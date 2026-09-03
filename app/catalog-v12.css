@@ -1,0 +1,34 @@
+
+/* TDR Auto Consumer Catalog V1.2 additions */
+.adminSubGrid{display:flex;flex-direction:column;gap:8px}
+.adminInlineFields.fourCols,.adminInlineFields.rangeCols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.rangeAdminBox{border:1px solid #d8dce5;padding:14px;background:#fafafa}
+.rangeAdminBox>input{width:100%;margin-top:10px}
+.rangeAdminBox small{display:block;margin-top:8px;color:#666;line-height:1.5}
+
+.consumerHeroMetrics{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+.consumerRangeHero{border-top:3px solid #ad1402;padding-top:10px;display:flex;flex-direction:column;gap:4px}
+.consumerRangeHero small,.consumerPrice small{font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+.consumerRangeHero strong{font-size:clamp(26px,3vw,40px);line-height:1;color:#111}
+.consumerRangeHero em,.consumerPrice em{font-size:12px;color:#666;font-style:normal}
+
+.dimensionGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid #d8dce5;border-left:1px solid #d8dce5}
+.dimensionGrid>div{padding:18px;border-right:1px solid #d8dce5;border-bottom:1px solid #d8dce5;display:flex;flex-direction:column;gap:6px}
+.dimensionGrid small{color:#666;font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+.dimensionGrid b{font-size:20px;color:#111}
+
+.trimSummaryNumbers{display:flex;align-items:flex-end;gap:18px}
+.trimSummaryNumbers span{font-size:13px;color:#555;font-weight:700}
+.trimSpecGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:16px}
+.trimSpecGrid>div{border:1px solid #e0e3e8;padding:12px;display:flex;flex-direction:column;gap:5px;background:#fff}
+.trimSpecGrid small{font-size:10px;color:#777;text-transform:uppercase;letter-spacing:.04em}
+.trimSpecGrid b{font-size:14px;color:#111}
+.trimSourceLink{display:inline-block;margin-top:10px;font-size:12px;font-weight:700;color:#012061;text-decoration:none;border-bottom:1px solid #012061}
+
+@media(max-width:820px){
+  .adminInlineFields.fourCols,.adminInlineFields.rangeCols{grid-template-columns:1fr 1fr}
+  .consumerHeroMetrics{grid-template-columns:1fr}
+  .dimensionGrid{grid-template-columns:1fr}
+  .trimSpecGrid{grid-template-columns:1fr}
+  .trimSummaryNumbers{flex-direction:column;gap:4px;align-items:flex-end}
+}
