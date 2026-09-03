@@ -1,0 +1,6 @@
+TDR AUTO V1.1
+1) Run supabase/migration_v11_consumer_catalog.sql
+2) Copy flat patch over existing V1 project
+3) Keep .env.local
+4) npm run dev
+5) Audit /admin/models/new and /models

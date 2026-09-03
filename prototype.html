@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TDR Automotive Intelligence — V0.3 Preview</title>
+<style>@import url("https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&display=swap");
+:root {
+  --navy: #012061;
+  --navy-2: #0b2f75;
+  --red: #ad1402;
+  --red-dark: #841000;
+  --ink: #101114;
+  --muted: #646a76;
+  --line: #d9dde5;
+  --paper: #f4f5f7;
+  --white: #fcfcfc;
+  --soft-blue: #f3f4f6;
+  --soft-red: #f8ece9;
+}
+* { box-sizing: border-box; }
+html { background: var(--paper); }
+body { margin: 0; color: var(--ink); background: var(--paper); font-family: "Prompt", "Noto Sans Thai", "Leelawadee UI", Tahoma, Arial, sans-serif; }
+a { color: inherit; text-decoration: none; }
+button, input { font: inherit; }
+.pageFrame { width: min(1460px, calc(100% - 36px)); margin: 0 auto; background: var(--white); min-height: 100vh; border-left: 1px solid var(--line); border-right: 1px solid var(--line); }
+main { padding: 0 44px 68px; }
+.siteHeader { border-bottom: 4px solid var(--red); padding: 19px 44px 0; background: var(--white); }
+.topline { display: flex; align-items: flex-end; justify-content: space-between; padding-bottom: 17px; }
+.brandLockup { display: grid; grid-template-columns: auto auto auto; align-items: end; gap: 8px 10px; }
+.tdrMark { grid-column: 1 / span 2; color: var(--navy); font-size: 31px; line-height: .9; font-weight: 900; letter-spacing: -.045em; }
+.brandText { grid-column: 1 / span 2; color: var(--navy); font-size: 12px; font-weight: 900; letter-spacing: .015em; }
+.brandText b { color: var(--red); }
+.productTag { grid-column: 3; grid-row: 1 / span 2; align-self: stretch; display: flex; align-items: center; border-left: 1px solid var(--line); margin-left: 3px; padding-left: 14px; color: var(--ink); font-size: 11px; font-weight: 800; letter-spacing: .07em; }
+.edition { color: var(--muted); font-size: 10px; letter-spacing: .06em; }
+.navline { border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; min-height: 48px; }
+.navline nav { display: flex; align-items: center; gap: 29px; }
+.navline a { font-size: 13px; font-weight: 700; }
+.navline nav a:hover, .searchLink:hover { color: var(--red); }
+.eyebrow { color: var(--red); font-size: 10px; font-weight: 900; letter-spacing: .13em; margin-bottom: 11px; }
+
+.leadHero { padding: 58px 0 52px; border-bottom: 1px solid var(--navy); display: grid; grid-template-columns: .74fr 1.26fr; gap: 54px; align-items: start; }
+.leadIntro { padding-top: 18px; }
+.leadIntro h1 { color: var(--ink); font-size: clamp(39px, 4.4vw, 67px); line-height: 1.08; letter-spacing: -.045em; margin: 0 0 22px; font-weight: 800; }
+.leadIntro > p { max-width: 620px; font-size: 16px; line-height: 1.75; color: #313236; margin: 0 0 30px; }
+.heroSearch { border: 1px solid var(--navy); background: white; display: grid; grid-template-columns: 42px 1fr auto; align-items: center; min-height: 56px; padding-left: 13px; box-shadow: 5px 5px 0 var(--soft-blue); }
+.compactSearch { width: min(620px,100%); }
+.heroSearch span { font-size: 20px; color: var(--ink); }
+.heroSearch input { border: 0; outline: 0; min-width: 0; font-size: 14px; background: transparent; }
+.heroSearch a, .heroSearch button { align-self: stretch; display: flex; align-items: center; padding: 0 20px; background: #fff; color: var(--ink); font-weight: 700; border: 0; border-left: 1px solid var(--navy); }
+.heroSearch a:hover, .heroSearch button:hover { background: #f7f7f7; color: var(--red); }
+.leadModels { display: grid; grid-template-columns: 1.35fr .82fr; gap: 12px; min-height: 480px; }
+.featureStack { display: grid; grid-template-rows: 1fr 1fr; gap: 12px; }
+.featureModel { border: 1px solid var(--line); background: #fff; display: flex; flex-direction: column; transition: transform .16s ease, border-color .16s ease; }
+.featureModel:hover { transform: translateY(-2px); border-color: var(--navy); }
+.featureModelMain { padding: 19px; }
+.smallModel { padding: 17px; background: linear-gradient(180deg, #fff 0%, #f8f9fb 100%); }
+.featureTop { display: flex; align-items: center; justify-content: space-between; }
+.featureNo { color: #a8adb7; font-size: 11px; font-weight: 800; }
+.statusPill { display: inline-block; border: 1px solid var(--navy); color: var(--ink); font-size: 8px; font-weight: 900; padding: 5px 7px 4px; letter-spacing: .09em; }
+.redPill { border-color: var(--red); color: var(--red); }
+.navyPill { background: #fff; color: var(--ink); border-color: var(--navy); }
+.modelVisual { flex: 1; min-height: 230px; margin: 15px 0 18px; background: linear-gradient(135deg, #f3f4f6, #fff); border: 1px solid var(--line); display: grid; place-items: center; position: relative; overflow: hidden; }
+.modelVisual::before { content: ""; width: 70%; height: 42%; border: 2px solid var(--navy); border-radius: 45% 48% 12% 12% / 45% 45% 18% 18%; opacity: .13; position: absolute; transform: skewX(-8deg); }
+.modelVisual span { position: relative; z-index: 2; color: #a2a7b0; font-size: 10px; letter-spacing: .14em; font-weight: 800; }
+.featureCopy small { color: var(--red); font-size: 9px; font-weight: 900; letter-spacing: .1em; }
+.featureCopy h2 { color: var(--ink); font-size: 26px; line-height: 1.2; letter-spacing: -.025em; margin: 8px 0 7px; }
+.featureCopy h3 { color: var(--ink); font-size: 19px; line-height: 1.25; margin: 30px 0 7px; }
+.featureCopy p { color: var(--muted); font-size: 11px; line-height: 1.55; margin: 0; }
+
+.homeSection { padding: 48px 0; border-bottom: 1px solid var(--navy); }
+.sectionHeader { display: flex; justify-content: space-between; align-items: end; gap: 20px; margin-bottom: 24px; }
+.sectionHeader h2 { color: var(--ink); font-size: 29px; line-height: 1.2; font-weight: 800; margin: 0; letter-spacing: -.025em; }
+.sectionHeader a { font-size: 11px; font-weight: 800; color: var(--ink); }
+.moatGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.moatCard { border: 1px solid var(--line); padding-bottom: 16px; background: white; }
+.moatCard:hover { border-color: var(--navy); }
+.moatVisual { height: 145px; display: grid; place-items: center; background: var(--soft-blue); border-bottom: 3px solid var(--navy); color: #979eaa; font-size: 9px; letter-spacing: .13em; font-weight: 900; }
+.moatMeta { display: flex; justify-content: space-between; color: var(--red); font-size: 9px; font-weight: 800; padding: 13px 15px 0; }
+.moatCard h3 { color: var(--ink); font-size: 17px; margin: 9px 15px 5px; }
+.moatCard p { color: var(--muted); font-size: 10px; margin: 0 15px; }
+.twoColHome { display: grid; grid-template-columns: 1.08fr .92fr; gap: 54px; }
+.activityList { border-top: 2px solid var(--navy); }
+.activityItem { display: grid; grid-template-columns: 64px 1fr 28px; gap: 14px; padding: 16px 0; border-bottom: 1px solid var(--line); align-items: start; }
+.activityType { color: var(--red); font-size: 8px; font-weight: 900; letter-spacing: .1em; }
+.activityItem strong { font-weight: 750; font-size: 15px; }
+.activityItem p { color: var(--muted); font-size: 10px; line-height: 1.45; margin: 4px 0 0; }
+.activityItem time { color: var(--muted); }
+.analysisCard { border-top: 2px solid var(--navy); padding-top: 15px; display: grid; grid-template-columns: 138px 1fr; gap: 18px; }
+.analysisImage { aspect-ratio: 1.12; background: #f3f4f6; border: 1px solid var(--navy); border-bottom: 8px solid var(--red); display: grid; place-items: center; color: var(--ink); font-size: 31px; font-weight: 800; }
+.cardMeta { color: var(--muted); font-size: 9px; font-weight: 900; letter-spacing: .11em; text-transform: uppercase; }
+.analysisBody h3 { color: var(--ink); font-size: 19px; line-height: 1.35; font-weight: 800; margin: 7px 0; }
+.analysisBody p { color: var(--muted); font-size: 11px; line-height: 1.65; }
+.databaseLinks { display: grid; grid-template-columns: repeat(4,1fr); border-top: 2px solid var(--navy); border-left: 1px solid var(--line); }
+.databaseLink { min-height: 215px; padding: 21px 19px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); display: flex; flex-direction: column; }
+.databaseLink:hover { background: #f6f6f6; }
+.databaseLink h3 { color: var(--ink); font-size: 24px; margin: 30px 0 8px; }
+.databaseLink p { color: var(--muted); font-size: 11px; line-height: 1.55; margin: 0 0 18px; }
+.databaseLink > span { margin-top: auto; font-size: 10px; font-weight: 800; color: var(--red); }
+
+.pageIntro { padding: 58px 0 36px; border-bottom: 2px solid var(--navy); display: grid; grid-template-columns: 1fr .9fr; gap: 40px; align-items: end; }
+.pageIntro .eyebrow, .pageIntro h1 { grid-column: 1; }
+.pageIntro h1 { color: var(--ink); font-size: 55px; line-height: 1.08; font-weight: 800; letter-spacing: -.04em; margin: 0; }
+.pageIntro p { grid-column: 2; grid-row: 1 / span 2; align-self: end; color: #313236; font-size: 15px; line-height: 1.75; margin: 0 0 4px; }
+.filterBar { display: flex; gap: 8px; flex-wrap: wrap; padding: 17px 0; border-bottom: 1px solid var(--line); }
+.filterBar button { background: transparent; border: 1px solid var(--line); padding: 8px 11px; font-size: 10px; font-weight: 700; }
+.filterBar button:hover { border-color: var(--navy); }
+.filterBar button span { margin-left: 11px; color: var(--muted); }
+.filterBar .clearFilter { margin-left: auto; border: 0; color: var(--muted); }
+.tableShell { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 11px; }
+th { text-align: left; border-bottom: 2px solid var(--navy); padding: 12px 10px; font-size: 9px; letter-spacing: .03em; color: var(--muted); }
+td { padding: 16px 10px; border-bottom: 1px solid var(--line); }
+.placeholderText { font-size: 13px; font-weight: 700; color: var(--ink); }
+.dash { color: #a6abb4; }
+.logoGrid { display: grid; grid-template-columns: repeat(6, 1fr); border-left: 1px solid var(--line); margin-top: 24px; }
+.logoPlaceholder { min-height: 160px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); border-top: 1px solid var(--line); padding: 17px; display: flex; flex-direction: column; gap: 7px; }
+.logoGlyph { height: 66px; display: grid; place-items: center; background: var(--soft-blue); color: #9aa1ad; font-size: 9px; letter-spacing: .13em; }
+.logoPlaceholder strong { margin-top: 8px; color: var(--ink); font-size: 14px; }
+.logoPlaceholder span { color: var(--muted); font-size: 9px; }
+.mapPlaceholder { height: 290px; margin-top: 24px; background: repeating-linear-gradient(45deg, #f2f4f7 0, #f2f4f7 1px, transparent 1px, transparent 14px); border: 1px solid var(--line); display: grid; place-items: center; text-align: center; }
+.mapPlaceholder div { background: var(--white); border: 1px solid var(--navy); border-bottom: 4px solid var(--red); padding: 17px 21px; max-width: 360px; }
+.mapPlaceholder strong, .mapPlaceholder span { display: block; }
+.mapPlaceholder strong { color: var(--ink); }
+.mapPlaceholder span { color: var(--muted); font-size: 10px; margin-top: 6px; line-height: 1.5; }
+.methodNote { margin: 20px 0 0; background: var(--soft-red); border-left: 4px solid var(--red); padding: 13px 16px; font-size: 11px; line-height: 1.55; }
+.newsLayout { display: grid; grid-template-columns: 1fr 280px; gap: 46px; margin-top: 10px; }
+.newsRow { display: grid; grid-template-columns: 68px 1fr; gap: 19px; padding: 23px 0; border-bottom: 1px solid var(--line); }
+.newsDate { font-size: 8px; font-weight: 900; letter-spacing: .08em; color: var(--muted); line-height: 1.55; }
+.newsRow h2 { color: var(--ink); font-size: 21px; font-weight: 800; letter-spacing: -.015em; margin: 7px 0; }
+.newsRow p { color: var(--muted); font-size: 11px; line-height: 1.6; margin: 0; }
+.newsAside { padding-top: 23px; }
+.asideBox { border-top: 2px solid var(--navy); padding: 15px 0 23px; }
+.asideBox p { color: var(--muted); font-size: 10px; line-height: 1.65; }
+.searchPageBox { padding: 39px 0; border-bottom: 1px solid var(--line); }
+.largeSearch { width: min(900px, 100%); position: static; box-shadow: 6px 6px 0 var(--soft-blue); }
+.searchExamples { margin-top: 18px; display: flex; gap: 7px; align-items: center; flex-wrap: wrap; }
+.searchExamples span { color: var(--muted); font-size: 10px; margin-right: 3px; }
+.searchExamples button { border: 1px solid var(--line); background: transparent; padding: 6px 10px; font-size: 9px; }
+.emptyState { margin: 42px 0; max-width: 620px; }
+.emptyState strong { color: var(--ink); font-size: 21px; font-weight: 800; }
+.emptyState p { color: var(--muted); font-size: 11px; line-height: 1.6; }
+.siteFooter { border-top: 1px solid var(--navy); border-bottom: 8px solid var(--navy); padding: 26px 44px 34px; display: grid; grid-template-columns: 1fr auto; gap: 40px; }
+.siteFooter strong { color: var(--ink); font-size: 15px; }
+.siteFooter p { max-width: 700px; color: var(--muted); font-size: 10px; line-height: 1.65; }
+.footerMeta { color: var(--muted); font-size: 9px; letter-spacing: .05em; }
+
+@media (max-width: 1000px) {
+  .pageFrame { width: 100%; border: 0; }
+  main, .siteHeader { padding-left: 22px; padding-right: 22px; }
+  .siteFooter { padding-left: 22px; padding-right: 22px; }
+  .leadHero { grid-template-columns: 1fr; gap: 32px; }
+  .leadModels { min-height: 440px; }
+  .moatGrid, .databaseLinks { grid-template-columns: repeat(2, 1fr); }
+  .twoColHome, .pageIntro, .newsLayout { grid-template-columns: 1fr; }
+  .pageIntro p { grid-column: 1; grid-row: auto; }
+  .logoGrid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 700px) {
+  .edition, .productTag { display: none; }
+  .brandLockup { display: block; }
+  .navline { overflow-x: auto; gap: 22px; }
+  .navline nav { gap: 18px; min-width: max-content; }
+  .leadHero { padding-top: 36px; }
+  .leadIntro h1 { font-size: 39px; }
+  .leadModels { grid-template-columns: 1fr; min-height: 0; }
+  .featureStack { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+  .modelVisual { min-height: 190px; }
+  .moatGrid, .databaseLinks, .logoGrid { grid-template-columns: 1fr; }
+  .pageIntro h1 { font-size: 40px; }
+  .siteFooter { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body><div class="pageFrame">
+<header class="siteHeader">
+  <div class="topline">
+    <a class="brandLockup"><span class="tdrMark">THAILAND</span><span class="brandText">DEVELOPMENT <b>REPORT</b></span><span class="productTag">AUTOMOTIVE INTELLIGENCE</span></a>
+    <div class="edition">ฐานข้อมูลอุตสาหกรรมยานยนต์ไทย · V0</div>
+  </div>
+  <div class="navline"><nav><a>รุ่นใหม่</a><a>รุ่นรถ</a><a>แบรนด์</a><a>โรงงาน</a><a>บริษัท</a><a>ข่าวอุตสาหกรรม</a></nav><a class="searchLink">ค้นหา ⌕</a></div>
+</header>
+<main>
+<section class="leadHero">
+  <div class="leadIntro">
+    <div class="eyebrow">TDR AUTOMOTIVE INTELLIGENCE</div>
+    <h1>รถรุ่นต่อไปที่กำลังจะมา<br>และสิ่งที่เกิดขึ้นหลังสายการผลิต</h1>
+    <p>ฐานข้อมูลยานยนต์ไทยที่เชื่อมรุ่นรถ โรงงาน บริษัท และข่าวอุตสาหกรรมไว้ในที่เดียว โดยยึดข้อมูลสาธารณะที่ตรวจสอบย้อนกลับได้</p>
+    <div class="heroSearch compactSearch"><span>⌕</span><input placeholder="ค้นหารุ่นรถ แบรนด์ โรงงาน หรือบริษัท…"><a>ค้นหา</a></div>
+  </div>
+  <div class="leadModels">
+    <a class="featureModel featureModelMain">
+      <div class="featureTop"><span class="statusPill redPill">UPCOMING</span><span class="featureNo">01</span></div>
+      <div class="modelVisual"><span>MODEL / PROGRAM</span></div>
+      <div class="featureCopy"><small>รุ่นเด่นที่กำลังติดตาม</small><h2>พื้นที่สำหรับรถรุ่นใหม่ที่มีข้อมูลนำ</h2><p>แบรนด์ · โรงงาน · ช่วงเปิดตัว · สถานะหลักฐาน</p></div>
+    </a>
+    <div class="featureStack">
+      <a class="featureModel smallModel"><div class="featureTop"><span class="statusPill navyPill">EXPECTED</span><span class="featureNo">02</span></div><div class="featureCopy"><small>UPCOMING MODEL</small><h3>โครงการผลิต / รุ่นใหม่</h3><p>ช่วงเวลา · โรงงาน · สถานะ</p></div></a>
+      <a class="featureModel smallModel"><div class="featureTop"><span class="statusPill">TDR DATA</span><span class="featureNo">03</span></div><div class="featureCopy"><small>DEEP COVERAGE</small><h3>รุ่นที่ฐานข้อมูลของเรามีข้อมูลนำ</h3><p>การผลิต · timeline · ข่าวที่เกี่ยวข้อง</p></div></a>
+    </div>
+  </div>
+</section>
+<section class="homeSection moatSection">
+  <div class="sectionHeader"><div><div class="eyebrow">WHAT TO WATCH</div><h2>รุ่นและโครงการที่ควรจับตา</h2></div><a>ดูทั้งหมด →</a></div>
+  <div class="moatGrid">
+    <a class="moatCard"><div class="moatVisual"><span>MODEL 01</span></div><div class="moatMeta"><span>สถานะ</span><span>ช่วงเวลา</span></div><h3>พื้นที่สำหรับรุ่น / โครงการผลิต</h3><p>แบรนด์ · โรงงาน · ข้อมูลล่าสุด</p></a><a class="moatCard"><div class="moatVisual"><span>MODEL 02</span></div><div class="moatMeta"><span>สถานะ</span><span>ช่วงเวลา</span></div><h3>พื้นที่สำหรับรุ่น / โครงการผลิต</h3><p>แบรนด์ · โรงงาน · ข้อมูลล่าสุด</p></a><a class="moatCard"><div class="moatVisual"><span>MODEL 03</span></div><div class="moatMeta"><span>สถานะ</span><span>ช่วงเวลา</span></div><h3>พื้นที่สำหรับรุ่น / โครงการผลิต</h3><p>แบรนด์ · โรงงาน · ข้อมูลล่าสุด</p></a><a class="moatCard"><div class="moatVisual"><span>MODEL 04</span></div><div class="moatMeta"><span>สถานะ</span><span>ช่วงเวลา</span></div><h3>พื้นที่สำหรับรุ่น / โครงการผลิต</h3><p>แบรนด์ · โรงงาน · ข้อมูลล่าสุด</p></a>
+  </div>
+</section>
+<section class="homeSection twoColHome">
+  <div><div class="sectionHeader"><div><div class="eyebrow">LATEST MOVES</div><h2>อัปเดตล่าสุดจากฐานข้อมูล</h2></div><a>ดูข่าวทั้งหมด →</a></div><div class="activityList">
+    <div class="activityItem"><span class="activityType">UPDATE</span><div><strong>พื้นที่สำหรับการเปลี่ยนแปลงล่าสุด</strong><p>รุ่นรถ · โรงงาน · บริษัท · แหล่งข้อมูล</p></div><time>—</time></div><div class="activityItem"><span class="activityType">UPDATE</span><div><strong>พื้นที่สำหรับการเปลี่ยนแปลงล่าสุด</strong><p>รุ่นรถ · โรงงาน · บริษัท · แหล่งข้อมูล</p></div><time>—</time></div><div class="activityItem"><span class="activityType">UPDATE</span><div><strong>พื้นที่สำหรับการเปลี่ยนแปลงล่าสุด</strong><p>รุ่นรถ · โรงงาน · บริษัท · แหล่งข้อมูล</p></div><time>—</time></div><div class="activityItem"><span class="activityType">UPDATE</span><div><strong>พื้นที่สำหรับการเปลี่ยนแปลงล่าสุด</strong><p>รุ่นรถ · โรงงาน · บริษัท · แหล่งข้อมูล</p></div><time>—</time></div>
+  </div></div>
+  <div><div class="sectionHeader"><div><div class="eyebrow">TDR ANALYSIS</div><h2>บทวิเคราะห์อุตสาหกรรม</h2></div><a>อ่านทั้งหมด →</a></div><article class="analysisCard"><div class="analysisImage"><span>TDR</span></div><div class="analysisBody"><div class="cardMeta">ANALYSIS</div><h3>บทวิเคราะห์จะเชื่อมกลับไปยังรุ่น โรงงาน และบริษัทในฐานข้อมูล</h3><p>ข่าวและบทวิเคราะห์ไม่ใช่โพสต์ที่แยกขาด แต่เป็นส่วนหนึ่งของประวัติแต่ละ record</p></div></article></div>
+</section>
+<section class="homeSection databaseSection">
+  <div class="sectionHeader"><div><div class="eyebrow">DATABASE</div><h2>สำรวจฐานข้อมูล</h2></div></div>
+  <div class="databaseLinks">
+    <a class="databaseLink"><div class="cardMeta">MODELS</div><h3>รุ่นรถ</h3><p>รุ่นและเจเนอเรชันที่เชื่อมกับสถานะการผลิตและโรงงานในไทย</p><span>เปิดฐานข้อมูล →</span></a>
+    <a class="databaseLink"><div class="cardMeta">PLANTS</div><h3>โรงงาน</h3><p>ฐานการผลิต ที่ตั้ง กำลังผลิต และรุ่นที่เกี่ยวข้อง</p><span>เปิดฐานข้อมูล →</span></a>
+    <a class="databaseLink"><div class="cardMeta">BRANDS</div><h3>แบรนด์</h3><p>ภาพรวมของแต่ละผู้ผลิตและ footprint การผลิตในประเทศไทย</p><span>เปิดฐานข้อมูล →</span></a>
+    <a class="databaseLink"><div class="cardMeta">COMPANIES</div><h3>บริษัท</h3><p>OEM ซัพพลายเออร์ และบริษัทที่มีข้อมูลสาธารณะเชื่อมโยงกับอุตสาหกรรม</p><span>เปิดฐานข้อมูล →</span></a>
+  </div>
+</section>
+</main>
+<footer class="siteFooter"><div><strong>Thailand Development Report — Automotive Intelligence</strong><p>ฐานข้อมูลรถยนต์ การผลิต โรงงาน บริษัท และความเคลื่อนไหวของอุตสาหกรรมยานยนต์ไทย จากข้อมูลสาธารณะที่ตรวจสอบแหล่งที่มาได้</p></div><div class="footerMeta">ต้นแบบ V0 · ยังไม่ใส่ข้อมูลจริง</div></footer>
+</div></body></html>
