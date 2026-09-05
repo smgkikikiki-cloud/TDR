@@ -309,19 +309,28 @@
 .sfViewToggle a.on { background: var(--navy); color: #fff; }
 .sfViewToggle a:not(.on):hover { color: var(--red); }
 
-.sfProvinceList > section { margin-bottom: 34px; }
-.sfProvinceHead { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--navy); margin-bottom: 4px; }
-.sfProvinceHead h2 { margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -.025em; }
-.sfProvinceHead span { font-size: 13px; color: var(--sf-muted); }
-.sfPlantRow { padding: 16px 0; border-bottom: 1px solid var(--sf-line-soft); }
-.sfPlantHead { display: flex; justify-content: space-between; align-items: baseline; gap: 18px; }
-.sfPlantHead > a { font-size: 17px; font-weight: 700; letter-spacing: -.015em; }
-.sfPlantHead > a:hover { color: var(--red); }
-.sfPlantHead em { font-style: normal; font-size: 13px; color: var(--sf-muted); font-variant-numeric: tabular-nums; text-align: right; }
-.sfModelChips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 11px; }
-.sfModelChips a { border: 1px solid var(--line); background: #fff; padding: 6px 11px; font-size: 13px; font-weight: 600; }
+.sfMakerGroup { margin-bottom: 40px; }
+.sfMakerHead { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--navy); }
+.sfMakerHead h2 { margin: 0; font-size: 23px; font-weight: 800; letter-spacing: -.02em; text-transform: uppercase; }
+.sfMakerHead span { font-size: 13px; color: var(--sf-muted); font-variant-numeric: tabular-nums; text-align: right; }
+/* contract assemblers: present, not featured */
+.sfMakerGroup.minor { opacity: .82; }
+.sfMakerGroup.minor .sfMakerHead { border-bottom-width: 1px; border-bottom-color: var(--line); }
+.sfMakerGroup.minor .sfMakerHead h2 { font-size: 17px; font-weight: 700; text-transform: none; color: var(--sf-muted); }
+.sfMakerGroup.minor .sfPlantName > a { font-size: 15px; }
+
+.sfPlantRow { padding: 17px 0; border-bottom: 1px solid var(--sf-line-soft); }
+.sfPlantHead { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; }
+.sfPlantName > a { font-size: 18px; font-weight: 700; letter-spacing: -.015em; }
+.sfPlantName > a:hover { color: var(--red); }
+.sfPlantName > span { display: block; margin-top: 3px; font-size: 13px; color: var(--sf-muted); }
+.sfPlantCap { flex-shrink: 0; text-align: right; }
+.sfPlantCap b { display: block; font-size: 19px; font-weight: 800; letter-spacing: -.02em; }
+.sfPlantCap em { display: block; font-style: normal; font-size: 12px; color: var(--sf-muted); margin-top: 2px; }
+.sfModelChips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+.sfModelChips a { border: 1px solid var(--line); background: #fff; padding: 7px 12px; font-size: 14px; font-weight: 600; }
 .sfModelChips a:hover { border-color: var(--navy); color: var(--red); }
-.sfPlantRow > p { margin: 10px 0 0; }
+.sfPlantRow > p { margin: 11px 0 0; }
 
 .sfProgramList { border-top: 1px solid var(--line); }
 .sfProgramList article { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 24px; align-items: baseline; padding: 15px 0; border-bottom: 1px solid var(--sf-line-soft); }
@@ -474,4 +483,12 @@
   .sfCompare { font-size: 14px; }
   .sfCompare th:not(:first-child), .sfCompare td:not(:first-child) { width: 62px; }
   .sfViewToggle a { padding: 10px 14px; font-size: 13px; }
+}
+
+@media (max-width: 640px) {
+  .sfPlantHead { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .sfPlantCap { text-align: left; }
+  .sfPlantCap b { font-size: 17px; }
+  .sfMakerHead { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .sfMakerHead span { text-align: left; }
 }
