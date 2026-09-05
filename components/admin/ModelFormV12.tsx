@@ -2,6 +2,7 @@
 
 import { useMemo, useState, type ReactNode } from "react";
 import { saveModelV12 } from "@/app/admin/catalog-actions";
+import { legacyOption } from "@/components/admin/Fields";
 
 const segments = ["A","B","C","D","E"];
 const bodies = ["Sedan","Hatchback","Coupe","Crossover","SUV (Monocoque)","SUV (Ladder frame)","MPV","Pickup truck","Van"];
@@ -106,7 +107,7 @@ function Input({label,name,defaultValue,type="text",placeholder,required=false}:
   return <label className="adminField"><span>{label}</span><input name={name} type={type} defaultValue={defaultValue??""} placeholder={placeholder} required={required}/></label>;
 }
 function Select({label,name,defaultValue,children}:{label:string;name:string;defaultValue?:any;children:ReactNode}) {
-  return <label className="adminField"><span>{label}</span><select name={name} defaultValue={defaultValue??""}>{children}</select></label>;
+  return <label className="adminField"><span>{label}</span><select name={name} defaultValue={defaultValue??""}>{legacyOption(defaultValue, children)}{children}</select></label>;
 }
 function Confidence({field,current}:{field:string;current:Set<string>}) {
   return <label className="adminUnconfirmed compact"><input type="checkbox" name="unconfirmed_fields" value={field} defaultChecked={current.has(field)}/><span>Unconfirmed</span></label>;
