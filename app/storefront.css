@@ -286,6 +286,105 @@
 .sfGroup > h3 + .sfOptGroup { margin-top: 2px; }
 .sfGroupNote { margin: -2px 0 9px; font-size: 12px; line-height: 1.55; color: var(--sf-muted); }
 
+/* ---------- header CTA: the one thing this site sells ---------- */
+.sfCta { display: flex; align-items: center; gap: 10px; border: 1px solid var(--navy); background: #fff; padding: 9px 14px; flex-shrink: 0; }
+.sfCta:hover { border-color: var(--red); color: var(--red); }
+.sfCta > svg { flex-shrink: 0; color: var(--red); }
+.sfCta b { display: block; font-size: 14px; font-weight: 800; letter-spacing: -.01em; }
+.sfCta em { display: block; font-style: normal; font-size: 12px; color: var(--sf-muted); margin-top: 1px; }
+.sfCta:hover em { color: var(--red); }
+
+/* ---------- buttons ---------- */
+.sfBtn { display: inline-block; background: var(--navy); color: #fff; font-size: 15px; font-weight: 700; padding: 13px 22px; border: 1px solid var(--navy); }
+.sfBtn:hover { background: var(--navy-2); color: #fff; }
+.sfBtnGhost { display: inline-block; border: 1px solid var(--navy); color: var(--navy); font-size: 15px; font-weight: 700; padding: 12px 21px; background: #fff; }
+.sfBtnGhost:hover { border-color: var(--red); color: var(--red); }
+.sfBtnDisabled { background: var(--sf-muted); border-color: var(--sf-muted); cursor: default; }
+.sfBtnDisabled:hover { background: var(--sf-muted); }
+
+/* ---------- /production: one page, two ways in ---------- */
+.sfViewToggle { display: flex; flex-shrink: 0; border: 1px solid var(--line); background: #fff; }
+.sfViewToggle a { padding: 11px 18px; font-size: 14px; font-weight: 700; color: var(--sf-muted); }
+.sfViewToggle a + a { border-left: 1px solid var(--line); }
+.sfViewToggle a.on { background: var(--navy); color: #fff; }
+.sfViewToggle a:not(.on):hover { color: var(--red); }
+
+.sfProvinceList > section { margin-bottom: 34px; }
+.sfProvinceHead { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--navy); margin-bottom: 4px; }
+.sfProvinceHead h2 { margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -.025em; }
+.sfProvinceHead span { font-size: 13px; color: var(--sf-muted); }
+.sfPlantRow { padding: 16px 0; border-bottom: 1px solid var(--sf-line-soft); }
+.sfPlantHead { display: flex; justify-content: space-between; align-items: baseline; gap: 18px; }
+.sfPlantHead > a { font-size: 17px; font-weight: 700; letter-spacing: -.015em; }
+.sfPlantHead > a:hover { color: var(--red); }
+.sfPlantHead em { font-style: normal; font-size: 13px; color: var(--sf-muted); font-variant-numeric: tabular-nums; text-align: right; }
+.sfModelChips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 11px; }
+.sfModelChips a { border: 1px solid var(--line); background: #fff; padding: 6px 11px; font-size: 13px; font-weight: 600; }
+.sfModelChips a:hover { border-color: var(--navy); color: var(--red); }
+.sfPlantRow > p { margin: 10px 0 0; }
+
+.sfProgramList { border-top: 1px solid var(--line); }
+.sfProgramList article { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 24px; align-items: baseline; padding: 15px 0; border-bottom: 1px solid var(--sf-line-soft); }
+.sfProgramModel { font-size: 17px; font-weight: 700; letter-spacing: -.015em; }
+.sfProgramModel:hover { color: var(--red); }
+.sfProgramList p { margin: 4px 0 0; font-size: 13px; color: var(--sf-muted); }
+.sfProgramPlant { text-align: right; }
+.sfProgramPlant a { font-size: 15px; font-weight: 600; }
+.sfProgramPlant a:hover { color: var(--red); }
+.sfProgramPlant em { display: block; font-style: normal; font-size: 13px; color: var(--sf-muted); margin-top: 3px; }
+
+/* ---------- /reports: the pitch ---------- */
+.sfPitchHero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 48px; padding: 42px 0 40px; align-items: start; }
+.sfPitchHero h1 { margin: 10px 0 0; font-size: 40px; font-weight: 800; letter-spacing: -.035em; line-height: 1.12; }
+.sfPitchHero > div > p { margin: 15px 0 0; max-width: 560px; font-size: 16px; line-height: 1.8; color: var(--sf-body); }
+.sfPitchActions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+
+.sfPitchPanel { border: 1px solid var(--navy); background: #fff; }
+.sfPanelHead { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 18px 20px 15px; border-bottom: 1px solid var(--line); }
+.sfPanelHead h2 { margin: 7px 0 0; font-size: 19px; font-weight: 700; letter-spacing: -.015em; }
+.sfLockBadge { display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; border: 1px solid var(--red); color: var(--red); background: var(--soft-red); padding: 4px 9px; font-size: 12px; font-weight: 700; }
+.sfPanelFade { position: relative; padding: 24px 20px 22px; min-height: 300px; }
+.sfPanelOverlay { position: absolute; left: 0; right: 0; bottom: 0; padding: 62px 20px 22px; text-align: center;
+  background: linear-gradient(180deg, rgba(252,252,252,0) 0%, rgba(252,252,252,.88) 46%, var(--white) 76%); }
+.sfPanelOverlay strong { display: block; font-size: 16px; font-weight: 700; margin-bottom: 13px; }
+
+/* a chart-shaped texture: no label is attached to any bar, so it claims nothing */
+.sfBlurChart { display: flex; flex-direction: column; gap: 11px; filter: blur(4px); opacity: .55; user-select: none; }
+.sfBlurChart.tall { gap: 13px; }
+.sfBlurChart > span { display: grid; grid-template-columns: minmax(0, 1fr) 38px; align-items: center; gap: 12px; }
+.sfBlurChart i { display: block; height: 13px; background: var(--navy); }
+.sfBlurChart > span:nth-child(even) i { background: var(--navy-2); }
+.sfBlurChart > span:nth-child(3n) i { background: var(--red); }
+.sfBlurChart em { font-style: normal; font-size: 13px; font-weight: 700; color: var(--sf-muted); text-align: right; letter-spacing: .08em; }
+
+.sfQGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.sfQCard { border: 1px solid var(--line); background: #fff; padding: 18px 18px 16px; display: flex; flex-direction: column; }
+.sfQCard:hover { border-color: var(--navy); }
+.sfQTop { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 11px; }
+.sfQCard h3 { margin: 0 0 16px; font-size: 18px; font-weight: 700; letter-spacing: -.015em; line-height: 1.4; }
+.sfQScope { margin: 16px 0 0; padding-top: 13px; border-top: 1px solid var(--sf-line-soft); font-size: 13px; line-height: 1.6; color: var(--sf-muted); }
+.sfQScope b { color: var(--ink); }
+.sfQFoot { margin: 20px 0 0; font-size: 13px; line-height: 1.7; color: var(--sf-muted); max-width: 820px; }
+
+.sfCompare { width: 100%; border-collapse: collapse; font-size: 15px; }
+.sfCompare th { text-align: left; font-size: 13px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--sf-muted); padding: 0 14px 11px 0; border-bottom: 1px solid var(--navy); }
+.sfCompare th:not(:first-child), .sfCompare td:not(:first-child) { width: 110px; text-align: center; padding-right: 0; }
+.sfCompare td { padding: 14px 14px 14px 0; border-bottom: 1px solid var(--sf-line-soft); line-height: 1.55; }
+.sfYes { color: var(--red); font-weight: 800; font-size: 17px; }
+.sfNo { color: var(--sf-slot-ink); }
+
+.sfPitchFoot { background: var(--navy); color: #fff; margin-top: 46px; padding-top: 40px; padding-bottom: 42px; display: flex; justify-content: space-between; align-items: center; gap: 40px; flex-wrap: wrap; }
+.sfPitchFoot .sfEyebrow { color: #ff8f7a; }
+.sfPitchFoot h2 { margin: 9px 0 0; font-size: 28px; font-weight: 800; letter-spacing: -.03em; }
+.sfPitchFoot p { margin: 10px 0 0; max-width: 560px; font-size: 15px; line-height: 1.75; color: #c6cee0; }
+.sfPitchFootActions { display: flex; flex-wrap: wrap; gap: 12px; flex-shrink: 0; }
+.sfPitchFoot .sfBtn { background: #fff; color: var(--navy); border-color: #fff; }
+.sfPitchFoot .sfBtn:hover { background: var(--soft-red); color: var(--red); }
+.sfPitchFoot .sfBtnDisabled { background: rgba(255,255,255,.22); border-color: rgba(255,255,255,.35); color: #fff; }
+.sfPitchFoot .sfBtnDisabled:hover { background: rgba(255,255,255,.22); color: #fff; }
+.sfPitchFoot .sfBtnGhost { background: transparent; border-color: rgba(255,255,255,.5); color: #fff; }
+.sfPitchFoot .sfBtnGhost:hover { border-color: #fff; color: #fff; }
+
 /* ============================ responsive ============================ */
 @media (max-width: 1180px) {
   .sfLayout { grid-template-columns: 216px minmax(0, 1fr); gap: 26px; }
@@ -351,4 +450,28 @@
 
 @media (max-width: 640px) {
   .sfTypeRow a { padding: 14px 14px 13px; font-size: 14px; gap: 7px; }
+}
+
+@media (max-width: 1180px) {
+  .sfQGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .sfPitchHero { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+  .sfProgramList article { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  .sfProgramPlant { text-align: left; }
+  .sfPitchFoot { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 700px) {
+  .topline { flex-wrap: wrap; gap: 14px; }
+  .sfCta { width: 100%; justify-content: center; }
+}
+@media (max-width: 640px) {
+  .sfQGrid { grid-template-columns: minmax(0, 1fr); }
+  .sfPitchHero h1 { font-size: 30px; }
+  .sfPitchFoot h2 { font-size: 23px; }
+  .sfPlantHead { flex-direction: column; gap: 4px; }
+  .sfPlantHead em { text-align: left; }
+  .sfCompare { font-size: 14px; }
+  .sfCompare th:not(:first-child), .sfCompare td:not(:first-child) { width: 62px; }
+  .sfViewToggle a { padding: 10px 14px; font-size: 13px; }
 }

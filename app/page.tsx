@@ -139,9 +139,9 @@ export default async function Home() {
         <div><div className="sfEyebrow ink">INDUSTRY LAYER</div><h2>ดูรถในอีกมุม</h2></div>
       </div>
       <div className="sfIndustryLinks">
-        <Link href="/production"><b>รถผลิตในประเทศไทย</b><p>Production program, local content และสถานะ MiT ของรุ่นที่ประกอบในไทย</p><span>เปิดดู →</span></Link>
-        <Link href="/plants"><b>โรงงาน</b><p>กำลังการผลิต อัตราการใช้กำลังผลิต และรุ่นที่ผลิตในแต่ละโรงงาน</p><span>เปิดดู →</span></Link>
-        <Link href="/reports"><b>TDR Report</b><p>โครงสร้างตลาดและบทวิเคราะห์จากข้อมูลชุดเดียวกับแคตตาล็อก</p><span>เปิดดู →</span></Link>
+        <Link href="/production"><b>โรงงานและรุ่นที่ผลิตในไทย</b><p>โรงงานอยู่จังหวัดไหน ประกอบรุ่นอะไร และรุ่นนั้นอยู่ตรงไหนของแคตตาล็อก</p><span>เปิดดู →</span></Link>
+        <Link href="/news"><b>ข่าวอุตสาหกรรม</b><p>ความเคลื่อนไหวของผู้ผลิต โรงงาน และนโยบายที่กระทบตลาดรถไทย</p><span>เปิดดู →</span></Link>
+        <Link href="/reports"><b>TDR Report · สำหรับสมาชิก</b><p>ยอดจดทะเบียนรายรุ่น ส่วนแบ่งตลาด และเทรนด์ย้อนหลัง ลึกถึงระดับรุ่นย่อย</p><span>ดูว่ามีอะไรบ้าง →</span></Link>
       </div>
     </section>
   </>;

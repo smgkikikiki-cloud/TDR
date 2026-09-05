@@ -15,9 +15,9 @@ export function Footer() {
           <Link href="/search">ค้นหา</Link>
         </div>
         <div>
-          <h3>อุตสาหกรรม</h3>
-          <Link href="/production">ผลิตในไทย</Link>
-          <Link href="/plants">โรงงาน</Link>
+          <h3>ผลิตในไทย</h3>
+          <Link href="/production">รุ่นที่ผลิตในไทย</Link>
+          <Link href="/production?view=model">ดูตามรุ่น</Link>
           <Link href="/news">ข่าวอุตสาหกรรม</Link>
         </div>
         <div>

@@ -1,4 +1,113 @@
 import Link from "next/link";
-import { getProductionPrograms } from "@/lib/data";
-function current(arr:any[]|undefined){return arr?.slice().sort((a:any,b:any)=>(b.announcement_year||b.valid_from_year||0)-(a.announcement_year||a.valid_from_year||0))[0]}
-export default async function ProductionIndex(){const rows:any[]=await getProductionPrograms(300);return <div className="productionIndex"><section className="industryHero"><small>THAILAND PRODUCTION</small><h1>รถที่ผลิตในประเทศไทย</h1><p>มองรถในฐานะโครงการผลิต — โรงงาน, ปริมาณผลิต, platform, Local content, MiT และสถานะการผลิต โดยแยกออกจากหน้า consumer ให้ชัด</p></section><div className="productionTableShell"><table><thead><tr><th>รุ่น</th><th>โรงงาน</th><th>รูปแบบ</th><th>ปริมาณผลิต/ปี</th><th>Local content</th><th>MiT</th><th>สถานะ</th></tr></thead><tbody>{rows.length?rows.map((r:any)=>{const lc=current(r.local_content_declarations);const mit=current(r.mit_approvals);return <tr key={r.id}><td><Link href={`/production/${r.models?.slug}`}><b>{r.models?.brands?.name_th} {r.models?.name_th}</b><small>{r.models?.generation||""}</small></Link></td><td>{r.plants?<Link href={`/plants/${r.plants.slug}`}>{r.plants.name_th}</Link>:"—"}</td><td>{r.production_type||"—"}</td><td>{r.annual_production_estimate?r.annual_production_estimate.toLocaleString():"—"}</td><td>{lc?.percentage!=null?`${lc.percentage}%${lc.unconfirmed?" *":""}`:"—"}</td><td>{mit?.approved?`✓ ${mit.valid_from_year||""}${mit.valid_to_year?`–${mit.valid_to_year}`:""}`:"—"}</td><td>{r.status||"—"}</td></tr>}):<tr><td colSpan={7} className="publicEmpty">ยังไม่มี Production Program — เพิ่มจากหน้า Edit Model ใน Admin</td></tr>}</tbody></table></div></div>}
+import { getPlantsWithStats, getProductionPrograms } from "@/lib/data";
+
+/** "ผลิตในไทย" and "โรงงาน" were two views of one join, so they are one page.
+ *  By plant answers "อยู่ตรงไหน ผลิตรุ่นอะไร"; by model answers the same join
+ *  from the other end. Both read the helpers the two old pages already used. */
+export default async function ProductionPage({ searchParams }: { searchParams: Promise<{ view?: string }> }) {
+  const sp = await searchParams;
+  const byModel = sp.view === "model";
+  const [plants, programs] = await Promise.all([getPlantsWithStats(), getProductionPrograms(300)]);
+
+  const active = (plants as any[]).filter((p) => (p.active_programs || []).length);
+  const idle = (plants as any[]).filter((p) => !(p.active_programs || []).length);
+  const provinces = new Set((plants as any[]).map((p) => p.province).filter(Boolean));
+  const modelIds = new Set((programs as any[]).map((r) => r.models?.id).filter(Boolean));
+
+  const byProvince = new Map<string, any[]>();
+  for (const p of active) {
+    const key = p.province || "ไม่ระบุจังหวัด";
+    byProvince.set(key, [...(byProvince.get(key) || []), p]);
+  }
+  const provinceRows = [...byProvince.entries()].sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0], "th"));
+
+  return <>
+    <div className="sfStrip sfBleed">
+      <div className="sfStripItem"><b className="sfNum">{modelIds.size.toLocaleString()}</b><span>รุ่นที่ผลิตในไทย</span></div>
+      <div className="sfStripItem"><b className="sfNum">{plants.length.toLocaleString()}</b><span>โรงงานในฐานข้อมูล</span></div>
+      <div className="sfStripItem"><b className="sfNum">{provinces.size.toLocaleString()}</b><span>จังหวัด</span></div>
+      <div className="sfStripNote">นับจากโครงการผลิตที่ TDR ยืนยันโรงงานแล้ว ไม่ใช่ค่าประมาณกำลังการผลิตของทั้งประเทศ</div>
+    </div>
+
+    <section className="sfPageHead">
+      <div>
+        <div className="sfEyebrow">THAILAND PRODUCTION</div>
+        <h1>รถที่ผลิตในประเทศไทย</h1>
+        <p>โรงงานอยู่จังหวัดไหน ประกอบรุ่นอะไรบ้าง และรุ่นนั้นอยู่ตรงไหนของแคตตาล็อก — ข้อมูลชุดเดียวกับหน้ารถ มองจากฝั่งการผลิต</p>
+      </div>
+      <div className="sfViewToggle">
+        <Link className={byModel ? undefined : "on"} href="/production">ตามโรงงาน</Link>
+        <Link className={byModel ? "on" : undefined} href="/production?view=model">ตามรุ่น</Link>
+      </div>
+    </section>
+
+    <div className="sfCatalog sfBleed">
+      {byModel ? (
+        programs.length ? (
+          <div className="sfProgramList">
+            {(programs as any[]).map((r: any) => (
+              <article key={r.id}>
+                <div>
+                  {r.models?.slug
+                    ? <Link className="sfProgramModel" href={`/models/${r.models.slug}`}>{[r.models.brands?.name_th, r.models.name_th].filter(Boolean).join(" ")}</Link>
+                    : <span className="sfMissing">ไม่พบรุ่นที่ผูกไว้</span>}
+                  <p>{[r.models?.body_type, r.models?.segment].filter(Boolean).join(" · ") || ""}</p>
+                </div>
+                <div className="sfProgramPlant">
+                  {r.plants?.slug
+                    ? <Link href={`/plants/${r.plants.slug}`}>{r.plants.name_th}</Link>
+                    : <span className="sfMissing">ยังไม่ระบุโรงงาน</span>}
+                  {r.plants?.province ? <em>{r.plants.province}</em> : null}
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : <div className="sfEmpty"><b>ยังไม่มีโครงการผลิตในฐานข้อมูล</b><span>เมื่อบันทึกโครงการผลิตแล้ว รายการจะขึ้นที่นี่</span></div>
+      ) : (
+        provinceRows.length ? (
+          <div className="sfProvinceList">
+            {provinceRows.map(([province, rows]) => (
+              <section key={province}>
+                <div className="sfProvinceHead">
+                  <h2>{province}</h2>
+                  <span className="sfNum">{rows.length} โรงงาน</span>
+                </div>
+                {rows.map((p: any) => {
+                  const models = (p.active_programs || []).map((x: any) => x.models).filter(Boolean);
+                  const seen = new Set<string>();
+                  const unique = models.filter((m: any) => !seen.has(m.id) && seen.add(m.id));
+                  return (
+                    <div className="sfPlantRow" key={p.id}>
+                      <div className="sfPlantHead">
+                        <Link href={`/plants/${p.slug}`}>{p.name_th}</Link>
+                        {p.capacity_annual ? <em>กำลังผลิตที่ประกาศ {Number(p.capacity_annual).toLocaleString()} คัน/ปี</em> : <em className="sfMissing">ไม่มีข้อมูลกำลังผลิต</em>}
+                      </div>
+                      {unique.length ? (
+                        <div className="sfModelChips">
+                          {unique.map((m: any) => (
+                            <Link key={m.id} href={`/models/${m.slug}`}>{[m.brands?.name_th, m.name_th].filter(Boolean).join(" ")}</Link>
+                          ))}
+                        </div>
+                      ) : <p className="sfMissing">ยังไม่ระบุรุ่นที่ผลิต</p>}
+                    </div>
+                  );
+                })}
+              </section>
+            ))}
+            {idle.length ? (
+              <section>
+                <div className="sfProvinceHead">
+                  <h2>โรงงานที่ยังไม่ผูกโครงการผลิต</h2>
+                  <span className="sfNum">{idle.length} โรงงาน</span>
+                </div>
+                <div className="sfModelChips">
+                  {idle.map((p: any) => <Link key={p.id} href={`/plants/${p.slug}`}>{p.name_th}{p.province ? ` · ${p.province}` : ""}</Link>)}
+                </div>
+              </section>
+            ) : null}
+          </div>
+        ) : <div className="sfEmpty"><b>ยังไม่มีโรงงานในฐานข้อมูล</b><span>เมื่อบันทึกโรงงานและโครงการผลิตแล้ว รายการจะขึ้นที่นี่</span></div>
+      )}
+    </div>
+  </>;
+}
