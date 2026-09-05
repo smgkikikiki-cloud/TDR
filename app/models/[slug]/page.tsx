@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getConsumerModelBundle } from "@/lib/catalog-data";
 import { getRelatedEvents, getProductionProgramsByModel, getRelatedModels, getModelRegistrationSummary } from "@/lib/data";
+import { bodyLabel } from "@/lib/body-labels";
 
 function launch(r: any) { return [r.launch_quarter, r.launch_year].filter(Boolean).join(" ") || null }
 function baht(n: any) { return n ? `฿${Number(n).toLocaleString()}` : null }
@@ -120,7 +121,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
         {r.image_url ? <img src={r.image_url} alt={r.name_th} /> : <><small>{(brand || "TDR").toUpperCase()}</small><b>{r.name_th}</b></>}
       </div>
       <div className="sfHeroCopy">
-        <div className="sfEyebrow">{[brand, r.body_type].filter(Boolean).join(" · ") || "MODEL"}</div>
+        <div className="sfEyebrow">{[brand, bodyLabel(r.body_type)].filter(Boolean).join(" · ") || "MODEL"}</div>
         <h1>{r.name_th}</h1>
         {r.generation ? <p className="sfGeneration">{r.generation}</p> : null}
         <div className="sfBadges">
@@ -262,7 +263,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
         </div>
         <div className="sfGrid">
           {related.map((m: any) => {
-            const meta = [m.body_type, (m.powertrains || []).join(" / ")].filter(Boolean).join(" · ");
+            const meta = [bodyLabel(m.body_type), (m.powertrains || []).join(" / ")].filter(Boolean).join(" · ");
             const price = bahtRange([m.retail_price_min, m.retail_price_max].filter((n: any) => Number(n) > 0).map(Number));
             return (
               <Link className="sfCard" href={`/models/${m.slug}`} key={m.id}>

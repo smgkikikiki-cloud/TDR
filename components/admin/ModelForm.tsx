@@ -4,7 +4,7 @@ import { useMemo, useState, type ReactNode } from "react";
 import { saveModel } from "@/app/admin/actions";
 
 const segments = ["A","B","C","D","E"];
-const bodies = ["Sedan","Hatchback","Coupe","Crossover","SUV (Monocoque)","SUV (Ladder frame)","MPV","Pickup truck","Van","Bus","Truck"];
+const bodies = ["Sedan","Hatchback","Coupe","Crossover","SUV (Monocoque)","SUV (Ladder frame)","MPV","Pickup truck","Van"];
 const positions = ["Mass","Premium","Luxury"];
 const productionTypes = ["CBU","CKD","SKD"];
 const countries = ["Thailand","Indonesia","Malaysia","Japan","China","South Korea","Germany","United Kingdom","United States","Mexico","India","Vietnam","Philippines","Austria","Hungary","Czech Republic","Slovakia","Spain","Sweden","South Africa","Italy","France","Turkey","Belgium","Netherlands","Poland","Romania","Serbia","Brazil","Argentina","Canada","Portugal"];

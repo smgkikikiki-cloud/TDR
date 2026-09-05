@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getBrands, getEvents, getFeaturedModels, getModels } from "@/lib/data";
+import { bodyLabel } from "@/lib/body-labels";
 
 export const dynamic = "force-dynamic";
 
@@ -16,7 +17,7 @@ function originLabel(r: any) {
 
 function GalleryCard({ r }: { r: any }) {
   const brand = r.brands?.name_th || "";
-  const meta = [r.body_type, (r.powertrains || []).join(" / "), r.seats ? `${r.seats} ที่นั่ง` : null].filter(Boolean).join(" · ");
+  const meta = [bodyLabel(r.body_type), (r.powertrains || []).join(" / "), r.seats ? `${r.seats} ที่นั่ง` : null].filter(Boolean).join(" · ");
   const price = baht(r.retail_price_min, r.retail_price_max);
   const local = r.production_type === "CKD" || r.production_type === "SKD";
   return (
@@ -57,7 +58,7 @@ export default async function Home() {
             <div><dt>ราคา</dt><dd>{baht(lead.retail_price_min, lead.retail_price_max) || <span className="sfMissing">ยังไม่ประกาศ</span>}</dd></div>
             <div><dt>ระบบขับเคลื่อน</dt><dd>{(lead.powertrains || []).join(" / ") || <span className="sfMissing">ไม่ระบุ</span>}</dd></div>
             <div><dt>แหล่งผลิต</dt><dd>{originLabel(lead) || <span className="sfMissing">ไม่ระบุ</span>}</dd></div>
-            <div><dt>ประเภทตัวถัง</dt><dd>{lead.body_type || <span className="sfMissing">ไม่ระบุ</span>}</dd></div>
+            <div><dt>ประเภทตัวถัง</dt><dd>{bodyLabel(lead.body_type) || <span className="sfMissing">ไม่ระบุ</span>}</dd></div>
           </dl>
         </div>
         <div className="sfLeadSide">
@@ -67,7 +68,7 @@ export default async function Home() {
               <div className="sfSideSlot">{r.image_url ? <img src={r.image_url} alt="" /> : (r.brands?.name_th || "TDR").toUpperCase()}</div>
               <div>
                 <h3>{r.brands?.name_th ? `${r.brands.name_th} ${r.name_th}` : r.name_th}</h3>
-                <p>{[r.body_type, (r.powertrains || []).join(" / "), r.production_type].filter(Boolean).join(" · ") || "ยังไม่มีสเปกพื้นฐาน"}</p>
+                <p>{[bodyLabel(r.body_type), (r.powertrains || []).join(" / "), r.production_type].filter(Boolean).join(" · ") || "ยังไม่มีสเปกพื้นฐาน"}</p>
               </div>
             </Link>
           )) : <p className="sfMissing">ยังไม่มีรุ่นรถในฐานข้อมูล</p>}

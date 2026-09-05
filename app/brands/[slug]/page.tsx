@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { publicDb } from "@/lib/supabase";
 import { getBrand, getRelatedEvents } from "@/lib/data";
+import { bodyLabel } from "@/lib/body-labels";
 
 function baht(min: any, max: any) {
   const f = (n: number) => Number(n).toLocaleString();
@@ -46,7 +47,7 @@ export default async function BrandPage({ params }: { params: Promise<{ slug: st
       {models.length ? (
         <div className="sfGrid">
           {(models as any[]).map((m: any) => {
-            const meta = [m.body_type, (m.powertrains || []).join(" / "), m.seats ? `${m.seats} ที่นั่ง` : null].filter(Boolean).join(" · ");
+            const meta = [bodyLabel(m.body_type), (m.powertrains || []).join(" / "), m.seats ? `${m.seats} ที่นั่ง` : null].filter(Boolean).join(" · ");
             const price = baht(m.retail_price_min, m.retail_price_max);
             const local = m.production_type === "CKD" || m.production_type === "SKD";
             return (

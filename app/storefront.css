@@ -269,6 +269,23 @@
 .sfHomeBrands img { height: 26px; max-width: 64px; object-fit: contain; }
 .sfHomeBrands > a > span { display: grid; place-items: center; width: 46px; height: 26px; border: 1px solid var(--line); background: var(--paper); color: var(--navy); font-size: 12px; font-weight: 800; }
 
+/* ---------- body-type quick row: the primary way in ---------- */
+.sfTypeRow { display: flex; overflow-x: auto; border-bottom: 1px solid var(--line); }
+.sfTypeRow a { flex: 0 0 auto; display: flex; align-items: baseline; gap: 9px; padding: 16px 20px 15px; border-right: 1px solid var(--sf-line-soft); font-size: 15px; white-space: nowrap; }
+.sfTypeRow a:first-child { padding-left: 0; }
+.sfTypeRow a:last-child { border-right: 0; }
+.sfTypeRow a:hover { background: var(--paper); }
+.sfTypeRow b { font-weight: 700; }
+.sfTypeRow em { font-style: normal; font-size: 13px; color: var(--sf-muted); }
+.sfTypeRow a.on { color: var(--red); box-shadow: inset 0 -3px 0 var(--red); }
+.sfTypeRow a.on em { color: var(--red); }
+.sfTypeRow a.off { color: var(--sf-slot-ink); pointer-events: none; }
+.sfTypeRow a.off em { color: var(--sf-slot-ink); }
+
+.sfOptGroup { margin: 13px 0 5px; font-size: 12px; font-weight: 700; letter-spacing: .02em; color: var(--sf-slot-ink); }
+.sfGroup > h3 + .sfOptGroup { margin-top: 2px; }
+.sfGroupNote { margin: -2px 0 9px; font-size: 12px; line-height: 1.55; color: var(--sf-muted); }
+
 /* ============================ responsive ============================ */
 @media (max-width: 1180px) {
   .sfLayout { grid-template-columns: 216px minmax(0, 1fr); gap: 26px; }
@@ -330,4 +347,8 @@
   .navline { flex-wrap: wrap; align-items: stretch; gap: 0; overflow: visible; }
   .navline nav { order: 1; width: 100%; min-width: 0; overflow-x: auto; gap: 20px; }
   .headerSearch { order: 2; width: 100%; margin: 0 0 12px; }
+}
+
+@media (max-width: 640px) {
+  .sfTypeRow a { padding: 14px 14px 13px; font-size: 14px; gap: 7px; }
 }

@@ -1,18 +1,47 @@
+import { Fragment } from "react";
 import Link from "next/link";
 import { getBrands, getModels } from "@/lib/data";
 import { FilterDisclosure } from "@/components/FilterDisclosure";
+import { BODY_LABEL, bodyLabel } from "@/lib/body-labels";
 
 type Sp = Record<string, string | undefined>;
+type Opt = { value: string; label: string; group?: string };
 
-const FACETS = [
-  { key: "body", label: "ประเภทตัวถัง", options: ["Sedan", "Hatchback", "Coupe", "Crossover", "SUV (Monocoque)", "SUV (Ladder frame)", "MPV", "Pickup truck", "Van"] },
-  { key: "powertrain", label: "ระบบขับเคลื่อน", options: ["ICE", "HEV", "PHEV", "REEV", "BEV"] },
-  { key: "segment", label: "Segment", options: ["A", "B", "C", "D", "E"] },
-  { key: "position", label: "ตำแหน่งตลาด", options: ["Mass", "Premium", "Luxury"] },
-  { key: "production", label: "แหล่งผลิต", options: ["CBU", "CKD", "SKD"] },
-] as const;
+const opts = (values: string[]): Opt[] => values.map((v) => ({ value: v, label: v }));
 
-const FILTER_LABEL: Record<string, string> = { brand: "แบรนด์", body: "ตัวถัง", powertrain: "ขับเคลื่อน", segment: "Segment", position: "ตำแหน่ง", production: "แหล่งผลิต" };
+/** Body type is the entry point Thai buyers actually use, so it leads the rail,
+ *  carries Thai labels and is grouped by family. The stored values are the
+ *  unchanged body_type strings — only the labels and the order are new. */
+const BODY_OPTIONS: Opt[] = [
+  { value: "Sedan", label: "ซีดาน", group: "รถเก๋ง" },
+  { value: "Hatchback", label: "แฮทช์แบ็ก", group: "รถเก๋ง" },
+  { value: "Coupe", label: "คูเป้", group: "รถเก๋ง" },
+  { value: "Crossover", label: "ครอสโอเวอร์", group: "SUV" },
+  { value: "SUV (Monocoque)", label: "SUV โมโนค็อก", group: "SUV" },
+  { value: "SUV (Ladder frame)", label: "SUV โครงกระบะ (PPV)", group: "SUV" },
+  { value: "Pickup truck", label: "กระบะ", group: "กระบะ · รถตู้ · MPV" },
+  { value: "MPV", label: "MPV", group: "กระบะ · รถตู้ · MPV" },
+  { value: "Van", label: "รถตู้", group: "กระบะ · รถตู้ · MPV" },
+];
+
+/** The quick row: every body type, ordered by how often it is what a Thai
+ *  buyer came here for. Each chip sets the same single body value the rail
+ *  sets — nothing here filters across several values. */
+const BODY_QUICK = ["Pickup truck", "SUV (Ladder frame)", "Crossover", "SUV (Monocoque)", "Sedan", "Hatchback", "MPV", "Van", "Coupe"];
+
+const FACETS: { key: string; label: string; note?: string; options: Opt[] }[] = [
+  { key: "body", label: "ประเภทตัวถัง", options: BODY_OPTIONS },
+  { key: "powertrain", label: "ระบบขับเคลื่อน", options: opts(["ICE", "HEV", "PHEV", "REEV", "BEV"]) },
+  { key: "segment", label: "ขนาดรถ (เก๋ง / SUV)", note: "สเกล A–E ใช้กับรถนั่ง กระบะและรถตู้ไม่มีค่านี้", options: opts(["A", "B", "C", "D", "E"]) },
+  { key: "position", label: "ตำแหน่งตลาด", options: opts(["Mass", "Premium", "Luxury"]) },
+  { key: "production", label: "แหล่งผลิต", options: opts(["CBU", "CKD", "SKD"]) },
+];
+
+const FILTER_LABEL: Record<string, string> = { brand: "แบรนด์", body: "ตัวถัง", powertrain: "ขับเคลื่อน", segment: "ขนาดรถ", position: "ตำแหน่ง", production: "แหล่งผลิต" };
+
+function valueLabel(key: string, value: string) {
+  return key === "body" ? BODY_LABEL[value] || value : value;
+}
 
 /** The catalog filter predicate. `skip` leaves one facet out so its option counts
  *  can be read against every OTHER active filter. Same comparisons as before. */
@@ -50,7 +79,7 @@ function baht(min: any, max: any) {
 
 function Card({ r }: { r: any }) {
   const brand = r.brands?.name_th || "";
-  const meta = [r.body_type, (r.powertrains || []).join(" / "), r.seats ? `${r.seats} ที่นั่ง` : null].filter(Boolean).join(" · ");
+  const meta = [bodyLabel(r.body_type), (r.powertrains || []).join(" / "), r.seats ? `${r.seats} ที่นั่ง` : null].filter(Boolean).join(" · ");
   const price = baht(r.retail_price_min, r.retail_price_max);
   const local = r.production_type === "CKD" || r.production_type === "SKD";
   return (
@@ -59,7 +88,7 @@ function Card({ r }: { r: any }) {
         {r.image_url ? <img src={r.image_url} alt={r.name_th} /> : <><small>{(brand || "TDR").toUpperCase()}</small><b>{r.name_th}</b></>}
       </div>
       <div className="sfCardBody">
-        <div className="sfEyebrow">{brand || " "}</div>
+        <div className="sfEyebrow">{brand || " "}</div>
         <h3>{r.name_th}</h3>
         {meta ? <p className="sfCardMeta">{meta}</p> : <p className="sfCardMeta sfMissing">ยังไม่มีข้อมูลสเปกพื้นฐาน</p>}
         <div className="sfCardFoot">
@@ -82,6 +111,7 @@ export default async function ModelsPage({ searchParams }: { searchParams: Promi
   const imported = current.filter((r) => r.production_type === "CBU").length;
   const activeBrand = brands.find((b: any) => b.slug === sp.brand);
   const activeFilters = Object.entries(sp).filter(([k, v]) => v && FILTER_LABEL[k]);
+  const bodyPool = current.filter((r) => matches(r, sp, "body"));
 
   return <>
     <div className="sfStrip sfBleed">
@@ -104,6 +134,21 @@ export default async function ModelsPage({ searchParams }: { searchParams: Promi
         <span>จาก {current.length.toLocaleString()} รุ่น</span>
       </div>
     </section>
+
+    <div className="sfTypeRow">
+      <Link className={sp.body ? undefined : "on"} href={href(sp, "body", null)}>
+        <b>ทุกประเภท</b><em className="sfNum">{bodyPool.length.toLocaleString()}</em>
+      </Link>
+      {BODY_QUICK.map((value) => {
+        const n = bodyPool.filter((r) => r.body_type === value).length;
+        const on = sp.body === value;
+        return (
+          <Link key={value} className={[on ? "on" : null, !on && n === 0 ? "off" : null].filter(Boolean).join(" ") || undefined} href={href(sp, "body", on ? null : value)}>
+            <b>{BODY_LABEL[value]}</b><em className="sfNum">{n.toLocaleString()}</em>
+          </Link>
+        );
+      })}
+    </div>
 
     <div className="sfBrandRail">
       <Link className={sp.brand ? undefined : "on"} href={href(sp, "brand", null)}><span>ทั้งหมด</span>ทุกแบรนด์</Link>
@@ -128,15 +173,20 @@ export default async function ModelsPage({ searchParams }: { searchParams: Promi
               return (
                 <div className="sfGroup" key={f.key}>
                   <h3>{f.label}</h3>
-                  {f.options.map((opt) => {
-                    const on = sp[f.key] === opt;
-                    const n = pool.filter((r) => facetHit(r, f.key, opt)).length;
+                  {f.note ? <p className="sfGroupNote">{f.note}</p> : null}
+                  {f.options.map((opt, i) => {
+                    const on = sp[f.key] === opt.value;
+                    const n = pool.filter((r) => facetHit(r, f.key, opt.value)).length;
                     const cls = ["sfOpt", on ? "on" : null, !on && n === 0 ? "off" : null].filter(Boolean).join(" ");
+                    const newGroup = opt.group && opt.group !== f.options[i - 1]?.group;
                     return (
-                      <Link className={cls} key={opt} href={href(sp, f.key, on ? null : opt)}>
-                        <span className="sfOptLabel"><i className="sfOptBox" />{opt}</span>
-                        <em>{n.toLocaleString()}</em>
-                      </Link>
+                      <Fragment key={opt.value}>
+                        {newGroup ? <div className="sfOptGroup">{opt.group}</div> : null}
+                        <Link className={cls} href={href(sp, f.key, on ? null : opt.value)}>
+                          <span className="sfOptLabel"><i className="sfOptBox" />{opt.label}</span>
+                          <em>{n.toLocaleString()}</em>
+                        </Link>
+                      </Fragment>
                     );
                   })}
                 </div>
@@ -155,7 +205,7 @@ export default async function ModelsPage({ searchParams }: { searchParams: Promi
             <div className="sfChips">
               {activeFilters.map(([k, v]) => (
                 <Link className="sfChip" key={k} href={href(sp, k, null)}>
-                  {FILTER_LABEL[k]} · {k === "brand" ? activeBrand?.name_th || v : v}
+                  {FILTER_LABEL[k]} · {k === "brand" ? activeBrand?.name_th || v : valueLabel(k, v as string)}
                   <svg width="11" height="11" viewBox="0 0 12 12" stroke="currentColor" strokeWidth="1.6" fill="none"><path d="M2 2l8 8M10 2l-8 8" /></svg>
                 </Link>
               ))}
