@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { primaryNav } from "@/lib/navigation";
+import { NavLinks } from "@/components/NavLinks";
 
 export function Header() {
   return (
@@ -10,15 +10,15 @@ export function Header() {
           <span className="brandText">DEVELOPMENT <b>REPORT</b></span>
           <span className="productTag">AUTOMOTIVE INTELLIGENCE</span>
         </Link>
-        <div className="edition">ฐานข้อมูลอุตสาหกรรมยานยนต์ไทย · V0</div>
       </div>
       <div className="navline">
-        <nav aria-label="เมนูหลัก">
-          {primaryNav.map((item) => (
-            <Link key={item.href} className={item.href === "/reports" ? "reportNavLink" : undefined} href={item.href}>{item.label}</Link>
-          ))}
-        </nav>
-        <Link className="searchLink" href="/search">ค้นหา ⌕</Link>
+        <NavLinks />
+        <form className="headerSearch" action="/search" role="search">
+          <input name="q" placeholder="ค้นหารุ่นรถ แบรนด์ โรงงาน" aria-label="ค้นหาฐานข้อมูล" />
+          <button type="submit" aria-label="ค้นหา">
+            <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.7"><circle cx="9" cy="9" r="6" /><path d="M13.5 13.5 17 17" /></svg>
+          </button>
+        </form>
       </div>
     </header>
   );

@@ -24,7 +24,7 @@ function LockedChart({ index }: { index: number }) {
 
 export default function ReportsPage() {
   return (
-    <main className="reportsPage">
+    <div className="reportsPage">
       <section className="reportsHero">
         <div>
           <div className="eyebrow">TDR REPORT</div>
@@ -105,6 +105,6 @@ export default function ReportsPage() {
           <Link href="/news">ข่าวอุตสาหกรรม →</Link>
         </div>
       </section>
-    </main>
+    </div>
   );
 }
