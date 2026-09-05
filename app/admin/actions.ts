@@ -1,7 +1,7 @@
 "use server";
 
 import { adminDb } from "@/lib/supabase";
-import { clearAdminCookie, isAdmin, setAdminCookie } from "@/lib/admin-auth";
+import { authenticate, clearAdminCookie, hasSessionSecret, isAdmin, setAdminCookie } from "@/lib/admin-auth";
 import { redirect } from "next/navigation";
 
 const val = (form: FormData, key: string) => {
@@ -30,9 +30,11 @@ function dbOrThrow() {
 }
 
 export async function loginAction(formData: FormData) {
-  const password = val(formData, "password");
-  if (!process.env.TDR_ADMIN_PASSWORD || password !== process.env.TDR_ADMIN_PASSWORD) redirect("/admin/login?error=1");
-  await setAdminCookie();
+  const editor = authenticate(val(formData, "name"), val(formData, "password"));
+  if (!editor) redirect("/admin/login?error=1");
+  // A missing session secret is a deployment fault, not a wrong password.
+  if (!hasSessionSecret()) redirect("/admin/login?error=config");
+  await setAdminCookie(editor);
   redirect("/admin");
 }
 export async function logoutAction() { await clearAdminCookie(); redirect("/admin/login"); }
