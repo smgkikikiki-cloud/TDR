@@ -19,12 +19,15 @@ export default async function ProductionPage({ searchParams }: { searchParams: P
     const models = (p.active_programs || [])
       .map((x: any) => x.models)
       .filter((m: any) => m && !seen.has(m.id) && seen.add(m.id));
-    return { ...p, models };
+    // A plant that has stopped assembling still belongs on the page — it is part
+    // of how Thai production got here — but it must never read as if it were
+    // running, and its capacity must not be added to anything.
+    return { ...p, models, retired: String(p.status || "active").toLowerCase() !== "active" };
   });
 
   const provinces = new Set(rows.map((p) => p.province).filter(Boolean));
   const modelIds = new Set((programs as any[]).map((r) => r.models?.id).filter(Boolean));
-  const declared = rows.filter((p) => Number(p.capacity_annual) > 0);
+  const declared = rows.filter((p) => !p.retired && Number(p.capacity_annual) > 0);
   const declaredTotal = declared.reduce((s, p) => s + Number(p.capacity_annual), 0);
 
   const byMaker = new Map<string, any[]>();
@@ -32,9 +35,10 @@ export default async function ProductionPage({ searchParams }: { searchParams: P
     const key = (p.maker_group || "").trim() || OTHER;
     byMaker.set(key, [...(byMaker.get(key) || []), p]);
   }
-  const capOf = (list: any[]) => list.reduce((s, p) => s + (Number(p.capacity_annual) || 0), 0);
+  const capOf = (list: any[]) => list.reduce((s, p) => s + (p.retired ? 0 : Number(p.capacity_annual) || 0), 0);
   const plantOrder = (a: any, b: any) =>
-    (Number(b.capacity_annual) || 0) - (Number(a.capacity_annual) || 0)
+    Number(a.retired) - Number(b.retired)
+    || (Number(b.capacity_annual) || 0) - (Number(a.capacity_annual) || 0)
     || b.models.length - a.models.length
     || String(a.name_th).localeCompare(String(b.name_th), "th");
 
@@ -98,27 +102,31 @@ export default async function ProductionPage({ searchParams }: { searchParams: P
         makerGroups.length ? (
           <div className="sfMakerList">
             {makerGroups.map(({ maker, list, capacity }) => {
-              const withCap = list.filter((p: any) => Number(p.capacity_annual) > 0).length;
+              const withCap = list.filter((p: any) => !p.retired && Number(p.capacity_annual) > 0).length;
+              const live = list.filter((p: any) => !p.retired).length;
               return (
                 <section key={maker} className={maker === OTHER ? "sfMakerGroup minor" : "sfMakerGroup"}>
                   <div className="sfMakerHead">
                     <h2>{maker === OTHER ? "ผู้รับจ้างประกอบและโรงงานอื่น" : maker}</h2>
                     <span>
-                      {list.length} โรงงาน
-                      {capacity ? ` · รวมที่ประกาศ ${num(capacity)} คัน/ปี${withCap < list.length ? ` (จาก ${withCap} โรงงาน)` : ""}` : ""}
+                      {list.length} โรงงาน{live < list.length ? ` · เดินสายผลิต ${live}` : ""}
+                      {capacity ? ` · รวมที่ประกาศ ${num(capacity)} คัน/ปี${withCap < live ? ` (จาก ${withCap} โรงงาน)` : ""}` : ""}
                     </span>
                   </div>
                   {list.map((p: any) => (
-                    <div className="sfPlantRow" key={p.id}>
+                    <div className={p.retired ? "sfPlantRow retired" : "sfPlantRow"} key={p.id}>
                       <div className="sfPlantHead">
                         <div className="sfPlantName">
                           <Link href={`/plants/${p.slug}`}>{p.name_th}</Link>
+                          {p.retired ? <b className="sfRetiredTag">หยุดสายประกอบรถยนต์แล้ว</b> : null}
                           {p.province ? <span>{[p.district, p.province].filter(Boolean).join(" · ")}</span> : <span className="sfMissing">ไม่ระบุที่ตั้ง</span>}
                         </div>
                         <div className="sfPlantCap">
-                          {Number(p.capacity_annual) > 0
-                            ? <><b className="sfNum">{num(p.capacity_annual)}</b><em>คัน/ปี · กำลังผลิตที่ประกาศ</em></>
-                            : <span className="sfMissing">ไม่มีข้อมูลกำลังผลิต</span>}
+                          {p.retired
+                            ? <span className="sfMissing">{Number(p.capacity_annual) > 0 ? `เคยประกาศ ${num(p.capacity_annual)} คัน/ปี` : "ไม่นับรวมกำลังผลิต"}</span>
+                            : Number(p.capacity_annual) > 0
+                              ? <><b className="sfNum">{num(p.capacity_annual)}</b><em>คัน/ปี · กำลังผลิตที่ประกาศ</em></>
+                              : <span className="sfMissing">ไม่มีข้อมูลกำลังผลิต</span>}
                         </div>
                       </div>
                       {p.models.length ? (
