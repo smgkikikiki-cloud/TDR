@@ -324,8 +324,6 @@
 .sfPlantName > a { font-size: 18px; font-weight: 700; letter-spacing: -.015em; }
 .sfPlantName > a:hover { color: var(--red); }
 .sfPlantName > span { display: block; margin-top: 3px; font-size: 13px; color: var(--sf-muted); }
-.sfRetiredTag { display: inline-block; margin-left: 10px; border: 1px solid var(--line); background: var(--paper); color: var(--sf-muted); padding: 3px 8px; font-size: 12px; font-weight: 700; vertical-align: middle; }
-.sfPlantRow.retired .sfPlantName > a { color: var(--sf-muted); }
 .sfPlantCap { flex-shrink: 0; text-align: right; }
 .sfPlantCap b { display: block; font-size: 19px; font-weight: 800; letter-spacing: -.02em; }
 .sfPlantCap em { display: block; font-style: normal; font-size: 12px; color: var(--sf-muted); margin-top: 2px; }
