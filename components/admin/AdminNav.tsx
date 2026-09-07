@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { logoutAction } from "@/app/admin/actions";
+import { currentEditor } from "@/lib/admin-auth";
 
-export function AdminNav() {
+export async function AdminNav() {
+  const editor = await currentEditor();
   return <aside className="adminNav">
     <div>
       <div className="adminBrand">TDR <b>AUTO</b></div>
@@ -17,6 +19,9 @@ export function AdminNav() {
       <Link href="/admin/events/new">+ เพิ่มข่าว / Event</Link>
       <Link href="/" target="_blank">เปิดเว็บ Public ↗</Link>
     </nav>
-    <form action={logoutAction}><button className="textButton">ออกจากระบบ</button></form>
+    <form action={logoutAction} className="adminNavFoot">
+      {editor ? <div className="adminWho"><small>กำลังแก้ไขในชื่อ</small><b>{editor.name}</b></div> : null}
+      <button className="textButton">ออกจากระบบ</button>
+    </form>
   </aside>;
 }
