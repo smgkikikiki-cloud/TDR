@@ -2,7 +2,8 @@ name: Align SUV taxonomy
 
 on:
   push:
-    branches: [fix/align-suv-taxonomy]
+    branches:
+      - fix/align-suv-taxonomy
 
 permissions:
   contents: write
@@ -19,35 +20,7 @@ jobs:
           node-version: '22'
           cache: npm
       - name: Align body choices to Vehicle Master
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-
-          p = Path('app/models/page.tsx')
-          s = p.read_text(encoding='utf-8')
-          s = s.replace(
-'''  { value: "Crossover", label: "ครอสโอเวอร์", group: "SUV" },
-  { value: "SUV (Monocoque)", label: "SUV โมโนค็อก", group: "SUV" },
-  { value: "SUV (Ladder frame)", label: "SUV โครงกระบะ (PPV)", group: "SUV" },''',
-'''  { value: "Crossover", label: "ครอสโอเวอร์ / SUV โมโนค็อก", group: "SUV" },
-  { value: "PPV", label: "PPV พื้นฐานกระบะ", group: "SUV" },
-  { value: "Offroad ladder frame", label: "SUV ออฟโรดโครงแชสซีส์", group: "SUV" },''')
-          s = s.replace(
-'const BODY_QUICK = ["Pickup truck", "SUV (Ladder frame)", "Crossover", "SUV (Monocoque)", "Sedan", "Hatchback", "MPV", "Van", "Coupe"];',
-'const BODY_QUICK = ["Pickup truck", "PPV", "Crossover", "Offroad ladder frame", "Sedan", "Hatchback", "MPV", "Van", "Coupe"];')
-          p.write_text(s, encoding='utf-8')
-
-          p = Path('components/admin/ModelFormV12.tsx')
-          s = p.read_text(encoding='utf-8')
-          s = s.replace(
-'const bodies = ["Sedan","Hatchback","Coupe","Crossover","SUV (Monocoque)","SUV (Ladder frame)","MPV","Pickup truck","Van"];',
-'const bodies = ["Sedan","Hatchback","Coupe","Crossover","PPV","Offroad ladder frame","MPV","Pickup truck","Van"];')
-          p.write_text(s, encoding='utf-8')
-          PY
-          if grep -R -n -E 'SUV \(Monocoque\)|SUV \(Ladder frame\)' app components lib --include='*.ts' --include='*.tsx'; then
-            echo 'Legacy SUV body values remain in runtime code' >&2
-            exit 1
-          fi
+        run: python scripts/align_suv_taxonomy.py
       - name: Install
         run: npm ci
       - name: Typecheck
