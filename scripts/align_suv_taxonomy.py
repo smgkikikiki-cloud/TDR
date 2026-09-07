@@ -1,7 +1,8 @@
 from pathlib import Path
 
 p = Path("app/models/page.tsx")
-s = p.read_text(encoding="utf-8")ns = s.replace(
+s = p.read_text(encoding="utf-8")
+s = s.replace(
     '  { value: "Crossover", label: "ครอสโอเวอร์", group: "SUV" },\n  { value: "SUV (Monocoque)", label: "SUV โมโนค็อก", group: "SUV" },\n  { value: "SUV (Ladder frame)", label: "SUV โครงกระบะ (PPV)", group: "SUV" },',
     '  { value: "Crossover", label: "ครอสโอเวอร์ / SUV โมโนค็อก", group: "SUV" },\n  { value: "PPV", label: "PPV พื้นฐานกระบะ", group: "SUV" },\n  { value: "Offroad ladder frame", label: "SUV ออฟโรดโครงแชสซีส์", group: "SUV" },',
 )
