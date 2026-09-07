@@ -16,9 +16,9 @@ const BODY_OPTIONS: Opt[] = [
   { value: "Sedan", label: "ซีดาน", group: "รถเก๋ง" },
   { value: "Hatchback", label: "แฮทช์แบ็ก", group: "รถเก๋ง" },
   { value: "Coupe", label: "คูเป้", group: "รถเก๋ง" },
-  { value: "Crossover", label: "ครอสโอเวอร์", group: "SUV" },
-  { value: "SUV (Monocoque)", label: "SUV โมโนค็อก", group: "SUV" },
-  { value: "SUV (Ladder frame)", label: "SUV โครงกระบะ (PPV)", group: "SUV" },
+  { value: "Crossover", label: "ครอสโอเวอร์ / SUV โมโนค็อก", group: "SUV" },
+  { value: "PPV", label: "PPV พื้นฐานกระบะ", group: "SUV" },
+  { value: "Offroad ladder frame", label: "SUV ออฟโรดโครงแชสซีส์", group: "SUV" },
   { value: "Pickup truck", label: "กระบะ", group: "กระบะ · รถตู้ · MPV" },
   { value: "MPV", label: "MPV", group: "กระบะ · รถตู้ · MPV" },
   { value: "Van", label: "รถตู้", group: "กระบะ · รถตู้ · MPV" },
@@ -27,7 +27,7 @@ const BODY_OPTIONS: Opt[] = [
 /** The quick row: every body type, ordered by how often it is what a Thai
  *  buyer came here for. Each chip sets the same single body value the rail
  *  sets — nothing here filters across several values. */
-const BODY_QUICK = ["Pickup truck", "SUV (Ladder frame)", "Crossover", "SUV (Monocoque)", "Sedan", "Hatchback", "MPV", "Van", "Coupe"];
+const BODY_QUICK = ["Pickup truck", "PPV", "Crossover", "Offroad ladder frame", "Sedan", "Hatchback", "MPV", "Van", "Coupe"];
 
 const FACETS: { key: string; label: string; note?: string; options: Opt[] }[] = [
   { key: "body", label: "ประเภทตัวถัง", options: BODY_OPTIONS },
