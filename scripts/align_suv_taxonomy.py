@@ -1,5 +1,8 @@
 from pathlib import Path
 
+OLD_BODIES = 'const bodies = ["Sedan","Hatchback","Coupe","Crossover","SUV (Monocoque)","SUV (Ladder frame)","MPV","Pickup truck","Van"];'
+NEW_BODIES = 'const bodies = ["Sedan","Hatchback","Coupe","Crossover","PPV","Offroad ladder frame","MPV","Pickup truck","Van"];'
+
 p = Path("app/models/page.tsx")
 s = p.read_text(encoding="utf-8")
 s = s.replace(
@@ -12,11 +15,17 @@ s = s.replace(
 )
 p.write_text(s, encoding="utf-8")
 
-p = Path("components/admin/ModelFormV12.tsx")
+for name in ("components/admin/ModelFormV12.tsx", "components/admin/ModelForm.tsx"):
+    p = Path(name)
+    if p.exists():
+        s = p.read_text(encoding="utf-8").replace(OLD_BODIES, NEW_BODIES)
+        p.write_text(s, encoding="utf-8")
+
+p = Path("app/reports/page.tsx")
 s = p.read_text(encoding="utf-8")
 s = s.replace(
-    'const bodies = ["Sedan","Hatchback","Coupe","Crossover","SUV (Monocoque)","SUV (Ladder frame)","MPV","Pickup truck","Van"];',
-    'const bodies = ["Sedan","Hatchback","Coupe","Crossover","PPV","Offroad ladder frame","MPV","Pickup truck","Van"];',
+    '{ scope: "SUV โครงกระบะ (PPV)", question: "PPV รุ่นไหนกำลังกินส่วนแบ่งของรุ่นอื่นอยู่", pick: (r) => r.body_type === "SUV (Ladder frame)" },',
+    '{ scope: "PPV พื้นฐานกระบะ", question: "PPV รุ่นไหนกำลังกินส่วนแบ่งของรุ่นอื่นอยู่", pick: (r) => r.body_type === "PPV" },',
 )
 p.write_text(s, encoding="utf-8")
 
