@@ -14,7 +14,7 @@ const MEMBER_SITE = "";
  *  fabricated number: the blur is a curtain, not a security boundary. */
 const QUESTIONS: { scope: string; question: string; pick: (r: any) => boolean }[] = [
   { scope: "กระบะ · Double Cab", question: "เดือนที่แล้วกระบะรุ่นไหนขายนำ และทิ้งห่างรุ่นรองเท่าไหร่", pick: (r) => r.body_type === "Pickup truck" },
-  { scope: "SUV โครงกระบะ (PPV)", question: "PPV รุ่นไหนกำลังกินส่วนแบ่งของรุ่นอื่นอยู่", pick: (r) => r.body_type === "SUV (Ladder frame)" },
+  { scope: "PPV พื้นฐานกระบะ", question: "PPV รุ่นไหนกำลังกินส่วนแบ่งของรุ่นอื่นอยู่", pick: (r) => r.body_type === "PPV" },
   { scope: "รถไฟฟ้า BEV", question: "รถไฟฟ้ารุ่นไหนขายได้จริง รุ่นไหนแค่เปิดตัวแล้วเงียบ", pick: (r) => (r.powertrains || []).includes("BEV") },
   { scope: "ไฮบริด HEV", question: "ไฮบริดแซงเครื่องยนต์สันดาปในเซกเมนต์ไหนไปแล้วบ้าง", pick: (r) => (r.powertrains || []).includes("HEV") },
   { scope: "ครอสโอเวอร์", question: "ครอสโอเวอร์รุ่นไหนโตเร็วที่สุดใน 6 เดือนล่าสุด", pick: (r) => r.body_type === "Crossover" },

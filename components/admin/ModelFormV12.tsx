@@ -5,7 +5,7 @@ import { saveModelV12 } from "@/app/admin/catalog-actions";
 import { legacyOption } from "@/components/admin/Fields";
 
 const segments = ["A","B","C","D","E"];
-const bodies = ["Sedan","Hatchback","Coupe","Crossover","SUV (Monocoque)","SUV (Ladder frame)","MPV","Pickup truck","Van"];
+const bodies = ["Sedan","Hatchback","Coupe","Crossover","PPV","Offroad ladder frame","MPV","Pickup truck","Van"];
 const positions = ["Mass","Premium","Luxury"];
 const productionTypes = ["CBU","CKD","SKD"];
 const countries = ["Thailand","Indonesia","Malaysia","Japan","China","South Korea","Germany","United Kingdom","United States","Mexico","India","Vietnam","Philippines","Austria","Hungary","Czech Republic","Slovakia","Spain","Sweden","South Africa","Italy","France","Turkey","Belgium","Netherlands","Poland","Romania","Serbia","Brazil","Argentina","Canada","Portugal"];

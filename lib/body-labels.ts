@@ -1,12 +1,11 @@
-/** Thai display labels for the stored body_type values. Presentation only —
- *  the values written to and read from the database are unchanged. */
+/** Thai display labels for the canonical body_type values shared with Vehicle Master. */
 export const BODY_LABEL: Record<string, string> = {
   "Sedan": "ซีดาน",
   "Hatchback": "แฮทช์แบ็ก",
   "Coupe": "คูเป้",
-  "Crossover": "ครอสโอเวอร์",
-  "SUV (Monocoque)": "SUV โมโนค็อก",
-  "SUV (Ladder frame)": "SUV โครงกระบะ (PPV)",
+  "Crossover": "ครอสโอเวอร์ / SUV โมโนค็อก",
+  "PPV": "PPV พื้นฐานกระบะ",
+  "Offroad ladder frame": "SUV ออฟโรดโครงแชสซีส์",
   "MPV": "MPV",
   "Pickup truck": "กระบะ",
   "Van": "รถตู้",
