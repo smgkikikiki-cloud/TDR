@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getBrands, getEvents, getFeaturedModels, getModels } from "@/lib/data";
 import { bodyLabel } from "@/lib/body-labels";
+import { displayName, initials } from "@/lib/display-name";
 
 export const dynamic = "force-dynamic";
 
@@ -16,16 +17,16 @@ function originLabel(r: any) {
 }
 
 function GalleryCard({ r }: { r: any }) {
-  const brand = r.brands?.name_th || "";
+  const brand = displayName(r.brands);
   const meta = [bodyLabel(r.body_type), (r.powertrains || []).join(" / "), r.seats ? `${r.seats} ที่นั่ง` : null].filter(Boolean).join(" · ");
   const price = baht(r.retail_price_min, r.retail_price_max);
   const local = r.production_type === "CKD" || r.production_type === "SKD";
   return (
     <Link className="sfCard" href={`/models/${r.slug}`}>
-      <div className="sfSlot">{r.image_url ? <img src={r.image_url} alt="" /> : <><small>{(brand || "TDR").toUpperCase()}</small><b>{r.name_th}</b></>}</div>
+      <div className="sfSlot">{r.image_url ? <img src={r.image_url} alt="" /> : <><small>{(brand || "TDR").toUpperCase()}</small><b>{displayName(r)}</b></>}</div>
       <div className="sfCardBody">
         <div className="sfEyebrow">{brand || " "}</div>
-        <h3>{r.name_th}</h3>
+        <h3>{displayName(r)}</h3>
         {meta ? <p className="sfCardMeta">{meta}</p> : <p className="sfCardMeta sfMissing">ยังไม่มีข้อมูลสเปกพื้นฐาน</p>}
         <div className="sfCardFoot">
           {price ? <span className="sfPrice">{price}</span> : <span className="sfMissing">ยังไม่ประกาศราคา</span>}
@@ -49,10 +50,10 @@ export default async function Home() {
       <section className="sfLead">
         <div className="sfLeadMain">
           <div className="sfEyebrow">รุ่นเด่นในฐานข้อมูล</div>
-          <h1>{lead.brands?.name_th ? `${lead.brands.name_th} ${lead.name_th}` : lead.name_th}</h1>
+          <h1>{[displayName(lead.brands), displayName(lead)].filter(Boolean).join(" ")}</h1>
           <p>{lead.consumer_description || "รุ่นปัจจุบันในแคตตาล็อก TDR พร้อมรุ่นย่อย ราคา ระบบขับเคลื่อน และแหล่งผลิตที่ตรวจสอบแหล่งที่มาได้"}</p>
           <Link className="sfLeadSlot" href={`/models/${lead.slug}`}>
-            {lead.image_url ? <img src={lead.image_url} alt="" /> : <><small>{(lead.brands?.name_th || "TDR").toUpperCase()}</small><b>{lead.name_th}</b></>}
+            {lead.image_url ? <img src={lead.image_url} alt="" /> : <><small>{(displayName(lead.brands) || "TDR").toUpperCase()}</small><b>{displayName(lead)}</b></>}
           </Link>
           <dl className="sfLeadFacts">
             <div><dt>ราคา</dt><dd>{baht(lead.retail_price_min, lead.retail_price_max) || <span className="sfMissing">ยังไม่ประกาศ</span>}</dd></div>
@@ -65,9 +66,9 @@ export default async function Home() {
           <div className="sfEyebrow ink" style={{ marginBottom: 12 }}>อัปเดตล่าสุดในแคตตาล็อก</div>
           {side.length ? side.map((r: any) => (
             <Link className="sfSideItem" href={`/models/${r.slug}`} key={r.id}>
-              <div className="sfSideSlot">{r.image_url ? <img src={r.image_url} alt="" /> : (r.brands?.name_th || "TDR").toUpperCase()}</div>
+              <div className="sfSideSlot">{r.image_url ? <img src={r.image_url} alt="" /> : (displayName(r.brands) || "TDR").toUpperCase()}</div>
               <div>
-                <h3>{r.brands?.name_th ? `${r.brands.name_th} ${r.name_th}` : r.name_th}</h3>
+                <h3>{[displayName(r.brands), displayName(r)].filter(Boolean).join(" ")}</h3>
                 <p>{[bodyLabel(r.body_type), (r.powertrains || []).join(" / "), r.production_type].filter(Boolean).join(" · ") || "ยังไม่มีสเปกพื้นฐาน"}</p>
               </div>
             </Link>
@@ -124,8 +125,8 @@ export default async function Home() {
         <div className="sfHomeBrands">
           {brands.slice(0, 16).map((b: any) => (
             <Link href={`/brands/${b.slug}`} key={b.id}>
-              {b.logo_url ? <img src={b.logo_url} alt="" /> : <span>{b.name_th.slice(0, 2).toUpperCase()}</span>}
-              {b.name_th}
+              {b.logo_url ? <img src={b.logo_url} alt="" /> : <span>{initials(b)}</span>}
+              {displayName(b)}
             </Link>
           ))}
         </div>

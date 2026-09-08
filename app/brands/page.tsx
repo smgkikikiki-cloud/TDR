@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getBrands } from "@/lib/data";
+import { displayName, initials } from "@/lib/display-name";
 
 export default async function Brands() {
   const rows: any[] = await getBrands(250);
@@ -22,9 +23,9 @@ export default async function Brands() {
         {rows.map((r: any) => (
           <Link href={`/brands/${r.slug}`} className="sfBrandCard" key={r.id}>
             <div className="sfBrandLogo">
-              {r.logo_url ? <img src={r.logo_url} alt="" /> : <span>{r.name_th.slice(0, 2).toUpperCase()}</span>}
+              {r.logo_url ? <img src={r.logo_url} alt="" /> : <span>{initials(r)}</span>}
             </div>
-            <b>{r.name_th}</b>
+            <b>{displayName(r)}</b>
             {r.country_origin ? <small>{r.country_origin}</small> : <small className="sfMissing">ไม่ระบุประเทศ</small>}
           </Link>
         ))}

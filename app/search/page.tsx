@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { searchAll } from "@/lib/data";
+import { displayName } from "@/lib/display-name";
 
 export default async function Search({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
   const p = await searchParams;
@@ -43,8 +44,8 @@ export default async function Search({ searchParams }: { searchParams: Promise<{
               {rows.length
                 ? rows.map((r: any) => (
                   <Link href={`/${path}/${r.slug}`} key={r.id}>
-                    <strong>{r.name_th}</strong>
-                    <span>{r.name_en || r.province || r.generation || r.company_type || ""}</span>
+                    <strong>{path === "plants" || path === "companies" ? r.name_th : displayName(r)}</strong>
+                    <span>{r.province || r.generation || r.company_type || (path === "plants" || path === "companies" ? r.name_en : "") || ""}</span>
                   </Link>
                 ))
                 : <p>ไม่พบใน{label}</p>}

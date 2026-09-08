@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getBrands, getEvents, getModels } from "@/lib/data";
 import { publicDb } from "@/lib/supabase";
+import { displayName } from "@/lib/display-name";
 
 export const dynamic = "force-dynamic";
 
@@ -52,7 +53,7 @@ export default async function ReportsPage() {
 
   const cards = QUESTIONS.map((q) => {
     const hits = current.filter(q.pick);
-    return { ...q, names: hits.slice(0, 5).map((r: any) => [r.brands?.name_th, r.name_th].filter(Boolean).join(" ")), total: hits.length };
+    return { ...q, names: hits.slice(0, 5).map((r: any) => [displayName(r.brands), displayName(r)].filter(Boolean).join(" ")), total: hits.length };
   }).filter((c) => c.total >= 2); // "เทียบ 1 รุ่น" is not a question worth pitching
 
   return <>

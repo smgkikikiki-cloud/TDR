@@ -2,3 +2,5 @@ node_modules
 .next
 .env.local
 .env*.local
+# TypeScript incremental build cache — a build artifact, not source.
+tsconfig.tsbuildinfo

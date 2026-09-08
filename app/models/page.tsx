@@ -1,6 +1,8 @@
 import { Fragment } from "react";
 import Link from "next/link";
-import { getBrands, getModels } from "@/lib/data";
+import { getBrands, getModels, getRecentRegistrationTotals } from "@/lib/data";
+import { displayName, initials } from "@/lib/display-name";
+import { byRelevance } from "@/lib/relevance";
 import { FilterDisclosure } from "@/components/FilterDisclosure";
 import { BODY_LABEL, bodyLabel } from "@/lib/body-labels";
 
@@ -78,18 +80,19 @@ function baht(min: any, max: any) {
 }
 
 function Card({ r }: { r: any }) {
-  const brand = r.brands?.name_th || "";
+  const brand = displayName(r.brands);
+  const name = displayName(r);
   const meta = [bodyLabel(r.body_type), (r.powertrains || []).join(" / "), r.seats ? `${r.seats} ที่นั่ง` : null].filter(Boolean).join(" · ");
   const price = baht(r.retail_price_min, r.retail_price_max);
   const local = r.production_type === "CKD" || r.production_type === "SKD";
   return (
     <Link className="sfCard" href={`/models/${r.slug}`}>
       <div className="sfSlot">
-        {r.image_url ? <img src={r.image_url} alt={r.name_th} /> : <><small>{(brand || "TDR").toUpperCase()}</small><b>{r.name_th}</b></>}
+        {r.image_url ? <img src={r.image_url} alt={name} /> : <><small>{(brand || "TDR").toUpperCase()}</small><b>{name}</b></>}
       </div>
       <div className="sfCardBody">
         <div className="sfEyebrow">{brand || " "}</div>
-        <h3>{r.name_th}</h3>
+        <h3>{name}</h3>
         {meta ? <p className="sfCardMeta">{meta}</p> : <p className="sfCardMeta sfMissing">ยังไม่มีข้อมูลสเปกพื้นฐาน</p>}
         <div className="sfCardFoot">
           {price ? <span className="sfPrice">{price}</span> : <span className="sfMissing">ยังไม่ประกาศราคา</span>}
@@ -102,9 +105,12 @@ function Card({ r }: { r: any }) {
 
 export default async function ModelsPage({ searchParams }: { searchParams: Promise<Record<string, string | undefined>> }) {
   const sp = await searchParams;
-  const [brands, all] = await Promise.all([getBrands(150), getModels(600)]);
+  const [brands, all, sales] = await Promise.all([getBrands(150), getModels(600), getRecentRegistrationTotals(12)]);
   const current = (all as any[]).filter((r) => r.status !== "discontinued");
-  const models = current.filter((r) => matches(r, sp));
+  // Most relevant first: how much it sells against the best seller of its own
+  // body type, plus how recently it launched. Not `updated_at`, which is
+  // whichever row an editor touched last.
+  const models = byRelevance(current.filter((r) => matches(r, sp)), sales);
 
   const brandCount = new Set(current.map((r) => r.brands?.slug).filter(Boolean)).size;
   const assembled = current.filter((r) => r.production_type === "CKD" || r.production_type === "SKD").length;
@@ -154,8 +160,8 @@ export default async function ModelsPage({ searchParams }: { searchParams: Promi
       <Link className={sp.brand ? undefined : "on"} href={href(sp, "brand", null)}><span>ทั้งหมด</span>ทุกแบรนด์</Link>
       {brands.map((b: any) => (
         <Link key={b.id} className={sp.brand === b.slug ? "on" : undefined} href={href(sp, "brand", b.slug)}>
-          {b.logo_url ? <img src={b.logo_url} alt="" /> : <span>{b.name_th.slice(0, 2).toUpperCase()}</span>}
-          {b.name_th}
+          {b.logo_url ? <img src={b.logo_url} alt="" /> : <span>{initials(b)}</span>}
+          {displayName(b)}
         </Link>
       ))}
     </div>
@@ -197,7 +203,7 @@ export default async function ModelsPage({ searchParams }: { searchParams: Promi
 
         <div>
           <div className="sfResultBar">
-            <h2>{activeBrand ? activeBrand.name_th : "รถทั้งหมด"} <span className="sfNum">{models.length.toLocaleString()} รุ่น</span></h2>
+            <h2>{activeBrand ? displayName(activeBrand) : "รถทั้งหมด"} <span className="sfNum">{models.length.toLocaleString()} รุ่น</span></h2>
             <Link className="sfChipClear" href="/brands">ดูตามแบรนด์ →</Link>
           </div>
 
@@ -205,7 +211,7 @@ export default async function ModelsPage({ searchParams }: { searchParams: Promi
             <div className="sfChips">
               {activeFilters.map(([k, v]) => (
                 <Link className="sfChip" key={k} href={href(sp, k, null)}>
-                  {FILTER_LABEL[k]} · {k === "brand" ? activeBrand?.name_th || v : valueLabel(k, v as string)}
+                  {FILTER_LABEL[k]} · {k === "brand" ? displayName(activeBrand, v as string) : valueLabel(k, v as string)}
                   <svg width="11" height="11" viewBox="0 0 12 12" stroke="currentColor" strokeWidth="1.6" fill="none"><path d="M2 2l8 8M10 2l-8 8" /></svg>
                 </Link>
               ))}

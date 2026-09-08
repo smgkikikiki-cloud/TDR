@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { publicDb } from "@/lib/supabase";
 import { getBrand, getRelatedEvents } from "@/lib/data";
 import { bodyLabel } from "@/lib/body-labels";
+import { displayName, initials } from "@/lib/display-name";
 
 function baht(min: any, max: any) {
   const f = (n: number) => Number(n).toLocaleString();
@@ -15,7 +16,7 @@ export default async function BrandPage({ params }: { params: Promise<{ slug: st
   const r: any = await getBrand(slug);
   if (!r) notFound();
   const db = publicDb();
-  const models = db ? (await db.from("models").select("id,slug,name_th,generation,status,body_type,powertrains,image_url,retail_price_min,retail_price_max,production_country,production_type,seats").eq("brand_id", r.id).neq("status", "discontinued").order("name_th")).data ?? [] : [];
+  const models = db ? (await db.from("models").select("id,slug,name_th,name_en,generation,status,body_type,powertrains,image_url,retail_price_min,retail_price_max,production_country,production_type,seats").eq("brand_id", r.id).neq("status", "discontinued").order("name_en",{nullsFirst:false}).order("name_th")).data ?? [] : [];
   const events: any[] = await getRelatedEvents({ brandId: r.id });
 
   const assembled = (models as any[]).filter((m: any) => m.production_type === "CKD" || m.production_type === "SKD").length;
@@ -23,11 +24,11 @@ export default async function BrandPage({ params }: { params: Promise<{ slug: st
   return <>
     <section className="sfBrandHero">
       <div className="sfBrandHeroLogo">
-        {r.logo_url ? <img src={r.logo_url} alt="" /> : <span>{r.name_th.slice(0, 2).toUpperCase()}</span>}
+        {r.logo_url ? <img src={r.logo_url} alt="" /> : <span>{initials(r)}</span>}
       </div>
       <div style={{ flex: 1, minWidth: 0 }}>
         <div className="sfEyebrow">{r.country_origin || "BRAND"}</div>
-        <h1 style={{ margin: "9px 0 0", fontSize: 40, fontWeight: 800, letterSpacing: "-.035em", lineHeight: 1.1 }}>{r.name_th}</h1>
+        <h1 style={{ margin: "9px 0 0", fontSize: 40, fontWeight: 800, letterSpacing: "-.035em", lineHeight: 1.1 }}>{displayName(r)}</h1>
         <p style={{ margin: "12px 0 0", maxWidth: 640, fontSize: 15, lineHeight: 1.75, color: "#31343b" }}>
           {r.notes || "รุ่นปัจจุบันที่จำหน่ายอย่างเป็นทางการในประเทศไทย"}
         </p>
@@ -41,7 +42,7 @@ export default async function BrandPage({ params }: { params: Promise<{ slug: st
 
     <div className="sfCatalog sfBleed">
       <div className="sfResultBar">
-        <h2>รถของ {r.name_th} <span className="sfNum">{models.length.toLocaleString()} รุ่น</span></h2>
+        <h2>รถของ {displayName(r)} <span className="sfNum">{models.length.toLocaleString()} รุ่น</span></h2>
         <Link className="sfChipClear" href={`/models?brand=${r.slug}`}>เปิดในแคตตาล็อกพร้อมตัวกรอง →</Link>
       </div>
       {models.length ? (
@@ -52,9 +53,9 @@ export default async function BrandPage({ params }: { params: Promise<{ slug: st
             const local = m.production_type === "CKD" || m.production_type === "SKD";
             return (
               <Link className="sfCard" href={`/models/${m.slug}`} key={m.id}>
-                <div className="sfSlot">{m.image_url ? <img src={m.image_url} alt="" /> : <><small>{r.name_th.toUpperCase()}</small><b>{m.name_th}</b></>}</div>
+                <div className="sfSlot">{m.image_url ? <img src={m.image_url} alt="" /> : <><small>{displayName(r).toUpperCase()}</small><b>{displayName(m)}</b></>}</div>
                 <div className="sfCardBody">
-                  <h3>{m.name_th}</h3>
+                  <h3>{displayName(m)}</h3>
                   {meta ? <p className="sfCardMeta">{meta}</p> : <p className="sfCardMeta sfMissing">ยังไม่มีข้อมูลสเปกพื้นฐาน</p>}
                   <div className="sfCardFoot">
                     {price ? <span className="sfPrice">{price}</span> : <span className="sfMissing">ยังไม่ประกาศราคา</span>}
@@ -66,7 +67,7 @@ export default async function BrandPage({ params }: { params: Promise<{ slug: st
           })}
         </div>
       ) : (
-        <div className="sfEmpty"><b>ยังไม่มีรถของแบรนด์นี้</b><span>ยังไม่ได้บันทึกรุ่นรถของ {r.name_th} ลงฐานข้อมูล</span></div>
+        <div className="sfEmpty"><b>ยังไม่มีรถของแบรนด์นี้</b><span>ยังไม่ได้บันทึกรุ่นรถของ {displayName(r)} ลงฐานข้อมูล</span></div>
       )}
     </div>
 

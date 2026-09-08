@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getPlantsWithStats, getProductionPrograms } from "@/lib/data";
+import { displayName } from "@/lib/display-name";
 
 const num = (n: any) => Number(n).toLocaleString();
 
@@ -87,7 +88,7 @@ export default async function ProductionPage({ searchParams }: { searchParams: P
               <article key={r.id}>
                 <div>
                   {r.models?.slug
-                    ? <Link className="sfProgramModel" href={`/models/${r.models.slug}`}>{[r.models.brands?.name_th, r.models.name_th].filter(Boolean).join(" ")}</Link>
+                    ? <Link className="sfProgramModel" href={`/models/${r.models.slug}`}>{[displayName(r.models.brands), displayName(r.models)].filter(Boolean).join(" ")}</Link>
                     : <span className="sfMissing">ไม่พบรุ่นที่ผูกไว้</span>}
                   <p>{[r.models?.body_type, r.models?.segment].filter(Boolean).join(" · ") || ""}</p>
                 </div>
@@ -131,7 +132,7 @@ export default async function ProductionPage({ searchParams }: { searchParams: P
                       {p.models.length ? (
                         <div className="sfModelChips">
                           {p.models.map((m: any) => (
-                            <Link key={m.id} href={`/models/${m.slug}`}>{[m.brands?.name_th, m.name_th].filter(Boolean).join(" ")}</Link>
+                            <Link key={m.id} href={`/models/${m.slug}`}>{[displayName(m.brands), displayName(m)].filter(Boolean).join(" ")}</Link>
                           ))}
                         </div>
                       ) : <p className="sfMissing">ยังไม่ระบุรุ่นที่ผลิตในโรงงานนี้</p>}

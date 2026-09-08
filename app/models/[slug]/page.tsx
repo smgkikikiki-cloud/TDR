@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getConsumerModelBundle } from "@/lib/catalog-data";
 import { getRelatedEvents, getProductionProgramsByModel, getRelatedModels, getModelRegistrationSummary } from "@/lib/data";
 import { bodyLabel } from "@/lib/body-labels";
+import { displayName, initials } from "@/lib/display-name";
 
 function launch(r: any) { return [r.launch_quarter, r.launch_year].filter(Boolean).join(" ") || null }
 function baht(n: any) { return n ? `฿${Number(n).toLocaleString()}` : null }
@@ -101,7 +102,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
     ? bahtRange([r.retail_price_min, r.retail_price_max].filter((n: any) => Number(n) > 0).map(Number))
     : null);
   const heroRange = officialRangeLabel(currentTrims);
-  const brand = r.brands?.name_th || "";
+  const brand = displayName(r.brands);
 
   const dimensions = [
     r.length_mm ? { k: "ความยาว", v: `${Number(r.length_mm).toLocaleString()} mm` } : null,
@@ -118,11 +119,11 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
     {/* ---------- Zone A · สำหรับผู้ซื้อ ---------- */}
     <section className="sfHero">
       <div className="sfHeroSlot">
-        {r.image_url ? <img src={r.image_url} alt={r.name_th} /> : <><small>{(brand || "TDR").toUpperCase()}</small><b>{r.name_th}</b></>}
+        {r.image_url ? <img src={r.image_url} alt={displayName(r)} /> : <><small>{(brand || "TDR").toUpperCase()}</small><b>{displayName(r)}</b></>}
       </div>
       <div className="sfHeroCopy">
         <div className="sfEyebrow">{[brand, bodyLabel(r.body_type)].filter(Boolean).join(" · ") || "MODEL"}</div>
-        <h1>{r.name_th}</h1>
+        <h1>{displayName(r)}</h1>
         {r.generation ? <p className="sfGeneration">{r.generation}</p> : null}
         <div className="sfBadges">
           {[r.segment, r.market_position, ...(r.powertrains || []), r.production_type, r.production_country, r.seats ? `${r.seats} ที่นั่ง` : null].filter(Boolean).map((x: string) => <span key={x}>{x}</span>)}
@@ -267,9 +268,9 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
             const price = bahtRange([m.retail_price_min, m.retail_price_max].filter((n: any) => Number(n) > 0).map(Number));
             return (
               <Link className="sfCard" href={`/models/${m.slug}`} key={m.id}>
-                <div className="sfSlot">{m.image_url ? <img src={m.image_url} alt="" /> : <><small>{(brand || "TDR").toUpperCase()}</small><b>{m.name_th}</b></>}</div>
+                <div className="sfSlot">{m.image_url ? <img src={m.image_url} alt="" /> : <><small>{(brand || "TDR").toUpperCase()}</small><b>{displayName(m)}</b></>}</div>
                 <div className="sfCardBody">
-                  <h3>{m.name_th}</h3>
+                  <h3>{displayName(m)}</h3>
                   {meta ? <p className="sfCardMeta">{meta}</p> : null}
                   <div className="sfCardFoot">{price ? <span className="sfPrice">{price}</span> : <span className="sfMissing">ยังไม่ประกาศราคา</span>}</div>
                 </div>
