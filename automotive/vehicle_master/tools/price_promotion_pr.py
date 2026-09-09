@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Apply reviewed P6 promotion and open a guarded GitHub price-data PR.
 
-This operator tool is intentionally conservative.  It requires ``git`` and the
-GitHub CLI (``gh``) to already be authenticated.  It will not run on a dirty
-working tree.  The sequence is:
+This operator tool is intentionally conservative. It requires ``git`` and the
+GitHub CLI (``gh``) to already be authenticated. It will not run on a dirty
+working tree. The sequence is:
 
-1. create a fresh branch from ``--base``;
+1. fetch the latest configured base branch and create a fresh pricebot branch;
 2. run ``price_promote_batch.py --apply``;
 3. commit the market-only diff locally;
 4. run pricefeed_guard, full Vehicle Master tests, market validate, and a
@@ -67,7 +67,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--fetch", type=Path, required=True)
     parser.add_argument("--review", type=Path, required=True)
     parser.add_argument("--year", type=int, default=2026)
-    parser.add_argument("--base", default="origin/main")
+    parser.add_argument(
+        "--base", default=None,
+        help="explicit git revision to branch/guard from; default is freshly fetched <remote>/<base-branch>",
+    )
     parser.add_argument("--base-branch", default="main")
     parser.add_argument("--branch", default=None)
     parser.add_argument("--title", default="Price intelligence: reviewed price promotion")
@@ -83,8 +86,13 @@ def main(argv: list[str] | None = None) -> int:
     _run(["gh", "auth", "status"], capture=True)
     _clean()
 
+    # A stale local remote-tracking ref defeats P6's canonical freshness checks:
+    # the bot would validate against yesterday's main and only discover the
+    # conflict after pushing. Refresh the base before any market file is read.
+    _run(["git", "fetch", "--no-tags", args.remote, args.base_branch])
+    base = args.base or f"{args.remote}/{args.base_branch}"
     branch = args.branch or _branch_default()
-    _run(["git", "switch", "--create", branch, args.base])
+    _run(["git", "switch", "--create", branch, base])
     manifest = ENGINE / ".pricebot-promotion-manifest.json"
     try:
         promote = [
@@ -100,12 +108,11 @@ def main(argv: list[str] | None = None) -> int:
         ]
         _run(promote, cwd=ENGINE)
         payload = _read(manifest)
-        files = payload.get("files") or []
         promoted = payload.get("items") or []
         if not promoted:
             raise RuntimeError("promotion plan contains no approved price writes")
 
-        # Only market data produced by P6 is staged.  The temporary manifest is
+        # Only market data produced by P6 is staged. The temporary manifest is
         # deliberately excluded from the commit.
         _run(["git", "add", f"automotive/vehicle_master/vehreg/data/{args.year}/market"])
         staged = _run(["git", "diff", "--cached", "--name-only"], capture=True)
@@ -115,7 +122,7 @@ def main(argv: list[str] | None = None) -> int:
 
         _run([
             sys.executable, "tools/pricefeed_guard.py",
-            "--base", args.base,
+            "--base", base,
             "--year", str(args.year),
             "--max-offers", str(args.max_offers),
             "--max-move", str(args.max_move),
@@ -148,6 +155,7 @@ def main(argv: list[str] | None = None) -> int:
         lines.extend([
             "",
             "Local pre-push gates passed:",
+            "- fresh base fetch",
             "- pricefeed_guard",
             "- full Vehicle Master pytest",
             "- market validate",
