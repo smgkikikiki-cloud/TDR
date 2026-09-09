@@ -49,6 +49,7 @@ from .price_reconcile import (
     PriceCandidate,
     ReconcileDisposition,
 )
+from .price_time import parse_aware_timestamp, thailand_business_date
 from .pricing import (
     Campaign,
     PriceLedger,
@@ -214,23 +215,14 @@ class PromotionPlan:
 
 
 def _timestamp(raw: object) -> Optional[datetime]:
-    if not raw:
-        return None
-    text = str(raw).strip().replace("Z", "+00:00")
-    try:
-        value = datetime.fromisoformat(text)
-    except ValueError:
-        return None
-    if value.tzinfo is None or value.utcoffset() is None:
-        return None
-    return value
+    return parse_aware_timestamp(raw)
 
 
 def _date_of(raw: str) -> date:
     stamp = _timestamp(raw)
     if stamp is None:
         raise PromotionError(f"invalid candidate timestamp {raw!r}")
-    return stamp.date()
+    return thailand_business_date(stamp)
 
 
 def load_promotion_bundle(path: Path | str) -> tuple[dict[str, PromotionDecision], tuple[dict, ...]]:
