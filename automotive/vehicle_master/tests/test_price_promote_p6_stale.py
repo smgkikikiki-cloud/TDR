@@ -32,7 +32,8 @@ def _data(tmp_path: Path) -> Path:
     return root
 
 
-def _candidate(candidate_id: str = "pcand:stale") -> PriceCandidate:
+def _candidate(candidate_id: str = "pcand:stale", *,
+               effective_from: str | None = None) -> PriceCandidate:
     return PriceCandidate(
         candidate_id=candidate_id,
         state=CandidateState.CONFIRMED,
@@ -48,6 +49,7 @@ def _candidate(candidate_id: str = "pcand:stale") -> PriceCandidate:
         claim_ids=("claim-1",),
         confirmed_at="2026-09-10T02:00:00+00:00",
         replaces_amount_thb=699_000,
+        effective_from=effective_from,
     )
 
 
@@ -62,30 +64,34 @@ def _approve(candidate_id: str, *,
     )
 
 
-def _report(candidate_id: str) -> dict:
+def _report(candidate_id: str, disposition: str = "CONFIRMED_REPLACEMENT") -> dict:
     return {
         "decisions": [{
             "claim_id": "claim-1",
             "decision": {
                 "candidate_id": candidate_id,
-                "disposition": "CONFIRMED_REPLACEMENT",
+                "disposition": disposition,
             },
         }],
     }
 
 
-def test_confirmed_replacement_passes_when_expected_prior_is_still_current(
-        tmp_path: Path) -> None:
-    root = _data(tmp_path)
-    candidate = _candidate()
-
+def _check(root: Path, candidate: PriceCandidate, *,
+           disposition: str = "CONFIRMED_REPLACEMENT",
+           approval: PromotionDecision | None = None) -> None:
     _refuse_stale_replacements(
         data_dir=root,
         year=YEAR,
         book=CandidateBook([candidate]),
-        reconcile=_report(candidate.candidate_id),
-        decisions={candidate.candidate_id: _approve(candidate.candidate_id)},
+        reconcile=_report(candidate.candidate_id, disposition),
+        decisions={candidate.candidate_id: approval or _approve(candidate.candidate_id)},
     )
+
+
+def test_confirmed_replacement_passes_when_expected_prior_is_still_current(
+        tmp_path: Path) -> None:
+    root = _data(tmp_path)
+    _check(root, _candidate())
 
 
 def test_confirmed_replacement_is_refused_if_canonical_changed_after_p5(
@@ -107,13 +113,7 @@ def test_confirmed_replacement_is_refused_if_canonical_changed_after_p5(
     )
 
     with pytest.raises(PromotionError, match="canonical stream changed since P5"):
-        _refuse_stale_replacements(
-            data_dir=root,
-            year=YEAR,
-            book=CandidateBook([candidate]),
-            reconcile=_report(candidate.candidate_id),
-            decisions={candidate.candidate_id: _approve(candidate.candidate_id)},
-        )
+        _check(root, candidate)
 
 
 def test_pending_era_approval_cannot_be_reused_after_confirmation(
@@ -126,10 +126,52 @@ def test_pending_era_approval_cannot_be_reused_after_confirmation(
     )
 
     with pytest.raises(PromotionError, match="approval predates 24h confirmation"):
-        _refuse_stale_replacements(
-            data_dir=root,
-            year=YEAR,
-            book=CandidateBook([candidate]),
-            reconcile=_report(candidate.candidate_id),
-            decisions={candidate.candidate_id: old_approval},
-        )
+        _check(root, candidate, approval=old_approval)
+
+
+def test_backdated_replacement_refuses_same_amount_row_starting_on_new_window(
+        tmp_path: Path) -> None:
+    root = _data(tmp_path)
+    candidate = _candidate("pcand:backdated", effective_from="2026-09-09")
+    prices = root / str(YEAR) / "market" / "prices"
+    # Same amount would have fooled an amount-only freshness check. Because this
+    # canonical row starts on the source-declared replacement date, P6 cannot
+    # close an older 699 row and pretend the intervening row never happened.
+    (prices / "intervening_same_amount.json").write_text(
+        json.dumps({"prices": [{
+            "trim_id": MAX_PLUS,
+            "amount_thb": 699_000,
+            "price_type": "LIST_PRICE",
+            "observed_at": "2026-09-09",
+            "source": "manual_review",
+            "source_ref": "https://example.com/same-amount-revision",
+            "reviewed_by": "owner",
+        }]}, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(PromotionError, match="on/after explicit replacement start"):
+        _check(root, candidate)
+
+
+def test_historical_only_requires_complete_literal_window(tmp_path: Path) -> None:
+    root = _data(tmp_path)
+    candidate = PriceCandidate(
+        candidate_id="pcand:history-end-only",
+        state=CandidateState.NEW,
+        trim_id=MAX_PLUS,
+        amount_thb=579_000,
+        price_type=PriceType.LIST_PRICE,
+        source_id="official_jaecoo_th",
+        target_id="jaecoo_history",
+        target_role=TargetRole.PRICE_LIST,
+        first_seen_at="2026-09-09T02:00:00+00:00",
+        last_seen_at="2026-09-09T02:00:00+00:00",
+        observation_count=1,
+        claim_ids=("claim-history",),
+        effective_to="2026-08-30",
+        historical_only=True,
+    )
+
+    with pytest.raises(PromotionError, match=r"effective_from \+ effective_to"):
+        _check(root, candidate, disposition="HISTORICAL_ONLY")
