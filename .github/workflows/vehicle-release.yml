@@ -1,0 +1,47 @@
+name: Publish canonical vehicle release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "automotive/vehicle_master/vehreg/**"
+      - "automotive/vehicle_master/integration_data/**"
+      - "automotive/vehicle_master/tdr_bridge/**"
+      - ".github/workflows/vehicle-release.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: canonical-vehicle-release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    defaults:
+      run:
+        working-directory: automotive/vehicle_master
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: automotive/vehicle_master/requirements.txt
+      - run: python -m pip install -r requirements.txt
+      - name: Build release once
+        run: |
+          python -m tdr_bridge.release \
+            --inventory integration_data/tdr_2026-09-09.json \
+            --overrides integration_data/crosswalk_overrides.json \
+            --out /tmp/vehicle-release.json \
+            --revision "${GITHUB_SHA}" --as-of "$(date -u +%F)"
+          python -m tdr_bridge.publish /tmp/vehicle-release.json
+      - name: Publish atomically to TDR Supabase
+        run: python -m tdr_bridge.publish /tmp/vehicle-release.json --publish
+

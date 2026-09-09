@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { getBrands, getEvents, getFeaturedModels, getModels } from "@/lib/data";
+import { getEvents } from "@/lib/data";
+import { getCanonicalBrands, getCanonicalModels } from "@/lib/canonical-data";
 import { bodyLabel } from "@/lib/body-labels";
 import { displayName, initials } from "@/lib/display-name";
 
@@ -38,9 +39,10 @@ function GalleryCard({ r }: { r: any }) {
 }
 
 export default async function Home() {
-  const [brands, events, featured, models] = await Promise.all([getBrands(30), getEvents(5), getFeaturedModels(6), getModels(12)]);
+  const [brands, events, models] = await Promise.all([getCanonicalBrands(30), getEvents(5), getCanonicalModels(600)]);
   const recent = (models as any[]).filter((r) => r.status !== "discontinued");
-  const current = (featured.length ? featured : recent.slice(0, 6)) as any[];
+  const featured = recent.filter((r) => r.featured);
+  const current = (featured.length ? featured.slice(0, 6) : recent.slice(0, 6)) as any[];
   const lead = current[0];
   const side = recent.filter((r) => !lead || r.id !== lead.id).slice(0, 5);
   const rest = current.slice(1, 7);
@@ -140,7 +142,7 @@ export default async function Home() {
         <div><div className="sfEyebrow ink">INDUSTRY LAYER</div><h2>ดูรถในอีกมุม</h2></div>
       </div>
       <div className="sfIndustryLinks">
-        <Link href="/production"><b>โรงงานและรุ่นที่ผลิตในไทย</b><p>โรงงานอยู่จังหวัดไหน ประกอบรุ่นอะไร และรุ่นนั้นอยู่ตรงไหนของแคตตาล็อก</p><span>เปิดดู →</span></Link>
+        <Link href="/models"><b>ราคา สเปก และรุ่นย่อย</b><p>ข้อมูลตลาดรถเปิดฟรีจาก Vehicle Master ชุดเดียว พร้อมราคาแคมเปญและเงื่อนไข</p><span>เปิดดู →</span></Link>
         <Link href="/news"><b>ข่าวอุตสาหกรรม</b><p>ความเคลื่อนไหวของผู้ผลิต โรงงาน และนโยบายที่กระทบตลาดรถไทย</p><span>เปิดดู →</span></Link>
         <Link href="/reports"><b>TDR Report · สำหรับสมาชิก</b><p>ยอดจดทะเบียนรายรุ่น ส่วนแบ่งตลาด และเทรนด์ย้อนหลัง ลึกถึงระดับรุ่นย่อย</p><span>ดูว่ามีอะไรบ้าง →</span></Link>
       </div>

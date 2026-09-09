@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { getBrands } from "@/lib/data";
+import { getCanonicalBrands } from "@/lib/canonical-data";
 import { displayName, initials } from "@/lib/display-name";
 
 export default async function Brands() {
-  const rows: any[] = await getBrands(250);
+  const rows: any[] = await getCanonicalBrands(250);
   return <>
     <section className="sfPageHead">
       <div>

@@ -1,14 +1,16 @@
 /** Thai display labels for the canonical body_type values shared with Vehicle Master. */
 export const BODY_LABEL: Record<string, string> = {
-  "Sedan": "ซีดาน",
-  "Hatchback": "แฮทช์แบ็ก",
-  "Coupe": "คูเป้",
-  "Crossover": "ครอสโอเวอร์ / SUV โมโนค็อก",
+  "SEDAN": "ซีดาน",
+  "HATCHBACK": "แฮทช์แบ็ก",
+  "COUPE": "คูเป้",
+  "CROSSOVER": "ครอสโอเวอร์ / SUV โมโนค็อก",
   "PPV": "PPV พื้นฐานกระบะ",
-  "Offroad ladder frame": "SUV ออฟโรดโครงแชสซีส์",
+  "OFFROAD": "SUV ออฟโรดโครงแชสซีส์",
   "MPV": "MPV",
-  "Pickup truck": "กระบะ",
-  "Van": "รถตู้",
+  "PICKUP": "กระบะ",
+  "WAGON": "แวกอน",
+  "VAN": "รถตู้",
+  "TRUCK": "รถบรรทุก",
 };
 
 /** Falls back to the stored value, so a body type that is not in the map

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { publicDb } from "@/lib/supabase";
-import { getBrand, getRelatedEvents } from "@/lib/data";
+import { getCanonicalBrand, getCanonicalModelsByBrand } from "@/lib/canonical-data";
+import { getRelatedEvents } from "@/lib/data";
 import { bodyLabel } from "@/lib/body-labels";
 import { displayName, initials } from "@/lib/display-name";
 
@@ -13,11 +13,10 @@ function baht(min: any, max: any) {
 
 export default async function BrandPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const r: any = await getBrand(slug);
+  const r: any = await getCanonicalBrand(slug);
   if (!r) notFound();
-  const db = publicDb();
-  const models = db ? (await db.from("models").select("id,slug,name_th,name_en,generation,status,body_type,powertrains,image_url,retail_price_min,retail_price_max,production_country,production_type,seats").eq("brand_id", r.id).neq("status", "discontinued").order("name_en",{nullsFirst:false}).order("name_th")).data ?? [] : [];
-  const events: any[] = await getRelatedEvents({ brandId: r.id });
+  const models = (await getCanonicalModelsByBrand(r.id)).filter((model: any) => model.status !== "discontinued");
+  const events: any[] = r.editorial_id ? await getRelatedEvents({ brandId: r.editorial_id }) : [];
 
   const assembled = (models as any[]).filter((m: any) => m.production_type === "CKD" || m.production_type === "SKD").length;
 
