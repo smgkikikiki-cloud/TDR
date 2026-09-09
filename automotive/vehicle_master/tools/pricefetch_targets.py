@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
 """Fetch registered OEM targets into SourceDocument evidence.
 
-By default this command keeps the P2 fetch-only behaviour.  Pass
+By default this command keeps the P2 fetch-only behaviour. Pass
 ``--extract-prices`` to run the deterministic P3 extractor against newly fetched
-documents and include PriceClaim evidence in the output.  Neither mode writes
-PriceLedger, the catalog, or serving data.
+documents. Pass ``--match-trims`` as well to run P4 canonical MarketTrim
+matching and attach diagnostics to each PriceClaim. No mode writes PriceLedger,
+the catalog, or serving data.
 
 Examples:
 
     python tools/pricefetch_targets.py --source official_jaecoo_th
     python tools/pricefetch_targets.py --source official_jaecoo_th \
-        --follow-discovery --extract-prices --out /tmp/jaecoo-fetch.json \
-        --state-out /tmp/jaecoo-state.json --snapshot-dir /tmp/jaecoo-snapshots
+        --follow-discovery --extract-prices --match-trims \
+        --out /tmp/jaecoo-fetch.json --state-out /tmp/jaecoo-state.json \
+        --snapshot-dir /tmp/jaecoo-snapshots
 """
 
 from __future__ import annotations
@@ -25,7 +27,7 @@ import urllib.parse
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from tools import robots_check  # noqa: E402
-from vehreg.catalog import DATA_DIR, DEFAULT_YEAR  # noqa: E402
+from vehreg.catalog import Catalog, DATA_DIR, DEFAULT_YEAR  # noqa: E402
 from vehreg.price_extract import extract_oem_price_claims  # noqa: E402
 from vehreg.price_fetch import (  # noqa: E402
     ADAPTERS,
@@ -34,6 +36,7 @@ from vehreg.price_fetch import (  # noqa: E402
     FetchState,
     adapter_for,
 )
+from vehreg.price_match import match_trim_diagnostic  # noqa: E402
 from vehreg.price_sources import SourceTarget, load_source_target_registry  # noqa: E402
 
 
@@ -86,8 +89,8 @@ def _document_dict(result: FetchResult, snapshot_ref: str = "") -> dict | None:
     }
 
 
-def _claim_dict(claim) -> dict:
-    return {
+def _claim_dict(claim, *, match=None) -> dict:
+    row = {
         "claim_id": claim.claim_id,
         "document_id": claim.document_id,
         "source_id": claim.source_id,
@@ -104,6 +107,9 @@ def _claim_dict(claim) -> dict:
         "campaign_hint": claim.campaign_hint,
         "option_hint": claim.option_hint,
     }
+    if match is not None:
+        row["match"] = match.as_dict()
+    return row
 
 
 def _origin(url: str) -> str:
@@ -142,6 +148,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--follow-discovery", action="store_true")
     parser.add_argument("--extract-prices", action="store_true",
                         help="run P3 deterministic extraction on fetched documents")
+    parser.add_argument("--match-trims", action="store_true",
+                        help="run P4 canonical MarketTrim matching; requires --extract-prices")
     parser.add_argument("--max-discovered", type=int, default=20)
     parser.add_argument("--state-in", type=Path, default=None)
     parser.add_argument("--state-out", type=Path, default=None)
@@ -149,9 +157,15 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--snapshot-dir", type=Path, default=None)
     args = parser.parse_args(argv)
 
+    if args.match_trims and not args.extract_prices:
+        parser.error("--match-trims requires --extract-prices")
+
     registry = load_source_target_registry(args.data_dir, args.year)
     states = _load_states(args.state_in)
     robots_cache: dict[str, str] = {}
+    catalog = Catalog.load(args.data_dir, args.year) if args.match_trims else None
+    siblings_by_model = None
+    model_memo: dict = {}
 
     targets = [target for target in registry.targets_for()
                if registry.effective_adapter(target) in ADAPTERS]
@@ -170,6 +184,7 @@ def main(argv: list[str] | None = None) -> int:
     followed = 0
     claims_total = 0
     extraction_warnings_total = 0
+    match_counts = {"EXACT": 0, "AMBIGUOUS": 0, "UNMAPPED": 0}
 
     while queue:
         target = queue.pop(0)
@@ -185,7 +200,16 @@ def main(argv: list[str] | None = None) -> int:
         extraction_warnings: list[str] = []
         if args.extract_prices:
             extracted = extract_oem_price_claims(target, result)
-            claims = [_claim_dict(claim) for claim in extracted.claims]
+            for claim in extracted.claims:
+                matched = None
+                if catalog is not None:
+                    matched = match_trim_diagnostic(
+                        catalog, claim,
+                        siblings_by_model=siblings_by_model,
+                        model_memo=model_memo,
+                    )
+                    match_counts[matched.state.value] += 1
+                claims.append(_claim_dict(claim, match=matched))
             extraction_warnings = list(extracted.warnings)
             claims_total += len(claims)
             extraction_warnings_total += len(extraction_warnings)
@@ -226,6 +250,8 @@ def main(argv: list[str] | None = None) -> int:
         "schema_version": 1,
         "year": args.year,
         "extract_prices": args.extract_prices,
+        "match_trims": args.match_trims,
+        "match_counts": match_counts if args.match_trims else None,
         "static_targets": sorted(static_ids),
         "results": rows,
         "robots": robots_cache,
@@ -248,6 +274,7 @@ def main(argv: list[str] | None = None) -> int:
         "not_modified": sum(1 for row in rows if row["not_modified"]),
         "claims": claims_total,
         "extraction_warnings": extraction_warnings_total,
+        "match_counts": match_counts if args.match_trims else None,
         "followed_discovered": followed,
         "skipped_robots": skipped_robots,
         "out": str(args.out) if args.out else None,
