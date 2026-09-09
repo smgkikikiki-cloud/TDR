@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
-"""Fetch registered P2 OEM targets into SourceDocument evidence.
+"""Fetch registered OEM targets into SourceDocument evidence.
 
-This command is deliberately read-only with respect to catalog and PriceLedger.
-It may write a local batch/state/snapshot file only when explicitly requested.
+By default this command keeps the P2 fetch-only behaviour.  Pass
+``--extract-prices`` to run the deterministic P3 extractor against newly fetched
+documents and include PriceClaim evidence in the output.  Neither mode writes
+PriceLedger, the catalog, or serving data.
 
 Examples:
 
     python tools/pricefetch_targets.py --source official_jaecoo_th
     python tools/pricefetch_targets.py --source official_jaecoo_th \
-        --follow-discovery --out /tmp/jaecoo-fetch.json \
+        --follow-discovery --extract-prices --out /tmp/jaecoo-fetch.json \
         --state-out /tmp/jaecoo-state.json --snapshot-dir /tmp/jaecoo-snapshots
 """
 
@@ -24,6 +26,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from tools import robots_check  # noqa: E402
 from vehreg.catalog import DATA_DIR, DEFAULT_YEAR  # noqa: E402
+from vehreg.price_extract import extract_oem_price_claims  # noqa: E402
 from vehreg.price_fetch import (  # noqa: E402
     ADAPTERS,
     FetchError,
@@ -83,6 +86,26 @@ def _document_dict(result: FetchResult, snapshot_ref: str = "") -> dict | None:
     }
 
 
+def _claim_dict(claim) -> dict:
+    return {
+        "claim_id": claim.claim_id,
+        "document_id": claim.document_id,
+        "source_id": claim.source_id,
+        "brand_raw": claim.brand_raw,
+        "model_raw": claim.model_raw,
+        "trim_raw": claim.trim_raw,
+        "amount_thb": claim.amount_thb,
+        "price_type": claim.price_type.value,
+        "evidence_text": claim.evidence_text,
+        "extraction_method": claim.extraction_method,
+        "effective_from": claim.effective_from,
+        "effective_to": claim.effective_to,
+        "reference_price_thb": claim.reference_price_thb,
+        "campaign_hint": claim.campaign_hint,
+        "option_hint": claim.option_hint,
+    }
+
+
 def _origin(url: str) -> str:
     parts = urllib.parse.urlsplit(url)
     return f"{parts.scheme}://{parts.netloc}"
@@ -117,6 +140,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--source", action="append", default=None)
     parser.add_argument("--target", action="append", default=None)
     parser.add_argument("--follow-discovery", action="store_true")
+    parser.add_argument("--extract-prices", action="store_true",
+                        help="run P3 deterministic extraction on fetched documents")
     parser.add_argument("--max-discovered", type=int, default=20)
     parser.add_argument("--state-in", type=Path, default=None)
     parser.add_argument("--state-out", type=Path, default=None)
@@ -143,6 +168,8 @@ def main(argv: list[str] | None = None) -> int:
     rows: list[dict] = []
     skipped_robots = 0
     followed = 0
+    claims_total = 0
+    extraction_warnings_total = 0
 
     while queue:
         target = queue.pop(0)
@@ -153,6 +180,16 @@ def main(argv: list[str] | None = None) -> int:
         result = adapter.fetch(target, previous=states.get(target.id))
         states[target.id] = result.state
         snapshot_ref = _snapshot(result, args.snapshot_dir)
+
+        claims: list[dict] = []
+        extraction_warnings: list[str] = []
+        if args.extract_prices:
+            extracted = extract_oem_price_claims(target, result)
+            claims = [_claim_dict(claim) for claim in extracted.claims]
+            extraction_warnings = list(extracted.warnings)
+            claims_total += len(claims)
+            extraction_warnings_total += len(extraction_warnings)
+
         rows.append({
             "target_id": result.target_id,
             "target_role": result.target_role.value,
@@ -160,6 +197,8 @@ def main(argv: list[str] | None = None) -> int:
             "model_hint": target.model_hint,
             "not_modified": result.not_modified,
             "document": _document_dict(result, snapshot_ref),
+            "claims": claims,
+            "extraction_warnings": extraction_warnings,
             "discovered_targets": [
                 {
                     "id": item.id,
@@ -186,6 +225,7 @@ def main(argv: list[str] | None = None) -> int:
     payload = {
         "schema_version": 1,
         "year": args.year,
+        "extract_prices": args.extract_prices,
         "static_targets": sorted(static_ids),
         "results": rows,
         "robots": robots_cache,
@@ -206,6 +246,8 @@ def main(argv: list[str] | None = None) -> int:
     print(json.dumps({
         "fetched": sum(1 for row in rows if row["document"] is not None),
         "not_modified": sum(1 for row in rows if row["not_modified"]),
+        "claims": claims_total,
+        "extraction_warnings": extraction_warnings_total,
         "followed_discovered": followed,
         "skipped_robots": skipped_robots,
         "out": str(args.out) if args.out else None,
