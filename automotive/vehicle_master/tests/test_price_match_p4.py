@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import vehreg.price_match as price_match
 from vehreg.catalog import Catalog, DATA_DIR, DEFAULT_YEAR
 from vehreg.price_match import TrimMatchMethod, TrimMatchState, match_trim_diagnostic
 from vehreg.pricefeed import PriceClaim, match_trim
@@ -44,6 +43,16 @@ def test_live_j5_raw_grades_resolve_to_canonical_market_trims() -> None:
         }
 
 
+def test_j5_max_plus_preserves_plus_semantics_before_generic_fold() -> None:
+    catalog = Catalog.load(DATA_DIR, DEFAULT_YEAR)
+
+    result = match_trim_diagnostic(catalog, _claim("MAX+"))
+
+    assert result.state is TrimMatchState.EXACT
+    assert result.trim_id == J5_TRIMS["MAX+"]
+    assert result.normalized_trim_raw == "MAX PLUS"
+
+
 def test_j5_max_plus_written_as_words_uses_canonical_alias() -> None:
     catalog = Catalog.load(DATA_DIR, DEFAULT_YEAR)
 
@@ -51,7 +60,22 @@ def test_j5_max_plus_written_as_words_uses_canonical_alias() -> None:
 
     assert result.state is TrimMatchState.EXACT
     assert result.trim_id == J5_TRIMS["MAX+"]
-    assert result.method is TrimMatchMethod.EXACT_ALIAS
+    assert result.method is TrimMatchMethod.EXACT_NAME
+    assert result.normalized_trim_raw == "MAX PLUS"
+
+
+def test_bare_j5_max_is_genuinely_ambiguous_and_never_guessed() -> None:
+    catalog = Catalog.load(DATA_DIR, DEFAULT_YEAR)
+
+    result = match_trim_diagnostic(catalog, _claim("MAX"))
+
+    assert result.state is TrimMatchState.AMBIGUOUS
+    assert result.trim_id is None
+    assert result.candidate_ids == tuple(sorted((
+        J5_TRIMS["LONG RANGE MAX"],
+        J5_TRIMS["MAX+"],
+    )))
+    assert result.method is TrimMatchMethod.AMBIGUOUS_EXACT
 
 
 def test_unmapped_grade_never_guesses_a_j5_trim() -> None:
@@ -77,28 +101,9 @@ def test_unknown_model_is_unmapped_before_grade_matching() -> None:
     assert result.method is TrimMatchMethod.NO_MODEL
 
 
-def test_ambiguous_candidates_are_reported_without_breaking_tie(monkeypatch) -> None:
+def test_p4_matches_production_matcher_when_no_surface_expansion_is_needed() -> None:
     catalog = Catalog.load(DATA_DIR, DEFAULT_YEAR)
-    left = J5_TRIMS["LONG RANGE DYNAMIC"]
-    right = J5_TRIMS["LONG RANGE MAX"]
-
-    monkeypatch.setattr(
-        price_match,
-        "match_trim",
-        lambda *args, **kwargs: (None, tuple(sorted((left, right)))),
-    )
-
-    result = match_trim_diagnostic(catalog, _claim("LONG RANGE"))
-
-    assert result.state is TrimMatchState.AMBIGUOUS
-    assert result.trim_id is None
-    assert result.candidate_ids == tuple(sorted((left, right)))
-    assert result.method is TrimMatchMethod.AMBIGUOUS_PARTIAL
-
-
-def test_p4_wrapper_preserves_production_matcher_answer() -> None:
-    catalog = Catalog.load(DATA_DIR, DEFAULT_YEAR)
-    claim = _claim("MAX+")
+    claim = _claim("ULTRA")
 
     legacy_trim, legacy_candidates = match_trim(catalog, claim)
     result = match_trim_diagnostic(catalog, claim)
