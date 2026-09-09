@@ -10,7 +10,7 @@
     {
       "source_id": "official_jaecoo_th",
       "kind": "OEM",
-      "notes": "First specific OEM source used by the P2 JAECOO 5 pilot."
+      "notes": "First specific OEM source used by the JAECOO price-intelligence pilot."
     },
     {
       "source_id": "headlightmag",
@@ -23,13 +23,21 @@
   ],
   "targets": [
     {
+      "id": "jaecoo_th_home_price_cards",
+      "source_id": "official_jaecoo_th",
+      "url": "https://www.omodajaecoo.co.th/th",
+      "role": "PRICE_LIST",
+      "poll_minutes": 360,
+      "notes": "Thailand homepage price cards. Multi-model source; extraction must identify the vehicle from page text and must not infer a model from target configuration."
+    },
+    {
       "id": "jaecoo_th_j5_model",
       "source_id": "official_jaecoo_th",
       "url": "https://www.omodajaecoo.co.th/th/model/jaecoo-5-ev",
       "role": "CURRENT_MODEL_PAGE",
       "poll_minutes": 360,
       "model_hint": "jaecoo.jaecoo_5_ev",
-      "notes": "Current Thailand model page. A model_hint narrows discovery only; P2 must still match extracted claims to canonical trims."
+      "notes": "Current Thailand model page. A model_hint narrows discovery only; extraction must still identify claims and matching must still resolve canonical trims."
     },
     {
       "id": "jaecoo_th_promotions",
@@ -46,7 +54,16 @@
       "role": "BLOG",
       "poll_minutes": 360,
       "model_hint": "jaecoo.jaecoo_5_ev",
-      "notes": "Pilot evidence page containing JAECOO 5 trim, list-price, estimated-price and finance wording."
+      "notes": "Thai pilot buyer-guide evidence page. Article age never creates expiry."
+    },
+    {
+      "id": "jaecoo_en_j5_buyer_guide_2026_09_02",
+      "source_id": "official_jaecoo_th",
+      "url": "https://www.omodajaecoo.co.th/en/blog/jaecoo-5-ev-en",
+      "role": "BLOG",
+      "poll_minutes": 360,
+      "model_hint": "jaecoo.jaecoo_5_ev",
+      "notes": "Official English version of the JAECOO 5 buyer guide. Same Tier-A voice as the Thai page; never counted as an independent source."
     },
     {
       "id": "headlightmag_wp_discovery",
