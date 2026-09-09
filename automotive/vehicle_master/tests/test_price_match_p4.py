@@ -75,7 +75,10 @@ def test_bare_j5_max_is_genuinely_ambiguous_and_never_guessed() -> None:
         J5_TRIMS["LONG RANGE MAX"],
         J5_TRIMS["MAX+"],
     )))
-    assert result.method is TrimMatchMethod.AMBIGUOUS_EXACT
+    # One candidate is an explicit `Max` alias; the other survives the legacy
+    # generic punctuation fold of `MAX+`. P4 refuses to use that asymmetry to
+    # guess which product an underspecified raw `MAX` meant.
+    assert result.method is TrimMatchMethod.AMBIGUOUS_PARTIAL
 
 
 def test_unmapped_grade_never_guesses_a_j5_trim() -> None:
