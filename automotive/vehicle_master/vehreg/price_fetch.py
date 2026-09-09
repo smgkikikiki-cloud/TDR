@@ -33,7 +33,7 @@ from .pricefeed import SourceDocument, body_sketch, content_id
 # RobotFileParser compares that token, so auditing one agent and fetching as
 # another would be a policy bug.
 USER_AGENT = (
-    "vehicle-market-master/tdr-price-intelligence-1.0 "
+    "tdr-automotive/price-intelligence-1.0 "
     "(+https://github.com/smgkikikiki-cloud/TDR)"
 )
 
