@@ -104,6 +104,20 @@ alter table canonical_write_commands enable row level security;
 alter table canonical_write_revisions enable row level security;
 alter table canonical_publish_outbox enable row level security;
 
+-- Supabase projects created after 2026-05-30 do not automatically expose new
+-- tables through the Data API.  The server-side admin bridge uses supabase-js,
+-- so grant the service role explicitly while denying browser roles at the
+-- object-grant layer as well as through RLS.
+revoke all on table canonical_object_map from anon, authenticated;
+revoke all on table canonical_write_commands from anon, authenticated;
+revoke all on table canonical_write_revisions from anon, authenticated;
+revoke all on table canonical_publish_outbox from anon, authenticated;
+
+grant select, insert, update, delete on table canonical_object_map to service_role;
+grant select, insert, update, delete on table canonical_write_commands to service_role;
+grant select, insert, update, delete on table canonical_write_revisions to service_role;
+grant select, insert, update, delete on table canonical_publish_outbox to service_role;
+
 -- Intentionally no anon/authenticated policies.  The Next.js admin action uses
 -- the server-only service role.  Later phases may add narrower authenticated
 -- RPCs, but Phase C must not turn this command/audit surface into a public API.
