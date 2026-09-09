@@ -395,11 +395,10 @@ def _parse_campaign(raw: object, source: str) -> Campaign:
 class PriceRecord:
     """One price a source stated for one trim, over one window.
 
-    A campaign price carries ``campaign_id``/``option_id`` back to the promotion
-    that produced it, and ``reference_price_thb`` is the "from" figure the source
-    quoted beside it.  Those three fields are the whole of what a campaign adds:
-    the number itself is an ordinary price row, so a campaign can never overwrite
-    or hide the MSRP.
+    ``source_ref`` is the human-facing URL. ``source_document_id`` is the
+    immutable SHA-256 SourceDocument identity captured by Price Intelligence;
+    a publisher may edit a URL later, but that cannot change which fetched
+    representation supported this canonical price.
     """
 
     trim_id: str
@@ -410,6 +409,7 @@ class PriceRecord:
     observed_at: Optional[str] = None
     source: str = ""
     source_ref: str = ""
+    source_document_id: str = ""
     notes: str = ""
     campaign_id: Optional[str] = None
     option_id: Optional[str] = None
@@ -442,6 +442,9 @@ class PriceRecord:
             problems.append("amount_thb must be a positive integer")
         if not isinstance(self.price_type, PriceType):
             problems.append("price_type must be a PriceType")
+        if self.source_document_id and not re.fullmatch(
+                r"sha256:[0-9a-f]{64}", self.source_document_id):
+            problems.append("source_document_id must be a sha256: hex digest")
         if self.reference_price_thb is not None and (
                 type(self.reference_price_thb) is not int
                 or self.reference_price_thb <= 0):
@@ -560,6 +563,7 @@ class PriceLedger:
                 observed_at=_iso_date(raw.get("observed_at"), "observed_at"),
                 source=str(raw.get("source") or "").strip(),
                 source_ref=str(raw.get("source_ref") or "").strip(),
+                source_document_id=str(raw.get("source_document_id") or "").strip(),
                 notes=str(raw.get("notes") or ""),
                 campaign_id=str(raw.get("campaign_id") or "").strip() or None,
                 option_id=str(raw.get("option_id") or "").strip() or None,
@@ -706,15 +710,10 @@ class PriceLedger:
                 "campaign_name": campaign.name if campaign else "",
                 "option_id": record.option_id,
                 "option_label": option.label if option else "",
-                # Two different questions, and merging them backdates the
-                # ending: what the offer was on the quoted day, and what the
-                # record says about it today.
                 "status_as_of": option.status_on(when).value if option else None,
                 "current_status": option.status.value if option else None,
                 "closed_at": option.closed_at if option else None,
                 "conditions": to_conditions_dict(option.conditions) if option else {},
-                # The cap, and whether it is this option's own or shared with
-                # every other option in the campaign.
                 "quota_units": (option.conditions.quota_units if option else None)
                                or (campaign.quota_units if campaign else None),
                 "quota_scope": ("OPTION" if option and option.conditions.quota_units
@@ -723,12 +722,12 @@ class PriceLedger:
                 "valid_to": record.effective_to,
                 "source": record.source,
                 "source_ref": record.source_ref,
+                "source_document_id": record.source_document_id or None,
             })
         return {
             "trim_id": trim_id,
             "as_of": when.isoformat(),
             "list_price_thb": listed.amount_thb if listed else None,
-            # Alternatives, never merged and never ranked.
             "campaign_options": offers,
         }
 
