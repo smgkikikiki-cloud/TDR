@@ -332,11 +332,11 @@ def extract_oem_price_claims(target: SourceTarget,
     if target.role is TargetRole.PRICE_LIST:
         claims = _extract_homepage(result, text)
     elif target.role is TargetRole.BLOG:
-        # model_hint scopes this article for the pilot, but does not bind any
-        # returned claim to a canonical trim.  P5 matching still has to do that.
-        if target.model_hint and target.model_hint != _J5_MODEL_HINT:
+        # This parser knows the dedicated J5 buyer-guide shape.  A naked grade
+        # such as MAX+ on an arbitrary OEM blog is not enough to invent J5.
+        if target.model_hint != _J5_MODEL_HINT:
             return ExtractionResult(warnings=(
-                f"{target.id}: unsupported model_hint {target.model_hint}",))
+                f"{target.id}: BLOG extraction requires model_hint {_J5_MODEL_HINT}",))
         claims = _extract_blog(result, text)
     elif target.role is TargetRole.PROMOTION:
         claims = _extract_promotion(result, text)
