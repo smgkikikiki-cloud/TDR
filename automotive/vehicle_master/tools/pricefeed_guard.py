@@ -2,7 +2,7 @@
 """CI brake for an automated price PR: what a harvester is allowed to change.
 
 A run that wants to rewrite fifty prices has a broken extractor, not fifty
-announcements.  This refuses the PR instead of merging it.
+announcements. This refuses the PR instead of merging it.
 
 Checks, in order:
 
@@ -12,9 +12,11 @@ Checks, in order:
 4. every trim that already had a current list price still has one, and any
    change to an existing price is inside ``--max-move`` percent.
 
-Run it against the base revision:
+When this engine lives inside another repository, pass the repository-root
+prefix so git can address files in the base revision correctly:
 
-    python tools/pricefeed_guard.py --base origin/main
+    python tools/pricefeed_guard.py --base origin/main \
+      --repo-prefix automotive/vehicle_master/
 """
 
 from __future__ import annotations
@@ -34,17 +36,30 @@ from vehreg.pricing import PriceLedger  # noqa: E402
 ALLOWED_PREFIX = "vehreg/data/{year}/market/"
 
 
+def repo_path(repo_prefix: str, path: str) -> str:
+    """Return a repository-root path for a path inside the embedded engine."""
+    prefix = repo_prefix.strip("/")
+    return f"{prefix}/{path}" if prefix else path
+
+
 def changed_files(base: str) -> list[str]:
-    out = subprocess.run(["git", "diff", "--name-only", f"{base}...HEAD"],
-                         capture_output=True, text=True, check=True)
+    out = subprocess.run(
+        ["git", "diff", "--name-only", f"{base}...HEAD"],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
     return [line for line in out.stdout.splitlines() if line.strip()]
 
 
-def ledger_at(revision: str, year: int) -> dict[str, int]:
+def ledger_at(revision: str, year: int, *, repo_prefix: str = "") -> dict[str, int]:
     """trim_id -> current list price, as of today, at one git revision."""
+    price_dir = repo_path(repo_prefix, f"vehreg/data/{year}/market/prices")
     prices = subprocess.run(
-        ["git", "show", f"{revision}:vehreg/data/{year}/market/prices"],
-        capture_output=True, text=True)
+        ["git", "show", f"{revision}:{price_dir}"],
+        capture_output=True,
+        text=True,
+    )
     if prices.returncode != 0:
         return {}
     amounts: dict[str, int] = {}
@@ -53,8 +68,10 @@ def ledger_at(revision: str, year: int) -> dict[str, int]:
         if not name.endswith(".json"):
             continue
         blob = subprocess.run(
-            ["git", "show", f"{revision}:vehreg/data/{year}/market/prices/{name}"],
-            capture_output=True, text=True)
+            ["git", "show", f"{revision}:{price_dir}/{name}"],
+            capture_output=True,
+            text=True,
+        )
         if blob.returncode != 0:
             continue
         for row in json.loads(blob.stdout).get("prices", []):
@@ -63,10 +80,17 @@ def ledger_at(revision: str, year: int) -> dict[str, int]:
     return amounts
 
 
-def check(base: str, *, year: int, data_dir: Path,
-          max_offers: int, max_move: float) -> list[str]:
+def check(
+    base: str,
+    *,
+    year: int,
+    data_dir: Path,
+    max_offers: int,
+    max_move: float,
+    repo_prefix: str = "",
+) -> list[str]:
     problems: list[str] = []
-    allowed = ALLOWED_PREFIX.format(year=year)
+    allowed = repo_path(repo_prefix, ALLOWED_PREFIX.format(year=year))
     for path in changed_files(base):
         if not path.startswith(allowed):
             problems.append(f"{path}: outside {allowed}; a price PR changes data only")
@@ -75,17 +99,24 @@ def check(base: str, *, year: int, data_dir: Path,
     ledger = PriceLedger.load(data_dir, year=year, catalog=catalog)
     problems.extend(ledger.validate())
 
-    before = ledger_at(base, year)
-    after = {trim_id: row.amount_thb for trim_id in {r.trim_id for r in ledger.records}
-             for row in [ledger.current_list_price(trim_id, as_of=date.today())]
-             if row is not None}
+    before = ledger_at(base, year, repo_prefix=repo_prefix)
+    after = {
+        trim_id: row.amount_thb
+        for trim_id in {r.trim_id for r in ledger.records}
+        for row in [ledger.current_list_price(trim_id, as_of=date.today())]
+        if row is not None
+    }
 
-    moved = {trim_id for trim_id in set(before) | set(after)
-             if before.get(trim_id) != after.get(trim_id)}
+    moved = {
+        trim_id
+        for trim_id in set(before) | set(after)
+        if before.get(trim_id) != after.get(trim_id)
+    }
     if len(moved) > max_offers:
         problems.append(
             f"{len(moved)} list prices change in one PR (limit {max_offers}); "
-            "this is an extractor fault, not that many announcements")
+            "this is an extractor fault, not that many announcements"
+        )
     for trim_id in sorted(moved):
         old, new = before.get(trim_id), after.get(trim_id)
         if old is not None and new is None:
@@ -93,7 +124,8 @@ def check(base: str, *, year: int, data_dir: Path,
         elif old and new and abs(new - old) / old * 100 > max_move:
             problems.append(
                 f"{trim_id}: list price moves {old:,} -> {new:,} "
-                f"({abs(new - old) / old * 100:.1f}% > {max_move}%); needs a person")
+                f"({abs(new - old) / old * 100:.1f}% > {max_move}%); needs a person"
+            )
     return problems
 
 
@@ -103,11 +135,26 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--year", type=int, default=DEFAULT_YEAR)
     parser.add_argument("--data-dir", type=Path, default=DATA_DIR)
     parser.add_argument("--max-offers", type=int, default=25)
-    parser.add_argument("--max-move", type=float, default=25.0,
-                        help="percent a single list price may move unattended")
+    parser.add_argument(
+        "--max-move",
+        type=float,
+        default=25.0,
+        help="percent a single list price may move unattended",
+    )
+    parser.add_argument(
+        "--repo-prefix",
+        default="",
+        help="repository-root prefix containing this engine, e.g. automotive/vehicle_master/",
+    )
     args = parser.parse_args(argv)
-    problems = check(args.base, year=args.year, data_dir=args.data_dir,
-                     max_offers=args.max_offers, max_move=args.max_move)
+    problems = check(
+        args.base,
+        year=args.year,
+        data_dir=args.data_dir,
+        max_offers=args.max_offers,
+        max_move=args.max_move,
+        repo_prefix=args.repo_prefix,
+    )
     if problems:
         print("price PR refused:", file=sys.stderr)
         for problem in problems:
