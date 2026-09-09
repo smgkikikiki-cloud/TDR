@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getConsumerModelBundle } from "@/lib/catalog-data";
-import { getRelatedEvents, getProductionProgramsByModel, getRelatedModels, getModelRegistrationSummary } from "@/lib/data";
+import { getCanonicalModelBundle, getCanonicalRelatedModels, getModelMarketTeasers } from "@/lib/canonical-data";
+import { getRelatedEvents, getProductionProgramsByModel } from "@/lib/data";
 import { bodyLabel } from "@/lib/body-labels";
 import { displayName, initials } from "@/lib/display-name";
 
@@ -52,6 +52,7 @@ function TrimRow({ t, ptById, muted }: { t: any; ptById: Map<any, any>; muted?: 
   const linked = (t.trim_powertrains || []).map((x: any) => ptById.get(x.powertrain_id)).filter(Boolean);
   const wheel = wheelLine(t);
   const price = baht(t.price_baht);
+  const offers = (t.campaign_quote?.campaign_options || []).filter((offer: any) => offer.status_as_of === "ACTIVE");
   return (
     <details className={muted ? "sfTrimRow sfDiscontinued" : "sfTrimRow"}>
       <summary>
@@ -74,7 +75,17 @@ function TrimRow({ t, ptById, muted }: { t: any; ptById: Map<any, any>; muted?: 
           {(t.seats_override || t.payload_capacity_kg_override) ? <div><small>ความจุ</small><b>{[t.seats_override ? `${t.seats_override} ที่นั่ง` : null, t.payload_capacity_kg_override ? `Payload ${t.payload_capacity_kg_override} kg` : null].filter(Boolean).join(" · ")}</b></div> : null}
         </div>
         {t.description ? <p>{t.description}</p> : <p className="sfMissing">ยังไม่มีรายละเอียดอุปกรณ์ของ Trim นี้</p>}
+        {offers.length ? <div className="sfRows">
+          {offers.map((offer: any) => <div className="sfRow" key={`${offer.campaign_id}:${offer.option_id}`}>
+            <span>
+              <b>{offer.option_label || offer.campaign_name}</b><br />
+              <small>{offer.conditions?.text || "โปรดตรวจสอบเงื่อนไขกับผู้จำหน่าย"}{offer.valid_to ? ` · ถึง ${offer.valid_to}` : ""}</small>
+            </span>
+            <b>{baht(offer.amount_thb) || `ลด ${baht(offer.discount_thb)}`}</b>
+          </div>)}
+        </div> : null}
         {t.range_source_url ? <a className="sfSourceLink" href={t.range_source_url} target="_blank" rel="noreferrer">แหล่งข้อมูล Range ↗</a> : null}
+        {offers.map((offer: any) => offer.source_ref ? <a className="sfSourceLink" key={offer.source_ref} href={offer.source_ref} target="_blank" rel="noreferrer">ที่มาราคาแคมเปญ ↗</a> : null)}
       </div>
     </details>
   );
@@ -82,16 +93,15 @@ function TrimRow({ t, ptById, muted }: { t: any; ptById: Map<any, any>; muted?: 
 
 export default async function ModelDetail({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const r: any = await getConsumerModelBundle(slug);
+  const r: any = await getCanonicalModelBundle(slug);
   if (!r) notFound();
 
-  const [events, programs, related, regs] = await Promise.all([
-    getRelatedEvents({ modelId: r.id }, 8),
-    getProductionProgramsByModel(r.id),
-    getRelatedModels(r, 6),
-    getModelRegistrationSummary(r.id)
+  const [events, programs, related, teasers] = await Promise.all([
+    r.editorial_id ? getRelatedEvents({ modelId: r.editorial_id }, 8) : [],
+    r.editorial_id ? getProductionProgramsByModel(r.editorial_id) : [],
+    getCanonicalRelatedModels(r, 6),
+    getModelMarketTeasers(r.id)
   ]);
-  const latestReg = regs[0];
   const ptById = new Map((r.powertrains_detail || []).map((p: any) => [p.id, p]));
   const allTrims = (r.trims || []) as any[];
   const currentTrims = allTrims.filter((t) => String(t.status || "current").toLowerCase() !== "discontinued");
@@ -111,9 +121,6 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
     r.seats ? { k: "จำนวนที่นั่ง", v: `${r.seats} ที่นั่ง` } : null,
     r.payload_capacity_kg ? { k: "Payload", v: `${Number(r.payload_capacity_kg).toLocaleString()} kg` } : null,
   ].filter(Boolean) as { k: string; v: string }[];
-
-  const regRows = [...regs].reverse();
-  const regMax = Math.max(1, ...regRows.map((x: any) => Number(x.registrations) || 0));
 
   return <>
     {/* ---------- Zone A · สำหรับผู้ซื้อ ---------- */}
@@ -210,39 +217,24 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
         <div><div className="sfEyebrow">INDUSTRY LAYER</div><h2 style={{ color: "#fff" }}>รุ่นนี้ในฐานะสินค้าอุตสาหกรรม</h2></div>
       </div>
       <div className="sfIndGrid">
-        <p>
-          ยอดจดทะเบียนคือจำนวนคันที่จดทะเบียนใหม่ตามที่บันทึกไว้ในฐานข้อมูล TDR ไม่ใช่ยอดขายของผู้จำหน่าย
-          และไม่ได้ปรับด้วยค่าประมาณใด ๆ
-        </p>
+        <p>ข้อมูลตลาดและยอดจดทะเบียนแยกจาก MarketTrim โดยตั้งใจ รถที่ไม่มีข้อมูลจดทะเบียนยังอยู่ในแคตตาล็อกได้ครบ ส่วนกราฟและเครื่องมือวิเคราะห์เปิดสำหรับสมาชิก TDR Market.</p>
         <div>
-          {regRows.length ? <>
-            <div className="sfBars">
-              {regRows.map((x: any) => (
-                <div className="sfBarRow" key={x.period}>
-                  <span>{x.period}</span>
-                  <span className="sfBarTrack"><span className="sfBarFill" style={{ width: `${Math.max(2, Math.round((Number(x.registrations) || 0) / regMax * 100))}%` }} /></span>
-                  <em>{Number(x.registrations || 0).toLocaleString()}</em>
-                </div>
-              ))}
-            </div>
-            <div className="sfSrcNote">ล่าสุด {latestReg?.period} · {Number(latestReg?.registrations || 0).toLocaleString()} คัน · ที่มา: ตารางยอดจดทะเบียนของ TDR</div>
-          </> : (
-            <div>
-              <p className="sfMissing" style={{ fontSize: 15 }}>ยังไม่มีข้อมูลยอดจดทะเบียนของรุ่นนี้ในฐานข้อมูล</p>
-              <div className="sfSrcNote">เมื่อมีการนำเข้าข้อมูลจดทะเบียน กราฟรายเดือนจะขึ้นตรงนี้</div>
-            </div>
-          )}
+          <div className="sfEmpty">
+            <b>{teasers.length ? "มีข้อมูลตลาดสำหรับรุ่นนี้" : "ยังไม่มีข้อมูลตลาดที่จับคู่กับรุ่นนี้"}</b>
+            <span>{teasers.length ? `ครอบคลุม ${teasers.length} ช่วงเวลาล่าสุด · เปิดกราฟ แนวโน้ม และ cohort ใน TDR Market` : "สถานะนี้ไม่กระทบราคา สเปก หรือการแสดงรถในแคตตาล็อก"}</span>
+            <Link href="/reports">เปิด TDR Market →</Link>
+          </div>
         </div>
       </div>
       {programs.length ? (
-        <Link href={`/production/${r.slug}`} className="sfBridge">
+        <div className="sfBridge">
           <div>
             <div className="sfEyebrow">THAILAND PRODUCTION</div>
             <h3>รุ่นนี้มีข้อมูลการผลิตในประเทศไทย</h3>
-            <p>ดูโรงงาน Platform ปริมาณผลิต Local Content และ MiT ของรถรุ่นนี้</p>
+            <p>{programs.map((program: any) => [program.plants?.name_th || program.plants?.name_en, program.status].filter(Boolean).join(" · ")).join(" / ")}</p>
           </div>
-          <span>ดูข้อมูลการผลิต →</span>
-        </Link>
+          <span>Industry context</span>
+        </div>
       ) : null}
     </section>
 

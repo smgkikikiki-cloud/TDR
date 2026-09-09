@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import Link from "next/link";
-import { getBrands, getModels, getRecentRegistrationTotals } from "@/lib/data";
+import { getCanonicalBrands, getCanonicalModels } from "@/lib/canonical-data";
 import { displayName, initials } from "@/lib/display-name";
 import { byRelevance } from "@/lib/relevance";
 import { FilterDisclosure } from "@/components/FilterDisclosure";
@@ -15,21 +15,23 @@ const opts = (values: string[]): Opt[] => values.map((v) => ({ value: v, label: 
  *  carries Thai labels and is grouped by family. The stored values are the
  *  unchanged body_type strings — only the labels and the order are new. */
 const BODY_OPTIONS: Opt[] = [
-  { value: "Sedan", label: "ซีดาน", group: "รถเก๋ง" },
-  { value: "Hatchback", label: "แฮทช์แบ็ก", group: "รถเก๋ง" },
-  { value: "Coupe", label: "คูเป้", group: "รถเก๋ง" },
-  { value: "Crossover", label: "ครอสโอเวอร์ / SUV โมโนค็อก", group: "SUV" },
+  { value: "SEDAN", label: "ซีดาน", group: "รถเก๋ง" },
+  { value: "HATCHBACK", label: "แฮทช์แบ็ก", group: "รถเก๋ง" },
+  { value: "COUPE", label: "คูเป้", group: "รถเก๋ง" },
+  { value: "CROSSOVER", label: "ครอสโอเวอร์ / SUV โมโนค็อก", group: "SUV" },
   { value: "PPV", label: "PPV พื้นฐานกระบะ", group: "SUV" },
-  { value: "Offroad ladder frame", label: "SUV ออฟโรดโครงแชสซีส์", group: "SUV" },
-  { value: "Pickup truck", label: "กระบะ", group: "กระบะ · รถตู้ · MPV" },
+  { value: "OFFROAD", label: "SUV ออฟโรดโครงแชสซีส์", group: "SUV" },
+  { value: "PICKUP", label: "กระบะ", group: "กระบะ · รถตู้ · MPV" },
   { value: "MPV", label: "MPV", group: "กระบะ · รถตู้ · MPV" },
-  { value: "Van", label: "รถตู้", group: "กระบะ · รถตู้ · MPV" },
+  { value: "WAGON", label: "แวกอน", group: "กระบะ · รถตู้ · MPV" },
+  { value: "VAN", label: "รถตู้", group: "กระบะ · รถตู้ · MPV" },
+  { value: "TRUCK", label: "รถบรรทุก", group: "กระบะ · รถตู้ · MPV" },
 ];
 
 /** The quick row: every body type, ordered by how often it is what a Thai
  *  buyer came here for. Each chip sets the same single body value the rail
  *  sets — nothing here filters across several values. */
-const BODY_QUICK = ["Pickup truck", "PPV", "Crossover", "Offroad ladder frame", "Sedan", "Hatchback", "MPV", "Van", "Coupe"];
+const BODY_QUICK = ["PICKUP", "PPV", "CROSSOVER", "OFFROAD", "SEDAN", "HATCHBACK", "MPV", "VAN", "COUPE"];
 
 const FACETS: { key: string; label: string; note?: string; options: Opt[] }[] = [
   { key: "body", label: "ประเภทตัวถัง", options: BODY_OPTIONS },
@@ -105,12 +107,11 @@ function Card({ r }: { r: any }) {
 
 export default async function ModelsPage({ searchParams }: { searchParams: Promise<Record<string, string | undefined>> }) {
   const sp = await searchParams;
-  const [brands, all, sales] = await Promise.all([getBrands(150), getModels(600), getRecentRegistrationTotals(12)]);
+  const [brands, all] = await Promise.all([getCanonicalBrands(150), getCanonicalModels(600)]);
   const current = (all as any[]).filter((r) => r.status !== "discontinued");
-  // Most relevant first: how much it sells against the best seller of its own
-  // body type, plus how recently it launched. Not `updated_at`, which is
-  // whichever row an editor touched last.
-  const models = byRelevance(current.filter((r) => matches(r, sp)), sales);
+  // Public catalogue relevance uses recency only. Registration-derived
+  // ordering belongs to the entitled market tools.
+  const models = byRelevance(current.filter((r) => matches(r, sp)), new Map());
 
   const brandCount = new Set(current.map((r) => r.brands?.slug).filter(Boolean)).size;
   const assembled = current.filter((r) => r.production_type === "CKD" || r.production_type === "SKD").length;

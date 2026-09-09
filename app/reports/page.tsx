@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { getBrands, getEvents, getModels } from "@/lib/data";
+import { getEvents } from "@/lib/data";
+import { getCanonicalBrands, getCanonicalModels } from "@/lib/canonical-data";
 import { displayName } from "@/lib/display-name";
 
 export const dynamic = "force-dynamic";
@@ -13,11 +14,11 @@ const MEMBER_SITE = "";
  *  hidden, and what sits behind the blur is "••" and abstract shapes, never a
  *  fabricated number: the blur is a curtain, not a security boundary. */
 const QUESTIONS: { scope: string; question: string; pick: (r: any) => boolean }[] = [
-  { scope: "กระบะ · Double Cab", question: "เดือนที่แล้วกระบะรุ่นไหนขายนำ และทิ้งห่างรุ่นรองเท่าไหร่", pick: (r) => r.body_type === "Pickup truck" },
+  { scope: "กระบะ · Double Cab", question: "เดือนที่แล้วกระบะรุ่นไหนขายนำ และทิ้งห่างรุ่นรองเท่าไหร่", pick: (r) => r.body_type === "PICKUP" },
   { scope: "PPV พื้นฐานกระบะ", question: "PPV รุ่นไหนกำลังกินส่วนแบ่งของรุ่นอื่นอยู่", pick: (r) => r.body_type === "PPV" },
   { scope: "รถไฟฟ้า BEV", question: "รถไฟฟ้ารุ่นไหนขายได้จริง รุ่นไหนแค่เปิดตัวแล้วเงียบ", pick: (r) => (r.powertrains || []).includes("BEV") },
   { scope: "ไฮบริด HEV", question: "ไฮบริดแซงเครื่องยนต์สันดาปในเซกเมนต์ไหนไปแล้วบ้าง", pick: (r) => (r.powertrains || []).includes("HEV") },
-  { scope: "ครอสโอเวอร์", question: "ครอสโอเวอร์รุ่นไหนโตเร็วที่สุดใน 6 เดือนล่าสุด", pick: (r) => r.body_type === "Crossover" },
+  { scope: "ครอสโอเวอร์", question: "ครอสโอเวอร์รุ่นไหนโตเร็วที่สุดใน 6 เดือนล่าสุด", pick: (r) => r.body_type === "CROSSOVER" },
   { scope: "ประกอบไทย เทียบ นำเข้า", question: "รุ่นที่ประกอบในไทยเสียส่วนแบ่งให้รถนำเข้าไปเท่าไหร่", pick: (r) => r.production_type === "CKD" || r.production_type === "SKD" },
 ];
 
@@ -33,13 +34,10 @@ function BlurChart({ tall }: { tall?: boolean }) {
 }
 
 export default async function ReportsPage() {
-  const [brands, events, models] = await Promise.all([getBrands(250), getEvents(6), getModels(600)]);
+  const [brands, events, models] = await Promise.all([getCanonicalBrands(250), getEvents(6), getCanonicalModels(600)]);
   const current = (models as any[]).filter((r) => r.status !== "discontinued");
   const assembled = current.filter((r) => r.production_type === "CKD" || r.production_type === "SKD").length;
 
-  // Registration coverage is deliberately NOT read here. The raw fact table is
-  // member intelligence and the public report teaser must remain useful even
-  // when the browser role has no permission to inspect a single registration row.
   const cta = MEMBER_SITE || "#tdr-contact";
   const ctaLabel = MEMBER_SITE ? "เข้าสู่ TDR Report ↗" : "ขอเข้าถึงข้อมูลชุดเต็ม";
 
@@ -85,7 +83,7 @@ export default async function ReportsPage() {
       <div className="sfStripItem"><b className="sfNum">{brands.length.toLocaleString()}</b><span>แบรนด์</span></div>
       <div className="sfStripItem"><b className="sfNum">{assembled.toLocaleString()}</b><span>ประกอบในไทย</span></div>
       <div className="sfStripItem"><b className="sfNum">สมาชิก</b><span>ข้อมูลจดทะเบียน</span></div>
-      <div className="sfStripNote">ตัวเลขตลาดจริงไม่ถูกอ่านผ่าน public client; การเข้าถึงชุดข้อมูลเต็มจะผ่านสิทธิ์สมาชิกของ TDR</div>
+      <div className="sfStripNote">ตัวเลขตลาดจริงไม่ถูกอ่านผ่าน public client; การเข้าถึงชุดข้อมูลเต็มต้องผ่านสิทธิ์สมาชิกของ TDR</div>
     </div>
 
     <section className="sfBlock">
@@ -142,7 +140,7 @@ export default async function ReportsPage() {
         <tbody>
           {[
             [`แคตตาล็อกรถ ${current.length.toLocaleString()} รุ่น · สเปก ราคา รุ่นย่อย`, true, true],
-            ["โรงงานและรุ่นที่ผลิตในไทย", true, true],
+            ["บริบทการผลิตไทยที่ผูกกับหน้ารถ", true, true],
             ["ข่าวอุตสาหกรรม", true, true],
             ["ยอดจดทะเบียนรายรุ่น รายเดือน", false, true],
             ["แยกถึงระดับรุ่นย่อย (trim)", false, true],
