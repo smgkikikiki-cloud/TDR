@@ -24,6 +24,7 @@ ULTRA = "jaecoo.jaecoo_5_ev.j5.trim.ultra_bev"
 SOURCE = "official_jaecoo_th"
 TARGET = "jaecoo_th_home_price"
 URL = "https://www.omodajaecoo.co.th/th"
+DOCUMENT_ID = "sha256:" + "a" * 64
 
 
 def _data(tmp_path: Path) -> Path:
@@ -108,7 +109,11 @@ def _fetch(*, target_id: str = TARGET, role: str = "PRICE_LIST") -> dict:
             "target_id": target_id,
             "target_role": role,
             "source_id": SOURCE,
-            "document": {"url": URL},
+            "document": {
+                "url": URL,
+                "document_id": DOCUMENT_ID,
+                "content_hash": DOCUMENT_ID,
+            },
             "claims": [],
         }],
     }
@@ -149,6 +154,7 @@ def test_confirmed_list_replacement_closes_prior_and_appends_new(tmp_path: Path)
     assert row["effective_from"] == "2026-09-10"
     assert row["source"] == SOURCE
     assert row["source_ref"] == URL
+    assert row["source_document_id"] == DOCUMENT_ID
     assert row["reviewed_by"] == "owner"
 
     plan.apply()
@@ -249,6 +255,40 @@ def test_approval_must_be_human() -> None:
             "origin": "SYSTEM_EVIDENCE",
             "reviewed_at": "2026-09-10T03:00:00+00:00",
         })
+
+
+def test_p6_rejects_url_only_fetch_evidence(tmp_path: Path) -> None:
+    root = _data(tmp_path)
+    candidate = _candidate("pcand:url-only")
+    fetch = _fetch()
+    fetch["results"][0]["document"] = {"url": URL}
+
+    with pytest.raises(PromotionError, match="immutable document_id"):
+        build_promotion_plan(
+            data_dir=root,
+            year=YEAR,
+            candidate_book=CandidateBook([candidate]),
+            reconcile_report=_report(candidate.candidate_id, "CONFIRMED_REPLACEMENT"),
+            fetch_batch=fetch,
+            decisions={candidate.candidate_id: _approval(candidate.candidate_id)},
+        )
+
+
+def test_p6_rejects_document_hash_mismatch(tmp_path: Path) -> None:
+    root = _data(tmp_path)
+    candidate = _candidate("pcand:hash-mismatch")
+    fetch = _fetch()
+    fetch["results"][0]["document"]["content_hash"] = "sha256:" + "b" * 64
+
+    with pytest.raises(PromotionError, match="document_id/content_hash mismatch"):
+        build_promotion_plan(
+            data_dir=root,
+            year=YEAR,
+            candidate_book=CandidateBook([candidate]),
+            reconcile_report=_report(candidate.candidate_id, "CONFIRMED_REPLACEMENT"),
+            fetch_batch=fetch,
+            decisions={candidate.candidate_id: _approval(candidate.candidate_id)},
+        )
 
 
 def _open_campaign() -> dict:
