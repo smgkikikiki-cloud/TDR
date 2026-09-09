@@ -36,6 +36,13 @@ import re
 from typing import Iterable, Optional
 
 from .catalog import Catalog, DATA_DIR, DEFAULT_YEAR
+from .price_bundle import (
+    PriceBundleError,
+    candidate_state_id,
+    reconcile_id,
+    source_batch_id,
+    verify_declared_id,
+)
 from .price_reconcile import (
     CandidateBook,
     CandidateState,
@@ -78,6 +85,9 @@ class PromotionDecision:
     origin: str
     reviewed_at: str
     notes: str = ""
+    source_batch_id: str = ""
+    reconcile_id: str = ""
+    candidate_state_id: str = ""
 
     @classmethod
     def from_dict(cls, raw: dict) -> "PromotionDecision":
@@ -234,9 +244,19 @@ def load_promotion_bundle(path: Path | str) -> tuple[dict[str, PromotionDecision
     rows = payload.get("decisions")
     if not isinstance(rows, list):
         raise PromotionError(f"{path}: decisions must be an array")
+
+    lineage_fields = ("source_batch_id", "reconcile_id", "candidate_state_id")
+    lineage = {field: str(payload.get(field) or "").strip() for field in lineage_fields}
+    if any(lineage.values()) and not all(lineage.values()):
+        raise PromotionError(
+            f"{path}: review lineage must provide source_batch_id, reconcile_id and "
+            "candidate_state_id together")
+
     decisions: dict[str, PromotionDecision] = {}
     for raw in rows:
         decision = PromotionDecision.from_dict(raw)
+        if all(lineage.values()):
+            decision = replace(decision, **lineage)
         if decision.candidate_id in decisions:
             raise PromotionError(f"{path}: duplicate decision for {decision.candidate_id}")
         decisions[decision.candidate_id] = decision
@@ -307,6 +327,75 @@ def evidence_map(fetch_batch: dict) -> dict[tuple[str, str], EvidenceRef]:
                 f"{source_id}/{target_id}: fetch batch has multiple evidence documents")
         out[key] = ref
     return out
+
+
+def _verify_price_intel_lineage(*, candidate_book: CandidateBook,
+                                reconcile_report: dict,
+                                fetch_batch: dict,
+                                decisions: dict[str, PromotionDecision]) -> None:
+    """Fail if reviewed Price Intel artifacts come from different runs.
+
+    CandidateBook itself spans multiple 24h observations, so no candidate is
+    assigned one global run id. Instead P6 binds the exact P2-P4 batch, exact P5
+    report and exact post-P5 CandidateBook snapshot that the HUMAN review saw.
+    Legacy in-memory unit fixtures with no lineage anywhere remain supported;
+    once any artifact carries lineage, the whole chain becomes mandatory.
+    """
+    artifact_has_lineage = any((
+        fetch_batch.get("source_batch_id"),
+        reconcile_report.get("source_batch_id"),
+        reconcile_report.get("reconcile_id"),
+        reconcile_report.get("candidate_state_after_id"),
+        *(value for decision in decisions.values() for value in (
+            decision.source_batch_id,
+            decision.reconcile_id,
+            decision.candidate_state_id,
+        )),
+    ))
+    if not artifact_has_lineage:
+        return
+
+    try:
+        batch_id = source_batch_id(fetch_batch)
+        verify_declared_id(
+            fetch_batch, "source_batch_id", batch_id,
+            source="P6 fetch batch")
+        state_id = candidate_state_id(candidate_book.to_payload())
+        rec_id = reconcile_id(reconcile_report)
+        verify_declared_id(
+            reconcile_report, "reconcile_id", rec_id,
+            source="P6 reconcile report")
+    except PriceBundleError as exc:
+        raise PromotionError(str(exc)) from exc
+
+    if reconcile_report.get("source_batch_id") != batch_id:
+        raise PromotionError(
+            "P6 reconcile report does not belong to the supplied source batch")
+    if reconcile_report.get("candidate_state_after_id") != state_id:
+        raise PromotionError(
+            "P6 reconcile report does not produce the supplied CandidateBook snapshot")
+
+    expected = {
+        "source_batch_id": batch_id,
+        "reconcile_id": rec_id,
+        "candidate_state_id": state_id,
+    }
+    for candidate_id, decision in decisions.items():
+        actual = {
+            "source_batch_id": decision.source_batch_id,
+            "reconcile_id": decision.reconcile_id,
+            "candidate_state_id": decision.candidate_state_id,
+        }
+        missing = [field for field, value in actual.items() if not value]
+        if missing:
+            raise PromotionError(
+                f"{candidate_id}: HUMAN review is missing Price Intel lineage "
+                f"{missing}; regenerate review queue from current P5 artifacts")
+        for field, value in expected.items():
+            if actual[field] != value:
+                raise PromotionError(
+                    f"{candidate_id}: HUMAN review {field} {actual[field]} does not "
+                    f"match current artifact {value}; regenerate review queue")
 
 
 def _candidate_start(candidate: PriceCandidate, disposition: ReconcileDisposition) -> date:
@@ -514,6 +603,12 @@ def build_promotion_plan(*, data_dir: Path | str = DATA_DIR, year: int = DEFAULT
                          decisions: dict[str, PromotionDecision],
                          create_campaigns: Iterable[dict] = ()) -> PromotionPlan:
     """Validate everything and return a market-file-only write plan."""
+    _verify_price_intel_lineage(
+        candidate_book=candidate_book,
+        reconcile_report=reconcile_report,
+        fetch_batch=fetch_batch,
+        decisions=decisions,
+    )
     root = Path(data_dir)
     catalog = Catalog.load(root, year)
     ledger = PriceLedger.load(root, year=year, catalog=catalog)
