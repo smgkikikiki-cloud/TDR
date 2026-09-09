@@ -1,0 +1,54 @@
+name: Test TDR
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  typescript:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck and catalogue display checks
+        run: npm run check
+
+  vehicle-master-engine:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: automotive/vehicle_master
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: automotive/vehicle_master/requirements.txt
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt pytest
+
+      - name: Compile Python
+        run: python -m compileall -q vehreg pages tests
+
+      - name: Run tests
+        run: python -m pytest -q
