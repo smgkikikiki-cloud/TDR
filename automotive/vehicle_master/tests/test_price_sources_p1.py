@@ -56,6 +56,7 @@ def test_live_registry_separates_legacy_generic_source_from_jaecoo() -> None:
 
     jaecoo = registry.targets_for(source_id="official_jaecoo_th")
     assert {target.role for target in jaecoo} == {
+        TargetRole.PRICE_LIST,
         TargetRole.CURRENT_MODEL_PAGE,
         TargetRole.PROMOTION_INDEX,
         TargetRole.BLOG,
