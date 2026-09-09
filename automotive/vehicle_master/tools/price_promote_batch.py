@@ -34,7 +34,7 @@ from vehreg.price_promote import (  # noqa: E402
 )
 from vehreg.price_reconcile import CandidateBook  # noqa: E402
 # Temporary shared writer primitive until price authoring is split out of
-# product.py.  Both manual maintenance and P6 must serialize through the same
+# product.py. Both manual maintenance and P6 must serialize through the same
 # lock and use atomic temp-file replacement; having two independent filesystem
 # writers was a correctness bug, not merely code style.
 from vehreg.product import _write_json, _writer_lock  # noqa: E402
@@ -79,32 +79,44 @@ def _refuse_multiple_current_approvals(book: CandidateBook, decisions: dict) -> 
         selected[key] = candidate_id
 
 
-def _apply_with_rollback(plan: PromotionPlan, *, data_dir: Path, year: int) -> None:
-    """Serialize with manual writers and atomically replace each touched file.
+def _apply_with_rollback(plan: PromotionPlan) -> None:
+    """Atomically replace each touched file; caller holds the writer lock.
 
-    The plan has already been fully validated in memory.  We snapshot every
-    touched file before taking the common product-writer lock, then perform each
-    replacement through product._write_json (temp file + fsync + os.replace).
-    Ordinary exceptions restore the whole pre-apply set.  This removes the old
-    race where a manual correction and P6 could edit the same JSON concurrently,
-    and prevents a torn individual JSON file if the process dies mid-write.
+    The plan has already been fully validated while the same common lock was
+    held. We snapshot every touched file and perform each replacement through
+    product._write_json (temp file + fsync + os.replace). Ordinary exceptions
+    restore the complete pre-apply set. Holding the lock before *building* the
+    plan is essential: otherwise a manual correction could land after P6 read
+    canonical state but before P6 wrote its stale plan.
     """
-    before: dict[Path, bytes | None] = {}
-    for planned in plan.files:
-        before[planned.path] = planned.path.read_bytes() if planned.path.exists() else None
+    before: dict[Path, bytes | None] = {
+        planned.path: (planned.path.read_bytes() if planned.path.exists() else None)
+        for planned in plan.files
+    }
+    try:
+        for planned in plan.files:
+            _write_json(planned.path, planned.payload)
+    except Exception:
+        for path, payload in before.items():
+            if payload is None:
+                path.unlink(missing_ok=True)
+                continue
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(payload)
+        raise
 
-    with _writer_lock(data_dir, year):
-        try:
-            for planned in plan.files:
-                _write_json(planned.path, planned.payload)
-        except Exception:
-            for path, payload in before.items():
-                if payload is None:
-                    path.unlink(missing_ok=True)
-                    continue
-                path.parent.mkdir(parents=True, exist_ok=True)
-                path.write_bytes(payload)
-            raise
+
+def _build(*, data_dir: Path, year: int, book: CandidateBook,
+           reconcile: dict, fetch: dict, decisions: dict, campaigns: tuple[dict, ...]) -> PromotionPlan:
+    return build_promotion_plan(
+        data_dir=data_dir,
+        year=year,
+        candidate_book=book,
+        reconcile_report=reconcile,
+        fetch_batch=fetch,
+        decisions=decisions,
+        create_campaigns=campaigns,
+    )
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -125,19 +137,33 @@ def main(argv: list[str] | None = None) -> int:
     decisions, campaigns = load_promotion_bundle(args.review)
     _refuse_multiple_current_approvals(book, decisions)
 
-    plan = build_promotion_plan(
-        data_dir=args.data_dir,
-        year=args.year,
-        candidate_book=book,
-        reconcile_report=reconcile,
-        fetch_batch=fetch,
-        decisions=decisions,
-        create_campaigns=campaigns,
-    )
+    if args.apply:
+        # The common writer lock covers canonical read -> plan -> validation ->
+        # apply, so a manual writer cannot invalidate a P6 plan between phases.
+        with _writer_lock(args.data_dir, args.year):
+            plan = _build(
+                data_dir=args.data_dir,
+                year=args.year,
+                book=book,
+                reconcile=reconcile,
+                fetch=fetch,
+                decisions=decisions,
+                campaigns=campaigns,
+            )
+            _apply_with_rollback(plan)
+    else:
+        plan = _build(
+            data_dir=args.data_dir,
+            year=args.year,
+            book=book,
+            reconcile=reconcile,
+            fetch=fetch,
+            decisions=decisions,
+            campaigns=campaigns,
+        )
+
     manifest = plan.manifest(args.data_dir)
     manifest["applied"] = bool(args.apply)
-    if args.apply:
-        _apply_with_rollback(plan, data_dir=args.data_dir, year=args.year)
     if args.manifest_out:
         args.manifest_out.parent.mkdir(parents=True, exist_ok=True)
         args.manifest_out.write_text(
