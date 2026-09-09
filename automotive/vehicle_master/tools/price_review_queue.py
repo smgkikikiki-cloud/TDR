@@ -17,8 +17,11 @@ import argparse
 from datetime import datetime, timezone
 import json
 from pathlib import Path
+import sys
 
-from vehreg.price_reconcile import CandidateBook, ReconcileDisposition
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from vehreg.price_reconcile import CandidateBook, ReconcileDisposition  # noqa: E402
 
 
 PROMOTABLE = {
