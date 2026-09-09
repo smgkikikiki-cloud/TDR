@@ -1,22 +1,21 @@
 #!/usr/bin/env python3
-"""CI brake for an automated price PR: what a harvester is allowed to change.
+"""CI brake for automated price PRs in the consolidated TDR repository.
 
 A run that wants to rewrite fifty prices has a broken extractor, not fifty
 announcements. This refuses the PR instead of merging it.
 
 Checks, in order:
 
-1. every changed file is under ``market/`` -- no code, no catalog, no warehouse;
+1. every changed file is under the canonical ``market/`` tree;
 2. the ledger and campaigns still validate against the catalog;
-3. no more than ``--max-offers`` price rows changed in one PR;
+3. no more than ``--max-offers`` current list prices changed in one PR;
 4. every trim that already had a current list price still has one, and any
    change to an existing price is inside ``--max-move`` percent.
 
-When this engine lives inside another repository, pass the repository-root
-prefix so git can address files in the base revision correctly:
-
-    python tools/pricefeed_guard.py --base origin/main \
-      --repo-prefix automotive/vehicle_master/
+Generated price branches are compared directly against the declared base tree,
+not via merge-base traversal. Git object paths are repository-root-relative, so
+the guard supports both automatic embedded-engine prefix detection and an
+explicit ``--repo-prefix automotive/vehicle_master/`` override.
 """
 
 from __future__ import annotations
@@ -36,48 +35,130 @@ from vehreg.pricing import PriceLedger  # noqa: E402
 ALLOWED_PREFIX = "vehreg/data/{year}/market/"
 
 
+def _git(args: list[str], *, check: bool = True) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(["git", *args], capture_output=True, text=True, check=check)
+
+
+def _auto_repo_prefix() -> str:
+    """Path from repository root to the current working directory."""
+    prefix = _git(["rev-parse", "--show-prefix"]).stdout.strip()
+    return prefix.rstrip("/")
+
+
 def repo_path(repo_prefix: str, path: str) -> str:
     """Return a repository-root path for a path inside the embedded engine."""
     prefix = repo_prefix.strip("/")
-    return f"{prefix}/{path}" if prefix else path
+    clean = path.lstrip("/")
+    return f"{prefix}/{clean}" if prefix else clean
+
+
+def _effective_repo_prefix(repo_prefix: str | None) -> str:
+    return _auto_repo_prefix() if repo_prefix is None else repo_prefix.strip("/")
 
 
 def changed_files(base: str) -> list[str]:
-    out = subprocess.run(
-        ["git", "diff", "--name-only", f"{base}...HEAD"],
-        capture_output=True,
-        text=True,
-        check=True,
-    )
+    """Return repo-root-relative files changed directly between base and HEAD."""
+    root = _git(["rev-parse", "--show-toplevel"]).stdout.strip()
+    out = _git(["-C", root, "diff", "--name-only", base, "HEAD"])
     return [line for line in out.stdout.splitlines() if line.strip()]
 
 
-def ledger_at(revision: str, year: int, *, repo_prefix: str = "") -> dict[str, int]:
-    """trim_id -> current list price, as of today, at one git revision."""
-    price_dir = repo_path(repo_prefix, f"vehreg/data/{year}/market/prices")
-    prices = subprocess.run(
-        ["git", "show", f"{revision}:{price_dir}"],
-        capture_output=True,
-        text=True,
+def _list_price_rows_at(
+    revision: str,
+    year: int,
+    *,
+    repo_prefix: str | None = None,
+) -> list[dict]:
+    prefix = _effective_repo_prefix(repo_prefix)
+    folder = repo_path(prefix, f"vehreg/data/{year}/market/prices")
+    listed = _git(
+        [
+            "ls-tree",
+            "-r",
+            "--name-only",
+            "--full-name",
+            revision,
+            "--",
+            f":(top){folder}",
+        ],
+        check=False,
     )
-    if prices.returncode != 0:
-        return {}
-    amounts: dict[str, int] = {}
-    for name in prices.stdout.splitlines()[2:]:
-        name = name.strip()
-        if not name.endswith(".json"):
+    if listed.returncode != 0:
+        return []
+
+    rows: list[dict] = []
+    for path in listed.stdout.splitlines():
+        path = path.strip()
+        if not path.endswith(".json"):
             continue
-        blob = subprocess.run(
-            ["git", "show", f"{revision}:{price_dir}/{name}"],
-            capture_output=True,
-            text=True,
-        )
+        blob = _git(["show", f"{revision}:{path}"], check=False)
         if blob.returncode != 0:
             continue
-        for row in json.loads(blob.stdout).get("prices", []):
-            if row.get("price_type") == "LIST_PRICE":
-                amounts.setdefault(row["trim_id"], row["amount_thb"])
-    return amounts
+        try:
+            payload = json.loads(blob.stdout)
+        except json.JSONDecodeError:
+            continue
+        for row in payload.get("prices", []):
+            if isinstance(row, dict) and row.get("price_type") == "LIST_PRICE":
+                rows.append(row)
+    return rows
+
+
+def _resolve_current_list(rows: list[dict], *, as_of: date) -> dict[str, int]:
+    """Resolve current list price per trim using the ledger's latest-start rule."""
+    day = as_of.isoformat()
+    by_trim: dict[str, list[dict]] = {}
+    for row in rows:
+        trim_id = str(row.get("trim_id") or "")
+        if not trim_id or row.get("retracted_at"):
+            continue
+        start = row.get("effective_from") or row.get("observed_at")
+        if not start or start > day:
+            continue
+        by_trim.setdefault(trim_id, []).append(row)
+
+    out: dict[str, int] = {}
+    for trim_id, candidates in by_trim.items():
+        latest_start = max(
+            row.get("effective_from") or row.get("observed_at")
+            for row in candidates
+        )
+        latest = [
+            row
+            for row in candidates
+            if (row.get("effective_from") or row.get("observed_at")) == latest_start
+        ]
+        active = [
+            row
+            for row in latest
+            if not row.get("effective_to") or row.get("effective_to") >= day
+        ]
+        amounts = {
+            int(row["amount_thb"])
+            for row in active
+            if row.get("amount_thb") is not None
+        }
+        if len(amounts) > 1:
+            raise ValueError(
+                f"{trim_id}: base revision has conflicting LIST_PRICE at {latest_start}"
+            )
+        if amounts:
+            out[trim_id] = next(iter(amounts))
+    return out
+
+
+def ledger_at(
+    revision: str,
+    year: int,
+    *,
+    as_of: date | None = None,
+    repo_prefix: str | None = None,
+) -> dict[str, int]:
+    """trim_id -> current list price at one git revision."""
+    return _resolve_current_list(
+        _list_price_rows_at(revision, year, repo_prefix=repo_prefix),
+        as_of=as_of or date.today(),
+    )
 
 
 def check(
@@ -87,22 +168,29 @@ def check(
     data_dir: Path,
     max_offers: int,
     max_move: float,
-    repo_prefix: str = "",
+    repo_prefix: str | None = None,
 ) -> list[str]:
     problems: list[str] = []
-    allowed = repo_path(repo_prefix, ALLOWED_PREFIX.format(year=year))
+    prefix = _effective_repo_prefix(repo_prefix)
+    allowed = repo_path(prefix, ALLOWED_PREFIX.format(year=year))
     for path in changed_files(base):
         if not path.startswith(allowed):
-            problems.append(f"{path}: outside {allowed}; a price PR changes data only")
+            problems.append(
+                f"{path}: outside {allowed}; a price PR changes data only"
+            )
 
     catalog = Catalog.load(data_dir, year)
     ledger = PriceLedger.load(data_dir, year=year, catalog=catalog)
     problems.extend(ledger.validate())
 
-    before = ledger_at(base, year, repo_prefix=repo_prefix)
+    try:
+        before = ledger_at(base, year, repo_prefix=prefix)
+    except ValueError as exc:
+        problems.append(str(exc))
+        before = {}
     after = {
         trim_id: row.amount_thb
-        for trim_id in {r.trim_id for r in ledger.records}
+        for trim_id in {record.trim_id for record in ledger.records}
         for row in [ledger.current_list_price(trim_id, as_of=date.today())]
         if row is not None
     }
@@ -143,8 +231,11 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument(
         "--repo-prefix",
-        default="",
-        help="repository-root prefix containing this engine, e.g. automotive/vehicle_master/",
+        default=None,
+        help=(
+            "repository-root prefix containing this engine; defaults to git's "
+            "current working-directory prefix"
+        ),
     )
     args = parser.parse_args(argv)
     problems = check(

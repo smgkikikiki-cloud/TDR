@@ -23,6 +23,16 @@ jobs:
       - name: Install Vehicle Master dependencies
         working-directory: automotive/vehicle_master
         run: python -m pip install -r requirements.txt pytest
+      - name: Fetch base tree for automated price PR
+        if: github.event_name == 'pull_request' && startsWith(github.head_ref, 'pricebot/')
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --no-tags --depth=1 origin "${{ github.event.pull_request.base.sha }}"
+      - name: Guard automated price PR
+        if: github.event_name == 'pull_request' && startsWith(github.head_ref, 'pricebot/')
+        working-directory: automotive/vehicle_master
+        run: python tools/pricefeed_guard.py --base "${{ github.event.pull_request.base.sha }}" --repo-prefix automotive/vehicle_master/
       - name: Compile Vehicle Master
         working-directory: automotive/vehicle_master
         run: python -m compileall -q vehreg pages tests

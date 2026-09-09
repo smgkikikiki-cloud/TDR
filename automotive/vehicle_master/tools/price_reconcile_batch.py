@@ -2,7 +2,7 @@
 """Reconcile one P4 fetch batch against canonical PriceLedger without writing it.
 
 The input is JSON produced by ``tools/pricefetch_targets.py`` with both
-``--extract-prices`` and ``--match-trims``.  P5 writes only its own staging
+``--extract-prices`` and ``--match-trims``. P5 writes only its own staging
 candidate-state JSON and an optional decision report. Canonical PriceLedger,
 vehicle identity, campaigns and serving data remain untouched.
 
@@ -29,6 +29,13 @@ import sys
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from vehreg.catalog import Catalog, DATA_DIR, DEFAULT_YEAR  # noqa: E402
+from vehreg.price_bundle import (  # noqa: E402
+    PriceBundleError,
+    candidate_state_id,
+    reconcile_id,
+    source_batch_id,
+    verify_declared_id,
+)
 from vehreg.price_match import (  # noqa: E402
     TrimMatchMethod,
     TrimMatchResult,
@@ -58,6 +65,13 @@ def _load_json(path: Path) -> dict:
     if not isinstance(payload, dict):
         raise ReconcileError(f"{path}: root must be an object")
     return payload
+
+
+def _verify_declared(payload: dict, field: str, computed: str, *, source: str) -> str:
+    try:
+        return verify_declared_id(payload, field, computed, source=source)
+    except PriceBundleError as exc:
+        raise ReconcileError(str(exc)) from exc
 
 
 def _document(raw: dict) -> SourceDocument:
@@ -119,10 +133,14 @@ def _match(raw: dict) -> TrimMatchResult:
         raise ReconcileError(f"invalid P4 match diagnostic: {exc}") from exc
 
 
-def _candidate_book(path: Path | None) -> CandidateBook:
+def _candidate_book_payload(path: Path | None) -> tuple[CandidateBook, dict]:
     if path is None or not path.exists():
-        return CandidateBook()
-    return CandidateBook.from_payload(_load_json(path))
+        payload = CandidateBook().to_payload()
+        return CandidateBook(), payload
+    payload = _load_json(path)
+    state_id = candidate_state_id(payload)
+    _verify_declared(payload, "candidate_state_id", state_id, source=str(path))
+    return CandidateBook.from_payload(payload), payload
 
 
 def _human_binding(decisions: dict[str, dict], claim_id: str) -> tuple[str | None, str | None]:
@@ -149,13 +167,16 @@ def main(argv: list[str] | None = None) -> int:
     payload = _load_json(args.input_path)
     if not payload.get("extract_prices") or not payload.get("match_trims"):
         parser.error("input must come from pricefetch_targets.py --extract-prices --match-trims")
+    batch_id = source_batch_id(payload)
+    _verify_declared(payload, "source_batch_id", batch_id, source=str(args.input_path))
     rows = payload.get("results")
     if not isinstance(rows, list):
         raise ReconcileError("fetch batch results must be an array")
 
     catalog = Catalog.load(args.data_dir, args.year)
     ledger = PriceLedger.load(args.data_dir, year=args.year, catalog=catalog)
-    book = _candidate_book(args.candidate_state_in)
+    book, state_before_payload = _candidate_book_payload(args.candidate_state_in)
+    state_before_id = candidate_state_id(state_before_payload)
     decisions = load_decisions(args.decisions) if args.decisions else {}
 
     observations: list[ReconcileObservation] = []
@@ -199,13 +220,25 @@ def main(argv: list[str] | None = None) -> int:
             "decision": decision.as_dict(),
         })
 
+    state_after_payload = result.candidate_book.to_payload()
+    state_after_id = candidate_state_id(state_after_payload)
     report = {
         "schema_version": 1,
         "source_batch": str(args.input_path),
+        "source_batch_id": batch_id,
+        "candidate_state_before_id": state_before_id,
+        "candidate_state_after_id": state_after_id,
         "year": args.year,
         "summary": result.summary(),
         "decisions": decision_rows,
     }
+    report["reconcile_id"] = reconcile_id(report)
+
+    state_after_payload.update({
+        "candidate_state_id": state_after_id,
+        "last_source_batch_id": batch_id,
+        "last_reconcile_id": report["reconcile_id"],
+    })
 
     if args.out:
         args.out.parent.mkdir(parents=True, exist_ok=True)
@@ -214,12 +247,16 @@ def main(argv: list[str] | None = None) -> int:
     if args.candidate_state_out:
         args.candidate_state_out.parent.mkdir(parents=True, exist_ok=True)
         args.candidate_state_out.write_text(
-            json.dumps(result.candidate_book.to_payload(), ensure_ascii=False, indent=2) + "\n",
+            json.dumps(state_after_payload, ensure_ascii=False, indent=2) + "\n",
             encoding="utf-8",
         )
 
     print(json.dumps({
         **result.summary(),
+        "source_batch_id": batch_id,
+        "candidate_state_before_id": state_before_id,
+        "candidate_state_after_id": state_after_id,
+        "reconcile_id": report["reconcile_id"],
         "out": str(args.out) if args.out else None,
         "candidate_state_out": (str(args.candidate_state_out)
                                 if args.candidate_state_out else None),

@@ -2,10 +2,16 @@
 """Fetch registered OEM targets into SourceDocument evidence.
 
 By default this command keeps the P2 fetch-only behaviour. Pass
-``--extract-prices`` to run the deterministic P3 extractor against newly fetched
-documents. Pass ``--match-trims`` as well to run P4 canonical MarketTrim
-matching and attach diagnostics to each PriceClaim. No mode writes PriceLedger,
-the catalog, or serving data.
+``--extract-prices`` to run the deterministic P3 extractor against fetched
+documents. In extraction mode an HTTP 304 is revalidated with one unconditional
+GET so unchanged price text can count as a real later observation for P5's 24h
+rule. Pass ``--match-trims`` as well to run P4 canonical MarketTrim matching.
+No mode writes PriceLedger, the catalog, or serving data.
+
+Discovered promotion detail URLs are durable fetch state. Once an index exposes
+a promotion page, later polls keep watching that page even when the index itself
+returns 304. This prevents a detail-page price edit from disappearing behind an
+unchanged discovery index.
 
 Examples:
 
@@ -28,25 +34,34 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from tools import robots_check  # noqa: E402
 from vehreg.catalog import Catalog, DATA_DIR, DEFAULT_YEAR  # noqa: E402
+from vehreg.price_bundle import source_batch_id  # noqa: E402
 from vehreg.price_extract import extract_oem_price_claims  # noqa: E402
 from vehreg.price_fetch import (  # noqa: E402
     ADAPTERS,
+    DiscoveredTarget,
     FetchError,
     FetchResult,
     FetchState,
     adapter_for,
 )
 from vehreg.price_match import match_trim_diagnostic  # noqa: E402
-from vehreg.price_sources import SourceTarget, load_source_target_registry  # noqa: E402
+from vehreg.price_sources import (  # noqa: E402
+    SourceTarget,
+    TargetRole,
+    load_source_target_registry,
+)
 
 
-def _load_states(path: Path | None) -> dict[str, FetchState]:
+def _load_state_bundle(path: Path | None) -> tuple[
+        dict[str, FetchState], dict[str, DiscoveredTarget]]:
     if path is None or not path.exists():
-        return {}
+        return {}, {}
     payload = json.loads(path.read_text(encoding="utf-8"))
-    rows = payload.get("states", [])
-    out: dict[str, FetchState] = {}
-    for row in rows:
+    if payload.get("schema_version", 1) != 1:
+        raise FetchError(f"{path}: unsupported state schema_version")
+
+    states: dict[str, FetchState] = {}
+    for row in payload.get("states", []):
         state = FetchState(
             target_id=str(row.get("target_id") or ""),
             content_hash=str(row.get("content_hash") or ""),
@@ -56,8 +71,29 @@ def _load_states(path: Path | None) -> dict[str, FetchState]:
         )
         if not state.target_id:
             raise FetchError(f"{path}: state row missing target_id")
-        out[state.target_id] = state
-    return out
+        states[state.target_id] = state
+
+    discovered: dict[str, DiscoveredTarget] = {}
+    rows = payload.get("discovered_targets", [])
+    if not isinstance(rows, list):
+        raise FetchError(f"{path}: discovered_targets must be an array")
+    for row in rows:
+        if not isinstance(row, dict):
+            raise FetchError(f"{path}: discovered target must be an object")
+        item = DiscoveredTarget(
+            id=str(row.get("id") or "").strip(),
+            source_id=str(row.get("source_id") or "").strip(),
+            url=str(row.get("url") or "").strip(),
+            role=TargetRole.parse(row.get("role")),
+            model_hint=str(row.get("model_hint") or "").strip(),
+        )
+        if not item.id or not item.source_id or not item.url:
+            raise FetchError(f"{path}: discovered target missing id/source_id/url")
+        previous = discovered.get(item.id)
+        if previous is not None and previous != item:
+            raise FetchError(f"{path}: duplicate discovered target id {item.id}")
+        discovered[item.id] = item
+    return states, discovered
 
 
 def _state_dict(state: FetchState) -> dict:
@@ -67,6 +103,16 @@ def _state_dict(state: FetchState) -> dict:
         "first_seen_at": state.first_seen_at,
         "etag": state.etag,
         "last_modified": state.last_modified,
+    }
+
+
+def _discovered_dict(item: DiscoveredTarget) -> dict:
+    return {
+        "id": item.id,
+        "source_id": item.source_id,
+        "url": item.url,
+        "role": item.role.value,
+        "model_hint": item.model_hint,
     }
 
 
@@ -139,6 +185,17 @@ def _snapshot(result: FetchResult, folder: Path | None) -> str:
     return str(path)
 
 
+def _persisted_selected(item: DiscoveredTarget, *, sources: list[str] | None,
+                        target_ids: list[str] | None) -> bool:
+    if sources and item.source_id not in sources:
+        return False
+    if target_ids and not any(
+            item.id == target_id or item.id.startswith(target_id + ":")
+            for target_id in target_ids):
+        return False
+    return True
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--data-dir", type=Path, default=DATA_DIR)
@@ -150,7 +207,8 @@ def main(argv: list[str] | None = None) -> int:
                         help="run P3 deterministic extraction on fetched documents")
     parser.add_argument("--match-trims", action="store_true",
                         help="run P4 canonical MarketTrim matching; requires --extract-prices")
-    parser.add_argument("--max-discovered", type=int, default=20)
+    parser.add_argument("--max-discovered", type=int, default=20,
+                        help="maximum newly discovered targets to follow in this run")
     parser.add_argument("--state-in", type=Path, default=None)
     parser.add_argument("--state-out", type=Path, default=None)
     parser.add_argument("--out", type=Path, default=None)
@@ -161,7 +219,7 @@ def main(argv: list[str] | None = None) -> int:
         parser.error("--match-trims requires --extract-prices")
 
     registry = load_source_target_registry(args.data_dir, args.year)
-    states = _load_states(args.state_in)
+    states, persisted_discovered = _load_state_bundle(args.state_in)
     robots_cache: dict[str, str] = {}
     catalog = Catalog.load(args.data_dir, args.year) if args.match_trims else None
     siblings_by_model = None
@@ -176,9 +234,16 @@ def main(argv: list[str] | None = None) -> int:
     if not targets:
         raise FetchError("no enabled P2 targets matched")
 
-    queue: list[SourceTarget] = list(targets)
+    persisted_targets = [
+        item.as_source_target()
+        for item in sorted(persisted_discovered.values(), key=lambda row: row.id)
+        if args.follow_discovery and _persisted_selected(
+            item, sources=args.source, target_ids=args.target)
+    ]
+    queue: list[SourceTarget] = [*targets, *persisted_targets]
     static_ids = {target.id for target in targets}
-    seen_urls = {target.url for target in targets}
+    seen_urls = {target.url for target in queue}
+    queued_ids = {target.id for target in queue}
     rows: list[dict] = []
     skipped_robots = 0
     followed = 0
@@ -192,7 +257,14 @@ def main(argv: list[str] | None = None) -> int:
             skipped_robots += 1
             continue
         adapter = adapter_for(registry, target)
-        result = adapter.fetch(target, previous=states.get(target.id))
+        result = adapter.fetch(
+            target,
+            previous=states.get(target.id),
+            # P5 confirmation requires a fresh sighting after 24h. A 304 proves
+            # representation stability but carries no body to re-extract, so
+            # extraction mode revalidates with one unconditional GET.
+            refetch_not_modified=args.extract_prices,
+        )
         states[target.id] = result.state
         snapshot_ref = _snapshot(result, args.snapshot_dir)
 
@@ -224,25 +296,22 @@ def main(argv: list[str] | None = None) -> int:
             "claims": claims,
             "extraction_warnings": extraction_warnings,
             "discovered_targets": [
-                {
-                    "id": item.id,
-                    "source_id": item.source_id,
-                    "url": item.url,
-                    "role": item.role.value,
-                    "model_hint": item.model_hint,
-                }
-                for item in result.discovered_targets
+                _discovered_dict(item) for item in result.discovered_targets
             ],
         })
 
         if not args.follow_discovery:
             continue
         for item in result.discovered_targets:
+            # Discovery is durable. Do not make future polling depend on the
+            # index itself returning 200 again.
+            persisted_discovered[item.id] = item
             if followed >= args.max_discovered:
-                break
-            if item.url in seen_urls:
+                continue
+            if item.url in seen_urls or item.id in queued_ids:
                 continue
             seen_urls.add(item.url)
+            queued_ids.add(item.id)
             queue.append(item.as_source_target())
             followed += 1
 
@@ -257,6 +326,7 @@ def main(argv: list[str] | None = None) -> int:
         "robots": robots_cache,
         "skipped_robots": skipped_robots,
     }
+    payload["source_batch_id"] = source_batch_id(payload)
 
     if args.out:
         args.out.parent.mkdir(parents=True, exist_ok=True)
@@ -267,15 +337,21 @@ def main(argv: list[str] | None = None) -> int:
         args.state_out.write_text(json.dumps({
             "schema_version": 1,
             "states": [_state_dict(states[key]) for key in sorted(states)],
+            "discovered_targets": [
+                _discovered_dict(persisted_discovered[key])
+                for key in sorted(persisted_discovered)
+            ],
         }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     print(json.dumps({
+        "source_batch_id": payload["source_batch_id"],
         "fetched": sum(1 for row in rows if row["document"] is not None),
         "not_modified": sum(1 for row in rows if row["not_modified"]),
         "claims": claims_total,
         "extraction_warnings": extraction_warnings_total,
         "match_counts": match_counts if args.match_trims else None,
         "followed_discovered": followed,
+        "persisted_discovered": len(persisted_discovered),
         "skipped_robots": skipped_robots,
         "out": str(args.out) if args.out else None,
         "state_out": str(args.state_out) if args.state_out else None,

@@ -30,6 +30,7 @@ from typing import Iterable, Optional
 
 from .price_match import TrimMatchResult, TrimMatchState
 from .price_sources import TargetRole
+from .price_time import parse_aware_timestamp, thailand_business_date
 from .pricefeed import PriceClaim, SourceDocument
 from .pricing import PriceLedger, PriceRecord, PriceType
 
@@ -365,16 +366,7 @@ class ReconcileBatchResult:
 
 
 def _parse_timestamp(raw: object) -> Optional[datetime]:
-    if not raw:
-        return None
-    text = str(raw).strip().replace("Z", "+00:00")
-    try:
-        value = datetime.fromisoformat(text)
-    except ValueError:
-        return None
-    if value.tzinfo is None or value.utcoffset() is None:
-        return None
-    return value
+    return parse_aware_timestamp(raw)
 
 
 def _iso_timestamp(value: datetime) -> str:
@@ -712,7 +704,8 @@ def _preflight(observation: ReconcileObservation) -> Optional[ReconcileDecision]
             observation.campaign_id and observation.option_id):
         reasons = [ReconcileReason.CAMPAIGN_SCOPE_REQUIRED]
         observed = observation.observed_at()
-        if observed is not None and _explicitly_closed(claim, observed.date()):
+        if observed is not None and _explicitly_closed(
+                claim, thailand_business_date(observed)):
             reasons.append(ReconcileReason.EXPLICIT_WINDOW_CLOSED)
         return ReconcileDecision(
             ReconcileDisposition.REVIEW,
@@ -734,7 +727,7 @@ def reconcile_one(observation: ReconcileObservation, ledger: PriceLedger, *,
     assert observation.match.trim_id is not None
     observed_at = observation.observed_at()
     assert observed_at is not None
-    when = observed_at.date()
+    when = thailand_business_date(observed_at)
     scope = replacement_scope(observation)
     assert scope is not None
 
@@ -851,7 +844,7 @@ def _conflict_key(observation: ReconcileObservation) -> Optional[tuple]:
     observed = observation.observed_at()
     if observed is None:
         return None
-    when = observed.date()
+    when = thailand_business_date(observed)
     if not _claim_live_on(observation.claim, when):
         return None
     if not _role_can_drive_current(observation):
