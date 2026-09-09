@@ -18,7 +18,7 @@ Required inputs:
 from __future__ import annotations
 
 import argparse
-from datetime import datetime
+from datetime import date, datetime
 import json
 from pathlib import Path
 import sys
@@ -80,6 +80,36 @@ def _refuse_multiple_current_approvals(book: CandidateBook, decisions: dict) -> 
         selected[key] = candidate_id
 
 
+def _refuse_orphan_campaign_creations(
+        book: CandidateBook, decisions: dict, campaigns: tuple[dict, ...]) -> None:
+    """Every new canonical campaign must be used by an approved candidate.
+
+    ``create_campaigns`` is an implementation aid for a reviewed offer, not a
+    second free-form campaign authoring API.  An unrelated campaign bundled next
+    to one approved price would otherwise land canonical data without any P5
+    candidate/evidence chain authorizing it.
+    """
+    used = {
+        candidate.campaign_id
+        for candidate_id, decision in decisions.items()
+        if decision.action is PromotionAction.APPROVE
+        for candidate in [book.candidates.get(candidate_id)]
+        if candidate is not None and candidate.campaign_id
+    }
+    seen: set[str] = set()
+    for raw in campaigns:
+        campaign_id = str(raw.get("id") or "").strip() if isinstance(raw, dict) else ""
+        if not campaign_id:
+            raise PromotionError("created campaign requires id")
+        if campaign_id in seen:
+            raise PromotionError(f"duplicate created campaign {campaign_id}")
+        seen.add(campaign_id)
+        if campaign_id not in used:
+            raise PromotionError(
+                f"campaign {campaign_id} is not referenced by any approved candidate; "
+                "remove the orphan campaign or review its price candidate first")
+
+
 def _aware_timestamp(raw: str, *, candidate_id: str, field: str) -> datetime:
     try:
         stamp = datetime.fromisoformat(str(raw).replace("Z", "+00:00"))
@@ -91,18 +121,69 @@ def _aware_timestamp(raw: str, *, candidate_id: str, field: str) -> datetime:
     return stamp
 
 
+def _scope_current(ledger: PriceLedger, candidate, when: date):
+    return ledger.current_price_for_scope(
+        candidate.trim_id,
+        candidate.price_type,
+        as_of=when,
+        campaign_id=candidate.campaign_id,
+        option_id=candidate.option_id,
+    )
+
+
+def _validate_campaign_binding(*, catalog: Catalog, ledger: PriceLedger,
+                               candidate, disposition: ReconcileDisposition | None,
+                               reviewed_at: datetime) -> None:
+    if candidate.price_type not in {PriceType.CAMPAIGN_PRICE, PriceType.FINANCE_PRICE}:
+        return
+    if not candidate.campaign_id or not candidate.option_id:
+        raise PromotionError(
+            f"{candidate.candidate_id}: {candidate.price_type.value} promotion requires "
+            "canonical campaign_id + option_id; rerun binding/P5")
+    campaign = ledger.campaigns.get(candidate.campaign_id)
+    if campaign is None:
+        raise PromotionError(
+            f"{candidate.candidate_id}: campaign {candidate.campaign_id} is not canonical "
+            "or staged in this reviewed bundle")
+    trim_brand = catalog.brand_for_trim(candidate.trim_id).id
+    if campaign.brand_id != trim_brand:
+        raise PromotionError(
+            f"{candidate.candidate_id}: campaign {candidate.campaign_id} belongs to "
+            f"brand {campaign.brand_id}, not trim brand {trim_brand}")
+    option = campaign.option(candidate.option_id)
+    if option is None:
+        raise PromotionError(
+            f"{candidate.candidate_id}: campaign {candidate.campaign_id} has no option "
+            f"{candidate.option_id}")
+    if disposition is ReconcileDisposition.HISTORICAL_ONLY:
+        return
+
+    # Current offers must still be bookable when the human approves them. A
+    # genuinely future scheduled offer is checked on its literal start instead.
+    check_day = reviewed_at.date()
+    if candidate.effective_from:
+        start = date.fromisoformat(candidate.effective_from)
+        if start > check_day:
+            check_day = start
+    if not campaign.live_on(check_day) or not option.open_on(check_day):
+        raise PromotionError(
+            f"{candidate.candidate_id}: campaign/option is not open on {check_day}; "
+            "rerun P5 instead of publishing a closed or not-yet-valid offer")
+
+
 def _refuse_stale_replacements(*, data_dir: Path, year: int,
                                book: CandidateBook, reconcile: dict,
-                               decisions: dict) -> None:
+                               decisions: dict,
+                               campaigns: tuple[dict, ...] = ()) -> None:
     """Fail if approval/P5 state is stale against current canonical truth.
 
     The shared writer lock prevents changes while P6 is running, but it cannot
     make an old P5 decision or an old HUMAN approval fresh again. A review must
     be made after the candidate was observed, and a confirmed replacement must
     be reviewed after confirmation. Immediately before write, its expected
-    prior amount must also remain canonical current truth on the confirmation
-    date. Any mismatch means rerun P5/review rather than silently overriding a
-    newer canonical price.
+    prior amount must also remain canonical current truth. SAFE_CANDIDATE is
+    protected too: if a stream that P5 saw as empty gained canonical truth in
+    the meantime, the candidate must go back through P5 rather than overlap it.
 
     Historical canonical rows need a complete literal window. Knowing only that
     an offer ended does not tell us when it began, so P6 must not invent a start
@@ -111,6 +192,15 @@ def _refuse_stale_replacements(*, data_dir: Path, year: int,
     dispositions = disposition_map(reconcile)
     catalog = Catalog.load(data_dir, year)
     ledger = PriceLedger.load(data_dir, year=year, catalog=catalog)
+
+    # New reviewed campaign identities participate in the same freshness and
+    # semantic checks as campaigns already on disk. Duplicate IDs fail closed.
+    for raw in campaigns:
+        try:
+            ledger.add_campaign_payload(
+                {"campaigns": [raw]}, source="<P6 staged reviewed campaign>")
+        except Exception as exc:
+            raise PromotionError(str(exc)) from exc
 
     for candidate_id, decision in decisions.items():
         if decision.action is not PromotionAction.APPROVE:
@@ -122,6 +212,8 @@ def _refuse_stale_replacements(*, data_dir: Path, year: int,
         disposition = dispositions.get(candidate_id)
         first_seen = _aware_timestamp(
             candidate.first_seen_at, candidate_id=candidate_id, field="first_seen_at")
+        last_seen = _aware_timestamp(
+            candidate.last_seen_at, candidate_id=candidate_id, field="last_seen_at")
         reviewed_at = _aware_timestamp(
             decision.reviewed_at, candidate_id=candidate_id, field="reviewed_at")
         if reviewed_at < first_seen:
@@ -129,11 +221,13 @@ def _refuse_stale_replacements(*, data_dir: Path, year: int,
                 f"{candidate_id}: HUMAN approval predates candidate first_seen_at; "
                 "review the current candidate again")
 
-        if candidate.price_type in {PriceType.CAMPAIGN_PRICE, PriceType.FINANCE_PRICE}:
-            if not candidate.campaign_id or not candidate.option_id:
-                raise PromotionError(
-                    f"{candidate_id}: {candidate.price_type.value} promotion requires "
-                    "canonical campaign_id + option_id; rerun binding/P5")
+        _validate_campaign_binding(
+            catalog=catalog,
+            ledger=ledger,
+            candidate=candidate,
+            disposition=disposition,
+            reviewed_at=reviewed_at,
+        )
 
         if disposition is ReconcileDisposition.HISTORICAL_ONLY:
             if not candidate.effective_from or not candidate.effective_to:
@@ -141,6 +235,23 @@ def _refuse_stale_replacements(*, data_dir: Path, year: int,
                     f"{candidate_id}: HISTORICAL_ONLY canonical promotion requires "
                     "explicit effective_from + effective_to; keep incomplete history "
                     "as evidence/review instead of inventing a start date")
+            continue
+
+        if disposition is ReconcileDisposition.SAFE_CANDIDATE:
+            # P5 classified this as a new stream because canonical current was
+            # absent. It must still be absent at the latest sighting and at human
+            # review. If the source stated a future start, check that date too so
+            # an intervening scheduled canonical row cannot be silently covered.
+            check_days = {last_seen.date(), reviewed_at.date()}
+            if candidate.effective_from:
+                check_days.add(date.fromisoformat(candidate.effective_from))
+            for check_day in sorted(check_days):
+                current = _scope_current(ledger, candidate, check_day)
+                if current is not None:
+                    raise PromotionError(
+                        f"{candidate_id}: SAFE_CANDIDATE stream is no longer empty on "
+                        f"{check_day}; canonical has {current.amount_thb:,} THB. "
+                        "Rerun P5 before promotion")
             continue
 
         if disposition is not ReconcileDisposition.CONFIRMED_REPLACEMENT:
@@ -156,19 +267,19 @@ def _refuse_stale_replacements(*, data_dir: Path, year: int,
                 f"{candidate_id}: HUMAN approval predates 24h confirmation; "
                 "review the confirmed replacement again")
 
-        current = ledger.current_price_for_scope(
-            candidate.trim_id,
-            candidate.price_type,
-            as_of=confirmed_at.date(),
-            campaign_id=candidate.campaign_id,
-            option_id=candidate.option_id,
-        )
-        if current is None or current.amount_thb != candidate.replaces_amount_thb:
-            actual = "none" if current is None else f"{current.amount_thb:,}"
-            raise PromotionError(
-                f"{candidate_id}: canonical stream changed since P5; expected current "
-                f"{candidate.replaces_amount_thb:,} THB at confirmation but found "
-                f"{actual}; rerun P5 before promotion")
+        # The expected prior must remain canonical both when the replacement was
+        # confirmed and when the human approved it. This catches a manual/new bot
+        # row landing after confirmation but before P6 writes.
+        current = None
+        for check_day in sorted({confirmed_at.date(), reviewed_at.date()}):
+            current = _scope_current(ledger, candidate, check_day)
+            if current is None or current.amount_thb != candidate.replaces_amount_thb:
+                actual = "none" if current is None else f"{current.amount_thb:,}"
+                raise PromotionError(
+                    f"{candidate_id}: canonical stream changed since P5; expected current "
+                    f"{candidate.replaces_amount_thb:,} THB on {check_day} but found "
+                    f"{actual}; rerun P5 before promotion")
+        assert current is not None
 
         current_start = current.effective_from or current.observed_at
         if candidate.effective_from:
@@ -341,6 +452,7 @@ def main(argv: list[str] | None = None) -> int:
     fetch = _load(args.fetch)
     decisions, campaigns = load_promotion_bundle(args.review)
     _refuse_multiple_current_approvals(book, decisions)
+    _refuse_orphan_campaign_creations(book, decisions, campaigns)
     _refuse_unbound_evidence(book=book, fetch=fetch, decisions=decisions)
 
     if args.apply:
@@ -354,6 +466,7 @@ def main(argv: list[str] | None = None) -> int:
                 book=book,
                 reconcile=reconcile,
                 decisions=decisions,
+                campaigns=campaigns,
             )
             plan = _build(
                 data_dir=args.data_dir,
@@ -374,6 +487,7 @@ def main(argv: list[str] | None = None) -> int:
             book=book,
             reconcile=reconcile,
             decisions=decisions,
+            campaigns=campaigns,
         )
         plan = _build(
             data_dir=args.data_dir,
