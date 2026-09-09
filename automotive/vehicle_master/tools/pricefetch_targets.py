@@ -1,0 +1,219 @@
+#!/usr/bin/env python3
+"""Fetch registered P2 OEM targets into SourceDocument evidence.
+
+This command is deliberately read-only with respect to catalog and PriceLedger.
+It may write a local batch/state/snapshot file only when explicitly requested.
+
+Examples:
+
+    python tools/pricefetch_targets.py --source official_jaecoo_th
+    python tools/pricefetch_targets.py --source official_jaecoo_th \
+        --follow-discovery --out /tmp/jaecoo-fetch.json \
+        --state-out /tmp/jaecoo-state.json --snapshot-dir /tmp/jaecoo-snapshots
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+from pathlib import Path
+import sys
+import urllib.parse
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from tools import robots_check  # noqa: E402
+from vehreg.catalog import DATA_DIR, DEFAULT_YEAR  # noqa: E402
+from vehreg.price_fetch import (  # noqa: E402
+    ADAPTERS,
+    FetchError,
+    FetchResult,
+    FetchState,
+    adapter_for,
+)
+from vehreg.price_sources import SourceTarget, load_source_target_registry  # noqa: E402
+
+
+def _load_states(path: Path | None) -> dict[str, FetchState]:
+    if path is None or not path.exists():
+        return {}
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    rows = payload.get("states", [])
+    out: dict[str, FetchState] = {}
+    for row in rows:
+        state = FetchState(
+            target_id=str(row.get("target_id") or ""),
+            content_hash=str(row.get("content_hash") or ""),
+            first_seen_at=str(row.get("first_seen_at") or ""),
+            etag=str(row.get("etag") or ""),
+            last_modified=str(row.get("last_modified") or ""),
+        )
+        if not state.target_id:
+            raise FetchError(f"{path}: state row missing target_id")
+        out[state.target_id] = state
+    return out
+
+
+def _state_dict(state: FetchState) -> dict:
+    return {
+        "target_id": state.target_id,
+        "content_hash": state.content_hash,
+        "first_seen_at": state.first_seen_at,
+        "etag": state.etag,
+        "last_modified": state.last_modified,
+    }
+
+
+def _document_dict(result: FetchResult, snapshot_ref: str = "") -> dict | None:
+    document = result.document
+    if document is None:
+        return None
+    return {
+        "document_id": document.document_id,
+        "source_id": document.source_id,
+        "url": document.url,
+        "content_hash": document.content_hash,
+        "published_at": document.published_at,
+        "modified_at": document.modified_at,
+        "first_seen_at": document.first_seen_at,
+        "fetched_at": document.fetched_at,
+        "title": document.title,
+        "snapshot_ref": snapshot_ref,
+        "body_sketch": list(document.body_sketch),
+    }
+
+
+def _origin(url: str) -> str:
+    parts = urllib.parse.urlsplit(url)
+    return f"{parts.scheme}://{parts.netloc}"
+
+
+def _robots_allowed(url: str, cache: dict[str, str]) -> bool:
+    origin = _origin(url)
+    if origin not in cache:
+        cache[origin] = robots_check.verdict(robots_check.audit(origin))
+    verdict = cache[origin]
+    if not verdict.startswith("allowed"):
+        print(f"{origin}: {verdict}", file=sys.stderr)
+        return False
+    return True
+
+
+def _snapshot(result: FetchResult, folder: Path | None) -> str:
+    if folder is None or result.document is None or not result.raw_body:
+        return ""
+    folder.mkdir(parents=True, exist_ok=True)
+    digest = result.document.content_hash.removeprefix("sha256:")
+    path = folder / f"{digest}.html"
+    if not path.exists():
+        path.write_bytes(result.raw_body)
+    return str(path)
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--data-dir", type=Path, default=DATA_DIR)
+    parser.add_argument("--year", type=int, default=DEFAULT_YEAR)
+    parser.add_argument("--source", action="append", default=None)
+    parser.add_argument("--target", action="append", default=None)
+    parser.add_argument("--follow-discovery", action="store_true")
+    parser.add_argument("--max-discovered", type=int, default=20)
+    parser.add_argument("--state-in", type=Path, default=None)
+    parser.add_argument("--state-out", type=Path, default=None)
+    parser.add_argument("--out", type=Path, default=None)
+    parser.add_argument("--snapshot-dir", type=Path, default=None)
+    args = parser.parse_args(argv)
+
+    registry = load_source_target_registry(args.data_dir, args.year)
+    states = _load_states(args.state_in)
+    robots_cache: dict[str, str] = {}
+
+    targets = [target for target in registry.targets_for()
+               if registry.effective_adapter(target) in ADAPTERS]
+    if args.source:
+        targets = [target for target in targets if target.source_id in args.source]
+    if args.target:
+        targets = [target for target in targets if target.id in args.target]
+    if not targets:
+        raise FetchError("no enabled P2 targets matched")
+
+    queue: list[SourceTarget] = list(targets)
+    static_ids = {target.id for target in targets}
+    seen_urls = {target.url for target in targets}
+    rows: list[dict] = []
+    skipped_robots = 0
+    followed = 0
+
+    while queue:
+        target = queue.pop(0)
+        if not _robots_allowed(target.url, robots_cache):
+            skipped_robots += 1
+            continue
+        adapter = adapter_for(registry, target)
+        result = adapter.fetch(target, previous=states.get(target.id))
+        states[target.id] = result.state
+        snapshot_ref = _snapshot(result, args.snapshot_dir)
+        rows.append({
+            "target_id": result.target_id,
+            "target_role": result.target_role.value,
+            "source_id": result.source_id,
+            "model_hint": target.model_hint,
+            "not_modified": result.not_modified,
+            "document": _document_dict(result, snapshot_ref),
+            "discovered_targets": [
+                {
+                    "id": item.id,
+                    "source_id": item.source_id,
+                    "url": item.url,
+                    "role": item.role.value,
+                    "model_hint": item.model_hint,
+                }
+                for item in result.discovered_targets
+            ],
+        })
+
+        if not args.follow_discovery:
+            continue
+        for item in result.discovered_targets:
+            if followed >= args.max_discovered:
+                break
+            if item.url in seen_urls:
+                continue
+            seen_urls.add(item.url)
+            queue.append(item.as_source_target())
+            followed += 1
+
+    payload = {
+        "schema_version": 1,
+        "year": args.year,
+        "static_targets": sorted(static_ids),
+        "results": rows,
+        "robots": robots_cache,
+        "skipped_robots": skipped_robots,
+    }
+
+    if args.out:
+        args.out.parent.mkdir(parents=True, exist_ok=True)
+        args.out.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+                            encoding="utf-8")
+    if args.state_out:
+        args.state_out.parent.mkdir(parents=True, exist_ok=True)
+        args.state_out.write_text(json.dumps({
+            "schema_version": 1,
+            "states": [_state_dict(states[key]) for key in sorted(states)],
+        }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+    print(json.dumps({
+        "fetched": sum(1 for row in rows if row["document"] is not None),
+        "not_modified": sum(1 for row in rows if row["not_modified"]),
+        "followed_discovered": followed,
+        "skipped_robots": skipped_robots,
+        "out": str(args.out) if args.out else None,
+        "state_out": str(args.state_out) if args.state_out else None,
+        "snapshot_dir": str(args.snapshot_dir) if args.snapshot_dir else None,
+    }, ensure_ascii=False, indent=2))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
