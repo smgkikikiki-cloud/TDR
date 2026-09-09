@@ -323,7 +323,18 @@ class OfficialOEMAdapter:
         return headers
 
     def fetch(self, target: SourceTarget, *, previous: Optional[FetchState] = None,
-              timeout: float = 45.0) -> FetchResult:
+              timeout: float = 45.0,
+              refetch_not_modified: bool = False) -> FetchResult:
+        """Fetch one target.
+
+        Conditional GET remains the cheap default.  Price reconciliation is
+        different: a P5 replacement is allowed to confirm only after a *fresh*
+        observation at/after 24h.  In that mode callers pass
+        ``refetch_not_modified=True``.  A 304 is then followed by one
+        unconditional GET so unchanged-but-still-present price text produces a
+        new fetched_at observation instead of leaving the candidate pending
+        forever.
+        """
         self.validate_target(target)
         if previous and previous.target_id != target.id:
             raise FetchError(
@@ -332,24 +343,30 @@ class OfficialOEMAdapter:
         fetched_at = self.clock()
         response = self.transport.fetch(
             target.url, headers=self._headers(previous), timeout=timeout)
-        response_headers = {
-            str(key).lower(): str(value) for key, value in response.headers.items()
-        }
 
         if response.status == 304:
             if previous is None:
                 raise FetchError(f"{target.id}: HTTP 304 without previous state")
-            return FetchResult(
-                target_id=target.id,
-                target_role=target.role,
-                source_id=target.source_id,
-                document=None,
-                raw_body=b"",
-                text="",
-                state=previous,
-                not_modified=True,
-            )
+            if not refetch_not_modified:
+                return FetchResult(
+                    target_id=target.id,
+                    target_role=target.role,
+                    source_id=target.source_id,
+                    document=None,
+                    raw_body=b"",
+                    text="",
+                    state=previous,
+                    not_modified=True,
+                )
+            response = self.transport.fetch(
+                target.url, headers=self._headers(None), timeout=timeout)
+            if response.status == 304:
+                raise FetchError(
+                    f"{target.id}: unconditional revalidation unexpectedly returned HTTP 304")
 
+        response_headers = {
+            str(key).lower(): str(value) for key, value in response.headers.items()
+        }
         if response.status != 200:
             raise FetchError(f"{target.url}: unexpected HTTP {response.status}")
         if not self._host_allowed(response.url):
