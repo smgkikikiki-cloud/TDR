@@ -34,6 +34,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from tools import robots_check  # noqa: E402
 from vehreg.catalog import Catalog, DATA_DIR, DEFAULT_YEAR  # noqa: E402
+from vehreg.price_bundle import source_batch_id  # noqa: E402
 from vehreg.price_extract import extract_oem_price_claims  # noqa: E402
 from vehreg.price_fetch import (  # noqa: E402
     ADAPTERS,
@@ -325,6 +326,7 @@ def main(argv: list[str] | None = None) -> int:
         "robots": robots_cache,
         "skipped_robots": skipped_robots,
     }
+    payload["source_batch_id"] = source_batch_id(payload)
 
     if args.out:
         args.out.parent.mkdir(parents=True, exist_ok=True)
@@ -342,6 +344,7 @@ def main(argv: list[str] | None = None) -> int:
         }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     print(json.dumps({
+        "source_batch_id": payload["source_batch_id"],
         "fetched": sum(1 for row in rows if row["document"] is not None),
         "not_modified": sum(1 for row in rows if row["not_modified"]),
         "claims": claims_total,
