@@ -38,6 +38,7 @@ from vehreg.price_reconcile import (  # noqa: E402
     CandidateBook,
     ReconcileDisposition,
 )
+from vehreg.price_time import parse_aware_timestamp, thailand_business_date  # noqa: E402
 from vehreg.pricing import PriceLedger, PriceType  # noqa: E402
 # Temporary shared writer primitive until price authoring is split out of
 # product.py. Both manual maintenance and P6 must serialize through the same
@@ -108,17 +109,17 @@ def _candidate_window(candidate, disposition: ReconcileDisposition) -> tuple[dat
     if candidate.effective_from:
         start = date.fromisoformat(candidate.effective_from)
     elif disposition is ReconcileDisposition.CONFIRMED_REPLACEMENT and candidate.confirmed_at:
-        start = _aware_timestamp(
+        start = thailand_business_date(_aware_timestamp(
             candidate.confirmed_at,
             candidate_id=candidate.candidate_id,
             field="confirmed_at",
-        ).date()
+        ))
     else:
-        start = _aware_timestamp(
+        start = thailand_business_date(_aware_timestamp(
             candidate.first_seen_at,
             candidate_id=candidate.candidate_id,
             field="first_seen_at",
-        ).date()
+        ))
     end = (date.fromisoformat(candidate.effective_to)
            if candidate.effective_to else date.max)
     return start, end
@@ -165,13 +166,10 @@ def _refuse_overlapping_approved_windows(
 
 
 def _aware_timestamp(raw: str, *, candidate_id: str, field: str) -> datetime:
-    try:
-        stamp = datetime.fromisoformat(str(raw).replace("Z", "+00:00"))
-    except ValueError as exc:
+    stamp = parse_aware_timestamp(raw)
+    if stamp is None:
         raise PromotionError(
-            f"{candidate_id}: invalid {field} timestamp {raw!r}") from exc
-    if stamp.tzinfo is None or stamp.utcoffset() is None:
-        raise PromotionError(f"{candidate_id}: {field} must be offset-aware")
+            f"{candidate_id}: {field} must be an offset-aware ISO timestamp, got {raw!r}")
     return stamp
 
 
@@ -212,7 +210,7 @@ def _validate_campaign_binding(*, catalog: Catalog, ledger: PriceLedger,
     if disposition is ReconcileDisposition.HISTORICAL_ONLY:
         return
 
-    check_day = reviewed_at.date()
+    check_day = thailand_business_date(reviewed_at)
     if candidate.effective_from:
         start = date.fromisoformat(candidate.effective_from)
         if start > check_day:
@@ -288,7 +286,10 @@ def _refuse_stale_replacements(*, data_dir: Path, year: int,
             continue
 
         if disposition is ReconcileDisposition.SAFE_CANDIDATE:
-            check_days = {last_seen.date(), reviewed_at.date()}
+            check_days = {
+                thailand_business_date(last_seen),
+                thailand_business_date(reviewed_at),
+            }
             if candidate.effective_from:
                 check_days.add(date.fromisoformat(candidate.effective_from))
             for check_day in sorted(check_days):
@@ -314,7 +315,11 @@ def _refuse_stale_replacements(*, data_dir: Path, year: int,
                 "review the confirmed replacement again")
 
         current = None
-        for check_day in sorted({confirmed_at.date(), reviewed_at.date()}):
+        check_days = {
+            thailand_business_date(confirmed_at),
+            thailand_business_date(reviewed_at),
+        }
+        for check_day in sorted(check_days):
             current = _scope_current(ledger, candidate, check_day)
             if current is None or current.amount_thb != candidate.replaces_amount_thb:
                 actual = "none" if current is None else f"{current.amount_thb:,}"
@@ -331,7 +336,7 @@ def _refuse_stale_replacements(*, data_dir: Path, year: int,
                     f"{candidate_id}: canonical stream has a row starting "
                     f"{current_start} on/after explicit replacement start "
                     f"{candidate.effective_from}; rerun P5 before backdating")
-        elif current_start and current_start > first_seen.date().isoformat():
+        elif current_start and current_start > thailand_business_date(first_seen).isoformat():
             raise PromotionError(
                 f"{candidate_id}: canonical stream was revised after candidate "
                 "first_seen_at even though the amount matches; rerun P5")
