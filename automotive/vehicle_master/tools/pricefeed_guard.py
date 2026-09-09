@@ -13,9 +13,10 @@ Checks, in order:
    change to an existing price is inside ``--max-move`` percent.
 
 The guard runs from ``automotive/vehicle_master`` in the consolidated repo. Git
-object paths, however, are always repository-root-relative. The helper below
-uses ``git rev-parse --show-prefix`` so base-revision reads continue working
-after consolidation instead of silently returning an empty pre-change ledger.
+object paths, however, are repository-root-relative. ``ls-tree`` needs both a
+top-level pathspec and ``--full-name``: the former prevents the current working
+directory prefix from being applied to the query, while the latter prevents Git
+from stripping that prefix from the returned tree paths before ``git show``.
 
 Run it against the base revision:
 
@@ -64,12 +65,12 @@ def changed_files(base: str) -> list[str]:
 
 def _list_price_rows_at(revision: str, year: int) -> list[dict]:
     folder = _repo_path(f"vehreg/data/{year}/market/prices")
-    # ls-tree pathspecs are cwd-relative even though tree object names and
-    # ``git show REV:path`` are repository-root-relative.  ``:(top)`` prevents
-    # the engine prefix from being applied a second time when this guard runs
-    # from automotive/vehicle_master.
+    # Input pathspec must be repo-root anchored, and output paths must remain
+    # repo-root-relative because ``git show REV:path`` consumes tree object
+    # names, not paths relative to this process' cwd.
     listed = _git([
-        "ls-tree", "-r", "--name-only", revision, "--", f":(top){folder}"
+        "ls-tree", "-r", "--name-only", "--full-name", revision,
+        "--", f":(top){folder}",
     ], check=False)
     if listed.returncode != 0:
         return []
