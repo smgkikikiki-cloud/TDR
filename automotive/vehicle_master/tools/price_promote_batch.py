@@ -33,6 +33,11 @@ from vehreg.price_promote import (  # noqa: E402
     load_promotion_bundle,
 )
 from vehreg.price_reconcile import CandidateBook  # noqa: E402
+# Temporary shared writer primitive until price authoring is split out of
+# product.py.  Both manual maintenance and P6 must serialize through the same
+# lock and use atomic temp-file replacement; having two independent filesystem
+# writers was a correctness bug, not merely code style.
+from vehreg.product import _write_json, _writer_lock  # noqa: E402
 
 
 def _load(path: Path) -> dict:
@@ -74,21 +79,32 @@ def _refuse_multiple_current_approvals(book: CandidateBook, decisions: dict) -> 
         selected[key] = candidate_id
 
 
-def _apply_with_rollback(plan: PromotionPlan) -> None:
-    """Restore the pre-apply working tree if an ordinary filesystem write fails."""
+def _apply_with_rollback(plan: PromotionPlan, *, data_dir: Path, year: int) -> None:
+    """Serialize with manual writers and atomically replace each touched file.
+
+    The plan has already been fully validated in memory.  We snapshot every
+    touched file before taking the common product-writer lock, then perform each
+    replacement through product._write_json (temp file + fsync + os.replace).
+    Ordinary exceptions restore the whole pre-apply set.  This removes the old
+    race where a manual correction and P6 could edit the same JSON concurrently,
+    and prevents a torn individual JSON file if the process dies mid-write.
+    """
     before: dict[Path, bytes | None] = {}
     for planned in plan.files:
         before[planned.path] = planned.path.read_bytes() if planned.path.exists() else None
-    try:
-        plan.apply()
-    except Exception:
-        for path, payload in before.items():
-            if payload is None:
-                path.unlink(missing_ok=True)
-                continue
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_bytes(payload)
-        raise
+
+    with _writer_lock(data_dir, year):
+        try:
+            for planned in plan.files:
+                _write_json(planned.path, planned.payload)
+        except Exception:
+            for path, payload in before.items():
+                if payload is None:
+                    path.unlink(missing_ok=True)
+                    continue
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(payload)
+            raise
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -121,7 +137,7 @@ def main(argv: list[str] | None = None) -> int:
     manifest = plan.manifest(args.data_dir)
     manifest["applied"] = bool(args.apply)
     if args.apply:
-        _apply_with_rollback(plan)
+        _apply_with_rollback(plan, data_dir=args.data_dir, year=args.year)
     if args.manifest_out:
         args.manifest_out.parent.mkdir(parents=True, exist_ok=True)
         args.manifest_out.write_text(
