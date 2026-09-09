@@ -1,9 +1,20 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 import pytest
 
-from tools.price_promote_batch import _refuse_multiple_current_approvals
-from vehreg.price_promote import PromotionAction, PromotionDecision, PromotionError
+from tools.price_promote_batch import (
+    _apply_with_rollback,
+    _refuse_multiple_current_approvals,
+)
+from vehreg.price_promote import (
+    PlannedFile,
+    PromotionAction,
+    PromotionDecision,
+    PromotionError,
+    PromotionPlan,
+)
 from vehreg.price_reconcile import CandidateBook, CandidateState, PriceCandidate
 from vehreg.price_sources import TargetRole
 from vehreg.pricing import PriceType
@@ -47,3 +58,33 @@ def test_two_approved_current_candidates_in_same_stream_are_refused() -> None:
             {one.candidate_id: _approve(one.candidate_id),
              two.candidate_id: _approve(two.candidate_id)},
         )
+
+
+def test_apply_rolls_back_existing_and_new_files_on_write_failure(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    existing = tmp_path / "existing.json"
+    new = tmp_path / "new.json"
+    existing.write_text('{"before":true}\n', encoding="utf-8")
+    plan = PromotionPlan(
+        year=2026,
+        files=(
+            PlannedFile(existing, {"after": True}, "supersede_prior"),
+            PlannedFile(new, {"new": True}, "append_price"),
+        ),
+        items=(),
+        rejected_candidate_ids=(),
+        affected_model_ids=(),
+    )
+
+    def broken_apply(self: PromotionPlan) -> None:
+        existing.write_text('{"after":true}\n', encoding="utf-8")
+        new.write_text('{"new":true}\n', encoding="utf-8")
+        raise OSError("disk fixture")
+
+    monkeypatch.setattr(PromotionPlan, "apply", broken_apply)
+
+    with pytest.raises(OSError, match="disk fixture"):
+        _apply_with_rollback(plan)
+
+    assert existing.read_text(encoding="utf-8") == '{"before":true}\n'
+    assert not new.exists()
