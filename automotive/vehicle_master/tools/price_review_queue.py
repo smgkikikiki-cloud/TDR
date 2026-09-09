@@ -5,10 +5,13 @@ Two queues are deliberately separate:
 
 * ``promotion_reviews``: P5 already resolved a canonical stream; the person may
   APPROVE or REJECT the candidate for P6 canonical write.
-* ``binding_reviews``: P5 refused automatic campaign scope.  The person must
-  bind canonical campaign_id + option_id in the existing pricefeed decisions
-  audit file, then rerun P5.  A raw campaign_hint is shown only as context and
-  is never copied into canonical scope automatically.
+* ``binding_reviews``: P5 refused automatic campaign scope. The person must
+  bind canonical campaign_id + option_id, then rerun P5. A raw campaign_hint is
+  shown only as context and is never copied into canonical scope automatically.
+
+Promotion reviews are content-bound to the exact P2-P4 source batch, P5 report
+and CandidateBook snapshot shown to the reviewer. P6 recomputes these identities
+before any canonical write.
 """
 
 from __future__ import annotations
@@ -21,6 +24,14 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
+from vehreg.price_bundle import (  # noqa: E402
+    PriceBundleError,
+    candidate_state_id,
+    lineage_dict,
+    reconcile_id,
+    source_batch_id,
+    verify_declared_id,
+)
 from vehreg.price_reconcile import CandidateBook, ReconcileDisposition  # noqa: E402
 
 
@@ -36,6 +47,45 @@ def _load(path: Path) -> dict:
     if not isinstance(payload, dict):
         raise ValueError(f"{path}: root must be an object")
     return payload
+
+
+def _artifact_lineage(candidate_state: dict, reconcile: dict, fetch: dict, *,
+                      strict: bool) -> dict[str, str]:
+    batch_id = source_batch_id(fetch)
+    state_id = candidate_state_id(candidate_state)
+    rec_id = reconcile_id(reconcile)
+    try:
+        verify_declared_id(
+            fetch, "source_batch_id", batch_id,
+            required=strict, source="fetch batch")
+        verify_declared_id(
+            candidate_state, "candidate_state_id", state_id,
+            required=strict, source="candidate state")
+        verify_declared_id(
+            reconcile, "reconcile_id", rec_id,
+            required=strict, source="reconcile report")
+    except PriceBundleError as exc:
+        raise ValueError(str(exc)) from exc
+
+    if strict:
+        if reconcile.get("source_batch_id") != batch_id:
+            raise ValueError(
+                "reconcile report does not belong to the supplied source batch")
+        if reconcile.get("candidate_state_after_id") != state_id:
+            raise ValueError(
+                "reconcile report does not produce the supplied candidate state")
+        if candidate_state.get("last_source_batch_id") != batch_id:
+            raise ValueError(
+                "candidate state last_source_batch_id does not match source batch")
+        if candidate_state.get("last_reconcile_id") != rec_id:
+            raise ValueError(
+                "candidate state last_reconcile_id does not match reconcile report")
+
+    return lineage_dict(
+        source_batch=batch_id,
+        reconcile=rec_id,
+        candidate_state=state_id,
+    )
 
 
 def _fetch_claims(fetch: dict) -> dict[str, dict]:
@@ -59,7 +109,10 @@ def _fetch_claims(fetch: dict) -> dict[str, dict]:
     return out
 
 
-def build_queue(candidate_state: dict, reconcile: dict, fetch: dict) -> dict:
+def build_queue(candidate_state: dict, reconcile: dict, fetch: dict, *,
+                strict_lineage: bool = False) -> dict:
+    lineage = _artifact_lineage(
+        candidate_state, reconcile, fetch, strict=strict_lineage)
     book = CandidateBook.from_payload(candidate_state)
     claims = _fetch_claims(fetch)
     promotion: list[dict] = []
@@ -120,6 +173,7 @@ def build_queue(candidate_state: dict, reconcile: dict, fetch: dict) -> dict:
     now = datetime.now(timezone.utc).isoformat(timespec="seconds")
     promotion_template = {
         "schema_version": 1,
+        **lineage,
         "decisions": [{
             "candidate_id": item["candidate_id"],
             "action": "",
@@ -144,6 +198,7 @@ def build_queue(candidate_state: dict, reconcile: dict, fetch: dict) -> dict:
     }
     return {
         "schema_version": 1,
+        **lineage,
         "promotion_reviews": promotion,
         "binding_reviews": binding,
         "promotion_review_template": promotion_template,
@@ -162,6 +217,7 @@ def main(argv: list[str] | None = None) -> int:
         _load(args.candidate_state),
         _load(args.reconcile),
         _load(args.fetch),
+        strict_lineage=True,
     )
     if args.out:
         args.out.parent.mkdir(parents=True, exist_ok=True)
