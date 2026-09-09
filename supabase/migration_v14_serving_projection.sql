@@ -50,8 +50,8 @@ comment on column public.trims.canonical_id is
 create or replace function public.apply_vehicle_serving_projection(p_projection jsonb)
 returns jsonb
 language plpgsql
-security definer
-set search_path = public
+security invoker
+set search_path = ''
 as $$
 declare
   v_canonical_model text := nullif(p_projection->>'canonical_model_id','');
