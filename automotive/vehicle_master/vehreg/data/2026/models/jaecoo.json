@@ -1,0 +1,383 @@
+{
+  "brand": {
+    "id": "jaecoo",
+    "name_en": "Jaecoo",
+    "name_th": "เจคู",
+    "brand_segment": "MASS",
+    "oem_group": "Chery",
+    "brand_origin": "CN",
+    "trim_detail": true,
+    "aliases": []
+  },
+  "models": [
+    {
+      "id": "jaecoo_5_ev",
+      "name_en": "Jaecoo 5 EV",
+      "name_th": "เจคู 5",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "5 ev",
+        "j5",
+        "j5 ev",
+        "jaecoo 5",
+        "jaecoo 5 ev",
+        "jaecoo j5",
+        "jaecoo j5 ev"
+      ],
+      "generations": [
+        {
+          "code": "J5",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2025-08-19",
+          "ended": null,
+          "variants": [
+            {
+              "name": "58.9 kWh BEV CBU",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_cc": null,
+              "battery_kwh": 58.9,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "retail price lives on MarketTrim",
+              "aliases": [
+                "Long Range Dynamic",
+                "Long Range Max"
+              ]
+            },
+            {
+              "name": "50.6 kWh BEV CKD",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_cc": null,
+              "battery_kwh": 50.6,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "retail price lives on MarketTrim",
+              "aliases": [
+                "MAX+"
+              ]
+            },
+            {
+              "name": "60.93 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_cc": null,
+              "battery_kwh": 60.93,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "",
+              "origin_country": "",
+              "price_note": "retail price lives on MarketTrim; assembly route not asserted here",
+              "aliases": [
+                "ULTRA"
+              ]
+            }
+          ],
+          "trims": [
+            {
+              "id": "long_range_dynamic_bev",
+              "name": "Long Range Dynamic",
+              "variant": "58.9 kWh BEV CBU",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_code": "",
+              "engine_cc": null,
+              "battery_kwh": 58.9,
+              "transmission": "single-speed",
+              "seats": 5,
+              "length_mm": 4380,
+              "width_mm": 1860,
+              "height_mm": 1650,
+              "wheelbase_mm": 2620,
+              "tire_front": "235/55 R18",
+              "tire_rear": "235/55 R18",
+              "wheel_front": "18 in",
+              "wheel_rear": "18 in",
+              "aliases": [
+                "5 EV Long Range Dynamic",
+                "Dynamic"
+              ],
+              "source_refs": {
+                "ecosticker": [
+                  "d744d9f3-d393-4ac3-b441-17a022098fed"
+                ],
+                "official_omodajaecoo": [
+                  "https://www.omodajaecoo.co.th/th/model/jaecoo-5-ev"
+                ]
+              },
+              "notes": "Specification carried forward from the existing Phase-1 seed. OEM product URL checked 2026-09-08. Prices are only in PriceLedger. ECO basic-spec evidence is linked by UUID."
+            },
+            {
+              "id": "long_range_max_bev",
+              "name": "Long Range Max",
+              "variant": "58.9 kWh BEV CBU",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_code": "",
+              "engine_cc": null,
+              "battery_kwh": 58.9,
+              "transmission": "single-speed",
+              "seats": 5,
+              "length_mm": 4380,
+              "width_mm": 1860,
+              "height_mm": 1650,
+              "wheelbase_mm": 2620,
+              "tire_front": "235/55 R18",
+              "tire_rear": "235/55 R18",
+              "wheel_front": "18 in",
+              "wheel_rear": "18 in",
+              "aliases": [
+                "5 EV Long Range Max",
+                "Max"
+              ],
+              "source_refs": {
+                "ecosticker": [
+                  "b4529bb4-d813-416b-b272-430b123cc06c"
+                ],
+                "official_omodajaecoo": [
+                  "https://www.omodajaecoo.co.th/th/model/jaecoo-5-ev"
+                ]
+              },
+              "notes": "Specification carried forward from the existing Phase-1 seed. OEM product URL checked 2026-09-08. Prices are only in PriceLedger. ECO basic-spec evidence is linked by UUID."
+            },
+            {
+              "id": "max_plus_bev",
+              "name": "MAX+",
+              "variant": "50.6 kWh BEV CKD",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_code": "",
+              "engine_cc": null,
+              "battery_kwh": 50.6,
+              "transmission": "single-speed",
+              "seats": 5,
+              "length_mm": 4380,
+              "width_mm": 1860,
+              "height_mm": 1650,
+              "wheelbase_mm": 2620,
+              "tire_front": "235/55 R18",
+              "tire_rear": "235/55 R18",
+              "wheel_front": "18 in",
+              "wheel_rear": "18 in",
+              "aliases": [
+                "5 EV MAX+",
+                "MAX PLUS"
+              ],
+              "source_refs": {
+                "ecosticker": [
+                  "98c1d7de-79db-4581-b332-69abe657a532"
+                ],
+                "official_omodajaecoo": [
+                  "https://www.omodajaecoo.co.th/th/model/jaecoo-5-ev"
+                ]
+              },
+              "notes": "Specification carried forward from the existing Phase-1 seed. OEM product URL checked 2026-09-08. Prices are only in PriceLedger. ECO basic-spec evidence is linked by UUID."
+            },
+            {
+              "id": "ultra_bev",
+              "name": "ULTRA",
+              "variant": "60.93 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_code": "",
+              "engine_cc": null,
+              "battery_kwh": 60.93,
+              "transmission": "single-speed",
+              "seats": 5,
+              "length_mm": 4380,
+              "width_mm": 1860,
+              "height_mm": 1650,
+              "wheelbase_mm": 2620,
+              "tire_front": "235/55 R18",
+              "tire_rear": "235/55 R18",
+              "wheel_front": "18 in",
+              "wheel_rear": "18 in",
+              "aliases": [
+                "5 EV ULTRA"
+              ],
+              "source_refs": {
+                "official_omodajaecoo": [
+                  "https://www.omodajaecoo.co.th/en/model/en-jaecoo-5-ev-ultra"
+                ]
+              },
+              "notes": "Specification carried forward from the existing Phase-1 seed. OEM product URL checked 2026-09-08. Prices are only in PriceLedger. No matching ECO UUID in the 2026-09-07 probe; no ECO specifications inferred."
+            }
+          ]
+        }
+      ],
+      "notes": "Retail trim detail is kept in MarketTrim. price_thb on trims uses source-backed recommended/list price, not temporary campaign price."
+    },
+    {
+      "id": "jaecoo_6_ev",
+      "name_en": "Jaecoo 6 EV",
+      "name_th": "เจคู 6",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "6 ev",
+        "jaecoo 6"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2025-11-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "69 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_cc": null,
+              "battery_kwh": 69.0,
+              "price_thb": 999000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jaecoo_6t_ev",
+      "name_en": "Jaecoo 6T EV",
+      "name_th": "เจคู 6ที",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "6t ev",
+        "jaecoo 6t"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2025-11-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "69 kWh BEV AWD",
+              "powertrain": "BEV",
+              "drivetrain": "AWD",
+              "engine_cc": null,
+              "battery_kwh": 69.0,
+              "price_thb": 1099000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jaecoo_7",
+      "name_en": "Jaecoo 7",
+      "name_th": "เจคู 7",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "7 shs",
+        "jaecoo 7",
+        "j7"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2024-09-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.5L PHEV",
+              "powertrain": "PHEV",
+              "drivetrain": "FWD",
+              "engine_cc": 1500,
+              "battery_kwh": 18.3,
+              "price_thb": 1099000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jaecoo_6t_reev",
+      "name_en": "Jaecoo 6T REEV",
+      "name_th": "เจคู 6T รีฟ",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "6T REEV",
+        "JAECOO 6T REEV"
+      ],
+      "incomplete": true,
+      "notes": "แยกจาก 6T EV เพราะเป็น REEV เสียบชาร์จได้แล้ววิ่งต่อด้วยเครื่องยนต์ คนละคันกับตัวไฟฟ้าล้วน — DLT จดแยกชัด สเปกยังไม่ได้ตรวจ",
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2026-08-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "REEV",
+              "powertrain": "REEV",
+              "drivetrain": "AWD",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "ยังไม่ได้ตรวจราคา",
+              "aliases": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

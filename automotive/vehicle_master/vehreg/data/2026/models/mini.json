@@ -1,0 +1,182 @@
+{
+  "brand": {
+    "id": "mini",
+    "name_en": "MINI",
+    "name_th": "มินิ",
+    "brand_segment": "PREMIUM_LUXURY",
+    "oem_group": "BMW Group",
+    "brand_origin": "GB",
+    "aliases": [
+      "มินิ"
+    ]
+  },
+  "models": [
+    {
+      "id": "mini_cooper",
+      "name_en": "Cooper",
+      "name_th": "คูเปอร์",
+      "nameplate": "",
+      "body_type": "HATCHBACK",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "mini cooper"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "J01",
+          "segment": "B",
+          "seats": 4,
+          "launched": "2024-06-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "54 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_cc": null,
+              "battery_kwh": 54.2,
+              "aliases": [
+                "Cooper SE"
+              ],
+              "overrides": {},
+              "price_thb": 2299000,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "seed-unverified",
+              "price_min_thb": 2299000,
+              "price_max_thb": 2299000
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "countryman",
+      "name_en": "Countryman",
+      "name_th": "คันทรีแมน",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "cooper s countryman",
+        "countryman s",
+        "jcw countryman",
+        "cooper sd all4 countryman"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "U25",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2024-06-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "66 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_cc": null,
+              "battery_kwh": 66.5,
+              "aliases": [
+                "Countryman E"
+              ],
+              "overrides": {},
+              "price_thb": 2799000,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "seed-unverified",
+              "price_min_thb": 2799000,
+              "price_max_thb": 2799000
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "aceman",
+      "name_en": "Aceman",
+      "name_th": "เอซแมน",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "aceman",
+        "jcw aceman"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2024-09-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "54 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_cc": null,
+              "battery_kwh": 54.2,
+              "price_thb": 2399000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "jcw_e",
+      "name_en": "JCW E",
+      "name_th": "",
+      "nameplate": "",
+      "body_type": "HATCHBACK",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "jcw e"
+      ],
+      "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
+      "generations": [
+        {
+          "code": "JCW_E",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": "2026-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "ยังไม่แยกรุ่นย่อย",
+              "powertrain": "UNKNOWN",
+              "drivetrain": "",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "aliases": [],
+              "overrides": {},
+              "price_thb": 2069000,
+              "import_type": "",
+              "origin_country": "",
+              "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+              "price_min_thb": 2069000,
+              "price_max_thb": 2069000
+            }
+          ]
+        }
+      ],
+      "incomplete": true
+    }
+  ]
+}
