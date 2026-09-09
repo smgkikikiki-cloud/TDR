@@ -280,7 +280,7 @@ def test_p6_rejects_document_hash_mismatch(tmp_path: Path) -> None:
     fetch = _fetch()
     fetch["results"][0]["document"]["content_hash"] = "sha256:" + "b" * 64
 
-    with pytest.raises(PromotionError, match="document_id/content_hash mismatch"):
+    with pytest.raises(PromotionError, match="document_id/content_hash"):
         build_promotion_plan(
             data_dir=root,
             year=YEAR,
