@@ -186,3 +186,22 @@ def test_legacy_admin_editor_is_not_a_price_writer_anymore() -> None:
     assert "price_baht:t.priceBaht" not in action
     assert "retail_price_min:retailMin" not in action
     assert "retail_price_max:retailMax" not in action
+
+
+def test_legacy_pricefeed_cannot_bypass_p5_p6_from_production_code() -> None:
+    """Keep the old consensus helper readable, but never let it become a writer.
+
+    ``pricefeed.to_price_rows`` predates P5/P6 and can still support historical
+    tests/debugging.  Production code must not call or import it: every automated
+    price change has to pass P5 reconciliation and the P6 HUMAN write gate.
+    """
+    root = Path(__file__).resolve().parents[1]
+    offenders: list[str] = []
+    for folder in (root / "vehreg", root / "tools"):
+        for path in folder.rglob("*.py"):
+            if path.name == "pricefeed.py":
+                continue
+            text = path.read_text(encoding="utf-8")
+            if "to_price_rows(" in text or "import to_price_rows" in text:
+                offenders.append(str(path.relative_to(root)))
+    assert offenders == []
