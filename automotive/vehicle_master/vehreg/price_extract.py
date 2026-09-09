@@ -21,6 +21,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import date
+from html import unescape
 import re
 from typing import Iterable, Optional
 
@@ -84,7 +85,16 @@ def _clean_trim(raw: str) -> str:
 def _visible_text(result: FetchResult) -> str:
     if not result.text:
         return ""
-    return parse_page_metadata(result.text).visible_text
+    metadata = parse_page_metadata(result.text)
+    # OEM landing pages often render the grade name only as image alt text while
+    # the price itself is ordinary text.  Alt text is user-facing/accessibility
+    # content, not hidden script data, so keep it beside visible DOM text.
+    alts = [unescape(value) for value in re.findall(
+        r"<img\b[^>]*\balt\s*=\s*['\"]([^'\"]+)['\"]",
+        result.text,
+        flags=re.I,
+    ) if value.strip()]
+    return "\n".join([metadata.visible_text, *alts])
 
 
 def _claim(*, document_id: str, source_id: str, trim_raw: str,
