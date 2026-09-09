@@ -174,15 +174,17 @@ export async function saveModelV12(formData:FormData) {
   if(existingTrimsError) throw existingTrimsError;
 
   const keepTrimIds:string[]=[];
-  const currentPrices:number[]=[];
   for(let i=0;i<trims.length;i++){
     const t=trims[i];
     if(!t.name?.trim()) continue;
 
+    // price_baht is deliberately absent. It is a serving cache projected from
+    // canonical PriceLedger; the legacy model editor is no longer a second
+    // price writer. priceBaht remains in TrimInput temporarily so the old form
+    // can post without breaking while the Price Workbench replaces that UI.
     const trimPayload={
       model_id:modelId,
       name:t.name.trim(),
-      price_baht:t.priceBaht??null,
       status:t.status||"current",
       description:t.description||null,
       seats_override:t.seatsOverride??null,
@@ -211,10 +213,6 @@ export async function saveModelV12(formData:FormData) {
     }
     keepTrimIds.push(trimId!);
 
-    if(String(trimPayload.status).toLowerCase()!=="discontinued" && trimPayload.price_baht){
-      currentPrices.push(Number(trimPayload.price_baht));
-    }
-
     const del=await db.from("trim_powertrains").delete().eq("trim_id",trimId);
     if(del.error) throw del.error;
     const ids=(t.powertrainKeys||[]).map(k=>ptMap.get(k)||k).filter((x):x is string=>!!x&&keepPtIds.includes(x));
@@ -232,9 +230,10 @@ export async function saveModelV12(formData:FormData) {
   }
 
   const ptTypes=[...new Set(powertrains.map(p=>p.powertrainType).filter((x):x is string=>!!x))];
-  const retailMin=currentPrices.length?Math.min(...currentPrices):null;
-  const retailMax=currentPrices.length?Math.max(...currentPrices):null;
-  const r2=await db.from("models").update({powertrains:ptTypes,retail_price_min:retailMin,retail_price_max:retailMax}).eq("id",modelId);
+  // retail_price_min/max are serving projections from PriceLedger too. Preserve
+  // their current values here instead of recomputing them from ignored legacy
+  // form prices; Phase-E publication owns those fields.
+  const r2=await db.from("models").update({powertrains:ptTypes}).eq("id",modelId);
   if(r2.error) throw r2.error;
 
   // Phase C shadow write.  This intentionally does not make legacy trim prices
