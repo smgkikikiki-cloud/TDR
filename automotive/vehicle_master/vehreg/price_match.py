@@ -1,11 +1,11 @@
 """P4 diagnostics around the canonical MarketTrim matcher.
 
-The production matcher remains :func:`vehreg.pricefeed.match_trim`.  This module
-never reimplements its resolution decision; it explains that decision so fetch
-and review tooling can distinguish a unique canonical match from ambiguity or
-an unmapped raw grade.
+The production resolver remains :func:`vehreg.pricefeed.match_trim`. This module
+adds a narrow retail-grade surface normalization and explains the resolver's
+decision so fetch/review tooling can distinguish a unique canonical match from
+ambiguity or an unmapped raw grade.
 
-PriceClaim -> existing match_trim() -> TrimMatchResult
+PriceClaim -> retail surface normalization -> existing match_trim() -> diagnostic
 
 Nothing here writes PriceLedger, changes catalog identity, or resolves DLT
 Variant / DLT Trim Ledger rows.
@@ -13,7 +13,7 @@ Variant / DLT Trim Ledger rows.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from enum import Enum
 from typing import Optional
 
@@ -57,6 +57,7 @@ class TrimMatchResult:
     candidate_ids: tuple[str, ...]
     method: TrimMatchMethod
     reason: str
+    normalized_trim_raw: str
 
     def as_dict(self) -> dict:
         return {
@@ -66,7 +67,24 @@ class TrimMatchResult:
             "candidate_ids": list(self.candidate_ids),
             "method": self.method.value,
             "reason": self.reason,
+            "normalized_trim_raw": self.normalized_trim_raw,
         }
+
+
+def normalize_retail_grade(raw: str) -> str:
+    """Preserve grade punctuation that generic catalog folding discards.
+
+    ``fold`` intentionally removes punctuation across the wider DLT/catalog
+    matcher. For retail grades, however, ``MAX+`` and ``MAX`` are different
+    products. Expanding ``+`` to the word ``PLUS`` before the existing matcher
+    keeps that distinction without changing normalization globally.
+    """
+    return " ".join(str(raw or "").replace("+", " PLUS ").split())
+
+
+def _normalized_claim(claim: PriceClaim) -> PriceClaim:
+    normalized = normalize_retail_grade(claim.trim_raw)
+    return claim if normalized == claim.trim_raw else replace(claim, trim_raw=normalized)
 
 
 def _exact_sources(catalog: Catalog, model_id: str, trim_ids: tuple[str, ...],
@@ -77,11 +95,16 @@ def _exact_sources(catalog: Catalog, model_id: str, trim_ids: tuple[str, ...],
     sources: dict[str, str] = {}
     for trim_id in trim_ids:
         trim = catalog.trims[trim_id]
-        if wanted and grade_tokens(trim.name, model.name_en) == wanted:
+        # Canonical names receive the same retail-surface normalization as raw
+        # claims so punctuation like MAX+ retains its meaning in diagnostics.
+        name = normalize_retail_grade(trim.name)
+        if wanted and grade_tokens(name, model.name_en) == wanted:
             sources[trim_id] = "name"
             continue
-        if wanted and any(grade_tokens(alias, model.name_en) == wanted
-                          for alias in trim.aliases):
+        if wanted and any(
+            grade_tokens(normalize_retail_grade(alias), model.name_en) == wanted
+            for alias in trim.aliases
+        ):
             sources[trim_id] = "alias"
     return sources
 
@@ -89,27 +112,27 @@ def _exact_sources(catalog: Catalog, model_id: str, trim_ids: tuple[str, ...],
 def match_trim_diagnostic(catalog: Catalog, claim: PriceClaim, *,
                           siblings_by_model: Optional[dict[str, list]] = None,
                           model_memo: Optional[dict] = None) -> TrimMatchResult:
-    """Explain the existing canonical MarketTrim matcher without changing it.
+    """Resolve and explain one raw grade without changing canonical data.
 
-    ``EXACT`` means the claim resolves to exactly one canonical MarketTrim.  The
-    ``method`` field says whether that uniqueness came from exact canonical-name
-    tokens, an exact alias, or the production matcher's conservative partial
-    grade rule.  Ambiguous and unmapped results are never promoted here.
+    ``EXACT`` means exactly one canonical MarketTrim was resolved. ``method``
+    records whether uniqueness came from exact canonical-name tokens, an exact
+    alias, or the existing matcher's conservative partial-grade rule.
     """
-    key = (claim.brand_raw, claim.model_raw, claim.trim_raw)
+    matched_claim = _normalized_claim(claim)
+    normalized = matched_claim.trim_raw
+    key = (matched_claim.brand_raw, matched_claim.model_raw, matched_claim.trim_raw)
     if model_memo is not None and key in model_memo:
         _, model_id = model_memo[key]
     else:
-        _, model_id = match_model(catalog, *key)
+        brand_id, model_id = match_model(catalog, *key)
         if model_memo is not None:
-            brand_id, checked_model_id = match_model(catalog, *key)
-            model_memo[key] = (brand_id, checked_model_id)
-            model_id = checked_model_id
+            model_memo[key] = (brand_id, model_id)
 
     if model_id is None:
         return TrimMatchResult(
             TrimMatchState.UNMAPPED, None, None, (), TrimMatchMethod.NO_MODEL,
             "brand/model could not be resolved to one canonical catalog model",
+            normalized,
         )
 
     if siblings_by_model is None:
@@ -120,23 +143,25 @@ def match_trim_diagnostic(catalog: Catalog, claim: PriceClaim, *,
             TrimMatchState.UNMAPPED, model_id, None, (),
             TrimMatchMethod.NO_MARKET_TRIMS,
             "canonical model has no MarketTrim children",
+            normalized,
         )
 
     model = catalog.models[model_id]
-    wanted = grade_tokens(claim.trim_raw, model.name_en)
+    wanted = grade_tokens(matched_claim.trim_raw, model.name_en)
     if not wanted:
         return TrimMatchResult(
             TrimMatchState.UNMAPPED, model_id, None, (),
             TrimMatchMethod.EMPTY_GRADE,
             "raw grade contains no identifying tokens after normalization",
+            normalized,
         )
 
     trim_id, candidates = match_trim(
-        catalog, claim,
+        catalog, matched_claim,
         siblings_by_model=siblings_by_model,
         model_memo=model_memo,
     )
-    exact_sources = _exact_sources(catalog, model_id, candidates, claim)
+    exact_sources = _exact_sources(catalog, model_id, candidates, matched_claim)
 
     if trim_id is not None:
         source = exact_sources.get(trim_id)
@@ -151,6 +176,7 @@ def match_trim_diagnostic(catalog: Catalog, claim: PriceClaim, *,
             reason = "one canonical MarketTrim uniquely satisfies the conservative partial-grade rule"
         return TrimMatchResult(
             TrimMatchState.EXACT, model_id, trim_id, candidates, method, reason,
+            normalized,
         )
 
     if candidates:
@@ -162,9 +188,11 @@ def match_trim_diagnostic(catalog: Catalog, claim: PriceClaim, *,
             reason = "multiple MarketTrims tie under the conservative partial-grade rule"
         return TrimMatchResult(
             TrimMatchState.AMBIGUOUS, model_id, None, candidates, method, reason,
+            normalized,
         )
 
     return TrimMatchResult(
         TrimMatchState.UNMAPPED, model_id, None, (), TrimMatchMethod.NO_GRADE_MATCH,
         "model resolved but no canonical MarketTrim safely matches the raw grade",
+        normalized,
     )
