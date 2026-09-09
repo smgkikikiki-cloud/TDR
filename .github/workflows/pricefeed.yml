@@ -1,0 +1,71 @@
+name: Price feed
+
+on:
+  schedule:
+    - cron: "*/20 * * * *"
+  workflow_dispatch:
+    inputs:
+      since:
+        description: "ISO timestamp to poll from (default: 3 hours ago)"
+        required: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: tdr-pricefeed
+  cancel-in-progress: false
+
+jobs:
+  harvest:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: automotive
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: automotive/requirements.txt
+      - run: python -m pip install -r requirements.txt pytest
+      - name: Choose polling window
+        id: window
+        run: |
+          if [ -n "${{ inputs.since }}" ]; then
+            echo "since=${{ inputs.since }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "since=$(date -u -d '3 hours ago' +%Y-%m-%dT%H:%M:%S)" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Harvest price news
+        run: |
+          python tools/pricefeed_harvest.py \
+            --since "${{ steps.window.outputs.since }}" --limit 60 --delay 1.0 \
+            --out vehreg/data/2026/market/pricefeed/batch-$(date -u +%Y-%m-%dT%H%M).json
+      - name: Apply publish policy
+        run: |
+          latest=$(ls -1 vehreg/data/2026/market/pricefeed/batch-*.json | tail -1)
+          python -m vehreg market price-run "$latest" \
+            --decisions vehreg/data/2026/market/pricefeed/review/decisions.json \
+            --write | tee /tmp/price-run.json
+      - run: python tools/pricefeed_guard.py --base origin/main --repo-prefix automotive/
+      - run: pytest -q
+      - name: Open a data-only pull request in TDR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet; then echo "no price changes"; exit 0; fi
+          branch="pricefeed/$(date -u +%Y%m%d-%H%M)"
+          git config user.name "TDR price watcher"
+          git config user.email "noreply@github.com"
+          git checkout -b "$branch"
+          git add vehreg/data/2026/market
+          git commit -m "Price feed: $(python -c "import json; d=json.load(open('/tmp/price-run.json')); print(f\"{d['canonical_offers']} offers, {d['review_items']} for review\")")"
+          git push -u origin "$branch"
+          gh pr create --title "Price feed $(date -u +%Y-%m-%d\ %H:%M)" \
+            --body "Automated TDR price harvest. Canonical offers only; ambiguity remains in review." \
+            --base main --head "$branch"

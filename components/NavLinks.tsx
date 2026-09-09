@@ -4,8 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { primaryNav } from "@/lib/navigation";
 
-/** /plants and /brands are sub-views, so they light up their parent section. */
-const SECTION_OF: Record<string, string> = { "/plants": "/production", "/brands": "/models", "/search": "/models" };
+/** Brand and search routes are views of the canonical vehicle catalogue. */
+const SECTION_OF: Record<string, string> = { "/brands": "/models", "/search": "/models" };
 
 export function NavLinks() {
   const pathname = usePathname() || "/";

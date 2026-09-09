@@ -1,0 +1,37 @@
+name: Automotive checks
+
+on:
+  push:
+    branches: [main, "feature/**", "feat/**", "fix/**", "data/**"]
+    paths: ["automotive/**", "lib/canonical-data.ts", "supabase/migrations/**", ".github/workflows/automotive.yml"]
+  pull_request:
+    paths: ["automotive/**", "lib/canonical-data.ts", "supabase/migrations/**", ".github/workflows/automotive.yml"]
+
+permissions:
+  contents: read
+
+jobs:
+  canonical:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: automotive
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: automotive/requirements.txt
+      - run: python -m pip install -r requirements.txt pytest
+      - run: python -m compileall -q vehreg tdr_bridge pages tests
+      - run: pytest -q
+      - name: Build serving release
+        run: |
+          python -m tdr_bridge.release \
+            --inventory integration_data/tdr_2026-09-09.json \
+            --overrides integration_data/crosswalk_overrides.json \
+            --out /tmp/vehicle-release.json \
+            --revision "${GITHUB_SHA}" --as-of 2026-09-09
+          python -m tdr_bridge.publish /tmp/vehicle-release.json
+

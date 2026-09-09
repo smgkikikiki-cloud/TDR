@@ -164,11 +164,6 @@ export async function saveProductionProgram(formData: FormData) {
 }
 
 // Legacy standalone powertrain action retained for compatibility with older pages.
-export async function savePowertrainDetail(formData: FormData) {
-  await requireAdmin();const db=dbOrThrow();const id=val(formData,"id");const modelId=val(formData,"model_id");if(!modelId)throw new Error("Missing model_id");const payload={model_id:modelId,label:val(formData,"label"),powertrain_type:val(formData,"powertrain_type"),engine_code:val(formData,"engine_code"),displacement_cc:num(formData,"displacement_cc"),battery_capacity_kwh:num(formData,"battery_capacity_kwh"),battery_chemistry:val(formData,"battery_chemistry"),motor_output_kw:num(formData,"motor_output_kw"),horsepower_ps:num(formData,"horsepower_ps"),torque_nm:num(formData,"torque_nm"),notes:val(formData,"notes")};const r=id?await db.from("model_powertrains").update(payload).eq("id",id):await db.from("model_powertrains").insert(payload);if(r.error)throw r.error;redirect(`/admin/models/${modelId}/edit?powertrain_saved=1`);
-}
-
-export async function deleteModel(formData:FormData){await requireAdmin();const db=dbOrThrow();const id=val(formData,"id");if(id){const r=await db.from("models").delete().eq("id",id);if(r.error)throw r.error;}redirect("/admin/library?table=models&deleted=1");}
 export async function deleteBrand(formData:FormData){await requireAdmin();const db=dbOrThrow();const id=val(formData,"id");if(id){const {count}=await db.from("models").select("*",{count:"exact",head:true}).eq("brand_id",id);if((count||0)>0)redirect(`/admin/brands/${id}/edit?inuse=1`);const r=await db.from("brands").delete().eq("id",id);if(r.error)throw r.error;}redirect("/admin/library?table=brands&deleted=1");}
 export async function deletePlant(formData:FormData){await requireAdmin();const db=dbOrThrow();const id=val(formData,"id");if(id){const r=await db.from("plants").delete().eq("id",id);if(r.error)throw r.error;}redirect("/admin/library?table=plants&deleted=1");}
 export async function deleteCompany(formData:FormData){await requireAdmin();const db=dbOrThrow();const id=val(formData,"id");if(id){const r=await db.from("companies").delete().eq("id",id);if(r.error)throw r.error;}redirect("/admin/library?table=companies&deleted=1");}
