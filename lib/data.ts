@@ -27,6 +27,8 @@ export const getDetailedPowertrains=getModelPowertrains;
 
 export async function getRelatedModels(model:any,limit=8){const db=publicDb();if(!db)return[];let q=db.from("models").select("id,slug,name_th,generation,segment,body_type,powertrains,image_url,retail_price_min,retail_price_max,seats,brands(name_th,name_en,slug)").neq("id",model.id).neq("status","discontinued").limit(limit);if(model.brand_id)q=q.eq("brand_id",model.brand_id);const{data}=await q.order("updated_at",{ascending:false});return data??[]}
 
+export type PublicRegistrationSummaryRow={period:string;registrations:number};
+
 /**
  * Phase-D public compatibility surface.
  *
@@ -36,7 +38,7 @@ export async function getRelatedModels(model:any,limit=8){const db=publicDb();if
  * render their locked/empty shell until the entitlement-aware member endpoint
  * is introduced.
  */
-export async function getModelRegistrationSummary(_modelId:string){return[]}
+export async function getModelRegistrationSummary(_modelId:string):Promise<PublicRegistrationSummaryRow[]>{return[]}
 
 export async function getPlantsWithStats(){const db=publicDb();if(!db)return[];const{data}=await db.from("plants").select("*, production_programs(id,model_id,status,annual_production_estimate,models(id,slug,name_th,name_en,generation,brands(name_th,name_en)))").order("name_th");return(data??[]).map((p:any)=>{const programs=(p.production_programs??[]).filter((x:any)=>x.status!=="ended");const estimate=p.estimated_production_annual??(programs.reduce((s:number,x:any)=>s+(x.annual_production_estimate||0),0)||null);const utilization=p.capacity_annual&&estimate?Math.round((estimate/p.capacity_annual)*1000)/10:null;return{...p,active_programs:programs,model_count:new Set(programs.map((x:any)=>x.model_id)).size,utilization_estimate:utilization,production_estimate:estimate}})}
 export async function getPlantWithPrograms(slug:string){const db=publicDb();if(!db)return null;const{data}=await db.from("plants").select("*, production_programs(*, models(id,slug,name_th,name_en,generation,segment,brands(name_th,name_en)))").eq("slug",slug).maybeSingle();if(!data)return null;const programs=(data.production_programs??[]).filter((x:any)=>x.status!=="ended");const estimate=data.estimated_production_annual??(programs.reduce((s:number,x:any)=>s+(x.annual_production_estimate||0),0)||null);const utilization=data.capacity_annual&&estimate?Math.round((estimate/data.capacity_annual)*1000)/10:null;return{...data,active_programs:programs,production_estimate:estimate,utilization_estimate:utilization}}
