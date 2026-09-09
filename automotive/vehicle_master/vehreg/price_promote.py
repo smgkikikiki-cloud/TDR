@@ -14,11 +14,13 @@ The canonical price history rule is append + supersede, not destructive rewrite:
 * LIST/CAMPAIGN/FINANCE/ESTIMATED streams never close one another;
 * campaign/finance supersession is scoped by campaign_id + option_id;
 * if the source did not state an effective date, confirmed replacement becomes
-  effective on the confirmation date.  ``observed_at`` still records when the
+  effective on the confirmation date. ``observed_at`` still records when the
   system first saw it, so no unknown effective date is invented.
 
-Campaign identities can be created in the same reviewed bundle.  Existing
-campaigns are never silently rewritten by the price bot.
+Campaign identities can be created in the same reviewed bundle. Existing
+campaigns are never silently rewritten by the price bot. Every promoted price
+also retains the immutable SourceDocument SHA-256 which supported the approval;
+a mutable URL by itself is never sufficient canonical provenance.
 """
 
 from __future__ import annotations
@@ -30,6 +32,7 @@ from enum import Enum
 import hashlib
 import json
 from pathlib import Path
+import re
 from typing import Iterable, Optional
 
 from .catalog import Catalog, DATA_DIR, DEFAULT_YEAR
@@ -105,7 +108,7 @@ class PromotionDecision:
             problems.append("candidate_id is required")
         if not self.reviewer:
             problems.append("reviewer is required")
-        # P6 intentionally starts human-gated.  SYSTEM_EVIDENCE may eventually
+        # P6 intentionally starts human-gated. SYSTEM_EVIDENCE may eventually
         # earn a safe auto-promotion class, but it must not arrive accidentally.
         if self.origin != "HUMAN":
             problems.append("P6 promotion decisions must have origin HUMAN")
@@ -120,6 +123,7 @@ class EvidenceRef:
     source_id: str
     target_id: str
     url: str
+    document_id: str
 
 
 @dataclass(frozen=True, slots=True)
@@ -147,6 +151,7 @@ class PromotionItem:
     previous_amount_thb: Optional[int]
     start_date: Optional[str]
     source_ref: str
+    source_document_id: str
     reviewer: str
 
     def as_dict(self) -> dict:
@@ -160,6 +165,7 @@ class PromotionItem:
             "previous_amount_thb": self.previous_amount_thb,
             "start_date": self.start_date,
             "source_ref": self.source_ref,
+            "source_document_id": self.source_document_id,
             "reviewer": self.reviewer,
         }
 
@@ -184,7 +190,11 @@ class PromotionPlan:
         }
 
     def apply(self) -> None:
-        """Write the already-validated plan.  No network/git operations here."""
+        """Legacy direct plan writer used by unit fixtures only.
+
+        Production P6 application goes through tools.price_promote_batch, which
+        owns the common writer lock and atomic replacement primitive.
+        """
         for planned in self.files:
             planned.path.parent.mkdir(parents=True, exist_ok=True)
             planned.path.write_text(
@@ -258,7 +268,6 @@ def disposition_map(reconcile_report: dict) -> dict[str, ReconcileDisposition]:
                 f"candidate {candidate_id}: invalid P5 disposition") from exc
         previous = out.get(candidate_id)
         if previous is not None and previous is not disposition:
-            # One candidate must not be simultaneously safe and conflicted.
             raise PromotionError(
                 f"candidate {candidate_id}: reconcile report has multiple dispositions")
         out[candidate_id] = disposition
@@ -266,6 +275,7 @@ def disposition_map(reconcile_report: dict) -> dict[str, ReconcileDisposition]:
 
 
 def evidence_map(fetch_batch: dict) -> dict[tuple[str, str], EvidenceRef]:
+    """Map target/source to immutable fetched evidence; URL alone is rejected."""
     rows = fetch_batch.get("results")
     if not isinstance(rows, list):
         raise PromotionError("fetch batch must contain results array")
@@ -276,9 +286,26 @@ def evidence_map(fetch_batch: dict) -> dict[tuple[str, str], EvidenceRef]:
         target_id = str(row.get("target_id") or "").strip()
         source_id = str(row.get("source_id") or "").strip()
         document = row.get("document") or {}
-        url = str(document.get("url") or "").strip() if isinstance(document, dict) else ""
-        if target_id and source_id and url:
-            out[(source_id, target_id)] = EvidenceRef(source_id, target_id, url)
+        if not isinstance(document, dict):
+            continue
+        url = str(document.get("url") or "").strip()
+        document_id = str(document.get("document_id") or "").strip()
+        content_hash = str(document.get("content_hash") or "").strip()
+        if not (target_id and source_id and url):
+            continue
+        if not re.fullmatch(r"sha256:[0-9a-f]{64}", document_id):
+            raise PromotionError(
+                f"{source_id}/{target_id}: fetch evidence lacks a valid immutable document_id")
+        if content_hash and content_hash != document_id:
+            raise PromotionError(
+                f"{source_id}/{target_id}: document_id/content_hash disagree")
+        key = (source_id, target_id)
+        ref = EvidenceRef(source_id, target_id, url, document_id)
+        previous = out.get(key)
+        if previous is not None and previous != ref:
+            raise PromotionError(
+                f"{source_id}/{target_id}: fetch batch has multiple evidence documents")
+        out[key] = ref
     return out
 
 
@@ -301,10 +328,6 @@ def _candidate_record(candidate: PriceCandidate, disposition: ReconcileDispositi
                       evidence: EvidenceRef, decision: PromotionDecision) -> PriceRecord:
     start = _candidate_start(candidate, disposition)
     observed = _date_of(candidate.first_seen_at)
-    # For a confirmed replacement without a literal source effective_from, use
-    # the confirmation day as effective_from and preserve first-seen separately
-    # in observed_at.  SAFE/HISTORICAL candidates need no invented effective
-    # date; observed_at alone is their known anchor unless the source gave one.
     effective_from = candidate.effective_from
     if disposition is ReconcileDisposition.CONFIRMED_REPLACEMENT and not effective_from:
         effective_from = start.isoformat()
@@ -324,6 +347,7 @@ def _candidate_record(candidate: PriceCandidate, disposition: ReconcileDispositi
         observed_at=observed.isoformat(),
         source=candidate.source_id,
         source_ref=evidence.url,
+        source_document_id=evidence.document_id,
         notes=notes,
         campaign_id=candidate.campaign_id,
         option_id=candidate.option_id,
@@ -342,6 +366,7 @@ def _record_dict(record: PriceRecord) -> dict:
         "observed_at": record.observed_at,
         "source": record.source,
         "source_ref": record.source_ref,
+        "source_document_id": record.source_document_id,
         "notes": record.notes,
         "campaign_id": record.campaign_id,
         "option_id": record.option_id,
@@ -502,8 +527,6 @@ def build_promotion_plan(*, data_dir: Path | str = DATA_DIR, year: int = DEFAULT
     rejected: list[str] = []
     affected_models: set[str] = set()
 
-    # Campaign creation is reviewed input and is applied before price validation
-    # so campaign-bound PriceRecords can validate in the same transaction.
     new_campaigns = tuple(deepcopy(list(create_campaigns)))
     if new_campaigns:
         grouped: dict[Path, list[dict]] = {}
@@ -518,7 +541,6 @@ def build_promotion_plan(*, data_dir: Path | str = DATA_DIR, year: int = DEFAULT
             if path.exists():
                 existing = json.loads(path.read_text(encoding="utf-8"))
             payload = _merge_campaign_payload(existing, rows)
-            # Parse/validate with canonical classes before any file is touched.
             check = deepcopy(staged_ledger)
             check.add_campaign_payload({"campaigns": rows}, source="<P6 reviewed campaign>")
             staged_ledger = check
@@ -539,7 +561,7 @@ def build_promotion_plan(*, data_dir: Path | str = DATA_DIR, year: int = DEFAULT
         evidence_ref = evidence.get((candidate.source_id, candidate.target_id))
         if evidence_ref is None:
             raise PromotionError(
-                f"{candidate_id}: fetch batch has no source URL for "
+                f"{candidate_id}: fetch batch has no immutable source document for "
                 f"{candidate.source_id}/{candidate.target_id}")
         record = _candidate_record(candidate, disposition, evidence_ref, decision)
         problems = record.validate()
@@ -602,6 +624,7 @@ def build_promotion_plan(*, data_dir: Path | str = DATA_DIR, year: int = DEFAULT
             previous_amount_thb=previous_amount,
             start_date=start.isoformat(),
             source_ref=evidence_ref.url,
+            source_document_id=evidence_ref.document_id,
             reviewer=decision.reviewer,
         ))
 
@@ -609,9 +632,6 @@ def build_promotion_plan(*, data_dir: Path | str = DATA_DIR, year: int = DEFAULT
     if problems:
         raise PromotionError("promoted ledger validation failed: " + "; ".join(problems))
 
-    # Prove every promoted LIST stream resolves to exactly the promoted amount
-    # on/after its start.  Campaign/finance resolution is scoped in P5 and the
-    # ledger validator checks campaign references.
     for item in items:
         if item.price_type != PriceType.LIST_PRICE.value or not item.start_date:
             continue
