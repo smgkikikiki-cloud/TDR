@@ -51,23 +51,24 @@ def _candidate(candidate_id: str = "pcand:stale") -> PriceCandidate:
     )
 
 
-def _approve(candidate_id: str) -> PromotionDecision:
+def _approve(candidate_id: str, *,
+             reviewed_at: str = "2026-09-10T03:00:00+00:00") -> PromotionDecision:
     return PromotionDecision(
         candidate_id=candidate_id,
         action=PromotionAction.APPROVE,
         reviewer="owner",
         origin="HUMAN",
-        reviewed_at="2026-09-10T03:00:00+00:00",
+        reviewed_at=reviewed_at,
     )
 
 
-def _report(candidate_id: str, disposition: str = "CONFIRMED_REPLACEMENT") -> dict:
+def _report(candidate_id: str) -> dict:
     return {
         "decisions": [{
             "claim_id": "claim-1",
             "decision": {
                 "candidate_id": candidate_id,
-                "disposition": disposition,
+                "disposition": "CONFIRMED_REPLACEMENT",
             },
         }],
     }
@@ -115,31 +116,20 @@ def test_confirmed_replacement_is_refused_if_canonical_changed_after_p5(
         )
 
 
-def test_campaign_candidate_needs_canonical_option_at_write_boundary(
+def test_pending_era_approval_cannot_be_reused_after_confirmation(
         tmp_path: Path) -> None:
     root = _data(tmp_path)
-    candidate = PriceCandidate(
-        candidate_id="pcand:campaign-unscoped",
-        state=CandidateState.NEW,
-        trim_id=MAX_PLUS,
-        amount_thb=599_000,
-        price_type=PriceType.CAMPAIGN_PRICE,
-        source_id="official_jaecoo_th",
-        target_id="jaecoo_promo",
-        target_role=TargetRole.PROMOTION,
-        first_seen_at="2026-09-09T02:00:00+00:00",
-        last_seen_at="2026-09-09T02:00:00+00:00",
-        observation_count=1,
-        claim_ids=("claim-campaign",),
-        campaign_id="campaign.jaecoo.some_offer",
-        option_id=None,
+    candidate = _candidate("pcand:old-approval")
+    old_approval = _approve(
+        candidate.candidate_id,
+        reviewed_at="2026-09-09T03:00:00+00:00",
     )
 
-    with pytest.raises(PromotionError, match=r"campaign_id \+ option_id"):
+    with pytest.raises(PromotionError, match="approval predates 24h confirmation"):
         _refuse_stale_replacements(
             data_dir=root,
             year=YEAR,
             book=CandidateBook([candidate]),
-            reconcile=_report(candidate.candidate_id, "SAFE_CANDIDATE"),
-            decisions={candidate.candidate_id: _approve(candidate.candidate_id)},
+            reconcile=_report(candidate.candidate_id),
+            decisions={candidate.candidate_id: old_approval},
         )
