@@ -18,6 +18,10 @@ top-level pathspec and ``--full-name``: the former prevents the current working
 directory prefix from being applied to the query, while the latter prevents Git
 from stripping that prefix from the returned tree paths before ``git show``.
 
+Changed files are compared directly between the declared base tree and HEAD.
+This avoids relying on merge-base traversal in shallow CI checkouts and is the
+right contract for generated price PRs, which are created from the current base.
+
 Run it against the base revision:
 
     python tools/pricefeed_guard.py --base origin/main
@@ -57,9 +61,10 @@ def _repo_path(relative: str) -> str:
 
 
 def changed_files(base: str) -> list[str]:
-    # --relative makes this deterministic from the engine directory; the allow
-    # list below is deliberately expressed in engine-relative paths.
-    out = _git(["diff", "--name-only", "--relative", f"{base}...HEAD"])
+    # Compare the declared base tree directly to HEAD. Generated price branches
+    # start from that base, and two-tree diffing also works in shallow CI clones
+    # without requiring Git to discover a merge base.
+    out = _git(["diff", "--name-only", "--relative", base, "HEAD"])
     return [line for line in out.stdout.splitlines() if line.strip()]
 
 
