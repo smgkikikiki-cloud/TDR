@@ -2,6 +2,7 @@
 
 import { adminDb } from "@/lib/supabase";
 import { isAdmin } from "@/lib/admin-auth";
+import { enqueueCanonicalModelShadow } from "@/lib/canonical-write-shadow";
 import { redirect } from "next/navigation";
 
 const val = (form: FormData, key: string) => {
@@ -235,6 +236,81 @@ export async function saveModelV12(formData:FormData) {
   const retailMax=currentPrices.length?Math.max(...currentPrices):null;
   const r2=await db.from("models").update({powertrains:ptTypes,retail_price_min:retailMin,retail_price_max:retailMax}).eq("id",modelId);
   if(r2.error) throw r2.error;
+
+  // Phase C shadow write.  This intentionally does not make legacy trim prices
+  // canonical: priceBaht is omitted here because PriceLedger owns money.
+  // Editorial-only fields (image/featured/consumer_description) also remain
+  // TDR-owned and are not included in the canonical command payload.
+  try {
+    await enqueueCanonicalModelShadow({
+      sourceModelId:modelId,
+      payload:{
+        model:{
+          slug:modelPayload.slug,
+          brand_id:modelPayload.brand_id,
+          name_th:modelPayload.name_th,
+          generation:modelPayload.generation,
+          segment:modelPayload.segment,
+          body_type:modelPayload.body_type,
+          production_type:modelPayload.production_type,
+          production_country:modelPayload.production_country,
+          launch_quarter:modelPayload.launch_quarter,
+          launch_year:modelPayload.launch_year,
+          seats:modelPayload.seats,
+          payload_capacity_kg:modelPayload.payload_capacity_kg,
+          length_mm:modelPayload.length_mm,
+          width_mm:modelPayload.width_mm,
+          wheelbase_mm:modelPayload.wheelbase_mm,
+          status:modelPayload.status,
+          unconfirmed_fields:modelPayload.unconfirmed_fields,
+          notes:modelPayload.notes
+        },
+        powertrains:powertrains.map(p=>({
+          id:p.id||null,
+          clientKey:p.clientKey,
+          label:p.label||null,
+          powertrainType:p.powertrainType||null,
+          engineCode:p.engineCode||null,
+          displacementCc:p.displacementCc??null,
+          batteryCapacityKwh:p.batteryCapacityKwh??null,
+          batteryChemistry:p.batteryChemistry||null,
+          motorOutputKw:p.motorOutputKw??null,
+          horsepowerPs:p.horsepowerPs??null,
+          torqueNm:p.torqueNm??null,
+          transmission:p.transmission||null,
+          drivetrain:p.drivetrain||null,
+          notes:p.notes||null,
+          unconfirmedFields:p.unconfirmedFields||[]
+        })),
+        trims:trims.map(t=>({
+          id:t.id||null,
+          clientKey:t.clientKey,
+          name:t.name,
+          status:t.status||"current",
+          description:t.description||null,
+          seatsOverride:t.seatsOverride??null,
+          payloadCapacityKgOverride:t.payloadCapacityKgOverride??null,
+          powertrainKeys:t.powertrainKeys||[],
+          tireSizeFront:t.tireSizeFront||null,
+          tireSizeRear:t.tireSizeRear||null,
+          wheelSizeFront:t.wheelSizeFront||null,
+          wheelSizeRear:t.wheelSizeRear||null,
+          publishedRangeKm:t.publishedRangeKm??null,
+          publishedRangeCycle:t.publishedRangeCycle||null,
+          standardizedWltpKm:t.standardizedWltpKm??null,
+          standardizedEpaKm:t.standardizedEpaKm??null,
+          rangeSourceUrl:t.rangeSourceUrl||null,
+          sortOrder:t.sortOrder??null,
+          unconfirmedFields:t.unconfirmedFields||[]
+        }))
+      },
+      reason:"legacy TDR model editor shadow write during Phase C"
+    });
+  } catch(error) {
+    // Shadow mode is observability, not the active write path yet.  Do not make
+    // a migration/queue outage destroy the old editor before cutover.
+    console.error("canonical shadow enqueue failed",error);
+  }
 
   redirect(`/admin/models/${modelId}/edit?saved=1`);
 }
