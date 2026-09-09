@@ -26,6 +26,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from vehreg.catalog import DATA_DIR, DEFAULT_YEAR  # noqa: E402
 from vehreg.price_promote import (  # noqa: E402
+    PromotionAction,
     PromotionError,
     build_promotion_plan,
     load_promotion_bundle,
@@ -41,6 +42,35 @@ def _load(path: Path) -> dict:
     if not isinstance(payload, dict):
         raise PromotionError(f"{path}: root must be an object")
     return payload
+
+
+def _refuse_multiple_current_approvals(book: CandidateBook, decisions: dict) -> None:
+    """One bot PR may select at most one current truth per canonical stream.
+
+    Historical candidates carry explicit closed windows and may coexist. For
+    current candidates, two HUMAN approval rows do not authorize the bot to
+    decide chronology/source precedence between them.
+    """
+    selected: dict[tuple, str] = {}
+    for candidate_id, decision in decisions.items():
+        if decision.action is not PromotionAction.APPROVE:
+            continue
+        candidate = book.candidates.get(candidate_id)
+        if candidate is None or candidate.historical_only:
+            continue
+        key = (
+            candidate.trim_id,
+            candidate.price_type.value,
+            candidate.campaign_id or "",
+            candidate.option_id or "",
+        )
+        previous = selected.get(key)
+        if previous is not None and previous != candidate_id:
+            raise PromotionError(
+                "multiple approved current candidates target the same canonical "
+                f"stream: {previous} and {candidate_id}; choose one or rerun review"
+            )
+        selected[key] = candidate_id
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -59,6 +89,7 @@ def main(argv: list[str] | None = None) -> int:
     reconcile = _load(args.reconcile)
     fetch = _load(args.fetch)
     decisions, campaigns = load_promotion_bundle(args.review)
+    _refuse_multiple_current_approvals(book, decisions)
 
     plan = build_promotion_plan(
         data_dir=args.data_dir,
