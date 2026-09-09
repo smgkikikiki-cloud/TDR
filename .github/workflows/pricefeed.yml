@@ -1,11 +1,6 @@
 name: Price feed
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - ".github/workflows/pricefeed.yml"
   schedule:
     - cron: "*/20 * * * *"
   workflow_dispatch:
