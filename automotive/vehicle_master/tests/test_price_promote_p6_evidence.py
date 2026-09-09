@@ -46,7 +46,8 @@ def _approve(candidate_id: str) -> PromotionDecision:
 
 
 def _fetch(*, claim_id: str = LATEST_CLAIM, amount: int = 719_000,
-           match_state: str = "EXACT", trim_id: str = TRIM) -> dict:
+           match_state: str = "EXACT", trim_id: str = TRIM,
+           fetched_at: str = "2026-09-10T02:00:00+00:00") -> dict:
     return {
         "results": [{
             "source_id": SOURCE,
@@ -55,6 +56,7 @@ def _fetch(*, claim_id: str = LATEST_CLAIM, amount: int = 719_000,
                 "document_id": DOCUMENT,
                 "content_hash": DOCUMENT,
                 "url": "https://www.omodajaecoo.co.th/th",
+                "fetched_at": fetched_at,
             },
             "claims": [{
                 "claim_id": claim_id,
@@ -88,6 +90,17 @@ def test_old_fetch_batch_cannot_supply_immutable_sha_for_newer_candidate() -> No
         _refuse_unbound_evidence(
             book=CandidateBook([candidate]),
             fetch=_fetch(claim_id="claim-first"),
+            decisions={candidate.candidate_id: _approve(candidate.candidate_id)},
+        )
+
+
+def test_same_sha_from_old_fetch_cannot_fake_latest_24h_sighting() -> None:
+    candidate = _candidate()
+
+    with pytest.raises(PromotionError, match="fetched_at predates candidate last_seen_at"):
+        _refuse_unbound_evidence(
+            book=CandidateBook([candidate]),
+            fetch=_fetch(fetched_at="2026-09-09T02:00:00+00:00"),
             decisions={candidate.candidate_id: _approve(candidate.candidate_id)},
         )
 
