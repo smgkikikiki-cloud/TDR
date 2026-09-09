@@ -10,14 +10,17 @@ Accounts exist only for paid/member products such as TDR Report registration ana
 
 Do not use a card number as account identity.
 
-- Supabase `auth.users.id` = canonical member identity
-- email/password = current login method
-- `tdr_customer_profiles.phone_e164` = phone/contact identity
-- `stripe_customer_id` = billing identity at Stripe
+- `tdr_customers.id` = stable canonical Customer ID
+- Supabase `auth.users.id` = authentication identity
+- `tdr_customer_phone_identities.phone_e164` = OTP-verified login/phone identity
+- `tdr_payment_customers` = provider-specific billing identity
 - Stripe PaymentMethod = payment credential (never stored as PAN/CVC in TDR)
 - `tdr_entitlements` = product access truth used by analytics endpoints
 
-At sign-up the phone is normalized to E.164 and stored in Supabase user metadata. A database trigger mirrors it into the service-role-only customer profile. Stripe Checkout also collects phone and may refresh the profile from the verified Checkout customer details.
+Supabase phone OTP creates/authenticates the user. A database trigger creates a
+stable Customer UUID and links only `auth.users.phone` values that have a real
+`phone_confirmed_at`; user metadata and the phone collected by Checkout never
+become identity evidence.
 
 ## Browser/server boundary
 
@@ -34,11 +37,11 @@ All four take the Supabase access token. Server code verifies the user and perfo
 
 ## Stripe flow
 
-1. Member creates/signs into a Supabase account.
-2. `POST /api/billing/checkout` resolves or creates a Stripe Customer tied to `tdr_user_id`.
+1. Member verifies a phone OTP through Supabase Auth.
+2. TDR resolves the stable Customer ID and creates a provider customer binding.
 3. Server creates a Stripe Checkout Session in subscription mode using `STRIPE_PRICE_REGISTRATION_MONTHLY`.
 4. Stripe hosts card entry. TDR never receives PAN/CVC.
-5. Stripe webhook is signature-verified and idempotently recorded in `tdr_billing_webhook_events`.
+5. Stripe webhook is signature-verified and atomically claimed in `tdr_billing_webhook_events`; failed/stale work can be retried.
 6. `checkout.session.completed` binds Stripe Customer/subscription IDs to the TDR user.
 7. `invoice.paid` opens/renews `registration_full` entitlement.
 8. `invoice.payment_failed` expires access by default; optional grace is controlled with `TDR_BILLING_GRACE_DAYS`.
@@ -49,10 +52,14 @@ Payment-provider webhook delivery, not the browser success redirect, is the auth
 
 ## Storage
 
-`tdr_customer_profiles`
-- `user_id`
-- phone in E.164
-- Stripe Customer ID
+`tdr_customers` + `tdr_customer_phone_identities`
+- stable internal Customer UUID
+- Supabase Auth user binding
+- OTP-verified E.164 phone history
+
+`tdr_payment_customers`
+- provider + provider customer ID
+- stable TDR Customer ID
 
 `tdr_subscriptions`
 - provider subscription ID
@@ -79,16 +86,22 @@ Payment-provider webhook delivery, not the browser success redirect, is the auth
 
 PromptPay should be implemented as a prepaid access pass, not forced into recurring billing. It can grant/extend the same `registration_full` entitlement after a confirmed provider webhook or reviewed manual payment.
 
-This keeps Stripe replaceable. A future Omise/2C2P integration only needs to map its payment lifecycle into `tdr_subscriptions` + `tdr_entitlements`; registration analytics and consumer pages do not change.
+This keeps Stripe replaceable. A future Omise/2C2P adapter writes the same
+payment-customer/subscription/entitlement contract; analytics and free consumer
+pages do not change.
 
 ## Production configuration still required
 
 The code intentionally fails closed until these exist:
 
 - `TDR_APP_URL`
+- `TDR_PAYMENT_PROVIDER=stripe`
 - `STRIPE_SECRET_KEY`
 - `STRIPE_WEBHOOK_SECRET`
 - `STRIPE_PRICE_REGISTRATION_MONTHLY`
+
+Supabase Auth must also have Phone sign-in and an SMS provider enabled. Apply
+CAPTCHA and OTP rate limits before opening public signup.
 
 Stripe webhook endpoint: `/api/billing/webhook`.
 

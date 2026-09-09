@@ -29,7 +29,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from vehreg.catalog import DATA_DIR, DEFAULT_YEAR  # noqa: E402
 from vehreg.pricefeed import load_sources  # noqa: E402
 
-AGENT = "vehicle-market-master"
+AGENT = "tdr-automotive"
 # Names an operator uses when they mean "no automated agents like this one".
 AI_AGENTS = ("claudebot", "gptbot", "google-extended", "ccbot", "anthropic-ai",
              "perplexitybot", "applebot-extended", "meta-externalagent",

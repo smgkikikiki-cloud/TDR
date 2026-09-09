@@ -77,7 +77,7 @@ def _request(url: str, *, payload: Optional[dict] = None, timeout: float = 60.0,
     """One JSON call with backoff. Only 5xx and transport errors are retried."""
     body = None
     headers = {"Accept": "application/json",
-               "User-Agent": "vehicle-market-master/ecosticker-harvester"}
+               "User-Agent": "tdr-automotive/ecosticker-harvester"}
     if payload is not None:
         body = json.dumps(payload).encode("utf-8")
         headers["Content-Type"] = "application/json"

@@ -14,9 +14,20 @@ type StripeObject = Record<string, any>;
 
 type MemberContext = {
   userId: string;
+  customerId: string;
   email: string | null;
-  phone: string | null;
+  phone: string;
 };
+
+export interface CardPaymentGateway {
+  readonly provider: "stripe";
+  request(
+    path: string,
+    params?: Record<string, string | number | boolean | null | undefined>,
+    method?: string,
+    idempotencyKey?: string,
+  ): Promise<StripeObject>;
+}
 
 function stripeSecret() {
   const secret = process.env.STRIPE_SECRET_KEY;
@@ -39,22 +50,33 @@ function asForm(params: Record<string, string | number | boolean | null | undefi
   return form;
 }
 
-async function stripeRequest(path: string, params?: Record<string, string | number | boolean | null | undefined>, method = "POST") {
-  const response = await fetch(`https://api.stripe.com${path}`, {
-    method,
-    headers: {
-      Authorization: `Bearer ${stripeSecret()}`,
-      ...(params ? { "Content-Type": "application/x-www-form-urlencoded" } : {}),
-    },
-    body: params ? asForm(params).toString() : undefined,
-    cache: "no-store",
-  });
-  const body = await response.json().catch(() => ({}));
-  if (!response.ok) {
-    const message = body?.error?.message || `Stripe request failed (${response.status})`;
-    throw new BillingError(response.status >= 500 ? 502 : 400, message);
+class StripeCardPaymentGateway implements CardPaymentGateway {
+  readonly provider = "stripe" as const;
+
+  async request(path: string, params?: Record<string, string | number | boolean | null | undefined>, method = "POST", idempotencyKey?: string) {
+    const response = await fetch(`https://api.stripe.com${path}`, {
+      method,
+      headers: {
+        Authorization: `Bearer ${stripeSecret()}`,
+        ...(params ? { "Content-Type": "application/x-www-form-urlencoded" } : {}),
+        ...(idempotencyKey ? { "Idempotency-Key": idempotencyKey } : {}),
+      },
+      body: params ? asForm(params).toString() : undefined,
+      cache: "no-store",
+    });
+    const body = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      const message = body?.error?.message || `Stripe request failed (${response.status})`;
+      throw new BillingError(response.status >= 500 ? 502 : 400, message);
+    }
+    return body as StripeObject;
   }
-  return body as StripeObject;
+}
+
+function cardGateway(): CardPaymentGateway {
+  const provider = (process.env.TDR_PAYMENT_PROVIDER || "stripe").toLowerCase();
+  if (provider !== "stripe") throw new BillingError(503, `unsupported card payment provider ${provider}`);
+  return new StripeCardPaymentGateway();
 }
 
 export async function requireMember(accessToken: string): Promise<MemberContext> {
@@ -64,20 +86,40 @@ export async function requireMember(accessToken: string): Promise<MemberContext>
   const { data, error } = await db.auth.getUser(accessToken);
   if (error || !data.user) throw new BillingError(401, "invalid or expired member session");
 
-  const phone = typeof data.user.user_metadata?.phone_e164 === "string"
-    ? data.user.user_metadata.phone_e164
-    : null;
+  const phone = data.user.phone || null;
+  if (!phone || !data.user.phone_confirmed_at) {
+    throw new BillingError(403, "verify a phone number with OTP before creating a billing customer");
+  }
+  let { data: customer, error: customerError } = await db.from("tdr_customers")
+    .select("id").eq("auth_user_id", data.user.id).maybeSingle();
+  if (customerError) throw new BillingError(503, "could not load customer identity");
+  if (!customer) {
+    const created = await db.from("tdr_customers").insert({ auth_user_id: data.user.id })
+      .select("id").single();
+    if (created.error) throw new BillingError(503, "could not create customer identity");
+    customer = created.data;
+  }
+  const { error: phoneError } = await db.from("tdr_customer_phone_identities").upsert({
+    customer_id: customer.id,
+    phone_e164: phone,
+    verified_at: data.user.phone_confirmed_at,
+    is_primary: true,
+    revoked_at: null,
+    updated_at: new Date().toISOString(),
+  }, { onConflict: "phone_e164" });
+  if (phoneError) throw new BillingError(409, "verified phone is already linked to another customer");
 
-  return { userId: data.user.id, email: data.user.email ?? null, phone };
+  return { userId: data.user.id, customerId: customer.id, email: data.user.email ?? null, phone };
 }
 
-async function customerProfile(userId: string) {
+async function providerCustomer(customerId: string) {
   const db = adminDb();
   if (!db) throw new BillingError(503, "member database is not configured");
   const { data, error } = await db
-    .from("tdr_customer_profiles")
-    .select("user_id,phone_e164,stripe_customer_id")
-    .eq("user_id", userId)
+    .from("tdr_payment_customers")
+    .select("provider_customer_id")
+    .eq("provider", "stripe")
+    .eq("customer_id", customerId)
     .maybeSingle();
   if (error) throw new BillingError(503, "could not load billing profile");
   return data;
@@ -86,21 +128,24 @@ async function customerProfile(userId: string) {
 async function ensureStripeCustomer(member: MemberContext) {
   const db = adminDb();
   if (!db) throw new BillingError(503, "member database is not configured");
-  const profile = await customerProfile(member.userId);
-  if (profile?.stripe_customer_id) return profile.stripe_customer_id as string;
+  const profile = await providerCustomer(member.customerId);
+  if (profile?.provider_customer_id) return profile.provider_customer_id as string;
 
-  const customer = await stripeRequest("/v1/customers", {
+  const customer = await cardGateway().request("/v1/customers", {
     email: member.email,
-    phone: profile?.phone_e164 || member.phone,
+    phone: member.phone,
     "metadata[tdr_user_id]": member.userId,
-  });
+    "metadata[tdr_customer_id]": member.customerId,
+  }, "POST", `tdr-stripe-customer-${member.customerId}`);
 
-  const { error } = await db.from("tdr_customer_profiles").upsert({
-    user_id: member.userId,
-    phone_e164: profile?.phone_e164 || member.phone,
-    stripe_customer_id: customer.id,
+  const { error } = await db.from("tdr_payment_customers").upsert({
+    provider: "stripe",
+    customer_id: member.customerId,
+    provider_customer_id: customer.id,
+    billing_email: member.email,
+    billing_phone_e164: member.phone,
     updated_at: new Date().toISOString(),
-  }, { onConflict: "user_id" });
+  }, { onConflict: "provider,provider_customer_id" });
   if (error) throw new BillingError(503, "could not save Stripe customer binding");
   return String(customer.id);
 }
@@ -112,10 +157,10 @@ export async function createRegistrationCheckout(args: {
 }) {
   const member = await requireMember(args.accessToken);
   const customerId = await ensureStripeCustomer(member);
-  const session = await stripeRequest("/v1/checkout/sessions", {
+  const session = await cardGateway().request("/v1/checkout/sessions", {
     mode: "subscription",
     customer: customerId,
-    client_reference_id: member.userId,
+    client_reference_id: member.customerId,
     "line_items[0][price]": registrationPriceId(),
     "line_items[0][quantity]": 1,
     success_url: args.successUrl,
@@ -123,8 +168,10 @@ export async function createRegistrationCheckout(args: {
     allow_promotion_codes: true,
     "phone_number_collection[enabled]": true,
     "metadata[tdr_user_id]": member.userId,
+    "metadata[tdr_customer_id]": member.customerId,
     "metadata[plan_code]": REGISTRATION_PLAN,
     "subscription_data[metadata][tdr_user_id]": member.userId,
+    "subscription_data[metadata][tdr_customer_id]": member.customerId,
     "subscription_data[metadata][plan_code]": REGISTRATION_PLAN,
   });
   if (!session.url) throw new BillingError(502, "Stripe Checkout did not return a redirect URL");
@@ -133,11 +180,11 @@ export async function createRegistrationCheckout(args: {
 
 export async function createBillingPortal(args: { accessToken: string; returnUrl: string }) {
   const member = await requireMember(args.accessToken);
-  const profile = await customerProfile(member.userId);
-  if (!profile?.stripe_customer_id) throw new BillingError(409, "this account has no billing profile yet");
+  const profile = await providerCustomer(member.customerId);
+  if (!profile?.provider_customer_id) throw new BillingError(409, "this account has no billing profile yet");
 
-  const session = await stripeRequest("/v1/billing_portal/sessions", {
-    customer: profile.stripe_customer_id,
+  const session = await cardGateway().request("/v1/billing_portal/sessions", {
+    customer: profile.provider_customer_id,
     return_url: args.returnUrl,
     configuration: process.env.STRIPE_PORTAL_CONFIGURATION_ID || undefined,
   });
@@ -151,8 +198,8 @@ export async function getBillingStatus(accessToken: string) {
   if (!db) throw new BillingError(503, "member database is not configured");
 
   const [{ data: profile, error: profileError }, { data: subscription, error: subscriptionError }, { data: entitlement, error: entitlementError }] = await Promise.all([
-    db.from("tdr_customer_profiles").select("phone_e164,stripe_customer_id").eq("user_id", member.userId).maybeSingle(),
-    db.from("tdr_subscriptions").select("plan_code,status,current_period_end,cancel_at_period_end,provider").eq("user_id", member.userId).order("updated_at", { ascending: false }).limit(1).maybeSingle(),
+    db.from("tdr_payment_customers").select("provider_customer_id").eq("provider", "stripe").eq("customer_id", member.customerId).maybeSingle(),
+    db.from("tdr_subscriptions").select("plan_code,status,current_period_end,cancel_at_period_end,provider").eq("customer_id", member.customerId).order("updated_at", { ascending: false }).limit(1).maybeSingle(),
     db.from("tdr_entitlements").select("product,status,valid_until").eq("user_id", member.userId).eq("product", REGISTRATION_PRODUCT).maybeSingle(),
   ]);
   if (profileError || subscriptionError || entitlementError) {
@@ -160,8 +207,8 @@ export async function getBillingStatus(accessToken: string) {
   }
 
   return {
-    user: { id: member.userId, email: member.email, phone: profile?.phone_e164 || member.phone },
-    customerBound: Boolean(profile?.stripe_customer_id),
+    user: { id: member.userId, customerId: member.customerId, email: member.email, phone: member.phone },
+    customerBound: Boolean(profile?.provider_customer_id),
     subscription: subscription ?? null,
     entitlement: entitlement ?? null,
     checkoutConfigured: Boolean(process.env.STRIPE_SECRET_KEY && process.env.STRIPE_PRICE_REGISTRATION_MONTHLY),
@@ -209,10 +256,10 @@ function stripeSubscriptionId(object: StripeObject) {
   return null;
 }
 
-function metadataUserId(object: StripeObject) {
-  return object.metadata?.tdr_user_id
-    || object.subscription_details?.metadata?.tdr_user_id
-    || object.parent?.subscription_details?.metadata?.tdr_user_id
+function metadataCustomerId(object: StripeObject) {
+  return object.metadata?.tdr_customer_id
+    || object.subscription_details?.metadata?.tdr_customer_id
+    || object.parent?.subscription_details?.metadata?.tdr_customer_id
     || object.client_reference_id
     || null;
 }
@@ -224,7 +271,28 @@ function metadataPlan(object: StripeObject) {
     || REGISTRATION_PLAN;
 }
 
-async function upsertSubscriptionFromObject(object: StripeObject, userId: string | null) {
+async function customerContext(object: StripeObject) {
+  const db = adminDb();
+  if (!db) throw new BillingError(503, "member database is not configured");
+  const direct = metadataCustomerId(object);
+  if (direct) {
+    const { data } = await db.from("tdr_customers").select("id,auth_user_id").eq("id", String(direct)).maybeSingle();
+    if (data) return { customerId: String(data.id), userId: String(data.auth_user_id) };
+  }
+  const providerCustomerId = typeof object.customer === "string"
+    ? object.customer
+    : typeof object.customer_details?.customer === "string" ? object.customer_details.customer : null;
+  if (!providerCustomerId) return null;
+  const { data } = await db.from("tdr_payment_customers")
+    .select("customer_id").eq("provider", "stripe")
+    .eq("provider_customer_id", providerCustomerId).maybeSingle();
+  if (!data?.customer_id) return null;
+  const { data: customer } = await db.from("tdr_customers")
+    .select("id,auth_user_id").eq("id", data.customer_id).maybeSingle();
+  return customer ? { customerId: String(customer.id), userId: String(customer.auth_user_id) } : null;
+}
+
+async function upsertSubscriptionFromObject(object: StripeObject, context: { customerId: string; userId: string } | null) {
   const db = adminDb();
   if (!db) throw new BillingError(503, "member database is not configured");
   const subscriptionId = typeof object.id === "string" && object.object === "subscription"
@@ -232,12 +300,14 @@ async function upsertSubscriptionFromObject(object: StripeObject, userId: string
     : stripeSubscriptionId(object);
   if (!subscriptionId) return null;
 
-  let effectiveUserId = userId;
-  if (!effectiveUserId) {
-    const { data } = await db.from("tdr_subscriptions").select("user_id").eq("provider", "stripe").eq("provider_subscription_id", subscriptionId).maybeSingle();
-    effectiveUserId = data?.user_id ?? null;
+  let effective = context;
+  if (!effective) {
+    const { data } = await db.from("tdr_subscriptions").select("customer_id,user_id")
+      .eq("provider", "stripe").eq("provider_subscription_id", subscriptionId).maybeSingle();
+    effective = data?.customer_id && data?.user_id
+      ? { customerId: String(data.customer_id), userId: String(data.user_id) } : null;
   }
-  if (!effectiveUserId) return null;
+  if (!effective) return null;
 
   const statusMap: Record<string, string> = {
     incomplete: "INCOMPLETE",
@@ -251,7 +321,8 @@ async function upsertSubscriptionFromObject(object: StripeObject, userId: string
   };
 
   const { error } = await db.from("tdr_subscriptions").upsert({
-    user_id: effectiveUserId,
+    customer_id: effective.customerId,
+    user_id: effective.userId,
     provider: "stripe",
     provider_subscription_id: subscriptionId,
     plan_code: metadataPlan(object),
@@ -263,18 +334,20 @@ async function upsertSubscriptionFromObject(object: StripeObject, userId: string
     updated_at: new Date().toISOString(),
   }, { onConflict: "provider,provider_subscription_id" });
   if (error) throw new BillingError(503, "could not save subscription state");
-  return { userId: effectiveUserId, subscriptionId };
+  return { ...effective, subscriptionId };
 }
 
-async function entitlementUserFromEvent(object: StripeObject) {
-  const direct = metadataUserId(object);
-  if (direct) return String(direct);
+async function entitlementContextFromEvent(object: StripeObject) {
+  const direct = await customerContext(object);
+  if (direct) return direct;
   const subscriptionId = stripeSubscriptionId(object);
   if (!subscriptionId) return null;
   const db = adminDb();
   if (!db) throw new BillingError(503, "member database is not configured");
-  const { data } = await db.from("tdr_subscriptions").select("user_id").eq("provider", "stripe").eq("provider_subscription_id", subscriptionId).maybeSingle();
-  return data?.user_id ?? null;
+  const { data } = await db.from("tdr_subscriptions").select("customer_id,user_id")
+    .eq("provider", "stripe").eq("provider_subscription_id", subscriptionId).maybeSingle();
+  return data?.customer_id && data?.user_id
+    ? { customerId: String(data.customer_id), userId: String(data.user_id) } : null;
 }
 
 async function setEntitlement(userId: string, status: "ACTIVE" | "GRACE" | "EXPIRED", validUntil: string | null) {
@@ -290,10 +363,10 @@ async function setEntitlement(userId: string, status: "ACTIVE" | "GRACE" | "EXPI
   if (error) throw new BillingError(503, "could not update member entitlement");
 }
 
-async function currentSubscriptionEnd(userId: string) {
+async function currentSubscriptionEnd(customerId: string) {
   const db = adminDb();
   if (!db) throw new BillingError(503, "member database is not configured");
-  const { data } = await db.from("tdr_subscriptions").select("current_period_end").eq("user_id", userId).order("updated_at", { ascending: false }).limit(1).maybeSingle();
+  const { data } = await db.from("tdr_subscriptions").select("current_period_end").eq("customer_id", customerId).order("updated_at", { ascending: false }).limit(1).maybeSingle();
   return data?.current_period_end ?? null;
 }
 
@@ -309,75 +382,77 @@ export async function processStripeWebhook(event: StripeObject) {
   if (!event?.id || !event?.type || !event?.data?.object) throw new BillingError(400, "invalid Stripe event payload");
 
   const object = event.data.object as StripeObject;
-  const { error: insertError } = await db.from("tdr_billing_webhook_events").insert({
-    provider: "stripe",
-    event_id: event.id,
-    event_type: event.type,
-    object_id: object.id || null,
-    status: "RECEIVED",
+  const { data: claimed, error: claimError } = await db.rpc("tdr_claim_billing_webhook", {
+    p_provider: "stripe",
+    p_event_id: event.id,
+    p_event_type: event.type,
+    p_object_id: object.id || null,
   });
-  if (insertError?.code === "23505") return { duplicate: true };
-  if (insertError) throw new BillingError(503, "could not record billing webhook");
+  if (claimError) throw new BillingError(503, "could not claim billing webhook");
+  if (!claimed) return { duplicate: true };
 
   try {
     if (event.type === "checkout.session.completed") {
-      const userId = metadataUserId(object);
-      if (userId) {
-        await db.from("tdr_customer_profiles").upsert({
-          user_id: userId,
-          phone_e164: object.customer_details?.phone || undefined,
-          stripe_customer_id: typeof object.customer === "string" ? object.customer : undefined,
+      const context = await customerContext(object);
+      if (context && typeof object.customer === "string") {
+        const { error } = await db.from("tdr_payment_customers").upsert({
+          provider: "stripe",
+          provider_customer_id: object.customer,
+          customer_id: context.customerId,
+          billing_email: object.customer_details?.email || null,
+          billing_phone_e164: object.customer_details?.phone || null,
           updated_at: new Date().toISOString(),
-        }, { onConflict: "user_id" });
-        await upsertSubscriptionFromObject(object, String(userId));
+        }, { onConflict: "provider,provider_customer_id" });
+        if (error) throw new BillingError(503, "could not bind payment customer");
+        await upsertSubscriptionFromObject(object, context);
       }
     }
 
     if (event.type.startsWith("customer.subscription.")) {
-      const result = await upsertSubscriptionFromObject(object, metadataUserId(object));
+      const result = await upsertSubscriptionFromObject(object, await customerContext(object));
       if (event.type === "customer.subscription.deleted" && result?.userId) {
         await setEntitlement(result.userId, "EXPIRED", new Date().toISOString());
       }
     }
 
     if (event.type === "invoice.paid") {
-      const userId = await entitlementUserFromEvent(object);
-      if (userId) {
-        const periodEnd = isoFromUnix(object.lines?.data?.[0]?.period?.end) || await currentSubscriptionEnd(userId);
-        await setEntitlement(userId, "ACTIVE", periodEnd);
+      const context = await entitlementContextFromEvent(object);
+      if (context) {
+        const periodEnd = isoFromUnix(object.lines?.data?.[0]?.period?.end) || await currentSubscriptionEnd(context.customerId);
+        await setEntitlement(context.userId, "ACTIVE", periodEnd);
       }
     }
 
     if (event.type === "invoice.payment_failed") {
-      const userId = await entitlementUserFromEvent(object);
-      if (userId) {
+      const context = await entitlementContextFromEvent(object);
+      if (context) {
         const until = graceUntil();
-        await setEntitlement(userId, until ? "GRACE" : "EXPIRED", until || new Date().toISOString());
+        await setEntitlement(context.userId, until ? "GRACE" : "EXPIRED", until || new Date().toISOString());
       }
     }
 
     if (event.type === "payment_method.attached") {
-      const customerId = typeof object.customer === "string" ? object.customer : null;
-      if (customerId && object.id) {
-        const { data: profile } = await db.from("tdr_customer_profiles").select("user_id").eq("stripe_customer_id", customerId).maybeSingle();
-        if (profile?.user_id) {
-          await db.from("tdr_payment_methods").upsert({
+      const context = await customerContext(object);
+      if (context && object.id) {
+          const { error } = await db.from("tdr_payment_methods").upsert({
             provider: "stripe",
             provider_payment_method_id: object.id,
-            user_id: profile.user_id,
+            customer_id: context.customerId,
+            user_id: context.userId,
             brand: object.card?.brand || null,
             last4: object.card?.last4 || null,
             exp_month: object.card?.exp_month || null,
             exp_year: object.card?.exp_year || null,
             updated_at: new Date().toISOString(),
           }, { onConflict: "provider,provider_payment_method_id" });
-        }
+          if (error) throw new BillingError(503, "could not save payment method metadata");
       }
     }
 
     await db.from("tdr_billing_webhook_events").update({
       status: "PROCESSED",
       processed_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
       error: null,
     }).eq("provider", "stripe").eq("event_id", event.id);
     return { duplicate: false };
@@ -385,6 +460,7 @@ export async function processStripeWebhook(event: StripeObject) {
     await db.from("tdr_billing_webhook_events").update({
       status: "ERROR",
       processed_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
       error: error instanceof Error ? error.message.slice(0, 1000) : "unknown billing error",
     }).eq("provider", "stripe").eq("event_id", event.id);
     throw error;

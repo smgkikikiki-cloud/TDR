@@ -20,6 +20,7 @@ export default async function AdminHome() {
     </div>
     <div className="adminStatGrid">{[["Canonical models", models], ["MarketTrims", trims], ["Canonical brands", brands], ["Releases", releases], ["โรงงาน", plants], ["ข่าว", events]].map(([label, value]) => <div className="adminStat" key={String(label)}><span>{label}</span><strong>{value ?? "—"}</strong><small>records</small></div>)}</div>
     <div className="adminQuickGrid">
+      <Link href="/admin/vehicle-input"><b>+ Canonical vehicle input</b><span>กรอกครั้งเดียว → validate → revision → PR → release</span></Link>
       <Link href="/admin/library?table=models"><b>Editorial model links</b><span>รูป คำอธิบาย รุ่นเด่น และ industry link เท่านั้น</span></Link>
       <Link href="/admin/plants/new"><b>+ เพิ่มโรงงาน</b><span>Capacity / production / utilization</span></Link>
       <Link href="/admin/events/new"><b>+ เพิ่มข่าว / Event</b><span>ผูกกับ TDR editorial UUID ผ่าน crosswalk</span></Link>

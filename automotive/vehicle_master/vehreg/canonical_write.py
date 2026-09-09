@@ -137,6 +137,21 @@ def _load_json(path: Path) -> dict[str, Any]:
         raise CanonicalWriteError(f"cannot read {path}: {exc}") from exc
 
 
+def _existing_target_matches(path: Path, payload: dict[str, Any]) -> bool:
+    """Recognize a data-first write left behind before its revision marker.
+
+    Batch input copies canonical data before audit state. If the process dies in
+    that narrow window, replay must finish the audit entry instead of forcing a
+    manual recovery for a byte-equivalent price/spec fact.
+    """
+    if not path.is_file():
+        return False
+    try:
+        return _load_json(path) == payload
+    except CanonicalWriteError:
+        return False
+
+
 def _state_dir(data_dir: Path | str, year: int) -> Path:
     return Path(data_dir) / str(year) / "canonical_state"
 
@@ -158,6 +173,63 @@ def _find_revision(data_dir: Path | str, year: int,
         if row.get("command_id") == command_id:
             return row
     return None
+
+
+def _repair_replay_audit(data_dir: Path | str, year: int,
+                         revision: dict[str, Any]) -> tuple[str, ...]:
+    """Restore outbox/shadow artifacts if a data-first batch copy was interrupted."""
+    state = _state_dir(data_dir, year)
+    event_id = f"{revision['revision_id']}:{revision['topic']}"
+    outbox = state / "outbox.jsonl"
+    event_exists = False
+    if outbox.is_file():
+        for line in outbox.read_text(encoding="utf-8").splitlines():
+            if line.strip() and json.loads(line).get("event_id") == event_id:
+                event_exists = True
+                break
+    event = {
+        "schema_version": 1,
+        "event_id": event_id,
+        "revision_id": revision["revision_id"],
+        "topic": revision["topic"],
+        "entity_type": revision["entity_type"],
+        "entity_id": revision["entity_id"],
+        "state": "PENDING",
+        "created_at": revision["applied_at"],
+        "payload": revision["after"],
+    }
+    repaired: list[str] = []
+    if not event_exists:
+        _append_jsonl(outbox, event)
+        repaired.append(str(outbox))
+    shadow = state / "shadow" / f"{revision['revision_id']}.json"
+    if not shadow.is_file():
+        _atomic_json(shadow, {
+            "schema_version": 1,
+            "release_kind": "SHADOW",
+            "revision": revision,
+            "event": event,
+        })
+        repaired.append(str(shadow))
+    return tuple(repaired)
+
+
+def _resolve_recorded_change(data_dir: Path | str, year: int, recorded: str) -> str:
+    """Resolve durable relative paths and legacy absolute temp paths."""
+    root = Path(data_dir)
+    path = Path(recorded)
+    if not path.is_absolute():
+        return str(root / path)
+    try:
+        path.relative_to(root)
+        return str(path)
+    except ValueError:
+        parts = path.parts
+        try:
+            year_index = parts.index(str(year))
+        except ValueError as exc:
+            raise CanonicalWriteError(f"recorded changed file is outside canonical data: {path}") from exc
+        return str(root.joinpath(*parts[year_index:]))
 
 
 def _load_brand_payloads(data_dir: Path | str,
@@ -253,13 +325,18 @@ class CanonicalWritePipeline:
                    else CanonicalWriteCommand.from_dict(raw_command))
         replay = _find_revision(self.data_dir, command.year, command.command_id)
         if replay:
+            repaired = _repair_replay_audit(self.data_dir, command.year, replay)
+            replay_files = tuple(
+                _resolve_recorded_change(self.data_dir, command.year, str(path))
+                for path in (replay.get("changed_files") or ())
+            )
             return WriteResult(
                 command_id=command.command_id,
                 revision_id=str(replay["revision_id"]),
                 topic=str(replay["topic"]),
                 entity_type=str(replay["entity_type"]),
                 entity_id=str(replay["entity_id"]),
-                changed_files=tuple(replay.get("changed_files") or ()),
+                changed_files=replay_files + repaired,
                 idempotent_replay=True,
             )
 
@@ -282,6 +359,7 @@ class CanonicalWritePipeline:
             f"{command.year}:{command.command_id}:{_hash(before)}:{_hash(after)}".encode()
         ).hexdigest()[:24]
         now = datetime.now(timezone.utc).isoformat(timespec="seconds")
+        durable_changed = [str(Path(path).relative_to(self.data_dir)) for path in changed]
         revision = {
             "schema_version": 1,
             "revision_id": revision_id,
@@ -299,7 +377,7 @@ class CanonicalWritePipeline:
             "after_hash": _hash(after),
             "before": before,
             "after": after,
-            "changed_files": list(changed),
+            "changed_files": durable_changed,
         }
         state = _state_dir(self.data_dir, command.year)
         _append_jsonl(state / "revisions.jsonl", revision)
@@ -472,10 +550,11 @@ class CanonicalWritePipeline:
                 trim_id, as_of=date.fromisoformat(start) if start else date.today())
         folder = Path(self.data_dir) / str(command.year) / "market" / "prices"
         target = folder / f"canonical_{command.command_id}.json"
-        if target.exists():
+        target_payload = {"prices": [record]}
+        if target.exists() and not _existing_target_matches(target, target_payload):
             raise CanonicalWriteError(
                 "command file already exists without a revision; manual recovery required")
-        _atomic_json(target, {"prices": [record]})
+        _atomic_json(target, target_payload)
         after_ledger = PriceLedger.load(
             self.data_dir, year=command.year, catalog=catalog)
         after = [to_jsonable(r) for r in after_ledger.records_for(
@@ -503,10 +582,11 @@ class CanonicalWritePipeline:
         root = (Path(self.data_dir) / str(command.year) / "product" /
                 "comparable_specs" / "facts")
         target = root / f"canonical_{command.command_id}.json"
-        if target.exists():
+        target_payload = {"schema_version": 1, "facts": [fact]}
+        if target.exists() and not _existing_target_matches(target, target_payload):
             raise CanonicalWriteError(
                 "command file already exists without a revision; manual recovery required")
-        _atomic_json(target, {"schema_version": 1, "facts": [fact]})
+        _atomic_json(target, target_payload)
         after_ledger = SpecLedger.load(
             self.data_dir, command.year, registry=registry, catalog=catalog)
         after = [to_jsonable(row) for row in after_ledger.facts if row.trim_id == trim_id]

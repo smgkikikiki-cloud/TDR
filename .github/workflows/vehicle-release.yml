@@ -29,6 +29,18 @@ jobs:
         working-directory: automotive/vehicle_master
     steps:
       - uses: actions/checkout@v4
+      - name: Preflight deployment secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${SUPABASE_URL}" ]; then
+            echo "::error::Set repository Actions secret SUPABASE_URL before publishing canonical releases."
+            exit 1
+          fi
+          if [ -z "${SUPABASE_SECRET_KEY}" ] && [ -z "${SUPABASE_SERVICE_ROLE_KEY}" ]; then
+            echo "::error::Set SUPABASE_SECRET_KEY (preferred) or SUPABASE_SERVICE_ROLE_KEY in repository Actions secrets."
+            exit 1
+          fi
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -44,4 +56,7 @@ jobs:
             --revision "${GITHUB_SHA}" --as-of "$(date -u +%F)"
           python -m tdr_bridge.publish /tmp/vehicle-release.json
       - name: Publish atomically to TDR Supabase
-        run: python -m tdr_bridge.publish /tmp/vehicle-release.json --publish
+        run: |
+          python -m tdr_bridge.publish /tmp/vehicle-release.json --publish
+          python tools/canonical_input_worker.py mark-published \
+            --data-dir vehreg/data --release-file /tmp/vehicle-release.json

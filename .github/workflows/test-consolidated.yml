@@ -24,13 +24,13 @@ jobs:
         working-directory: automotive/vehicle_master
         run: python -m pip install -r requirements.txt pytest
       - name: Fetch base tree for automated price PR
-        if: github.event_name == 'pull_request' && startsWith(github.head_ref, 'pricebot/')
+        if: github.event_name == 'pull_request' && (startsWith(github.head_ref, 'pricebot/') || startsWith(github.head_ref, 'pricefeed/'))
         shell: bash
         run: |
           set -euo pipefail
           git fetch --no-tags --depth=1 origin "${{ github.event.pull_request.base.sha }}"
       - name: Guard automated price PR
-        if: github.event_name == 'pull_request' && startsWith(github.head_ref, 'pricebot/')
+        if: github.event_name == 'pull_request' && (startsWith(github.head_ref, 'pricebot/') || startsWith(github.head_ref, 'pricefeed/'))
         working-directory: automotive/vehicle_master
         run: python tools/pricefeed_guard.py --base "${{ github.event.pull_request.base.sha }}" --repo-prefix automotive/vehicle_master/
       - name: Compile Vehicle Master
@@ -58,7 +58,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: npm
       - run: npm ci
       - name: Guard public registration entitlement boundary

@@ -1,0 +1,90 @@
+name: Process canonical vehicle input
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: canonical-vehicle-input
+  cancel-in-progress: false
+
+jobs:
+  process:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    defaults:
+      run:
+        working-directory: automotive/vehicle_master
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Preflight deployment secrets
+        id: preflight
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${SUPABASE_URL}" ] || [ -z "${SUPABASE_SECRET_KEY}${SUPABASE_SERVICE_ROLE_KEY}" ]; then
+            if [ "${GITHUB_EVENT_NAME}" = "schedule" ]; then
+              echo "::warning::Canonical input is paused until SUPABASE_URL and SUPABASE_SECRET_KEY/SUPABASE_SERVICE_ROLE_KEY are configured."
+              echo "ready=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            echo "::error::Set SUPABASE_URL and SUPABASE_SECRET_KEY (preferred) or SUPABASE_SERVICE_ROLE_KEY before processing canonical input."
+            exit 1
+          fi
+          echo "ready=true" >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-python@v5
+        if: steps.preflight.outputs.ready == 'true'
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: automotive/vehicle_master/requirements.txt
+      - if: steps.preflight.outputs.ready == 'true'
+        run: python -m pip install -r requirements.txt pytest
+      - name: Pull and apply queued batches
+        if: steps.preflight.outputs.ready == 'true'
+        run: python tools/canonical_input_worker.py pull --result-file /tmp/canonical-input.json --limit 10
+      - name: Check whether a PR is needed
+        if: steps.preflight.outputs.ready == 'true'
+        id: changes
+        run: |
+          count=$(python -c "import json; print(len(json.load(open('/tmp/canonical-input.json'))['applied']))")
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+      - name: Validate canonical result
+        if: steps.preflight.outputs.ready == 'true' && steps.changes.outputs.count != '0'
+        run: |
+          python -m pytest -q
+          python -m vehreg market validate
+          python -m tdr_bridge.release \
+            --inventory integration_data/tdr_2026-09-09.json \
+            --overrides integration_data/crosswalk_overrides.json \
+            --revision "input-${GITHUB_RUN_ID}" --as-of "$(date -u +%F)" \
+            --out /tmp/vehicle-release.json
+          python -m tdr_bridge.publish /tmp/vehicle-release.json
+      - name: Open one reviewed input PR
+        if: steps.preflight.outputs.ready == 'true' && steps.changes.outputs.count != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          branch="canonical-input/${GITHUB_RUN_ID}"
+          git config user.name "TDR canonical input"
+          git config user.email "noreply@github.com"
+          git checkout -b "$branch"
+          git add vehreg/data
+          git commit -m "Apply ${{ steps.changes.outputs.count }} canonical input batch(es)"
+          git push -u origin "$branch"
+          pr_url=$(gh pr create --title "Canonical vehicle input (${GITHUB_RUN_ID})" \
+            --body "Validated one-input Vehicle Master batch. Registration facts remain outside this PR." \
+            --base main --head "$branch")
+          python tools/canonical_input_worker.py mark-staged \
+            --result-file /tmp/canonical-input.json --pull-request-url "$pr_url"

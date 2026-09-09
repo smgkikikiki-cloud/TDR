@@ -7,7 +7,7 @@ import { browserDb } from "@/lib/supabase-browser";
 import styles from "../member.module.css";
 
 type BillingStatus = {
-  user: { id: string; email: string | null; phone: string | null };
+  user: { id: string; customerId: string; email: string | null; phone: string };
   customerBound: boolean;
   subscription: null | {
     plan_code: string;
@@ -113,8 +113,8 @@ export default function MemberBillingPage() {
         <section className={styles.stateCard}>กำลังโหลดข้อมูลบัญชี…</section>
       ) : <>
         <section className={styles.kpis}>
-          <article><span>อีเมล</span><strong className={styles.accountValue}>{data.user.email || "—"}</strong><small>บัญชี Supabase</small></article>
-          <article><span>เบอร์มือถือ</span><strong className={styles.accountValue}>{data.user.phone || "—"}</strong><small>customer identity/contact</small></article>
+          <article><span>Customer ID</span><strong className={styles.accountValue}>{data.user.customerId}</strong><small>stable TDR identity</small></article>
+          <article><span>เบอร์มือถือ</span><strong className={styles.accountValue}>{data.user.phone}</strong><small>ยืนยันแล้วด้วย OTP</small></article>
           <article><span>Subscription</span><strong>{data.subscription?.status || "ยังไม่มี"}</strong><small>{data.subscription?.provider || "Stripe เมื่อเริ่มจ่าย"}</small></article>
           <article><span>TDR Report access</span><strong>{data.entitlement?.status || "ยังไม่มี"}</strong><small>ถึง {date(data.entitlement?.valid_until)}</small></article>
         </section>
