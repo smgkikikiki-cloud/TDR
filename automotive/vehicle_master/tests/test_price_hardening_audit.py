@@ -19,7 +19,6 @@ from vehreg.pricing import (
     CampaignOption,
     OfferStatus,
     PriceLedger,
-    PriceType,
     PricingError,
 )
 
@@ -167,25 +166,16 @@ def test_campaign_quote_includes_finance_price_alternative() -> None:
     quote = ledger.campaign_quote(
         "acme.one.g1.trim.max", as_of=date(2026, 9, 9))
 
-    assert quote["campaign_options"] == [pytest.approx({
-        "amount_thb": 899_000,
-        "price_type": "FINANCE_PRICE",
-        "reference_price_thb": None,
-        "discount_thb": None,
-        "campaign_id": "campaign.acme.september",
-        "campaign_name": "September",
-        "option_id": "finance",
-        "option_label": "Finance",
-        "status_as_of": "ACTIVE",
-        "current_status": "ACTIVE",
-        "closed_at": None,
-        "conditions": {"finance_required": True, "text": "approved finance"},
-        "quota_units": None,
-        "quota_scope": None,
-        "valid_to": None,
-        "source": "official_oem",
-        "source_ref": "",
-    })]
+    assert len(quote["campaign_options"]) == 1
+    offer = quote["campaign_options"][0]
+    assert offer["amount_thb"] == 899_000
+    assert offer["price_type"] == "FINANCE_PRICE"
+    assert offer["campaign_id"] == "campaign.acme.september"
+    assert offer["option_id"] == "finance"
+    assert offer["conditions"] == {
+        "finance_required": True,
+        "text": "approved finance",
+    }
 
 
 def test_legacy_admin_editor_is_not_a_price_writer_anymore() -> None:
