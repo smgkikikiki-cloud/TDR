@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "source_profiles": [
+    {
+      "source_id": "official_oem",
+      "kind": "OTHER",
+      "legacy": true,
+      "notes": "Legacy generic first-party source id retained for historical PriceLedger provenance. New automated evidence must use a specific OEM source id."
+    },
+    {
+      "source_id": "official_jaecoo_th",
+      "kind": "OEM",
+      "notes": "First specific OEM source used by the P2 JAECOO 5 pilot."
+    },
+    {
+      "source_id": "headlightmag",
+      "kind": "MEDIA"
+    },
+    {
+      "source_id": "autolifethailand",
+      "kind": "MEDIA"
+    }
+  ],
+  "targets": [
+    {
+      "id": "jaecoo_th_j5_model",
+      "source_id": "official_jaecoo_th",
+      "url": "https://www.omodajaecoo.co.th/th/model/jaecoo-5-ev",
+      "role": "CURRENT_MODEL_PAGE",
+      "poll_minutes": 360,
+      "model_hint": "jaecoo.jaecoo_5_ev",
+      "notes": "Current Thailand model page. A model_hint narrows discovery only; P2 must still match extracted claims to canonical trims."
+    },
+    {
+      "id": "jaecoo_th_promotions",
+      "source_id": "official_jaecoo_th",
+      "url": "https://www.omodajaecoo.co.th/th/promotion",
+      "role": "PROMOTION_INDEX",
+      "poll_minutes": 360,
+      "notes": "Promotion discovery root. Detail pages discovered from this index become SourceDocuments; they do not all need permanent target rows."
+    },
+    {
+      "id": "jaecoo_th_j5_buyer_guide_2026_09_02",
+      "source_id": "official_jaecoo_th",
+      "url": "https://www.omodajaecoo.co.th/th/blog/jaecoo-5-ev",
+      "role": "BLOG",
+      "poll_minutes": 360,
+      "model_hint": "jaecoo.jaecoo_5_ev",
+      "notes": "Pilot evidence page containing JAECOO 5 trim, list-price, estimated-price and finance wording."
+    },
+    {
+      "id": "headlightmag_wp_discovery",
+      "source_id": "headlightmag",
+      "url": "https://www.headlightmag.com",
+      "role": "DISCOVERY_FEED",
+      "adapter": "wordpress",
+      "poll_minutes": 20
+    },
+    {
+      "id": "autolifethailand_wp_discovery",
+      "source_id": "autolifethailand",
+      "url": "https://autolifethailand.tv",
+      "role": "DISCOVERY_FEED",
+      "adapter": "wordpress",
+      "poll_minutes": 20
+    }
+  ]
+}
