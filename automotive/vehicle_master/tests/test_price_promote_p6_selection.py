@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 import pytest
+import tools.price_promote_batch as promote_batch
 
 from tools.price_promote_batch import (
     _apply_with_rollback,
@@ -76,12 +77,20 @@ def test_apply_rolls_back_existing_and_new_files_on_write_failure(
         affected_model_ids=(),
     )
 
-    def broken_apply(self: PromotionPlan) -> None:
-        existing.write_text('{"after":true}\n', encoding="utf-8")
-        new.write_text('{"new":true}\n', encoding="utf-8")
-        raise OSError("disk fixture")
+    real_write = promote_batch._write_json
+    calls = 0
 
-    monkeypatch.setattr(PromotionPlan, "apply", broken_apply)
+    def broken_write(path: Path, payload: dict) -> None:
+        nonlocal calls
+        calls += 1
+        if calls == 2:
+            raise OSError("disk fixture")
+        real_write(path, payload)
+
+    # P6 no longer calls PromotionPlan.apply(): that direct writer bypasses the
+    # shared atomic writer primitive. Inject failure into the primitive the
+    # production path actually uses and prove the whole touched set rolls back.
+    monkeypatch.setattr(promote_batch, "_write_json", broken_write)
 
     with pytest.raises(OSError, match="disk fixture"):
         _apply_with_rollback(plan)
