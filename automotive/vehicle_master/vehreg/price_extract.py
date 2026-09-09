@@ -21,11 +21,11 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import date
-from html import unescape
+from html.parser import HTMLParser
 import re
 from typing import Iterable, Optional
 
-from .price_fetch import FetchResult, parse_page_metadata
+from .price_fetch import FetchResult
 from .price_sources import SourceTarget, TargetRole
 from .pricefeed import PriceClaim, content_id
 from .pricing import PriceType
@@ -74,6 +74,43 @@ _EN_MONTHS = {
 }
 
 
+class _EvidenceTextParser(HTMLParser):
+    """User-facing HTML text in DOM order, including image alt labels.
+
+    Price cards on OEM sites frequently use an image alt label for the grade
+    name and ordinary text nodes for the number.  Keeping those pieces in DOM
+    order preserves the relationship between identity and price.  Script/style
+    payloads remain excluded.
+    """
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.parts: list[str] = []
+        self._hidden_depth = 0
+
+    def handle_starttag(self, tag: str, attrs) -> None:
+        lower = tag.lower()
+        values = {str(key).lower(): str(value or "") for key, value in attrs}
+        if lower in {"script", "style"}:
+            self._hidden_depth += 1
+            return
+        if lower == "img" and self._hidden_depth == 0:
+            alt = " ".join(values.get("alt", "").split())
+            if alt:
+                self.parts.append(alt)
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag.lower() in {"script", "style"}:
+            self._hidden_depth = max(0, self._hidden_depth - 1)
+
+    def handle_data(self, data: str) -> None:
+        if self._hidden_depth:
+            return
+        clean = " ".join(data.split())
+        if clean:
+            self.parts.append(clean)
+
+
 def _amount(raw: str) -> int:
     return int(raw.replace(",", ""))
 
@@ -85,16 +122,9 @@ def _clean_trim(raw: str) -> str:
 def _visible_text(result: FetchResult) -> str:
     if not result.text:
         return ""
-    metadata = parse_page_metadata(result.text)
-    # OEM landing pages often render the grade name only as image alt text while
-    # the price itself is ordinary text.  Alt text is user-facing/accessibility
-    # content, not hidden script data, so keep it beside visible DOM text.
-    alts = [unescape(value) for value in re.findall(
-        r"<img\b[^>]*\balt\s*=\s*['\"]([^'\"]+)['\"]",
-        result.text,
-        flags=re.I,
-    ) if value.strip()]
-    return "\n".join([metadata.visible_text, *alts])
+    parser = _EvidenceTextParser()
+    parser.feed(result.text)
+    return "\n".join(parser.parts)
 
 
 def _claim(*, document_id: str, source_id: str, trim_raw: str,
