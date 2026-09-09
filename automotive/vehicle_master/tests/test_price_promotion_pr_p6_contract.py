@@ -7,6 +7,8 @@ def test_price_pr_wrapper_keeps_human_merge_and_local_gates() -> None:
     )
 
     assert "working tree must be clean" in source
+    assert '"git", "fetch", "--no-tags"' in source
+    assert 'base = args.base or f"{args.remote}/{args.base_branch}"' in source
     assert "pricefeed_guard.py" in source
     assert '"-m", "pytest", "-q"' in source
     assert '"-m", "vehreg", "market", "validate"' in source
