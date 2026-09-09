@@ -1,0 +1,180 @@
+{
+  "brand": {
+    "id": "wuling",
+    "name_en": "Wuling",
+    "name_th": "หวูหลิง",
+    "brand_segment": "BUDGET",
+    "oem_group": "SAIC-GM-Wuling",
+    "brand_origin": "CN",
+    "trim_detail": true,
+    "aliases": []
+  },
+  "models": [
+    {
+      "id": "wuling_bingo",
+      "name_en": "Wuling Bingo",
+      "name_th": "หวูหลิง บิงโก",
+      "nameplate": "",
+      "body_type": "HATCHBACK",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "bingo",
+        "binguo",
+        "bingou"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "A",
+          "seats": 5,
+          "launched": "2024-06-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "32 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_cc": null,
+              "battery_kwh": 31.9,
+              "price_thb": 499000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    {
+      "id": "wuling_air_ev",
+      "name_en": "Wuling Air EV",
+      "name_th": "หวูหลิง แอร์ อีวี",
+      "nameplate": "",
+      "body_type": "HATCHBACK",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "air ev"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "A",
+          "seats": 4,
+          "launched": "2022-08-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "27 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "RWD",
+              "engine_cc": null,
+              "battery_kwh": 26.7,
+              "price_thb": 399000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    {
+      "id": "wuling_darion",
+      "name_en": "Wuling Darion EV",
+      "name_th": "",
+      "nameplate": "",
+      "body_type": "MPV",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "darion",
+        "darion ev"
+      ],
+      "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
+      "generations": [
+        {
+          "code": "WULING_DARION",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": "2026-07-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "ยังไม่แยกรุ่นย่อย",
+              "powertrain": "BEV",
+              "drivetrain": "",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "aliases": [],
+              "overrides": {},
+              "price_thb": 869000,
+              "import_type": "",
+              "origin_country": "",
+              "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+              "price_min_thb": 869000,
+              "price_max_thb": 869000
+            }
+          ]
+        }
+      ],
+      "incomplete": true,
+      "powertrain_checked": true
+    },
+    {
+      "id": "wuling_porta",
+      "name_en": "Wuling Porta EV",
+      "name_th": "",
+      "nameplate": "",
+      "body_type": "VAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "porta",
+        "porta ev"
+      ],
+      "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
+      "generations": [
+        {
+          "code": "WULING_PORTA",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": "2026-07-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "ยังไม่แยกรุ่นย่อย",
+              "powertrain": "BEV",
+              "drivetrain": "",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "aliases": [],
+              "overrides": {},
+              "price_thb": 629000,
+              "import_type": "",
+              "origin_country": "",
+              "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+              "price_min_thb": 629000,
+              "price_max_thb": 629000
+            }
+          ]
+        }
+      ],
+      "incomplete": true,
+      "powertrain_checked": true
+    }
+  ]
+}

@@ -1,0 +1,803 @@
+"""Loading, validating and querying one year's vehicle catalog.
+
+The catalog is plain JSON on disk, one file per brand under a per-year folder,
+so the owner can extend it in a text editor or with
+``python -m vehreg catalog import`` and diff it in Git:
+
+    vehreg/data/2026/models/toyota.json
+    vehreg/data/2027/models/toyota.json    (created by `catalog fork`)
+
+Years are independent on purpose. Nothing reads across them: 2026 volume is
+classified by the 2026 catalog and that is the end of it. When a car is
+repriced or repositioned for the next year, that is an edit to the next year's
+folder, and the year already published never moves.
+
+Inside a year file the layers nest exactly as ``entities.py`` describes them:
+
+    brand -> models[] -> generations[] -> variants[]
+                                      -> trims[]  (retail catalog only)
+
+IDs are composed from the path, so nothing in the file repeats a parent key and
+no two brands can collide.
+"""
+
+from __future__ import annotations
+
+import json
+import shutil
+from pathlib import Path
+from typing import Any, Iterator, Optional
+
+from .entities import (
+    Brand, Generation, MarketTrim, Model, ResolvedVehicle, Variant, cross_check, resolve,
+    to_jsonable,
+)
+from .normalize import MatchIndex, base_nameplate, slug
+from .taxonomy import (
+    BodyType, BrandSegment, CabType, Drivetrain, ImportType, MarketScope,
+    RetailStatus,
+    Powertrain, RegistrationType, Segment, registration_type_for,
+)
+
+DATA_DIR = Path(__file__).with_name("data")
+
+#: The year this tool is being run for. Older years are not consulted at all.
+DEFAULT_YEAR = 2026
+
+
+class CatalogError(ValueError):
+    pass
+
+
+def year_dir(data_dir: Path | str, year: int) -> Path:
+    return Path(data_dir) / str(year) / "models"
+
+
+def available_years(data_dir: Path | str = DATA_DIR) -> list[int]:
+    out = []
+    for child in sorted(Path(data_dir).glob("[0-9][0-9][0-9][0-9]")):
+        if (child / "models").is_dir():
+            out.append(int(child.name))
+    return out
+
+
+def _facet(cls, raw, default):
+    if raw in (None, ""):
+        return default
+    return cls.parse(raw)
+
+
+#: Override values arriving from JSON are plain strings; parse the ones that
+#: name a closed vocabulary so downstream code always sees the enum.
+_OVERRIDE_PARSERS = {
+    "body_type": BodyType, "cab_type": CabType, "segment": Segment,
+    "powertrain": Powertrain, "drivetrain": Drivetrain,
+    "import_type": ImportType, "brand_segment": BrandSegment,
+    "registration_type": RegistrationType, "market_scope": MarketScope,
+}
+
+
+def _overrides(raw: Any) -> dict[str, Any]:
+    out: dict[str, Any] = {}
+    for key, value in dict(raw or {}).items():
+        parser = _OVERRIDE_PARSERS.get(key)
+        out[key] = parser.parse(value) if parser and value not in (None, "") else value
+    return out
+
+
+def _tuple(raw: Any) -> tuple[str, ...]:
+    if not raw:
+        return ()
+    if isinstance(raw, str):
+        return (raw,)
+    return tuple(str(x) for x in raw)
+
+
+def _source_refs(raw: Any) -> dict[str, tuple[str, ...]]:
+    """Canonicalize external source IDs without changing their meaning.
+
+    Source-system IDs are provenance, not vehicle identity. Whitespace-only
+    keys/IDs are discarded and duplicates are removed while preserving order,
+    so repeated ECO imports cannot silently accumulate junk references.
+    """
+    out: dict[str, tuple[str, ...]] = {}
+    for key, value in dict(raw or {}).items():
+        source = str(key).strip()
+        if not source:
+            continue
+        refs: list[str] = []
+        seen: set[str] = set()
+        for item in _tuple(value):
+            ref = item.strip()
+            if not ref or ref in seen:
+                continue
+            seen.add(ref)
+            refs.append(ref)
+        if refs:
+            out[source] = tuple(refs)
+    return out
+
+
+class Catalog:
+    """One year of catalog, in memory, with the indexes ingest needs."""
+
+    def __init__(self, year: int = DEFAULT_YEAR) -> None:
+        self.year = year
+        self.brands: dict[str, Brand] = {}
+        self.models: dict[str, Model] = {}
+        self.generations: dict[str, Generation] = {}
+        self.variants: dict[str, Variant] = {}
+        # Retail trims are deliberately separate from analytical variants.
+        self.trims: dict[str, MarketTrim] = {}
+        self.brand_index = MatchIndex()
+        self.model_index = MatchIndex()
+        self.variant_index = MatchIndex()
+        # Useful to catalog/enrichment code only; Resolver does not consult it.
+        self.trim_index = MatchIndex()
+        self._models_by_brand: dict[str, list[str]] = {}
+        self._variants_by_model: dict[str, list[str]] = {}
+        self._trims_by_generation: dict[str, list[str]] = {}
+        self._trims_by_variant: dict[str, list[str]] = {}
+
+    # ---------------------------------------------------------------- load
+    @classmethod
+    def load(cls, data_dir: Path | str = DATA_DIR,
+             year: int = DEFAULT_YEAR) -> "Catalog":
+        catalog = cls(year)
+        models_dir = year_dir(data_dir, year)
+        model_files = sorted(models_dir.glob("*.json"))
+        if not model_files:
+            years = available_years(data_dir)
+            raise CatalogError(
+                f"no brand files under {models_dir}"
+                + (f"; years present: {', '.join(map(str, years))}" if years
+                   else ""))
+        for path in model_files:
+            catalog.load_brand_file(path)
+        catalog.build_indexes()
+        return catalog
+
+    def load_brand_file(self, path: Path) -> None:
+        try:
+            payload = json.loads(Path(path).read_text(encoding="utf-8"))
+        except json.JSONDecodeError as exc:
+            raise CatalogError(f"{path}: invalid JSON: {exc}") from exc
+        self.add_brand_payload(payload, source=str(path))
+
+    def add_brand_payload(self, payload: dict, source: str = "<memory>") -> None:
+        """Atomically add one brand payload.
+
+        Parsing used to mutate the live Catalog as it descended the payload. A
+        bad late trim therefore left a half-added brand/models/variants behind
+        after raising CatalogError. Stage the whole brand in an isolated Catalog
+        first, then merge only after every nested object was accepted.
+        """
+        raw_brand = payload.get("brand")
+        if not raw_brand:
+            raise CatalogError(f"{source}: missing 'brand'")
+        brand_id = slug(raw_brand.get("id") or raw_brand["name_en"])
+        if brand_id in self.brands:
+            raise CatalogError(f"{source}: duplicate brand id {brand_id!r}")
+
+        staged = Catalog(self.year)
+        staged._add_brand_payload_inplace(payload, source)
+        self.brands.update(staged.brands)
+        self.models.update(staged.models)
+        self.generations.update(staged.generations)
+        self.variants.update(staged.variants)
+        self.trims.update(staged.trims)
+        self._models_by_brand.update(staged._models_by_brand)
+        self._variants_by_model.update(staged._variants_by_model)
+        self._trims_by_generation.update(staged._trims_by_generation)
+        self._trims_by_variant.update(staged._trims_by_variant)
+
+    def _add_brand_payload_inplace(self, payload: dict, source: str) -> None:
+        raw_brand = payload.get("brand")
+        if not raw_brand:
+            raise CatalogError(f"{source}: missing 'brand'")
+        brand_id = slug(raw_brand.get("id") or raw_brand["name_en"])
+        if brand_id in self.brands:
+            raise CatalogError(f"{source}: duplicate brand id {brand_id!r}")
+        self.brands[brand_id] = Brand(
+            id=brand_id,
+            name_en=raw_brand["name_en"],
+            name_th=raw_brand.get("name_th", ""),
+            brand_segment=_facet(BrandSegment, raw_brand.get("brand_segment"),
+                                 BrandSegment.UNKNOWN),
+            oem_group=raw_brand.get("oem_group", "UNKNOWN"),
+            brand_origin=raw_brand.get("brand_origin", "UNKNOWN"),
+            trim_detail=bool(raw_brand.get("trim_detail", False)),
+            aliases=_tuple(raw_brand.get("aliases")),
+            overrides=_overrides(raw_brand.get("overrides")),
+        )
+        self._models_by_brand[brand_id] = []
+        for raw_model in payload.get("models", []):
+            self._add_model(brand_id, raw_model, source)
+
+    def _add_model(self, brand_id: str, raw: dict, source: str) -> None:
+        model_id = f"{brand_id}.{slug(raw.get('id') or raw['name_en'])}"
+        if model_id in self.models:
+            raise CatalogError(f"{source}: duplicate model id {model_id!r}")
+        body = _facet(BodyType, raw.get("body_type"), BodyType.OTHER)
+        cab = _facet(CabType, raw.get("cab_type"), CabType.NOT_APPLICABLE)
+        model = Model(
+            id=model_id,
+            brand_id=brand_id,
+            name_en=raw["name_en"],
+            name_th=raw.get("name_th", ""),
+            # A blank nameplate falls back to the model name with its split
+            # suffix removed, so Mazda2 Sedan rolls up to Mazda2 without the
+            # owner typing anything. Hilux says "Hilux" explicitly, because
+            # Revo and Champ are one nameplate but not one base name.
+            nameplate=raw.get("nameplate") or base_nameplate(raw["name_en"]),
+            body_type=body,
+            cab_type=cab,
+            # A blank registration_type follows from body and cab, which is
+            # what puts double cabs in รย.1 and the other cabs in รย.3.
+            registration_type=_facet(RegistrationType,
+                                     raw.get("registration_type"),
+                                     registration_type_for(body, cab)),
+            market_scope=_facet(MarketScope, raw.get("market_scope"),
+                                MarketScope.CORE),
+            incomplete=bool(raw.get("incomplete", False)),
+            powertrain_checked=bool(raw.get("powertrain_checked", False)),
+            retail_status=_facet(RetailStatus, raw.get("retail_status"),
+                                 RetailStatus.UNVERIFIED),
+            retail_checked_at=raw.get("retail_checked_at") or None,
+            retail_source=raw.get("retail_source", ""),
+            aliases=_tuple(raw.get("aliases")),
+            notes=raw.get("notes", ""),
+            overrides=_overrides(raw.get("overrides")),
+        )
+        self.models[model_id] = model
+        self._models_by_brand[brand_id].append(model_id)
+        self._variants_by_model[model_id] = []
+
+        generations = raw.get("generations")
+        if not generations:
+            raise CatalogError(f"{source}: model {model_id} has no generations")
+        for raw_gen in generations:
+            self._add_generation(model_id, raw_gen, source)
+
+    def _add_generation(self, model_id: str, raw: dict, source: str) -> None:
+        code = raw.get("code") or raw.get("id") or "gen1"
+        gen_id = f"{model_id}.{slug(code)}"
+        if gen_id in self.generations:
+            raise CatalogError(f"{source}: duplicate generation id {gen_id!r}")
+        self._trims_by_generation[gen_id] = []
+        self.generations[gen_id] = Generation(
+            id=gen_id,
+            model_id=model_id,
+            code=raw.get("code", ""),
+            segment=_facet(Segment, raw.get("segment"), Segment.UNKNOWN),
+            seats=raw.get("seats"),
+            launched=raw.get("launched"),
+            ended=raw.get("ended"),
+            overrides=_overrides(raw.get("overrides")),
+        )
+        for raw_variant in raw.get("variants", []):
+            self._add_variant(gen_id, model_id, raw_variant, source)
+        # Market trims are loaded only after variants, so an optional `variant`
+        # reference can be resolved without changing the analytical hierarchy.
+        for raw_trim in raw.get("trims", []):
+            self._add_trim(gen_id, raw_trim, source)
+
+    def _add_variant(self, gen_id: str, model_id: str, raw: dict,
+                     source: str) -> None:
+        variant_id = f"{gen_id}.{slug(raw.get('id') or raw['name'])}"
+        if variant_id in self.variants:
+            raise CatalogError(f"{source}: duplicate variant id {variant_id!r}")
+        self.variants[variant_id] = Variant(
+            id=variant_id,
+            generation_id=gen_id,
+            name=raw["name"],
+            powertrain=_facet(Powertrain, raw.get("powertrain"),
+                              Powertrain.UNKNOWN),
+            drivetrain=_facet(Drivetrain, raw.get("drivetrain"),
+                              Drivetrain.UNKNOWN),
+            engine_cc=raw.get("engine_cc"),
+            battery_kwh=raw.get("battery_kwh"),
+            price_thb=raw.get("price_thb"),
+            price_min_thb=raw.get("price_min_thb"),
+            price_max_thb=raw.get("price_max_thb"),
+            import_type=_facet(ImportType, raw.get("import_type"),
+                               ImportType.UNKNOWN),
+            origin_country=raw.get("origin_country", "UNKNOWN"),
+            price_note=raw.get("price_note", ""),
+            aliases=_tuple(raw.get("aliases")),
+            incomplete=bool(raw.get("incomplete", False)),
+            overrides=_overrides(raw.get("overrides")),
+        )
+        self._variants_by_model[model_id].append(variant_id)
+
+    def _resolve_trim_variant_ref(self, gen_id: str, raw_ref: Any,
+                                  source: str) -> Optional[str]:
+        if raw_ref in (None, ""):
+            return None
+        ref = str(raw_ref).strip()
+        if ref in self.variants and self.variants[ref].generation_id == gen_id:
+            return ref
+        candidate = f"{gen_id}.{slug(ref)}"
+        if candidate in self.variants:
+            return candidate
+        for variant in self.variants.values():
+            if variant.generation_id == gen_id and slug(variant.name) == slug(ref):
+                return variant.id
+        raise CatalogError(
+            f"{source}: trim variant reference {ref!r} does not exist under {gen_id}")
+
+    def _add_trim(self, gen_id: str, raw: dict, source: str) -> None:
+        if not raw.get("name"):
+            raise CatalogError(f"{source}: trim under {gen_id} is missing name")
+
+        # A MarketTrim is a real showroom SKU, not an unresolved analytical
+        # bucket. Its powertrain is part of the product identity and must be
+        # exact. UNKNOWN remains available to analytical Variants for source
+        # limitations, but it is not valid for a retail MarketTrim.
+        trim_powertrain = _facet(Powertrain, raw.get("powertrain"),
+                                 Powertrain.UNKNOWN)
+        if trim_powertrain is Powertrain.UNKNOWN:
+            raise CatalogError(
+                f"{source}: trim {raw['name']!r} under {gen_id} must declare "
+                "an exact powertrain")
+
+        # Explicit IDs stay stable. If omitted, powertrain participates in the
+        # generated identity so Premium BEV and Premium PHEV cannot collide.
+        raw_id = raw.get("id")
+        identity = raw_id or f"{raw['name']} {trim_powertrain.value}"
+        trim_id = f"{gen_id}.trim.{slug(identity)}"
+        if trim_id in self.trims:
+            raise CatalogError(f"{source}: duplicate trim id {trim_id!r}")
+        variant_id = self._resolve_trim_variant_ref(
+            gen_id, raw.get("variant_id") or raw.get("variant"), source)
+        source_refs = _source_refs(raw.get("source_refs"))
+        trim = MarketTrim(
+            id=trim_id,
+            generation_id=gen_id,
+            name=raw["name"],
+            variant_id=variant_id,
+            powertrain=trim_powertrain,
+            price_thb=raw.get("price_thb"),
+            drivetrain=_facet(Drivetrain, raw.get("drivetrain"),
+                              Drivetrain.UNKNOWN),
+            engine_code=raw.get("engine_code", ""),
+            engine_cc=raw.get("engine_cc"),
+            battery_kwh=raw.get("battery_kwh"),
+            transmission=raw.get("transmission", ""),
+            seats=raw.get("seats"),
+            length_mm=raw.get("length_mm"),
+            width_mm=raw.get("width_mm"),
+            height_mm=raw.get("height_mm"),
+            wheelbase_mm=raw.get("wheelbase_mm"),
+            tire_front=raw.get("tire_front", ""),
+            tire_rear=raw.get("tire_rear", ""),
+            wheel_front=raw.get("wheel_front", ""),
+            wheel_rear=raw.get("wheel_rear", ""),
+            aliases=_tuple(raw.get("aliases")),
+            source_refs=source_refs,
+            notes=raw.get("notes", ""),
+        )
+        self.trims[trim_id] = trim
+        self._trims_by_generation.setdefault(gen_id, []).append(trim_id)
+        if variant_id:
+            self._trims_by_variant.setdefault(variant_id, []).append(trim_id)
+
+    # -------------------------------------------------------------- indexes
+    def ensure_indexes(self) -> None:
+        """Build the match indexes once.
+
+        ``build_indexes`` rebuilds unconditionally, which is right after the
+        catalog is edited and wasteful when it is only being read: a batch of
+        price claims would otherwise rebuild them once per claim.
+        """
+        if not getattr(self, "_indexes_built", False):
+            self.build_indexes()
+
+    def build_indexes(self) -> None:
+        self._indexes_built = True
+        self.brand_index = MatchIndex()
+        self.model_index = MatchIndex()
+        self.variant_index = MatchIndex()
+        self.trim_index = MatchIndex()
+        for brand in self.brands.values():
+            self.brand_index.add(brand.id, [brand.name_en, brand.name_th,
+                                            brand.id], priority=1)
+            self.brand_index.add(brand.id, list(brand.aliases))
+        for model in self.models.values():
+            brand = self.brands[model.brand_id]
+            for priority, names in ((1, [model.name_en, model.name_th]),
+                                    (0, list(model.aliases))):
+                # Both bare and brand-prefixed spellings appear in DLT exports.
+                surfaces = [n for n in names if n]
+                surfaces += [f"{brand.name_en} {n}" for n in surfaces]
+                if brand.name_th:
+                    surfaces += [f"{brand.name_th} {n}" for n in names if n]
+                self.model_index.add(model.id, surfaces, priority=priority)
+        for variant in self.variants.values():
+            model = self.model_for_variant(variant.id)
+            surfaces = [variant.name, *variant.aliases]
+            surfaces += [f"{model.name_en} {s}" for s in surfaces if s]
+            self.variant_index.add(variant.id, [s for s in surfaces if s])
+        for trim in self.trims.values():
+            model = self.model_for_trim(trim.id)
+            surfaces = [trim.name, *trim.aliases]
+            surfaces += [f"{model.name_en} {s}" for s in surfaces if s]
+            self.trim_index.add(trim.id, [s for s in surfaces if s])
+
+    # ------------------------------------------------------------ traversal
+    def generation_for_variant(self, variant_id: str) -> Generation:
+        return self.generations[self.variants[variant_id].generation_id]
+
+    def model_for_variant(self, variant_id: str) -> Model:
+        return self.models[self.generation_for_variant(variant_id).model_id]
+
+    def brand_for_variant(self, variant_id: str) -> Brand:
+        return self.brands[self.model_for_variant(variant_id).brand_id]
+
+    def generation_for_trim(self, trim_id: str) -> Generation:
+        return self.generations[self.trims[trim_id].generation_id]
+
+    def model_for_trim(self, trim_id: str) -> Model:
+        return self.models[self.generation_for_trim(trim_id).model_id]
+
+    def brand_for_trim(self, trim_id: str) -> Brand:
+        return self.brands[self.model_for_trim(trim_id).brand_id]
+
+    def variant_for_trim(self, trim_id: str) -> Optional[Variant]:
+        variant_id = self.trims[trim_id].variant_id
+        return self.variants.get(variant_id) if variant_id else None
+
+    def trims_of_generation(self, generation_id: str) -> list[MarketTrim]:
+        return [self.trims[t] for t in self._trims_by_generation.get(generation_id, [])]
+
+    def trims_of_variant(self, variant_id: str) -> list[MarketTrim]:
+        return [self.trims[t] for t in self._trims_by_variant.get(variant_id, [])]
+
+    def trims_of(self, model_id: str) -> list[MarketTrim]:
+        out: list[MarketTrim] = []
+        for generation in self.generations_of(model_id):
+            out.extend(self.trims_of_generation(generation.id))
+        return out
+
+    def models_of(self, brand_id: str) -> list[Model]:
+        return [self.models[m] for m in self._models_by_brand.get(brand_id, [])]
+
+    def variants_of(self, model_id: str) -> list[Variant]:
+        return [self.variants[v] for v in self._variants_by_model.get(model_id, [])]
+
+    def generations_of(self, model_id: str) -> list[Generation]:
+        """Oldest first, so a nameplate's โฉม read as a succession."""
+        return sorted((g for g in self.generations.values()
+                       if g.model_id == model_id),
+                      key=lambda g: (g.launched or "", g.code))
+
+    def trim_detail_brands(self) -> list[str]:
+        """Brands whose DLT รุ่น field carries trim, so the ledger tracks them."""
+        return sorted(b.id for b in self.brands.values() if b.trim_detail)
+
+    def nameplates(self) -> dict[str, list[str]]:
+        """``{"Toyota Hilux": [model_id, ...]}`` - the reporting roll-up."""
+        out: dict[str, list[str]] = {}
+        for model in self.models.values():
+            brand = self.brands[model.brand_id]
+            key = f"{brand.name_en} {model.nameplate or model.name_en}"
+            out.setdefault(key, []).append(model.id)
+        return dict(sorted(out.items()))
+
+    def succession(self, model_id: str) -> list[tuple[Generation, list[Variant]]]:
+        """Generations of one model, oldest first, with their variants."""
+        return [(gen, [v for v in self.variants.values()
+                       if v.generation_id == gen.id])
+                for gen in self.generations_of(model_id)]
+
+    # ------------------------------------------------------------- resolve
+    def resolve(self, variant_id: str) -> ResolvedVehicle:
+        variant = self.variants[variant_id]
+        generation = self.generations[variant.generation_id]
+        model = self.models[generation.model_id]
+        brand = self.brands[model.brand_id]
+        return resolve(brand, model, generation, variant, self.year)
+
+    def iter_resolved(self) -> Iterator[ResolvedVehicle]:
+        # Intentionally variants only. Retail trims enrich the catalog but never
+        # multiply or allocate registration facts.
+        for variant_id in self.variants:
+            yield self.resolve(variant_id)
+
+    # ------------------------------------------------------------ validate
+    def validate(self) -> list[str]:
+        problems: list[str] = []
+        # A stub keeps the powertrain the DLT label stated, which is worth
+        # more than dropping it to UNKNOWN would be. The spec rules that hang
+        # off a powertrain -- a PHEV needs an engine and a battery -- are then
+        # unmeetable until someone researches the car, so they are reported by
+        # incomplete_models() rather than here.
+        declared = {model.id for model in self.models.values() if model.incomplete}
+        for model in self.models.values():
+            problems += model.validate()
+            # A model that declares itself incomplete is a known gap with a
+            # name on it, not a defect. It is reported by incomplete_models()
+            # instead, so this list stays "things nobody has looked at".
+            if model.incomplete:
+                continue
+            if model.body_type is BodyType.OTHER:
+                problems.append(f"model {model.id}: body_type not set")
+            if not self.variants_of(model.id):
+                problems.append(f"model {model.id}: no variants")
+        for variant in self.variants.values():
+            if self.model_for_variant(variant.id).id in declared:
+                continue
+            problems += variant.validate()
+        for trim in self.trims.values():
+            problems += trim.validate()
+            if trim.variant_id:
+                parent = self.variants[trim.variant_id]
+                if trim.powertrain is not Powertrain.UNKNOWN and \
+                        parent.powertrain is not Powertrain.UNKNOWN and \
+                        trim.powertrain is not parent.powertrain:
+                    problems.append(
+                        f"trim {trim.id}: powertrain {trim.powertrain.value} "
+                        f"does not match analytical variant {parent.id} "
+                        f"({parent.powertrain.value})")
+        problems += self.duplicate_body_warnings()
+        for resolved in self.iter_resolved():
+            if self.model_for_variant(resolved.variant_id).id in declared:
+                continue
+            if self.variants[resolved.variant_id].incomplete:
+                continue
+            problems += cross_check(resolved)
+        return problems
+
+    #: Powertrains that must state a battery, and those that must state an
+    #: engine. A PHEV is in both.
+    _ELECTRIFIED = frozenset({Powertrain.BEV, Powertrain.PHEV, Powertrain.HEV,
+                              Powertrain.REEV})
+    _COMBUSTION = frozenset({Powertrain.ICE, Powertrain.HEV,
+                             Powertrain.PHEV, Powertrain.REEV})
+
+    def incomplete_models(self) -> list[str]:
+        """Models carrying registrations while their specification is unwritten.
+
+        Kept apart from ``validate`` so a full catalog and a catalog with
+        declared holes are not the same answer, and so the holes are countable
+        rather than buried in a list of problems.
+        """
+        out: list[str] = []
+        for model in sorted(self.models.values(), key=lambda m: m.id):
+            if not model.incomplete:
+                # A nameplate can be complete while one of its trims is not -
+                # the X1's petrol side is written and its plug-in side is not.
+                for variant in self.variants_of(model.id):
+                    if not variant.incomplete:
+                        continue
+                    gaps = sorted(self._variant_gaps(variant))
+                    out.append(f"variant {variant.id}: incomplete "
+                               f"({', '.join(gaps)})" if gaps else
+                               f"variant {variant.id}: marked incomplete but "
+                               "nothing is missing")
+                continue
+            missing = []
+            if model.body_type is BodyType.OTHER:
+                missing.append("body_type")
+            if not self.variants_of(model.id):
+                missing.append("variants")
+            gaps: set[str] = set()
+            for variant in self.variants_of(model.id):
+                gaps |= self._variant_gaps(variant)
+            missing += sorted(gaps)
+            out.append(f"model {model.id}: incomplete ({', '.join(missing)})"
+                       if missing else f"model {model.id}: marked incomplete "
+                                       "but nothing is missing")
+        return out
+
+    def _variant_gaps(self, variant) -> set[str]:
+        gaps: set[str] = set()
+        if variant.price_thb is None:
+            gaps.add("price")
+        if variant.powertrain in self._ELECTRIFIED and variant.battery_kwh is None:
+            gaps.add("battery_kwh")
+        if variant.powertrain in self._COMBUSTION and variant.engine_cc is None:
+            gaps.add("engine_cc")
+        if variant.powertrain is Powertrain.UNKNOWN:
+            gaps.add("powertrain")
+        return gaps
+
+    def duplicate_body_warnings(self) -> list[str]:
+        """One nameplate must not appear twice in the same body under a brand.
+
+        Splitting by body is the rule; two model rows that end up with the same
+        name *and* the same body are a duplicate, not a split.
+        """
+        seen: dict[tuple[str, str, str, str], str] = {}
+        problems: list[str] = []
+        for model in self.models.values():
+            key = (model.brand_id, slug(model.name_en), model.body_type.value,
+                   model.cab_type.value)
+            if key in seen:
+                problems.append(
+                    f"model {model.id}: same name and body as {seen[key]}")
+            seen[key] = model.id
+        return problems
+
+    def trim_coverage(self) -> dict[str, int]:
+        """Coverage counters for retail-product fields, separate from DLT grain.
+
+        Dimensions are canonical exterior length/width/height plus wheelbase,
+        all in millimetres. Missing dimensions stay missing rather than being
+        inherited or guessed from another trim.
+        """
+        dims = ("length_mm", "width_mm", "height_mm", "wheelbase_mm")
+        return {
+            "trims": len(self.trims),
+            "exact_powertrain": sum(
+                t.powertrain is not Powertrain.UNKNOWN for t in self.trims.values()),
+            **{name: sum(getattr(t, name) is not None for t in self.trims.values())
+               for name in dims},
+            "complete_dimensions": sum(
+                all(getattr(t, name) is not None for name in dims)
+                for t in self.trims.values()),
+        }
+
+    def coverage(self) -> dict[str, int]:
+        scopes: dict[str, int] = {}
+        for model in self.models.values():
+            key = model.market_scope.value
+            scopes[key] = scopes.get(key, 0) + 1
+        return {
+            "year": self.year,
+            "brands": len(self.brands),
+            "nameplates": len(self.nameplates()),
+            "models": len(self.models),
+            "generations": len(self.generations),
+            "variants": len(self.variants),
+            **{f"models_{k.lower()}": v for k, v in sorted(scopes.items())},
+        }
+
+    # ------------------------------------------------------------- writing
+    def brand_payload(self, brand_id: str) -> dict:
+        """Round-trip a brand back to the on-disk JSON shape."""
+        brand = self.brands[brand_id]
+        payload: dict[str, Any] = {
+            "brand": {
+                "id": brand.id, "name_en": brand.name_en, "name_th": brand.name_th,
+                "brand_segment": brand.brand_segment.value,
+                "oem_group": brand.oem_group, "brand_origin": brand.brand_origin,
+                "trim_detail": brand.trim_detail,
+                "aliases": list(brand.aliases),
+            },
+            "models": [],
+        }
+        if brand.overrides:
+            payload["brand"]["overrides"] = to_jsonable(brand.overrides)
+        for model in self.models_of(brand_id):
+            model_payload: dict[str, Any] = {
+                "id": model.id.split(".", 1)[1], "name_en": model.name_en,
+                "name_th": model.name_th, "nameplate": model.nameplate,
+                "body_type": model.body_type.value,
+                "cab_type": model.cab_type.value,
+                "registration_type": model.registration_type.value,
+                "market_scope": model.market_scope.value,
+                "retail_status": model.retail_status.value,
+                "aliases": list(model.aliases), "generations": [],
+            }
+            if model.overrides:
+                model_payload["overrides"] = to_jsonable(model.overrides)
+            # Without this, saving a brand from the editor would silently clear
+            # the marker and the model would start reading as a finished one.
+            if model.incomplete:
+                model_payload["incomplete"] = True
+            if model.powertrain_checked:
+                model_payload["powertrain_checked"] = True
+            if model.retail_checked_at:
+                model_payload["retail_checked_at"] = model.retail_checked_at
+            if model.retail_source:
+                model_payload["retail_source"] = model.retail_source
+            if model.notes:
+                model_payload["notes"] = model.notes
+            for gen in self.generations_of(model.id):
+                gen_payload: dict[str, Any] = {
+                    # Preserve the canonical local ID even when `code` is blank.
+                    # Otherwise a generation authored with only `id` reloads as
+                    # `gen1` after an editor/save round-trip.
+                    "id": gen.id[len(model.id) + 1:],
+                    "code": gen.code, "segment": gen.segment.value,
+                    "seats": gen.seats, "launched": gen.launched,
+                    "ended": gen.ended, "variants": [], "trims": [],
+                }
+                if gen.overrides:
+                    gen_payload["overrides"] = to_jsonable(gen.overrides)
+                for variant in self.variants.values():
+                    if variant.generation_id != gen.id:
+                        continue
+                    variant_payload = {
+                        # Variant IDs are referenced by MarketTrim. Saving only
+                        # the display name could rename the analytical parent and
+                        # strand every trim link on the next load.
+                        "id": variant.id[len(gen.id) + 1:],
+                        "name": variant.name,
+                        "powertrain": variant.powertrain.value,
+                        "drivetrain": variant.drivetrain.value,
+                        "engine_cc": variant.engine_cc,
+                        "battery_kwh": variant.battery_kwh,
+                        "price_thb": variant.price_thb,
+                        "price_min_thb": variant.price_min_thb,
+                        "price_max_thb": variant.price_max_thb,
+                        "import_type": variant.import_type.value,
+                        "origin_country": variant.origin_country,
+                        "price_note": variant.price_note,
+                        "aliases": list(variant.aliases),
+                    }
+                    if variant.overrides:
+                        variant_payload["overrides"] = to_jsonable(variant.overrides)
+                    # Same reason as the model flag: saving from the editor
+                    # must not quietly clear the marker and turn a declared
+                    # gap back into a finished trim.
+                    if variant.incomplete:
+                        variant_payload["incomplete"] = True
+                    gen_payload["variants"].append(variant_payload)
+
+                # Product data must survive every editor/save round-trip.
+                # Previously brand_payload() omitted trims completely.
+                for trim in self.trims_of_generation(gen.id):
+                    trim_payload = {
+                        "id": trim.id.split(".trim.", 1)[1],
+                        "name": trim.name,
+                        "variant_id": trim.variant_id,
+                        "powertrain": trim.powertrain.value,
+                        "price_thb": trim.price_thb,
+                        "drivetrain": trim.drivetrain.value,
+                        "engine_code": trim.engine_code,
+                        "engine_cc": trim.engine_cc,
+                        "battery_kwh": trim.battery_kwh,
+                        "transmission": trim.transmission,
+                        "seats": trim.seats,
+                        "length_mm": trim.length_mm,
+                        "width_mm": trim.width_mm,
+                        "height_mm": trim.height_mm,
+                        "wheelbase_mm": trim.wheelbase_mm,
+                        "tire_front": trim.tire_front,
+                        "tire_rear": trim.tire_rear,
+                        "wheel_front": trim.wheel_front,
+                        "wheel_rear": trim.wheel_rear,
+                        "aliases": list(trim.aliases),
+                        "source_refs": {
+                            source: list(refs)
+                            for source, refs in trim.source_refs.items()
+                        },
+                    }
+                    if trim.notes:
+                        trim_payload["notes"] = trim.notes
+                    if trim.price_thb is None:
+                        trim_payload.pop("price_thb")
+                    gen_payload["trims"].append(trim_payload)
+                model_payload["generations"].append(gen_payload)
+            payload["models"].append(model_payload)
+        return payload
+
+    def save_brand(self, brand_id: str, data_dir: Path | str = DATA_DIR) -> Path:
+        path = year_dir(data_dir, self.year) / f"{brand_id}.json"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(
+            json.dumps(self.brand_payload(brand_id), ensure_ascii=False, indent=2)
+            + "\n", encoding="utf-8")
+        return path
+
+
+def fork_year(data_dir: Path | str, source_year: int, target_year: int, *,
+              overwrite: bool = False) -> Path:
+    """Start next year's catalog as a copy of this year's.
+
+    The copy is a starting point to edit, not a link: changing 2027 never
+    touches 2026.
+    """
+    src = year_dir(data_dir, source_year)
+    dst = year_dir(data_dir, target_year)
+    if not src.is_dir():
+        raise CatalogError(f"no catalog for {source_year} at {src}")
+    if dst.exists() and any(dst.glob("*.json")) and not overwrite:
+        raise CatalogError(
+            f"{target_year} already exists at {dst}; pass overwrite to replace it")
+    dst.mkdir(parents=True, exist_ok=True)
+    for path in sorted(src.glob("*.json")):
+        shutil.copy2(path, dst / path.name)
+    return dst

@@ -1,0 +1,45 @@
+name: Test TDR consolidated
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - 'consolidation/**'
+
+permissions:
+  contents: read
+
+jobs:
+  vehicle-engine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: automotive/vehicle_master/requirements.txt
+      - name: Install Vehicle Master dependencies
+        working-directory: automotive/vehicle_master
+        run: python -m pip install -r requirements.txt pytest
+      - name: Compile Vehicle Master
+        working-directory: automotive/vehicle_master
+        run: python -m compileall -q vehreg pages tests
+      - name: Test Vehicle Master
+        working-directory: automotive/vehicle_master
+        run: pytest -q
+      - name: Validate Vehicle Master
+        working-directory: automotive/vehicle_master
+        run: python -m vehreg market validate
+
+  web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - run: npm ci
+      - run: npm run build

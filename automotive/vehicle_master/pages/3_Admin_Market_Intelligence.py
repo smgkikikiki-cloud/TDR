@@ -1,0 +1,577 @@
+from __future__ import annotations
+
+import pandas as pd
+import streamlit as st
+
+import ui
+
+from vehreg import charting, coverage, cube
+from vehreg.db import connect
+from vehreg.market_metrics import (
+    compare_share_rows,
+    missing_periods,
+    previous_window,
+    rolling_window,
+    shift_period,
+    window_is_complete,
+    ytd_window,
+)
+from vehreg.web_bootstrap import bootstrap_database, database_path, raw_dir
+
+st.set_page_config(page_title="Admin Market Intelligence | TDR", layout="wide")
+st.title("Admin Market Intelligence")
+st.caption(
+    "Internal analyst deck. DLT first-registration counts are registration activity, "
+    "not a monthly retail-sales ledger. Read raw volumes descriptively; use share and "
+    "relative position for competitive movement."
+)
+
+
+@st.cache_resource
+def boot() -> dict[str, object]:
+    return bootstrap_database()
+
+
+def distinct_model_values(conn, field: str, year: int) -> list[str]:
+    allowed = {"brand", "origin_country"}
+    if field not in allowed:
+        raise ValueError(field)
+    rows = conn.execute(
+        f"SELECT DISTINCT {field} AS value FROM dim_unit "
+        "WHERE catalog_year=? AND grain='MODEL' AND "
+        f"{field} IS NOT NULL ORDER BY {field}",
+        (year,),
+    ).fetchall()
+    return [str(row["value"]) for row in rows if row["value"] not in (None, "")]
+
+
+def add_filter(filters: dict[str, object], key: str, value: str) -> None:
+    if value != "ALL":
+        filters[key] = value
+
+
+def comparison_filters(filters: dict[str, object], dimension: str) -> dict[str, object]:
+    """Keep the grouping field open so its shares have a useful denominator."""
+    out = dict(filters)
+    out.pop(dimension, None)
+    return out
+
+
+def market_rows(
+    conn,
+    dimension: str,
+    filters: dict[str, object],
+    period_from: str,
+    period_to: str,
+    scopes,
+) -> tuple[list[dict[str, object]], float]:
+    group_by = ["brand", "model"] if dimension == "model" else [dimension]
+    result = cube.run(
+        conn,
+        group_by,
+        filters=filters,
+        period_from=period_from,
+        period_to=period_to,
+        scopes=scopes,
+        grains=GRAINS,
+    )
+    rows: list[dict[str, object]] = []
+    for raw in result.rows:
+        row = dict(raw)
+        if dimension == "model":
+            brand = str(row.get("brand") or "UNKNOWN")
+            model = str(row.get("model") or "UNKNOWN")
+            entity = f"{brand} {model}"
+        else:
+            entity = str(row.get(dimension) or "UNKNOWN")
+        row["entity"] = entity
+        rows.append(row)
+    return rows, float(result.total_units)
+
+
+def current_table(rows: list[dict[str, object]]) -> pd.DataFrame:
+    if not rows:
+        return pd.DataFrame()
+    data = pd.DataFrame(rows)
+    data = data.sort_values(["units", "entity"], ascending=[False, True]).reset_index(drop=True)
+    data.insert(0, "rank", range(1, len(data) + 1))
+    data["share_pct"] = data["share"].astype(float) * 100.0
+    return data[["rank", "entity", "units", "share_pct"]]
+
+
+def movement_table(
+    previous_rows: list[dict[str, object]],
+    current_rows_: list[dict[str, object]],
+) -> pd.DataFrame:
+    rows = compare_share_rows(previous_rows, current_rows_, "entity")
+    if not rows:
+        return pd.DataFrame()
+    data = pd.DataFrame(rows)
+    data["share_previous_pct"] = data["share_previous"] * 100.0
+    data["share_current_pct"] = data["share_current"] * 100.0
+    return data[
+        [
+            "entity",
+            "units_previous",
+            "units_current",
+            "units_change",
+            "share_previous_pct",
+            "share_current_pct",
+            "share_change_pp",
+        ]
+    ]
+
+
+def render_movement(
+    conn,
+    *,
+    title: str,
+    previous_from: str,
+    previous_to: str,
+    current_from: str,
+    current_to: str,
+    dimension: str,
+    filters: dict[str, object],
+    scopes,
+) -> None:
+    previous_rows, previous_total = market_rows(
+        conn, dimension, filters, previous_from, previous_to, scopes
+    )
+    current_rows_, current_total = market_rows(
+        conn, dimension, filters, current_from, current_to, scopes
+    )
+    data = movement_table(previous_rows, current_rows_)
+    st.subheader(title)
+    st.caption(
+        f"Previous: {previous_from} → {previous_to} ({previous_total:,.0f} registrations) · "
+        f"Current: {current_from} → {current_to} ({current_total:,.0f} registrations)"
+    )
+    if data.empty:
+        st.info("ไม่มีข้อมูลสำหรับการเปรียบเทียบนี้")
+        return
+
+    gainers = data.sort_values(
+        ["share_change_pp", "units_current"], ascending=[False, False]
+    ).head(10)
+    losers = data.sort_values(
+        ["share_change_pp", "units_current"], ascending=[True, False]
+    ).head(10)
+
+    left, right = st.columns(2)
+    with left:
+        st.markdown("**Share gainers**")
+        chart = gainers.sort_values("share_change_pp", ascending=True)
+        st.plotly_chart(
+            charting.signed_bar(
+                chart,
+                x="share_change_pp",
+                y="entity",
+                height=coverage.chart_height(len(chart)),
+                labels={"share_change_pp": "Share change (pp)", "entity": ""},
+                hover_unit="pp",
+            ),
+            use_container_width=True,
+        )
+    with right:
+        st.markdown("**Share losers**")
+        chart = losers.sort_values("share_change_pp", ascending=False)
+        st.plotly_chart(
+            charting.signed_bar(
+                chart,
+                x="share_change_pp",
+                y="entity",
+                height=coverage.chart_height(len(chart)),
+                labels={"share_change_pp": "Share change (pp)", "entity": ""},
+                hover_unit="pp",
+            ),
+            use_container_width=True,
+        )
+
+    st.dataframe(
+        data.sort_values(
+            ["share_change_pp", "units_current"], ascending=[False, False]
+        ),
+        use_container_width=True,
+        hide_index=True,
+        column_config={
+            "units_previous": st.column_config.NumberColumn(format="%.0f"),
+            "units_current": st.column_config.NumberColumn(format="%.0f"),
+            "units_change": st.column_config.NumberColumn(format="%+.0f"),
+            "share_previous_pct": st.column_config.NumberColumn(format="%.2f%%"),
+            "share_current_pct": st.column_config.NumberColumn(format="%.2f%%"),
+            "share_change_pp": st.column_config.NumberColumn(format="%+.2f pp"),
+        },
+    )
+    ui.download_table(data, stem=f"movement-{title}", period=current_to,
+                      context=EXPORT_CONTEXT, key=f"dl_move_{title}")
+
+
+try:
+    state = boot()
+except Exception as exc:
+    st.error("เปิดฐานข้อมูลไม่สำเร็จ")
+    st.exception(exc)
+    st.stop()
+
+conn = connect(database_path())
+periods = [
+    str(row["period"])
+    for row in conn.execute("SELECT DISTINCT period FROM fact_registration ORDER BY period")
+]
+if not periods:
+    st.warning("ยังไม่มี registration facts ในฐานข้อมูล")
+    conn.close()
+    st.stop()
+
+# This deck reports leader share. Opening it on a month DLT has only started
+# publishing produced "Leader share 100.00%" off fifteen registrations, which is
+# the single most misleading thing this product can put on a screen.
+totals = coverage.period_totals(conn)
+provisional = coverage.provisional_periods(totals)
+selected_period = st.sidebar.selectbox(
+    "เดือนข้อมูล", periods,
+    index=coverage.default_period_index(periods, totals, provisional),
+)
+selected_year = int(selected_period[:4])
+
+for notice in coverage.coverage_notices(
+    provisional, coverage.duplicate_payload_periods(raw_dir())
+):
+    st.warning(notice)
+if selected_period in provisional:
+    st.error(
+        f"กำลังดู {selected_period} ซึ่งเป็นเดือนที่ข้อมูลยังไม่ครบ "
+        "ส่วนแบ่งตลาดและอันดับด้านล่างยังใช้อ้างอิงไม่ได้"
+    )
+coarse = coverage.coarse_periods(coverage.brand_grain_share(conn))
+if selected_period in coarse:
+    st.warning(coverage.coarse_notice(selected_period, coarse[selected_period]))
+
+# Read every grain on a month that carries unattributed volume, so this deck
+# ranks the whole month rather than the part that reached a model.
+GRAINS = coverage.analysis_grains(selected_period, coarse)
+
+grouping_labels = {
+    "Brand": "brand",
+    # Aion and GAC rank as two brands but sell through one network, as do
+    # Chery/Jaecoo, Changan/Deepal/Avatr and BYD/Denza. oem_group has always
+    # been in the warehouse; this is the first thing to offer it.
+    "OEM group": "oem_group",
+    "Model": "model",
+    "Segment": "segment",
+    "Body family": "body_family",
+    "ระบบขับเคลื่อน (แบบที่เว็บใช้)": "market_powertrain",
+    "Powertrain (ละเอียด)": "powertrain",
+    "Powertrain group": "powertrain_group",
+    "Price band": "price_band",
+    "CBU / CKD": "import_type",
+    "Production country": "origin_country",
+    "Brand origin": "brand_origin",
+}
+grouping_label = st.sidebar.selectbox("Compare / rank by", list(grouping_labels))
+dimension = grouping_labels[grouping_label]
+
+registration = st.sidebar.selectbox("ประเภทรถ DLT", ["ALL", "RY1", "RY2", "RY3"], key="f_reg")
+brand_values = distinct_model_values(conn, "brand", selected_year)
+brand = st.sidebar.selectbox("Brand scope", ["ALL", *brand_values], key="f_brand")
+segment = st.sidebar.selectbox("Segment scope", ["ALL", "A", "B", "C", "D", "E", "F"],
+                                 key="f_segment")
+body_family = st.sidebar.selectbox(
+    "Body scope",
+    ["ALL", "SUV", "SEDAN", "HATCHBACK", "MPV", "PICKUP", "COUPE", "WAGON", "VAN", "TRUCK", "OTHER"],
+    key="f_body",
+)
+powertrain = st.sidebar.selectbox(
+    "Powertrain scope",
+    ["ALL", "ICE", "HEV", "PHEV", "REEV", "BEV", "FCEV", "MIXED", "UNKNOWN"],
+    key="f_powertrain",
+)
+price_band = st.sidebar.selectbox(
+    "Price scope",
+    ["ALL", "UNDER_1M", "1M_TO_2M", "2M_PLUS", "MIXED", "UNKNOWN"],
+    key="f_price",
+)
+import_type = st.sidebar.selectbox(
+    "CBU / CKD scope", ["ALL", "CBU", "CKD", "SKD", "MIXED", "UNKNOWN"],
+    key="f_import",
+)
+origin_values = distinct_model_values(conn, "origin_country", selected_year)
+origin = st.sidebar.selectbox("Production country scope", ["ALL", *origin_values],
+                              key="f_origin")
+include_all_scopes = st.sidebar.checkbox("รวม NICHE / GREY / COMMERCIAL", value=False,
+                                          key="f_scopes")
+scopes = "all" if include_all_scopes else None
+
+# This deck reports leader share and rank. A scope left on from earlier reads
+# as a fact about the whole market, so the active ones are named up here.
+ui.filter_bar({
+    "f_reg": ("ประเภทรถ", registration),
+    "f_brand": ("Brand", brand),
+    "f_segment": ("Segment", segment),
+    "f_body": ("Body", body_family),
+    "f_powertrain": ("Powertrain", powertrain),
+    "f_price": ("Price", price_band),
+    "f_import": ("CBU / CKD", import_type),
+    "f_origin": ("Production country", origin),
+}, extra=["f_scopes"], defaults={"f_scopes": False},
+   # comparison_filters() drops whatever this page is ranking by, so that a
+   # brand ranking has other brands in it. Say so on the chip rather than
+   # letting it claim a scope the numbers below do not obey.
+   ignored=[{
+       "brand": "f_brand", "segment": "f_segment", "body_family": "f_body",
+       "powertrain": "f_powertrain", "price_band": "f_price",
+       "import_type": "f_import", "origin_country": "f_origin",
+   }.get(dimension, "")])
+
+# Downloaded files name what they are: a folder of "data.csv" is a folder
+# nobody can tell apart a week later.
+EXPORT_CONTEXT = {
+    "dimension": grouping_label,
+    "registration": registration,
+    "brand": brand,
+    "segment": segment,
+    "body": body_family,
+    "powertrain": powertrain,
+    "price": price_band,
+    "import": import_type,
+    "origin": origin,
+}
+
+filters: dict[str, object] = {}
+add_filter(filters, "fact_registration_type", registration)
+add_filter(filters, "brand", brand)
+add_filter(filters, "segment", segment)
+add_filter(filters, "body_family", body_family)
+add_filter(filters, "powertrain", powertrain)
+add_filter(filters, "price_band", price_band)
+add_filter(filters, "import_type", import_type)
+add_filter(filters, "origin_country", origin)
+analysis_filters = comparison_filters(filters, dimension)
+
+if dimension in filters:
+    st.info(
+        f"{grouping_label} scope ถูกเปิดออกอัตโนมัติในหน้านี้เพื่อให้เปรียบเทียบ "
+        f"{grouping_label} กับคู่แข่งได้จริง; filter อื่นยังมีผลตามปกติ"
+    )
+
+st.warning(
+    "Interpretation rule: raw monthly registration volumes may move with registration timing "
+    "and seasonality. This deck does not label MoM unit changes as sales growth. "
+    "Competitive movement is ranked by market-share change within the same filtered market."
+)
+
+tab_structure, tab_movement, tab_ytd, tab_raw = st.tabs(
+    ["Market structure", "Share movement", "YTD position", "Raw registration trend"]
+)
+
+with tab_structure:
+    rows, total = market_rows(
+        conn,
+        dimension,
+        analysis_filters,
+        selected_period,
+        selected_period,
+        scopes,
+    )
+    table = current_table(rows)
+    a, b, c = st.columns(3)
+    a.metric("Registrations in scope", f"{total:,.0f}")
+    b.metric(grouping_label + " entities", f"{len(table):,}")
+    if not table.empty:
+        c.metric(
+            "Leader share",
+            f"{table.iloc[0]['share_pct']:.2f}%",
+            help=str(table.iloc[0]["entity"]),
+        )
+    else:
+        c.metric("Leader share", "—")
+
+    # Same question with every scope allowed, so the gap to the published month
+    # is stated rather than left for a reader to discover against a press
+    # release. A month total is only comparable when nothing else narrows it.
+    _, all_scope_total = market_rows(
+        conn, dimension, analysis_filters, selected_period, selected_period,
+        "all",
+    )
+    month_total = None
+    if not analysis_filters:
+        month_total = conn.execute(
+            "SELECT COALESCE(SUM(units),0) AS u FROM fact_registration "
+            "WHERE period = ?", (selected_period,)
+        ).fetchone()["u"]
+    st.caption(ui.scope_caption(total, all_scope_total, month_total))
+
+    if table.empty:
+        st.info("ไม่มีข้อมูลตาม scope นี้")
+    else:
+        visual = table.head(30).sort_values("share_pct", ascending=True)
+        st.plotly_chart(
+            charting.rank_bar(
+                visual,
+                x="share_pct",
+                y="entity",
+                height=coverage.chart_height(len(visual)),
+                value_format=",.2f",
+                labels={"share_pct": "Market share (%)", "entity": ""},
+                hover_unit="%",
+            ),
+            use_container_width=True,
+        )
+        st.dataframe(
+            table,
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "units": st.column_config.NumberColumn("Registrations", format="%.0f"),
+                "share_pct": st.column_config.NumberColumn("Share", format="%.2f%%"),
+            },
+        )
+        ui.download_table(table, stem="market-structure",
+                          period=selected_period, context=EXPORT_CONTEXT)
+
+with tab_movement:
+    previous_month = shift_period(selected_period, -1)
+    same_month_last_year = shift_period(selected_period, -12)
+    current_3m_from, current_3m_to = rolling_window(selected_period, 3)
+    previous_3m_from, previous_3m_to = previous_window(selected_period, 3)
+
+    compare_mode = st.radio(
+        "Comparison window",
+        ["Previous month", "Rolling 3M vs previous 3M", "Same month last year"],
+        horizontal=True,
+    )
+
+    if compare_mode == "Previous month":
+        if previous_month not in periods:
+            st.info(f"ไม่มีข้อมูล {previous_month}; ไม่สร้าง MoM comparison จากเดือนที่หาย")
+        else:
+            render_movement(
+                conn,
+                title="Share movement vs previous month",
+                previous_from=previous_month,
+                previous_to=previous_month,
+                current_from=selected_period,
+                current_to=selected_period,
+                dimension=dimension,
+                filters=analysis_filters,
+                scopes=scopes,
+            )
+    elif compare_mode == "Rolling 3M vs previous 3M":
+        needed_from = previous_3m_from
+        needed_to = current_3m_to
+        if not window_is_complete(periods, needed_from, needed_to):
+            missing = ", ".join(missing_periods(periods, needed_from, needed_to))
+            st.info("Rolling comparison ถูกปิดเพราะเดือนใน window ไม่ครบ: " + missing)
+        else:
+            render_movement(
+                conn,
+                title="Rolling 3-month share movement",
+                previous_from=previous_3m_from,
+                previous_to=previous_3m_to,
+                current_from=current_3m_from,
+                current_to=current_3m_to,
+                dimension=dimension,
+                filters=analysis_filters,
+                scopes=scopes,
+            )
+    else:
+        if same_month_last_year not in periods:
+            st.info(
+                f"ไม่มีข้อมูลเดือนเดียวกันของปีก่อน ({same_month_last_year}); "
+                "ไม่สร้าง YoY จากข้อมูลที่ไม่ครบ"
+            )
+        else:
+            render_movement(
+                conn,
+                title="Same-month year-over-year share movement",
+                previous_from=same_month_last_year,
+                previous_to=same_month_last_year,
+                current_from=selected_period,
+                current_to=selected_period,
+                dimension=dimension,
+                filters=analysis_filters,
+                scopes=scopes,
+            )
+
+with tab_ytd:
+    ytd_from, ytd_to = ytd_window(selected_period)
+    if not window_is_complete(periods, ytd_from, ytd_to):
+        missing = ", ".join(missing_periods(periods, ytd_from, ytd_to))
+        st.info("YTD ถูกปิดเพราะข้อมูลปีนี้ยังขาดเดือน: " + missing)
+    else:
+        rows, total = market_rows(
+            conn, dimension, analysis_filters, ytd_from, ytd_to, scopes
+        )
+        table = current_table(rows)
+        st.caption(f"YTD {ytd_from} → {ytd_to} · {total:,.0f} registrations")
+        if table.empty:
+            st.info("ไม่มีข้อมูลตาม scope นี้")
+        else:
+            st.dataframe(
+                table,
+                use_container_width=True,
+                hide_index=True,
+                column_config={
+                    "units": st.column_config.NumberColumn("Registrations", format="%.0f"),
+                    "share_pct": st.column_config.NumberColumn("YTD share", format="%.2f%%"),
+                },
+            )
+            ui.download_table(table, stem="ytd-position", period=ytd_to,
+                              context=EXPORT_CONTEXT)
+
+        previous_ytd_from = f"{selected_year - 1:04d}-01"
+        previous_ytd_to = f"{selected_year - 1:04d}-{selected_period[5:7]}"
+        if window_is_complete(periods, previous_ytd_from, previous_ytd_to):
+            render_movement(
+                conn,
+                title="YTD share change vs prior-year YTD",
+                previous_from=previous_ytd_from,
+                previous_to=previous_ytd_to,
+                current_from=ytd_from,
+                current_to=ytd_to,
+                dimension=dimension,
+                filters=analysis_filters,
+                scopes=scopes,
+            )
+        else:
+            missing = ", ".join(
+                missing_periods(periods, previous_ytd_from, previous_ytd_to)
+            )
+            st.caption(
+                "Prior-year YTD comparison unavailable because these months are missing: "
+                + missing
+            )
+
+with tab_raw:
+    trend_from = shift_period(selected_period, -11)
+    trend = cube.timeseries(
+        conn,
+        [],
+        bucket="period",
+        filters=filters,
+        period_from=trend_from,
+        period_to=selected_period,
+        scopes=scopes, grains=GRAINS,
+    )
+    trend_df = pd.DataFrame(trend.rows)
+    st.caption(
+        "Descriptive only: this is raw DLT registration activity. "
+        "No MoM sales-growth label or automatic demand interpretation is applied."
+    )
+    if trend_df.empty:
+        st.info("ไม่มีข้อมูล trend ตาม scope นี้")
+    else:
+        expected = pd.DataFrame(
+            {"period": [shift_period(trend_from, offset) for offset in range(12)]}
+        )
+        trend_df = expected.merge(trend_df[["period", "units"]], on="period", how="left")
+        st.plotly_chart(
+            charting.trend_line(trend_df, x="period", y="units",
+                                labels={"units": "คัน", "period": ""}),
+            use_container_width=True,
+        )
+        st.dataframe(trend_df, use_container_width=True, hide_index=True)
+        ui.download_table(trend_df, stem="raw-trend", period=selected_period,
+                          context=EXPORT_CONTEXT)
+
+conn.close()
