@@ -92,8 +92,16 @@ class ReviewReason(str, Enum):
     PRICE_TYPE_UNCLEAR = "price_type_unclear"
     IMPLAUSIBLE_AMOUNT = "implausible_amount"
     LOW_TIER_ONLY = "low_tier_only"
+    #: The manufacturer closed this offer *before* the article ran. The piece
+    #: is quoting a price nobody could buy on the day it was published.
     CONTRADICTED_BY_CLOSED_CAMPAIGN = "contradicted_by_closed_campaign"
+    #: The article ran while the offer was open, and the offer has since closed.
+    #: True when written and a duplicate of what the brand already told us --
+    #: history, not a contradiction, and not a live price either.
     HISTORICAL_CAMPAIGN_OBSERVATION = "historical_campaign_observation"
+    #: A campaign price whose document carries no publication date, matching an
+    #: offer that has closed. Whether it is a stale reprint or a contemporary
+    #: report cannot be told apart without the date, so neither is asserted.
     CAMPAIGN_DATE_UNKNOWN = "campaign_date_unknown"
 
 
@@ -105,6 +113,8 @@ class Source:
     base_url: str = ""
     adapter: str = ""
     poll_minutes: int = 60
+    #: Set for outlets that reprint manufacturer copy verbatim as a matter of
+    #: course. They still produce claims; they just never carry a vote alone.
     republisher: bool = False
 
     def validate(self) -> list[str]:
@@ -120,16 +130,19 @@ class Source:
 
 @dataclass(frozen=True, slots=True)
 class SourceDocument:
-    document_id: str
+    document_id: str          # "sha256:..."
     source_id: str
     url: str
     content_hash: str
-    published_at: Optional[str] = None
-    modified_at: Optional[str] = None
-    first_seen_at: Optional[str] = None
+    published_at: Optional[str] = None    # what the outlet says
+    modified_at: Optional[str] = None     # changes when they edit a price
+    first_seen_at: Optional[str] = None   # when this system first saw it
     fetched_at: Optional[str] = None
     title: str = ""
     snapshot_ref: str = ""
+    #: A min-hash sketch of the article body. Two documents that are the same
+    #: press release reprinted share most of it; two independent write-ups of
+    #: the same price table share only the table.
     body_sketch: tuple[str, ...] = ()
 
     def validate(self) -> list[str]:
@@ -147,6 +160,7 @@ class SourceDocument:
         return problems
 
     def latency_hours(self) -> Optional[float]:
+        """published_at -> first_seen_at, the half of the SLA we control."""
         published, seen = _timestamp(self.published_at), _timestamp(self.first_seen_at)
         if published is None or seen is None:
             return None
@@ -165,13 +179,14 @@ class PriceClaim:
     trim_raw: str
     amount_thb: int
     price_type: PriceType
-    evidence_text: str = ""
+    evidence_text: str = ""          # short internal quote; never republished
     extraction_method: str = "rule"
     effective_from: Optional[str] = None
     effective_to: Optional[str] = None
     reference_price_thb: Optional[int] = None
     campaign_hint: str = ""
     option_hint: str = ""
+    #: Filled by matching, not by extraction.
     trim_id: Optional[str] = None
     trim_candidates: tuple[str, ...] = ()
 
@@ -190,6 +205,7 @@ class PriceClaim:
         return problems
 
     def key(self) -> tuple:
+        """What two claims must share to be talking about the same price."""
         return (self.trim_id, self.amount_thb, self.price_type)
 
 
@@ -209,13 +225,15 @@ def content_id(payload: bytes | str) -> str:
 
 
 def normalise_evidence(text: str) -> str:
+    """Strip everything that differs between two reprints of one press release."""
     value = unicodedata.normalize("NFKC", text or "").lower()
-    value = re.sub(r"[\d,.]+", " ", value)
+    value = re.sub(r"[\d,.]+", " ", value)      # the numbers are compared separately
     value = re.sub(r"[^\w฀-๿]+", " ", value)
     return " ".join(value.split())
 
 
 def body_sketch(text: str) -> tuple[str, ...]:
+    """A min-hash sketch of an article: the smallest hashed word 5-grams."""
     words = normalise_evidence(text).split()
     if len(words) < SHINGLE_WORDS:
         return ()
@@ -235,9 +253,12 @@ def sketch_overlap(left: Iterable[str], right: Iterable[str]) -> float:
 
 
 def looks_reprinted(left: SourceDocument, right: SourceDocument) -> bool:
+    """True when two articles are one press release under two mastheads."""
     if left.document_id == right.document_id:
         return True
     if not left.body_sketch or not right.body_sketch:
+        # Nothing to compare. Two different outlets are still two observations;
+        # claiming dependence here would silently sink every honest agreement.
         return False
     return sketch_overlap(left.body_sketch, right.body_sketch) >= INDEPENDENCE_LIMIT
 
@@ -248,6 +269,11 @@ def looks_reprinted(left: SourceDocument, right: SourceDocument) -> bool:
 
 def match_model(catalog: Catalog, brand_raw: str, model_raw: str,
                 trim_raw: str = "") -> tuple[Optional[str], Optional[str]]:
+    """Resolve ``(brand_id, model_id)`` for one claim, refusing to guess.
+
+    The grade line is more specific than the headline. One article covering
+    "Alphard / Vellfire" prices both, and only the line says which is which.
+    """
     catalog.ensure_indexes()
     brand_id, _, _ = catalog.brand_index.lookup(brand_raw)
     if brand_id is None:
@@ -264,6 +290,7 @@ def match_model(catalog: Catalog, brand_raw: str, model_raw: str,
 
 
 def trims_by_model(catalog: Catalog) -> dict[str, list]:
+    """model_id -> its trims. One pass, instead of one scan per claim."""
     index: dict[str, list] = {}
     for trim in catalog.trims.values():
         index.setdefault(catalog.model_for_trim(trim.id).id, []).append(trim)
@@ -274,6 +301,7 @@ def match_trim(catalog: Catalog, claim: PriceClaim, *,
                siblings_by_model: Optional[dict[str, list]] = None,
                model_memo: Optional[dict] = None
                ) -> tuple[Optional[str], tuple[str, ...]]:
+    """Return ``(trim_id, candidates)``. A tie is never broken automatically."""
     key = (claim.brand_raw, claim.model_raw, claim.trim_raw)
     if model_memo is not None and key in model_memo:
         brand_id, model_id = model_memo[key]
@@ -303,6 +331,11 @@ def match_trim(catalog: Catalog, claim: PriceClaim, *,
     if not wanted:
         return None, ()
 
+    # Media and the homologation register word the same grade differently
+    # ("Fronx 1.5 GL 4AT" against "GL 1.5L 4AT"), so compare token sets rather
+    # than strings.  A trim matches when every one of its own tokens appears in
+    # the claim, and it must account for at least half of what the claim said --
+    # otherwise a one-word grade would answer to every longer name.
     scored: list[tuple[int, str]] = []
     for trim in siblings:
         tokens = grade_tokens(trim.name, model.name_en)
@@ -315,25 +348,20 @@ def match_trim(catalog: Catalog, claim: PriceClaim, *,
     return (winners[0] if len(winners) == 1 else None), tuple(winners)
 
 
+#: Unit words that one source writes and the other omits ("1.5L" vs "1.5").
 NOISE_TOKENS = frozenset({"l", "cc", "litre", "liter", "รุ่น", "ใหม่"})
-
-
-def _retail_fold(value: str) -> str:
-    """Fold retail-grade text without collapsing meaningful ``+`` suffixes."""
-    return fold(str(value or "").replace("+", " PLUS "))
 
 
 @lru_cache(maxsize=8192)
 def grade_tokens(name: str, model_name: str) -> frozenset[str]:
     """The tokens that identify a grade: no nameplate, no unit noise.
 
-    ``+`` is meaningful in retail grade identity (MAX+ != MAX), so it is
-    expanded before the generic catalog fold strips punctuation.  Keeping this
-    rule here means every price matcher caller sees the same normalization.
+    Cached: matching one claim compares it against every trim of the model, so
+    the same trim name is folded thousands of times over a batch.
     """
-    nameplate = set(_retail_fold(model_name).split())
+    nameplate = set(fold(model_name).split())
     return frozenset(
-        token for token in _retail_fold(name).split()
+        token for token in fold(name).split()
         if token not in nameplate and token not in NOISE_TOKENS)
 
 
@@ -343,7 +371,7 @@ def grade_tokens(name: str, model_name: str) -> frozenset[str]:
 
 @dataclass(frozen=True, slots=True)
 class Verdict:
-    state: str
+    state: str                       # "canonical" | "provisional" | "review"
     reasons: tuple[str, ...] = ()
     independent_claims: int = 0
     supporting_claim_ids: tuple[str, ...] = ()
@@ -352,6 +380,7 @@ class Verdict:
 def independent_groups(claims: Iterable[PriceClaim],
                        documents: Optional[dict[str, SourceDocument]] = None
                        ) -> list[list[PriceClaim]]:
+    """Cluster claims that come from one voice. One group, one vote."""
     documents = documents or {}
     groups: list[list[PriceClaim]] = []
     for claim in claims:
@@ -374,6 +403,11 @@ def decide(claims: list[PriceClaim], sources: dict[str, Source], *,
            catalog: Optional[Catalog] = None,
            has_conditions: bool = True,
            documents: Optional[dict[str, SourceDocument]] = None) -> Verdict:
+    """Whether a set of claims about one price may be published, and why not.
+
+    ``claims`` must already agree on trim, amount and price type -- they are the
+    supporting evidence for a single candidate offer.
+    """
     if not claims:
         return Verdict("review", (ReviewReason.NO_TRIM_MATCH.value,))
     reasons: list[str] = []
@@ -407,6 +441,8 @@ def decide(claims: list[PriceClaim], sources: dict[str, Source], *,
     tier_a = any(tiers.get(claim.source_id) is Tier.A for claim in usable)
     if tier_a:
         return Verdict("canonical", (), votes, supporting)
+    # Tier B alone: two independent voices, and neither a known republisher on
+    # its own, before anything reaches the public site.
     solo_republisher = all(sources[c.source_id].republisher for c in usable)
     if votes >= 2 and not solo_republisher:
         return Verdict("canonical", (), votes, supporting)
@@ -414,6 +450,7 @@ def decide(claims: list[PriceClaim], sources: dict[str, Source], *,
 
 
 def group_claims(claims: Iterable[PriceClaim]) -> dict[tuple, list[PriceClaim]]:
+    """Bucket claims by the price they describe, so disagreement is visible."""
     buckets: dict[tuple, list[PriceClaim]] = {}
     for claim in claims:
         buckets.setdefault(claim.key(), []).append(claim)
@@ -421,6 +458,7 @@ def group_claims(claims: Iterable[PriceClaim]) -> dict[tuple, list[PriceClaim]]:
 
 
 def conflicting(claims: Iterable[PriceClaim]) -> dict[tuple, set[int]]:
+    """trim+type -> the distinct amounts claimed. More than one is a conflict."""
     seen: dict[tuple, set[int]] = {}
     for claim in claims:
         if claim.trim_id is None:
@@ -488,7 +526,6 @@ def _claim_from_dict(raw: dict) -> PriceClaim:
         reference_price_thb=(int(raw["reference_price_thb"])
                              if raw.get("reference_price_thb") else None),
         campaign_hint=str(raw.get("campaign_hint") or ""),
-        option_hint=str(raw.get("option_hint") or ""),
         trim_id=raw.get("trim_id") or None,
         trim_candidates=tuple(raw.get("trim_candidates") or ()),
     )
@@ -507,6 +544,7 @@ def _document_from_dict(raw: dict) -> SourceDocument:
 
 
 def load_batch(path: Path | str) -> tuple[list[SourceDocument], list[PriceClaim]]:
+    """Read one harvest batch: the documents fetched and the claims read off them."""
     payload = json.loads(Path(path).read_text(encoding="utf-8"))
     for key in ("documents", "claims"):
         if not isinstance(payload.get(key), list):
@@ -558,6 +596,7 @@ class RunResult:
 
 
 def measure_latency(documents: Iterable[SourceDocument]) -> dict:
+    """published_at -> first_seen_at, per batch. The SLA, measured not asserted."""
     values = sorted(v for v in (d.latency_hours() for d in documents) if v is not None)
     if not values:
         return {"documents_with_latency": 0}
@@ -576,8 +615,21 @@ AGENT_REVIEWER = "agent-proposed"
 
 
 class DecisionOrigin(str, Enum):
+    """Who actually made a decision. Stated, never inferred from a name.
+
+    The inference this replaces -- any reviewer that is not ``agent-proposed``
+    is a person -- turns every decision this code writes into a human one by
+    choosing a reviewer string, which is the opposite of an audit trail.
+    """
+
+    #: This code's own proposal. Never moves a price on its own.
     AGENT = "AGENT"
+    #: A person, who is answerable for it.
     HUMAN = "HUMAN"
+    #: A rule that resolved against a document, not against a judgement: the
+    #: brand's own page says the offer closed on the 25th. It may act, and it
+    #: has to name the document it acted on. It is not a person, and it may
+    #: never stand in for one.
     SYSTEM_EVIDENCE = "SYSTEM_EVIDENCE"
 
     @classmethod
@@ -591,11 +643,25 @@ class DecisionOrigin(str, Enum):
                 f"{[o.value for o in cls]}, got {raw!r}") from exc
 
 
+#: Origins whose answer actually removes or rebinds a claim. ``AGENT`` proposes.
 _DECIDING = frozenset({DecisionOrigin.HUMAN.value,
                        DecisionOrigin.SYSTEM_EVIDENCE.value})
 
 
 def load_decisions(path: Path | str) -> dict[str, dict]:
+    """Reviewer answers, keyed by claim id.
+
+    A decision may name the trim a claim belongs to, the campaign and option a
+    campaign price sits under, reject the claim outright, or -- ``publish`` --
+    say that one outlet is good enough for this particular price.  As in Phase 2,
+    a decision this code wrote carries ``reviewer: "agent-proposed"`` and does
+    not count: only a person's answer moves a price.
+
+    ``publish`` promotes a *provisional* price to canonical and nothing else.
+    The review reasons are structural -- no trim, an implausible amount, a
+    campaign with no conditions, two sources disagreeing -- and each has to be
+    answered by fixing the thing, not by overriding it.
+    """
     payload = json.loads(Path(path).read_text(encoding="utf-8"))
     if not isinstance(payload.get("decisions"), list):
         raise PriceFeedError(f"{path}: decisions must be an array")
@@ -649,6 +715,12 @@ def load_decisions(path: Path | str) -> dict[str, dict]:
 
 def closed_offers_matching(amount: int, campaigns: Optional[dict],
                            ledger_records: Iterable, when: date) -> list[dict]:
+    """Offers at this price that the brand has already shut, as of ``when``.
+
+    Each entry carries the day the offer opened and the day it really ended, so
+    a claim can be placed against the offer's life rather than merely matched
+    to it by amount.
+    """
     found: list[dict] = []
     for record in ledger_records:
         if record.amount_thb != amount or not record.campaign_id:
@@ -667,6 +739,8 @@ def closed_offers_matching(amount: int, campaigns: Optional[dict],
                 continue
             closed_on, opened_on = campaign.ends, campaign.starts
         if not closed_on:
+            # Shut, but with no date to place an article against. Treated as
+            # closed-with-unknown-date rather than silently skipped.
             closed_on = None
         found.append({"campaign_id": campaign.id,
                       "option_id": option.id if option else None,
@@ -680,6 +754,31 @@ def closed_campaign_echo(group: list[PriceClaim], *,
                          documents: dict[str, SourceDocument],
                          sources: dict[str, Source],
                          when: date) -> Optional[str]:
+    """Place a campaign-price claim against an offer the brand has closed.
+
+    A capped campaign ends when the cars run out, and the motoring press does
+    not reissue last month's article when that happens.  Suzuki closed the Fronx
+    GL cash price on 25 August; a Headlightmag piece dated 1 September still
+    listed it.  The brand's own record of its own offer outranks a report of it.
+
+    But "matches a closed offer" is not by itself a contradiction, and the
+    earlier rule -- same trim, same amount, some closed campaign somewhere --
+    said it was.  On that rule an official list price, or next quarter's
+    campaign that happens to land on the same round number, was filed as
+    contradicted by an offer it had nothing to do with.  So:
+
+    * only an incoming ``CAMPAIGN_PRICE`` is placed against a campaign at all;
+    * a Tier-A claim is the manufacturer talking about its own offer, and is
+      never held back by a rule about what the manufacturer said earlier;
+    * the article's ``published_at`` decides the rest.  Published after the
+      offer closed, it is stale.  Published while the offer was open, it was
+      true when written -- history and a duplicate of what the brand already
+      told us, which is not the same accusation.
+    * no ``published_at`` at all, and neither can be established: it goes to
+      review as an open question rather than being called either one.
+
+    Returns the :class:`ReviewReason` value, or ``None`` when nothing applies.
+    """
     first = group[0]
     if first.price_type is not PriceType.CAMPAIGN_PRICE:
         return None
@@ -690,6 +789,7 @@ def closed_campaign_echo(group: list[PriceClaim], *,
                                     ledger_records, when)
     if not closed:
         return None
+    #: The offer stayed open longest; an article beating that is not stale.
     last_close = max((entry["closed_on"] for entry in closed
                       if entry["closed_on"]), default=None)
     first_open = min((entry["opened_on"] for entry in closed
@@ -706,6 +806,8 @@ def closed_campaign_echo(group: list[PriceClaim], *,
     if any(day > last_close for day in published):
         return ReviewReason.CONTRADICTED_BY_CLOSED_CAMPAIGN.value
     if first_open and any(day < first_open for day in published):
+        # Written before the offer existed: it is not a report of this offer,
+        # and the amount matching is a coincidence this rule may not resolve.
         return None
     return ReviewReason.HISTORICAL_CAMPAIGN_OBSERVATION.value
 
@@ -716,6 +818,7 @@ def run(documents: list[SourceDocument], claims: list[PriceClaim],
         decisions: Optional[dict[str, dict]] = None,
         ledger: Optional[object] = None,
         as_of: Optional[date] = None) -> RunResult:
+    """Match, group, decide. Pure: no file or network access."""
     campaigns = campaigns or {}
     decisions = decisions or {}
     siblings_by_model = trims_by_model(catalog)
@@ -723,6 +826,9 @@ def run(documents: list[SourceDocument], claims: list[PriceClaim],
     matched: list[PriceClaim] = []
     for claim in claims:
         answer = decisions.get(claim.claim_id)
+        # A person withdraws a claim; so does a rule that resolved against the
+        # brand's own page, which is why it has to cite it. This code's own
+        # proposals never do.
         if answer and answer["origin"] in _DECIDING and \
                 answer["action"] in {"reject", "archive"}:
             continue
@@ -731,6 +837,8 @@ def run(documents: list[SourceDocument], claims: list[PriceClaim],
             model_memo=model_memo)
         changes = {"trim_id": trim_id, "trim_candidates": candidates}
         if answer and answer["origin"] == DecisionOrigin.HUMAN.value:
+            # A person outranks the matcher, and is the only way a campaign
+            # price ever learns which campaign it belongs to.
             if answer["trim_id"]:
                 changes["trim_id"] = answer["trim_id"]
                 changes["trim_candidates"] = (answer["trim_id"],)
@@ -745,6 +853,8 @@ def run(documents: list[SourceDocument], claims: list[PriceClaim],
 
     for key, group in group_claims(matched).items():
         first = group[0]
+        # A campaign price is only publishable once it is attached to a campaign
+        # that states at least one condition of its own.
         campaign = campaigns.get(first.campaign_hint)
         option = campaign.option(first.option_hint) if campaign else None
         has_conditions = bool(option and (
@@ -759,6 +869,7 @@ def run(documents: list[SourceDocument], claims: list[PriceClaim],
             and decisions[claim.claim_id]["origin"] == DecisionOrigin.HUMAN.value
             and decisions[claim.claim_id]["action"] == "publish"}
         if published_by and verdict.state == "provisional":
+            # One outlet, and a person who has looked at it and vouched.
             verdict = Verdict("canonical", (), verdict.independent_claims,
                               verdict.supporting_claim_ids)
         echo = (closed_campaign_echo(
@@ -823,6 +934,11 @@ def _item(first: PriceClaim, group: list[PriceClaim], verdict: Verdict,
 
 def _trim_proposal(first: PriceClaim, group: list[PriceClaim],
                    documents: Optional[dict[str, SourceDocument]] = None) -> dict:
+    """A launch price and the trim it implies, as one decision for the owner.
+
+    Without this the most valuable case -- a car announced today -- can never
+    publish, because the trim it names does not exist until someone creates it.
+    """
     return {
         "brand_raw": first.brand_raw,
         "model_raw": first.model_raw,
@@ -830,6 +946,8 @@ def _trim_proposal(first: PriceClaim, group: list[PriceClaim],
         "amount_thb": first.amount_thb,
         "price_type": first.price_type.value,
         "claim_ids": [claim.claim_id for claim in group],
+        # The articles this proposal came from, so accepting it can cite them
+        # rather than whatever happened to be first in the queue.
         "urls": sorted({(documents or {})[claim.document_id].url
                         for claim in group
                         if claim.document_id in (documents or {})}),
@@ -840,7 +958,7 @@ def _trim_proposal(first: PriceClaim, group: list[PriceClaim],
 
 def to_price_rows(result: RunResult, *, observed_at: str,
                   source_of: dict[str, Source]) -> list[dict]:
-    """Legacy row conversion for evidence/debugging only; P5/P6 owns writes."""
+    """Canonical offers as PriceLedger rows. Nothing else is written."""
     rows: list[dict] = []
     for item in result.offers:
         row = {
@@ -854,8 +972,7 @@ def to_price_rows(result: RunResult, *, observed_at: str,
         for name in ("effective_from", "effective_to", "reference_price_thb"):
             if item.get(name):
                 row[name] = item[name]
-        if item["price_type"] in {
-                PriceType.CAMPAIGN_PRICE.value, PriceType.FINANCE_PRICE.value}:
+        if item["price_type"] == PriceType.CAMPAIGN_PRICE.value:
             row["campaign_id"] = item["campaign_hint"]
             if item.get("option_hint"):
                 row["option_id"] = item["option_hint"]
@@ -865,6 +982,21 @@ def to_price_rows(result: RunResult, *, observed_at: str,
 
 def save_decision(path: Path | str, entry: dict, *, write: bool = False,
                   replace: bool = False) -> dict:
+    """Record one reviewer answer, keyed by claim id.
+
+    ``origin`` is required and is never derived from ``reviewer``: a caller
+    that picks a reviewer string does not thereby become a person.
+
+    A second answer about the same claim **merges** into the first.  Reviewing
+    is not one question: a person binds a campaign price to its campaign, then
+    later vouches for the single source that reported it, and the second answer
+    must not silently erase the first.  Pass ``replace=True`` to overwrite the
+    whole entry -- which is what rejecting one does.
+
+    Validated by reading the whole file back through :func:`load_decisions`
+    before it is written, so a malformed entry cannot land and cannot take the
+    existing answers down with it.
+    """
     path = Path(path)
     claim_id = str(entry.get("claim_id") or "").strip()
     if not claim_id:
