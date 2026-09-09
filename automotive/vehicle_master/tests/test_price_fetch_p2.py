@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from pathlib import Path
 
 import pytest
 
@@ -18,7 +17,7 @@ from vehreg.price_sources import SourceTarget, TargetRole, load_source_target_re
 from vehreg.pricefeed import content_id
 
 
-HTML = b"""<!doctype html>
+HTML = """<!doctype html>
 <html><head>
 <title>fallback title</title>
 <meta property="og:title" content="JAECOO 5 EV Thailand">
@@ -32,7 +31,7 @@ HTML = b"""<!doctype html>
 <a href="https://www.omodajaecoo.co.th/th/promotion/big-motor-sales#terms">duplicate</a>
 <a href="/th/blog/jaecoo-5-ev">blog</a>
 <a href="https://example.com/th/promotion/evil">external</a>
-</body></html>"""
+</body></html>""".encode("utf-8")
 
 
 @dataclass
@@ -143,7 +142,7 @@ def test_changed_content_gets_new_identity_and_new_first_seen() -> None:
         content_hash=content_id(HTML),
         first_seen_at="2026-09-08T08:00:00+00:00",
     )
-    changed = HTML.replace(b"699,000", b"719,000") + b"<!--changed-->"
+    changed = HTML + b"<!--changed-->"
     transport = FakeTransport([_response(changed)])
     adapter = OmodaJaecooThailandAdapter(
         transport=transport,
