@@ -82,13 +82,7 @@ def _refuse_multiple_current_approvals(book: CandidateBook, decisions: dict) -> 
 
 def _refuse_orphan_campaign_creations(
         book: CandidateBook, decisions: dict, campaigns: tuple[dict, ...]) -> None:
-    """Every new canonical campaign must be used by an approved candidate.
-
-    ``create_campaigns`` is an implementation aid for a reviewed offer, not a
-    second free-form campaign authoring API.  An unrelated campaign bundled next
-    to one approved price would otherwise land canonical data without any P5
-    candidate/evidence chain authorizing it.
-    """
+    """Every new canonical campaign must be used by an approved candidate."""
     used = {
         candidate.campaign_id
         for candidate_id, decision in decisions.items()
@@ -108,6 +102,66 @@ def _refuse_orphan_campaign_creations(
             raise PromotionError(
                 f"campaign {campaign_id} is not referenced by any approved candidate; "
                 "remove the orphan campaign or review its price candidate first")
+
+
+def _candidate_window(candidate, disposition: ReconcileDisposition) -> tuple[date, date]:
+    if candidate.effective_from:
+        start = date.fromisoformat(candidate.effective_from)
+    elif disposition is ReconcileDisposition.CONFIRMED_REPLACEMENT and candidate.confirmed_at:
+        start = _aware_timestamp(
+            candidate.confirmed_at,
+            candidate_id=candidate.candidate_id,
+            field="confirmed_at",
+        ).date()
+    else:
+        start = _aware_timestamp(
+            candidate.first_seen_at,
+            candidate_id=candidate.candidate_id,
+            field="first_seen_at",
+        ).date()
+    end = (date.fromisoformat(candidate.effective_to)
+           if candidate.effective_to else date.max)
+    return start, end
+
+
+def _refuse_overlapping_approved_windows(
+        book: CandidateBook, reconcile: dict, decisions: dict) -> None:
+    """Do not let one PR silently resolve contradictory candidate chronology.
+
+    Historical and current candidates may both be legitimate in one stream, but
+    their canonical windows must not overlap.  If they do, latest-start semantics
+    would make the bot choose a winner despite both being HUMAN-approved source
+    claims.  That disagreement belongs back in review/P5.
+    """
+    dispositions = disposition_map(reconcile)
+    by_scope: dict[tuple, list[tuple[date, date, str, int]]] = {}
+    for candidate_id, decision in decisions.items():
+        if decision.action is not PromotionAction.APPROVE:
+            continue
+        candidate = book.candidates.get(candidate_id)
+        disposition = dispositions.get(candidate_id)
+        if candidate is None or disposition is None:
+            continue
+        key = (
+            candidate.trim_id,
+            candidate.price_type.value,
+            candidate.campaign_id or "",
+            candidate.option_id or "",
+        )
+        start, end = _candidate_window(candidate, disposition)
+        by_scope.setdefault(key, []).append(
+            (start, end, candidate_id, candidate.amount_thb))
+
+    for key, rows in by_scope.items():
+        rows.sort(key=lambda row: (row[0], row[1], row[2]))
+        for index, left in enumerate(rows):
+            for right in rows[index + 1:]:
+                if right[0] > left[1]:
+                    break
+                raise PromotionError(
+                    "approved candidates have overlapping canonical windows in the "
+                    f"same stream {key}: {left[2]} ({left[0]}..{left[1]}) and "
+                    f"{right[2]} ({right[0]}..{right[1]}); review chronology first")
 
 
 def _aware_timestamp(raw: str, *, candidate_id: str, field: str) -> datetime:
@@ -158,8 +212,6 @@ def _validate_campaign_binding(*, catalog: Catalog, ledger: PriceLedger,
     if disposition is ReconcileDisposition.HISTORICAL_ONLY:
         return
 
-    # Current offers must still be bookable when the human approves them. A
-    # genuinely future scheduled offer is checked on its literal start instead.
     check_day = reviewed_at.date()
     if candidate.effective_from:
         start = date.fromisoformat(candidate.effective_from)
@@ -193,8 +245,6 @@ def _refuse_stale_replacements(*, data_dir: Path, year: int,
     catalog = Catalog.load(data_dir, year)
     ledger = PriceLedger.load(data_dir, year=year, catalog=catalog)
 
-    # New reviewed campaign identities participate in the same freshness and
-    # semantic checks as campaigns already on disk. Duplicate IDs fail closed.
     for raw in campaigns:
         try:
             ledger.add_campaign_payload(
@@ -238,10 +288,6 @@ def _refuse_stale_replacements(*, data_dir: Path, year: int,
             continue
 
         if disposition is ReconcileDisposition.SAFE_CANDIDATE:
-            # P5 classified this as a new stream because canonical current was
-            # absent. It must still be absent at the latest sighting and at human
-            # review. If the source stated a future start, check that date too so
-            # an intervening scheduled canonical row cannot be silently covered.
             check_days = {last_seen.date(), reviewed_at.date()}
             if candidate.effective_from:
                 check_days.add(date.fromisoformat(candidate.effective_from))
@@ -267,9 +313,6 @@ def _refuse_stale_replacements(*, data_dir: Path, year: int,
                 f"{candidate_id}: HUMAN approval predates 24h confirmation; "
                 "review the confirmed replacement again")
 
-        # The expected prior must remain canonical both when the replacement was
-        # confirmed and when the human approved it. This catches a manual/new bot
-        # row landing after confirmation but before P6 writes.
         current = None
         for check_day in sorted({confirmed_at.date(), reviewed_at.date()}):
             current = _scope_current(ledger, candidate, check_day)
@@ -283,19 +326,12 @@ def _refuse_stale_replacements(*, data_dir: Path, year: int,
 
         current_start = current.effective_from or current.observed_at
         if candidate.effective_from:
-            # A literal source start is allowed to backdate the replacement only
-            # if canonical truth has not itself gained a row starting on/after
-            # that date. Otherwise appending the backdated row can leave the
-            # intervening later-start row current after confirmation.
             if current_start and current_start >= candidate.effective_from:
                 raise PromotionError(
                     f"{candidate_id}: canonical stream has a row starting "
                     f"{current_start} on/after explicit replacement start "
                     f"{candidate.effective_from}; rerun P5 before backdating")
         elif current_start and current_start > first_seen.date().isoformat():
-            # Even a same-amount row with a later start means the canonical
-            # stream was revised during this observation cycle. Candidate v1
-            # does not retain a full prior-row fingerprint, so fail safely.
             raise PromotionError(
                 f"{candidate_id}: canonical stream was revised after candidate "
                 "first_seen_at even though the amount matches; rerun P5")
@@ -303,16 +339,7 @@ def _refuse_stale_replacements(*, data_dir: Path, year: int,
 
 def _refuse_unbound_evidence(*, book: CandidateBook, fetch: dict,
                              decisions: dict) -> None:
-    """Bind every approved candidate to the exact latest P4 claim/document.
-
-    Matching only ``source_id + target_id`` is insufficient provenance: the same
-    URL can change between P5 and promotion. Candidate claim_ids are durable P5
-    evidence. The latest supporting claim must be present in this P4 batch, must
-    belong to the fetched immutable document, and must agree on amount/type and
-    exact canonical MarketTrim. The document must also have been fetched at or
-    after the candidate's ``last_seen_at``; otherwise an old identical snapshot
-    could be reused to fake the second sighting that confirmed a 24h replacement.
-    """
+    """Bind every approved candidate to the exact latest P4 claim/document."""
     rows = fetch.get("results")
     if not isinstance(rows, list):
         raise PromotionError("fetch batch must contain results array")
@@ -397,13 +424,7 @@ def _refuse_unbound_evidence(*, book: CandidateBook, fetch: dict,
 
 
 def _apply_with_rollback(plan: PromotionPlan) -> None:
-    """Atomically replace each touched file; caller holds the writer lock.
-
-    The plan has already been fully validated while the same common lock was
-    held. We snapshot every touched file and perform each replacement through
-    product._write_json (temp file + fsync + os.replace). Ordinary exceptions
-    restore the complete pre-apply set.
-    """
+    """Atomically replace each touched file; caller holds the writer lock."""
     before: dict[Path, bytes | None] = {
         planned.path: (planned.path.read_bytes() if planned.path.exists() else None)
         for planned in plan.files
@@ -453,12 +474,10 @@ def main(argv: list[str] | None = None) -> int:
     decisions, campaigns = load_promotion_bundle(args.review)
     _refuse_multiple_current_approvals(book, decisions)
     _refuse_orphan_campaign_creations(book, decisions, campaigns)
+    _refuse_overlapping_approved_windows(book, reconcile, decisions)
     _refuse_unbound_evidence(book=book, fetch=fetch, decisions=decisions)
 
     if args.apply:
-        # The common writer lock covers stale-P5 check -> canonical read -> plan
-        # -> validation -> apply, so no writer can invalidate the decision after
-        # the final freshness check and before bytes land.
         with _writer_lock(args.data_dir, args.year):
             _refuse_stale_replacements(
                 data_dir=args.data_dir,
@@ -479,8 +498,6 @@ def main(argv: list[str] | None = None) -> int:
             )
             _apply_with_rollback(plan)
     else:
-        # Dry-run also reports stale input when possible. It is not serialized
-        # against a writer, so --apply repeats this check under the lock.
         _refuse_stale_replacements(
             data_dir=args.data_dir,
             year=args.year,
