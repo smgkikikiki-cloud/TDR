@@ -103,6 +103,10 @@ def _refuse_stale_replacements(*, data_dir: Path, year: int,
     prior amount must also remain canonical current truth on the confirmation
     date. Any mismatch means rerun P5/review rather than silently overriding a
     newer canonical price.
+
+    Historical canonical rows need a complete literal window. Knowing only that
+    an offer ended does not tell us when it began, so P6 must not invent a start
+    from first_seen_at after the fact.
     """
     dispositions = disposition_map(reconcile)
     catalog = Catalog.load(data_dir, year)
@@ -115,6 +119,7 @@ def _refuse_stale_replacements(*, data_dir: Path, year: int,
         if candidate is None:
             continue
 
+        disposition = dispositions.get(candidate_id)
         first_seen = _aware_timestamp(
             candidate.first_seen_at, candidate_id=candidate_id, field="first_seen_at")
         reviewed_at = _aware_timestamp(
@@ -130,7 +135,15 @@ def _refuse_stale_replacements(*, data_dir: Path, year: int,
                     f"{candidate_id}: {candidate.price_type.value} promotion requires "
                     "canonical campaign_id + option_id; rerun binding/P5")
 
-        if dispositions.get(candidate_id) is not ReconcileDisposition.CONFIRMED_REPLACEMENT:
+        if disposition is ReconcileDisposition.HISTORICAL_ONLY:
+            if not candidate.effective_from or not candidate.effective_to:
+                raise PromotionError(
+                    f"{candidate_id}: HISTORICAL_ONLY canonical promotion requires "
+                    "explicit effective_from + effective_to; keep incomplete history "
+                    "as evidence/review instead of inventing a start date")
+            continue
+
+        if disposition is not ReconcileDisposition.CONFIRMED_REPLACEMENT:
             continue
         if not candidate.confirmed_at or candidate.replaces_amount_thb is None:
             raise PromotionError(
@@ -157,11 +170,21 @@ def _refuse_stale_replacements(*, data_dir: Path, year: int,
                 f"{candidate.replaces_amount_thb:,} THB at confirmation but found "
                 f"{actual}; rerun P5 before promotion")
 
-        # Even a same-amount row with a later start means the canonical stream
-        # was revised during this observation cycle. Candidate v1 does not retain
-        # a full prior-row fingerprint yet, so fail conservatively.
         current_start = current.effective_from or current.observed_at
-        if current_start and current_start > first_seen.date().isoformat():
+        if candidate.effective_from:
+            # A literal source start is allowed to backdate the replacement only
+            # if canonical truth has not itself gained a row starting on/after
+            # that date. Otherwise appending the backdated row can leave the
+            # intervening later-start row current after confirmation.
+            if current_start and current_start >= candidate.effective_from:
+                raise PromotionError(
+                    f"{candidate_id}: canonical stream has a row starting "
+                    f"{current_start} on/after explicit replacement start "
+                    f"{candidate.effective_from}; rerun P5 before backdating")
+        elif current_start and current_start > first_seen.date().isoformat():
+            # Even a same-amount row with a later start means the canonical
+            # stream was revised during this observation cycle. Candidate v1
+            # does not retain a full prior-row fingerprint, so fail safely.
             raise PromotionError(
                 f"{candidate_id}: canonical stream was revised after candidate "
                 "first_seen_at even though the amount matches; rerun P5")
@@ -175,13 +198,15 @@ def _refuse_unbound_evidence(*, book: CandidateBook, fetch: dict,
     URL can change between P5 and promotion. Candidate claim_ids are durable P5
     evidence. The latest supporting claim must be present in this P4 batch, must
     belong to the fetched immutable document, and must agree on amount/type and
-    exact canonical MarketTrim. Otherwise P6 refuses to write a misleading SHA.
+    exact canonical MarketTrim. The document must also have been fetched at or
+    after the candidate's ``last_seen_at``; otherwise an old identical snapshot
+    could be reused to fake the second sighting that confirmed a 24h replacement.
     """
     rows = fetch.get("results")
     if not isinstance(rows, list):
         raise PromotionError("fetch batch must contain results array")
 
-    support: dict[tuple[str, str, str], tuple[dict, str]] = {}
+    support: dict[tuple[str, str, str], tuple[dict, str, str]] = {}
     for row in rows:
         if not isinstance(row, dict):
             continue
@@ -191,6 +216,7 @@ def _refuse_unbound_evidence(*, book: CandidateBook, fetch: dict,
         if not isinstance(document, dict):
             continue
         document_id = str(document.get("document_id") or "").strip()
+        fetched_at = str(document.get("fetched_at") or "").strip()
         claims = row.get("claims") or []
         if not isinstance(claims, list):
             raise PromotionError(
@@ -202,7 +228,7 @@ def _refuse_unbound_evidence(*, book: CandidateBook, fetch: dict,
             if not claim_id:
                 continue
             key = (source_id, target_id, claim_id)
-            item = (claim, document_id)
+            item = (claim, document_id, fetched_at)
             previous = support.get(key)
             if previous is not None and previous != item:
                 raise PromotionError(
@@ -225,16 +251,31 @@ def _refuse_unbound_evidence(*, book: CandidateBook, fetch: dict,
             raise PromotionError(
                 f"{candidate_id}: latest supporting claim {claim_id} is absent from "
                 "the supplied P4 fetch batch; rerun fetch/P5/review")
-        claim, document_id = item
+        claim, document_id, fetched_at = item
         if str(claim.get("document_id") or "") != document_id:
             raise PromotionError(
                 f"{candidate_id}: supporting claim/document SHA mismatch")
+
+        if not fetched_at:
+            raise PromotionError(
+                f"{candidate_id}: supporting document lacks fetched_at; cannot prove "
+                "the latest P5 observation")
+        fetched = _aware_timestamp(
+            fetched_at, candidate_id=candidate_id, field="document.fetched_at")
+        last_seen = _aware_timestamp(
+            candidate.last_seen_at, candidate_id=candidate_id, field="last_seen_at")
+        if fetched < last_seen:
+            raise PromotionError(
+                f"{candidate_id}: supporting document fetched_at predates candidate "
+                "last_seen_at; rerun P4/P5 so immutable evidence proves the latest sighting")
+
         try:
             amount = int(claim.get("amount_thb"))
         except (TypeError, ValueError) as exc:
             raise PromotionError(
                 f"{candidate_id}: supporting claim has invalid amount_thb") from exc
-        if amount != candidate.amount_thb or str(claim.get("price_type") or "") != candidate.price_type.value:
+        if amount != candidate.amount_thb or \
+                str(claim.get("price_type") or "") != candidate.price_type.value:
             raise PromotionError(
                 f"{candidate_id}: supporting claim amount/type does not match candidate")
         match = claim.get("match")
