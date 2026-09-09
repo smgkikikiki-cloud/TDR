@@ -64,7 +64,13 @@ def changed_files(base: str) -> list[str]:
 
 def _list_price_rows_at(revision: str, year: int) -> list[dict]:
     folder = _repo_path(f"vehreg/data/{year}/market/prices")
-    listed = _git(["ls-tree", "-r", "--name-only", revision, "--", folder], check=False)
+    # ls-tree pathspecs are cwd-relative even though tree object names and
+    # ``git show REV:path`` are repository-root-relative.  ``:(top)`` prevents
+    # the engine prefix from being applied a second time when this guard runs
+    # from automotive/vehicle_master.
+    listed = _git([
+        "ls-tree", "-r", "--name-only", revision, "--", f":(top){folder}"
+    ], check=False)
     if listed.returncode != 0:
         return []
     rows: list[dict] = []
