@@ -626,6 +626,9 @@ class PriceLedger:
         latest = [r for r in rows if (r.effective_from or r.observed_at) == start
                   and r.active_on(when)]
         if len({r.amount_thb for r in latest}) > 1:
+            if price_type is PriceType.LIST_PRICE:
+                raise PricingError(
+                    f"{trim_id}: conflicting LIST_PRICE at {start}; review required")
             scope = f"{trim_id} {price_type.value}"
             if campaign_id or option_id:
                 scope += f" {campaign_id or ''}/{option_id or ''}"
