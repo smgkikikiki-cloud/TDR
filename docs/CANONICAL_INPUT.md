@@ -25,4 +25,6 @@ worker retry cannot turn an identical submission into a different revision.
 
 The queue and worker are server-only and fail closed without the repository
 Actions secrets `SUPABASE_URL` and `SUPABASE_SECRET_KEY` (or legacy
-`SUPABASE_SERVICE_ROLE_KEY`).
+`SUPABASE_SERVICE_ROLE_KEY`). Both workflows probe the configured credential
+against the server-only queue before doing any build or write; scheduled intake
+pauses without a red run when the credential is absent or invalid.

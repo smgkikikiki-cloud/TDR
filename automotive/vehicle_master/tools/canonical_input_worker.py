@@ -61,6 +61,12 @@ def _patch(row_id: str, expected_status: str, payload: dict):
     ) or []
 
 
+def check_connection() -> int:
+    _request("GET", "canonical_input_batches?select=id&limit=0")
+    print(json.dumps({"supabase": "ready", "canonical_input_batches": "accessible"}))
+    return 0
+
+
 def pull(data_dir: Path, result_file: Path, limit: int) -> int:
     now = datetime.now(timezone.utc)
     candidates = _rows("QUEUED", limit)
@@ -147,6 +153,7 @@ def mark_published(data_dir: Path, release_file: Path) -> int:
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
+    sub.add_parser("check")
     p_pull = sub.add_parser("pull")
     p_pull.add_argument("--data-dir", type=Path, default=DATA_DIR)
     p_pull.add_argument("--result-file", type=Path, required=True)
@@ -158,6 +165,12 @@ def main(argv=None) -> int:
     p_publish.add_argument("--data-dir", type=Path, default=DATA_DIR)
     p_publish.add_argument("--release-file", type=Path, required=True)
     args = parser.parse_args(argv)
+    if args.command == "check":
+        try:
+            return check_connection()
+        except RuntimeError as exc:
+            print(json.dumps({"supabase": "unavailable", "error": str(exc)}, ensure_ascii=False))
+            return 2
     if args.command == "pull":
         return pull(args.data_dir, args.result_file, max(1, min(args.limit, 50)))
     if args.command == "mark-staged":
