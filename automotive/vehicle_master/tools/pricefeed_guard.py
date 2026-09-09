@@ -1,30 +1,21 @@
 #!/usr/bin/env python3
-"""CI brake for an automated price PR: what a harvester is allowed to change.
+"""CI brake for automated price PRs in the consolidated TDR repository.
 
 A run that wants to rewrite fifty prices has a broken extractor, not fifty
 announcements. This refuses the PR instead of merging it.
 
 Checks, in order:
 
-1. every changed file is under ``market/`` -- no code, catalog or warehouse;
+1. every changed file is under the canonical ``market/`` tree;
 2. the ledger and campaigns still validate against the catalog;
 3. no more than ``--max-offers`` current list prices changed in one PR;
 4. every trim that already had a current list price still has one, and any
    change to an existing price is inside ``--max-move`` percent.
 
-The guard runs from ``automotive/vehicle_master`` in the consolidated repo. Git
-object paths, however, are repository-root-relative. ``ls-tree`` needs both a
-top-level pathspec and ``--full-name``: the former prevents the current working
-directory prefix from being applied to the query, while the latter prevents Git
-from stripping that prefix from the returned tree paths before ``git show``.
-
-Changed files are compared directly between the declared base tree and HEAD.
-This avoids relying on merge-base traversal in shallow CI checkouts and is the
-right contract for generated price PRs, which are created from the current base.
-
-Run it against the base revision:
-
-    python tools/pricefeed_guard.py --base origin/main
+Generated price branches are compared directly against the declared base tree,
+not via merge-base traversal. Git object paths are repository-root-relative, so
+the guard supports both automatic embedded-engine prefix detection and an
+explicit ``--repo-prefix automotive/vehicle_master/`` override.
 """
 
 from __future__ import annotations
@@ -48,37 +39,53 @@ def _git(args: list[str], *, check: bool = True) -> subprocess.CompletedProcess[
     return subprocess.run(["git", *args], capture_output=True, text=True, check=check)
 
 
-def _repo_prefix() -> str:
+def _auto_repo_prefix() -> str:
     """Path from repository root to the current working directory."""
     prefix = _git(["rev-parse", "--show-prefix"]).stdout.strip()
     return prefix.rstrip("/")
 
 
-def _repo_path(relative: str) -> str:
-    prefix = _repo_prefix()
-    clean = relative.lstrip("/")
+def repo_path(repo_prefix: str, path: str) -> str:
+    """Return a repository-root path for a path inside the embedded engine."""
+    prefix = repo_prefix.strip("/")
+    clean = path.lstrip("/")
     return f"{prefix}/{clean}" if prefix else clean
 
 
+def _effective_repo_prefix(repo_prefix: str | None) -> str:
+    return _auto_repo_prefix() if repo_prefix is None else repo_prefix.strip("/")
+
+
 def changed_files(base: str) -> list[str]:
-    # Compare the declared base tree directly to HEAD. Generated price branches
-    # start from that base, and two-tree diffing also works in shallow CI clones
-    # without requiring Git to discover a merge base.
-    out = _git(["diff", "--name-only", "--relative", base, "HEAD"])
+    """Return repo-root-relative files changed directly between base and HEAD."""
+    root = _git(["rev-parse", "--show-toplevel"]).stdout.strip()
+    out = _git(["-C", root, "diff", "--name-only", base, "HEAD"])
     return [line for line in out.stdout.splitlines() if line.strip()]
 
 
-def _list_price_rows_at(revision: str, year: int) -> list[dict]:
-    folder = _repo_path(f"vehreg/data/{year}/market/prices")
-    # Input pathspec must be repo-root anchored, and output paths must remain
-    # repo-root-relative because ``git show REV:path`` consumes tree object
-    # names, not paths relative to this process' cwd.
-    listed = _git([
-        "ls-tree", "-r", "--name-only", "--full-name", revision,
-        "--", f":(top){folder}",
-    ], check=False)
+def _list_price_rows_at(
+    revision: str,
+    year: int,
+    *,
+    repo_prefix: str | None = None,
+) -> list[dict]:
+    prefix = _effective_repo_prefix(repo_prefix)
+    folder = repo_path(prefix, f"vehreg/data/{year}/market/prices")
+    listed = _git(
+        [
+            "ls-tree",
+            "-r",
+            "--name-only",
+            "--full-name",
+            revision,
+            "--",
+            f":(top){folder}",
+        ],
+        check=False,
+    )
     if listed.returncode != 0:
         return []
+
     rows: list[dict] = []
     for path in listed.stdout.splitlines():
         path = path.strip()
@@ -112,54 +119,92 @@ def _resolve_current_list(rows: list[dict], *, as_of: date) -> dict[str, int]:
 
     out: dict[str, int] = {}
     for trim_id, candidates in by_trim.items():
-        latest_start = max(row.get("effective_from") or row.get("observed_at")
-                           for row in candidates)
-        latest = [row for row in candidates
-                  if (row.get("effective_from") or row.get("observed_at")) == latest_start]
-        active = [row for row in latest
-                  if not row.get("effective_to") or row.get("effective_to") >= day]
-        amounts = {int(row["amount_thb"]) for row in active if row.get("amount_thb") is not None}
+        latest_start = max(
+            row.get("effective_from") or row.get("observed_at")
+            for row in candidates
+        )
+        latest = [
+            row
+            for row in candidates
+            if (row.get("effective_from") or row.get("observed_at")) == latest_start
+        ]
+        active = [
+            row
+            for row in latest
+            if not row.get("effective_to") or row.get("effective_to") >= day
+        ]
+        amounts = {
+            int(row["amount_thb"])
+            for row in active
+            if row.get("amount_thb") is not None
+        }
         if len(amounts) > 1:
             raise ValueError(
-                f"{trim_id}: base revision has conflicting LIST_PRICE at {latest_start}")
+                f"{trim_id}: base revision has conflicting LIST_PRICE at {latest_start}"
+            )
         if amounts:
             out[trim_id] = next(iter(amounts))
     return out
 
 
-def ledger_at(revision: str, year: int, *, as_of: date | None = None) -> dict[str, int]:
+def ledger_at(
+    revision: str,
+    year: int,
+    *,
+    as_of: date | None = None,
+    repo_prefix: str | None = None,
+) -> dict[str, int]:
     """trim_id -> current list price at one git revision."""
-    return _resolve_current_list(_list_price_rows_at(revision, year),
-                                 as_of=as_of or date.today())
+    return _resolve_current_list(
+        _list_price_rows_at(revision, year, repo_prefix=repo_prefix),
+        as_of=as_of or date.today(),
+    )
 
 
-def check(base: str, *, year: int, data_dir: Path,
-          max_offers: int, max_move: float) -> list[str]:
+def check(
+    base: str,
+    *,
+    year: int,
+    data_dir: Path,
+    max_offers: int,
+    max_move: float,
+    repo_prefix: str | None = None,
+) -> list[str]:
     problems: list[str] = []
-    allowed = ALLOWED_PREFIX.format(year=year)
+    prefix = _effective_repo_prefix(repo_prefix)
+    allowed = repo_path(prefix, ALLOWED_PREFIX.format(year=year))
     for path in changed_files(base):
         if not path.startswith(allowed):
-            problems.append(f"{path}: outside {allowed}; a price PR changes data only")
+            problems.append(
+                f"{path}: outside {allowed}; a price PR changes data only"
+            )
 
     catalog = Catalog.load(data_dir, year)
     ledger = PriceLedger.load(data_dir, year=year, catalog=catalog)
     problems.extend(ledger.validate())
 
     try:
-        before = ledger_at(base, year)
+        before = ledger_at(base, year, repo_prefix=prefix)
     except ValueError as exc:
         problems.append(str(exc))
         before = {}
-    after = {trim_id: row.amount_thb for trim_id in {r.trim_id for r in ledger.records}
-             for row in [ledger.current_list_price(trim_id, as_of=date.today())]
-             if row is not None}
+    after = {
+        trim_id: row.amount_thb
+        for trim_id in {record.trim_id for record in ledger.records}
+        for row in [ledger.current_list_price(trim_id, as_of=date.today())]
+        if row is not None
+    }
 
-    moved = {trim_id for trim_id in set(before) | set(after)
-             if before.get(trim_id) != after.get(trim_id)}
+    moved = {
+        trim_id
+        for trim_id in set(before) | set(after)
+        if before.get(trim_id) != after.get(trim_id)
+    }
     if len(moved) > max_offers:
         problems.append(
             f"{len(moved)} list prices change in one PR (limit {max_offers}); "
-            "this is an extractor fault, not that many announcements")
+            "this is an extractor fault, not that many announcements"
+        )
     for trim_id in sorted(moved):
         old, new = before.get(trim_id), after.get(trim_id)
         if old is not None and new is None:
@@ -167,7 +212,8 @@ def check(base: str, *, year: int, data_dir: Path,
         elif old and new and abs(new - old) / old * 100 > max_move:
             problems.append(
                 f"{trim_id}: list price moves {old:,} -> {new:,} "
-                f"({abs(new - old) / old * 100:.1f}% > {max_move}%); needs a person")
+                f"({abs(new - old) / old * 100:.1f}% > {max_move}%); needs a person"
+            )
     return problems
 
 
@@ -177,11 +223,29 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--year", type=int, default=DEFAULT_YEAR)
     parser.add_argument("--data-dir", type=Path, default=DATA_DIR)
     parser.add_argument("--max-offers", type=int, default=25)
-    parser.add_argument("--max-move", type=float, default=25.0,
-                        help="percent a single list price may move unattended")
+    parser.add_argument(
+        "--max-move",
+        type=float,
+        default=25.0,
+        help="percent a single list price may move unattended",
+    )
+    parser.add_argument(
+        "--repo-prefix",
+        default=None,
+        help=(
+            "repository-root prefix containing this engine; defaults to git's "
+            "current working-directory prefix"
+        ),
+    )
     args = parser.parse_args(argv)
-    problems = check(args.base, year=args.year, data_dir=args.data_dir,
-                     max_offers=args.max_offers, max_move=args.max_move)
+    problems = check(
+        args.base,
+        year=args.year,
+        data_dir=args.data_dir,
+        max_offers=args.max_offers,
+        max_move=args.max_move,
+        repo_prefix=args.repo_prefix,
+    )
     if problems:
         print("price PR refused:", file=sys.stderr)
         for problem in problems:

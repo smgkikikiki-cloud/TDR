@@ -1,16 +1,14 @@
 import Link from "next/link";
-import { searchAll } from "@/lib/data";
+import { searchCanonicalCatalog } from "@/lib/canonical-data";
 import { displayName } from "@/lib/display-name";
 
 export default async function Search({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
   const p = await searchParams;
   const q = p.q || "";
-  const result = await searchAll(q);
+  const result = await searchCanonicalCatalog(q);
   const groups = [
     ["รุ่นรถ", result.models, "models"],
     ["แบรนด์", result.brands, "brands"],
-    ["โรงงาน", result.plants, "plants"],
-    ["บริษัท", result.companies, "companies"],
   ] as const;
   const total = groups.reduce((s, [, rows]) => s + rows.length, 0);
 
@@ -19,7 +17,7 @@ export default async function Search({ searchParams }: { searchParams: Promise<{
       <div>
         <div className="sfEyebrow">SEARCH</div>
         <h1>ค้นหาฐานข้อมูล</h1>
-        <p>ค้นหารุ่นรถ แบรนด์ โรงงาน บริษัท หรือพื้นที่ จากฐานข้อมูลเดียว</p>
+        <p>ค้นหารุ่นรถและแบรนด์จาก Vehicle Master ชุดเดียว</p>
       </div>
       {q ? (
         <div className="sfPageHeadAside">
@@ -31,7 +29,7 @@ export default async function Search({ searchParams }: { searchParams: Promise<{
     </section>
 
     <form className="sfSearchForm" role="search">
-      <input name="q" defaultValue={q} placeholder="เช่น Hilux, ระยอง, BYD…" aria-label="คำค้น" autoFocus />
+      <input name="q" defaultValue={q} placeholder="เช่น Hilux, BYD…" aria-label="คำค้น" autoFocus />
       <button type="submit">ค้นหา</button>
     </form>
 
@@ -44,8 +42,8 @@ export default async function Search({ searchParams }: { searchParams: Promise<{
               {rows.length
                 ? rows.map((r: any) => (
                   <Link href={`/${path}/${r.slug}`} key={r.id}>
-                    <strong>{path === "plants" || path === "companies" ? r.name_th : displayName(r)}</strong>
-                    <span>{r.province || r.generation || r.company_type || (path === "plants" || path === "companies" ? r.name_en : "") || ""}</span>
+                    <strong>{displayName(r)}</strong>
+                    <span>{r.generation || r.name_en || ""}</span>
                   </Link>
                 ))
                 : <p>ไม่พบใน{label}</p>}
@@ -55,13 +53,13 @@ export default async function Search({ searchParams }: { searchParams: Promise<{
       ) : (
         <div className="sfEmpty" style={{ marginTop: 26 }}>
           <b>ไม่พบ “{q}” ในฐานข้อมูล</b>
-          <span>ลองพิมพ์ชื่อรุ่นเป็นภาษาอังกฤษ ชื่อแบรนด์ หรือชื่อจังหวัดที่ตั้งโรงงาน</span>
+          <span>ลองพิมพ์ชื่อรุ่นหรือชื่อแบรนด์เป็นภาษาไทยหรืออังกฤษ</span>
         </div>
       )
     ) : (
       <div className="sfEmpty" style={{ marginTop: 26 }}>
         <b>พิมพ์คำค้นเพื่อเริ่มค้นฐานข้อมูล</b>
-        <span>ค้นได้ทั้งชื่อรุ่นรถ แบรนด์ โรงงาน บริษัท และจังหวัด</span>
+        <span>ค้นได้ทั้งชื่อรุ่นรถและแบรนด์</span>
       </div>
     )}
   </>;

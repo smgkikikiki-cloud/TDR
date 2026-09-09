@@ -12,8 +12,7 @@ export async function AdminNav() {
     <nav>
       <Link href="/admin">ภาพรวม</Link>
       <Link href="/admin/library?table=models">Data Library</Link>
-      <Link href="/admin/models/new">+ เพิ่มรุ่นรถ</Link>
-      <Link href="/admin/brands/new">+ เพิ่มแบรนด์</Link>
+      <Link href="/admin/library?table=canonical_vehicle_releases">Vehicle releases</Link>
       <Link href="/admin/plants/new">+ เพิ่มโรงงาน</Link>
       <Link href="/admin/companies/new">+ เพิ่มบริษัท</Link>
       <Link href="/admin/events/new">+ เพิ่มข่าว / Event</Link>

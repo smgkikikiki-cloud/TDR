@@ -32,7 +32,7 @@ jobs:
       - name: Guard automated price PR
         if: github.event_name == 'pull_request' && startsWith(github.head_ref, 'pricebot/')
         working-directory: automotive/vehicle_master
-        run: python tools/pricefeed_guard.py --base "${{ github.event.pull_request.base.sha }}"
+        run: python tools/pricefeed_guard.py --base "${{ github.event.pull_request.base.sha }}" --repo-prefix automotive/vehicle_master/
       - name: Compile Vehicle Master
         working-directory: automotive/vehicle_master
         run: python -m compileall -q vehreg pages tests
@@ -42,6 +42,15 @@ jobs:
       - name: Validate Vehicle Master
         working-directory: automotive/vehicle_master
         run: python -m vehreg market validate
+      - name: Build full canonical release
+        working-directory: automotive/vehicle_master
+        run: |
+          python -m tdr_bridge.release \
+            --inventory integration_data/tdr_2026-09-09.json \
+            --overrides integration_data/crosswalk_overrides.json \
+            --revision "${GITHUB_SHA}" --as-of 2026-09-09 \
+            --out /tmp/vehicle-release.json
+          python -m tdr_bridge.publish /tmp/vehicle-release.json
 
   web:
     runs-on: ubuntu-latest
@@ -61,6 +70,15 @@ jobs:
             --include='*.ts' --include='*.tsx'; then
             echo 'Raw registrations must not be queried from public catalogue/report code.' >&2
             echo 'Use a future entitlement-aware server projection instead.' >&2
+            exit 1
+          fi
+      - name: Guard retired repository routing
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -R --line-number 'vehicle[-]market[-]master' .github scripts \
+            --include='*.yml' --include='*.yaml' --include='*.sh' --include='*.ts' --include='*.js' 2>/dev/null; then
+            echo 'Active automation must target TDR, never the retired Vehicle Master repository.' >&2
             exit 1
           fi
       - run: npm run build
