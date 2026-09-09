@@ -483,6 +483,10 @@ def cmd_market(args) -> int:
     if args.market_cmd == "price-run":
         from . import pricefeed
         from .pricing import PriceLedger
+        if args.write:
+            raise CatalogError(
+                "market price-run is evidence-only; canonical automated writes "
+                "must go through P5 reconciliation and the P6 HUMAN promotion gate")
         documents, claims = pricefeed.load_batch(args.path)
         catalog = Catalog.load(args.data_dir, args.year)
         ledger = PriceLedger.load(args.data_dir, year=args.year, catalog=catalog)
@@ -492,18 +496,14 @@ def cmd_market(args) -> int:
                                pricefeed.load_sources(args.data_dir, args.year),
                                catalog, campaigns=ledger.campaigns,
                                decisions=decisions, ledger=ledger)
-        rows = pricefeed.to_price_rows(
-            result, observed_at=date.today().isoformat(),
-            source_of=pricefeed.load_sources(args.data_dir, args.year))
-        written = None
-        if args.write and rows:
-            written = append_prices(args.data_dir, args.year, {"prices": rows},
-                                    write=True)
-        print(json.dumps({**result.summary(), "offer_rows": len(rows),
-                          "written": written,
-                          "review": result.review[:40],
-                          "trim_proposals": result.trim_proposals[:40]},
-                         ensure_ascii=False, indent=2, allow_nan=False))
+        print(json.dumps({
+            **result.summary(),
+            "legacy_consensus_offers": len(result.offers),
+            "written": False,
+            "note": "evidence only; use P5 -> P6 for canonical price changes",
+            "review": result.review[:40],
+            "trim_proposals": result.trim_proposals[:40],
+        }, ensure_ascii=False, indent=2, allow_nan=False))
         return 0
     if args.market_cmd == "quote":
         from .pricing import PriceLedger
@@ -665,8 +665,11 @@ def build_parser() -> argparse.ArgumentParser:
         if name == "price-run":
             m.add_argument("path", help="harvested batch JSON")
             m.add_argument("--decisions", help="reviewer decisions JSON")
+            # Kept as a compatibility trap for old scripts: the handler rejects
+            # it. Removing the flag outright would make a stale script fail at
+            # argparse with no explanation of the P5/P6 migration path.
             m.add_argument("--write", action="store_true",
-                           help="append canonical offers to the ledger; default is dry run")
+                           help="disabled: canonical writes now require P5 -> P6")
         if name == "quote":
             m.add_argument("trim_id")
             m.add_argument("--as-of", help="date YYYY-MM-DD")
