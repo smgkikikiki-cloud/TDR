@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { getBrands, getEvents, getModels } from "@/lib/data";
-import { publicDb } from "@/lib/supabase";
 import { displayName } from "@/lib/display-name";
 
 export const dynamic = "force-dynamic";
@@ -38,16 +37,9 @@ export default async function ReportsPage() {
   const current = (models as any[]).filter((r) => r.status !== "discontinued");
   const assembled = current.filter((r) => r.production_type === "CKD" || r.production_type === "SKD").length;
 
-  // Registration coverage, read straight from the table so the page never
-  // claims history it does not hold.
-  const db = publicDb();
-  const [firstReg, lastReg] = db ? await Promise.all([
-    db.from("registrations").select("period").order("period", { ascending: true }).limit(1),
-    db.from("registrations").select("period").order("period", { ascending: false }).limit(1),
-  ]) : [null, null];
-  const regFrom = firstReg?.data?.[0]?.period ?? null;
-  const regTo = lastReg?.data?.[0]?.period ?? null;
-
+  // Registration coverage is deliberately NOT read here. The raw fact table is
+  // member intelligence and the public report teaser must remain useful even
+  // when the browser role has no permission to inspect a single registration row.
   const cta = MEMBER_SITE || "#tdr-contact";
   const ctaLabel = MEMBER_SITE ? "เข้าสู่ TDR Report ↗" : "ขอเข้าถึงข้อมูลชุดเต็ม";
 
@@ -92,11 +84,8 @@ export default async function ReportsPage() {
       <div className="sfStripItem"><b className="sfNum">{current.length.toLocaleString()}</b><span>รุ่นในฐานข้อมูล</span></div>
       <div className="sfStripItem"><b className="sfNum">{brands.length.toLocaleString()}</b><span>แบรนด์</span></div>
       <div className="sfStripItem"><b className="sfNum">{assembled.toLocaleString()}</b><span>ประกอบในไทย</span></div>
-      <div className="sfStripItem">
-        {regFrom && regTo ? <><b className="sfNum">{regFrom} – {regTo}</b><span>ช่วงข้อมูลจดทะเบียน</span></>
-          : <><b className="sfNum">กำลังนำเข้า</b><span>ข้อมูลจดทะเบียน</span></>}
-      </div>
-      <div className="sfStripNote">ตัวเลขชุดนี้นับจากฐานข้อมูล TDR โดยตรง ไม่ใช่ค่าประมาณ</div>
+      <div className="sfStripItem"><b className="sfNum">สมาชิก</b><span>ข้อมูลจดทะเบียน</span></div>
+      <div className="sfStripNote">ตัวเลขตลาดจริงไม่ถูกอ่านผ่าน public client; การเข้าถึงชุดข้อมูลเต็มจะผ่านสิทธิ์สมาชิกของ TDR</div>
     </div>
 
     <section className="sfBlock">

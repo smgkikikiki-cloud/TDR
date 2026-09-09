@@ -26,31 +26,27 @@ export async function getProductionProgramsByModel(modelId:string){const db=publ
 export const getDetailedPowertrains=getModelPowertrains;
 
 export async function getRelatedModels(model:any,limit=8){const db=publicDb();if(!db)return[];let q=db.from("models").select("id,slug,name_th,generation,segment,body_type,powertrains,image_url,retail_price_min,retail_price_max,seats,brands(name_th,name_en,slug)").neq("id",model.id).neq("status","discontinued").limit(limit);if(model.brand_id)q=q.eq("brand_id",model.brand_id);const{data}=await q.order("updated_at",{ascending:false});return data??[]}
-export async function getModelRegistrationSummary(modelId:string){const db=publicDb();if(!db)return[];const{data}=await db.from("registrations").select("period,registrations").eq("model_id",modelId).order("period",{ascending:false}).limit(12);return data??[]}
+
+export type PublicRegistrationSummaryRow={period:string;registrations:number};
+
+/**
+ * Phase-D public compatibility surface.
+ *
+ * Raw registration facts are paid intelligence and are service-role only.  A
+ * public Supabase client must never query `registrations`, even when the table
+ * happens to be empty.  Keep this function temporarily so existing pages can
+ * render their locked/empty shell until the entitlement-aware member endpoint
+ * is introduced.
+ */
+export async function getModelRegistrationSummary(_modelId:string):Promise<PublicRegistrationSummaryRow[]>{return[]}
 
 export async function getPlantsWithStats(){const db=publicDb();if(!db)return[];const{data}=await db.from("plants").select("*, production_programs(id,model_id,status,annual_production_estimate,models(id,slug,name_th,name_en,generation,brands(name_th,name_en)))").order("name_th");return(data??[]).map((p:any)=>{const programs=(p.production_programs??[]).filter((x:any)=>x.status!=="ended");const estimate=p.estimated_production_annual??(programs.reduce((s:number,x:any)=>s+(x.annual_production_estimate||0),0)||null);const utilization=p.capacity_annual&&estimate?Math.round((estimate/p.capacity_annual)*1000)/10:null;return{...p,active_programs:programs,model_count:new Set(programs.map((x:any)=>x.model_id)).size,utilization_estimate:utilization,production_estimate:estimate}})}
 export async function getPlantWithPrograms(slug:string){const db=publicDb();if(!db)return null;const{data}=await db.from("plants").select("*, production_programs(*, models(id,slug,name_th,name_en,generation,segment,brands(name_th,name_en)))").eq("slug",slug).maybeSingle();if(!data)return null;const programs=(data.production_programs??[]).filter((x:any)=>x.status!=="ended");const estimate=data.estimated_production_annual??(programs.reduce((s:number,x:any)=>s+(x.annual_production_estimate||0),0)||null);const utilization=data.capacity_annual&&estimate?Math.round((estimate/data.capacity_annual)*1000)/10:null;return{...data,active_programs:programs,production_estimate:estimate,utilization_estimate:utilization}}
 
-/** Units registered per model over the last `months` published periods.
- *
- *  Used to order the catalogue by what actually sells. Deliberately forgiving:
- *  the registrations table can be empty, and an empty map simply means every
- *  sales score is zero and the grid falls back to ordering by launch date.
+/**
+ * Public catalogue ordering no longer reads the raw registration fact table.
+ * An empty sales map preserves the existing relevance function's documented
+ * newest-first fallback without creating a second public registration channel.
+ * A later serving projection may supply a deliberately public teaser score.
  */
-export async function getRecentRegistrationTotals(months=12):Promise<Map<string,number>>{
-  const db=publicDb();
-  const totals=new Map<string,number>();
-  if(!db) return totals;
-  const{data:latest}=await db.from("registrations").select("period").order("period",{ascending:false}).limit(1);
-  const newest=latest?.[0]?.period;
-  if(!newest) return totals;
-  const end=new Date(newest);
-  const start=new Date(end.getFullYear(),end.getMonth()-(months-1),1);
-  const cutoff=`${start.getFullYear()}-${String(start.getMonth()+1).padStart(2,"0")}-01`;
-  const{data}=await db.from("registrations").select("model_id,registrations").gte("period",cutoff).not("model_id","is",null);
-  for(const row of data??[]){
-    const id=(row as any).model_id as string;
-    totals.set(id,(totals.get(id)||0)+Number((row as any).registrations||0));
-  }
-  return totals;
-}
+export async function getRecentRegistrationTotals(_months=12):Promise<Map<string,number>>{return new Map<string,number>()}

@@ -42,4 +42,15 @@ jobs:
           node-version: '20'
           cache: npm
       - run: npm ci
+      - name: Guard public registration entitlement boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -R --line-number --fixed-strings '.from("registrations")' \
+            lib/data.ts app/models app/reports \
+            --include='*.ts' --include='*.tsx'; then
+            echo 'Raw registrations must not be queried from public catalogue/report code.' >&2
+            echo 'Use a future entitlement-aware server projection instead.' >&2
+            exit 1
+          fi
       - run: npm run build
