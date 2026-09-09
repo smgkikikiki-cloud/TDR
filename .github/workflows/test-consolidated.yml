@@ -32,6 +32,9 @@ jobs:
       - name: Validate Vehicle Master
         working-directory: automotive/vehicle_master
         run: python -m vehreg market validate
+      - name: Emit Phase E canonical payload
+        working-directory: automotive/vehicle_master
+        run: python scripts/publish_serving_projection.py jaecoo.jaecoo_5_ev --as-of 2026-09-09 --compact
 
   web:
     runs-on: ubuntu-latest
