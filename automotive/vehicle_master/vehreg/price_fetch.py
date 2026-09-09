@@ -15,7 +15,7 @@ source authority.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from html.parser import HTMLParser
 import json
@@ -29,8 +29,11 @@ from .price_sources import SourceTarget, SourceTargetRegistry, TargetRole
 from .pricefeed import SourceDocument, body_sketch, content_id
 
 
+# Keep the token before '/' identical to tools.robots_check.AGENT.  Python's
+# RobotFileParser compares that token, so auditing one agent and fetching as
+# another would be a policy bug.
 USER_AGENT = (
-    "TDR price intelligence/1.0 "
+    "vehicle-market-master/tdr-price-intelligence-1.0 "
     "(+https://github.com/smgkikikiki-cloud/TDR)"
 )
 
@@ -208,6 +211,18 @@ def _first(mapping: Mapping[str, str], *keys: str) -> str:
     return ""
 
 
+def _iso_timestamp_or_none(raw: object) -> Optional[str]:
+    """Keep explicit ISO timestamps; treat localised prose dates as unknown."""
+    if not raw:
+        return None
+    text = str(raw).strip()
+    try:
+        datetime.fromisoformat(text.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    return text
+
+
 def parse_page_metadata(text: str) -> PageMetadata:
     parser = _HTMLMetadataParser()
     parser.feed(text)
@@ -244,8 +259,8 @@ def parse_page_metadata(text: str) -> PageMetadata:
 
     return PageMetadata(
         title=title,
-        published_at=published or None,
-        modified_at=modified or None,
+        published_at=_iso_timestamp_or_none(published),
+        modified_at=_iso_timestamp_or_none(modified),
         visible_text="\n".join(parser.visible_parts),
         links=tuple(parser.links),
     )
@@ -317,6 +332,9 @@ class OfficialOEMAdapter:
         fetched_at = self.clock()
         response = self.transport.fetch(
             target.url, headers=self._headers(previous), timeout=timeout)
+        response_headers = {
+            str(key).lower(): str(value) for key, value in response.headers.items()
+        }
 
         if response.status == 304:
             if previous is None:
@@ -338,12 +356,12 @@ class OfficialOEMAdapter:
             raise FetchError(
                 f"{target.id}: redirect escaped adapter host allow-list: {response.url}")
 
-        content_type = response.headers.get("content-type", "").lower()
+        content_type = response_headers.get("content-type", "").lower()
         if content_type and "html" not in content_type:
             raise FetchError(f"{target.id}: expected HTML, got {content_type!r}")
 
         try:
-            text = response.body.decode(_charset(response.headers), "replace")
+            text = response.body.decode(_charset(response_headers), "replace")
         except LookupError as exc:
             raise FetchError(f"{target.id}: unknown response charset") from exc
 
@@ -358,8 +376,8 @@ class OfficialOEMAdapter:
             target_id=target.id,
             content_hash=digest,
             first_seen_at=first_seen,
-            etag=response.headers.get("etag", ""),
-            last_modified=response.headers.get("last-modified", ""),
+            etag=response_headers.get("etag", ""),
+            last_modified=response_headers.get("last-modified", ""),
         )
         document = SourceDocument(
             document_id=digest,
