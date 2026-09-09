@@ -207,7 +207,7 @@ class CampaignOption:
         recording ``closed_at`` separately from ``ends``.
         """
         day = when.isoformat()
-        if self.closed_at and day > self.closed_at:
+        if self.closed_at and day >= self.closed_at:
             return False
         if not self.status.open and not self.closed_at:
             return False
@@ -232,7 +232,7 @@ class CampaignOption:
         """
         day = when.isoformat()
         if self.closed_at:
-            return self.status if day > self.closed_at else OfferStatus.ACTIVE
+            return self.status if day >= self.closed_at else OfferStatus.ACTIVE
         # Closed with no date recorded: validation forbids it, so this is only
         # reachable on an unvalidated object. Say closed rather than guess a day.
         return self.status
@@ -338,12 +338,15 @@ def _parse_conditions(raw: object, source: str) -> Conditions:
     unknown = set(raw) - set(Conditions.__dataclass_fields__)
     if unknown:
         raise PricingError(f"{source}: unknown condition fields: {sorted(unknown)}")
+    finance_required = raw.get("finance_required", False)
+    if not isinstance(finance_required, bool):
+        raise PricingError(f"{source}: finance_required must be boolean")
     return Conditions(
         booking_from=_iso_date(raw.get("booking_from"), "booking_from"),
         booking_to=_iso_date(raw.get("booking_to"), "booking_to"),
         delivery_by=_iso_date(raw.get("delivery_by"), "delivery_by"),
         quota_units=_quota(raw.get("quota_units"), source),
-        finance_required=bool(raw.get("finance_required", False)),
+        finance_required=finance_required,
         text=str(raw.get("text") or "").strip(),
     )
 
@@ -443,8 +446,9 @@ class PriceRecord:
                 type(self.reference_price_thb) is not int
                 or self.reference_price_thb <= 0):
             problems.append("reference_price_thb must be a positive integer")
-        if self.price_type is PriceType.CAMPAIGN_PRICE and not self.campaign_id:
-            problems.append("CAMPAIGN_PRICE requires a campaign_id")
+        if self.price_type in (PriceType.CAMPAIGN_PRICE, PriceType.FINANCE_PRICE) \
+                and not self.campaign_id:
+            problems.append(f"{self.price_type.value} requires a campaign_id")
         if self.option_id and not self.campaign_id:
             problems.append("option_id without campaign_id")
         if self.campaign_id and self.price_type not in (
@@ -596,24 +600,44 @@ class PriceLedger:
         rows = self.records_for(trim_id, price_type=price_type)
         return rows[-1] if rows else None
 
-    def current_list_price(self, trim_id: str, *,
-                           as_of: Optional[date] = None) -> Optional[PriceRecord]:
-        """Return canonical current MSRP/list price, never a promo or ECO value."""
+    def current_price_for_scope(self, trim_id: str, price_type: PriceType, *,
+                                as_of: Optional[date] = None,
+                                campaign_id: Optional[str] = None,
+                                option_id: Optional[str] = None) -> Optional[PriceRecord]:
+        """Resolve one canonical price stream with one shared latest-start rule.
+
+        LIST uses ``(trim, type)``. Campaign/finance additionally require the
+        exact canonical campaign/option scope supplied by the caller. Different
+        price types never supersede one another.
+        """
         when = as_of or date.today()
-        rows = [
-            r for r in self.records_for(trim_id, price_type=PriceType.LIST_PRICE)
-            if (r.effective_from or r.observed_at or "9999-12-31") <= when.isoformat()
-        ]
+        rows = self.records_for(trim_id, price_type=price_type)
+        if price_type in (PriceType.CAMPAIGN_PRICE, PriceType.FINANCE_PRICE):
+            if not campaign_id or not option_id:
+                return None
+            rows = [r for r in rows if r.campaign_id == campaign_id
+                    and r.option_id == option_id]
+        rows = [r for r in rows
+                if (r.effective_from or r.observed_at or "9999-12-31")
+                <= when.isoformat()]
         if not rows:
             return None
-        # A newer list supersedes an older open-ended list. Expiring the newer
-        # record must not resurrect an obsolete MSRP.
         start = max(r.effective_from or r.observed_at for r in rows)
         latest = [r for r in rows if (r.effective_from or r.observed_at) == start
                   and r.active_on(when)]
         if len({r.amount_thb for r in latest}) > 1:
-            raise PricingError(f"{trim_id}: conflicting LIST_PRICE at {start}; review required")
+            scope = f"{trim_id} {price_type.value}"
+            if campaign_id or option_id:
+                scope += f" {campaign_id or ''}/{option_id or ''}"
+            raise PricingError(
+                f"{scope}: conflicting canonical prices at {start}; review required")
         return latest[-1] if latest else None
+
+    def current_list_price(self, trim_id: str, *,
+                           as_of: Optional[date] = None) -> Optional[PriceRecord]:
+        """Return canonical current MSRP/list price, never a promo or ECO value."""
+        return self.current_price_for_scope(
+            trim_id, PriceType.LIST_PRICE, as_of=as_of)
 
     def current_list_amount(self, trim_id: str, *,
                             as_of: Optional[date] = None) -> Optional[int]:
@@ -622,23 +646,33 @@ class PriceLedger:
 
     def current_campaign_offers(self, trim_id: str, *,
                                 as_of: Optional[date] = None) -> list[PriceRecord]:
-        """Every campaign price live today, one row per option.
-
-        Options are alternatives, so all of them are returned and none is
-        declared best: a cash discount and a finance deal are not comparable,
-        and choosing between them is the buyer's decision.
-        """
+        """Every live campaign/finance alternative, one current row per scope."""
         when = as_of or date.today()
-        live: list[PriceRecord] = []
-        for record in self.records_for(trim_id,
-                                       price_type=PriceType.CAMPAIGN_PRICE):
-            if not record.active_on(when):
+        scopes: set[tuple[PriceType, str, str]] = set()
+        for record in self.records_for(trim_id):
+            if record.price_type not in (
+                    PriceType.CAMPAIGN_PRICE, PriceType.FINANCE_PRICE):
                 continue
-            campaign = self.campaigns.get(record.campaign_id or "")
+            if record.campaign_id and record.option_id:
+                scopes.add((record.price_type, record.campaign_id, record.option_id))
+
+        live: list[PriceRecord] = []
+        for price_type, campaign_id, option_id in sorted(
+                scopes, key=lambda row: (row[1], row[2], row[0].value)):
+            record = self.current_price_for_scope(
+                trim_id,
+                price_type,
+                as_of=when,
+                campaign_id=campaign_id,
+                option_id=option_id,
+            )
+            if record is None:
+                continue
+            campaign = self.campaigns.get(campaign_id)
             if campaign is not None:
                 if not campaign.live_on(when):
                     continue
-                option = campaign.option(record.option_id or "")
+                option = campaign.option(option_id)
                 if option is not None and not option.open_on(when):
                     continue
             live.append(record)
@@ -662,6 +696,7 @@ class PriceLedger:
             option = campaign.option(record.option_id or "") if campaign else None
             offers.append({
                 "amount_thb": record.amount_thb,
+                "price_type": record.price_type.value,
                 "reference_price_thb": record.reference_price_thb,
                 "discount_thb": record.discount_thb,
                 "campaign_id": record.campaign_id,
@@ -720,6 +755,25 @@ class PriceLedger:
                     self.current_list_price(trim_id, as_of=date.fromisoformat(start))
                 except (PricingError, ValueError) as exc:
                     problems.append(str(exc))
+            for price_type in (PriceType.CAMPAIGN_PRICE, PriceType.FINANCE_PRICE):
+                scoped = {(r.campaign_id, r.option_id)
+                          for r in self.records_for(trim_id, price_type=price_type)
+                          if r.campaign_id and r.option_id}
+                for campaign_id, option_id in scoped:
+                    starts = {r.effective_from or r.observed_at for r in self.records_for(
+                        trim_id, price_type=price_type)
+                        if r.campaign_id == campaign_id and r.option_id == option_id} - {None}
+                    for start in starts:
+                        try:
+                            self.current_price_for_scope(
+                                trim_id,
+                                price_type,
+                                as_of=date.fromisoformat(start),
+                                campaign_id=campaign_id,
+                                option_id=option_id,
+                            )
+                        except (PricingError, ValueError) as exc:
+                            problems.append(str(exc))
         return problems
 
     def coverage(self, *, as_of: Optional[date] = None) -> dict[str, int]:
@@ -735,6 +789,8 @@ class PriceLedger:
             "campaigns": len(self.campaigns),
             "campaign_price_records": sum(
                 r.price_type is PriceType.CAMPAIGN_PRICE for r in self.records),
+            "finance_price_records": sum(
+                r.price_type is PriceType.FINANCE_PRICE for r in self.records),
             "trims_with_live_campaign": len({
                 trim_id for trim_id in trims_with_any
                 if self.current_campaign_offers(trim_id, as_of=as_of)}),
