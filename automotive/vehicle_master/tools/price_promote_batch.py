@@ -28,6 +28,7 @@ from vehreg.catalog import DATA_DIR, DEFAULT_YEAR  # noqa: E402
 from vehreg.price_promote import (  # noqa: E402
     PromotionAction,
     PromotionError,
+    PromotionPlan,
     build_promotion_plan,
     load_promotion_bundle,
 )
@@ -73,6 +74,23 @@ def _refuse_multiple_current_approvals(book: CandidateBook, decisions: dict) -> 
         selected[key] = candidate_id
 
 
+def _apply_with_rollback(plan: PromotionPlan) -> None:
+    """Restore the pre-apply working tree if an ordinary filesystem write fails."""
+    before: dict[Path, bytes | None] = {}
+    for planned in plan.files:
+        before[planned.path] = planned.path.read_bytes() if planned.path.exists() else None
+    try:
+        plan.apply()
+    except Exception:
+        for path, payload in before.items():
+            if payload is None:
+                path.unlink(missing_ok=True)
+                continue
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(payload)
+        raise
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--candidate-state", type=Path, required=True)
@@ -103,7 +121,7 @@ def main(argv: list[str] | None = None) -> int:
     manifest = plan.manifest(args.data_dir)
     manifest["applied"] = bool(args.apply)
     if args.apply:
-        plan.apply()
+        _apply_with_rollback(plan)
     if args.manifest_out:
         args.manifest_out.parent.mkdir(parents=True, exist_ok=True)
         args.manifest_out.write_text(
