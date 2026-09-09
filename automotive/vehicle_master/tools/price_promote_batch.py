@@ -10,7 +10,7 @@ Required inputs:
 
 * ``--candidate-state``: P5 CandidateBook JSON
 * ``--reconcile``: P5 reconcile report from the same/latest run
-* ``--fetch``: P4 fetch batch, used to retain the exact source document
+* ``--fetch``: P4 fetch batch, used to retain the exact source document/claim
 * ``--review``: HUMAN approval/rejection bundle; may also create reviewed
   campaign identities used by bound campaign/finance candidates
 """
@@ -57,12 +57,7 @@ def _load(path: Path) -> dict:
 
 
 def _refuse_multiple_current_approvals(book: CandidateBook, decisions: dict) -> None:
-    """One bot PR may select at most one current truth per canonical stream.
-
-    Historical candidates carry explicit closed windows and may coexist. For
-    current candidates, two HUMAN approval rows do not authorize the bot to
-    decide chronology/source precedence between them.
-    """
+    """One bot PR may select at most one current truth per canonical stream."""
     selected: dict[tuple, str] = {}
     for candidate_id, decision in decisions.items():
         if decision.action is not PromotionAction.APPROVE:
@@ -85,33 +80,29 @@ def _refuse_multiple_current_approvals(book: CandidateBook, decisions: dict) -> 
         selected[key] = candidate_id
 
 
-def _candidate_day(raw: str, *, candidate_id: str, field: str):
+def _aware_timestamp(raw: str, *, candidate_id: str, field: str) -> datetime:
     try:
         stamp = datetime.fromisoformat(str(raw).replace("Z", "+00:00"))
     except ValueError as exc:
         raise PromotionError(
             f"{candidate_id}: invalid {field} timestamp {raw!r}") from exc
     if stamp.tzinfo is None or stamp.utcoffset() is None:
-        raise PromotionError(
-            f"{candidate_id}: {field} must be offset-aware")
-    return stamp.date()
+        raise PromotionError(f"{candidate_id}: {field} must be offset-aware")
+    return stamp
 
 
 def _refuse_stale_replacements(*, data_dir: Path, year: int,
                                book: CandidateBook, reconcile: dict,
                                decisions: dict) -> None:
-    """Fail if canonical truth changed after P5 formed a replacement candidate.
+    """Fail if approval/P5 state is stale against current canonical truth.
 
-    P5 records the amount it believes is being replaced. Between reconciliation
-    and HUMAN promotion, another manual or automated writer may legitimately
-    change the same stream. The common writer lock prevents changes *during*
-    P6, but cannot make an old P5 decision fresh again. Therefore, immediately
-    before build/write and while holding that lock, a confirmed replacement
-    must still see its ``replaces_amount_thb`` as canonical current truth on the
-    confirmation date. Otherwise the only safe action is to rerun P5.
-
-    Campaign and finance streams are additionally required to carry both
-    canonical campaign_id and option_id at this final write boundary.
+    The shared writer lock prevents changes while P6 is running, but it cannot
+    make an old P5 decision or an old HUMAN approval fresh again. A review must
+    be made after the candidate was observed, and a confirmed replacement must
+    be reviewed after confirmation. Immediately before write, its expected
+    prior amount must also remain canonical current truth on the confirmation
+    date. Any mismatch means rerun P5/review rather than silently overriding a
+    newer canonical price.
     """
     dispositions = disposition_map(reconcile)
     catalog = Catalog.load(data_dir, year)
@@ -123,6 +114,15 @@ def _refuse_stale_replacements(*, data_dir: Path, year: int,
         candidate = book.candidates.get(candidate_id)
         if candidate is None:
             continue
+
+        first_seen = _aware_timestamp(
+            candidate.first_seen_at, candidate_id=candidate_id, field="first_seen_at")
+        reviewed_at = _aware_timestamp(
+            decision.reviewed_at, candidate_id=candidate_id, field="reviewed_at")
+        if reviewed_at < first_seen:
+            raise PromotionError(
+                f"{candidate_id}: HUMAN approval predates candidate first_seen_at; "
+                "review the current candidate again")
 
         if candidate.price_type in {PriceType.CAMPAIGN_PRICE, PriceType.FINANCE_PRICE}:
             if not candidate.campaign_id or not candidate.option_id:
@@ -136,12 +136,17 @@ def _refuse_stale_replacements(*, data_dir: Path, year: int,
             raise PromotionError(
                 f"{candidate_id}: confirmed replacement lacks confirmation/prior amount")
 
-        confirmed_on = _candidate_day(
+        confirmed_at = _aware_timestamp(
             candidate.confirmed_at, candidate_id=candidate_id, field="confirmed_at")
+        if reviewed_at < confirmed_at:
+            raise PromotionError(
+                f"{candidate_id}: HUMAN approval predates 24h confirmation; "
+                "review the confirmed replacement again")
+
         current = ledger.current_price_for_scope(
             candidate.trim_id,
             candidate.price_type,
-            as_of=confirmed_on,
+            as_of=confirmed_at.date(),
             campaign_id=candidate.campaign_id,
             option_id=candidate.option_id,
         )
@@ -152,16 +157,91 @@ def _refuse_stale_replacements(*, data_dir: Path, year: int,
                 f"{candidate.replaces_amount_thb:,} THB at confirmation but found "
                 f"{actual}; rerun P5 before promotion")
 
-        # Even a same-amount row written with a later start means the stream was
-        # revised during the observation cycle. PriceCandidate v1 does not yet
-        # retain the prior row's immutable fingerprint, so fail conservatively.
-        first_seen_on = _candidate_day(
-            candidate.first_seen_at, candidate_id=candidate_id, field="first_seen_at")
+        # Even a same-amount row with a later start means the canonical stream
+        # was revised during this observation cycle. Candidate v1 does not retain
+        # a full prior-row fingerprint yet, so fail conservatively.
         current_start = current.effective_from or current.observed_at
-        if current_start and current_start > first_seen_on.isoformat():
+        if current_start and current_start > first_seen.date().isoformat():
             raise PromotionError(
                 f"{candidate_id}: canonical stream was revised after candidate "
                 "first_seen_at even though the amount matches; rerun P5")
+
+
+def _refuse_unbound_evidence(*, book: CandidateBook, fetch: dict,
+                             decisions: dict) -> None:
+    """Bind every approved candidate to the exact latest P4 claim/document.
+
+    Matching only ``source_id + target_id`` is insufficient provenance: the same
+    URL can change between P5 and promotion. Candidate claim_ids are durable P5
+    evidence. The latest supporting claim must be present in this P4 batch, must
+    belong to the fetched immutable document, and must agree on amount/type and
+    exact canonical MarketTrim. Otherwise P6 refuses to write a misleading SHA.
+    """
+    rows = fetch.get("results")
+    if not isinstance(rows, list):
+        raise PromotionError("fetch batch must contain results array")
+
+    support: dict[tuple[str, str, str], tuple[dict, str]] = {}
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        source_id = str(row.get("source_id") or "").strip()
+        target_id = str(row.get("target_id") or "").strip()
+        document = row.get("document") or {}
+        if not isinstance(document, dict):
+            continue
+        document_id = str(document.get("document_id") or "").strip()
+        claims = row.get("claims") or []
+        if not isinstance(claims, list):
+            raise PromotionError(
+                f"{source_id}/{target_id}: fetch claims must be an array")
+        for claim in claims:
+            if not isinstance(claim, dict):
+                continue
+            claim_id = str(claim.get("claim_id") or "").strip()
+            if not claim_id:
+                continue
+            key = (source_id, target_id, claim_id)
+            item = (claim, document_id)
+            previous = support.get(key)
+            if previous is not None and previous != item:
+                raise PromotionError(
+                    f"{source_id}/{target_id}: claim {claim_id} appears with "
+                    "multiple evidence documents")
+            support[key] = item
+
+    for candidate_id, decision in decisions.items():
+        if decision.action is not PromotionAction.APPROVE:
+            continue
+        candidate = book.candidates.get(candidate_id)
+        if candidate is None:
+            continue
+        if not candidate.claim_ids:
+            raise PromotionError(
+                f"{candidate_id}: candidate has no supporting claim_ids")
+        claim_id = candidate.claim_ids[-1]
+        item = support.get((candidate.source_id, candidate.target_id, claim_id))
+        if item is None:
+            raise PromotionError(
+                f"{candidate_id}: latest supporting claim {claim_id} is absent from "
+                "the supplied P4 fetch batch; rerun fetch/P5/review")
+        claim, document_id = item
+        if str(claim.get("document_id") or "") != document_id:
+            raise PromotionError(
+                f"{candidate_id}: supporting claim/document SHA mismatch")
+        try:
+            amount = int(claim.get("amount_thb"))
+        except (TypeError, ValueError) as exc:
+            raise PromotionError(
+                f"{candidate_id}: supporting claim has invalid amount_thb") from exc
+        if amount != candidate.amount_thb or str(claim.get("price_type") or "") != candidate.price_type.value:
+            raise PromotionError(
+                f"{candidate_id}: supporting claim amount/type does not match candidate")
+        match = claim.get("match")
+        if not isinstance(match, dict) or match.get("state") != "EXACT" or \
+                match.get("trim_id") != candidate.trim_id:
+            raise PromotionError(
+                f"{candidate_id}: supporting claim lacks the same P4 EXACT MarketTrim match")
 
 
 def _apply_with_rollback(plan: PromotionPlan) -> None:
@@ -170,9 +250,7 @@ def _apply_with_rollback(plan: PromotionPlan) -> None:
     The plan has already been fully validated while the same common lock was
     held. We snapshot every touched file and perform each replacement through
     product._write_json (temp file + fsync + os.replace). Ordinary exceptions
-    restore the complete pre-apply set. Holding the lock before *building* the
-    plan is essential: otherwise a manual correction could land after P6 read
-    canonical state but before P6 wrote its stale plan.
+    restore the complete pre-apply set.
     """
     before: dict[Path, bytes | None] = {
         planned.path: (planned.path.read_bytes() if planned.path.exists() else None)
@@ -222,6 +300,7 @@ def main(argv: list[str] | None = None) -> int:
     fetch = _load(args.fetch)
     decisions, campaigns = load_promotion_bundle(args.review)
     _refuse_multiple_current_approvals(book, decisions)
+    _refuse_unbound_evidence(book=book, fetch=fetch, decisions=decisions)
 
     if args.apply:
         # The common writer lock covers stale-P5 check -> canonical read -> plan
