@@ -3,9 +3,19 @@ import { createClient, SupabaseClient } from "@supabase/supabase-js";
 const FALLBACK_SUPABASE_URL = "https://ltvwzkffmpudpjfjomrg.supabase.co";
 const FALLBACK_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_bFWJkCQOyVU07PYMebjLgQ_yfb6bgQX";
 
+function cleanEnv(value: string | undefined) {
+  const trimmed = value?.trim();
+  if (!trimmed) return undefined;
+  // Guard against values pasted with wrapping quotes from docs/shell examples.
+  if ((trimmed.startsWith('"') && trimmed.endsWith('"')) || (trimmed.startsWith("'") && trimmed.endsWith("'"))) {
+    return trimmed.slice(1, -1).trim();
+  }
+  return trimmed;
+}
+
 export function publicDb(): SupabaseClient | null {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || FALLBACK_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || FALLBACK_SUPABASE_PUBLISHABLE_KEY;
+  const url = cleanEnv(process.env.NEXT_PUBLIC_SUPABASE_URL) || FALLBACK_SUPABASE_URL;
+  const key = cleanEnv(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) || FALLBACK_SUPABASE_PUBLISHABLE_KEY;
   return createClient(url, key, {
     auth: {
       persistSession: false,
@@ -16,8 +26,11 @@ export function publicDb(): SupabaseClient | null {
 }
 
 export function adminDb(): SupabaseClient | null {
-  const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || FALLBACK_SUPABASE_URL;
-  const key = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const url = cleanEnv(process.env.SUPABASE_URL)
+    || cleanEnv(process.env.NEXT_PUBLIC_SUPABASE_URL)
+    || FALLBACK_SUPABASE_URL;
+  const key = cleanEnv(process.env.SUPABASE_SECRET_KEY)
+    || cleanEnv(process.env.SUPABASE_SERVICE_ROLE_KEY);
   if (!key) return null;
 
   const client = createClient(url, key, {
@@ -49,6 +62,6 @@ export function adminDb(): SupabaseClient | null {
 }
 
 export const isDbConfigured = Boolean(
-  (process.env.NEXT_PUBLIC_SUPABASE_URL || FALLBACK_SUPABASE_URL) &&
-  (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || FALLBACK_SUPABASE_PUBLISHABLE_KEY)
+  (cleanEnv(process.env.NEXT_PUBLIC_SUPABASE_URL) || FALLBACK_SUPABASE_URL) &&
+  (cleanEnv(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) || FALLBACK_SUPABASE_PUBLISHABLE_KEY)
 );
