@@ -35,6 +35,29 @@ export type MarketSliceFilters = {
   marketScopes?: string[];
 };
 
+export type CanonicalRegistrationFact = {
+  period: string;
+  registration_type: string;
+  registrations: number;
+  canonical_model_id: string | null;
+  canonical_brand_id: string | null;
+  brand_name: string;
+  model_name: string;
+  segment: string;
+  body_type: string;
+  powertrain: string;
+  oem_group: string;
+  market_position: string;
+  import_type: string;
+  origin_country: string;
+  brand_origin: string;
+  market_scope: string;
+  raw_brand_name: string;
+  raw_model_name: string;
+  brand_mapped: boolean;
+  canonically_mapped: boolean;
+};
+
 export type MarketSliceRow = {
   entity_key: string;
   entity_label: string;
@@ -78,6 +101,7 @@ const MARKET_DIMENSIONS = new Set<MarketDimension>([
 
 const MARKET_WINDOWS = new Set<MarketWindow>(["month", "rolling3", "rolling6", "rolling12", "ytd"]);
 const MARKET_COMPARISONS = new Set<MarketComparison>(["previous", "yoy"]);
+const BRAND_GRAIN_DIMENSIONS = new Set<MarketDimension>(["brand", "oem_group", "brand_origin"]);
 
 export function isMarketDimension(value: string | null): value is MarketDimension {
   return Boolean(value && MARKET_DIMENSIONS.has(value as MarketDimension));
@@ -152,6 +176,114 @@ export function reportPeriods(window: MarketPeriodWindow): string[] {
 export function missingReportPeriods(window: MarketPeriodWindow, available: Iterable<string>): string[] {
   const known = new Set(Array.from(available, (period) => normalizeReportPeriod(period)).filter(Boolean));
   return reportPeriods(window).filter((period) => !known.has(period));
+}
+
+function allowed(values: string[] | undefined, value: string | null): boolean {
+  return !values?.length || Boolean(value && values.includes(value));
+}
+
+function displayValue(value: string | null | undefined): string {
+  return value && value.trim() ? value : "UNKNOWN";
+}
+
+function rawKey(value: string): string {
+  return encodeURIComponent(value.trim().toLocaleLowerCase().replace(/\s+/g, " "));
+}
+
+function entity(fact: CanonicalRegistrationFact, dimension: MarketDimension): [string, string] {
+  switch (dimension) {
+    case "brand":
+      return [fact.canonical_brand_id || `raw-brand:${rawKey(fact.raw_brand_name)}`, fact.brand_name];
+    case "model":
+      return [
+        fact.canonical_model_id || `raw-model:${rawKey(fact.raw_brand_name)}:${rawKey(fact.raw_model_name)}`,
+        [fact.brand_name, fact.model_name].filter(Boolean).join(" "),
+      ];
+    case "segment": return [fact.segment, fact.segment];
+    case "body_type": return [fact.body_type, fact.body_type];
+    case "powertrain": return [fact.powertrain, fact.powertrain];
+    case "oem_group": return [fact.oem_group, fact.oem_group];
+    case "market_position": return [fact.market_position, fact.market_position];
+    case "import_type": return [fact.import_type, fact.import_type];
+    case "origin_country": return [fact.origin_country, fact.origin_country];
+    case "brand_origin": return [fact.brand_origin, fact.brand_origin];
+    case "registration_type": return [fact.registration_type, fact.registration_type];
+    case "market_scope": return [fact.market_scope, fact.market_scope];
+  }
+}
+
+function passesFilters(
+  fact: CanonicalRegistrationFact,
+  dimension: MarketDimension,
+  filters: MarketSliceFilters,
+): boolean {
+  return (dimension === "registration_type" || allowed(filters.registrationTypes, fact.registration_type))
+    && (dimension === "brand" || allowed(filters.brandIds, fact.canonical_brand_id))
+    && (dimension === "model" || allowed(filters.modelIds, fact.canonical_model_id))
+    && (dimension === "segment" || allowed(filters.segments, fact.segment))
+    && (dimension === "body_type" || allowed(filters.bodyTypes, fact.body_type))
+    && (dimension === "powertrain" || allowed(filters.powertrains, fact.powertrain))
+    && (dimension === "oem_group" || allowed(filters.oemGroups, fact.oem_group))
+    && (dimension === "market_position" || allowed(filters.marketPositions, fact.market_position))
+    && (dimension === "import_type" || allowed(filters.importTypes, fact.import_type))
+    && (dimension === "origin_country" || allowed(filters.originCountries, fact.origin_country))
+    && (dimension === "brand_origin" || allowed(filters.brandOrigins, fact.brand_origin))
+    && (dimension === "market_scope" || allowed(filters.marketScopes, fact.market_scope));
+}
+
+export function sliceMarketFacts(args: {
+  facts: CanonicalRegistrationFact[];
+  dimension: MarketDimension;
+  filters?: MarketSliceFilters;
+  includeUnmapped?: boolean;
+  limit?: number;
+}): MarketSliceRow[] {
+  const filters = args.filters || {};
+  const limit = Math.min(Math.max(Math.trunc(args.limit ?? 100), 1), 500);
+
+  // Registration type participates in the coverage universe unless it is the
+  // dimension being ranked, in which case it must stay open like every other
+  // grouped dimension.
+  const coverageFacts = args.facts.filter((fact) =>
+    args.dimension === "registration_type" || allowed(filters.registrationTypes, fact.registration_type)
+  );
+  const windowRawUnits = coverageFacts.reduce((sum, fact) => sum + Number(fact.registrations || 0), 0);
+  const windowMappedUnits = coverageFacts
+    .filter((fact) => fact.canonically_mapped)
+    .reduce((sum, fact) => sum + Number(fact.registrations || 0), 0);
+
+  const grouped = new Map<string, { label: string; units: number }>();
+  for (const fact of coverageFacts) {
+    const usable = args.includeUnmapped
+      || fact.canonically_mapped
+      || (BRAND_GRAIN_DIMENSIONS.has(args.dimension) && fact.brand_mapped);
+    if (!usable || !passesFilters(fact, args.dimension, filters)) continue;
+    const [key, label] = entity(fact, args.dimension);
+    if (!key) continue;
+    const previous = grouped.get(key);
+    grouped.set(key, {
+      label: displayValue(label),
+      units: (previous?.units || 0) + Number(fact.registrations || 0),
+    });
+  }
+
+  const ranked = [...grouped.entries()]
+    .map(([key, row]) => ({ key, ...row }))
+    .sort((a, b) => b.units - a.units || a.key.localeCompare(b.key));
+  const marketTotal = ranked.reduce((sum, row) => sum + row.units, 0);
+  const mappingCoverage = windowRawUnits ? Math.round((1000 * windowMappedUnits) / windowRawUnits) / 10 : 0;
+
+  return ranked.slice(0, limit).map((row, index) => ({
+    entity_key: row.key,
+    entity_label: row.label,
+    registrations: row.units,
+    market_total: marketTotal,
+    market_share_pct: marketTotal ? Math.round((10000 * row.units) / marketTotal) / 100 : 0,
+    market_rank: index + 1,
+    window_raw_units: windowRawUnits,
+    window_mapped_units: windowMappedUnits,
+    window_mapping_coverage_pct: mappingCoverage,
+  }));
 }
 
 export function compareMarketSliceRows(
