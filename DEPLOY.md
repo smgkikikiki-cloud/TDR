@@ -10,4 +10,5 @@
 4. Deploy
 5. ชี้ custom domain ของ TDR มาที่ Vercel
 
-อย่า expose `SUPABASE_SERVICE_ROLE_KEY` ฝั่ง browser — โค้ด V0 ใช้มันเฉพาะ server action ใน admin เท่านั้น
+อย่า expose `SUPABASE_SECRET_KEY` หรือ legacy `SUPABASE_SERVICE_ROLE_KEY` ฝั่ง browser
+ให้ตั้งเฉพาะ server/runtime และตรวจว่า key เป็นของ project เดียวกับ `SUPABASE_URL`
