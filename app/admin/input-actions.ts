@@ -78,9 +78,11 @@ function priceSourceLabel(kind: string): string {
 
 async function releaseYear(db: any, releaseId: string): Promise<number> {
   const { data, error } = await db.from("canonical_vehicle_releases")
-    .select("as_of").eq("release_id", releaseId).maybeSingle();
+    .select("payload,as_of").eq("release_id", releaseId).maybeSingle();
   if (error) throw error;
-  const year = Number(String(data?.as_of || "").slice(0, 4));
+  const payload = data?.payload && typeof data.payload === "object"
+    ? data.payload as Record<string, unknown> : {};
+  const year = Number(payload.year || String(data?.as_of || "").slice(0, 4));
   if (!Number.isInteger(year) || year < 2000 || year > 2100) {
     throw new Error("หา catalog year ของ active canonical release ไม่ได้");
   }
@@ -148,6 +150,9 @@ export async function enqueueVehicleInput(formData: FormData) {
   if (typeof raw !== "string" || !raw.trim()) throw new Error("กรุณาใส่ input batch JSON");
   let payload: Record<string, unknown>;
   try { payload = JSON.parse(raw); } catch { throw new Error("input batch ต้องเป็น JSON ที่ถูกต้อง"); }
+  if (!payload.submitted_at && field(formData, "submitted_at")) {
+    payload.submitted_at = submissionTimestamp(formData);
+  }
   return enqueuePayload(payload, "advanced");
 }
 
