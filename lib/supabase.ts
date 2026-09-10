@@ -6,7 +6,13 @@ const FALLBACK_SUPABASE_PUBLISHABLE_KEY = "sb_publishable_bFWJkCQOyVU07PYMebjLgQ
 export function publicDb(): SupabaseClient | null {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL || FALLBACK_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || FALLBACK_SUPABASE_PUBLISHABLE_KEY;
-  return createClient(url, key, { auth: { persistSession: false } });
+  return createClient(url, key, {
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+      detectSessionInUrl: false,
+    },
+  });
 }
 
 export function adminDb(): SupabaseClient | null {
@@ -14,23 +20,7 @@ export function adminDb(): SupabaseClient | null {
   const key = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!key) return null;
 
-  const adminFetch: typeof fetch = async (input, init) => {
-    const headers = new Headers(init?.headers);
-    headers.set("apikey", key);
-
-    // New Supabase sb_secret_* keys are opaque API keys, not JWTs. If a
-    // client helper mirrors one into Authorization: Bearer, strip that copy
-    // and let the API gateway authorize the request from the apikey header.
-    // Legacy service_role JWTs still keep their Authorization header.
-    if (key.startsWith("sb_secret_") && headers.get("Authorization") === `Bearer ${key}`) {
-      headers.delete("Authorization");
-    }
-
-    return fetch(input, { ...init, headers });
-  };
-
   const client = createClient(url, key, {
-    global: { fetch: adminFetch },
     auth: {
       persistSession: false,
       autoRefreshToken: false,
@@ -38,35 +28,21 @@ export function adminDb(): SupabaseClient | null {
     },
   });
 
-  // Member requests arrive with a user access-token JWT. Validate that token
-  // against the Auth server with the public API key, while keeping the secret
-  // key exclusively for privileged database access.
+  // Billing code historically calls adminDb().auth.getUser(jwt). Keep that
+  // surface, but verify member JWTs through a separate publishable-key auth
+  // client. The privileged client remains untouched for PostgREST writes and
+  // reads, matching Supabase's documented server-secret setup.
   const originalGetUser = client.auth.getUser.bind(client.auth);
   (client.auth as any).getUser = async (jwt?: string) => {
     if (!jwt) return originalGetUser();
-
-    const publishableKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || FALLBACK_SUPABASE_PUBLISHABLE_KEY;
-    const response = await fetch(`${url}/auth/v1/user`, {
-      method: "GET",
-      headers: {
-        apikey: publishableKey,
-        Authorization: `Bearer ${jwt}`,
-      },
-      cache: "no-store",
-    });
-
-    if (!response.ok) {
-      const body = await response.json().catch(() => ({}));
+    const authClient = publicDb();
+    if (!authClient) {
       return {
         data: { user: null },
-        error: {
-          message: body?.msg || body?.message || "invalid member session",
-          status: response.status,
-        },
+        error: { message: "member auth is not configured", status: 503 },
       };
     }
-
-    return { data: { user: await response.json() }, error: null };
+    return authClient.auth.getUser(jwt);
   };
 
   return client;
