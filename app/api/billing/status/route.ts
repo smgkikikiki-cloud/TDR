@@ -9,6 +9,20 @@ function bearer(request: NextRequest) {
   return match?.[1] || null;
 }
 
+function normalizedSecretKind() {
+  const raw = process.env.SUPABASE_SECRET_KEY;
+  const trimmed = raw?.trim();
+  const unquoted = trimmed && ((trimmed.startsWith('"') && trimmed.endsWith('"')) || (trimmed.startsWith("'") && trimmed.endsWith("'")))
+    ? trimmed.slice(1, -1).trim()
+    : trimmed;
+
+  if (raw?.startsWith("sb_secret_")) return "sb_secret";
+  if (unquoted?.startsWith("sb_secret_")) return "sb_secret_wrapped";
+  if (process.env.SUPABASE_SERVICE_ROLE_KEY) return "service_role";
+  if (raw) return "other_secret";
+  return "missing";
+}
+
 async function profileDiagnostic(accessToken: string) {
   const auth = publicDb();
   const db = adminDb();
@@ -26,15 +40,7 @@ async function profileDiagnostic(accessToken: string) {
     .maybeSingle();
 
   if (!probe.error) return "profile probe unexpectedly succeeded";
-
-  const keyKind = process.env.SUPABASE_SECRET_KEY?.startsWith("sb_secret_")
-    ? "sb_secret"
-    : process.env.SUPABASE_SERVICE_ROLE_KEY
-      ? "service_role"
-      : process.env.SUPABASE_SECRET_KEY
-        ? "other_secret"
-        : "missing";
-  return `${probe.error.code || "unknown"}: ${probe.error.message} [http ${probe.status}; key ${keyKind}]`;
+  return `${probe.error.code || "unknown"}: ${probe.error.message} [http ${probe.status}; key ${normalizedSecretKind()}]`;
 }
 
 export async function GET(request: NextRequest) {
