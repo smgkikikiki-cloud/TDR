@@ -8,11 +8,18 @@ function bearer(request: NextRequest) {
   return match?.[1] || null;
 }
 
+function normalizeOrigin(value: string | undefined | null) {
+  if (!value) return null;
+  const trimmed = value.trim().replace(/^['"]|['"]$/g, "").replace(/\/$/, "");
+  if (!trimmed) return null;
+  return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+}
+
 function appOrigin(request: NextRequest) {
-  const configured = process.env.TDR_APP_URL?.replace(/\/$/, "");
-  if (configured) return configured;
-  if (process.env.NODE_ENV !== "production") return request.nextUrl.origin;
-  throw new BillingError(503, "TDR_APP_URL is not configured");
+  return normalizeOrigin(process.env.TDR_APP_URL)
+    || normalizeOrigin(process.env.VERCEL_PROJECT_PRODUCTION_URL)
+    || (process.env.NODE_ENV !== "production" ? request.nextUrl.origin : null)
+    || "https://tdr-xi.vercel.app";
 }
 
 export async function POST(request: NextRequest) {
