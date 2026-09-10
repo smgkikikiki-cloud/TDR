@@ -10,5 +10,7 @@
 4. Deploy
 5. ชี้ custom domain ของ TDR มาที่ Vercel
 
+Production deployment ของ Vercel ผูกกับ `main`; push เข้า `main` จะเป็นตัว trigger production build/deploy.
+
 อย่า expose `SUPABASE_SECRET_KEY` หรือ legacy `SUPABASE_SERVICE_ROLE_KEY` ฝั่ง browser
 ให้ตั้งเฉพาะ server/runtime และตรวจว่า key เป็นของ project เดียวกับ `SUPABASE_URL`
