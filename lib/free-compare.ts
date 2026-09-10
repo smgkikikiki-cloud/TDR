@@ -102,8 +102,8 @@ export const FREE_COMPARE_GROUPS: CompareGroupDefinition[] = [
   {
     title: "แหล่งผลิตและการรับประกัน",
     rows: [
-      { key: "production_type", label: "นำเข้า / ประกอบ" },
-      { key: "production_country", label: "ประเทศที่ผลิต" },
+      { key: "production_type", label: "นำเข้า / ประกอบ (ระดับรุ่น)" },
+      { key: "production_country", label: "ประเทศที่ผลิต (ระดับรุ่น)" },
       { key: "warranty", label: "การรับประกันรถ" },
     ],
   },
@@ -166,8 +166,8 @@ export function compareValue(trim: FreeCompareTrim, key: CompareRowKey): string 
     case "wheelbase_mm": return numericUnit(trim.wheelbase_mm, "mm");
     case "ground_clearance_mm": return numericUnit(trim.ground_clearance_mm, "mm");
     case "seats": return numericUnit(trim.seats ?? trim.model_seats, "ที่นั่ง");
-    case "production_type": return trim.production_type || null;
-    case "production_country": return trim.production_country || null;
+    case "production_type": return trim.production_type === "MIXED" ? "MIXED · ต่างกันตามรุ่นย่อย/ช่วงเวลา" : trim.production_type || null;
+    case "production_country": return trim.production_country === "MIXED" ? "MIXED · ต่างกันตามรุ่นย่อย/ช่วงเวลา" : trim.production_country || null;
     case "warranty": return trim.vehicle_warranty || trim.warranty || null;
   }
 }
