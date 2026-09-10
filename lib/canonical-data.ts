@@ -47,15 +47,12 @@ function trimRow(row: any) {
     generation_id: row.generation_id,
     variant_id: row.variant_id,
     status: row.status || "current",
+    powertrain: row.powertrain || specs.powertrain || null,
     price_baht: list?.amount_thb ?? null,
     current_list_price: list || null,
     campaign_quote: row.campaign_quote || {},
     price_history: row.price_history || [],
     source_refs: row.source_refs || {},
-    tire_size_front: specs.tire_front || null,
-    tire_size_rear: specs.tire_rear || null,
-    wheel_size_front: specs.wheel_front || null,
-    wheel_size_rear: specs.wheel_rear || null,
     trim_powertrains: [{ powertrain_id: powertrainId }],
     _powertrain: {
       id: powertrainId,
@@ -134,6 +131,41 @@ export async function getCanonicalModelBundle(slug: string) {
     trims: trims.map(({ _powertrain, ...trim }: any) => trim) };
 }
 
+/** Free compare reads the same active release as the catalogue. It deliberately
+ * returns exact MarketTrim grain so price/spec values are never mixed between
+ * variants. Tyre/wheel fields remain canonical data but are not projected onto
+ * the public compare object in this product phase. */
+export async function getCanonicalCompareTrims(limit = 600) {
+  const db = publicDb();
+  if (!db) return [];
+  const [{ data: rawTrims, error: trimError }, { data: rawModels, error: modelError }] = await Promise.all([
+    db.from("current_market_trims").select("*").order("name").limit(limit),
+    db.from("current_vehicle_models").select("*").limit(600),
+  ]);
+  if (trimError) throw trimError;
+  if (modelError) throw modelError;
+  const models = new Map((rawModels || []).map((row: any) => [row.canonical_id, modelRow(row)]));
+  return (rawTrims || [])
+    .map((raw: any) => {
+      const trim = trimRow(raw);
+      const model: any = models.get(raw.model_id) || null;
+      const detail = raw.payload || {};
+      return {
+        ...trim,
+        model_slug: model?.slug || null,
+        brand_name: detail.brand || model?.brands?.name_en || "",
+        model_name: detail.model || model?.name_en || raw.model_id,
+        segment: model?.segment || null,
+        body_type: model?.body_type || null,
+        production_type: model?.production_type || null,
+        production_country: model?.production_country || null,
+        model_seats: model?.seats || null,
+      };
+    })
+    .filter((row: any) => String(row.status || "current").toLowerCase() !== "discontinued")
+    .sort((a: any, b: any) => `${a.brand_name} ${a.model_name} ${a.name}`.localeCompare(`${b.brand_name} ${b.model_name} ${b.name}`));
+}
+
 export async function getCanonicalRelatedModels(model: any, limit = 8) {
   const rows = await getCanonicalModels(600);
   return rows.filter((row: any) => row.id !== model.id && row.brand_id === model.brand_id)
@@ -157,4 +189,3 @@ export async function getModelMarketTeasers(canonicalModelId: string, limit = 4)
   if (error) throw error;
   return data || [];
 }
-
