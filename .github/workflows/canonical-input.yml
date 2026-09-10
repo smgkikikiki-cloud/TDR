@@ -73,7 +73,7 @@ jobs:
         run: |
           python -m pytest -q
           python -m vehreg market validate
-          python -m tdr_bridge.release \
+          python -m tdr_bridge.release_enriched \
             --inventory integration_data/tdr_2026-09-09.json \
             --overrides integration_data/crosswalk_overrides.json \
             --revision "input-${GITHUB_RUN_ID}" --as-of "$(date -u +%F)" \

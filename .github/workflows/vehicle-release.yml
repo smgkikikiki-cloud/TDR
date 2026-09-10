@@ -53,7 +53,7 @@ jobs:
       - run: python -m pip install -r requirements.txt
       - name: Build release once
         run: |
-          python -m tdr_bridge.release \
+          python -m tdr_bridge.release_enriched \
             --inventory integration_data/tdr_2026-09-09.json \
             --overrides integration_data/crosswalk_overrides.json \
             --out /tmp/vehicle-release.json \

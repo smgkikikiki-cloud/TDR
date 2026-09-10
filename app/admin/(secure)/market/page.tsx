@@ -25,8 +25,8 @@ type SearchParams = Record<string, string | string[] | undefined>;
 const DIMENSIONS: Array<[MarketDimension, string]> = [
   ["brand", "Brand"], ["oem_group", "OEM group"], ["model", "Model"],
   ["segment", "Segment"], ["body_type", "Body"], ["powertrain", "Powertrain"],
-  ["market_position", "Market position*"], ["import_type", "CBU / CKD*"],
-  ["origin_country", "Production country*"], ["brand_origin", "Brand origin"],
+  ["market_position", "Market position*"], ["import_type", "CBU / CKD"],
+  ["origin_country", "Production country"], ["brand_origin", "Brand origin"],
   ["registration_type", "DLT class"], ["market_scope", "Market scope"],
 ];
 const WINDOWS: Array<[MarketWindow, string]> = [
@@ -148,8 +148,8 @@ export default async function AdminMarketPage({ searchParams }: { searchParams: 
 
       <label><span>OEM group</span><input name="oem_group" defaultValue={oemGroup} placeholder="เช่น Toyota Motor" /></label>
       <label className={styles.blocked}><span>Market position* · CURRENT SNAPSHOT</span><input name="market_position" defaultValue={marketPosition} placeholder="ใช้วินิจฉัยเท่านั้น" /></label>
-      <label className={styles.blocked}><span>CBU / CKD* · CURRENT SNAPSHOT</span><input name="import_type" defaultValue={importType} placeholder="CBU / CKD / SKD" /></label>
-      <label className={styles.blocked}><span>Production country* · CURRENT SNAPSHOT</span><input name="origin_country" defaultValue={originCountry} placeholder="TH / CN / ID…" /></label>
+      <label><span>CBU / CKD · PERIOD-AWARE</span><input name="import_type" defaultValue={importType} placeholder="CBU / CKD / SKD" /></label>
+      <label><span>Production country · PERIOD-AWARE</span><input name="origin_country" defaultValue={originCountry} placeholder="TH / CN / ID…" /></label>
       <label><span>Brand origin</span><input name="brand_origin" defaultValue={brandOrigin} placeholder="TH / JP / CN…" /></label>
 
       <div className={styles.checks}><label><input type="checkbox" name="all_scopes" defaultChecked={allScopes}/> รวม NICHE / GREY / COMMERCIAL</label><label><input type="checkbox" name="include_unmapped" defaultChecked={includeUnmapped}/> รวม unmapped/raw buckets</label></div>
@@ -159,7 +159,7 @@ export default async function AdminMarketPage({ searchParams }: { searchParams: 
     {provisional.has(period) ? <div className={styles.warning}><b>PROVISIONAL MONTH:</b> เดือน {period} ต่ำกว่า 40% ของ trailing six-month median. ดู raw data ได้ แต่ share/rank ไม่ควรใช้อ้างอิงจน source settle.</div> : null}
     {missingCurrent.length ? <div className={styles.warning}>Window นี้ข้อมูลไม่ครบ: {missingCurrent.map(periodKey).join(", ")} — ไม่สร้าง ranking จากเดือนที่หาย.</div> : null}
     {comparisonMissing.length ? <div className={styles.warning}>Comparison ถูกปิดเพราะ window ฝั่งเทียบขาด: {comparisonMissing.map(periodKey).join(", ")}</div> : null}
-    {(marketPosition || importType || originCountry) ? <div className={styles.warning}><b>* Current-snapshot diagnostic:</b> market position / import route / production country ใน serving DB ยังไม่เป็น period-aware state. ใช้ตรวจข้อมูลปัจจุบันได้ แต่ยังไม่ถือว่า parity กับ historical Streamlit.</div> : null}
+    {marketPosition ? <div className={styles.warning}><b>* Current-snapshot diagnostic:</b> market position ยังไม่ได้เป็น period-aware state. Import route และ production country ใช้ historical year baseline + reviewed monthly change-points แล้ว.</div> : null}
 
     <div className={styles.kpis}>
       <article><span>Registrations in competitive scope</span><strong>{n(leader?.market_total)}</strong><small>{currentWindow ? `${periodKey(currentWindow.from)} → ${periodKey(currentWindow.to)}` : "—"}</small></article>
@@ -172,8 +172,8 @@ export default async function AdminMarketPage({ searchParams }: { searchParams: 
 
     {comparison && movement.length ? <section className={styles.panel}><div className={styles.panelHead}><div><small>MOVEMENT</small><h2>Share gainers / losers</h2></div><span>{comparisonWindow ? `${periodKey(comparisonWindow.from)}–${periodKey(comparisonWindow.to)} → ${periodKey(currentWindow!.from)}–${periodKey(currentWindow!.to)}` : ""}</span></div><div className={styles.movement}><div className={styles.moveCol}><h3>Gainers</h3>{gainers.map((row) => <div className={styles.moveRow} key={row.entity_key}><b>{row.entity_label}</b><div className={styles.bar}><i style={{width:`${100*Math.abs(row.share_change_pp)/maxMove}%`}}/></div><span className={styles.positive}>{pp(row.share_change_pp)}</span></div>)}</div><div className={styles.moveCol}><h3>Losers</h3>{losers.map((row) => <div className={styles.moveRow} key={row.entity_key}><b>{row.entity_label}</b><div className={`${styles.bar} ${styles.negativeBar}`}><i style={{width:`${100*Math.abs(row.share_change_pp)/maxMove}%`}}/></div><span className={styles.negative}>{pp(row.share_change_pp)}</span></div>)}</div></div></section> : null}
 
-    <section className={styles.panel}><div className={styles.panelHead}><div><small>RAW TREND · PARITY CHECK</small><h2>12 เดือนที่มีใน serving DB</h2></div><span>ตอนนี้ trend ใช้ competitive-scope query; full-filter raw-trend parity ยังอยู่ใน 6D gate</span></div><div className={styles.trend}>{trend.map((point) => <div className={styles.trendItem} key={point.period}><div className={styles.trendBar} style={{height:`${Math.max(2,100*point.total/maxTrend)}%`}}/><span>{periodKey(point.period)}</span></div>)}</div></section>
+    <section className={styles.panel}><div className={styles.panelHead}><div><small>RAW TREND</small><h2>12 เดือนที่มีใน serving DB</h2></div><span>registration history 2021-01 → 2026-08 is backfilled</span></div><div className={styles.trend}>{trend.map((point) => <div className={styles.trendItem} key={point.period}><div className={styles.trendBar} style={{height:`${Math.max(2,100*point.total/maxTrend)}%`}}/><span>{periodKey(point.period)}</span></div>)}</div></section>
 
-    <div className={styles.warning}><b>Legacy parity blockers ที่ยังห้าม retire Streamlit:</b> period-aware Price band, period-aware import/origin state, full-filter raw trend, 2021–2025 serving history และ Regional Market/province grain. 6B/6C/6D จะปิดรายการนี้ทีละอัน.</div>
+    <div className={styles.warning}><b>Legacy parity blockers ที่ยังห้าม retire Streamlit:</b> period-aware Price band และ Regional Market/province grain. Import/origin historical state กับ registration history ย้ายแล้ว; retirement gate จะเขียวเมื่อ active release publish historical state สำเร็จ.</div>
   </div>;
 }
