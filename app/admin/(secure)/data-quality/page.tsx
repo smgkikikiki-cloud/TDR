@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { adminDb } from "@/lib/supabase";
+import { getActiveHistoricalModelState } from "@/lib/historical-model-state";
 import { getAdminRegistrationCoverage, getAdminUnmappedRegistrationSummary } from "@/lib/admin-registration-market";
 import { periodKey, provisionalMarketPeriods } from "@/lib/member-market";
 
@@ -13,10 +14,11 @@ async function count(table: string) {
 
 export default async function DataQualityPage() {
   const db = adminDb();
-  const [coverage, unresolved, models, trims, prices, specs, batches] = await Promise.all([
+  const [coverage, unresolved, models, trims, prices, specs, batches, historicalState] = await Promise.all([
     getAdminRegistrationCoverage(), getAdminUnmappedRegistrationSummary(500),
     count("current_vehicle_models"), count("current_market_trims"), count("canonical_price_projection"),
     count("canonical_spec_projection"), count("canonical_input_batches"),
+    db ? getActiveHistoricalModelState(db) : Promise.resolve(null),
   ]);
   const latest = coverage.at(-1) as any;
   const provisional = provisionalMarketPeriods(coverage as any[]);
@@ -29,6 +31,7 @@ export default async function DataQualityPage() {
   const hasLongHistory = Boolean(firstPeriod && firstPeriod <= "2021-01" && lastPeriod >= "2026-08");
   const priceCoverageGood = Boolean(models && pricedModels / models >= .8);
   const mappingHealthy = Number(latest?.mapped_unit_pct || 0) >= 90;
+  const hasHistoricalImportOrigin = Boolean(historicalState);
 
   const gates = [
     ["Canonical Catalog / Compare source", true, "Free Catalog + Compare read active canonical release"],
@@ -38,9 +41,10 @@ export default async function DataQualityPage() {
     ["Price ledger read/history", true, "Admin reads active canonical price projection and campaign quote"],
     ["Price correction write parity", true, "Append / supersede / retract / close / campaign upsert all enter the canonical input queue and Vehicle Master revision path"],
     ["Raw trend uses full filter semantics", true, "Paid market trend uses a neutral OEM-group aggregation so Brand / Model / Segment / Body / Powertrain / DLT scope remains fully applied"],
-    ["Period-aware price/import/origin analytics", false, "Serving analytics still use current model snapshot for these historical facets"],
+    ["Period-aware import/origin analytics", hasHistoricalImportOrigin, hasHistoricalImportOrigin ? "Active canonical release contains yearly baselines + reviewed sparse monthly changes" : "Active canonical release does not yet contain historical_model_state"],
+    ["Period-aware price analytics", false, "Historical price classification remains separate until canonical Price Ledger coverage is sufficient"],
     ["Full registration history", hasLongHistory, `${firstPeriod || "—"} → ${lastPeriod || "—"}; old warehouse extends back to 2021`],
-    ["Regional / province grain", false, "Current Supabase registration fact has no province field"],
+    ["Regional / province grain", false, "Private provincial workbook is not available in the active repository/library; national totals are not a substitute"],
     ["Price range usable in paid slicer", priceCoverageGood, `${pricedModels}/${models ?? 0} canonical models have current price range`],
   ] as const;
   const remainingBlockers = gates.filter(([, ok]) => !ok);
