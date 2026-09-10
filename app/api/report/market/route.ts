@@ -92,13 +92,17 @@ export async function GET(request: NextRequest) {
       }, { status: 409 });
     }
 
-    const rows = await getRegistrationMarketSlice({
+    // A comparison must be calculated from the full competitive set, not the
+    // display limit. Otherwise rank 11 becomes a fake zero merely because the
+    // caller asked to render a top-10 table.
+    const queryLimit = comparisonMode ? 500 : limit;
+    const currentRows = await getRegistrationMarketSlice({
       accessToken: match[1],
       dimension: dimensionValue,
       window: currentWindow,
       filters,
       includeUnmapped,
-      limit,
+      limit: queryLimit,
     });
 
     let comparison = null;
@@ -124,8 +128,8 @@ export async function GET(request: NextRequest) {
       comparison = {
         mode: comparisonMode,
         window: previousWindow,
-        rows: previousRows,
-        movement: compareMarketSliceRows(previousRows, rows),
+        rows: previousRows.slice(0, limit),
+        movement: compareMarketSliceRows(previousRows, currentRows),
       };
     }
 
@@ -137,7 +141,7 @@ export async function GET(request: NextRequest) {
       period_to: currentWindow.to,
       filters,
       include_unmapped: includeUnmapped,
-      rows,
+      rows: currentRows.slice(0, limit),
       comparison,
     }, { headers: { "Cache-Control": "private, no-store" } });
   } catch (error) {
