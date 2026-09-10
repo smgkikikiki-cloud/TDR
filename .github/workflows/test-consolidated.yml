@@ -45,7 +45,7 @@ jobs:
       - name: Build full canonical release
         working-directory: automotive/vehicle_master
         run: |
-          python -m tdr_bridge.release \
+          python -m tdr_bridge.release_enriched \
             --inventory integration_data/tdr_2026-09-09.json \
             --overrides integration_data/crosswalk_overrides.json \
             --revision "${GITHUB_SHA}" --as-of 2026-09-09 \
