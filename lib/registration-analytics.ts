@@ -42,6 +42,33 @@ export type RegistrationDimension =
   | "powertrain"
   | "chinese-bev";
 
+type JsonObject = Record<string, unknown>;
+
+type CanonicalModelRow = {
+  canonical_id: string | null;
+  tdr_model_id: string | null;
+  brand_id: string | null;
+  name_en: string | null;
+  name_th: string | null;
+  segment: string | null;
+  body_type: string | null;
+  payload: JsonObject | null;
+};
+
+type CanonicalBrandRow = {
+  canonical_id: string | null;
+  tdr_brand_id: string | null;
+  slug: string | null;
+  name_en: string | null;
+  name_th: string | null;
+  payload: JsonObject | null;
+};
+
+type RegistrationBrandAliasRow = {
+  raw_brand_norm: string;
+  brand_id: string;
+};
+
 const ACTIVE_STATUSES = new Set(["ACTIVE", "TRIALING", "GRACE"]);
 const PAGE_SIZE = 1000;
 const MAX_FACT_ROWS = 50000;
@@ -131,7 +158,7 @@ function normalizeRegistrationToken(value: unknown): string {
   return String(value || "").toLocaleLowerCase().replace(/[^a-z0-9]+/g, "");
 }
 
-function canonicalPowertrain(payload: any): string {
+function canonicalPowertrain(payload: JsonObject | null | undefined): string {
   const powertrains = Array.isArray(payload?.powertrains)
     ? payload.powertrains.map((value: unknown) => String(value || "").trim()).filter(Boolean)
     : [];
@@ -184,23 +211,28 @@ async function canonicalizeRegistrationRows(db: any, rows: any[]): Promise<Canon
   if (brandError) throw new RegistrationAccessError(500, `canonical brand query failed: ${brandError.message}`);
   if (aliasError) throw new RegistrationAccessError(500, `registration brand crosswalk query failed: ${aliasError.message}`);
 
-  const modelsByTdrId = new Map((modelRows || [])
-    .filter((row: any) => row.tdr_model_id)
-    .map((row: any) => [String(row.tdr_model_id), row]));
-  const brandsByCanonicalId = new Map((brandRows || [])
-    .map((row: any) => [String(row.canonical_id), row]));
-  const brandsByTdrId = new Map((brandRows || [])
-    .filter((row: any) => row.tdr_brand_id)
-    .map((row: any) => [String(row.tdr_brand_id), row]));
-  const brandAliases = new Map((aliasRows || [])
-    .map((row: any) => [String(row.raw_brand_norm), String(row.brand_id)]));
+  const typedModels = (modelRows || []) as CanonicalModelRow[];
+  const typedBrands = (brandRows || []) as CanonicalBrandRow[];
+  const typedAliases = (aliasRows || []) as RegistrationBrandAliasRow[];
+
+  const modelsByTdrId = new Map<string, CanonicalModelRow>(typedModels
+    .filter((row) => row.tdr_model_id)
+    .map((row) => [String(row.tdr_model_id), row]));
+  const brandsByCanonicalId = new Map<string, CanonicalBrandRow>(typedBrands
+    .filter((row) => row.canonical_id)
+    .map((row) => [String(row.canonical_id), row]));
+  const brandsByTdrId = new Map<string, CanonicalBrandRow>(typedBrands
+    .filter((row) => row.tdr_brand_id)
+    .map((row) => [String(row.tdr_brand_id), row]));
+  const brandAliases = new Map<string, string>(typedAliases
+    .map((row) => [String(row.raw_brand_norm), String(row.brand_id)]));
 
   return rows.map((row: any) => {
-    const model = row.model_id ? modelsByTdrId.get(String(row.model_id)) : null;
+    const model = row.model_id ? modelsByTdrId.get(String(row.model_id)) : undefined;
     const aliasBrandTdrId = brandAliases.get(normalizeRegistrationToken(row.brand_name_raw));
     const brand = model?.brand_id
       ? brandsByCanonicalId.get(String(model.brand_id))
-      : aliasBrandTdrId ? brandsByTdrId.get(aliasBrandTdrId) : null;
+      : aliasBrandTdrId ? brandsByTdrId.get(aliasBrandTdrId) : undefined;
     const payload = model?.payload || {};
     const brandPayload = brand?.payload || {};
     const canonicalModelId = model?.canonical_id ? String(model.canonical_id) : null;
