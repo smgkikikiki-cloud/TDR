@@ -6,6 +6,8 @@ import {
   normalizeReportPeriod,
   resolveMarketWindow,
   shiftReportPeriod,
+  sliceMarketFacts,
+  type CanonicalRegistrationFact,
   type MarketSliceRow,
 } from "../lib/registration-market.ts";
 
@@ -43,10 +45,92 @@ check("missing month is explicit, never silently skipped",
   ),
   ["2026-07-01"]);
 
-console.log("\nregistration market dimensions — only supported canonical facets enter the RPC");
+console.log("\nregistration market dimensions — only supported canonical facets enter the contract");
 check("model is supported", isMarketDimension("model"), true);
 check("price is deliberately not live yet", isMarketDimension("price_band"), false);
 check("arbitrary SQL-ish token is rejected", isMarketDimension("model;drop table"), false);
+
+function fact(overrides: Partial<CanonicalRegistrationFact>): CanonicalRegistrationFact {
+  return {
+    period: "2026-08-01",
+    registration_type: "RY1",
+    registrations: 0,
+    canonical_model_id: null,
+    canonical_brand_id: null,
+    brand_name: "UNKNOWN",
+    model_name: "UNKNOWN",
+    segment: "UNKNOWN",
+    body_type: "UNKNOWN",
+    powertrain: "UNKNOWN",
+    oem_group: "UNKNOWN",
+    market_position: "Mass",
+    import_type: "UNKNOWN",
+    origin_country: "UNKNOWN",
+    brand_origin: "UNKNOWN",
+    market_scope: "CORE",
+    raw_brand_name: "",
+    raw_model_name: "",
+    brand_mapped: false,
+    canonically_mapped: false,
+    ...overrides,
+  };
+}
+
+const marketFacts: CanonicalRegistrationFact[] = [
+  fact({
+    registrations: 60, canonical_model_id: "model-a", canonical_brand_id: "brand-a",
+    brand_name: "Brand A", model_name: "Model A", segment: "C", body_type: "CROSSOVER",
+    powertrain: "BEV", oem_group: "Group A", brand_origin: "TH",
+    brand_mapped: true, canonically_mapped: true,
+  }),
+  fact({
+    registrations: 40, canonical_model_id: "model-b", canonical_brand_id: "brand-b",
+    brand_name: "Brand B", model_name: "Model B", segment: "C", body_type: "CROSSOVER",
+    powertrain: "HEV", oem_group: "Group B", brand_origin: "JP",
+    brand_mapped: true, canonically_mapped: true,
+  }),
+  fact({
+    registrations: 20, canonical_model_id: "model-c", canonical_brand_id: "brand-c",
+    brand_name: "Brand C", model_name: "Model C", segment: "D", body_type: "SEDAN",
+    powertrain: "ICE", oem_group: "Group C", brand_origin: "DE",
+    brand_mapped: true, canonically_mapped: true,
+  }),
+  fact({
+    registrations: 10, canonical_brand_id: "brand-a", brand_name: "Brand A",
+    raw_brand_name: "BRAND A", raw_model_name: "UNRESOLVED LABEL", oem_group: "Group A",
+    brand_origin: "TH", brand_mapped: true, canonically_mapped: false,
+  }),
+];
+
+console.log("\nmarket slicer — preserve competitive denominator and honest grain");
+const brandRanking = sliceMarketFacts({
+  facts: marketFacts,
+  dimension: "brand",
+  filters: { brandIds: ["brand-a"] },
+  limit: 10,
+});
+check("ranking dimension opens its own filter", brandRanking.map((row) => row.entity_key), ["brand-a", "brand-b", "brand-c"]);
+check("brand-grain residual stays in Brand A", Number(brandRanking[0]?.registrations), 70);
+check("brand market keeps honest residual volume", Number(brandRanking[0]?.market_total), 130);
+check("coverage still reports model mapping, not fake perfection", Number(brandRanking[0]?.window_mapping_coverage_pct), 92.3);
+
+const modelInsideBrand = sliceMarketFacts({
+  facts: marketFacts,
+  dimension: "model",
+  filters: { brandIds: ["brand-a"] },
+  limit: 10,
+});
+check("brand filter narrows a model ranking", modelInsideBrand.map((row) => row.entity_key), ["model-a"]);
+check("brand-only residual is never invented as a model", Number(modelInsideBrand[0]?.market_total), 60);
+
+const segmentRanking = sliceMarketFacts({
+  facts: marketFacts,
+  dimension: "segment",
+  filters: { segments: ["C"] },
+  limit: 10,
+});
+check("segment ranking opens segment scope", segmentRanking.map((row) => row.entity_key), ["C", "D"]);
+check("model-dependent dimension excludes brand-only residual", Number(segmentRanking[0]?.market_total), 120);
 
 const previous: MarketSliceRow[] = [
   {
