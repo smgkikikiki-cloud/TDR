@@ -3,5 +3,6 @@ export function normalizeRequestedMarketScopes(values?: string[]): string[] | un
     .map((value) => String(value || "").trim().toUpperCase())
     .filter(Boolean))];
   if (cleaned.includes("ALL")) return undefined;
-  return cleaned.length ? cleaned : ["CORE"];
+  const requested = cleaned.length ? cleaned : ["CORE"];
+  return requested.includes("MIXED") ? requested : [...requested, "MIXED"];
 }
