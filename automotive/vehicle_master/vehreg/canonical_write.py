@@ -22,14 +22,11 @@ import re
 from typing import Any, Optional
 
 from .catalog import Catalog, CatalogError, DATA_DIR, DEFAULT_YEAR, year_dir
-from .comparable_specs import (
-    ComparableSpecError,
-    SpecLedger,
-    SpecRegistry,
-)
+from .comparable_specs import ComparableSpecError, SpecLedger, SpecRegistry
 from .normalize import slug
 from .pricing import PriceLedger, PricingError, PriceType
 from .entities import to_jsonable
+from .product import close_price, correct_price, save_campaign
 
 
 class CanonicalWriteError(ValueError):
@@ -40,6 +37,9 @@ _ALLOWED_COMMANDS = {
     "UPSERT_MODEL_BUNDLE",
     "WITHDRAW_MODEL",
     "APPEND_PRICE",
+    "CORRECT_PRICE",
+    "CLOSE_PRICE",
+    "UPSERT_CAMPAIGN",
     "APPEND_SPEC",
 }
 _SAFE_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$")
@@ -138,12 +138,7 @@ def _load_json(path: Path) -> dict[str, Any]:
 
 
 def _existing_target_matches(path: Path, payload: dict[str, Any]) -> bool:
-    """Recognize a data-first write left behind before its revision marker.
-
-    Batch input copies canonical data before audit state. If the process dies in
-    that narrow window, replay must finish the audit entry instead of forcing a
-    manual recovery for a byte-equivalent price/spec fact.
-    """
+    """Recognize a data-first write left behind before its revision marker."""
     if not path.is_file():
         return False
     try:
@@ -215,7 +210,6 @@ def _repair_replay_audit(data_dir: Path | str, year: int,
 
 
 def _resolve_recorded_change(data_dir: Path | str, year: int, recorded: str) -> str:
-    """Resolve durable relative paths and legacy absolute temp paths."""
     root = Path(data_dir)
     path = Path(recorded)
     if not path.is_absolute():
@@ -260,8 +254,7 @@ def _validate_payloads(payloads: dict[str, dict[str, Any]], year: int) -> Catalo
 def _model_raw_id(model_id: str) -> tuple[str, str]:
     brand_id, dot, local_id = model_id.partition(".")
     if not dot or not brand_id or not local_id:
-        raise CanonicalWriteError(
-            "model canonical_id must look like '<brand>.<model>'")
+        raise CanonicalWriteError("model canonical_id must look like '<brand>.<model>'")
     return brand_id, local_id
 
 
@@ -310,12 +303,36 @@ def _catalog_snapshot(catalog: Catalog, model_id: str) -> dict[str, Any]:
     }
 
 
-class CanonicalWritePipeline:
-    """Validated, idempotent, revisioned writer for canonical vehicle facts.
+def _price_snapshot(data_dir: Path | str, year: int, trim_id: str) -> list[dict[str, Any]]:
+    catalog = Catalog.load(data_dir, year)
+    ledger = PriceLedger.load(data_dir, year=year, catalog=catalog)
+    return [to_jsonable(row) for row in ledger.records_for(trim_id, include_retracted=True)]
 
-    Successful writes append one immutable revision and one outbox event, then
-    write a shadow projection.  No Supabase serving table is modified here.
-    """
+
+def _campaign_snapshot(data_dir: Path | str, year: int,
+                       campaign_id: str) -> Optional[dict[str, Any]]:
+    folder = Path(data_dir) / str(year) / "market" / "campaigns"
+    if not folder.is_dir():
+        return None
+    for path in sorted(folder.glob("*.json")):
+        payload = _load_json(path)
+        for campaign in payload.get("campaigns", []):
+            if str(campaign.get("id") or "") == campaign_id:
+                return deepcopy(campaign)
+    return None
+
+
+def _as_of_date(value: Any) -> Optional[date]:
+    if value in (None, ""):
+        return None
+    try:
+        return date.fromisoformat(str(value))
+    except ValueError as exc:
+        raise CanonicalWriteError("as_of must be YYYY-MM-DD") from exc
+
+
+class CanonicalWritePipeline:
+    """Validated, idempotent, revisioned writer for canonical vehicle facts."""
 
     def __init__(self, data_dir: Path | str = DATA_DIR) -> None:
         self.data_dir = Path(data_dir)
@@ -341,18 +358,20 @@ class CanonicalWritePipeline:
             )
 
         if command.operation == "UPSERT_MODEL_BUNDLE":
-            topic, entity_type, entity_id, before, after, changed = \
-                self._upsert_model_bundle(command)
+            topic, entity_type, entity_id, before, after, changed = self._upsert_model_bundle(command)
         elif command.operation == "WITHDRAW_MODEL":
-            topic, entity_type, entity_id, before, after, changed = \
-                self._withdraw_model(command)
+            topic, entity_type, entity_id, before, after, changed = self._withdraw_model(command)
         elif command.operation == "APPEND_PRICE":
-            topic, entity_type, entity_id, before, after, changed = \
-                self._append_price(command)
+            topic, entity_type, entity_id, before, after, changed = self._append_price(command)
+        elif command.operation == "CORRECT_PRICE":
+            topic, entity_type, entity_id, before, after, changed = self._correct_price(command)
+        elif command.operation == "CLOSE_PRICE":
+            topic, entity_type, entity_id, before, after, changed = self._close_price(command)
+        elif command.operation == "UPSERT_CAMPAIGN":
+            topic, entity_type, entity_id, before, after, changed = self._upsert_campaign(command)
         elif command.operation == "APPEND_SPEC":
-            topic, entity_type, entity_id, before, after, changed = \
-                self._append_spec(command)
-        else:  # guarded by parser; retained for callers constructing dataclass directly
+            topic, entity_type, entity_id, before, after, changed = self._append_spec(command)
+        else:
             raise CanonicalWriteError(f"unsupported operation {command.operation}")
 
         revision_id = hashlib.sha256(
@@ -413,45 +432,35 @@ class CanonicalWritePipeline:
         brand_patch = bundle.get("brand")
         model_patch = bundle.get("model")
         generation_patch = bundle.get("generation")
-        if not all(isinstance(x, dict) for x in
-                   (brand_patch, model_patch, generation_patch)):
-            raise CanonicalWriteError(
-                "UPSERT_MODEL_BUNDLE requires brand/model/generation objects")
+        if not all(isinstance(x, dict) for x in (brand_patch, model_patch, generation_patch)):
+            raise CanonicalWriteError("UPSERT_MODEL_BUNDLE requires brand/model/generation objects")
         canonical_id = command.canonical_id or str(model_patch.get("canonical_id") or "")
         if not canonical_id:
             brand_hint = slug(brand_patch.get("id") or brand_patch.get("name_en") or "")
             model_hint = slug(model_patch.get("id") or model_patch.get("name_en") or "")
             if not brand_hint or not model_hint:
-                raise CanonicalWriteError(
-                    "new model bundle needs canonical_id or stable brand/model ids")
+                raise CanonicalWriteError("new model bundle needs canonical_id or stable brand/model ids")
             canonical_id = f"{brand_hint}.{model_hint}"
         brand_id, local_model_id = _model_raw_id(canonical_id)
         if slug(brand_patch.get("id") or brand_patch.get("name_en") or brand_id) != brand_id:
             raise CanonicalWriteError("brand payload disagrees with canonical_id")
 
         payloads = _load_brand_payloads(self.data_dir, command.year)
-        brand_payload = deepcopy(payloads.get(brand_id) or {
-            "brand": {"id": brand_id}, "models": [],
-        })
+        brand_payload = deepcopy(payloads.get(brand_id) or {"brand": {"id": brand_id}, "models": []})
         existing_model = _find_model_raw(brand_payload, local_model_id)
         before = deepcopy(existing_model) if existing_model is not None else None
-
         brand_node = brand_payload.setdefault("brand", {"id": brand_id})
-        brand_node.update({k: deepcopy(v) for k, v in brand_patch.items()
-                           if k != "canonical_id"})
+        brand_node.update({k: deepcopy(v) for k, v in brand_patch.items() if k != "canonical_id"})
         brand_node["id"] = brand_id
         if not brand_node.get("name_en"):
             raise CanonicalWriteError("brand.name_en is required")
-
         if existing_model is None:
             if not model_patch.get("name_en"):
                 raise CanonicalWriteError("new model requires model.name_en")
             existing_model = {"id": local_model_id, "generations": []}
             brand_payload.setdefault("models", []).append(existing_model)
-        existing_model.update({k: deepcopy(v) for k, v in model_patch.items()
-                               if k not in {"canonical_id", "generations"}})
+        existing_model.update({k: deepcopy(v) for k, v in model_patch.items() if k not in {"canonical_id", "generations"}})
         existing_model["id"] = local_model_id
-
         code = str(generation_patch.get("code") or "").strip()
         if not code:
             raise CanonicalWriteError("generation.code is required")
@@ -460,12 +469,10 @@ class CanonicalWritePipeline:
         if generation is None:
             generation = {"code": code, "variants": [], "trims": []}
             existing_model.setdefault("generations", []).append(generation)
-        generation.update({k: deepcopy(v) for k, v in generation_patch.items()
-                           if k not in {"variants", "trims"}})
+        generation.update({k: deepcopy(v) for k, v in generation_patch.items() if k not in {"variants", "trims"}})
         generation["code"] = code
         generation.setdefault("variants", [])
         generation.setdefault("trims", [])
-
         for raw in bundle.get("variants") or []:
             if not isinstance(raw, dict) or not raw.get("name"):
                 raise CanonicalWriteError("every variant requires a name")
@@ -475,11 +482,7 @@ class CanonicalWritePipeline:
                 if not full.startswith(generation_id + "."):
                     raise CanonicalWriteError("variant canonical_id has wrong parent")
                 incoming["id"] = full.rsplit(".", 1)[-1]
-            _upsert_by_identity(
-                generation["variants"], incoming,
-                lambda row: slug(row.get("id") or row.get("name") or ""),
-            )
-
+            _upsert_by_identity(generation["variants"], incoming, lambda row: slug(row.get("id") or row.get("name") or ""))
         for raw in bundle.get("trims") or []:
             if not isinstance(raw, dict) or not raw.get("name"):
                 raise CanonicalWriteError("every market trim requires a name")
@@ -492,10 +495,8 @@ class CanonicalWritePipeline:
                 incoming["id"] = full[len(prefix):]
             _upsert_by_identity(
                 generation["trims"], incoming,
-                lambda row: slug(row.get("id") or
-                                 f"{row.get('name','')} {row.get('powertrain','')}"),
+                lambda row: slug(row.get("id") or f"{row.get('name','')} {row.get('powertrain','')}")
             )
-
         payloads[brand_id] = brand_payload
         catalog = _validate_payloads(payloads, command.year)
         if canonical_id not in catalog.models:
@@ -540,26 +541,111 @@ class CanonicalWritePipeline:
         if trim_id not in catalog.trims:
             raise CanonicalWriteError(f"unknown MarketTrim {trim_id!r}")
         ledger = PriceLedger.load(self.data_dir, year=command.year, catalog=catalog)
-        before = [to_jsonable(r) for r in ledger.records_for(
-            trim_id, include_retracted=True)]
+        before = [to_jsonable(r) for r in ledger.records_for(trim_id, include_retracted=True)]
         ledger.add_payload({"prices": [record]}, source=f"<command {command.command_id}>")
         if PriceType.parse(record.get("price_type")) is PriceType.LIST_PRICE:
-            # Force conflict detection on the exact day this claim starts.
             start = record.get("effective_from") or record.get("observed_at")
-            ledger.current_list_price(
-                trim_id, as_of=date.fromisoformat(start) if start else date.today())
+            ledger.current_list_price(trim_id, as_of=date.fromisoformat(start) if start else date.today())
         folder = Path(self.data_dir) / str(command.year) / "market" / "prices"
         target = folder / f"canonical_{command.command_id}.json"
         target_payload = {"prices": [record]}
         if target.exists() and not _existing_target_matches(target, target_payload):
-            raise CanonicalWriteError(
-                "command file already exists without a revision; manual recovery required")
+            raise CanonicalWriteError("command file already exists without a revision; manual recovery required")
         _atomic_json(target, target_payload)
-        after_ledger = PriceLedger.load(
-            self.data_dir, year=command.year, catalog=catalog)
-        after = [to_jsonable(r) for r in after_ledger.records_for(
-            trim_id, include_retracted=True)]
+        after_ledger = PriceLedger.load(self.data_dir, year=command.year, catalog=catalog)
+        after = [to_jsonable(r) for r in after_ledger.records_for(trim_id, include_retracted=True)]
         return "price", "market_trim", trim_id, before, after, (str(target),)
+
+    def _correct_price(self, command: CanonicalWriteCommand):
+        payload = deepcopy(command.payload)
+        trim_id = command.canonical_id or str(payload.get("trim_id") or "")
+        if not trim_id:
+            raise CanonicalWriteError("CORRECT_PRICE requires trim_id/canonical_id")
+        if not command.reason:
+            raise CanonicalWriteError("CORRECT_PRICE requires command.reason")
+        catalog = Catalog.load(self.data_dir, command.year)
+        if trim_id not in catalog.trims:
+            raise CanonicalWriteError(f"unknown MarketTrim {trim_id!r}")
+        before = _price_snapshot(self.data_dir, command.year, trim_id)
+        try:
+            result = correct_price(
+                self.data_dir, command.year,
+                trim_id=trim_id,
+                price_type=PriceType.parse(payload.get("price_type") or "LIST_PRICE").value,
+                amount_thb=int(payload["amount_thb"]),
+                reason=command.reason,
+                reviewer=command.actor,
+                mode=str(payload.get("mode") or "supersede").lower(),
+                effective_from=(str(payload.get("effective_from")) if payload.get("effective_from") else None),
+                campaign_id=(str(payload.get("campaign_id")) if payload.get("campaign_id") else None),
+                option_id=(str(payload.get("option_id")) if payload.get("option_id") else None),
+                source=str(payload.get("source") or ""),
+                source_ref=str(payload.get("source_ref") or ""),
+                reference_price_thb=(int(payload["reference_price_thb"]) if payload.get("reference_price_thb") not in (None, "") else None),
+                as_of=_as_of_date(payload.get("as_of")),
+                write=True,
+            )
+        except (CatalogError, PricingError, KeyError, TypeError, ValueError) as exc:
+            raise CanonicalWriteError(f"price correction failed: {exc}") from exc
+        if not result.get("changed"):
+            raise CanonicalWriteError(str(result.get("note") or "price correction produced no change"))
+        after = _price_snapshot(self.data_dir, command.year, trim_id)
+        return "price", "market_trim", trim_id, before, after, tuple(result.get("paths") or ())
+
+    def _close_price(self, command: CanonicalWriteCommand):
+        payload = deepcopy(command.payload)
+        trim_id = command.canonical_id or str(payload.get("trim_id") or "")
+        if not trim_id:
+            raise CanonicalWriteError("CLOSE_PRICE requires trim_id/canonical_id")
+        if not command.reason:
+            raise CanonicalWriteError("CLOSE_PRICE requires command.reason")
+        ends = str(payload.get("ends") or "")
+        if not ends:
+            raise CanonicalWriteError("CLOSE_PRICE requires ends")
+        catalog = Catalog.load(self.data_dir, command.year)
+        if trim_id not in catalog.trims:
+            raise CanonicalWriteError(f"unknown MarketTrim {trim_id!r}")
+        before = _price_snapshot(self.data_dir, command.year, trim_id)
+        try:
+            result = close_price(
+                self.data_dir, command.year,
+                trim_id=trim_id,
+                price_type=PriceType.parse(payload.get("price_type") or "LIST_PRICE").value,
+                ends=ends,
+                reason=command.reason,
+                reviewer=command.actor,
+                campaign_id=(str(payload.get("campaign_id")) if payload.get("campaign_id") else None),
+                option_id=(str(payload.get("option_id")) if payload.get("option_id") else None),
+                as_of=_as_of_date(payload.get("as_of")),
+                write=True,
+            )
+        except (CatalogError, PricingError, TypeError, ValueError) as exc:
+            raise CanonicalWriteError(f"price close failed: {exc}") from exc
+        after = _price_snapshot(self.data_dir, command.year, trim_id)
+        return "price", "market_trim", trim_id, before, after, tuple(result.get("paths") or ())
+
+    def _upsert_campaign(self, command: CanonicalWriteCommand):
+        campaign = deepcopy(command.payload.get("campaign") or command.payload)
+        if not isinstance(campaign, dict):
+            raise CanonicalWriteError("UPSERT_CAMPAIGN requires a campaign object")
+        campaign_id = command.canonical_id or str(campaign.get("id") or "")
+        if not campaign_id:
+            raise CanonicalWriteError("UPSERT_CAMPAIGN requires campaign id/canonical_id")
+        campaign["id"] = campaign_id
+        before = _campaign_snapshot(self.data_dir, command.year, campaign_id)
+        try:
+            probe = save_campaign(self.data_dir, command.year, campaign, write=False)
+            if before == campaign:
+                raise CanonicalWriteError("campaign already matches canonical payload")
+            result = save_campaign(self.data_dir, command.year, campaign, write=True)
+        except CanonicalWriteError:
+            raise
+        except (CatalogError, PricingError, TypeError, ValueError) as exc:
+            raise CanonicalWriteError(f"campaign write failed: {exc}") from exc
+        after = _campaign_snapshot(self.data_dir, command.year, campaign_id)
+        if after is None:
+            raise CanonicalWriteError("campaign write did not produce canonical state")
+        return "campaign", "campaign", campaign_id, before, after, (str(result.get("path") or probe.get("path")),)
 
     def _append_spec(self, command: CanonicalWriteCommand):
         fact = deepcopy(command.payload)
@@ -569,26 +655,19 @@ class CanonicalWritePipeline:
         fact["trim_id"] = trim_id
         catalog = Catalog.load(self.data_dir, command.year)
         registry = SpecRegistry.load(self.data_dir, command.year)
-        ledger = SpecLedger.load(
-            self.data_dir, command.year, registry=registry, catalog=catalog)
+        ledger = SpecLedger.load(self.data_dir, command.year, registry=registry, catalog=catalog)
         before = [to_jsonable(row) for row in ledger.facts if row.trim_id == trim_id]
-        ledger.add_payload(
-            {"schema_version": 1, "facts": [fact]},
-            source=f"<command {command.command_id}>",
-        )
+        ledger.add_payload({"schema_version": 1, "facts": [fact]}, source=f"<command {command.command_id}>")
         problems = ledger.validate()
         if problems:
             raise CanonicalWriteError("spec validation failed: " + "; ".join(problems))
-        root = (Path(self.data_dir) / str(command.year) / "product" /
-                "comparable_specs" / "facts")
+        root = Path(self.data_dir) / str(command.year) / "product" / "comparable_specs" / "facts"
         target = root / f"canonical_{command.command_id}.json"
         target_payload = {"schema_version": 1, "facts": [fact]}
         if target.exists() and not _existing_target_matches(target, target_payload):
-            raise CanonicalWriteError(
-                "command file already exists without a revision; manual recovery required")
+            raise CanonicalWriteError("command file already exists without a revision; manual recovery required")
         _atomic_json(target, target_payload)
-        after_ledger = SpecLedger.load(
-            self.data_dir, command.year, registry=registry, catalog=catalog)
+        after_ledger = SpecLedger.load(self.data_dir, command.year, registry=registry, catalog=catalog)
         after = [to_jsonable(row) for row in after_ledger.facts if row.trim_id == trim_id]
         return "spec", "market_trim", trim_id, before, after, (str(target),)
 
