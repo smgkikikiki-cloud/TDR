@@ -26,7 +26,10 @@ python -m tdr_bridge.release \
 python -m tdr_bridge.publish /tmp/vehicle-release.json
 ```
 
-Publishing requires `SUPABASE_URL` (or `NEXT_PUBLIC_SUPABASE_URL`) and `SUPABASE_SERVICE_ROLE_KEY`. No secret belongs in git.
+Publishing requires `SUPABASE_URL` (or `NEXT_PUBLIC_SUPABASE_URL`) plus
+`SUPABASE_SECRET_KEY`; the legacy `SUPABASE_SERVICE_ROLE_KEY` remains a fallback.
+The URL and key must belong to the same Supabase project. No secret belongs in git
+or browser code.
 
 ## Repository status
 
