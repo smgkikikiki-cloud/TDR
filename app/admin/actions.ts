@@ -2,6 +2,7 @@
 
 import { adminDb } from "@/lib/supabase";
 import { authenticate, clearAdminCookie, hasSessionSecret, isAdmin, setAdminCookie } from "@/lib/admin-auth";
+import { checkAdminLoginRateLimit, clearAdminLoginFailures, recordAdminLoginFailure } from "@/lib/admin-rate-limit";
 import { redirect } from "next/navigation";
 
 const val = (form: FormData, key: string) => {
@@ -30,10 +31,19 @@ function dbOrThrow() {
 }
 
 export async function loginAction(formData: FormData) {
-  const editor = authenticate(val(formData, "name"), val(formData, "password"));
-  if (!editor) redirect("/admin/login?error=1");
   // A missing session secret is a deployment fault, not a wrong password.
   if (!hasSessionSecret()) redirect("/admin/login?error=config");
+
+  const rate = await checkAdminLoginRateLimit();
+  if (!rate.allowed) redirect("/admin/login?error=rate");
+
+  const editor = authenticate(val(formData, "name"), val(formData, "password"));
+  if (!editor) {
+    await recordAdminLoginFailure();
+    redirect("/admin/login?error=1");
+  }
+
+  await clearAdminLoginFailures();
   await setAdminCookie(editor);
   redirect("/admin");
 }
