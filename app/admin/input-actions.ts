@@ -67,6 +67,17 @@ function priceSourceLabel(kind: string): string {
   } as Record<string, string>)[kind] || kind.toLowerCase();
 }
 
+async function releaseYear(db: any, releaseId: string): Promise<number> {
+  const { data, error } = await db.from("canonical_vehicle_releases")
+    .select("as_of").eq("release_id", releaseId).maybeSingle();
+  if (error) throw error;
+  const year = Number(String(data?.as_of || "").slice(0, 4));
+  if (!Number.isInteger(year) || year < 2000 || year > 2100) {
+    throw new Error("หา catalog year ของ active canonical release ไม่ได้");
+  }
+  return year;
+}
+
 async function enqueuePayload(payload: Record<string, unknown>, resultKind: string) {
   if (!(await isAdmin())) redirect("/admin/login");
   if (payload.schema_version !== 1) throw new Error("รองรับเฉพาะ schema_version 1");
@@ -145,9 +156,10 @@ export async function enqueuePriceInput(formData: FormData) {
   const db = adminDb();
   if (!db) throw new Error("ยังไม่ได้ตั้งค่า Supabase server credential");
   const { data: trim, error } = await db.from("current_market_trims")
-    .select("canonical_id").eq("canonical_id", trimId).maybeSingle();
+    .select("canonical_id,release_id").eq("canonical_id", trimId).maybeSingle();
   if (error) throw error;
-  if (!trim) throw new Error("ไม่พบ MarketTrim นี้ใน active canonical release");
+  if (!trim?.release_id) throw new Error("ไม่พบ MarketTrim นี้ใน active canonical release");
+  const year = await releaseYear(db, trim.release_id);
 
   const pricePayload: Record<string, unknown> = {
     amount_thb: amount,
@@ -162,7 +174,7 @@ export async function enqueuePriceInput(formData: FormData) {
   return enqueuePayload({
     schema_version: 1,
     batch_id: `admin-price-${submissionId(formData)}`,
-    year: Number(observedAt.slice(0, 4)),
+    year,
     source: { kind, ref: sourceRef || undefined },
     reason,
     commands: [{ operation: "APPEND_PRICE", canonical_id: trimId, payload: pricePayload }],
@@ -184,10 +196,10 @@ export async function enqueueModelTaxonomyInput(formData: FormData) {
   const db = adminDb();
   if (!db) throw new Error("ยังไม่ได้ตั้งค่า Supabase server credential");
   const { data: model, error: modelError } = await db.from("current_vehicle_models")
-    .select("canonical_id,brand_id,generation_id,name_en,name_th,body_type,segment")
+    .select("canonical_id,release_id,brand_id,generation_id,name_en,name_th,body_type,segment")
     .eq("canonical_id", modelId).maybeSingle();
   if (modelError) throw modelError;
-  if (!model?.brand_id || !model.generation_id) throw new Error("รุ่นนี้ไม่มี active brand/generation ที่แก้ผ่าน Quick mode ได้");
+  if (!model?.brand_id || !model.generation_id || !model.release_id) throw new Error("รุ่นนี้ไม่มี active brand/generation ที่แก้ผ่าน Quick mode ได้");
   const [{ data: brand, error: brandError }, { data: generation, error: generationError }] = await Promise.all([
     db.from("current_vehicle_brands").select("canonical_id,name_en,name_th").eq("canonical_id", model.brand_id).maybeSingle(),
     db.from("current_vehicle_generations").select("canonical_id,code,segment").eq("canonical_id", model.generation_id).maybeSingle(),
@@ -195,6 +207,7 @@ export async function enqueueModelTaxonomyInput(formData: FormData) {
   if (brandError) throw brandError;
   if (generationError) throw generationError;
   if (!brand || !generation?.code) throw new Error("หา canonical brand/generation ของรุ่นนี้ไม่ครบ");
+  const year = await releaseYear(db, model.release_id);
 
   const modelPatch: Record<string, unknown> = {};
   if (nameEn) modelPatch.name_en = nameEn;
@@ -206,7 +219,7 @@ export async function enqueueModelTaxonomyInput(formData: FormData) {
   return enqueuePayload({
     schema_version: 1,
     batch_id: `admin-model-${submissionId(formData)}`,
-    year: new Date().getUTCFullYear(),
+    year,
     source: { kind: "ADMIN" },
     reason,
     commands: [{
@@ -229,14 +242,15 @@ export async function enqueueWithdrawModel(formData: FormData) {
   const db = adminDb();
   if (!db) throw new Error("ยังไม่ได้ตั้งค่า Supabase server credential");
   const { data: model, error } = await db.from("current_vehicle_models")
-    .select("canonical_id").eq("canonical_id", modelId).maybeSingle();
+    .select("canonical_id,release_id").eq("canonical_id", modelId).maybeSingle();
   if (error) throw error;
-  if (!model) throw new Error("ไม่พบรุ่นนี้ใน active canonical release");
+  if (!model?.release_id) throw new Error("ไม่พบรุ่นนี้ใน active canonical release");
+  const year = await releaseYear(db, model.release_id);
 
   return enqueuePayload({
     schema_version: 1,
     batch_id: `admin-withdraw-${submissionId(formData)}`,
-    year: ended ? Number(ended.slice(0, 4)) : new Date().getUTCFullYear(),
+    year,
     source: { kind: "ADMIN" },
     reason,
     commands: [{ operation: "WITHDRAW_MODEL", canonical_id: modelId, payload: ended ? { ended } : {} }],
