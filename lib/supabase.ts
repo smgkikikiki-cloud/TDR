@@ -14,14 +14,33 @@ export function adminDb(): SupabaseClient | null {
   const key = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!key) return null;
 
+  const adminFetch: typeof fetch = async (input, init) => {
+    const headers = new Headers(init?.headers);
+    headers.set("apikey", key);
+
+    // New Supabase sb_secret_* keys are opaque API keys, not JWTs. If a
+    // client helper mirrors one into Authorization: Bearer, strip that copy
+    // and let the API gateway authorize the request from the apikey header.
+    // Legacy service_role JWTs still keep their Authorization header.
+    if (key.startsWith("sb_secret_") && headers.get("Authorization") === `Bearer ${key}`) {
+      headers.delete("Authorization");
+    }
+
+    return fetch(input, { ...init, headers });
+  };
+
   const client = createClient(url, key, {
-    auth: { persistSession: false, autoRefreshToken: false },
+    global: { fetch: adminFetch },
+    auth: {
+      persistSession: false,
+      autoRefreshToken: false,
+      detectSessionInUrl: false,
+    },
   });
 
   // Member requests arrive with a user access-token JWT. Validate that token
   // against the Auth server with the public API key, while keeping the secret
-  // key exclusively for privileged database access. This avoids coupling user
-  // JWT verification to the admin client's API-key authentication semantics.
+  // key exclusively for privileged database access.
   const originalGetUser = client.auth.getUser.bind(client.auth);
   (client.auth as any).getUser = async (jwt?: string) => {
     if (!jwt) return originalGetUser();
