@@ -29,7 +29,7 @@ function appOrigin(request: NextRequest) {
   // Stable production fallback so Checkout does not fail only because one
   // deployment environment omitted TDR_APP_URL. Replace this when a custom
   // canonical domain is introduced.
-  return "https://tdr-kiki-ed8b.vercel.app";
+  return "https://tdr-xi.vercel.app";
 }
 
 export async function POST(request: NextRequest) {
