@@ -325,8 +325,14 @@ def _apply(edits, *, write):
     """Write each touched file once, atomically, after re-validating the ledger."""
     by_path = {}
     for edit in edits:
-        by_path.setdefault(edit["path"], json.loads(
-            edit["path"].read_text(encoding="utf-8")))
+        path = edit["path"]
+        if path in by_path:
+            continue
+        payload = (json.loads(path.read_text(encoding="utf-8"))
+                   if path.exists() else {"prices": []})
+        if not isinstance(payload, dict) or not isinstance(payload.get("prices"), list):
+            raise CatalogError(f"invalid price file shape: {path}")
+        by_path[path] = payload
     for edit in edits:
         payload = by_path[edit["path"]]
         if edit.get("index") is not None:
