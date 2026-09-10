@@ -1,18 +1,26 @@
+from tdr_bridge import publish
 from tools import canonical_input_worker as worker
 
 
 def test_clean_env_value_accepts_bare_assignment_and_quotes():
-    assert worker._clean_env_value("abc", "KEY") == "abc"
-    assert worker._clean_env_value(" KEY=abc ", "KEY") == "abc"
-    assert worker._clean_env_value("'KEY=abc'", "KEY") == "KEY=abc"
-    assert worker._clean_env_value('"abc"', "KEY") == "abc"
+    cases = [
+        ("abc", "abc"),
+        (" KEY=abc ", "abc"),
+        ("'KEY=abc'", "abc"),
+        ('"KEY=abc"', "abc"),
+        ('"abc"', "abc"),
+        ("'abc'", "abc"),
+    ]
+    for raw, expected in cases:
+        assert worker._clean_env_value(raw, "KEY") == expected
+        assert publish._clean_env_value(raw, "KEY") == expected
 
 
 def test_env_normalizes_copied_supabase_assignments(monkeypatch):
     monkeypatch.delenv("SUPABASE_SECRET_KEY", raising=False)
     monkeypatch.delenv("NEXT_PUBLIC_SUPABASE_URL", raising=False)
-    monkeypatch.setenv("SUPABASE_URL", " SUPABASE_URL=https://example.supabase.co ")
-    monkeypatch.setenv("SUPABASE_SERVICE_ROLE_KEY", " SUPABASE_SERVICE_ROLE_KEY=eyJ.test.value ")
+    monkeypatch.setenv("SUPABASE_URL", '"SUPABASE_URL=https://example.supabase.co"')
+    monkeypatch.setenv("SUPABASE_SERVICE_ROLE_KEY", "'SUPABASE_SERVICE_ROLE_KEY=eyJ.test.value'")
     assert worker._env() == ("https://example.supabase.co", "eyJ.test.value")
 
 
