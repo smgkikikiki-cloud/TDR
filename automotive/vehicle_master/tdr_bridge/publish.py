@@ -9,16 +9,21 @@ from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
 
+def _strip_wrapper_quotes(value: str) -> str:
+    cleaned = value.strip()
+    if len(cleaned) >= 2 and cleaned[0] == cleaned[-1] and cleaned[0] in {"'", '"'}:
+        return cleaned[1:-1].strip()
+    return cleaned
+
+
 def _clean_env_value(value: str | None, *names: str) -> str:
-    """Accept either a bare secret value or a copied NAME=value assignment."""
-    cleaned = (value or "").strip()
+    """Accept a bare secret value or copied/quoted NAME=value assignment."""
+    cleaned = _strip_wrapper_quotes(value or "")
     if "=" in cleaned:
         prefix, remainder = cleaned.split("=", 1)
         if prefix.strip() in names:
             cleaned = remainder.strip()
-    if len(cleaned) >= 2 and cleaned[0] == cleaned[-1] and cleaned[0] in {"'", '"'}:
-        cleaned = cleaned[1:-1].strip()
-    return cleaned
+    return _strip_wrapper_quotes(cleaned)
 
 
 def publish(release: dict, *, url: str, service_key: str) -> dict:
