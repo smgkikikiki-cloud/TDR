@@ -71,6 +71,7 @@ export async function GET(request: NextRequest) {
   if (compareValue && !isMarketComparison(compareValue)) {
     return NextResponse.json({ error: "compare must be previous or yoy" }, { status: 400 });
   }
+  const comparisonMode = compareValue && isMarketComparison(compareValue) ? compareValue : null;
 
   const limitValue = Number(request.nextUrl.searchParams.get("limit") || "100");
   const limit = Number.isFinite(limitValue) ? Math.min(Math.max(Math.trunc(limitValue), 1), 500) : 100;
@@ -101,8 +102,8 @@ export async function GET(request: NextRequest) {
     });
 
     let comparison = null;
-    if (compareValue) {
-      const previousWindow = comparisonMarketWindow(currentWindow, compareValue);
+    if (comparisonMode) {
+      const previousWindow = comparisonMarketWindow(currentWindow, comparisonMode);
       const missingPrevious = missingReportPeriods(previousWindow, available);
       if (missingPrevious.length) {
         return NextResponse.json({
@@ -121,7 +122,7 @@ export async function GET(request: NextRequest) {
         limit: 500,
       });
       comparison = {
-        mode: compareValue,
+        mode: comparisonMode,
         window: previousWindow,
         rows: previousRows,
         movement: compareMarketSliceRows(previousRows, rows),
