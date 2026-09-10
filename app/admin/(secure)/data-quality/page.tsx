@@ -26,7 +26,7 @@ export default async function DataQualityPage() {
   const failed = failedResult.data || [];
   const firstPeriod = coverage[0] ? periodKey((coverage[0] as any).period) : "";
   const lastPeriod = latest ? periodKey(latest.period) : "";
-  const hasLongHistory = firstPeriod && firstPeriod <= "2021-01" && lastPeriod >= "2026-08";
+  const hasLongHistory = Boolean(firstPeriod && firstPeriod <= "2021-01" && lastPeriod >= "2026-08");
   const priceCoverageGood = Boolean(models && pricedModels / models >= .8);
   const mappingHealthy = Number(latest?.mapped_unit_pct || 0) >= 90;
 
@@ -36,13 +36,14 @@ export default async function DataQualityPage() {
     ["Admin Full Market Bench", true, "New /admin/market uses the same market aggregation contract"],
     ["Registration ingest + crosswalk review", true, "Preview / replace-month ingest / reviewed alias queue now live in TDR Admin"],
     ["Price ledger read/history", true, "Admin reads active canonical price projection and campaign quote"],
-    ["Price correction write parity", false, "Supersede / retract / close / campaign edit canonical commands not enabled yet"],
+    ["Price correction write parity", true, "Append / supersede / retract / close / campaign upsert all enter the canonical input queue and Vehicle Master revision path"],
+    ["Raw trend uses full filter semantics", true, "Paid market trend uses a neutral OEM-group aggregation so Brand / Model / Segment / Body / Powertrain / DLT scope remains fully applied"],
     ["Period-aware price/import/origin analytics", false, "Serving analytics still use current model snapshot for these historical facets"],
     ["Full registration history", hasLongHistory, `${firstPeriod || "—"} → ${lastPeriod || "—"}; old warehouse extends back to 2021`],
     ["Regional / province grain", false, "Current Supabase registration fact has no province field"],
-    ["Raw trend uses full filter semantics", false, "Current web market trend still reuses competitive ranking scope"],
     ["Price range usable in paid slicer", priceCoverageGood, `${pricedModels}/${models ?? 0} canonical models have current price range`],
   ] as const;
+  const remainingBlockers = gates.filter(([, ok]) => !ok);
 
   return <div className="adminEditor">
     <div className="adminHeader"><div><small>ADMIN BENCH · DATA QUALITY / PARITY GATE</small><h1>ย้ายครบจริงหรือยัง?</h1><p>หน้านี้ตอบคำถามเดียว: capability จาก Vehicle Master เก่าเข้าถึงได้จาก TDR ใหม่ครบหรือยัง. แดงหนึ่งอัน = ยังห้าม retire Streamlit workbench.</p></div><Link className="adminPrimaryLink" href="/admin/market">เปิด Full Market Bench</Link></div>
@@ -59,13 +60,13 @@ export default async function DataQualityPage() {
 
     <div className="adminHeader"><div><small>LEGACY RETIREMENT GATE</small><h2>Feature parity matrix</h2></div></div>
     <div className="libraryTable"><table><thead><tr><th>Status</th><th>Capability</th><th>Evidence / blocker</th></tr></thead><tbody>{gates.map(([label, ok, note]) => <tr key={label}><td style={{fontSize:18}}>{status(Boolean(ok))}</td><td><b>{label}</b></td><td>{note}</td></tr>)}</tbody></table></div>
-    <div className="adminNotice"><b>Retirement decision: KEEP LEGACY WORKBENCH</b><span>ยังมี red gates อยู่ จึงยังไม่ลบ/disable Streamlit. เมื่อทุก capability ที่ตั้งใจเก็บมี TDR route + data parity + tests จึงค่อย retire presentation layer เก่า.</span></div>
+    {remainingBlockers.length ? <div className="adminNotice"><b>Retirement decision: KEEP LEGACY WORKBENCH</b><span>ยังเหลือ {remainingBlockers.length} red gate: {remainingBlockers.map(([label]) => label).join(" · ")}. จึงยังไม่ลบ/disable Streamlit จนกว่าจะย้าย data grain/history ที่จำเป็นและผ่าน parity tests.</span></div> : <div className="adminNotice"><b>Retirement decision: READY FOR FINAL MANUAL REVIEW</b><span>Automated parity gates ผ่านหมดแล้ว เหลือ product-level manual review ก่อน disable presentation layer เก่า.</span></div>}
 
     <div className="adminHeader"><div><small>REGISTRATION HEALTH</small><h2>Coverage by month</h2></div></div>
     <div className="libraryTable"><table><thead><tr><th>Period</th><th>Total</th><th>Mapped</th><th>Coverage</th><th>Quality flag</th></tr></thead><tbody>{[...coverage].reverse().map((row:any) => { const p=periodKey(row.period); return <tr key={p}><td>{p}</td><td>{n(row.total_registrations)}</td><td>{n(row.mapped_registrations)}</td><td>{Number(row.mapped_unit_pct || 0).toFixed(1)}%</td><td>{provisional.has(p) ? "PROVISIONAL" : Number(row.mapped_unit_pct || 0)<80 ? "LOW MAP" : "—"}</td></tr>; })}</tbody></table></div>
 
     {failed.length ? <><div className="adminHeader"><div><small>FAILED INPUT</small><h2>Canonical batches ที่ต้องแก้</h2></div></div><div className="libraryTable"><table><thead><tr><th>Batch</th><th>When</th><th>Error</th></tr></thead><tbody>{failed.map((row:any) => <tr key={row.batch_key}><td>{row.batch_key}</td><td>{String(row.created_at || "").slice(0,19)}</td><td>{row.error || "—"}</td></tr>)}</tbody></table></div></> : null}
 
-    <div className="adminQuickGrid"><Link href="/admin/registrations"><b>แก้ Registration coverage</b><span>preview ingest / reviewed aliases</span></Link><Link href="/admin/prices"><b>ตรวจ Price Ledger</b><span>current / history / campaign</span></Link><Link href="/admin/vehicle-input"><b>Canonical input queue</b><span>vehicle / price / spec input</span></Link></div>
+    <div className="adminQuickGrid"><Link href="/admin/registrations"><b>แก้ Registration coverage</b><span>preview ingest / reviewed aliases</span></Link><Link href="/admin/prices"><b>ตรวจ Price Ledger</b><span>current / history / campaign / maintenance</span></Link><Link href="/admin/vehicle-input"><b>Canonical input queue</b><span>vehicle / price / spec input</span></Link></div>
   </div>;
 }
