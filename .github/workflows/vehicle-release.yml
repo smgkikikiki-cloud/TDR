@@ -41,7 +41,7 @@ jobs:
             echo "::error::Set SUPABASE_SECRET_KEY (preferred) or SUPABASE_SERVICE_ROLE_KEY in repository Actions secrets."
             exit 1
           fi
-          if ! probe=$(python tools/canonical_input_worker.py check 2>&1); then
+          if ! probe=$(PYTHONPATH=. python tools/canonical_input_worker.py check 2>&1); then
             echo "::error::Configured Supabase URL/key cannot access the TDR canonical input table: ${probe}"
             exit 1
           fi
@@ -62,5 +62,5 @@ jobs:
       - name: Publish atomically to TDR Supabase
         run: |
           python -m tdr_bridge.publish /tmp/vehicle-release.json --publish
-          python tools/canonical_input_worker.py mark-published \
+          PYTHONPATH=. python tools/canonical_input_worker.py mark-published \
             --data-dir vehreg/data --release-file /tmp/vehicle-release.json
