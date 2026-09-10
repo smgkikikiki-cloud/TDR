@@ -50,6 +50,15 @@ function submissionId(formData: FormData): string {
   return value;
 }
 
+function submissionTimestamp(formData: FormData): string {
+  const value = requiredField(formData, "submitted_at", "submission timestamp");
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime()) || !/(?:Z|[+-]\d{2}:\d{2})$/.test(value)) {
+    throw new Error("submission timestamp ต้องเป็น ISO-8601 พร้อม timezone");
+  }
+  return value;
+}
+
 function sourceKind(formData: FormData): string {
   const value = (field(formData, "source_kind") || "ADMIN").toUpperCase();
   if (!SOURCE_KINDS.has(value) || value === "MIGRATION") throw new Error("source.kind ไม่รองรับใน Quick input");
@@ -95,7 +104,9 @@ async function enqueuePayload(payload: Record<string, unknown>, resultKind: stri
 
   const editor = await currentEditor();
   const actor = editor?.name || "tdr-admin";
-  const submittedAt = new Date().toISOString();
+  const submittedAt = typeof payload.submitted_at === "string" && payload.submitted_at.trim()
+    ? payload.submitted_at.trim()
+    : new Date().toISOString();
   const normalized = {
     ...payload,
     source: { ...source, kind },
@@ -152,6 +163,7 @@ export async function enqueuePriceInput(formData: FormData) {
   const kind = sourceKind(formData);
   const sourceRef = field(formData, "source_ref");
   const reason = requiredField(formData, "reason", "เหตุผล/หลักฐานย่อ");
+  const submittedAt = submissionTimestamp(formData);
 
   const db = adminDb();
   if (!db) throw new Error("ยังไม่ได้ตั้งค่า Supabase server credential");
@@ -175,6 +187,7 @@ export async function enqueuePriceInput(formData: FormData) {
     schema_version: 1,
     batch_id: `admin-price-${submissionId(formData)}`,
     year,
+    submitted_at: submittedAt,
     source: { kind, ref: sourceRef || undefined },
     reason,
     commands: [{ operation: "APPEND_PRICE", canonical_id: trimId, payload: pricePayload }],
@@ -192,6 +205,7 @@ export async function enqueueModelTaxonomyInput(formData: FormData) {
   const nameTh = field(formData, "name_th");
   if (!bodyType && !segment && !nameEn && !nameTh) throw new Error("เลือกอย่างน้อย 1 field ที่ต้องการแก้");
   const reason = requiredField(formData, "reason", "เหตุผลการแก้");
+  const submittedAt = submissionTimestamp(formData);
 
   const db = adminDb();
   if (!db) throw new Error("ยังไม่ได้ตั้งค่า Supabase server credential");
@@ -220,6 +234,7 @@ export async function enqueueModelTaxonomyInput(formData: FormData) {
     schema_version: 1,
     batch_id: `admin-model-${submissionId(formData)}`,
     year,
+    submitted_at: submittedAt,
     source: { kind: "ADMIN" },
     reason,
     commands: [{
@@ -239,6 +254,7 @@ export async function enqueueWithdrawModel(formData: FormData) {
   const modelId = requiredField(formData, "model_id", "รุ่นรถ");
   const ended = isoDate(field(formData, "ended"), "วันที่ยุติขาย");
   const reason = requiredField(formData, "reason", "เหตุผลการถอนรุ่น");
+  const submittedAt = submissionTimestamp(formData);
   const db = adminDb();
   if (!db) throw new Error("ยังไม่ได้ตั้งค่า Supabase server credential");
   const { data: model, error } = await db.from("current_vehicle_models")
@@ -251,6 +267,7 @@ export async function enqueueWithdrawModel(formData: FormData) {
     schema_version: 1,
     batch_id: `admin-withdraw-${submissionId(formData)}`,
     year,
+    submitted_at: submittedAt,
     source: { kind: "ADMIN" },
     reason,
     commands: [{ operation: "WITHDRAW_MODEL", canonical_id: modelId, payload: ended ? { ended } : {} }],
