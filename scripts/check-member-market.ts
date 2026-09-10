@@ -11,9 +11,9 @@ function check(name: string, got: unknown, want: unknown) {
 }
 
 console.log("paid market — scope contract");
-check("no scope request defaults to CORE", normalizeRequestedMarketScopes(), ["CORE"]);
+check("no scope request defaults to CORE plus honest mixed-grain residual", normalizeRequestedMarketScopes(), ["CORE", "MIXED"]);
 check("explicit all scopes removes the scope filter", normalizeRequestedMarketScopes(["all"]), undefined);
-check("explicit scope is normalized", normalizeRequestedMarketScopes(["niche", "core", "core"]), ["NICHE", "CORE"]);
+check("explicit scope stays normalized and keeps mixed residual", normalizeRequestedMarketScopes(["niche", "core", "core"]), ["NICHE", "CORE", "MIXED"]);
 
 console.log("\npaid market — provisional month default");
 const coverage = [
