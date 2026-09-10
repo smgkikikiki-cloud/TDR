@@ -38,10 +38,12 @@ def test_historical_projection_uses_year_catalog_baselines_and_sparse_changes():
         ("2025-09", "CN", "CBU"),
         ("2026-03", "TH", "CKD"),
     ]
+    # The stale source ID maps onto the already-reviewed canonical change point;
+    # it must not create a duplicate monthly row.
     jaecoo_7 = _changes(payload, "jaecoo.jaecoo_7")
-    assert len(jaecoo_7) == 1
-    assert jaecoo_7[0]["effective_month"] == "2025-05"
-    assert "source unit id=chery.jaecoo_j7" in jaecoo_7[0]["note"]
+    assert [(row["effective_month"], row["origin_country"], row["import_type"]) for row in jaecoo_7] == [
+        ("2025-05", "CN", "CBU"),
+    ]
 
     forester = _changes(payload, "subaru.forester")
     assert [(row["effective_month"], row["origin_country"], row["import_type"]) for row in forester] == [
