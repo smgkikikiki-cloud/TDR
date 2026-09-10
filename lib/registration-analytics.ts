@@ -1,9 +1,11 @@
 import { adminDb } from "@/lib/supabase";
-import type {
-  MarketDimension,
-  MarketPeriodWindow,
-  MarketSliceFilters,
-  MarketSliceRow,
+import {
+  sliceMarketFacts,
+  type CanonicalRegistrationFact,
+  type MarketDimension,
+  type MarketPeriodWindow,
+  type MarketSliceFilters,
+  type MarketSliceRow,
 } from "@/lib/registration-market";
 
 export {
@@ -18,8 +20,10 @@ export {
   reportPeriods,
   resolveMarketWindow,
   shiftReportPeriod,
+  sliceMarketFacts,
 } from "@/lib/registration-market";
 export type {
+  CanonicalRegistrationFact,
   MarketComparison,
   MarketDimension,
   MarketMovementRow,
@@ -39,6 +43,8 @@ export type RegistrationDimension =
   | "chinese-bev";
 
 const ACTIVE_STATUSES = new Set(["ACTIVE", "TRIALING", "GRACE"]);
+const PAGE_SIZE = 1000;
+const MAX_FACT_ROWS = 50000;
 
 const VIEW_CONFIG: Record<RegistrationDimension, { table: string; order: string; ascending?: boolean }> = {
   coverage: { table: "registration_analytics_coverage", order: "period", ascending: true },
@@ -121,6 +127,112 @@ export async function getRegistrationAvailablePeriods(accessToken: string): Prom
     .filter(Boolean);
 }
 
+function normalizeRegistrationToken(value: unknown): string {
+  return String(value || "").toLocaleLowerCase().replace(/[^a-z0-9]+/g, "");
+}
+
+function canonicalPowertrain(payload: any): string {
+  const powertrains = Array.isArray(payload?.powertrains)
+    ? payload.powertrains.map((value: unknown) => String(value || "").trim()).filter(Boolean)
+    : [];
+  if (!powertrains.length) return "UNKNOWN";
+  return powertrains.length === 1 ? powertrains[0] : "MIXED";
+}
+
+async function fetchRegistrationRows(
+  db: any,
+  window: MarketPeriodWindow,
+  registrationTypes: string[] | undefined,
+  keepRegistrationTypeOpen: boolean,
+): Promise<any[]> {
+  const rows: any[] = [];
+  for (let offset = 0; offset < MAX_FACT_ROWS; offset += PAGE_SIZE) {
+    let query = db
+      .from("registrations")
+      .select("period,registration_type,brand_name_raw,model_name_raw,model_id,registrations")
+      .gte("period", window.from)
+      .lte("period", window.to)
+      .order("period", { ascending: true })
+      .order("brand_name_raw", { ascending: true })
+      .order("model_name_raw", { ascending: true })
+      .range(offset, offset + PAGE_SIZE - 1);
+    if (!keepRegistrationTypeOpen && registrationTypes?.length) {
+      query = query.in("registration_type", registrationTypes);
+    }
+    const { data, error } = await query;
+    if (error) throw new RegistrationAccessError(500, `registration fact query failed: ${error.message}`);
+    const page = data || [];
+    rows.push(...page);
+    if (page.length < PAGE_SIZE) return rows;
+  }
+  throw new RegistrationAccessError(413, `registration market window exceeds ${MAX_FACT_ROWS.toLocaleString()} fact rows`);
+}
+
+async function canonicalizeRegistrationRows(db: any, rows: any[]): Promise<CanonicalRegistrationFact[]> {
+  const [{ data: modelRows, error: modelError }, { data: brandRows, error: brandError }, { data: aliasRows, error: aliasError }] = await Promise.all([
+    db.from("current_vehicle_models")
+      .select("canonical_id,tdr_model_id,brand_id,name_en,name_th,segment,body_type,payload")
+      .limit(1000),
+    db.from("current_vehicle_brands")
+      .select("canonical_id,tdr_brand_id,slug,name_en,name_th,payload")
+      .limit(500),
+    db.from("registration_brand_aliases")
+      .select("raw_brand_norm,brand_id")
+      .limit(2000),
+  ]);
+  if (modelError) throw new RegistrationAccessError(500, `canonical model query failed: ${modelError.message}`);
+  if (brandError) throw new RegistrationAccessError(500, `canonical brand query failed: ${brandError.message}`);
+  if (aliasError) throw new RegistrationAccessError(500, `registration brand crosswalk query failed: ${aliasError.message}`);
+
+  const modelsByTdrId = new Map((modelRows || [])
+    .filter((row: any) => row.tdr_model_id)
+    .map((row: any) => [String(row.tdr_model_id), row]));
+  const brandsByCanonicalId = new Map((brandRows || [])
+    .map((row: any) => [String(row.canonical_id), row]));
+  const brandsByTdrId = new Map((brandRows || [])
+    .filter((row: any) => row.tdr_brand_id)
+    .map((row: any) => [String(row.tdr_brand_id), row]));
+  const brandAliases = new Map((aliasRows || [])
+    .map((row: any) => [String(row.raw_brand_norm), String(row.brand_id)]));
+
+  return rows.map((row: any) => {
+    const model = row.model_id ? modelsByTdrId.get(String(row.model_id)) : null;
+    const aliasBrandTdrId = brandAliases.get(normalizeRegistrationToken(row.brand_name_raw));
+    const brand = model?.brand_id
+      ? brandsByCanonicalId.get(String(model.brand_id))
+      : aliasBrandTdrId ? brandsByTdrId.get(aliasBrandTdrId) : null;
+    const payload = model?.payload || {};
+    const brandPayload = brand?.payload || {};
+    const canonicalModelId = model?.canonical_id ? String(model.canonical_id) : null;
+    const canonicalBrandId = model?.brand_id
+      ? String(model.brand_id)
+      : brand?.canonical_id ? String(brand.canonical_id) : null;
+
+    return {
+      period: String(row.period).slice(0, 10),
+      registration_type: String(row.registration_type || "*"),
+      registrations: Number(row.registrations || 0),
+      canonical_model_id: canonicalModelId,
+      canonical_brand_id: canonicalBrandId,
+      brand_name: String(brand?.name_en || brand?.name_th || row.brand_name_raw || "UNKNOWN"),
+      model_name: String(model?.name_en || model?.name_th || row.model_name_raw || "UNKNOWN"),
+      segment: String(model?.segment || "UNKNOWN"),
+      body_type: String(model?.body_type || "UNKNOWN"),
+      powertrain: canonicalModelId ? canonicalPowertrain(payload) : "UNKNOWN",
+      oem_group: String(brandPayload.oem_group || "UNKNOWN"),
+      market_position: String(payload.market_position || "UNKNOWN"),
+      import_type: String(payload.production_type || "UNKNOWN"),
+      origin_country: String(payload.production_country || "UNKNOWN"),
+      brand_origin: String(brandPayload.brand_origin || "UNKNOWN"),
+      market_scope: String(payload.market_scope || "UNKNOWN"),
+      raw_brand_name: String(row.brand_name_raw || ""),
+      raw_model_name: String(row.model_name_raw || ""),
+      brand_mapped: Boolean(canonicalBrandId),
+      canonically_mapped: Boolean(canonicalModelId),
+    };
+  });
+}
+
 export async function getRegistrationMarketSlice(args: {
   accessToken: string;
   dimension: MarketDimension;
@@ -130,27 +242,19 @@ export async function getRegistrationMarketSlice(args: {
   limit?: number;
 }): Promise<MarketSliceRow[]> {
   const db = await requireRegistrationEntitlement(args.accessToken);
-  const limit = Math.min(Math.max(args.limit ?? 100, 1), 500);
   const filters = args.filters || {};
-  const { data, error } = await db.rpc("registration_market_slice", {
-    p_period_from: args.window.from,
-    p_period_to: args.window.to,
-    p_dimension: args.dimension,
-    p_registration_types: filters.registrationTypes || null,
-    p_brand_ids: filters.brandIds || null,
-    p_model_ids: filters.modelIds || null,
-    p_segments: filters.segments || null,
-    p_body_types: filters.bodyTypes || null,
-    p_powertrains: filters.powertrains || null,
-    p_oem_groups: filters.oemGroups || null,
-    p_market_positions: filters.marketPositions || null,
-    p_import_types: filters.importTypes || null,
-    p_origin_countries: filters.originCountries || null,
-    p_brand_origins: filters.brandOrigins || null,
-    p_market_scopes: filters.marketScopes || null,
-    p_include_unmapped: Boolean(args.includeUnmapped),
-    p_limit: limit,
+  const rows = await fetchRegistrationRows(
+    db,
+    args.window,
+    filters.registrationTypes,
+    args.dimension === "registration_type",
+  );
+  const facts = await canonicalizeRegistrationRows(db, rows);
+  return sliceMarketFacts({
+    facts,
+    dimension: args.dimension,
+    filters,
+    includeUnmapped: args.includeUnmapped,
+    limit: args.limit,
   });
-  if (error) throw new RegistrationAccessError(500, `registration market slice failed: ${error.message}`);
-  return (data ?? []) as MarketSliceRow[];
 }
