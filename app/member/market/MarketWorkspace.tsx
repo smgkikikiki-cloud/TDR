@@ -84,9 +84,15 @@ async function jsonFetch(path: string, token: string) {
   return body;
 }
 
-function marketPath(filters: FilterState, period = filters.period, limit = 100, includeComparison = true) {
+function marketPath(
+  filters: FilterState,
+  period = filters.period,
+  limit = 100,
+  includeComparison = true,
+  dimension: string = filters.dimension,
+) {
   const params = new URLSearchParams({
-    dimension: filters.dimension,
+    dimension,
     period,
     window: filters.window,
     limit: String(limit),
@@ -145,7 +151,11 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
       const trendFilters = { ...next, window: "month" as MarketWindow, compare: "none" as const };
       const points = await Promise.all(trendPeriods.map(async (period) => {
         try {
-          const trendBody = await jsonFetch(marketPath(trendFilters, period, 1, false), accessToken) as MarketResponse;
+          // OEM group is deliberately neutral here: the customer-facing filter rail
+          // does not expose an OEM-group filter, so the API keeps every selected
+          // Brand/Model/Segment/Body/Powertrain/DLT filter instead of opening the
+          // currently ranked dimension. market_total is therefore the true scope total.
+          const trendBody = await jsonFetch(marketPath(trendFilters, period, 1, false, "oem_group"), accessToken) as MarketResponse;
           return { period, total: Number(trendBody.rows?.[0]?.market_total || 0) };
         } catch { return null; }
       }));

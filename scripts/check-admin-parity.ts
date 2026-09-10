@@ -31,8 +31,12 @@ check("registration ingest stays on dedicated RPC", registration.includes('rpc("
 check("registration input does not enter Vehicle Master queue", !registration.includes("canonical_input_batches"));
 
 const prices = text("app/admin/(secure)/prices/page.tsx");
+const priceActions = text("app/admin/price-actions.ts");
 check("price history reads canonical projection", prices.includes('canonical_price_projection'));
 check("price corrections are not bypassed through serving writes", !prices.includes('.update({ amount_thb'));
+check("price maintenance UI is wired", prices.includes("enqueueCorrectPrice") && prices.includes("enqueueClosePrice") && prices.includes("enqueueCampaignUpsert"));
+check("price maintenance uses canonical commands", ["CORRECT_PRICE","CLOSE_PRICE","UPSERT_CAMPAIGN"].every((operation) => priceActions.includes(operation)));
+check("price maintenance reuses canonical input queue", priceActions.includes("enqueueVehicleInput"));
 
 console.log(failed ? `\n${failed} check(s) failed` : "\nall admin parity smoke checks passed");
 process.exit(failed ? 1 : 0);

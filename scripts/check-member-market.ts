@@ -1,3 +1,4 @@
+import fs from "node:fs";
 import { normalizeRequestedMarketScopes } from "../lib/market-scope.ts";
 import { defaultMarketPeriod, provisionalMarketPeriods } from "../lib/member-market.ts";
 
@@ -23,6 +24,11 @@ const coverage = [
 ].map(([period, total]) => ({ period: String(period), total_registrations: Number(total) }));
 check("stub month is labelled provisional", [...provisionalMarketPeriods(coverage)], ["2026-07"]);
 check("workspace opens on latest settled month", defaultMarketPeriod(coverage), "2026-06");
+
+console.log("\npaid market — trend keeps the full selected scope");
+const workspace = fs.readFileSync("app/member/market/MarketWorkspace.tsx", "utf8");
+check("trend uses a neutral non-UI dimension so Brand/Model/Segment/Body/Powertrain filters stay closed", workspace.includes('marketPath(trendFilters, period, 1, false, "oem_group")'), true);
+check("trend helper can override ranking dimension without changing applied filter state", workspace.includes('dimension: string = filters.dimension'), true);
 
 console.log(failed ? `\n${failed} check(s) failed` : "\nall member market checks passed");
 process.exit(failed ? 1 : 0);
