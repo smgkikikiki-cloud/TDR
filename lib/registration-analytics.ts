@@ -256,7 +256,7 @@ async function canonicalizeRegistrationRows(db: any, rows: any[]): Promise<Canon
       import_type: String(payload.production_type || "UNKNOWN"),
       origin_country: String(payload.production_country || "UNKNOWN"),
       brand_origin: String(brandPayload.brand_origin || "UNKNOWN"),
-      market_scope: String(payload.market_scope || "UNKNOWN"),
+      market_scope: canonicalModelId ? String(payload.market_scope || "UNKNOWN") : canonicalBrandId ? "MIXED" : "UNKNOWN",
       raw_brand_name: String(row.brand_name_raw || ""),
       raw_model_name: String(row.model_name_raw || ""),
       brand_mapped: Boolean(canonicalBrandId),

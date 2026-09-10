@@ -13,6 +13,7 @@ import {
   resolveMarketWindow,
   type MarketSliceFilters,
 } from "@/lib/registration-analytics";
+import { normalizeRequestedMarketScopes } from "@/lib/market-scope";
 
 export const dynamic = "force-dynamic";
 
@@ -37,7 +38,7 @@ function filtersFromRequest(request: NextRequest): MarketSliceFilters {
     importTypes: values(request, "import_type"),
     originCountries: values(request, "origin_country"),
     brandOrigins: values(request, "brand_origin"),
-    marketScopes: values(request, "market_scope"),
+    marketScopes: normalizeRequestedMarketScopes(values(request, "market_scope")),
   };
 }
 

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { browserDb } from "@/lib/supabase-browser";
@@ -115,8 +116,8 @@ export default function MemberDashboardPage() {
   return (
     <main className={styles.shell}>
       <header className={styles.header}>
-        <div><div className={styles.eyebrow}>TDR REPORT · REGISTRATION INTELLIGENCE</div><h1>ตลาดรถยนต์ไทย · {month}</h1><p>ข้อมูลจดทะเบียน DLT ที่ผ่าน crosswalk ของ TDR — MarketTrim ยังคงเป็นฐานข้อมูลอีกชุดหนึ่งและไม่ได้ถูกนำมาปนกัน</p></div>
-        <button className={styles.secondary} onClick={signOut}>ออกจากระบบ</button>
+        <div><div className={styles.eyebrow}>TDR REPORT · REGISTRATION INTELLIGENCE</div><h1>ตลาดรถยนต์ไทย · {month}</h1><p>ภาพรวมข้อมูลจดทะเบียน DLT ที่ map เข้ากับ canonical Vehicle Master ของ TDR; ใช้ Market Comparison สำหรับกำหนด Segment, Body, Brand, Model และ Powertrain เพื่อเทียบตลาดแบบละเอียด</p></div>
+        <div className={styles.memberActions}><Link className={styles.secondary} href="/member/market">เปิด Market Comparison</Link><button className={styles.secondary} onClick={signOut}>ออกจากระบบ</button></div>
       </header>
 
       <section className={styles.kpis}>
