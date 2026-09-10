@@ -10,6 +10,10 @@ function selectedValues(value: string | string[] | undefined) {
   return [...new Set(raw.filter(Boolean))].slice(0, 4);
 }
 
+function firstValue(value: string | string[] | undefined) {
+  return Array.isArray(value) ? value[0] : value;
+}
+
 function choiceLabel(trim: any) {
   return [trim.brand_name, trim.model_name, trim.name].filter(Boolean).join(" · ");
 }
@@ -26,7 +30,7 @@ export default async function ComparePage({ searchParams }: { searchParams: Prom
   const requested = selectedValues(sp.trims);
   const byId = new Map(all.map((trim) => [trim.id, trim]));
   const selected = requested.map((id) => byId.get(id)).filter(Boolean) as FreeCompareTrim[];
-  const diffOnly = sp.diff === "1";
+  const diffOnly = firstValue(sp.diff) === "1";
   const groups = visibleCompareGroups(selected, diffOnly);
   const missingSelection = requested.length !== selected.length;
 
