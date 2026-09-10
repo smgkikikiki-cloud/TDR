@@ -29,6 +29,27 @@ jobs:
         working-directory: automotive/vehicle_master
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: automotive/vehicle_master/requirements.txt
+      - run: python -m pip install -r requirements.txt
+      - name: Build release once
+        run: |
+          python -m tdr_bridge.release_enriched \
+            --inventory integration_data/tdr_2026-09-09.json \
+            --overrides integration_data/crosswalk_overrides.json \
+            --out /tmp/vehicle-release.json \
+            --revision "${GITHUB_SHA}" --as-of "$(date -u +%F)"
+          python -m tdr_bridge.publish /tmp/vehicle-release.json
+      - name: Preserve validated canonical release
+        uses: actions/upload-artifact@v4
+        with:
+          name: canonical-vehicle-release-${{ github.sha }}
+          path: /tmp/vehicle-release.json
+          if-no-files-found: error
+          retention-days: 14
       - name: Preflight deployment secrets
         shell: bash
         run: |
@@ -45,20 +66,6 @@ jobs:
             echo "::error::Configured Supabase URL/key cannot access the TDR canonical input table: ${probe}"
             exit 1
           fi
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-          cache: pip
-          cache-dependency-path: automotive/vehicle_master/requirements.txt
-      - run: python -m pip install -r requirements.txt
-      - name: Build release once
-        run: |
-          python -m tdr_bridge.release_enriched \
-            --inventory integration_data/tdr_2026-09-09.json \
-            --overrides integration_data/crosswalk_overrides.json \
-            --out /tmp/vehicle-release.json \
-            --revision "${GITHUB_SHA}" --as-of "$(date -u +%F)"
-          python -m tdr_bridge.publish /tmp/vehicle-release.json
       - name: Publish atomically to TDR Supabase
         run: |
           python -m tdr_bridge.publish /tmp/vehicle-release.json --publish
