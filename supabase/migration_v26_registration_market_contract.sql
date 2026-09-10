@@ -21,8 +21,8 @@ select
   r.registrations,
   r.model_id as tdr_model_id,
   cm.canonical_id as canonical_model_id,
-  cm.brand_id as canonical_brand_id,
-  coalesce(cb.name_en, r.brand_name_raw) as brand_name,
+  coalesce(cm.brand_id, cb_alias.canonical_id) as canonical_brand_id,
+  coalesce(cb_model.name_en, cb_alias.name_en, r.brand_name_raw) as brand_name,
   coalesce(cm.name_en, r.model_name_raw) as model_name,
   coalesce(nullif(cm.segment, ''), 'UNKNOWN') as segment,
   coalesce(nullif(cm.body_type, ''), 'UNKNOWN') as body_type,
@@ -37,23 +37,28 @@ select
   coalesce(nullif(cm.payload->>'market_scope', ''), 'UNKNOWN') as market_scope,
   coalesce(nullif(cm.payload->>'production_type', ''), 'UNKNOWN') as import_type,
   coalesce(nullif(cm.payload->>'production_country', ''), 'UNKNOWN') as origin_country,
-  coalesce(nullif(cb.payload->>'oem_group', ''), 'UNKNOWN') as oem_group,
-  coalesce(nullif(cb.payload->>'brand_origin', ''), 'UNKNOWN') as brand_origin,
+  coalesce(nullif(cb_model.payload->>'oem_group', ''), nullif(cb_alias.payload->>'oem_group', ''), 'UNKNOWN') as oem_group,
+  coalesce(nullif(cb_model.payload->>'brand_origin', ''), nullif(cb_alias.payload->>'brand_origin', ''), 'UNKNOWN') as brand_origin,
   r.brand_name_raw,
   r.model_name_raw,
   r.mapping_method,
+  (coalesce(cm.brand_id, cb_alias.canonical_id) is not null) as brand_mapped,
   (cm.canonical_id is not null) as canonically_mapped
 from public.registrations r
 left join public.current_vehicle_models cm
   on cm.tdr_model_id = r.model_id
-left join public.current_vehicle_brands cb
-  on cb.canonical_id = cm.brand_id;
+left join public.current_vehicle_brands cb_model
+  on cb_model.canonical_id = cm.brand_id
+left join public.registration_brand_aliases rba
+  on rba.raw_brand_norm = public.normalize_registration_token(r.brand_name_raw)
+left join public.current_vehicle_brands cb_alias
+  on cb_alias.tdr_brand_id = rba.brand_id;
 
 revoke all on table public.registration_canonical_fact from public, anon, authenticated;
 grant select on table public.registration_canonical_fact to service_role;
 
 comment on view public.registration_canonical_fact is
-  'Paid registration fact projected against the active canonical Vehicle Master release. Registration rows stay separate; segment/body/powertrain/etc always come from current_vehicle_*.';
+  'Paid registration fact projected against the active canonical Vehicle Master release. Registration rows stay separate; model dimensions come from current_vehicle_models and reviewed brand-only residuals may still resolve through the brand crosswalk.';
 
 create or replace function public.registration_market_slice(
   p_period_from date,
@@ -109,7 +114,7 @@ begin
     select f.*
     from public.registration_canonical_fact f
     where f.period between p_period_from and p_period_to
-      and (p_registration_types is null or f.registration_type = any(p_registration_types))
+      and (p_dimension = 'registration_type' or p_registration_types is null or f.registration_type = any(p_registration_types))
   ), coverage as (
     select
       coalesce(sum(w.registrations), 0)::bigint as raw_units,
@@ -118,7 +123,11 @@ begin
   ), scoped as (
     select w.*
     from window_base w
-    where (p_include_unmapped or w.canonically_mapped)
+    where (
+        p_include_unmapped
+        or w.canonically_mapped
+        or (p_dimension in ('brand', 'oem_group', 'brand_origin') and w.brand_mapped)
+      )
       -- The dimension being ranked stays open. A Brand ranking with Brand=B
       -- must still contain Brand A/C/etc so share and rank retain a meaningful
       -- denominator. This is the same rule as Vehicle Master's
@@ -211,4 +220,4 @@ comment on function public.registration_market_slice(
   date, date, text, text[], text[], text[], text[], text[], text[], text[],
   text[], text[], text[], text[], text[], boolean, integer
 ) is
-  'Service-only market slicer over active canonical vehicle dimensions. The grouped dimension ignores its own scope filter so rank/share denominators remain competitive. Price is intentionally absent until canonical PriceLedger coverage and period semantics are sufficient.';
+  'Service-only market slicer over active canonical vehicle dimensions. The grouped dimension ignores its own scope filter so rank/share denominators remain competitive. Brand-level residuals remain usable at brand grain; model-dependent dimensions never guess. Price is intentionally absent until canonical PriceLedger coverage and period semantics are sufficient.';
