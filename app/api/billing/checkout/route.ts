@@ -8,11 +8,28 @@ function bearer(request: NextRequest) {
   return match?.[1] || null;
 }
 
+function cleanEnv(value: string | undefined) {
+  const trimmed = value?.trim();
+  if (!trimmed) return null;
+  if ((trimmed.startsWith('"') && trimmed.endsWith('"')) || (trimmed.startsWith("'") && trimmed.endsWith("'"))) {
+    return trimmed.slice(1, -1).trim();
+  }
+  return trimmed;
+}
+
 function appOrigin(request: NextRequest) {
-  const configured = process.env.TDR_APP_URL?.replace(/\/$/, "");
+  const configured = cleanEnv(process.env.TDR_APP_URL)?.replace(/\/$/, "");
   if (configured) return configured;
+
+  const vercelProductionHost = cleanEnv(process.env.VERCEL_PROJECT_PRODUCTION_URL);
+  if (vercelProductionHost) return `https://${vercelProductionHost.replace(/^https?:\/\//, "").replace(/\/$/, "")}`;
+
   if (process.env.NODE_ENV !== "production") return request.nextUrl.origin;
-  throw new BillingError(503, "TDR_APP_URL is not configured");
+
+  // Stable production fallback so Checkout does not fail only because one
+  // deployment environment omitted TDR_APP_URL. Replace this when a custom
+  // canonical domain is introduced.
+  return "https://tdr-kiki-ed8b.vercel.app";
 }
 
 export async function POST(request: NextRequest) {
