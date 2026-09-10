@@ -1,4 +1,5 @@
 import { adminDb } from "@/lib/supabase";
+import { getActiveHistoricalModelState, resolveHistoricalModelState } from "@/lib/historical-model-state";
 import {
   sliceMarketFacts,
   type CanonicalRegistrationFact,
@@ -44,6 +45,13 @@ function canonicalPowertrain(payload: JsonObject | null | undefined): string {
   return powertrains.length === 1 ? powertrains[0] : "MIXED";
 }
 
+function needsHistoricalImportOrigin(dimension: MarketDimension, filters: MarketSliceFilters) {
+  return dimension === "import_type"
+    || dimension === "origin_country"
+    || Boolean(filters.importTypes?.length)
+    || Boolean(filters.originCountries?.length);
+}
+
 async function fetchRows(window: MarketPeriodWindow, filters: MarketSliceFilters, dimension: MarketDimension) {
   const db = adminDb();
   if (!db) throw new Error("admin database is not configured");
@@ -68,17 +76,30 @@ async function fetchRows(window: MarketPeriodWindow, filters: MarketSliceFilters
   throw new Error(`registration market window exceeds ${MAX_FACT_ROWS.toLocaleString()} fact rows`);
 }
 
-async function canonicalize(db: any, rows: any[]): Promise<CanonicalRegistrationFact[]> {
-  const [{ data: modelRows, error: modelError }, { data: brandRows, error: brandError }, { data: aliasRows, error: aliasError }] = await Promise.all([
+async function canonicalize(
+  db: any,
+  rows: any[],
+  requireHistoricalImportOrigin: boolean,
+): Promise<CanonicalRegistrationFact[]> {
+  const [
+    { data: modelRows, error: modelError },
+    { data: brandRows, error: brandError },
+    { data: aliasRows, error: aliasError },
+    historicalState,
+  ] = await Promise.all([
     db.from("current_vehicle_models")
       .select("canonical_id,tdr_model_id,brand_id,name_en,name_th,segment,body_type,payload").limit(1000),
     db.from("current_vehicle_brands")
       .select("canonical_id,tdr_brand_id,slug,name_en,name_th,payload").limit(500),
     db.from("registration_brand_aliases").select("raw_brand_norm,brand_id").limit(2000),
+    getActiveHistoricalModelState(db),
   ]);
   if (modelError) throw new Error(`canonical model query failed: ${modelError.message}`);
   if (brandError) throw new Error(`canonical brand query failed: ${brandError.message}`);
   if (aliasError) throw new Error(`registration brand crosswalk query failed: ${aliasError.message}`);
+  if (requireHistoricalImportOrigin && !historicalState) {
+    throw new Error("period-aware import/origin state is not available in the active canonical release");
+  }
 
   const models = (modelRows || []) as CanonicalModelRow[];
   const brands = (brandRows || []) as CanonicalBrandRow[];
@@ -101,6 +122,15 @@ async function canonicalize(db: any, rows: any[]): Promise<CanonicalRegistration
       ? String(model.brand_id)
       : brand?.canonical_id ? String(brand.canonical_id) : null;
     const modelScope = String(payload.market_scope || "UNKNOWN");
+    const historical = historicalState && canonicalModelId
+      ? resolveHistoricalModelState(historicalState, canonicalModelId, String(row.period))
+      : null;
+    const importType = historical
+      ? historical.import_type
+      : String(payload.production_type || "UNKNOWN");
+    const originCountry = historical
+      ? historical.origin_country
+      : String(payload.production_country || "UNKNOWN");
 
     return {
       period: String(row.period).slice(0, 10),
@@ -115,8 +145,8 @@ async function canonicalize(db: any, rows: any[]): Promise<CanonicalRegistration
       powertrain: canonicalModelId ? canonicalPowertrain(payload) : "UNKNOWN",
       oem_group: String(brandPayload.oem_group || "UNKNOWN"),
       market_position: String(payload.market_position || "UNKNOWN"),
-      import_type: String(payload.production_type || "UNKNOWN"),
-      origin_country: String(payload.production_country || "UNKNOWN"),
+      import_type: importType,
+      origin_country: originCountry,
       brand_origin: String(brandPayload.brand_origin || "UNKNOWN"),
       market_scope: canonicalModelId ? modelScope : canonicalBrandId ? "MIXED" : "UNKNOWN",
       raw_brand_name: String(row.brand_name_raw || ""),
@@ -167,7 +197,7 @@ export async function getAdminRegistrationMarketSlice(args: {
 }): Promise<MarketSliceRow[]> {
   const filters = args.filters || {};
   const { db, rows } = await fetchRows(args.window, filters, args.dimension);
-  const facts = await canonicalize(db, rows);
+  const facts = await canonicalize(db, rows, needsHistoricalImportOrigin(args.dimension, filters));
   return sliceMarketFacts({ facts, dimension: args.dimension, filters, includeUnmapped: args.includeUnmapped, limit: args.limit });
 }
 
