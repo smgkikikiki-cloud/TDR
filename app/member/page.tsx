@@ -3,6 +3,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { browserDb } from "@/lib/supabase-browser";
+import { DonutChart, Legend } from "@/components/charts/PieChart";
+import { DivergingBars } from "@/components/charts/DivergingBars";
+import { colorFor } from "@/components/charts/palette";
 import styles from "./member.module.css";
 
 type Row = Record<string, any>;
@@ -101,6 +104,28 @@ export default function MemberDashboardPage() {
       .slice(0, 12);
   }, [data]);
 
+  /** Top 7 brands as their own slice, the long tail folded into one "อื่นๆ" —
+   *  the same shape vehreg's own composition_pie() uses so a pie never grows
+   *  more colors than a legend can hold on a phone. */
+  const brandSlices = useMemo(() => {
+    if (!data) return [];
+    const sorted = [...data.brands].sort((a, b) => Number(b.registrations || 0) - Number(a.registrations || 0));
+    const top = sorted.slice(0, 7).map((row, i) => ({
+      label: row.brand_name as string,
+      value: Number(row.registrations || 0),
+      color: colorFor(i),
+    }));
+    const rest = sorted.slice(7).reduce((sum, row) => sum + Number(row.registrations || 0), 0);
+    return rest > 0 ? [...top, { label: "อื่นๆ", value: rest, color: "#cfcfcf" }] : top;
+  }, [data]);
+
+  const moverRows = useMemo(() => movers.map((row) => ({
+    key: row.entity_key as string,
+    label: row.model_name as string,
+    sub: row.brand_name as string,
+    value: Number(row.mom_pct ?? 0),
+  })), [movers]);
+
   async function signOut() {
     await browserDb()?.auth.signOut();
     router.replace("/member/login");
@@ -129,6 +154,12 @@ export default function MemberDashboardPage() {
       <div className={styles.grid2}>
         <section className={styles.panel}>
           <div className={styles.panelHead}><div><div className={styles.eyebrow}>MARKET SHARE</div><h2>แบรนด์</h2></div><span>Top 12</span></div>
+          <div className={styles.chartLayout}>
+            <div className={styles.donutBox}>
+              <DonutChart data={brandSlices} centerValue={n(data.coverage?.total_registrations)} centerLabel="คันรวม" />
+            </div>
+            <Legend data={brandSlices} className={styles.legend} swatchClassName={styles.legendSwatch} valueClassName={styles.legendValue} />
+          </div>
           <div className={styles.tableWrap}><table><thead><tr><th>#</th><th>แบรนด์</th><th>คัน</th><th>Share</th></tr></thead><tbody>{data.brands.slice(0, 12).map((row) => <tr key={row.brand_key}><td>{row.market_rank}</td><td><b>{row.brand_name}</b></td><td>{n(row.registrations)}</td><td>{pct(row.market_share_pct, 2)}</td></tr>)}</tbody></table></div>
         </section>
 
@@ -141,18 +172,29 @@ export default function MemberDashboardPage() {
       <div className={styles.grid2}>
         <section className={styles.panel}>
           <div className={styles.panelHead}><div><div className={styles.eyebrow}>POWERTRAIN</div><h2>สัดส่วนระบบขับเคลื่อน</h2></div><span>coverage {pct(data.powertrains[0]?.market_coverage_pct)}</span></div>
-          <div className={styles.barList}>{data.powertrains.map((row) => <div className={styles.barRow} key={row.powertrain}><div><b>{row.powertrain}</b><span>{n(row.registrations)} คัน</span></div><div className={styles.bar}><i style={{ width: `${Math.min(Number(row.share_of_classified_pct), 100)}%` }} /></div><strong>{pct(row.share_of_classified_pct, 2)}</strong></div>)}</div>
+          <div className={styles.barList}>{data.powertrains.map((row, i) => <div className={styles.barRow} key={row.powertrain}><div><b>{row.powertrain}</b><span>{n(row.registrations)} คัน</span></div><div className={styles.bar}><i style={{ width: `${Math.min(Number(row.share_of_classified_pct), 100)}%`, background: colorFor(i) }} /></div><strong>{pct(row.share_of_classified_pct, 2)}</strong></div>)}</div>
           <p className={styles.note}>คำนวณเฉพาะรุ่น canonical ที่มี powertrain เดียว เพื่อไม่เดารุ่น ICE/HEV/PHEV/BEV ที่ DLT ไม่ได้แยกรุ่นย่อยชัดเจน</p>
         </section>
 
         <section className={styles.panel}>
           <div className={styles.panelHead}><div><div className={styles.eyebrow}>SEGMENT</div><h2>ส่วนแบ่งตามเซกเมนต์</h2></div><span>coverage {pct(data.segments[0]?.market_coverage_pct)}</span></div>
-          <div className={styles.barList}>{data.segments.slice(0, 10).map((row) => <div className={styles.barRow} key={row.segment}><div><b>{row.segment}</b><span>{n(row.registrations)} คัน</span></div><div className={styles.bar}><i style={{ width: `${Math.min(Number(row.share_of_classified_pct), 100)}%` }} /></div><strong>{pct(row.share_of_classified_pct, 2)}</strong></div>)}</div>
+          <div className={styles.barList}>{data.segments.slice(0, 10).map((row, i) => <div className={styles.barRow} key={row.segment}><div><b>{row.segment}</b><span>{n(row.registrations)} คัน</span></div><div className={styles.bar}><i style={{ width: `${Math.min(Number(row.share_of_classified_pct), 100)}%`, background: colorFor(i) }} /></div><strong>{pct(row.share_of_classified_pct, 2)}</strong></div>)}</div>
         </section>
       </div>
 
       <section className={styles.panel}>
         <div className={styles.panelHead}><div><div className={styles.eyebrow}>MONTH-ON-MONTH</div><h2>รุ่นที่ขยับแรงจากเดือนก่อน</h2></div><span>เฉพาะ canonical model ที่เทียบข้ามเดือนได้</span></div>
+        <DivergingBars
+          rows={moverRows}
+          className={styles.moverChart}
+          rowClassName={styles.moverRow}
+          labelClassName={styles.moverLabel}
+          trackClassName={styles.moverTrack}
+          positiveClassName={styles.moverPos}
+          negativeClassName={styles.moverNeg}
+          valueClassName={styles.moverValue}
+          formatValue={(v) => `${v.toFixed(1)}%`}
+        />
         <div className={styles.tableWrap}><table><thead><tr><th>แบรนด์</th><th>รุ่น</th><th>เดือนก่อน</th><th>เดือนนี้</th><th>Δ คัน</th><th>MoM</th></tr></thead><tbody>{movers.map((row) => <tr key={row.entity_key}><td>{row.brand_name}</td><td><b>{row.model_name}</b></td><td>{n(row.previous_registrations)}</td><td>{n(row.registrations)}</td><td className={Number(row.mom_delta) >= 0 ? styles.positive : styles.negative}>{Number(row.mom_delta) >= 0 ? "+" : ""}{n(row.mom_delta)}</td><td>{row.mom_pct == null ? "—" : `${Number(row.mom_pct) >= 0 ? "+" : ""}${pct(row.mom_pct)}`}</td></tr>)}</tbody></table></div>
       </section>
 
