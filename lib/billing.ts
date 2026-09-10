@@ -86,30 +86,40 @@ export async function requireMember(accessToken: string): Promise<MemberContext>
   const { data, error } = await db.auth.getUser(accessToken);
   if (error || !data.user) throw new BillingError(401, "invalid or expired member session");
 
-  const phone = data.user.phone || null;
-  if (!phone || !data.user.phone_confirmed_at) {
-    throw new BillingError(403, "verify a phone number with OTP before creating a billing customer");
-  }
-  let { data: customer, error: customerError } = await db.from("tdr_customers")
-    .select("id").eq("auth_user_id", data.user.id).maybeSingle();
-  if (customerError) throw new BillingError(503, "could not load customer identity");
-  if (!customer) {
-    const created = await db.from("tdr_customers").insert({ auth_user_id: data.user.id })
-      .select("id").single();
-    if (created.error) throw new BillingError(503, "could not create customer identity");
-    customer = created.data;
-  }
-  const { error: phoneError } = await db.from("tdr_customer_phone_identities").upsert({
-    customer_id: customer.id,
-    phone_e164: phone,
-    verified_at: data.user.phone_confirmed_at,
-    is_primary: true,
-    revoked_at: null,
-    updated_at: new Date().toISOString(),
-  }, { onConflict: "phone_e164" });
-  if (phoneError) throw new BillingError(409, "verified phone is already linked to another customer");
+  const { data: profile, error: profileError } = await db.from("tdr_customer_profiles")
+  .select("phone_e164").eq("user_id", data.user.id).maybeSingle();
+if (profileError) throw new BillingError(503, "could not load customer profile");
 
-  return { userId: data.user.id, customerId: customer.id, email: data.user.email ?? null, phone };
+const metadataPhone = typeof data.user.user_metadata?.phone_e164 === "string"
+  ? data.user.user_metadata.phone_e164 : null;
+const phone = data.user.phone || metadataPhone || profile?.phone_e164 || null;
+if (!phone || !/^\+[1-9][0-9]{7,14}$/.test(phone)) {
+  throw new BillingError(403, "add a valid mobile number to this member account before checkout");
+}
+
+const { data: duplicatePhone, error: duplicatePhoneError } = await db.from("tdr_customer_profiles")
+  .select("user_id").eq("phone_e164", phone).neq("user_id", data.user.id).limit(1).maybeSingle();
+if (duplicatePhoneError) throw new BillingError(503, "could not validate customer phone");
+if (duplicatePhone) throw new BillingError(409, "this mobile number is already linked to another TDR account");
+
+const { error: profileUpsertError } = await db.from("tdr_customer_profiles").upsert({
+  user_id: data.user.id,
+  phone_e164: phone,
+  updated_at: new Date().toISOString(),
+}, { onConflict: "user_id" });
+if (profileUpsertError) throw new BillingError(503, "could not save customer profile");
+
+let { data: customer, error: customerError } = await db.from("tdr_customers")
+  .select("id").eq("auth_user_id", data.user.id).maybeSingle();
+if (customerError) throw new BillingError(503, "could not load customer identity");
+if (!customer) {
+  const created = await db.from("tdr_customers").insert({ auth_user_id: data.user.id })
+    .select("id").single();
+  if (created.error) throw new BillingError(503, "could not create customer identity");
+  customer = created.data;
+}
+
+return { userId: data.user.id, customerId: customer.id, email: data.user.email ?? null, phone };
 }
 
 async function providerCustomer(customerId: string) {

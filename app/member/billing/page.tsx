@@ -114,7 +114,7 @@ export default function MemberBillingPage() {
       ) : <>
         <section className={styles.kpis}>
           <article><span>Customer ID</span><strong className={styles.accountValue}>{data.user.customerId}</strong><small>stable TDR identity</small></article>
-          <article><span>เบอร์มือถือ</span><strong className={styles.accountValue}>{data.user.phone}</strong><small>ยืนยันแล้วด้วย OTP</small></article>
+          <article><span>เบอร์มือถือ</span><strong className={styles.accountValue}>{data.user.phone}</strong><small>ผูกกับ Customer ID</small></article>
           <article><span>Subscription</span><strong>{data.subscription?.status || "ยังไม่มี"}</strong><small>{data.subscription?.provider || "Stripe เมื่อเริ่มจ่าย"}</small></article>
           <article><span>TDR Report access</span><strong>{data.entitlement?.status || "ยังไม่มี"}</strong><small>ถึง {date(data.entitlement?.valid_until)}</small></article>
         </section>

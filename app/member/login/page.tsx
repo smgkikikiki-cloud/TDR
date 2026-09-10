@@ -15,38 +15,50 @@ function normalizeThaiPhone(value: string) {
 
 export default function MemberLoginPage() {
   const router = useRouter();
+  const [mode, setMode] = useState<"login" | "signup">("login");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
-  const [phoneE164, setPhoneE164] = useState<string | null>(null);
-  const [otp, setOtp] = useState("");
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
 
-  async function requestOtp(event: FormEvent) {
+  async function submit(event: FormEvent) {
     event.preventDefault();
     const db = browserDb();
     if (!db) return setMessage("ระบบสมาชิกยังไม่ได้ตั้งค่า Supabase บน deployment นี้");
-    const normalized = normalizeThaiPhone(phone);
-    if (!normalized) return setMessage("กรอกเบอร์มือถือไทย 10 หลัก หรือเบอร์แบบ +66 ให้ถูกต้อง");
-    setBusy(true); setMessage("");
-    const { error } = await db.auth.signInWithOtp({
-      phone: normalized,
-      options: { shouldCreateUser: true },
-    });
-    setBusy(false);
-    if (error) return setMessage(error.message);
-    setPhoneE164(normalized);
-    setMessage("ส่งรหัส OTP แล้ว กรุณากรอกรหัส 6 หลักจาก SMS");
-  }
 
-  async function verifyOtp(event: FormEvent) {
-    event.preventDefault();
-    const db = browserDb();
-    if (!db || !phoneE164) return setMessage("กรุณาขอ OTP ใหม่");
-    if (!/^\d{6}$/.test(otp)) return setMessage("OTP ต้องเป็นตัวเลข 6 หลัก");
-    setBusy(true); setMessage("");
-    const { data, error } = await db.auth.verifyOtp({ phone: phoneE164, token: otp, type: "sms" });
+    setBusy(true);
+    setMessage("");
+
+    if (mode === "signup") {
+      const normalized = normalizeThaiPhone(phone);
+      if (!normalized) {
+        setBusy(false);
+        return setMessage("กรอกเบอร์มือถือไทย 10 หลัก หรือเบอร์แบบ +66 ให้ถูกต้อง");
+      }
+      const { data, error } = await db.auth.signUp({
+        email,
+        password,
+        options: {
+          data: { phone_e164: normalized },
+          emailRedirectTo: `${window.location.origin}/member/billing`,
+        },
+      });
+      setBusy(false);
+      if (error) return setMessage(error.message);
+      if (!data.session) {
+        setMessage("สร้างบัญชีแล้ว กรุณายืนยันอีเมลจากข้อความของ Supabase แล้วกลับมาเข้าสู่ระบบ");
+        setMode("login");
+        return;
+      }
+      router.replace("/member/billing");
+      router.refresh();
+      return;
+    }
+
+    const { data, error } = await db.auth.signInWithPassword({ email, password });
     setBusy(false);
-    if (error || !data.session) return setMessage(error?.message || "ยืนยัน OTP ไม่สำเร็จ");
+    if (error || !data.session) return setMessage(error?.message || "เข้าสู่ระบบไม่สำเร็จ");
     router.replace("/member/billing");
     router.refresh();
   }
@@ -55,19 +67,20 @@ export default function MemberLoginPage() {
     <main className={styles.shell}>
       <section className={styles.loginCard}>
         <div className={styles.eyebrow}>TDR REPORT · MEMBER</div>
-        <h1>{phoneE164 ? "ยืนยันเบอร์มือถือ" : "เข้าสู่ระบบด้วยเบอร์มือถือ"}</h1>
-        <p className={styles.muted}>ข้อมูลรถ ราคา และสเปกยังเปิดฟรี บัญชีนี้ใช้เฉพาะเครื่องมือวิเคราะห์แบบสมาชิก โดย Customer ID จะผูกกับเบอร์ที่ผ่าน OTP เท่านั้น</p>
+        <h1>{mode === "signup" ? "สร้างบัญชี TDR Report" : "เข้าสู่ระบบ TDR Report"}</h1>
+        <p className={styles.muted}>ข้อมูลรถ ราคา และสเปกยังเปิดฟรี บัญชีใช้เฉพาะเครื่องมือวิเคราะห์แบบสมาชิก โดยเบอร์มือถือจะผูกกับ Customer ID และบัตรถูกเก็บโดย Stripe ไม่ใช่ TDR</p>
 
-        {!phoneE164 ? <form onSubmit={requestOtp} className={styles.form}>
-          <label>เบอร์มือถือ<input type="tel" required placeholder="08x xxx xxxx" value={phone} onChange={(event) => setPhone(event.target.value)} autoComplete="tel" /></label>
-          <button type="submit" disabled={busy}>{busy ? "กำลังส่ง…" : "รับรหัส OTP"}</button>
-        </form> : <form onSubmit={verifyOtp} className={styles.form}>
-          <label>รหัส OTP<input inputMode="numeric" pattern="[0-9]{6}" maxLength={6} required value={otp} onChange={(event) => setOtp(event.target.value.replace(/\D/g, ""))} autoComplete="one-time-code" /></label>
-          <button type="submit" disabled={busy}>{busy ? "กำลังยืนยัน…" : "ยืนยันและเข้าสู่ระบบ"}</button>
-        </form>}
+        <form onSubmit={submit} className={styles.form}>
+          <label>อีเมล<input type="email" required value={email} onChange={(event) => setEmail(event.target.value)} autoComplete="email" /></label>
+          <label>รหัสผ่าน<input type="password" required minLength={8} value={password} onChange={(event) => setPassword(event.target.value)} autoComplete={mode === "signup" ? "new-password" : "current-password"} /></label>
+          {mode === "signup" ? <label>เบอร์มือถือ<input type="tel" required placeholder="08x xxx xxxx" value={phone} onChange={(event) => setPhone(event.target.value)} autoComplete="tel" /></label> : null}
+          <button type="submit" disabled={busy}>{busy ? "กำลังดำเนินการ…" : mode === "signup" ? "สร้างบัญชี" : "เข้าสู่ระบบ"}</button>
+        </form>
 
         {message ? <p className={styles.message}>{message}</p> : null}
-        {phoneE164 ? <button className={styles.textButton} type="button" onClick={() => { setPhoneE164(null); setOtp(""); setMessage(""); }}>เปลี่ยนเบอร์ / ขอ OTP ใหม่</button> : null}
+        <button className={styles.textButton} type="button" onClick={() => { setMode(mode === "signup" ? "login" : "signup"); setMessage(""); }}>
+          {mode === "signup" ? "มีบัญชีแล้ว · เข้าสู่ระบบ" : "ยังไม่มีบัญชี · สมัครสมาชิก"}
+        </button>
         <Link className={styles.backLink} href="/reports">← กลับหน้า TDR Report</Link>
       </section>
     </main>
