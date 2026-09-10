@@ -29,9 +29,11 @@ const b: FreeCompareTrim = {
 };
 
 console.log("free compare — product scope");
-const keys = FREE_COMPARE_GROUPS.flatMap((group) => group.rows.map((row) => row.key));
-check("tyre is not a public compare field", keys.some((key) => String(key).includes("tire")), false);
-check("wheel is not a public compare field", keys.some((key) => String(key).includes("wheel")), false);
+const keys = FREE_COMPARE_GROUPS.flatMap((group) => group.rows.map((row) => String(row.key)));
+const fitmentKey = (key: string) => key.startsWith("tire_") || key.startsWith("tyre_")
+  || /^wheel_(?:front|rear|size)/.test(key);
+check("tyre/wheel fitment is not a public compare field", keys.some(fitmentKey), false);
+check("wheelbase remains a valid vehicle dimension", keys.includes("wheelbase_mm"), true);
 check("price formats from exact trim", compareValue(a, "price"), "฿899,000");
 
 console.log("\nfree compare — honest missing data");
