@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "check": "tsc --noEmit && node --experimental-strip-types scripts/check-catalog-display.ts && node --experimental-strip-types scripts/check-market-contract.ts && node --experimental-strip-types scripts/check-free-compare.ts && node --experimental-strip-types scripts/check-member-market.ts"
+    "check": "tsc --noEmit && node --experimental-strip-types scripts/check-catalog-display.ts && node --experimental-strip-types scripts/check-market-contract.ts && node --experimental-strip-types scripts/check-free-compare.ts && node --experimental-strip-types scripts/check-member-market.ts && node --experimental-strip-types scripts/check-admin-parity.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",
