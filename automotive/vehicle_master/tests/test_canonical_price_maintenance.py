@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import date
 import json
 from pathlib import Path
 
@@ -101,7 +102,7 @@ def test_supersede_price_closes_old_row_and_replays_idempotently(tmp_path: Path)
     assert old.effective_to == "2026-08-31"
     assert new.effective_from == "2026-09-01"
     ledger = PriceLedger.load(data, year=YEAR, catalog=Catalog.load(data, YEAR))
-    assert ledger.current_list_amount(TRIM_ID, as_of="2026-09-10") == 859000
+    assert ledger.current_list_amount(TRIM_ID, as_of=date(2026, 9, 10)) == 859000
 
     replay = pipeline.apply(_command("price-supersede", "CORRECT_PRICE", {
         "price_type": "LIST_PRICE", "amount_thb": 859000,
@@ -196,4 +197,4 @@ def test_input_batch_accepts_price_maintenance_and_stages_atomically(tmp_path: P
     assert result.status == "APPLIED"
     assert any(path.endswith("observations.json") for path in result.changed_files)
     ledger = PriceLedger.load(data, year=YEAR, catalog=Catalog.load(data, YEAR))
-    assert ledger.current_list_amount(TRIM_ID, as_of="2026-09-10") == 859000
+    assert ledger.current_list_amount(TRIM_ID, as_of=date(2026, 9, 10)) == 859000
