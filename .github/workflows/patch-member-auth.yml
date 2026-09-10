@@ -25,32 +25,16 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
+
           p = Path('lib/billing.ts')
           s = p.read_text()
-          old = '''  const phone = data.user.phone || null;
-          if (!phone || !data.user.phone_confirmed_at) {
-            throw new BillingError(403, "verify a phone number with OTP before creating a billing customer");
-          }
-          let { data: customer, error: customerError } = await db.from("tdr_customers")
-            .select("id").eq("auth_user_id", data.user.id).maybeSingle();
-          if (customerError) throw new BillingError(503, "could not load customer identity");
-          if (!customer) {
-            const created = await db.from("tdr_customers").insert({ auth_user_id: data.user.id })
-              .select("id").single();
-            if (created.error) throw new BillingError(503, "could not create customer identity");
-            customer = created.data;
-          }
-          const { error: phoneError } = await db.from("tdr_customer_phone_identities").upsert({
-            customer_id: customer.id,
-            phone_e164: phone,
-            verified_at: data.user.phone_confirmed_at,
-            is_primary: true,
-            revoked_at: null,
-            updated_at: new Date().toISOString(),
-          }, { onConflict: "phone_e164" });
-          if (phoneError) throw new BillingError(409, "verified phone is already linked to another customer");
-
-          return { userId: data.user.id, customerId: customer.id, email: data.user.email ?? null, phone };'''
+          start_marker = '  const phone = data.user.phone || null;'
+          end_marker = '  return { userId: data.user.id, customerId: customer.id, email: data.user.email ?? null, phone };'
+          start = s.find(start_marker)
+          end = s.find(end_marker, start)
+          if start < 0 or end < 0:
+              raise SystemExit('requireMember markers not found')
+          end += len(end_marker)
           new = '''  const { data: profile, error: profileError } = await db.from("tdr_customer_profiles")
             .select("phone_e164").eq("user_id", data.user.id).maybeSingle();
           if (profileError) throw new BillingError(503, "could not load customer profile");
@@ -85,13 +69,10 @@ jobs:
           }
 
           return { userId: data.user.id, customerId: customer.id, email: data.user.email ?? null, phone };'''
-          if old not in s:
-              raise SystemExit('target requireMember block not found')
-          p.write_text(s.replace(old, new))
+          p.write_text(s[:start] + new + s[end:])
 
           p = Path('app/member/billing/page.tsx')
-          s = p.read_text()
-          s = s.replace('<small>ยืนยันแล้วด้วย OTP</small>', '<small>ผูกกับ Customer ID</small>')
+          s = p.read_text().replace('<small>ยืนยันแล้วด้วย OTP</small>', '<small>ผูกกับ Customer ID</small>')
           p.write_text(s)
           PY
       - name: Install and verify
