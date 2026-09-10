@@ -39,7 +39,8 @@ export default async function VehicleInputPage({
 }) {
   const query = await searchParams;
   const db = adminDb();
-  const today = new Date().toISOString().slice(0, 10);
+  const submittedAt = new Date().toISOString();
+  const today = submittedAt.slice(0, 10);
 
   const [modelsResult, trimsResult, batchesResult, coverageResult, releaseResult] = db
     ? await Promise.all([
@@ -76,6 +77,7 @@ export default async function VehicleInputPage({
     schema_version: 1,
     batch_id: `admin-advanced-${randomUUID()}`,
     year: Number(String(release?.as_of || today).slice(0, 4)),
+    submitted_at: submittedAt,
     source: { kind: "OEM", ref: "https://example.com/official-price" },
     reason: "official list price",
     commands: [{
@@ -123,6 +125,7 @@ export default async function VehicleInputPage({
     <div className="adminHeader"><div><small>QUICK INPUT 01</small><h2>เพิ่ม / เปลี่ยนราคาหลัก</h2><p>ใช้กับ MSRP / ราคาเปิดตัว / estimated price ที่มีหลักฐาน. Campaign ซับซ้อนยังเก็บใน Advanced เพื่อไม่บิดเงื่อนไขโปร.</p></div></div>
     <form action={enqueuePriceInput} className="adminForm">
       <input type="hidden" name="submission_id" value={randomUUID()} />
+      <input type="hidden" name="submitted_at" value={submittedAt} />
       <label className="adminField adminFieldWide"><span>MarketTrim</span><select name="trim_id" required defaultValue="">
         <option value="" disabled>เลือกรุ่นย่อย…</option>
         {trims.map((trim: any) => <option key={trim.canonical_id} value={trim.canonical_id}>
@@ -149,6 +152,7 @@ export default async function VehicleInputPage({
     <div className="adminHeader"><div><small>QUICK INPUT 02</small><h2>แก้ Model / Taxonomy</h2><p>ช่องว่าง = ไม่แก้. Quick mode จำกัดเฉพาะ field ที่ Vehicle Master เป็นเจ้าของจริง; variant/powertrain และรายละเอียดลึกใช้ Advanced.</p></div></div>
     <form action={enqueueModelTaxonomyInput} className="adminForm">
       <input type="hidden" name="submission_id" value={randomUUID()} />
+      <input type="hidden" name="submitted_at" value={submittedAt} />
       <label className="adminField adminFieldWide"><span>Canonical model</span><select name="model_id" required defaultValue="">
         <option value="" disabled>เลือกรุ่น…</option>
         {models.map((model: any) => <option key={model.canonical_id} value={model.canonical_id}>
@@ -166,6 +170,7 @@ export default async function VehicleInputPage({
     <div className="adminHeader"><div><small>QUICK INPUT 03</small><h2>ถอนรุ่นออกจาก Current catalog</h2><p>ไม่ลบ identity และไม่ลบ history — worker จะ mark เป็น HISTORICAL และปิด generation ตามวันที่ที่ให้.</p></div></div>
     <form action={enqueueWithdrawModel} className="adminForm">
       <input type="hidden" name="submission_id" value={randomUUID()} />
+      <input type="hidden" name="submitted_at" value={submittedAt} />
       <label className="adminField adminFieldWide"><span>Canonical model</span><select name="model_id" required defaultValue=""><option value="" disabled>เลือกรุ่น…</option>{models.map((model: any) => <option key={model.canonical_id} value={model.canonical_id}>{modelNames.get(model.canonical_id)}</option>)}</select></label>
       <label className="adminField"><span>วันที่ยุติขาย / generation ended</span><input name="ended" type="date" /></label>
       <label className="adminField"><span>เหตุผล</span><input name="reason" type="text" placeholder="Discontinued / replaced by new generation…" required /></label>
