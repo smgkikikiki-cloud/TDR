@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from copy import deepcopy
+from unittest.mock import patch
 
 from tdr_bridge.lifecycle import apply_retail_lifecycle
 
@@ -30,6 +31,17 @@ def _release(*, model_status="UNVERIFIED", model_row_status="current", ended=Non
     }
 
 
+def _decision(status: str):
+    return [{
+        "trim_id": "brand.model.gen1.trim.grade",
+        "status": status,
+        "reviewer": "Human Reviewer",
+        "reviewed_at": "2026-09-11",
+        "source_ref": "https://example.com/official-lineup",
+        "notes": "official retail evidence",
+    }]
+
+
 def test_legacy_editorial_current_cannot_promote_unverified_canonical_model_or_trim():
     source = _release()
     before = deepcopy(source)
@@ -55,20 +67,39 @@ def test_active_generation_without_retail_evidence_does_not_make_trim_current():
     assert projected["market_trims"][0]["status"] == "UNVERIFIED"
 
 
-def test_ended_generation_is_historical_even_if_old_price_row_is_still_present():
-    projected = apply_retail_lifecycle(_release(
-        model_status="CURRENT",
-        ended="2026-08-31",
-        current_list_price={"amount_thb": 999000},
-    ))
+def test_human_current_review_can_resolve_unpriced_trim():
+    with patch("tdr_bridge.lifecycle.load_trim_lifecycle_decisions", return_value=_decision("CURRENT")):
+        projected = apply_retail_lifecycle(_release(model_status="CURRENT"))
+    trim = projected["market_trims"][0]
+    assert trim["status"] == "CURRENT"
+    assert trim["retail_lifecycle_review"]["reviewer"] == "Human Reviewer"
+
+
+def test_human_historical_review_overrides_open_ended_old_price():
+    with patch("tdr_bridge.lifecycle.load_trim_lifecycle_decisions", return_value=_decision("HISTORICAL")):
+        projected = apply_retail_lifecycle(_release(
+            model_status="CURRENT",
+            current_list_price={"amount_thb": 999000},
+        ))
     assert projected["market_trims"][0]["status"] == "HISTORICAL"
 
 
-def test_historical_model_forces_child_trim_historical():
-    projected = apply_retail_lifecycle(_release(
-        model_status="HISTORICAL",
-        current_list_price={"amount_thb": 999000},
-    ))
+def test_ended_generation_beats_human_current_review():
+    with patch("tdr_bridge.lifecycle.load_trim_lifecycle_decisions", return_value=_decision("CURRENT")):
+        projected = apply_retail_lifecycle(_release(
+            model_status="CURRENT",
+            ended="2026-08-31",
+        ))
+    assert projected["market_trims"][0]["status"] == "HISTORICAL"
+    assert "retail_lifecycle_review" not in projected["market_trims"][0]
+
+
+def test_historical_model_forces_child_trim_historical_even_with_human_current_review():
+    with patch("tdr_bridge.lifecycle.load_trim_lifecycle_decisions", return_value=_decision("CURRENT")):
+        projected = apply_retail_lifecycle(_release(
+            model_status="HISTORICAL",
+            current_list_price={"amount_thb": 999000},
+        ))
     assert projected["models"][0]["status"] == "HISTORICAL"
     assert projected["market_trims"][0]["status"] == "HISTORICAL"
 
