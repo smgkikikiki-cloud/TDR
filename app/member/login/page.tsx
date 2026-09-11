@@ -81,7 +81,7 @@ export default function MemberLoginPage() {
         <button className={styles.textButton} type="button" onClick={() => { setMode(mode === "signup" ? "login" : "signup"); setMessage(""); }}>
           {mode === "signup" ? "มีบัญชีแล้ว · เข้าสู่ระบบ" : "ยังไม่มีบัญชี · สมัครสมาชิก"}
         </button>
-        <Link className={styles.backLink} href="/reports">← กลับหน้า TDR Report</Link>
+        <Link className={styles.backLink} href="/pricing">← กลับหน้าแพ็กเกจ</Link>
       </section>
     </main>
   );
