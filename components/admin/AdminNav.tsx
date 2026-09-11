@@ -15,6 +15,7 @@ export async function AdminNav() {
       <Link href="/admin/market">Admin Bench · Market intelligence</Link>
       <Link href="/admin/registrations">Admin Bench · Registration ops</Link>
       <Link href="/admin/prices">Admin Bench · Prices</Link>
+      <Link href="/admin/prices/coverage">Price coverage worklist</Link>
       <Link href="/admin/data-quality">Admin Bench · Data quality</Link>
       <Link href="/admin/library?table=models">Data Library</Link>
       <Link href="/admin/library?table=canonical_vehicle_releases">Vehicle releases</Link>
