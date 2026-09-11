@@ -29,7 +29,7 @@ function ModelCard({ model, selected, selectionFull, onToggle }: { model: Catalo
   return <article className={styles.card}>
     <Link href={`/models/${model.slug}`} className={styles.visualLink}>
       {model.imageUrl ? <img src={model.imageUrl} alt={model.name} /> : <div className={styles.placeholder}><small>{model.brand.toUpperCase()}</small><b>{model.name}</b></div>}
-      {!model.verifiedCurrent ? <span className={styles.statusFlag}>อยู่ระหว่างตรวจสอบ</span> : null}
+      {!model.verifiedCurrent ? <span className={styles.statusFlag}>สถานะรอตรวจสอบ</span> : null}
     </Link>
     <div className={styles.cardBody}>
       <div className={styles.brand}>{model.brand}</div>
@@ -41,7 +41,6 @@ function ModelCard({ model, selected, selectionFull, onToggle }: { model: Catalo
         {model.seats ? <span>{model.seats} ที่นั่ง</span> : null}
         {model.productionType ? <span>{model.productionType === "CBU" ? "นำเข้า (CBU)" : model.productionType === "CKD" || model.productionType === "SKD" ? "ประกอบไทย" : model.productionType}</span> : null}
       </div>
-      {!model.verifiedCurrent ? <p className={styles.statusNote}>ข้อมูลสถานะการจำหน่ายอยู่ระหว่างตรวจสอบ จึงยังไม่แสดงราคาเป็นข้อมูลปัจจุบัน</p> : null}
       <div className={styles.actions}>
         <Link className={styles.detailButton} href={`/models/${model.slug}`}>ดูรายละเอียด</Link>
         <button type="button" aria-pressed={selected} disabled={disabled} className={`${styles.compareButton} ${selected ? styles.compareButtonSelected : ""}`} onClick={onToggle}>
@@ -67,9 +66,9 @@ export function CatalogResults({ models, marketHref = "/market" }: { models: Cat
     {models.length ? <section className={styles.bridge}><div className={styles.bridgeCopy}><div className={styles.bridgeIcon}>▥</div><div><b>อยากรู้ว่ารุ่นไหนนำตลาดในกลุ่มนี้?</b><p>ดูยอดจดทะเบียน ส่วนแบ่งตลาด และแนวโน้มแบบเจาะลึกด้วย Market Intelligence</p></div></div><Link href={marketHref}>เปิด Market Intelligence →</Link></section> : null}
     {rest.length ? <div className={styles.grid}>{rest.map(renderCard)}</div> : null}
     {selected.length ? <aside className={styles.tray} aria-label="รถที่เลือกไว้เปรียบเทียบ"><div className={styles.trayInner}>
-      <div className={styles.trayCount}>{selected.length} / 4 รุ่นที่เลือก</div>
+      <div className={styles.trayCount}>{selected.length} / 4 รุ่น</div>
       <div className={styles.trayModels}>{selected.map((id) => { const model = byId.get(id); if (!model) return null; return <div className={styles.trayModel} key={id}>{model.imageUrl ? <img className={styles.trayThumb} src={model.imageUrl} alt="" /> : null}<span>{model.brand} {model.name}</span><button type="button" aria-label={`เอา ${model.name} ออกจากรายการ`} onClick={() => toggle(id)}>×</button></div>; })}{selected.length < 4 ? <span className={styles.trayAdd}>+ เพิ่มรถ</span> : null}</div>
-      <span className={styles.compareHint}>{selected.length < 2 ? "เลือกอย่างน้อย 2 รุ่น" : "เลือก Trim จริงในขั้นถัดไป"}</span>
+      <span className={styles.compareHint}>{selected.length < 2 ? "เลือกอีกอย่างน้อย 1 รุ่น" : "เลือก Trim ในขั้นถัดไป"}</span>
       {selected.length >= 2 ? <Link className={styles.trayCta} href={compareHref(selected)}>ไปหน้าเปรียบเทียบ →</Link> : <span className={`${styles.trayCta} ${styles.trayCtaDisabled}`} aria-disabled="true">ไปหน้าเปรียบเทียบ →</span>}
     </div></aside> : null}
   </>;
