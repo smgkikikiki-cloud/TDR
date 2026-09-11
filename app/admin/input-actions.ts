@@ -3,6 +3,7 @@
 import { createHash, randomUUID } from "node:crypto";
 import { redirect } from "next/navigation";
 import { currentEditor, isAdmin } from "@/lib/admin-auth";
+import { resolveOemTarget } from "@/lib/price-evidence-registry";
 import { adminDb } from "@/lib/supabase";
 
 const SOURCE_KINDS = new Set(["ADMIN", "ECO", "OEM", "MEDIA", "PRICE_HARVEST", "MIGRATION", "API"]);
@@ -165,24 +166,36 @@ export async function enqueuePriceInput(formData: FormData) {
   if (!QUICK_PRICE_TYPES.has(priceType)) throw new Error("Quick price รองรับ List / Introductory / Estimated เท่านั้น");
   const observedAt = isoDate(requiredField(formData, "observed_at", "วันที่ตรวจพบ"), "วันที่ตรวจพบ", true)!;
   const effectiveFrom = isoDate(field(formData, "effective_from"), "วันที่มีผล");
-  const kind = sourceKind(formData);
-  const sourceRef = field(formData, "source_ref");
+  const targetId = field(formData, "target_id");
+  let kind = sourceKind(formData);
+  let sourceRef = field(formData, "source_ref");
+  let sourceLabel = priceSourceLabel(kind);
   const reason = requiredField(formData, "reason", "เหตุผล/หลักฐานย่อ");
   const submittedAt = submissionTimestamp(formData);
 
   const db = adminDb();
   if (!db) throw new Error("ยังไม่ได้ตั้งค่า Supabase server credential");
   const { data: trim, error } = await db.from("current_market_trims")
-    .select("canonical_id,release_id").eq("canonical_id", trimId).maybeSingle();
+    .select("canonical_id,release_id,model_id").eq("canonical_id", trimId).maybeSingle();
   if (error) throw error;
-  if (!trim?.release_id) throw new Error("ไม่พบ MarketTrim นี้ใน active canonical release");
-  const year = await releaseYear(db, trim.release_id);
+  if (!trim?.release_id || !trim.model_id) throw new Error("ไม่พบ MarketTrim นี้ใน active canonical release");
 
+  if (targetId) {
+    const target = resolveOemTarget(targetId, String(trim.model_id));
+    if (!target) {
+      throw new Error("OEM target นี้ไม่อยู่ใน registry หรือไม่ตรง canonical model ของ MarketTrim");
+    }
+    kind = "OEM";
+    sourceRef = target.url;
+    sourceLabel = target.sourceId;
+  }
+
+  const year = await releaseYear(db, trim.release_id);
   const pricePayload: Record<string, unknown> = {
     amount_thb: amount,
     price_type: priceType,
     observed_at: observedAt,
-    source: priceSourceLabel(kind),
+    source: sourceLabel,
     source_ref: sourceRef || undefined,
     notes: reason,
   };
