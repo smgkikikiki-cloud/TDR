@@ -92,9 +92,9 @@ def _write_review(path: Path, *, origin="HUMAN", reviewer="owner",
 
 @pytest.fixture
 def local_data(tmp_path):
-    year = tmp_path / "2026"
-    year.mkdir()
-    (year / "acme.json").write_text(
+    models = tmp_path / "2026/models"
+    models.mkdir(parents=True)
+    (models / "acme.json").write_text(
         json.dumps(_catalog_payload(), ensure_ascii=False), encoding="utf-8")
     # Prove the fixture is valid before promotion.
     catalog = Catalog.load(tmp_path, 2026)
