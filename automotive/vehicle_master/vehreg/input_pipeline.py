@@ -6,9 +6,9 @@ copies the validated files into the real tree and writes the batch commit marker
 last. A single accepted batch therefore feeds the same release projection used
 by every TDR catalogue, price, specification and fitment surface.
 
-ECO review dispositions also use this staging path, but remain review metadata:
+Review dispositions also use this staging path, but remain workflow metadata:
 they are committed through the same batch/PR workflow without entering serving
-release projections or the registration database.
+release projections, PriceLedger facts, or the registration database.
 """
 
 from __future__ import annotations
@@ -27,6 +27,7 @@ from typing import Any
 from .canonical_write import CanonicalWriteCommand, CanonicalWriteError, CanonicalWritePipeline
 from .catalog import DATA_DIR, DEFAULT_YEAR
 from .eco_review_write import upsert_review_dispositions
+from .price_coverage_review import upsert_coverage_disposition
 
 
 class CanonicalInputError(ValueError):
@@ -36,7 +37,12 @@ class CanonicalInputError(ValueError):
 _SAFE_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$")
 _SOURCE_KINDS = {"ADMIN", "ECO", "OEM", "MEDIA", "PRICE_HARVEST", "MIGRATION", "API"}
 _MAX_COMMANDS = 500
-_SPECIAL_OPERATIONS = {"UPSERT_ECO_REVIEW"}
+_SPECIAL_OPERATIONS = {"UPSERT_ECO_REVIEW", "UPSERT_PRICE_COVERAGE_REVIEW"}
+_PRICE_COVERAGE_REASONS = {
+    "AWAITING_FINAL_LIST_PRICE",
+    "OFFICIAL_EVIDENCE_CONFLICT",
+    "NO_RELIABLE_EVIDENCE",
+}
 
 
 def _canonical_json(value: Any) -> str:
@@ -52,6 +58,24 @@ def _atomic_bytes(path: Path, content: bytes) -> None:
     tmp = path.with_suffix(path.suffix + ".tmp")
     tmp.write_bytes(content)
     os.replace(tmp, path)
+
+
+def _validated_human_actor(command: dict[str, Any], operation: str) -> str:
+    actor = str(command.get("actor") or "").strip()
+    if not actor or actor.lower() in {"system", "agent", "agent-proposed"}:
+        raise CanonicalInputError(f"{operation} requires an explicit HUMAN actor")
+    return actor
+
+
+def _validated_submitted_at(command: dict[str, Any], operation: str) -> datetime:
+    submitted_at = str(command.get("submitted_at") or "").strip()
+    try:
+        parsed = datetime.fromisoformat(submitted_at.replace("Z", "+00:00"))
+    except ValueError as exc:
+        raise CanonicalInputError(f"{operation} submitted_at must be ISO-8601") from exc
+    if parsed.tzinfo is None:
+        raise CanonicalInputError(f"{operation} submitted_at must include timezone")
+    return parsed
 
 
 def _validate_eco_review_command(command: dict[str, Any]) -> None:
@@ -82,24 +106,52 @@ def _validate_eco_review_command(command: dict[str, Any]) -> None:
     normalized_ids = [str(value or "").strip().lower() for value in source_ids]
     if any(not value for value in normalized_ids) or len(normalized_ids) != len(set(normalized_ids)):
         raise CanonicalInputError("UPSERT_ECO_REVIEW source_ids must be non-empty and unique")
-    actor = str(command.get("actor") or "").strip()
-    if not actor or actor.lower() in {"system", "agent", "agent-proposed"}:
-        raise CanonicalInputError("UPSERT_ECO_REVIEW requires an explicit HUMAN actor")
-    submitted_at = str(command.get("submitted_at") or "").strip()
-    try:
-        parsed = datetime.fromisoformat(submitted_at.replace("Z", "+00:00"))
-    except ValueError as exc:
-        raise CanonicalInputError("UPSERT_ECO_REVIEW submitted_at must be ISO-8601") from exc
-    if parsed.tzinfo is None:
-        raise CanonicalInputError("UPSERT_ECO_REVIEW submitted_at must include timezone")
+    _validated_human_actor(command, "UPSERT_ECO_REVIEW")
+    _validated_submitted_at(command, "UPSERT_ECO_REVIEW")
+
+
+def _validate_price_coverage_review_command(command: dict[str, Any]) -> None:
+    unknown = set(command) - {
+        "operation", "command_id", "year", "actor", "reason", "submitted_at", "payload",
+    }
+    if unknown:
+        raise CanonicalInputError(
+            f"UPSERT_PRICE_COVERAGE_REVIEW unknown fields: {sorted(unknown)}")
+    payload = command.get("payload")
+    if not isinstance(payload, dict):
+        raise CanonicalInputError("UPSERT_PRICE_COVERAGE_REVIEW requires payload object")
+    unknown_payload = set(payload) - {
+        "trim_id", "action", "reason_code", "source_ref", "notes",
+    }
+    if unknown_payload:
+        raise CanonicalInputError(
+            "UPSERT_PRICE_COVERAGE_REVIEW payload unknown fields: "
+            f"{sorted(unknown_payload)}")
+    trim_id = str(payload.get("trim_id") or "").strip()
+    if not trim_id or len(trim_id) > 255:
+        raise CanonicalInputError("UPSERT_PRICE_COVERAGE_REVIEW trim_id is required")
+    action = str(payload.get("action") or "").strip().lower()
+    if action not in {"defer", "reopen"}:
+        raise CanonicalInputError(
+            "UPSERT_PRICE_COVERAGE_REVIEW action must be defer or reopen")
+    reason_code = str(payload.get("reason_code") or "").strip().upper()
+    source_ref = str(payload.get("source_ref") or "").strip()
+    if action == "defer":
+        if reason_code not in _PRICE_COVERAGE_REASONS:
+            raise CanonicalInputError(
+                "UPSERT_PRICE_COVERAGE_REVIEW reason_code must be one of "
+                f"{sorted(_PRICE_COVERAGE_REASONS)}")
+        if not source_ref.startswith(("https://", "http://")):
+            raise CanonicalInputError(
+                "UPSERT_PRICE_COVERAGE_REVIEW defer requires http(s) source_ref")
+    _validated_human_actor(command, "UPSERT_PRICE_COVERAGE_REVIEW")
+    _validated_submitted_at(command, "UPSERT_PRICE_COVERAGE_REVIEW")
 
 
 def _apply_eco_review_command(staged: Path, command: dict[str, Any]) -> tuple[dict[str, Any], Path | None]:
     _validate_eco_review_command(command)
     payload = command["payload"]
-    reviewed_at = datetime.fromisoformat(
-        str(command["submitted_at"]).replace("Z", "+00:00")
-    ).date().isoformat()
+    reviewed_at = _validated_submitted_at(command, "UPSERT_ECO_REVIEW").date().isoformat()
     result = upsert_review_dispositions(
         data_dir=staged,
         year=int(command["year"]),
@@ -118,6 +170,35 @@ def _apply_eco_review_command(staged: Path, command: dict[str, Any]) -> tuple[di
         "topic": "eco_review",
         "entity_type": "ecosticker_review",
         "entity_id": str(payload["snapshot_date"]),
+        "idempotent_replay": not bool(result["changed"]),
+    }, path if result["changed"] else None)
+
+
+def _apply_price_coverage_review_command(
+        staged: Path, command: dict[str, Any]) -> tuple[dict[str, Any], Path | None]:
+    _validate_price_coverage_review_command(command)
+    payload = command["payload"]
+    reviewed_at = _validated_submitted_at(
+        command, "UPSERT_PRICE_COVERAGE_REVIEW").date().isoformat()
+    result = upsert_coverage_disposition(
+        data_dir=staged,
+        year=int(command["year"]),
+        trim_id=str(payload["trim_id"]),
+        action=str(payload["action"]),
+        reason_code=str(payload.get("reason_code") or ""),
+        reviewer=str(command["actor"]),
+        reviewed_at=reviewed_at,
+        source_ref=str(payload.get("source_ref") or ""),
+        notes=str(payload.get("notes") or command.get("reason") or ""),
+        write=True,
+    )
+    path = Path(result["path"])
+    return ({
+        "command_id": str(command["command_id"]),
+        "revision_id": f"price-coverage-review-{_hash(command)[:16]}",
+        "topic": "price_coverage_review",
+        "entity_type": "price_coverage_review",
+        "entity_id": str(payload["trim_id"]),
         "idempotent_replay": not bool(result["changed"]),
     }, path if result["changed"] else None)
 
@@ -196,10 +277,16 @@ class CanonicalInputBatch:
             }
             operation = str(command.get("operation") or "").strip().upper()
             if operation in _SPECIAL_OPERATIONS:
-                if source_kind != "ECO":
-                    raise CanonicalInputError("UPSERT_ECO_REVIEW requires source.kind ECO")
                 command["operation"] = operation
-                _validate_eco_review_command(command)
+                if operation == "UPSERT_ECO_REVIEW":
+                    if source_kind != "ECO":
+                        raise CanonicalInputError("UPSERT_ECO_REVIEW requires source.kind ECO")
+                    _validate_eco_review_command(command)
+                elif operation == "UPSERT_PRICE_COVERAGE_REVIEW":
+                    if source_kind != "ADMIN":
+                        raise CanonicalInputError(
+                            "UPSERT_PRICE_COVERAGE_REVIEW requires source.kind ADMIN")
+                    _validate_price_coverage_review_command(command)
                 parsed_id = str(command["command_id"])
             else:
                 parsed = CanonicalWriteCommand.from_dict(command)
@@ -284,9 +371,13 @@ class CanonicalInputPipeline:
             changed_relative: set[Path] = set()
             for command in batch.commands:
                 operation = str(command.get("operation") or "").strip().upper()
-                if operation == "UPSERT_ECO_REVIEW":
+                if operation in _SPECIAL_OPERATIONS:
                     try:
-                        review_result, changed_path = _apply_eco_review_command(staged, command)
+                        if operation == "UPSERT_ECO_REVIEW":
+                            review_result, changed_path = _apply_eco_review_command(staged, command)
+                        else:
+                            review_result, changed_path = _apply_price_coverage_review_command(
+                                staged, command)
                     except (CanonicalInputError, ValueError, KeyError, TypeError) as exc:
                         raise CanonicalInputError(
                             f"batch {batch.batch_id!r} rejected at {command['command_id']}: {exc}"
@@ -320,10 +411,10 @@ class CanonicalInputPipeline:
             for path in (state / "shadow").glob("*.json"):
                 changed_relative.add(path.relative_to(staged))
 
-            # Data/review artifacts first and audit state second. The canonical
-            # writer can safely recover an identical target file if a process
-            # dies between them. ECO review state is staging metadata and thus
-            # intentionally has no serving outbox entry of its own.
+            # Data/review artifacts first and audit state second. Canonical
+            # writes can recover identical targets if a process dies between
+            # them. Review state is workflow metadata and intentionally has no
+            # serving outbox entry of its own.
             ordered = sorted(changed_relative, key=lambda path: "canonical_state" in path.parts)
             for relative in ordered:
                 _atomic_bytes(self.data_dir / relative, (staged / relative).read_bytes())

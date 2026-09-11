@@ -1,5 +1,6 @@
 import targetsRegistry from "@/automotive/vehicle_master/vehreg/data/2026/market/pricefeed/targets.json";
 import { defaultMarketPeriod, periodKey } from "@/lib/member-market";
+import { priceCoverageDecisions } from "@/lib/price-coverage-review";
 
 export type PriceCoverageBlocker = "NO_MARKET_TRIM" | "MISSING_LIST_PRICE";
 
@@ -11,6 +12,8 @@ export type PriceCoverageWorkItem = {
   totalTrims: number;
   pricedTrims: number;
   missingTrims: number;
+  deferredTrims: number;
+  actionableMissingTrims: number;
   registrations3m: number;
   registrationSharePct: number;
   seedMinThb: number | null;
@@ -129,6 +132,7 @@ export async function getPriceCoverageWorklist(db: any, limit = 100): Promise<Pr
     String(row.name_en || row.name_th || row.canonical_id),
   ]));
   const oemTargets = targetCountsByModel();
+  const deferred = priceCoverageDecisions();
   const canonicalModels = (modelRows || []).length;
   const modelsWithTrims = [...trimsByModel.keys()].length;
   const modelsWithoutTrims = Math.max(0, canonicalModels - modelsWithTrims);
@@ -136,7 +140,9 @@ export async function getPriceCoverageWorklist(db: any, limit = 100): Promise<Pr
   const rows: PriceCoverageBaseRow[] = (modelRows || []).map((model: any): PriceCoverageBaseRow => {
     const modelId = String(model.canonical_id || "");
     const trims = trimsByModel.get(modelId) || [];
-    const pricedTrims = trims.filter((trim) => actualCurrentPrice(trim) != null).length;
+    const missing = trims.filter((trim) => actualCurrentPrice(trim) == null);
+    const pricedTrims = trims.length - missing.length;
+    const deferredTrims = missing.filter((trim) => deferred.has(String(trim.canonical_id || ""))).length;
     const seeds = variantSeedPrices((model.payload || {}) as JsonObject);
     const blocker: PriceCoverageBlocker = trims.length ? "MISSING_LIST_PRICE" : "NO_MARKET_TRIM";
     return {
@@ -146,7 +152,9 @@ export async function getPriceCoverageWorklist(db: any, limit = 100): Promise<Pr
       blocker,
       totalTrims: trims.length,
       pricedTrims,
-      missingTrims: trims.length ? Math.max(0, trims.length - pricedTrims) : 0,
+      missingTrims: missing.length,
+      deferredTrims,
+      actionableMissingTrims: Math.max(0, missing.length - deferredTrims),
       registrations3m: Number(unitsByTdrModel.get(String(model.tdr_model_id || "")) || 0),
       seedMinThb: seeds.length ? Math.min(...seeds) : null,
       seedMaxThb: seeds.length ? Math.max(...seeds) : null,
@@ -156,6 +164,8 @@ export async function getPriceCoverageWorklist(db: any, limit = 100): Promise<Pr
   });
 
   const mappedRegistrations3m = rows.reduce((sum: number, row: PriceCoverageBaseRow) => sum + row.registrations3m, 0);
+  // A deferred trim is still missing a verified LIST_PRICE. Deferred state only
+  // removes duplicate reviewer work; it never changes readiness or paid gating.
   const ready = rows.filter((row: PriceCoverageBaseRow) => row.totalTrims > 0 && row.missingTrims === 0);
   const readyRegistrations3m = ready.reduce((sum: number, row: PriceCoverageBaseRow) => sum + row.registrations3m, 0);
   const readyModels = ready.length;
@@ -165,6 +175,7 @@ export async function getPriceCoverageWorklist(db: any, limit = 100): Promise<Pr
   const items: PriceCoverageWorkItem[] = rows
     .filter((row: PriceCoverageBaseRow) => row.totalTrims === 0 || row.missingTrims > 0)
     .sort((a: PriceCoverageBaseRow, b: PriceCoverageBaseRow) => b.registrations3m - a.registrations3m
+      || b.actionableMissingTrims - a.actionableMissingTrims
       || Number(a.blocker === "MISSING_LIST_PRICE") - Number(b.blocker === "MISSING_LIST_PRICE")
       || b.missingTrims - a.missingTrims
       || `${a.brand} ${a.model}`.localeCompare(`${b.brand} ${b.model}`))
