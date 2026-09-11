@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: canonical-vehicle-release
@@ -50,6 +50,20 @@ jobs:
           path: /tmp/vehicle-release.json
           if-no-files-found: error
           retention-days: 14
+      - name: Stage recovery copy
+        working-directory: ${{ github.workspace }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "TDR canonical release"
+          git config user.email "noreply@github.com"
+          git switch --orphan release-staging
+          git rm -rf .
+          cp /tmp/vehicle-release.json vehicle-release.json
+          git add vehicle-release.json
+          git commit -m "Stage canonical release ${GITHUB_SHA}"
+          git push --force origin HEAD:refs/heads/release-staging
+          git switch -f main
       - name: Preflight deployment secrets
         shell: bash
         run: |
