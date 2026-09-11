@@ -1,0 +1,56 @@
+.reviewForm {
+  display: grid;
+  gap: 8px;
+  min-width: 250px;
+}
+
+.reviewForm label {
+  display: grid;
+  gap: 4px;
+}
+
+.reviewForm label span {
+  color: #5f646d;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.reviewForm input {
+  width: 100%;
+  border: 1px solid #cfd3da;
+  background: #fff;
+  padding: 8px 9px;
+  font: inherit;
+  font-size: 12px;
+}
+
+.reviewForm input:focus {
+  border-color: #012061;
+  outline: none;
+}
+
+.reviewForm button {
+  width: 100%;
+  font-size: 11px;
+  white-space: normal;
+}
+
+.evidenceCell {
+  min-width: 250px;
+  max-width: 360px;
+  overflow-wrap: anywhere;
+}
+
+.targetCell {
+  min-width: 210px;
+}
+
+.impactCell {
+  min-width: 120px;
+}
+
+@media (max-width: 900px) {
+  .reviewForm {
+    min-width: 220px;
+  }
+}
