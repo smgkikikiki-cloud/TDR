@@ -1,4 +1,11 @@
 import { publicDb } from "@/lib/supabase";
+import {
+  isCatalogVisible,
+  isHistorical,
+  isVerifiedCurrent,
+  publicCompatibilityStatus,
+  publicRetailLifecycle,
+} from "@/lib/public-retail-lifecycle";
 
 const BODY: Record<string, string> = {
   HATCHBACK: "HATCHBACK", SEDAN: "SEDAN", CROSSOVER: "CROSSOVER",
@@ -9,6 +16,8 @@ const BODY: Record<string, string> = {
 function modelRow(row: any) {
   const payload = row.payload || {};
   const brand = payload.brand || {};
+  const lifecycle = publicRetailLifecycle(row.status);
+  const verifiedCurrent = lifecycle === "CURRENT";
   return {
     ...payload,
     id: row.canonical_id,
@@ -20,9 +29,12 @@ function modelRow(row: any) {
     generation: payload.generation || row.generation_id?.split(".").at(-1) || null,
     segment: row.segment,
     body_type: BODY[row.body_type] || row.body_type,
-    status: row.status,
-    retail_price_min: row.retail_price_min,
-    retail_price_max: row.retail_price_max,
+    status: publicCompatibilityStatus(row.status),
+    retail_lifecycle: lifecycle,
+    // A model-level price is consumer-facing "current price" data. Never expose
+    // it as current until the canonical model lifecycle itself is verified.
+    retail_price_min: verifiedCurrent ? row.retail_price_min : null,
+    retail_price_max: verifiedCurrent ? row.retail_price_max : null,
     brands: {
       id: brand.id,
       slug: brand.slug,
@@ -36,7 +48,8 @@ function modelRow(row: any) {
 function trimRow(row: any) {
   const detail = row.payload || {};
   const specs = detail.specs || {};
-  const list = row.current_list_price || detail.current_list_price;
+  const lifecycle = publicRetailLifecycle(row.status);
+  const list = lifecycle === "CURRENT" ? (row.current_list_price || detail.current_list_price) : null;
   const powertrainId = `canonical-pt:${row.canonical_id}`;
   return {
     ...specs,
@@ -46,11 +59,12 @@ function trimRow(row: any) {
     model_id: row.model_id,
     generation_id: row.generation_id,
     variant_id: row.variant_id,
-    status: row.status || "current",
+    status: publicCompatibilityStatus(row.status),
+    retail_lifecycle: lifecycle,
     powertrain: row.powertrain || specs.powertrain || null,
     price_baht: list?.amount_thb ?? null,
     current_list_price: list || null,
-    campaign_quote: row.campaign_quote || {},
+    campaign_quote: lifecycle === "CURRENT" ? (row.campaign_quote || {}) : {},
     price_history: row.price_history || [],
     source_refs: row.source_refs || {},
     trim_powertrains: [{ powertrain_id: powertrainId }],
@@ -93,7 +107,7 @@ export async function getCanonicalBrand(slug: string) {
 
 export async function getCanonicalModelsByBrand(brandId: string) {
   const rows = await getCanonicalModels(600);
-  return rows.filter((row: any) => row.brand_id === brandId);
+  return rows.filter((row: any) => row.brand_id === brandId && isCatalogVisible(row.retail_lifecycle));
 }
 
 export async function getCanonicalModels(limit = 600) {
@@ -115,10 +129,17 @@ export async function getCanonicalModelBundle(slug: string) {
   const { data: rawTrims, error: trimError } = await db.from("current_market_trims")
     .select("*").eq("model_id", model.canonical_id).order("name");
   if (trimError) throw trimError;
-  const trims = (rawTrims || []).map(trimRow);
+
+  // Detail pages may show verified CURRENT and HISTORICAL trims. UNVERIFIED
+  // identities remain in canonical storage but are withheld from consumer
+  // "current/past trim" claims until lifecycle review resolves them.
+  const trims = (rawTrims || []).map(trimRow)
+    .filter((trim: any) => trim.retail_lifecycle !== "UNVERIFIED");
   const powertrains = trims.map((trim: any) => trim._powertrain);
   const row: any = modelRow(model);
-  const numeric = (key: string) => trims.map((trim: any) => Number(trim[key]))
+  const numeric = (key: string) => trims
+    .filter((trim: any) => trim.retail_lifecycle === "CURRENT")
+    .map((trim: any) => Number(trim[key]))
     .filter((value: number) => Number.isFinite(value) && value > 0);
   for (const [modelKey, trimKey] of [
     ["length_mm", "length_mm"], ["width_mm", "width_mm"],
@@ -153,6 +174,7 @@ export async function getCanonicalCompareTrims(limit = 600) {
       return {
         ...trim,
         model_slug: model?.slug || null,
+        model_lifecycle: model?.retail_lifecycle || "UNVERIFIED",
         brand_name: detail.brand || model?.brands?.name_en || "",
         model_name: detail.model || model?.name_en || raw.model_id,
         segment: model?.segment || null,
@@ -162,13 +184,15 @@ export async function getCanonicalCompareTrims(limit = 600) {
         model_seats: model?.seats || null,
       };
     })
-    .filter((row: any) => String(row.status || "current").toLowerCase() !== "discontinued")
+    .filter((row: any) => isVerifiedCurrent(row.retail_lifecycle) && isVerifiedCurrent(row.model_lifecycle))
     .sort((a: any, b: any) => `${a.brand_name} ${a.model_name} ${a.name}`.localeCompare(`${b.brand_name} ${b.model_name} ${b.name}`));
 }
 
 export async function getCanonicalRelatedModels(model: any, limit = 8) {
   const rows = await getCanonicalModels(600);
-  return rows.filter((row: any) => row.id !== model.id && row.brand_id === model.brand_id)
+  return rows.filter((row: any) => row.id !== model.id
+      && row.brand_id === model.brand_id
+      && isCatalogVisible(row.retail_lifecycle))
     .slice(0, limit);
 }
 
@@ -178,7 +202,10 @@ export async function searchCanonicalCatalog(query: string) {
   const [brands, models] = await Promise.all([getCanonicalBrands(), getCanonicalModels()]);
   const hit = (row: any) => [row.name_en, row.name_th, row.slug, row.canonical_id]
     .some((value) => String(value || "").toLocaleLowerCase().includes(term));
-  return { brands: brands.filter(hit).slice(0, 10), models: models.filter(hit).slice(0, 20) };
+  return {
+    brands: brands.filter(hit).slice(0, 10),
+    models: models.filter((row: any) => isCatalogVisible(row.retail_lifecycle) && hit(row)).slice(0, 20),
+  };
 }
 
 export async function getModelMarketTeasers(canonicalModelId: string, limit = 4) {
