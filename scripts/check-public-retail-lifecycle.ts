@@ -1,4 +1,5 @@
 import {
+  canClaimCurrentCommerce,
   isCatalogVisible,
   isHistorical,
   isVerifiedCurrent,
@@ -28,6 +29,12 @@ check("only exact CURRENT is verified current", [isVerifiedCurrent("CURRENT"), i
 check("historical is excluded from main catalogue", [isCatalogVisible("CURRENT"), isCatalogVisible("UNVERIFIED"), isCatalogVisible("HISTORICAL")], [true, true, false]);
 check("historical helper recognizes canonical and legacy", [isHistorical("HISTORICAL"), isHistorical("discontinued"), isHistorical("UNVERIFIED")], [true, true, false]);
 check("compatibility never maps unverified to current", [publicCompatibilityStatus("CURRENT"), publicCompatibilityStatus("HISTORICAL"), publicCompatibilityStatus("current")], ["CURRENT", "discontinued", "UNVERIFIED"]);
+check("current commerce requires current parent and child", [
+  canClaimCurrentCommerce("CURRENT", "CURRENT"),
+  canClaimCurrentCommerce("UNVERIFIED", "CURRENT"),
+  canClaimCurrentCommerce("CURRENT", "UNVERIFIED"),
+  canClaimCurrentCommerce("HISTORICAL", "CURRENT"),
+], [true, false, false, false]);
 
 console.log(failed ? `\n${failed} check(s) failed` : "\nall public retail lifecycle checks passed");
 process.exit(failed ? 1 : 0);
