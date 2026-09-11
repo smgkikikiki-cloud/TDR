@@ -135,6 +135,9 @@ export async function getCanonicalModelBundle(slug: string) {
     .filter((trim: any) => trim.retail_lifecycle === "HISTORICAL"
       || canClaimCurrentCommerce(row.retail_lifecycle, trim.retail_lifecycle));
   const powertrains = trims.map((trim: any) => trim._powertrain);
+  const currentPowertrains = trims
+    .filter((trim: any) => canClaimCurrentCommerce(row.retail_lifecycle, trim.retail_lifecycle))
+    .map((trim: any) => trim._powertrain);
   const numeric = (key: string) => trims
     .filter((trim: any) => canClaimCurrentCommerce(row.retail_lifecycle, trim.retail_lifecycle))
     .map((trim: any) => Number(trim[key]))
@@ -146,8 +149,12 @@ export async function getCanonicalModelBundle(slug: string) {
     const values = numeric(trimKey);
     if (!row[modelKey] && values.length && new Set(values).size === 1) row[modelKey] = values[0];
   }
-  return { ...row, powertrains_detail: powertrains,
-    trims: trims.map(({ _powertrain, ...trim }: any) => trim) };
+  return {
+    ...row,
+    powertrains_detail: powertrains,
+    current_powertrains_detail: currentPowertrains,
+    trims: trims.map(({ _powertrain, ...trim }: any) => trim),
+  };
 }
 
 /** Free compare reads the same active release as the catalogue. Identity/spec
