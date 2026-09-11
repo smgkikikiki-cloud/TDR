@@ -1,5 +1,6 @@
 import { publicDb } from "@/lib/supabase";
 import {
+  canClaimCurrentCommerce,
   isCatalogVisible,
   publicCompatibilityStatus,
   publicRetailLifecycle,
@@ -127,16 +128,15 @@ export async function getCanonicalModelBundle(slug: string) {
   if (trimError) throw trimError;
 
   const row: any = modelRow(model);
-  const modelIsCurrent = row.retail_lifecycle === "CURRENT";
 
   // UNVERIFIED trims are never labelled current or historical. A CURRENT child
   // is also withheld as a current claim until its parent model is CURRENT.
   const trims = (rawTrims || []).map(trimRow)
     .filter((trim: any) => trim.retail_lifecycle === "HISTORICAL"
-      || (modelIsCurrent && trim.retail_lifecycle === "CURRENT"));
+      || canClaimCurrentCommerce(row.retail_lifecycle, trim.retail_lifecycle));
   const powertrains = trims.map((trim: any) => trim._powertrain);
   const numeric = (key: string) => trims
-    .filter((trim: any) => trim.retail_lifecycle === "CURRENT")
+    .filter((trim: any) => canClaimCurrentCommerce(row.retail_lifecycle, trim.retail_lifecycle))
     .map((trim: any) => Number(trim[key]))
     .filter((value: number) => Number.isFinite(value) && value > 0);
   for (const [modelKey, trimKey] of [
@@ -170,12 +170,12 @@ export async function getCanonicalCompareTrims(limit = 600) {
       const model: any = models.get(raw.model_id) || null;
       const detail = raw.payload || {};
       const modelLifecycle = model?.retail_lifecycle || "UNVERIFIED";
-      const canClaimCurrentCommerce = trim.retail_lifecycle === "CURRENT" && modelLifecycle === "CURRENT";
+      const canClaimCommerce = canClaimCurrentCommerce(modelLifecycle, trim.retail_lifecycle);
       return {
         ...trim,
-        price_baht: canClaimCurrentCommerce ? trim.price_baht : null,
-        current_list_price: canClaimCurrentCommerce ? trim.current_list_price : null,
-        campaign_quote: canClaimCurrentCommerce ? trim.campaign_quote : {},
+        price_baht: canClaimCommerce ? trim.price_baht : null,
+        current_list_price: canClaimCommerce ? trim.current_list_price : null,
+        campaign_quote: canClaimCommerce ? trim.campaign_quote : {},
         model_slug: model?.slug || null,
         model_lifecycle: modelLifecycle,
         brand_name: detail.brand || model?.brands?.name_en || "",
