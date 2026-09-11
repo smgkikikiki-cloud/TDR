@@ -112,7 +112,7 @@ export default function PricingPage() {
         </article>
       </section>
 
-      <section className={styles.comparison}>
+      <section className={styles.comparison} id="compare">
         <div className={styles.sectionHead}>
           <div className={styles.eyebrow}>COMPARE</div>
           <h2>เปรียบเทียบฟีเจอร์</h2>
