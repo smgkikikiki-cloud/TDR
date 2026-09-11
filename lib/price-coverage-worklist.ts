@@ -124,7 +124,10 @@ export async function getPriceCoverageWorklist(db: any, limit = 100): Promise<Pr
     list.push(row);
     trimsByModel.set(modelId, list);
   }
-  const brands = new Map((brandRows || []).map((row: any) => [String(row.canonical_id), String(row.name_en || row.name_th || row.canonical_id)]));
+  const brands = new Map<string, string>((brandRows || []).map((row: any): [string, string] => [
+    String(row.canonical_id),
+    String(row.name_en || row.name_th || row.canonical_id),
+  ]));
   const oemTargets = targetCountsByModel();
   const canonicalModels = (modelRows || []).length;
   const modelsWithTrims = [...trimsByModel.keys()].length;
