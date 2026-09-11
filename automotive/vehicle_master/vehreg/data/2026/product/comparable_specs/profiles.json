@@ -23,16 +23,29 @@
     {
       "id": "c_crossover_safety",
       "fields": [
-        "safety.airbag_count", "safety.aeb", "safety.adaptive_cruise",
-        "safety.lane_keep_assist", "safety.blind_spot",
-        "safety.rear_cross_traffic", "safety.ncap_stars"
+        "safety.airbag_count", "safety.abs", "safety.ebd", "safety.brake_assist",
+        "safety.stability_control", "safety.traction_control", "safety.hill_start_assist",
+        "safety.hill_descent_control", "safety.tpms", "safety.isofix",
+        "safety.aeb", "safety.forward_collision_warning", "safety.adaptive_cruise",
+        "safety.adaptive_cruise_stop_go", "safety.lane_keep_assist",
+        "safety.lane_departure_warning", "safety.lane_departure_prevention",
+        "safety.blind_spot", "safety.rear_cross_traffic", "safety.door_opening_warning",
+        "safety.auto_high_beam", "safety.traffic_sign_recognition",
+        "safety.driver_monitoring", "safety.camera_360",
+        "safety.parking_sensors_front", "safety.parking_sensors_rear",
+        "safety.auto_park", "safety.ncap_stars"
       ]
     },
     {
       "id": "c_crossover_comfort",
       "fields": [
         "comfort.ventilated_front_seats", "comfort.panoramic_roof",
-        "technology.head_up_display"
+        "technology.infotainment_screen_in", "technology.driver_display_in",
+        "technology.head_up_display", "technology.apple_carplay",
+        "technology.apple_carplay_wireless", "technology.android_auto",
+        "technology.android_auto_wireless", "technology.wireless_charger",
+        "technology.speaker_count", "technology.branded_audio",
+        "technology.usb_front_count", "technology.usb_rear_count"
       ]
     },
     {
