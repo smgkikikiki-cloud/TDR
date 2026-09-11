@@ -162,16 +162,15 @@ export default async function VehicleInputPage({
       </select></label>
       <label className="adminField"><span>วันที่ตรวจพบ</span><input name="observed_at" type="date" defaultValue={today} required /></label>
       <label className="adminField"><span>วันที่เริ่มมีผล (ถ้ารู้)</span><input name="effective_from" type="date" /></label>
-      {focusedTargets.length ? <label className="adminField adminFieldWide"><span>Registered OEM target</span><select name="target_id" required defaultValue={focusedTargets.length === 1 ? focusedTargets[0].id : ""}>
-        <option value="" disabled>เลือกหน้า OEM ที่ใช้เป็นหลักฐาน…</option>
+      {focusedTargets.length ? <label className="adminField adminFieldWide"><span>Registered OEM target (ถ้าหน้านี้มีราคาจริง)</span><select name="target_id" defaultValue="">
+        <option value="">ไม่ใช้ registry target — ใช้ source ref ด้านล่าง</option>
         {focusedTargets.map((target) => <option key={target.id} value={target.id}>{target.sourceId} · {target.role} · {target.id}</option>)}
-      </select></label> : <>
-        <label className="adminField"><span>ชนิดแหล่งข้อมูล</span><select name="source_kind" defaultValue="OEM">
-          <option value="OEM">OEM / official</option><option value="ECO">EcoSticker</option><option value="MEDIA">Media</option>
-          <option value="PRICE_HARVEST">Price Harvester</option><option value="API">API</option><option value="ADMIN">Admin manual evidence</option>
-        </select></label>
-        <label className="adminField"><span>Source URL / ref</span><input name="source_ref" type="text" placeholder="https://…" /></label>
-      </>}
+      </select></label> : null}
+      <label className="adminField"><span>ชนิดแหล่งข้อมูล</span><select name="source_kind" defaultValue="OEM">
+        <option value="OEM">OEM / official</option><option value="ECO">EcoSticker</option><option value="MEDIA">Media</option>
+        <option value="PRICE_HARVEST">Price Harvester</option><option value="API">API</option><option value="ADMIN">Admin manual evidence</option>
+      </select></label>
+      <label className="adminField"><span>Source URL / ref</span><input name="source_ref" type="text" placeholder={focusedTargets.length ? "เว้นได้เมื่อเลือก registered OEM target" : "https://…"} /></label>
       <label className="adminField adminFieldWide"><span>เหตุผล / หลักฐานย่อ</span><input name="reason" type="text" placeholder="Official Thai page lists this trim at MSRP…" required /></label>
       <div className="adminFormActions"><button className="adminPrimary">Validate + enqueue price</button></div>
     </form>
