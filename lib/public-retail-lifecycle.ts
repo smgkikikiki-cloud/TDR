@@ -29,6 +29,13 @@ export function isCatalogVisible(value: unknown): boolean {
   return publicRetailLifecycle(value) !== "HISTORICAL";
 }
 
+/** Price, campaigns and "currently sold" trim claims require both the model
+ * and the child trim to be verified CURRENT. A CURRENT child under an
+ * UNVERIFIED/HISTORICAL parent must fail closed on public surfaces. */
+export function canClaimCurrentCommerce(modelLifecycle: unknown, trimLifecycle: unknown): boolean {
+  return isVerifiedCurrent(modelLifecycle) && isVerifiedCurrent(trimLifecycle);
+}
+
 /** Compatibility status for older public components while the UI migrates to
  * explicit lifecycle semantics. HISTORICAL maps to the old discontinued token;
  * UNVERIFIED is deliberately not mapped to current. */
