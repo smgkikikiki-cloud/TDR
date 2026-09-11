@@ -16,7 +16,18 @@ const securityHeaders = [
   { key: "Strict-Transport-Security", value: "max-age=31536000" },
 ];
 
+const ecoSnapshotFiles = [
+  "./automotive/vehicle_master/vehreg/data/2026/ingest/ecosticker/snapshots/2026-09-08/manifest.json",
+  "./automotive/vehicle_master/vehreg/data/2026/ingest/ecosticker/snapshots/2026-09-08/normalized.jsonl.gz",
+];
+
 const nextConfig: NextConfig = {
+  // The admin ECO reviewer verifies the immutable repo snapshot at runtime.
+  // Explicit tracing prevents a production server bundle from compiling the
+  // page successfully but omitting the evidence files it must hash/read.
+  outputFileTracingIncludes: {
+    "/*": ecoSnapshotFiles,
+  },
   async headers() {
     return [
       {
