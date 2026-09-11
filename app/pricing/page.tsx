@@ -3,6 +3,7 @@ import styles from "./pricing.module.css";
 
 const comparison = [
   { label: "แคทตาล็อกรถยนต์ รุ่นย่อย ราคา และสเปกพื้นฐาน", free: "yes", pro: "yes", enterprise: "yes" },
+  { label: "รถที่กำลังจะมา: รายชื่อและช่วงเวลาเปิดตัว", free: "yes", pro: "yes", enterprise: "yes" },
   { label: "เทียบรถ", free: "yes", pro: "yes", enterprise: "yes" },
   { label: "บทวิเคราะห์พื้นฐาน", free: "yes", pro: "yes", enterprise: "yes" },
   { label: "ยอดจดทะเบียนรายรุ่น", free: "no", pro: "yes", enterprise: "yes" },
@@ -11,7 +12,7 @@ const comparison = [
   { label: "ดูตามแบรนด์ รุ่น เซกเมนต์ ตัวถัง ระบบขับเคลื่อน", free: "no", pro: "yes", enterprise: "yes" },
   { label: "แนวโน้มย้อนหลัง 3 / 6 / 12 เดือน และ YTD", free: "no", pro: "yes", enterprise: "yes" },
   { label: "ส่งออกข้อมูล (CSV)", free: "no", pro: "yes", enterprise: "yes" },
-  { label: "ติดตามตารางเปิดตัวรถใหม่ล่วงหน้า", free: "no", pro: "soon", enterprise: "soon" },
+  { label: "Launch Calendar + ประวัติการเปลี่ยนแปลง / แจ้งเตือน", free: "no", pro: "soon", enterprise: "soon" },
   { label: "หลายบัญชีสำหรับทีม", free: "no", pro: "no", enterprise: "custom" },
   { label: "ขอบเขตข้อมูล / รายงานสำหรับองค์กร", free: "no", pro: "no", enterprise: "custom" },
 ];
@@ -62,6 +63,7 @@ export default function PricingPage() {
           <Link className={styles.freeCta} href="/models">เริ่มใช้งานฟรี</Link>
           <ul>
             <Bullet>แคทตาล็อกรถยนต์</Bullet>
+            <Bullet>รถที่กำลังจะมา (Launch Roadmap)</Bullet>
             <Bullet>เทียบรถ</Bullet>
             <Bullet>บทวิเคราะห์พื้นฐาน</Bullet>
             <Bullet muted>ยอดจดทะเบียนรายรุ่น</Bullet>
@@ -88,7 +90,7 @@ export default function PricingPage() {
             <Bullet>ดูตามแบรนด์ รุ่น เซกเมนต์ ตัวถัง และระบบขับเคลื่อน</Bullet>
             <Bullet>แนวโน้มย้อนหลัง 3 / 6 / 12 เดือน และ YTD</Bullet>
             <Bullet>ส่งออกข้อมูล CSV</Bullet>
-            <li className={styles.soonFeature}><span>◉</span>ติดตามตารางเปิดตัวรถใหม่ล่วงหน้า <em>เร็วๆ นี้</em></li>
+            <li className={styles.soonFeature}><span>◉</span>Launch Calendar + change history / alerts <em>เร็วๆ นี้</em></li>
           </ul>
         </article>
 
