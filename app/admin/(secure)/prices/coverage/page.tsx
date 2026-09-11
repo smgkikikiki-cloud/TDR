@@ -85,9 +85,9 @@ export default async function PriceCoveragePage() {
           <td>{money(row.seedMinThb, row.seedMaxThb)}<br/><small>{row.seedHintCount ? `${row.seedHintCount} seed values · HINT ONLY` : "no seed hint"}</small></td>
           <td>{row.oemTargetCount ? <b>{row.oemTargetCount}</b> : <span>0</span>}</td>
           <td>{row.blocker === "UNRESOLVED_MODEL_LIFECYCLE"
-            ? <span>Review model retail lifecycle</span>
+            ? <Link href={`/admin/retail-lifecycle?model=${encodeURIComponent(row.canonicalModelId)}`}>Review model lifecycle ↗</Link>
             : row.blocker === "UNRESOLVED_TRIM_LIFECYCLE"
-              ? <span>Review trim retail lifecycle</span>
+              ? <Link href={`/admin/retail-lifecycle?model=${encodeURIComponent(row.canonicalModelId)}`}>Review trim lifecycle ↗</Link>
               : row.blocker === "NO_MARKET_TRIM"
                 ? ecoCandidateGroups
                   ? <><Link href={`/admin/eco-trims?model=${encodeURIComponent(row.canonicalModelId)}`}>Review ECO ({ecoCandidateGroups}) ↗</Link><br/><small><Link href="/admin/vehicle-input">Manual fallback</Link></small></>
