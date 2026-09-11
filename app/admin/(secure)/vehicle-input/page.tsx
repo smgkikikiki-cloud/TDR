@@ -6,6 +6,8 @@ import {
   enqueueVehicleInput,
   enqueueWithdrawModel,
 } from "@/app/admin/input-actions";
+import { enqueuePriceCoverageDisposition } from "@/app/admin/price-coverage-actions";
+import { priceCoverageDecisions } from "@/lib/price-coverage-review";
 import { oemTargetsForModel } from "@/lib/price-evidence-registry";
 import { adminDb } from "@/lib/supabase";
 
@@ -76,8 +78,11 @@ export default async function VehicleInputPage({
   const focusedModel = models.some((model: any) => model.canonical_id === requestedModel) ? requestedModel : "";
   const focusedModelTrims = focusedModel ? trims.filter((trim: any) => trim.model_id === focusedModel) : [];
   const missingFocusedTrims = focusedModelTrims.filter((trim: any) => !currentPrice(trim));
+  const coverageReviews = priceCoverageDecisions();
+  const deferredFocusedTrims = missingFocusedTrims.filter((trim: any) => coverageReviews.has(String(trim.canonical_id)));
+  const actionableFocusedTrims = missingFocusedTrims.filter((trim: any) => !coverageReviews.has(String(trim.canonical_id)));
   const priceTrims = focusedModel
-    ? (missingFocusedTrims.length ? missingFocusedTrims : focusedModelTrims)
+    ? (missingFocusedTrims.length ? actionableFocusedTrims : focusedModelTrims)
     : trims;
   const focusedTargets = focusedModel ? oemTargetsForModel(focusedModel) : [];
 
@@ -133,7 +138,7 @@ export default async function VehicleInputPage({
 
     {focusedModel ? <div className="adminNotice">
       <b>Focused LIST_PRICE backfill · {modelNames.get(focusedModel) || focusedModel}</b>
-      <span>มาจาก Price Coverage Worklist. Quick Price ด้านล่างแสดงเฉพาะ MarketTrim ของรุ่นนี้{missingFocusedTrims.length ? `ที่ยังขาด LIST_PRICE ${missingFocusedTrims.length} trim` : ""}; OEM evidence selector ถูกผูกกับ <code>{focusedModel}</code> ฝั่ง server.</span>
+      <span>ขาด LIST_PRICE {missingFocusedTrims.length} trim · actionable {actionableFocusedTrims.length} · deferred {deferredFocusedTrims.length}. Deferred ยังบล็อก readiness เหมือนเดิม แต่ไม่ถูกโยนกลับเข้ากองงานซ้ำจนกว่าจะ Reopen.</span>
       <Link href="/admin/prices/coverage">กลับ Price Coverage Worklist ↗</Link>
     </div> : null}
 
@@ -144,8 +149,50 @@ export default async function VehicleInputPage({
       </a>)}</div>
     </> : null}
 
+    {focusedModel && deferredFocusedTrims.length ? <>
+      <div className="adminHeader"><div><small>DEFERRED LIST_PRICE</small><h2>ตรวจแล้ว แต่ตลาดยังไม่มี canonical answer</h2><p>รายการนี้ไม่ถูกนับ ready. Reopen เมื่อ OEM ประกาศราคา final หรือ evidence conflict ถูกคลี่คลาย.</p></div></div>
+      <div className="adminQuickGrid">{deferredFocusedTrims.map((trim: any) => {
+        const decision = coverageReviews.get(String(trim.canonical_id))!;
+        return <div key={trim.canonical_id}>
+          <b>{trim.name} · {trim.powertrain || "?"}</b>
+          <span>{decision.reasonCode}</span>
+          <small>{decision.reviewedAt} · {decision.reviewer}{decision.notes ? ` · ${decision.notes}` : ""}</small>
+          <a href={decision.sourceRef} target="_blank" rel="noreferrer">Evidence ↗</a>
+          <form action={enqueuePriceCoverageDisposition} className="adminForm">
+            <input type="hidden" name="submission_id" value={randomUUID()} />
+            <input type="hidden" name="submitted_at" value={submittedAt} />
+            <input type="hidden" name="trim_id" value={trim.canonical_id} />
+            <input type="hidden" name="disposition" value="reopen" />
+            <input type="hidden" name="notes" value={`Reopen ${decision.reasonCode}`} />
+            <button>Reopen</button>
+          </form>
+        </div>;
+      })}</div>
+    </> : null}
+
+    {focusedModel && actionableFocusedTrims.length ? <>
+      <div className="adminHeader"><div><small>WORKFLOW DISPOSITION</small><h2>Defer เฉพาะกรณีที่ไม่มี LIST_PRICE ที่ publishable จริง</h2><p>ใช้เพื่อหยุดงานซ้ำ ไม่ใช่ bypass ราคา. ต้องอ้าง evidence URL ที่ทำให้ตัดสินว่า final MSRP ยังไม่มี/ขัดกัน.</p></div></div>
+      <form action={enqueuePriceCoverageDisposition} className="adminForm">
+        <input type="hidden" name="submission_id" value={randomUUID()} />
+        <input type="hidden" name="submitted_at" value={submittedAt} />
+        <input type="hidden" name="disposition" value="defer" />
+        <label className="adminField adminFieldWide"><span>MarketTrim</span><select name="trim_id" required defaultValue={actionableFocusedTrims.length === 1 ? actionableFocusedTrims[0].canonical_id : ""}>
+          <option value="" disabled>เลือก missing trim…</option>
+          {actionableFocusedTrims.map((trim: any) => <option key={trim.canonical_id} value={trim.canonical_id}>{trim.name} · {trim.powertrain || "?"}</option>)}
+        </select></label>
+        <label className="adminField"><span>เหตุผล</span><select name="reason_code" defaultValue="AWAITING_FINAL_LIST_PRICE" required>
+          <option value="AWAITING_FINAL_LIST_PRICE">AWAITING_FINAL_LIST_PRICE</option>
+          <option value="OFFICIAL_EVIDENCE_CONFLICT">OFFICIAL_EVIDENCE_CONFLICT</option>
+          <option value="NO_RELIABLE_EVIDENCE">NO_RELIABLE_EVIDENCE</option>
+        </select></label>
+        <label className="adminField"><span>Evidence URL</span><input name="source_ref" type="url" placeholder="https://…" required /></label>
+        <label className="adminField adminFieldWide"><span>Review note</span><input name="notes" type="text" placeholder="OEM still labels this as estimated / official pages conflict…" required /></label>
+        <div className="adminFormActions"><button>Defer from actionable queue</button></div>
+      </form>
+    </> : null}
+
     <div className="adminHeader"><div><small>QUICK INPUT 01</small><h2>เพิ่ม / เปลี่ยนราคาหลัก</h2><p>ใช้กับ MSRP / ราคาเปิดตัว / estimated price ที่มีหลักฐาน. Campaign ซับซ้อนยังเก็บใน Advanced เพื่อไม่บิดเงื่อนไขโปร.</p></div></div>
-    <form action={enqueuePriceInput} className="adminForm">
+    {priceTrims.length ? <form action={enqueuePriceInput} className="adminForm">
       <input type="hidden" name="submission_id" value={randomUUID()} />
       <input type="hidden" name="submitted_at" value={submittedAt} />
       <label className="adminField adminFieldWide"><span>MarketTrim</span><select name="trim_id" required defaultValue={priceTrims.length === 1 ? priceTrims[0].canonical_id : ""}>
@@ -173,7 +220,7 @@ export default async function VehicleInputPage({
       <label className="adminField"><span>Source URL / ref</span><input name="source_ref" type="text" placeholder={focusedTargets.length ? "เว้นได้เมื่อเลือก registered OEM target" : "https://…"} /></label>
       <label className="adminField adminFieldWide"><span>เหตุผล / หลักฐานย่อ</span><input name="reason" type="text" placeholder="Official Thai page lists this trim at MSRP…" required /></label>
       <div className="adminFormActions"><button className="adminPrimary">Validate + enqueue price</button></div>
-    </form>
+    </form> : focusedModel && missingFocusedTrims.length ? <div className="adminNotice"><span>ไม่มี actionable missing trim ในรุ่นนี้ตอนนี้ — missing ทั้งหมดถูก defer ไว้. Reopen ด้านบนเมื่อ evidence เปลี่ยน.</span></div> : <div className="adminNotice"><span>ไม่มี MarketTrim ให้เพิ่มราคาใน scope นี้.</span></div>}
 
     <div className="adminHeader"><div><small>QUICK INPUT 02</small><h2>แก้ Model / Taxonomy</h2><p>ช่องว่าง = ไม่แก้. Quick mode จำกัดเฉพาะ field ที่ Vehicle Master เป็นเจ้าของจริง; variant/powertrain และรายละเอียดลึกใช้ Advanced.</p></div></div>
     <form action={enqueueModelTaxonomyInput} className="adminForm">
