@@ -6,12 +6,7 @@ import {
   visibleCompareGroups,
   type FreeCompareTrim,
 } from "../lib/free-compare.ts";
-import {
-  QUICK_COMPARE_ROWS,
-  WORKSPACE_COMPARE_SECTIONS,
-  factsByTrim,
-  specCell,
-} from "../lib/compare-workspace.ts";
+import { factsByTrim, specCell } from "../lib/compare-facts.ts";
 
 let failed = 0;
 function check(name: string, got: unknown, want: unknown) {
@@ -60,14 +55,12 @@ const registryPath = new URL(
   "../automotive/vehicle_master/vehreg/data/2026/product/comparable_specs/registry.json",
   import.meta.url,
 );
+const workspacePath = new URL("../lib/compare-workspace.ts", import.meta.url);
 const registry = JSON.parse(readFileSync(registryPath, "utf8"));
+const workspaceSource = readFileSync(workspacePath, "utf8");
 const registered = new Set<string>(registry.fields.map((field: { key: string }) => field.key));
-const workspaceRows = [
-  ...QUICK_COMPARE_ROWS,
-  ...WORKSPACE_COMPARE_SECTIONS.flatMap((section) => section.rows),
-];
 const workspaceSpecKeys = [...new Set(
-  workspaceRows.filter((row) => row.source === "spec").map((row) => row.key),
+  [...workspaceSource.matchAll(/\bspec\("([^"]+)"/g)].map((match) => match[1]),
 )].sort();
 check(
   "every Compare spec key exists in canonical registry",
