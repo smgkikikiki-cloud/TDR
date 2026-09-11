@@ -12,11 +12,12 @@ for (const path of [
   "app/admin/(secure)/market/page.tsx",
   "app/admin/(secure)/registrations/page.tsx",
   "app/admin/(secure)/prices/page.tsx",
+  "app/admin/(secure)/eco-trims/page.tsx",
   "app/admin/(secure)/data-quality/page.tsx",
 ]) check(path, fs.existsSync(path));
 
 const nav = text("components/admin/AdminNav.tsx");
-for (const route of ["/admin/market","/admin/registrations","/admin/prices","/admin/data-quality"]) {
+for (const route of ["/admin/market","/admin/registrations","/admin/prices","/admin/eco-trims","/admin/data-quality"]) {
   check(`nav exposes ${route}`, nav.includes(`href=\"${route}\"`));
 }
 
@@ -25,6 +26,10 @@ check("price band remains blocked until period-aware prices exist", market.inclu
 check("legacy retirement blockers are visible", market.includes("Legacy parity blockers"));
 const quality = text("app/admin/(secure)/data-quality/page.tsx");
 check("data-quality page refuses premature retirement", quality.includes("KEEP LEGACY WORKBENCH"));
+check("data-quality exposes ECO MarketTrim workflow separately from coverage", quality.includes("ECO → MarketTrim review workflow"));
+check("price range gate uses registration-weighted canonical coverage", quality.includes("priceCoverage.registrationCoveragePct3m >= 80"));
+check("price range gate does not use model seed price fields", !quality.includes("retail_price_min") && !quality.includes("retail_price_max"));
+check("data-quality links operator to ECO review", quality.includes('href="/admin/eco-trims"'));
 
 const registration = text("app/admin/registration-actions.ts");
 check("registration ingest stays on dedicated RPC", registration.includes('rpc("ingest_registration_snapshot"'));
