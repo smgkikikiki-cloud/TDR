@@ -145,6 +145,9 @@ export async function enqueueBulkModelRetailLifecycleReview(formData: FormData) 
     const targetId = required(formData, `bulk_target:${modelId}`, `registered OEM target ของ ${modelId}`);
     const target = resolveOemTarget(targetId, modelId);
     if (!target) throw new Error(`registered OEM evidence target ไม่ตรงกับ ${modelId}`);
+    if (target.role !== "CURRENT_MODEL_PAGE") {
+      throw new Error(`bulk review ของ ${modelId} ต้องใช้ registered CURRENT_MODEL_PAGE เท่านั้น`);
+    }
     return { modelId, status, target };
   });
 
@@ -218,7 +221,7 @@ export async function enqueueBulkModelRetailLifecycleReview(formData: FormData) 
     year,
     submitted_at: submittedAt,
     source: { kind: "ADMIN" },
-    reason: `HUMAN bulk retail lifecycle review (${commands.length} models, registered OEM evidence only)`,
+    reason: `HUMAN bulk retail lifecycle review (${commands.length} models, registered CURRENT_MODEL_PAGE evidence only)`,
     commands,
   });
 
