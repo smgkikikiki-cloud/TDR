@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getEcoTrimCandidateGroups } from "@/lib/eco-trim-snapshot";
 import { getPriceCoverageWorklist } from "@/lib/price-coverage-worklist";
 import { adminDb } from "@/lib/supabase";
 
@@ -22,6 +23,10 @@ export default async function PriceCoveragePage() {
   }
   const work = await getPriceCoverageWorklist(db, 150);
   const periodLabel = work.periods.length ? work.periods.join(" · ") : "no settled registration window";
+  const ecoGroupsByModel = new Map<string, number>();
+  for (const group of getEcoTrimCandidateGroups()) {
+    ecoGroupsByModel.set(group.modelId, (ecoGroupsByModel.get(group.modelId) || 0) + 1);
+  }
 
   return <div className="adminEditor">
     <div className="adminHeader">
@@ -42,7 +47,7 @@ export default async function PriceCoveragePage() {
 
     <div className="adminNotice">
       <b>Two blockers, two fixes</b>
-      <span><b>NO_MARKET_TRIM</b> = ต้องสร้าง canonical MarketTrim identity ก่อน จึงยังเพิ่ม trim-level PriceLedger ไม่ได้. <b>MISSING_LIST_PRICE</b> = identity พร้อมแล้ว ให้หา first-party/independent evidence และ append verified LIST_PRICE. ห้ามสร้าง trim หรือราคาเดาจากชื่อรุ่นเพื่อให้ coverage ดูดี.</span>
+      <span><b>NO_MARKET_TRIM</b> = review ECO identity ก่อนเมื่อ snapshot มี candidate; manual MarketTrim เป็น fallback เมื่อ ECO ไม่มีหลักฐานพอ. <b>MISSING_LIST_PRICE</b> = identity พร้อมแล้ว ให้หา first-party/independent evidence และ append verified LIST_PRICE. ห้ามสร้าง trim หรือราคาเดาจากชื่อรุ่นเพื่อให้ coverage ดูดี.</span>
     </div>
 
     <div className="adminNotice">
@@ -52,25 +57,30 @@ export default async function PriceCoveragePage() {
 
     <div className="adminNotice">
       <b>Source + seed boundary</b>
-      <span>OEM target มาจาก Price Intelligence target registry. Seed price ใน catalog เป็น <b>UNVERIFIED HINT</b> สำหรับช่วย reviewer หาเอกสารเท่านั้น — ไม่ใช่ authority, ไม่สร้าง MarketTrim และไม่ถูกเอาไปทำ paid cohort.</span>
+      <span>OEM target มาจาก Price Intelligence target registry. ECO candidate ใช้ยืนยัน identity เท่านั้น. Seed price ใน catalog เป็น <b>UNVERIFIED HINT</b> สำหรับช่วย reviewer หาเอกสาร — ทั้งสองอย่างไม่ใช่ price authority และไม่ถูกเอาไปทำ paid cohort.</span>
     </div>
 
     <div className="libraryTable"><table>
       <thead><tr><th>#</th><th>Brand / Model</th><th>Blocker</th><th>3M regs</th><th>Market share</th><th>Verified trims</th><th>Missing price</th><th>UNVERIFIED seed hint</th><th>OEM target</th><th>Action</th></tr></thead>
-      <tbody>{work.items.map((row, index) => <tr key={row.canonicalModelId}>
-        <td>{index + 1}</td>
-        <td><b>{row.brand} {row.model}</b><br/><small>{row.canonicalModelId}</small></td>
-        <td><b>{row.blocker}</b></td>
-        <td>{n(row.registrations3m)}</td>
-        <td>{pct(row.registrationSharePct)}</td>
-        <td>{row.totalTrims ? `${row.pricedTrims} / ${row.totalTrims}` : "—"}</td>
-        <td><b>{row.totalTrims ? row.missingTrims : "—"}</b></td>
-        <td>{money(row.seedMinThb, row.seedMaxThb)}<br/><small>{row.seedHintCount ? `${row.seedHintCount} seed values · HINT ONLY` : "no seed hint"}</small></td>
-        <td>{row.oemTargetCount ? <b>{row.oemTargetCount}</b> : <span>0</span>}</td>
-        <td>{row.blocker === "NO_MARKET_TRIM"
-          ? <Link href="/admin/vehicle-input">สร้าง MarketTrim ↗</Link>
-          : <Link href={`/admin/vehicle-input?model=${encodeURIComponent(row.canonicalModelId)}`}>เติม LIST_PRICE ↗</Link>}</td>
-      </tr>)}</tbody>
+      <tbody>{work.items.map((row, index) => {
+        const ecoCandidateGroups = ecoGroupsByModel.get(row.canonicalModelId) || 0;
+        return <tr key={row.canonicalModelId}>
+          <td>{index + 1}</td>
+          <td><b>{row.brand} {row.model}</b><br/><small>{row.canonicalModelId}</small></td>
+          <td><b>{row.blocker}</b></td>
+          <td>{n(row.registrations3m)}</td>
+          <td>{pct(row.registrationSharePct)}</td>
+          <td>{row.totalTrims ? `${row.pricedTrims} / ${row.totalTrims}` : "—"}</td>
+          <td><b>{row.totalTrims ? row.missingTrims : "—"}</b></td>
+          <td>{money(row.seedMinThb, row.seedMaxThb)}<br/><small>{row.seedHintCount ? `${row.seedHintCount} seed values · HINT ONLY` : "no seed hint"}</small></td>
+          <td>{row.oemTargetCount ? <b>{row.oemTargetCount}</b> : <span>0</span>}</td>
+          <td>{row.blocker === "NO_MARKET_TRIM"
+            ? ecoCandidateGroups
+              ? <><Link href={`/admin/eco-trims?model=${encodeURIComponent(row.canonicalModelId)}`}>Review ECO ({ecoCandidateGroups}) ↗</Link><br/><small><Link href="/admin/vehicle-input">Manual fallback</Link></small></>
+              : <Link href="/admin/vehicle-input">Manual MarketTrim ↗</Link>
+            : <Link href={`/admin/vehicle-input?model=${encodeURIComponent(row.canonicalModelId)}`}>เติม LIST_PRICE ↗</Link>}</td>
+        </tr>;
+      })}</tbody>
     </table></div>
 
     {!work.items.length ? <div className="adminNotice"><span>ทุก canonical model พร้อมสำหรับ Price Range แล้ว.</span></div> : null}
