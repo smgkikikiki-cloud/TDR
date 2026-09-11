@@ -19,6 +19,8 @@ export type PriceCoverageWorkItem = {
   oemTargetCount: number;
 };
 
+type PriceCoverageBaseRow = Omit<PriceCoverageWorkItem, "registrationSharePct">;
+
 export type PriceCoverageWorklist = {
   periods: string[];
   canonicalModels: number;
@@ -128,7 +130,7 @@ export async function getPriceCoverageWorklist(db: any, limit = 100): Promise<Pr
   const modelsWithTrims = [...trimsByModel.keys()].length;
   const modelsWithoutTrims = Math.max(0, canonicalModels - modelsWithTrims);
 
-  const rows = (modelRows || []).map((model: any) => {
+  const rows: PriceCoverageBaseRow[] = (modelRows || []).map((model: any): PriceCoverageBaseRow => {
     const modelId = String(model.canonical_id || "");
     const trims = trimsByModel.get(modelId) || [];
     const pricedTrims = trims.filter((trim) => actualCurrentPrice(trim) != null).length;
@@ -150,21 +152,21 @@ export async function getPriceCoverageWorklist(db: any, limit = 100): Promise<Pr
     };
   });
 
-  const mappedRegistrations3m = rows.reduce((sum, row) => sum + row.registrations3m, 0);
-  const ready = rows.filter((row) => row.totalTrims > 0 && row.missingTrims === 0);
-  const readyRegistrations3m = ready.reduce((sum, row) => sum + row.registrations3m, 0);
+  const mappedRegistrations3m = rows.reduce((sum: number, row: PriceCoverageBaseRow) => sum + row.registrations3m, 0);
+  const ready = rows.filter((row: PriceCoverageBaseRow) => row.totalTrims > 0 && row.missingTrims === 0);
+  const readyRegistrations3m = ready.reduce((sum: number, row: PriceCoverageBaseRow) => sum + row.registrations3m, 0);
   const readyModels = ready.length;
   const modelCoveragePct = canonicalModels ? Math.round(1000 * readyModels / canonicalModels) / 10 : 0;
   const registrationCoveragePct3m = mappedRegistrations3m ? Math.round(10000 * readyRegistrations3m / mappedRegistrations3m) / 100 : 0;
 
-  const items = rows
-    .filter((row) => row.totalTrims === 0 || row.missingTrims > 0)
-    .sort((a, b) => b.registrations3m - a.registrations3m
+  const items: PriceCoverageWorkItem[] = rows
+    .filter((row: PriceCoverageBaseRow) => row.totalTrims === 0 || row.missingTrims > 0)
+    .sort((a: PriceCoverageBaseRow, b: PriceCoverageBaseRow) => b.registrations3m - a.registrations3m
       || Number(a.blocker === "MISSING_LIST_PRICE") - Number(b.blocker === "MISSING_LIST_PRICE")
       || b.missingTrims - a.missingTrims
       || `${a.brand} ${a.model}`.localeCompare(`${b.brand} ${b.model}`))
     .slice(0, Math.max(1, Math.min(limit, 321)))
-    .map((row) => ({
+    .map((row: PriceCoverageBaseRow): PriceCoverageWorkItem => ({
       ...row,
       registrationSharePct: mappedRegistrations3m ? Math.round(10000 * row.registrations3m / mappedRegistrations3m) / 100 : 0,
     }));
