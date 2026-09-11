@@ -141,6 +141,11 @@ export default async function ModelsPage({ searchParams }: { searchParams: Promi
       <p>ค้นหารุ่นรถ เปรียบเทียบสเปก และสำรวจรถในตลาดไทยจาก Vehicle Master ชุดเดียวกับเครื่องมือวิเคราะห์ของ TDR</p>
     </section>
 
+    <nav className={styles.quickRow} aria-label="ขอบเขตแคตตาล็อก">
+      <Link className={`${styles.quick} ${styles.quickOn}`} href="/models" aria-current="page">รถที่จำหน่ายอยู่</Link>
+      <Link className={styles.quick} href="/upcoming">รถที่กำลังจะมา</Link>
+    </nav>
+
     <div className={styles.searchRow}>
       <form className={styles.searchForm} method="get">
         <span className={styles.searchIcon}>⌕</span>
