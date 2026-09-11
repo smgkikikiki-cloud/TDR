@@ -1,32 +1,35 @@
 """Fail-closed retail lifecycle semantics for serving releases.
 
-Canonical identity and retail currentness are different claims.  Vehicle Master
+Canonical identity and retail currentness are different claims. Vehicle Master
 may know a MarketTrim because ECO/homologation evidence proves that the grade
 exists, but that does not prove a Thai buyer can order it today.
 
-This module normalizes the release after the base bridge has assembled identity,
-price and generation facts:
+Precedence is deliberately strict:
 
-* model status comes only from canonical ``Model.retail_status`` embedded in the
-  model payload; legacy TDR editorial status never gets to promote a model.
-* a trim in a generation/model that is explicitly historical is HISTORICAL.
-* a trim with a real current canonical LIST_PRICE is CURRENT evidence.
-* everything else is UNVERIFIED until a separate retail-lifecycle review says
-  otherwise (added by the review workflow, not inferred here).
+* canonical Model.retail_status owns model lifecycle.
+* historical parent model / ended generation always forces HISTORICAL.
+* explicit HUMAN trim lifecycle review owns CURRENT/HISTORICAL next.
+* absent a review, a real current canonical LIST_PRICE may establish CURRENT.
+* everything else remains UNVERIFIED.
 
-The important property is asymmetric: missing evidence never becomes CURRENT.
+Missing evidence never becomes CURRENT, and an open-ended old price cannot
+silently override a newer HUMAN historical review.
 """
 from __future__ import annotations
 
 from copy import deepcopy
 from datetime import date
+from pathlib import Path
 from typing import Any
+
+from vehreg.catalog import DATA_DIR, DEFAULT_YEAR
+from vehreg.retail_lifecycle_review import load_trim_lifecycle_decisions
 
 _ALLOWED = {"CURRENT", "HISTORICAL", "UNVERIFIED"}
 
 
 def _status(value: object, default: str = "UNVERIFIED") -> str:
-    # Exact canonical enum spelling only.  The old serving bridge emitted
+    # Exact canonical enum spelling only. The old serving bridge emitted
     # lowercase `current` as a free default; accepting case-insensitively would
     # silently resurrect that trust bug.
     normalized = str(value or default).strip()
@@ -43,10 +46,19 @@ def _positive_amount(price: object) -> bool:
     return amount > 0
 
 
-def apply_retail_lifecycle(release: dict[str, Any]) -> dict[str, Any]:
+def apply_retail_lifecycle(
+    release: dict[str, Any],
+    *,
+    data_dir: Path | str = DATA_DIR,
+    year: int = DEFAULT_YEAR,
+) -> dict[str, Any]:
     """Return a copy whose model/trim status is evidence-backed and fail-closed."""
     out = deepcopy(release)
     as_of = date.fromisoformat(str(out.get("as_of") or ""))
+    decisions = {
+        row["trim_id"]: row
+        for row in load_trim_lifecycle_decisions(data_dir=data_dir, year=year)
+    }
 
     model_status: dict[str, str] = {}
     for model in out.get("models", []):
@@ -63,6 +75,7 @@ def apply_retail_lifecycle(release: dict[str, Any]) -> dict[str, Any]:
     for trim in out.get("market_trims", []):
         if not isinstance(trim, dict):
             continue
+        trim_id = str(trim.get("canonical_id") or "")
         model_id = str(trim.get("model_id") or "")
         generation = generations.get(str(trim.get("generation_id") or ""), {})
         ended = str(generation.get("ended") or "").strip()
@@ -71,12 +84,18 @@ def apply_retail_lifecycle(release: dict[str, Any]) -> dict[str, Any]:
             try:
                 generation_historical = date.fromisoformat(ended) <= as_of
             except ValueError:
-                # Release validation owns malformed canonical dates.  Do not
-                # promote the trim while the lifecycle evidence is unreadable.
+                # Release validation owns malformed canonical dates. Do not
+                # promote the trim while lifecycle evidence is unreadable.
                 generation_historical = False
 
         if model_status.get(model_id) == "HISTORICAL" or generation_historical:
             trim["status"] = "HISTORICAL"
+        elif trim_id in decisions:
+            trim["status"] = _status(decisions[trim_id].get("status"))
+            trim["retail_lifecycle_review"] = {
+                key: decisions[trim_id][key]
+                for key in ("reviewer", "reviewed_at", "source_ref", "notes")
+            }
         elif _positive_amount(trim.get("current_list_price")):
             trim["status"] = "CURRENT"
         else:
