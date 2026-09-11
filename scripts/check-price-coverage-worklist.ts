@@ -34,11 +34,14 @@ check("quick LIST_PRICE cannot enter canonical queue without evidence ref", inpu
 
 console.log("\nprice coverage worklist — operator UX");
 check("page labels seeds unverified", page.includes("UNVERIFIED seed hint"), true);
-check("page says seed is not authority", page.includes("ไม่ใช่ authority"), true);
+check("page keeps ECO identity separate from price authority", page.includes("ECO candidate ใช้ยืนยัน identity เท่านั้น"), true);
 check("page shows registration weighted coverage", page.includes("3M registration coverage"), true);
 check("page separates MarketTrim and price blockers", page.includes("NO_MARKET_TRIM") && page.includes("MISSING_LIST_PRICE"), true);
 check("page states the 80% paid gate", page.includes("80%"), true);
 check("missing-price action carries canonical model into quick input", page.includes('/admin/vehicle-input?model=${encodeURIComponent(row.canonicalModelId)}'), true);
+check("no-trim action uses model-scoped ECO review when snapshot candidates exist", page.includes('/admin/eco-trims?model=${encodeURIComponent(row.canonicalModelId)}') && page.includes("Review ECO"), true);
+check("no-trim action preserves manual fallback", page.includes("Manual fallback") && page.includes("Manual MarketTrim"), true);
+check("price page counts ECO candidate groups by canonical model", page.includes("getEcoTrimCandidateGroups") && page.includes("ecoGroupsByModel"), true);
 check("focused quick input filters to the requested model", inputPage.includes("trim.model_id === focusedModel"), true);
 check("focused quick input prefers missing LIST_PRICE trims", inputPage.includes("missingFocusedTrims") && inputPage.includes("!currentPrice(trim)"), true);
 check("focused quick input exposes registered OEM targets", inputPage.includes("Registered OEM target") && inputPage.includes("oemTargetsForModel(focusedModel)"), true);
