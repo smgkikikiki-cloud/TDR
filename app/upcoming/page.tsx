@@ -4,6 +4,7 @@ import { bodyLabel } from "@/lib/body-labels";
 import {
   UPCOMING_STATUSES,
   launchWindowLabel,
+  launchWindowSortKey,
   launchYear,
   upcomingStatusLabel,
   type UpcomingStatus,
@@ -39,9 +40,9 @@ function matches(vehicle: PublicUpcomingVehicle, sp: Sp) {
 }
 
 function sortUpcoming(a: PublicUpcomingVehicle, b: PublicUpcomingVehicle) {
-  const ad = a.launch_window.start || "9999-12-31";
-  const bd = b.launch_window.start || "9999-12-31";
-  return ad.localeCompare(bd) || a.brand.localeCompare(b.brand) || a.working_name.localeCompare(b.working_name);
+  return launchWindowSortKey(a.launch_window).localeCompare(launchWindowSortKey(b.launch_window))
+    || a.brand.localeCompare(b.brand)
+    || a.working_name.localeCompare(b.working_name);
 }
 
 function queryHasFilters(sp: Sp) {
