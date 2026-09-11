@@ -74,8 +74,8 @@ def _validate_eco_review_command(command: dict[str, Any]) -> None:
     except ValueError as exc:
         raise CanonicalInputError("UPSERT_ECO_REVIEW snapshot_date is invalid") from exc
     action = str(payload.get("action") or "").strip().lower()
-    if action not in {"reject", "defer"}:
-        raise CanonicalInputError("UPSERT_ECO_REVIEW action must be reject or defer")
+    if action not in {"reject", "defer", "reopen"}:
+        raise CanonicalInputError("UPSERT_ECO_REVIEW action must be reject, defer or reopen")
     source_ids = payload.get("source_ids")
     if not isinstance(source_ids, list) or not source_ids or len(source_ids) > 100:
         raise CanonicalInputError("UPSERT_ECO_REVIEW source_ids must contain 1–100 IDs")
@@ -83,7 +83,7 @@ def _validate_eco_review_command(command: dict[str, Any]) -> None:
     if any(not value for value in normalized_ids) or len(normalized_ids) != len(set(normalized_ids)):
         raise CanonicalInputError("UPSERT_ECO_REVIEW source_ids must be non-empty and unique")
     actor = str(command.get("actor") or "").strip()
-    if not actor or actor == "system":
+    if not actor or actor.lower() in {"system", "agent", "agent-proposed"}:
         raise CanonicalInputError("UPSERT_ECO_REVIEW requires an explicit HUMAN actor")
     submitted_at = str(command.get("submitted_at") or "").strip()
     try:
@@ -196,6 +196,8 @@ class CanonicalInputBatch:
             }
             operation = str(command.get("operation") or "").strip().upper()
             if operation in _SPECIAL_OPERATIONS:
+                if source_kind != "ECO":
+                    raise CanonicalInputError("UPSERT_ECO_REVIEW requires source.kind ECO")
                 command["operation"] = operation
                 _validate_eco_review_command(command)
                 parsed_id = str(command["command_id"])
