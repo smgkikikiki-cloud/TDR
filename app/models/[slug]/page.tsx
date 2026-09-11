@@ -11,7 +11,19 @@ function baht(n: any) { return n ? `฿${Number(n).toLocaleString()}` : null }
 function bahtRange(values: number[]) {
   if (!values.length) return null;
   const min = Math.min(...values), max = Math.max(...values);
-  return min === max ? `฿${min.toLocaleString()}` : `฿${min.toLocaleString()} – ${max.toLocaleString()}`;
+  return min === max ? `฿${min.toLocaleString()}` : `฿${min.toLocaleString()} – ฿${max.toLocaleString()}`;
+}
+function thaiDate(raw: any) {
+  const value = String(raw || "").slice(0, 10);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
+  const parsed = new Date(`${value}T00:00:00Z`);
+  if (Number.isNaN(parsed.getTime())) return null;
+  return new Intl.DateTimeFormat("th-TH-u-ca-gregory", {
+    day: "numeric", month: "short", year: "numeric", timeZone: "UTC",
+  }).format(parsed);
+}
+function priceDate(record: any) {
+  return thaiDate(record?.observed_at || record?.effective_from);
 }
 function numberRange(values: number[], formatter: (n: number) => string) {
   if (!values.length) return null;
@@ -40,6 +52,7 @@ function officialRangeLabel(trims: any[]) {
 function TrimRow({ t, ptById, muted }: { t: any; ptById: Map<any, any>; muted?: boolean }) {
   const linked = (t.trim_powertrains || []).map((x: any) => ptById.get(x.powertrain_id)).filter(Boolean);
   const price = baht(t.price_baht);
+  const updated = priceDate(t.current_list_price);
   const offers = (t.campaign_quote?.campaign_options || []).filter((offer: any) => offer.status_as_of === "ACTIVE");
   return (
     <details className={muted ? "sfTrimRow sfDiscontinued" : "sfTrimRow"}>
@@ -51,6 +64,7 @@ function TrimRow({ t, ptById, muted }: { t: any; ptById: Map<any, any>; muted?: 
         <div className="sfTrimNums">
           {t.published_range_km ? <span>{Number(t.published_range_km).toLocaleString()} km {t.published_range_cycle || ""}</span> : null}
           {price ? <strong>{price}</strong> : <span className="sfMissing">ไม่ระบุราคา</span>}
+          {updated ? <small>อัปเดตล่าสุด {updated}</small> : null}
         </div>
       </summary>
       <div className="sfTrimBody">
@@ -72,7 +86,6 @@ function TrimRow({ t, ptById, muted }: { t: any; ptById: Map<any, any>; muted?: 
           </div>)}
         </div> : null}
         {t.range_source_url ? <a className="sfSourceLink" href={t.range_source_url} target="_blank" rel="noreferrer">แหล่งข้อมูล Range ↗</a> : null}
-        {offers.map((offer: any) => offer.source_ref ? <a className="sfSourceLink" key={offer.source_ref} href={offer.source_ref} target="_blank" rel="noreferrer">ที่มาราคาแคมเปญ ↗</a> : null)}
       </div>
     </details>
   );
@@ -101,6 +114,11 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
   const heroPrice = modelCurrent ? (bahtRange(trimPrices) || (r.retail_price_min || r.retail_price_max
     ? bahtRange([r.retail_price_min, r.retail_price_max].filter((n: any) => Number(n) > 0).map(Number))
     : null)) : null;
+  const priceDates = currentTrims
+    .map((t: any) => String(t.current_list_price?.observed_at || t.current_list_price?.effective_from || "").slice(0, 10))
+    .filter((value: string) => /^\d{4}-\d{2}-\d{2}$/.test(value))
+    .sort();
+  const heroPriceUpdated = thaiDate(priceDates.at(-1));
   const heroRange = modelCurrent ? officialRangeLabel(currentTrims) : null;
   const brand = displayName(r.brands);
 
@@ -136,7 +154,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
           <div>
             <small>ราคาปัจจุบัน</small>
             {heroPrice ? <strong>{heroPrice}</strong> : <strong className="sfMissing">{modelCurrent ? "ยังไม่ประกาศราคา" : "ยังไม่แสดงราคาปัจจุบัน"}</strong>}
-            <em>{modelCurrent ? (trimPrices.length ? "คำนวณจาก Trim ที่ยืนยัน CURRENT" : "ยังไม่มีราคา CURRENT ที่ยืนยันในฐานข้อมูล") : "ต้องยืนยัน lifecycle ก่อนแสดงเป็นราคาปัจจุบัน"}</em>
+            <em>{heroPrice && heroPriceUpdated ? `อัปเดตล่าสุด ${heroPriceUpdated}` : modelCurrent ? (trimPrices.length ? "ราคา CURRENT ที่ยืนยันในฐานข้อมูล" : "ยังไม่มีราคา CURRENT ที่ยืนยันในฐานข้อมูล") : "ต้องยืนยัน lifecycle ก่อนแสดงเป็นราคาปัจจุบัน"}</em>
           </div>
           <div className={heroRange ? "mark" : undefined}>
             <small>ระยะทางที่ผู้ผลิตประกาศ</small>
