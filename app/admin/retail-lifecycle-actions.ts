@@ -4,6 +4,7 @@ import { randomUUID } from "node:crypto";
 import { redirect } from "next/navigation";
 import { isAdmin } from "@/lib/admin-auth";
 import { enqueueCanonicalInputBatch } from "@/lib/canonical-input-queue";
+import { resolveOemTarget } from "@/lib/price-evidence-registry";
 import { adminDb } from "@/lib/supabase";
 
 const REVIEW_STATUSES = new Set(["CURRENT", "HISTORICAL"]);
@@ -29,7 +30,7 @@ function checkedDate(value: string): string {
 function evidenceUrl(value: string): string {
   let url: URL;
   try { url = new URL(value); } catch { throw new Error("Evidence ต้องเป็น URL ที่ถูกต้อง"); }
-  if (!['http:', 'https:'].includes(url.protocol)) throw new Error("Evidence ต้องเป็น HTTP(S) URL");
+  if (!["http:", "https:"].includes(url.protocol)) throw new Error("Evidence ต้องเป็น HTTP(S) URL");
   return url.toString();
 }
 
@@ -38,7 +39,10 @@ export async function enqueueModelRetailLifecycleReview(formData: FormData) {
   const modelId = required(formData, "model_id", "canonical model");
   const status = required(formData, "retail_status", "retail status").toUpperCase();
   if (!REVIEW_STATUSES.has(status)) throw new Error("retail status ต้องเป็น CURRENT หรือ HISTORICAL");
-  const sourceRef = evidenceUrl(required(formData, "source_ref", "official evidence URL"));
+  const targetId = field(formData, "target_id");
+  const target = targetId ? resolveOemTarget(targetId, modelId) : null;
+  if (targetId && !target) throw new Error("registered OEM evidence target ไม่ตรงกับ canonical model นี้");
+  const sourceRef = target?.url || evidenceUrl(required(formData, "source_ref", "official evidence URL"));
   const reviewedAt = checkedDate(required(formData, "reviewed_at", "วันที่ตรวจ"));
   const reason = required(formData, "reason", "review note");
   const submissionId = field(formData, "submission_id") || randomUUID();
