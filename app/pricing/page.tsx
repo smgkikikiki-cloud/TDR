@@ -79,7 +79,7 @@ export default function PricingPage() {
           <div className={styles.price}><strong>฿990</strong><span>/ เดือน</span></div>
           <div className={styles.annual}>หรือ <b>฿8,790 / ปี</b> <span>ประหยัด 26%</span></div>
           <p className={styles.planDescription}>เครื่องมือวิเคราะห์ตลาดสำหรับติดตามอันดับ ส่วนแบ่ง และความเคลื่อนไหวของตลาดรถไทย</p>
-          <Link className={styles.proCta} href="/member/login">สมัครสมาชิก</Link>
+          <Link className={styles.proCta} href="/member/login?mode=signup">สมัครสมาชิก</Link>
           <ul>
             <Bullet>ทุกฟีเจอร์ใน Free</Bullet>
             <Bullet>ยอดจดทะเบียนรายรุ่น</Bullet>
