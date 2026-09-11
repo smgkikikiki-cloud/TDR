@@ -11,9 +11,21 @@ import {
   normalizeReportPeriod,
   RegistrationAccessError,
   resolveMarketWindow,
+  type MarketPeriodWindow,
   type MarketSliceFilters,
+  type MarketSliceRow,
 } from "@/lib/registration-analytics";
 import { normalizeRequestedMarketScopes } from "@/lib/market-scope";
+import { adminDb } from "@/lib/supabase";
+import {
+  getActiveMarketPriceState,
+  MARKET_PRICE_BANDS,
+  MARKET_PRICE_MIN_COVERAGE_PCT,
+  priceStateModelCoverage,
+  resolveModelPriceBand,
+  type MarketPriceBand,
+  type MarketPriceState,
+} from "@/lib/market-price-state";
 
 export const dynamic = "force-dynamic";
 
@@ -40,6 +52,87 @@ function filtersFromRequest(request: NextRequest): MarketSliceFilters {
     brandOrigins: values(request, "brand_origin"),
     marketScopes: normalizeRequestedMarketScopes(values(request, "market_scope")),
   };
+}
+
+type PriceCoverage = {
+  basis: "canonical_model_count";
+  priced_models: number;
+  mixed_models: number;
+  total_models: number;
+  coverage_pct: number;
+  minimum_required_pct: number;
+};
+
+async function priceCoverage(state: MarketPriceState | null, period: string): Promise<PriceCoverage> {
+  const db = adminDb();
+  let totalModels = 0;
+  if (db) {
+    const { count, error } = await db.from("current_vehicle_models").select("*", { count: "exact", head: true });
+    if (error) throw new Error(`canonical model count query failed: ${error.message}`);
+    totalModels = Number(count || 0);
+  }
+  const summary = priceStateModelCoverage(state, period);
+  return {
+    basis: "canonical_model_count",
+    priced_models: summary.pricedModels,
+    mixed_models: summary.mixedModels,
+    total_models: totalModels,
+    coverage_pct: totalModels ? Math.round((1000 * summary.pricedModels) / totalModels) / 10 : 0,
+    minimum_required_pct: MARKET_PRICE_MIN_COVERAGE_PCT,
+  };
+}
+
+function intersectModelFilter(filters: MarketSliceFilters, eligible: Set<string>, dimension: string): MarketSliceFilters {
+  if (dimension === "model") return filters;
+  const requested = filters.modelIds?.length ? new Set(filters.modelIds) : null;
+  const modelIds = [...eligible].filter((id) => !requested || requested.has(id));
+  return { ...filters, modelIds };
+}
+
+function rerankModelRows(rows: MarketSliceRow[], eligible: Set<string>): MarketSliceRow[] {
+  const kept = rows
+    .filter((row) => eligible.has(String(row.entity_key)))
+    .sort((a, b) => Number(b.registrations || 0) - Number(a.registrations || 0)
+      || String(a.entity_key).localeCompare(String(b.entity_key)));
+  const total = kept.reduce((sum, row) => sum + Number(row.registrations || 0), 0);
+  return kept.map((row, index) => ({
+    ...row,
+    market_total: total,
+    market_share_pct: total ? Math.round((10000 * Number(row.registrations || 0)) / total) / 100 : 0,
+    market_rank: index + 1,
+  }));
+}
+
+function eligibleModels(state: MarketPriceState | null, period: string, band: MarketPriceBand): Set<string> {
+  const eligible = new Set<string>();
+  if (!state) return eligible;
+  for (const modelId of state.trimsByModel.keys()) {
+    if (resolveModelPriceBand(state, modelId, period) === band) eligible.add(modelId);
+  }
+  return eligible;
+}
+
+async function marketSliceWithPrice(args: {
+  accessToken: string;
+  dimension: Parameters<typeof getRegistrationMarketSlice>[0]["dimension"];
+  window: MarketPeriodWindow;
+  filters: MarketSliceFilters;
+  includeUnmapped: boolean;
+  limit: number;
+  priceBand: MarketPriceBand | null;
+  priceState: MarketPriceState | null;
+}) {
+  const eligible = args.priceBand ? eligibleModels(args.priceState, args.window.to, args.priceBand) : null;
+  const filters = eligible ? intersectModelFilter(args.filters, eligible, args.dimension) : args.filters;
+  const rows = await getRegistrationMarketSlice({
+    accessToken: args.accessToken,
+    dimension: args.dimension,
+    window: args.window,
+    filters,
+    includeUnmapped: args.includeUnmapped,
+    limit: args.dimension === "model" && eligible ? 500 : args.limit,
+  });
+  return args.dimension === "model" && eligible ? rerankModelRows(rows, eligible).slice(0, args.limit) : rows;
 }
 
 export async function GET(request: NextRequest) {
@@ -74,6 +167,19 @@ export async function GET(request: NextRequest) {
   }
   const comparisonMode = compareValue && isMarketComparison(compareValue) ? compareValue : null;
 
+  const requestedPriceBand = String(request.nextUrl.searchParams.get("price_band") || "").trim().toUpperCase();
+  const priceBand = requestedPriceBand && MARKET_PRICE_BANDS.includes(requestedPriceBand as MarketPriceBand)
+    ? requestedPriceBand as MarketPriceBand
+    : null;
+  if (requestedPriceBand && !priceBand) {
+    return NextResponse.json({ error: "price_band must be ENTRY, VOLUME, UPPER or LUXURY" }, { status: 400 });
+  }
+  if (priceBand && windowValue !== "month") {
+    return NextResponse.json({
+      error: "price-band filtering is currently month-grain only; rolling/YTD cohorts stay disabled until dated ledger coverage supports fact-month slicing",
+    }, { status: 400 });
+  }
+
   const limitValue = Number(request.nextUrl.searchParams.get("limit") || "100");
   const limit = Number.isFinite(limitValue) ? Math.min(Math.max(Math.trunc(limitValue), 1), 500) : 100;
   const includeUnmapped = ["1", "true", "yes"].includes(
@@ -82,6 +188,7 @@ export async function GET(request: NextRequest) {
   const filters = filtersFromRequest(request);
 
   try {
+    // Entitlement is checked before privileged canonical-price metadata is read.
     const available = await getRegistrationAvailablePeriods(match[1]);
     const currentWindow = resolveMarketWindow(period, windowValue);
     const missingCurrent = missingReportPeriods(currentWindow, available);
@@ -93,17 +200,30 @@ export async function GET(request: NextRequest) {
       }, { status: 409 });
     }
 
+    const db = adminDb();
+    const priceState = db ? await getActiveMarketPriceState(db) : null;
+    const currentPriceCoverage = await priceCoverage(priceState, currentWindow.to);
+    if (priceBand && currentPriceCoverage.coverage_pct < MARKET_PRICE_MIN_COVERAGE_PCT) {
+      return NextResponse.json({
+        error: "verified canonical LIST_PRICE coverage is too low for a paid price cohort",
+        price_band: priceBand,
+        price_coverage: currentPriceCoverage,
+      }, { status: 409 });
+    }
+
     // A comparison must be calculated from the full competitive set, not the
     // display limit. Otherwise rank 11 becomes a fake zero merely because the
     // caller asked to render a top-10 table.
     const queryLimit = comparisonMode ? 500 : limit;
-    const currentRows = await getRegistrationMarketSlice({
+    const currentRows = await marketSliceWithPrice({
       accessToken: match[1],
       dimension: dimensionValue,
       window: currentWindow,
       filters,
       includeUnmapped,
       limit: queryLimit,
+      priceBand,
+      priceState,
     });
 
     let comparison = null;
@@ -118,19 +238,31 @@ export async function GET(request: NextRequest) {
           missing_periods: missingPrevious,
         }, { status: 409 });
       }
-      const previousRows = await getRegistrationMarketSlice({
+      const previousPriceCoverage = await priceCoverage(priceState, previousWindow.to);
+      if (priceBand && previousPriceCoverage.coverage_pct < MARKET_PRICE_MIN_COVERAGE_PCT) {
+        return NextResponse.json({
+          error: "comparison price cohort does not have enough verified canonical LIST_PRICE coverage",
+          price_band: priceBand,
+          comparison_window: previousWindow,
+          price_coverage: previousPriceCoverage,
+        }, { status: 409 });
+      }
+      const previousRows = await marketSliceWithPrice({
         accessToken: match[1],
         dimension: dimensionValue,
         window: previousWindow,
         filters,
         includeUnmapped,
         limit: 500,
+        priceBand,
+        priceState,
       });
       comparison = {
         mode: comparisonMode,
         window: previousWindow,
         rows: previousRows.slice(0, limit),
         movement: compareMarketSliceRows(previousRows, currentRows),
+        price_coverage: previousPriceCoverage,
       };
     }
 
@@ -141,6 +273,8 @@ export async function GET(request: NextRequest) {
       period_from: currentWindow.from,
       period_to: currentWindow.to,
       filters,
+      price_band: priceBand,
+      price_coverage: currentPriceCoverage,
       include_unmapped: includeUnmapped,
       rows: currentRows.slice(0, limit),
       comparison,
