@@ -8,10 +8,13 @@ import {
 } from "@/lib/eco-trim-snapshot";
 import { getPriceCoverageWorklist } from "@/lib/price-coverage-worklist";
 import { adminDb } from "@/lib/supabase";
+import styles from "./eco-trims.module.css";
 
 export const dynamic = "force-dynamic";
 
 type SearchParams = Record<string, string | string[] | undefined>;
+type ModelLabel = { brand: string; name: string };
+type MarketImpact = { regs: number; share: number; blocker: string };
 function first(value: string | string[] | undefined) { return Array.isArray(value) ? value[0] : value; }
 function one(value: string | string[] | undefined) { return String(first(value) || "").trim(); }
 function n(value: unknown) { const number = Number(value); return Number.isFinite(number) ? number.toLocaleString("th-TH") : "—"; }
@@ -47,8 +50,10 @@ export default async function EcoTrimReviewPage({ searchParams }: { searchParams
   if (brandsError) throw new Error(`ECO review brand query failed: ${brandsError.message}`);
   if (trimsError) throw new Error(`ECO review trim query failed: ${trimsError.message}`);
 
-  const brands = new Map((brandsData || []).map((row: any) => [String(row.canonical_id), String(row.name_en || row.name_th || row.canonical_id)]));
-  const models = new Map((modelsData || []).map((row: any) => [String(row.canonical_id), {
+  const brands = new Map<string, string>((brandsData || []).map((row: any): [string, string] => [
+    String(row.canonical_id), String(row.name_en || row.name_th || row.canonical_id),
+  ]));
+  const models = new Map<string, ModelLabel>((modelsData || []).map((row: any): [string, ModelLabel] => [String(row.canonical_id), {
     brand: brands.get(String(row.brand_id)) || String(row.brand_id || ""),
     name: String(row.name_en || row.name_th || row.canonical_id),
   }]));
@@ -60,7 +65,7 @@ export default async function EcoTrimReviewPage({ searchParams }: { searchParams
     trimCountByModel.set(modelId, (trimCountByModel.get(modelId) || 0) + 1);
     for (const sourceId of ecoRefs(row)) attachedSourceIds.add(sourceId);
   }
-  const impactByModel = new Map(impact.items.map((row) => [row.canonicalModelId, {
+  const impactByModel = new Map<string, MarketImpact>(impact.items.map((row): [string, MarketImpact] => [row.canonicalModelId, {
     regs: row.registrations3m,
     share: row.registrationSharePct,
     blocker: row.blocker,
@@ -82,7 +87,7 @@ export default async function EcoTrimReviewPage({ searchParams }: { searchParams
     };
   });
 
-  const modelOptions = [...new Map(enriched.map((row) => [row.modelId, `${row.brand} ${row.modelName}`])).entries()]
+  const modelOptions = [...new Map<string, string>(enriched.map((row): [string, string] => [row.modelId, `${row.brand} ${row.modelName}`])).entries()]
     .sort((a, b) => a[1].localeCompare(b[1]));
   const visible = enriched
     .filter((row) => showAttached || !row.attached)
@@ -131,11 +136,11 @@ export default async function EcoTrimReviewPage({ searchParams }: { searchParams
     <div className="libraryTable"><table>
       <thead><tr><th>Market impact</th><th>Canonical target</th><th>ECO evidence</th><th>Current state</th><th>Human decision</th></tr></thead>
       <tbody>{shown.map((row) => <tr key={row.key}>
-        <td><b>{n(row.registrations3m)}</b><br/><small>{Number(row.registrationSharePct || 0).toFixed(2)}% of mapped 3M · {row.priceBlocker}</small></td>
-        <td><b>{row.brand} {row.modelName}</b><br/><small>{row.generationId} · {row.powertrain}</small></td>
-        <td><b>{row.rawLabel}</b><br/><small>{row.sourceCount} ECO UUID{row.sourceCount === 1 ? "" : "s"} · ECO evidence price {money(row.ecoPriceMinThb, row.ecoPriceMaxThb)}</small><br/><small>{row.sourceIds.slice(0,2).join(" · ")}{row.sourceIds.length > 2 ? ` · +${row.sourceIds.length - 2}` : ""}</small></td>
+        <td className={styles.impactCell}><b>{n(row.registrations3m)}</b><br/><small>{Number(row.registrationSharePct || 0).toFixed(2)}% of mapped 3M · {row.priceBlocker}</small></td>
+        <td className={styles.targetCell}><b>{row.brand} {row.modelName}</b><br/><small>{row.generationId} · {row.powertrain}</small></td>
+        <td className={styles.evidenceCell}><b>{row.rawLabel}</b><br/><small>{row.sourceCount} ECO UUID{row.sourceCount === 1 ? "" : "s"} · ECO evidence price {money(row.ecoPriceMinThb, row.ecoPriceMaxThb)}</small><br/><small>{row.sourceIds.slice(0,2).join(" · ")}{row.sourceIds.length > 2 ? ` · +${row.sourceIds.length - 2}` : ""}</small></td>
         <td>{row.attached ? <><b>ATTACHED</b><br/><small>อย่างน้อยหนึ่ง source UUID อยู่ใน canonical trim แล้ว</small></> : <><b>{row.currentTrimCount} current trims</b><br/><small>{row.currentTrimCount ? "ตรวจ duplicate grade ก่อนสร้าง" : "NO_MARKET_TRIM priority"}</small></>}</td>
-        <td>{row.attached ? <span>ไม่เสนอ create ซ้ำ</span> : <form action={enqueueEcoMarketTrim} className="adminInlineForm">
+        <td>{row.attached ? <span>ไม่เสนอ create ซ้ำ</span> : <form action={enqueueEcoMarketTrim} className={styles.reviewForm}>
           <input type="hidden" name="group_key" value={row.key}/>
           <input type="hidden" name="submission_id" value={randomUUID()}/>
           <input type="hidden" name="submitted_at" value={submittedAt}/>
