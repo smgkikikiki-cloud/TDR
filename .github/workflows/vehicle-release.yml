@@ -58,7 +58,6 @@ jobs:
           git config user.name "TDR canonical release"
           git config user.email "noreply@github.com"
           git switch --orphan release-staging
-          git rm -rf .
           cp /tmp/vehicle-release.json vehicle-release.json
           git add vehicle-release.json
           git commit -m "Stage canonical release ${GITHUB_SHA}"
