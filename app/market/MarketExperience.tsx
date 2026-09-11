@@ -16,7 +16,7 @@ type ModelOption = {
   powertrains: string[];
 };
 
-type Mode = "checking" | "public" | "pro" | "error";
+type Mode = "checking" | "public" | "free" | "pro" | "error";
 
 export function MarketExperience({
   brands,
@@ -66,7 +66,7 @@ export function MarketExperience({
           return;
         }
         if (response.status === 403) {
-          setMode("public");
+          setMode("free");
           return;
         }
 
@@ -97,6 +97,6 @@ export function MarketExperience({
     );
   }
   if (mode === "pro") return <MarketWorkspace brands={brands} models={models} />;
-
-  return <>{freePreview || publicPreview}</>;
+  if (mode === "free") return <>{freePreview}</>;
+  return <>{publicPreview}</>;
 }
