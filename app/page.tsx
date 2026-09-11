@@ -1,151 +1,174 @@
 import Link from "next/link";
 import { getEvents } from "@/lib/data";
-import { getCanonicalBrands, getCanonicalModels } from "@/lib/canonical-data";
-import { bodyLabel } from "@/lib/body-labels";
-import { displayName, initials } from "@/lib/display-name";
+import { getCanonicalModels } from "@/lib/canonical-data";
+import { displayName } from "@/lib/display-name";
+import styles from "./home-saas.module.css";
 
 export const dynamic = "force-dynamic";
 
-function baht(min: any, max: any) {
-  const f = (n: number) => Number(n).toLocaleString();
-  if (!min && !max) return null;
-  return min && max && min !== max ? `฿${f(min)}–${f(max)}` : `฿${f(min || max)}`;
-}
-function originLabel(r: any) {
-  if (r.production_type === "CKD" || r.production_type === "SKD") return `${r.production_country || "ไทย"} (${r.production_type})`;
-  if (r.production_country) return `${r.production_country}${r.production_type ? ` (${r.production_type})` : ""}`;
-  return null;
+function baht(min: unknown, max: unknown) {
+  const low = Number(min || 0);
+  const high = Number(max || 0);
+  if (!low && !high) return null;
+  const f = (n: number) => n.toLocaleString("th-TH");
+  if (low && high && low !== high) return `฿${f(low)}–${f(high)}`;
+  return `฿${f(low || high)}`;
 }
 
-function GalleryCard({ r }: { r: any }) {
-  const brand = displayName(r.brands);
-  const meta = [bodyLabel(r.body_type), (r.powertrains || []).join(" / "), r.seats ? `${r.seats} ที่นั่ง` : null].filter(Boolean).join(" · ");
-  const price = baht(r.retail_price_min, r.retail_price_max);
-  const local = r.production_type === "CKD" || r.production_type === "SKD";
+function vehicleMeta(model: any) {
+  return [
+    Array.isArray(model.powertrains) ? model.powertrains.join(" / ") : null,
+    model.production_country || null,
+    model.production_type || null,
+  ].filter(Boolean).join(" · ");
+}
+
+function MarketPreview() {
   return (
-    <Link className="sfCard" href={`/models/${r.slug}`}>
-      <div className="sfSlot">{r.image_url ? <img src={r.image_url} alt="" /> : <><small>{(brand || "TDR").toUpperCase()}</small><b>{displayName(r)}</b></>}</div>
-      <div className="sfCardBody">
-        <div className="sfEyebrow">{brand || " "}</div>
-        <h3>{displayName(r)}</h3>
-        {meta ? <p className="sfCardMeta">{meta}</p> : <p className="sfCardMeta sfMissing">ยังไม่มีข้อมูลสเปกพื้นฐาน</p>}
-        <div className="sfCardFoot">
-          {price ? <span className="sfPrice">{price}</span> : <span className="sfMissing">ยังไม่ประกาศราคา</span>}
-          {local ? <span className="sfLocal">ประกอบไทย</span> : r.production_type === "CBU" ? <span className="sfImported">นำเข้า CBU</span> : null}
+    <div className={styles.preview} aria-label="ตัวอย่าง Market Intelligence">
+      <div className={styles.previewTop}>
+        <div>
+          <strong>Market Intelligence</strong>
+          <span>ภาพรวมตลาดรถยนต์ประเทศไทย</span>
+        </div>
+        <button type="button" disabled>ส่งออกข้อมูล</button>
+      </div>
+      <div className={styles.previewFilters} aria-hidden="true">
+        <div><small>เดือน</small><b>เลือกรอบข้อมูล</b></div>
+        <div><small>ช่วงเวลา</small><b>เดือน / 3M / 6M / 12M / YTD</b></div>
+        <div><small>มิติข้อมูล</small><b>แบรนด์ / รุ่น / Segment</b></div>
+      </div>
+      <div className={styles.previewTabs} aria-hidden="true">
+        <b>ส่วนแบ่งตลาด</b><span>ยอดจดทะเบียน</span><span>การเปลี่ยนแปลง</span><span>แนวโน้มรายเดือน</span>
+      </div>
+      <div className={styles.previewTable} aria-hidden="true">
+        <div className={`${styles.previewRow} ${styles.previewHead}`}>
+          <span>อันดับ</span><span>ตลาด</span><span>ยอดจดทะเบียน</span><span>ส่วนแบ่งตลาด</span><span>การเปลี่ยนแปลง</span>
+        </div>
+        {Array.from({ length: 8 }, (_, index) => (
+          <div className={styles.previewRow} key={index}>
+            <span>{index + 1}</span>
+            <i className={styles.nameBar} />
+            <i className={styles.valueBar} />
+            <i className={styles.shareBar} />
+            <i className={styles.moveBar} />
+          </div>
+        ))}
+      </div>
+      <div className={styles.previewLock}>
+        <div className={styles.previewLockCard}>
+          <div className={styles.lockMark}>▣</div>
+          <strong>ปลดล็อก Market Intelligence</strong>
+          <span>เข้าถึงตัวเลขทั้งหมด กราฟแนวโน้ม และข้อมูลสำหรับตัดสินใจ</span>
+          <Link href="/reports">ดูแพ็กเกจ</Link>
+          <Link className={styles.previewLogin} href="/member/login">มีบัญชีแล้ว? เข้าสู่ระบบ</Link>
         </div>
       </div>
+    </div>
+  );
+}
+
+function VehicleCard({ model }: { model: any }) {
+  const brand = displayName(model.brands);
+  const price = baht(model.retail_price_min, model.retail_price_max);
+  return (
+    <Link className={styles.vehicleCard} href={`/models/${model.slug}`}>
+      <div className={styles.vehicleVisual}>
+        {model.image_url ? <img src={model.image_url} alt="" /> : <><small>{brand || "TDR"}</small><b>{displayName(model)}</b></>}
+      </div>
+      <strong>{[brand, displayName(model)].filter(Boolean).join(" ")}</strong>
+      <span>{vehicleMeta(model) || "ข้อมูลรุ่นใน Vehicle Master"}</span>
+      <em>{price || "ยังไม่มีราคาที่ตรวจสอบได้"}</em>
     </Link>
   );
 }
 
 export default async function Home() {
-  const [brands, events, models] = await Promise.all([getCanonicalBrands(30), getEvents(5), getCanonicalModels(600)]);
-  const recent = (models as any[]).filter((r) => r.status !== "discontinued");
-  const featured = recent.filter((r) => r.featured);
-  const current = (featured.length ? featured.slice(0, 6) : recent.slice(0, 6)) as any[];
-  const lead = current[0];
-  const side = recent.filter((r) => !lead || r.id !== lead.id).slice(0, 5);
-  const rest = current.slice(1, 7);
+  const [models, events] = await Promise.all([getCanonicalModels(600), getEvents(3)]);
+  const catalogue = (models as any[]).filter((row) => String(row.status || "").toUpperCase() !== "HISTORICAL");
+  const cards = catalogue.slice(0, 5);
 
-  return <>
-    {lead ? (
-      <section className="sfLead">
-        <div className="sfLeadMain">
-          <div className="sfEyebrow">รุ่นเด่นในฐานข้อมูล</div>
-          <h1>{[displayName(lead.brands), displayName(lead)].filter(Boolean).join(" ")}</h1>
-          <p>{lead.consumer_description || "รุ่นปัจจุบันในแคตตาล็อก TDR พร้อมรุ่นย่อย ราคา ระบบขับเคลื่อน และแหล่งผลิตที่ตรวจสอบแหล่งที่มาได้"}</p>
-          <Link className="sfLeadSlot" href={`/models/${lead.slug}`}>
-            {lead.image_url ? <img src={lead.image_url} alt="" /> : <><small>{(displayName(lead.brands) || "TDR").toUpperCase()}</small><b>{displayName(lead)}</b></>}
+  return (
+    <div className={styles.home}>
+      <section className={styles.hero}>
+        <div className={styles.heroCopy}>
+          <div className={styles.eyebrow}>TDR AUTOMOTIVE INTELLIGENCE</div>
+          <h1>เห็นภาพตลาดรถไทย<br />ก่อนต้องอ่านทุกเว็บ<br />ทีละที่</h1>
+          <p>ข้อมูลจดทะเบียน ส่วนแบ่งตลาด และความเคลื่อนไหวของแบรนด์และรุ่นรถในที่เดียว เชื่อมโยงกับฐานข้อมูลรถของ TDR เพื่อให้เห็นตลาดได้ชัดขึ้น</p>
+          <div className={styles.heroActions}>
+            <Link className={styles.primaryButton} href="/market">เปิด Market Intelligence →</Link>
+            <Link className={styles.secondaryButton} href="/models">ค้นหารถในฐานข้อมูล</Link>
+          </div>
+          <div className={styles.trustRow}>
+            <div><b>ข้อมูลจดทะเบียน</b><span>ใช้ชุดข้อมูลตลาดที่ระบบรองรับ</span></div>
+            <div><b>รองรับข้อมูลรายเดือน</b><span>ติดตามการเปลี่ยนแปลงตามช่วงเวลา</span></div>
+            <div><b>เชื่อมโยงฐานข้อมูลรถ</b><span>{catalogue.length.toLocaleString("th-TH")} รุ่นใน active canonical release</span></div>
+          </div>
+        </div>
+        <MarketPreview />
+      </section>
+
+      <section className={styles.tools}>
+        <div className={styles.sectionHead}>
+          <h2>เครื่องมือ TDR</h2>
+          <span>เครื่องมือข้อมูลรถยนต์สำหรับการค้นหา เปรียบเทียบ และวิเคราะห์ตลาด</span>
+        </div>
+        <div className={styles.toolGrid}>
+          <Link className={`${styles.toolCard} ${styles.marketTool}`} href="/market">
+            <span className={styles.badge}>PRO</span>
+            <div className={styles.toolIcon}>▥</div>
+            <h3>Market Intelligence</h3>
+            <p>ดูยอดจดทะเบียน ส่วนแบ่งตลาด อันดับ และการเคลื่อนไหวของตลาดรถไทย พร้อมเชื่อมกับ Vehicle Master ของ TDR</p>
+            <b>เปิดเครื่องมือ →</b>
+            <small>ยอดจดทะเบียน · ส่วนแบ่งตลาด · แนวโน้ม · Movement</small>
           </Link>
-          <dl className="sfLeadFacts">
-            <div><dt>ราคา</dt><dd>{baht(lead.retail_price_min, lead.retail_price_max) || <span className="sfMissing">ยังไม่ประกาศ</span>}</dd></div>
-            <div><dt>ระบบขับเคลื่อน</dt><dd>{(lead.powertrains || []).join(" / ") || <span className="sfMissing">ไม่ระบุ</span>}</dd></div>
-            <div><dt>แหล่งผลิต</dt><dd>{originLabel(lead) || <span className="sfMissing">ไม่ระบุ</span>}</dd></div>
-            <div><dt>ประเภทตัวถัง</dt><dd>{bodyLabel(lead.body_type) || <span className="sfMissing">ไม่ระบุ</span>}</dd></div>
-          </dl>
-        </div>
-        <div className="sfLeadSide">
-          <div className="sfEyebrow ink" style={{ marginBottom: 12 }}>อัปเดตล่าสุดในแคตตาล็อก</div>
-          {side.length ? side.map((r: any) => (
-            <Link className="sfSideItem" href={`/models/${r.slug}`} key={r.id}>
-              <div className="sfSideSlot">{r.image_url ? <img src={r.image_url} alt="" /> : (displayName(r.brands) || "TDR").toUpperCase()}</div>
-              <div>
-                <h3>{[displayName(r.brands), displayName(r)].filter(Boolean).join(" ")}</h3>
-                <p>{[bodyLabel(r.body_type), (r.powertrains || []).join(" / "), r.production_type].filter(Boolean).join(" · ") || "ยังไม่มีสเปกพื้นฐาน"}</p>
-              </div>
-            </Link>
-          )) : <p className="sfMissing">ยังไม่มีรุ่นรถในฐานข้อมูล</p>}
-          <Link className="sfSideMore" href="/models">ดูแคตตาล็อกทั้งหมด →</Link>
+
+          <Link className={styles.toolCard} href="/compare">
+            <span className={`${styles.badge} ${styles.freeBadge}`}>FREE</span>
+            <div className={styles.toolIcon}>⚖</div>
+            <h3>เทียบรถ</h3>
+            <p>เปรียบเทียบรุ่นย่อย ราคา ขนาด Powertrain กำลัง และระยะทางที่ผู้ผลิตประกาศในตารางเดียว</p>
+            <b>เทียบรถ →</b>
+            <small>ราคา · ขนาดตัวถัง · Powertrain · Range</small>
+          </Link>
+
+          <Link className={styles.toolCard} href="/models">
+            <span className={`${styles.badge} ${styles.freeBadge}`}>FREE</span>
+            <div className={styles.toolIcon}>◫</div>
+            <h3>แคทตาล็อกรถยนต์</h3>
+            <p>ค้นหารุ่นและรุ่นย่อยใน Vehicle Master พร้อมราคา ระบบขับเคลื่อน และข้อมูลการผลิตที่มีแหล่งอ้างอิง</p>
+            <b>ค้นหารถ →</b>
+            <small>รุ่นย่อย · ราคา · Powertrain · การผลิต</small>
+          </Link>
         </div>
       </section>
-    ) : (
-      <section className="sfPageHead">
-        <div>
-          <div className="sfEyebrow">TDR AUTOMOTIVE INTELLIGENCE</div>
-          <h1>รถที่ขายในไทย กับอุตสาหกรรมที่อยู่ข้างหลังมัน</h1>
-          <p>ยังไม่มีรุ่นรถในฐานข้อมูล เมื่อบันทึกรุ่นแรกแล้ว แคตตาล็อกจะขึ้นที่หน้านี้</p>
+
+      <section className={styles.secondarySection}>
+        <div className={styles.sectionHead}>
+          <h2>รถในฐานข้อมูล</h2>
+          <Link href="/models">ดูรถทั้งหมด →</Link>
         </div>
+        {cards.length ? <div className={styles.vehicleGrid}>{cards.map((model) => <VehicleCard key={model.id} model={model} />)}</div> : <div className={styles.empty}>ยังไม่มีรถใน active canonical release</div>}
       </section>
-    )}
 
-    {rest.length ? (
-      <section className="sfHomeSec">
-        <div className="sfZoneHead">
-          <div><div className="sfEyebrow ink">CATALOG</div><h2>รุ่นอื่นในแคตตาล็อก</h2></div>
-          <Link href="/models">ดูทั้งหมด →</Link>
+      <section className={styles.secondarySection}>
+        <div className={styles.sectionHead}>
+          <h2>บทวิเคราะห์ล่าสุด</h2>
+          <Link href="/news">ดูบทวิเคราะห์ทั้งหมด →</Link>
         </div>
-        <div className="sfGrid">{rest.map((r: any) => <GalleryCard key={r.id} r={r} />)}</div>
+        {events.length ? (
+          <div className={styles.articleGrid}>
+            {(events as any[]).map((event) => (
+              <Link className={styles.articleCard} href="/news" key={event.id}>
+                <time>{event.event_date}</time>
+                <strong>{event.title_th}</strong>
+                <span>{event.summary_th || event.source_name || "อ่านรายละเอียด"}</span>
+                <b>→</b>
+              </Link>
+            ))}
+          </div>
+        ) : <div className={styles.empty}>ยังไม่มีบทวิเคราะห์ที่เผยแพร่ในฐานข้อมูล</div>}
       </section>
-    ) : null}
-
-    <section className="sfHomeSec">
-      <div className="sfZoneHead">
-        <div><div className="sfEyebrow ink">LATEST</div><h2>ข่าวอุตสาหกรรม</h2></div>
-        <Link href="/news">อ่านทั้งหมด →</Link>
-      </div>
-      {events.length ? (
-        <div className="sfHomeNews">
-          {events.slice(0, 3).map((e: any) => (
-            <article key={e.id}>
-              <time>{e.event_date}</time>
-              <h3>{e.title_th}</h3>
-              {e.summary_th || e.source_name ? <p>{e.summary_th || e.source_name}</p> : null}
-            </article>
-          ))}
-        </div>
-      ) : (
-        <div className="sfEmpty"><b>ยังไม่มีข่าวในฐานข้อมูล</b><span>ข่าวที่เผยแพร่แล้วจะแสดงที่นี่</span></div>
-      )}
-    </section>
-
-    <section className="sfHomeSec">
-      <div className="sfZoneHead">
-        <div><div className="sfEyebrow ink">BRANDS</div><h2>แบรนด์ในฐานข้อมูล</h2></div>
-        <Link href="/brands">ดูทั้งหมด →</Link>
-      </div>
-      {brands.length ? (
-        <div className="sfHomeBrands">
-          {brands.slice(0, 16).map((b: any) => (
-            <Link href={`/brands/${b.slug}`} key={b.id}>
-              {b.logo_url ? <img src={b.logo_url} alt="" /> : <span>{initials(b)}</span>}
-              {displayName(b)}
-            </Link>
-          ))}
-        </div>
-      ) : (
-        <div className="sfEmpty"><b>ยังไม่มีแบรนด์ในฐานข้อมูล</b><span>แบรนด์ที่บันทึกแล้วจะแสดงที่นี่</span></div>
-      )}
-    </section>
-
-    <section className="sfHomeSec">
-      <div className="sfZoneHead">
-        <div><div className="sfEyebrow ink">INDUSTRY LAYER</div><h2>ดูรถในอีกมุม</h2></div>
-      </div>
-      <div className="sfIndustryLinks">
-        <Link href="/models"><b>ราคา สเปก และรุ่นย่อย</b><p>ข้อมูลตลาดรถเปิดฟรีจาก Vehicle Master ชุดเดียว พร้อมราคาแคมเปญและเงื่อนไข</p><span>เปิดดู →</span></Link>
-        <Link href="/news"><b>ข่าวอุตสาหกรรม</b><p>ความเคลื่อนไหวของผู้ผลิต โรงงาน และนโยบายที่กระทบตลาดรถไทย</p><span>เปิดดู →</span></Link>
-        <Link href="/reports"><b>TDR Report · สำหรับสมาชิก</b><p>ยอดจดทะเบียนรายรุ่น ส่วนแบ่งตลาด และเทรนด์ย้อนหลัง ลึกถึงระดับรุ่นย่อย</p><span>ดูว่ามีอะไรบ้าง →</span></Link>
-      </div>
-    </section>
-  </>;
+    </div>
+  );
 }
