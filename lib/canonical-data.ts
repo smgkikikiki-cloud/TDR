@@ -12,6 +12,49 @@ const BODY: Record<string, string> = {
   PICKUP: "PICKUP", WAGON: "WAGON", VAN: "VAN", TRUCK: "TRUCK", OTHER: "OTHER",
 };
 
+function publicPriceRecord(record: any) {
+  if (!record || typeof record !== "object") return null;
+  const {
+    source: _source,
+    source_ref: _sourceRef,
+    source_document_id: _sourceDocumentId,
+    notes: _notes,
+    reviewed_by: _reviewedBy,
+    ...publicRecord
+  } = record;
+  return publicRecord;
+}
+
+function publicCampaignQuote(quote: any) {
+  if (!quote || typeof quote !== "object") return {};
+  const {
+    source: _source,
+    source_ref: _sourceRef,
+    source_document_id: _sourceDocumentId,
+    ...publicQuote
+  } = quote;
+  return {
+    ...publicQuote,
+    campaign_options: Array.isArray(publicQuote.campaign_options)
+      ? publicQuote.campaign_options.map((option: any) => {
+        if (!option || typeof option !== "object") return option;
+        const {
+          source: _optionSource,
+          source_ref: _optionSourceRef,
+          source_document_id: _optionSourceDocumentId,
+          ...publicOption
+        } = option;
+        return publicOption;
+      })
+      : [],
+  };
+}
+
+function publicPriceHistory(history: any) {
+  if (!Array.isArray(history)) return [];
+  return history.map(publicPriceRecord).filter(Boolean);
+}
+
 function modelRow(row: any) {
   const payload = row.payload || {};
   const brand = payload.brand || {};
@@ -46,7 +89,8 @@ function trimRow(row: any) {
   const detail = row.payload || {};
   const specs = detail.specs || {};
   const lifecycle = publicRetailLifecycle(row.status);
-  const list = lifecycle === "CURRENT" ? (row.current_list_price || detail.current_list_price) : null;
+  const rawList = lifecycle === "CURRENT" ? (row.current_list_price || detail.current_list_price) : null;
+  const list = publicPriceRecord(rawList);
   const powertrainId = `canonical-pt:${row.canonical_id}`;
   return {
     ...specs,
@@ -60,9 +104,9 @@ function trimRow(row: any) {
     retail_lifecycle: lifecycle,
     powertrain: row.powertrain || specs.powertrain || null,
     price_baht: list?.amount_thb ?? null,
-    current_list_price: list || null,
-    campaign_quote: lifecycle === "CURRENT" ? (row.campaign_quote || {}) : {},
-    price_history: row.price_history || [],
+    current_list_price: list,
+    campaign_quote: lifecycle === "CURRENT" ? publicCampaignQuote(row.campaign_quote || {}) : {},
+    price_history: publicPriceHistory(row.price_history || []),
     source_refs: row.source_refs || {},
     trim_powertrains: [{ powertrain_id: powertrainId }],
     _powertrain: {
