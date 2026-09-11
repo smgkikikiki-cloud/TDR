@@ -1,8 +1,6 @@
 import { publicDb } from "@/lib/supabase";
 import {
   isCatalogVisible,
-  isHistorical,
-  isVerifiedCurrent,
   publicCompatibilityStatus,
   publicRetailLifecycle,
 } from "@/lib/public-retail-lifecycle";
@@ -31,8 +29,6 @@ function modelRow(row: any) {
     body_type: BODY[row.body_type] || row.body_type,
     status: publicCompatibilityStatus(row.status),
     retail_lifecycle: lifecycle,
-    // A model-level price is consumer-facing "current price" data. Never expose
-    // it as current until the canonical model lifecycle itself is verified.
     retail_price_min: verifiedCurrent ? row.retail_price_min : null,
     retail_price_max: verifiedCurrent ? row.retail_price_max : null,
     brands: {
@@ -130,9 +126,8 @@ export async function getCanonicalModelBundle(slug: string) {
     .select("*").eq("model_id", model.canonical_id).order("name");
   if (trimError) throw trimError;
 
-  // Detail pages may show verified CURRENT and HISTORICAL trims. UNVERIFIED
-  // identities remain in canonical storage but are withheld from consumer
-  // "current/past trim" claims until lifecycle review resolves them.
+  // Model detail must never call UNVERIFIED trims current or historical. Keep
+  // those identities in canonical storage until lifecycle review resolves them.
   const trims = (rawTrims || []).map(trimRow)
     .filter((trim: any) => trim.retail_lifecycle !== "UNVERIFIED");
   const powertrains = trims.map((trim: any) => trim._powertrain);
@@ -152,10 +147,9 @@ export async function getCanonicalModelBundle(slug: string) {
     trims: trims.map(({ _powertrain, ...trim }: any) => trim) };
 }
 
-/** Free compare reads the same active release as the catalogue. It deliberately
- * returns exact MarketTrim grain so price/spec values are never mixed between
- * variants. Tyre/wheel fields remain canonical data but are not projected onto
- * the public compare object in this product phase. */
+/** Free compare reads the same active release as the catalogue. Identity/spec
+ * rows may remain visible while lifecycle is UNVERIFIED, but HISTORICAL rows
+ * are excluded and current price/campaign fields stay blank until CURRENT. */
 export async function getCanonicalCompareTrims(limit = 600) {
   const db = publicDb();
   if (!db) return [];
@@ -184,7 +178,7 @@ export async function getCanonicalCompareTrims(limit = 600) {
         model_seats: model?.seats || null,
       };
     })
-    .filter((row: any) => isVerifiedCurrent(row.retail_lifecycle) && isVerifiedCurrent(row.model_lifecycle))
+    .filter((row: any) => isCatalogVisible(row.retail_lifecycle) && isCatalogVisible(row.model_lifecycle))
     .sort((a: any, b: any) => `${a.brand_name} ${a.model_name} ${a.name}`.localeCompare(`${b.brand_name} ${b.model_name} ${b.name}`));
 }
 
