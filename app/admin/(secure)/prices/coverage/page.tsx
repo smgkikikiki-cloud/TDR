@@ -68,8 +68,8 @@ export default async function PriceCoveragePage() {
         <td>{money(row.seedMinThb, row.seedMaxThb)}<br/><small>{row.seedHintCount ? `${row.seedHintCount} seed values · HINT ONLY` : "no seed hint"}</small></td>
         <td>{row.oemTargetCount ? <b>{row.oemTargetCount}</b> : <span>0</span>}</td>
         <td>{row.blocker === "NO_MARKET_TRIM"
-          ? <Link href="/admin/vehicle-input">เปิด Vehicle input ↗</Link>
-          : <Link href={`/admin/prices?q=${encodeURIComponent(`${row.brand} ${row.model}`)}`}>เปิด trims ↗</Link>}</td>
+          ? <Link href="/admin/vehicle-input">สร้าง MarketTrim ↗</Link>
+          : <Link href={`/admin/vehicle-input?model=${encodeURIComponent(row.canonicalModelId)}`}>เติม LIST_PRICE ↗</Link>}</td>
       </tr>)}</tbody>
     </table></div>
 
