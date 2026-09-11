@@ -37,7 +37,7 @@ def by_source(payload):
     return {row["source_id"]: row for row in payload["decisions"]}
 
 
-def test_review_disposition_preserves_other_decisions_and_replaces_same_source(local_data):
+def test_review_disposition_preserves_replaces_and_reopens(local_data):
     source_id = another_source(local_data)
     before = by_source(review_payload(local_data))
     assert before[AGENT_SOURCE]["reviewer"] == "agent-proposed"
@@ -83,6 +83,22 @@ def test_review_disposition_preserves_other_decisions_and_replaces_same_source(l
     assert replaced[source_id]["action"] == "defer"
     assert replaced[source_id]["reviewed_at"] == "2026-09-12"
 
+    reopened = upsert_review_dispositions(
+        data_dir=local_data,
+        year=2026,
+        snapshot_date=SNAPSHOT_DATE,
+        source_ids=[source_id],
+        action="reopen",
+        reviewer="Human Reviewer",
+        reviewed_at="2026-09-13",
+        notes="New brochure evidence arrived",
+        write=True,
+    )
+    assert reopened["written"] is True
+    final = by_source(review_payload(local_data))
+    assert source_id not in final
+    assert final[AGENT_SOURCE] == before[AGENT_SOURCE]
+
 
 def test_review_disposition_rejects_unknown_source(local_data):
     with pytest.raises(ECOIngestError, match="unknown ECO source IDs"):
@@ -98,27 +114,31 @@ def test_review_disposition_rejects_unknown_source(local_data):
         )
 
 
-def test_input_pipeline_stages_human_review_without_serving_mutation(local_data):
-    source_id = another_source(local_data)
-    pipeline = CanonicalInputPipeline(local_data)
-    batch = {
+def review_batch(source_id, *, actor="TDR Human", source_kind="ECO", action="defer", batch_id="eco-review-test-1"):
+    return {
         "schema_version": 1,
-        "batch_id": "eco-review-test-1",
+        "batch_id": batch_id,
         "year": 2026,
-        "source": {"kind": "ECO", "ref": "ecosticker:snapshot:2026-09-08"},
-        "actor": "TDR Human",
+        "source": {"kind": source_kind, "ref": "ecosticker:snapshot:2026-09-08"},
+        "actor": actor,
         "reason": "Reviewed ECO candidate",
         "submitted_at": "2026-09-11T09:30:00+07:00",
         "commands": [{
             "operation": "UPSERT_ECO_REVIEW",
             "payload": {
                 "snapshot_date": SNAPSHOT_DATE,
-                "action": "defer",
+                "action": action,
                 "source_ids": [source_id],
                 "notes": "Need exact grade confirmation",
             },
         }],
     }
+
+
+def test_input_pipeline_stages_human_review_without_serving_mutation(local_data):
+    source_id = another_source(local_data)
+    pipeline = CanonicalInputPipeline(local_data)
+    batch = review_batch(source_id)
     result = pipeline.apply(batch)
     assert result.idempotent_replay is False
     assert any(path.endswith("ingest/ecosticker/review/2026-09-08.json") for path in result.changed_files)
@@ -132,24 +152,20 @@ def test_input_pipeline_stages_human_review_without_serving_mutation(local_data)
     replay = pipeline.apply(batch)
     assert replay.idempotent_replay is True
 
+    reopened = pipeline.apply(review_batch(
+        source_id, action="reopen", batch_id="eco-review-test-reopen",
+    ))
+    assert reopened.idempotent_replay is False
+    assert source_id not in by_source(review_payload(local_data))
 
-def test_input_pipeline_refuses_system_actor_for_review(local_data):
+
+def test_input_pipeline_refuses_nonhuman_actor_and_non_eco_source(local_data):
     source_id = another_source(local_data)
     with pytest.raises(CanonicalInputError, match="HUMAN actor"):
-        CanonicalInputPipeline(local_data).apply({
-            "schema_version": 1,
-            "batch_id": "eco-review-system",
-            "year": 2026,
-            "source": {"kind": "ECO"},
-            "actor": "system",
-            "reason": "should fail",
-            "submitted_at": "2026-09-11T09:30:00+07:00",
-            "commands": [{
-                "operation": "UPSERT_ECO_REVIEW",
-                "payload": {
-                    "snapshot_date": SNAPSHOT_DATE,
-                    "action": "reject",
-                    "source_ids": [source_id],
-                },
-            }],
-        })
+        CanonicalInputPipeline(local_data).apply(review_batch(
+            source_id, actor="agent-proposed", batch_id="eco-review-agent",
+        ))
+    with pytest.raises(CanonicalInputError, match="source.kind ECO"):
+        CanonicalInputPipeline(local_data).apply(review_batch(
+            source_id, source_kind="ADMIN", batch_id="eco-review-admin-source",
+        ))
