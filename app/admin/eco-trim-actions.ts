@@ -33,6 +33,8 @@ function ecoRefs(row: any): string[] {
 export async function enqueueEcoMarketTrim(formData: FormData) {
   if (!(await isAdmin())) redirect("/admin/login");
   const groupKey = required(formData, "group_key", "ECO candidate");
+  // The field is intentionally blank in the UI. A human must type/confirm the
+  // canonical name, but a correctly-written ECO label may legitimately equal it.
   const trimName = required(formData, "trim_name", "ชื่อ MarketTrim ที่ตรวจแล้ว");
   const reason = required(formData, "reason", "review note");
   const submissionId = required(formData, "submission_id", "submission id");
@@ -47,11 +49,6 @@ export async function enqueueEcoMarketTrim(formData: FormData) {
   if (!group || group.snapshotDate !== ECO_TRIM_SNAPSHOT_DATE) throw new Error("ไม่พบ candidate นี้ใน immutable ECO snapshot");
   if (!group.modelId || !group.generationId || !group.powertrain || !group.sourceIds.length) {
     throw new Error("candidate ไม่มี model / generation / powertrain / source identity ครบ");
-  }
-  // A reviewer must type a canonical product name. Raw ECO text is evidence,
-  // not a default that can be accepted by clicking through.
-  if (normalizedName(trimName) === normalizedName(group.rawLabel)) {
-    throw new Error("กรุณาตรวจและตั้งชื่อ MarketTrim ไม่ใช่คัดลอก raw ECO label ทั้งบรรทัด");
   }
 
   const db = adminDb();
