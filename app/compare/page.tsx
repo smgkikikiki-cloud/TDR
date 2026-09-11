@@ -51,13 +51,14 @@ export default async function ComparePage({ searchParams }: { searchParams: Prom
     </section>
 
     {requestedModels.length ? <div className="compareNotice">เลือกรถมาจากแคตตาล็อกแล้ว {requestedModels.length} รุ่น · เลือก Trim จริงของแต่ละรุ่นด้านล่างก่อนเทียบ เพื่อไม่ให้ระบบเดาสเปกแทนคุณ</div> : null}
-    {missingModelSelection ? <div className="compareNotice">มีรถที่เลือกจากแคตตาล็อกซึ่งยังไม่มี Trim ที่ใช้ใน Free Compare ระบบจึงไม่สร้างตัวเลือกให้รุ่นนั้น</div> : null}
+    {missingModelSelection ? <div className="compareNotice">มีรถที่เลือกจากแคตตาล็อกซึ่งยังไม่มี Trim ที่ใช้ใน Free Compare ช่องนั้นจึงกลับมาให้เลือกรุ่นย่อยอื่นได้แทน</div> : null}
 
     <form className="comparePicker" method="get">
       {[0, 1, 2, 3].map((slot) => {
         const modelId = selected[slot]?.model_id || requestedModels[slot] || null;
-        const options = modelId ? all.filter((trim) => trim.model_id === modelId) : all;
-        const scopedLabel = options[0] ? modelLabel(options[0]) : null;
+        const scopedOptions = modelId ? all.filter((trim) => trim.model_id === modelId) : [];
+        const options = modelId && scopedOptions.length ? scopedOptions : all;
+        const scopedLabel = scopedOptions[0] ? modelLabel(scopedOptions[0]) : null;
         return <label key={slot}>
           <span>คันที่ {slot + 1}{scopedLabel ? ` · ${scopedLabel}` : slot < 2 ? " · ต้องเลือก" : " · ไม่บังคับ"}</span>
           <select name="trims" defaultValue={selected[slot]?.id || ""} required={slot < 2}>
