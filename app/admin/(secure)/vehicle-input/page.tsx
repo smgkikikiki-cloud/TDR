@@ -6,6 +6,7 @@ import {
   enqueueVehicleInput,
   enqueueWithdrawModel,
 } from "@/app/admin/input-actions";
+import { oemTargetsForModel } from "@/lib/price-evidence-registry";
 import { adminDb } from "@/lib/supabase";
 
 const SEGMENTS = ["A", "B", "C", "D", "E", "F", "UNKNOWN"];
@@ -35,7 +36,7 @@ function kindLabel(kind?: string) {
 export default async function VehicleInputPage({
   searchParams,
 }: {
-  searchParams: Promise<{ queued?: string; kind?: string }>;
+  searchParams: Promise<{ queued?: string; kind?: string; model?: string }>;
 }) {
   const query = await searchParams;
   const db = adminDb();
@@ -71,6 +72,14 @@ export default async function VehicleInputPage({
   const pricedModels = new Set(trims.filter((trim: any) => currentPrice(trim)).map((trim: any) => trim.model_id));
   const queueCount = batches.filter((batch: any) => batch.status === "QUEUED" || batch.status === "PROCESSING").length;
   const failedCount = batches.filter((batch: any) => batch.status === "FAILED").length;
+  const requestedModel = String(query.model || "").trim();
+  const focusedModel = models.some((model: any) => model.canonical_id === requestedModel) ? requestedModel : "";
+  const focusedModelTrims = focusedModel ? trims.filter((trim: any) => trim.model_id === focusedModel) : [];
+  const missingFocusedTrims = focusedModelTrims.filter((trim: any) => !currentPrice(trim));
+  const priceTrims = focusedModel
+    ? (missingFocusedTrims.length ? missingFocusedTrims : focusedModelTrims)
+    : trims;
+  const focusedTargets = focusedModel ? oemTargetsForModel(focusedModel) : [];
 
   const exampleTrim = trims.find((trim: any) => trim.canonical_id === "jaecoo.jaecoo_5_ev.j5.trim.max_plus_bev") || trims[0];
   const example = JSON.stringify({
@@ -122,13 +131,26 @@ export default async function VehicleInputPage({
       <code>{release?.release_id || "no active release"} · as of {release?.as_of || "—"}</code>
     </div>
 
+    {focusedModel ? <div className="adminNotice">
+      <b>Focused LIST_PRICE backfill · {modelNames.get(focusedModel) || focusedModel}</b>
+      <span>มาจาก Price Coverage Worklist. Quick Price ด้านล่างแสดงเฉพาะ MarketTrim ของรุ่นนี้{missingFocusedTrims.length ? `ที่ยังขาด LIST_PRICE ${missingFocusedTrims.length} trim` : ""}; OEM evidence selector ถูกผูกกับ <code>{focusedModel}</code> ฝั่ง server.</span>
+      <Link href="/admin/prices/coverage">กลับ Price Coverage Worklist ↗</Link>
+    </div> : null}
+
+    {focusedModel && focusedTargets.length ? <>
+      <div className="adminHeader"><div><small>REGISTERED OEM EVIDENCE</small><h2>เปิดหลักฐานก่อนกรอกราคา</h2><p>รายการนี้เป็น target ที่ registry ผูกกับ canonical model นี้โดยตรง. อ่าน note ก่อนใช้ เพราะบาง OEM page ใช้ยืนยัน model ได้แต่ไม่มีราคาใน HTML/page content.</p></div></div>
+      <div className="adminQuickGrid">{focusedTargets.map((target) => <a key={target.id} href={target.url} target="_blank" rel="noreferrer">
+        <b>{target.sourceId}</b><span>{target.role} ↗</span><small>{target.notes || target.url}</small>
+      </a>)}</div>
+    </> : null}
+
     <div className="adminHeader"><div><small>QUICK INPUT 01</small><h2>เพิ่ม / เปลี่ยนราคาหลัก</h2><p>ใช้กับ MSRP / ราคาเปิดตัว / estimated price ที่มีหลักฐาน. Campaign ซับซ้อนยังเก็บใน Advanced เพื่อไม่บิดเงื่อนไขโปร.</p></div></div>
     <form action={enqueuePriceInput} className="adminForm">
       <input type="hidden" name="submission_id" value={randomUUID()} />
       <input type="hidden" name="submitted_at" value={submittedAt} />
-      <label className="adminField adminFieldWide"><span>MarketTrim</span><select name="trim_id" required defaultValue="">
+      <label className="adminField adminFieldWide"><span>MarketTrim</span><select name="trim_id" required defaultValue={priceTrims.length === 1 ? priceTrims[0].canonical_id : ""}>
         <option value="" disabled>เลือกรุ่นย่อย…</option>
-        {trims.map((trim: any) => <option key={trim.canonical_id} value={trim.canonical_id}>
+        {priceTrims.map((trim: any) => <option key={trim.canonical_id} value={trim.canonical_id}>
           {modelNames.get(trim.model_id) || trim.model_id} — {trim.name} · {trim.powertrain || "?"} · {money(currentPrice(trim))}
         </option>)}
       </select></label>
@@ -140,12 +162,16 @@ export default async function VehicleInputPage({
       </select></label>
       <label className="adminField"><span>วันที่ตรวจพบ</span><input name="observed_at" type="date" defaultValue={today} required /></label>
       <label className="adminField"><span>วันที่เริ่มมีผล (ถ้ารู้)</span><input name="effective_from" type="date" /></label>
+      {focusedTargets.length ? <label className="adminField adminFieldWide"><span>Registered OEM target (ถ้าหน้านี้มีราคาจริง)</span><select name="target_id" defaultValue="">
+        <option value="">ไม่ใช้ registry target — ใช้ source ref ด้านล่าง</option>
+        {focusedTargets.map((target) => <option key={target.id} value={target.id}>{target.sourceId} · {target.role} · {target.id}</option>)}
+      </select></label> : null}
       <label className="adminField"><span>ชนิดแหล่งข้อมูล</span><select name="source_kind" defaultValue="OEM">
         <option value="OEM">OEM / official</option><option value="ECO">EcoSticker</option><option value="MEDIA">Media</option>
         <option value="PRICE_HARVEST">Price Harvester</option><option value="API">API</option><option value="ADMIN">Admin manual evidence</option>
       </select></label>
-      <label className="adminField"><span>Source URL / ref</span><input name="source_ref" type="text" placeholder="https://…" /></label>
-      <label className="adminField adminFieldWide"><span>เหตุผล / หลักฐานย่อ</span><input name="reason" type="text" placeholder="Official Thai page lists new MSRP…" required /></label>
+      <label className="adminField"><span>Source URL / ref</span><input name="source_ref" type="text" placeholder={focusedTargets.length ? "เว้นได้เมื่อเลือก registered OEM target" : "https://…"} /></label>
+      <label className="adminField adminFieldWide"><span>เหตุผล / หลักฐานย่อ</span><input name="reason" type="text" placeholder="Official Thai page lists this trim at MSRP…" required /></label>
       <div className="adminFormActions"><button className="adminPrimary">Validate + enqueue price</button></div>
     </form>
 
