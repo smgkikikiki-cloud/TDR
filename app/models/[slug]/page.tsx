@@ -26,16 +26,6 @@ function ptSummary(p: any) {
   if (p.horsepower_ps) b.push(`${p.horsepower_ps} PS`);
   return b.join(" · ") || p.label || "Powertrain";
 }
-function wheelLine(t: any) {
-  const bits: string[] = [];
-  if (t.tire_size_front) {
-    bits.push(t.tire_size_rear && t.tire_size_rear !== t.tire_size_front ? `ยาง ${t.tire_size_front} / ${t.tire_size_rear}` : `ยาง ${t.tire_size_front}`);
-  }
-  if (t.wheel_size_front) {
-    bits.push(t.wheel_size_rear && t.wheel_size_rear !== t.wheel_size_front ? `ล้อ ${t.wheel_size_front} / ${t.wheel_size_rear}` : `ล้อ ${t.wheel_size_front}`);
-  }
-  return bits.join(" · ");
-}
 function officialRangeLabel(trims: any[]) {
   const withRange = trims.filter((t) => Number(t.published_range_km) > 0);
   if (!withRange.length) return null;
@@ -50,7 +40,6 @@ function officialRangeLabel(trims: any[]) {
 /** One trim row. Shared by the current and the discontinued list. */
 function TrimRow({ t, ptById, muted }: { t: any; ptById: Map<any, any>; muted?: boolean }) {
   const linked = (t.trim_powertrains || []).map((x: any) => ptById.get(x.powertrain_id)).filter(Boolean);
-  const wheel = wheelLine(t);
   const price = baht(t.price_baht);
   const offers = (t.campaign_quote?.campaign_options || []).filter((offer: any) => offer.status_as_of === "ACTIVE");
   return (
@@ -71,7 +60,6 @@ function TrimRow({ t, ptById, muted }: { t: any; ptById: Map<any, any>; muted?: 
           {t.published_range_km ? <div><small>Range ที่ผู้ผลิตประกาศ</small><b>{Number(t.published_range_km).toLocaleString()} km {t.published_range_cycle || ""}</b></div> : null}
           {t.standardized_wltp_km ? <div><small>TDR standardized</small><b>~{Number(t.standardized_wltp_km).toLocaleString()} km WLTP-equivalent</b></div> : null}
           {t.standardized_epa_km ? <div><small>EPA / equivalent</small><b>~{Number(t.standardized_epa_km).toLocaleString()} km</b></div> : null}
-          {wheel ? <div><small>ยาง / ล้อ</small><b>{wheel}</b></div> : null}
           {(t.seats_override || t.payload_capacity_kg_override) ? <div><small>ความจุ</small><b>{[t.seats_override ? `${t.seats_override} ที่นั่ง` : null, t.payload_capacity_kg_override ? `Payload ${t.payload_capacity_kg_override} kg` : null].filter(Boolean).join(" · ")}</b></div> : null}
         </div>
         {t.description ? <p>{t.description}</p> : <p className="sfMissing">ยังไม่มีรายละเอียดอุปกรณ์ของ Trim นี้</p>}
