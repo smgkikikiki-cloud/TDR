@@ -132,12 +132,16 @@ function stamp(fact: CompareSpecFact) {
 export function factsByTrim(facts: CompareSpecFact[]) {
   const map = new Map<string, Map<string, CompareSpecFact>>();
   for (const fact of facts) {
-    if (fact.verification_status && fact.verification_status !== "VERIFIED") continue;
+    // Keep the renderer fail-closed even though the server query already asks
+    // for VERIFIED rows. Future callers must not be able to promote a missing
+    // or provisional verification status into the public comparison table.
+    if (fact.verification_status !== "VERIFIED") continue;
     if (!map.has(fact.trim_id)) map.set(fact.trim_id, new Map());
     const bucket = map.get(fact.trim_id)!;
     const existing = bucket.get(fact.field_key);
-    // Active releases should already contain resolved facts. If history is
-    // present, use the newest verified assertion rather than merging values.
+    // Active releases already contain facts resolved at the release `as_of` by
+    // ProductMaster.detail(). The ranking only makes duplicate verified rows
+    // deterministic; it is not a second temporal resolver.
     if (!existing || stamp(fact) > stamp(existing)) bucket.set(fact.field_key, fact);
   }
   return map;
