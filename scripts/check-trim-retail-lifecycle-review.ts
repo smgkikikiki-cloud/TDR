@@ -22,7 +22,7 @@ check("browser action never supplies reviewer actor", action.includes("actor:") 
 check("server binds selected trim to canonical model", action.includes("trim.model_id !== modelId"), true);
 check("server requires canonical parent CURRENT for new decisions", action.includes('action !== "reopen" && canonicalModelStatus !== "CURRENT"'), true);
 check("workflow store enforces canonical parent CURRENT", reviewStore.includes('_parent_model_status(catalog, trim_id) != "CURRENT"'), true);
-check("workflow store exempts reopen from parent guard", reviewStore.includes('if action != "reopen" && _parent_model_status'), true);
+check("workflow store exempts reopen from parent guard", reviewStore.includes('if action != "reopen" and _parent_model_status'), true);
 check("current/historical require HTTP(S) evidence", action.includes("Evidence ต้องเป็น HTTP(S) URL"), true);
 check("dispatcher requires ADMIN source", input.includes("UPSERT_TRIM_RETAIL_LIFECYCLE_REVIEW requires source.kind ADMIN"), true);
 check("dispatcher requires HUMAN actor", input.includes("_validate_trim_lifecycle_review_command") && input.includes("_validated_human_actor(command, operation)"), true);
