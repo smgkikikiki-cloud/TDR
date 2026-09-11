@@ -1,7 +1,7 @@
 """Build the canonical TDR release with derived historical model state attached.
 
 The base ReleaseBuilder remains the owner of catalog identity, price/spec facts
-and TDR crosswalks.  This wrapper owns serving-only enrichment that must be part
+and TDR crosswalks. This wrapper owns serving-only enrichment that must be part
 of the immutable release hash: fail-closed retail lifecycle semantics and the
 historical registration projection.
 """
@@ -40,9 +40,10 @@ def enrich_release(
     source_aliases: dict[str, str] | None = None,
 ) -> dict:
     # Base release historically inherited legacy TDR model status and promoted
-    # every trim in an active generation to CURRENT.  Normalize both before the
-    # semantic hash so rollback/versioning includes the corrected lifecycle.
-    out = apply_retail_lifecycle(release)
+    # every trim in an active generation to CURRENT. Normalize both before the
+    # semantic hash so rollback/versioning includes lifecycle review state.
+    year = int(release.get("year") or DEFAULT_YEAR)
+    out = apply_retail_lifecycle(release, data_dir=data_dir, year=year)
     out["historical_model_state"] = build_historical_model_state(
         data_dir=data_dir,
         source_aliases=source_aliases,

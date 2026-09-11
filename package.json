@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "check": "tsc --noEmit && node --experimental-strip-types scripts/check-catalog-display.ts && node --experimental-strip-types scripts/check-market-contract.ts && node --experimental-strip-types scripts/check-historical-model-state.ts && node --experimental-strip-types scripts/check-free-compare.ts && node --experimental-strip-types scripts/check-member-market.ts && node --experimental-strip-types scripts/check-admin-parity.ts && node --experimental-strip-types scripts/check-price-coverage-worklist.ts && node --experimental-strip-types scripts/check-eco-trim-admin.ts && node --experimental-strip-types scripts/check-retail-lifecycle-review.ts"
+    "check": "tsc --noEmit && node --experimental-strip-types scripts/check-catalog-display.ts && node --experimental-strip-types scripts/check-market-contract.ts && node --experimental-strip-types scripts/check-historical-model-state.ts && node --experimental-strip-types scripts/check-free-compare.ts && node --experimental-strip-types scripts/check-member-market.ts && node --experimental-strip-types scripts/check-admin-parity.ts && node --experimental-strip-types scripts/check-price-coverage-worklist.ts && node --experimental-strip-types scripts/check-eco-trim-admin.ts && node --experimental-strip-types scripts/check-retail-lifecycle-review.ts && node --experimental-strip-types scripts/check-trim-retail-lifecycle-review.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",
