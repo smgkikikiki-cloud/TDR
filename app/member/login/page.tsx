@@ -132,7 +132,7 @@ export default function MemberLoginPage() {
 
           <div className={styles.securityNote}>
             <div className={styles.securityIcon}>▣</div>
-            <div><strong>ข้อมูลบัตรไม่ถูกเก็บโดย TDR</strong><span>หลังสร้างบัญชี การชำระเงินจะดำเนินการผ่าน Stripe Checkout เมื่อเลือกสมัครแพ็กเกจ</span></div>
+            <div><strong>ข้อมูลบัตรไม่ถูกเก็บโดย TDR</strong><span>หลังสร้างบัญชี ระบบจะพาไปหน้าจัดการแพ็กเกจ โดยการชำระเงินที่เปิดใช้งานจะดำเนินการผ่าน Stripe Checkout</span></div>
           </div>
 
           <Link className={styles.backLink} href="/pricing">← กลับหน้าแพ็กเกจ</Link>
