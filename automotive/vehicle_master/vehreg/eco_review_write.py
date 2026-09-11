@@ -20,7 +20,7 @@ from .ecosticker_ingest import (
 )
 
 
-_ALLOWED_ACTIONS = {"reject", "defer"}
+_ALLOWED_ACTIONS = {"reject", "defer", "reopen"}
 
 
 def _atomic_json(path: Path, payload: dict) -> None:
@@ -39,10 +39,10 @@ def upsert_review_dispositions(*, data_dir: Path | str = DATA_DIR,
                                reviewed_at: str,
                                notes: str = "",
                                write: bool = False) -> dict:
-    """Replace decisions for the selected source IDs while preserving all others."""
+    """Replace, defer, reject or reopen selected source decisions."""
     action = str(action or "").strip().lower()
     if action not in _ALLOWED_ACTIONS:
-        raise ECOIngestError(f"review disposition action must be reject/defer, got {action!r}")
+        raise ECOIngestError(f"review disposition action must be reject/defer/reopen, got {action!r}")
     reviewer = str(reviewer or "").strip()
     if not reviewer:
         raise ECOIngestError("reviewer is required")
@@ -73,13 +73,14 @@ def upsert_review_dispositions(*, data_dir: Path | str = DATA_DIR,
     existing = validate_decisions(existing_payload, records, catalog)
     selected = set(source_ids)
     merged = [decision for decision in existing if decision["source_id"] not in selected]
-    merged.extend({
-        "source_id": source_id,
-        "action": action,
-        "reviewer": reviewer,
-        "reviewed_at": reviewed_at,
-        "notes": str(notes or "").strip(),
-    } for source_id in source_ids)
+    if action != "reopen":
+        merged.extend({
+            "source_id": source_id,
+            "action": action,
+            "reviewer": reviewer,
+            "reviewed_at": reviewed_at,
+            "notes": str(notes or "").strip(),
+        } for source_id in source_ids)
     candidate = {
         "schema_version": 1,
         "snapshot_date": snapshot_date,
@@ -105,6 +106,7 @@ def upsert_review_dispositions(*, data_dir: Path | str = DATA_DIR,
         "decisions": len(checked),
         "rejected": sum(row["action"] == "reject" for row in checked),
         "deferred": sum(row["action"] == "defer" for row in checked),
+        "reopened": len(source_ids) if action == "reopen" else 0,
         "updated_source_ids": source_ids,
     }
 
