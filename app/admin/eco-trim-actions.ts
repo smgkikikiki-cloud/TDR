@@ -151,8 +151,6 @@ async function enqueueBatch(payload: unknown, submittedAt: string) {
 export async function enqueueEcoMarketTrim(formData: FormData) {
   if (!(await isAdmin())) redirect("/admin/login");
   const groupKey = required(formData, "group_key", "ECO candidate");
-  // The field is intentionally blank in the UI. A human must type/confirm the
-  // canonical name, but a correctly-written ECO label may legitimately equal it.
   const trimName = required(formData, "trim_name", "ชื่อ MarketTrim ที่ตรวจแล้ว");
   const reason = required(formData, "reason", "review note");
   const submissionId = required(formData, "submission_id", "submission id");
@@ -211,4 +209,40 @@ export async function enqueueEcoAttachExistingTrim(formData: FormData) {
       source_refs: mergedSourceRefs(targetTrim.source_refs, context.group.sourceIds),
     },
   }), submittedAt);
+}
+
+export async function enqueueEcoReviewDisposition(formData: FormData) {
+  if (!(await isAdmin())) redirect("/admin/login");
+  const groupKey = required(formData, "group_key", "ECO candidate");
+  const action = required(formData, "disposition", "review disposition").toLowerCase();
+  if (!new Set(["reject", "defer", "reopen"]).has(action)) throw new Error("review disposition รองรับ reject/defer/reopen เท่านั้น");
+  const reason = required(formData, "reason", "review note");
+  const submissionId = required(formData, "submission_id", "submission id");
+  const submittedAt = required(formData, "submitted_at", "submission timestamp");
+  validateSubmission(submissionId, submittedAt);
+
+  const context = await loadEcoWriteContext(groupKey);
+  const snapshotHash = getEcoTrimSnapshotHash();
+  // Reviewer/origin are deliberately absent. enqueueVehicleInput injects the
+  // authenticated editor as command.actor; the worker derives reviewer from it.
+  return enqueueBatch({
+    schema_version: 1,
+    batch_id: `admin-eco-review-${submissionId}`,
+    year: context.year,
+    submitted_at: submittedAt,
+    source: {
+      kind: "ECO",
+      ref: `ecosticker:snapshot:${ECO_TRIM_SNAPSHOT_DATE}:sha256:${snapshotHash}`,
+    },
+    reason: `HUMAN ECO ${action}: ${reason}`,
+    commands: [{
+      operation: "UPSERT_ECO_REVIEW",
+      payload: {
+        snapshot_date: ECO_TRIM_SNAPSHOT_DATE,
+        action,
+        source_ids: context.group.sourceIds,
+        notes: reason,
+      },
+    }],
+  }, submittedAt);
 }

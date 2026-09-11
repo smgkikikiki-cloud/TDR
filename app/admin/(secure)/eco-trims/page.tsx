@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import Link from "next/link";
-import { enqueueEcoAttachExistingTrim, enqueueEcoMarketTrim } from "@/app/admin/eco-trim-actions";
+import { enqueueEcoAttachExistingTrim, enqueueEcoMarketTrim, enqueueEcoReviewDisposition } from "@/app/admin/eco-trim-actions";
+import ecoReviewState from "@/automotive/vehicle_master/vehreg/data/2026/ingest/ecosticker/review/2026-09-08.json";
 import {
   ECO_TRIM_SNAPSHOT_DATE,
   getEcoTrimCandidateGroups,
@@ -16,6 +17,14 @@ type SearchParams = Record<string, string | string[] | undefined>;
 type ModelLabel = { brand: string; name: string };
 type MarketImpact = { regs: number; share: number; blocker: string };
 type ExistingTrimOption = { canonicalId: string; name: string; powertrain: string; sourceCount: number };
+type ReviewDecision = {
+  source_id: string;
+  action: string;
+  reviewer: string;
+  origin?: string;
+  reviewed_at?: string;
+  notes?: string;
+};
 function first(value: string | string[] | undefined) { return Array.isArray(value) ? value[0] : value; }
 function one(value: string | string[] | undefined) { return String(first(value) || "").trim(); }
 function n(value: unknown) { const number = Number(value); return Number.isFinite(number) ? number.toLocaleString("th-TH") : "—"; }
@@ -33,11 +42,17 @@ export default async function EcoTrimReviewPage({ searchParams }: { searchParams
   const q = one(sp.q).toLocaleLowerCase();
   const modelFilter = one(sp.model);
   const showAttached = one(sp.attached) === "1";
+  const showReviewed = one(sp.reviewed) === "1";
   const db = adminDb();
   if (!db) return <div className="adminEditor"><div className="adminNotice">Admin database is not configured.</div></div>;
 
   const groups = getEcoTrimCandidateGroups();
   const snapshotHash = getEcoTrimSnapshotHash();
+  const humanReviewBySource = new Map<string, ReviewDecision>(
+    (ecoReviewState.decisions as ReviewDecision[])
+      .filter((row) => row.origin === "human" || String(row.reviewer || "").toLowerCase() !== "agent-proposed")
+      .map((row) => [String(row.source_id).toLowerCase(), row]),
+  );
   const [{ data: modelsData, error: modelsError }, { data: brandsData, error: brandsError }, { data: trimsData, error: trimsError }, impact] = await Promise.all([
     db.from("current_vehicle_models")
       .select("canonical_id,brand_id,name_en,name_th,generation_id").limit(1000),
@@ -76,6 +91,18 @@ export default async function EcoTrimReviewPage({ searchParams }: { searchParams
     const model = models.get(group.modelId);
     const attached = group.sourceIds.some((id) => attachedSourceIds.has(id));
     const market = impactByModel.get(group.modelId) || { regs: 0, share: 0, blocker: "—" };
+    const humanDecisions = group.sourceIds
+      .map((id) => humanReviewBySource.get(id.toLowerCase()))
+      .filter((row): row is ReviewDecision => Boolean(row));
+    const actionSet = new Set(humanDecisions.map((row) => row.action));
+    const reviewDisposition = humanDecisions.length === group.sourceIds.length
+      && actionSet.size === 1
+      && ["reject", "defer"].includes(humanDecisions[0]?.action || "")
+      ? humanDecisions[0].action
+      : null;
+    const reviewSummary = humanDecisions.length
+      ? [...new Set(humanDecisions.map((row) => `${row.reviewer} · ${row.reviewed_at || "—"}${row.notes ? ` · ${row.notes}` : ""}`))].join(" | ")
+      : "";
     const existingTrimOptions: ExistingTrimOption[] = trims
       .filter((row: any) => row.model_id === group.modelId
         && row.generation_id === group.generationId
@@ -91,6 +118,9 @@ export default async function EcoTrimReviewPage({ searchParams }: { searchParams
     return {
       ...group,
       attached,
+      reviewDisposition,
+      reviewSummary,
+      humanReviewedCount: humanDecisions.length,
       brand: model?.brand || group.modelId.split(".")[0].toUpperCase(),
       modelName: model?.name || group.modelId,
       currentTrimCount: trimCountByModel.get(group.modelId) || 0,
@@ -105,21 +135,24 @@ export default async function EcoTrimReviewPage({ searchParams }: { searchParams
     .sort((a, b) => a[1].localeCompare(b[1]));
   const visible = enriched
     .filter((row) => showAttached || !row.attached)
+    .filter((row) => showReviewed || !row.reviewDisposition)
     .filter((row) => !modelFilter || row.modelId === modelFilter)
     .filter((row) => !q || `${row.brand} ${row.modelName} ${row.rawLabel} ${row.powertrain} ${row.modelId}`.toLocaleLowerCase().includes(q))
     .sort((a, b) => b.registrations3m - a.registrations3m || b.sourceCount - a.sourceCount || `${a.brand} ${a.modelName} ${a.rawLabel}`.localeCompare(`${b.brand} ${b.modelName} ${b.rawLabel}`));
   const shown = visible.slice(0, 80);
   const attachedGroups = enriched.filter((row) => row.attached).length;
-  const noTrimGroups = enriched.filter((row) => !row.attached && row.currentTrimCount === 0).length;
-  const attachableGroups = enriched.filter((row) => !row.attached && row.existingTrimOptions.length > 0).length;
+  const rejectedGroups = enriched.filter((row) => row.reviewDisposition === "reject").length;
+  const deferredGroups = enriched.filter((row) => row.reviewDisposition === "defer").length;
+  const noTrimGroups = enriched.filter((row) => !row.attached && !row.reviewDisposition && row.currentTrimCount === 0).length;
+  const attachableGroups = enriched.filter((row) => !row.attached && !row.reviewDisposition && row.existingTrimOptions.length > 0).length;
   const submittedAt = new Date().toISOString();
 
   return <div className="adminEditor">
     <div className="adminHeader">
       <div>
         <small>ADMIN BENCH · ECO → MARKETTRIM REVIEW</small>
-        <h1>Review ECO identity → Create หรือ Attach MarketTrim</h1>
-        <p>Snapshot ถูก hash-verify ก่อนอ่าน. ถ้า canonical trim มีอยู่แล้ว ให้ attach ECO source เข้า trim เดิม; ถ้ายังไม่มีจริงค่อยสร้างใหม่. ทั้งสองทางเข้าคิว canonical worker → staging → PR ไม่เขียน master ตรง.</p>
+        <h1>Review ECO identity → Attach / Create / Reject / Defer</h1>
+        <p>Snapshot ถูก hash-verify ก่อนอ่าน. Identity ที่ใช่ไป canonical queue; record ที่ไม่ใช่ retail trim ให้ reject; เคสที่หลักฐานยังไม่พอให้ defer. HUMAN-reviewed disposition ถูกเก็บใน review file เดิมผ่าน staging PR.</p>
       </div>
       <Link className="adminPrimaryLink" href="/admin/prices/coverage">ดู Price coverage ↗</Link>
     </div>
@@ -128,27 +161,28 @@ export default async function EcoTrimReviewPage({ searchParams }: { searchParams
       <div className="adminStat"><span>Ready candidate groups</span><strong>{n(enriched.length)}</strong><small>exact signature groups, not fuzzy merged</small></div>
       <div className="adminStat"><span>Already attached</span><strong>{n(attachedGroups)}</strong><small>hidden by default</small></div>
       <div className="adminStat"><span>Attachable to existing</span><strong>{n(attachableGroups)}</strong><small>same model + generation + powertrain</small></div>
-      <div className="adminStat"><span>No MarketTrim yet</span><strong>{n(noTrimGroups)}</strong><small>candidate groups on models with 0 current trims</small></div>
-      <div className="adminStat"><span>Snapshot</span><strong>{ECO_TRIM_SNAPSHOT_DATE}</strong><small>sha256:{snapshotHash.slice(0, 12)}…</small></div>
+      <div className="adminStat"><span>Reject / Defer</span><strong>{n(rejectedGroups)} / {n(deferredGroups)}</strong><small>HUMAN dispositions, hidden by default</small></div>
+      <div className="adminStat"><span>No MarketTrim yet</span><strong>{n(noTrimGroups)}</strong><small>unresolved groups on models with 0 current trims</small></div>
     </div>
 
     <div className="adminNotice">
       <b>Attach first, create only when needed</b>
-      <span>ถ้า ECO candidate คือ grade ที่มี canonical MarketTrim อยู่แล้ว ให้เลือก Attach to existing trim เพื่อเพิ่ม source_refs โดยไม่สร้าง identity ซ้ำ. Create new ใช้เมื่อ reviewer ยืนยันว่าเป็น grade ใหม่จริง.</span>
+      <span>ถ้า ECO candidate คือ grade ที่มี canonical MarketTrim อยู่แล้ว ให้เลือก Attach. Create new ใช้เมื่อ reviewer ยืนยันว่าเป็น grade ใหม่จริง. Reject/Defer เป็น review metadata ไม่แตะ serving vehicle facts.</span>
     </div>
     <div className="adminNotice">
       <b>Identity only</b>
       <span>ECO ราคา / dimensions / tyre / wheel / battery ที่เห็นใน source ไม่ถูกส่งไปพร้อม identity review. LIST_PRICE ต้องเข้าผ่าน Price Ledger และ evidence policy แยกต่างหาก.</span>
     </div>
     <div className="adminNotice">
-      <b>Grouping rule</b>
-      <span>รวมเฉพาะแถวที่ canonical model + generation + powertrain + normalized raw label เหมือนกันเป๊ะ. ไม่ fuzzy-merge ข้ามชื่อ เพราะ ECO UUID หลายอันอาจเป็น homologation records ของคนละ gradeจริง.</span>
+      <b>Snapshot</b>
+      <span>{ECO_TRIM_SNAPSHOT_DATE} · sha256:{snapshotHash.slice(0, 16)}… · human dispositions มาจาก review file ที่ version-control อยู่กับ snapshot เดิม</span>
     </div>
 
     <form className="adminForm" method="get">
       <label className="adminField adminFieldWide"><span>ค้นหา Brand / Model / raw ECO label</span><input name="q" defaultValue={one(sp.q)} placeholder="D-Max / Ranger / Mazda2…"/></label>
       <label className="adminField adminFieldWide"><span>Canonical model</span><select name="model" defaultValue={modelFilter}><option value="">ทุก model</option>{modelOptions.map(([id, label]) => <option key={id} value={id}>{label}</option>)}</select></label>
       <label className="adminField"><span>แสดง attached แล้ว</span><select name="attached" defaultValue={showAttached ? "1" : "0"}><option value="0">ซ่อน</option><option value="1">แสดง</option></select></label>
+      <label className="adminField"><span>แสดง reject/defer แล้ว</span><select name="reviewed" defaultValue={showReviewed ? "1" : "0"}><option value="0">ซ่อน</option><option value="1">แสดง</option></select></label>
       <div className="adminFormActions"><button className="adminPrimary">Apply filter</button></div>
     </form>
 
@@ -159,8 +193,15 @@ export default async function EcoTrimReviewPage({ searchParams }: { searchParams
         <td className={styles.impactCell}><b>{n(row.registrations3m)}</b><br/><small>{Number(row.registrationSharePct || 0).toFixed(2)}% of mapped 3M · {row.priceBlocker}</small></td>
         <td className={styles.targetCell}><b>{row.brand} {row.modelName}</b><br/><small>{row.generationId} · {row.powertrain}</small></td>
         <td className={styles.evidenceCell}><b>{row.rawLabel}</b><br/><small>{row.sourceCount} ECO UUID{row.sourceCount === 1 ? "" : "s"} · ECO evidence price {money(row.ecoPriceMinThb, row.ecoPriceMaxThb)}</small><br/><small>{row.sourceIds.slice(0,2).join(" · ")}{row.sourceIds.length > 2 ? ` · +${row.sourceIds.length - 2}` : ""}</small></td>
-        <td>{row.attached ? <><b>ATTACHED</b><br/><small>อย่างน้อยหนึ่ง source UUID อยู่ใน canonical trim แล้ว</small></> : <><b>{row.currentTrimCount} current trims</b><br/><small>{row.existingTrimOptions.length ? `${row.existingTrimOptions.length} same-generation/powertrain trim candidates` : row.currentTrimCount ? "มี trim แต่ไม่มี candidate ที่ generation/powertrain ตรง" : "NO_MARKET_TRIM priority"}</small></>}</td>
-        <td>{row.attached ? <span>ไม่เสนอ attach/create ซ้ำ</span> : <div className={styles.decisionStack}>
+        <td>{row.attached ? <><b>ATTACHED</b><br/><small>อย่างน้อยหนึ่ง source UUID อยู่ใน canonical trim แล้ว</small></> : row.reviewDisposition ? <><b>{row.reviewDisposition.toUpperCase()}</b><br/><small>{row.reviewSummary || "HUMAN reviewed"}</small></> : <><b>{row.currentTrimCount} current trims</b><br/><small>{row.humanReviewedCount ? `${row.humanReviewedCount}/${row.sourceCount} source refs มี partial HUMAN decision` : row.existingTrimOptions.length ? `${row.existingTrimOptions.length} same-generation/powertrain trim candidates` : row.currentTrimCount ? "มี trim แต่ไม่มี candidate ที่ generation/powertrain ตรง" : "NO_MARKET_TRIM priority"}</small></>}</td>
+        <td>{row.attached ? <span>ไม่เสนอ review ซ้ำ</span> : row.reviewDisposition ? <form action={enqueueEcoReviewDisposition} className={styles.reviewForm}>
+          <input type="hidden" name="group_key" value={row.key}/>
+          <input type="hidden" name="submission_id" value={randomUUID()}/>
+          <input type="hidden" name="submitted_at" value={submittedAt}/>
+          <input type="hidden" name="disposition" value="reopen"/>
+          <label><span>เหตุผลที่ reopen</span><input name="reason" placeholder="พบ brochure ใหม่ / ตัดสิน disposition ผิด…" required/></label>
+          <button className="adminPrimary">Reopen candidate</button>
+        </form> : <div className={styles.decisionStack}>
           {row.existingTrimOptions.length ? <form action={enqueueEcoAttachExistingTrim} className={styles.reviewForm}>
             <input type="hidden" name="group_key" value={row.key}/>
             <input type="hidden" name="submission_id" value={randomUUID()}/>
@@ -176,6 +217,14 @@ export default async function EcoTrimReviewPage({ searchParams }: { searchParams
             <label><span>Create new canonical trim name</span><input name="trim_name" placeholder="เช่น Premium / Max / Z Prestige" required/></label>
             <label><span>Review note</span><input name="reason" placeholder="ยืนยันว่าเป็น grade ใหม่จาก ECO detail / brochure…" required/></label>
             <button className="adminPrimary">Create + queue MarketTrim</button>
+          </form>
+          <form action={enqueueEcoReviewDisposition} className={styles.reviewForm}>
+            <input type="hidden" name="group_key" value={row.key}/>
+            <input type="hidden" name="submission_id" value={randomUUID()}/>
+            <input type="hidden" name="submitted_at" value={submittedAt}/>
+            <label><span>Disposition</span><select name="disposition" defaultValue="defer" required><option value="defer">DEFER · หลักฐานยังไม่พอ</option><option value="reject">REJECT · ไม่ใช่ retail MarketTrim</option></select></label>
+            <label><span>Review note</span><input name="reason" placeholder="เหตุผลที่ defer/reject…" required/></label>
+            <button className="adminPrimary">Queue disposition</button>
           </form>
         </div>}</td>
       </tr>)}</tbody>
