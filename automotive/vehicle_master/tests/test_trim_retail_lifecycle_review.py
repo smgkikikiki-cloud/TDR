@@ -23,7 +23,7 @@ def _write_json(path: Path, payload: dict) -> None:
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
-def _seed(tmp_path: Path) -> Path:
+def _seed(tmp_path: Path, *, parent_status: str = "CURRENT") -> Path:
     data = tmp_path / "data"
     _write_json(data / str(YEAR) / "models" / "jaecoo.json", {
         "brand": {
@@ -36,6 +36,9 @@ def _seed(tmp_path: Path) -> Path:
             "nameplate": "Jaecoo 5", "body_type": "CROSSOVER",
             "cab_type": "NOT_APPLICABLE", "registration_type": "",
             "market_scope": "CORE", "aliases": [],
+            "retail_status": parent_status,
+            "retail_checked_at": "2026-09-11",
+            "retail_source": "https://example.test/j5/model",
             "generations": [{
                 "code": "J5", "segment": "B", "seats": 5,
                 "launched": "2025-08-19", "ended": None,
@@ -134,6 +137,36 @@ def test_current_and_historical_require_http_evidence(tmp_path: Path):
     batch["commands"][0]["payload"]["source_ref"] = ""
     with pytest.raises(CanonicalInputError, match=r"requires http\(s\) source_ref"):
         CanonicalInputPipeline(data).apply(batch)
+
+
+def test_non_reopen_review_requires_canonical_current_parent(tmp_path: Path):
+    data = _seed(tmp_path, parent_status="UNVERIFIED")
+    with pytest.raises(CanonicalInputError, match="parent model must be canonical CURRENT"):
+        CanonicalInputPipeline(data).apply(_batch(batch_id="unverified-parent"))
+    with pytest.raises(RetailLifecycleReviewError, match="parent model must be canonical CURRENT"):
+        upsert_trim_lifecycle_disposition(
+            data_dir=data, year=YEAR, trim_id=TRIM_ID, action="historical",
+            reviewer="retail-reviewer", reviewed_at="2026-09-11",
+            source_ref="https://example.test/evidence", write=True,
+        )
+
+
+def test_reopen_can_clear_stale_decision_after_parent_stops_being_current(tmp_path: Path):
+    data = _seed(tmp_path, parent_status="UNVERIFIED")
+    _write_json(data / str(YEAR) / "market" / "retail_lifecycle" / "trim_review.json", {
+        "schema_version": 1,
+        "decisions": [{
+            "trim_id": TRIM_ID,
+            "status": "CURRENT",
+            "reviewer": "retail-reviewer",
+            "reviewed_at": "2026-09-10",
+            "source_ref": "https://example.test/old-current-evidence",
+            "notes": "stale current decision",
+        }],
+    })
+    result = CanonicalInputPipeline(data).apply(_batch("reopen", batch_id="stale-reopen"))
+    assert result.status == "APPLIED"
+    assert load_trim_lifecycle_decisions(data_dir=data, year=YEAR) == []
 
 
 def test_direct_store_requires_known_trim_and_human_reviewer(tmp_path: Path):
