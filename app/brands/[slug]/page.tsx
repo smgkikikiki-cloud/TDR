@@ -4,6 +4,7 @@ import { getCanonicalBrand, getCanonicalModelsByBrand } from "@/lib/canonical-da
 import { getRelatedEvents } from "@/lib/data";
 import { bodyLabel } from "@/lib/body-labels";
 import { displayName, initials } from "@/lib/display-name";
+import { isVerifiedCurrent } from "@/lib/public-retail-lifecycle";
 
 function baht(min: any, max: any) {
   const f = (n: number) => Number(n).toLocaleString();
@@ -15,10 +16,11 @@ export default async function BrandPage({ params }: { params: Promise<{ slug: st
   const { slug } = await params;
   const r: any = await getCanonicalBrand(slug);
   if (!r) notFound();
-  const models = (await getCanonicalModelsByBrand(r.id)).filter((model: any) => model.status !== "discontinued");
+  const models = await getCanonicalModelsByBrand(r.id);
   const events: any[] = r.editorial_id ? await getRelatedEvents({ brandId: r.editorial_id }) : [];
 
   const assembled = (models as any[]).filter((m: any) => m.production_type === "CKD" || m.production_type === "SKD").length;
+  const verifiedCurrent = (models as any[]).filter((m: any) => isVerifiedCurrent(m.retail_lifecycle)).length;
 
   return <>
     <section className="sfBrandHero">
@@ -29,13 +31,13 @@ export default async function BrandPage({ params }: { params: Promise<{ slug: st
         <div className="sfEyebrow">{r.country_origin || "BRAND"}</div>
         <h1 style={{ margin: "9px 0 0", fontSize: 40, fontWeight: 800, letterSpacing: "-.035em", lineHeight: 1.1 }}>{displayName(r)}</h1>
         <p style={{ margin: "12px 0 0", maxWidth: 640, fontSize: 15, lineHeight: 1.75, color: "#31343b" }}>
-          {r.notes || "รุ่นปัจจุบันที่จำหน่ายอย่างเป็นทางการในประเทศไทย"}
+          {r.notes || "รุ่นรถในฐานข้อมูล TDR สำหรับประเทศไทย โดยสถานะจำหน่ายและราคาปัจจุบันจะแสดงเมื่อผ่านการยืนยัน lifecycle แล้ว"}
         </p>
       </div>
       <div className="sfPageHeadAside">
         <div className="sfEyebrow ink">ในแคตตาล็อก</div>
         <b className="sfNum">{models.length.toLocaleString()}</b>
-        <span>{assembled ? `รุ่น · ประกอบไทย ${assembled}` : "รุ่น"}</span>
+        <span>{`รุ่น · ยืนยัน CURRENT ${verifiedCurrent}${assembled ? ` · ประกอบไทย ${assembled}` : ""}`}</span>
       </div>
     </section>
 
@@ -48,7 +50,8 @@ export default async function BrandPage({ params }: { params: Promise<{ slug: st
         <div className="sfGrid">
           {(models as any[]).map((m: any) => {
             const meta = [bodyLabel(m.body_type), (m.powertrains || []).join(" / "), m.seats ? `${m.seats} ที่นั่ง` : null].filter(Boolean).join(" · ");
-            const price = baht(m.retail_price_min, m.retail_price_max);
+            const current = isVerifiedCurrent(m.retail_lifecycle);
+            const price = current ? baht(m.retail_price_min, m.retail_price_max) : null;
             const local = m.production_type === "CKD" || m.production_type === "SKD";
             return (
               <Link className="sfCard" href={`/models/${m.slug}`} key={m.id}>
@@ -56,8 +59,9 @@ export default async function BrandPage({ params }: { params: Promise<{ slug: st
                 <div className="sfCardBody">
                   <h3>{displayName(m)}</h3>
                   {meta ? <p className="sfCardMeta">{meta}</p> : <p className="sfCardMeta sfMissing">ยังไม่มีข้อมูลสเปกพื้นฐาน</p>}
+                  {!current ? <p className="sfCardMeta sfMissing">สถานะการจำหน่ายรอตรวจสอบ</p> : null}
                   <div className="sfCardFoot">
-                    {price ? <span className="sfPrice">{price}</span> : <span className="sfMissing">ยังไม่ประกาศราคา</span>}
+                    {price ? <span className="sfPrice">{price}</span> : <span className="sfMissing">{current ? "ยังไม่ประกาศราคา" : "ยังไม่แสดงราคาปัจจุบัน"}</span>}
                     {local ? <span className="sfLocal">ประกอบไทย</span> : m.production_type === "CBU" ? <span className="sfImported">นำเข้า CBU</span> : null}
                   </div>
                 </div>
