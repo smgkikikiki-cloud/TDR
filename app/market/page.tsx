@@ -128,7 +128,7 @@ export default function PublicMarketPage() {
             <div className={styles.donutWrap}>
               <div className={styles.donut} />
               <div className={styles.legend}>
-                {['ICE', 'HEV', 'BEV', 'PHEV', 'อื่นๆ'].map((label) => <span key={label}><i />{label}<b>•••</b></span>)}
+                {["ICE", "HEV", "BEV", "PHEV", "อื่นๆ"].map((label) => <span key={label}><i />{label}<b>•••</b></span>)}
               </div>
             </div>
           </article>
@@ -146,7 +146,7 @@ export default function PublicMarketPage() {
             <div className={styles.lockIcon}><LockIcon /></div>
             <h2>ปลดล็อก Market Intelligence</h2>
             <p>เข้าถึงตัวเลขทั้งหมด กราฟแนวโน้ม และข้อมูลเชิงลึก</p>
-            <Link className={styles.primary} href="/reports">ดูแพ็กเกจ</Link>
+            <Link className={styles.primary} href="/pricing">ดูแพ็กเกจ</Link>
             <Link className={styles.login} href="/member/login">มีบัญชีแล้ว? เข้าสู่ระบบ</Link>
           </div>
         </div>
@@ -160,8 +160,8 @@ export default function PublicMarketPage() {
             <p>มากกว่าแค่ตัวเลข แต่คือความได้เปรียบในการตัดสินใจสำหรับคนที่ทำงานในอุตสาหกรรมยานยนต์</p>
           </div>
           <div className={styles.proActions}>
-            <Link className={styles.primaryAction} href="/reports">ดูแพ็กเกจ <span>→</span></Link>
-            <Link href="/reports#tdr-compare">ดูรายละเอียดแพ็กเกจ →</Link>
+            <Link className={styles.primaryAction} href="/pricing">ดูแพ็กเกจ <span>→</span></Link>
+            <Link href="/pricing#compare">ดูรายละเอียดแพ็กเกจ →</Link>
           </div>
         </div>
 
@@ -189,7 +189,7 @@ export default function PublicMarketPage() {
           <h2>ร่วมเป็นส่วนหนึ่งขององค์กรที่ใช้ TDR</h2>
           <p>ผู้จำหน่ายรถยนต์ ธนาคาร สถาบันการเงิน บริษัทวิจัย และองค์กรชั้นนำ เลือกใช้ TDR เพื่อเข้าใจตลาดก่อนใคร</p>
         </div>
-        <Link href="/reports#tdr-contact">ดูแพ็กเกจองค์กร <span>→</span></Link>
+        <Link href="/pricing">ดูแพ็กเกจองค์กร <span>→</span></Link>
       </section>
     </div>
   );
