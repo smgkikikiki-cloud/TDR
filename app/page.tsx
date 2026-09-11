@@ -60,7 +60,7 @@ function MarketPreview() {
           <div className={styles.lockMark}>▣</div>
           <strong>ปลดล็อก Market Intelligence</strong>
           <span>เข้าถึงตัวเลขทั้งหมด กราฟแนวโน้ม และข้อมูลสำหรับตัดสินใจ</span>
-          <Link href="/reports">ดูแพ็กเกจ</Link>
+          <Link href="/pricing">ดูแพ็กเกจ</Link>
           <Link className={styles.previewLogin} href="/member/login">มีบัญชีแล้ว? เข้าสู่ระบบ</Link>
         </div>
       </div>
