@@ -18,6 +18,10 @@ function choiceLabel(trim: any) {
   return [trim.brand_name, trim.model_name, trim.name].filter(Boolean).join(" · ");
 }
 
+function modelLabel(trim: any) {
+  return [trim.brand_name, trim.model_name].filter(Boolean).join(" ");
+}
+
 function displayValue(trim: FreeCompareTrim, key: Parameters<typeof compareValue>[1]) {
   const value = compareValue(trim, key);
   if (key === "body_type" && value) return bodyLabel(value);
@@ -28,11 +32,13 @@ export default async function ComparePage({ searchParams }: { searchParams: Prom
   const sp = await searchParams;
   const all = await getCanonicalCompareTrims(600) as FreeCompareTrim[];
   const requested = selectedValues(sp.trims);
+  const requestedModels = selectedValues(sp.models);
   const byId = new Map(all.map((trim) => [trim.id, trim]));
   const selected = requested.map((id) => byId.get(id)).filter(Boolean) as FreeCompareTrim[];
   const diffOnly = firstValue(sp.diff) === "1";
   const groups = visibleCompareGroups(selected, diffOnly);
   const missingSelection = requested.length !== selected.length;
+  const missingModelSelection = requestedModels.some((modelId) => !all.some((trim) => trim.model_id === modelId));
 
   return <div className="comparePage">
     <section className="compareHero">
@@ -44,16 +50,22 @@ export default async function ComparePage({ searchParams }: { searchParams: Prom
       <Link href="/models">กลับไปดูแคตตาล็อก →</Link>
     </section>
 
+    {requestedModels.length ? <div className="compareNotice">เลือกรถมาจากแคตตาล็อกแล้ว {requestedModels.length} รุ่น · เลือก Trim จริงของแต่ละรุ่นด้านล่างก่อนเทียบ เพื่อไม่ให้ระบบเดาสเปกแทนคุณ</div> : null}
+    {missingModelSelection ? <div className="compareNotice">มีรถที่เลือกจากแคตตาล็อกซึ่งยังไม่มี Trim ที่ใช้ใน Free Compare ระบบจึงไม่สร้างตัวเลือกให้รุ่นนั้น</div> : null}
+
     <form className="comparePicker" method="get">
-      {[0, 1, 2, 3].map((slot) => (
-        <label key={slot}>
-          <span>คันที่ {slot + 1}{slot < 2 ? " · ต้องเลือก" : " · ไม่บังคับ"}</span>
+      {[0, 1, 2, 3].map((slot) => {
+        const modelId = selected[slot]?.model_id || requestedModels[slot] || null;
+        const options = modelId ? all.filter((trim) => trim.model_id === modelId) : all;
+        const scopedLabel = options[0] ? modelLabel(options[0]) : null;
+        return <label key={slot}>
+          <span>คันที่ {slot + 1}{scopedLabel ? ` · ${scopedLabel}` : slot < 2 ? " · ต้องเลือก" : " · ไม่บังคับ"}</span>
           <select name="trims" defaultValue={selected[slot]?.id || ""} required={slot < 2}>
-            <option value="">เลือกรุ่นย่อย</option>
-            {all.map((trim: any) => <option key={`${slot}:${trim.id}`} value={trim.id}>{choiceLabel(trim)}</option>)}
+            <option value="">{scopedLabel ? `เลือกรุ่นย่อยของ ${scopedLabel}` : "เลือกรุ่นย่อย"}</option>
+            {options.map((trim: any) => <option key={`${slot}:${trim.id}`} value={trim.id}>{choiceLabel(trim)}</option>)}
           </select>
-        </label>
-      ))}
+        </label>;
+      })}
       <label className="compareDiffToggle">
         <input type="checkbox" name="diff" value="1" defaultChecked={diffOnly} />
         <span>แสดงเฉพาะจุดที่ต่างกัน</span>
@@ -61,7 +73,7 @@ export default async function ComparePage({ searchParams }: { searchParams: Prom
       <button type="submit">เทียบรถ</button>
     </form>
 
-    {missingSelection ? <div className="compareNotice">มีรุ่นที่เลือกไว้ซึ่งไม่อยู่ใน active canonical release แล้ว ระบบจึงไม่นำมาเทียบ</div> : null}
+    {missingSelection ? <div className="compareNotice">มีรุ่นย่อยที่เลือกไว้ซึ่งไม่อยู่ใน active canonical release แล้ว ระบบจึงไม่นำมาเทียบ</div> : null}
 
     {selected.length < 2 ? (
       <section className="compareEmpty">
