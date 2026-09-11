@@ -1,7 +1,7 @@
 """HUMAN-reviewed retail lifecycle dispositions for MarketTrim identity.
 
 MarketTrim identity can come from ECO/homologation evidence without proving that
-that grade is in today's Thai retail lineup.  These dispositions are workflow
+that grade is in today's Thai retail lineup. These dispositions are workflow
 metadata consumed by the serving release enrichment; they do not mutate the
 MarketTrim identity schema itself.
 
@@ -59,6 +59,14 @@ def _validated_reviewer(value: str) -> str:
     if not reviewer or reviewer.lower() in {"system", "agent", "agent-proposed"}:
         raise RetailLifecycleReviewError("trim lifecycle review requires explicit HUMAN reviewer")
     return reviewer
+
+
+def _parent_model_status(catalog: Catalog, trim_id: str) -> str:
+    trim = catalog.trims[trim_id]
+    generation = catalog.generations.get(trim.generation_id)
+    model = catalog.models.get(generation.model_id) if generation else None
+    retail_status = getattr(model, "retail_status", None)
+    return str(getattr(retail_status, "value", retail_status or "UNVERIFIED")).strip().upper()
 
 
 def validate_trim_lifecycle_decisions(payload: dict[str, Any], *,
@@ -129,6 +137,15 @@ def upsert_trim_lifecycle_disposition(*, data_dir: Path | str = DATA_DIR,
         raise RetailLifecycleReviewError(f"unknown MarketTrim {trim_id!r}")
     reviewer = _validated_reviewer(reviewer)
     reviewed_at = _validated_date(reviewed_at, "reviewed_at")
+
+    # Keep the parent invariant inside the workflow store so advanced/admin
+    # batches cannot bypass the web action. Reopen is exempt because stale
+    # sidecar state must remain removable after a parent becomes historical.
+    if action != "reopen" and _parent_model_status(catalog, trim_id) != "CURRENT":
+        raise RetailLifecycleReviewError(
+            "parent model must be canonical CURRENT before trim lifecycle review"
+        )
+
     existing = load_trim_lifecycle_decisions(data_dir=data_dir, year=year)
     merged = [row for row in existing if row["trim_id"] != trim_id]
     if action != "reopen":

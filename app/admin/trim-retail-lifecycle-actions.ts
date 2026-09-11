@@ -56,7 +56,7 @@ export async function enqueueTrimRetailLifecycleReview(formData: FormData) {
   if (modelError) throw modelError;
   if (releaseError) throw releaseError;
   const canonicalModelStatus = String((model?.payload as any)?.retail_status || "UNVERIFIED").toUpperCase();
-  if (canonicalModelStatus !== "CURRENT") {
+  if (action !== "reopen" && canonicalModelStatus !== "CURRENT") {
     throw new Error("ต้อง review parent model เป็น CURRENT ก่อน review trim lifecycle");
   }
   const releasePayload = release?.payload && typeof release.payload === "object"
