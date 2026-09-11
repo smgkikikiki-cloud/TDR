@@ -13,13 +13,16 @@ const action = fs.readFileSync("app/admin/trim-retail-lifecycle-actions.ts", "ut
 const page = fs.readFileSync("app/admin/(secure)/retail-lifecycle/page.tsx", "utf8");
 const coverage = fs.readFileSync("app/admin/(secure)/prices/coverage/page.tsx", "utf8");
 const input = fs.readFileSync("automotive/vehicle_master/vehreg/input_pipeline.py", "utf8");
+const reviewStore = fs.readFileSync("automotive/vehicle_master/vehreg/retail_lifecycle_review.py", "utf8");
 const lifecycle = fs.readFileSync("automotive/vehicle_master/tdr_bridge/lifecycle.py", "utf8");
 
 console.log("trim retail lifecycle — trust boundary");
 check("trim review uses ADMIN special operation", action.includes('operation: "UPSERT_TRIM_RETAIL_LIFECYCLE_REVIEW"'), true);
 check("browser action never supplies reviewer actor", action.includes("actor:") === false, true);
 check("server binds selected trim to canonical model", action.includes("trim.model_id !== modelId"), true);
-check("server requires canonical parent model CURRENT", action.includes('canonicalModelStatus !== "CURRENT"'), true);
+check("server requires canonical parent CURRENT for new decisions", action.includes('action !== "reopen" && canonicalModelStatus !== "CURRENT"'), true);
+check("workflow store enforces canonical parent CURRENT", reviewStore.includes('_parent_model_status(catalog, trim_id) != "CURRENT"'), true);
+check("workflow store exempts reopen from parent guard", reviewStore.includes('if action != "reopen" && _parent_model_status'), true);
 check("current/historical require HTTP(S) evidence", action.includes("Evidence ต้องเป็น HTTP(S) URL"), true);
 check("dispatcher requires ADMIN source", input.includes("UPSERT_TRIM_RETAIL_LIFECYCLE_REVIEW requires source.kind ADMIN"), true);
 check("dispatcher requires HUMAN actor", input.includes("_validate_trim_lifecycle_review_command") && input.includes("_validated_human_actor(command, operation)"), true);
