@@ -18,6 +18,8 @@ check("current price requires amount_thb, so JSON null is not counted", helper.i
 check("catalog seed values are read only as separate hints", helper.includes("variantSeedPrices"), true);
 check("seed hint never feeds pricedTrims", /pricedTrims = trims\.filter\(\(trim\) => actualCurrentPrice\(trim\) != null\)\.length/.test(helper), true);
 check("readiness requires every MarketTrim priced", helper.includes("row.totalTrims > 0 && row.missingTrims === 0"), true);
+check("models without MarketTrim remain visible blockers", helper.includes('"NO_MARKET_TRIM"'), true);
+check("worklist includes both no-trim and missing-price models", helper.includes("row.totalTrims === 0 || row.missingTrims > 0"), true);
 check("worklist is prioritized by registration impact", helper.includes("b.registrations3m - a.registrations3m"), true);
 check("registration mapping uses canonical model tdr_model_id bridge", helper.includes("unitsByTdrModel.get(String(model.tdr_model_id"), true);
 check("OEM target signal comes from price-intelligence registry", helper.includes("pricefeed/targets.json"), true);
@@ -26,6 +28,7 @@ console.log("\nprice coverage worklist — operator UX");
 check("page labels seeds unverified", page.includes("UNVERIFIED seed hint"), true);
 check("page says seed is not authority", page.includes("ไม่ใช่ authority"), true);
 check("page shows registration weighted coverage", page.includes("3M registration coverage"), true);
+check("page separates MarketTrim and price blockers", page.includes("NO_MARKET_TRIM") && page.includes("MISSING_LIST_PRICE"), true);
 check("page states the 80% paid gate", page.includes("80%"), true);
 check("admin navigation exposes the worklist", nav.includes('href="/admin/prices/coverage"'), true);
 
