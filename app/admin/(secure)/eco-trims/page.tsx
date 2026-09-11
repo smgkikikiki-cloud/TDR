@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import Link from "next/link";
-import { enqueueEcoMarketTrim } from "@/app/admin/eco-trim-actions";
+import { enqueueEcoAttachExistingTrim, enqueueEcoMarketTrim } from "@/app/admin/eco-trim-actions";
 import {
   ECO_TRIM_SNAPSHOT_DATE,
   getEcoTrimCandidateGroups,
@@ -15,6 +15,7 @@ export const dynamic = "force-dynamic";
 type SearchParams = Record<string, string | string[] | undefined>;
 type ModelLabel = { brand: string; name: string };
 type MarketImpact = { regs: number; share: number; blocker: string };
+type ExistingTrimOption = { canonicalId: string; name: string; powertrain: string; sourceCount: number };
 function first(value: string | string[] | undefined) { return Array.isArray(value) ? value[0] : value; }
 function one(value: string | string[] | undefined) { return String(first(value) || "").trim(); }
 function n(value: unknown) { const number = Number(value); return Number.isFinite(number) ? number.toLocaleString("th-TH") : "—"; }
@@ -75,12 +76,25 @@ export default async function EcoTrimReviewPage({ searchParams }: { searchParams
     const model = models.get(group.modelId);
     const attached = group.sourceIds.some((id) => attachedSourceIds.has(id));
     const market = impactByModel.get(group.modelId) || { regs: 0, share: 0, blocker: "—" };
+    const existingTrimOptions: ExistingTrimOption[] = trims
+      .filter((row: any) => row.model_id === group.modelId
+        && row.generation_id === group.generationId
+        && String(row.powertrain || "").toUpperCase() === group.powertrain)
+      .map((row: any): ExistingTrimOption => ({
+        canonicalId: String(row.canonical_id || ""),
+        name: String(row.name || row.canonical_id || ""),
+        powertrain: String(row.powertrain || "").toUpperCase(),
+        sourceCount: ecoRefs(row).length,
+      }))
+      .filter((row: ExistingTrimOption) => Boolean(row.canonicalId && row.name))
+      .sort((a: ExistingTrimOption, b: ExistingTrimOption) => a.name.localeCompare(b.name));
     return {
       ...group,
       attached,
       brand: model?.brand || group.modelId.split(".")[0].toUpperCase(),
       modelName: model?.name || group.modelId,
       currentTrimCount: trimCountByModel.get(group.modelId) || 0,
+      existingTrimOptions,
       registrations3m: market.regs,
       registrationSharePct: market.share,
       priceBlocker: market.blocker,
@@ -97,14 +111,15 @@ export default async function EcoTrimReviewPage({ searchParams }: { searchParams
   const shown = visible.slice(0, 80);
   const attachedGroups = enriched.filter((row) => row.attached).length;
   const noTrimGroups = enriched.filter((row) => !row.attached && row.currentTrimCount === 0).length;
+  const attachableGroups = enriched.filter((row) => !row.attached && row.existingTrimOptions.length > 0).length;
   const submittedAt = new Date().toISOString();
 
   return <div className="adminEditor">
     <div className="adminHeader">
       <div>
         <small>ADMIN BENCH · ECO → MARKETTRIM REVIEW</small>
-        <h1>สร้าง MarketTrim จากหลักฐาน ECO แบบ Human-gated</h1>
-        <p>Snapshot ถูก hash-verify ก่อนอ่าน แล้ว group เฉพาะ candidate ที่ model + generation + powertrain ชัดเจน. Reviewer ต้องพิมพ์ชื่อ canonical trim เอง; การกด submit แค่เข้าคิว canonical worker → staging → PR ไม่เขียน master ตรง.</p>
+        <h1>Review ECO identity → Create หรือ Attach MarketTrim</h1>
+        <p>Snapshot ถูก hash-verify ก่อนอ่าน. ถ้า canonical trim มีอยู่แล้ว ให้ attach ECO source เข้า trim เดิม; ถ้ายังไม่มีจริงค่อยสร้างใหม่. ทั้งสองทางเข้าคิว canonical worker → staging → PR ไม่เขียน master ตรง.</p>
       </div>
       <Link className="adminPrimaryLink" href="/admin/prices/coverage">ดู Price coverage ↗</Link>
     </div>
@@ -112,17 +127,22 @@ export default async function EcoTrimReviewPage({ searchParams }: { searchParams
     <div className="adminStatGrid">
       <div className="adminStat"><span>Ready candidate groups</span><strong>{n(enriched.length)}</strong><small>exact signature groups, not fuzzy merged</small></div>
       <div className="adminStat"><span>Already attached</span><strong>{n(attachedGroups)}</strong><small>hidden by default</small></div>
+      <div className="adminStat"><span>Attachable to existing</span><strong>{n(attachableGroups)}</strong><small>same model + generation + powertrain</small></div>
       <div className="adminStat"><span>No MarketTrim yet</span><strong>{n(noTrimGroups)}</strong><small>candidate groups on models with 0 current trims</small></div>
       <div className="adminStat"><span>Snapshot</span><strong>{ECO_TRIM_SNAPSHOT_DATE}</strong><small>sha256:{snapshotHash.slice(0, 12)}…</small></div>
     </div>
 
     <div className="adminNotice">
+      <b>Attach first, create only when needed</b>
+      <span>ถ้า ECO candidate คือ grade ที่มี canonical MarketTrim อยู่แล้ว ให้เลือก Attach to existing trim เพื่อเพิ่ม source_refs โดยไม่สร้าง identity ซ้ำ. Create new ใช้เมื่อ reviewer ยืนยันว่าเป็น grade ใหม่จริง.</span>
+    </div>
+    <div className="adminNotice">
       <b>Identity only</b>
-      <span>ECO ราคา / dimensions / tyre / wheel / battery ที่เห็นใน source ไม่ถูกส่งไปพร้อมการสร้าง trim. หน้านี้สร้างแค่ MarketTrim name + exact powertrain + ECO source UUID. LIST_PRICE ต้องเข้าผ่าน Price Ledger และ evidence policy แยกต่างหาก.</span>
+      <span>ECO ราคา / dimensions / tyre / wheel / battery ที่เห็นใน source ไม่ถูกส่งไปพร้อม identity review. LIST_PRICE ต้องเข้าผ่าน Price Ledger และ evidence policy แยกต่างหาก.</span>
     </div>
     <div className="adminNotice">
       <b>Grouping rule</b>
-      <span>รวมเฉพาะแถวที่ canonical model + generation + powertrain + normalized raw label เหมือนกันเป๊ะ. ไม่ fuzzy-merge ข้ามชื่อ เพราะ ECO UUID หลายอันอาจเป็น homologation records ของคนละ grade จริง.</span>
+      <span>รวมเฉพาะแถวที่ canonical model + generation + powertrain + normalized raw label เหมือนกันเป๊ะ. ไม่ fuzzy-merge ข้ามชื่อ เพราะ ECO UUID หลายอันอาจเป็น homologation records ของคนละ gradeจริง.</span>
     </div>
 
     <form className="adminForm" method="get">
@@ -139,15 +159,25 @@ export default async function EcoTrimReviewPage({ searchParams }: { searchParams
         <td className={styles.impactCell}><b>{n(row.registrations3m)}</b><br/><small>{Number(row.registrationSharePct || 0).toFixed(2)}% of mapped 3M · {row.priceBlocker}</small></td>
         <td className={styles.targetCell}><b>{row.brand} {row.modelName}</b><br/><small>{row.generationId} · {row.powertrain}</small></td>
         <td className={styles.evidenceCell}><b>{row.rawLabel}</b><br/><small>{row.sourceCount} ECO UUID{row.sourceCount === 1 ? "" : "s"} · ECO evidence price {money(row.ecoPriceMinThb, row.ecoPriceMaxThb)}</small><br/><small>{row.sourceIds.slice(0,2).join(" · ")}{row.sourceIds.length > 2 ? ` · +${row.sourceIds.length - 2}` : ""}</small></td>
-        <td>{row.attached ? <><b>ATTACHED</b><br/><small>อย่างน้อยหนึ่ง source UUID อยู่ใน canonical trim แล้ว</small></> : <><b>{row.currentTrimCount} current trims</b><br/><small>{row.currentTrimCount ? "ตรวจ duplicate grade ก่อนสร้าง" : "NO_MARKET_TRIM priority"}</small></>}</td>
-        <td>{row.attached ? <span>ไม่เสนอ create ซ้ำ</span> : <form action={enqueueEcoMarketTrim} className={styles.reviewForm}>
-          <input type="hidden" name="group_key" value={row.key}/>
-          <input type="hidden" name="submission_id" value={randomUUID()}/>
-          <input type="hidden" name="submitted_at" value={submittedAt}/>
-          <label><span>Canonical trim name</span><input name="trim_name" placeholder="เช่น Premium / Max / Z Prestige" required/></label>
-          <label><span>Review note</span><input name="reason" placeholder="ตรวจ grade จาก ECO detail / official brochure…" required/></label>
-          <button className="adminPrimary">Review + queue MarketTrim</button>
-        </form>}</td>
+        <td>{row.attached ? <><b>ATTACHED</b><br/><small>อย่างน้อยหนึ่ง source UUID อยู่ใน canonical trim แล้ว</small></> : <><b>{row.currentTrimCount} current trims</b><br/><small>{row.existingTrimOptions.length ? `${row.existingTrimOptions.length} same-generation/powertrain trim candidates` : row.currentTrimCount ? "มี trim แต่ไม่มี candidate ที่ generation/powertrain ตรง" : "NO_MARKET_TRIM priority"}</small></>}</td>
+        <td>{row.attached ? <span>ไม่เสนอ attach/create ซ้ำ</span> : <div className={styles.decisionStack}>
+          {row.existingTrimOptions.length ? <form action={enqueueEcoAttachExistingTrim} className={styles.reviewForm}>
+            <input type="hidden" name="group_key" value={row.key}/>
+            <input type="hidden" name="submission_id" value={randomUUID()}/>
+            <input type="hidden" name="submitted_at" value={submittedAt}/>
+            <label><span>Attach to existing trim</span><select name="target_trim_id" defaultValue="" required><option value="" disabled>เลือก canonical trim…</option>{row.existingTrimOptions.map((trim) => <option key={trim.canonicalId} value={trim.canonicalId}>{trim.name} · {trim.powertrain}{trim.sourceCount ? ` · ${trim.sourceCount} ECO refs` : ""}</option>)}</select></label>
+            <label><span>Review note</span><input name="reason" placeholder="ยืนยันว่า ECO row คือ canonical grade นี้…" required/></label>
+            <button className="adminPrimary">Attach evidence to existing</button>
+          </form> : null}
+          <form action={enqueueEcoMarketTrim} className={styles.reviewForm}>
+            <input type="hidden" name="group_key" value={row.key}/>
+            <input type="hidden" name="submission_id" value={randomUUID()}/>
+            <input type="hidden" name="submitted_at" value={submittedAt}/>
+            <label><span>Create new canonical trim name</span><input name="trim_name" placeholder="เช่น Premium / Max / Z Prestige" required/></label>
+            <label><span>Review note</span><input name="reason" placeholder="ยืนยันว่าเป็น grade ใหม่จาก ECO detail / brochure…" required/></label>
+            <button className="adminPrimary">Create + queue MarketTrim</button>
+          </form>
+        </div>}</td>
       </tr>)}</tbody>
     </table></div>
 

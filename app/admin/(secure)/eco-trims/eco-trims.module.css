@@ -15,7 +15,8 @@
   font-weight: 700;
 }
 
-.reviewForm input {
+.reviewForm input,
+.reviewForm select {
   width: 100%;
   border: 1px solid #cfd3da;
   background: #fff;
@@ -24,7 +25,8 @@
   font-size: 12px;
 }
 
-.reviewForm input:focus {
+.reviewForm input:focus,
+.reviewForm select:focus {
   border-color: #012061;
   outline: none;
 }
@@ -33,6 +35,17 @@
   width: 100%;
   font-size: 11px;
   white-space: normal;
+}
+
+.decisionStack {
+  display: grid;
+  gap: 14px;
+  min-width: 270px;
+}
+
+.decisionStack form + form {
+  border-top: 1px solid #dfe2e8;
+  padding-top: 12px;
 }
 
 .evidenceCell {
@@ -50,7 +63,8 @@
 }
 
 @media (max-width: 900px) {
-  .reviewForm {
+  .reviewForm,
+  .decisionStack {
     min-width: 220px;
   }
 }
