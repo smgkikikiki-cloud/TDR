@@ -28,6 +28,7 @@ def _catalog_payload():
                     "name": "BEV",
                     "powertrain": "BEV",
                     "drivetrain": "FWD",
+                    "battery_kwh": 60,
                     "import_type": "CBU",
                     "origin_country": "CN",
                 }],
