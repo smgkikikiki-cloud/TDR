@@ -30,7 +30,7 @@ const sample: UpcomingDataset = {
     working_name: "Vehicle",
     status: "SCHEDULED",
     visibility: "PUBLIC",
-    launch_window: { start: "2027-01-01", end: "2027-03-31", precision: "QUARTER" },
+    launch_window: { start: "2027-Q1", end: null, precision: "QUARTER" },
     body_type: "CROSSOVER",
     powertrains: ["HEV"],
     facts: [{ field_key: "powertrain.type", label: "Powertrain", value: "HEV", scope: "THAI_MARKET", certainty: "CONFIRMED" }],
@@ -41,6 +41,9 @@ const sample: UpcomingDataset = {
 };
 check("valid scheduled sample", validateUpcomingDataset(sample), []);
 check("quarter display stays broad", launchWindowLabel(sample.vehicles[0].launch_window), "Q1 2027");
+check("year token needs no fake January date", launchWindowLabel({ start: "2028", end: null, precision: "YEAR" }), "2028");
+check("half-year token stays broad", launchWindowLabel({ start: "2028-H2", end: null, precision: "HALF" }), "H2 2028");
+check("month token stays broad", launchWindowLabel({ start: "2028-03", end: null, precision: "MONTH" }), "มี.ค. 2028");
 
 console.log("\nupcoming vehicles — fail closed semantics");
 const noDate = structuredClone(sample);
@@ -54,6 +57,10 @@ check("launched record must link to canonical model", validateUpcomingDataset(la
 const inventedDate = structuredClone(sample);
 inventedDate.vehicles[0].launch_window = { start: "2027-01-15", end: null, precision: "UNKNOWN" };
 check("unknown precision cannot smuggle an exact date", validateUpcomingDataset(inventedDate).some((p) => p.includes("UNKNOWN launch window cannot carry dates")), true);
+
+const wrongPrecision = structuredClone(sample);
+wrongPrecision.vehicles[0].launch_window = { start: "2027-01-15", end: null, precision: "QUARTER" };
+check("quarter cannot smuggle an exact date", validateUpcomingDataset(wrongPrecision).some((p) => p.includes("does not match QUARTER precision")), true);
 
 console.log(failed ? `\n${failed} check(s) failed` : "\nall upcoming vehicle checks passed");
 process.exit(failed ? 1 : 0);
