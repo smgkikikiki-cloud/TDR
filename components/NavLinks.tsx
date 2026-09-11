@@ -4,8 +4,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { primaryNav } from "@/lib/navigation";
 
-/** Brand and search routes are views of the canonical vehicle catalogue. */
-const SECTION_OF: Record<string, string> = { "/brands": "/models", "/search": "/models" };
+/** Brand, search and forward-looking launch routes are views of the vehicle catalogue product. */
+const SECTION_OF: Record<string, string> = {
+  "/brands": "/models",
+  "/search": "/models",
+  "/upcoming": "/models",
+};
 
 export function NavLinks() {
   const pathname = usePathname() || "/";
