@@ -56,7 +56,7 @@ export default async function UpcomingDetailPage({ params }: { params: Promise<{
     <section className={styles.detailHero}>
       <div>
         <div className={styles.eyebrow}>THAILAND LAUNCH ROADMAP</div>
-        <span className={styles.status} data-status={vehicle.status}>{upcomingStatusLabel(vehicle.status)}</span>
+        <span className={styles.status} data-status={vehicle.status} style={{ position: "static", display: "inline-block" }}>{upcomingStatusLabel(vehicle.status)}</span>
         <h1>{vehicle.brand} {vehicle.working_name}</h1>
         <p className={styles.detailLead}>{vehicle.summary || "TDR กำลังติดตามสถานะของรถรุ่นนี้สำหรับตลาดไทย รายละเอียดที่ยังไม่ยืนยันจะไม่ถูกเติมแทนด้วยสเปกจากตลาดอื่นโดยอัตโนมัติ"}</p>
         <div className={styles.launchBox}><small>ช่วงเวลาเปิดตัวที่ติดตาม</small><b>{launchWindowLabel(vehicle.launch_window)}</b></div>
