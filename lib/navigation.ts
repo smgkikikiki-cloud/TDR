@@ -8,4 +8,4 @@ export const primaryNav = [
 ];
 
 export const loginCta = { href: "/member/login", label: "เข้าสู่ระบบ" };
-export const pricingCta = { href: "/reports", label: "ดูแพ็กเกจ" };
+export const pricingCta = { href: "/pricing", label: "ดูแพ็กเกจ" };
