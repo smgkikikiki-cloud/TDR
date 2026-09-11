@@ -428,12 +428,25 @@ class CanonicalInputPipeline:
         if not self.data_dir.is_dir():
             raise CanonicalInputError(f"canonical data directory does not exist: {self.data_dir}")
 
+        # data/research/ sits beside vehreg/data, not under it, so it needs
+        # its own staged copy -- APPEND_PRODUCTION_STATE must review/discard
+        # exactly like every other write, never touch the real checkout
+        # until the whole batch succeeds.
+        research_source = self.data_dir.resolve().parent.parent / "data" / "research"
+        research_writable = research_source.is_dir()
+
         with tempfile.TemporaryDirectory(prefix="tdr-canonical-input-") as temp:
             staged = Path(temp) / "data"
             shutil.copytree(self.data_dir, staged)
-            writer = CanonicalWritePipeline(staged)
+            staged_research = Path(temp) / "research"
+            production_state_path = None
+            if research_writable:
+                shutil.copytree(research_source, staged_research)
+                production_state_path = staged_research / "monthly_production_state.csv"
+            writer = CanonicalWritePipeline(staged, production_state_path=production_state_path)
             write_results: list[dict[str, Any]] = []
             changed_relative: set[Path] = set()
+            changed_research_relative: set[Path] = set()
             canonical_write_applied = False
             for command in batch.commands:
                 operation = str(command.get("operation") or "").strip().upper()
@@ -471,7 +484,11 @@ class CanonicalInputPipeline:
                     "idempotent_replay": result.idempotent_replay,
                 })
                 for changed in result.changed_files:
-                    changed_relative.add(Path(changed).relative_to(staged))
+                    changed_path = Path(changed)
+                    if production_state_path is not None and changed_path == production_state_path:
+                        changed_research_relative.add(changed_path.relative_to(staged_research))
+                    else:
+                        changed_relative.add(changed_path.relative_to(staged))
 
             # Review-only batches must not pretend pre-existing revision/outbox/
             # shadow files changed. Those audit artifacts belong only to normal
@@ -492,6 +509,13 @@ class CanonicalInputPipeline:
             ordered = sorted(changed_relative, key=lambda path: "canonical_state" in path.parts)
             for relative in ordered:
                 _atomic_bytes(self.data_dir / relative, (staged / relative).read_bytes())
+            ordered_research = sorted(changed_research_relative)
+            for relative in ordered_research:
+                _atomic_bytes(research_source / relative, (staged_research / relative).read_bytes())
+            research_changed_files = [
+                str((research_source / relative).relative_to(self.data_dir.resolve().parent.parent))
+                for relative in ordered_research
+            ]
 
         saved = {
             "schema_version": 1,
@@ -505,7 +529,7 @@ class CanonicalInputPipeline:
             "submitted_at": batch.submitted_at,
             "applied_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "results": write_results,
-            "changed_files": [str(path) for path in ordered],
+            "changed_files": [str(path) for path in ordered] + research_changed_files,
         }
         _atomic_bytes(marker, (json.dumps(saved, ensure_ascii=False, indent=2) + "\n").encode())
         return CanonicalInputResult(

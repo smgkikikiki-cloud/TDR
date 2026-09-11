@@ -9,6 +9,8 @@ import { adminDb } from "@/lib/supabase";
 const SOURCE_KINDS = new Set(["ADMIN", "ECO", "OEM", "MEDIA", "PRICE_HARVEST", "MIGRATION", "API"]);
 const QUICK_PRICE_TYPES = new Set(["LIST_PRICE", "INTRODUCTORY_PRICE", "ESTIMATED_PRICE"]);
 const SEGMENTS = new Set(["A", "B", "C", "D", "E", "F", "UNKNOWN"]);
+const IMPORT_TYPES = new Set(["CBU", "CKD", "SKD"]);
+const STATE_MONTH_RE = /^\d{4}-(0[1-9]|1[0-2])$/;
 const BODY_TYPES = new Set([
   "HATCHBACK", "SEDAN", "CROSSOVER", "PPV", "OFFROAD", "COUPE",
   "MPV", "PICKUP", "WAGON", "VAN", "TRUCK", "OTHER",
@@ -268,6 +270,45 @@ export async function enqueueModelTaxonomyInput(formData: FormData) {
       },
     }],
   }, "model");
+}
+
+export async function enqueueProductionStateInput(formData: FormData) {
+  if (!(await isAdmin())) redirect("/admin/login");
+  const modelId = requiredField(formData, "model_id", "รุ่นรถ");
+  const grain = (field(formData, "grain") || "MODEL").toUpperCase();
+  if (grain !== "MODEL" && grain !== "VARIANT") throw new Error("grain ต้องเป็น MODEL หรือ VARIANT");
+  const effectiveMonth = requiredField(formData, "effective_month", "เดือนที่มีผล");
+  if (!STATE_MONTH_RE.test(effectiveMonth)) throw new Error("เดือนที่มีผลต้องเป็น YYYY-MM");
+  const originCountry = field(formData, "origin_country").toUpperCase();
+  const importType = field(formData, "import_type").toUpperCase();
+  if (!originCountry && !importType) throw new Error("ต้องระบุ production country และ/หรือ import type อย่างน้อยหนึ่งอย่าง");
+  if (importType && !IMPORT_TYPES.has(importType)) throw new Error("import type ต้องเป็น CBU / CKD / SKD");
+  const evidence = requiredField(formData, "evidence", "หลักฐาน (ทำไมถึงเชื่อว่าจริง)");
+  const sourceUrl = field(formData, "source_url");
+  const submittedAt = submissionTimestamp(formData);
+
+  const db = adminDb();
+  if (!db) throw new Error("ยังไม่ได้ตั้งค่า Supabase server credential");
+  const { data: model, error } = await db.from("current_vehicle_models")
+    .select("canonical_id,release_id").eq("canonical_id", modelId).maybeSingle();
+  if (error) throw error;
+  if (!model?.release_id) throw new Error("ไม่พบรุ่นนี้ใน active canonical release");
+  const year = await releaseYear(db, model.release_id);
+
+  const payload: Record<string, unknown> = { grain, effective_month: effectiveMonth, evidence };
+  if (originCountry) payload.origin_country = originCountry;
+  if (importType) payload.import_type = importType;
+  if (sourceUrl) payload.source_url = sourceUrl;
+
+  return enqueuePayload({
+    schema_version: 1,
+    batch_id: `admin-state-${submissionId(formData)}`,
+    year,
+    submitted_at: submittedAt,
+    source: { kind: "ADMIN" },
+    reason: evidence,
+    commands: [{ operation: "APPEND_PRODUCTION_STATE", canonical_id: modelId, payload }],
+  }, "state");
 }
 
 export async function enqueueWithdrawModel(formData: FormData) {
