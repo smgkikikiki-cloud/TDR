@@ -185,6 +185,7 @@ export async function getCanonicalCompareTrims(limit = 600) {
         campaign_quote: canClaimCommerce ? trim.campaign_quote : {},
         model_slug: model?.slug || null,
         model_lifecycle: modelLifecycle,
+        model_image_url: model?.image_url || null,
         brand_name: detail.brand || model?.brands?.name_en || "",
         model_name: detail.model || model?.name_en || raw.model_id,
         segment: model?.segment || null,
@@ -196,6 +197,29 @@ export async function getCanonicalCompareTrims(limit = 600) {
     })
     .filter((row: any) => isCatalogVisible(row.retail_lifecycle) && isCatalogVisible(row.model_lifecycle))
     .sort((a: any, b: any) => `${a.brand_name} ${a.model_name} ${a.name}`.localeCompare(`${b.brand_name} ${b.model_name} ${b.name}`));
+}
+
+/** Public compare only consumes VERIFIED canonical facts for the trims actually
+ * on screen. Missing/UNKNOWN facts remain missing; explicit KNOWN false is kept
+ * so the UI can distinguish "ไม่มี" from "ยังไม่มีข้อมูลยืนยัน". */
+export async function getCanonicalCompareSpecFacts(trimIds: string[]) {
+  const ids = [...new Set(trimIds.filter(Boolean))].slice(0, 4);
+  if (!ids.length) return [];
+  const db = publicDb();
+  if (!db) return [];
+  const { data, error } = await db.from("current_spec_facts")
+    .select("fact_id,trim_id,field_key,verification_status,payload")
+    .in("trim_id", ids)
+    .eq("verification_status", "VERIFIED")
+    .limit(1000);
+  if (error) throw error;
+  return (data || []).map((row: any) => ({
+    ...(row.payload || {}),
+    fact_id: row.fact_id,
+    trim_id: row.trim_id,
+    field_key: row.field_key,
+    verification_status: row.verification_status,
+  }));
 }
 
 export async function getCanonicalRelatedModels(model: any, limit = 8) {
