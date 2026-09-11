@@ -1,21 +1,19 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import styles from "./catalog.module.css";
 
-export function CatalogSort({ value }: { value: string }) {
+export function CatalogSort({ value, query }: { value: string; query: string }) {
   const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
   return <select
     className={styles.sortSelect}
     aria-label="เรียงลำดับรถ"
     value={value}
     onChange={(event) => {
-      const params = new URLSearchParams(searchParams.toString());
+      const params = new URLSearchParams(query);
       if (event.target.value === "recommended") params.delete("sort");
       else params.set("sort", event.target.value);
-      router.push(`${pathname}${params.size ? `?${params.toString()}` : ""}`);
+      router.push(`/models${params.size ? `?${params.toString()}` : ""}`);
     }}
   >
     <option value="recommended">เรียง: แนะนำ</option>
