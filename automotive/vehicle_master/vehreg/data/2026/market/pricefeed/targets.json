@@ -19,6 +19,58 @@
     {
       "source_id": "autolifethailand",
       "kind": "MEDIA"
+    },
+    {
+      "source_id": "official_toyota_th",
+      "kind": "OEM"
+    },
+    {
+      "source_id": "official_isuzu_th",
+      "kind": "OEM"
+    },
+    {
+      "source_id": "official_honda_th",
+      "kind": "OEM"
+    },
+    {
+      "source_id": "official_mitsubishi_th",
+      "kind": "OEM"
+    },
+    {
+      "source_id": "official_nissan_th",
+      "kind": "OEM"
+    },
+    {
+      "source_id": "official_mazda_th",
+      "kind": "OEM"
+    },
+    {
+      "source_id": "official_byd_th",
+      "kind": "OEM"
+    },
+    {
+      "source_id": "official_mg_th",
+      "kind": "OEM"
+    },
+    {
+      "source_id": "official_gwm_th",
+      "kind": "OEM"
+    },
+    {
+      "source_id": "official_changan_th",
+      "kind": "OEM"
+    },
+    {
+      "source_id": "official_aion_th",
+      "kind": "OEM"
+    },
+    {
+      "source_id": "official_zeekr_th",
+      "kind": "OEM"
+    },
+    {
+      "source_id": "official_chery_th",
+      "kind": "OEM"
     }
   ],
   "targets": [
@@ -80,6 +132,365 @@
       "role": "DISCOVERY_FEED",
       "adapter": "wordpress",
       "poll_minutes": 20
+    },
+    {
+      "id": "toyota_th_yaris_ativ",
+      "source_id": "official_toyota_th",
+      "url": "https://www.toyota.co.th/model/yarisativ",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "toyota.yaris_ativ",
+      "notes": "Model page shows a starting price and a per-grade price table in static text (verified live)."
+    },
+    {
+      "id": "toyota_th_yaris_cross",
+      "source_id": "official_toyota_th",
+      "url": "https://www.toyota.co.th/model/yariscross",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "toyota.yaris_cross",
+      "notes": "Model page shows starting price and per-grade prices in static text (verified live)."
+    },
+    {
+      "id": "toyota_th_corolla_cross",
+      "source_id": "official_toyota_th",
+      "url": "https://www.toyota.co.th/model/corollacross",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "toyota.corolla_cross",
+      "notes": "Model page shows starting price and per-grade prices in static text (verified live). A separate GR Sport trim page exists at /model/corollacross_grsport and was not added here."
+    },
+    {
+      "id": "toyota_th_fortuner_leader",
+      "source_id": "official_toyota_th",
+      "url": "https://www.toyota.co.th/model/fortuner_leader",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "toyota.fortuner",
+      "notes": "Toyota splits Fortuner into three separate trim-family pages (Leader/Legender/GR Sport); this is the base Leader page, static price text confirmed live. Legender and GR Sport pages exist separately and were not added."
+    },
+    {
+      "id": "toyota_th_hilux_champ",
+      "source_id": "official_toyota_th",
+      "url": "https://www.toyota.co.th/model/hilux_champ",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "toyota.hilux_champ",
+      "notes": "Single page covers all Hilux Champ cab/bed configurations with a 6-grade static price table (verified live)."
+    },
+    {
+      "id": "toyota_th_hilux_revo_standard",
+      "source_id": "official_toyota_th",
+      "url": "https://www.toyota.co.th/model/hilux_revo_standard",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "toyota.hilux_revo_cab",
+      "notes": "Toyota's 'Standard Cab' Revo page, static price text confirmed live."
+    },
+    {
+      "id": "toyota_th_hilux_revo_zedition",
+      "source_id": "official_toyota_th",
+      "url": "https://www.toyota.co.th/model/hilux_revo_zedition",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "toyota.hilux_revo_double_cab",
+      "notes": "Toyota has no single 'double cab' URL; Revo double-cab splits across Prerunner/Rocco/Z-Edition/GR Sport trim pages. The Prerunner page (/model/hilux_revo_prerunner) was reachable when first researched but started returning HTTP 301 with no Location header on repeated re-checks just before this PR, so it was swapped for the Z-Edition page instead, which is confirmed live with static price text ('ราคา 669,000+'). The other trim pages were not added to keep this batch bounded."
+    },
+    {
+      "id": "toyota_th_hilux_travo_standard_4trex",
+      "source_id": "official_toyota_th",
+      "url": "https://www.toyota.co.th/en/model/hilux_travo_standard_4trex",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "toyota.hilux_travo_cab",
+      "notes": "Requires the /en/ path and _4trex suffix -- the shorter /model/hilux_travo_standard path 301-redirects and does not resolve. Static price text confirmed live."
+    },
+    {
+      "id": "toyota_th_hilux_travo_prerunner_4trex",
+      "source_id": "official_toyota_th",
+      "url": "https://www.toyota.co.th/en/model/hilux_travo_prerunner_4trex",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "toyota.hilux_travo_double_cab",
+      "notes": "Covers both Smart Cab and Double Cab Prerunner/4TREX configurations on one page; static price text confirmed live."
+    },
+    {
+      "id": "toyota_th_camry",
+      "source_id": "official_toyota_th",
+      "url": "https://www.toyota.co.th/model/camry",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "toyota.camry",
+      "notes": "Static price text confirmed live."
+    },
+    {
+      "id": "isuzu_tis_dmax_2door",
+      "source_id": "official_isuzu_th",
+      "url": "https://www.isuzu-tis.com/isuzu-pick-up-2-door",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "isuzu.dmax_cab",
+      "notes": "isuzu.co.th itself is the corporate/holding site with no model pages; isuzu-tis.com (Tri Petch Isuzu Sales, the exclusive Thai distributor) is Isuzu's actual consumer sales site. Site calls this trim '2-door' (Spacecab). Static price text confirmed live."
+    },
+    {
+      "id": "isuzu_tis_dmax_4door",
+      "source_id": "official_isuzu_th",
+      "url": "https://www.isuzu-tis.com/isuzu-pick-up-4-door",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "isuzu.dmax_double_cab",
+      "notes": "Site calls this trim '4-door' (double cab). Static price text confirmed live."
+    },
+    {
+      "id": "isuzu_tis_mux",
+      "source_id": "official_isuzu_th",
+      "url": "https://www.isuzu-tis.com/isuzu-mu-x",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "isuzu.mux",
+      "notes": "Static price text confirmed live."
+    },
+    {
+      "id": "honda_th_hrv",
+      "source_id": "official_honda_th",
+      "url": "https://www.honda.co.th/en/hrvehev",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "honda.hrv",
+      "notes": "Current Thai HR-V is hybrid-only, URL slug is 'hrvehev' not 'hrv'. Static price text confirmed live."
+    },
+    {
+      "id": "honda_th_city_hatchback",
+      "source_id": "official_honda_th",
+      "url": "https://www.honda.co.th/en/cityhatchback",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "honda.city_hatchback",
+      "notes": "Static price text confirmed live."
+    },
+    {
+      "id": "honda_th_city",
+      "source_id": "official_honda_th",
+      "url": "https://www.honda.co.th/en/city",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "honda.city",
+      "notes": "Static price text confirmed live (an introductory-price framing, still an OEM-stated number)."
+    },
+    {
+      "id": "honda_th_civic",
+      "source_id": "official_honda_th",
+      "url": "https://www.honda.co.th/en/civic",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "honda.civic",
+      "notes": "Static price text confirmed live. Separate Civic Type R page exists and was not added."
+    },
+    {
+      "id": "honda_th_crv",
+      "source_id": "official_honda_th",
+      "url": "https://www.honda.co.th/en/crv",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "honda.crv",
+      "notes": "Static price text confirmed live."
+    },
+    {
+      "id": "mitsubishi_th_triton",
+      "source_id": "official_mitsubishi_th",
+      "url": "https://www.mitsubishi-motors.co.th/en/cars/all-newtriton",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "mitsubishi.triton_double_cab",
+      "notes": "One page covers Single Cab, Mega Cab and Double Cab together; static starting price confirmed live. Also used for mitsubishi.triton_cab (same URL, see next row) rather than duplicating -- both are separate target rows because model_hint is one-per-target."
+    },
+    {
+      "id": "mitsubishi_th_triton_singlecab",
+      "source_id": "official_mitsubishi_th",
+      "url": "https://www.mitsubishi-motors.co.th/en/cars/all-newtriton",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "mitsubishi.triton_cab",
+      "notes": "Same URL as mitsubishi_th_triton -- Mitsubishi has one Triton page for all cab configurations, this row exists only to carry the triton_cab model_hint."
+    },
+    {
+      "id": "mitsubishi_th_pajero_sport",
+      "source_id": "official_mitsubishi_th",
+      "url": "https://www.mitsubishi-motors.co.th/en/cars/pajero-sport",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "mitsubishi.pajero_sport",
+      "notes": "Static starting price confirmed live."
+    },
+    {
+      "id": "nissan_th_kicks",
+      "source_id": "official_nissan_th",
+      "url": "https://www.nissan.co.th/vehicles/new-vehicles/kicks-epower.html",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "nissan.kicks",
+      "notes": "Current Thai Kicks is e-POWER only, hence the '-epower' slug. Static per-grade price text confirmed live."
+    },
+    {
+      "id": "nissan_th_almera",
+      "source_id": "official_nissan_th",
+      "url": "https://www.nissan.co.th/vehicles/new-vehicles/new-almera.html",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "nissan.almera",
+      "notes": "Static per-grade price text confirmed live."
+    },
+    {
+      "id": "mazda_th_mazda2",
+      "source_id": "official_mazda_th",
+      "url": "https://www.mazda.co.th/th/cars/mazda2-essential",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "mazda.mazda2",
+      "notes": "Page loads fine but shows NO price text in a plain fetch -- pricing is JS-rendered client-side. Do not treat this target as price evidence until fetched with a rendering step; useful today only to confirm the model exists/current trim naming."
+    },
+    {
+      "id": "mazda_th_cx5",
+      "source_id": "official_mazda_th",
+      "url": "https://www.mazda.co.th/th/cars/mazda-cx5",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "mazda.cx5",
+      "notes": "Same JS-rendering limitation as mazda_th_mazda2 -- no static price text, needs a rendering fetch."
+    },
+    {
+      "id": "byd_th_dolphin",
+      "source_id": "official_byd_th",
+      "url": "https://www.byd.com/en-th/car/dolphin",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "byd.dolphin",
+      "notes": "Server-rendered spec/feature page (not a bot-block, not a JS shell) but has NO price text anywhere. Useful for confirming the model exists/current spec claims, not for price evidence."
+    },
+    {
+      "id": "byd_th_atto3",
+      "source_id": "official_byd_th",
+      "url": "https://www.byd.com/en-th/car/atto3",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "byd.atto3",
+      "notes": "Same as byd_th_dolphin: real content, no price. A search-indexed brochure PDF at .../atto3/atto3-th.pdf returned 404 on direct fetch and was not added."
+    },
+    {
+      "id": "byd_th_sealion6",
+      "source_id": "official_byd_th",
+      "url": "https://www.byd.com/en-th/car/sealion6",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "byd.sealion6",
+      "notes": "Same as byd_th_dolphin: real content, no price. Note some spec fields on this page look templated/placeholder -- treat any non-price spec claims from it with caution too."
+    },
+    {
+      "id": "byd_th_seal",
+      "source_id": "official_byd_th",
+      "url": "https://www.byd.com/en-th/car/seal",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "byd.seal",
+      "notes": "Same as byd_th_dolphin: real content, no price."
+    },
+    {
+      "id": "mg_th_home_price_cards",
+      "source_id": "official_mg_th",
+      "url": "https://www.mgcars.com/en",
+      "role": "PRICE_LIST",
+      "notes": "Multi-model homepage; a live fetch showed starting prices for MG S5 EV Plus, MG4 MY2026, MG ZS EV and MG3 in one crawl, even though each model's own page did not show a price in isolation. Extraction must identify which vehicle each price belongs to from page text, same caveat as the existing jaecoo_th_home_price_cards target."
+    },
+    {
+      "id": "mg_th_s5_ev_plus",
+      "source_id": "official_mg_th",
+      "url": "https://www.mgcars.com/en/cars/mg-s5-ev-plus",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "mg.mg_s5_ev",
+      "notes": "No price text on this specific page fetch (price appeared on the homepage crawl instead, ~THB 749,900 per that separate fetch) -- treat this target as model/spec confirmation, use mg_th_home_price_cards or a re-check for price."
+    },
+    {
+      "id": "mg_th_mg4_my2026",
+      "source_id": "official_mg_th",
+      "url": "https://www.mgcars.com/en/cars/mg4-my2026",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "mg.mg4",
+      "notes": "Same pattern as mg_th_s5_ev_plus -- no price in this page's own text, homepage crawl showed one instead."
+    },
+    {
+      "id": "mg_th_zs_ev",
+      "source_id": "official_mg_th",
+      "url": "https://www.mgcars.com/en/cars/mg-zs-ev",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "mg.mg_zs_ev",
+      "notes": "Page text contains a THB 9,000 figure that is a maintenance-cost cap, NOT the vehicle price -- do not let an automated extractor mistake it for LIST_PRICE. No actual vehicle price present on this page."
+    },
+    {
+      "id": "mg_th_all_new_mg3",
+      "source_id": "official_mg_th",
+      "url": "https://www.mgcars.com/en/cars/all-new-mg3",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "mg.mg3",
+      "notes": "Same pattern as mg_th_s5_ev_plus -- no price in this page's own text."
+    },
+    {
+      "id": "gwm_th_tank300",
+      "source_id": "official_gwm_th",
+      "url": "https://www.gwm.co.th/en/models/tank-300",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "gwm.tank300",
+      "notes": "Static price text confirmed live (HEV and a separate diesel variant page both show prices). An older-style gwm.co.th/en/TANK300.html URL 404'd and was not used."
+    },
+    {
+      "id": "gwm_th_haval_h6",
+      "source_id": "official_gwm_th",
+      "url": "https://www.gwm.co.th/en/models/haval-h6",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "gwm.haval_h6",
+      "notes": "Static price text confirmed live for both HEV and PHEV variants."
+    },
+    {
+      "id": "changan_th_deepal_s05",
+      "source_id": "official_changan_th",
+      "url": "https://www.changan.co.th/en/deepal/s05-en/",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "deepal.deepal_s05",
+      "notes": "Page loads with real spec content (motor power, range, wheelbase) but NO price text -- JS-rendered price widget, same limitation as Mazda. Not usable as price evidence until fetched with a rendering step."
+    },
+    {
+      "id": "changan_th_lumin_l",
+      "source_id": "official_changan_th",
+      "url": "https://www.changan.co.th/en/lumin/luminl-en/",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "changan.changan_lumin",
+      "notes": "CATALOG MISMATCH WARNING: this page loads (HTTP-wise) but its fetched text is almost empty (nav/logo only, no confirmed model name, no price) -- classic thin SPA shell. It also only exposes 'Lumin L' / 'Lumin L DC', not a plain 'Lumin' -- the live Thai product may have succeeded the canonical 'changan_lumin' nameplate. Flagging for catalog review rather than assuming the id is still correct; do not treat this target as usable evidence yet."
+    },
+    {
+      "id": "aion_th_aion_ut",
+      "source_id": "official_aion_th",
+      "url": "https://www.gacgroup.com/th-th/hatchback/aion-ut",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "aion.aion_ut",
+      "notes": "aionauto.com (the older brand domain) now 301-redirects to a relocation notice naming gacgroup.com as the new official site -- use this domain, not aionauto.com. Static price text confirmed live independently (raw HTML contains 'ราคา 519,900 บาท' / 'ราคา 619,900 บาท')."
+    },
+    {
+      "id": "aion_th_aion_v",
+      "source_id": "official_aion_th",
+      "url": "https://www.gacgroup.com/th-th/suv/aion-v",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "aion.aion_v",
+      "notes": "Static price text confirmed live independently ('ราคา 769,900 บาท' / 'ราคา 899,900 บาท')."
+    },
+    {
+      "id": "aion_th_aion_y_plus",
+      "source_id": "official_aion_th",
+      "url": "https://www.gacgroup.com/th-th/suv/aion-y-plus",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "aion.aion_y_plus",
+      "notes": "Static price text confirmed live independently ('ราคา 749,000 บาท' for the 490 Premium variant); page likely lists more trims than this one price string."
+    },
+    {
+      "id": "zeekr_th_zeekr_x",
+      "source_id": "official_zeekr_th",
+      "url": "https://www.zeekrlife.com/en-th/models/x",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "zeekr.zeekr_x",
+      "notes": "Confirmed reachable (server-rendered Nuxt page, not a bot-block), but no price text anywhere in the fetched HTML -- a 'price-wrap' UI element exists but appears populated client-side/via API at runtime. Not usable as price evidence until fetched with a rendering step."
+    },
+    {
+      "id": "chery_th_v23",
+      "source_id": "official_chery_th",
+      "url": "https://www.chery-thailand.com/en/models/v23",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "chery.chery_v23",
+      "notes": "Confirmed a separate domain from omodajaecoo.co.th (Chery and Omoda/Jaecoo are NOT the same Thailand distributor). Static price text confirmed live ('Start Price: 699,900 THB')."
+    },
+    {
+      "id": "chery_th_tiggo8",
+      "source_id": "official_chery_th",
+      "url": "https://www.chery-thailand.com/en/models/tiggo8",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "chery.tiggo8",
+      "notes": "Static price text confirmed live ('Starting from 949,000 THB'). Site brands this model 'TIGGO 8 CSH' (Chery Super Hybrid/PHEV); no separate non-hybrid Tiggo 8 page was found -- flag for catalog review if a non-hybrid trim is expected to map to the same canonical id."
+    },
+    {
+      "id": "jaecoo_th_omoda_c5_ev",
+      "source_id": "official_jaecoo_th",
+      "url": "https://www.omodajaecoo.co.th/en/model/new-omoda-c5-ev-en",
+      "role": "CURRENT_MODEL_PAGE",
+      "model_hint": "chery.omoda_c5",
+      "notes": "Reuses the existing official_jaecoo_th source: Omoda and Jaecoo share the omodajaecoo.co.th domain (confirmed distinct from chery-thailand.com). IMPORTANT fetch caveat: this URL returned HTTP 403 when fetched through our research tool's default fetch path, but loads fine (200) with a standard browser User-Agent and contains an embedded JSON blob with 'sub_model_name\":\"OMODA C5 EV MAX+\",\"price\":\"709000\"' -- confirmed independently. The same JSON blob also carries several Jaecoo models' prices, so extraction must pick out the right vehicle by name, same caveat as jaecoo_th_home_price_cards. If the pipeline's own fetcher (User-Agent 'tdr-automotive/price-intelligence-1.0', see price_fetch.py) also gets a 403 here, that is a fetch-layer/WAF issue to solve separately, not a dead source. Only 'OMODA C5 EV' was found on this domain; no separate non-EV Omoda C5 page exists."
     }
   ]
 }
