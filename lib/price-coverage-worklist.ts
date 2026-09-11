@@ -1,10 +1,13 @@
 import targetsRegistry from "@/automotive/vehicle_master/vehreg/data/2026/market/pricefeed/targets.json";
 import { defaultMarketPeriod, periodKey } from "@/lib/member-market";
 
+export type PriceCoverageBlocker = "NO_MARKET_TRIM" | "MISSING_LIST_PRICE";
+
 export type PriceCoverageWorkItem = {
   canonicalModelId: string;
   brand: string;
   model: string;
+  blocker: PriceCoverageBlocker;
   totalTrims: number;
   pricedTrims: number;
   missingTrims: number;
@@ -20,6 +23,7 @@ export type PriceCoverageWorklist = {
   periods: string[];
   canonicalModels: number;
   modelsWithTrims: number;
+  modelsWithoutTrims: number;
   readyModels: number;
   modelCoveragePct: number;
   mappedRegistrations3m: number;
@@ -61,10 +65,12 @@ function targetCountsByModel(): Map<string, number> {
 }
 
 function actualCurrentPrice(row: any): number | null {
+  // JSONB `null` is not SQL NULL, so presence of current_list_price alone is
+  // never evidence. A usable current price must contain a positive amount.
   return numberOrNull(row?.current_list_price?.amount_thb);
 }
 
-export async function getPriceCoverageWorklist(db: any, limit = 60): Promise<PriceCoverageWorklist> {
+export async function getPriceCoverageWorklist(db: any, limit = 100): Promise<PriceCoverageWorklist> {
   const [{ data: coverageRows, error: coverageError }, { data: modelRows, error: modelError }, { data: trimRows, error: trimError }, { data: brandRows, error: brandError }] = await Promise.all([
     db.from("registration_analytics_coverage")
       .select("period,total_registrations,mapped_registrations,mapped_unit_pct")
@@ -120,19 +126,22 @@ export async function getPriceCoverageWorklist(db: any, limit = 60): Promise<Pri
   const oemTargets = targetCountsByModel();
   const canonicalModels = (modelRows || []).length;
   const modelsWithTrims = [...trimsByModel.keys()].length;
+  const modelsWithoutTrims = Math.max(0, canonicalModels - modelsWithTrims);
 
   const rows = (modelRows || []).map((model: any) => {
     const modelId = String(model.canonical_id || "");
     const trims = trimsByModel.get(modelId) || [];
     const pricedTrims = trims.filter((trim) => actualCurrentPrice(trim) != null).length;
     const seeds = variantSeedPrices((model.payload || {}) as JsonObject);
+    const blocker: PriceCoverageBlocker = trims.length ? "MISSING_LIST_PRICE" : "NO_MARKET_TRIM";
     return {
       canonicalModelId: modelId,
       brand: brands.get(String(model.brand_id || "")) || "UNKNOWN",
       model: String(model.name_en || model.name_th || modelId),
+      blocker,
       totalTrims: trims.length,
       pricedTrims,
-      missingTrims: Math.max(0, trims.length - pricedTrims),
+      missingTrims: trims.length ? Math.max(0, trims.length - pricedTrims) : 0,
       registrations3m: Number(unitsByTdrModel.get(String(model.tdr_model_id || "")) || 0),
       seedMinThb: seeds.length ? Math.min(...seeds) : null,
       seedMaxThb: seeds.length ? Math.max(...seeds) : null,
@@ -149,9 +158,12 @@ export async function getPriceCoverageWorklist(db: any, limit = 60): Promise<Pri
   const registrationCoveragePct3m = mappedRegistrations3m ? Math.round(10000 * readyRegistrations3m / mappedRegistrations3m) / 100 : 0;
 
   const items = rows
-    .filter((row) => row.totalTrims > 0 && row.missingTrims > 0)
-    .sort((a, b) => b.registrations3m - a.registrations3m || b.missingTrims - a.missingTrims || `${a.brand} ${a.model}`.localeCompare(`${b.brand} ${b.model}`))
-    .slice(0, Math.max(1, Math.min(limit, 300)))
+    .filter((row) => row.totalTrims === 0 || row.missingTrims > 0)
+    .sort((a, b) => b.registrations3m - a.registrations3m
+      || Number(a.blocker === "MISSING_LIST_PRICE") - Number(b.blocker === "MISSING_LIST_PRICE")
+      || b.missingTrims - a.missingTrims
+      || `${a.brand} ${a.model}`.localeCompare(`${b.brand} ${b.model}`))
+    .slice(0, Math.max(1, Math.min(limit, 321)))
     .map((row) => ({
       ...row,
       registrationSharePct: mappedRegistrations3m ? Math.round(10000 * row.registrations3m / mappedRegistrations3m) / 100 : 0,
@@ -161,6 +173,7 @@ export async function getPriceCoverageWorklist(db: any, limit = 60): Promise<Pri
     periods,
     canonicalModels,
     modelsWithTrims,
+    modelsWithoutTrims,
     readyModels,
     modelCoveragePct,
     mappedRegistrations3m,
