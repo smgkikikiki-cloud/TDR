@@ -189,6 +189,9 @@ export async function enqueuePriceInput(formData: FormData) {
     sourceRef = target.url;
     sourceLabel = target.sourceId;
   }
+  if (priceType === "LIST_PRICE" && !sourceRef) {
+    throw new Error("LIST_PRICE ใน Quick input ต้องมี source ref หรือ registered OEM target");
+  }
 
   const year = await releaseYear(db, trim.release_id);
   const pricePayload: Record<string, unknown> = {
