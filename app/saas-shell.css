@@ -1,0 +1,166 @@
+/* Product-first public chrome approved for the SaaS redesign. */
+.saasHeader {
+  border-bottom: 1px solid var(--line);
+  padding: 0 var(--pagePad);
+  background: var(--white);
+}
+
+.saasHeaderRow {
+  min-height: 78px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 34px;
+}
+
+.saasHeader .brandLockup {
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.saasHeader .productTag {
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.saasHeaderNav {
+  min-width: 0;
+}
+
+.saasHeaderNav nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 28px;
+}
+
+.saasHeaderNav nav a {
+  position: relative;
+  padding: 29px 0 25px;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.saasHeaderNav nav a:hover,
+.saasHeaderNav nav a.navOn {
+  color: var(--red);
+}
+
+.saasHeaderNav nav a.navOn::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 3px;
+  background: var(--red);
+}
+
+.saasHeaderActions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  white-space: nowrap;
+}
+
+.saasLogin {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.saasLogin:hover {
+  color: var(--red);
+}
+
+.saasPricing {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 19px;
+  border: 1px solid var(--red);
+  background: var(--red);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.saasPricing:hover {
+  background: var(--red-dark);
+  border-color: var(--red-dark);
+  color: #fff;
+}
+
+@media (max-width: 1040px) {
+  .saasHeaderRow {
+    grid-template-columns: auto auto;
+    gap: 14px 24px;
+    padding-top: 16px;
+  }
+
+  .saasHeaderNav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    overflow-x: auto;
+    border-top: 1px solid var(--line);
+  }
+
+  .saasHeaderNav nav {
+    gap: 24px;
+  }
+
+  .saasHeaderNav nav a {
+    padding: 14px 0 13px;
+  }
+
+  .saasHeaderActions {
+    justify-self: end;
+  }
+}
+
+@media (max-width: 700px) {
+  .saasHeader {
+    padding-inline: 20px;
+  }
+
+  .saasHeaderRow {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+  }
+
+  .saasHeader .brandLockup {
+    display: grid;
+  }
+
+  .saasHeader .tdrMark {
+    font-size: 25px;
+  }
+
+  .saasHeader .productTag {
+    display: none;
+  }
+
+  .saasHeaderActions {
+    gap: 10px;
+  }
+
+  .saasLogin {
+    display: none;
+  }
+
+  .saasPricing {
+    min-height: 38px;
+    padding-inline: 14px;
+    font-size: 12px;
+  }
+
+  .saasHeaderNav nav {
+    gap: 20px;
+  }
+
+  .saasHeaderNav nav a {
+    font-size: 12px;
+  }
+}
