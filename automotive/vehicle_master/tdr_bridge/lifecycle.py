@@ -26,7 +26,10 @@ _ALLOWED = {"CURRENT", "HISTORICAL", "UNVERIFIED"}
 
 
 def _status(value: object, default: str = "UNVERIFIED") -> str:
-    normalized = str(value or default).strip().upper()
+    # Exact canonical enum spelling only.  The old serving bridge emitted
+    # lowercase `current` as a free default; accepting case-insensitively would
+    # silently resurrect that trust bug.
+    normalized = str(value or default).strip()
     return normalized if normalized in _ALLOWED else default
 
 
