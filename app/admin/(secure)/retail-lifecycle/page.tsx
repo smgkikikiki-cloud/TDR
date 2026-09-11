@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import Link from "next/link";
 import { enqueueModelRetailLifecycleReview } from "@/app/admin/retail-lifecycle-actions";
 import { enqueueTrimRetailLifecycleReview } from "@/app/admin/trim-retail-lifecycle-actions";
+import BulkRetailLifecycleReview from "@/components/admin/BulkRetailLifecycleReview";
 import { oemTargetsForModel } from "@/lib/price-evidence-registry";
 import { getPriceCoverageWorklist } from "@/lib/price-coverage-worklist";
 import { adminDb } from "@/lib/supabase";
@@ -15,7 +16,7 @@ function n(value: unknown) {
 export default async function RetailLifecyclePage({
   searchParams,
 }: {
-  searchParams: Promise<{ model?: string; evidence?: string; queued?: string; trimQueued?: string }>;
+  searchParams: Promise<{ model?: string; evidence?: string; queued?: string; trimQueued?: string; bulkQueued?: string }>;
 }) {
   const query = await searchParams;
   const db = adminDb();
@@ -56,6 +57,7 @@ export default async function RetailLifecyclePage({
 
     {query.queued ? <div className="adminSaved">รับ model lifecycle review เข้าคิว canonical แล้ว</div> : null}
     {query.trimQueued ? <div className="adminSaved">รับ trim lifecycle review เข้าคิว canonical แล้ว</div> : null}
+    {query.bulkQueued ? <div className="adminSaved">รับ bulk HUMAN lifecycle review {n(query.bulkQueued)} models เข้าคิว canonical แล้ว</div> : null}
 
     <div className="adminStatGrid">
       <div className="adminStat"><span>Unverified models</span><strong>{n(work.unverifiedModels)}</strong><small>ต้อง resolve ก่อน trim review</small></div>
@@ -68,6 +70,8 @@ export default async function RetailLifecyclePage({
       <b>Review order</b>
       <span>1) resolve parent model เป็น CURRENT/HISTORICAL ก่อน 2) ถ้า model CURRENT จึง review grade identity ที่ยัง UNVERIFIED 3) เมื่อ current lineup ชัดแล้วจึงเปิด LIST_PRICE coverage. HUMAN trim review ชนะ open-ended price inference; parent model/generation HISTORICAL ชนะทุกอย่าง.</span>
     </div>
+
+    <BulkRetailLifecycleReview rows={lifecycleDebt} submittedAt={submittedAt} today={today} />
 
     <div className="libraryTable"><table>
       <thead><tr><th>#</th><th>Model</th><th>Blocker</th><th>3M regs</th><th>Trim state</th><th>OEM targets</th><th>Review</th></tr></thead>
