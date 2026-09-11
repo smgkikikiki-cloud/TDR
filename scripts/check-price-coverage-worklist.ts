@@ -30,6 +30,7 @@ check("evidence registry accepts only OEM source profiles", evidence.includes('t
 check("evidence registry scopes targets by exact model_hint", evidence.includes("model_hint") && evidence.includes("=== canonicalModelId"), true);
 check("server resolves registry target against selected trim model", inputActions.includes("resolveOemTarget(targetId, String(trim.model_id))"), true);
 check("browser source URL is replaced by registry URL when target selected", inputActions.includes("sourceRef = target.url") && inputActions.includes("sourceLabel = target.sourceId"), true);
+check("quick LIST_PRICE cannot enter canonical queue without evidence ref", inputActions.includes('priceType === "LIST_PRICE" && !sourceRef'), true);
 
 console.log("\nprice coverage worklist — operator UX");
 check("page labels seeds unverified", page.includes("UNVERIFIED seed hint"), true);
@@ -41,6 +42,7 @@ check("missing-price action carries canonical model into quick input", page.incl
 check("focused quick input filters to the requested model", inputPage.includes("trim.model_id === focusedModel"), true);
 check("focused quick input prefers missing LIST_PRICE trims", inputPage.includes("missingFocusedTrims") && inputPage.includes("!currentPrice(trim)"), true);
 check("focused quick input exposes registered OEM targets", inputPage.includes("Registered OEM target") && inputPage.includes("oemTargetsForModel(focusedModel)"), true);
+check("registry target stays optional when the registered page has no usable price", inputPage.includes("ไม่ใช้ registry target — ใช้ source ref ด้านล่าง"), true);
 check("admin navigation exposes the worklist", nav.includes('href="/admin/prices/coverage"'), true);
 
 console.log(failed ? `\n${failed} check(s) failed` : "\nall price coverage worklist checks passed");
