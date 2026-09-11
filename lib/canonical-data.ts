@@ -126,12 +126,15 @@ export async function getCanonicalModelBundle(slug: string) {
     .select("*").eq("model_id", model.canonical_id).order("name");
   if (trimError) throw trimError;
 
-  // Model detail must never call UNVERIFIED trims current or historical. Keep
-  // those identities in canonical storage until lifecycle review resolves them.
-  const trims = (rawTrims || []).map(trimRow)
-    .filter((trim: any) => trim.retail_lifecycle !== "UNVERIFIED");
-  const powertrains = trims.map((trim: any) => trim._powertrain);
   const row: any = modelRow(model);
+  const modelIsCurrent = row.retail_lifecycle === "CURRENT";
+
+  // UNVERIFIED trims are never labelled current or historical. A CURRENT child
+  // is also withheld as a current claim until its parent model is CURRENT.
+  const trims = (rawTrims || []).map(trimRow)
+    .filter((trim: any) => trim.retail_lifecycle === "HISTORICAL"
+      || (modelIsCurrent && trim.retail_lifecycle === "CURRENT"));
+  const powertrains = trims.map((trim: any) => trim._powertrain);
   const numeric = (key: string) => trims
     .filter((trim: any) => trim.retail_lifecycle === "CURRENT")
     .map((trim: any) => Number(trim[key]))
@@ -149,7 +152,8 @@ export async function getCanonicalModelBundle(slug: string) {
 
 /** Free compare reads the same active release as the catalogue. Identity/spec
  * rows may remain visible while lifecycle is UNVERIFIED, but HISTORICAL rows
- * are excluded and current price/campaign fields stay blank until CURRENT. */
+ * are excluded. Current price/campaign fields require both trim and parent
+ * model to be verified CURRENT. */
 export async function getCanonicalCompareTrims(limit = 600) {
   const db = publicDb();
   if (!db) return [];
@@ -165,10 +169,15 @@ export async function getCanonicalCompareTrims(limit = 600) {
       const trim = trimRow(raw);
       const model: any = models.get(raw.model_id) || null;
       const detail = raw.payload || {};
+      const modelLifecycle = model?.retail_lifecycle || "UNVERIFIED";
+      const canClaimCurrentCommerce = trim.retail_lifecycle === "CURRENT" && modelLifecycle === "CURRENT";
       return {
         ...trim,
+        price_baht: canClaimCurrentCommerce ? trim.price_baht : null,
+        current_list_price: canClaimCurrentCommerce ? trim.current_list_price : null,
+        campaign_quote: canClaimCurrentCommerce ? trim.campaign_quote : {},
         model_slug: model?.slug || null,
-        model_lifecycle: model?.retail_lifecycle || "UNVERIFIED",
+        model_lifecycle: modelLifecycle,
         brand_name: detail.brand || model?.brands?.name_en || "",
         model_name: detail.model || model?.name_en || raw.model_id,
         segment: model?.segment || null,
