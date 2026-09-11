@@ -3,11 +3,11 @@ import { notFound } from "next/navigation";
 import { getCanonicalModelBundle, getCanonicalRelatedModels, getModelMarketTeasers } from "@/lib/canonical-data";
 import { getRelatedEvents, getProductionProgramsByModel } from "@/lib/data";
 import { bodyLabel } from "@/lib/body-labels";
-import { displayName, initials } from "@/lib/display-name";
+import { displayName } from "@/lib/display-name";
+import { isVerifiedCurrent, publicRetailLifecycle } from "@/lib/public-retail-lifecycle";
 
 function launch(r: any) { return [r.launch_quarter, r.launch_year].filter(Boolean).join(" ") || null }
 function baht(n: any) { return n ? `฿${Number(n).toLocaleString()}` : null }
-/** A price range carries one ฿, not one per end. */
 function bahtRange(values: number[]) {
   if (!values.length) return null;
   const min = Math.min(...values), max = Math.max(...values);
@@ -37,7 +37,6 @@ function officialRangeLabel(trims: any[]) {
   };
 }
 
-/** One trim row. Shared by the current and the discontinued list. */
 function TrimRow({ t, ptById, muted }: { t: any; ptById: Map<any, any>; muted?: boolean }) {
   const linked = (t.trim_powertrains || []).map((x: any) => ptById.get(x.powertrain_id)).filter(Boolean);
   const price = baht(t.price_baht);
@@ -90,16 +89,18 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
     getCanonicalRelatedModels(r, 6),
     getModelMarketTeasers(r.id)
   ]);
+  const modelLifecycle = publicRetailLifecycle(r.retail_lifecycle);
+  const modelCurrent = isVerifiedCurrent(modelLifecycle);
   const ptById = new Map((r.powertrains_detail || []).map((p: any) => [p.id, p]));
   const allTrims = (r.trims || []) as any[];
-  const currentTrims = allTrims.filter((t) => String(t.status || "current").toLowerCase() !== "discontinued");
-  const pastTrims = allTrims.filter((t) => String(t.status || "current").toLowerCase() === "discontinued");
+  const currentTrims = allTrims.filter((t) => publicRetailLifecycle(t.retail_lifecycle) === "CURRENT");
+  const pastTrims = allTrims.filter((t) => publicRetailLifecycle(t.retail_lifecycle) === "HISTORICAL");
 
   const trimPrices = currentTrims.map((t: any) => Number(t.price_baht)).filter((n: number) => Number.isFinite(n) && n > 0);
-  const heroPrice = bahtRange(trimPrices) || (r.retail_price_min || r.retail_price_max
+  const heroPrice = modelCurrent ? (bahtRange(trimPrices) || (r.retail_price_min || r.retail_price_max
     ? bahtRange([r.retail_price_min, r.retail_price_max].filter((n: any) => Number(n) > 0).map(Number))
-    : null);
-  const heroRange = officialRangeLabel(currentTrims);
+    : null)) : null;
+  const heroRange = modelCurrent ? officialRangeLabel(currentTrims) : null;
   const brand = displayName(r.brands);
 
   const dimensions = [
@@ -110,8 +111,13 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
     r.payload_capacity_kg ? { k: "Payload", v: `${Number(r.payload_capacity_kg).toLocaleString()} kg` } : null,
   ].filter(Boolean) as { k: string; v: string }[];
 
+  const lifecycleMessage = modelLifecycle === "HISTORICAL"
+    ? "รุ่นนี้อยู่ในข้อมูลประวัติ ไม่ถูกอ้างเป็นรุ่นที่จำหน่ายปัจจุบัน"
+    : modelLifecycle === "UNVERIFIED"
+      ? "สถานะการจำหน่ายของรุ่นนี้ยังรอตรวจสอบ"
+      : null;
+
   return <>
-    {/* ---------- Zone A · สำหรับผู้ซื้อ ---------- */}
     <section className="sfHero">
       <div className="sfHeroSlot">
         {r.image_url ? <img src={r.image_url} alt={displayName(r)} /> : <><small>{(brand || "TDR").toUpperCase()}</small><b>{displayName(r)}</b></>}
@@ -122,17 +128,19 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
         {r.generation ? <p className="sfGeneration">{r.generation}</p> : null}
         <div className="sfBadges">
           {[r.segment, r.market_position, ...(r.powertrains || []), r.production_type, r.production_country, r.seats ? `${r.seats} ที่นั่ง` : null].filter(Boolean).map((x: string) => <span key={x}>{x}</span>)}
+          {modelLifecycle !== "CURRENT" ? <span>{modelLifecycle}</span> : null}
         </div>
+        {lifecycleMessage ? <p className="sfMissing" style={{ marginTop: 12 }}>{lifecycleMessage}</p> : null}
         <div className="sfKeyBlock">
           <div>
             <small>ราคาปัจจุบัน</small>
-            {heroPrice ? <strong>{heroPrice}</strong> : <strong className="sfMissing">ยังไม่ประกาศราคา</strong>}
-            <em>{trimPrices.length ? "คำนวณจาก Trim ที่จำหน่ายอยู่" : "ยังไม่มีราคา Trim ในฐานข้อมูล"}</em>
+            {heroPrice ? <strong>{heroPrice}</strong> : <strong className="sfMissing">{modelCurrent ? "ยังไม่ประกาศราคา" : "ยังไม่แสดงราคาปัจจุบัน"}</strong>}
+            <em>{modelCurrent ? (trimPrices.length ? "คำนวณจาก Trim ที่ยืนยัน CURRENT" : "ยังไม่มีราคา CURRENT ที่ยืนยันในฐานข้อมูล") : "ต้องยืนยัน lifecycle ก่อนแสดงเป็นราคาปัจจุบัน"}</em>
           </div>
           <div className={heroRange ? "mark" : undefined}>
             <small>ระยะทางที่ผู้ผลิตประกาศ</small>
-            {heroRange ? <strong>{heroRange.range}</strong> : <strong className="sfMissing">ยังไม่มีข้อมูล</strong>}
-            <em>{heroRange ? heroRange.cycle : "ผู้ผลิตยังไม่ประกาศ หรือยังไม่ได้บันทึก"}</em>
+            {heroRange ? <strong>{heroRange.range}</strong> : <strong className="sfMissing">ยังไม่มีข้อมูล CURRENT ที่ยืนยัน</strong>}
+            <em>{heroRange ? heroRange.cycle : "ไม่ใช้ข้อมูลจาก Trim ที่ยังไม่ยืนยันสถานะ"}</em>
           </div>
         </div>
       </div>
@@ -152,7 +160,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
       </div>
       {currentTrims.length
         ? <div>{currentTrims.map((t: any) => <TrimRow key={t.id} t={t} ptById={ptById} />)}</div>
-        : <div className="sfEmpty"><b>ยังไม่ได้กรอกรุ่นย่อย</b><span>ข้อมูล Trim ของรุ่นนี้ยังไม่อยู่ในฐานข้อมูล</span></div>}
+        : <div className="sfEmpty"><b>{modelCurrent ? "ยังไม่มี Trim CURRENT ที่ยืนยัน" : "ยังไม่ยืนยันรุ่นย่อยที่จำหน่ายปัจจุบัน"}</b><span>{modelCurrent ? "ข้อมูลรุ่นย่อยอาจยังอยู่ระหว่างการตรวจสอบ" : "ข้อมูล Trim ที่ยังเป็น UNVERIFIED จะไม่ถูกแสดงเป็นรุ่นย่อยที่จำหน่าย"}</span></div>}
       {pastTrims.length ? (
         <details style={{ marginTop: 18 }}>
           <summary className="sfEyebrow ink" style={{ cursor: "pointer", padding: "10px 0" }}>รุ่นย่อยที่เลิกจำหน่ายแล้ว ({pastTrims.length})</summary>
@@ -161,7 +169,6 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
       ) : null}
     </section>
 
-    {/* ---------- Zone B · ข้อมูลทางเทคนิค ---------- */}
     <section className="sfTechZone sfBleed">
       <div className="sfZoneHead">
         <div><div className="sfEyebrow ink">TECHNICAL</div><h2>ข้อมูลทางเทคนิค</h2></div>
@@ -194,23 +201,22 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
                 </dl>
               </details>
             ))
-            : <div className="sfEmpty"><b>ยังไม่มีรายละเอียดระบบขับเคลื่อน</b><span>ยังไม่ได้บันทึกสเปกเครื่องยนต์หรือมอเตอร์ของรุ่นนี้</span></div>}
+            : <div className="sfEmpty"><b>ยังไม่มีรายละเอียดระบบขับเคลื่อนที่ยืนยัน</b><span>ข้อมูลจาก Trim ที่ยังไม่ยืนยัน lifecycle จะไม่ถูกนำมาสรุปเป็นข้อมูลปัจจุบัน</span></div>}
         </div>
       </div>
     </section>
 
-    {/* ---------- Zone C · อุตสาหกรรม ---------- */}
     <section className="sfIndZone sfBleed">
       <div className="sfZoneHead">
         <div><div className="sfEyebrow">INDUSTRY LAYER</div><h2 style={{ color: "#fff" }}>รุ่นนี้ในฐานะสินค้าอุตสาหกรรม</h2></div>
       </div>
       <div className="sfIndGrid">
-        <p>ข้อมูลตลาดและยอดจดทะเบียนแยกจาก MarketTrim โดยตั้งใจ รถที่ไม่มีข้อมูลจดทะเบียนยังอยู่ในแคตตาล็อกได้ครบ ส่วนกราฟและเครื่องมือวิเคราะห์เปิดสำหรับสมาชิก TDR Market.</p>
+        <p>ข้อมูลตลาดและยอดจดทะเบียนแยกจาก MarketTrim โดยตั้งใจ รถที่ไม่มีข้อมูลจดทะเบียนยังอยู่ในแคตตาล็อกได้ครบ ส่วนกราฟและเครื่องมือวิเคราะห์เปิดสำหรับสมาชิก TDR Market Intelligence.</p>
         <div>
           <div className="sfEmpty">
             <b>{teasers.length ? "มีข้อมูลตลาดสำหรับรุ่นนี้" : "ยังไม่มีข้อมูลตลาดที่จับคู่กับรุ่นนี้"}</b>
-            <span>{teasers.length ? `ครอบคลุม ${teasers.length} ช่วงเวลาล่าสุด · เปิดกราฟ แนวโน้ม และ cohort ใน TDR Market` : "สถานะนี้ไม่กระทบราคา สเปก หรือการแสดงรถในแคตตาล็อก"}</span>
-            <Link href="/reports">เปิด TDR Market →</Link>
+            <span>{teasers.length ? `ครอบคลุม ${teasers.length} ช่วงเวลาล่าสุด · เปิดกราฟ แนวโน้ม และ cohort ใน Market Intelligence` : "สถานะนี้ไม่กระทบข้อมูล identity หรือสเปกพื้นฐานในแคตตาล็อก"}</span>
+            <Link href="/market">เปิด Market Intelligence →</Link>
           </div>
         </div>
       </div>
@@ -245,14 +251,16 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
         <div className="sfGrid">
           {related.map((m: any) => {
             const meta = [bodyLabel(m.body_type), (m.powertrains || []).join(" / ")].filter(Boolean).join(" · ");
-            const price = bahtRange([m.retail_price_min, m.retail_price_max].filter((n: any) => Number(n) > 0).map(Number));
+            const current = isVerifiedCurrent(m.retail_lifecycle);
+            const price = current ? bahtRange([m.retail_price_min, m.retail_price_max].filter((n: any) => Number(n) > 0).map(Number)) : null;
             return (
               <Link className="sfCard" href={`/models/${m.slug}`} key={m.id}>
                 <div className="sfSlot">{m.image_url ? <img src={m.image_url} alt="" /> : <><small>{(brand || "TDR").toUpperCase()}</small><b>{displayName(m)}</b></>}</div>
                 <div className="sfCardBody">
                   <h3>{displayName(m)}</h3>
                   {meta ? <p className="sfCardMeta">{meta}</p> : null}
-                  <div className="sfCardFoot">{price ? <span className="sfPrice">{price}</span> : <span className="sfMissing">ยังไม่ประกาศราคา</span>}</div>
+                  {!current ? <p className="sfCardMeta sfMissing">สถานะการจำหน่ายรอตรวจสอบ</p> : null}
+                  <div className="sfCardFoot">{price ? <span className="sfPrice">{price}</span> : <span className="sfMissing">{current ? "ยังไม่ประกาศราคา" : "ยังไม่แสดงราคาปัจจุบัน"}</span>}</div>
                 </div>
               </Link>
             );
