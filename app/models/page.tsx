@@ -136,12 +136,9 @@ export default async function ModelsPage({ searchParams }: { searchParams: Promi
 
   return <div className={styles.page}>
     <section className={styles.hero}>
-      <div>
-        <div className={styles.eyebrow}>VEHICLE CATALOG</div>
-        <h1>แคทตาล็อกรถยนต์</h1>
-        <p>ค้นหารุ่นรถ เปรียบเทียบสเปก และสำรวจรถในตลาดไทยจาก Vehicle Master ชุดเดียวกับเครื่องมือวิเคราะห์ของ TDR</p>
-      </div>
-      <div className={styles.heroAside}><b>{models.length.toLocaleString("th-TH")} รุ่น</b><span>ตรงกับการค้นหาและตัวกรองปัจจุบัน</span></div>
+      <div className={styles.eyebrow}>VEHICLE CATALOG</div>
+      <h1>แคทตาล็อกรถยนต์</h1>
+      <p>ค้นหารุ่นรถ เปรียบเทียบสเปก และสำรวจรถในตลาดไทยจาก Vehicle Master ชุดเดียวกับเครื่องมือวิเคราะห์ของ TDR</p>
     </section>
 
     <div className={styles.searchRow}>
@@ -152,7 +149,7 @@ export default async function ModelsPage({ searchParams }: { searchParams: Promi
         <button type="submit">ค้นหา</button>
       </form>
       <div className={styles.examples}>
-        <span>ตัวอย่างการค้นหา</span>
+        <span>ตัวอย่าง</span>
         {["Toyota", "Yaris Cross", "BYD", "HR-V"].map((term) => <Link key={term} href={href(sp, "q", term)}>{term}</Link>)}
       </div>
     </div>
@@ -189,7 +186,7 @@ export default async function ModelsPage({ searchParams }: { searchParams: Promi
       </div>
 
       <div className={styles.resultTools}>
-        <span className={styles.resultCount}>พบ <b>{models.length.toLocaleString("th-TH")}</b> รุ่น</span>
+        <span className={styles.resultCount}><b>{models.length.toLocaleString("th-TH")}</b> รุ่น</span>
         <CatalogSort value={sort} query={currentQuery} />
       </div>
     </div>
