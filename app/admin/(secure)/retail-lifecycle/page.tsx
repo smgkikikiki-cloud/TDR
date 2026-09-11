@@ -15,7 +15,7 @@ function n(value: unknown) {
 export default async function RetailLifecyclePage({
   searchParams,
 }: {
-  searchParams: Promise<{ model?: string; queued?: string; trimQueued?: string }>;
+  searchParams: Promise<{ model?: string; evidence?: string; queued?: string; trimQueued?: string }>;
 }) {
   const query = await searchParams;
   const db = adminDb();
@@ -27,6 +27,8 @@ export default async function RetailLifecyclePage({
   const requested = String(query.model || "").trim();
   const focused = lifecycleDebt.find((row) => row.canonicalModelId === requested) || lifecycleDebt[0] || null;
   const targets = focused ? oemTargetsForModel(focused.canonicalModelId) : [];
+  const selectedEvidenceId = String(query.evidence || "").trim();
+  const selectedTarget = targets.find((target) => target.id === selectedEvidenceId) || null;
   const submittedAt = new Date().toISOString();
   const today = submittedAt.slice(0, 10);
   const trimReviews = trimRetailLifecycleDecisions();
@@ -83,21 +85,25 @@ export default async function RetailLifecyclePage({
     {focused ? <>
       <div className="adminHeader"><div><small>FOCUSED MODEL</small><h2>{focused.brand} {focused.model}</h2><p>{focused.canonicalModelId} · {n(focused.registrations3m)} registrations ใน priority window</p></div></div>
 
-      {targets.length ? <div className="adminQuickGrid">{targets.map((target) => <a key={target.id} href={target.url} target="_blank" rel="noreferrer">
-        <b>{target.sourceId}</b><span>{target.role} ↗</span><small>{target.notes || target.url}</small>
-      </a>)}</div> : <div className="adminNotice"><span>Registry ยังไม่มี official OEM target สำหรับ model นี้ — ต้องหา first-party evidence เองก่อน review.</span></div>}
+      {targets.length ? <div className="adminQuickGrid">{targets.map((target) => <div key={target.id}>
+        <b>{target.sourceId}</b><span>{target.role}</span><small>{target.notes || target.url}</small>
+        <a href={target.url} target="_blank" rel="noreferrer">เปิด official source ↗</a>
+        {focused.blocker === "UNRESOLVED_MODEL_LIFECYCLE" ? <Link href={`/admin/retail-lifecycle?model=${encodeURIComponent(focused.canonicalModelId)}&evidence=${encodeURIComponent(target.id)}`}>Use evidence →</Link> : null}
+      </div>)}</div> : <div className="adminNotice"><span>Registry ยังไม่มี official OEM target สำหรับ model นี้ — ต้องหา first-party evidence เองก่อน review.</span></div>}
 
       {focused.blocker === "UNRESOLVED_MODEL_LIFECYCLE" ? <form action={enqueueModelRetailLifecycleReview} className="adminForm">
         <input type="hidden" name="submission_id" value={randomUUID()} />
         <input type="hidden" name="submitted_at" value={submittedAt} />
         <input type="hidden" name="model_id" value={focused.canonicalModelId} />
+        {selectedTarget ? <input type="hidden" name="target_id" value={selectedTarget.id} /> : null}
         <label className="adminField"><span>Retail status</span><select name="retail_status" required defaultValue="CURRENT">
           <option value="CURRENT">CURRENT — ยังขาย/สั่งซื้อได้</option>
           <option value="HISTORICAL">HISTORICAL — ไม่ใช่ current retail model แล้ว</option>
         </select></label>
         <label className="adminField"><span>Checked at</span><input name="reviewed_at" type="date" defaultValue={today} required /></label>
-        <label className="adminField adminFieldWide"><span>Official evidence URL</span><input name="source_ref" type="url" placeholder="https://www.oem.co.th/model/..." required /></label>
-        <label className="adminField adminFieldWide"><span>Review note</span><input name="reason" type="text" placeholder="Official Thailand model page lists this model in current line-up…" required /></label>
+        <label className="adminField adminFieldWide"><span>Official evidence URL</span><input name="source_ref" type="url" placeholder="https://www.oem.co.th/model/..." defaultValue={selectedTarget?.url || ""} readOnly={Boolean(selectedTarget)} required /></label>
+        <label className="adminField adminFieldWide"><span>Review note</span><input name="reason" type="text" defaultValue={selectedTarget ? `Reviewed registered OEM target ${selectedTarget.sourceId} (${selectedTarget.role}). ${selectedTarget.notes}`.trim() : ""} placeholder="Official Thailand model page lists this model in current line-up…" required /></label>
+        {selectedTarget ? <div className="adminNotice"><b>Registry-bound evidence</b><span>{selectedTarget.id} · server จะ resolve target นี้กับ {focused.canonicalModelId} ซ้ำและใช้ URL จาก registry แทน browser value.</span></div> : null}
         <div className="adminFormActions"><button>Queue canonical model lifecycle review</button></div>
       </form> : null}
 
