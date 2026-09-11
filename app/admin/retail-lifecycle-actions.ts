@@ -8,6 +8,7 @@ import { resolveOemTarget } from "@/lib/price-evidence-registry";
 import { adminDb } from "@/lib/supabase";
 
 const REVIEW_STATUSES = new Set(["CURRENT", "HISTORICAL"]);
+const MAX_BULK_REVIEW = 20;
 
 function field(formData: FormData, name: string): string {
   const value = formData.get(name);
@@ -27,6 +28,20 @@ function checkedDate(value: string): string {
   return value;
 }
 
+function submittedTimestamp(formData: FormData): string {
+  const value = required(formData, "submitted_at", "submission timestamp");
+  if (Number.isNaN(Date.parse(value)) || !/(?:Z|[+-]\d{2}:\d{2})$/.test(value)) {
+    throw new Error("submission timestamp ต้องเป็น ISO-8601 พร้อม timezone");
+  }
+  return value;
+}
+
+function safeSubmissionId(formData: FormData): string {
+  const value = field(formData, "submission_id") || randomUUID();
+  if (!/^[A-Za-z0-9][A-Za-z0-9_.:-]{0,63}$/.test(value)) throw new Error("submission_id ไม่ถูกต้อง");
+  return value;
+}
+
 function evidenceUrl(value: string): string {
   let url: URL;
   try { url = new URL(value); } catch { throw new Error("Evidence ต้องเป็น URL ที่ถูกต้อง"); }
@@ -34,23 +49,32 @@ function evidenceUrl(value: string): string {
   return url.toString();
 }
 
+function reviewStatus(value: string): string {
+  const status = value.trim().toUpperCase();
+  if (!REVIEW_STATUSES.has(status)) throw new Error("retail status ต้องเป็น CURRENT หรือ HISTORICAL");
+  return status;
+}
+
+function releaseYear(release: any): number {
+  const payload = release?.payload && typeof release.payload === "object"
+    ? release.payload as Record<string, unknown> : {};
+  const year = Number(payload.year || String(release?.as_of || "").slice(0, 4));
+  if (!Number.isInteger(year) || year < 2000 || year > 2100) throw new Error("หา catalog year ไม่ได้");
+  return year;
+}
+
 export async function enqueueModelRetailLifecycleReview(formData: FormData) {
   if (!(await isAdmin())) redirect("/admin/login");
   const modelId = required(formData, "model_id", "canonical model");
-  const status = required(formData, "retail_status", "retail status").toUpperCase();
-  if (!REVIEW_STATUSES.has(status)) throw new Error("retail status ต้องเป็น CURRENT หรือ HISTORICAL");
+  const status = reviewStatus(required(formData, "retail_status", "retail status"));
   const targetId = field(formData, "target_id");
   const target = targetId ? resolveOemTarget(targetId, modelId) : null;
   if (targetId && !target) throw new Error("registered OEM evidence target ไม่ตรงกับ canonical model นี้");
   const sourceRef = target?.url || evidenceUrl(required(formData, "source_ref", "official evidence URL"));
   const reviewedAt = checkedDate(required(formData, "reviewed_at", "วันที่ตรวจ"));
   const reason = required(formData, "reason", "review note");
-  const submissionId = field(formData, "submission_id") || randomUUID();
-  if (!/^[A-Za-z0-9][A-Za-z0-9_.:-]{0,63}$/.test(submissionId)) throw new Error("submission_id ไม่ถูกต้อง");
-  const submittedAt = required(formData, "submitted_at", "submission timestamp");
-  if (Number.isNaN(Date.parse(submittedAt)) || !/(?:Z|[+-]\d{2}:\d{2})$/.test(submittedAt)) {
-    throw new Error("submission timestamp ต้องเป็น ISO-8601 พร้อม timezone");
-  }
+  const submissionId = safeSubmissionId(formData);
+  const submittedAt = submittedTimestamp(formData);
 
   const db = adminDb();
   if (!db) throw new Error("ยังไม่ได้ตั้งค่า Supabase server credential");
@@ -70,10 +94,7 @@ export async function enqueueModelRetailLifecycleReview(formData: FormData) {
   if (generationError) throw generationError;
   if (releaseError) throw releaseError;
   if (!brand || !generation?.code) throw new Error("หา canonical brand/generation ของ model นี้ไม่ครบ");
-  const releasePayload = release?.payload && typeof release.payload === "object"
-    ? release.payload as Record<string, unknown> : {};
-  const year = Number(releasePayload.year || String(release?.as_of || "").slice(0, 4));
-  if (!Number.isInteger(year) || year < 2000 || year > 2100) throw new Error("หา catalog year ไม่ได้");
+  const year = releaseYear(release);
 
   await enqueueCanonicalInputBatch({
     schema_version: 1,
@@ -105,4 +126,101 @@ export async function enqueueModelRetailLifecycleReview(formData: FormData) {
   });
 
   redirect(`/admin/retail-lifecycle?queued=1&model=${encodeURIComponent(modelId)}`);
+}
+
+export async function enqueueBulkModelRetailLifecycleReview(formData: FormData) {
+  if (!(await isAdmin())) redirect("/admin/login");
+  const selected = formData.getAll("bulk_model_id")
+    .filter((value): value is string => typeof value === "string")
+    .map((value) => value.trim()).filter(Boolean);
+  const modelIds = [...new Set(selected)];
+  if (!modelIds.length) throw new Error("เลือกอย่างน้อย 1 model สำหรับ bulk review");
+  if (modelIds.length > MAX_BULK_REVIEW) throw new Error(`bulk review รองรับสูงสุด ${MAX_BULK_REVIEW} models ต่อ batch`);
+
+  const reviewedAt = checkedDate(required(formData, "reviewed_at", "วันที่ตรวจ"));
+  const submissionId = safeSubmissionId(formData);
+  const submittedAt = submittedTimestamp(formData);
+  const decisions = modelIds.map((modelId) => {
+    const status = reviewStatus(required(formData, `bulk_status:${modelId}`, `retail status ของ ${modelId}`));
+    const targetId = required(formData, `bulk_target:${modelId}`, `registered OEM target ของ ${modelId}`);
+    const target = resolveOemTarget(targetId, modelId);
+    if (!target) throw new Error(`registered OEM evidence target ไม่ตรงกับ ${modelId}`);
+    return { modelId, status, target };
+  });
+
+  const db = adminDb();
+  if (!db) throw new Error("ยังไม่ได้ตั้งค่า Supabase server credential");
+  const { data: models, error: modelError } = await db.from("current_vehicle_models")
+    .select("canonical_id,release_id,brand_id,generation_id,name_en,name_th,payload")
+    .in("canonical_id", modelIds).limit(MAX_BULK_REVIEW);
+  if (modelError) throw modelError;
+  if ((models || []).length !== modelIds.length) throw new Error("มี model ใน bulk review ที่ไม่อยู่ใน active canonical release");
+  const modelMap = new Map((models || []).map((row: any) => [String(row.canonical_id), row]));
+  const releaseIds = new Set((models || []).map((row: any) => String(row.release_id || "")));
+  if (releaseIds.size !== 1 || releaseIds.has("")) throw new Error("bulk review ต้องอ้าง active release เดียวกัน");
+
+  // Fail closed on a stale review page. A model already reviewed by another HUMAN
+  // must not be silently overwritten by a bulk submission opened earlier.
+  for (const modelId of modelIds) {
+    const model = modelMap.get(modelId) as any;
+    const canonicalStatus = String(model?.payload?.retail_status || "UNVERIFIED").toUpperCase();
+    if (canonicalStatus !== "UNVERIFIED") {
+      throw new Error(`${modelId} ไม่ใช่ UNVERIFIED แล้ว — refresh lifecycle bench ก่อน submit ใหม่`);
+    }
+  }
+
+  const brandIds = [...new Set((models || []).map((row: any) => String(row.brand_id || "")).filter(Boolean))];
+  const generationIds = [...new Set((models || []).map((row: any) => String(row.generation_id || "")).filter(Boolean))];
+  const releaseId = [...releaseIds][0];
+  const [{ data: brands, error: brandError }, { data: generations, error: generationError }, { data: release, error: releaseError }] = await Promise.all([
+    db.from("current_vehicle_brands").select("canonical_id,name_en,name_th").in("canonical_id", brandIds).limit(500),
+    db.from("current_vehicle_generations").select("canonical_id,code,segment").in("canonical_id", generationIds).limit(500),
+    db.from("canonical_vehicle_releases").select("payload,as_of").eq("release_id", releaseId).maybeSingle(),
+  ]);
+  if (brandError) throw brandError;
+  if (generationError) throw generationError;
+  if (releaseError) throw releaseError;
+  const brandMap = new Map((brands || []).map((row: any) => [String(row.canonical_id), row]));
+  const generationMap = new Map((generations || []).map((row: any) => [String(row.canonical_id), row]));
+  const year = releaseYear(release);
+
+  const commands = decisions.map(({ modelId, status, target }) => {
+    const model = modelMap.get(modelId) as any;
+    const brand = brandMap.get(String(model.brand_id)) as any;
+    const generation = generationMap.get(String(model.generation_id)) as any;
+    if (!brand || !generation?.code) throw new Error(`หา canonical brand/generation ของ ${modelId} ไม่ครบ`);
+    return {
+      operation: "UPSERT_MODEL_BUNDLE",
+      canonical_id: modelId,
+      reason: `HUMAN bulk retail lifecycle review using registered OEM target ${target.id}`,
+      payload: {
+        brand: {
+          id: model.brand_id,
+          name_en: brand.name_en || model.brand_id,
+          ...(brand.name_th ? { name_th: brand.name_th } : {}),
+        },
+        model: {
+          retail_status: status,
+          retail_source: target.url,
+          retail_checked_at: reviewedAt,
+        },
+        generation: {
+          code: generation.code,
+          ...(generation.segment ? { segment: generation.segment } : {}),
+        },
+      },
+    };
+  });
+
+  await enqueueCanonicalInputBatch({
+    schema_version: 1,
+    batch_id: `admin-retail-lifecycle-bulk-${submissionId}`,
+    year,
+    submitted_at: submittedAt,
+    source: { kind: "ADMIN" },
+    reason: `HUMAN bulk retail lifecycle review (${commands.length} models, registered OEM evidence only)`,
+    commands,
+  });
+
+  redirect(`/admin/retail-lifecycle?bulkQueued=${commands.length}`);
 }
