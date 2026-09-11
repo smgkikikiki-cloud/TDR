@@ -62,7 +62,7 @@ def _normalized_row(**changes):
 
 def _write_snapshot(data_dir: Path, row: dict):
     root = data_dir / "2026/ingest/ecosticker/snapshots" / SNAPSHOT_DATE
-    root.mkdir(parents=True)
+    root.mkdir(parents=True, exist_ok=True)
     normalized = (json.dumps(row, ensure_ascii=False, sort_keys=True,
                              separators=(",", ":")) + "\n").encode()
     (root / "normalized.jsonl.gz").write_bytes(gzip.compress(normalized, mtime=0))
@@ -160,7 +160,6 @@ def test_agent_or_nonhuman_origin_cannot_create_market_trim(local_data, tmp_path
 
 
 def test_ambiguous_eco_candidate_must_be_resolved_before_creation(local_data, tmp_path):
-    snapshot = local_data / f"2026/ingest/ecosticker/snapshots/{SNAPSHOT_DATE}"
     _write_snapshot(local_data, _normalized_row(
         matched_generation_id=None,
         review_status="needs_model_review",
