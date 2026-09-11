@@ -1,8 +1,11 @@
-/** The free public surface is the canonical vehicle catalogue and basic compare.
- * Analytics and registration visualisations live behind the TDR Report entitlement. */
-export const primaryNav=[
-  {href:"/models",label:"รถ"},
-  {href:"/compare",label:"เทียบรถ"},
+/** Public product navigation. Market Intelligence is the paid flagship; the
+ * catalogue, vehicle compare and analysis remain directly discoverable. */
+export const primaryNav = [
+  { href: "/market", label: "Market Intelligence" },
+  { href: "/models", label: "แคทตาล็อกรถยนต์" },
+  { href: "/compare", label: "เทียบรถ" },
+  { href: "/news", label: "บทวิเคราะห์" },
 ];
 
-export const reportCta={href:"/reports",label:"TDR Report"};
+export const loginCta = { href: "/member/login", label: "เข้าสู่ระบบ" };
+export const pricingCta = { href: "/reports", label: "ดูแพ็กเกจ" };
