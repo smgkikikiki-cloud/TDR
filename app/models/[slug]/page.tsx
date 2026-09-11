@@ -95,6 +95,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
   const allTrims = (r.trims || []) as any[];
   const currentTrims = allTrims.filter((t) => publicRetailLifecycle(t.retail_lifecycle) === "CURRENT");
   const pastTrims = allTrims.filter((t) => publicRetailLifecycle(t.retail_lifecycle) === "HISTORICAL");
+  const currentPowertrains = (r.current_powertrains_detail || []) as any[];
 
   const trimPrices = currentTrims.map((t: any) => Number(t.price_baht)).filter((n: number) => Number.isFinite(n) && n > 0);
   const heroPrice = modelCurrent ? (bahtRange(trimPrices) || (r.retail_price_min || r.retail_price_max
@@ -186,9 +187,9 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
           </div>
         </div>
         <div>
-          <h3 style={{ margin: "0 0 12px", fontSize: 16, fontWeight: 800 }}>ระบบขับเคลื่อน</h3>
-          {(r.powertrains_detail || []).length
-            ? (r.powertrains_detail as any[]).map((p: any) => (
+          <h3 style={{ margin: "0 0 12px", fontSize: 16, fontWeight: 800 }}>ระบบขับเคลื่อนปัจจุบัน</h3>
+          {currentPowertrains.length
+            ? currentPowertrains.map((p: any) => (
               <details className="sfPtCard" key={p.id}>
                 <summary><b>{p.label || ptSummary(p)}</b><span>{ptSummary(p)}</span></summary>
                 <dl>
@@ -201,7 +202,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
                 </dl>
               </details>
             ))
-            : <div className="sfEmpty"><b>ยังไม่มีรายละเอียดระบบขับเคลื่อนที่ยืนยัน</b><span>ข้อมูลจาก Trim ที่ยังไม่ยืนยัน lifecycle จะไม่ถูกนำมาสรุปเป็นข้อมูลปัจจุบัน</span></div>}
+            : <div className="sfEmpty"><b>ยังไม่มีรายละเอียดระบบขับเคลื่อน CURRENT ที่ยืนยัน</b><span>ข้อมูลจาก Trim HISTORICAL หรือ UNVERIFIED จะไม่ถูกนำมาปนในสรุปปัจจุบัน</span></div>}
         </div>
       </div>
     </section>
