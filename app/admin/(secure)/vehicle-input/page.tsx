@@ -3,12 +3,14 @@ import Link from "next/link";
 import {
   enqueueModelTaxonomyInput,
   enqueuePriceInput,
+  enqueueProductionStateInput,
   enqueueVehicleInput,
   enqueueWithdrawModel,
 } from "@/app/admin/input-actions";
 import { enqueuePriceCoverageDisposition } from "@/app/admin/price-coverage-actions";
 import { priceCoverageDecisions } from "@/lib/price-coverage-review";
 import { oemTargetsForModel } from "@/lib/price-evidence-registry";
+import { getActiveHistoricalModelState } from "@/lib/historical-model-state";
 import { adminDb } from "@/lib/supabase";
 
 const SEGMENTS = ["A", "B", "C", "D", "E", "F", "UNKNOWN"];
@@ -16,6 +18,7 @@ const BODY_TYPES = [
   "HATCHBACK", "SEDAN", "CROSSOVER", "PPV", "OFFROAD", "COUPE",
   "MPV", "PICKUP", "WAGON", "VAN", "TRUCK", "OTHER",
 ];
+const IMPORT_TYPES = ["CBU", "CKD", "SKD"];
 
 function money(value: unknown) {
   const number = Number(value);
@@ -30,6 +33,7 @@ function kindLabel(kind?: string) {
   return ({
     price: "ราคา",
     model: "ข้อมูลรุ่น/Taxonomy",
+    state: "Production country / import type",
     withdraw: "ถอนรุ่น",
     advanced: "Advanced batch",
   } as Record<string, string>)[kind || ""] || "Canonical input";
@@ -85,6 +89,8 @@ export default async function VehicleInputPage({
     ? (missingFocusedTrims.length ? actionableFocusedTrims : focusedModelTrims)
     : trims;
   const focusedTargets = focusedModel ? oemTargetsForModel(focusedModel) : [];
+  const historicalState = db ? await getActiveHistoricalModelState(db) : null;
+  const focusedModelChanges = focusedModel ? (historicalState?.changes.get(focusedModel) || []) : [];
 
   const exampleTrim = trims.find((trim: any) => trim.canonical_id === "jaecoo.jaecoo_5_ev.j5.trim.max_plus_bev") || trims[0];
   const example = JSON.stringify({
@@ -249,6 +255,34 @@ export default async function VehicleInputPage({
       <label className="adminField"><span>เหตุผล</span><input name="reason" type="text" placeholder="Discontinued / replaced by new generation…" required /></label>
       <div className="adminFormActions"><button className="adminPrimary">Validate + enqueue withdrawal</button></div>
     </form>
+
+    <div className="adminHeader"><div><small>QUICK INPUT 04</small><h2>Production country / import type ตามเดือนที่มีผล</h2><p>เพิ่ม change-point ใหม่เท่านั้น — ไม่แก้ของเดิม. เดือนเดียวกัน + รุ่นเดียวกัน ที่ส่งซ้ำจะแทนที่แค่แถวนั้น ไม่ลบประวัติเดือนอื่น. ค่านี้ไปที่ data/research/monthly_production_state.csv (ไฟล์เดียวกับ seed ที่ historical_state.py อ่านอยู่แล้ว) ไม่ใช่ table ใหม่.</p></div></div>
+    <form action={enqueueProductionStateInput} className="adminForm">
+      <input type="hidden" name="submission_id" value={randomUUID()} />
+      <input type="hidden" name="submitted_at" value={submittedAt} />
+      <label className="adminField adminFieldWide"><span>Canonical model</span><select name="model_id" required defaultValue={focusedModel || ""}>
+        <option value="" disabled>เลือกรุ่น…</option>
+        {models.map((model: any) => <option key={model.canonical_id} value={model.canonical_id}>{modelNames.get(model.canonical_id)}</option>)}
+      </select></label>
+      <label className="adminField"><span>Grain</span><select name="grain" defaultValue="MODEL"><option value="MODEL">MODEL</option><option value="VARIANT">VARIANT</option></select></label>
+      <label className="adminField"><span>เดือนที่มีผล</span><input name="effective_month" type="month" required /></label>
+      <label className="adminField"><span>Production country (ว่าง = ไม่แก้)</span><input name="origin_country" type="text" placeholder="TH / CN / JP…" /></label>
+      <label className="adminField"><span>Import type (ว่าง = ไม่แก้)</span><select name="import_type" defaultValue=""><option value="">ไม่แก้</option>{IMPORT_TYPES.map((value) => <option key={value} value={value}>{value}</option>)}</select></label>
+      <label className="adminField"><span>Source URL (ถ้ามี)</span><input name="source_url" type="text" placeholder="https://…" /></label>
+      <label className="adminField adminFieldWide"><span>หลักฐาน (ทำไมถึงเชื่อว่าจริง)</span><input name="evidence" type="text" placeholder="OEM press release confirms local assembly began at Rayong plant…" required /></label>
+      <div className="adminFormActions"><button className="adminPrimary">Validate + enqueue state change</button></div>
+    </form>
+
+    {focusedModel ? <div className="adminNotice">
+      <b>Change-points ที่มีอยู่แล้ว · {modelNames.get(focusedModel) || focusedModel}</b>
+      {focusedModelChanges.length
+        ? <div className="libraryTable"><table><thead><tr><th>เดือนที่มีผล</th><th>Origin</th><th>Import type</th></tr></thead><tbody>
+            {focusedModelChanges.map((change: any) => <tr key={change.effective_month}>
+              <td>{change.effective_month}</td><td>{change.origin_country || "—"}</td><td>{change.import_type || "—"}</td>
+            </tr>)}
+          </tbody></table></div>
+        : <span>ยังไม่มี change-point ที่ active release สำหรับรุ่นนี้ — จะเห็นแถวใหม่หลัง release build รอบถัดไป publish สำเร็จ.</span>}
+    </div> : null}
 
     <details className="adminNotice">
       <summary><b>Advanced · Canonical batch JSON</b> — variant / powertrain / spec / multi-command</summary>
