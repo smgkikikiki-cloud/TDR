@@ -1,9 +1,9 @@
 """Build the canonical TDR release with derived historical model state attached.
 
-The base ReleaseBuilder remains the owner of current catalog/trim/price/spec
-projection. This wrapper adds one backward-compatible payload section used by
-historical registration analytics, then recomputes the semantic release hash so
-rollback/versioning covers the historical projection too.
+The base ReleaseBuilder remains the owner of catalog identity, price/spec facts
+and TDR crosswalks.  This wrapper owns serving-only enrichment that must be part
+of the immutable release hash: fail-closed retail lifecycle semantics and the
+historical registration projection.
 """
 from __future__ import annotations
 
@@ -15,6 +15,7 @@ from pathlib import Path
 
 from vehreg.catalog import DATA_DIR, DEFAULT_YEAR
 from tdr_bridge.historical_state import build_historical_model_state
+from tdr_bridge.lifecycle import apply_retail_lifecycle
 from tdr_bridge.release import ReleaseBuilder
 
 SEMANTIC_KEYS = (
@@ -38,7 +39,10 @@ def enrich_release(
     data_dir: Path | str = DATA_DIR,
     source_aliases: dict[str, str] | None = None,
 ) -> dict:
-    out = dict(release)
+    # Base release historically inherited legacy TDR model status and promoted
+    # every trim in an active generation to CURRENT.  Normalize both before the
+    # semantic hash so rollback/versioning includes the corrected lifecycle.
+    out = apply_retail_lifecycle(release)
     out["historical_model_state"] = build_historical_model_state(
         data_dir=data_dir,
         source_aliases=source_aliases,

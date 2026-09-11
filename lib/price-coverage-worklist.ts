@@ -2,14 +2,24 @@ import targetsRegistry from "@/automotive/vehicle_master/vehreg/data/2026/market
 import { defaultMarketPeriod, periodKey } from "@/lib/member-market";
 import { priceCoverageDecisions } from "@/lib/price-coverage-review";
 
-export type PriceCoverageBlocker = "NO_MARKET_TRIM" | "MISSING_LIST_PRICE";
+export type PriceCoverageBlocker =
+  | "UNRESOLVED_MODEL_LIFECYCLE"
+  | "NO_MARKET_TRIM"
+  | "UNRESOLVED_TRIM_LIFECYCLE"
+  | "MISSING_LIST_PRICE";
+
+type RetailLifecycle = "CURRENT" | "HISTORICAL" | "UNVERIFIED";
 
 export type PriceCoverageWorkItem = {
   canonicalModelId: string;
   brand: string;
   model: string;
+  modelStatus: RetailLifecycle;
   blocker: PriceCoverageBlocker;
   totalTrims: number;
+  currentTrims: number;
+  historicalTrims: number;
+  unverifiedTrims: number;
   pricedTrims: number;
   missingTrims: number;
   deferredTrims: number;
@@ -22,11 +32,17 @@ export type PriceCoverageWorkItem = {
   oemTargetCount: number;
 };
 
-type PriceCoverageBaseRow = Omit<PriceCoverageWorkItem, "registrationSharePct">;
+type PriceCoverageBaseRow = Omit<PriceCoverageWorkItem, "registrationSharePct" | "blocker"> & {
+  blocker: PriceCoverageBlocker | null;
+};
 
 export type PriceCoverageWorklist = {
   periods: string[];
   canonicalModels: number;
+  retailRelevantModels: number;
+  currentModels: number;
+  historicalModels: number;
+  unverifiedModels: number;
   modelsWithTrims: number;
   modelsWithoutTrims: number;
   readyModels: number;
@@ -42,6 +58,21 @@ type JsonObject = Record<string, unknown>;
 function numberOrNull(value: unknown): number | null {
   const number = Number(value);
   return Number.isFinite(number) && number > 0 ? number : null;
+}
+
+function lifecycle(value: unknown): RetailLifecycle {
+  // Exact uppercase is deliberate. Old serving releases emitted lowercase
+  // `current` by default; accepting it would silently reintroduce the bug this
+  // worklist is meant to expose.
+  return value === "CURRENT" || value === "HISTORICAL" || value === "UNVERIFIED"
+    ? value
+    : "UNVERIFIED";
+}
+
+function canonicalModelLifecycle(model: any): RetailLifecycle {
+  // Canonical Model.retail_status is the authority. Legacy editorial `status`
+  // in the serving row is not allowed to promote an unreviewed model.
+  return lifecycle(model?.payload?.retail_status);
 }
 
 function variantSeedPrices(payload: JsonObject | null | undefined): number[] {
@@ -81,7 +112,7 @@ export async function getPriceCoverageWorklist(db: any, limit = 100): Promise<Pr
       .select("period,total_registrations,mapped_registrations,mapped_unit_pct")
       .order("period", { ascending: true }).limit(240),
     db.from("current_vehicle_models")
-      .select("canonical_id,tdr_model_id,brand_id,name_en,name_th,payload")
+      .select("canonical_id,tdr_model_id,brand_id,name_en,name_th,status,payload")
       .limit(1000),
     db.from("current_market_trims")
       .select("canonical_id,model_id,current_list_price,status")
@@ -139,18 +170,32 @@ export async function getPriceCoverageWorklist(db: any, limit = 100): Promise<Pr
 
   const rows: PriceCoverageBaseRow[] = (modelRows || []).map((model: any): PriceCoverageBaseRow => {
     const modelId = String(model.canonical_id || "");
+    const modelStatus = canonicalModelLifecycle(model);
     const trims = trimsByModel.get(modelId) || [];
-    const missing = trims.filter((trim) => actualCurrentPrice(trim) == null);
-    const pricedTrims = trims.length - missing.length;
+    const current = trims.filter((trim) => lifecycle(trim?.status) === "CURRENT");
+    const historical = trims.filter((trim) => lifecycle(trim?.status) === "HISTORICAL");
+    const unverified = trims.filter((trim) => lifecycle(trim?.status) === "UNVERIFIED");
+    const missing = current.filter((trim) => actualCurrentPrice(trim) == null);
+    const pricedTrims = current.length - missing.length;
     const deferredTrims = missing.filter((trim) => deferred.has(String(trim.canonical_id || ""))).length;
     const seeds = variantSeedPrices((model.payload || {}) as JsonObject);
-    const blocker: PriceCoverageBlocker = trims.length ? "MISSING_LIST_PRICE" : "NO_MARKET_TRIM";
+
+    let blocker: PriceCoverageBlocker | null = null;
+    if (modelStatus === "UNVERIFIED") blocker = "UNRESOLVED_MODEL_LIFECYCLE";
+    else if (modelStatus === "CURRENT" && trims.length === 0) blocker = "NO_MARKET_TRIM";
+    else if (modelStatus === "CURRENT" && (unverified.length > 0 || current.length === 0)) blocker = "UNRESOLVED_TRIM_LIFECYCLE";
+    else if (modelStatus === "CURRENT" && missing.length > 0) blocker = "MISSING_LIST_PRICE";
+
     return {
       canonicalModelId: modelId,
       brand: brands.get(String(model.brand_id || "")) || "UNKNOWN",
       model: String(model.name_en || model.name_th || modelId),
+      modelStatus,
       blocker,
       totalTrims: trims.length,
+      currentTrims: current.length,
+      historicalTrims: historical.length,
+      unverifiedTrims: unverified.length,
       pricedTrims,
       missingTrims: missing.length,
       deferredTrims,
@@ -163,24 +208,32 @@ export async function getPriceCoverageWorklist(db: any, limit = 100): Promise<Pr
     };
   });
 
-  const mappedRegistrations3m = rows.reduce((sum: number, row: PriceCoverageBaseRow) => sum + row.registrations3m, 0);
-  // A deferred trim is still missing a verified LIST_PRICE. Deferred state only
-  // removes duplicate reviewer work; it never changes readiness or paid gating.
-  const ready = rows.filter((row: PriceCoverageBaseRow) => row.totalTrims > 0 && row.missingTrims === 0);
-  const readyRegistrations3m = ready.reduce((sum: number, row: PriceCoverageBaseRow) => sum + row.registrations3m, 0);
+  // HISTORICAL models are resolved as outside today's retail-price surface.
+  // UNVERIFIED models remain in the denominator so unresolved lifecycle work
+  // can never make price coverage look artificially complete.
+  const retailRows = rows.filter((row) => row.modelStatus !== "HISTORICAL");
+  const mappedRegistrations3m = retailRows.reduce((sum, row) => sum + row.registrations3m, 0);
+  const ready = retailRows.filter((row) => row.modelStatus === "CURRENT"
+    && row.currentTrims > 0
+    && row.unverifiedTrims === 0
+    && row.missingTrims === 0);
+  const readyRegistrations3m = ready.reduce((sum, row) => sum + row.registrations3m, 0);
   const readyModels = ready.length;
-  const modelCoveragePct = canonicalModels ? Math.round(1000 * readyModels / canonicalModels) / 10 : 0;
+  const retailRelevantModels = retailRows.length;
+  const currentModels = rows.filter((row) => row.modelStatus === "CURRENT").length;
+  const historicalModels = rows.filter((row) => row.modelStatus === "HISTORICAL").length;
+  const unverifiedModels = rows.filter((row) => row.modelStatus === "UNVERIFIED").length;
+  const modelCoveragePct = retailRelevantModels ? Math.round(1000 * readyModels / retailRelevantModels) / 10 : 0;
   const registrationCoveragePct3m = mappedRegistrations3m ? Math.round(10000 * readyRegistrations3m / mappedRegistrations3m) / 100 : 0;
 
-  const items: PriceCoverageWorkItem[] = rows
-    .filter((row: PriceCoverageBaseRow) => row.totalTrims === 0 || row.missingTrims > 0)
-    .sort((a: PriceCoverageBaseRow, b: PriceCoverageBaseRow) => b.registrations3m - a.registrations3m
+  const items: PriceCoverageWorkItem[] = retailRows
+    .filter((row): row is PriceCoverageBaseRow & { blocker: PriceCoverageBlocker } => Boolean(row.blocker))
+    .sort((a, b) => b.registrations3m - a.registrations3m
+      || b.unverifiedTrims - a.unverifiedTrims
       || b.actionableMissingTrims - a.actionableMissingTrims
-      || Number(a.blocker === "MISSING_LIST_PRICE") - Number(b.blocker === "MISSING_LIST_PRICE")
-      || b.missingTrims - a.missingTrims
       || `${a.brand} ${a.model}`.localeCompare(`${b.brand} ${b.model}`))
     .slice(0, Math.max(1, Math.min(limit, 321)))
-    .map((row: PriceCoverageBaseRow): PriceCoverageWorkItem => ({
+    .map((row): PriceCoverageWorkItem => ({
       ...row,
       registrationSharePct: mappedRegistrations3m ? Math.round(10000 * row.registrations3m / mappedRegistrations3m) / 100 : 0,
     }));
@@ -188,6 +241,10 @@ export async function getPriceCoverageWorklist(db: any, limit = 100): Promise<Pr
   return {
     periods,
     canonicalModels,
+    retailRelevantModels,
+    currentModels,
+    historicalModels,
+    unverifiedModels,
     modelsWithTrims,
     modelsWithoutTrims,
     readyModels,
