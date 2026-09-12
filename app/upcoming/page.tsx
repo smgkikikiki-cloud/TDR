@@ -100,7 +100,7 @@ export default async function UpcomingPage({ searchParams }: { searchParams: Pro
     {vehicles.length ? <div className={styles.grid}>
       {vehicles.map((vehicle) => <article className={styles.card} key={vehicle.id}>
         <Link href={`/upcoming/${vehicle.slug}`} className={styles.visual}>
-          {vehicle.image_url ? <img src={vehicle.image_url} alt="" /> : <span className={styles.placeholder}>UPCOMING VEHICLE</span>}
+          {vehicle.image_url ? <img src={vehicle.image_url} alt="" /> : <span className={styles.placeholder}>ยังไม่มีภาพ</span>}
           <span className={styles.status} data-status={vehicle.status}>{upcomingStatusLabel(vehicle.status)}</span>
         </Link>
         <div className={styles.body}>

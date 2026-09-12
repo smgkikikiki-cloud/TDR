@@ -120,6 +120,10 @@
   }
 }
 
+.mobileNavToggle {
+  display: none;
+}
+
 @media (max-width: 700px) {
   .saasHeader {
     padding-inline: 20px;
@@ -151,16 +155,94 @@
   }
 
   .saasPricing {
-    min-height: 38px;
+    min-height: 42px;
     padding-inline: 14px;
-    font-size: 12px;
+    font-size: 13px;
   }
 
-  .saasHeaderNav nav {
-    gap: 20px;
+  /* Explicit mobile menu replaces the horizontal-scroll nav row: there was
+   * no hint more items sat off-screen, so items past the fold went unseen. */
+  .saasHeaderNav {
+    display: none;
   }
 
-  .saasHeaderNav nav a {
-    font-size: 12px;
+  .mobileNavToggle {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line);
+    background: #fff;
+    padding: 0;
+    cursor: pointer;
   }
+
+  .mobileNavToggle span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: var(--ink);
+  }
+}
+
+.mobileNavOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(16, 17, 20, .45);
+}
+
+.mobileNavPanel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(320px, 86vw);
+  background: #fff;
+  padding: 84px 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  box-shadow: -12px 0 32px rgba(16, 17, 20, .18);
+  overflow-y: auto;
+}
+
+.mobileNavClose {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.mobileNavPanel a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 12px 4px;
+  font-size: 15px;
+  font-weight: 700;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+}
+
+.mobileNavPanel a.navOn {
+  color: var(--red);
+}
+
+.mobileNavPanel a.mobileNavPricing {
+  margin-top: 14px;
+  justify-content: center;
+  border: 1px solid var(--red);
+  background: var(--red);
+  color: #fff;
 }

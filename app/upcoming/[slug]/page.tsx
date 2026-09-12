@@ -68,7 +68,7 @@ export default async function UpcomingDetailPage({ params }: { params: Promise<{
         </div>
       </div>
       <div className={styles.detailVisual}>
-        {vehicle.image_url ? <img src={vehicle.image_url} alt="" /> : <span>UPCOMING VEHICLE</span>}
+        {vehicle.image_url ? <img src={vehicle.image_url} alt="" /> : <span>ยังไม่มีภาพในฐานข้อมูล</span>}
       </div>
     </section>
 

@@ -183,7 +183,7 @@ export function CompareWorkspace({ allTrims, initialTrimIds, initialModelIds, fa
           const choice = modelChoices.find((model) => model.id === slot.modelId);
           return <article className={`compareSlot ${selectedTrim ? "ready" : ""}`} key={`${index}:${slot.modelId}`}>
             <div className="compareSlotNo">คันที่ {index + 1}{index < 2 ? " · ต้องเลือก" : ""}</div>
-            {choice?.imageUrl ? <img className="compareSlotImage" src={choice.imageUrl} alt="" /> : <div className="compareSlotImage placeholder">TDR</div>}
+            {choice?.imageUrl ? <img className="compareSlotImage" src={choice.imageUrl} alt="" /> : <div className="compareSlotImage placeholder">ไม่มีรูป</div>}
             <ModelPicker slotIndex={index} choices={modelChoices} value={slot.modelId} onChange={(id) => chooseModel(index, id)} />
             <select className="compareTrimSelect" value={slot.trimId} disabled={!slot.modelId} onChange={(event) => chooseTrim(index, event.target.value)}>
               <option value="">{slot.modelId ? "เลือกรุ่นย่อย / Trim" : "เลือกรถก่อน"}</option>

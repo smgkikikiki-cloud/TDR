@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { NavLinks } from "@/components/NavLinks";
+import { MobileNav } from "@/components/MobileNav";
 import { loginCta, pricingCta } from "@/lib/navigation";
 
 export function Header() {
@@ -19,6 +20,7 @@ export function Header() {
         <div className="saasHeaderActions">
           <Link className="saasLogin" href={loginCta.href}>{loginCta.label}</Link>
           <Link className="saasPricing" href={pricingCta.href}>{pricingCta.label}</Link>
+          <MobileNav />
         </div>
       </div>
     </header>
