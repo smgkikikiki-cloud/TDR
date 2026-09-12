@@ -17,15 +17,18 @@ const SUPABASE_PAGE_SIZE = 1000;
 /** A single `.limit(N)` on an eligibility-relevant table is a false-negative
  * waiting to happen once row count crosses N: rows past the cutoff silently
  * vanish from the result with no error, so a real Model/Trim can look
- * ineligible for reasons that have nothing to do with its own data. Page
- * through the whole table instead so completeness never depends on a guessed
- * ceiling. */
-async function fetchAllRows(db: any, table: string, select: string, orderColumn?: string) {
+ * ineligible for reasons that have nothing to do with its own data.
+ *
+ * Offset pagination also needs a deterministic unique ordering. Both canonical
+ * views expose `canonical_id`, so page boundaries are anchored to that stable
+ * key; display ordering is applied later after all rows have been collected. */
+async function fetchAllRows(db: any, table: string, select: string) {
   const rows: any[] = [];
   for (let offset = 0; ; offset += SUPABASE_PAGE_SIZE) {
-    let query = db.from(table).select(select).range(offset, offset + SUPABASE_PAGE_SIZE - 1);
-    if (orderColumn) query = query.order(orderColumn);
-    const { data, error } = await query;
+    const { data, error } = await db.from(table)
+      .select(select)
+      .order("canonical_id", { ascending: true })
+      .range(offset, offset + SUPABASE_PAGE_SIZE - 1);
     if (error) throw error;
     rows.push(...(data || []));
     if (!data || data.length < SUPABASE_PAGE_SIZE) break;
@@ -254,7 +257,7 @@ export async function getCanonicalCompareTrims() {
   const db = publicDb();
   if (!db) return [];
   const [rawTrims, rawModels] = await Promise.all([
-    fetchAllRows(db, "current_market_trims", "*", "name"),
+    fetchAllRows(db, "current_market_trims", "*"),
     fetchAllRows(db, "current_vehicle_models", "*"),
   ]);
   const models = new Map(rawModels.map((row: any) => [row.canonical_id, modelRow(row)]));
