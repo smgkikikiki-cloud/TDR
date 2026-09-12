@@ -124,6 +124,7 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
   const [applied, setApplied] = useState<FilterState | null>(null);
   const [data, setData] = useState<MarketResponse | null>(null);
   const [trend, setTrend] = useState<TrendPoint[]>([]);
+  const [trendIncomplete, setTrendIncomplete] = useState(false);
   const [status, setStatus] = useState<"loading" | "ready" | "forbidden" | "error">("loading");
   const [message, setMessage] = useState("");
   const [showFilters, setShowFilters] = useState(false);
@@ -179,9 +180,11 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
       // has caught up -- let the dashboard show the new ranking next to a
       // trend chart still drawn from the previous scope. Nothing becomes
       // visible as "current" until every piece of this request is in.
+      const nextTrend = points.filter(Boolean) as TrendPoint[];
       setData(body);
       setApplied(next);
-      setTrend(points.filter(Boolean) as TrendPoint[]);
+      setTrend(nextTrend);
+      setTrendIncomplete(nextTrend.length !== trendPeriods.length);
       setStatus("ready");
     } catch (error: any) {
       if (requestIdRef.current !== requestId) return;
@@ -453,6 +456,7 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
           </div>
           <div className={styles.trendLabels}>{trendPoints.map((point) => <span key={point.period}>{monthLabel(point.period)}</span>)}</div>
         </> : <div className={styles.empty}>ยังไม่มีข้อมูล trend สำหรับ scope นี้</div>}
+        {trendIncomplete ? <div className={styles.info}>Trend ย้อนหลังโหลดได้ไม่ครบทุกเดือน — กราฟแสดงเฉพาะเดือนที่ดึงข้อมูลสำเร็จ</div> : null}
         <p className={styles.note}>กราฟนี้เป็น registration activity ตาม DLT ไม่ใช่ retail-sales ledger; ใช้ share และ relative position เป็นแกนหลักสำหรับอ่าน movement. กราฟแสดงยอดรายเดือนดิบของแต่ละช่วงเสมอ ไม่เปลี่ยนตามโหมด “เปรียบเทียบ” ด้านบน — ตัวเลือกนั้นมีผลเฉพาะ Δ ส่วนแบ่ง/อันดับที่ตารางและ SHARE MOVEMENT เท่านั้น</p>
       </section>
 
