@@ -12,6 +12,27 @@ const BODY: Record<string, string> = {
   PICKUP: "PICKUP", WAGON: "WAGON", VAN: "VAN", TRUCK: "TRUCK", OTHER: "OTHER",
 };
 
+const SUPABASE_PAGE_SIZE = 1000;
+
+/** A single `.limit(N)` on an eligibility-relevant table is a false-negative
+ * waiting to happen once row count crosses N: rows past the cutoff silently
+ * vanish from the result with no error, so a real Model/Trim can look
+ * ineligible for reasons that have nothing to do with its own data. Page
+ * through the whole table instead so completeness never depends on a guessed
+ * ceiling. */
+async function fetchAllRows(db: any, table: string, select: string, orderColumn?: string) {
+  const rows: any[] = [];
+  for (let offset = 0; ; offset += SUPABASE_PAGE_SIZE) {
+    let query = db.from(table).select(select).range(offset, offset + SUPABASE_PAGE_SIZE - 1);
+    if (orderColumn) query = query.order(orderColumn);
+    const { data, error } = await query;
+    if (error) throw error;
+    rows.push(...(data || []));
+    if (!data || data.length < SUPABASE_PAGE_SIZE) break;
+  }
+  return rows;
+}
+
 function publicPriceRecord(record: any) {
   if (!record || typeof record !== "object") return null;
   const {
@@ -222,18 +243,22 @@ export async function getCanonicalModelBundle(slug: string) {
 /** Free compare reads the same active release as the catalogue. Identity/spec
  * rows may remain visible while lifecycle is UNVERIFIED, but HISTORICAL rows
  * are excluded. Current price/campaign fields require both trim and parent
- * model to be verified CURRENT. */
-export async function getCanonicalCompareTrims(limit = 600) {
+ * model to be verified CURRENT.
+ *
+ * Pages through both tables in full rather than capping at an arbitrary row
+ * count: a `.limit()` here doesn't just shorten the compare picker, it makes
+ * `getCompareEligibleModelIds` (below) produce false negatives for any Model
+ * whose Trims happen to fall past the cutoff, which is a correctness bug,
+ * not a performance trade-off. */
+export async function getCanonicalCompareTrims() {
   const db = publicDb();
   if (!db) return [];
-  const [{ data: rawTrims, error: trimError }, { data: rawModels, error: modelError }] = await Promise.all([
-    db.from("current_market_trims").select("*").order("name").limit(limit),
-    db.from("current_vehicle_models").select("*").limit(600),
+  const [rawTrims, rawModels] = await Promise.all([
+    fetchAllRows(db, "current_market_trims", "*", "name"),
+    fetchAllRows(db, "current_vehicle_models", "*"),
   ]);
-  if (trimError) throw trimError;
-  if (modelError) throw modelError;
-  const models = new Map((rawModels || []).map((row: any) => [row.canonical_id, modelRow(row)]));
-  return (rawTrims || [])
+  const models = new Map(rawModels.map((row: any) => [row.canonical_id, modelRow(row)]));
+  return rawTrims
     .map((raw: any) => {
       const trim = trimRow(raw);
       const model: any = models.get(raw.model_id) || null;
@@ -263,10 +288,11 @@ export async function getCanonicalCompareTrims(limit = 600) {
 
 /** The Catalog's "Compare" action must never point at a Model Compare can't
  * actually resolve. This is the exact same eligibility Compare itself uses
- * (getCanonicalCompareTrims), reduced to a lookup set, so the two can never
- * drift apart into two different definitions of "comparable". */
-export async function getCompareEligibleModelIds(limit = 600) {
-  const trims = await getCanonicalCompareTrims(limit);
+ * (getCanonicalCompareTrims, now unpaginated -- see its own comment), reduced
+ * to a lookup set, so the two can never drift apart into two different
+ * definitions of "comparable". */
+export async function getCompareEligibleModelIds() {
+  const trims = await getCanonicalCompareTrims();
   return new Set(trims.map((trim: any) => trim.model_id).filter(Boolean));
 }
 

@@ -36,7 +36,7 @@ export default function PricingPage() {
       <section className={styles.hero}>
         <div className={styles.heroCopy}>
           <div className={styles.eyebrow}>PRICING</div>
-          <h1>ข้อมูลตลาดรถ ที่คุณใช้ตัดสินใจได้จริง</h1>
+          <h1>ข้อมูลตลาดรถยนต์ไทยสำหรับการวิเคราะห์และตัดสินใจ</h1>
           <p>เลือกตั้งแต่ข้อมูลรถและเครื่องมือพื้นฐานแบบฟรี ไปจนถึง Market Intelligence สำหรับดูยอดจดทะเบียน ส่วนแบ่งตลาด และแนวโน้มย้อนหลัง</p>
           <div className={styles.trustRow}>
             <div><b>ข้อมูลจดทะเบียน</b><span>เชื่อมกับข้อมูลตลาดที่ TDR รองรับ</span></div>

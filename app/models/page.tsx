@@ -111,7 +111,7 @@ function sortModels(rows: any[], mode: string) {
 export default async function ModelsPage({ searchParams }: { searchParams: Promise<Sp> }) {
   const sp = await searchParams;
   const [brands, all, compareEligibleModelIds] = await Promise.all([
-    getCanonicalBrands(150), getCanonicalModels(600), getCompareEligibleModelIds(600),
+    getCanonicalBrands(150), getCanonicalModels(600), getCompareEligibleModelIds(),
   ]);
   const catalog = (all as any[]).filter((row) => isCatalogVisible(row.retail_lifecycle));
   const q = sp.q || "";

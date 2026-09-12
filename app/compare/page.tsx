@@ -18,7 +18,7 @@ function firstValue(value: string | string[] | undefined) {
 export default async function ComparePage({ searchParams }: { searchParams: Promise<SearchParams> }) {
   const sp = await searchParams;
   const [all, brandRows] = await Promise.all([
-    getCanonicalCompareTrims(600) as Promise<FreeCompareTrim[]>,
+    getCanonicalCompareTrims() as Promise<FreeCompareTrim[]>,
     getCanonicalBrands(250),
   ]);
   const requestedTrims = selectedValues(sp.trims);

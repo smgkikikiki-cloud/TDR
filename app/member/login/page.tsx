@@ -87,17 +87,17 @@ export default function MemberLoginPage() {
 
       <section className={styles.authShell}>
         <aside className={styles.productPanel}>
-          <div className={styles.productEyebrow}>MARKET INTELLIGENCE · TDR PRO</div>
-          <h2>ข้อมูลตลาดสำหรับคนที่ต้องใช้มันทำงานจริง</h2>
-          <p className={styles.productLead}>ยอดจดทะเบียน ส่วนแบ่งตลาด การเปลี่ยนแปลงรายรุ่น และแนวโน้มย้อนหลังจาก workspace เดียว</p>
+          <div className={styles.productEyebrow}>MARKET INTELLIGENCE</div>
+          <h2>Market Intelligence สำหรับตลาดรถยนต์ไทย</h2>
+          <p className={styles.productLead}>วิเคราะห์ยอดจดทะเบียน ส่วนแบ่งตลาด แนวโน้ม และการเปลี่ยนแปลงรายรุ่น</p>
 
           <div className={styles.priceBlock}><strong>฿990</strong><span>/ เดือน</span></div>
           <p className={styles.annual}>หรือ <b>฿8,790 / ปี</b><span className={styles.saving}>ประหยัด 26%</span></p>
 
           <ul className={styles.featureList}>
             <li><span>✓</span>ยอดจดทะเบียนและ Market Share รายรุ่น</li>
-            <li><span>✓</span>ดูตามแบรนด์ รุ่น เซกเมนต์ ตัวถัง และระบบขับเคลื่อน</li>
-            <li><span>✓</span>แนวโน้มย้อนหลัง 3 / 6 / 12 เดือน และ YTD</li>
+            <li><span>✓</span>วิเคราะห์ตามแบรนด์ รุ่น เซกเมนต์ ตัวถัง และระบบขับเคลื่อน</li>
+            <li><span>✓</span>ข้อมูลย้อนหลัง 3 / 6 / 12 เดือน และ YTD</li>
             <li><span>✓</span>ส่งออกข้อมูล CSV</li>
           </ul>
 

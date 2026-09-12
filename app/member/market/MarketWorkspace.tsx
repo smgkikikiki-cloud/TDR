@@ -162,9 +162,6 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
       // response (or the state it will set) is the authoritative one, so
       // this stale response must not touch state at all.
       if (requestIdRef.current !== requestId) return;
-      setData(body);
-      setApplied(next);
-      setStatus("ready");
 
       const trendPeriods = rows.map((row) => periodKey(row.period)).filter((period) => period && period <= next.period).sort().slice(-6);
       const trendFilters = { ...next, window: "month" as MarketWindow, compare: "none" as const };
@@ -175,7 +172,17 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
         } catch { return null; }
       }));
       if (requestIdRef.current !== requestId) return;
+
+      // Main data, applied scope and trend settle together in one commit.
+      // Flipping to "ready" (which re-enables every control and lifts the
+      // dimming overlay) the moment the main response lands -- before trend
+      // has caught up -- let the dashboard show the new ranking next to a
+      // trend chart still drawn from the previous scope. Nothing becomes
+      // visible as "current" until every piece of this request is in.
+      setData(body);
+      setApplied(next);
       setTrend(points.filter(Boolean) as TrendPoint[]);
+      setStatus("ready");
     } catch (error: any) {
       if (requestIdRef.current !== requestId) return;
       if (error?.status === 401) {
@@ -183,6 +190,14 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
         router.replace("/member/login");
         return;
       }
+      // A failed request must never leave the interactive controls (filters,
+      // which drives dimension/period/window/compare and the filter-drawer
+      // fields) representing a scope other than the one `applied`/`data`
+      // still show. `applied` is only ever written by a successful commit
+      // above, and the requestId guard just proved no newer request has
+      // touched it since this one started, so it is exactly the last
+      // committed state to roll the optimistic control update back to.
+      if (applied) setFilters(applied);
       setStatus(error?.status === 403 ? "forbidden" : "error");
       const missing = error?.body?.missing_periods;
       setMessage(Array.isArray(missing) && missing.length ? `ช่วงข้อมูลไม่ครบ: ${missing.map(periodKey).join(", ")}` : (error?.message || "โหลดข้อมูลไม่สำเร็จ"));
