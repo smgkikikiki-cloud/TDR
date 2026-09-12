@@ -74,18 +74,23 @@ export async function getCanonicalBrands(limit = 150) {
     .order("name_en").limit(limit);
   if (error) throw error;
   const rows = data || [];
-  // logo_url is a TDR-only display field, not part of the canonical payload —
-  // it lives on the legacy `brands` table, keyed by the same slug.
-  const slugs = rows.map((row: any) => row.slug).filter(Boolean);
-  const logoBySlug = new Map<string, string>();
-  if (slugs.length) {
-    const { data: legacy, error: legacyError } = await db.from("brands")
-      .select("slug,logo_url").in("slug", slugs);
-    if (legacyError) throw legacyError;
-    for (const row of legacy || []) {
-      if (row.logo_url) logoBySlug.set(row.slug, row.logo_url);
+
+  // logo_url is an optional TDR presentation overlay. Link it through the
+  // canonical projection's stable tdr_brand_id foreign key, not a mutable slug.
+  // Failure to read optional presentation metadata must never take the canonical
+  // catalogue down; the UI already falls back to text initials when logo_url is null.
+  const editorialIds = [...new Set(rows.map((row: any) => row.tdr_brand_id).filter(Boolean))];
+  const logoByEditorialId = new Map<string, string>();
+  if (editorialIds.length) {
+    const { data: editorial, error: editorialError } = await db.from("brands")
+      .select("id,logo_url").in("id", editorialIds);
+    if (!editorialError) {
+      for (const row of editorial || []) {
+        if (row.logo_url) logoByEditorialId.set(row.id, row.logo_url);
+      }
     }
   }
+
   return rows.map((row: any) => ({
     ...(row.payload || {}),
     id: row.canonical_id,
@@ -95,7 +100,7 @@ export async function getCanonicalBrands(limit = 150) {
     name_en: row.name_en,
     name_th: row.name_th,
     country_origin: row.origin_country,
-    logo_url: logoBySlug.get(row.slug) || null,
+    logo_url: row.tdr_brand_id ? (logoByEditorialId.get(row.tdr_brand_id) || null) : null,
   }));
 }
 
