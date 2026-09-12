@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getCanonicalBrands, getCanonicalModels } from "@/lib/canonical-data";
+import { getCanonicalBrands, getCanonicalModels, getCompareEligibleModelIds } from "@/lib/canonical-data";
 import { displayName } from "@/lib/display-name";
 import { byRelevance } from "@/lib/relevance";
 import { BODY_LABEL, bodyLabel } from "@/lib/body-labels";
@@ -110,7 +110,9 @@ function sortModels(rows: any[], mode: string) {
 
 export default async function ModelsPage({ searchParams }: { searchParams: Promise<Sp> }) {
   const sp = await searchParams;
-  const [brands, all] = await Promise.all([getCanonicalBrands(150), getCanonicalModels(600)]);
+  const [brands, all, compareEligibleModelIds] = await Promise.all([
+    getCanonicalBrands(150), getCanonicalModels(600), getCompareEligibleModelIds(600),
+  ]);
   const catalog = (all as any[]).filter((row) => isCatalogVisible(row.retail_lifecycle));
   const q = sp.q || "";
   const sort = ["new", "price-asc", "price-desc", "az"].includes(sp.sort || "") ? sp.sort! : "recommended";
@@ -132,6 +134,7 @@ export default async function ModelsPage({ searchParams }: { searchParams: Promi
     productionType: row.production_type || null,
     verifiedCurrent: isVerifiedCurrent(row.retail_lifecycle),
     priceLabel: priceLabel(row),
+    compareEligible: compareEligibleModelIds.has(row.id),
   }));
 
   return <div className={styles.page}>

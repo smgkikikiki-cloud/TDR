@@ -16,6 +16,7 @@ type CatalogModel = {
   productionType: string | null;
   verifiedCurrent: boolean;
   priceLabel: string | null;
+  compareEligible: boolean;
 };
 
 function compareHref(ids: string[]) {
@@ -25,7 +26,14 @@ function compareHref(ids: string[]) {
 }
 
 function ModelCard({ model, selected, selectionFull, onToggle }: { model: CatalogModel; selected: boolean; selectionFull: boolean; onToggle: () => void }) {
-  const disabled = selectionFull && !selected;
+  // Catalog must never advertise a Compare action it can't fulfil: a Model
+  // with zero Free Compare-eligible Trims would otherwise send the user
+  // straight into Compare's "choose again" dead end.
+  const disabled = !model.compareEligible || (selectionFull && !selected);
+  const compareLabel = selected ? "✓ เลือกแล้ว"
+    : !model.compareEligible ? "ยังเทียบไม่ได้"
+    : selectionFull ? "เต็ม 4 รุ่น" : "+ เทียบ";
+  const compareTitle = !model.compareEligible ? "รุ่นนี้ยังไม่มีข้อมูล Trim สำหรับ Free Compare" : undefined;
   return <article className={styles.card}>
     <Link href={`/models/${model.slug}`} className={styles.visualLink}>
       {model.imageUrl ? <img src={model.imageUrl} alt={model.name} /> : <div className={styles.placeholder}><small>{model.brand.toUpperCase()}</small><b>{model.name}</b></div>}
@@ -43,8 +51,8 @@ function ModelCard({ model, selected, selectionFull, onToggle }: { model: Catalo
       </div>
       <div className={styles.actions}>
         <Link className={styles.detailButton} href={`/models/${model.slug}`}>ดูรายละเอียด</Link>
-        <button type="button" aria-pressed={selected} disabled={disabled} className={`${styles.compareButton} ${selected ? styles.compareButtonSelected : ""}`} onClick={onToggle}>
-          {selected ? "✓ เลือกแล้ว" : disabled ? "เต็ม 4 รุ่น" : "+ เทียบ"}
+        <button type="button" aria-pressed={selected} disabled={disabled} title={compareTitle} className={`${styles.compareButton} ${selected ? styles.compareButtonSelected : ""}`} onClick={onToggle}>
+          {compareLabel}
         </button>
       </div>
     </div>
@@ -55,7 +63,11 @@ export function CatalogResults({ models, marketHref = "/market" }: { models: Cat
   const [selected, setSelected] = useState<string[]>([]);
   const byId = useMemo(() => new Map(models.map((model) => [model.id, model])), [models]);
   function toggle(id: string) {
-    setSelected((current) => current.includes(id) ? current.filter((item) => item !== id) : current.length >= 4 ? current : [...current, id]);
+    setSelected((current) => {
+      if (current.includes(id)) return current.filter((item) => item !== id);
+      if (current.length >= 4 || !byId.get(id)?.compareEligible) return current;
+      return [...current, id];
+    });
   }
   const first = models.slice(0, 8);
   const rest = models.slice(8);

@@ -1,14 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { browserDb } from "@/lib/supabase-browser";
 import { bodyLabel } from "@/lib/body-labels";
 import {
   comparisonMarketWindow,
   missingReportPeriods,
+  monthLabel,
   normalizeReportPeriod,
+  periodRangeLabel,
   resolveMarketWindow,
   type MarketComparison,
   type MarketWindow,
@@ -78,11 +80,6 @@ function pp(value: unknown) {
   if (!Number.isFinite(number)) return "—";
   return `${number > 0 ? "+" : ""}${number.toFixed(2)} pp`;
 }
-function monthLabel(period: string) {
-  const normalized = normalizeReportPeriod(period);
-  if (!normalized) return period;
-  return new Intl.DateTimeFormat("th-TH", { month: "short", year: "numeric" }).format(new Date(`${normalized}T00:00:00Z`));
-}
 function rankDelta(value: unknown) {
   if (value == null) return "ใหม่/หลุด";
   const number = Number(value);
@@ -131,6 +128,12 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
   const [message, setMessage] = useState("");
   const [showFilters, setShowFilters] = useState(false);
   const [rankingMetric, setRankingMetric] = useState<RankingMetric>("share");
+  // Filter/dimension state and the displayed dataset must never diverge: only
+  // the response to the most recently dispatched request is allowed to reach
+  // `data`/`applied` (the single source both the chips and the rows read
+  // from). Any older, superseded response is discarded outright rather than
+  // merged or partially applied, so the two can never show different scopes.
+  const requestIdRef = useRef(0);
 
   const periods = useMemo(() => coverage.map((row) => periodKey(row.period)).filter(Boolean).sort(), [coverage]);
   const available = useMemo(() => new Set(periods.map((period) => normalizeReportPeriod(period)).filter(Boolean) as string[]), [periods]);
@@ -150,10 +153,15 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
   }
 
   async function loadMarket(next: FilterState, accessToken: string, rows: CoverageRowLike[]) {
+    const requestId = ++requestIdRef.current;
     setStatus("loading");
     setMessage("");
     try {
       const body = await jsonFetch(marketPath(next), accessToken) as MarketResponse;
+      // A newer request was dispatched while this one was in flight -- its
+      // response (or the state it will set) is the authoritative one, so
+      // this stale response must not touch state at all.
+      if (requestIdRef.current !== requestId) return;
       setData(body);
       setApplied(next);
       setStatus("ready");
@@ -166,8 +174,10 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
           return { period, total: Number(trendBody.rows?.[0]?.market_total || 0) };
         } catch { return null; }
       }));
+      if (requestIdRef.current !== requestId) return;
       setTrend(points.filter(Boolean) as TrendPoint[]);
     } catch (error: any) {
+      if (requestIdRef.current !== requestId) return;
       if (error?.status === 401) {
         await browserDb()?.auth.signOut();
         router.replace("/member/login");
@@ -329,35 +339,37 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
   if (status === "forbidden") return <main className={styles.shell}><section className={styles.stateCard}><h1>บัญชีนี้ยังไม่มีสิทธิ์ Market Intelligence</h1><p>{message}</p><Link href="/pricing">ดูแพ็กเกจ</Link></section></main>;
   if (status === "error" && !data) return <main className={styles.shell}><section className={styles.stateCard}><h1>เปิด Market Intelligence ไม่สำเร็จ</h1><p>{message}</p><button onClick={() => location.reload()}>ลองใหม่</button></section></main>;
 
+  const isLoading = status === "loading";
+
   return (
     <main className={styles.shell}>
       <section className={styles.commandBar}>
         <div className={styles.commandTop}>
           <nav className={styles.dimensionTabs} aria-label="จัดอันดับตาม">
-            {DIMENSIONS.map((item) => <button key={item.value} type="button" className={filters.dimension === item.value ? styles.activeTab : ""} onClick={() => changeDimension(item.value)}>{item.label}</button>)}
+            {DIMENSIONS.map((item) => <button key={item.value} type="button" disabled={isLoading} className={filters.dimension === item.value ? styles.activeTab : ""} onClick={() => changeDimension(item.value)}>{item.label}</button>)}
           </nav>
 
           <div className={styles.commandControls}>
-            <select className={styles.periodSelect} aria-label="เดือนข้อมูล" value={filters.period} onChange={(event) => changePeriod(event.target.value)}>
+            <select className={styles.periodSelect} aria-label="เดือนข้อมูล" value={filters.period} disabled={isLoading} onChange={(event) => changePeriod(event.target.value)}>
               {periods.map((period) => <option key={period} value={period}>{monthLabel(period)}{provisional.has(period) ? " · provisional" : ""}</option>)}
             </select>
             <div className={styles.windowTabs} aria-label="ช่วงเวลา">
-              {WINDOWS.map((item) => <button key={item.value} type="button" className={filters.window === item.value ? styles.activeWindow : ""} disabled={!windowAvailable(filters.period, item.value)} onClick={() => changeWindow(item.value)}>{item.compact}</button>)}
+              {WINDOWS.map((item) => <button key={item.value} type="button" className={filters.window === item.value ? styles.activeWindow : ""} disabled={isLoading || !windowAvailable(filters.period, item.value)} onClick={() => changeWindow(item.value)}>{item.compact}</button>)}
             </div>
-            <select className={styles.compareSelect} aria-label="เปรียบเทียบ" value={filters.compare} onChange={(event) => applyNow({ ...filters, compare: event.target.value as FilterState["compare"] })}>
+            <select className={styles.compareSelect} aria-label="เปรียบเทียบ" value={filters.compare} disabled={isLoading} onChange={(event) => applyNow({ ...filters, compare: event.target.value as FilterState["compare"] })}>
               <option value="none">ไม่เทียบ</option>
-              <option value="previous" disabled={!comparisonAvailable(filters.period, filters.window, "previous")}>เทียบช่วงก่อน</option>
-              <option value="yoy" disabled={!comparisonAvailable(filters.period, filters.window, "yoy")}>YoY</option>
+              <option value="previous" disabled={!comparisonAvailable(filters.period, filters.window, "previous")}>เทียบช่วงก่อน (เฉพาะ Δ ส่วนแบ่ง/อันดับ)</option>
+              <option value="yoy" disabled={!comparisonAvailable(filters.period, filters.window, "yoy")}>YoY (เฉพาะ Δ ส่วนแบ่ง/อันดับ)</option>
             </select>
-            <button className={styles.filterButton} type="button" onClick={() => setShowFilters(true)}>⌄ ตัวกรอง{filterCount ? ` (${filterCount})` : ""}</button>
+            <button className={styles.filterButton} type="button" disabled={isLoading} onClick={() => setShowFilters(true)}>⌄ ตัวกรอง{filterCount ? ` (${filterCount})` : ""}</button>
             <button className={styles.exportButton} type="button" onClick={downloadCsv}>↓ Export CSV</button>
           </div>
         </div>
 
         <div className={styles.scopeRow}>
-          <button type="button" className={styles.scopeHome} onClick={() => clearScope()}>ตลาดทั้งหมด</button>
-          {scopeChips.map((chip) => <button type="button" className={styles.scopeChip} key={chip.key} onClick={() => clearScope(chip.key)}>{chip.label}<span>×</span></button>)}
-          {status === "loading" && data ? <span className={styles.updating}>กำลังอัปเดต…</span> : null}
+          <button type="button" className={styles.scopeHome} disabled={isLoading} onClick={() => clearScope()}>ตลาดทั้งหมด</button>
+          {scopeChips.map((chip) => <button type="button" className={styles.scopeChip} key={chip.key} disabled={isLoading} onClick={() => clearScope(chip.key)}>{chip.label}<span>×</span></button>)}
+          {isLoading && data ? <span className={styles.updating}>กำลังอัปเดต…</span> : null}
         </div>
       </section>
 
@@ -366,10 +378,11 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
       {ignoredValue ? <div className={styles.info}>ระบบเปิด filter ของ dimension ที่กำลังจัดอันดับออกอัตโนมัติ เพื่อให้ denominator และคู่แข่งในตลาดถูกต้อง</div> : null}
       {message && status === "error" ? <div className={styles.danger}>{message}</div> : null}
 
+      <div className={`${styles.dashboardBody} ${isLoading && data ? styles.isUpdating : ""}`} aria-busy={isLoading}>
       <section className={styles.primaryGrid}>
         <article className={`${styles.panel} ${styles.rankingPanel}`}>
           <div className={styles.panelHead}>
-            <div><span>MARKET RANKING</span><h1>10 อันดับ · {dimensionLabel}</h1><small>{applied ? `${monthLabel(applied.period)} · ${WINDOWS.find((item) => item.value === applied.window)?.label}` : ""}</small></div>
+            <div><span>MARKET RANKING</span><h1>10 อันดับ · {dimensionLabel}</h1><small>{applied ? `${periodRangeLabel(data?.period_from, data?.period_to) || monthLabel(applied.period)} · ${WINDOWS.find((item) => item.value === applied.window)?.label}` : ""}</small></div>
             <div className={styles.metricToggle}><button type="button" className={rankingMetric === "share" ? styles.activeMetric : ""} onClick={() => setRankingMetric("share")}>Share</button><button type="button" className={rankingMetric === "registrations" ? styles.activeMetric : ""} onClick={() => setRankingMetric("registrations")}>ยอดจดทะเบียน</button></div>
           </div>
 
@@ -383,7 +396,7 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
               return (
                 <div className={styles.rankRow} key={row.entity_key}>
                   <span className={styles.rankNumber}>{row.market_rank}</span>
-                  <button type="button" className={styles.entityButton} disabled={!drillable} onClick={() => drill(row)} title={drillable ? "คลิกเพื่อเจาะลงเป็นรายรุ่น" : undefined}>{row.entity_label}</button>
+                  <button type="button" className={styles.entityButton} disabled={!drillable || isLoading} onClick={() => drill(row)} title={drillable ? "คลิกเพื่อเจาะลงเป็นรายรุ่น" : undefined}>{row.entity_label}</button>
                   <div className={styles.rankBar}><i style={{ width: `${width}%` }} /></div>
                   <b className={styles.rankValue}>{rankingMetric === "share" ? pct(row.market_share_pct, 1) : n(row.registrations)}</b>
                   <span className={styles.rankUnits}>{n(row.registrations)} คัน</span>
@@ -425,7 +438,7 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
           </div>
           <div className={styles.trendLabels}>{trendPoints.map((point) => <span key={point.period}>{monthLabel(point.period)}</span>)}</div>
         </> : <div className={styles.empty}>ยังไม่มีข้อมูล trend สำหรับ scope นี้</div>}
-        <p className={styles.note}>กราฟนี้เป็น registration activity ตาม DLT ไม่ใช่ retail-sales ledger; ใช้ share และ relative position เป็นแกนหลักสำหรับอ่าน movement.</p>
+        <p className={styles.note}>กราฟนี้เป็น registration activity ตาม DLT ไม่ใช่ retail-sales ledger; ใช้ share และ relative position เป็นแกนหลักสำหรับอ่าน movement. กราฟแสดงยอดรายเดือนดิบของแต่ละช่วงเสมอ ไม่เปลี่ยนตามโหมด “เปรียบเทียบ” ด้านบน — ตัวเลือกนั้นมีผลเฉพาะ Δ ส่วนแบ่ง/อันดับที่ตารางและ SHARE MOVEMENT เท่านั้น</p>
       </section>
 
       {data?.comparison ? <section className={`${styles.panel} ${styles.movementPanel}`}>
@@ -440,6 +453,7 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
         <summary><span>▤ รายละเอียดข้อมูล</span><b>แสดงทั้งหมด</b></summary>
         <div className={styles.tableWrap}><table><thead><tr><th>#</th><th>{dimensionLabel}</th><th>ยอดจดทะเบียน</th><th>ส่วนแบ่งตลาด</th>{data?.comparison ? <><th>Δ ส่วนแบ่ง</th><th>Δ อันดับ</th></> : null}</tr></thead><tbody>{(data?.rows || []).map((row) => { const move = movementByKey.get(row.entity_key); return <tr key={row.entity_key}><td>{row.market_rank}</td><td><b>{row.entity_label}</b></td><td>{n(row.registrations)}</td><td>{pct(row.market_share_pct)}</td>{data?.comparison ? <><td className={Number(move?.share_change_pp || 0) >= 0 ? styles.positive : styles.negative}>{pp(move?.share_change_pp)}</td><td>{rankDelta(move?.rank_change)}</td></> : null}</tr>; })}</tbody></table></div>
       </details>
+      </div>
 
       {showFilters ? <div className={styles.drawerBackdrop} onMouseDown={() => setShowFilters(false)}>
         <aside className={styles.filterDrawer} onMouseDown={(event) => event.stopPropagation()}>

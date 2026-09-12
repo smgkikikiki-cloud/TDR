@@ -142,6 +142,26 @@ export function shiftReportPeriod(value: string, months: number): string {
   return periodFromIndex(periodIndex(value) + Math.trunc(months));
 }
 
+/** th-TH's default calendar is Buddhist, matching the rest of the public UI. */
+export function monthLabel(period: string): string {
+  const normalized = normalizeReportPeriod(period);
+  if (!normalized) return period;
+  return new Intl.DateTimeFormat("th-TH", { month: "short", year: "numeric" }).format(new Date(`${normalized}T00:00:00Z`));
+}
+
+/** A multi-month window (3M/6M/12M/YTD) otherwise forces the user to work
+ * out the effective range in their head from a single anchor month. This
+ * only formats period_from/period_to as returned by the market API's own
+ * window resolution -- it never re-derives the range, so the label can't
+ * disagree with the actual query (including YTD and year-boundary cases). */
+export function periodRangeLabel(from?: string | null, to?: string | null): string {
+  if (!from || !to) return "";
+  const fromNormalized = normalizeReportPeriod(from);
+  const toNormalized = normalizeReportPeriod(to);
+  if (!fromNormalized || !toNormalized) return "";
+  return fromNormalized === toNormalized ? monthLabel(fromNormalized) : `${monthLabel(fromNormalized)}–${monthLabel(toNormalized)}`;
+}
+
 export function resolveMarketWindow(period: string, window: MarketWindow): MarketPeriodWindow {
   const normalized = normalizeReportPeriod(period);
   if (!normalized) throw new Error(`invalid report period: ${period}`);

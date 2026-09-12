@@ -261,6 +261,15 @@ export async function getCanonicalCompareTrims(limit = 600) {
     .sort((a: any, b: any) => `${a.brand_name} ${a.model_name} ${a.name}`.localeCompare(`${b.brand_name} ${b.model_name} ${b.name}`));
 }
 
+/** The Catalog's "Compare" action must never point at a Model Compare can't
+ * actually resolve. This is the exact same eligibility Compare itself uses
+ * (getCanonicalCompareTrims), reduced to a lookup set, so the two can never
+ * drift apart into two different definitions of "comparable". */
+export async function getCompareEligibleModelIds(limit = 600) {
+  const trims = await getCanonicalCompareTrims(limit);
+  return new Set(trims.map((trim: any) => trim.model_id).filter(Boolean));
+}
+
 /** Public compare only consumes VERIFIED canonical facts for the trims actually
  * on screen. Missing/UNKNOWN facts remain missing; explicit KNOWN false is kept
  * so the UI can distinguish "ไม่มี" from "ยังไม่มีข้อมูลยืนยัน". */

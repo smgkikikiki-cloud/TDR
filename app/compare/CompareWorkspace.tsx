@@ -18,10 +18,11 @@ import {
 const MAX_CARS = 4;
 
 type Slot = { modelId: string; trimId: string };
-type ModelChoice = { id: string; label: string; imageUrl: string | null };
+type ModelChoice = { id: string; label: string; imageUrl: string | null; brandName: string; modelName: string };
 
 type Props = {
   allTrims: FreeCompareTrim[];
+  allBrandNames: string[];
   initialTrimIds: string[];
   initialModelIds: string[];
   facts: CompareSpecFact[];
@@ -56,29 +57,61 @@ function initialSlots(all: FreeCompareTrim[], models: string[], trims: string[])
   return slots;
 }
 
-function ModelPicker({ slotIndex, choices, value, onChange }: {
+function ModelPicker({ slotIndex, choices, allBrandNames, value, onChange }: {
   slotIndex: number;
   choices: ModelChoice[];
+  allBrandNames: string[];
   value: string;
   onChange: (id: string) => void;
 }) {
   const [query, setQuery] = useState("");
   const details = useRef<HTMLDetailsElement>(null);
   const selected = choices.find((choice) => choice.id === value);
-  const filtered = query.trim()
-    ? choices.filter((choice) => choice.label.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase())).slice(0, 16)
-    : choices.slice(0, 16);
+  const term = query.trim().toLocaleLowerCase();
+  const filtered = term
+    ? choices.filter((choice) => choice.label.toLocaleLowerCase().includes(term))
+    : choices;
+
+  // Brand -> Model is the discovery hierarchy the user actually knows;
+  // a flat list of canonical "Brand Model" strings made discovery depend on
+  // already knowing that exact naming. Cap the browse view generously so a
+  // larger future catalogue still renders a manageable popover.
+  const grouped = useMemo(() => {
+    const byBrand = new Map<string, ModelChoice[]>();
+    for (const choice of filtered.slice(0, 60)) {
+      if (!byBrand.has(choice.brandName)) byBrand.set(choice.brandName, []);
+      byBrand.get(choice.brandName)!.push(choice);
+    }
+    return [...byBrand.entries()].sort(([a], [b]) => a.localeCompare(b));
+  }, [filtered]);
+
+  // A real brand with zero comparable Trims today is a data-coverage gap,
+  // not a broken search -- say so, instead of implying the user typed it
+  // wrong or that Compare's matching is faulty.
+  const matchedKnownBrand = !filtered.length && term
+    ? allBrandNames.find((name) => name.toLocaleLowerCase().includes(term) || term.includes(name.toLocaleLowerCase()))
+    : undefined;
+
+  function pick(id: string) {
+    onChange(id);
+    setQuery("");
+    if (details.current) details.current.open = false;
+  }
+
   return <details className="compareModelPicker" ref={details}>
     <summary>{selected?.label || `เลือกรถคันที่ ${slotIndex + 1}`}</summary>
     <div className="compareModelPopover">
-      <input autoFocus={false} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="ค้นหาแบรนด์หรือรุ่น เช่น Camry, BYD, HR-V" />
+      <input autoFocus={false} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="ค้นหาแบรนด์หรือรุ่น เช่น Camry, Toyota, Isuzu" />
       <div className="compareModelChoices">
-        {filtered.map((choice) => <button type="button" key={choice.id} className={choice.id === value ? "on" : undefined} onClick={() => {
-          onChange(choice.id);
-          setQuery("");
-          if (details.current) details.current.open = false;
-        }}>{choice.label}</button>)}
-        {!filtered.length ? <span>ไม่พบรุ่นที่ค้นหา</span> : null}
+        {grouped.map(([brandName, models]) => <div className="compareModelGroup" key={brandName}>
+          <span className="compareModelGroupLabel">{brandName}</span>
+          {models.map((choice) => <button type="button" key={choice.id} className={choice.id === value ? "on" : undefined} onClick={() => pick(choice.id)}>{choice.modelName}</button>)}
+        </div>)}
+        {!filtered.length ? (
+          matchedKnownBrand
+            ? <span>ยังไม่มี Trim สำหรับเทียบของแบรนด์ &quot;{matchedKnownBrand}&quot; ในระบบตอนนี้</span>
+            : <span>ไม่พบรุ่นที่ค้นหา ลองล้างช่องค้นหาเพื่อดูรายการทั้งหมด</span>
+        ) : null}
       </div>
     </div>
   </details>;
@@ -95,7 +128,7 @@ function displayCell(trim: FreeCompareTrim, row: WorkspaceCompareRow, factMap: R
   return cell;
 }
 
-export function CompareWorkspace({ allTrims, initialTrimIds, initialModelIds, facts, initialDiffOnly, missingTrimSelection, missingModelSelection }: Props) {
+export function CompareWorkspace({ allTrims, allBrandNames, initialTrimIds, initialModelIds, facts, initialDiffOnly, missingTrimSelection, missingModelSelection }: Props) {
   const router = useRouter();
   const [slots, setSlots] = useState<Slot[]>(() => initialSlots(allTrims, initialModelIds, initialTrimIds));
   const [diffOnly, setDiffOnly] = useState(initialDiffOnly);
@@ -105,7 +138,10 @@ export function CompareWorkspace({ allTrims, initialTrimIds, initialModelIds, fa
     const map = new Map<string, ModelChoice>();
     for (const trim of allTrims) {
       if (!trim.model_id || map.has(trim.model_id)) continue;
-      map.set(trim.model_id, { id: trim.model_id, label: modelLabel(trim), imageUrl: (trim as any).model_image_url || null });
+      map.set(trim.model_id, {
+        id: trim.model_id, label: modelLabel(trim), imageUrl: (trim as any).model_image_url || null,
+        brandName: trim.brand_name || "", modelName: trim.model_name || modelLabel(trim),
+      });
     }
     return [...map.values()].sort((a, b) => a.label.localeCompare(b.label));
   }, [allTrims]);
@@ -184,7 +220,7 @@ export function CompareWorkspace({ allTrims, initialTrimIds, initialModelIds, fa
           return <article className={`compareSlot ${selectedTrim ? "ready" : ""}`} key={`${index}:${slot.modelId}`}>
             <div className="compareSlotNo">คันที่ {index + 1}{index < 2 ? " · ต้องเลือก" : ""}</div>
             {choice?.imageUrl ? <img className="compareSlotImage" src={choice.imageUrl} alt="" /> : <div className="compareSlotImage placeholder">ไม่มีรูป</div>}
-            <ModelPicker slotIndex={index} choices={modelChoices} value={slot.modelId} onChange={(id) => chooseModel(index, id)} />
+            <ModelPicker slotIndex={index} choices={modelChoices} allBrandNames={allBrandNames} value={slot.modelId} onChange={(id) => chooseModel(index, id)} />
             <select className="compareTrimSelect" value={slot.trimId} disabled={!slot.modelId} onChange={(event) => chooseTrim(index, event.target.value)}>
               <option value="">{slot.modelId ? "เลือกรุ่นย่อย / Trim" : "เลือกรถก่อน"}</option>
               {options.map((trim) => <option key={trim.id} value={trim.id}>{trimLabel(trim)}</option>)}
