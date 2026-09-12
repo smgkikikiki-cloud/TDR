@@ -95,6 +95,37 @@
               "price_min_thb": 699000,
               "price_max_thb": 699000
             }
+          ],
+          "trims": [
+            {
+              "id": "aion_es_bev",
+              "name": "AION ES",
+              "variant": "55 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_code": "",
+              "engine_cc": null,
+              "battery_kwh": 55.2,
+              "seats": 5,
+              "length_mm": 4810,
+              "width_mm": 1880,
+              "height_mm": 1545,
+              "wheelbase_mm": 2750,
+              "tire_front": "215/55 R17",
+              "tire_rear": "215/55 R17",
+              "wheel_front": "17 in",
+              "wheel_rear": "17 in",
+              "aliases": [
+                "AION ES"
+              ],
+              "source_refs": {
+                "official_gac_thailand": [
+                  "https://www.gacgroup.com/th-th/configuration/aion-es/2024",
+                  "https://www.gacgroup.com/th-th/sedan/aion-es"
+                ]
+              },
+              "notes": "Current Thai-market retail configuration verified from GAC Thailand on 2026-09-13. Retail price is maintained separately in PriceLedger."
+            }
           ]
         }
       ],
