@@ -14,6 +14,7 @@ export function Footer() {
           <Link href="/brands">แบรนด์</Link>
           <Link href="/search">ค้นหา</Link>
           <Link href="/upcoming">รุ่นที่กำลังมา</Link>
+          <Link href="/companies">บริษัท</Link>
         </div>
         <div>
           <h3>Market Intelligence</h3>
@@ -24,7 +25,6 @@ export function Footer() {
         <div>
           <h3>บัญชีและแพ็กเกจ</h3>
           <Link href="/pricing">ดูแพ็กเกจ</Link>
-          <Link href="/companies">บริษัท</Link>
           <Link href="/member/login">เข้าสู่ระบบ</Link>
         </div>
       </div>
