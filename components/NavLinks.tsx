@@ -2,18 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { primaryNav } from "@/lib/navigation";
-
-/** Brand and search routes are views of the canonical vehicle catalogue. */
-const SECTION_OF: Record<string, string> = { "/brands": "/models", "/search": "/models" };
+import { primaryNav, resolveActiveNavHref } from "@/lib/navigation";
 
 export function NavLinks() {
   const pathname = usePathname() || "/";
-  const section = Object.entries(SECTION_OF).find(([p]) => pathname === p || pathname.startsWith(`${p}/`))?.[1];
+  const resolved = resolveActiveNavHref(pathname);
   return (
     <nav aria-label="เมนูหลัก">
       {primaryNav.map((item) => {
-        const active = section === item.href || pathname === item.href || pathname.startsWith(`${item.href}/`);
+        const active = resolved === item.href || pathname.startsWith(`${item.href}/`);
         return (
           <Link key={item.href} href={item.href} className={active ? "navOn" : undefined} aria-current={active ? "page" : undefined}>
             {item.label}

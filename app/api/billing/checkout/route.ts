@@ -1,5 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { BillingError, createRegistrationCheckout, REGISTRATION_PLAN } from "@/lib/billing";
+import {
+  BillingError,
+  createRegistrationCheckout,
+  REGISTRATION_ANNUAL_PLAN,
+  REGISTRATION_PLAN,
+  type RegistrationPlan,
+} from "@/lib/billing";
 
 export const dynamic = "force-dynamic";
 
@@ -26,9 +32,6 @@ function appOrigin(request: NextRequest) {
 
   if (process.env.NODE_ENV !== "production") return request.nextUrl.origin;
 
-  // Stable production fallback so Checkout does not fail only because one
-  // deployment environment omitted TDR_APP_URL. Replace this when a custom
-  // canonical domain is introduced.
   return "https://tdr-xi.vercel.app";
 }
 
@@ -38,13 +41,18 @@ export async function POST(request: NextRequest) {
 
   let body: Record<string, unknown> = {};
   try { body = await request.json(); } catch {}
-  const plan = typeof body.plan === "string" ? body.plan : REGISTRATION_PLAN;
-  if (plan !== REGISTRATION_PLAN) return NextResponse.json({ error: "unsupported billing plan" }, { status: 400 });
+  const requestedPlan = typeof body.plan === "string" ? body.plan : REGISTRATION_PLAN;
+  const supportedPlans = new Set<string>([REGISTRATION_PLAN, REGISTRATION_ANNUAL_PLAN]);
+  if (!supportedPlans.has(requestedPlan)) {
+    return NextResponse.json({ error: "unsupported billing plan" }, { status: 400 });
+  }
+  const plan = requestedPlan as RegistrationPlan;
 
   try {
     const origin = appOrigin(request);
     const session = await createRegistrationCheckout({
       accessToken,
+      plan,
       successUrl: `${origin}/member/billing?checkout=success`,
       cancelUrl: `${origin}/member/billing?checkout=cancelled`,
     });

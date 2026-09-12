@@ -1,4 +1,10 @@
 import { publicDb } from "@/lib/supabase";
+import {
+  canClaimCurrentCommerce,
+  isCatalogVisible,
+  publicCompatibilityStatus,
+  publicRetailLifecycle,
+} from "@/lib/public-retail-lifecycle";
 
 const BODY: Record<string, string> = {
   HATCHBACK: "HATCHBACK", SEDAN: "SEDAN", CROSSOVER: "CROSSOVER",
@@ -6,9 +12,78 @@ const BODY: Record<string, string> = {
   PICKUP: "PICKUP", WAGON: "WAGON", VAN: "VAN", TRUCK: "TRUCK", OTHER: "OTHER",
 };
 
+const SUPABASE_PAGE_SIZE = 1000;
+
+/** A single `.limit(N)` on an eligibility-relevant table is a false-negative
+ * waiting to happen once row count crosses N: rows past the cutoff silently
+ * vanish from the result with no error, so a real Model/Trim can look
+ * ineligible for reasons that have nothing to do with its own data.
+ *
+ * Offset pagination also needs a deterministic unique ordering. Both canonical
+ * views expose `canonical_id`, so page boundaries are anchored to that stable
+ * key; display ordering is applied later after all rows have been collected. */
+async function fetchAllRows(db: any, table: string, select: string) {
+  const rows: any[] = [];
+  for (let offset = 0; ; offset += SUPABASE_PAGE_SIZE) {
+    const { data, error } = await db.from(table)
+      .select(select)
+      .order("canonical_id", { ascending: true })
+      .range(offset, offset + SUPABASE_PAGE_SIZE - 1);
+    if (error) throw error;
+    rows.push(...(data || []));
+    if (!data || data.length < SUPABASE_PAGE_SIZE) break;
+  }
+  return rows;
+}
+
+function publicPriceRecord(record: any) {
+  if (!record || typeof record !== "object") return null;
+  const {
+    source: _source,
+    source_ref: _sourceRef,
+    source_document_id: _sourceDocumentId,
+    notes: _notes,
+    reviewed_by: _reviewedBy,
+    ...publicRecord
+  } = record;
+  return publicRecord;
+}
+
+function publicCampaignQuote(quote: any) {
+  if (!quote || typeof quote !== "object") return {};
+  const {
+    source: _source,
+    source_ref: _sourceRef,
+    source_document_id: _sourceDocumentId,
+    ...publicQuote
+  } = quote;
+  return {
+    ...publicQuote,
+    campaign_options: Array.isArray(publicQuote.campaign_options)
+      ? publicQuote.campaign_options.map((option: any) => {
+        if (!option || typeof option !== "object") return option;
+        const {
+          source: _optionSource,
+          source_ref: _optionSourceRef,
+          source_document_id: _optionSourceDocumentId,
+          ...publicOption
+        } = option;
+        return publicOption;
+      })
+      : [],
+  };
+}
+
+function publicPriceHistory(history: any) {
+  if (!Array.isArray(history)) return [];
+  return history.map(publicPriceRecord).filter(Boolean);
+}
+
 function modelRow(row: any) {
   const payload = row.payload || {};
   const brand = payload.brand || {};
+  const lifecycle = publicRetailLifecycle(row.status);
+  const verifiedCurrent = lifecycle === "CURRENT";
   return {
     ...payload,
     id: row.canonical_id,
@@ -20,9 +95,10 @@ function modelRow(row: any) {
     generation: payload.generation || row.generation_id?.split(".").at(-1) || null,
     segment: row.segment,
     body_type: BODY[row.body_type] || row.body_type,
-    status: row.status,
-    retail_price_min: row.retail_price_min,
-    retail_price_max: row.retail_price_max,
+    status: publicCompatibilityStatus(row.status),
+    retail_lifecycle: lifecycle,
+    retail_price_min: verifiedCurrent ? row.retail_price_min : null,
+    retail_price_max: verifiedCurrent ? row.retail_price_max : null,
     brands: {
       id: brand.id,
       slug: brand.slug,
@@ -36,7 +112,9 @@ function modelRow(row: any) {
 function trimRow(row: any) {
   const detail = row.payload || {};
   const specs = detail.specs || {};
-  const list = row.current_list_price || detail.current_list_price;
+  const lifecycle = publicRetailLifecycle(row.status);
+  const rawList = lifecycle === "CURRENT" ? (row.current_list_price || detail.current_list_price) : null;
+  const list = publicPriceRecord(rawList);
   const powertrainId = `canonical-pt:${row.canonical_id}`;
   return {
     ...specs,
@@ -46,12 +124,13 @@ function trimRow(row: any) {
     model_id: row.model_id,
     generation_id: row.generation_id,
     variant_id: row.variant_id,
-    status: row.status || "current",
+    status: publicCompatibilityStatus(row.status),
+    retail_lifecycle: lifecycle,
     powertrain: row.powertrain || specs.powertrain || null,
     price_baht: list?.amount_thb ?? null,
-    current_list_price: list || null,
-    campaign_quote: row.campaign_quote || {},
-    price_history: row.price_history || [],
+    current_list_price: list,
+    campaign_quote: lifecycle === "CURRENT" ? publicCampaignQuote(row.campaign_quote || {}) : {},
+    price_history: publicPriceHistory(row.price_history || []),
     source_refs: row.source_refs || {},
     trim_powertrains: [{ powertrain_id: powertrainId }],
     _powertrain: {
@@ -73,7 +152,25 @@ export async function getCanonicalBrands(limit = 150) {
   const { data, error } = await db.from("current_vehicle_brands").select("*")
     .order("name_en").limit(limit);
   if (error) throw error;
-  return (data || []).map((row: any) => ({
+  const rows = data || [];
+
+  // logo_url is an optional TDR presentation overlay. Link it through the
+  // canonical projection's stable tdr_brand_id foreign key, not a mutable slug.
+  // Failure to read optional presentation metadata must never take the canonical
+  // catalogue down; the UI already falls back to text initials when logo_url is null.
+  const editorialIds = [...new Set(rows.map((row: any) => row.tdr_brand_id).filter(Boolean))];
+  const logoByEditorialId = new Map<string, string>();
+  if (editorialIds.length) {
+    const { data: editorial, error: editorialError } = await db.from("brands")
+      .select("id,logo_url").in("id", editorialIds);
+    if (!editorialError) {
+      for (const row of editorial || []) {
+        if (row.logo_url) logoByEditorialId.set(row.id, row.logo_url);
+      }
+    }
+  }
+
+  return rows.map((row: any) => ({
     ...(row.payload || {}),
     id: row.canonical_id,
     canonical_id: row.canonical_id,
@@ -82,7 +179,7 @@ export async function getCanonicalBrands(limit = 150) {
     name_en: row.name_en,
     name_th: row.name_th,
     country_origin: row.origin_country,
-    logo_url: null,
+    logo_url: row.tdr_brand_id ? (logoByEditorialId.get(row.tdr_brand_id) || null) : null,
   }));
 }
 
@@ -93,7 +190,7 @@ export async function getCanonicalBrand(slug: string) {
 
 export async function getCanonicalModelsByBrand(brandId: string) {
   const rows = await getCanonicalModels(600);
-  return rows.filter((row: any) => row.brand_id === brandId);
+  return rows.filter((row: any) => row.brand_id === brandId && isCatalogVisible(row.retail_lifecycle));
 }
 
 export async function getCanonicalModels(limit = 600) {
@@ -115,10 +212,21 @@ export async function getCanonicalModelBundle(slug: string) {
   const { data: rawTrims, error: trimError } = await db.from("current_market_trims")
     .select("*").eq("model_id", model.canonical_id).order("name");
   if (trimError) throw trimError;
-  const trims = (rawTrims || []).map(trimRow);
-  const powertrains = trims.map((trim: any) => trim._powertrain);
+
   const row: any = modelRow(model);
-  const numeric = (key: string) => trims.map((trim: any) => Number(trim[key]))
+
+  // UNVERIFIED trims are never labelled current or historical. A CURRENT child
+  // is also withheld as a current claim until its parent model is CURRENT.
+  const trims = (rawTrims || []).map(trimRow)
+    .filter((trim: any) => trim.retail_lifecycle === "HISTORICAL"
+      || canClaimCurrentCommerce(row.retail_lifecycle, trim.retail_lifecycle));
+  const powertrains = trims.map((trim: any) => trim._powertrain);
+  const currentPowertrains = trims
+    .filter((trim: any) => canClaimCurrentCommerce(row.retail_lifecycle, trim.retail_lifecycle))
+    .map((trim: any) => trim._powertrain);
+  const numeric = (key: string) => trims
+    .filter((trim: any) => canClaimCurrentCommerce(row.retail_lifecycle, trim.retail_lifecycle))
+    .map((trim: any) => Number(trim[key]))
     .filter((value: number) => Number.isFinite(value) && value > 0);
   for (const [modelKey, trimKey] of [
     ["length_mm", "length_mm"], ["width_mm", "width_mm"],
@@ -127,32 +235,47 @@ export async function getCanonicalModelBundle(slug: string) {
     const values = numeric(trimKey);
     if (!row[modelKey] && values.length && new Set(values).size === 1) row[modelKey] = values[0];
   }
-  return { ...row, powertrains_detail: powertrains,
-    trims: trims.map(({ _powertrain, ...trim }: any) => trim) };
+  return {
+    ...row,
+    powertrains_detail: powertrains,
+    current_powertrains_detail: currentPowertrains,
+    trims: trims.map(({ _powertrain, ...trim }: any) => trim),
+  };
 }
 
-/** Free compare reads the same active release as the catalogue. It deliberately
- * returns exact MarketTrim grain so price/spec values are never mixed between
- * variants. Tyre/wheel fields remain canonical data but are not projected onto
- * the public compare object in this product phase. */
-export async function getCanonicalCompareTrims(limit = 600) {
+/** Free compare reads the same active release as the catalogue. Identity/spec
+ * rows may remain visible while lifecycle is UNVERIFIED, but HISTORICAL rows
+ * are excluded. Current price/campaign fields require both trim and parent
+ * model to be verified CURRENT.
+ *
+ * Pages through both tables in full rather than capping at an arbitrary row
+ * count: a `.limit()` here doesn't just shorten the compare picker, it makes
+ * `getCompareEligibleModelIds` (below) produce false negatives for any Model
+ * whose Trims happen to fall past the cutoff, which is a correctness bug,
+ * not a performance trade-off. */
+export async function getCanonicalCompareTrims() {
   const db = publicDb();
   if (!db) return [];
-  const [{ data: rawTrims, error: trimError }, { data: rawModels, error: modelError }] = await Promise.all([
-    db.from("current_market_trims").select("*").order("name").limit(limit),
-    db.from("current_vehicle_models").select("*").limit(600),
+  const [rawTrims, rawModels] = await Promise.all([
+    fetchAllRows(db, "current_market_trims", "*"),
+    fetchAllRows(db, "current_vehicle_models", "*"),
   ]);
-  if (trimError) throw trimError;
-  if (modelError) throw modelError;
-  const models = new Map((rawModels || []).map((row: any) => [row.canonical_id, modelRow(row)]));
-  return (rawTrims || [])
+  const models = new Map(rawModels.map((row: any) => [row.canonical_id, modelRow(row)]));
+  return rawTrims
     .map((raw: any) => {
       const trim = trimRow(raw);
       const model: any = models.get(raw.model_id) || null;
       const detail = raw.payload || {};
+      const modelLifecycle = model?.retail_lifecycle || "UNVERIFIED";
+      const canClaimCommerce = canClaimCurrentCommerce(modelLifecycle, trim.retail_lifecycle);
       return {
         ...trim,
+        price_baht: canClaimCommerce ? trim.price_baht : null,
+        current_list_price: canClaimCommerce ? trim.current_list_price : null,
+        campaign_quote: canClaimCommerce ? trim.campaign_quote : {},
         model_slug: model?.slug || null,
+        model_lifecycle: modelLifecycle,
+        model_image_url: model?.image_url || null,
         brand_name: detail.brand || model?.brands?.name_en || "",
         model_name: detail.model || model?.name_en || raw.model_id,
         segment: model?.segment || null,
@@ -162,13 +285,48 @@ export async function getCanonicalCompareTrims(limit = 600) {
         model_seats: model?.seats || null,
       };
     })
-    .filter((row: any) => String(row.status || "current").toLowerCase() !== "discontinued")
+    .filter((row: any) => isCatalogVisible(row.retail_lifecycle) && isCatalogVisible(row.model_lifecycle))
     .sort((a: any, b: any) => `${a.brand_name} ${a.model_name} ${a.name}`.localeCompare(`${b.brand_name} ${b.model_name} ${b.name}`));
+}
+
+/** The Catalog's "Compare" action must never point at a Model Compare can't
+ * actually resolve. This is the exact same eligibility Compare itself uses
+ * (getCanonicalCompareTrims, now unpaginated -- see its own comment), reduced
+ * to a lookup set, so the two can never drift apart into two different
+ * definitions of "comparable". */
+export async function getCompareEligibleModelIds() {
+  const trims = await getCanonicalCompareTrims();
+  return new Set(trims.map((trim: any) => trim.model_id).filter(Boolean));
+}
+
+/** Public compare only consumes VERIFIED canonical facts for the trims actually
+ * on screen. Missing/UNKNOWN facts remain missing; explicit KNOWN false is kept
+ * so the UI can distinguish "ไม่มี" from "ยังไม่มีข้อมูลยืนยัน". */
+export async function getCanonicalCompareSpecFacts(trimIds: string[]) {
+  const ids = [...new Set(trimIds.filter(Boolean))].slice(0, 4);
+  if (!ids.length) return [];
+  const db = publicDb();
+  if (!db) return [];
+  const { data, error } = await db.from("current_spec_facts")
+    .select("fact_id,trim_id,field_key,verification_status,payload")
+    .in("trim_id", ids)
+    .eq("verification_status", "VERIFIED")
+    .limit(1000);
+  if (error) throw error;
+  return (data || []).map((row: any) => ({
+    ...(row.payload || {}),
+    fact_id: row.fact_id,
+    trim_id: row.trim_id,
+    field_key: row.field_key,
+    verification_status: row.verification_status,
+  }));
 }
 
 export async function getCanonicalRelatedModels(model: any, limit = 8) {
   const rows = await getCanonicalModels(600);
-  return rows.filter((row: any) => row.id !== model.id && row.brand_id === model.brand_id)
+  return rows.filter((row: any) => row.id !== model.id
+      && row.brand_id === model.brand_id
+      && isCatalogVisible(row.retail_lifecycle))
     .slice(0, limit);
 }
 
@@ -178,7 +336,10 @@ export async function searchCanonicalCatalog(query: string) {
   const [brands, models] = await Promise.all([getCanonicalBrands(), getCanonicalModels()]);
   const hit = (row: any) => [row.name_en, row.name_th, row.slug, row.canonical_id]
     .some((value) => String(value || "").toLocaleLowerCase().includes(term));
-  return { brands: brands.filter(hit).slice(0, 10), models: models.filter(hit).slice(0, 20) };
+  return {
+    brands: brands.filter(hit).slice(0, 10),
+    models: models.filter((row: any) => isCatalogVisible(row.retail_lifecycle) && hit(row)).slice(0, 20),
+  };
 }
 
 export async function getModelMarketTeasers(canonicalModelId: string, limit = 4) {

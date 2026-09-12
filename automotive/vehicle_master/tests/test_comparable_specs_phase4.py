@@ -56,7 +56,15 @@ def payload(*facts):
 
 def test_registry_and_c_crossover_cohort_are_closed_and_valid():
     registry = SpecRegistry.load()
-    assert len(registry.fields) == 60
+    assert len(registry.fields) == 92
+    for key in (
+        "technology.infotainment_screen_in", "technology.driver_display_in",
+        "safety.abs", "safety.forward_collision_warning", "safety.camera_360",
+    ):
+        assert key in registry.fields, key
+    assert registry.fields["technology.infotainment_screen_in"].group == "technology"
+    assert registry.fields["technology.infotainment_screen_in"].canonical_unit == "in"
+    assert registry.fields["safety.abs"].group == "safety"
     assert set(registry.profiles) == {
         "c_crossover_core", "c_crossover_safety", "c_crossover_comfort",
         "c_crossover_fitment",
