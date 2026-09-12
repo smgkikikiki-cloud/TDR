@@ -73,7 +73,20 @@ export async function getCanonicalBrands(limit = 150) {
   const { data, error } = await db.from("current_vehicle_brands").select("*")
     .order("name_en").limit(limit);
   if (error) throw error;
-  return (data || []).map((row: any) => ({
+  const rows = data || [];
+  // logo_url is a TDR-only display field, not part of the canonical payload —
+  // it lives on the legacy `brands` table, keyed by the same slug.
+  const slugs = rows.map((row: any) => row.slug).filter(Boolean);
+  const logoBySlug = new Map<string, string>();
+  if (slugs.length) {
+    const { data: legacy, error: legacyError } = await db.from("brands")
+      .select("slug,logo_url").in("slug", slugs);
+    if (legacyError) throw legacyError;
+    for (const row of legacy || []) {
+      if (row.logo_url) logoBySlug.set(row.slug, row.logo_url);
+    }
+  }
+  return rows.map((row: any) => ({
     ...(row.payload || {}),
     id: row.canonical_id,
     canonical_id: row.canonical_id,
@@ -82,7 +95,7 @@ export async function getCanonicalBrands(limit = 150) {
     name_en: row.name_en,
     name_th: row.name_th,
     country_origin: row.origin_country,
-    logo_url: null,
+    logo_url: logoBySlug.get(row.slug) || null,
   }));
 }
 
