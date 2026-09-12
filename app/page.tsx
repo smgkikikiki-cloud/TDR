@@ -93,16 +93,16 @@ export default async function Home() {
       <section className={styles.hero}>
         <div className={styles.heroCopy}>
           <div className={styles.eyebrow}>TDR AUTOMOTIVE INTELLIGENCE</div>
-          <h1>เห็นภาพตลาดรถไทย<br />ก่อนต้องอ่านทุกเว็บ<br />ทีละที่</h1>
-          <p>ข้อมูลจดทะเบียน ส่วนแบ่งตลาด และความเคลื่อนไหวของแบรนด์และรุ่นรถในที่เดียว เชื่อมโยงกับฐานข้อมูลรถของ TDR เพื่อให้เห็นตลาดได้ชัดขึ้น</p>
+          <h1>ติดตามตลาดรถยนต์ไทย<br />จากข้อมูลจดทะเบียนรายเดือน</h1>
+          <p>ยอดจดทะเบียน ส่วนแบ่งตลาด แนวโน้ม และการเปลี่ยนแปลงรายแบรนด์ รุ่น และเซกเมนต์ เชื่อมกับฐานข้อมูลรถยนต์ของ TDR</p>
           <div className={styles.heroActions}>
             <Link className={styles.primaryButton} href="/market">เปิด Market Intelligence →</Link>
-            <Link className={styles.secondaryButton} href="/models">ค้นหารถในฐานข้อมูล</Link>
+            <Link className={styles.secondaryButton} href="/models">ดูฐานข้อมูลรถยนต์</Link>
           </div>
           <div className={styles.trustRow}>
-            <div><b>ข้อมูลจดทะเบียน</b><span>ใช้ชุดข้อมูลตลาดที่ระบบรองรับ</span></div>
-            <div><b>รองรับข้อมูลรายเดือน</b><span>ติดตามการเปลี่ยนแปลงตามช่วงเวลา</span></div>
-            <div><b>เชื่อมโยงฐานข้อมูลรถ</b><span>{catalogue.length.toLocaleString("th-TH")} รุ่นใน active canonical release</span></div>
+            <div><b>ข้อมูลจดทะเบียนรายเดือน</b><span>ติดตามยอดและส่วนแบ่งตลาดตามช่วงเวลา</span></div>
+            <div><b>วิเคราะห์หลายมิติ</b><span>แบรนด์ รุ่น เซกเมนต์ ตัวถัง และระบบขับเคลื่อน</span></div>
+            <div><b>เชื่อมกับ Vehicle Master</b><span>อ้างอิงรุ่นและโครงสร้างรถจากฐานข้อมูล TDR</span></div>
           </div>
         </div>
         <MarketPreview />
@@ -110,8 +110,8 @@ export default async function Home() {
 
       <section className={styles.tools}>
         <div className={styles.sectionHead}>
-          <h2>เครื่องมือ TDR</h2>
-          <span>เครื่องมือข้อมูลรถยนต์สำหรับการค้นหา เปรียบเทียบ และวิเคราะห์ตลาด</span>
+          <h2>เครื่องมือและฐานข้อมูล</h2>
+          <span>ค้นหา เปรียบเทียบ และวิเคราะห์ข้อมูลรถยนต์ในระบบ TDR</span>
         </div>
         <div className={styles.toolGrid}>
           <Link className={`${styles.toolCard} ${styles.marketTool}`} href="/market">
