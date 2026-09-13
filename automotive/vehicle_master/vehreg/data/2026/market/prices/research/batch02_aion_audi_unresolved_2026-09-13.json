@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "batch": "batch02_aion_audi_first_20",
+  "observed_at": "2026-09-13",
+  "models_reviewed": 20,
+  "market_trims_written": 0,
+  "price_rows_written": 0,
+  "policy": "Fail closed when current Thai retail identity cannot be attached to the existing canonical Model/Generation/Variant without ambiguity. Promotional prices are never promoted to normal MSRP.",
+  "results": [
+    {
+      "model_id": "aion.aion_es",
+      "status": "BLOCKED_RETAIL_CHANNEL",
+      "reason": "AION ES is evidenced in Thailand through fleet/taxi activity, but it is not in the current normal GAC AION consumer product selector. Historical EVme prices do not establish a current normal consumer list price.",
+      "source_refs": ["https://www.gacgroup.com/en-th/"],
+      "next_action": "Confirm whether TDR should model ES as current fleet/commercial retail, historical consumer retail, or both before authoring MarketTrim/PriceLedger rows."
+    },
+    {
+      "model_id": "aion.aion_ut",
+      "status": "BLOCKED_VARIANT_SPEC_MISMATCH",
+      "reason": "Current Thai grades are 420 Standard and 500 Premium and current official displayed prices are 519,900 and 619,900. Existing canonical analytical variants carry battery capacities that do not match the current Thai grade specifications, so attaching new MarketTrim rows would bind them to the wrong parent variant.",
+      "source_refs": ["https://www.gacgroup.com/en-th/aion-ut"],
+      "next_action": "Correct current Thai Variant specifications first, then create 420 Standard / 500 Premium MarketTrim rows and append normal prices."
+    },
+    {
+      "model_id": "aion.aion_v",
+      "status": "BLOCKED_VARIANT_SET_AND_PROMO_SEMANTICS",
+      "reason": "Current Thailand has 500 Premium and 602 Luxury, while canonical coverage is incomplete. Official event material explicitly distinguishes a special 500 Premium price from its normal price, so the product-page headline must not be treated as MSRP without chronology.",
+      "source_refs": ["https://www.gacgroup.com/en-th/aion-v", "https://www.gacgroup.com/en-th/news"],
+      "next_action": "Add/correct the V500 parent variant, create exact current MarketTrim identities, and record normal MSRP separately from dated campaign prices."
+    },
+    {
+      "model_id": "aion.aion_y_plus",
+      "status": "PRICE_UNRESOLVED_PROMOTION_ONLY",
+      "reason": "The current 490 Premium identity can plausibly map to the existing 63.2 kWh analytical variant, but the current 749,000 figure is explicitly used as a promotional/special price in official event material. A latest normal MSRP was not established confidently.",
+      "source_refs": ["https://www.gacgroup.com/en-th/aion-y-plus", "https://www.gacgroup.com/en-th/news"],
+      "next_action": "Create a current MarketTrim only after confirming exact specification continuity; leave LIST_PRICE blank until normal MSRP is evidenced, and record promotion only with its dates/conditions."
+    },
+    {
+      "model_id": "aion.hyptec_ht",
+      "status": "BLOCKED_VARIANT_SPEC_MISMATCH",
+      "reason": "Existing canonical battery specification conflicts with Thai-market published specification, and the currently displayed 1,199,000 figure has also appeared as a special price against a higher normal reference price. Both product identity and price semantics need correction before publication.",
+      "source_refs": ["https://www.gacgroup.com/en-th/hyptec-ht", "https://www.headlightmag.com/"],
+      "next_action": "Correct the Thai analytical variant/spec first, then distinguish latest normal MSRP from campaign pricing."
+    },
+    {
+      "model_id": "audi.a1",
+      "status": "HISTORICAL_LIFECYCLE_RESEARCH_REQUIRED",
+      "reason": "A1 is absent from the current Audi Thailand model lineup. Existing canonical data is not enough to assert the final Thai normal price or exact end date.",
+      "source_refs": ["https://www.audi.co.th/en/models/"],
+      "next_action": "Find last official normal Thai price and discontinuation window, then mark model/trim historical rather than inventing a current trim."
+    },
+    {
+      "model_id": "audi.a4",
+      "status": "HISTORICAL_REPLACED_BY_A5",
+      "reason": "Current Audi Thailand lineup no longer lists A4, and launch coverage for the new A5 states that it replaces the former A4/A5 family. Canonical A4 should not receive new current MarketTrim rows.",
+      "source_refs": ["https://www.audi.co.th/en/models/", "https://www.headlightmag.com/"],
+      "next_action": "Research the last normal A4 Thai price and close its generation/model lifecycle as historical."
+    },
+    {
+      "model_id": "audi.a5",
+      "status": "BLOCKED_NEW_GENERATION_IDENTITY",
+      "reason": "Canonical A5 is an older COUPE/ICE identity that also carries Sportback/Avant aliases, while the current Thai All-New A5 family is a new-generation Sportback/Avant range including PHEV grades. Creating trims under the old parent would conflate generations and bodies.",
+      "source_refs": ["https://www.audi.co.th/en/models/", "https://www.headlightmag.com/"],
+      "next_action": "Model the current A5 generation/body structure first, then create Thai MarketTrim rows and prices."
+    },
+    {
+      "model_id": "audi.a7",
+      "status": "BLOCKED_POWERTRAIN_VARIANT_MISMATCH",
+      "reason": "Thai A7 retail evidence includes PHEV grades, while the canonical parent variant is a generic 3.0 ICE AWD seed. Price cannot safely be attached until the current grade/powertrain identity is corrected.",
+      "source_refs": ["https://www.audi.co.th/en/models/", "https://www.headlightmag.com/"],
+      "next_action": "Author current A7 analytical variant and exact Thai grade identity before PriceLedger rows."
+    },
+    {
+      "model_id": "audi.a8",
+      "status": "HISTORICAL_POWERTRAIN_MISMATCH",
+      "reason": "A8 is absent from the current Audi Thailand lineup, while the canonical seed says generic ICE and recent Thai retail evidence was PHEV. It needs historical lifecycle and powertrain correction, not a current price row.",
+      "source_refs": ["https://www.audi.co.th/en/models/", "https://www.headlightmag.com/"],
+      "next_action": "Determine final Thai grade/normal price and end date, correct powertrain identity, then publish historical lifecycle."
+    },
+    {
+      "model_id": "audi.a6",
+      "status": "BLOCKED_BODY_GRADE_SCOPE",
+      "reason": "Audi Thailand currently lists A6 configurations, but the canonical model is a generic incomplete identity and needs verification of sedan/Avant grade scope before MarketTrim authoring.",
+      "source_refs": ["https://www.audi.co.th/en/models/"],
+      "next_action": "Resolve current A6 body and grade boundaries, then author trims and normal prices."
+    },
+    {
+      "model_id": "audi.a6_etron",
+      "status": "BLOCKED_NEW_VARIANT_SET",
+      "reason": "A6 e-tron is current in Audi Thailand, but canonical data is intentionally incomplete and has no MarketTrim. Exact current Thai grade/variant identities must be authored before prices.",
+      "source_refs": ["https://www.audi.co.th/en/models/"],
+      "next_action": "Research current Thai A6 e-tron configurations/specs, create parent variants and MarketTrim rows, then verify prices."
+    },
+    {
+      "model_id": "audi.etron",
+      "status": "HISTORICAL_RENAMED_TO_Q8_ETRON",
+      "reason": "Audi describes the Q8 e-tron as the continuation/evolution of the earlier e-tron nameplate. The old standalone e-tron identity should not receive new current trims alongside Q8 e-tron.",
+      "source_refs": ["https://www.audi.co.th/en/models/q8-e-tron/q8-e-tron/"],
+      "next_action": "Close the standalone e-tron generation/model lifecycle and retain its last normal prices as historical evidence."
+    },
+    {
+      "model_id": "audi.etron_gt",
+      "status": "CURRENT_STATUS_UNRESOLVED",
+      "reason": "The first-pass current Audi model list did not provide enough evidence to classify the existing e-tron GT canonical identity as current or historical with confidence.",
+      "source_refs": ["https://www.audi.co.th/en/models/"],
+      "next_action": "Verify current official distributor availability and exact latest Thai grade before any MarketTrim or historical disposition."
+    },
+    {
+      "model_id": "audi.q6_etron",
+      "status": "BLOCKED_NEW_VARIANT_SET",
+      "reason": "Q6 e-tron is current in Audi Thailand but canonical data is incomplete and has no exact Thai current MarketTrim identities.",
+      "source_refs": ["https://www.audi.co.th/en/models/q6-e-tron/"],
+      "next_action": "Author current Thai Q6 e-tron variants/trims from official evidence, then verify normal prices."
+    },
+    {
+      "model_id": "audi.q7",
+      "status": "CURRENT_GRADE_RESEARCH_REQUIRED",
+      "reason": "Q7 is current in Audi Thailand, but the canonical seed contains mixed ICE/PHEV analytical evidence and no exact current MarketTrim. A headline model price is insufficient.",
+      "source_refs": ["https://www.audi.co.th/en/models/q7/q7/"],
+      "next_action": "Resolve exact current Thai grade names/powertrains and prices before authoring MarketTrim."
+    },
+    {
+      "model_id": "audi.q8_etron",
+      "status": "CURRENT_GRADE_RESEARCH_REQUIRED",
+      "reason": "Q8 e-tron is current in Audi Thailand but exact current Thai grades and normal prices have not yet been mapped to canonical MarketTrim identities.",
+      "source_refs": ["https://www.audi.co.th/en/models/q8-e-tron/q8-e-tron/"],
+      "next_action": "Map current Thai grades/specs first, then append normal PriceLedger rows."
+    },
+    {
+      "model_id": "audi.audi_q3",
+      "status": "BLOCKED_NEW_GENERATION_IDENTITY",
+      "reason": "Canonical Q3 is the older F3 generation launched in 2019, while Audi Thailand currently markets the new Q3. Current price must not be attached to the old generation.",
+      "source_refs": ["https://www.audi.co.th/en/models/q3/q3/"],
+      "next_action": "Add the current Q3 generation and exact Thai grades before MarketTrim/pricing."
+    },
+    {
+      "model_id": "audi.audi_q5",
+      "status": "BLOCKED_NEW_GENERATION_POWERTRAIN",
+      "reason": "Canonical Q5 is the older FY 2.0 ICE AWD seed, while the current Audi Thailand Q5 is an e-hybrid/PHEV product. Current price cannot be attached to that old parent variant.",
+      "source_refs": ["https://www.audi.co.th/en/models/q5/q5-suv-e-hybrid/"],
+      "next_action": "Add/correct the current Q5 generation and PHEV variants, then create Thai MarketTrim and prices."
+    },
+    {
+      "model_id": "audi.q8",
+      "status": "CURRENT_GRADE_RESEARCH_REQUIRED",
+      "reason": "Q8 is current in Audi Thailand, but the canonical generic 3.0 ICE seed does not establish exact current Thai grade identity or latest normal price.",
+      "source_refs": ["https://www.audi.co.th/en/models/q8/q8/"],
+      "next_action": "Verify current Thai grade/powertrain and normal MSRP, then author MarketTrim."
+    }
+  ]
+}
