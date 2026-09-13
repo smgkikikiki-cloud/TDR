@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "batch": "source-first-04",
+  "as_of": "2026-09-13",
+  "strategy": "AutoLifeThailand first; if no usable Thai-model result, Headlightmag fallback once; if still no usable Thai price, skip. No third-source resolution in this pass.",
+  "models": [
+    {
+      "model": "BMW X1",
+      "source_status": "AUTOLIFE",
+      "source_ref": "https://autolifethailand.tv/official-price-discount-bmw-x1-sdrive20i-m-sport-u11-july2025/",
+      "observed": ["X1 sDrive20i M Sport normal reference 2,619,000; reduced to 2,399,000 from 2025-07-01"],
+      "disposition": "BLOCKED_IDENTITY",
+      "notes": "Canonical ICE parent is labelled 1.5L/1499 cc while current sDrive20i is 2.0L/1998 cc. PHEV source also shows 14.2 kWh while canonical seed says 16.3. Repair parent before trim/price write."
+    },
+    {
+      "model": "BMW X3",
+      "source_status": "AUTOLIFE",
+      "source_ref": "https://autolifethailand.tv/official-price-bmw-x3-20d-m50-xdrive-g45/",
+      "observed": ["X3 20d xDrive M Sport Pro 3,799,000", "X3 M50 xDrive 4,499,000"],
+      "disposition": "BLOCKED_IDENTITY",
+      "notes": "Canonical G45 analytical row folds 20d and M50 into one 2.0 ICE line even though they are different engine families/specs. Split first."
+    },
+    {
+      "model": "BMW X4",
+      "source_status": "HEADLIGHTMAG_FALLBACK",
+      "source_ref": "https://www.headlightmag.com/2022-03-official-price-bmw-x4-xdrive20d-m-sport-lci-thailand/",
+      "observed": ["X4 xDrive20d M Sport LCI 4,099,000"],
+      "disposition": "SOURCE_FOUND_STALE",
+      "notes": "Thai official-price article found only for old G02/LCI. No third source in streamlined pass; do not assert current 2026 retail status."
+    },
+    {
+      "model": "BMW X5",
+      "source_status": "AUTOLIFE",
+      "source_ref": "https://autolifethailand.tv/official-price-bmw-x5-xdrive30d-xdrive50e-g05-lci/",
+      "observed": ["X5 xDrive30d M Sport 5,099,000", "X5 xDrive50e M Sport 5,399,000", "xDrive50e battery 29.5 kWh"],
+      "disposition": "BLOCKED_IDENTITY",
+      "notes": "Canonical PHEV seed says 25.7 kWh while source says 29.5 kWh. Repair analytical parent before MarketTrim."
+    },
+    {
+      "model": "BMW X6",
+      "source_status": "AUTOLIFE",
+      "source_ref": "https://autolifethailand.tv/official-price-bmw-x6-xdrive40i-g06-lci/",
+      "observed": ["X6 xDrive40i M Sport G06 LCI 5,899,000"],
+      "disposition": "SOURCE_FOUND_STALE",
+      "notes": "Identity broadly matches canonical 3.0 AWD line, but latest direct Thai price article found is 2023. No third source by rule; keep out of current ledger for this pass."
+    },
+    {
+      "model": "BMW X7",
+      "source_status": "HEADLIGHTMAG_FALLBACK",
+      "source_ref": "https://www.headlightmag.com/2023-02-28-official-price-bmw-x7-xdrive40d-m-sport-lci/",
+      "observed": ["X7 xDrive40d M Sport LCI 6,599,000"],
+      "disposition": "SOURCE_FOUND_STALE",
+      "notes": "Fallback source is 2023. Identity is plausible but current 2026 price not asserted in source-first pass."
+    },
+    {
+      "model": "BMW XM",
+      "source_status": "AUTOLIFE",
+      "source_ref": "https://autolifethailand.tv/official-price-bmw-xm-thailand/",
+      "observed": ["BMW XM V8 4.4 PHEV 14,899,000", "29.5 kWh AWD"],
+      "disposition": "BLOCKED_IDENTITY",
+      "notes": "Canonical row represents XM 50e/3.0 PHEV with 25.7 kWh. It cannot receive the original V8 XM price."
+    },
+    {
+      "model": "BMW Z4",
+      "source_status": "HEADLIGHTMAG_FALLBACK",
+      "source_ref": "https://www.headlightmag.com/official-price-bmw-z4-sdrive30i-m40i-g29/",
+      "observed": ["Z4 sDrive30i M Sport 3,999,000", "Z4 M40i 4,999,000"],
+      "disposition": "BLOCKED_IDENTITY",
+      "notes": "Canonical row says COUPE/AWD/2.0 generic. Source is roadster, RWD, and includes both 2.0 and 3.0 grades. Parent must be repaired."
+    },
+    {
+      "model": "BYD Atto 2",
+      "source_status": "AUTOLIFE",
+      "source_ref": "https://autolifethailand.tv/official-price-byd-atto-2-ev-bev-thailand/",
+      "observed": ["Atto 2 Dynamic 629,900", "Atto 2 Premium 659,900", "BEV CBU China"],
+      "disposition": "BLOCKED_IDENTITY_LIGHT",
+      "notes": "Canonical model is explicitly incomplete with UNKNOWN analytical powertrain. Source gives a clean current Thai lineup; parent repair can be done without another price source."
+    },
+    {
+      "model": "BYD Atto 3",
+      "source_status": "AUTOLIFE",
+      "source_ref": "https://autolifethailand.tv/official-price-discount-byd-atto-3-ev-bev-sep-2026/",
+      "observed": ["Premium 50.25 kWh base shown 669,900; 3-day dealer deal 609,900", "Extended 60.48 kWh base shown 769,900; 3-day dealer deal 649,900"],
+      "disposition": "BLOCKED_IDENTITY_AND_PRICE_SEMANTICS",
+      "notes": "Canonical lacks the 50.25 kWh Premium analytical variant. September article is explicitly a 3-day special and its reference prices differ from earlier 2026 MSRP history. Do not promote headline/dealer figures to normal list price."
+    },
+    {
+      "model": "BYD M6",
+      "source_status": "AUTOLIFE",
+      "source_ref": "https://autolifethailand.tv/official-price-byd-m6-jan-2026/",
+      "observed": ["Dynamic 6 Seats 909,900", "Extended 6 Seats 1,009,900", "Extended 7 Seats 1,009,900"],
+      "disposition": "BLOCKED_IDENTITY",
+      "notes": "Canonical has only the Dynamic/55 kWh analytical line. Extended grades require their own exact parent identity before MarketTrim. Later Motor Show discounts are campaign prices, not MSRP."
+    },
+    {
+      "model": "BYD T3",
+      "source_status": "HEADLIGHTMAG_FALLBACK_NONQUALIFYING",
+      "source_ref": "https://www.headlightmag.com/bangkok-motorshow-2018-report/",
+      "observed": ["preliminary T3 price 1,590,000 in 2018 show report"],
+      "disposition": "SKIP",
+      "notes": "No AutoLife official-price result. Headlightmag only has an old show-report preliminary figure, not a qualifying current/last normal official-price article."
+    },
+    {
+      "model": "BYD Dolphin",
+      "source_status": "AUTOLIFE",
+      "source_ref": "https://autolifethailand.tv/official-price-byd-dolphin-jan-2026/",
+      "observed": ["Standard Range 50.25 kWh 599,900", "Extended Range 60.48 kWh 719,900"],
+      "disposition": "BLOCKED_IDENTITY",
+      "notes": "Canonical Standard analytical battery is 44.9 kWh, not the current 50.25 kWh. Extended is near-compatible. Repair Standard parent before authoring; Motor Show reductions stay campaigns."
+    },
+    {
+      "model": "BYD Dolphin Mini",
+      "source_status": "NOT_FOUND",
+      "source_ref": null,
+      "observed": [],
+      "disposition": "SKIP",
+      "notes": "No usable Thai AutoLife result and no usable Headlightmag Thai official-price result under Dolphin Mini/Seagull/Atto 1 identity."
+    },
+    {
+      "model": "BYD Seal",
+      "source_status": "AUTOLIFE",
+      "source_ref": "https://autolifethailand.tv/official-price-discount-byd-seal-oct-2025/",
+      "observed": ["Dynamic RWD list reference 1,325,900", "Premium RWD list reference 1,449,900", "Performance AWD list reference 1,599,900", "run-out discounts until stock ends"],
+      "disposition": "BLOCKED_IDENTITY_AND_LIFECYCLE",
+      "notes": "Source explicitly describes run-out stock. Canonical also lacks Premium RWD analytical variant. Treat only as historical candidate after parent and lifecycle repair."
+    },
+    {
+      "model": "BYD Seal 5 DM-i",
+      "source_status": "AUTOLIFE",
+      "source_ref": "https://autolifethailand.tv/official-price-byd-seal-5-dm-i-plug-in-hybrid-standard-dynamic-premium/",
+      "observed": ["Standard 13.08 kWh 599,900", "Dynamic 13.08 kWh 659,900", "Premium 18.3 kWh 699,900"],
+      "disposition": "BLOCKED_IDENTITY_LIGHT",
+      "notes": "Canonical PHEV parent is incomplete with battery unset. Source gives exact battery split and current grades; repair parent then author all three."
+    },
+    {
+      "model": "BYD Sealion 5 DM-i",
+      "source_status": "AUTOLIFE",
+      "source_ref": "https://autolifethailand.tv/official-price-byd-sealion-5-dm-i-phev/",
+      "observed": ["Dynamic 759,900", "Premium 799,900"],
+      "disposition": "BLOCKED_IDENTITY_LIGHT",
+      "notes": "Canonical parent is incomplete with drivetrain/engine/battery details unset. Source confirms current Thai grades but parent must be made exact first."
+    },
+    {
+      "model": "BYD Sealion 6 DM-i",
+      "source_status": "AUTOLIFE",
+      "source_ref": "https://autolifethailand.tv/official-price-byd-sealion-6-my2026-extended-dm-i-phev/",
+      "observed": ["Dynamic normal reference 879,900; discounted 859,900", "Premium normal reference 939,900; discounted 899,900", "Extended 969,900 new"],
+      "disposition": "BLOCKED_IDENTITY_AND_PRICE_SEMANTICS",
+      "notes": "Canonical has only one 18.3 kWh line and cannot yet represent all MY2026 grades. Keep Dynamic/Premium discount separate from normal reference prices."
+    },
+    {
+      "model": "BYD Sealion 7",
+      "source_status": "AUTOLIFE",
+      "source_ref": "https://autolifethailand.tv/official-price-byd-sealion-7-my2026-awd-ultimate-800v/",
+      "observed": ["Premium RWD normal reference 1,264,900; special 1,199,900", "Performance AWD normal reference 1,364,900; special 1,299,900", "AWD Ultimate 1,349,900 new"],
+      "disposition": "BLOCKED_IDENTITY_AND_PRICE_SEMANTICS",
+      "notes": "Canonical only has Premium RWD analytical line; Performance and new Ultimate need exact parents. Promotional figures must not overwrite normal list references."
+    },
+    {
+      "model": "BYD Shark 6",
+      "source_status": "NOT_FOUND_THAI_PRICE",
+      "source_ref": "https://www.headlightmag.com/news-byd-shark-6-dynamic-previewed/",
+      "observed": [],
+      "disposition": "SKIP",
+      "notes": "No usable AutoLife Thai official-price result. Headlightmag fallback found only overseas/Australian coverage, not a Thai price. Stop by batch rule."
+    }
+  ]
+}
