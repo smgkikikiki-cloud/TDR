@@ -4,8 +4,10 @@
 Conservative rules:
 - Match a source nameplate to exactly one canonical model.
 - Attach only to an unambiguous generation.
-- Create/update a MarketTrim only when an exact canonical powertrain can be resolved.
-- Never invent prices/specs, never alter analytical Variant rows, and never mark lifecycle CURRENT.
+- Create/update a MarketTrim only when the supplied directory or an unambiguous
+  canonical fallback resolves an exact powertrain.
+- Never invent prices/specs, never alter analytical Variant rows, and never mark
+  lifecycle CURRENT.
 - Anything ambiguous is left untouched and written to apply_report.json.
 """
 
@@ -81,21 +83,19 @@ def model_keys(brand: dict[str, Any], model: dict[str, Any]) -> set[str]:
 
 
 def infer_powertrains(text: str) -> set[str]:
-    """Return only powertrains explicitly supported by the text.
+    """Return powertrains explicitly supported by a source/trim string.
 
-    MHEV is ICE in the canonical taxonomy. Plug-in/REEV markers suppress the
-    generic Hybrid/EV substrings they contain. This parser is deliberately
-    conservative because an unresolved trim is safer than a wrong identity.
+    MHEV is ICE in the canonical taxonomy. A source that explicitly says REEV or
+    PHEV is not also treated as BEV merely because it contains the word
+    "electric". Likewise TFSI e is PHEV, not a simultaneous ICE marker.
     """
     raw = text or ""
     n = norm(raw)
     out: set[str] = set()
 
-    if re.search(r"\b(fcev|fuel cell|hydrogen)\b", n):
-        out.add("FCEV")
-    if re.search(r"\b(reev|erev)\b", n) or "range extender" in n:
-        out.add("REEV")
-    if (
+    has_fcev = bool(re.search(r"\b(fcev|fuel cell|hydrogen)\b", n))
+    has_reev = bool(re.search(r"\b(reev|erev)\b", n) or "range extender" in n)
+    has_phev = bool(
         re.search(r"\bphev\b", n)
         or "plug in hybrid" in n
         or re.search(r"\btfsi e\b", n)
@@ -103,12 +103,17 @@ def infer_powertrains(text: str) -> set[str]:
         or re.search(r"\b\d{2,3}e\b", n)
         or re.search(r"\bdm i\b", n)
         or re.search(r"\bcsh\b", n)
-    ):
-        out.add("PHEV")
-    if re.search(r"\bbev\b", n) or re.search(r"\belectric\b", n):
-        out.add("BEV")
+    )
+    has_bev = bool(re.search(r"\bbev\b", n))
 
-    # Standalone EV is useful, but do not let EREV/PHEV text manufacture BEV.
+    if has_fcev:
+        out.add("FCEV")
+    if has_reev:
+        out.add("REEV")
+    if has_phev:
+        out.add("PHEV")
+    if has_bev or (not (has_reev or has_phev) and re.search(r"\belectric\b", n)):
+        out.add("BEV")
     if not ({"PHEV", "REEV"} & out) and re.search(r"\bev\b", n):
         out.add("BEV")
 
@@ -122,7 +127,16 @@ def infer_powertrains(text: str) -> set[str]:
     ):
         out.add("HEV")
 
-    if re.search(r"\b(diesel|petrol|gasoline|tdi|tsi|tfsi|ecoboost|turbo diesel)\b", n):
+    # Remove PHEV-specific TFSI-e text before testing ordinary combustion cues.
+    ice_n = re.sub(r"\btfsi e\b", " ", n)
+    if re.search(r"\b(diesel|petrol|gasoline|tdi|tsi|tfsi|ecoboost|turbo diesel)\b", ice_n):
+        out.add("ICE")
+    # BMW-style grade suffixes: 520d, 330i, xDrive20d, sDrive20i, M340i.
+    if (
+        re.search(r"\b\d{2,3}[di]\b", n)
+        or re.search(r"\b(?:xdrive|sdrive)\d{2,3}[di]\b", n)
+        or re.search(r"\bm\d{2,3}i\b", n)
+    ):
         out.add("ICE")
 
     if not (out & {"HEV", "PHEV", "REEV", "BEV", "FCEV"}) and re.search(
@@ -131,6 +145,14 @@ def infer_powertrains(text: str) -> set[str]:
         out.add("ICE")
 
     return out & POWERTRAINS
+
+
+def generation_powertrains(generation: dict[str, Any]) -> set[str]:
+    return {
+        str(v.get("powertrain", "")).upper()
+        for v in generation.get("variants", [])
+        if str(v.get("powertrain", "")).upper() in POWERTRAINS
+    }
 
 
 def select_generation(model: dict[str, Any]) -> tuple[dict[str, Any] | None, str | None]:
@@ -193,37 +215,31 @@ def resolve_trim_powertrain(
     source_powertrain_text: str,
     generation: dict[str, Any],
 ) -> tuple[str | None, str | None]:
-    allowed = {
-        str(v.get("powertrain", "")).upper()
-        for v in generation.get("variants", [])
-        if str(v.get("powertrain", "")).upper() in POWERTRAINS
-    }
+    """Resolve from the supplied directory first; canonical Variant is fallback.
+
+    A stale analytical Variant must not veto an exact source-backed MarketTrim
+    identity. Such disagreements are reported separately for canonical repair.
+    """
+    allowed = generation_powertrains(generation)
     trim_pts = infer_powertrains(raw_trim)
     source_pts = infer_powertrains(source_powertrain_text)
 
-    # Per-trim evidence wins. More than one explicit powertrain in the same trim
-    # string is not collapsed by the canonical variant set.
     if len(trim_pts) == 1:
         pt = next(iter(trim_pts))
-        if allowed and pt not in allowed:
-            return None, "POWERTRAIN_CONFLICT"
+        # If the row explicitly constrains the available powertrains, the trim
+        # cue must be one of them. This catches generic "Hybrid" being mistaken
+        # for HEV when the source row actually says ICE/PHEV.
+        if source_pts and pt not in source_pts:
+            return None, "POWERTRAIN_SOURCE_CONFLICT"
         return pt, None
     if len(trim_pts) > 1:
         return None, "AMBIGUOUS_POWERTRAIN"
 
-    # A source row describing a single powertrain is safe for all its trims.
     if len(source_pts) == 1:
-        pt = next(iter(source_pts))
-        if allowed and pt not in allowed:
-            return None, "POWERTRAIN_CONFLICT"
-        return pt, None
-
-    # Mixed source rows stay mixed unless the trim itself disambiguates them.
+        return next(iter(source_pts)), None
     if len(source_pts) > 1:
         return None, "AMBIGUOUS_POWERTRAIN"
 
-    # If the directory omitted powertrain wording entirely, one exact canonical
-    # analytical powertrain can supply the identity without guessing.
     if len(allowed) == 1:
         return next(iter(allowed)), None
     return None, "AMBIGUOUS_POWERTRAIN"
@@ -287,6 +303,7 @@ def main() -> int:
         "unmatched_models": [],
         "skipped_models": [],
         "skipped_trim_rows": [],
+        "variant_powertrain_mismatches": [],
         "model_matches": [],
     }
 
@@ -340,6 +357,7 @@ def main() -> int:
                 if n:
                     existing_names[n] = trim
 
+        allowed = generation_powertrains(generation)
         for raw_trim in source.get("submodels_trims", []):
             if is_non_market_trim(raw_trim):
                 report["skipped_trims"] += 1
@@ -370,6 +388,17 @@ def main() -> int:
                     }
                 )
                 continue
+
+            if allowed and powertrain not in allowed:
+                report["variant_powertrain_mismatches"].append(
+                    {
+                        "source_index": source["source_index"],
+                        "canonical_model_id": item["model_id"],
+                        "trim": raw_trim,
+                        "resolved_market_trim_powertrain": powertrain,
+                        "analytical_variant_powertrains": sorted(allowed),
+                    }
+                )
 
             name, aliases = canonical_trim_name(
                 raw_trim,
@@ -446,6 +475,7 @@ def main() -> int:
     )}, indent=2))
     print(f"unmatched_models={len(report['unmatched_models'])}")
     print(f"skipped_models={len(report['skipped_models'])}")
+    print(f"variant_powertrain_mismatches={len(report['variant_powertrain_mismatches'])}")
     print(f"report={REPORT_PATH.relative_to(ROOT)}")
     return 0
 
