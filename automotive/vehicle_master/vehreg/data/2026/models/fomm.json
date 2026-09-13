@@ -50,6 +50,34 @@
               "price_note": "ยังไม่ได้ตรวจราคา",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "Standard",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:082"
+                ]
+              },
+              "aliases": [
+                "FOMM One Standard"
+              ],
+              "id": "standard_bev"
+            },
+            {
+              "name": "Premium Edition",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:082"
+                ]
+              },
+              "aliases": [
+                "FOMM One Premium Edition"
+              ],
+              "id": "premium_edition_bev"
+            }
           ]
         }
       ]

@@ -50,6 +50,38 @@
               "price_min_thb": 1199000,
               "price_max_thb": 1199000
             }
+          ],
+          "trims": [
+            {
+              "name": "Standard RWD (272 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:321"
+                ]
+              },
+              "id": "standard_rwd_272_hp_bev"
+            },
+            {
+              "name": "Long Range RWD (272 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:321"
+                ]
+              },
+              "id": "long_range_rwd_272_hp_bev"
+            },
+            {
+              "name": "Flagship AWD (Dual Motor, 428 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:321"
+                ]
+              },
+              "id": "flagship_awd_dual_motor_428_hp_bev"
+            }
           ]
         }
       ]
@@ -91,6 +123,28 @@
               "price_note": "seed-unverified",
               "price_min_thb": 3999000,
               "price_max_thb": 3999000
+            }
+          ],
+          "trims": [
+            {
+              "name": "009 Luxury 6-Seater AWD (Dual Motor, 603 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:320"
+                ]
+              },
+              "id": "009_luxury_6_seater_awd_dual_motor_603_hp_bev"
+            },
+            {
+              "name": "009 Grand 4-Seater VIP (Ultra-Luxury Rear Suite, 778 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:320"
+                ]
+              },
+              "id": "009_grand_4_seater_vip_ultra_luxury_rear_suite_778_hp_bev"
             }
           ]
         }

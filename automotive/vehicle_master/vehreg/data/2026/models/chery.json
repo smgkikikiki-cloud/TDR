@@ -52,6 +52,28 @@
               "price_min_thb": 989000,
               "price_max_thb": 989000
             }
+          ],
+          "trims": [
+            {
+              "name": "C5 EV Long Range Plus",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:064"
+                ]
+              },
+              "id": "c5_ev_long_range_plus_bev"
+            },
+            {
+              "name": "C5 EV Long Range Ultimate",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:064"
+                ]
+              },
+              "id": "c5_ev_long_range_ultimate_bev"
+            }
           ]
         }
       ]
@@ -104,6 +126,28 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "V23 Standard RWD",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:063"
+                ]
+              },
+              "id": "v23_standard_rwd_bev"
+            },
+            {
+              "name": "V23 4WD Dual Motor",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:063"
+                ]
+              },
+              "id": "v23_4wd_dual_motor_bev"
+            }
           ]
         }
       ]
@@ -144,6 +188,18 @@
               "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
               "price_min_thb": 1009000,
               "price_max_thb": 1009000
+            }
+          ],
+          "trims": [
+            {
+              "name": "Tiggo 8 Pro Plug-in Hybrid (1.5T DHT)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:065"
+                ]
+              },
+              "id": "tiggo_8_pro_plug_in_hybrid_1_5t_dht_phev"
             }
           ]
         }

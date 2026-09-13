@@ -62,6 +62,18 @@
               "price_min_thb": 3399000,
               "price_max_thb": 3399000
             }
+          ],
+          "trims": [
+            {
+              "name": "C 350 e AMG Dynamic (PHEV, 313 hp)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:188"
+                ]
+              },
+              "id": "c_350_e_amg_dynamic_phev_313_hp_phev"
+            }
           ]
         }
       ]
@@ -109,6 +121,38 @@
               "price_min_thb": 4290000,
               "price_max_thb": 4290000
             }
+          ],
+          "trims": [
+            {
+              "name": "E 300 e AMG Dynamic (W214 PHEV)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:189"
+                ]
+              },
+              "id": "e_300_e_amg_dynamic_w214_phev_phev"
+            },
+            {
+              "name": "E 350 e Exclusive / AMG Line (W213 PHEV)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:189"
+                ]
+              },
+              "id": "e_350_e_exclusive_amg_line_w213_phev_phev"
+            },
+            {
+              "name": "Mercedes-AMG E 53 Hybrid 4MATIC+",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:189"
+                ]
+              },
+              "id": "mercedes_amg_e_53_hybrid_4matic_plus_phev"
+            }
           ]
         }
       ]
@@ -151,6 +195,44 @@
               "price_note": "seed-unverified",
               "price_min_thb": 2590000,
               "price_max_thb": 2590000
+            }
+          ],
+          "trims": [
+            {
+              "name": "200 Progressive",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:191"
+                ]
+              },
+              "aliases": [
+                "GLA 200 Progressive"
+              ],
+              "id": "200_progressive_ice"
+            },
+            {
+              "name": "200 AMG Dynamic",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:191"
+                ]
+              },
+              "aliases": [
+                "GLA 200 AMG Dynamic"
+              ],
+              "id": "200_amg_dynamic_ice"
+            },
+            {
+              "name": "Mercedes-AMG GLA 35 4MATIC",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:191"
+                ]
+              },
+              "id": "mercedes_amg_gla_35_4matic_ice"
             }
           ]
         }
@@ -197,6 +279,34 @@
               "price_min_thb": 4290000,
               "price_max_thb": 4290000
             }
+          ],
+          "trims": [
+            {
+              "name": "350 e 4MATIC AMG Dynamic (PHEV)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:192"
+                ]
+              },
+              "aliases": [
+                "GLC 350 e 4MATIC AMG Dynamic (PHEV)"
+              ],
+              "id": "350_e_4matic_amg_dynamic_phev_phev"
+            },
+            {
+              "name": "300 e 4MATIC Coupe AMG Dynamic (PHEV)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:192"
+                ]
+              },
+              "aliases": [
+                "GLC 300 e 4MATIC Coupe AMG Dynamic (PHEV)"
+              ],
+              "id": "300_e_4matic_coupe_amg_dynamic_phev_phev"
+            }
           ]
         }
       ]
@@ -241,6 +351,57 @@
               "price_min_thb": 8090000,
               "price_max_thb": 8090000
             }
+          ],
+          "trims": [
+            {
+              "name": "450+ AMG Premium (Sedan)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:190"
+                ]
+              },
+              "aliases": [
+                "EQS 450+ AMG Premium (Sedan)"
+              ],
+              "id": "450_plus_amg_premium_sedan_bev"
+            },
+            {
+              "name": "500 4MATIC AMG Premium (Sedan)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:190"
+                ]
+              },
+              "aliases": [
+                "EQS 500 4MATIC AMG Premium (Sedan)"
+              ],
+              "id": "500_4matic_amg_premium_sedan_bev"
+            },
+            {
+              "name": "450 4MATIC SUV AMG Line",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:190"
+                ]
+              },
+              "aliases": [
+                "EQS 450 4MATIC SUV AMG Line"
+              ],
+              "id": "450_4matic_suv_amg_line_bev"
+            },
+            {
+              "name": "Mercedes-AMG EQS 53 4MATIC+",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:190"
+                ]
+              },
+              "id": "mercedes_amg_eqs_53_4matic_plus_bev"
+            }
           ]
         }
       ]
@@ -280,6 +441,48 @@
               "origin_country": "TH",
               "price_note": "seed-unverified",
               "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "A 200 Progressive",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:178"
+                ]
+              },
+              "id": "a_200_progressive_ice"
+            },
+            {
+              "name": "A 200 AMG Dynamic",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:178"
+                ]
+              },
+              "id": "a_200_amg_dynamic_ice"
+            },
+            {
+              "name": "Mercedes-AMG A 35 4MATIC",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:178"
+                ]
+              },
+              "id": "mercedes_amg_a_35_4matic_ice"
+            },
+            {
+              "name": "Mercedes-AMG A 45 S 4MATIC+",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:178"
+                ]
+              },
+              "id": "mercedes_amg_a_45_s_4matic_plus_ice"
             }
           ]
         }
@@ -321,6 +524,44 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "300 4MATIC Coupe AMG Dynamic",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:180"
+                ]
+              },
+              "aliases": [
+                "CLE 300 4MATIC Coupe AMG Dynamic"
+              ],
+              "id": "300_4matic_coupe_amg_dynamic_ice"
+            },
+            {
+              "name": "300 Cabriolet AMG Dynamic",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:180"
+                ]
+              },
+              "aliases": [
+                "CLE 300 Cabriolet AMG Dynamic"
+              ],
+              "id": "300_cabriolet_amg_dynamic_ice"
+            },
+            {
+              "name": "Mercedes-AMG CLE 53 4MATIC+ Coupe",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:180"
+                ]
+              },
+              "id": "mercedes_amg_cle_53_4matic_plus_coupe_ice"
+            }
           ]
         }
       ]
@@ -360,6 +601,31 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "300 d AMG Dynamic",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:181"
+                ]
+              },
+              "aliases": [
+                "CLS 300 d AMG Dynamic"
+              ],
+              "id": "300_d_amg_dynamic_ice"
+            },
+            {
+              "name": "Mercedes-AMG CLS 53 4MATIC+",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:181"
+                ]
+              },
+              "id": "mercedes_amg_cls_53_4matic_plus_ice"
+            }
           ]
         }
       ]
@@ -398,6 +664,44 @@
               "origin_country": "TH",
               "price_note": "seed-unverified",
               "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "200 Progressive",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:185"
+                ]
+              },
+              "aliases": [
+                "GLB 200 Progressive"
+              ],
+              "id": "200_progressive_ice"
+            },
+            {
+              "name": "200 AMG Dynamic",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:185"
+                ]
+              },
+              "aliases": [
+                "GLB 200 AMG Dynamic"
+              ],
+              "id": "200_amg_dynamic_ice"
+            },
+            {
+              "name": "Mercedes-AMG GLB 35 4MATIC",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:185"
+                ]
+              },
+              "id": "mercedes_amg_glb_35_4matic_ice"
             }
           ]
         }
@@ -440,7 +744,8 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
-          ]
+          ],
+          "trims": []
         }
       ]
     },
@@ -478,6 +783,31 @@
               "origin_country": "TH",
               "price_note": "seed-unverified",
               "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "450 d 4MATIC AMG Dynamic",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:187"
+                ]
+              },
+              "aliases": [
+                "GLS 450 d 4MATIC AMG Dynamic"
+              ],
+              "id": "450_d_4matic_amg_dynamic_ice"
+            },
+            {
+              "name": "Mercedes-Maybach GLS 600 4MATIC",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:187"
+                ]
+              },
+              "id": "mercedes_maybach_gls_600_4matic_ice"
             }
           ]
         }
@@ -523,6 +853,18 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "S 580 e AMG Dynamic (PHEV, 510 hp)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:193"
+                ]
+              },
+              "id": "s_580_e_amg_dynamic_phev_510_hp_phev"
+            }
           ]
         }
       ]
@@ -564,6 +906,57 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "350+ AMG Dynamic (Sedan)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:183"
+                ]
+              },
+              "aliases": [
+                "EQE 350+ AMG Dynamic (Sedan)"
+              ],
+              "id": "350_plus_amg_dynamic_sedan_bev"
+            },
+            {
+              "name": "350 4MATIC SUV Electric Art",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:183"
+                ]
+              },
+              "aliases": [
+                "EQE 350 4MATIC SUV Electric Art"
+              ],
+              "id": "350_4matic_suv_electric_art_bev"
+            },
+            {
+              "name": "350 4MATIC SUV AMG Line",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:183"
+                ]
+              },
+              "aliases": [
+                "EQE 350 4MATIC SUV AMG Line"
+              ],
+              "id": "350_4matic_suv_amg_line_bev"
+            },
+            {
+              "name": "Mercedes-AMG EQE 53 4MATIC+",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:183"
+                ]
+              },
+              "id": "mercedes_amg_eqe_53_4matic_plus_bev"
+            }
           ]
         }
       ]
@@ -602,6 +995,38 @@
               "origin_country": "TH",
               "price_note": "seed-unverified",
               "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "V 250 d Exclusive",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:195"
+                ]
+              },
+              "id": "v_250_d_exclusive_ice"
+            },
+            {
+              "name": "V 250 d Avantgarde",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:195"
+                ]
+              },
+              "id": "v_250_d_avantgarde_ice"
+            },
+            {
+              "name": "V 300 d Exclusive",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:195"
+                ]
+              },
+              "id": "v_300_d_exclusive_ice"
             }
           ]
         }
@@ -642,6 +1067,34 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "116 CDI Tourer",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:196"
+                ]
+              },
+              "aliases": [
+                "Vito 116 CDI Tourer"
+              ],
+              "id": "116_cdi_tourer_ice"
+            },
+            {
+              "name": "119 CDI Tourer",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:196"
+                ]
+              },
+              "aliases": [
+                "Vito 119 CDI Tourer"
+              ],
+              "id": "119_cdi_tourer_ice"
+            }
           ]
         }
       ]
@@ -681,6 +1134,47 @@
               "origin_country": "TH",
               "price_note": "seed-unverified",
               "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "319 CDI Panel Van",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:194"
+                ]
+              },
+              "aliases": [
+                "Sprinter 319 CDI Panel Van"
+              ],
+              "id": "319_cdi_panel_van_ice"
+            },
+            {
+              "name": "419 CDI Minibus",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:194"
+                ]
+              },
+              "aliases": [
+                "Sprinter 419 CDI Minibus"
+              ],
+              "id": "419_cdi_minibus_ice"
+            },
+            {
+              "name": "519 CDI Long Wheelbase",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:194"
+                ]
+              },
+              "aliases": [
+                "Sprinter 519 CDI Long Wheelbase"
+              ],
+              "id": "519_cdi_long_wheelbase_ice"
             }
           ]
         }
@@ -724,6 +1218,18 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "G 580 with EQ Technology (Electric G-Class Quad-Motor)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:184"
+                ]
+              },
+              "id": "g_580_with_eq_technology_electric_g_class_quad_motor_bev"
+            }
           ]
         }
       ]
@@ -764,6 +1270,54 @@
               "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
               "price_min_thb": 2290000,
               "price_max_thb": 2290000
+            }
+          ],
+          "trims": [
+            {
+              "name": "200 Urban",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:179"
+                ]
+              },
+              "aliases": [
+                "CLA 200 Urban"
+              ],
+              "id": "200_urban_ice"
+            },
+            {
+              "name": "250 AMG Dynamic",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:179"
+                ]
+              },
+              "aliases": [
+                "CLA 250 AMG Dynamic"
+              ],
+              "id": "250_amg_dynamic_ice"
+            },
+            {
+              "name": "Mercedes-AMG CLA 35 4MATIC",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:179"
+                ]
+              },
+              "id": "mercedes_amg_cla_35_4matic_ice"
+            },
+            {
+              "name": "Mercedes-AMG CLA 45 S 4MATIC+",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:179"
+                ]
+              },
+              "id": "mercedes_amg_cla_45_s_4matic_plus_ice"
             }
           ]
         }
@@ -808,6 +1362,18 @@
               "price_note": "ยังไม่ได้ตรวจราคา",
               "aliases": [],
               "incomplete": true
+            }
+          ],
+          "trims": [
+            {
+              "name": "EQB 250 AMG Line",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:182"
+                ]
+              },
+              "id": "eqb_250_amg_line_bev"
             }
           ]
         }

@@ -44,6 +44,38 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "GT (300 hp MHEV)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:163"
+                ]
+              },
+              "id": "gt_300_hp_mhev_ice"
+            },
+            {
+              "name": "Modena (330 hp MHEV)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:163"
+                ]
+              },
+              "id": "modena_330_hp_mhev_ice"
+            },
+            {
+              "name": "Folgore (BEV 105 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:163"
+                ]
+              },
+              "id": "folgore_bev_105_kwh_bev"
+            }
           ]
         }
       ]
@@ -82,6 +114,47 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "GT Hybrid (330 hp)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:164"
+                ]
+              },
+              "aliases": [
+                "Levante GT Hybrid (330 hp)"
+              ],
+              "id": "gt_hybrid_330_hp_ice"
+            },
+            {
+              "name": "Modena (430 hp)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:164"
+                ]
+              },
+              "aliases": [
+                "Levante Modena (430 hp)"
+              ],
+              "id": "modena_430_hp_ice"
+            },
+            {
+              "name": "Trofeo (580 hp V8)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:164"
+                ]
+              },
+              "aliases": [
+                "Levante Trofeo (580 hp V8)"
+              ],
+              "id": "trofeo_580_hp_v8_ice"
+            }
           ]
         }
       ]
@@ -119,6 +192,18 @@
               "origin_country": "UNKNOWN",
               "price_note": "seed-unverified",
               "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Folgore (BEV Tri-Motor, 761 hp, 92.5 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:162"
+                ]
+              },
+              "id": "folgore_bev_tri_motor_761_hp_92_5_kwh_bev"
             }
           ]
         }

@@ -134,6 +134,28 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "L07 Standard 540",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:072"
+                ]
+              },
+              "id": "l07_standard_540_bev"
+            },
+            {
+              "name": "L07 Plus 620",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:072"
+                ]
+              },
+              "id": "l07_plus_620_bev"
+            }
           ]
         }
       ]
@@ -172,7 +194,8 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
-          ]
+          ],
+          "trims": []
         }
       ]
     },
@@ -211,7 +234,8 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
-          ]
+          ],
+          "trims": []
         }
       ]
     }

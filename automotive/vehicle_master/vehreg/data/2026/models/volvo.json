@@ -50,6 +50,28 @@
               "price_min_thb": 2590000,
               "price_max_thb": 2590000
             }
+          ],
+          "trims": [
+            {
+              "name": "B4 Mild Hybrid Plus Dark (197 hp)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:311"
+                ]
+              },
+              "id": "b4_mild_hybrid_plus_dark_197_hp_ice"
+            },
+            {
+              "name": "B4 Mild Hybrid Ultimate Dark (197 hp)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:311"
+                ]
+              },
+              "id": "b4_mild_hybrid_ultimate_dark_197_hp_ice"
+            }
           ]
         }
       ]
@@ -91,6 +113,28 @@
               "price_note": "seed-unverified",
               "price_min_thb": 3390000,
               "price_max_thb": 3390000
+            }
+          ],
+          "trims": [
+            {
+              "name": "Recharge T8 Plug-in Hybrid Plus Dark",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:312"
+                ]
+              },
+              "id": "recharge_t8_plug_in_hybrid_plus_dark_phev"
+            },
+            {
+              "name": "Recharge T8 Plug-in Hybrid Ultimate Dark",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:312"
+                ]
+              },
+              "id": "recharge_t8_plug_in_hybrid_ultimate_dark_phev"
             }
           ]
         }
@@ -134,6 +178,28 @@
               "price_min_thb": 4990000,
               "price_max_thb": 4990000
             }
+          ],
+          "trims": [
+            {
+              "name": "Recharge T8 Plug-in Hybrid Plus Dark",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:313"
+                ]
+              },
+              "id": "recharge_t8_plug_in_hybrid_plus_dark_phev"
+            },
+            {
+              "name": "Recharge T8 Plug-in Hybrid Ultimate Dark",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:313"
+                ]
+              },
+              "id": "recharge_t8_plug_in_hybrid_ultimate_dark_phev"
+            }
           ]
         }
       ]
@@ -175,6 +241,38 @@
               "price_note": "seed-unverified",
               "price_min_thb": 1590000,
               "price_max_thb": 1590000
+            }
+          ],
+          "trims": [
+            {
+              "name": "Core Single Motor (51 kWh LFP)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:305"
+                ]
+              },
+              "id": "core_single_motor_51_kwh_lfp_bev"
+            },
+            {
+              "name": "Plus Single Motor Extended Range (69 kWh NMC)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:305"
+                ]
+              },
+              "id": "plus_single_motor_extended_range_69_kwh_nmc_bev"
+            },
+            {
+              "name": "Ultra Twin Motor Performance (69 kWh AWD, 428 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:305"
+                ]
+              },
+              "id": "ultra_twin_motor_performance_69_kwh_awd_428_hp_bev"
             }
           ]
         }
@@ -252,6 +350,47 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "Single Motor Extended Range (RWD, 252 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:304"
+                ]
+              },
+              "aliases": [
+                "EC40 Single Motor Extended Range (RWD, 252 hp)"
+              ],
+              "id": "single_motor_extended_range_rwd_252_hp_bev"
+            },
+            {
+              "name": "Twin Motor Performance (AWD, 408 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:304"
+                ]
+              },
+              "aliases": [
+                "EC40 Twin Motor Performance (AWD, 408 hp)"
+              ],
+              "id": "twin_motor_performance_awd_408_hp_bev"
+            },
+            {
+              "name": "Black Edition",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:304"
+                ]
+              },
+              "aliases": [
+                "EC40 Black Edition"
+              ],
+              "id": "black_edition_bev"
+            }
           ]
         }
       ]
@@ -289,6 +428,28 @@
               "origin_country": "TH",
               "price_note": "seed-unverified",
               "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Twin Motor AWD (408 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:307"
+                ]
+              },
+              "id": "twin_motor_awd_408_hp_bev"
+            },
+            {
+              "name": "Twin Motor Performance AWD (517 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:307"
+                ]
+              },
+              "id": "twin_motor_performance_awd_517_hp_bev"
             }
           ]
         }
@@ -328,6 +489,28 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "Recharge T8 Plug-in Hybrid Plus Dark",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:308"
+                ]
+              },
+              "id": "recharge_t8_plug_in_hybrid_plus_dark_phev"
+            },
+            {
+              "name": "Recharge T8 Plug-in Hybrid Ultimate Dark",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:308"
+                ]
+              },
+              "id": "recharge_t8_plug_in_hybrid_ultimate_dark_phev"
+            }
           ]
         }
       ]
@@ -366,6 +549,28 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "Recharge T8 Plug-in Hybrid Ultimate",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:309"
+                ]
+              },
+              "id": "recharge_t8_plug_in_hybrid_ultimate_phev"
+            },
+            {
+              "name": "Recharge T8 Plug-in Hybrid Inscription",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:309"
+                ]
+              },
+              "id": "recharge_t8_plug_in_hybrid_inscription_phev"
+            }
           ]
         }
       ]
@@ -403,6 +608,28 @@
               "origin_country": "TH",
               "price_note": "seed-unverified",
               "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Recharge T8 Plug-in Hybrid Plus Dark",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:310"
+                ]
+              },
+              "id": "recharge_t8_plug_in_hybrid_plus_dark_phev"
+            },
+            {
+              "name": "Recharge T8 Plug-in Hybrid Ultimate Dark",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:310"
+                ]
+              },
+              "id": "recharge_t8_plug_in_hybrid_ultimate_dark_phev"
             }
           ]
         }

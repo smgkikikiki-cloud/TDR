@@ -255,6 +255,28 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "Jaecoo 6 Long Range 2WD (RWD)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:129"
+                ]
+              },
+              "id": "jaecoo_6_long_range_2wd_rwd_bev"
+            },
+            {
+              "name": "Jaecoo 6 Long Range 4WD (AWD Dual Motor)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:129"
+                ]
+              },
+              "id": "jaecoo_6_long_range_4wd_awd_dual_motor_bev"
+            }
           ]
         }
       ]
@@ -374,6 +396,21 @@
               "origin_country": "CN",
               "price_note": "ยังไม่ได้ตรวจราคา",
               "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Long Range 4WD",
+              "powertrain": "REEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:131"
+                ]
+              },
+              "aliases": [
+                "Jaecoo 6T REEV Long Range 4WD"
+              ],
+              "id": "long_range_4wd_reev"
             }
           ]
         }

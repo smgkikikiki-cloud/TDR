@@ -46,6 +46,28 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "Standard Range (333 km)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:315"
+                ]
+              },
+              "id": "standard_range_333_km_bev"
+            },
+            {
+              "name": "Long Range (410 km)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:315"
+                ]
+              },
+              "id": "long_range_410_km_bev"
+            }
           ]
         }
       ],
@@ -84,6 +106,28 @@
               "origin_country": "TH",
               "price_note": "seed-unverified",
               "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Standard Range Lite (17.3 kWh, 200 km)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:314"
+                ]
+              },
+              "id": "standard_range_lite_17_3_kwh_200_km_bev"
+            },
+            {
+              "name": "Long Range (26.7 kWh, 300 km)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:314"
+                ]
+              },
+              "id": "long_range_26_7_kwh_300_km_bev"
             }
           ]
         }
@@ -127,6 +171,28 @@
               "price_min_thb": 869000,
               "price_max_thb": 869000
             }
+          ],
+          "trims": [
+            {
+              "name": "Darion EV Cargo Van",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:316"
+                ]
+              },
+              "id": "darion_ev_cargo_van_bev"
+            },
+            {
+              "name": "Darion EV Passenger Minibus",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:316"
+                ]
+              },
+              "id": "darion_ev_passenger_minibus_bev"
+            }
           ]
         }
       ],
@@ -169,6 +235,28 @@
               "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
               "price_min_thb": 629000,
               "price_max_thb": 629000
+            }
+          ],
+          "trims": [
+            {
+              "name": "Porta EV Standard Box",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:317"
+                ]
+              },
+              "id": "porta_ev_standard_box_bev"
+            },
+            {
+              "name": "Porta EV Flatbed Carrier",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:317"
+                ]
+              },
+              "id": "porta_ev_flatbed_carrier_bev"
             }
           ]
         }

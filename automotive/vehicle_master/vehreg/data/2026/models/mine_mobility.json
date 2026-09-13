@@ -45,6 +45,34 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "Taxi EV",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:215"
+                ]
+              },
+              "aliases": [
+                "MINE MTS Taxi EV"
+              ],
+              "id": "taxi_ev_bev"
+            },
+            {
+              "name": "Passenger EV",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:215"
+                ]
+              },
+              "aliases": [
+                "MINE MTS Passenger EV"
+              ],
+              "id": "passenger_ev_bev"
+            }
           ]
         }
       ]
