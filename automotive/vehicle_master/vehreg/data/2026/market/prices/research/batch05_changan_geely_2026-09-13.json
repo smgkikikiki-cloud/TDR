@@ -1,0 +1,290 @@
+{
+  "schema_version": 1,
+  "batch_id": "source-first-05-changan-geely",
+  "researched_at": "2026-09-13",
+  "policy": {
+    "source_order": ["autolifethailand", "headlightmag", "third_source_only_if_needed"],
+    "do_not_force_missing": true,
+    "temporary_promotions_do_not_replace_msrp": true
+  },
+  "requested_models": 30,
+  "results": [
+    {
+      "model_id": "changan.changan_lumin",
+      "model": "Changan Lumin",
+      "canonical": "repaired",
+      "market_trim": "authored",
+      "price_ledger": "historical_window",
+      "open_issue": "Latest September 2026 list price not established; February 2026 published window retained.",
+      "source_refs": ["https://autolifethailand.tv/official-price-changan-lumin-dc-ev-bev-feb-2026/"]
+    },
+    {
+      "model_id": "changan.nevo_q05",
+      "model": "Changan Nevo Q05",
+      "canonical": "repaired",
+      "market_trim": "authored",
+      "price_ledger": "list_price",
+      "open_issue": null,
+      "source_refs": ["https://autolifethailand.tv/changan-nevo-q05-unofficial-price-thailand/", "https://www.headlightmag.com/official-price-changan-nevo-q05/"]
+    },
+    {
+      "model_id": "chery.chery_v23",
+      "model": "Chery V23",
+      "canonical": "repaired",
+      "market_trim": "authored",
+      "price_ledger": "list_price",
+      "open_issue": null,
+      "source_refs": ["https://autolifethailand.tv/official-price-chery-v23-limited-edition-pop-purple/", "https://www.headlightmag.com/official-price-chery-v23/"]
+    },
+    {
+      "model_id": "chery.omoda_c5",
+      "model": "Omoda C5",
+      "canonical": "checked",
+      "market_trim": "not_authored",
+      "price_ledger": "not_appended",
+      "open_issue": "AutoLife/Headlight headline and article-price semantics conflict; no price was forced.",
+      "source_refs": ["https://autolifethailand.tv/official-price-omoda-c5-ev-bev-jan-2026/", "https://www.headlightmag.com/official-price-omoda-c5-ev-my-2025/"]
+    },
+    {
+      "model_id": "chery.tiggo8",
+      "model": "Chery Tiggo 8",
+      "canonical": "repaired",
+      "market_trim": "authored",
+      "price_ledger": "historical_window",
+      "open_issue": "Latest September 2026 list price not established; April 2026 normal-price window retained.",
+      "source_refs": ["https://autolifethailand.tv/official-price-chery-tiggo-8-csh-phev-apr-2026/", "https://www.headlightmag.com/official-price-chery-tiggo-8-csh-phev/"]
+    },
+    {
+      "model_id": "chevrolet.captiva",
+      "model": "Captiva",
+      "canonical": "legacy_row_preserved",
+      "market_trim": "not_authored",
+      "price_ledger": "not_appended",
+      "open_issue": "Only historical Thai retail evidence found; model is no longer a current retail product.",
+      "source_refs": ["https://www.headlightmag.com/official-price-chevrolet-captiva-turbo/"]
+    },
+    {
+      "model_id": "chevrolet.colorado_c_cab",
+      "model": "Colorado C-Cab",
+      "canonical": "legacy_row_preserved",
+      "market_trim": "not_authored",
+      "price_ledger": "not_appended",
+      "open_issue": "Only historical multi-grade Colorado evidence found; no current retail price was inferred.",
+      "source_refs": ["https://www.headlightmag.com/full-review-2017-chevrolet-colorado/"]
+    },
+    {
+      "model_id": "chevrolet.colorado_x_cab",
+      "model": "Colorado X-Cab",
+      "canonical": "legacy_row_preserved",
+      "market_trim": "not_authored",
+      "price_ledger": "not_appended",
+      "open_issue": "Only historical multi-grade Colorado evidence found; no current retail price was inferred.",
+      "source_refs": ["https://www.headlightmag.com/full-review-2017-chevrolet-colorado/"]
+    },
+    {
+      "model_id": "daihatsu.hijet",
+      "model": "Hijet",
+      "canonical": "checked",
+      "market_trim": "not_authored",
+      "price_ledger": "not_appended",
+      "open_issue": "No qualifying AutoLifeThailand or Headlightmag Thai retail-price source found.",
+      "source_refs": []
+    },
+    {
+      "model_id": "deepal.deepal_e07",
+      "model": "Deepal E07",
+      "canonical": "repaired",
+      "market_trim": "authored",
+      "price_ledger": "list_price_and_campaign",
+      "open_issue": null,
+      "source_refs": ["https://autolifethailand.tv/official-price-changan-deepal-e07-thailand-jan2025/", "https://autolifethailand.tv/official-price-deepal-e07-ev-bev-feb2026/"]
+    },
+    {
+      "model_id": "deepal.deepal_hunter_k50",
+      "model": "Deepal Hunter K50",
+      "canonical": "repaired",
+      "market_trim": "authored",
+      "price_ledger": "list_price",
+      "open_issue": null,
+      "source_refs": ["https://autolifethailand.tv/official-price-deepal-hunter-k50-reev-awd-oct-2025/", "https://www.headlightmag.com/official-price-deepal-hunter-k50-reev-awd/"]
+    },
+    {
+      "model_id": "deepal.deepal_l07",
+      "model": "Deepal L07",
+      "canonical": "repaired",
+      "market_trim": "authored",
+      "price_ledger": "list_price",
+      "open_issue": null,
+      "source_refs": ["https://autolifethailand.tv/official-price-changan-deepal-l07-s/", "https://www.headlightmag.com/2024-03-25-official-price-deepal-l07-s/"]
+    },
+    {
+      "model_id": "deepal.deepal_s05",
+      "model": "Deepal S05",
+      "canonical": "repaired",
+      "market_trim": "authored",
+      "price_ledger": "list_price",
+      "open_issue": "A later Long Range article was not used to overwrite these grades where price semantics were not clean enough.",
+      "source_refs": ["https://autolifethailand.tv/official-price-changan-deepal-s05-bev-ev-reev-thailand/"]
+    },
+    {
+      "model_id": "deepal.deepal_s07",
+      "model": "Deepal S07",
+      "canonical": "repaired",
+      "market_trim": "authored",
+      "price_ledger": "list_price",
+      "open_issue": null,
+      "source_refs": ["https://autolifethailand.tv/official-price-deepal-s07-my2025/"]
+    },
+    {
+      "model_id": "denza.denza_d9",
+      "model": "Denza D9",
+      "canonical": "repaired",
+      "market_trim": "authored",
+      "price_ledger": "historical_window",
+      "open_issue": "Latest September 2026 list price not established; January 2026 published window retained.",
+      "source_refs": ["https://autolifethailand.tv/official-price-denza-d9-premium-performance-jan-2026/", "https://www.headlightmag.com/official-price-denza-d9/"]
+    },
+    {
+      "model_id": "farizon.farizon_sv",
+      "model": "Farizon SV",
+      "canonical": "checked",
+      "market_trim": "not_authored",
+      "price_ledger": "not_appended",
+      "open_issue": "No qualifying AutoLifeThailand or Headlightmag Thai retail-price source found.",
+      "source_refs": []
+    },
+    {
+      "model_id": "ferrari.12cilindri",
+      "model": "12Cilindri",
+      "canonical": "repaired",
+      "market_trim": "authored",
+      "price_ledger": "list_price",
+      "open_issue": null,
+      "source_refs": ["https://autolifethailand.tv/official-price-ferrari-12cilindri-spider-thailand/"]
+    },
+    {
+      "model_id": "ferrari.296",
+      "model": "296",
+      "canonical": "checked",
+      "market_trim": "not_authored_in_batch",
+      "price_ledger": "not_appended",
+      "open_issue": "Available evidence is older; no fresh current-retail row was promoted in this batch.",
+      "source_refs": ["https://autolifethailand.tv/official-price-ferrari-296-gts-plug-in-hybrid/", "https://www.headlightmag.com/2022-09-06-price-ferrari-296-gts-v6-phev-rht/"]
+    },
+    {
+      "model_id": "ferrari.f8",
+      "model": "F8",
+      "canonical": "checked",
+      "market_trim": "not_authored_in_batch",
+      "price_ledger": "not_appended",
+      "open_issue": "Only historical evidence found; current retail lifecycle not asserted.",
+      "source_refs": ["https://www.headlightmag.com/photo-short-review-ferrari-f8-spider-2020/"]
+    },
+    {
+      "model_id": "ferrari.roma",
+      "model": "Roma",
+      "canonical": "checked",
+      "market_trim": "not_authored_in_batch",
+      "price_ledger": "not_appended",
+      "open_issue": "Older list-price evidence exists, but no fresh current-retail row was promoted in this batch.",
+      "source_refs": ["https://www.headlightmag.com/2023-06-27-official-price-ferrari-roma-spider-thailand/"]
+    },
+    {
+      "model_id": "ferrari.sf90",
+      "model": "SF90",
+      "canonical": "checked",
+      "market_trim": "not_authored_in_batch",
+      "price_ledger": "not_appended",
+      "open_issue": "Older list-price evidence exists, but no fresh current-retail row was promoted in this batch.",
+      "source_refs": ["https://www.headlightmag.com/official-price-ferrari-sf90-stradale-thailand/"]
+    },
+    {
+      "model_id": "fomm.fomm_one",
+      "model": "FOMM One",
+      "canonical": "repaired",
+      "market_trim": "not_authored",
+      "price_ledger": "not_appended",
+      "open_issue": "No qualifying AutoLifeThailand or Headlightmag current Thai list-price source found.",
+      "source_refs": []
+    },
+    {
+      "model_id": "ford.everest",
+      "model": "Everest",
+      "canonical": "repaired",
+      "market_trim": "authored",
+      "price_ledger": "current_list_price",
+      "open_issue": null,
+      "source_refs": ["https://autolifethailand.tv/official-price-ford-everest-my2026-thailand/"]
+    },
+    {
+      "model_id": "ford.mustang",
+      "model": "Mustang",
+      "canonical": "checked",
+      "market_trim": "not_authored_in_batch",
+      "price_ledger": "not_appended",
+      "open_issue": "Search results were dominated by older-generation pricing; current S650 Thai list price was not established cleanly.",
+      "source_refs": ["https://www.headlightmag.com/official-price-ford-mustang-ecoboost-v8/"]
+    },
+    {
+      "model_id": "ford.ranger_cab",
+      "model": "Ranger Cab",
+      "canonical": "checked",
+      "market_trim": "not_authored_in_batch",
+      "price_ledger": "not_appended",
+      "open_issue": "Available source sets mix Standard/Open Cab grades; exact current trim-to-price mapping remains unresolved.",
+      "source_refs": ["https://autolifethailand.tv/official-price-ford-ranger-opencab/", "https://www.headlightmag.com/2022-05-15-official-price-ford-ranger-xl-and-xl-plus/"]
+    },
+    {
+      "model_id": "ford.ranger_double_cab",
+      "model": "Ranger Double Cab",
+      "canonical": "repaired_preserving_existing_eco_trims",
+      "market_trim": "existing_plus_authored",
+      "price_ledger": "current_list_price",
+      "open_issue": "Only grades with clean current source mapping were priced; other existing ECO-derived trims remain unpriced rather than guessed.",
+      "source_refs": ["https://autolifethailand.tv/photo-official-price-ford-ranger-wildtrak-x-v6-diesel/", "https://autolifethailand.tv/official-price-ford-ranger-super-duty-double-cab-thailand/"]
+    },
+    {
+      "model_id": "foton.foton_truck",
+      "model": "Foton Truck",
+      "canonical": "checked",
+      "market_trim": "not_authored",
+      "price_ledger": "not_appended",
+      "open_issue": "No qualifying AutoLifeThailand or Headlightmag Thai retail-price source found.",
+      "source_refs": []
+    },
+    {
+      "model_id": "gac.gac_m8",
+      "model": "GAC M8 / GN8",
+      "canonical": "repaired_for_gn8_rename",
+      "market_trim": "authored",
+      "price_ledger": "current_list_price",
+      "open_issue": null,
+      "source_refs": ["https://autolifethailand.tv/official-price-gac-gn8-phev-mpv-thailand/"]
+    },
+    {
+      "model_id": "geely.geely_ex2",
+      "model": "Geely EX2",
+      "canonical": "repaired",
+      "market_trim": "authored",
+      "price_ledger": "historical_window",
+      "open_issue": "Latest September 2026 list price not established; January 2026 normal-price window retained.",
+      "source_refs": ["https://autolifethailand.tv/official-price-geely-ex2-ev-bev-jan-2026/", "https://www.headlightmag.com/official-price-geely-ex2/"]
+    },
+    {
+      "model_id": "geely.geely_ex5",
+      "model": "Geely EX5",
+      "canonical": "repaired",
+      "market_trim": "authored",
+      "price_ledger": "historical_window",
+      "open_issue": "Latest September 2026 list price not established; May 2026 normal-price window retained.",
+      "source_refs": ["https://autolifethailand.tv/official-price-geely-ex5-may-2026/", "https://www.headlightmag.com/official-price-geely-ex5-my2026/"]
+    }
+  ],
+  "summary": {
+    "rows": 30,
+    "models_with_price_rows": 16,
+    "models_with_no_price_appended": 14,
+    "campaigns_added": 1,
+    "forced_prices": 0
+  }
+}

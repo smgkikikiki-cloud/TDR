@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "campaigns": [
+    {
+      "id": "deepal_e07_feb_2026_discount",
+      "brand_id": "deepal",
+      "name": "Deepal E07 February 2026 discount",
+      "starts": "2026-02-01",
+      "ends": "2026-02-28",
+      "source": "AutoLifeThailand",
+      "source_ref": "https://autolifethailand.tv/official-price-deepal-e07-ev-bev-feb2026/",
+      "options": [
+        {
+          "id": "cash_discount",
+          "label": "Published discounted cash price",
+          "starts": "2026-02-01",
+          "ends": "2026-02-28",
+          "status": "ACTIVE",
+          "conditions": {
+            "booking_from": "2026-02-01",
+            "booking_to": "2026-02-28",
+            "text": "ราคาหลังหักส่วนลดตามบทความ AutoLifeThailand"
+          },
+          "notes": "Historical campaign window; the calendar controls availability."
+        }
+      ],
+      "notes": "Campaign prices remain separate from the 1,699,000 / 2,099,000 normal list references."
+    }
+  ]
+}
