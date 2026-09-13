@@ -21,7 +21,7 @@ jobs:
           python-version: '3.12'
 
       - name: Apply owner trim directory
-        run: python automotive/vehicle_master/tools/apply_owner_trim_directory_v2.py
+        run: python automotive/vehicle_master/tools/apply_owner_trim_directory_v3.py
 
       - name: Validate Vehicle Master
         working-directory: automotive/vehicle_master
