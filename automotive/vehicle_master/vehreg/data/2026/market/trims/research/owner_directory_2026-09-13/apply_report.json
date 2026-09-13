@@ -3,9 +3,9 @@
   "source_record_count": 321,
   "canonical_model_count": 321,
   "matched_models": 321,
-  "changed_models": 305,
+  "changed_models": 298,
   "changed_files": 61,
-  "trims_added": 885,
+  "trims_added": 830,
   "existing_trim_refs_added": 2,
   "existing_trim_matches_unchanged": 0,
   "skipped_trims": 153,
@@ -19,9 +19,37 @@
   "variant_powertrain_mismatch_count": 57,
   "notes": [
     "All 321 source nameplates matched one canonical model.",
-    "885 source-backed MarketTrim rows were promoted with exact powertrain identity and stable explicit IDs.",
     "152 trim rows were left unpromoted because the supplied row/trim text did not resolve one exact powertrain.",
     "1 concept/future-production row was intentionally not promoted.",
-    "57 promoted trims disagree with the pre-existing analytical Variant powertrain set; those Variant rows were not rewritten by this import and require separate canonical review."
-  ]
+    "57 promoted trims disagree with the pre-existing analytical Variant powertrain set; those Variant rows were not rewritten by this import and require separate canonical review.",
+    "830 source-backed MarketTrim rows remain after respecting existing repository guard tests.",
+    "22 protected model surfaces were restored exactly to main rather than weakening existing tests."
+  ],
+  "initial_trims_added": 885,
+  "ci_guard_reverted_models": [
+    "aion.aion_v",
+    "byd.atto3",
+    "byd.sealion6",
+    "deepal.deepal_s05",
+    "deepal.deepal_s07",
+    "geely.geely_ex5",
+    "gwm.haval_h6",
+    "honda.crv",
+    "hyundai.ioniq5",
+    "jaecoo.jaecoo_5_ev",
+    "jaecoo.jaecoo_6t_ev",
+    "jaecoo.jaecoo_7",
+    "kia.ev6",
+    "mazda.cx30",
+    "mg.mg_hs",
+    "mg.mg_s5_ev",
+    "nissan.x_trail",
+    "subaru.forester",
+    "suzuki.fronx",
+    "toyota.bz4x",
+    "toyota.corolla_cross",
+    "volvo.ex40"
+  ],
+  "ci_guard_reverted_model_count": 22,
+  "ci_guard_reverted_trim_delta": 55
 }

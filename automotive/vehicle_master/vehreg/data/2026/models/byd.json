@@ -52,47 +52,6 @@
               "price_min_thb": 899000,
               "price_max_thb": 899000
             }
-          ],
-          "trims": [
-            {
-              "name": "Standard Range Dynamic (49.92 kWh)",
-              "powertrain": "BEV",
-              "source_refs": {
-                "owner_directory": [
-                  "owner_directory_2026_09_13:050"
-                ]
-              },
-              "aliases": [
-                "Atto 3 Standard Range Dynamic (49.92 kWh)"
-              ],
-              "id": "standard_range_dynamic_49_92_kwh_bev"
-            },
-            {
-              "name": "Standard Range Premium (49.92 kWh)",
-              "powertrain": "BEV",
-              "source_refs": {
-                "owner_directory": [
-                  "owner_directory_2026_09_13:050"
-                ]
-              },
-              "aliases": [
-                "Atto 3 Standard Range Premium (49.92 kWh)"
-              ],
-              "id": "standard_range_premium_49_92_kwh_bev"
-            },
-            {
-              "name": "Extended Range Premium (60.48 kWh)",
-              "powertrain": "BEV",
-              "source_refs": {
-                "owner_directory": [
-                  "owner_directory_2026_09_13:050"
-                ]
-              },
-              "aliases": [
-                "Atto 3 Extended Range Premium (60.48 kWh)"
-              ],
-              "id": "extended_range_premium_60_48_kwh_bev"
-            }
           ]
         }
       ],
@@ -318,28 +277,6 @@
               "price_note": "seed-unverified",
               "price_min_thb": 899000,
               "price_max_thb": 899000
-            }
-          ],
-          "trims": [
-            {
-              "name": "Dynamic DM-i (FWD, 218 hp)",
-              "powertrain": "PHEV",
-              "source_refs": {
-                "owner_directory": [
-                  "owner_directory_2026_09_13:058"
-                ]
-              },
-              "id": "dynamic_dm_i_fwd_218_hp_phev"
-            },
-            {
-              "name": "Premium DM-i (AWD Dual Motor, 324 hp)",
-              "powertrain": "PHEV",
-              "source_refs": {
-                "owner_directory": [
-                  "owner_directory_2026_09_13:058"
-                ]
-              },
-              "id": "premium_dm_i_awd_dual_motor_324_hp_phev"
             }
           ]
         }
