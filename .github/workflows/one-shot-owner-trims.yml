@@ -6,7 +6,7 @@ on:
       - data/apply-owner-trims-2026-09-13
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   apply:
@@ -29,15 +29,16 @@ jobs:
           python -m compileall -q vehreg
           python -m vehreg market validate
 
-      - name: Commit generated canonical trims and report
+      - name: Show generated diff summary
         run: |
-          if git diff --quiet -- automotive/vehicle_master/vehreg/data/2026/models automotive/vehicle_master/vehreg/data/2026/market/trims/research/owner_directory_2026-09-13/apply_report.json; then
-            echo "No generated changes"
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add automotive/vehicle_master/vehreg/data/2026/models
-          git add automotive/vehicle_master/vehreg/data/2026/market/trims/research/owner_directory_2026-09-13/apply_report.json
-          git commit -m "Apply owner directory trims to canonical models"
-          git push origin HEAD:data/apply-owner-trims-2026-09-13
+          git diff --stat -- automotive/vehicle_master/vehreg/data/2026/models automotive/vehicle_master/vehreg/data/2026/market/trims/research/owner_directory_2026-09-13/apply_report.json
+
+      - name: Upload generated canonical files
+        uses: actions/upload-artifact@v4
+        with:
+          name: owner-trim-generated-files
+          path: |
+            automotive/vehicle_master/vehreg/data/2026/models
+            automotive/vehicle_master/vehreg/data/2026/market/trims/research/owner_directory_2026-09-13/apply_report.json
+          if-no-files-found: error
+          retention-days: 1
