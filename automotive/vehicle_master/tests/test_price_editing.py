@@ -28,6 +28,30 @@ class EditingTests(unittest.TestCase):
     def setUp(self):
         self.root = Path(self.enterContext(TemporaryDirectory()))
         shutil.copytree(DATA_DIR / "2026", self.root / "2026")
+
+        # This suite exercises price-editing behaviour with a controlled fixture.
+        # Production data may legitimately gain a LIST_PRICE for TRIM over time,
+        # so remove any pre-existing list rows for that trim before inserting the
+        # test row. Keep ECO/campaign evidence and every unrelated price intact.
+        for path in (self.root / "2026/market/prices").glob("*.json"):
+            payload = json.loads(path.read_text(encoding="utf-8"))
+            rows = payload.get("prices")
+            if not isinstance(rows, list):
+                continue
+            filtered = [
+                row for row in rows
+                if not (
+                    row.get("trim_id") == TRIM
+                    and row.get("price_type") == "LIST_PRICE"
+                )
+            ]
+            if len(filtered) != len(rows):
+                payload["prices"] = filtered
+                path.write_text(
+                    json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+                    encoding="utf-8",
+                )
+
         append_prices(self.root, 2026, {"prices": [{
             "trim_id": TRIM, "amount_thb": 700_000, "price_type": "LIST_PRICE",
             "effective_from": "2026-09-01", "observed_at": "2026-09-01",
