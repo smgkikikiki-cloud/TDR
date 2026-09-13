@@ -1,0 +1,43 @@
+name: One-shot owner trim directory apply
+
+on:
+  push:
+    branches:
+      - data/apply-owner-trims-2026-09-13
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Apply owner trim directory
+        run: python automotive/vehicle_master/tools/apply_owner_trim_directory.py
+
+      - name: Validate Vehicle Master
+        working-directory: automotive/vehicle_master
+        run: |
+          python -m compileall -q vehreg
+          python -m vehreg market validate
+
+      - name: Commit generated canonical trims and report
+        run: |
+          if git diff --quiet -- automotive/vehicle_master/vehreg/data/2026/models automotive/vehicle_master/vehreg/data/2026/market/trims/research/owner_directory_2026-09-13/apply_report.json; then
+            echo "No generated changes"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add automotive/vehicle_master/vehreg/data/2026/models
+          git add automotive/vehicle_master/vehreg/data/2026/market/trims/research/owner_directory_2026-09-13/apply_report.json
+          git commit -m "Apply owner directory trims to canonical models"
+          git push origin HEAD:data/apply-owner-trims-2026-09-13
