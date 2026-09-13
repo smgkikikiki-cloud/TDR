@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "source": {
+    "title": "Thailand Automotive Market: Master Vehicle Directory",
+    "provided_file": "Thailand Automotive Nameplates & Sub-Models Directory.pdf",
+    "ingested_on": "2026-09-13",
+    "declared_nameplate_count": 321,
+    "declared_brand_count": "50+",
+    "declared_scope": ["ICE", "HEV", "PHEV", "BEV", "Commercial"],
+    "declared_primary_market": "Thailand & ASEAN Region",
+    "declared_verification_status": "100% Complete",
+    "source_semantics": "Faithful normalized extraction of the owner-provided directory. This file is research evidence / trim-name candidate input; it does not by itself assert CURRENT Thailand retail lifecycle."
+  },
+  "counts": {"nameplates": 321, "submodels_trims": 1040},
+  "chunks": [
+    {"file":"records_001_030.json","source_index_start":1,"source_index_end":30,"record_count":30,"trim_count":102},
+    {"file":"records_031_060.json","source_index_start":31,"source_index_end":60,"record_count":30,"trim_count":76},
+    {"file":"records_061_090.json","source_index_start":61,"source_index_end":90,"record_count":30,"trim_count":99},
+    {"file":"records_091_120.json","source_index_start":91,"source_index_end":120,"record_count":30,"trim_count":89},
+    {"file":"records_121_150.json","source_index_start":121,"source_index_end":150,"record_count":30,"trim_count":106},
+    {"file":"records_151_180.json","source_index_start":151,"source_index_end":180,"record_count":30,"trim_count":109},
+    {"file":"records_181_210.json","source_index_start":181,"source_index_end":210,"record_count":30,"trim_count":83},
+    {"file":"records_211_240.json","source_index_start":211,"source_index_end":240,"record_count":30,"trim_count":108},
+    {"file":"records_241_270.json","source_index_start":241,"source_index_end":270,"record_count":30,"trim_count":107},
+    {"file":"records_271_300.json","source_index_start":271,"source_index_end":300,"record_count":30,"trim_count":110},
+    {"file":"records_301_321.json","source_index_start":301,"source_index_end":321,"record_count":21,"trim_count":51}
+  ]
+}
