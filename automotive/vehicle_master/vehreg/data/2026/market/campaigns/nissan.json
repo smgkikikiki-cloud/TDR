@@ -1,0 +1,30 @@
+{
+  "campaigns": [
+    {
+      "id": "campaign.nissan.kicks_launch_2026",
+      "brand_id": "nissan",
+      "name": "NEW Nissan Kicks e-POWER launch price 2026",
+      "starts": "2026-03-23",
+      "ends": "2026-06-30",
+      "source": "headlightmag",
+      "source_ref": "https://www.headlightmag.com/official-price-nissan-kicks-e-power-minorchange-2026/",
+      "notes": "Launch prices were initially tied to booking by 30 April and delivery by 31 May 2026. Headlightmag subsequently records the special-price period as extended through 30 June 2026. The normal list prices are stored separately and begin 1 July 2026.",
+      "options": [
+        {
+          "id": "launch_price",
+          "label": "ราคาพิเศษช่วงเปิดตัว",
+          "starts": "2026-03-23",
+          "ends": "2026-06-30",
+          "status": "SUPERSEDED",
+          "closed_at": "2026-06-30",
+          "notes": "Closed historical launch promotion; never used as the current normal list price.",
+          "conditions": {
+            "booking_to": "2026-06-30",
+            "finance_required": false,
+            "text": "Headlightmag states the launch-price period was extended through 30 June 2026; the original announcement required booking by 30 April and delivery by 31 May."
+          }
+        }
+      ]
+    }
+  ]
+}
