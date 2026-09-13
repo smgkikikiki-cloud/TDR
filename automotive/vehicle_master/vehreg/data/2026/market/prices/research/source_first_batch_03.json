@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "batch": "source-first-03",
+  "as_of": "2026-09-13",
+  "strategy": "AutoLifeThailand first; if no usable Thai-model result, Headlightmag fallback once; if still no usable Thai price, skip. No third-source resolution in this pass.",
+  "models": [
+    {
+      "model": "Audi RS",
+      "source_status": "AUTOLIFE",
+      "source_ref": "https://autolifethailand.tv/official-price-audi-rs-5-sedan-sportback-thailand/",
+      "observed": ["RS 5 Sportback 6,799,000", "RS 5 Avant 6,999,000"],
+      "disposition": "BLOCKED_IDENTITY",
+      "notes": "Canonical Audi RS is an aggregate sedan/ICE row covering several unrelated RS nameplates. Current RS 5 is V6 2.9 PHEV and also sold as Avant. Do not attach trims to this parent."
+    },
+    {
+      "model": "Audi TT",
+      "source_status": "AUTOLIFE",
+      "source_ref": "https://autolifethailand.tv/official-price-audi-tt-coupe-my2023/",
+      "observed": ["TT Coupe 45 TFSI quattro S-Line Final Icon Black 3,599,000"],
+      "disposition": "BLOCKED_LIFECYCLE",
+      "notes": "Article explicitly says final 200 units before global production ended. Candidate for historical last-normal-price only after canonical lifecycle is closed."
+    },
+    {
+      "model": "Avatr 07",
+      "source_status": "AUTOLIFE",
+      "source_ref": "https://autolifethailand.tv/official-price-avatr-07-ev-bev-thailand/",
+      "observed": ["Max RWD 1,659,000", "Ultra AWD 1,859,000", "82.16 kWh BEV"],
+      "disposition": "BLOCKED_IDENTITY_LIGHT",
+      "notes": "Source is sufficient to repair the parent: canonical row is still UNKNOWN/unsplit. Repair Variant identity first, then MarketTrim can be authored without another source."
+    },
+    {
+      "model": "Avatr 11",
+      "source_status": "AUTOLIFE",
+      "source_ref": "https://autolifethailand.tv/official-price-avatr-11-ev-bev-nov-2024/",
+      "observed": ["Standard Range 2,099,000", "Long Range 2,299,000", "116 kWh BEV"],
+      "disposition": "BLOCKED_IDENTITY",
+      "notes": "Canonical analytical row says 90.4 kWh AWD; current Thai source says 116 kWh lineup. Earlier 1,999,000/2,199,000 figures were limited 200-car promotion and are not MSRP."
+    },
+    {
+      "model": "Bentley Bentayga",
+      "source_status": "HEADLIGHTMAG_FALLBACK",
+      "source_ref": "https://www.headlightmag.com/2023-10-19-official-price-bentley-bentayga-a-my2024/",
+      "observed": ["Bentayga A Hybrid from 14,600,000", "Bentayga A V8 from 19,100,000", "Bentayga EWB A V8 from 21,300,000"],
+      "disposition": "BLOCKED_IDENTITY",
+      "notes": "Canonical body_type is SEDAN and one PHEV variant cannot represent Hybrid/V8/EWB. Parent must be repaired before retail trims."
+    },
+    {
+      "model": "Bentley Flying Spur",
+      "source_status": "HEADLIGHTMAG_FALLBACK",
+      "source_ref": "https://www.headlightmag.com/official-price-bentley-flying-spur-minorchange-2026/",
+      "observed": ["Flying Spur S from 18,100,000; scheduled from September 2026"],
+      "disposition": "BLOCKED_IDENTITY",
+      "notes": "Current 2026 source is usable, but canonical powertrain specification is stale versus the minorchange. Repair parent spec before trim authoring."
+    },
+    {
+      "model": "BMW 2 Series Gran Coupe",
+      "source_status": "AUTOLIFE",
+      "source_ref": "https://autolifethailand.tv/official-price-bmw-220-gran-coupe-f74/",
+      "observed": ["220 Gran Coupe M Sport Pro F74 2,199,000"],
+      "disposition": "BLOCKED_IDENTITY",
+      "notes": "Current source is F74 while canonical parent is a generic gen1 seed. Generation/spec identity needs replacement before MarketTrim."
+    },
+    {
+      "model": "BMW 3 Series",
+      "source_status": "HEADLIGHTMAG_FALLBACK",
+      "source_ref": "https://www.headlightmag.com/2023-02-28-official-price-bmw-320li-330li-m-sport-lci-thailand/",
+      "observed": ["320Li M Sport LCI 2,759,000", "330Li M Sport LCI 3,099,000"],
+      "disposition": "BLOCKED_IDENTITY",
+      "notes": "Canonical G20 parent folds G20/G28 and multiple petrol/diesel/PHEV grades together. Fallback result is G28 Gran Sedan; do not attach it to G20 blindly."
+    },
+    {
+      "model": "BMW 4 Series",
+      "source_status": "HEADLIGHTMAG_FALLBACK",
+      "source_ref": "https://www.headlightmag.com/official-price-bmw-4-series-coupe-lci-2025/",
+      "observed": ["420i Coupe M Sport 3,599,000", "430i Coupe M Sport 4,099,000", "M440i xDrive 5,299,000"],
+      "disposition": "BLOCKED_IDENTITY",
+      "notes": "Canonical parent has one generic 2.0 ICE AWD line; current grades include different engines/drivetrains. Split analytical identity first."
+    },
+    {
+      "model": "BMW 5 Series",
+      "source_status": "HEADLIGHTMAG_FALLBACK",
+      "source_ref": "https://www.headlightmag.com/2024-02-27-official-price-bmw-520d-m-sport-g60/",
+      "observed": ["520d M Sport Pro 3,799,000", "530e M Sport Pro 3,969,000"],
+      "disposition": "BLOCKED_IDENTITY_LIGHT",
+      "notes": "G60 parent exists, but canonical 530e battery is 19.4 kWh while source specifies 22.1 kWh. Repair exact parent spec, then these two grades can be authored."
+    },
+    {
+      "model": "BMW 7 Series",
+      "source_status": "HEADLIGHTMAG_FALLBACK",
+      "source_ref": "https://www.headlightmag.com/bmw-price-including-bsi-package-year-2025/",
+      "observed": ["740d M Sport 6,739,000", "750e xDrive M Sport 7,059,000", "M760e xDrive 7,419,000"],
+      "disposition": "READY_FOR_TRIM_REVIEW",
+      "notes": "Latest fallback source found in this pass gives 2025 adjusted list prices. Parent powertrain split is broadly compatible; one trim-level identity review remains before write."
+    },
+    {
+      "model": "BMW i3",
+      "source_status": "NOT_FOUND",
+      "source_ref": null,
+      "observed": [],
+      "disposition": "SKIP",
+      "notes": "No usable Thai official-price article found in AutoLife, then Headlightmag. Search stopped by batch rule."
+    },
+    {
+      "model": "BMW i4",
+      "source_status": "AUTOLIFE",
+      "source_ref": "https://autolifethailand.tv/offcial-price-bmw-i4-edrive35-m50-2023/",
+      "observed": ["i4 eDrive35 M Sport 3,899,000", "i4 M50 5,259,000", "eDrive40 discontinued"],
+      "disposition": "BLOCKED_IDENTITY",
+      "notes": "Canonical has only an 83.9 kWh RWD line; source has eDrive35 70.2 kWh RWD and M50 83.9 kWh AWD. Parent split required."
+    },
+    {
+      "model": "BMW i5",
+      "source_status": "AUTOLIFE",
+      "source_ref": "https://autolifethailand.tv/official-price-bmw-i5-edrive40-m-sport-th-ckd/",
+      "observed": ["i5 eDrive40 M Sport 3,499,000 CKD Thailand"],
+      "disposition": "BLOCKED_IDENTITY",
+      "notes": "Current eDrive40 is not compatible with canonical generic AWD seed. Repair drivetrain/import identity before MarketTrim."
+    },
+    {
+      "model": "BMW i7",
+      "source_status": "AUTOLIFE",
+      "source_ref": "https://autolifethailand.tv/official-price-bmw-i7-ev-bev-thailand/",
+      "observed": ["i7 xDrive60 First Edition 7,599,000", "i7 xDrive60 M Sport 7,849,000", "Gran Lusso 8,599,000"],
+      "disposition": "SOURCE_FOUND_STALE",
+      "notes": "Usable Thai price article found, but it is 2022 launch data. Under source-first rule no third source is fetched; do not assert it as latest 2026 retail price."
+    },
+    {
+      "model": "BMW i8",
+      "source_status": "HEADLIGHTMAG_FALLBACK",
+      "source_ref": "https://www.headlightmag.com/official-price-bmw-i8-roadster-12999000/",
+      "observed": ["i8 Roadster 12,999,000"],
+      "disposition": "READY_HISTORICAL_AFTER_LIFECYCLE",
+      "notes": "2018 last-price evidence is suitable for historical use, not current retail. Canonical lifecycle must be closed first."
+    },
+    {
+      "model": "BMW iX",
+      "source_status": "AUTOLIFE",
+      "source_ref": "https://autolifethailand.tv/official-price-bmw-ix-lci-ix-xdrive45-m-sport-thailand/",
+      "observed": ["iX xDrive45 M Sport 5,999,000 CBU Germany"],
+      "disposition": "BLOCKED_IDENTITY",
+      "notes": "Current LCI xDrive45 does not match canonical 111.5 kWh/CKD seed derived from older xDrive50 configuration."
+    },
+    {
+      "model": "BMW iX1",
+      "source_status": "AUTOLIFE",
+      "source_ref": "https://autolifethailand.tv/official-price-bmw-ix1-l-edrive20-msport-u11-bev-thailand/",
+      "observed": ["iX1 eDrive20L M Sport 2,499,000 CBU China"],
+      "disposition": "BLOCKED_IDENTITY",
+      "notes": "Current Thai car is long-wheelbase eDrive20L; canonical seed says AWD/CKD Thailand. Do not map."
+    },
+    {
+      "model": "BMW iX2",
+      "source_status": "AUTOLIFE",
+      "source_ref": "https://autolifethailand.tv/official-price-bmw-ix2-ev-bev-thailand/",
+      "observed": ["iX2 xDrive30 3,399,000", "64.7 kWh AWD"],
+      "disposition": "BLOCKED_IDENTITY_LIGHT",
+      "notes": "Canonical parent is explicitly incomplete with missing battery. AutoLife source supplies the missing exact identity; repair parent then author trim."
+    },
+    {
+      "model": "BMW iX3",
+      "source_status": "AUTOLIFE",
+      "source_ref": "https://autolifethailand.tv/official-price-bmw-ix3-neue-klasse-ev-bev-thailand/",
+      "observed": ["iX3 50 xDrive NA5 3,599,000 CBU Europe"],
+      "disposition": "BLOCKED_GENERATION",
+      "notes": "Canonical is old G08 RWD 80 kWh/CBU China. Current 2026 car is all-new NA5 Neue Klasse AWD. Must create/replace generation before retail trim authoring."
+    }
+  ]
+}
