@@ -15,13 +15,14 @@
       "name_en": "Bentayga",
       "name_th": "Bentayga",
       "nameplate": "",
-      "body_type": "SEDAN",
+      "body_type": "CROSSOVER",
       "cab_type": "NOT_APPLICABLE",
       "registration_type": "",
       "market_scope": "NICHE",
       "aliases": [
         "Bentayga"
       ],
+      "notes": "2026 canonical repair: corrected body type and split Thai-market Hybrid/V8 analytical powertrains. Retail prices belong in PriceLedger.",
       "generations": [
         {
           "code": "gen1",
@@ -31,22 +32,42 @@
           "ended": null,
           "variants": [
             {
-              "name": "spec",
+              "name": "3.0L PHEV AWD",
               "powertrain": "PHEV",
               "drivetrain": "AWD",
-              "engine_cc": 3996,
-              "battery_kwh": 18.0,
-              "price_thb": 25000000.0,
+              "engine_cc": 2984,
+              "battery_kwh": 17.3,
+              "price_thb": null,
               "price_min_thb": null,
               "price_max_thb": null,
               "import_type": "CBU",
-              "origin_country": "UNKNOWN",
-              "price_note": "seed-unverified",
-              "aliases": []
+              "origin_country": "GB",
+              "price_note": "retail price lives in PriceLedger",
+              "aliases": [
+                "Bentayga A Hybrid"
+              ]
+            },
+            {
+              "name": "4.0L V8 ICE AWD",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "engine_cc": 3996,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "GB",
+              "price_note": "retail price lives in PriceLedger",
+              "aliases": [
+                "Bentayga A V8",
+                "Bentayga EWB A V8"
+              ]
             }
           ]
         }
-      ]
+      ],
+      "powertrain_checked": true
     },
     {
       "id": "flying_spur",
@@ -60,6 +81,7 @@
       "aliases": [
         "Flying Spur"
       ],
+      "notes": "2026 canonical repair: current minorchange High Performance Hybrid powertrain. Retail price lives in PriceLedger.",
       "generations": [
         {
           "code": "gen1",
@@ -69,22 +91,25 @@
           "ended": null,
           "variants": [
             {
-              "name": "spec",
+              "name": "4.0L V8 PHEV AWD",
               "powertrain": "PHEV",
               "drivetrain": "AWD",
               "engine_cc": 3996,
-              "battery_kwh": 18.0,
-              "price_thb": 25000000.0,
+              "battery_kwh": 25.9,
+              "price_thb": null,
               "price_min_thb": null,
               "price_max_thb": null,
               "import_type": "CBU",
-              "origin_country": "UNKNOWN",
-              "price_note": "seed-unverified",
-              "aliases": []
+              "origin_country": "GB",
+              "price_note": "retail price lives in PriceLedger",
+              "aliases": [
+                "Flying Spur S"
+              ]
             }
           ]
         }
-      ]
+      ],
+      "powertrain_checked": true
     }
   ]
 }
