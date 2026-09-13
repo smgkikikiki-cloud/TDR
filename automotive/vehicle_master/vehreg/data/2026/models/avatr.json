@@ -23,6 +23,7 @@
         "avatr 11",
         "11"
       ],
+      "notes": "Thai retail analytical variants repaired from AutoLifeThailand source-first audit 2026-09-13. Retail prices belong in PriceLedger, not Variant.price_thb.",
       "generations": [
         {
           "code": "gen1",
@@ -32,27 +33,46 @@
           "ended": null,
           "variants": [
             {
-              "name": "90 kWh BEV",
+              "name": "90 kWh BEV RWD",
               "powertrain": "BEV",
-              "drivetrain": "AWD",
+              "drivetrain": "RWD",
               "engine_cc": null,
-              "battery_kwh": 90.4,
-              "price_thb": 2599000.0,
+              "battery_kwh": 90.0,
+              "price_thb": null,
               "price_min_thb": null,
               "price_max_thb": null,
               "import_type": "CBU",
               "origin_country": "CN",
-              "price_note": "seed-unverified",
-              "aliases": []
+              "price_note": "retail price lives in PriceLedger",
+              "aliases": [
+                "Standard Range"
+              ]
+            },
+            {
+              "name": "116 kWh BEV RWD",
+              "powertrain": "BEV",
+              "drivetrain": "RWD",
+              "engine_cc": null,
+              "battery_kwh": 116.0,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "retail price lives in PriceLedger",
+              "aliases": [
+                "Long Range"
+              ]
             }
           ]
         }
-      ]
+      ],
+      "powertrain_checked": true
     },
     {
       "id": "avatr_07",
       "name_en": "Avatr 07",
-      "name_th": "",
+      "name_th": "อาวาตาร์ 07",
       "nameplate": "",
       "body_type": "CROSSOVER",
       "cab_type": "NOT_APPLICABLE",
@@ -61,34 +81,53 @@
       "aliases": [
         "avatr 07"
       ],
-      "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
+      "notes": "Thai retail analytical variants repaired from AutoLifeThailand source-first audit 2026-09-13. Retail prices belong in PriceLedger.",
       "generations": [
         {
           "code": "AVATR_07",
           "segment": "UNKNOWN",
-          "seats": null,
+          "seats": 5,
           "launched": "2026-04-01",
           "ended": null,
           "variants": [
             {
-              "name": "ยังไม่แยกรุ่นย่อย",
-              "powertrain": "UNKNOWN",
-              "drivetrain": "",
+              "name": "82.16 kWh BEV RWD",
+              "powertrain": "BEV",
+              "drivetrain": "RWD",
               "engine_cc": null,
-              "battery_kwh": null,
-              "aliases": [],
+              "battery_kwh": 82.16,
+              "aliases": [
+                "Max RWD"
+              ],
               "overrides": {},
-              "price_thb": 1759000,
-              "import_type": "",
-              "origin_country": "",
-              "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
-              "price_min_thb": 1759000,
-              "price_max_thb": 1759000
+              "price_thb": null,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "retail price lives in PriceLedger",
+              "price_min_thb": null,
+              "price_max_thb": null
+            },
+            {
+              "name": "82.16 kWh BEV AWD",
+              "powertrain": "BEV",
+              "drivetrain": "AWD",
+              "engine_cc": null,
+              "battery_kwh": 82.16,
+              "aliases": [
+                "Ultra AWD"
+              ],
+              "overrides": {},
+              "price_thb": null,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "retail price lives in PriceLedger",
+              "price_min_thb": null,
+              "price_max_thb": null
             }
           ]
         }
       ],
-      "incomplete": true
+      "powertrain_checked": true
     }
   ]
 }
