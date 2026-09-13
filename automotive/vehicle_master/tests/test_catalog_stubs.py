@@ -1,9 +1,9 @@
-"""The 2026 models added as stubs, and the shape a stub has to keep.
+"""The 2026 models first added from DLT-only evidence, and their alias guards.
 
-These exist because the failure they guard against is silent: an alias removed
-or an id renamed does not break anything, it just quietly sends a few thousand
-registrations a month back to the review queue and drops the model out of every
-ranking.
+Some of these rows begin life as declared-incomplete stubs, then become normal
+canonical models once research fills their specification.  The DLT label must
+keep resolving in either state; finishing a stub must not require weakening the
+alias regression tests or pretending the row is still incomplete forever.
 """
 
 from __future__ import annotations
@@ -15,7 +15,7 @@ from vehreg.ingest import Resolver
 from vehreg.db import connect, rebuild_dimension
 
 #: raw DLT label -> the model id it must reach. Every one of these was sitting
-#: in review before the stub was added.
+#: in review before the stub/alias was added.
 LABELS = {
     ("BYD", "BYD ATTO 2 PREMIUM"): "atto2",
     # Atto 1 is Dolphin Mini renamed, confirmed by the owner: an alias on
@@ -36,7 +36,9 @@ LABELS = {
     ("HONDA", "e:N2"): "en2",
 }
 
-STUB_IDS = sorted(set(LABELS.values()) - {"seagull"})
+#: These ids were introduced through the stub/alias workflow.  The name is
+#: intentionally historical: individual rows may now be fully researched.
+SOURCE_MODEL_IDS = sorted(set(LABELS.values()) - {"seagull"})
 
 
 @pytest.fixture(scope="module")
@@ -46,8 +48,14 @@ def catalog():
     return cat
 
 
-class TestTheStubsExist:
-    @pytest.mark.parametrize("model_id", STUB_IDS)
+def _source_models(catalog):
+    wanted = set(SOURCE_MODEL_IDS)
+    return [(key, model) for key, model in catalog.models.items()
+            if key.split(".", 1)[1] in wanted]
+
+
+class TestTheSourceRowsExist:
+    @pytest.mark.parametrize("model_id", SOURCE_MODEL_IDS)
     def test_the_model_is_in_the_2026_catalog(self, catalog, model_id):
         # Catalog keys are "<brand>.<model>".
         assert any(key.split(".", 1)[1] == model_id for key in catalog.models)
@@ -73,21 +81,27 @@ class TestTheLabelsStillReach:
         assert model_id in unit_id, f"{brand} {model} -> {unit_id}"
 
 
-class TestAStubStaysHonest:
-    """A stub says what DLT said and nothing else. If someone fills a price in,
-    they must drop the marker with it."""
+class TestHistoricallyStubbedRowsStayHonest:
+    """A still-incomplete row says what DLT said and nothing else.
 
-    @pytest.mark.parametrize("model_id", STUB_IDS)
-    def test_no_price_is_claimed_without_dropping_the_marker(self, catalog, model_id):
-        for variant in catalog.variants.values():
-            if variant.id.split(".")[1] != model_id:
+    Once research completes a row, the same test file keeps guarding its alias
+    without requiring the obsolete ``incomplete`` marker to remain forever.
+    """
+
+    def test_no_price_is_claimed_on_a_declared_hole_without_evidence(self, catalog):
+        for key, model in _source_models(catalog):
+            if not model.incomplete:
                 continue
-            if variant.price_thb is not None:
-                assert variant.price_note != "not-researched", (
-                    f"{model_id} has a price but is still marked not-researched")
+            model_id = key.split(".", 1)[1]
+            for variant in catalog.variants.values():
+                if variant.id.split(".")[1] != model_id:
+                    continue
+                if variant.price_thb is not None:
+                    assert variant.price_note != "not-researched", (
+                        f"{model_id} has a price but is still marked not-researched")
 
-    @pytest.mark.parametrize("model_id", STUB_IDS)
-    def test_a_stub_carries_at_least_one_alias(self, catalog, model_id):
+    @pytest.mark.parametrize("model_id", SOURCE_MODEL_IDS)
+    def test_a_source_row_keeps_at_least_one_alias(self, catalog, model_id):
         # The alias is the whole mechanism: without it the DLT label finds
         # nothing and the volume goes straight back to review.
         model = next(m for key, m in catalog.models.items()
@@ -106,10 +120,13 @@ class TestDeclaredIncompleteness:
             cat.build_indexes()
             assert cat.validate() == [], f"{year} has unexplained problems"
 
-    def test_the_stubs_are_reported_as_holes_rather_than_hidden(self, catalog):
+    def test_only_rows_still_marked_incomplete_are_reported_as_holes(self, catalog):
         reported = catalog.incomplete_models()
-        for model_id in STUB_IDS:
-            assert any(model_id in line for line in reported), model_id
+        for key, model in _source_models(catalog):
+            model_id = key.split(".", 1)[1]
+            present = any(model_id in line for line in reported)
+            assert present is model.incomplete, (
+                f"{model_id}: incomplete={model.incomplete}, report={present}")
 
     def test_dolphin_mini_is_finished_and_not_reported(self, catalog):
         # It has a price and a body type, so it is not a hole even though the
@@ -127,15 +144,20 @@ class TestDeclaredIncompleteness:
                         if k.split(".", 1)[1] == "atto3")
         assert finished.incomplete is False
 
-    def test_the_marker_survives_a_save_round_trip(self, catalog):
-        payload = catalog.brand_payload("byd")
-        stub = next(m for m in payload["models"] if m["id"] == "atto2")
+    def test_an_incomplete_marker_survives_a_save_round_trip(self, catalog):
+        # Pick a source-row that is *currently* incomplete instead of freezing
+        # this test to ATTO 2 forever. Research is expected to finish stubs.
+        key, model = next((key, model) for key, model in _source_models(catalog)
+                          if model.incomplete)
+        brand_id, model_id = key.split(".", 1)
+        payload = catalog.brand_payload(brand_id)
+        stub = next(m for m in payload["models"] if m["id"] == model_id)
         assert stub.get("incomplete") is True
 
         rebuilt = Catalog(catalog.year)
         rebuilt.add_brand_payload(payload)
         rebuilt.build_indexes()
-        assert rebuilt.models["byd.atto2"].incomplete is True
+        assert rebuilt.models[key].incomplete is True
         assert rebuilt.validate() == []
 
 
