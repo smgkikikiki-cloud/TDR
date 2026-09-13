@@ -48,7 +48,6 @@ def strip_prefix(text: str, prefix: str) -> str:
     if p and t == p:
         return ""
     if p and t.startswith(p + " "):
-        # Preserve original spelling by removing the same number of normalized words.
         words = text.strip().split()
         pwords = prefix.strip().split()
         if len(words) > len(pwords):
@@ -84,9 +83,9 @@ def model_keys(brand: dict[str, Any], model: dict[str, Any]) -> set[str]:
 def infer_powertrains(text: str) -> set[str]:
     """Return only powertrains explicitly supported by the text.
 
-    This intentionally prefers omission to clever inference. MHEV is ICE in the
-    canonical taxonomy. Plug-in/REEV markers suppress the generic Hybrid/EV
-    substrings they contain.
+    MHEV is ICE in the canonical taxonomy. Plug-in/REEV markers suppress the
+    generic Hybrid/EV substrings they contain. This parser is deliberately
+    conservative because an unresolved trim is safer than a wrong identity.
     """
     raw = text or ""
     n = norm(raw)
@@ -96,7 +95,15 @@ def infer_powertrains(text: str) -> set[str]:
         out.add("FCEV")
     if re.search(r"\b(reev|erev)\b", n) or "range extender" in n:
         out.add("REEV")
-    if re.search(r"\bphev\b", n) or "plug in hybrid" in n or "plug-in hybrid" in raw.lower():
+    if (
+        re.search(r"\bphev\b", n)
+        or "plug in hybrid" in n
+        or re.search(r"\btfsi e\b", n)
+        or re.search(r"\bxdrive\d+e\b", n)
+        or re.search(r"\b\d{2,3}e\b", n)
+        or re.search(r"\bdm i\b", n)
+        or re.search(r"\bcsh\b", n)
+    ):
         out.add("PHEV")
     if re.search(r"\bbev\b", n) or re.search(r"\belectric\b", n):
         out.add("BEV")
@@ -118,8 +125,6 @@ def infer_powertrains(text: str) -> set[str]:
     if re.search(r"\b(diesel|petrol|gasoline|tdi|tsi|tfsi|ecoboost|turbo diesel)\b", n):
         out.add("ICE")
 
-    # An engine-only displacement description is enough for ICE only when no
-    # electrified marker is present.
     if not (out & {"HEV", "PHEV", "REEV", "BEV", "FCEV"}) and re.search(
         r"\b\d(?:\.\d+)?\s*l\b", raw.lower()
     ):
@@ -143,9 +148,6 @@ def canonical_trim_name(raw_trim: str, source_nameplate: str, model_name: str) -
     if candidate == raw_trim:
         candidate = strip_prefix(raw_trim, model_name)
     candidate = candidate.strip()
-    # Do not create a meaningless one-token result after stripping a generic
-    # aggregate name such as Audi RS -> "3 Sportback ..." unless it still looks
-    # like a grade. In that case keep the exact source string.
     if not candidate or len(norm(candidate)) < 2:
         candidate = raw_trim.strip()
     aliases = [] if norm(candidate) == norm(raw_trim) else [raw_trim.strip()]
@@ -163,8 +165,6 @@ def classify_model_match(
     if len(direct) == 1:
         return direct[0], "EXACT_NAME", 1.0
 
-    # A brand-prefixed source name can still match a canonical key once the
-    # first brand words are removed. Try suffix equality against unique keys.
     suffix_candidates: set[int] = set()
     for key, indexes in key_index.items():
         if key and (source_key.endswith(" " + key) or key.endswith(" " + source_key)):
@@ -174,10 +174,8 @@ def classify_model_match(
         idx = next(iter(suffix_candidates))
         return idx, "UNIQUE_SUFFIX", 0.95
 
-    # The supplied directory has the same declared count/order as the canonical
-    # catalogue. Order is only a fallback and is accepted when the names remain
-    # strongly similar; a shifted list therefore fails closed instead of silently
-    # attaching the wrong trims.
+    # Order is only a fallback. It is accepted only with strong name similarity,
+    # so one missing/extra source row cannot shift every subsequent attachment.
     if aligned_idx is not None and 0 <= aligned_idx < len(canonical):
         item = canonical[aligned_idx]
         best = max(
@@ -203,27 +201,31 @@ def resolve_trim_powertrain(
     trim_pts = infer_powertrains(raw_trim)
     source_pts = infer_powertrains(source_powertrain_text)
 
-    if allowed:
-        trim_allowed = trim_pts & allowed
-        if len(trim_allowed) == 1:
-            return next(iter(trim_allowed)), None
-        if trim_pts and not trim_allowed:
+    # Per-trim evidence wins. More than one explicit powertrain in the same trim
+    # string is not collapsed by the canonical variant set.
+    if len(trim_pts) == 1:
+        pt = next(iter(trim_pts))
+        if allowed and pt not in allowed:
             return None, "POWERTRAIN_CONFLICT"
-
-        source_allowed = source_pts & allowed
-        if len(source_allowed) == 1:
-            return next(iter(source_allowed)), None
-        if source_pts and not source_allowed:
-            return None, "POWERTRAIN_CONFLICT"
-
-        if len(allowed) == 1:
-            return next(iter(allowed)), None
+        return pt, None
+    if len(trim_pts) > 1:
         return None, "AMBIGUOUS_POWERTRAIN"
 
-    if len(trim_pts) == 1:
-        return next(iter(trim_pts)), None
+    # A source row describing a single powertrain is safe for all its trims.
     if len(source_pts) == 1:
-        return next(iter(source_pts)), None
+        pt = next(iter(source_pts))
+        if allowed and pt not in allowed:
+            return None, "POWERTRAIN_CONFLICT"
+        return pt, None
+
+    # Mixed source rows stay mixed unless the trim itself disambiguates them.
+    if len(source_pts) > 1:
+        return None, "AMBIGUOUS_POWERTRAIN"
+
+    # If the directory omitted powertrain wording entirely, one exact canonical
+    # analytical powertrain can supply the identity without guessing.
+    if len(allowed) == 1:
+        return next(iter(allowed)), None
     return None, "AMBIGUOUS_POWERTRAIN"
 
 
@@ -419,7 +421,6 @@ def main() -> int:
     report["changed_models"] = len(changed_model_ids)
     report["changed_files"] = len(changed_paths)
 
-    # Deterministic report; no timestamps so the one-shot workflow is idempotent.
     REPORT_PATH.write_text(
         json.dumps(report, ensure_ascii=False, indent=2, sort_keys=False) + "\n",
         encoding="utf-8",
