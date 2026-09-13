@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "batch": "batch01_existing_trims",
+  "observed_at": "2026-09-13",
+  "resolved_models": [
+    "jaecoo.jaecoo_5_ev",
+    "mazda.mazda2",
+    "mitsubishi.triton_double_cab",
+    "nissan.almera",
+    "nissan.kicks",
+    "suzuki.fronx",
+    "toyota.alphard",
+    "toyota.hilux_revo_double_cab",
+    "toyota.vellfire"
+  ],
+  "unresolved": [
+    {
+      "model_id": "ford.ranger_double_cab",
+      "status": "BLOCKED_MARKET_TRIM_IDENTITY",
+      "reason": "The current Thai Ranger Double Cab lineup is verifiable, but existing canonical MarketTrim identities do not cleanly represent the whole current lineup. In particular the current XL+ is 2.0 Turbo 10AT while the attached XL+ trim is 6MT, and Super Duty identity is not explicit. Do not attach current prices to near-match historical/registration trims.",
+      "source_refs": [
+        "https://www.ford.co.th/showroom/future-vehicle/next-gen-ranger/models/",
+        "https://www.headlightmag.com/tag/ford-ranger/"
+      ],
+      "next_action": "Author exact current MarketTrim identities for the current Thai grades, then append price rows. Keep historical trims separate."
+    },
+    {
+      "model_id": "isuzu.dmax_cab",
+      "status": "BLOCKED_TRIM_REPARENTING",
+      "reason": "Canonical model cab_type is SINGLE_SMART, but attached MarketTrims include Cab 4 / double-cab grades as well as Spark grades. Pricing them in place would publish correct prices against the wrong canonical model identity.",
+      "source_refs": [
+        "https://www.isuzu-tis.com/isuzu-d-max/",
+        "https://www.headlightmag.com/tag/isuzu-d-max/"
+      ],
+      "next_action": "Review and reparent/split MarketTrim identities between D-Max Cab and D-Max Double Cab before price publication."
+    },
+    {
+      "model_id": "jaecoo.jaecoo_5_ev",
+      "status": "PROMOTION_UNRESOLVED_ONLY",
+      "reason": "Normal MSRP is resolved separately. Recent sources quote multiple special prices for MAX+ and ULTRA with different event/date contexts, so no open-ended campaign price is published without a fully verified campaign window.",
+      "source_refs": [
+        "https://www.omodajaecoo.co.th/en",
+        "https://autolifethailand.tv/"
+      ],
+      "next_action": "Resolve each promotion by booking/delivery dates and conditions before adding CAMPAIGN_PRICE rows."
+    }
+  ]
+}
