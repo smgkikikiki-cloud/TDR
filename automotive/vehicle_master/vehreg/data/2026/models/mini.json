@@ -49,6 +49,34 @@
               "price_min_thb": 2299000,
               "price_max_thb": 2299000
             }
+          ],
+          "trims": [
+            {
+              "name": "E (BEV 3-Door)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:219"
+                ]
+              },
+              "aliases": [
+                "Cooper E (BEV 3-Door)"
+              ],
+              "id": "e_bev_3_door_bev"
+            },
+            {
+              "name": "SE (BEV 3-Door, 218 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:219"
+                ]
+              },
+              "aliases": [
+                "Cooper SE (BEV 3-Door, 218 hp)"
+              ],
+              "id": "se_bev_3_door_218_hp_bev"
+            }
           ]
         }
       ]
@@ -94,6 +122,21 @@
               "price_min_thb": 2799000,
               "price_max_thb": 2799000
             }
+          ],
+          "trims": [
+            {
+              "name": "SE ALL4 (BEV 313 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:217"
+                ]
+              },
+              "aliases": [
+                "Countryman SE ALL4 (BEV 313 hp)"
+              ],
+              "id": "se_all4_bev_313_hp_bev"
+            }
           ]
         }
       ]
@@ -132,6 +175,34 @@
               "origin_country": "CN",
               "price_note": "seed-unverified",
               "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "E Classic (184 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:216"
+                ]
+              },
+              "aliases": [
+                "Aceman E Classic (184 hp)"
+              ],
+              "id": "e_classic_184_hp_bev"
+            },
+            {
+              "name": "SE Favoured (218 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:216"
+                ]
+              },
+              "aliases": [
+                "Aceman SE Favoured (218 hp)"
+              ],
+              "id": "se_favoured_218_hp_bev"
             }
           ]
         }
@@ -172,6 +243,18 @@
               "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
               "price_min_thb": 2069000,
               "price_max_thb": 2069000
+            }
+          ],
+          "trims": [
+            {
+              "name": "John Cooper Works Electric",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:218"
+                ]
+              },
+              "id": "john_cooper_works_electric_bev"
             }
           ]
         }

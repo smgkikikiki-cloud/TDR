@@ -43,6 +43,47 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "90 (3-Door: S, SE, X-Dynamic HSE, V8)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:143"
+                ]
+              },
+              "aliases": [
+                "Defender 90 (3-Door: S, SE, X-Dynamic HSE, V8)"
+              ],
+              "id": "90_3_door_s_se_x_dynamic_hse_v8_ice"
+            },
+            {
+              "name": "110 (5-Door: S, SE, HSE, X-Dynamic, X, V8)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:143"
+                ]
+              },
+              "aliases": [
+                "Defender 110 (5-Door: S, SE, HSE, X-Dynamic, X, V8)"
+              ],
+              "id": "110_5_door_s_se_hse_x_dynamic_x_v8_ice"
+            },
+            {
+              "name": "130 (8-Seater: First Edition, Outbound)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:143"
+                ]
+              },
+              "aliases": [
+                "Defender 130 (8-Seater: First Edition, Outbound)"
+              ],
+              "id": "130_8_seater_first_edition_outbound_ice"
+            }
           ]
         }
       ]
@@ -81,7 +122,8 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
-          ]
+          ],
+          "trims": []
         }
       ]
     },
@@ -122,7 +164,8 @@
               "aliases": [],
               "incomplete": true
             }
-          ]
+          ],
+          "trims": []
         }
       ]
     },
@@ -164,7 +207,8 @@
               "aliases": [],
               "incomplete": true
             }
-          ]
+          ],
+          "trims": []
         }
       ]
     }

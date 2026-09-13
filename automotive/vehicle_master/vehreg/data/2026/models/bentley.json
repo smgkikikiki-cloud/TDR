@@ -44,6 +44,21 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "Hybrid / Azure Hybrid",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:025"
+                ]
+              },
+              "aliases": [
+                "Bentayga Hybrid / Azure Hybrid"
+              ],
+              "id": "hybrid_azure_hybrid_phev"
+            }
           ]
         }
       ]
@@ -82,7 +97,8 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
-          ]
+          ],
+          "trims": []
         }
       ]
     }

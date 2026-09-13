@@ -52,6 +52,47 @@
               "price_min_thb": 949000,
               "price_max_thb": 949000
             }
+          ],
+          "trims": [
+            {
+              "name": "410 Premium",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:004"
+                ]
+              },
+              "aliases": [
+                "Aion Y Plus 410 Premium"
+              ],
+              "id": "410_premium_bev"
+            },
+            {
+              "name": "490 Elite",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:004"
+                ]
+              },
+              "aliases": [
+                "Aion Y Plus 490 Elite"
+              ],
+              "id": "490_elite_bev"
+            },
+            {
+              "name": "490 Premium",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:004"
+                ]
+              },
+              "aliases": [
+                "Aion Y Plus 490 Premium"
+              ],
+              "id": "490_premium_bev"
+            }
           ]
         }
       ],
@@ -95,6 +136,34 @@
               "price_min_thb": 699000,
               "price_max_thb": 699000
             }
+          ],
+          "trims": [
+            {
+              "name": "Standard (Fleet / Taxi EV)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:001"
+                ]
+              },
+              "aliases": [
+                "Aion ES Standard (Fleet / Taxi EV)"
+              ],
+              "id": "standard_fleet_taxi_ev_bev"
+            },
+            {
+              "name": "Comfort / Private Use",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:001"
+                ]
+              },
+              "aliases": [
+                "Aion ES Comfort / Private Use"
+              ],
+              "id": "comfort_private_use_bev"
+            }
           ]
         }
       ],
@@ -137,6 +206,47 @@
               "price_note": "seed-unverified",
               "price_min_thb": 1199000,
               "price_max_thb": 1199000
+            }
+          ],
+          "trims": [
+            {
+              "name": "520 Luxury",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:003"
+                ]
+              },
+              "aliases": [
+                "Aion V 520 Luxury"
+              ],
+              "id": "520_luxury_bev"
+            },
+            {
+              "name": "650 Luxury",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:003"
+                ]
+              },
+              "aliases": [
+                "Aion V 650 Luxury"
+              ],
+              "id": "650_luxury_bev"
+            },
+            {
+              "name": "750 Max",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:003"
+                ]
+              },
+              "aliases": [
+                "Aion V 750 Max"
+              ],
+              "id": "750_max_bev"
             }
           ]
         }
@@ -192,6 +302,34 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "400 Standard Range",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:002"
+                ]
+              },
+              "aliases": [
+                "Aion UT 400 Standard Range"
+              ],
+              "id": "400_standard_range_bev"
+            },
+            {
+              "name": "500 Long Range",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:002"
+                ]
+              },
+              "aliases": [
+                "Aion UT 500 Long Range"
+              ],
+              "id": "500_long_range_bev"
+            }
           ]
         }
       ],
@@ -231,6 +369,47 @@
               "origin_country": "CN",
               "price_note": "seed-unverified",
               "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "620 Premium (Standard Doors)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:005"
+                ]
+              },
+              "aliases": [
+                "Hyptec HT 620 Premium (Standard Doors)"
+              ],
+              "id": "620_premium_standard_doors_bev"
+            },
+            {
+              "name": "620 Luxury (Gull-Wing Doors)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:005"
+                ]
+              },
+              "aliases": [
+                "Hyptec HT 620 Luxury (Gull-Wing Doors)"
+              ],
+              "id": "620_luxury_gull_wing_doors_bev"
+            },
+            {
+              "name": "670 Ultra (Gull-Wing Doors, 800V Architecture)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:005"
+                ]
+              },
+              "aliases": [
+                "Hyptec HT 670 Ultra (Gull-Wing Doors, 800V Architecture)"
+              ],
+              "id": "670_ultra_gull_wing_doors_800v_architecture_bev"
             }
           ]
         }

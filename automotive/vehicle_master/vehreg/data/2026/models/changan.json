@@ -47,6 +47,28 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "Lumin L (205 km Range)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:061"
+                ]
+              },
+              "id": "lumin_l_205_km_range_bev"
+            },
+            {
+              "name": "Lumin L Extended (301 km Range)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:061"
+                ]
+              },
+              "id": "lumin_l_extended_301_km_range_bev"
+            }
           ]
         }
       ]
@@ -87,6 +109,58 @@
               "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
               "price_min_thb": 669900,
               "price_max_thb": 669900
+            }
+          ],
+          "trims": [
+            {
+              "name": "60 Lite",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:062"
+                ]
+              },
+              "id": "60_lite_phev"
+            },
+            {
+              "name": "60 Pro",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:062"
+                ]
+              },
+              "id": "60_pro_phev"
+            },
+            {
+              "name": "125 Air",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:062"
+                ]
+              },
+              "id": "125_air_phev"
+            },
+            {
+              "name": "125 Pro",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:062"
+                ]
+              },
+              "id": "125_pro_phev"
+            },
+            {
+              "name": "125 Max",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:062"
+                ]
+              },
+              "id": "125_max_phev"
             }
           ]
         }

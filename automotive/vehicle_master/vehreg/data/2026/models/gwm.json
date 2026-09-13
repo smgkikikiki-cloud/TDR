@@ -73,6 +73,38 @@
               "price_min_thb": 1449000,
               "price_max_thb": 1449000
             }
+          ],
+          "trims": [
+            {
+              "name": "H6 HEV Pro",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:091"
+                ]
+              },
+              "id": "h6_hev_pro_hev"
+            },
+            {
+              "name": "H6 HEV Ultra",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:091"
+                ]
+              },
+              "id": "h6_hev_ultra_hev"
+            },
+            {
+              "name": "H6 PHEV Ultra (34 kWh Battery)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:091"
+                ]
+              },
+              "id": "h6_phev_ultra_34_kwh_battery_phev"
+            }
           ]
         }
       ]
@@ -114,6 +146,38 @@
               "price_note": "seed-unverified",
               "price_min_thb": 879000,
               "price_max_thb": 879000
+            }
+          ],
+          "trims": [
+            {
+              "name": "Jolion HEV Sport",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:092"
+                ]
+              },
+              "id": "jolion_hev_sport_hev"
+            },
+            {
+              "name": "Jolion HEV Pro",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:092"
+                ]
+              },
+              "id": "jolion_hev_pro_hev"
+            },
+            {
+              "name": "Jolion HEV Ultra",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:092"
+                ]
+              },
+              "id": "jolion_hev_ultra_hev"
             }
           ]
         }
@@ -158,6 +222,48 @@
               "price_min_thb": 899000,
               "price_max_thb": 899000
             }
+          ],
+          "trims": [
+            {
+              "name": "Good Cat 400 TECH",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:094"
+                ]
+              },
+              "id": "good_cat_400_tech_bev"
+            },
+            {
+              "name": "Good Cat 400 PRO",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:094"
+                ]
+              },
+              "id": "good_cat_400_pro_bev"
+            },
+            {
+              "name": "Good Cat 500 ULTRA",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:094"
+                ]
+              },
+              "id": "good_cat_500_ultra_bev"
+            },
+            {
+              "name": "Good Cat GT",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:094"
+                ]
+              },
+              "id": "good_cat_gt_bev"
+            }
           ]
         }
       ],
@@ -200,6 +306,47 @@
               "price_note": "seed-unverified",
               "price_min_thb": 829000,
               "price_max_thb": 829000
+            }
+          ],
+          "trims": [
+            {
+              "name": "400 PRO",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:093"
+                ]
+              },
+              "aliases": [
+                "Ora 03 400 PRO"
+              ],
+              "id": "400_pro_bev"
+            },
+            {
+              "name": "500 ULTRA",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:093"
+                ]
+              },
+              "aliases": [
+                "Ora 03 500 ULTRA"
+              ],
+              "id": "500_ultra_bev"
+            },
+            {
+              "name": "GT",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:093"
+                ]
+              },
+              "aliases": [
+                "Ora 03 GT"
+              ],
+              "id": "gt_bev"
             }
           ]
         }
@@ -262,6 +409,34 @@
                 "2.4 Diesel",
                 "4WD Diesel"
               ]
+            }
+          ],
+          "trims": [
+            {
+              "name": "HEV PRO",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:096"
+                ]
+              },
+              "aliases": [
+                "Tank 300 HEV PRO"
+              ],
+              "id": "hev_pro_hev"
+            },
+            {
+              "name": "HEV ULTRA",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:096"
+                ]
+              },
+              "aliases": [
+                "Tank 300 HEV ULTRA"
+              ],
+              "id": "hev_ultra_hev"
             }
           ]
         }
@@ -326,6 +501,34 @@
                 "4WD Diesel"
               ]
             }
+          ],
+          "trims": [
+            {
+              "name": "HEV PRO",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:097"
+                ]
+              },
+              "aliases": [
+                "Tank 500 HEV PRO"
+              ],
+              "id": "hev_pro_hev"
+            },
+            {
+              "name": "HEV ULTRA",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:097"
+                ]
+              },
+              "aliases": [
+                "Tank 500 HEV ULTRA"
+              ],
+              "id": "hev_ultra_hev"
+            }
           ]
         }
       ],
@@ -367,6 +570,34 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "HEV 2.0T Pro 4x2",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:095"
+                ]
+              },
+              "aliases": [
+                "Poer Sahar HEV 2.0T Pro 4x2"
+              ],
+              "id": "hev_2_0t_pro_4x2_hev"
+            },
+            {
+              "name": "HEV 2.0T Ultra 4x4",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:095"
+                ]
+              },
+              "aliases": [
+                "Poer Sahar HEV 2.0T Ultra 4x4"
+              ],
+              "id": "hev_2_0t_ultra_4x4_hev"
+            }
           ]
         }
       ]
@@ -407,6 +638,28 @@
               "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
               "price_min_thb": 2349000,
               "price_max_thb": 2349000
+            }
+          ],
+          "trims": [
+            {
+              "name": "G9 Executive 7-Seater",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:098"
+                ]
+              },
+              "id": "g9_executive_7_seater_phev"
+            },
+            {
+              "name": "G9 Flagship 6-Seater (Executive LWB)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:098"
+                ]
+              },
+              "id": "g9_flagship_6_seater_executive_lwb_phev"
             }
           ]
         }

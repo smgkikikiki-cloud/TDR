@@ -58,6 +58,38 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "S05 EV 510 Pro",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:073"
+                ]
+              },
+              "id": "s05_ev_510_pro_bev"
+            },
+            {
+              "name": "S05 EV 510 Max",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:073"
+                ]
+              },
+              "id": "s05_ev_510_max_bev"
+            },
+            {
+              "name": "S05 REEV 1200 Max",
+              "powertrain": "REEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:073"
+                ]
+              },
+              "id": "s05_reev_1200_max_reev"
+            }
           ]
         }
       ]
@@ -95,6 +127,38 @@
               "origin_country": "TH",
               "price_note": "seed-unverified",
               "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "S07 Standard 540",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:074"
+                ]
+              },
+              "id": "s07_standard_540_bev"
+            },
+            {
+              "name": "S07 Plus 620",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:074"
+                ]
+              },
+              "id": "s07_plus_620_bev"
+            },
+            {
+              "name": "S07 L Long Range",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:074"
+                ]
+              },
+              "id": "s07_l_long_range_bev"
             }
           ]
         }
@@ -134,6 +198,28 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "L07 Standard 540",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:072"
+                ]
+              },
+              "id": "l07_standard_540_bev"
+            },
+            {
+              "name": "L07 Plus 620",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:072"
+                ]
+              },
+              "id": "l07_plus_620_bev"
+            }
           ]
         }
       ]
@@ -172,7 +258,8 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
-          ]
+          ],
+          "trims": []
         }
       ]
     },
@@ -211,7 +298,8 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
-          ]
+          ],
+          "trims": []
         }
       ]
     }

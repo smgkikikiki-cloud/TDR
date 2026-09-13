@@ -49,6 +49,48 @@
               "price_min_thb": 599000,
               "price_max_thb": 599000
             }
+          ],
+          "trims": [
+            {
+              "name": "1.2 GL 5MT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:265"
+                ]
+              },
+              "id": "1_2_gl_5mt_ice"
+            },
+            {
+              "name": "1.2 GL CVT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:265"
+                ]
+              },
+              "id": "1_2_gl_cvt_ice"
+            },
+            {
+              "name": "1.2 GL PLUS CVT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:265"
+                ]
+              },
+              "id": "1_2_gl_plus_cvt_ice"
+            },
+            {
+              "name": "1.2 GLX CVT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:265"
+                ]
+              },
+              "id": "1_2_glx_cvt_ice"
+            }
           ]
         }
       ],
@@ -90,6 +132,48 @@
               "price_min_thb": 675000,
               "price_max_thb": 675000
             }
+          ],
+          "trims": [
+            {
+              "name": "GL 5MT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:260"
+                ]
+              },
+              "id": "gl_5mt_ice"
+            },
+            {
+              "name": "GL CVT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:260"
+                ]
+              },
+              "id": "gl_cvt_ice"
+            },
+            {
+              "name": "GLX CVT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:260"
+                ]
+              },
+              "id": "glx_cvt_ice"
+            },
+            {
+              "name": "RS CVT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:260"
+                ]
+              },
+              "id": "rs_cvt_ice"
+            }
           ]
         }
       ]
@@ -129,6 +213,38 @@
               "price_note": "seed-unverified",
               "price_min_thb": 399000,
               "price_max_thb": 399000
+            }
+          ],
+          "trims": [
+            {
+              "name": "GA 5MT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:259"
+                ]
+              },
+              "id": "ga_5mt_ice"
+            },
+            {
+              "name": "GL CVT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:259"
+                ]
+              },
+              "id": "gl_cvt_ice"
+            },
+            {
+              "name": "GLX CVT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:259"
+                ]
+              },
+              "id": "glx_cvt_ice"
             }
           ]
         }
@@ -170,6 +286,28 @@
               "price_note": "seed-unverified",
               "price_min_thb": 715000,
               "price_max_thb": 715000
+            }
+          ],
+          "trims": [
+            {
+              "name": "Smart Hybrid GL 4AT",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:261"
+                ]
+              },
+              "id": "smart_hybrid_gl_4at_hev"
+            },
+            {
+              "name": "Smart Hybrid GX 4AT",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:261"
+                ]
+              },
+              "id": "smart_hybrid_gx_4at_hev"
             }
           ]
         }
@@ -213,6 +351,18 @@
               "price_min_thb": 799000,
               "price_max_thb": 799000
             }
+          ],
+          "trims": [
+            {
+              "name": "Smart Hybrid GLX 4AT",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:266"
+                ]
+              },
+              "id": "smart_hybrid_glx_4at_hev"
+            }
           ]
         }
       ],
@@ -255,6 +405,47 @@
               "price_note": "seed-unverified",
               "price_min_thb": 1550000,
               "price_max_thb": 1550000
+            }
+          ],
+          "trims": [
+            {
+              "name": "3-Door 1.5 GL 5MT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:263"
+                ]
+              },
+              "aliases": [
+                "Jimny 3-Door 1.5 GL 5MT"
+              ],
+              "id": "3_door_1_5_gl_5mt_ice"
+            },
+            {
+              "name": "3-Door 1.5 GLX 4AT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:263"
+                ]
+              },
+              "aliases": [
+                "Jimny 3-Door 1.5 GLX 4AT"
+              ],
+              "id": "3_door_1_5_glx_4at_ice"
+            },
+            {
+              "name": "5-Door 1.5 GLX 4AT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:263"
+                ]
+              },
+              "aliases": [
+                "Jimny 5-Door 1.5 GLX 4AT"
+              ],
+              "id": "5_door_1_5_glx_4at_ice"
             }
           ]
         }
@@ -385,6 +576,16 @@
                 ]
               },
               "notes": "K15C with Suzuki SHVS 12V mild hybrid, recorded as declared technology rather than a powertrain."
+            },
+            {
+              "name": "Boosterjet Hybrid",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:262"
+                ]
+              },
+              "id": "boosterjet_hybrid_hev"
             }
           ]
         }
@@ -423,6 +624,18 @@
               "origin_country": "TH",
               "price_note": "seed-unverified",
               "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Carry 1.5 Flatbed (Heavy Duty Commercial / Food Truck Platform)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:264"
+                ]
+              },
+              "id": "carry_1_5_flatbed_heavy_duty_commercial_food_truck_platform_ice"
             }
           ]
         }

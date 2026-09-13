@@ -44,6 +44,28 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "B10 Standard Range",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:147"
+                ]
+              },
+              "id": "b10_standard_range_bev"
+            },
+            {
+              "name": "B10 Long Range",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:147"
+                ]
+              },
+              "id": "b10_long_range_bev"
+            }
           ]
         }
       ]
@@ -82,7 +104,8 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
-          ]
+          ],
+          "trims": []
         }
       ]
     }

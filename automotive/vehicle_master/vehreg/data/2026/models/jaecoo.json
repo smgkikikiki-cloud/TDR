@@ -214,6 +214,32 @@
                 ]
               },
               "notes": "Specification carried forward from the existing Phase-1 seed. OEM product URL checked 2026-09-08. Prices are only in PriceLedger. No matching ECO UUID in the 2026-09-07 probe; no ECO specifications inferred."
+            },
+            {
+              "name": "Standard",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:128"
+                ]
+              },
+              "aliases": [
+                "Jaecoo 5 EV Standard"
+              ],
+              "id": "standard_bev"
+            },
+            {
+              "name": "Premium Long Range",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:128"
+                ]
+              },
+              "aliases": [
+                "Jaecoo 5 EV Premium Long Range"
+              ],
+              "id": "premium_long_range_bev"
             }
           ]
         }
@@ -255,6 +281,28 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "Jaecoo 6 Long Range 2WD (RWD)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:129"
+                ]
+              },
+              "id": "jaecoo_6_long_range_2wd_rwd_bev"
+            },
+            {
+              "name": "Jaecoo 6 Long Range 4WD (AWD Dual Motor)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:129"
+                ]
+              },
+              "id": "jaecoo_6_long_range_4wd_awd_dual_motor_bev"
+            }
           ]
         }
       ]
@@ -293,6 +341,34 @@
               "origin_country": "TH",
               "price_note": "seed-unverified",
               "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Off-road Standard",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:130"
+                ]
+              },
+              "aliases": [
+                "Jaecoo 6T EV Off-road Standard"
+              ],
+              "id": "off_road_standard_bev"
+            },
+            {
+              "name": "Extreme AWD",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:130"
+                ]
+              },
+              "aliases": [
+                "Jaecoo 6T EV Extreme AWD"
+              ],
+              "id": "extreme_awd_bev"
             }
           ]
         }
@@ -334,6 +410,21 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "SHS PHEV (Super Hybrid System)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:132"
+                ]
+              },
+              "aliases": [
+                "Jaecoo 7 SHS PHEV (Super Hybrid System)"
+              ],
+              "id": "shs_phev_super_hybrid_system_phev"
+            }
           ]
         }
       ]
@@ -374,6 +465,21 @@
               "origin_country": "CN",
               "price_note": "ยังไม่ได้ตรวจราคา",
               "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Long Range 4WD",
+              "powertrain": "REEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:131"
+                ]
+              },
+              "aliases": [
+                "Jaecoo 6T REEV Long Range 4WD"
+              ],
+              "id": "long_range_4wd_reev"
             }
           ]
         }
