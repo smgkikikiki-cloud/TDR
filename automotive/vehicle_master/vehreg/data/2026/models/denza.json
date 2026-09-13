@@ -59,6 +59,38 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "D9 DM-i 970 / 1050 (PHEV Premium)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:075"
+                ]
+              },
+              "id": "d9_dm_i_970_1050_phev_premium_phev"
+            },
+            {
+              "name": "D9 EV Premium (FWD)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:075"
+                ]
+              },
+              "id": "d9_ev_premium_fwd_bev"
+            },
+            {
+              "name": "D9 EV Flagship AWD (Dual Motor)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:075"
+                ]
+              },
+              "id": "d9_ev_flagship_awd_dual_motor_bev"
+            }
           ]
         }
       ]

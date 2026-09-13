@@ -44,6 +44,34 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "Truck (Standard / High Roof / Jumbo Cab)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:069"
+                ]
+              },
+              "aliases": [
+                "Hijet Truck (Standard / High Roof / Jumbo Cab)"
+              ],
+              "id": "truck_standard_high_roof_jumbo_cab_ice"
+            },
+            {
+              "name": "Cargo (Cruise / Deluxe / Special)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:069"
+                ]
+              },
+              "aliases": [
+                "Hijet Cargo (Cruise / Deluxe / Special)"
+              ],
+              "id": "cargo_cruise_deluxe_special_ice"
+            }
           ]
         }
       ]

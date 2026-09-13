@@ -47,6 +47,58 @@
               "price_min_thb": 2399000,
               "price_max_thb": 2399000
             }
+          ],
+          "trims": [
+            {
+              "name": "2.2 Diesel LX (11-Seater)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:134"
+                ]
+              },
+              "id": "2_2_diesel_lx_11_seater_ice"
+            },
+            {
+              "name": "2.2 Diesel EX (11-Seater)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:134"
+                ]
+              },
+              "id": "2_2_diesel_ex_11_seater_ice"
+            },
+            {
+              "name": "2.2 Diesel SXL (11-Seater)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:134"
+                ]
+              },
+              "id": "2_2_diesel_sxl_11_seater_ice"
+            },
+            {
+              "name": "2.2 Diesel SXL Luxury (7-Seater VIP Lounge)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:134"
+                ]
+              },
+              "id": "2_2_diesel_sxl_luxury_7_seater_vip_lounge_ice"
+            },
+            {
+              "name": "1.6 Turbo HEV Smartstream (Hybrid)",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:134"
+                ]
+              },
+              "id": "1_6_turbo_hev_smartstream_hybrid_hev"
+            }
           ]
         }
       ]
@@ -132,6 +184,28 @@
               "price_min_thb": 3490000,
               "price_max_thb": 3490000
             }
+          ],
+          "trims": [
+            {
+              "name": "Earth Long Range (RWD, 7-Seater)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:137"
+                ]
+              },
+              "id": "earth_long_range_rwd_7_seater_bev"
+            },
+            {
+              "name": "GT-Line AWD (Dual Motor, 6-Seater Swivel / Relaxation)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:137"
+                ]
+              },
+              "id": "gt_line_awd_dual_motor_6_seater_swivel_relaxation_bev"
+            }
           ]
         }
       ]
@@ -170,6 +244,48 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "Light (64.2 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:135"
+                ]
+              },
+              "id": "light_64_2_kwh_bev"
+            },
+            {
+              "name": "Air (64.2 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:135"
+                ]
+              },
+              "id": "air_64_2_kwh_bev"
+            },
+            {
+              "name": "Earth Long Range (88.1 kWh FWD)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:135"
+                ]
+              },
+              "id": "earth_long_range_88_1_kwh_fwd_bev"
+            },
+            {
+              "name": "Earth Exclusive AWD (88.1 kWh Dual Motor)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:135"
+                ]
+              },
+              "id": "earth_exclusive_awd_88_1_kwh_dual_motor_bev"
+            }
           ]
         }
       ]
@@ -207,6 +323,28 @@
               "origin_country": "KR",
               "price_note": "seed-unverified",
               "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Smartstream 1.6 Turbo PHEV (Captain Seats)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:139"
+                ]
+              },
+              "id": "smartstream_1_6_turbo_phev_captain_seats_phev"
+            },
+            {
+              "name": "Smartstream 2.2 CRDi Diesel 8DCT AWD",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:139"
+                ]
+              },
+              "id": "smartstream_2_2_crdi_diesel_8dct_awd_ice"
             }
           ]
         }
@@ -247,6 +385,38 @@
               "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
               "price_min_thb": 1199000,
               "price_max_thb": 1199000
+            }
+          ],
+          "trims": [
+            {
+              "name": "PV5 Passenger (Minivan)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:138"
+                ]
+              },
+              "id": "pv5_passenger_minivan_bev"
+            },
+            {
+              "name": "PV5 Cargo (Commercial Delivery Van)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:138"
+                ]
+              },
+              "id": "pv5_cargo_commercial_delivery_van_bev"
+            },
+            {
+              "name": "PV5 Robotaxi",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:138"
+                ]
+              },
+              "id": "pv5_robotaxi_bev"
             }
           ]
         }

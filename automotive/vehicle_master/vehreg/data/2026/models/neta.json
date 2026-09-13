@@ -52,6 +52,47 @@
               "price_min_thb": 549000,
               "price_max_thb": 549000
             }
+          ],
+          "trims": [
+            {
+              "name": "Standard (38.5 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:229"
+                ]
+              },
+              "aliases": [
+                "Neta V Standard (38.5 kWh)"
+              ],
+              "id": "standard_38_5_kwh_bev"
+            },
+            {
+              "name": "Lite (31.18 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:229"
+                ]
+              },
+              "aliases": [
+                "Neta V-II Lite (31.18 kWh)"
+              ],
+              "id": "lite_31_18_kwh_bev"
+            },
+            {
+              "name": "Smart (31.18 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:229"
+                ]
+              },
+              "aliases": [
+                "Neta V-II Smart (31.18 kWh)"
+              ],
+              "id": "smart_31_18_kwh_bev"
+            }
           ]
         }
       ],
@@ -94,6 +135,38 @@
               "price_note": "seed-unverified",
               "price_min_thb": 799000,
               "price_max_thb": 799000
+            }
+          ],
+          "trims": [
+            {
+              "name": "Comfort 400 (51.8 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:230"
+                ]
+              },
+              "id": "comfort_400_51_8_kwh_bev"
+            },
+            {
+              "name": "Smart 480 (62 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:230"
+                ]
+              },
+              "id": "smart_480_62_kwh_bev"
+            },
+            {
+              "name": "Smart 500 (62 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:230"
+                ]
+              },
+              "id": "smart_500_62_kwh_bev"
             }
           ]
         }

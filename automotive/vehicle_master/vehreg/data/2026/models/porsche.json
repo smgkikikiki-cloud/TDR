@@ -47,6 +47,34 @@
               "price_min_thb": 5300000,
               "price_max_thb": 5300000
             }
+          ],
+          "trims": [
+            {
+              "name": "4 Electric (BEV 408 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:246"
+                ]
+              },
+              "aliases": [
+                "Macan 4 Electric (BEV 408 hp)"
+              ],
+              "id": "4_electric_bev_408_hp_bev"
+            },
+            {
+              "name": "Turbo Electric (BEV 639 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:246"
+                ]
+              },
+              "aliases": [
+                "Macan Turbo Electric (BEV 639 hp)"
+              ],
+              "id": "turbo_electric_bev_639_hp_bev"
+            }
           ]
         }
       ]
@@ -86,6 +114,47 @@
               "price_note": "seed-unverified",
               "price_min_thb": 9500000,
               "price_max_thb": 9500000
+            }
+          ],
+          "trims": [
+            {
+              "name": "E-Hybrid (PHEV, 470 hp)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:245"
+                ]
+              },
+              "aliases": [
+                "Cayenne E-Hybrid (PHEV, 470 hp)"
+              ],
+              "id": "e_hybrid_phev_470_hp_phev"
+            },
+            {
+              "name": "Turbo E-Hybrid (PHEV, 739 hp)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:245"
+                ]
+              },
+              "aliases": [
+                "Cayenne Turbo E-Hybrid (PHEV, 739 hp)"
+              ],
+              "id": "turbo_e_hybrid_phev_739_hp_phev"
+            },
+            {
+              "name": "Coupe (Coupe Body Style in Base, E-Hybrid, S, GTS, Turbo)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:245"
+                ]
+              },
+              "aliases": [
+                "Cayenne Coupe (Coupe Body Style in Base, E-Hybrid, S, GTS, Turbo)"
+              ],
+              "id": "coupe_coupe_body_style_in_base_e_hybrid_s_gts_turbo_phev"
             }
           ]
         }
@@ -129,6 +198,21 @@
               "price_min_thb": 12500000,
               "price_max_thb": 12500000
             }
+          ],
+          "trims": [
+            {
+              "name": "Carrera GTS (T-Hybrid 541 hp)",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:248"
+                ]
+              },
+              "aliases": [
+                "911 Carrera GTS (T-Hybrid 541 hp)"
+              ],
+              "id": "carrera_gts_t_hybrid_541_hp_hev"
+            }
           ]
         }
       ]
@@ -167,6 +251,47 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "4 E-Hybrid (PHEV, 470 hp)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:247"
+                ]
+              },
+              "aliases": [
+                "Panamera 4 E-Hybrid (PHEV, 470 hp)"
+              ],
+              "id": "4_e_hybrid_phev_470_hp_phev"
+            },
+            {
+              "name": "4S E-Hybrid (PHEV, 544 hp)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:247"
+                ]
+              },
+              "aliases": [
+                "Panamera 4S E-Hybrid (PHEV, 544 hp)"
+              ],
+              "id": "4s_e_hybrid_phev_544_hp_phev"
+            },
+            {
+              "name": "Turbo E-Hybrid (PHEV, 680 hp)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:247"
+                ]
+              },
+              "aliases": [
+                "Panamera Turbo E-Hybrid (PHEV, 680 hp)"
+              ],
+              "id": "turbo_e_hybrid_phev_680_hp_phev"
+            }
           ]
         }
       ]
@@ -204,6 +329,125 @@
               "origin_country": "DE",
               "price_note": "seed-unverified",
               "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "(RWD, 408 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:249"
+                ]
+              },
+              "aliases": [
+                "Taycan (RWD, 408 hp)"
+              ],
+              "id": "rwd_408_hp_bev"
+            },
+            {
+              "name": "4S (AWD, 544 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:249"
+                ]
+              },
+              "aliases": [
+                "Taycan 4S (AWD, 544 hp)"
+              ],
+              "id": "4s_awd_544_hp_bev"
+            },
+            {
+              "name": "GTS (AWD, 598 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:249"
+                ]
+              },
+              "aliases": [
+                "Taycan GTS (AWD, 598 hp)"
+              ],
+              "id": "gts_awd_598_hp_bev"
+            },
+            {
+              "name": "Turbo (AWD, 884 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:249"
+                ]
+              },
+              "aliases": [
+                "Taycan Turbo (AWD, 884 hp)"
+              ],
+              "id": "turbo_awd_884_hp_bev"
+            },
+            {
+              "name": "Turbo S (AWD, 952 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:249"
+                ]
+              },
+              "aliases": [
+                "Taycan Turbo S (AWD, 952 hp)"
+              ],
+              "id": "turbo_s_awd_952_hp_bev"
+            },
+            {
+              "name": "Turbo GT (AWD, 1,034 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:249"
+                ]
+              },
+              "aliases": [
+                "Taycan Turbo GT (AWD, 1,034 hp)"
+              ],
+              "id": "turbo_gt_awd_1_034_hp_bev"
+            },
+            {
+              "name": "4 Cross Turismo (Gravel/All-Terrain Wagon)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:249"
+                ]
+              },
+              "aliases": [
+                "Taycan 4 Cross Turismo (Gravel/All-Terrain Wagon)"
+              ],
+              "id": "4_cross_turismo_gravel_all_terrain_wagon_bev"
+            },
+            {
+              "name": "4S Cross Turismo",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:249"
+                ]
+              },
+              "aliases": [
+                "Taycan 4S Cross Turismo"
+              ],
+              "id": "4s_cross_turismo_bev"
+            },
+            {
+              "name": "Turbo Cross Turismo",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:249"
+                ]
+              },
+              "aliases": [
+                "Taycan Turbo Cross Turismo"
+              ],
+              "id": "turbo_cross_turismo_bev"
             }
           ]
         }
@@ -244,6 +488,112 @@
               "origin_country": "DE",
               "price_note": "seed-unverified",
               "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Cayman (2.0 Turbo, 300 hp)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:244"
+                ]
+              },
+              "aliases": [
+                "718 Cayman (2.0 Turbo, 300 hp)"
+              ],
+              "id": "cayman_2_0_turbo_300_hp_ice"
+            },
+            {
+              "name": "Cayman S (2.5 Turbo, 350 hp)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:244"
+                ]
+              },
+              "aliases": [
+                "718 Cayman S (2.5 Turbo, 350 hp)"
+              ],
+              "id": "cayman_s_2_5_turbo_350_hp_ice"
+            },
+            {
+              "name": "Cayman GTS 4.0 (4.0L Flat-6, 400 hp)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:244"
+                ]
+              },
+              "aliases": [
+                "718 Cayman GTS 4.0 (4.0L Flat-6, 400 hp)"
+              ],
+              "id": "cayman_gts_4_0_4_0l_flat_6_400_hp_ice"
+            },
+            {
+              "name": "Cayman GT4 RS (4.0L Flat-6, 500 hp)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:244"
+                ]
+              },
+              "aliases": [
+                "718 Cayman GT4 RS (4.0L Flat-6, 500 hp)"
+              ],
+              "id": "cayman_gt4_rs_4_0l_flat_6_500_hp_ice"
+            },
+            {
+              "name": "Boxster (2.0 Turbo, 300 hp)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:244"
+                ]
+              },
+              "aliases": [
+                "718 Boxster (2.0 Turbo, 300 hp)"
+              ],
+              "id": "boxster_2_0_turbo_300_hp_ice"
+            },
+            {
+              "name": "Boxster S (2.5 Turbo, 350 hp)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:244"
+                ]
+              },
+              "aliases": [
+                "718 Boxster S (2.5 Turbo, 350 hp)"
+              ],
+              "id": "boxster_s_2_5_turbo_350_hp_ice"
+            },
+            {
+              "name": "Boxster GTS 4.0 (400 hp)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:244"
+                ]
+              },
+              "aliases": [
+                "718 Boxster GTS 4.0 (400 hp)"
+              ],
+              "id": "boxster_gts_4_0_400_hp_ice"
+            },
+            {
+              "name": "Spyder RS (500 hp)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:244"
+                ]
+              },
+              "aliases": [
+                "718 Spyder RS (500 hp)"
+              ],
+              "id": "spyder_rs_500_hp_ice"
             }
           ]
         }

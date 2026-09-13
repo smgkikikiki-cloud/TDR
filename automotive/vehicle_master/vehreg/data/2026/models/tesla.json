@@ -67,6 +67,47 @@
               "price_min_thb": 1899000,
               "price_max_thb": 1899000
             }
+          ],
+          "trims": [
+            {
+              "name": "Rear-Wheel Drive (RWD, 60 kWh LFP)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:268"
+                ]
+              },
+              "aliases": [
+                "Model 3 Rear-Wheel Drive (RWD, 60 kWh LFP)"
+              ],
+              "id": "rear_wheel_drive_rwd_60_kwh_lfp_bev"
+            },
+            {
+              "name": "Long Range All-Wheel Drive (AWD, 78.1 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:268"
+                ]
+              },
+              "aliases": [
+                "Model 3 Long Range All-Wheel Drive (AWD, 78.1 kWh)"
+              ],
+              "id": "long_range_all_wheel_drive_awd_78_1_kwh_bev"
+            },
+            {
+              "name": "Performance All-Wheel Drive (AWD, 460 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:268"
+                ]
+              },
+              "aliases": [
+                "Model 3 Performance All-Wheel Drive (AWD, 460 hp)"
+              ],
+              "id": "performance_all_wheel_drive_awd_460_hp_bev"
+            }
           ]
         }
       ],
@@ -126,6 +167,47 @@
               "price_note": "seed-unverified",
               "price_min_thb": 2509000,
               "price_max_thb": 2509000
+            }
+          ],
+          "trims": [
+            {
+              "name": "Rear-Wheel Drive (RWD, 60 kWh LFP)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:269"
+                ]
+              },
+              "aliases": [
+                "Model Y Rear-Wheel Drive (RWD, 60 kWh LFP)"
+              ],
+              "id": "rear_wheel_drive_rwd_60_kwh_lfp_bev"
+            },
+            {
+              "name": "Long Range All-Wheel Drive (AWD, 78.1 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:269"
+                ]
+              },
+              "aliases": [
+                "Model Y Long Range All-Wheel Drive (AWD, 78.1 kWh)"
+              ],
+              "id": "long_range_all_wheel_drive_awd_78_1_kwh_bev"
+            },
+            {
+              "name": "Performance All-Wheel Drive (AWD, 514 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:269"
+                ]
+              },
+              "aliases": [
+                "Model Y Performance All-Wheel Drive (AWD, 514 hp)"
+              ],
+              "id": "performance_all_wheel_drive_awd_514_hp_bev"
             }
           ]
         }

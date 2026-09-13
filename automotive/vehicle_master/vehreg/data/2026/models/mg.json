@@ -52,6 +52,47 @@
               "price_min_thb": 789000,
               "price_max_thb": 789000
             }
+          ],
+          "trims": [
+            {
+              "name": "Hybrid+ Standard",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:212"
+                ]
+              },
+              "aliases": [
+                "MG3 Hybrid+ Standard"
+              ],
+              "id": "hybrid_plus_standard_hev"
+            },
+            {
+              "name": "Hybrid+ Comfort",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:212"
+                ]
+              },
+              "aliases": [
+                "MG3 Hybrid+ Comfort"
+              ],
+              "id": "hybrid_plus_comfort_hev"
+            },
+            {
+              "name": "Hybrid+ Luxury",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:212"
+                ]
+              },
+              "aliases": [
+                "MG3 Hybrid+ Luxury"
+              ],
+              "id": "hybrid_plus_luxury_hev"
+            }
           ]
         }
       ]
@@ -112,6 +153,48 @@
               "price_min_thb": 969000,
               "price_max_thb": 969000
             }
+          ],
+          "trims": [
+            {
+              "name": "Standard Range D (51 kWh RWD)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:213"
+                ]
+              },
+              "id": "standard_range_d_51_kwh_rwd_bev"
+            },
+            {
+              "name": "Standard Range X (51 kWh RWD)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:213"
+                ]
+              },
+              "id": "standard_range_x_51_kwh_rwd_bev"
+            },
+            {
+              "name": "Long Range V (64 kWh RWD)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:213"
+                ]
+              },
+              "id": "long_range_v_64_kwh_rwd_bev"
+            },
+            {
+              "name": "XPOWER (64 kWh AWD Dual Motor, 435 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:213"
+                ]
+              },
+              "id": "xpower_64_kwh_awd_dual_motor_435_hp_bev"
+            }
           ]
         }
       ],
@@ -154,6 +237,74 @@
               "price_note": "seed-unverified",
               "price_min_thb": 679000,
               "price_max_thb": 679000
+            }
+          ],
+          "trims": [
+            {
+              "name": "1.5 C",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:214"
+                ]
+              },
+              "id": "1_5_c_ice"
+            },
+            {
+              "name": "1.5 D",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:214"
+                ]
+              },
+              "id": "1_5_d_ice"
+            },
+            {
+              "name": "1.5 D+",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:214"
+                ]
+              },
+              "id": "1_5_d_plus_ice"
+            },
+            {
+              "name": "1.5 X",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:214"
+                ]
+              },
+              "id": "1_5_x_ice"
+            },
+            {
+              "name": "Pro D+",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:214"
+                ]
+              },
+              "aliases": [
+                "MG5 Pro D+"
+              ],
+              "id": "pro_d_plus_ice"
+            },
+            {
+              "name": "Pro X",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:214"
+                ]
+              },
+              "aliases": [
+                "MG5 Pro X"
+              ],
+              "id": "pro_x_ice"
             }
           ]
         }
@@ -198,6 +349,38 @@
               "price_min_thb": 689000,
               "price_max_thb": 689000
             }
+          ],
+          "trims": [
+            {
+              "name": "1.5 C+",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:210"
+                ]
+              },
+              "id": "1_5_c_plus_ice"
+            },
+            {
+              "name": "1.5 D+",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:210"
+                ]
+              },
+              "id": "1_5_d_plus_ice"
+            },
+            {
+              "name": "1.5 X+",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:210"
+                ]
+              },
+              "id": "1_5_x_plus_ice"
+            }
           ]
         }
       ],
@@ -241,6 +424,28 @@
               "price_note": "seed-unverified",
               "price_min_thb": 949000,
               "price_max_thb": 949000
+            }
+          ],
+          "trims": [
+            {
+              "name": "ZS EV D",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:211"
+                ]
+              },
+              "id": "zs_ev_d_bev"
+            },
+            {
+              "name": "ZS EV X",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:211"
+                ]
+              },
+              "id": "zs_ev_x_bev"
             }
           ]
         }
@@ -344,7 +549,8 @@
               "price_min_thb": 899000,
               "price_max_thb": 899000
             }
-          ]
+          ],
+          "trims": []
         }
       ]
     },
@@ -388,6 +594,48 @@
               "price_note": "seed-unverified",
               "price_min_thb": 649000,
               "price_max_thb": 649000
+            }
+          ],
+          "trims": [
+            {
+              "name": "Giant Cab 2.0 C 6MT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:200"
+                ]
+              },
+              "id": "giant_cab_2_0_c_6mt_ice"
+            },
+            {
+              "name": "Giant Cab 2.0 D 6MT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:200"
+                ]
+              },
+              "id": "giant_cab_2_0_d_6mt_ice"
+            },
+            {
+              "name": "Giant Cab Grand 2.0 D 6MT / 6AT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:200"
+                ]
+              },
+              "id": "giant_cab_grand_2_0_d_6mt_6at_ice"
+            },
+            {
+              "name": "Giant Cab Grand 2.0 X 6MT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:200"
+                ]
+              },
+              "id": "giant_cab_grand_2_0_x_6mt_ice"
             }
           ]
         }
@@ -434,6 +682,38 @@
               "price_min_thb": 799000,
               "price_max_thb": 799000
             }
+          ],
+          "trims": [
+            {
+              "name": "Double Cab Grand 2.0 D 6MT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:201"
+                ]
+              },
+              "id": "double_cab_grand_2_0_d_6mt_ice"
+            },
+            {
+              "name": "Double Cab Grand 2.0 X 6AT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:201"
+                ]
+              },
+              "id": "double_cab_grand_2_0_x_6at_ice"
+            },
+            {
+              "name": "Double Cab Grand 2.0 4WD X 6AT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:201"
+                ]
+              },
+              "id": "double_cab_grand_2_0_4wd_x_6at_ice"
+            }
           ]
         }
       ]
@@ -477,6 +757,28 @@
               "price_min_thb": 2599000,
               "price_max_thb": 2599000
             }
+          ],
+          "trims": [
+            {
+              "name": "Maxus 9 Model X",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:206"
+                ]
+              },
+              "id": "maxus_9_model_x_bev"
+            },
+            {
+              "name": "Maxus 9 Model V",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:206"
+                ]
+              },
+              "id": "maxus_9_model_v_bev"
+            }
           ]
         }
       ]
@@ -514,6 +816,18 @@
               "price_note": "retail price lives in PriceLedger",
               "price_min_thb": null,
               "price_max_thb": null
+            }
+          ],
+          "trims": [
+            {
+              "name": "ES Electric Touring Wagon",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:199"
+                ]
+              },
+              "id": "es_electric_touring_wagon_bev"
             }
           ]
         }
@@ -592,6 +906,28 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "IM6 Luxury RWD",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:204"
+                ]
+              },
+              "id": "im6_luxury_rwd_bev"
+            },
+            {
+              "name": "IM6 Performance AWD Dual Motor",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:204"
+                ]
+              },
+              "id": "im6_performance_awd_dual_motor_bev"
+            }
           ]
         }
       ]
@@ -629,6 +965,28 @@
               "origin_country": "TH",
               "price_note": "seed-unverified",
               "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "EP Standard",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:198"
+                ]
+              },
+              "id": "ep_standard_bev"
+            },
+            {
+              "name": "EP Plus",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:198"
+                ]
+              },
+              "id": "ep_plus_bev"
             }
           ]
         }
@@ -668,6 +1026,28 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "Maxus 7 Premium",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:205"
+                ]
+              },
+              "id": "maxus_7_premium_bev"
+            },
+            {
+              "name": "Maxus 7 Luxury",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:205"
+                ]
+              },
+              "id": "maxus_7_luxury_bev"
+            }
           ]
         }
       ]
@@ -705,6 +1085,18 @@
               "origin_country": "CN",
               "price_note": "seed-unverified",
               "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Cyberster AWD Dual Motor (Scissor Doors)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:197"
+                ]
+              },
+              "id": "cyberster_awd_dual_motor_scissor_doors_bev"
             }
           ]
         }
@@ -747,6 +1139,28 @@
               "price_min_thb": 649900,
               "price_max_thb": 649900
             }
+          ],
+          "trims": [
+            {
+              "name": "Urban EV Standard Range",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:208"
+                ]
+              },
+              "id": "urban_ev_standard_range_bev"
+            },
+            {
+              "name": "Urban EV Long Range",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:208"
+                ]
+              },
+              "id": "urban_ev_long_range_bev"
+            }
           ]
         }
       ],
@@ -787,6 +1201,28 @@
               "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
               "price_min_thb": 1549900,
               "price_max_thb": 1549900
+            }
+          ],
+          "trims": [
+            {
+              "name": "IM5 Standard Range RWD",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:203"
+                ]
+              },
+              "id": "im5_standard_range_rwd_bev"
+            },
+            {
+              "name": "IM5 Long Range AWD Dual Motor",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:203"
+                ]
+              },
+              "id": "im5_long_range_awd_dual_motor_bev"
             }
           ]
         }

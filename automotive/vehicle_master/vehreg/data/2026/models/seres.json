@@ -44,6 +44,34 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "Standard",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:253"
+                ]
+              },
+              "aliases": [
+                "Seres 3 Standard"
+              ],
+              "id": "standard_bev"
+            },
+            {
+              "name": "Premium",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:253"
+                ]
+              },
+              "aliases": [
+                "Seres 3 Premium"
+              ],
+              "id": "premium_bev"
+            }
           ]
         }
       ]

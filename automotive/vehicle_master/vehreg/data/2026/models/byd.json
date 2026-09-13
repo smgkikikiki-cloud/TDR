@@ -112,6 +112,28 @@
               "price_min_thb": 859000,
               "price_max_thb": 859000
             }
+          ],
+          "trims": [
+            {
+              "name": "Standard Range Dynamic (44.9 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:053"
+                ]
+              },
+              "id": "standard_range_dynamic_44_9_kwh_bev"
+            },
+            {
+              "name": "Extended Range Premium (60.48 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:053"
+                ]
+              },
+              "id": "extended_range_premium_60_48_kwh_bev"
+            }
           ]
         }
       ],
@@ -171,6 +193,47 @@
               "price_note": "seed-unverified",
               "price_min_thb": 1599000,
               "price_max_thb": 1599000
+            }
+          ],
+          "trims": [
+            {
+              "name": "Dynamic (RWD, 204 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:055"
+                ]
+              },
+              "aliases": [
+                "Seal Dynamic (RWD, 204 hp)"
+              ],
+              "id": "dynamic_rwd_204_hp_bev"
+            },
+            {
+              "name": "Premium (RWD, 313 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:055"
+                ]
+              },
+              "aliases": [
+                "Seal Premium (RWD, 313 hp)"
+              ],
+              "id": "premium_rwd_313_hp_bev"
+            },
+            {
+              "name": "Performance AWD (Dual Motor, 530 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:055"
+                ]
+              },
+              "aliases": [
+                "Seal Performance AWD (Dual Motor, 530 hp)"
+              ],
+              "id": "performance_awd_dual_motor_530_hp_bev"
             }
           ]
         }
@@ -257,6 +320,28 @@
               "price_min_thb": 1399000,
               "price_max_thb": 1399000
             }
+          ],
+          "trims": [
+            {
+              "name": "Premium RWD (313 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:059"
+                ]
+              },
+              "id": "premium_rwd_313_hp_bev"
+            },
+            {
+              "name": "Performance AWD (Dual Motor, 530 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:059"
+                ]
+              },
+              "id": "performance_awd_dual_motor_530_hp_bev"
+            }
           ]
         }
       ]
@@ -299,6 +384,38 @@
               "price_note": "seed-unverified",
               "price_min_thb": 829000,
               "price_max_thb": 829000
+            }
+          ],
+          "trims": [
+            {
+              "name": "M6 Dynamic (7-Seater)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:051"
+                ]
+              },
+              "id": "m6_dynamic_7_seater_bev"
+            },
+            {
+              "name": "M6 Extended (7-Seater)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:051"
+                ]
+              },
+              "id": "m6_extended_7_seater_bev"
+            },
+            {
+              "name": "M6 Extended (6-Seater Captain Seats)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:051"
+                ]
+              },
+              "id": "m6_extended_6_seater_captain_seats_bev"
             }
           ]
         }
@@ -343,6 +460,21 @@
               "price_note": "seed-unverified",
               "price_min_thb": 1599000,
               "price_max_thb": 1599000
+            }
+          ],
+          "trims": [
+            {
+              "name": "Dual Motor AWD Premium",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:060"
+                ]
+              },
+              "aliases": [
+                "Shark 6 Dual Motor AWD Premium"
+              ],
+              "id": "dual_motor_awd_premium_phev"
             }
           ]
         }
@@ -389,6 +521,38 @@
               "price_min_thb": 444900,
               "price_max_thb": 444900
             }
+          ],
+          "trims": [
+            {
+              "name": "Vitality Edition (30.08 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:054"
+                ]
+              },
+              "id": "vitality_edition_30_08_kwh_bev"
+            },
+            {
+              "name": "Freedom Edition (30.08 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:054"
+                ]
+              },
+              "id": "freedom_edition_30_08_kwh_bev"
+            },
+            {
+              "name": "Flying Edition (38.88 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:054"
+                ]
+              },
+              "id": "flying_edition_38_88_kwh_bev"
+            }
           ]
         }
       ]
@@ -426,6 +590,18 @@
               "origin_country": "CN",
               "price_note": "seed-unverified",
               "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "T3 Cargo Van Pure Electric",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:052"
+                ]
+              },
+              "id": "t3_cargo_van_pure_electric_bev"
             }
           ]
         }
@@ -466,6 +642,34 @@
               "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
               "price_min_thb": 644900,
               "price_max_thb": 644900
+            }
+          ],
+          "trims": [
+            {
+              "name": "Standard Range Dynamic (32 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:049"
+                ]
+              },
+              "aliases": [
+                "Atto 2 Standard Range Dynamic (32 kWh)"
+              ],
+              "id": "standard_range_dynamic_32_kwh_bev"
+            },
+            {
+              "name": "Extended Range Premium (45.1 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:049"
+                ]
+              },
+              "aliases": [
+                "Atto 2 Extended Range Premium (45.1 kWh)"
+              ],
+              "id": "extended_range_premium_45_1_kwh_bev"
             }
           ]
         }
@@ -509,6 +713,28 @@
               "price_min_thb": 759900,
               "price_max_thb": 759900
             }
+          ],
+          "trims": [
+            {
+              "name": "Dynamic DM-i",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:057"
+                ]
+              },
+              "id": "dynamic_dm_i_phev"
+            },
+            {
+              "name": "Premium DM-i",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:057"
+                ]
+              },
+              "id": "premium_dm_i_phev"
+            }
           ]
         }
       ],
@@ -551,6 +777,28 @@
               "origin_country": "CN",
               "price_note": "ยังไม่ได้ตรวจราคา",
               "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Dynamic DM-i",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:056"
+                ]
+              },
+              "id": "dynamic_dm_i_phev"
+            },
+            {
+              "name": "Premium DM-i",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:056"
+                ]
+              },
+              "id": "premium_dm_i_phev"
             }
           ]
         }

@@ -50,6 +50,38 @@
               "price_min_thb": 1359000,
               "price_max_thb": 1359000
             }
+          ],
+          "trims": [
+            {
+              "name": "Standard Range RWD (66 kWh LFP, 258 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:318"
+                ]
+              },
+              "id": "standard_range_rwd_66_kwh_lfp_258_hp_bev"
+            },
+            {
+              "name": "Long Range RWD (87.5 kWh NCM, 286 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:318"
+                ]
+              },
+              "id": "long_range_rwd_87_5_kwh_ncm_286_hp_bev"
+            },
+            {
+              "name": "Performance AWD (87.5 kWh Dual Motor, 487 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:318"
+                ]
+              },
+              "id": "performance_awd_87_5_kwh_dual_motor_487_hp_bev"
+            }
           ]
         }
       ]
@@ -88,6 +120,38 @@
               "origin_country": "CN",
               "price_note": "seed-unverified",
               "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Long Range Pro (84.5 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:319"
+                ]
+              },
+              "id": "long_range_pro_84_5_kwh_bev"
+            },
+            {
+              "name": "Long Range Max (101.5 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:319"
+                ]
+              },
+              "id": "long_range_max_101_5_kwh_bev"
+            },
+            {
+              "name": "Performance AWD Ultra (101.5 kWh Dual Motor, 503 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:319"
+                ]
+              },
+              "id": "performance_awd_ultra_101_5_kwh_dual_motor_503_hp_bev"
             }
           ]
         }

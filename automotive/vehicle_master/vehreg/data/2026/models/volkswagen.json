@@ -46,6 +46,47 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "T6.1 Businessline",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:301"
+                ]
+              },
+              "aliases": [
+                "Caravelle T6.1 Businessline"
+              ],
+              "id": "t6_1_businessline_ice"
+            },
+            {
+              "name": "T6.1 Highline",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:301"
+                ]
+              },
+              "aliases": [
+                "Caravelle T6.1 Highline"
+              ],
+              "id": "t6_1_highline_ice"
+            },
+            {
+              "name": "T6.1 Touring",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:301"
+                ]
+              },
+              "aliases": [
+                "Caravelle T6.1 Touring"
+              ],
+              "id": "t6_1_touring_ice"
+            }
           ]
         }
       ]

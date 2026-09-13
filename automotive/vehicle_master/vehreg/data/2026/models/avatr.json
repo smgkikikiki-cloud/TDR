@@ -45,6 +45,47 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "Standard Range (RWD)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:024"
+                ]
+              },
+              "aliases": [
+                "Avatr 11 Standard Range (RWD)"
+              ],
+              "id": "standard_range_rwd_bev"
+            },
+            {
+              "name": "Long Range (RWD)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:024"
+                ]
+              },
+              "aliases": [
+                "Avatr 11 Long Range (RWD)"
+              ],
+              "id": "long_range_rwd_bev"
+            },
+            {
+              "name": "Royal Edition AWD (Dual Motor)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:024"
+                ]
+              },
+              "aliases": [
+                "Avatr 11 Royal Edition AWD (Dual Motor)"
+              ],
+              "id": "royal_edition_awd_dual_motor_bev"
+            }
           ]
         }
       ]
@@ -85,7 +126,8 @@
               "price_min_thb": 1759000,
               "price_max_thb": 1759000
             }
-          ]
+          ],
+          "trims": []
         }
       ],
       "incomplete": true

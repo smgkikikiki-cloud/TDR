@@ -44,6 +44,44 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "(Standard Wheelbase)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:252"
+                ]
+              },
+              "aliases": [
+                "Ghost (Standard Wheelbase)"
+              ],
+              "id": "standard_wheelbase_ice"
+            },
+            {
+              "name": "Extended (Extended Wheelbase)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:252"
+                ]
+              },
+              "aliases": [
+                "Ghost Extended (Extended Wheelbase)"
+              ],
+              "id": "extended_extended_wheelbase_ice"
+            },
+            {
+              "name": "Black Badge Ghost (600 hp)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:252"
+                ]
+              },
+              "id": "black_badge_ghost_600_hp_ice"
+            }
           ]
         }
       ]
