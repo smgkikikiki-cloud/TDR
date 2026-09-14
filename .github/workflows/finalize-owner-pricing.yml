@@ -45,6 +45,49 @@ jobs:
           if dict(statuses) != expected:
               raise SystemExit(f'status coverage changed: {dict(statuses)} != {expected}')
 
+          sys.path.insert(0, str(root / 'automotive' / 'vehicle_master'))
+          from vehreg.catalog import Catalog
+          from vehreg.normalize import fold
+          catalog = Catalog.load()
+
+          # Some hand-built target IDs used the human-readable ID spelling rather
+          # than Catalog's final slug.  Resolve those against the exact canonical
+          # trim name inside the already-matched model instead of inventing a new
+          # MarketTrim or dropping a valid price.
+          repaired_targets = []
+          unresolved_targets = []
+          for row in rows:
+              model_ids = set(row[7] or [])
+              for item in row[10]:
+                  stored_id, amount, source_grade, canonical_grade, method = item
+                  if stored_id in catalog.trims:
+                      continue
+                  candidates = []
+                  for tid, trim in catalog.trims.items():
+                      generation = catalog.generations[trim.generation_id]
+                      if generation.model_id not in model_ids:
+                          continue
+                      if fold(trim.name) == fold(canonical_grade):
+                          candidates.append(tid)
+                  if len(candidates) == 1:
+                      actual = candidates[0]
+                      repaired_targets.append((stored_id, actual))
+                      item[0] = actual
+                  else:
+                      unresolved_targets.append({
+                          'source_index': row[0],
+                          'stored_id': stored_id,
+                          'canonical_grade': canonical_grade,
+                          'model_ids': sorted(model_ids),
+                          'candidates': candidates,
+                      })
+          if unresolved_targets:
+              raise SystemExit('canonical target resolution failed: ' + json.dumps(unresolved_targets[:20], ensure_ascii=False))
+          if repaired_targets:
+              print('canonical target ID repairs:')
+              for old, new in repaired_targets:
+                  print(f'  {old} -> {new}')
+
           observations = []
           for row in rows:
               idx = row[0]
@@ -74,10 +117,6 @@ jobs:
           dupes = [k for k,v in Counter(trim_ids).items() if v > 1]
           if dupes:
               raise SystemExit(f'duplicate trim price targets: {dupes[:10]}')
-
-          sys.path.insert(0, str(root / 'automotive' / 'vehicle_master'))
-          from vehreg.catalog import Catalog
-          catalog = Catalog.load()
           missing = sorted(set(trim_ids) - set(catalog.trims))
           if missing:
               raise SystemExit('mapped trim IDs absent from current canonical catalog: ' + ', '.join(missing[:20]))
@@ -109,6 +148,7 @@ jobs:
               'rows_not_fully_applied':statuses['PARTIAL'] + statuses['UNAPPLIED'],
               'canonical_price_observations_added':len(observations),
               'unique_market_trims_priced':len(set(trim_ids)),
+              'canonical_target_id_repairs':len(repaired_targets),
               'unresolved_reason_counts':dict(sorted(reasons.items())),
               'observed_at':'2026-09-14',
               'campaign_rows_promoted':0,
