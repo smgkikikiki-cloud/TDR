@@ -1,4 +1,4 @@
-name: Recover owner pricing payload
+name: Recover owner pricing rows
 
 on:
   push:
@@ -16,27 +16,60 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Recover partial prepared payload
+      - name: Extract complete rows from recovered payload prefix
         shell: bash
         run: |
           python - <<'PY'
           from pathlib import Path
-          import base64, zlib
-          chunk_dir = Path('tmp/owner-pricing-payload')
-          encoded = ''.join(p.read_text(encoding='utf-8').strip() for p in sorted(chunk_dir.glob('part*.txt')))
-          compressed = base64.b64decode(encoded)
-          dec = zlib.decompressobj(16 + zlib.MAX_WBITS)
-          raw = dec.decompress(compressed)
-          out = chunk_dir / 'recovered.txt'
-          out.write_bytes(raw)
-          print('compressed bytes', len(compressed), 'recovered bytes', len(raw), 'eof', dec.eof)
-          print(raw[:300].decode('utf-8', errors='replace'))
+          import json
+
+          p = Path('tmp/owner-pricing-payload/recovered.txt')
+          text = p.read_text(encoding='utf-8')
+          marker = '"research/records.json":"'
+          start = text.index(marker) + len(marker)
+          frag = text[start:]
+
+          # Decode the prefix of one outer JSON string without needing its missing closing quote.
+          out = []
+          i = 0
+          while i < len(frag):
+              c = frag[i]
+              if c != '\\':
+                  out.append(c); i += 1; continue
+              if i + 1 >= len(frag):
+                  break
+              e = frag[i+1]
+              simple = {'"':'"', '\\':'\\', '/':'/', 'b':'\b', 'f':'\f', 'n':'\n', 'r':'\r', 't':'\t'}
+              if e in simple:
+                  out.append(simple[e]); i += 2; continue
+              if e == 'u' and i + 5 < len(frag):
+                  try:
+                      out.append(chr(int(frag[i+2:i+6], 16))); i += 6; continue
+                  except ValueError:
+                      pass
+              break
+          inner = ''.join(out)
+          marker2 = '"rows":['
+          pos = inner.index(marker2) + len(marker2)
+          dec = json.JSONDecoder()
+          rows = []
+          while True:
+              while pos < len(inner) and inner[pos] in ' \r\n\t,': pos += 1
+              if pos >= len(inner) or inner[pos] == ']': break
+              try:
+                  row, end = dec.raw_decode(inner, pos)
+              except json.JSONDecodeError:
+                  break
+              rows.append(row); pos = end
+          outp = Path('tmp/owner-pricing-payload/recovered_rows.jsonl')
+          outp.write_text('\n'.join(json.dumps(r, ensure_ascii=False) for r in rows) + '\n', encoding='utf-8')
+          print('complete rows recovered:', len(rows), 'last index:', rows[-1][0] if rows else None)
           PY
-      - name: Commit recovered payload
+      - name: Commit recovered rows
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add tmp/owner-pricing-payload/recovered.txt
-          git commit -m "Recover prepared owner pricing payload" || exit 0
+          git add tmp/owner-pricing-payload/recovered_rows.jsonl
+          git commit -m "Extract recovered owner pricing rows" || exit 0
           git push origin HEAD:data/owner-pricing-registry-2026-09-14
