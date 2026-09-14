@@ -37,12 +37,15 @@ eventually converge to, so that convergence is deliberate rather than accidental
                                  ▼
 ┌─────────────────────────────────────────────────────────────────────┐
 │ 3. IDENTITY PLANE                                                    │
-│    Stable canonical vehicle identity.                                │
-│    Brand → Model → Generation → Configuration → MarketTrim.          │
-│    ("Configuration" is the future name for today's "Variant" —       │
-│    see "What does NOT change in Phase 0" below.) IDs are stable,     │
-│    never recycled, and every observation resolves to the finest      │
-│    identity level it can actually prove — never further.             │
+│    Stable canonical vehicle identity — a graph, not a strict chain.  │
+│    Brand → Model → Generation, which scopes two distinct children:   │
+│    Configuration (analytical/spec identity) and MarketTrim (retail   │
+│    identity). MarketTrim may be classified into a Configuration      │
+│    where that relationship is known and evidenced — never fabricated│
+│    to complete the picture. ("Configuration" is the future name for  │
+│    today's "Variant" — see "What does NOT change in Phase 0" below.) │
+│    IDs are stable, never recycled, and every observation resolves to │
+│    the finest identity level it can actually prove — never further.  │
 └───────────────────────────────┬───────────────────────────────────────┘
                                  ▼
 ┌─────────────────────────────────────────────────────────────────────┐
@@ -74,7 +77,7 @@ and `SpecLedger` behave today — see `CURRENT_STATE.md`).
 ```
 ECO / product sources ──────┐
   (source + observation)    │
-                             ├──▶ identity resolution ──▶ canonical vehicle spine
+                             ├──▶ identity resolution ──▶ canonical identity graph
 DLT registrations ──────────┘         (Identity Plane)     (Identity Plane)
   (source + observation)                                          │
                                                     ┌───────────────┴───────────────┐
@@ -95,25 +98,65 @@ Plane would let a new source (a third OEM feed, a new registration authority) pl
 re-deriving matching/review/audit logic from scratch. That convergence is Phase 4 work, not
 Phase 0 — Phase 0 changes no code, only names this destination.
 
-## Target canonical vehicle spine
+## Target canonical identity graph
+
+**Reviewer decision (architecture amendment, incorporated into this document): canonical
+vehicle identity is a graph, not a strict linear chain.** An earlier draft of this document
+used a simplified `Brand → Model → Generation → Configuration → MarketTrim` chain, and the term
+"canonical vehicle spine." Both implied that every MarketTrim descends *through* a Configuration,
+as if Configuration were a mandatory intermediate node between Generation and MarketTrim. That is
+not the target shape, and it is not what the current code does either (see `CURRENT_STATE.md`
+§1–2: `MarketTrim.generation_id` is already its structural parent today, with `variant_id` as an
+optional cross-reference, not a nesting relationship). This document now uses **canonical identity
+graph**, not "spine," specifically because "spine" implies a single strict tree.
 
 ```
 Brand
-  → Model
-    → Generation
-      → Configuration     (target name for today's "Variant")
-      → MarketTrim         (already a sibling of Variant/Configuration today,
-                             not a child of it — see CURRENT_STATE.md)
+  └── Model
+        └── Generation
+              ├── Configuration   (target name for today's "Variant" — analytical/
+              │                    specification identity, used for classification
+              │                    and market analysis)
+              └── MarketTrim      (retail identity — an actual marketed grade/SKU)
+                     · optional classification/link to a Configuration,
+                       where that relationship is known and evidenced
 ```
 
-`Configuration` is the eventual name for the concept the codebase currently calls `Variant` —
-the analytical/registration-grain classification line. Renaming it, or changing what it means,
-is Phase 6 work ("Variant/Configuration, MarketTrim and DLT-detail semantic consolidation") —
-see `MIGRATION_PLAN.md`. **Phase 0 does not rename or restructure anything.** The current
-`Variant`↔`MarketTrim` relationship (MarketTrim optionally references a Variant by ID, but is
-not nested under it) already matches the shape this target spine describes; what changes in a
-later phase is mainly the *name* `Variant → Configuration`, plus tightening how registration
-observations attach to it.
+Reading this graph correctly:
+
+- **Both `Configuration` and `MarketTrim` are structurally scoped by `Generation`** — siblings,
+  not parent/child. This matches `CURRENT_STATE.md`'s description of today's `Variant`/
+  `MarketTrim` relationship exactly; the target graph does not change that shape.
+- **`MarketTrim` may be classified into, or linked to, a `Configuration`** where the relationship
+  is actually known — this is the existing optional `variant_id` cross-reference, kept, not
+  replaced.
+- **That link must never be fabricated merely to make the graph look complete.** A MarketTrim
+  with no evidenced Configuration link stays unlinked. Invariant 3 ("missing granularity must
+  remain missing") governs this exactly as it governs any other field.
+- **This migration does not assume every MarketTrim must have a Configuration parent.** Cardinality
+  between MarketTrim and Configuration is target-open, not target-1:1. A future phase may tighten
+  it — require or infer more links as evidence and coverage justify — but Phase 0 and this
+  document take no position on whether that tightening ever happens, and no phase before an
+  explicit, evidence-based decision may assume or enforce it.
+- **Source observations may eventually resolve at the finest identity level they genuinely
+  prove** — Brand, Model, Generation, Configuration, *or* MarketTrim — not capped at Configuration
+  the way today's DLT `RESOLUTION_CHAIN` is. This is a target-architecture statement about what
+  *future* infrastructure (Phase 4 onward) may be built to support, not a change to today's DLT
+  engine. **Invariant 7 is unaffected and unconditional: DLT still must never autonomously create
+  MarketTrim identity**, regardless of how finely a future source observation could in principle
+  resolve. Letting an observation *reach* MarketTrim grain is not the same as letting it *create*
+  MarketTrim identity — the latter stays human-gated exactly as it is today (`INVARIANTS.md` rule
+  8, ECO's `origin == "HUMAN"` gate in `CURRENT_STATE.md` §4).
+
+`Configuration` is the eventual name for the concept the codebase currently calls `Variant` — the
+analytical/registration-grain classification line. Renaming it, or changing what it means, is
+Phase 6 work ("Variant/Configuration, MarketTrim and DLT-detail semantic consolidation") — see
+`MIGRATION_PLAN.md`. **Phase 0 does not rename or restructure anything, in code or in data.** The
+current `Variant`↔`MarketTrim` relationship (MarketTrim optionally references a Variant by ID,
+scoped by the same Generation, not nested under it) already matches the shape this target graph
+describes; what changes in a later phase is mainly the *name* `Variant → Configuration`, plus
+whatever evidence-based cardinality decisions a future phase makes explicit — not the underlying
+graph shape.
 
 ## Source grain vs. reporting grain, formalized
 
@@ -138,6 +181,8 @@ identity-resolution component instead of two.
 
 - `Variant` is not renamed to `Configuration` in code, data, or APIs.
 - `MarketTrim` and `Variant` are not merged.
+- No cardinality between `MarketTrim` and `Variant`/`Configuration` is assumed or enforced —
+  the graph shape above is a documentation decision, not a schema or validation change.
 - No canonical ID scheme changes.
 - No registration data is re-resolved against a new grain model.
 - No existing crosswalk (legacy UUID ↔ canonical ID, either of the two current mechanisms) is

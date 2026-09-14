@@ -5,12 +5,32 @@ completes or starts any migration packet.
 
 ## Current migration phase
 
-**Phase 0 — architecture contract and parity foundation.** Completed by this pass (2026-09-14):
-documentation set created (`CURRENT_STATE.md`, `MASTER_ARCHITECTURE.md`, `INVARIANTS.md`,
-`MIGRATION_PLAN.md`, this file, `BASELINE.md`), plus one narrowly-scoped regression test added
-(see "Completed migration packets" below). No architecture, schema, or behavior change.
+**Phase 0 — architecture contract and parity foundation.** Documentation set created
+2026-09-14 (`CURRENT_STATE.md`, `MASTER_ARCHITECTURE.md`, `INVARIANTS.md`, `MIGRATION_PLAN.md`,
+this file, `BASELINE.md`), plus one narrowly-scoped regression test (see "Completed migration
+packets" below). **Received architecture review; amended 2026-09-15** (see
+`LIVE_IDENTITY_BASELINE_2026-09-15.md`) to incorporate two reviewer corrections:
 
-Phases 1–7 (`MIGRATION_PLAN.md`) are **not authorized and not started**.
+1. **Identity-graph decision**: canonical vehicle identity is documented as a graph (Generation
+   scoping two distinct children, Configuration/Variant and MarketTrim, linked optionally — not a
+   strict `Configuration → MarketTrim` chain). `MASTER_ARCHITECTURE.md` and `MIGRATION_PLAN.md`
+   were revised; the term "canonical identity graph" replaces "canonical vehicle spine."
+2. **Live external-identity baseline recorded**: a 2026-09-15 reviewer-supplied, read-only live
+   Supabase inspection found Mechanism A (383 derived Brand+Model links) and Mechanism B (1
+   verified Brand/Model mapping) are not comparable registries — Mechanism A is broad/derived for
+   serving, Mechanism B is a sparse, explicit write-authority gate. Recorded in
+   `LIVE_IDENTITY_BASELINE_2026-09-15.md`, linked from `BASELINE.md` and `CURRENT_STATE.md`. The
+   Phase 1 problem statement in `MIGRATION_PLAN.md` was rewritten around this — it is now about
+   building one external-identity contract that preserves derived-vs-verified trust semantics,
+   not about "reconciling" two crosswalks into agreement.
+
+**No production behavior, schema, serving path, write path, canonical data, or application code
+changed in either the 2026-09-14 pass or the 2026-09-15 amendment.** Both passes are
+documentation-only (the 2026-09-14 pass also added one pure-Python regression test; the
+2026-09-15 amendment added no test changes).
+
+Phases 1–7 (`MIGRATION_PLAN.md`) remain **not authorized and not started**. This amendment does
+not start Phase 1 — it only corrects Phase 0's documentation.
 
 The separate, pre-existing Masterplan Phase A–J sequence
 (`automotive/vehicle_master/docs/consolidation/MASTERPLAN.md`) is independent of this Phase
@@ -51,6 +71,7 @@ started.
 |---|---|---|
 | Phase 0 documentation + baseline | 0 | Added `docs/vehicle-platform/*`. No code/behavior change. |
 | `test_enriched_release_identity_is_stable_and_covers_lifecycle_and_history` | 0 | Closed a confirmed gap: the production-published `release_enriched.enrich_release` payload had no dedicated determinism/shape test (only the base `ReleaseBuilder` output did). Added to `automotive/vehicle_master/tests/test_tdr_bridge.py`. Pure-Python, no Supabase required. |
+| Phase 0 amendment: identity-graph correction + live identity baseline | 0 | Reviewer-directed correction of `MASTER_ARCHITECTURE.md`/`MIGRATION_PLAN.md`'s identity structure and Phase 1 problem statement; added `LIVE_IDENTITY_BASELINE_2026-09-15.md` recording reviewer-supplied live Mechanism A/B evidence. Documentation only, no code change. |
 
 ## Known parity gaps (things Phase 0 could not close)
 
@@ -63,10 +84,15 @@ started.
    `LIVE_SUPABASE_VERIFICATION.md` (2026-09-09) confirmed the *prior* anon-read policy was live;
    this pass could not re-verify against a live project (no credentials available in this
    session). See `BASELINE.md`.
-3. **Mechanism A vs. Mechanism B crosswalk reconciliation does not exist.** No report or test
-   compares `current_vehicle_models.tdr_model_id` (Mechanism A) against `canonical_object_map`
-   (Mechanism B) for disagreement. This is Phase 1's stated problem to solve, not Phase 0's to
-   fix — recorded here so it isn't lost.
+3. **No automated/repeatable comparison between Mechanism A and Mechanism B exists.** A live,
+   reviewer-supplied point-in-time comparison was performed manually on 2026-09-15
+   (`LIVE_IDENTITY_BASELINE_2026-09-15.md`: 383 Mechanism A links, 1 verified Mechanism B link,
+   0 disagreements), which resolves the *coverage/trust-semantics* uncertainty this item
+   originally flagged — but no checked-in script, view, or test reproduces that comparison, so
+   the result cannot be re-verified except by another manual live query, and it is a snapshot,
+   not a standing guarantee (both mechanisms move independently). Building a reusable audit tool
+   is explicitly named as the likely Phase 1A packet (see "Next approved step"), not implemented
+   here.
 4. **Whether the legacy per-model serving projection path (§9 mechanism 2 in
    `CURRENT_STATE.md`) is still operationally exercised, or has been fully superseded by the
    full-release path, is not established from repository state alone.** Both are wired, tested,
@@ -77,11 +103,21 @@ started.
 
 ## Next approved step
 
-**None.** Per the task brief, only Phase 0 is authorized. The next step is for a human (or a
-separately-authorized task) to review this documentation set and explicitly approve starting
-Phase 1 (`MIGRATION_PLAN.md`) — most likely scoped narrowly to the Mechanism A/B crosswalk
-reconciliation report named in parity gap 3 above, since it requires no behavior change and
-would close the most concretely-identified duplication.
+**None.** Per the task brief, Phase 1 remains unauthorized until the next explicit task — this
+2026-09-15 amendment corrects Phase 0's documentation only and does not authorize or start Phase 1.
 
-Do not start Phase 1 work from this file alone. This file records state; it does not grant
-authorization.
+The likely next packet, if and when authorized, is **Phase 1A: a pure, read-only external-identity
+contract and audit abstraction** that:
+- defines a shared shape/vocabulary able to represent a Mechanism-A-style derived mapping and a
+  Mechanism-B-style verified mapping side by side, for the same external ID, without collapsing
+  one into the other;
+- ships as a read-only audit report/tool over the two existing mechanisms (no new table, no
+  write path, no auto-population of `canonical_object_map`, no change to
+  `lib/canonical-write-shadow.ts` or the release builder);
+- makes the 2026-09-15 manual comparison in `LIVE_IDENTITY_BASELINE_2026-09-15.md` reproducible
+  and re-runnable, instead of ad hoc;
+- preserves Mechanism B's `verified`-only write-authority gate exactly as-is — a derived
+  Mechanism A match must never become an implicit `verified` row.
+
+Phase 1A is **not implemented by this amendment**. Do not start Phase 1/1A work from this file
+alone — this file records state; it does not grant authorization.

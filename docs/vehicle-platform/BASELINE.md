@@ -5,6 +5,12 @@ Everything in this file was either computed directly from repository state durin
 Nothing here is a live production statistic — see "What requires live Supabase verification" at
 the end. Re-run the commands shown to reproduce any number.
 
+**2026-09-15 amendment**: one live-Supabase gap in this file (Mechanism A/B crosswalk coverage)
+is now recorded as reviewer-supplied live evidence rather than left open — see
+`LIVE_IDENTITY_BASELINE_2026-09-15.md` and the updated "Known legacy-to-canonical dependency
+points" and "What requires live Supabase verification" sections below. This did not involve this
+session querying Supabase itself; the counts are reviewer-supplied and cited as such throughout.
+
 ## Canonical catalog counts (repository-testable, computed directly)
 
 Computed by loading the catalog directly (not via a test assertion, though it matches
@@ -111,9 +117,17 @@ Full detail and code citations: `CURRENT_STATE.md` §5, `INVARIANTS.md` rules 2�
 | `canonical_object_map` (Mechanism B) | Phase-C canonical-write shadow; legacy per-model serving projection | `migration_v12_canonical_write_pipeline.sql` |
 | Legacy `public.models`/`model_powertrains`/`trims` | Legacy dashboard registration views (no crosswalk hop); the older per-model serving projection | `migration_v19`/`v20`, `migration_v14_serving_projection.sql` |
 
-Mechanisms A and B are independent and not reconciled against each other by any code path found
-in the repository — see `CURRENT_STATE.md` §10 for full detail. This is the single largest
-concrete duplication identified in this pass and the leading candidate for Phase 1 scope.
+Mechanisms A and B are independently implemented, with no shared contract or automated
+reconciliation between them — see `CURRENT_STATE.md` §10 for full structural detail. **This is no
+longer an unverified gap as of the 2026-09-15 amendment**: a live inspection
+(`LIVE_IDENTITY_BASELINE_2026-09-15.md`) found Mechanism A carries 383 derived Brand+Model
+external-ID links while Mechanism B carries exactly 1 verified Brand/Model mapping, with zero
+disagreements and zero conflicts in the one case where both mechanisms have an opinion. This
+confirms the two are not competing/duplicate registries in practice — they are a broad derived
+mapping (A) and a sparse, deliberately narrow verification gate (B) serving different consumers.
+The corrected Phase 1 problem statement (`MIGRATION_PLAN.md`) is about building one external-
+identity contract that can represent both trust levels without conflating them, not about closing
+a coverage gap between A and B.
 
 ## Test suite baseline (run this pass)
 
@@ -137,12 +151,23 @@ source-period coverage, DLT/trim-ledger/pivot reconciliation, the full pytest su
 `npm run check` suite (all 10 `check-*.ts` scripts are pure source/logic assertions, not live
 Supabase integration tests — confirmed by running them offline in this pass).
 
-**Requires live Supabase verification** (not obtainable from repository state, and explicitly
-not fabricated in this document):
+**Now verified via reviewer-supplied live evidence** (2026-09-15, see
+`LIVE_IDENTITY_BASELINE_2026-09-15.md` — not independently queried by this session, but recorded
+as dated reviewer evidence rather than left as an open gap):
+- Mechanism A (`current_vehicle_models`/`current_vehicle_brands`) live coverage: 383 derived
+  Brand+Model external-ID links (321 models + 62 brands).
+- Mechanism B (`canonical_object_map`) live status distribution: 1 verified Brand/Model mapping
+  (`jaecoo.jaecoo_5_ev`), 326 `unmatched` model rows, no verified Brand rows.
+- Mechanism A/B agreement where both have an opinion: 1 case checked, 0 disagreements, 0
+  conflicts — see the full cross-mechanism table in `LIVE_IDENTITY_BASELINE_2026-09-15.md`.
+
+**Still requires live Supabase verification** (not obtainable from repository state, not checked
+by the 2026-09-15 review, and explicitly not fabricated in this document):
 - Whether `migration_v15`'s replacement of the `registrations` anon-read policy with a
   paid-entitlement-gated one has actually been applied to the production project. The last live
   check (`docs/consolidation/LIVE_SUPABASE_VERIFICATION.md`, 2026-09-09) predates `migration_v15`
-  and found the *old* anon-read policy live with zero rows in the table.
+  and found the *old* anon-read policy live with zero rows in the table. The 2026-09-15 review was
+  scoped to the identity crosswalk question only and did not re-check this policy.
 - Actual row counts in `registrations`, live `public.models`/`brands`/`trims` (legacy serving
   tables), and which `canonical_vehicle_state.active_release_id` is currently active in
   production.
@@ -153,6 +178,9 @@ not fabricated in this document):
   currently green in production CI (this pass did not have access to GitHub Actions run history
   beyond what's in the repository's own committed workflow files).
 - Live legacy-vs-canonical registration read parity (Phase 3's eventual acceptance criterion).
+- Whether the Mechanism A/B counts above remain stable over time — both mechanisms can change
+  independently (A on every release build, B whenever a model is Phase-C verified), so this is a
+  point-in-time snapshot, not a standing guarantee.
 
 A future agent with live Supabase credentials should re-run
 `docs/consolidation/LIVE_SUPABASE_VERIFICATION.md`'s style of read-only inspection against the

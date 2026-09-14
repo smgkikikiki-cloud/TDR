@@ -43,6 +43,10 @@ allocate registration facts" (`vehreg/catalog.py`).
 is its structural parent — MarketTrim nests directly under **Generation**, as a *sibling* of
 Variant, not as a child of Variant. `MarketTrim.variant_id` is a separate, optional field that
 cross-references its analytical counterpart when one exists; it is not a nesting relationship.
+This is exactly the shape `MASTER_ARCHITECTURE.md` calls a **canonical identity graph** (Brand →
+Model → Generation, with Configuration/Variant and MarketTrim as two distinct children of
+Generation, linked optionally, not chained) — the target architecture does not change this shape,
+only the eventual name `Variant → Configuration`.
 
 ## 2. Variant vs. MarketTrim semantics
 
@@ -294,10 +298,14 @@ during shadow mode... not promoted to canonical truth by this phase" — i.e. me
 target tables are explicitly legacy, and mechanism 1 (the `canonical_*_projection`/`current_*`
 views) is the one described as authoritative going forward. Phase 0 does not remove either.
 
-## 10. Legacy UUID → canonical crosswalk — two independent mechanisms
+## 10. Legacy UUID → canonical crosswalk — two mechanisms with different trust semantics
 
 This is the clearest concrete duplication found during this pass, and the brief specifically
-asked it be documented rather than collapsed.
+asked it be documented rather than collapsed. **A 2026-09-15 architecture review and live
+Supabase inspection refined this section's framing — see `LIVE_IDENTITY_BASELINE_2026-09-15.md`
+for the full dated evidence.** The two mechanisms below are not two equivalent, competing
+registries; they have overlapping schema intent but materially different scope and purpose, and
+conflating them would be a mistake in either direction.
 
 **Mechanism A — release-build crosswalk** (used for the public catalog and, downstream, for
 registration-market reads):
@@ -329,16 +337,36 @@ older per-model serving projection, §9 mechanism 2):
   `apply_vehicle_serving_projection` (§9 mechanism 2) to decide whether a legacy model is
   eligible for either a shadow canonical-write command or an old-style serving projection.
 
-**These two crosswalks are not the same table, are not kept in sync with each other by any
-code path found in this repository, and answer conceptually different questions** — Mechanism A
+**These two crosswalks are not the same table, are not kept in sync with each other by any code
+path found in this repository, and answer conceptually different questions** — Mechanism A
 answers "what canonical model does this release say this legacy model corresponds to," rebuilt
 fresh on every release from name/alias matching plus overrides; Mechanism B answers "has a human
 explicitly verified this legacy object maps to this canonical object," a durable, manually
-curated record. A model could in principle be crosswalked by A (and appear correctly in the
-public catalog and registration analytics) while having no `verified` row in B (and therefore
-being ineligible for canonical-write shadowing or old-style serving projection), or vice versa.
-No reconciliation check between A and B exists today. This is a concrete candidate for Phase 1
-("canonical identity registry / external identity abstraction") — see `MIGRATION_PLAN.md`.
+curated record used as a write-authority gate (`lib/canonical-write-shadow.ts` requires
+`canonical_object_map.status == 'verified'` before a legacy model save can become an executable
+canonical shadow write — an unverified or missing row becomes `needs_crosswalk` instead, never a
+silent fallback to name/slug matching).
+
+A live, read-only inspection of the production Supabase project on 2026-09-15 (reviewer-supplied
+evidence; recorded in full in `LIVE_IDENTITY_BASELINE_2026-09-15.md`) found these are **not**
+two similarly-populated, competing registries:
+
+- Mechanism A: 383 derived Brand+Model external-ID links (321 models + 62 brands), broad-coverage,
+  produced by the release builder from the committed inventory plus reviewed overrides.
+- Mechanism B: exactly 1 verified Brand/Model mapping (`jaecoo.jaecoo_5_ev`, the Phase-C/Phase-E
+  pilot lineage), plus 326 `unmatched` model rows and no verified Brand rows at all.
+- Of the 383 Mechanism A links, exactly 1 (the same Jaecoo 5 EV row) also has a verified
+  Mechanism B counterpart; there were zero disagreements between A and B on any ID where both
+  had an opinion, and zero cases where B was verified but A disagreed or was silent.
+
+The correct interpretation is: **there are two independently implemented external-ID mapping
+mechanisms with overlapping schema intent but different operational roles and trust
+semantics.** Mechanism A is broad and derived, for serving/read integration. Mechanism B is
+sparse and explicitly verified, for write-sensitive Phase-C bridging — its sparseness reflects
+its original role as an explicit verification gate, not a coverage defect to be closed by making
+it look more like Mechanism A. They currently have no shared contract. This distinction, not "two
+competing crosswalks racing to the same answer," is the actual problem Phase 1 needs to address —
+see `MIGRATION_PLAN.md`'s Phase 1 section for the corrected problem statement.
 
 **A third, narrower crosswalk layer** exists purely for registration ingestion and does not
 resolve to canonical IDs at all: `registration_brand_aliases`/`registration_model_aliases`
@@ -351,7 +379,9 @@ be used to mutate the free catalogue.
 
 Collecting the duplications found across this document, for visibility:
 
-1. **Legacy UUID → canonical crosswalk** — Mechanism A vs. Mechanism B, §10.
+1. **Legacy UUID → canonical crosswalk** — Mechanism A (broad, derived) vs. Mechanism B (sparse,
+   verified), different trust semantics rather than competing registries — §10,
+   `LIVE_IDENTITY_BASELINE_2026-09-15.md`.
 2. **Serving projection** — the full-release `canonical_*_projection`/`current_*` path vs. the
    older per-model `apply_vehicle_serving_projection` path into legacy `models`/`trims`, §9.
 3. **Canonical write entrypoint** — `CanonicalWritePipeline`/`CanonicalInputPipeline` (used by

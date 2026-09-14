@@ -6,6 +6,12 @@ authorized and implemented by this pass.** Phases 1–7 are described here at th
 and acceptance criteria only, precisely so a future agent does not need to guess the sequence —
 implementing any of them is explicitly out of scope until a separate, later task authorizes it.
 
+**2026-09-15 amendment**: architecture review and a live Supabase inspection corrected two points
+in the original Phase 0 pass — see `LIVE_IDENTITY_BASELINE_2026-09-15.md` and
+`status/CURRENT.md`. The identity graph shape below and the Phase 1 problem statement were
+revised accordingly. This amendment is still Phase 0 (documentation only); it does not start
+Phase 1.
+
 ## Relationship to the existing `docs/consolidation/MASTERPLAN.md` (Phase A–J)
 
 This repository already contains a detailed, previously-approved migration plan:
@@ -24,7 +30,7 @@ Masterplan — always name the source document when referring to a phase number.
 | This plan | Masterplan (A–J) relationship |
 |---|---|
 | Phase 0 — architecture contract and parity foundation | Roughly parallel to Masterplan Phase A's baseline/documentation intent, but scoped specifically to the five-plane target and Phase 0–7 sequence; does not repeat Masterplan Phase A's TDR-schema inventory work, which is already done. |
-| Phase 1 — canonical identity registry / external identity abstraction | Overlaps with unresolved parts of Masterplan §16 ("Canonical IDs") and the Mechanism A/B crosswalk duplication documented in `CURRENT_STATE.md` §10. Not the same as any single lettered phase. |
+| Phase 1 — canonical identity registry / external identity abstraction | Overlaps with unresolved parts of Masterplan §16 ("Canonical IDs") and the Mechanism A/B distinction documented in `CURRENT_STATE.md` §10 and `LIVE_IDENTITY_BASELINE_2026-09-15.md` (derived-vs-verified trust semantics, not a reconciliation of two equal registries). Not the same as any single lettered phase. |
 | Phase 2 — canonical DLT v2 shadow pipeline | New work; the Masterplan's Phase-A/§7 registration architecture description informs it but does not implement a "v2" pipeline itself. |
 | Phase 3 — registration analytics read cutover | Related to, but narrower than, Masterplan Phase D ("entitlement boundary") + §19 ("Registration Serving Model") — this plan's Phase 3 is specifically about retiring `CURRENT_STATE.md`'s duplicate-path item 4 (legacy dashboard views bypassing the crosswalk), which Masterplan §19/REGISTRATION_MARKET_CONTRACT.md already flags as a "Transition rule" to resolve later. |
 | Phase 4 — generic source observation/resolution infrastructure, incl. ECO convergence | New work; the Masterplan's Phase-C/ECO description does not by itself unify ECO and DLT ingestion — masterplan explicitly forbids that unification without a dedicated decision (§25.10). |
@@ -59,24 +65,59 @@ only documentation and one test file).
 
 ## Phase 1 — Canonical identity registry / external identity abstraction
 
-**Problem it solves**: `CURRENT_STATE.md` §10 documents two independent, unsynchronized
-legacy-UUID→canonical crosswalks (Mechanism A, rebuilt per-release from name/alias matching;
-Mechanism B, `canonical_object_map`, durable and human-verified). Neither is aware of the other.
+**Problem it solves** *(corrected by reviewer amendment, 2026-09-15 — see
+`LIVE_IDENTITY_BASELINE_2026-09-15.md`)*: this is **not** "reconcile two competing crosswalks and
+make them equal." A live inspection of the two mechanisms showed they are not comparable
+registries in the first place — Mechanism A carries 383 derived Brand+Model external-ID links
+(broad, deterministic, used for serving/read integration); Mechanism B carries exactly 1 verified
+Brand/Model mapping (`jaecoo.jaecoo_5_ev`, the deliberate Phase-C pilot), because Mechanism B was
+built as a sparse, explicit verification *gate* for write-sensitive operations, not as a
+comprehensive registry. Treating Mechanism B's sparseness as a coverage defect to "catch up" to
+Mechanism A would be a category error — it would either flood the write-authority gate with
+unverified mappings (defeating its purpose, see `lib/canonical-write-shadow.ts`'s explicit
+`status == 'verified'` requirement) or imply Mechanism A's derived matches should silently gain
+write authority (a direct violation of Invariant 8).
 
-**Intent**: introduce one authoritative external-identity registry that both the release-build
-crosswalk and the canonical-write shadow can read from and write to, without changing what
-either currently does operationally. This is explicitly an *abstraction* step — it does not
-change which crosswalk is authoritative for which consumer yet (that is a Phase-1 acceptance
-question to resolve with evidence, not assumed up front).
+The real problem: **TDR lacks one explicit external-identity contract that can represent
+different namespaces, provenance, purpose, and authority levels without conflating them.** Future
+infrastructure needs to distinguish at least:
+
+- a **derived** external identity mapping suitable for read/serving integration (what Mechanism A
+  produces today: deterministic, rebuilt per release, from name/alias matching plus overrides);
+- an **explicitly verified** mapping suitable for authoritative/write-sensitive operations (what
+  Mechanism B's `status == 'verified'` rows represent today);
+- **unmatched / ambiguous / retired** states (Mechanism B already has `unmatched` — 326 rows live,
+  per the 2026-09-15 baseline — this vocabulary is worth generalizing, not discarding);
+- **provenance and match basis** (how a mapping was produced — name match, override file,
+  human review — kept as data, not implied by which table a row happens to sit in).
+
+**A derived match must never silently become verified merely because it agrees with a canonical
+name, or because Mechanism A already carries it.** Promotion from derived to verified is, and
+must remain, a human/evidence action.
+
+**Intent**: design (not yet build or migrate onto) a common external-identity abstraction that
+both mechanisms *could* eventually consume, while preserving each one's current trust semantics
+exactly — Mechanism A stays broad-and-derived for serving/read; Mechanism B stays sparse-and-
+verified for write-sensitive gating. Whether they eventually share one physical table, two
+tables with a shared contract, or something else is **not decided by this plan** and is
+explicitly deferred to whenever Phase 1 is authorized and scoped in detail — this document fixes
+the problem statement and the trust-semantics constraint, not the persistence design.
 
 **Must preserve**: Invariant 5 (no ID recycling), Invariant 6 (legacy UUIDs stay load-bearing
-until explicitly migrated), Invariant 8 (auditable human verification) — a name/slug match
-must never silently become `verified`.
+until explicitly migrated), Invariant 8 (auditable human verification) — a name/slug match, and
+the mere fact that Mechanism A already contains a mapping, must never cause a Mechanism-B-style
+`verified` status to be assigned automatically.
 
-**Acceptance criteria** (sketch, to be refined when this phase is authorized): every legacy
-model/brand UUID currently resolved by Mechanism A also resolves consistently (or is flagged as
-disagreeing) against Mechanism B; a shadow report can enumerate every case where A and B would
-answer differently, with zero silent divergence.
+**Acceptance criteria** (sketch, to be refined when this phase is authorized): a common
+external-identity contract exists that can represent a Mechanism-A-shaped derived mapping and a
+Mechanism-B-shaped verified mapping side by side for the same external ID, without either
+implying the other; every currently `verified` Mechanism B row is representable losslessly in
+the new contract; no existing consumer of either mechanism changes behavior as a result of the
+contract's introduction (this is an abstraction/design phase, not a cutover). The **likely** next
+concrete packet inside Phase 1 is a pure, read-only audit report/tool enumerating Mechanism A and
+Mechanism B side by side with their distinct trust levels made explicit (not "reconciling" them
+into one number) — see "Recommended next packet" in the amendment completion report. That packet
+is not authorized or implemented by this document.
 
 ## Phase 2 — Canonical DLT v2 shadow pipeline
 
