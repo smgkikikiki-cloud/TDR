@@ -4,6 +4,7 @@ import {
   isMarketDimension,
   missingReportPeriods,
   normalizeReportPeriod,
+  periodRangeLabel,
   resolveMarketWindow,
   shiftReportPeriod,
   sliceMarketFacts,
@@ -44,6 +45,13 @@ check("missing month is explicit, never silently skipped",
     ["2026-06-01", "2026-08-01"],
   ),
   ["2026-07-01"]);
+
+console.log("\nperiod range label — only formats the backend's own resolved window, never re-derives it");
+check("single month has no dash", periodRangeLabel("2026-08-01", "2026-08-01"), "ส.ค. 2569");
+check("multi-month window shows the effective range", periodRangeLabel("2026-08-01", "2026-10-01"), "ส.ค. 2569–ต.ค. 2569");
+check("range crossing a year boundary carries each Buddhist-era year", periodRangeLabel("2025-11-01", "2026-01-01"), "พ.ย. 2568–ม.ค. 2569");
+check("YTD window (Jan through the anchor month)", periodRangeLabel("2026-01-01", "2026-08-01"), "ม.ค. 2569–ส.ค. 2569");
+check("missing bound yields no label rather than a guess", periodRangeLabel(null, "2026-08-01"), "");
 
 console.log("\nregistration market dimensions — only supported canonical facets enter the contract");
 check("model is supported", isMarketDimension("model"), true);

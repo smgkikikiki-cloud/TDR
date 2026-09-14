@@ -1,5 +1,6 @@
 export type FreeCompareTrim = {
   id: string;
+  model_id?: string | null;
   brand_name?: string | null;
   model_name?: string | null;
   name?: string | null;

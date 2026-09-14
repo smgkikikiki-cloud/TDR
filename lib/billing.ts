@@ -2,7 +2,9 @@ import { createHmac, timingSafeEqual } from "node:crypto";
 import { adminDb } from "@/lib/supabase";
 
 export const REGISTRATION_PLAN = "registration_monthly";
+export const REGISTRATION_ANNUAL_PLAN = "registration_annual";
 export const REGISTRATION_PRODUCT = "registration_full";
+export type RegistrationPlan = typeof REGISTRATION_PLAN | typeof REGISTRATION_ANNUAL_PLAN;
 
 export class BillingError extends Error {
   constructor(public status: number, message: string) {
@@ -35,9 +37,15 @@ function stripeSecret() {
   return secret;
 }
 
-function registrationPriceId() {
-  const price = process.env.STRIPE_PRICE_REGISTRATION_MONTHLY;
-  if (!price) throw new BillingError(503, "registration subscription price is not configured");
+function registrationPriceId(plan: RegistrationPlan) {
+  const envName = plan === REGISTRATION_ANNUAL_PLAN
+    ? "STRIPE_PRICE_REGISTRATION_ANNUAL"
+    : "STRIPE_PRICE_REGISTRATION_MONTHLY";
+  const price = process.env[envName];
+  if (!price) {
+    const cadence = plan === REGISTRATION_ANNUAL_PLAN ? "annual" : "monthly";
+    throw new BillingError(503, `${cadence} registration subscription price is not configured`);
+  }
   return price;
 }
 
@@ -164,14 +172,16 @@ export async function createRegistrationCheckout(args: {
   accessToken: string;
   successUrl: string;
   cancelUrl: string;
+  plan?: RegistrationPlan;
 }) {
+  const plan = args.plan ?? REGISTRATION_PLAN;
   const member = await requireMember(args.accessToken);
   const customerId = await ensureStripeCustomer(member);
   const session = await cardGateway().request("/v1/checkout/sessions", {
     mode: "subscription",
     customer: customerId,
     client_reference_id: member.customerId,
-    "line_items[0][price]": registrationPriceId(),
+    "line_items[0][price]": registrationPriceId(plan),
     "line_items[0][quantity]": 1,
     success_url: args.successUrl,
     cancel_url: args.cancelUrl,
@@ -179,10 +189,10 @@ export async function createRegistrationCheckout(args: {
     "phone_number_collection[enabled]": true,
     "metadata[tdr_user_id]": member.userId,
     "metadata[tdr_customer_id]": member.customerId,
-    "metadata[plan_code]": REGISTRATION_PLAN,
+    "metadata[plan_code]": plan,
     "subscription_data[metadata][tdr_user_id]": member.userId,
     "subscription_data[metadata][tdr_customer_id]": member.customerId,
-    "subscription_data[metadata][plan_code]": REGISTRATION_PLAN,
+    "subscription_data[metadata][plan_code]": plan,
   });
   if (!session.url) throw new BillingError(502, "Stripe Checkout did not return a redirect URL");
   return { id: session.id as string, url: session.url as string };
@@ -216,13 +226,15 @@ export async function getBillingStatus(accessToken: string) {
     throw new BillingError(503, "could not load billing status");
   }
 
+  const stripeReady = Boolean(process.env.STRIPE_SECRET_KEY);
   return {
     user: { id: member.userId, customerId: member.customerId, email: member.email, phone: member.phone },
     customerBound: Boolean(profile?.provider_customer_id),
     subscription: subscription ?? null,
     entitlement: entitlement ?? null,
-    checkoutConfigured: Boolean(process.env.STRIPE_SECRET_KEY && process.env.STRIPE_PRICE_REGISTRATION_MONTHLY),
-    portalConfigured: Boolean(process.env.STRIPE_SECRET_KEY),
+    checkoutConfigured: Boolean(stripeReady && process.env.STRIPE_PRICE_REGISTRATION_MONTHLY),
+    annualCheckoutConfigured: Boolean(stripeReady && process.env.STRIPE_PRICE_REGISTRATION_ANNUAL),
+    portalConfigured: stripeReady,
   };
 }
 

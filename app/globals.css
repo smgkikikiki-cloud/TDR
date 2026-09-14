@@ -27,7 +27,8 @@ main { padding: 0 var(--pagePad) 68px; }
 .tdrMark { grid-column: 1 / span 2; color: var(--navy); font-size: 31px; line-height: .9; font-weight: 900; letter-spacing: -.045em; }
 .brandText { grid-column: 1 / span 2; color: var(--navy); font-size: 12px; font-weight: 900; letter-spacing: .015em; }
 .brandText b { color: var(--red); }
-.productTag { grid-column: 3; grid-row: 1 / span 2; align-self: stretch; display: flex; align-items: center; border-left: 1px solid var(--line); margin-left: 3px; padding-left: 14px; color: var(--ink); font-size: 12px; font-weight: 800; letter-spacing: .07em; }
+.productTag { grid-column: 3; grid-row: 1 / span 2; align-self: stretch; display: flex; align-items: center; gap: 7px; border-left: 1px solid var(--line); margin-left: 3px; padding-left: 14px; color: var(--navy); font-size: 11px; font-weight: 900; letter-spacing: .11em; }
+.productTag::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--red); flex: 0 0 auto; }
 .edition { color: var(--muted); font-size: 10px; letter-spacing: .06em; }
 .navline { border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 24px; min-height: 52px; }
 .navline nav { display: flex; align-items: center; gap: 29px; }
@@ -107,6 +108,10 @@ main { padding: 0 var(--pagePad) 68px; }
 table { width: 100%; border-collapse: collapse; font-size: 11px; }
 th { text-align: left; border-bottom: 2px solid var(--navy); padding: 12px 10px; font-size: 9px; letter-spacing: .03em; color: var(--muted); }
 td { padding: 16px 10px; border-bottom: 1px solid var(--line); }
+/* Scoped, not a change to the bare table/th/td above: .tableShell is only
+   used by /companies, so this floor only affects that one page's table. */
+.tableShell table { font-size: 13px; }
+.tableShell th { font-size: 11px; }
 .placeholderText { font-size: 13px; font-weight: 700; color: var(--ink); }
 .dash { color: #a6abb4; }
 .logoGrid { display: grid; grid-template-columns: repeat(6, 1fr); border-left: 1px solid var(--line); margin-top: 24px; }
@@ -192,10 +197,10 @@ td { padding: 16px 10px; border-bottom: 1px solid var(--line); }
 .upcomingCard dt { color:var(--muted); }.upcomingCard dd { margin:0; }
 .eventStream { max-width:900px; padding:20px 0; }
 .eventRow { display:grid; grid-template-columns:110px 1fr; gap:24px; padding:24px 0; border-bottom:1px solid var(--line); }
-.eventRow time { color:var(--muted); font-size:10px; }
-.eventRow small { color:var(--red); font-weight:800; font-size:8px; letter-spacing:.08em; }
-.eventRow h2 { font-size:21px; margin:6px 0; }.eventRow p { color:var(--muted); font-size:11px; line-height:1.65; }
-.eventRow a { font-size:10px; font-weight:700; }
+.eventRow time { color:var(--muted); font-size:11px; }
+.eventRow small { color:var(--red); font-weight:800; font-size:10px; letter-spacing:.08em; }
+.eventRow h2 { font-size:21px; margin:6px 0; }.eventRow p { color:var(--muted); font-size:13px; line-height:1.65; }
+.eventRow a { font-size:12px; font-weight:700; }
 .publicSearch { margin:28px 0; border:1px solid var(--navy); display:grid; grid-template-columns:1fr auto; max-width:900px; }
 .publicSearch input { border:0; outline:0; padding:16px; }.publicSearch button { border:0; border-left:1px solid var(--navy); background:white; padding:0 22px; font-weight:700; }
 .searchResults { display:grid; grid-template-columns:repeat(2,1fr); gap:28px; padding:10px 0 40px; }
