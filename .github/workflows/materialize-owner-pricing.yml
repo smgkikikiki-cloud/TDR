@@ -1,4 +1,4 @@
-name: Materialize owner pricing payload
+name: Recover owner pricing payload
 
 on:
   push:
@@ -9,89 +9,34 @@ permissions:
   contents: write
 
 jobs:
-  materialize:
+  recover:
     runs-on: ubuntu-latest
     if: github.actor != 'github-actions[bot]'
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Decode prepared pricing payload
+      - name: Recover partial prepared payload
         shell: bash
         run: |
           python - <<'PY'
           from pathlib import Path
-          import base64, gzip, io, json, tarfile, zipfile
-
-          root = Path('.')
-          chunk_dir = root / 'tmp' / 'owner-pricing-payload'
-          chunks = sorted(chunk_dir.glob('part*.txt'))
-          if not chunks:
-              raise SystemExit('prepared payload chunks not found')
-          encoded = ''.join(p.read_text(encoding='utf-8').strip() for p in chunks)
-          raw = gzip.decompress(base64.b64decode(encoded))
-          print('decoded bytes:', len(raw), 'prefix:', repr(raw[:120]))
-
-          def write_mapping(mapping):
-              written = 0
-              for path, content in mapping.items():
-                  p = root / str(path)
-                  p.parent.mkdir(parents=True, exist_ok=True)
-                  if isinstance(content, dict) and 'content' in content:
-                      content = content['content']
-                  if isinstance(content, (dict, list)):
-                      text = json.dumps(content, ensure_ascii=False, indent=2) + '\n'
-                      p.write_text(text, encoding='utf-8')
-                  elif isinstance(content, str):
-                      p.write_text(content, encoding='utf-8')
-                  else:
-                      raise TypeError(f'unsupported content for {path}: {type(content)}')
-                  written += 1
-              return written
-
-          materialized = 0
-          if raw.startswith(b'{') or raw.startswith(b'['):
-              obj = json.loads(raw.decode('utf-8'))
-              print('json type:', type(obj).__name__)
-              if isinstance(obj, dict):
-                  print('json keys:', sorted(obj)[:30])
-                  if isinstance(obj.get('files'), dict):
-                      materialized = write_mapping(obj['files'])
-                  elif isinstance(obj.get('artifacts'), dict):
-                      materialized = write_mapping(obj['artifacts'])
-                  elif all(isinstance(k, str) and ('/' in k or k.endswith(('.json','.md','.txt'))) for k in obj):
-                      materialized = write_mapping(obj)
-              if not materialized:
-                  raise SystemExit('decoded JSON schema not recognized; see keys above')
-          else:
-              bio = io.BytesIO(raw)
-              if tarfile.is_tarfile(fileobj := io.BytesIO(raw)):
-                  with tarfile.open(fileobj=fileobj, mode='r:*') as tf:
-                      tf.extractall(root, filter='data')
-                      materialized = len(tf.getmembers())
-              else:
-                  bio.seek(0)
-                  if zipfile.is_zipfile(bio):
-                      bio.seek(0)
-                      with zipfile.ZipFile(bio) as zf:
-                          zf.extractall(root)
-                          materialized = len(zf.infolist())
-              if not materialized:
-                  raise SystemExit('decoded payload is neither recognized JSON nor tar/zip')
-
-          print('materialized entries:', materialized)
+          import base64, zlib
+          chunk_dir = Path('tmp/owner-pricing-payload')
+          encoded = ''.join(p.read_text(encoding='utf-8').strip() for p in sorted(chunk_dir.glob('part*.txt')))
+          compressed = base64.b64decode(encoded)
+          dec = zlib.decompressobj(16 + zlib.MAX_WBITS)
+          raw = dec.decompress(compressed)
+          out = chunk_dir / 'recovered.txt'
+          out.write_bytes(raw)
+          print('compressed bytes', len(compressed), 'recovered bytes', len(raw), 'eof', dec.eof)
+          print(raw[:300].decode('utf-8', errors='replace'))
           PY
-      - name: Remove transport chunks and temporary workflow
-        shell: bash
-        run: |
-          rm -rf tmp/owner-pricing-payload
-          rm -f .github/workflows/materialize-owner-pricing.yml
-      - name: Commit materialized payload
+      - name: Commit recovered payload
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          git status --short
-          git commit -m "Materialize owner pricing registry" || exit 0
+          git add tmp/owner-pricing-payload/recovered.txt
+          git commit -m "Recover prepared owner pricing payload" || exit 0
           git push origin HEAD:data/owner-pricing-registry-2026-09-14
