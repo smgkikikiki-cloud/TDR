@@ -5,32 +5,54 @@ completes or starts any migration packet.
 
 ## Current migration phase
 
-**Phase 0 — architecture contract and parity foundation.** Documentation set created
-2026-09-14 (`CURRENT_STATE.md`, `MASTER_ARCHITECTURE.md`, `INVARIANTS.md`, `MIGRATION_PLAN.md`,
-this file, `BASELINE.md`), plus one narrowly-scoped regression test (see "Completed migration
-packets" below). **Received architecture review; amended 2026-09-15** (see
-`LIVE_IDENTITY_BASELINE_2026-09-15.md`) to incorporate two reviewer corrections:
+**Phase 0 is complete.** Documentation set created 2026-09-14 (`CURRENT_STATE.md`,
+`MASTER_ARCHITECTURE.md`, `INVARIANTS.md`, `MIGRATION_PLAN.md`, this file, `BASELINE.md`), plus
+one narrowly-scoped regression test (see "Completed migration packets" below). Received
+architecture review; amended 2026-09-15 (`LIVE_IDENTITY_BASELINE_2026-09-15.md`) for two
+corrections: (1) canonical vehicle identity documented as a graph (Generation scoping two
+distinct children, Configuration/Variant and MarketTrim, linked optionally — not a strict
+`Configuration → MarketTrim` chain; "canonical identity graph" replaces "canonical vehicle
+spine"), and (2) a live, read-only Mechanism A/B inspection recorded and the Phase 1 problem
+statement rewritten around derived-vs-verified trust semantics rather than "reconciling" two
+crosswalks. Both the 2026-09-14 pass and the 2026-09-15 amendment were documentation-only (the
+2026-09-14 pass also added one pure-Python regression test).
 
-1. **Identity-graph decision**: canonical vehicle identity is documented as a graph (Generation
-   scoping two distinct children, Configuration/Variant and MarketTrim, linked optionally — not a
-   strict `Configuration → MarketTrim` chain). `MASTER_ARCHITECTURE.md` and `MIGRATION_PLAN.md`
-   were revised; the term "canonical identity graph" replaces "canonical vehicle spine."
-2. **Live external-identity baseline recorded**: a 2026-09-15 reviewer-supplied, read-only live
-   Supabase inspection found Mechanism A (383 derived Brand+Model links) and Mechanism B (1
-   verified Brand/Model mapping) are not comparable registries — Mechanism A is broad/derived for
-   serving, Mechanism B is a sparse, explicit write-authority gate. Recorded in
-   `LIVE_IDENTITY_BASELINE_2026-09-15.md`, linked from `BASELINE.md` and `CURRENT_STATE.md`. The
-   Phase 1 problem statement in `MIGRATION_PLAN.md` was rewritten around this — it is now about
-   building one external-identity contract that preserves derived-vs-verified trust semantics,
-   not about "reconciling" two crosswalks into agreement.
+**Phase 1A is implemented (2026-09-16).** Phase 1A was the narrow first packet of Phase 1: a
+read-only external-identity contract and audit engine. What now exists:
 
-**No production behavior, schema, serving path, write path, canonical data, or application code
-changed in either the 2026-09-14 pass or the 2026-09-15 amendment.** Both passes are
-documentation-only (the 2026-09-14 pass also added one pure-Python regression test; the
-2026-09-15 amendment added no test changes).
+- `docs/vehicle-platform/EXTERNAL_IDENTITY_CONTRACT.md` — the vocabulary (external namespace/
+  entity type/ID, canonical entity type/ID, mapping state, trust level, provenance), the
+  comparability rule, and the audit classifications.
+- `lib/external-identity/types.ts`, `audit.ts`, `mechanism-adapters.ts` — pure TypeScript
+  (no I/O): the contract types, the classification engine, and adapters converting each
+  mechanism's actual row shape into the shared contract.
+- `scripts/audit-external-identity.ts` — a live, **SELECT-only** command (no insert / update /
+  delete / upsert / RPC of any kind) that reads `current_vehicle_brands`,
+  `current_vehicle_models`, and `canonical_object_map` and prints a human-readable summary plus a
+  deterministic JSON report. Fails clearly (exit code 2, no fabricated output) when server-side
+  Supabase credentials are absent.
+- `scripts/check-external-identity-audit.ts` — pure tests against synthetic fixtures only (no
+  2026-09-15 counts hard-coded), wired into `npm run check`.
 
-Phases 1–7 (`MIGRATION_PLAN.md`) remain **not authorized and not started**. This amendment does
-not start Phase 1 — it only corrects Phase 0's documentation.
+**Production identity behavior is unchanged.** Mechanism A (`tdr_bridge/release.py`, the
+`current_*` views) and Mechanism B (`canonical_object_map`, `lib/canonical-write-shadow.ts`)
+behave exactly as before Phase 1A — this packet only reads them and reports on what it reads.
+
+**No persistence migration has begun.** Phase 1A does not choose whether a future
+external-identity registry wraps an existing mechanism, replaces one, or becomes something new —
+see `MIGRATION_PLAN.md`'s Phase 1 section. **That decision, and the rest of Phase 1, remain
+unauthorized and unstarted; Phase 1A completing does not authorize it.**
+
+**Live audit status**: not run against a live Supabase project in this pass — no server-side
+credentials were available in this session (confirmed: no `SUPABASE_*` environment variables
+set). The tool was exercised against its own synthetic test fixtures only
+(`scripts/check-external-identity-audit.ts`, all passing) and its no-credentials failure path was
+verified directly (`node --experimental-strip-types scripts/audit-external-identity.ts` exits 2
+with a clear message, no live Supabase call attempted). No live result exists to compare against
+`LIVE_IDENTITY_BASELINE_2026-09-15.md` as of this pass.
+
+Phases 1B (rest of Phase 1) and 2–7 (`MIGRATION_PLAN.md`) remain **not authorized and not
+started**.
 
 The separate, pre-existing Masterplan Phase A–J sequence
 (`automotive/vehicle_master/docs/consolidation/MASTERPLAN.md`) is independent of this Phase
@@ -72,8 +94,9 @@ started.
 | Phase 0 documentation + baseline | 0 | Added `docs/vehicle-platform/*`. No code/behavior change. |
 | `test_enriched_release_identity_is_stable_and_covers_lifecycle_and_history` | 0 | Closed a confirmed gap: the production-published `release_enriched.enrich_release` payload had no dedicated determinism/shape test (only the base `ReleaseBuilder` output did). Added to `automotive/vehicle_master/tests/test_tdr_bridge.py`. Pure-Python, no Supabase required. |
 | Phase 0 amendment: identity-graph correction + live identity baseline | 0 | Reviewer-directed correction of `MASTER_ARCHITECTURE.md`/`MIGRATION_PLAN.md`'s identity structure and Phase 1 problem statement; added `LIVE_IDENTITY_BASELINE_2026-09-15.md` recording reviewer-supplied live Mechanism A/B evidence. Documentation only, no code change. |
+| Phase 1A: external-identity contract + read-only audit engine | 1 | Added `EXTERNAL_IDENTITY_CONTRACT.md`; `lib/external-identity/{types,audit,mechanism-adapters}.ts`; live SELECT-only `scripts/audit-external-identity.ts`; `scripts/check-external-identity-audit.ts` (wired into `npm run check`). No table created, no migration, no write to `canonical_object_map`, no change to `tdr_bridge/release.py` or `lib/canonical-write-shadow.ts`. |
 
-## Known parity gaps (things Phase 0 could not close)
+## Known parity gaps (from Phase 0, updated as later packets affect them)
 
 1. **No test exercises `publish_vehicle_release` or `rollback_vehicle_release`.** Both are
    Postgres functions in `supabase/migration_v15_canonical_vehicle_release.sql`; this repository
@@ -84,15 +107,14 @@ started.
    `LIVE_SUPABASE_VERIFICATION.md` (2026-09-09) confirmed the *prior* anon-read policy was live;
    this pass could not re-verify against a live project (no credentials available in this
    session). See `BASELINE.md`.
-3. **No automated/repeatable comparison between Mechanism A and Mechanism B exists.** A live,
-   reviewer-supplied point-in-time comparison was performed manually on 2026-09-15
-   (`LIVE_IDENTITY_BASELINE_2026-09-15.md`: 383 Mechanism A links, 1 verified Mechanism B link,
-   0 disagreements), which resolves the *coverage/trust-semantics* uncertainty this item
-   originally flagged — but no checked-in script, view, or test reproduces that comparison, so
-   the result cannot be re-verified except by another manual live query, and it is a snapshot,
-   not a standing guarantee (both mechanisms move independently). Building a reusable audit tool
-   is explicitly named as the likely Phase 1A packet (see "Next approved step"), not implemented
-   here.
+3. **Resolved by Phase 1A**: a reusable, checked-in comparison now exists
+   (`scripts/audit-external-identity.ts` + `lib/external-identity/`), superseding the "no
+   automated/repeatable comparison" gap this item previously flagged. What remains open: the tool
+   has not yet been run against live production data in any pass (see "Live audit status" above)
+   — the 2026-09-15 manual comparison in `LIVE_IDENTITY_BASELINE_2026-09-15.md` is therefore still
+   the only live evidence on record, and it remains a point-in-time snapshot, not a standing
+   guarantee (both mechanisms move independently). Running the new tool against a live project and
+   recording the result as a dated addendum is the natural next check-in, not a new packet.
 4. **Whether the legacy per-model serving projection path (§9 mechanism 2 in
    `CURRENT_STATE.md`) is still operationally exercised, or has been fully superseded by the
    full-release path, is not established from repository state alone.** Both are wired, tested,
@@ -103,21 +125,19 @@ started.
 
 ## Next approved step
 
-**None.** Per the task brief, Phase 1 remains unauthorized until the next explicit task — this
-2026-09-15 amendment corrects Phase 0's documentation only and does not authorize or start Phase 1.
+**None.** Phase 1A is complete; the rest of Phase 1 remains unauthorized until a separate,
+explicit task authorizes it. Completing Phase 1A does not itself authorize continuing Phase 1.
 
-The likely next packet, if and when authorized, is **Phase 1A: a pure, read-only external-identity
-contract and audit abstraction** that:
-- defines a shared shape/vocabulary able to represent a Mechanism-A-style derived mapping and a
-  Mechanism-B-style verified mapping side by side, for the same external ID, without collapsing
-  one into the other;
-- ships as a read-only audit report/tool over the two existing mechanisms (no new table, no
-  write path, no auto-population of `canonical_object_map`, no change to
-  `lib/canonical-write-shadow.ts` or the release builder);
-- makes the 2026-09-15 manual comparison in `LIVE_IDENTITY_BASELINE_2026-09-15.md` reproducible
-  and re-runnable, instead of ad hoc;
-- preserves Mechanism B's `verified`-only write-authority gate exactly as-is — a derived
-  Mechanism A match must never become an implicit `verified` row.
+Candidates for a future, separately-authorized **Phase 1B** (not implemented, not started, not
+scoped in detail here):
+- run `scripts/audit-external-identity.ts` against the live production project and record the
+  result as a dated addendum (this needs only credentials, not new code);
+- use that live result plus `EXTERNAL_IDENTITY_CONTRACT.md`'s vocabulary to actually decide the
+  Phase 1 persistence question — wrap an existing mechanism, replace one, or introduce a new
+  canonical abstraction — which Phase 1A deliberately left open;
+- if a persistence decision is made, design (not yet implement) the migration path for any
+  existing `canonical_object_map` `verified` rows and any Mechanism A consumer that would need to
+  read the new abstraction instead.
 
-Phase 1A is **not implemented by this amendment**. Do not start Phase 1/1A work from this file
-alone — this file records state; it does not grant authorization.
+Do not start Phase 1B work from this file alone — this file records state; it does not grant
+authorization.

@@ -368,6 +368,15 @@ it look more like Mechanism A. They currently have no shared contract. This dist
 competing crosswalks racing to the same answer," is the actual problem Phase 1 needs to address —
 see `MIGRATION_PLAN.md`'s Phase 1 section for the corrected problem statement.
 
+**As of Phase 1A (2026-09-16)**, "no shared contract" is narrowed to "no shared *persistence*."
+`docs/vehicle-platform/EXTERNAL_IDENTITY_CONTRACT.md` now defines a read-only vocabulary both
+mechanisms' rows can be converted into for comparison, implemented in `lib/external-identity/`
+and runnable live via `node --experimental-strip-types scripts/audit-external-identity.ts`
+(SELECT-only; requires the same server-side Supabase credentials as the rest of the admin
+tooling). This is observational infrastructure only — it reads both mechanisms and reports how
+they relate; it does not write to either, does not choose one as authoritative, and does not
+change `tdr_bridge/release.py` or `lib/canonical-write-shadow.ts`.
+
 **A third, narrower crosswalk layer** exists purely for registration ingestion and does not
 resolve to canonical IDs at all: `registration_brand_aliases`/`registration_model_aliases`
 (`supabase/migration_v17_registration_analytics.sql`) map raw DLT brand/model text to a

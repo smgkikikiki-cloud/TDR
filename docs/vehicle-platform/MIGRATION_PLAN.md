@@ -1,16 +1,21 @@
 # Migration Plan
 
 This is the high-level sequence for converging `main` toward the target architecture in
-`MASTER_ARCHITECTURE.md`, while preserving every rule in `INVARIANTS.md`. **Only Phase 0 is
-authorized and implemented by this pass.** Phases 1–7 are described here at the level of intent
-and acceptance criteria only, precisely so a future agent does not need to guess the sequence —
-implementing any of them is explicitly out of scope until a separate, later task authorizes it.
+`MASTER_ARCHITECTURE.md`, while preserving every rule in `INVARIANTS.md`. Phases 1–7 are
+described here at the level of intent and acceptance criteria only, precisely so a future agent
+does not need to guess the sequence — implementing any of them beyond what is explicitly recorded
+as done below is out of scope until a separate task authorizes it.
 
 **2026-09-15 amendment**: architecture review and a live Supabase inspection corrected two points
 in the original Phase 0 pass — see `LIVE_IDENTITY_BASELINE_2026-09-15.md` and
 `status/CURRENT.md`. The identity graph shape below and the Phase 1 problem statement were
-revised accordingly. This amendment is still Phase 0 (documentation only); it does not start
+revised accordingly. This amendment was still Phase 0 (documentation only); it did not start
 Phase 1.
+
+**2026-09-16 — Phase 1A implemented.** Phase 0 is complete. The narrow first packet of Phase 1
+(a read-only external-identity contract and audit engine — see the "Phase 1A" subsection under
+Phase 1 below, `EXTERNAL_IDENTITY_CONTRACT.md`, and `status/CURRENT.md`) is now implemented. The
+rest of Phase 1 — choosing a persistence design — remains unauthorized.
 
 ## Relationship to the existing `docs/consolidation/MASTERPLAN.md` (Phase A–J)
 
@@ -108,16 +113,35 @@ until explicitly migrated), Invariant 8 (auditable human verification) — a nam
 the mere fact that Mechanism A already contains a mapping, must never cause a Mechanism-B-style
 `verified` status to be assigned automatically.
 
-**Acceptance criteria** (sketch, to be refined when this phase is authorized): a common
+**Acceptance criteria** (sketch, to be refined when the rest of Phase 1 is authorized): a common
 external-identity contract exists that can represent a Mechanism-A-shaped derived mapping and a
 Mechanism-B-shaped verified mapping side by side for the same external ID, without either
 implying the other; every currently `verified` Mechanism B row is representable losslessly in
 the new contract; no existing consumer of either mechanism changes behavior as a result of the
-contract's introduction (this is an abstraction/design phase, not a cutover). The **likely** next
-concrete packet inside Phase 1 is a pure, read-only audit report/tool enumerating Mechanism A and
-Mechanism B side by side with their distinct trust levels made explicit (not "reconciling" them
-into one number) — see "Recommended next packet" in the amendment completion report. That packet
-is not authorized or implemented by this document.
+contract's introduction (this is an abstraction/design phase, not a cutover).
+
+### Phase 1A — implemented (this pass, 2026-09-16 — still Phase 1, not Phase 0)
+
+**Phase 1A is done.** It was scoped narrowly to exactly the read-only audit/contract packet
+sketched above, and only that: `docs/vehicle-platform/EXTERNAL_IDENTITY_CONTRACT.md` defines the
+shared vocabulary (external namespace/entity type/ID, canonical entity type/ID, mapping state,
+trust level, provenance) and the comparability rule; `lib/external-identity/{types,audit,
+mechanism-adapters}.ts` implement it as pure, side-effect-free TypeScript plus thin adapters from
+each mechanism's actual row shape; `scripts/audit-external-identity.ts` is a read-only (SELECT
+only — no insert/update/delete/upsert/RPC) live command that reads `current_vehicle_brands`,
+`current_vehicle_models`, and `canonical_object_map` and prints a human-readable summary plus a
+deterministic JSON report; `scripts/check-external-identity-audit.ts` (wired into `npm run check`)
+covers exact agreement, disagreement, derived-only, verified-only, each of Mechanism B's
+non-verified states, the non-comparable-target-level case, trust non-escalation, and
+order-independent determinism, entirely against synthetic fixtures.
+
+**What Phase 1A explicitly did not do**: choose a persistence model, migrate either mechanism
+onto the new contract, change `tdr_bridge/release.py` or `lib/canonical-write-shadow.ts`, write
+anything to `canonical_object_map`, or auto-verify anything. See
+`EXTERNAL_IDENTITY_CONTRACT.md`'s "Non-goals" section and `status/CURRENT.md` for the exact
+boundary. **The rest of Phase 1 — actually deciding whether a future external-identity registry
+wraps an existing mechanism, replaces one, or becomes something new — remains unauthorized and
+unstarted.**
 
 ## Phase 2 — Canonical DLT v2 shadow pipeline
 
