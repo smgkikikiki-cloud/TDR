@@ -1,0 +1,36 @@
+{
+  "source": "owner_pricing_directory_2026_09_14",
+  "source_record_count": 170,
+  "fully_applied_rows": 76,
+  "partially_applied_rows": 13,
+  "unapplied_rows": 81,
+  "rows_not_fully_applied": 94,
+  "canonical_price_observations_added": 161,
+  "unique_market_trims_priced": 161,
+  "canonical_target_id_repairs": 11,
+  "unresolved_reason_counts": {
+    "ESTIMATED_NOT_OFFICIAL": 2,
+    "GRADE_MISMATCH": 1,
+    "NO_CANONICAL_TRIM_MATCH": 3,
+    "NO_OFFICIAL_PRICE": 7,
+    "PARTIAL_DRIVETRAIN_MISMATCH": 1,
+    "PARTIAL_GRADE_MISMATCH": 1,
+    "PARTIAL_NO_CANONICAL_TRIM": 3,
+    "PARTIAL_PRICE_RANGE": 5,
+    "PARTIAL_TRIM_IDENTITY_AMBIGUOUS": 1,
+    "PARTIAL_TRIM_IDENTITY_MISMATCH": 2,
+    "PRICE_RANGE_ONLY": 49,
+    "PROTECTED_CANONICAL_SURFACE": 10,
+    "TRIM_GENERATION_MISMATCH": 2,
+    "TRIM_IDENTITY_AMBIGUOUS": 3,
+    "TRIM_IDENTITY_MISMATCH": 4
+  },
+  "observed_at": "2026-09-14",
+  "campaign_rows_promoted": 0,
+  "notes": [
+    "Only exact MSRP amounts bound to an existing canonical MarketTrim.id were promoted.",
+    "Grouped price ranges were retained as research and not fabricated into per-trim prices.",
+    "Promotion text is preserved verbatim in records.json but not promoted as a live campaign because reliable per-row start/end dates are absent.",
+    "Protected canonical surfaces were not modified to make price rows fit."
+  ]
+}

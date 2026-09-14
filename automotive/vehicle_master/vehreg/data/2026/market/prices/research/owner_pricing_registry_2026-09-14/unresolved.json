@@ -1,0 +1,1553 @@
+{
+  "source": "owner_pricing_directory_2026_09_14",
+  "columns": [
+    "source_index",
+    "page",
+    "brand",
+    "nameplate",
+    "trim_level_raw",
+    "msrp_raw",
+    "campaign_raw",
+    "canonical_model_ids",
+    "apply_status",
+    "unresolved_reason",
+    "price_observations"
+  ],
+  "rows": [
+    [
+      1,
+      1,
+      "GAC Aion",
+      "Aion ES",
+      "Aion ES (Taxi / Private EV)",
+      "859,000 บาท",
+      "สว่ นลดพเิศษ 100,000 บาท เหลือ 759,000 บาท + ประกันภัยชนั้ 1 ฟรี",
+      [
+        "aion.aion_es"
+      ],
+      "UNAPPLIED",
+      "TRIM_IDENTITY_AMBIGUOUS",
+      []
+    ],
+    [
+      2,
+      1,
+      "GAC Aion",
+      "Aion UT",
+      "Aion UT Standard / Long Range",
+      "-",
+      "- (ยงั ไมเ่ปิดตัวราคาจา  หน่ายอยา่ งเป็นทางการในไทย)",
+      [
+        "aion.aion_ut"
+      ],
+      "UNAPPLIED",
+      "NO_OFFICIAL_PRICE",
+      []
+    ],
+    [
+      3,
+      1,
+      "GAC Aion",
+      "Aion V",
+      "Aion V 602 Luxury",
+      "949,900 บาท",
+      "ราคาพเิศษ 899,900 บาท (สว่ นลด 50,000 บาท) + ดอกเบยี้ 1.98% นาน 48 เดือน หรอื ผอ่ น 9,850 บาท/ด. + ฟรโีฮมชารจ์ เจอร์",
+      [
+        "aion.aion_v"
+      ],
+      "UNAPPLIED",
+      "PROTECTED_CANONICAL_SURFACE",
+      []
+    ],
+    [
+      8,
+      1,
+      "Audi",
+      "A5",
+      "A5 Coupe / Sportback 40 TFSI S line A5 45 TFSI quattro S line Black Ed.",
+      "2,799,000 บาท 3,699,000 บาท",
+      "ราคาพเิศษชว่ งแคมเปญลด 300,000 บาท พรอ้ มโปรโมชนั่ ดอกเบยี้ พเิศษ 1.79% นาน 48 เดือน",
+      [
+        "audi.a5"
+      ],
+      "PARTIAL",
+      "PARTIAL_TRIM_IDENTITY_AMBIGUOUS",
+      [
+        [
+          "audi.a5.gen1.trim.coupe_40_tfsi_s_line_ice",
+          2799000,
+          "A5 Coupe / Sportback 40 TFSI S line",
+          "Coupe 40 TFSI S line",
+          "manual_group_expand"
+        ],
+        [
+          "audi.a5.gen1.trim.sportback_40_tfsi_s_line_ice",
+          2799000,
+          "A5 Coupe / Sportback 40 TFSI S line",
+          "Sportback 40 TFSI S line",
+          "manual_group_expand"
+        ]
+      ]
+    ],
+    [
+      10,
+      1,
+      "Audi",
+      "Audi A6 e-tron",
+      "A6 e-tron Sportback / Avant",
+      "-",
+      "- (เตรยี มเปิดตัวอยา่ งเป็นทางการในไทย)",
+      [
+        "audi.a6_etron"
+      ],
+      "UNAPPLIED",
+      "NO_OFFICIAL_PRICE",
+      []
+    ],
+    [
+      17,
+      2,
+      "Audi",
+      "Audi Q6 e-tron",
+      "Q6 e-tron performance / quattro",
+      "-",
+      "- (อยูร่ ะหวา่ งแผนการน  าเขา้ และเปิดราคา)",
+      [
+        "audi.q6_etron"
+      ],
+      "UNAPPLIED",
+      "NO_OFFICIAL_PRICE",
+      []
+    ],
+    [
+      23,
+      2,
+      "Avatr",
+      "Avatr 07",
+      "Avatr 07 Pro / Max / Ultra",
+      "-",
+      "- (แผนเปิดตัวและประกาศราคาชว่ งไตรมาสถัดไป)",
+      [
+        "avatr.avatr_07"
+      ],
+      "UNAPPLIED",
+      "NO_OFFICIAL_PRICE",
+      []
+    ],
+    [
+      24,
+      2,
+      "Avatr",
+      "Avatr 11",
+      "Avatr 11 Standard Range Avatr 11 Long Range AWD",
+      "2,099,000 บาท 2,299,000 บาท",
+      "ราคาโปรโมชนั่ เปิดตัวลด 100,000 บาท + ฟรปี ระกันภัยชนั้ 1 นาน 2 ปี + ฟรที ่ีชารจ์ ติดผนัง",
+      [
+        "avatr.avatr_11"
+      ],
+      "PARTIAL",
+      "PARTIAL_DRIVETRAIN_MISMATCH",
+      [
+        [
+          "avatr.avatr_11.gen1.trim.standard_range_rwd_bev",
+          2099000,
+          "Avatr 11 Standard Range",
+          "Standard Range (RWD)",
+          "manual"
+        ]
+      ]
+    ],
+    [
+      33,
+      3,
+      "BMW",
+      "iX3",
+      "iX3 M Sport",
+      "3,699,000 บาท",
+      "ราคาพเิศษ 2,999,000 บาท (สว่ นลดเงินสด 700,000 บาท) แคมเปญ Clearance Deal",
+      [
+        "bmw.bmw_ix3"
+      ],
+      "UNAPPLIED",
+      "TRIM_IDENTITY_AMBIGUOUS",
+      []
+    ],
+    [
+      50,
+      3,
+      "BYD",
+      "Atto 3",
+      "Premium 50.25 kWh Extended 60.48 kWh",
+      "669,900 บาท 769,900 บาท",
+      "ราคาพเิศษ 609,900 บาท (ลด 60,000) ในรุน่ Premium และ 649,900 บาท (ลด 120,000) ในรุน่ Extended + Rever Care รบั ประกันตัวรถและแบตเตอร ี่8 ปี",
+      [
+        "byd.atto3"
+      ],
+      "UNAPPLIED",
+      "PROTECTED_CANONICAL_SURFACE",
+      []
+    ],
+    [
+      54,
+      4,
+      "BYD",
+      "Dolphin Mini (Seagull)",
+      "ATTO 1 / Seagull Premium",
+      "459,900 บาท",
+      "ราคาโปรโมชนั่ พเิศษ 399,900 บาท (สว่ นลดเงินสด 60,000 บาท) + ฟรปี ระกันภัยชนั้ 1",
+      [
+        "byd.seagull"
+      ],
+      "UNAPPLIED",
+      "TRIM_IDENTITY_MISMATCH",
+      []
+    ],
+    [
+      56,
+      4,
+      "BYD",
+      "Seal 5 DM-i",
+      "Seal 5 DM-i Dynamic / Premium",
+      "-",
+      "- (รอเปิดตัวท  าตลาดอยา่ งเป็นทางการ)",
+      [
+        "byd.seal_5_dmi"
+      ],
+      "UNAPPLIED",
+      "NO_OFFICIAL_PRICE",
+      []
+    ],
+    [
+      58,
+      4,
+      "BYD",
+      "Sealion 6 DM-i",
+      "Dynamic DM-i Premium DM-i",
+      "939,900 บาท 1,099,000 บาท",
+      "ดอกเบยี้ 0.99% หรอื เลือกรบั สว่ นลดพเิศษ 50,000 บาท พรอ้ มฟรปี ระกันชนั้ 1 และ Smart Home Charger",
+      [
+        "byd.sealion6"
+      ],
+      "UNAPPLIED",
+      "PROTECTED_CANONICAL_SURFACE",
+      []
+    ],
+    [
+      60,
+      4,
+      "BYD",
+      "Shark 6",
+      "Shark 6 DMO Dual Motor AWD",
+      "-",
+      "- (เตรยี มเปิดตัวอยา่ งเป็นทางการในไทย)",
+      [
+        "byd.shark6"
+      ],
+      "UNAPPLIED",
+      "NO_OFFICIAL_PRICE",
+      []
+    ],
+    [
+      72,
+      4,
+      "Deepal",
+      "Deepal L07",
+      "L07 Standard Range L07 Long Range",
+      "1,199,000 บาท 1,329,000 บาท",
+      "สว่ นลดพเิศษ 100,000 บาท เหลือ 1,099,000 - 1,229,000 บาท + โฮมชารจ์ เจอรพ์ รอ้ มติดตัง้ ฟรี",
+      [
+        "deepal.deepal_l07"
+      ],
+      "PARTIAL",
+      "PARTIAL_TRIM_IDENTITY_MISMATCH",
+      [
+        [
+          "deepal.deepal_l07.gen1.trim.l07_standard_540_bev",
+          1199000,
+          "L07 Standard Range",
+          "L07 Standard 540",
+          "manual"
+        ]
+      ]
+    ],
+    [
+      73,
+      4,
+      "Deepal",
+      "Deepal S05",
+      "S05 BEV Plus S05 BEV Max S05 BEV Max Long Range",
+      "849,000 บาท 899,000 บาท 999,000 บาท",
+      "ราคาพเิศษ 799,000 บาท (ลด 50,000), Max 849,000 บาท (ลด 50,000), Long Range 969,000 บาท (ลด 30,000) + Lifetime Warranty แบตเตอรี่",
+      [
+        "deepal.deepal_s05"
+      ],
+      "UNAPPLIED",
+      "PROTECTED_CANONICAL_SURFACE",
+      []
+    ],
+    [
+      74,
+      4,
+      "Deepal",
+      "Deepal S07",
+      "S07 Standard Range S07 Long Range",
+      "1,399,000 บาท 1,499,000 บาท",
+      "ราคาพเิศษลดทันที 100,000 บาท เหลือ 1,299,000 - 1,399,000 บาท + ดอกเบยี้ 1.88% + ประกันชนั้ 1",
+      [
+        "deepal.deepal_s07"
+      ],
+      "UNAPPLIED",
+      "PROTECTED_CANONICAL_SURFACE",
+      []
+    ],
+    [
+      75,
+      4,
+      "Denza",
+      "Denza D9",
+      "D9 Premium FWD D9 Performance AWD",
+      "2,154,900 บาท 2,589,900 บาท",
+      "ราคาแคมเปญชว่ งแนะน  า 1,899,900 บาท (FWD) และ 2,499,900 บาท (AWD) + บรกิ ารพรเีมยี มรบั สง่ ซอ่ มบา  รุงและโฮม ชารจ์ เจอรฟ์ รี",
+      [
+        "denza.denza_d9"
+      ],
+      "PARTIAL",
+      "PARTIAL_GRADE_MISMATCH",
+      [
+        [
+          "denza.denza_d9.gen1.trim.d9_ev_premium_fwd_bev",
+          2154900,
+          "D9 Premium FWD",
+          "D9 EV Premium (FWD)",
+          "manual"
+        ]
+      ]
+    ],
+    [
+      82,
+      4,
+      "Ford",
+      "Everest",
+      "Trend / Sport Titanium+ 4x2 / 4x4 Wildtrak 4x4",
+      "1,392,000 - 1,582,000 บาท 1,762,000 - 1,912,000 บาท 1,952,000 บาท",
+      "ดอกเบยี้ พเิศษ 0.99% หรอื เลือกรบั สว่ นลดเงินสด 80,000 บาท + ฟรปี ระกันภัยชนั้ 1 และโปรแกรม Ford Care 5 ปี",
+      [
+        "ford.everest"
+      ],
+      "PARTIAL",
+      "PARTIAL_PRICE_RANGE",
+      [
+        [
+          "ford.everest.u704.trim.wildtrak_2_0l_bi_turbo_10at_4x4_ice",
+          1952000,
+          "Wildtrak 4x4",
+          "Wildtrak 2.0L Bi-Turbo 10AT 4x4",
+          "partial_exact"
+        ]
+      ]
+    ],
+    [
+      84,
+      4,
+      "Ford",
+      "Ranger Cab",
+      "Open Cab XL / XL+ / XLS / XLT",
+      "632,000 - 829,000 บาท",
+      "ดาวน์เรมิ่ ต้นเพยี ง 19,900 บาท หรอื ผอ่ นดอกเบยี้ 0.99% 48 เดือน + ฟรปี ระกันภัยชนั้ 1",
+      [
+        "ford.ranger_cab"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      85,
+      4,
+      "Ford",
+      "Ranger Double Cab",
+      "Double Cab Sport / Wildtrak Raptor 2.0 Bi-Turbo / 3.0 V6",
+      "964,000 - 1,329,000 บาท 1,829,000 - 2,019,000 บาท",
+      "Wildtrak ดอกเบยี้ 0.99% นาน 48 เดือน หรอื สว่ นลด 60,000 บาท; Raptor ฟรปี ระกันชนั้ 1 และแพก็ เกจบา  รุงรกั ษา 5 ปี",
+      [
+        "ford.ranger_double_cab"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      88,
+      5,
+      "Geely",
+      "Geely EX5",
+      "EX5 Standard / Long Range",
+      "899,000 - 999,000 บาท (คาดการณ)์",
+      "โปรโมชนั่ พรบี ุก๊ ก้ิง: รบั สทิ ธฟิ์ ร ีWallbox พรอ้ มติดตัง้ + ประกันภัยชนั้ 1 ฟร ี1 ปี",
+      [
+        "geely.geely_ex5"
+      ],
+      "UNAPPLIED",
+      "ESTIMATED_NOT_OFFICIAL",
+      []
+    ],
+    [
+      90,
+      5,
+      "GWM",
+      "Haval H6",
+      "H6 Hybrid PRO / ULTRA H6 Plug-in Hybrid ULTRA",
+      "1,099,000 - 1,349,000 บาท 1,699,000 บาท",
+      "สว่ นลดพเิศษเงินสด 150,000 - 200,000 บาท + ดอกเบยี้ 0% นาน 48 เดือน พรอ้ ม GPSI ฟรคี ่าแรงบา  รุงรกั ษา 5 ปี",
+      [
+        "gwm.haval_h6"
+      ],
+      "UNAPPLIED",
+      "PROTECTED_CANONICAL_SURFACE",
+      []
+    ],
+    [
+      101,
+      5,
+      "Honda",
+      "City",
+      "City 1.0 Turbo V / SV / RS City e:HEV SV / RS",
+      "629,000 - 749,000 บาท 729,000 - 799,000 บาท",
+      "ดอกเบยี้ 0% หรอื เลือกรบั ดับเบลิ้ สไมล์ พลัส ผอ่ นเรมิ่ ต้น 7,130 บาท/ด. + ฟรปี ระกันภัยชนั้ 1 + บตั รน้า  มนั 10,000 บาท",
+      [
+        "honda.city"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      102,
+      5,
+      "Honda",
+      "City Hatchback",
+      "City Hatchback Turbo S+ / SV / RS City Hatchback e:HEV SV / RS",
+      "599,000 - 749,000 บาท 729,000 - 799,000 บาท",
+      "ดอกเบยี้ 0% + ฟรปี ระกันภัย 1 ปี หรอื ดาวน์ต่  า 10% พรอ้ มบตั รเติมน้า  มนั มูลค่าสงู สดุ 20,000 บาท",
+      [
+        "honda.city_hatchback"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      103,
+      5,
+      "Honda",
+      "Civic",
+      "Civic 1.5 Turbo EL+ Civic e:HEV EL+ / RS",
+      "1,039,000 บาท 1,099,000 - 1,239,000 บาท",
+      "ดอกเบยี้ 0% ทกุ รุน่ ยอ่ ย หรอื ผอ่ นเรมิ่ ต้น 11,403 บาท/ด. + ฟรปี ระกันภัยชนั้ 1 + ฟรคี ่าแรงเชก็ ระยะ 5 ปี",
+      [
+        "honda.civic"
+      ],
+      "UNAPPLIED",
+      "NO_CANONICAL_TRIM_MATCH",
+      []
+    ],
+    [
+      104,
+      5,
+      "Honda",
+      "CR-V",
+      "1.5 Turbo E / ES 4WD / EL 4WD (7-Seat) e:HEV ES / e:HEV RS 4WD",
+      "1,419,000 - 1,649,000 บาท 1,589,000 - 1,729,000 บาท",
+      "ดอกเบยี้ 1.29% หรอื สว่ นลดพเิศษเงินสด 50,000 บาท + ประกันภัยชนั้ 1 ฟร ี+ Honda Ultimate Care",
+      [
+        "honda.crv"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      112,
+      6,
+      "Hyundai",
+      "Creta",
+      "Creta Trend / Style / Smart / Black Edition",
+      "789,000 - 899,000 บาท",
+      "ราคาพเิศษเคลียรส์ ต็อกลด 100,000 - 150,000 บาท หรอื เลือกผอ่ นดอกเบยี้ 0% นาน 48 เดือน",
+      [
+        "hyundai.creta"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      115,
+      6,
+      "Hyundai",
+      "Ioniq 5",
+      "Premium (58 kWh) Exclusive (72.6 kWh) Ioniq 5 N",
+      "1,699,000 บาท 1,899,000 บาท 3,790,000 บาท",
+      "สว่ นลดพเิศษเงินสด 100,000 บาท หรอื ดอกเบยี้ 0.99% + ฟรปี ระกันภัยชนั้ 1 และโฮมชารจ์ เจอรพ์ รอ้ มติดตัง้",
+      [
+        "hyundai.ioniq5"
+      ],
+      "UNAPPLIED",
+      "PROTECTED_CANONICAL_SURFACE",
+      []
+    ],
+    [
+      119,
+      6,
+      "Hyundai",
+      "Stargazer",
+      "Trend / Style / Smart 7 / Smart 6 / X",
+      "769,000 - 939,000 บาท",
+      "สว่ นลดเงินสดพเิศษ 80,000 - 120,000 บาท หรอื ดอกเบยี้ 0% นาน 48 เดือน + ฟรปี ระกันภัยชนั้ 1",
+      [
+        "hyundai.stargazer"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      120,
+      6,
+      "Hyundai",
+      "Staria",
+      "Trend S / Style S / Premium",
+      "1,799,000 - 2,399,000 บาท",
+      "ดอกเบยี้ 1.19% หรอื เลือกรบั สว่ นลดเงินสด 60,000 บาท + ฟรปี ระกันภัยชนั้ 1",
+      [
+        "hyundai.staria"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      121,
+      6,
+      "Isuzu",
+      "D-Max Cab",
+      "Spacecab 1.9 / 3.0 Ddi S, L DA, Z",
+      "650,000 - 781,000 บาท",
+      "ขบั ฟร ี90 วนั หรอื เลือกรบั สว่ นลดชว่ ยผอ่ น 40,000 บาท + ดอกเบยี้ พเิศษ 1.45%",
+      [
+        "isuzu.dmax_cab"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      122,
+      6,
+      "Isuzu",
+      "D-Max Double Cab",
+      "Hi-Lander 4 ประต ู/ V-Cross 4x4",
+      "865,000 - 1,257,000 บาท",
+      "ขอ้ เสนอพเิศษดอกเบยี้ 0.99% หรอื เลือกรบั บตั รก  านัลอีซูซุมูลค่า 30,000 บาท + ฟรปี ระกันภัยชนั้ 1",
+      [
+        "isuzu.dmax_double_cab"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      125,
+      6,
+      "Isuzu",
+      "MU-X",
+      "Active / Elegant / Ultimate / RS",
+      "1,184,000 - 1,759,000 บาท",
+      "ดอกเบยี้ พเิศษ 0.99% หรอื เลือกรบั สว่ นลดเงินสด 50,000 บาท + ฟรปี ระกันภัยชนั้ 1 นาน 1 ปี",
+      [
+        "isuzu.mux"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      131,
+      6,
+      "Jaecoo",
+      "Jaecoo 7",
+      "Jaecoo 7 SHS (PHEV)",
+      "1,149,000 - 1,299,000 บาท (คาดการณ)์",
+      "โปรโมชนั่ Early Bird รบั สว่ นลด 50,000 บาท + ประกันภัยชนั้ 1 ฟรี",
+      [
+        "jaecoo.jaecoo_7"
+      ],
+      "UNAPPLIED",
+      "ESTIMATED_NOT_OFFICIAL",
+      []
+    ],
+    [
+      133,
+      6,
+      "Kia",
+      "Carnival",
+      "LX / EX / SXL / SXL Luxury",
+      "1,892,000 - 2,990,000 บาท",
+      "ดอกเบยี้ 1.79% พรอ้ มฟรกี ารบา  รุงรกั ษา Kia Care 5 ปี หรอื 100,000 กม. + ฟรปี ระกันภัยชนั้ 1",
+      [
+        "kia.carnival"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      134,
+      6,
+      "Kia",
+      "EV5",
+      "Light (64.2 kWh) Air / Earth Long Range (88.1 kWh) Earth Exclusive AWD",
+      "1,299,000 บาท 1,399,000 - 1,599,000 บาท 1,799,000 บาท",
+      "ดอกเบยี้ พเิศษ 1.88% + ฟรปี ระกันภัยชนั้ 1 นาน 1 ปี + ฟรโีฮมชารจ์ เจอรพ์ รอ้ มติดตัง้ + รบั ประกันคณุ ภาพ 7 ปี / 150,000 กม.",
+      [
+        "kia.ev5"
+      ],
+      "PARTIAL",
+      "PARTIAL_PRICE_RANGE",
+      [
+        [
+          "kia.ev5.gen1.trim.light_64_2_kwh_bev",
+          1299000,
+          "Light (64.2 kWh)",
+          "Light (64.2 kWh)",
+          "partial_exact"
+        ],
+        [
+          "kia.ev5.gen1.trim.earth_exclusive_awd_88_1_kwh_dual_bev",
+          1799000,
+          "Earth Exclusive AWD",
+          "Earth Exclusive AWD (88.1 kWh Dual Motor)",
+          "partial_exact"
+        ]
+      ]
+    ],
+    [
+      151,
+      7,
+      "Lexus",
+      "NX",
+      "NX 350h Luxury / Grand Luxury NX 450h+ F SPORT (PHEV)",
+      "3,240,000 - 3,590,000 บาท 4,320,000 บาท",
+      "ดอกเบยี้ พเิศษ 1.49% หรอื เลือกรบั ฟรปี ระกันภัยชนั้ 1 นาน 2 ปี",
+      [
+        "lexus.lexus_nx"
+      ],
+      "UNAPPLIED",
+      "NO_CANONICAL_TRIM_MATCH",
+      []
+    ],
+    [
+      152,
+      7,
+      "Lexus",
+      "RX",
+      "RX 350h Luxury RX 450h+ Premium / F SPORT",
+      "4,480,000 บาท 5,090,000 - 5,520,000 บาท",
+      "ดอกเบยี้ 0.99% หรอื รบั ประกันภัยชนั้ 1 ฟร ี2 ปี พรอ้ มวารนั ตี 4 ปี ไมจ่ า  กัดระยะทาง",
+      [
+        "lexus.lexus_rx"
+      ],
+      "PARTIAL",
+      "PARTIAL_PRICE_RANGE",
+      [
+        [
+          "lexus.lexus_rx.al30.trim.350h_luxury_hev",
+          4480000,
+          "RX 350h Luxury",
+          "350h Luxury",
+          "partial_exact"
+        ]
+      ]
+    ],
+    [
+      154,
+      7,
+      "Lexus",
+      "RZ",
+      "RZ 450e Luxury / Premium",
+      "3,870,000 - 4,190,000 บาท",
+      "สว่ นลดพเิศษ 300,000 บาท + โฮมชารจ์ เจอรพ์ รอ้ มติดตัง้ ฟร ี+ รบั ประกันแบตเตอร ี่10 ปี",
+      [
+        "lexus.rz"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      163,
+      7,
+      "Mazda",
+      "BT-50 Cab",
+      "Freestyle Cab 1.9 C / S / Hi- Racer",
+      "679,000 - 752,000 บาท",
+      "สว่ นลดพเิศษเงินสด 70,000 บาท หรอื ผอ่ นเรมิ่ ต้น 6,xxx บาท/ด. + ประกันชนั้ 1 ฟรี",
+      [
+        "mazda.bt50_cab"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      164,
+      7,
+      "Mazda",
+      "BT-50 Double Cab",
+      "Double Cab 1.9 / 3.0 SP 4x4",
+      "812,000 - 1,172,000 บาท",
+      "สว่ นลดพเิศษ 80,000 บาท หรอื เลือกรบั ดอกเบยี้ 0.99% พรอ้ มฟรคี ่าแรงเชก็ ระยะ 5 ปี",
+      [
+        "mazda.bt50_double_cab"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      165,
+      7,
+      "Mazda",
+      "CX-3",
+      "Base / Base Plus / Comfort / Sport Luxe",
+      "770,000 - 970,000 บาท",
+      "ดอกเบยี้ 0.99% หรอื รบั สว่ นลด 60,000 บาท + บตั รเติมน้า  มนั 15,000 บาท และประกันภัยชนั้ 1",
+      [
+        "mazda.cx3"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      166,
+      7,
+      "Mazda",
+      "CX-30",
+      "2.0 C / 2.0 S / 2.0 SP",
+      "989,000 - 1,199,000 บาท",
+      "ดอกเบยี้ 0% นาน 48 เดือน หรอื เลือกรบั สว่ นลด 100,000 บาท + ฟรคี ่าบา  รุงรกั ษา 5 ปี",
+      [
+        "mazda.cx30"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      167,
+      7,
+      "Mazda",
+      "CX-5",
+      "2.0 S / 2.0 SP / 2.2 XDL / 2.5 Turbo",
+      "1,349,000 - 1,859,000 บาท",
+      "สว่ นลดพเิศษสงู สดุ 150,000 บาท หรอื ดอกเบยี้ 0% 48 เดือน + Mazda Care 5 ปี",
+      [
+        "mazda.cx5"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      168,
+      7,
+      "Mazda",
+      "CX-8",
+      "2.5 S / SP (7-Seat) / 2.5 SP Exclusive / XDL",
+      "1,549,000 - 2,199,000 บาท",
+      "สว่ นลดเงินสด 150,000 บาท หรอื ดอกเบยี้ 0% 48 เดือน + ฟรปี ระกันภัยชนั้ 1",
+      [
+        "mazda.cx8"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      169,
+      7,
+      "Mazda",
+      "Mazda2",
+      "1.3 C, S, SP / 1.5 XDL (Sedan & Hatchback)",
+      "599,000 - 830,000 บาท",
+      "ดอกเบยี้ 0% หรอื เลือกรบั สว่ นลดเงินสด 50,000 - 70,000 บาท + ฟรปี ระกันภัย 1 ปี",
+      [
+        "mazda.mazda2"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      171,
+      7,
+      "Mazda",
+      "Mazda3",
+      "2.0 C / 2.0 S / 2.0 SP (Sedan & Fastback)",
+      "979,000 - 1,198,000 บาท",
+      "ดอกเบยี้ 0% นาน 48 เดือน หรอื รบั สว่ นลด 100,000 บาท + ฟรปี ระกันภัยชนั้ 1 และค่าบา  รุงรกั ษา 5 ปี",
+      [
+        "mazda.mazda3"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      181,
+      8,
+      "Mercedes-\nBenz",
+      "EQE",
+      "EQE 350 4MATIC SUV AMG Dynamic",
+      "5,300,000 บาท",
+      "สว่ นลดเงินสด 400,000 บาท + รบั ประกันแบตเตอร ี่10 ปี / 250,000 กม. + ฟรโีฮมชารจ์ เจอร์",
+      [
+        "mercedes_benz.eqe"
+      ],
+      "UNAPPLIED",
+      "TRIM_IDENTITY_MISMATCH",
+      []
+    ],
+    [
+      185,
+      8,
+      "Mercedes-\nBenz",
+      "C-Class",
+      "C 220 d Avantgarde C 350 e AMG Dynamic (PHEV)",
+      "2,730,000 บาท 3,350,000 บาท",
+      "ดอกเบยี้ 0% นาน 48 เดือน หรอื เลือกรบั สว่ นลดเงินสด 250,000 บาท + ฟรปี ระกันภัย 1 ปี",
+      [
+        "mercedes_benz.mb_c_class"
+      ],
+      "PARTIAL",
+      "PARTIAL_NO_CANONICAL_TRIM",
+      [
+        [
+          "mercedes_benz.mb_c_class.w206.trim.c_350_e_amg_dynamic_phev_313_hp_phev",
+          3350000,
+          "C 350 e AMG Dynamic (PHEV)",
+          "C 350 e AMG Dynamic (PHEV, 313 hp)",
+          "manual"
+        ]
+      ]
+    ],
+    [
+      186,
+      8,
+      "Mercedes-\nBenz",
+      "E-Class",
+      "E 220 d AMG Line (W214) E 350 e AMG Dynamic (W214)",
+      "3,990,000 บาท 4,250,000 บาท",
+      "ขอ้ เสนอพเิศษทางการ MBSP Easy Care 5 ปี พรอ้ มประกันภัยชนั้ 1 ฟร ี1 ปี",
+      [
+        "mercedes_benz.mb_e_class"
+      ],
+      "UNAPPLIED",
+      "TRIM_GENERATION_MISMATCH",
+      []
+    ],
+    [
+      189,
+      8,
+      "Mercedes- Benz",
+      "GLC",
+      "GLC 220 d 4MATIC Avantgarde GLC 350 e 4MATIC AMG Dynamic",
+      "3,720,000 บาท 4,180,000 บาท",
+      "ดอกเบยี้ 0% นาน 48 เดือน หรอื สว่ นลดพเิศษ 300,000 บาท + ฟรปี ระกันภัยชนั้ 1",
+      [
+        "mercedes_benz.mb_glc"
+      ],
+      "PARTIAL",
+      "PARTIAL_NO_CANONICAL_TRIM",
+      [
+        [
+          "mercedes_benz.mb_glc.x254.trim.350_e_4matic_amg_dynamic_phev_phev",
+          4180000,
+          "GLC 350 e 4MATIC AMG Dynamic",
+          "350 e 4MATIC AMG Dynamic (PHEV)",
+          "manual"
+        ]
+      ]
+    ],
+    [
+      190,
+      8,
+      "Mercedes- Benz",
+      "S-Class",
+      "S 580 e AMG Premium",
+      "7,580,000 บาท",
+      "ดอกเบยี้ 0% นาน 48 เดือน + MBSP 6 ปี + ประกันภัยชนั้ 1 ฟร ี2 ปี",
+      [
+        "mercedes_benz.s_class"
+      ],
+      "UNAPPLIED",
+      "GRADE_MISMATCH",
+      []
+    ],
+    [
+      201,
+      8,
+      "MG",
+      "MG Maxus 7",
+      "Maxus 7 (e-MPV 7 ท่ีนัง่ )",
+      "1,769,000 บาท",
+      "ราคาพเิศษ 1,599,000 บาท + โฮมชารจ์ เจอรฟ์ ร ี+ ประกันภัยชนั้ 1",
+      [
+        "mg.mg_maxus_7"
+      ],
+      "UNAPPLIED",
+      "TRIM_IDENTITY_AMBIGUOUS",
+      []
+    ],
+    [
+      203,
+      8,
+      "MG",
+      "MG S5 EV",
+      "S5 EV Standard D S5 EV Standard X S5 EV Long Range V",
+      "719,900 บาท 779,900 บาท 899,900 บาท",
+      "ราคาพเิศษเรมิ่ ต้น 649,900 บาท + โฮมชารจ์ เจอรฟ์ ร ี+ ประกันภัยชนั้ 1",
+      [
+        "mg.mg_s5_ev"
+      ],
+      "UNAPPLIED",
+      "PROTECTED_CANONICAL_SURFACE",
+      []
+    ],
+    [
+      206,
+      8,
+      "MG",
+      "MG ZS",
+      "ZS 1.5 C+ / D / X+",
+      "689,000 - 799,000 บาท",
+      "สว่ นลดพเิศษ 100,000 บาท หรอื ดอกเบยี้ 0% นาน 48 เดือน + ประกันภัยชนั้ 1",
+      [
+        "mg.mg_zs"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      208,
+      8,
+      "MG",
+      "MG3",
+      "MG3 Hybrid+ D MG3 Hybrid+ X",
+      "559,900 บาท 599,900 บาท",
+      "ราคาพเิศษเรมิ่ ต้น 519,900 บาท + ฟรปี ระกันภัยชนั้ 1",
+      [
+        "mg.mg3"
+      ],
+      "UNAPPLIED",
+      "TRIM_IDENTITY_MISMATCH",
+      []
+    ],
+    [
+      210,
+      8,
+      "MG",
+      "MG5",
+      "MG5 1.5 D / D+ / X / 10th Anniversary",
+      "589,000 - 699,000 บาท",
+      "สว่ นลดพเิศษ 80,000 บาท + ดอกเบยี้ 0% + ประกันภัยชนั้ 1",
+      [
+        "mg.mg5"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      216,
+      9,
+      "Mitsubishi",
+      "Attrage",
+      "Active / Special Edition / Smart",
+      "494,000 - 584,000 บาท",
+      "สว่ นลดเงินสดสงู สดุ 70,000 บาท หรอื ดอกเบยี้ 0% 48 เดือน + ฟรปี ระกันภัยชนั้ 1",
+      [
+        "mitsubishi.attrage"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      217,
+      9,
+      "Mitsubishi",
+      "Mirage",
+      "Active / Smart",
+      "474,000 - 579,000 บาท",
+      "สว่ นลดพเิศษ 60,000 บาท หรอื ดอกเบยี้ 0% 48 เดือน + ประกันชนั้ 1",
+      [
+        "mitsubishi.mirage"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      219,
+      9,
+      "Mitsubishi",
+      "Pajero Sport",
+      "Prime / Ultra / Elite Edition 4WD",
+      "1,389,000 - 1,689,000 บาท",
+      "สว่ นลดเงินสดสงู สดุ 150,000 บาท หรอื ดอกเบยี้ 0.99% + Mitsubishi Care 5 ปี",
+      [
+        "mitsubishi.pajero_sport"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      220,
+      9,
+      "Mitsubishi",
+      "Triton Cab",
+      "Mega Cab Pro / Ultra / Plus",
+      "622,000 - 821,000 บาท",
+      "สว่ นลดสงู สดุ 100,000 บาท หรอื ดอกเบยี้ พเิศษ 0.99% + ประกันภัยชนั้ 1",
+      [
+        "mitsubishi.triton_cab"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      221,
+      9,
+      "Mitsubishi",
+      "Triton Double Cab",
+      "Double Cab Plus Ultra / Athlete / 4x4",
+      "882,000 - 1,298,000 บาท",
+      "สว่ นลดเงินสดสงู สดุ 120,000 บาท หรอื ดอกเบยี้ 0.99% + ฟรปี ระกันภัยชนั้ 1",
+      [
+        "mitsubishi.triton_double_cab"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      223,
+      9,
+      "Mitsubishi",
+      "Xpander",
+      "Xpander GLS-LTD / GT / HEV (e:MOTION)",
+      "799,000 - 933,000 บาท",
+      "ดอกเบยี้ 0% 48 เดือน หรอื สว่ นลด 70,000 บาท + ประกันภัยชนั้ 1",
+      [
+        "mitsubishi.xpander"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      224,
+      9,
+      "Mitsubishi",
+      "Xpander Cross",
+      "Cross ICE / Cross HEV",
+      "946,000 - 961,000 บาท",
+      "ดอกเบยี้ พเิศษ 0.99% + ฟรปี ระกันภัยชนั้ 1",
+      [
+        "mitsubishi.xpander_cross"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      228,
+      9,
+      "Nissan",
+      "Almera",
+      "1.0 Turbo E / EL / V / VL",
+      "549,000 - 699,000 บาท",
+      "ดอกเบยี้ 0% หรอื สว่ นลดพเิศษ 50,000 บาท + ฟรปี ระกันภัยชนั้ 1",
+      [
+        "nissan.almera"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      229,
+      9,
+      "Nissan",
+      "Nissan GT-R",
+      "GT-R T-Spec / Premium Luxury",
+      "10,700,000 - 12,200,000 บาท",
+      "- (รถนา  เขา้ จา  นวนนอ้ ย ไมม่ แี คมเปญสว่ นลด)",
+      [
+        "nissan.gtr"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      230,
+      9,
+      "Nissan",
+      "Kicks e-Power",
+      "E / V / VL / AUTECH",
+      "779,900 - 980,000 บาท",
+      "ราคาพเิศษเรมิ่ ต้น 749,900 บาท + ดอกเบยี้ 0.99% + ประกันภัยชนั้ 1",
+      [
+        "nissan.kicks"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      231,
+      9,
+      "Nissan",
+      "Navara Cab",
+      "King Cab SL / E / Calibre V",
+      "649,000 - 815,000 บาท",
+      "สว่ นลดพเิศษสงู สดุ 100,000 บาท หรอื ดอกเบยี้ 0% 48 เดือน",
+      [
+        "nissan.navara_cab"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      232,
+      9,
+      "Nissan",
+      "Navara Double Cab",
+      "Double Cab Calibre E, V / PRO-2X / PRO-4X",
+      "849,000 - 1,160,000 บาท",
+      "สว่ นลดเงินสดสงู สดุ 120,000 บาท + ประกันภัยชนั้ 1 ฟร ี1 ปี",
+      [
+        "nissan.navara_double_cab"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      233,
+      9,
+      "Nissan",
+      "Serena",
+      "Serena Highway Star S-Hybrid (C27)",
+      "1,469,000 บาท",
+      "โปรโมชนั่ สว่ นลดรถ Demo / รถคงคลัง 100,000 - 200,000 บาท",
+      [
+        "nissan.serena"
+      ],
+      "UNAPPLIED",
+      "TRIM_GENERATION_MISMATCH",
+      []
+    ],
+    [
+      236,
+      9,
+      "Nissan",
+      "Terra",
+      "2.3 E / VL 2WD / VL 4WD / Sport",
+      "1,199,000 - 1,555,000 บาท",
+      "สว่ นลดเงินสดสงู สดุ 150,000 บาท + ดอกเบยี้ 0.99%",
+      [
+        "nissan.terra"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      244,
+      10,
+      "Riddara",
+      "Riddara RD6",
+      "RD6 63 kWh RWD RD6 73 kWh RWD RD6 73 kWh 4WD RD6 86 kWh 4WD",
+      "899,000 บาท 999,000 บาท 1,149,000 บาท 1,299,000 บาท",
+      "ราคาเปิดตัวพเิศษลด 100,000 บาททุกรุน่ + โฮมชารจ์ เจอรฟ์ ร ี+ ประกันภัยชนั้ 1",
+      [
+        "riddara.riddara_rd6_double_cab"
+      ],
+      "PARTIAL",
+      "PARTIAL_NO_CANONICAL_TRIM",
+      [
+        [
+          "riddara.riddara_rd6_double_cab.gen1.trim.rd6_2wd_lite_63_kwh_bev",
+          899000,
+          "RD6 63 kWh RWD",
+          "RD6 2WD Lite (63 kWh)",
+          "manual"
+        ],
+        [
+          "riddara.riddara_rd6_double_cab.gen1.trim.rd6_2wd_plus_73_kwh_bev",
+          999000,
+          "RD6 73 kWh RWD",
+          "RD6 2WD Plus (73 kWh)",
+          "manual"
+        ]
+      ]
+    ],
+    [
+      251,
+      10,
+      "Suzuki",
+      "Celerio",
+      "GA / GL / GL UP / GX",
+      "338,000 - 451,000 บาท",
+      "สว่ นลดเงินสดสงู สดุ 30,000 บาท + ประกันภัยชนั้ 1",
+      [
+        "suzuki.celerio"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      252,
+      10,
+      "Suzuki",
+      "Ciaz",
+      "GL / GLX / RS",
+      "528,000 - 678,000 บาท",
+      "สว่ นลดเงินสด 50,000 บาท หรอื ดอกเบยี้ 0.99% + ประกันภัยชนั้ 1",
+      [
+        "suzuki.ciaz"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      253,
+      10,
+      "Suzuki",
+      "Ertiga Smart Hybrid",
+      "GL / GX",
+      "699,000 - 765,000 บาท",
+      "สว่ นลดพเิศษ 60,000 บาท + ดอกเบยี้ 0.99%",
+      [
+        "suzuki.ertiga"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      255,
+      10,
+      "Suzuki",
+      "Jimny",
+      "1.5 GLX 4WD AT (ทโูทน / โมโนโทน)",
+      "1,760,000 - 1,790,000 บาท",
+      "- (รถนา  เขา้ CBU จา  นวนจา  กัด)",
+      [
+        "suzuki.jimny"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      257,
+      10,
+      "Suzuki",
+      "Swift",
+      "GL / GL PLUS / GLX",
+      "567,000 - 637,000 บาท",
+      "สว่ นลดเงินสด 50,000 บาท + ดอกเบยี้ 0.99% + ประกันภัยชนั้ 1",
+      [
+        "suzuki.swift"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      258,
+      10,
+      "Suzuki",
+      "XL7 Hybrid",
+      "XL7 Smart Hybrid GLX",
+      "799,000 - 809,000 บาท",
+      "สว่ นลดพเิศษ 50,000 บาท + ดอกเบยี้ 0.99% + ประกันภัยชนั้ 1",
+      [
+        "suzuki.xl7"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      264,
+      10,
+      "Toyota",
+      "bZ4X",
+      "bZ4X AWD (71.4 kWh)",
+      "1,836,000 บาท",
+      "ราคาโปรโมชนั่ 1,699,000 บาท + โฮมชารจ์ เจอรฟ์ ร ี+ ประกันภัยชนั้ 1",
+      [
+        "toyota.bz4x"
+      ],
+      "UNAPPLIED",
+      "PROTECTED_CANONICAL_SURFACE",
+      []
+    ],
+    [
+      268,
+      10,
+      "Toyota",
+      "Corolla Altis",
+      "1.6 G 1.8 Sport HEV Premium HEV GR Sport",
+      "894,000 - 979,000 บาท 1,009,000 - 1,129,000 บาท",
+      "ดอกเบยี้ 0% หรอื สว่ นลด 70,000 บาท + ประกันภัยชนั้ 1",
+      [
+        "toyota.corolla_altis"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      269,
+      10,
+      "Toyota",
+      "Corolla Cross",
+      "1.8 Sport Plus HEV Premium / HEV Premium Luxury HEV GR Sport",
+      "999,000 บาท 1,094,000 - 1,204,000 บาท 1,254,000 บาท",
+      "ดอกเบยี้ 0% นาน 48 เดือน หรอื สว่ นลดพเิศษสงู สดุ 100,000 บาท + ประกันภัยชนั้ 1",
+      [
+        "toyota.corolla_cross"
+      ],
+      "UNAPPLIED",
+      "PROTECTED_CANONICAL_SURFACE",
+      []
+    ],
+    [
+      271,
+      11,
+      "Toyota",
+      "Fortuner",
+      "Leader G / V (2WD/4WD) Legender 2.4 / 2.8 (2WD/4WD) GR Sport 2.8 4WD",
+      "1,375,000 - 1,575,000 บาท 1,618,000 - 1,887,000 บาท 1,959,000 บาท",
+      "ดอกเบยี้ 0% / สว่ นลด 100,000 บาท + ประกันภัยชนั้ 1",
+      [
+        "toyota.fortuner"
+      ],
+      "PARTIAL",
+      "PARTIAL_PRICE_RANGE",
+      [
+        [
+          "toyota.fortuner.an160.trim.gr_sport_2_8_6at_4wd_224_hp_ice",
+          1959000,
+          "GR Sport 2.8 4WD",
+          "GR Sport 2.8 6AT 4WD (224 hp)",
+          "partial_exact"
+        ]
+      ]
+    ],
+    [
+      276,
+      11,
+      "Toyota",
+      "Hilux Champ",
+      "2.0 เบนซนิ SWB / 2.7 SWB AT 2.4 ดีเซล SWB / LWB (MT/AT)",
+      "459,000 - 499,000 บาท 536,000 - 577,000 บาท",
+      "ดอกเบยี้ 0.99% หรอื สว่ นลดพเิศษ 30,000 บาท",
+      [
+        "toyota.hilux_champ"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      277,
+      11,
+      "Toyota",
+      "Hilux Revo Cab",
+      "Smart Cab Standard / Prerunner (Z-Edition, Mid, High)",
+      "639,000 - 904,000 บาท",
+      "ดอกเบยี้ 0% / สว่ นลด 60,000 บาท + ประกันภัยชนั้ 1",
+      [
+        "toyota.hilux_revo_cab"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      278,
+      11,
+      "Toyota",
+      "Hilux Revo Double Cab",
+      "Double Cab Z-Edition / Prerunner / GR Sport 4x4 (Wide Tread)",
+      "744,000 - 1,286,000 บาท 1,499,000 บาท (GR Sport)",
+      "ดอกเบยี้ 0% / สว่ นลด 80,000 บาท + ประกันภัยชนั้ 1",
+      [
+        "toyota.hilux_revo_double_cab"
+      ],
+      "PARTIAL",
+      "PARTIAL_PRICE_RANGE",
+      [
+        [
+          "toyota.hilux_revo_double_cab.an120.trim.double_cab_gr_sport_4x4_wide_tread_2_8_6at_224_hp_ice",
+          1499000,
+          "GR Sport 4x4 (Wide Tread)",
+          "Double Cab GR Sport 4x4 Wide-Tread 2.8 6AT (224 hp)",
+          "partial_exact"
+        ]
+      ]
+    ],
+    [
+      279,
+      11,
+      "Toyota",
+      "Hilux Travo (Cab/ Double)",
+      "Hilux Travo Concept / Next-Gen",
+      "-",
+      "- (ยงั ไมเ่ปิดราคาจา  หน่าย)",
+      [
+        "toyota.hilux_travo_double_cab"
+      ],
+      "UNAPPLIED",
+      "NO_OFFICIAL_PRICE",
+      []
+    ],
+    [
+      285,
+      11,
+      "Toyota",
+      "Vellfire",
+      "2.5 HEV Executive Lounge",
+      "4,279,000 บาท",
+      "ฟรปี ระกันภัยชนั้ 1 + Toyota Premium Care + ดอกเบยี้ พเิศษ",
+      [
+        "toyota.vellfire"
+      ],
+      "UNAPPLIED",
+      "NO_CANONICAL_TRIM_MATCH",
+      []
+    ],
+    [
+      288,
+      11,
+      "Toyota",
+      "Yaris",
+      "1.2 Sport / Smart / Premium / Premium Luxury",
+      "559,000 - 694,000 บาท",
+      "ดอกเบยี้ 0% / สว่ นลด 50,000 บาท + ประกันภัยชนั้ 1",
+      [
+        "toyota.yaris"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      289,
+      11,
+      "Toyota",
+      "Yaris Ativ",
+      "Sport / Smart / Premium / Premium Luxury / NIGHTSHADE",
+      "549,000 - 699,000 บาท",
+      "ดอกเบยี้ 0% / สว่ นลด 50,000 บาท + ประกันภัยชนั้ 1",
+      [
+        "toyota.yaris_ativ"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      296,
+      12,
+      "Volvo",
+      "EX30",
+      "Core Single Motor Extended Ultra Single Motor Extended Ultra Twin Motor Performance",
+      "1,590,000 บาท 1,790,000 บาท 1,890,000 บาท",
+      "ดอกเบยี้ พเิศษ 1.99% + ฟรปี ระกันภัยชนั้ 1 + Wallbox พรอ้ มติดตัง้",
+      [
+        "volvo.ex30"
+      ],
+      "PARTIAL",
+      "PARTIAL_TRIM_IDENTITY_MISMATCH",
+      [
+        [
+          "volvo.ex30.ex30g.trim.ultra_twin_performance_69_kwh_awd_428_hp_bev",
+          1890000,
+          "Ultra Twin Motor Performance",
+          "Ultra Twin Motor Performance (69 kWh AWD, 428 hp)",
+          "manual"
+        ]
+      ]
+    ],
+    [
+      297,
+      12,
+      "Volvo",
+      "EX40 / EC40",
+      "Single Motor Extended Twin Motor Ultra AWD",
+      "1,990,000 - 2,090,000 บาท 2,390,000 - 2,490,000 บาท",
+      "ดอกเบยี้ 1.99% + ฟรปี ระกันภัยชนั้ 1 + Wallbox พรอ้ มติดตัง้",
+      [
+        "volvo.ex40"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ],
+    [
+      302,
+      12,
+      "Volvo",
+      "XC60",
+      "Bright T8 AWD PHEV (MY2026) Dark T8 AWD PHEV",
+      "3,390,000 บาท 3,590,000 บาท",
+      "ดอกเบยี้ 1.99% + Volvo Care Package 5 ปี + ประกันภัยชนั้ 1",
+      [
+        "volvo.xc60"
+      ],
+      "UNAPPLIED",
+      "TRIM_IDENTITY_MISMATCH",
+      []
+    ],
+    [
+      303,
+      12,
+      "Volvo",
+      "XC90",
+      "Recharge T8 Plug-in Hybrid Ultimate",
+      "4,190,000 - 4,790,000 บาท",
+      "ดอกเบยี้ 1.99% + Volvo Care Package 5 ปี + ประกันภัยชนั้ 1",
+      [
+        "volvo.xc90"
+      ],
+      "UNAPPLIED",
+      "PRICE_RANGE_ONLY",
+      []
+    ]
+  ]
+}
