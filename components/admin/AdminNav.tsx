@@ -15,6 +15,7 @@ export async function AdminNav() {
       <Link href="/admin/retail-lifecycle">Retail lifecycle review</Link>
       <Link href="/admin/eco-trims">ECO → MarketTrim review</Link>
       <Link href="/admin/market">Admin Bench · Market intelligence</Link>
+      <Link href="/admin/regional-market">Regional market (coming soon)</Link>
       <Link href="/admin/registrations">Admin Bench · Registration ops</Link>
       <Link href="/admin/prices">Admin Bench · Prices</Link>
       <Link href="/admin/prices/coverage">Price coverage worklist</Link>
