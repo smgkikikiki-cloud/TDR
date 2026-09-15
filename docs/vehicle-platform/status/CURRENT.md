@@ -137,7 +137,81 @@ sub-packets. Full record: `docs/vehicle-platform/EXTERNAL_IDENTITY_PERSISTENCE.m
   though no consumer has been switched to depend on it yet. That switch is intentionally deferred,
   separately-authorized, future work — not a blocker to closing Phase 1.
 
-**Phase 1 is closed. Phase 2 (DLT v2 shadow pipeline) is not started and remains unauthorized.**
+**Phase 1 is closed.**
+
+**Phase 2 is complete, in shadow (2026-09-15).** The DLT v2 observation/resolution/fact/backfill/
+parity pipeline is implemented and tested, running alongside both the existing local
+`vehreg/ingest.py`/`vehreg/dlt.py` pipeline and the existing production Supabase registration
+path. Full record: `DLT_V2_ARCHITECTURE.md`.
+
+- **Observation layer** (`automotive/vehicle_master/vehreg/registration_observation.py`):
+  immutable, deterministically-keyed `RegistrationObservation` rows, with adapters for DLT CKAN
+  records, column-mapped CSV rows (the current DLT CSV fetcher's own output), and — for
+  backfill — live Supabase `public.registrations` rows. The legacy `model_id`/`mapping_method` on
+  a backfilled row are carried as parity evidence only, never as resolution input.
+- **Canonical resolver** (`vehreg/resolution_v2.py`): a thin, observation-shaped wrapper over the
+  unchanged, already-correct `vehreg.ingest.Resolver` — resolves directly against
+  `vehreg.catalog.Catalog` text ids (never a legacy `public.models.id` uuid), stops at the deepest
+  grain the source proves (BRAND/MODEL/VARIANT), never guesses across an ambiguity, and derives
+  trim/battery detail for trim-detail brands (BYD, Jaecoo, Aion, Deepal, Tesla) without ever
+  producing a `MarketTrim` — `Grain` has no such member, so this is structural, not a policy.
+- **Fact model** (`vehreg/registration_v2_writer.py`, pure): a fact row exists only when
+  resolution produced a canonical id at all; an observation whose brand could not be placed
+  produces no fact, its units remaining visible only on the observation itself. A repeated
+  observation is collapsed before resolution, so no batch ever double-counts.
+- **Shadow schema** (`supabase/migration_v29_registration_dlt_v2_shadow.sql`): three new,
+  additive, service-role-only tables (`registration_observations_v2`, `registration_facts_v2`,
+  `registration_resolution_review_v2`) — no grant to `anon`/`authenticated`, no change to
+  `registrations`/`registration_brand_aliases`/`registration_model_aliases`/
+  `match_registration_model`/any `registration_*` analytics view, proven by source-text regression
+  coverage since no live Postgres exists in this test suite.
+- **Backfill** (`tools/backfill_registration_v2.py`): reads live `public.registrations`
+  (paged, optional `--period-from`/`--period-to`), resolves, and — only with `--apply` — upserts
+  the three shadow tables. Idempotent and resumable structurally (deterministic ids, PostgREST
+  upsert), not via a checkpoint file. Dry-run (default) performs zero writes and prints counts
+  before writing.
+- **Parity** (`tools/registration_v2_parity.py` / `vehreg/registration_v2_parity.py`, pure
+  comparison logic): compares v1 `registrations` against the v2 shadow, exactly paired by the
+  legacy row's own uuid (no fuzzy label matching), and keeps four questions strictly separate —
+  volume parity, identity parity, resolution-coverage difference, grain difference — per the
+  explicit rule that a mapping disagreement is not automatically a unit mismatch. Only a real
+  volume mismatch, a duplicate source key, or a reconciliation (units-drift) failure marks a
+  report unclean.
+- **No production consumer change, no read cutover.** `/api/report/registration`,
+  `/api/report/market`, and every `registration_*` view/function are byte-for-byte unchanged.
+  Nothing reads the v2 shadow tables in production — that is Phase 3, not started.
+- **No change to `vehreg/ingest.py`/`vehreg/dlt.py`/the local SQLite warehouse.** Phase 2 is a
+  second, independent Supabase-side consumer of the same `Resolver`/`Catalog`, not a replacement
+  for the local pipeline.
+
+**Phase 2 is closed. Phase 3 (registration analytics read cutover) is not started and remains
+unauthorized.**
+
+**Live result for the DLT v2 backfill/parity tools**: not run against the live production
+project — no server-side Supabase credentials were available in this session (confirmed the same
+way as every other phase: no `SUPABASE_*` environment variables set, no local `.env`/`.env.local`
+with real values). What *was* verified without live access: both tools' own no-credentials path
+(fail closed, exit 2, "Nothing was read," no live call attempted —
+`tests/test_registration_v2_tools_env.py`); and the full observation/resolution/fact-building/
+parity-classification logic at the pure-function level (874 Python tests passing across the whole
+suite, including the new `tests/test_registration_observation_v2.py`,
+`tests/test_resolution_v2.py`, `tests/test_registration_v2_writer.py`,
+`tests/test_registration_v2_parity.py`, and
+`tests/test_registration_dlt_v2_shadow_migration.py`). The exact commands an operator with
+credentials should run, in order:
+
+```
+cd automotive/vehicle_master
+python tools/backfill_registration_v2.py                          # dry run first — review counts
+python tools/backfill_registration_v2.py --apply                  # write the shadow tables
+python tools/registration_v2_parity.py --json-out parity.json     # compare v1 vs v2
+```
+
+No prediction is offered for what the parity report would show against live production data — the
+reviewer-supplied 2026-09-15 baseline (`PHASE_1A_LIVE_VALIDATION_2026-09-15.md`,
+`LIVE_IDENTITY_BASELINE_2026-09-15.md`) covers Mechanism A/B identity assertions, not registration
+fact volumes; treat production registration parity as genuinely unknown until an operator runs the
+commands above.
 
 **Live result for the registry↔operational sync tool**: not run against a live Supabase project —
 no server-side credentials were available in this session (confirmed: no `SUPABASE_*` environment
@@ -200,13 +274,21 @@ started.
   explicitly run with `--apply`) is to create a missing `canonical_object_map` row that mirrors a
   Git binding — it does not change what any consumer reads or how. No consumer, page, or pipeline
   queries the registry directly, and none is authorized to yet.
+- The DLT v2 shadow tables (`registration_observations_v2`, `registration_facts_v2`,
+  `registration_resolution_review_v2`) exist as an additive, service-role-only schema; nothing in
+  production reads them, and the backfill tool's only effect (with `--apply`) is to upsert rows
+  into those three tables — it never writes to `registrations` or any other existing table.
 
 ## Shadow paths currently active
 
 - Phase-C canonical write pipeline shadows the legacy Supabase model editor
   (`app/admin/catalog-actions.ts` writes legacy tables first, then best-effort enqueues a
   canonical shadow command) — `docs/consolidation/PHASE_C_WRITE_PIPELINE.md`.
-- No Phase 1–7 (this document's numbering) shadow pipeline exists yet — none has been started.
+- Phase 2's DLT v2 pipeline shadows both the existing local `vehreg/ingest.py`/`vehreg/dlt.py`
+  pipeline and the existing production Supabase registration path
+  (`registrations`/`registration_brand_aliases`/`registration_model_aliases`/
+  `match_registration_model`) — see `DLT_V2_ARCHITECTURE.md`. No other Phase 1–7 (this document's
+  numbering) shadow pipeline exists yet.
 
 ## Completed migration packets
 
@@ -220,6 +302,7 @@ started.
 | Phase 1B: Git-backed external-identity registry (shadow mode) | 1 | Added `docs/vehicle-platform/EXTERNAL_IDENTITY_PERSISTENCE.md` (ownership decision record); `automotive/vehicle_master/tdr_bridge/external_identity_registry.py` (dataclasses, loader, offline validator); `integration_data/external_identity_registry.json` (seeded with exactly the one explicitly-reviewed Jaecoo binding); `tools/validate_external_identity_registry.py` (offline CLI, no Supabase); `tests/test_external_identity_registry.py` (20 tests). Clarified `EXTERNAL_IDENTITY_CONTRACT.md` that `verified`/trust level and persistence ownership are separate dimensions, without changing any Phase 1A type, classification, or test. No Supabase migration, write, or consumer change; Mechanism A's 383 derived links and the 8 Phase-E projection-owned `canonical_object_map` rows were deliberately excluded from the seed. |
 | Phase 1 completion: registry↔operational reconciliation/sync | 1 | Added `automotive/vehicle_master/tdr_bridge/external_identity_sync.py` (pure reconciliation/classification/mutation-proposal, no I/O) and `tools/sync_external_identity_registry.py` (live CLI: dry-run default, `--apply` for safe mutations, reread-and-prove-convergence built in). Tightened `external_identity_registry.py`'s validator to require `verified_at`/`verified_by` for active `explicit_review` bindings. Added `tests/test_external_identity_sync.py`. No production consumer, existing Supabase behavior, or Phase 1A TypeScript contract changed. No Supabase migration added. |
 | Phase 1 correction: operational representability + apply fail-closed gate + Phase-E ownership tightening | 1 | Architecture-review-directed correction. Reverted an earlier draft's `migration_v28` (would have dropped `canonical_object_map_verified_target_uq`, which is load-bearing for `apply_vehicle_serving_projection`'s canonical_id-only row selection) — deleted the migration file and its regression test entirely; no Supabase migration is part of Phase 1. Added `operational_target_uniqueness_blocker` detection (`_compute_uniqueness_blockers()` in `external_identity_sync.py`) so a Git registry state that is not representable under the existing unique index is reported before any write, instead of weakening the DB constraint. Added `mutations_to_apply()` as a whole-run fail-closed gate for `--apply`: any blocker anywhere means zero mutations applied that run, closing a partial-apply gap in the previous packet. Tightened `is_phase_e_owned` from OR to AND (both `verified_by` and `match_basis.basis` now required). Added new tests to `tests/test_external_identity_sync.py` for all of the above. Updated `EXTERNAL_IDENTITY_PERSISTENCE.md`, `MIGRATION_PLAN.md`, and this file to remove the `migration_v28` claims and document operational representability instead. No Phase-E change, no other production consumer change. **Phase 1 remains closed after this correction.** |
+| Phase 2: DLT v2 shadow pipeline (observation/resolution/fact/backfill/parity) | 2 | Added `docs/vehicle-platform/DLT_V2_ARCHITECTURE.md`. Added `automotive/vehicle_master/vehreg/registration_observation.py` (deterministic observation ids, three adapters: DLT CKAN, mapped CSV, legacy `registrations` row), `vehreg/resolution_v2.py` (thin wrapper over the unchanged `vehreg.ingest.Resolver`, resolving to Vehicle Master text ids, never a legacy uuid), `vehreg/registration_v2_writer.py` (pure batch builder, no I/O), `vehreg/registration_v2_parity.py` (pure volume/identity/coverage/grain comparison, kept strictly separate). Added `supabase/migration_v29_registration_dlt_v2_shadow.sql` (three additive, service-role-only tables — `registration_observations_v2`, `registration_facts_v2`, `registration_resolution_review_v2` — no change to any existing registration object, no grant to anon/authenticated; file created, not applied to live Supabase in this pass). Added live CLIs `tools/backfill_registration_v2.py` (dry-run default, `--apply` to upsert, deterministic/idempotent/resumable) and `tools/registration_v2_parity.py` (read-only dual-run report). Added `tests/test_registration_observation_v2.py`, `tests/test_resolution_v2.py`, `tests/test_registration_v2_writer.py`, `tests/test_registration_v2_parity.py`, `tests/test_registration_dlt_v2_shadow_migration.py`, `tests/test_registration_v2_tools_env.py` (83 new tests). No change to `vehreg/ingest.py`/`vehreg/dlt.py`/the local SQLite warehouse, `registrations`/`registration_brand_aliases`/`registration_model_aliases`/`match_registration_model`/any `registration_*` view, Phase-E, or Phase 1's external-identity registry. No production consumer switched to read v2. **Phase 2 is closed by this packet, in shadow.** |
 
 ## Known parity gaps (from Phase 0, updated as later packets affect them)
 
@@ -264,26 +347,37 @@ started.
    selection semantics — out of scope here, and not needed for current registry contents.
 7. **The registry↔operational sync tool has not been run live.** See "Live result for the
    registry↔operational sync tool" above — predicted-safe from existing evidence, not confirmed.
+8. **The DLT v2 backfill/parity tools have not been run live**, so production registration parity
+   (v1 `registrations` vs the v2 shadow) is genuinely unknown, not predicted-safe — see "Live
+   result for the DLT v2 backfill/parity tools" above and the exact commands there. This is
+   recorded as ordinary deployment work an operator with credentials performs next, not a design
+   gap or a reason to treat Phase 2 as incomplete: the infrastructure is implemented and tested;
+   only its first live run against production is outstanding.
 
 ## Next approved step
 
-**None.** Phase 1 is complete; Phase 2 (`MIGRATION_PLAN.md`'s DLT v2 shadow pipeline) remains
-unauthorized until a separate, explicit task authorizes it. Completing Phase 1 does not itself
-authorize starting Phase 2.
+**None.** Phase 1 and Phase 2 are complete; Phase 3 (`MIGRATION_PLAN.md`'s "Registration
+analytics read cutover") remains unauthorized until a separate, explicit task authorizes it.
+Completing Phase 2 does not itself authorize starting Phase 3.
 
 Operational follow-ups that need only credentials, not new code or a new phase (safe to do at any
-time, not blocking Phase 2):
+time, not blocking Phase 3):
 - run `tools/sync_external_identity_registry.py` (dry-run, then `--apply` if clean) against the
-  live production project and record the result as a dated addendum — see "Live result" above for
-  the exact command and the predicted (unconfirmed) outcome;
-- run `scripts/audit-external-identity.ts` similarly, per the Phase 1A parity gap above.
+  live production project and record the result as a dated addendum — see the Phase 1 "Live
+  result" above for the exact command and the predicted (unconfirmed) outcome;
+- run `scripts/audit-external-identity.ts` similarly, per the Phase 1A parity gap above;
+- apply `supabase/migration_v29_registration_dlt_v2_shadow.sql` through this repository's normal
+  deployment path, then run `tools/backfill_registration_v2.py` (dry-run first) and
+  `tools/registration_v2_parity.py` against the live production project, recording the result as a
+  dated addendum — see the Phase 2 "Live result" above for the exact commands. Unlike the Phase 1
+  follow-up above, no outcome is predicted here; production registration parity is unknown until
+  this actually runs.
 
-No Supabase migration is outstanding for Phase 1 — see parity gap 6 above.
+Candidates for a future, separately-authorized **Phase 3** (not implemented, not started, not
+scoped in detail here — see `MIGRATION_PLAN.md`'s Phase 3 section): switching
+`/api/report/registration`/`/api/report/market` to read from the v2 shadow (or a v2-derived
+projection) after a demonstrated parity period, per Invariant 11/12 — a distinct, later, separately
+gated decision from building the shadow pipeline itself.
 
-Candidates for a future, separately-authorized **Phase 2** (not implemented, not started, not
-scoped in detail here — see `MIGRATION_PLAN.md`'s Phase 2 section): the canonical DLT v2 shadow
-pipeline, run alongside the current `vehreg/ingest.py`/`vehreg/dlt.py` pipeline, reconciled against
-it, before anything reads from the new pipeline.
-
-Do not start Phase 2 work from this file alone — this file records state; it does not grant
+Do not start Phase 3 work from this file alone — this file records state; it does not grant
 authorization.

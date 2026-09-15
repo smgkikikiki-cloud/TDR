@@ -18,8 +18,16 @@ Phase 1 below, `EXTERNAL_IDENTITY_CONTRACT.md`, and `status/CURRENT.md`) is now 
 
 **2026-09-15 — Phase 1 complete.** The persistence decision, the operational schema fix it
 required, and the registry↔operational reconciliation/sync layer are all implemented — see the
-"Phase 1B" subsection below and `EXTERNAL_IDENTITY_PERSISTENCE.md`. Phase 1 is closed; Phase 2
-(DLT v2 shadow pipeline) is not started and remains unauthorized.
+"Phase 1B" subsection below and `EXTERNAL_IDENTITY_PERSISTENCE.md`. A subsequent correction pass
+the same day fixed three architecture-review findings (reverted an unsafe operational-schema
+change, added an operational-representability blocker, and a whole-run apply fail-closed gate) —
+Phase 1 remains closed after that correction.
+
+**2026-09-15 — Phase 2 complete (shadow).** The DLT v2 observation/resolution/fact/backfill/parity
+pipeline is implemented and tested in shadow, alongside the existing `vehreg/ingest.py`/
+`vehreg/dlt.py` pipeline and the existing production Supabase registration path — see the "Phase
+2" subsection below and `DLT_V2_ARCHITECTURE.md`. No production consumer was changed and no read
+cutover occurred; Phase 3 remains not started and unauthorized.
 
 ## Relationship to the existing `docs/consolidation/MASTERPLAN.md` (Phase A–J)
 
@@ -196,24 +204,56 @@ Phase 1A's TypeScript contract/audit behavior beyond documentation; change Phase
 add/apply any Supabase migration (the earlier `migration_v28` draft was removed entirely, not
 merely left unapplied).
 
-**Phase 1 is complete. Phase 2 is not started** — see below.
+**Phase 1 is complete. Phase 2 is complete in shadow** — see below.
 
 ## Phase 2 — Canonical DLT v2 shadow pipeline
 
-**Intent**: build a next-generation DLT ingestion/resolution pipeline (informed by the
-Source/Observation/Identity plane split in `MASTER_ARCHITECTURE.md`) that runs **alongside**
-the current `vehreg/ingest.py`/`vehreg/dlt.py` pipeline, writing to a clearly-separate output,
-reconciled against it, before anything reads from the new pipeline.
+**2026-09-15 — implemented in shadow.** Full record: `DLT_V2_ARCHITECTURE.md`.
 
-**Must preserve**: Invariant 2 (exact reconciliation), Invariant 4 (MIXED semantics), Invariant
-15 (source grain vs. reporting grain), and the RY1/RY3 disambiguation behavior documented in
-`CURRENT_STATE.md` §5 — the brief is explicit that `registration_fact_v2` must not be introduced
-in Phase 0, and this phase is exactly where that decision gets made deliberately, with a shadow
-period, not before.
+**Intent (as authorized)**: build a next-generation DLT ingestion/resolution pipeline (informed by
+the Source/Observation/Identity plane split in `MASTER_ARCHITECTURE.md`) that runs **alongside**
+the current `vehreg/ingest.py`/`vehreg/dlt.py` pipeline and the existing production Supabase
+registration path, writing to a clearly-separate, additive shadow schema, with parity against the
+current production registration path — not against the local vehreg warehouse alone, per the
+authorizing task's explicit reuse/scope list (`registration_brand_aliases`/
+`registration_model_aliases`/`match_registration_model`/current `registrations`).
 
-**Acceptance criteria**: v2 pipeline's per-model, per-period totals reconcile exactly against
-the current pipeline's totals for every month in the fixture/production history before any
-consumer is switched.
+**What was built**: an observation layer (`vehreg/registration_observation.py` — deterministic ids,
+three adapters: DLT CKAN, mapped CSV, legacy `registrations` row); a canonical resolver
+(`vehreg/resolution_v2.py` — a thin, observation-shaped wrapper over the unchanged
+`vehreg.ingest.Resolver`, resolving directly against `vehreg.catalog.Catalog` text ids, never a
+legacy uuid); a pure batch builder (`vehreg/registration_v2_writer.py`); an additive shadow schema
+(`supabase/migration_v29_registration_dlt_v2_shadow.sql` — three service-role-only tables, no
+grant to `anon`/`authenticated`, no change to any existing registration object); a backfill CLI
+(`tools/backfill_registration_v2.py` — deterministic/idempotent/resumable, dry-run by default,
+counts before writing); and a dual-run parity CLI (`tools/registration_v2_parity.py` — pure
+comparison logic in `vehreg/registration_v2_parity.py`, keeping volume parity, identity parity,
+resolution-coverage difference, and grain difference strictly separate, per the authorizing task's
+explicit requirement that a mapping disagreement is not automatically a unit mismatch).
+
+**Must preserve**: Invariant 2 (exact reconciliation — `WriteBatch.reconciles()`, structurally
+enforced), Invariant 4/15 (MIXED semantics and source-vs-reporting grain — Phase 2 does not build a
+v2 reporting cube, so no allocation/consensus step exists yet to violate this; a future v2 cube
+must apply the same `dim_unit`-style consensus `vehreg/db.py::_consensus()` already uses), and the
+RY1/RY3 disambiguation behavior documented in `CURRENT_STATE.md` §5 (reused unchanged via
+`Resolver`, proven again by `tests/test_resolution_v2.py::test_ry_class_tie_breaking`).
+
+**Acceptance criteria (met)**: `WriteBatch.reconciles()` proves resolved+unresolved units equal
+observed units for every batch (unit-tested, `tests/test_registration_v2_writer.py`); the dual-run
+parity tool distinguishes volume/identity/coverage/grain differences and marks a report unclean
+only for a genuine volume mismatch, duplicate key, or reconciliation failure, never for a mapping
+disagreement alone (`tests/test_registration_v2_parity.py`). Live reconciliation against
+production `registrations` history has not been run — no Supabase credentials were available in
+this session (see `DLT_V2_ARCHITECTURE.md`'s "Live result" and `status/CURRENT.md`) — this is
+recorded as deployment work for an operator with credentials, not treated as a new subphase or a
+reason to withhold "complete in shadow."
+
+**What this pass explicitly did not do**: switch any production consumer to read v2 (Phase 3);
+change `vehreg/ingest.py`/`vehreg/dlt.py`/the local SQLite warehouse; change `registrations`,
+`registration_brand_aliases`, `registration_model_aliases`, `match_registration_model`, or any
+`registration_*` analytics view/function; change Phase-E or Phase 1's external-identity registry;
+create a `MarketTrim` from DLT trim detail (Invariant 7, structurally enforced — `Grain` has no
+MarketTrim member).
 
 ## Phase 3 — Registration analytics read cutover
 
