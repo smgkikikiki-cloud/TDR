@@ -1,10 +1,17 @@
-# External Identity Persistence — Phase 1B Decision Record
+# External Identity Persistence — Phase 1 Decision Record
 
-**Status: architecture decision, implemented in shadow mode.** This document records the Phase 1B
-persistence decision for external-identity bindings. It is fixed by architecture review, not open
-for re-litigation as an implementation-choice debate in this or a future packet — see
-`MIGRATION_PLAN.md`'s Phase 1 section for how this fits the overall sequence, and
-`status/CURRENT.md` for exactly what is and is not consumed yet.
+**Status: architecture decision, fully implemented, still shadow mode for production consumers.**
+This document records the Phase 1B persistence decision for external-identity bindings, and the
+Phase 1-completion pass that built the reconciliation/sync layer the decision implied. Both are
+fixed by architecture review, not open for re-litigation as an implementation-choice debate in a
+future packet — see `MIGRATION_PLAN.md`'s Phase 1 section for how this fits the overall sequence,
+and `status/CURRENT.md` for exactly what is and is not consumed yet.
+
+**"Shadow mode" here means specifically**: the Git registry is canonical truth, and can now be
+deterministically, safely, repeatably projected into the operational `canonical_object_map` layer
+— but no production consumer has been switched to read the registry (directly or via that
+projection) instead of `canonical_object_map` as it already does. That switch is future,
+separately-authorized work — see "What remains unauthorized" near the end of this document.
 
 This document assumes familiarity with `EXTERNAL_IDENTITY_CONTRACT.md` (Phase 1A's observational
 vocabulary — namespace, entity type, mapping state, trust level) and `CURRENT_STATE.md` §10
@@ -233,6 +240,151 @@ canonical-target validation checks against one catalog year (by default
 `vehreg.catalog.DEFAULT_YEAR`), since canonical IDs are stable and never recycled
 (`INVARIANTS.md` rule 5): a target valid in the current year is the practical, available check.
 
+## Schema decision: `canonical_object_map_verified_target_uq`
+
+The registry deliberately permits multiple external identities to bind to the same canonical
+target (see "Key and cardinality rules" above). `canonical_object_map` had a global partial unique
+index that forbade exactly that:
+
+```sql
+create unique index canonical_object_map_verified_target_uq
+  on canonical_object_map (canonical_entity_type, canonical_id)
+  where status = 'verified';
+```
+
+This is a real conflict between the registry's model and the operational schema, not a future
+concern — it directly blocks a second binding from ever being synced as `verified` against a
+canonical target that already has one. Rather than deferring this to yet another packet, it is
+fixed now: `supabase/migration_v28_external_identity_registry_operational.sql` drops that one
+index and nothing else.
+
+**Why this is safe:**
+
+- Dropping an index never touches row data. Any table that currently satisfies the index trivially
+  still satisfies "no such index" — there is no data migration, no data loss, and no way this
+  change can be unsafe against current production data, regardless of what that data currently is.
+- The source-key uniqueness constraint from `migration_v12`,
+  `unique (source_table, source_id, canonical_entity_type)`, is untouched. That is the actual key
+  every consumer queries by:
+  - `lib/canonical-write-shadow.ts`'s `.eq('source_table', ...).eq('source_id', ...).eq('canonical_entity_type', ...)`
+    is answered entirely by the source-key index; it never references the dropped target index.
+  - `apply_vehicle_serving_projection`'s `on conflict (source_table, source_id, canonical_entity_type)
+    do update` upserts are answered the same way.
+  - Neither behavior changes.
+- The per-row correctness check (`status = 'verified' and canonical_id is not null and verified_at
+  is not null) or status <> 'verified'`) is untouched — a row still cannot be `verified` without a
+  target and a timestamp.
+- Regression coverage: `tests/test_external_identity_registry_migration.py` asserts the migration
+  contains exactly the one `drop index` statement, touches no table data (no `insert`/`update`/
+  `delete`/`truncate`), and contains no constraint-altering DDL — a source-text regression test,
+  the same pattern `scripts/check-admin-parity.ts` already uses for other migrations, since this
+  repository has no dockerized/live Postgres to execute DDL against in CI (see
+  `status/CURRENT.md`'s known parity gaps — this is not a new gap, it is the same pre-existing one).
+
+**This migration file has not been applied to the live production project by this pass** — see
+"Live result" in the accompanying completion report. Creating the migration file is the normal
+unit of change in this repository (as with every other `supabase/migration_v*.sql` file); applying
+it to production follows the project's normal deployment path, not an ad hoc connection from this
+session.
+
+## Registry → operational reconciliation and sync
+
+`automotive/vehicle_master/tdr_bridge/external_identity_sync.py` (pure classification/decision
+logic, no I/O) and `automotive/vehicle_master/tools/sync_external_identity_registry.py` (the live
+CLI) answer, for every Git-pinned binding, "does `canonical_object_map` already reflect this?" and
+— for exactly one safe case — can make it so.
+
+### Reconciliation key and classifications
+
+Key: `(source_table, source_id, canonical_entity_type)` — `canonical_object_map`'s own key,
+derived from a registry binding's `(external_entity_type, external_id, canonical_entity_type)` via
+`EXTERNAL_ENTITY_TYPE_TO_SOURCE_TABLE`. The same external UUID at two different canonical entity
+types is two different keys, not a conflict — this mirrors Phase 1A's comparability rule exactly.
+
+Every Git binding is classified as exactly one of:
+
+| Classification | Meaning | Safe to auto-fix? |
+|---|---|---|
+| `in_sync` | The operational row already matches the binding (same canonical target, matching status). | n/a — nothing to do |
+| `missing_operational_row` | No `canonical_object_map` row exists for this key. | **Yes — the only mutation this tool ever performs.** |
+| `canonical_target_conflict` | An operational row exists at this key, but its `canonical_id` differs from the registry's. | No — reported, never overwritten |
+| `operational_status_conflict` | An operational row exists with the registry's `canonical_id`, but a different `status` than the registry's `state` implies. | No — reported, never overwritten |
+| `missing_external_source_row` | The legacy Supabase row the binding's `external_id` names (in `brands`/`models`/`model_powertrains`/`trims`) does not exist. | No — reported, never synced |
+
+Every `canonical_object_map` row whose key is **not** in the registry is separately classified as
+operational-only: `review_state_unmatched`, `review_state_ambiguous`, `retired_operational_only`,
+`phase_e_projection_owned` (detected via `verified_by = 'phase-e-publisher'` or
+`match_basis.basis = 'phase-e canonical serving projection'`), or `verified_ownership_unknown`
+(`verified`, but neither registry-keyed nor Phase-E-shaped — an operator's own direct Supabase
+edit, or a future candidate for registry promotion). None of these are ever mutated by this tool.
+
+### Dry-run, apply, convergence
+
+```
+python tools/sync_external_identity_registry.py                # dry run (default) — reads only
+python tools/sync_external_identity_registry.py --apply         # applies safe mutations, then rereads to prove convergence
+```
+
+Every run, regardless of `--apply`, first validates the registry offline (refusing to reconcile
+against an invalid one) and then reads live `canonical_object_map` plus live existence of every
+binding's legacy source row. **Dry-run performs zero writes** — this is not merely a policy, it
+follows from `reconcile()` being pure Python over already-fetched data with no write path at all.
+
+`--apply` inserts exactly the `missing_operational_row` mutations reconciliation proposed — plain
+`INSERT`s, never an upsert/`on conflict`, so a race that created the row between read and write
+fails loudly rather than silently overwriting anything — then **rereads live state and reconciles
+again**, printing a second report to prove convergence. A clean rerun after a successful apply (no
+conflicts, nothing changed operationally in between) reports zero further bindings needing
+attention — `tests/test_external_identity_sync.py::test_apply_idempotency_and_convergence` proves
+this at the pure-logic level; "Live result" below records whether it was also proven live.
+
+**What the writer can never do, structurally, not just by convention:**
+
+- Update an existing operational row. The only write path (`insert_operational_row`) is a plain
+  `INSERT`; there is no update/upsert code path anywhere in this tool.
+- Touch a row outside the registry's own keys. `propose_mutation()` only ever derives from
+  `BindingReconciliation` values, which only ever come from registry bindings — an operational-only
+  row (review state, Phase-E, unknown-verified, retired) structurally cannot produce a mutation,
+  proven directly by
+  `tests/test_external_identity_sync.py::test_operational_only_rows_never_produce_proposed_mutations`.
+  Nothing about this is decided at the CLI/apply layer, where a bug would be much easier to miss —
+  it is decided at the return type of the pure reconciliation function.
+- Import an operational row into the Git registry. Nothing in `external_identity_sync.py` writes
+  to the registry file; the only mutation direction is registry → operational, matching "No
+  source-of-truth loop" above.
+- Silently resolve a `canonical_target_conflict` or `operational_status_conflict`. Every blocker
+  classification is excluded from `SAFE_MUTATION_CLASSIFICATIONS`; `propose_mutation()` returns
+  `None` for all of them, proven by
+  `tests/test_external_identity_sync.py::test_conflict_prevents_mutation_even_when_other_bindings_are_missing`.
+
+### Provenance: projection is not re-review
+
+A synced operational row keeps the **original** `verified_by`/`verified_at` from the Git binding
+untouched — this is a projection of an existing decision, not a new review, so the operational row
+must say who actually made the decision and when, not who ran the sync tool. Distinct
+synchronization provenance goes in `match_basis`, in its own object, so a future operator can tell
+at a glance that a row was **projected from the Git registry** rather than created directly in
+Supabase or by Phase-E:
+
+```json
+{
+  "basis": "external_identity_registry_sync",
+  "registry_namespace": "legacy_tdr",
+  "registry_external_entity_type": "model",
+  "registry_authority_basis": "explicit_review",
+  "registry_state": "active",
+  "synced_at": "...",
+  "synced_by": "external-identity-registry-sync"
+}
+```
+
+This is symmetric with how Phase-E's own rows are told apart
+(`match_basis.basis = "phase-e canonical serving projection"`, `verified_by = "phase-e-publisher"`)
+— three distinct, machine-readable shapes now exist for three distinct provenances: a direct human
+Supabase edit (no recognizable `match_basis.basis`), a Phase-E projection, and a registry sync.
+`tests/test_external_identity_sync.py::test_active_sync_proposes_verified_row_with_preserved_provenance`
+proves the separation holds.
+
 ## No source-of-truth loop
 
 The target architecture must never create this cycle:
@@ -241,14 +393,15 @@ The target architecture must never create this cycle:
 Git canonical registry → Supabase projection → read Supabase back → rewrite Git canonical registry
 ```
 
-Git canonical truth must not depend on its own serving projection. A future Supabase projection of
-this registry (not built in Phase 1B) must flow **one-way** from canonical Git state outward,
-except for separately-reviewed commands entering through the existing canonical write/review
-pipeline (`vehreg/canonical_write.py`, `docs/CANONICAL_INPUT.md`) — exactly the same rule that
-already governs every other canonical fact in this repository. This registry's own offline
-validator enforces this by construction: it reads the registry file and the local catalog only,
-never Supabase, so there is no path by which a live read could feed back into what the validator
-accepts as valid Git state.
+Git canonical truth must not depend on its own serving projection. The Supabase projection this
+document describes above (`tools/sync_external_identity_registry.py`) flows **one-way** from
+canonical Git state outward, except for separately-reviewed commands entering through the existing
+canonical write/review pipeline (`vehreg/canonical_write.py`, `docs/CANONICAL_INPUT.md`) — exactly
+the same rule that already governs every other canonical fact in this repository. Concretely:
+the offline registry validator reads the registry file and the local catalog only, never Supabase;
+and the sync tool reads Supabase only to decide what to write *to* Supabase — it never writes back
+to `integration_data/external_identity_registry.json`. There is no path by which a live read could
+feed back into Git canonical state.
 
 ## Relationship to the Phase 1A contract
 
@@ -275,19 +428,31 @@ Concretely:
 No existing Mechanism-B database `status` value is renamed, and no Phase 1A TypeScript type,
 classification, or test changes as a result of this packet.
 
-## What Phase 1B deliberately does not do
+## What remains unauthorized
+
+Phase 1 is complete as an identity authority/projection boundary, but this is still deliberately
+short of a consumer cutover:
 
 - **No production consumer cutover.** `tdr_bridge/release.py`, `lib/canonical-write-shadow.ts`,
-  `apply_vehicle_serving_projection`, `canonical_object_map`, the `current_vehicle_*` views,
-  registration ingestion/analytics, ECO ingestion, canonical input commands, and every application
-  page/compare/member-dashboard consumer are all unchanged. Nothing reads from the new registry in
-  production.
-- **No Supabase migration, write, or behavioral change.** No new table, RPC, or RLS policy; no
-  write to `canonical_object_map`; no live Supabase read (the offline validator never connects to
-  Supabase at all).
+  `apply_vehicle_serving_projection`, the `current_vehicle_*` views, registration
+  ingestion/analytics, ECO ingestion, canonical input commands, and every application
+  page/compare/member-dashboard consumer are all unchanged and continue reading
+  `canonical_object_map`/Mechanism A exactly as before. **Nothing reads from the Git registry in
+  production** — `tools/sync_external_identity_registry.py` only ever *writes* to
+  `canonical_object_map` (and only the one safe, additive case); no consumer reads the registry
+  file directly, and none is authorized to.
+- **No write-gate cutover.** `lib/canonical-write-shadow.ts` may continue reading
+  `canonical_object_map` — that is by design. Phase 1's completed architecture is `Git truth →
+  controlled operational projection → existing consumer`, not `consumer → Git file directly`.
+  Switching the write gate itself to prefer/require a registry-derived signal is a distinct,
+  separately-authorized future decision.
 - **No retirement of `crosswalk_overrides.json`** or any existing Mechanism A/B path.
 - **No bulk import** of Mechanism A's derived links, Mechanism B's unmatched rows, or the
-  Phase-E projection-owned rows — see "Initial migration seed" below.
+  Phase-E projection-owned rows into the registry — see "Initial migration seed" below. The sync
+  tool's own safety boundary (above) makes this structural, not just a policy: it cannot import
+  anything into Git, and cannot mutate an operational-only row regardless of what it is.
+- **No new Phase 1 subphase.** This is Phase 1's completion, not a "Phase 1C/1D" — see
+  `status/CURRENT.md`.
 
 ## Initial migration seed
 
@@ -309,6 +474,8 @@ verified Phase C pilot") rather than the fixed `phase-e-publisher` literal the o
 
 ## Files changed
 
+Phase 1B (persistence decision):
+
 - `automotive/vehicle_master/tdr_bridge/external_identity_registry.py` — loader, dataclasses,
   offline validator (schema, uniqueness, canonical-target resolution).
 - `automotive/vehicle_master/integration_data/external_identity_registry.json` — the registry
@@ -317,6 +484,20 @@ verified Phase C pilot") rather than the fixed `phase-e-publisher` literal the o
   (`python tools/validate_external_identity_registry.py`), no credentials or network required.
 - `automotive/vehicle_master/tests/test_external_identity_registry.py` — pytest coverage.
 
-No TypeScript file changed as part of this decision beyond documentation. The Phase 1A contract
+Phase 1 completion (reconciliation/sync + operational schema fix):
+
+- `automotive/vehicle_master/tdr_bridge/external_identity_sync.py` — pure reconciliation/
+  classification logic and mutation-proposal, no I/O.
+- `automotive/vehicle_master/tools/sync_external_identity_registry.py` — the live CLI (dry-run
+  default, `--apply` for the one safe mutation type, reread-and-prove-convergence built in).
+- `supabase/migration_v28_external_identity_registry_operational.sql` — drops
+  `canonical_object_map_verified_target_uq`; see "Schema decision" above.
+- `automotive/vehicle_master/tests/test_external_identity_sync.py` and
+  `tests/test_external_identity_registry_migration.py` — pytest coverage.
+- `tdr_bridge/external_identity_registry.py` was additionally tightened: an `active` binding with
+  `authority_basis = 'explicit_review'` now requires `verified_at`/`verified_by` at validation
+  time, so the sync tool never has to invent provenance for a `verified` operational row.
+
+No TypeScript file changed as part of either pass beyond documentation. The Phase 1A contract
 (`lib/external-identity/`) remains valid, unremoved, and unmodified in behavior; no TypeScript
-consumer switches to the new registry in this packet.
+consumer switches to the new registry.

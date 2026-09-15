@@ -305,6 +305,24 @@ def validate_registry(doc: RegistryDocument, catalog: Catalog) -> list[str]:
                 f"mappings must never be seeded into this registry"
             )
 
+        # An active, explicitly-reviewed binding without knowing who/when
+        # reviewed it is a data-quality gap in its own right, and the
+        # synchronization tool (tdr_bridge/external_identity_sync.py) must be
+        # able to trust these are present before writing an operational
+        # 'verified' row (canonical_object_map's own check constraint
+        # requires verified_at whenever status='verified'). Enforcing this
+        # here, at offline validation time, means sync never has to invent a
+        # timestamp/actor or special-case a partially-provenanced binding.
+        if (
+            binding.state == "active"
+            and binding.authority_basis == "explicit_review"
+            and (not binding.verified_at or not binding.verified_by)
+        ):
+            problems.append(
+                f"{where}: state='active' with authority_basis='explicit_review' requires "
+                f"both verified_at and verified_by to be recorded"
+            )
+
         if binding.namespace == "legacy_tdr" and not _is_valid_legacy_tdr_uuid(binding.external_id):
             problems.append(
                 f"{where}: external_id {binding.external_id!r} is not a valid UUID, "

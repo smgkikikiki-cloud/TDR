@@ -14,8 +14,12 @@ Phase 1.
 
 **2026-09-15 — Phase 1A implemented.** Phase 0 is complete. The narrow first packet of Phase 1
 (a read-only external-identity contract and audit engine — see the "Phase 1A" subsection under
-Phase 1 below, `EXTERNAL_IDENTITY_CONTRACT.md`, and `status/CURRENT.md`) is now implemented. The
-rest of Phase 1 — choosing a persistence design — remains unauthorized.
+Phase 1 below, `EXTERNAL_IDENTITY_CONTRACT.md`, and `status/CURRENT.md`) is now implemented.
+
+**2026-09-15 — Phase 1 complete.** The persistence decision, the operational schema fix it
+required, and the registry↔operational reconciliation/sync layer are all implemented — see the
+"Phase 1B" subsection below and `EXTERNAL_IDENTITY_PERSISTENCE.md`. Phase 1 is closed; Phase 2
+(DLT v2 shadow pipeline) is not started and remains unauthorized.
 
 ## Relationship to the existing `docs/consolidation/MASTERPLAN.md` (Phase A–J)
 
@@ -141,30 +145,46 @@ anything to `canonical_object_map`, or auto-verify anything. See
 `EXTERNAL_IDENTITY_CONTRACT.md`'s "Non-goals" section and `status/CURRENT.md` for the exact
 boundary. The persistence-model question was answered by the next packet (Phase 1B, below).
 
-### Phase 1B — implemented in shadow mode (this pass, 2026-09-15 — still Phase 1, not Phase 2)
+### Phase 1B — persistence decision + reconciliation (2026-09-15) — Phase 1 is now complete
 
-**Phase 1B is done, in shadow mode.** It answered the persistence question Phase 1A deliberately
-left open, with a split-ownership decision fixed by architecture review — full record in
-`docs/vehicle-platform/EXTERNAL_IDENTITY_PERSISTENCE.md`: a new Git-backed registry
-(`automotive/vehicle_master/integration_data/external_identity_registry.json`, loader/validator in
-`tdr_bridge/external_identity_registry.py`) owns pinned, non-reconstructible identity decisions;
-Mechanism A remains derived; Supabase `canonical_object_map` remains the unchanged operational
-bridge; Phase-E serving-projection-generated rows are explicitly excluded from the registry as
-projection-owned, not pinned (a live finding: `apply_vehicle_serving_projection`
-auto-writes `status='verified', verified_by='phase-e-publisher'` for every child row it projects —
-see the persistence document's "Phase-E verification finding"). The registry was seeded with
-exactly the one binding whose provenance is an actual human review
-(`e1a0b9fd-2d57-477d-b13f-1647d36d0298` → `jaecoo.jaecoo_5_ev`), out of nine currently `verified`
-`canonical_object_map` rows — the other eight are Phase-E projection-owned and excluded by design.
+**Phase 1 is done, in shadow mode.** Phase 1B answered the persistence question Phase 1A
+deliberately left open, with a split-ownership decision fixed by architecture review, and the same
+pass built the reconciliation/sync layer that decision implied — full record in
+`docs/vehicle-platform/EXTERNAL_IDENTITY_PERSISTENCE.md`. This was deliberately finished in one
+pass rather than split into further Phase 1 sub-packets, per architecture review's explicit
+instruction not to invent a "Phase 1C."
 
-**What Phase 1B explicitly did not do**: switch any production consumer to read from the new
+- **Persistence**: a new Git-backed registry
+  (`automotive/vehicle_master/integration_data/external_identity_registry.json`, loader/validator
+  in `tdr_bridge/external_identity_registry.py`) owns pinned, non-reconstructible identity
+  decisions; Mechanism A remains derived; Supabase `canonical_object_map` remains the operational
+  bridge; Phase-E serving-projection-generated rows are explicitly excluded from the registry as
+  projection-owned, not pinned (a live finding: `apply_vehicle_serving_projection` auto-writes
+  `status='verified', verified_by='phase-e-publisher'` for every child row it projects). The
+  registry was seeded with exactly the one binding whose provenance is an actual human review
+  (`e1a0b9fd-2d57-477d-b13f-1647d36d0298` → `jaecoo.jaecoo_5_ev`), out of nine currently `verified`
+  `canonical_object_map` rows — the other eight are Phase-E projection-owned and excluded by
+  design.
+- **Operational schema fix**: `canonical_object_map`'s global partial unique index on
+  `(canonical_entity_type, canonical_id) where status='verified'` conflicted with the registry's
+  cardinality model (multiple external identities may legitimately bind to one canonical target).
+  `supabase/migration_v28_external_identity_registry_operational.sql` drops that index; the
+  source-key uniqueness constraint and the per-row correctness check are both untouched.
+- **Reconciliation/sync**: `tdr_bridge/external_identity_sync.py` (pure classification, no I/O)
+  and `tools/sync_external_identity_registry.py` (the live CLI) deterministically reconcile every
+  Git binding against live `canonical_object_map`, dry-run by default, `--apply` to create exactly
+  the missing rows reconciliation proposed (never update, never touch anything outside the
+  registry's own keys), and reread afterward to prove convergence.
+
+**What this pass explicitly did not do**: switch any production consumer to read from the new
 registry (`tdr_bridge/release.py`, `lib/canonical-write-shadow.ts`,
-`apply_vehicle_serving_projection`, every application page, remain exactly as before); write to
-Supabase or add a migration; retire `crosswalk_overrides.json` or any Mechanism A/B path; rename
-any Mechanism B `status` value; or touch Phase 1A's TypeScript contract/audit behavior beyond
-documentation. **Phase 1C — building deterministic projection/reconciliation from the Git registry
-to the operational Supabase mapping layer, dual-run against `canonical_object_map`, and only much
-later considering a write-gate cutover — remains unauthorized and unstarted.**
+`apply_vehicle_serving_projection`, every application page, remain exactly as before); retire
+`crosswalk_overrides.json` or any Mechanism A/B path; rename any Mechanism B `status` value; touch
+Phase 1A's TypeScript contract/audit behavior beyond documentation; or apply the new Supabase
+migration to production (the file was created and reasoned about for safety, not executed live by
+this session — see `status/CURRENT.md`'s "Live result").
+
+**Phase 1 is complete. Phase 2 is not started** — see below.
 
 ## Phase 2 — Canonical DLT v2 shadow pipeline
 
