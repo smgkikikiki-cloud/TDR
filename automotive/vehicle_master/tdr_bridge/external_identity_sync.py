@@ -31,6 +31,23 @@ row, not an operational-only `verified` row of unknown origin, not a
 retired-operational-only row. It never *updates* an existing row, even one
 that conflicts with Git — a conflict is reported, never silently resolved,
 never overwritten. See `classify_binding()` and `SAFE_MUTATION_STATES` below.
+
+Operational representability: the Git registry's canonical identity graph is
+allowed to be more expressive than `canonical_object_map` currently is — in
+particular, `canonical_object_map_verified_target_uq`
+(migration_v12_canonical_write_pipeline.sql) permits only one `verified` row
+per `(canonical_entity_type, canonical_id)`, because
+`apply_vehicle_serving_projection()` (migration_v14_serving_projection.sql,
+"Phase-E") selects a legacy row by canonical_id alone, with no source key, so
+that index is load-bearing for Phase-E's correctness. A Git registry state
+that does not fit that shape is not invalid — it just is not yet
+representable by the current operational compatibility layer. This module
+detects that case (`operational_target_uniqueness_blocker`, see
+`_compute_uniqueness_blockers()`) and refuses to propose or apply the write,
+rather than weakening the DB constraint to make room for it. And
+`--apply` is fail-closed at the whole-run level, not per-binding: see
+`mutations_to_apply()` — any blocker anywhere in a run means zero mutations
+are applied that run, even ones that are individually safe.
 """
 from __future__ import annotations
 
@@ -89,9 +106,16 @@ class OperationalRow:
 
     @property
     def is_phase_e_owned(self) -> bool:
+        # Both halves of the known provenance pattern are required. A row
+        # carrying only one (e.g. verified_by set by some other process that
+        # happens to reuse the literal, or a match_basis someone hand-typed)
+        # is NOT confidently Phase-E-owned — it falls through to
+        # "verified_ownership_unknown" instead of being silently hidden
+        # behind a Phase-E label it may not actually deserve.
         return (
             self.verified_by == PHASE_E_VERIFIED_BY
-            or (isinstance(self.match_basis, dict) and self.match_basis.get("basis") == PHASE_E_MATCH_BASIS_VALUE)
+            and isinstance(self.match_basis, dict)
+            and self.match_basis.get("basis") == PHASE_E_MATCH_BASIS_VALUE
         )
 
     @property
@@ -110,13 +134,17 @@ def binding_key(binding: ExternalIdentityBinding) -> tuple[str, str, str]:
 
 BindingClassification = str  # in_sync | missing_operational_row | canonical_target_conflict
                               # | operational_status_conflict | missing_external_source_row
+                              # | operational_target_uniqueness_blocker
 
 #: Classifications the sync writer may act on — everything else is a
 #: blocker, reported and never auto-resolved.
 SAFE_MUTATION_CLASSIFICATIONS = frozenset({"missing_operational_row"})
 
 BLOCKER_CLASSIFICATIONS = frozenset({
-    "canonical_target_conflict", "operational_status_conflict", "missing_external_source_row",
+    "canonical_target_conflict",
+    "operational_status_conflict",
+    "missing_external_source_row",
+    "operational_target_uniqueness_blocker",
 })
 
 
@@ -135,6 +163,7 @@ def classify_binding(
     operational_row: OperationalRow | None,
     *,
     source_row_exists: bool,
+    uniqueness_blocker_detail: str | None = None,
 ) -> BindingReconciliation:
     key = binding_key(binding)
     desired_status = DESIRED_STATUS_BY_BINDING_STATE[binding.state]
@@ -151,6 +180,18 @@ def classify_binding(
         )
 
     if operational_row is None:
+        if uniqueness_blocker_detail is not None:
+            # The registry considers this binding valid, but creating the
+            # operational row it implies is not representable under the
+            # current canonical_object_map_verified_target_uq constraint
+            # (see supabase/migration_v12_canonical_write_pipeline.sql). This
+            # is a compatibility-layer limitation, not a Git registry defect
+            # — see docs/vehicle-platform/EXTERNAL_IDENTITY_PERSISTENCE.md.
+            return BindingReconciliation(
+                binding=binding, key=key, classification="operational_target_uniqueness_blocker",
+                desired_status=desired_status, operational_row=None,
+                detail=uniqueness_blocker_detail,
+            )
         return BindingReconciliation(
             binding=binding, key=key, classification="missing_operational_row",
             desired_status=desired_status, operational_row=None,
@@ -184,19 +225,98 @@ def classify_binding(
     )
 
 
+def _compute_uniqueness_blockers(
+    doc: RegistryDocument,
+    operational_by_key: dict[tuple[str, str, str], OperationalRow],
+) -> dict[tuple[str, str, str], str]:
+    """Maps a binding's key to a blocker detail whenever syncing that binding
+    (creating a *new* `canonical_object_map` row for it) would — or already
+    does, via a sibling binding — violate
+    `canonical_object_map_verified_target_uq` (unique on
+    `(canonical_entity_type, canonical_id) where status = 'verified'`,
+    migration_v12). Only bindings whose desired status is `verified` are
+    subject to this constraint; `retired` is not.
+
+    This is "operational representability", not registry validity: the Git
+    registry itself may legitimately hold more than one active binding for
+    the same canonical target (Mechanism A/B may disagree, or a legacy
+    dataset may have duplicate legacy rows for the same real vehicle) — see
+    docs/vehicle-platform/EXTERNAL_IDENTITY_PERSISTENCE.md. This function
+    exists only to keep that broader Git state from being silently forced
+    into the narrower shape `apply_vehicle_serving_projection()` (migration_v14)
+    depends on for correctness, by refusing to propose the write rather than
+    weakening the DB constraint.
+    """
+    active_binding_keys_by_target: dict[tuple[str, str], set[tuple[str, str, str]]] = {}
+    for binding in doc.bindings:
+        if DESIRED_STATUS_BY_BINDING_STATE[binding.state] != "verified":
+            continue
+        source_table = EXTERNAL_ENTITY_TYPE_TO_SOURCE_TABLE.get(binding.external_entity_type)
+        if source_table is None:
+            continue
+        target = (binding.canonical_entity_type, binding.canonical_id)
+        active_binding_keys_by_target.setdefault(target, set()).add(binding_key(binding))
+
+    verified_keys_by_target: dict[tuple[str, str], set[tuple[str, str, str]]] = {}
+    for row in operational_by_key.values():
+        if row.status != "verified" or row.canonical_id is None:
+            continue
+        target = (row.canonical_entity_type, row.canonical_id)
+        verified_keys_by_target.setdefault(target, set()).add(row.key)
+
+    blockers: dict[tuple[str, str, str], str] = {}
+
+    # (a) Two or more active Git bindings target the same canonical target —
+    # applying all of them would create two verified rows for one target,
+    # which canonical_object_map_verified_target_uq forbids.
+    for target, keys in active_binding_keys_by_target.items():
+        if len(keys) > 1:
+            for key in keys:
+                blockers[key] = (
+                    f"{len(keys)} active registry bindings all target canonical "
+                    f"{target!r} ({sorted(keys)!r}) — canonical_object_map_verified_target_uq "
+                    f"permits only one verified row per (canonical_entity_type, canonical_id); "
+                    f"this Git registry state is not representable in the current operational "
+                    f"compatibility layer without a Phase-E redesign"
+                )
+
+    # (b) This binding's own operational row is missing, but its canonical
+    # target is already occupied by a *different* key's verified row —
+    # inserting this binding's row would violate the same index.
+    for target, keys in active_binding_keys_by_target.items():
+        occupying_keys = verified_keys_by_target.get(target, set())
+        for key in keys:
+            if key in blockers:
+                continue
+            other_occupants = occupying_keys - {key}
+            if other_occupants:
+                blockers[key] = (
+                    f"canonical target {target!r} already has a verified canonical_object_map "
+                    f"row at key(s) {sorted(other_occupants)!r} — inserting a second verified row "
+                    f"at key {key!r} would violate canonical_object_map_verified_target_uq; "
+                    f"this Git registry state is not representable in the current operational "
+                    f"compatibility layer without a Phase-E redesign"
+                )
+
+    return blockers
+
+
 def classify_bindings(
     doc: RegistryDocument,
     operational_by_key: dict[tuple[str, str, str], OperationalRow],
     source_row_exists: dict[tuple[str, str], bool],
 ) -> list[BindingReconciliation]:
+    uniqueness_blockers = _compute_uniqueness_blockers(doc, operational_by_key)
     results = []
     for binding in doc.bindings:
         source_table = EXTERNAL_ENTITY_TYPE_TO_SOURCE_TABLE.get(binding.external_entity_type)
         exists = source_row_exists.get((source_table, binding.external_id), False) if source_table else False
+        key = binding_key(binding) if source_table else None
         results.append(classify_binding(
             binding,
-            operational_by_key.get(binding_key(binding)) if source_table else None,
+            operational_by_key.get(key) if key else None,
             source_row_exists=exists,
+            uniqueness_blocker_detail=uniqueness_blockers.get(key) if key else None,
         ))
     # Deterministic order, independent of dict/input ordering.
     results.sort(key=lambda r: r.key)
@@ -353,3 +473,20 @@ def reconcile(
         operational_only=operational_only,
         proposed_mutations=proposed_mutations,
     )
+
+
+def mutations_to_apply(report: ReconciliationReport) -> list[ProposedMutation]:
+    """The mutations actually safe to write for this run.
+
+    This is a *global*, batch-level gate, not a per-binding one: if the
+    report has ANY blocker anywhere — a conflict on one binding, a
+    uniqueness blocker on an unrelated one — this returns an empty list,
+    even for other bindings whose own classification is individually safe
+    (`missing_operational_row`). `--apply` is an all-or-nothing convergence
+    step for the whole registry, never a partial apply that writes the safe
+    subset while blockers exist elsewhere; that partial-apply behavior is
+    exactly the failure mode this function exists to close off.
+    """
+    if report.has_blockers:
+        return []
+    return report.proposed_mutations

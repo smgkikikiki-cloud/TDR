@@ -13,9 +13,16 @@ Steps performed, always in this order:
     3. reconcile (pure logic, tdr_bridge.external_identity_sync) and print
        proposed mutations
     4. (only with --apply) apply the safe mutations -- pure INSERTs of rows
-       that step 3 confirmed are absent; nothing else is ever written
-    5. (only with --apply) reread live state and reconcile again, to prove
-       convergence -- exits nonzero if anything still needs attention
+       that step 3 confirmed are absent; nothing else is ever written. This
+       is a whole-run, fail-closed gate: if ANY binding in the run is a
+       blocker (a conflict, a missing source row, or an operational
+       representability blocker -- see
+       tdr_bridge.external_identity_sync.mutations_to_apply()), zero
+       mutations are applied that run, even ones for other bindings that are
+       individually safe.
+    5. (only with --apply, and only if step 4 actually applied something)
+       reread live state and reconcile again, to prove convergence --
+       exits nonzero if anything still needs attention
 
 Dry-run (no --apply) performs zero writes -- it is safe to run at any time,
 including in a read-only credential context, and never mutates anything.
@@ -60,9 +67,11 @@ from tdr_bridge.external_identity_registry import (  # noqa: E402
     validate_registry,
 )
 from tdr_bridge.external_identity_sync import (  # noqa: E402
+    BLOCKER_CLASSIFICATIONS,
     EXTERNAL_ENTITY_TYPE_TO_SOURCE_TABLE,
     OperationalRow,
     ReconciliationReport,
+    mutations_to_apply,
     reconcile,
 )
 
@@ -178,7 +187,7 @@ def _print_report(report: ReconciliationReport, *, label: str) -> None:
     if report.has_blockers:
         print("  BLOCKERS PRESENT -- see per-binding detail below; nothing here is auto-resolved.", file=sys.stderr)
         for r in report.binding_results:
-            if r.classification in ("canonical_target_conflict", "operational_status_conflict", "missing_external_source_row"):
+            if r.classification in BLOCKER_CLASSIFICATIONS:
                 print(f"    - {r.key}: {r.classification}: {r.detail}", file=sys.stderr)
     if report.proposed_mutations:
         print("  proposed (not yet applied unless --apply was given):", file=sys.stderr)
@@ -263,27 +272,43 @@ def main(argv: list[str] | None = None) -> int:
 
     final_report = report
     if args.apply:
-        if not report.proposed_mutations:
-            print("\n--apply: nothing to do (no safe mutations pending).", file=sys.stderr)
+        # Global, whole-run fail-closed gate: if ANY binding is a blocker
+        # (a conflict, a missing source row, an operational-representability
+        # blocker), zero mutations are applied this run -- not even ones for
+        # other, individually-safe bindings. See
+        # tdr_bridge.external_identity_sync.mutations_to_apply().
+        if report.has_blockers:
+            print(
+                "\n--apply: BLOCKERS PRESENT -- applying zero mutations this run "
+                "(a run-wide fail-closed gate; see blocker detail above). "
+                "Nothing was written.",
+                file=sys.stderr,
+            )
         else:
-            print(f"\n--apply: applying {len(report.proposed_mutations)} safe mutation(s)...", file=sys.stderr)
-            for mutation in report.proposed_mutations:
-                try:
-                    insert_operational_row(mutation.payload)
-                    print(f"  applied: {mutation.key}", file=sys.stderr)
-                except RuntimeError as exc:
-                    print(f"  FAILED to apply {mutation.key}: {exc}", file=sys.stderr)
-                    print("  Stopping -- not attempting further mutations this run.", file=sys.stderr)
-                    return 2
+            to_apply = mutations_to_apply(report)
+            if not to_apply:
+                print("\n--apply: nothing to do (no safe mutations pending).", file=sys.stderr)
+            else:
+                print(f"\n--apply: applying {len(to_apply)} safe mutation(s)...", file=sys.stderr)
+                for mutation in to_apply:
+                    try:
+                        insert_operational_row(mutation.payload)
+                        print(f"  applied: {mutation.key}", file=sys.stderr)
+                    except RuntimeError as exc:
+                        print(f"  FAILED to apply {mutation.key}: {exc}", file=sys.stderr)
+                        print("  Stopping -- not attempting further mutations this run.", file=sys.stderr)
+                        return 2
 
-        # Reread and prove convergence.
-        try:
-            operational_rows_after = fetch_operational_rows()
-        except RuntimeError as exc:
-            print(f"registry sync: re-read after apply failed: {exc}", file=sys.stderr)
-            return 2
-        final_report = reconcile(doc, operational_rows_after, source_row_exists)
-        _print_report(final_report, label="reconciliation (post-apply, proving convergence)")
+            # Reread and prove convergence. Skipped when apply was blocked
+            # above (nothing was written, so re-reading would only reprint
+            # an identical report under a misleading "post-apply" label).
+            try:
+                operational_rows_after = fetch_operational_rows()
+            except RuntimeError as exc:
+                print(f"registry sync: re-read after apply failed: {exc}", file=sys.stderr)
+                return 2
+            final_report = reconcile(doc, operational_rows_after, source_row_exists)
+            _print_report(final_report, label="reconciliation (post-apply, proving convergence)")
 
     if args.json_out:
         args.json_out.write_text(json.dumps(_report_to_json(final_report), indent=2, sort_keys=True), encoding="utf-8")

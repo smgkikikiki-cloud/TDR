@@ -95,22 +95,35 @@ sub-packets. Full record: `docs/vehicle-platform/EXTERNAL_IDENTITY_PERSISTENCE.m
   finding confirmed by reading `supabase/migration_v14_serving_projection.sql` directly) were NOT
   imported: deterministic, reconstructible serving-projection output, not reviewed decisions.
 - **`canonical_object_map` remains the compatibility/operational layer**, and is now
-  *deterministically, safely, reproducibly* projectable from Git — but its own behavior, schema
-  content, and existing consumers are otherwise unchanged. One schema fix was required and applied
-  as a new migration file (not yet run live — see "Live result" below):
-  `supabase/migration_v28_external_identity_registry_operational.sql` drops
-  `canonical_object_map_verified_target_uq`, the global partial-unique index that forbade more than
-  one verified row per canonical target — a real conflict with the registry's cardinality model
-  (multiple external identities may legitimately bind to one canonical target). Source-key
-  uniqueness and the per-row correctness check are both untouched.
-- **Operational projection/sync now exists.** `tdr_bridge/external_identity_sync.py` (pure
-  reconciliation logic, no I/O) and `tools/sync_external_identity_registry.py` (the live CLI,
-  dry-run by default, `--apply` for the one safe mutation type — creating a missing operational
-  row for a registry binding — with reread-and-prove-convergence built into `--apply`) make
+  *deterministically, safely, reproducibly* projectable from Git — but its own behavior, schema,
+  and existing consumers are unchanged, and **no Supabase migration is part of Phase 1.** An
+  earlier draft of this pass proposed dropping `canonical_object_map_verified_target_uq` (the
+  global partial-unique index forbidding more than one verified row per canonical target) as
+  `migration_v28`; architecture review reverted that after finding the index is load-bearing for
+  `apply_vehicle_serving_projection` (Phase-E), which selects its target row by `canonical_id`
+  alone with no source key. The index stays. Instead, the registry's broader cardinality model
+  (multiple external identities may legitimately bind to one canonical target in Git) is reconciled
+  against the narrower operational constraint by **detection, not schema change** — see the next
+  bullet.
+- **Operational projection/sync now exists, with a representability check.**
+  `tdr_bridge/external_identity_sync.py` (pure reconciliation logic, no I/O) and
+  `tools/sync_external_identity_registry.py` (the live CLI, dry-run by default, `--apply` for safe
+  mutations, with reread-and-prove-convergence built in) make
   "Git truth → controlled operational projection → existing consumer" real and repeatable. It can
   never update an existing operational row, never touch a row outside the registry's own keys
   (review-state, Phase-E, unknown-verified, retired-operational-only rows all survive untouched),
-  and never imports anything back into Git.
+  and never imports anything back into Git. A new classification,
+  `operational_target_uniqueness_blocker`, detects a registry state that is valid in Git but not yet
+  representable under `canonical_object_map_verified_target_uq` (two active bindings sharing a
+  canonical target, or a binding whose target another source key already holds verified) and
+  refuses to propose or apply that write. `--apply` is fail-closed at the whole run's level:
+  `mutations_to_apply()` returns zero mutations if *any* blocker exists anywhere in the run, even
+  for an unrelated binding that is individually safe — closing a real partial-apply gap an earlier
+  draft of this pass had. `is_phase_e_owned` detection was also tightened from OR to AND (both
+  `verified_by='phase-e-publisher'` *and* the Phase-E `match_basis.basis` literal are now required
+  to classify a row as Phase-E-owned; a row with only one is `verified_ownership_unknown`). See
+  `EXTERNAL_IDENTITY_PERSISTENCE.md`'s "Operational representability" section for the full
+  reasoning.
 - **Existing consumers have not been cut over.** `tdr_bridge/release.py`,
   `lib/canonical-write-shadow.ts`, `apply_vehicle_serving_projection`, every `current_vehicle_*`
   view, registration ingestion/analytics, ECO ingestion, canonical input commands, and every
@@ -132,9 +145,17 @@ variables set, no local `.env`/`.env.local` with real values), consistent with e
 session. What *was* verified without live access: `tools/sync_external_identity_registry.py`'s
 own no-credentials path (fails closed, exit 2, no fabricated output, confirmed by direct
 execution); its offline registry-validation step (runs and passes independently of Supabase); and
-the full reconciliation/classification/mutation-proposal/convergence logic at the pure-function
-level (`tests/test_external_identity_sync.py`, 18/18 passing, including apply-idempotency and
-rerun-converges-to-zero-mutations). The exact command an operator with credentials should run:
+the full reconciliation/classification/mutation-proposal/convergence/representability-blocking
+logic at the pure-function level (`tests/test_external_identity_sync.py`, all passing, including
+apply-idempotency, rerun-converges-to-zero-mutations, the operational-target-uniqueness-blocker
+cases, and the whole-run apply gate). The following architecture-review-supplied live facts (not
+executed by this session, and no production data or schema altered to produce them) confirm the
+current registry's single binding remains representable today:
+`canonical_object_map_verified_target_uq` still exists in production unchanged; production
+currently has zero duplicate verified canonical targets; the pinned Jaecoo model UUID
+(`e1a0b9fd-2d57-477d-b13f-1647d36d0298`) still exists in `public.models`; its `canonical_object_map`
+model binding is still that UUID → `jaecoo.jaecoo_5_ev`, `status='verified'`. The exact command an
+operator with credentials should run:
 
 ```
 cd automotive/vehicle_master
@@ -197,7 +218,8 @@ started.
 | Phase 1A: external-identity contract + read-only audit engine | 1 | Added `EXTERNAL_IDENTITY_CONTRACT.md`; `lib/external-identity/{types,audit,mechanism-adapters}.ts`; live SELECT-only `scripts/audit-external-identity.ts`; `scripts/check-external-identity-audit.ts` (wired into `npm run check`). No table created, no migration, no write to `canonical_object_map`, no change to `tdr_bridge/release.py` or `lib/canonical-write-shadow.ts`. |
 | Phase 1A hardening: corrected invariant, duplicate anomalies, read-only boundary, live validation | 1 | Architecture-review-directed amendment. Fixed the `canonicalId`/`mappingState` contract by encoding it as a discriminated union (a `retired`/`unmatched`/`ambiguous` row may legitimately keep a contextual `canonicalId` without becoming resolved/trusted); added `InvalidMechanismBRowError` fail-closed handling for a `verified` row with a null `canonical_id`; added `AuditAnomaly`/`report.anomalies` so duplicate same-mechanism assertions under one comparability key are surfaced, never silently reduced to the first row; precisely documented the read-only boundary as code-enforced, not credential-enforced; added `PHASE_1A_LIVE_VALIDATION_2026-09-15.md` recording architecture-review-supplied live results; corrected an internal `2026-09-16` date error to `2026-09-15` across `CURRENT_STATE.md`, `MIGRATION_PLAN.md`, and this file. Documentation + pure TypeScript only — no persistence, table, migration, or consumer change. |
 | Phase 1B: Git-backed external-identity registry (shadow mode) | 1 | Added `docs/vehicle-platform/EXTERNAL_IDENTITY_PERSISTENCE.md` (ownership decision record); `automotive/vehicle_master/tdr_bridge/external_identity_registry.py` (dataclasses, loader, offline validator); `integration_data/external_identity_registry.json` (seeded with exactly the one explicitly-reviewed Jaecoo binding); `tools/validate_external_identity_registry.py` (offline CLI, no Supabase); `tests/test_external_identity_registry.py` (20 tests). Clarified `EXTERNAL_IDENTITY_CONTRACT.md` that `verified`/trust level and persistence ownership are separate dimensions, without changing any Phase 1A type, classification, or test. No Supabase migration, write, or consumer change; Mechanism A's 383 derived links and the 8 Phase-E projection-owned `canonical_object_map` rows were deliberately excluded from the seed. |
-| Phase 1 completion: registry↔operational reconciliation/sync + schema fix | 1 | Added `automotive/vehicle_master/tdr_bridge/external_identity_sync.py` (pure reconciliation/classification/mutation-proposal, no I/O) and `tools/sync_external_identity_registry.py` (live CLI: dry-run default, `--apply` for the one safe mutation type, reread-and-prove-convergence built in). Added `supabase/migration_v28_external_identity_registry_operational.sql` (drops `canonical_object_map_verified_target_uq`, the global unique index that conflicted with the registry's multiple-external-IDs-per-canonical-target cardinality model; source-key uniqueness and the per-row correctness check both untouched) — file created, not applied to live Supabase in this pass. Tightened `external_identity_registry.py`'s validator to require `verified_at`/`verified_by` for active `explicit_review` bindings. Added `tests/test_external_identity_sync.py` (18 tests) and `tests/test_external_identity_registry_migration.py` (6 source-text regression tests over the new migration file). No production consumer, existing Supabase behavior, or Phase 1A TypeScript contract changed. **Phase 1 is closed by this packet.** |
+| Phase 1 completion: registry↔operational reconciliation/sync | 1 | Added `automotive/vehicle_master/tdr_bridge/external_identity_sync.py` (pure reconciliation/classification/mutation-proposal, no I/O) and `tools/sync_external_identity_registry.py` (live CLI: dry-run default, `--apply` for safe mutations, reread-and-prove-convergence built in). Tightened `external_identity_registry.py`'s validator to require `verified_at`/`verified_by` for active `explicit_review` bindings. Added `tests/test_external_identity_sync.py`. No production consumer, existing Supabase behavior, or Phase 1A TypeScript contract changed. No Supabase migration added. |
+| Phase 1 correction: operational representability + apply fail-closed gate + Phase-E ownership tightening | 1 | Architecture-review-directed correction. Reverted an earlier draft's `migration_v28` (would have dropped `canonical_object_map_verified_target_uq`, which is load-bearing for `apply_vehicle_serving_projection`'s canonical_id-only row selection) — deleted the migration file and its regression test entirely; no Supabase migration is part of Phase 1. Added `operational_target_uniqueness_blocker` detection (`_compute_uniqueness_blockers()` in `external_identity_sync.py`) so a Git registry state that is not representable under the existing unique index is reported before any write, instead of weakening the DB constraint. Added `mutations_to_apply()` as a whole-run fail-closed gate for `--apply`: any blocker anywhere means zero mutations applied that run, closing a partial-apply gap in the previous packet. Tightened `is_phase_e_owned` from OR to AND (both `verified_by` and `match_basis.basis` now required). Added new tests to `tests/test_external_identity_sync.py` for all of the above. Updated `EXTERNAL_IDENTITY_PERSISTENCE.md`, `MIGRATION_PLAN.md`, and this file to remove the `migration_v28` claims and document operational representability instead. No Phase-E change, no other production consumer change. **Phase 1 remains closed after this correction.** |
 
 ## Known parity gaps (from Phase 0, updated as later packets affect them)
 
@@ -228,17 +250,18 @@ started.
 5. **`README.md`'s manual quick-start example calls the base `tdr_bridge.release`, not
    `tdr_bridge.release_enriched`, which is what CI/production actually publish.** Minor
    documentation drift, noted rather than fixed in Phase 0 (not a code/behavior change).
-6. **`supabase/migration_v28_external_identity_registry_operational.sql` has not been applied to
-   the live production Supabase project.** The file was created, reasoned about for safety (index
-   drop only — no data touched, no other constraint changed — see
-   `EXTERNAL_IDENTITY_PERSISTENCE.md`'s "Schema decision"), and covered by a source-text regression
-   test, but this pass had no live Supabase access to apply it, and applying a migration follows
-   this repository's normal deployment path rather than an ad hoc connection from an agent session.
-   Until applied, `tools/sync_external_identity_registry.py --apply` would still succeed for the
-   current single registry binding (it only ever needs to *insert*, and the dropped index only
-   blocks a *second* verified row at the same canonical target, which does not yet exist), but a
-   second binding pointing at an already-verified canonical target would fail at the database level
-   until this migration is applied.
+6. **Resolved / retracted**: an earlier draft of the Phase 1 completion packet proposed
+   `supabase/migration_v28_external_identity_registry_operational.sql`, dropping
+   `canonical_object_map_verified_target_uq`. Architecture review found that index load-bearing for
+   `apply_vehicle_serving_projection`'s (Phase-E) canonical_id-only row selection, and the draft
+   migration was reverted and deleted, not merely left unapplied — no Supabase migration is part of
+   Phase 1. In its place, `tdr_bridge/external_identity_sync.py` detects a registry state that is
+   not representable under the existing index (`operational_target_uniqueness_blocker`) and refuses
+   to write it, rather than changing the database constraint. The registry's current single binding
+   is fully representable today (see "Live result" above), so this does not block Phase 1; a future
+   registry entry that would violate the index is caught by this detection before any write is
+   attempted. Changing the DB invariant itself would require first redesigning Phase-E's model-row
+   selection semantics — out of scope here, and not needed for current registry contents.
 7. **The registry↔operational sync tool has not been run live.** See "Live result for the
    registry↔operational sync tool" above — predicted-safe from existing evidence, not confirmed.
 
@@ -253,9 +276,9 @@ time, not blocking Phase 2):
 - run `tools/sync_external_identity_registry.py` (dry-run, then `--apply` if clean) against the
   live production project and record the result as a dated addendum — see "Live result" above for
   the exact command and the predicted (unconfirmed) outcome;
-- run `scripts/audit-external-identity.ts` similarly, per the Phase 1A parity gap above;
-- apply `supabase/migration_v28_external_identity_registry_operational.sql` through this
-  repository's normal deployment path.
+- run `scripts/audit-external-identity.ts` similarly, per the Phase 1A parity gap above.
+
+No Supabase migration is outstanding for Phase 1 — see parity gap 6 above.
 
 Candidates for a future, separately-authorized **Phase 2** (not implemented, not started, not
 scoped in detail here — see `MIGRATION_PLAN.md`'s Phase 2 section): the canonical DLT v2 shadow

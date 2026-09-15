@@ -165,24 +165,36 @@ instruction not to invent a "Phase 1C."
   (`e1a0b9fd-2d57-477d-b13f-1647d36d0298` → `jaecoo.jaecoo_5_ev`), out of nine currently `verified`
   `canonical_object_map` rows — the other eight are Phase-E projection-owned and excluded by
   design.
-- **Operational schema fix**: `canonical_object_map`'s global partial unique index on
-  `(canonical_entity_type, canonical_id) where status='verified'` conflicted with the registry's
-  cardinality model (multiple external identities may legitimately bind to one canonical target).
-  `supabase/migration_v28_external_identity_registry_operational.sql` drops that index; the
-  source-key uniqueness constraint and the per-row correctness check are both untouched.
+- **Operational representability, not a schema change**: `canonical_object_map`'s global partial
+  unique index on `(canonical_entity_type, canonical_id) where status='verified'` is narrower than
+  the registry's cardinality model (multiple external identities may legitimately bind to one
+  canonical target in Git). An earlier draft of this pass proposed dropping that index
+  (`migration_v28`) — architecture review reverted that: the index is load-bearing for
+  `apply_vehicle_serving_projection` (Phase-E), which selects its target model row by `canonical_id`
+  alone, with no source key, so more than one verified row per canonical target would make that
+  selection undefined. **No Supabase migration is part of Phase 1.** Instead,
+  `tdr_bridge/external_identity_sync.py` detects a registry shape the operational layer cannot
+  currently represent (`operational_target_uniqueness_blocker`) and refuses to propose or apply the
+  write for it — Git canonical validity and operational representability are now treated as
+  distinct questions. Changing the DB invariant itself would require first redesigning Phase-E's
+  model-row selection, which this pass does not do and does not need to: the registry's current
+  single binding is fully representable as-is. See
+  `docs/vehicle-platform/EXTERNAL_IDENTITY_PERSISTENCE.md`'s "Operational representability" section.
 - **Reconciliation/sync**: `tdr_bridge/external_identity_sync.py` (pure classification, no I/O)
   and `tools/sync_external_identity_registry.py` (the live CLI) deterministically reconcile every
   Git binding against live `canonical_object_map`, dry-run by default, `--apply` to create exactly
   the missing rows reconciliation proposed (never update, never touch anything outside the
-  registry's own keys), and reread afterward to prove convergence.
+  registry's own keys) — gated globally: any blocker anywhere in the run, including an operational
+  representability blocker, means zero mutations are applied that run — and reread afterward to
+  prove convergence.
 
 **What this pass explicitly did not do**: switch any production consumer to read from the new
 registry (`tdr_bridge/release.py`, `lib/canonical-write-shadow.ts`,
 `apply_vehicle_serving_projection`, every application page, remain exactly as before); retire
 `crosswalk_overrides.json` or any Mechanism A/B path; rename any Mechanism B `status` value; touch
-Phase 1A's TypeScript contract/audit behavior beyond documentation; or apply the new Supabase
-migration to production (the file was created and reasoned about for safety, not executed live by
-this session — see `status/CURRENT.md`'s "Live result").
+Phase 1A's TypeScript contract/audit behavior beyond documentation; change Phase-E in any way; or
+add/apply any Supabase migration (the earlier `migration_v28` draft was removed entirely, not
+merely left unapplied).
 
 **Phase 1 is complete. Phase 2 is not started** — see below.
 

@@ -7,6 +7,7 @@ from tdr_bridge.external_identity_sync import (
     binding_key,
     classify_binding,
     classify_operational_only,
+    mutations_to_apply,
     propose_mutation,
     reconcile,
 )
@@ -191,9 +192,17 @@ def test_apply_idempotency_and_convergence():
     assert third.summary() == second.summary()
 
 
-def test_conflict_prevents_mutation_even_when_other_bindings_are_missing():
+def test_dry_run_still_lists_the_individually_safe_mutation_when_a_conflict_exists_elsewhere():
+    # reconcile()/proposed_mutations is a dry-run *report* — per binding, on
+    # its own merits. A conflict on one binding does not stop an unrelated,
+    # individually-safe binding from being listed as a candidate mutation
+    # here; it is --apply (mutations_to_apply(), tested below) that gates on
+    # blockers existing anywhere in the run, not this reporting layer.
+    # Distinct canonical targets, so this exercises conflict-vs-missing
+    # isolation only -- not the operational-target-uniqueness blocker
+    # (covered separately below).
     conflicting = _binding(external_id="11111111-1111-4111-8111-111111111111")
-    missing = _binding(external_id="22222222-2222-4222-8222-222222222222")
+    missing = _binding(external_id="22222222-2222-4222-8222-222222222222", canonical_id="byd.byd_seal")
     doc = _doc(conflicting, missing)
     conflicting_row = _operational_row(
         source_id=conflicting.external_id, canonical_id="some.other.model",
@@ -203,9 +212,118 @@ def test_conflict_prevents_mutation_even_when_other_bindings_are_missing():
     report = reconcile(doc, [conflicting_row], exists)
     assert report.has_blockers
     assert not report.is_fully_reconciled
-    # Only the missing binding gets a proposed mutation; the conflict never does.
+    # Only the missing binding gets a proposed (dry-run) mutation; the
+    # conflict never does.
     assert len(report.proposed_mutations) == 1
     assert report.proposed_mutations[0].key == binding_key(missing)
+    # But nothing is actually safe to *apply* this run -- see
+    # test_apply_gate_blocks_every_mutation_when_any_blocker_exists_anywhere.
+
+
+def test_apply_gate_blocks_every_mutation_when_any_blocker_exists_anywhere():
+    # This is the critical --apply safety property: one blocker anywhere in
+    # the run means zero mutations are applied, even for a completely
+    # unrelated binding whose own classification is individually safe
+    # (missing_operational_row). A partial apply here would insert the
+    # "missing" binding's row while leaving the conflict unresolved -- never
+    # acceptable for --apply, even though it's fine to *report* in dry-run.
+    conflicting = _binding(external_id="11111111-1111-4111-8111-111111111111")
+    missing = _binding(external_id="22222222-2222-4222-8222-222222222222", canonical_id="byd.byd_seal")
+    doc = _doc(conflicting, missing)
+    conflicting_row = _operational_row(
+        source_id=conflicting.external_id, canonical_id="some.other.model",
+    )
+    exists = {("models", conflicting.external_id): True, ("models", missing.external_id): True}
+
+    report = reconcile(doc, [conflicting_row], exists)
+    assert report.has_blockers
+    # The dry-run report still lists the individually-safe mutation...
+    assert len(report.proposed_mutations) == 1
+    # ...but the apply gate applies none of them.
+    assert mutations_to_apply(report) == []
+
+
+def test_apply_gate_applies_everything_when_no_blockers_exist():
+    binding = _binding()
+    doc = _doc(binding)
+    exists = {("models", binding.external_id): True}
+    report = reconcile(doc, [], exists)
+    assert not report.has_blockers
+    assert mutations_to_apply(report) == report.proposed_mutations
+    assert len(mutations_to_apply(report)) == 1
+
+
+# ---------------------------------------------------------------------------
+# Operational representability -- canonical_object_map_verified_target_uq
+# ---------------------------------------------------------------------------
+
+def test_two_active_bindings_targeting_the_same_canonical_target_are_blocked():
+    # Neither binding has an operational row yet. Git allows both bindings
+    # to exist (a broader identity graph than the operational layer), but
+    # applying both would create two verified canonical_object_map rows for
+    # one (canonical_entity_type, canonical_id) -- forbidden by
+    # canonical_object_map_verified_target_uq. Both must be blocked, and
+    # neither may produce a proposed mutation.
+    binding_one = _binding(external_id="11111111-1111-4111-8111-111111111111")
+    binding_two = _binding(external_id="22222222-2222-4222-8222-222222222222")
+    doc = _doc(binding_one, binding_two)
+    exists = {
+        ("models", binding_one.external_id): True,
+        ("models", binding_two.external_id): True,
+    }
+
+    report = reconcile(doc, [], exists)
+    assert report.has_blockers
+    classifications = {r.key: r.classification for r in report.binding_results}
+    assert classifications[binding_key(binding_one)] == "operational_target_uniqueness_blocker"
+    assert classifications[binding_key(binding_two)] == "operational_target_uniqueness_blocker"
+    assert report.proposed_mutations == []
+    assert mutations_to_apply(report) == []
+
+
+def test_missing_binding_whose_target_is_already_verified_under_another_key_is_blocked():
+    # binding's own operational row is absent (would otherwise be
+    # missing_operational_row), but a *different* source key already has a
+    # verified row at the same canonical target -- inserting this binding's
+    # row would violate canonical_object_map_verified_target_uq just the
+    # same as if both were in the registry.
+    already_verified = _binding(external_id="11111111-1111-4111-8111-111111111111")
+    still_missing = _binding(external_id="22222222-2222-4222-8222-222222222222")
+    doc = _doc(already_verified, still_missing)
+    existing_row = _operational_row(source_id=already_verified.external_id)  # in_sync for already_verified
+    exists = {
+        ("models", already_verified.external_id): True,
+        ("models", still_missing.external_id): True,
+    }
+
+    report = reconcile(doc, [existing_row], exists)
+    assert report.has_blockers
+    classifications = {r.key: r.classification for r in report.binding_results}
+    assert classifications[binding_key(already_verified)] == "in_sync"
+    assert classifications[binding_key(still_missing)] == "operational_target_uniqueness_blocker"
+    assert report.proposed_mutations == []
+    assert mutations_to_apply(report) == []
+
+
+def test_retired_bindings_are_never_subject_to_the_uniqueness_blocker():
+    # DESIRED_STATUS_BY_BINDING_STATE maps "retired" -> "retired", not
+    # "verified" -- canonical_object_map_verified_target_uq only constrains
+    # status='verified' rows, so two retired bindings sharing a canonical
+    # target is not a representability problem.
+    binding_one = _binding(external_id="11111111-1111-4111-8111-111111111111", state="retired")
+    binding_two = _binding(external_id="22222222-2222-4222-8222-222222222222", state="retired")
+    doc = _doc(binding_one, binding_two)
+    exists = {
+        ("models", binding_one.external_id): True,
+        ("models", binding_two.external_id): True,
+    }
+
+    report = reconcile(doc, [], exists)
+    assert not report.has_blockers
+    classifications = {r.key: r.classification for r in report.binding_results}
+    assert classifications[binding_key(binding_one)] == "missing_operational_row"
+    assert classifications[binding_key(binding_two)] == "missing_operational_row"
+    assert len(report.proposed_mutations) == 2
 
 
 # ---------------------------------------------------------------------------
@@ -232,6 +350,30 @@ def test_phase_e_projection_rows_survive_untouched():
     )
     results = classify_operational_only([row], registry_keys=set())
     assert results[0].classification == "phase_e_projection_owned"
+
+
+def test_phase_e_ownership_requires_both_verified_by_and_match_basis():
+    # is_phase_e_owned is AND, not OR: only a row carrying BOTH halves of the
+    # known Phase-E provenance pattern is confidently Phase-E-owned. A row
+    # with just one half is real but unconfirmed provenance and must not be
+    # silently hidden behind a Phase-E label it may not deserve.
+    both = _operational_row(
+        source_id="pe-both", verified_by=PHASE_E_VERIFIED_BY,
+        match_basis={"basis": PHASE_E_MATCH_BASIS_VALUE},
+    )
+    assert classify_operational_only([both], registry_keys=set())[0].classification == "phase_e_projection_owned"
+
+    actor_only = _operational_row(
+        source_id="pe-actor-only", verified_by=PHASE_E_VERIFIED_BY,
+        match_basis={"basis": "something-else"},
+    )
+    assert classify_operational_only([actor_only], registry_keys=set())[0].classification == "verified_ownership_unknown"
+
+    basis_only = _operational_row(
+        source_id="pe-basis-only", verified_by="someone-else@example.com",
+        match_basis={"basis": PHASE_E_MATCH_BASIS_VALUE},
+    )
+    assert classify_operational_only([basis_only], registry_keys=set())[0].classification == "verified_ownership_unknown"
 
 
 def test_unknown_verified_operational_rows_survive_untouched():
