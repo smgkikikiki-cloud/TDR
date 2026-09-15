@@ -182,8 +182,18 @@ async function fetchRegistrationRows(
 ): Promise<any[]> {
   const rows: any[] = [];
   for (let offset = 0; offset < MAX_FACT_ROWS; offset += PAGE_SIZE) {
+    // Phase 3 compatibility boundary: registration_reporting_source is
+    // shape-identical to `registrations` (plus a canonical_model_id
+    // passthrough this query does not select) and transparently serves
+    // either legacy `registrations` or the v2 shadow projection depending
+    // on registration_serving_state.active_source -- see
+    // supabase/migration_v31_registration_v2_serving_and_cutover.sql and
+    // docs/vehicle-platform/PHASE3_CUTOVER.md. This is the one place the
+    // market-slice path needs to change for the cutover switch to reach it;
+    // every dimension view VIEW_CONFIG reads from (registration_monthly_model
+    // etc.) is redirected at the SQL layer and needs no change here.
     let query = db
-      .from("registrations")
+      .from("registration_reporting_source")
       .select("period,registration_type,brand_name_raw,model_name_raw,model_id,registrations")
       .gte("period", window.from)
       .lte("period", window.to)

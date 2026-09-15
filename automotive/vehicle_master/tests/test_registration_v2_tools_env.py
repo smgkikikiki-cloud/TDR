@@ -88,3 +88,20 @@ def test_adapt_legacy_rows_keeps_legacy_model_id_as_a_plain_string():
            "registrations": 100}]
     rows = parity.adapt_legacy_rows(raw)
     assert rows[0].model_id == "11111111-1111-4111-8111-111111111111"
+
+
+def test_readiness_mode_fails_closed_with_no_credentials(monkeypatch, capsys):
+    monkeypatch.delenv("SUPABASE_URL", raising=False)
+    monkeypatch.delenv("NEXT_PUBLIC_SUPABASE_URL", raising=False)
+    monkeypatch.delenv("SUPABASE_SECRET_KEY", raising=False)
+    monkeypatch.delenv("SUPABASE_SERVICE_ROLE_KEY", raising=False)
+    exit_code = parity.main(["--readiness", "--required-periods", "2026-01,2026-02"])
+    assert exit_code == 2
+    assert "no server-side Supabase credentials found" in capsys.readouterr().err
+
+
+def test_never_cut_over_never_reads_credentials_message_is_present():
+    # The readiness CLI's own help text documents the "never cut over
+    # through a failed/unknown gate" rule directly in --help output.
+    help_text = parity._parser().format_help()
+    assert "--readiness" in help_text

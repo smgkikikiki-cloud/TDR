@@ -392,3 +392,150 @@ def build_parity_report(
         reconciliation_failures=find_reconciliation_failures(
             legacy_rows, v2_observations),
     )
+
+
+# --------------------------------------------------------------------------
+# Source-lineage ownership (Phase 3 preflight fix #2): a simple,
+# deterministic period/source rule, not a source-priority framework. A
+# period's authoritative v2 source is legacy_registrations_backfill on or
+# before the configured boundary period (or always, when no boundary has
+# been configured yet - the safe default, since only backfill exists until
+# an operator deliberately marks a cutover point), and dlt_ckan afterward.
+# The boundary itself lives in exactly one place operationally -
+# registration_serving_state.v2_source_boundary_period
+# (supabase/migration_v31_registration_v2_serving_and_cutover.sql) - both the
+# serving view and this module's own overlap check read the same value, so
+# there is exactly one source of truth for "which source owns this period."
+# --------------------------------------------------------------------------
+DLT_CKAN = "dlt_ckan"
+
+#: The only two source kinds that participate in v2 authoritative-volume
+#: ownership. dlt_csv (a manual/ad hoc file adapter) is not a first-class
+#: ownership participant - it was never meant to become production volume
+#: on its own.
+AUTHORITATIVE_SOURCE_KINDS = (LEGACY_REGISTRATIONS_BACKFILL, DLT_CKAN)
+
+
+def authoritative_source_for_period(period: str,
+                                    boundary_period: Optional[str]) -> str:
+    """Which source_kind's volume is authoritative for ``period``. Pure,
+    deterministic, and the single rule both the SQL serving view and this
+    module's overlap check apply."""
+    if boundary_period is None:
+        return LEGACY_REGISTRATIONS_BACKFILL
+    return (LEGACY_REGISTRATIONS_BACKFILL if period <= boundary_period
+           else DLT_CKAN)
+
+
+@dataclass(frozen=True, slots=True)
+class SourceLineageOverlap:
+    """Period/source_kind volume that exists in v2 but is *not* the
+    authoritative source for that period under the deterministic ownership
+    rule - shadow volume the serving view deliberately excludes from
+    authoritative totals. Not itself a blocker (the rule already resolves
+    it), but must stay visible so an operator can see exactly what is being
+    excluded and why, rather than it silently not counting anywhere."""
+
+    period: str
+    excluded_source_kind: str
+    units: float
+
+
+def find_source_lineage_overlaps(
+    v2_observations: Iterable[V2ObservationRow],
+    boundary_period: Optional[str],
+) -> list[SourceLineageOverlap]:
+    totals: dict[tuple[str, str], float] = {}
+    for o in v2_observations:
+        if o.source_kind in AUTHORITATIVE_SOURCE_KINDS:
+            key = (o.period, o.source_kind)
+            totals[key] = totals.get(key, 0.0) + o.units
+    out = [
+        SourceLineageOverlap(period=period, excluded_source_kind=kind, units=units)
+        for (period, kind), units in totals.items()
+        if kind != authoritative_source_for_period(period, boundary_period)
+    ]
+    return sorted(out, key=lambda o: (o.period, o.excluded_source_kind))
+
+
+def find_unresolved_source_ownership(
+    v2_observations: Iterable[V2ObservationRow],
+    boundary_period: Optional[str],
+) -> list[str]:
+    """Periods where *both* legacy_registrations_backfill and dlt_ckan have
+    volume, but no boundary has been configured to adjudicate which one is
+    authoritative (the default rule then always favors backfill, which is
+    almost certainly wrong once direct DLT ingest has started for that
+    period). This is the one source-lineage condition the cutover readiness
+    gate must treat as a hard blocker - see
+    ``build_cutover_readiness_report``."""
+    if boundary_period is not None:
+        return []
+    kinds_by_period: dict[str, set[str]] = {}
+    for o in v2_observations:
+        if o.source_kind in AUTHORITATIVE_SOURCE_KINDS:
+            kinds_by_period.setdefault(o.period, set()).add(o.source_kind)
+    return sorted(period for period, kinds in kinds_by_period.items()
+                 if len(kinds) > 1)
+
+
+# --------------------------------------------------------------------------
+# Cutover readiness: the one machine-readable gate report, built on top of
+# the parity report above plus the source-lineage/required-period checks -
+# not a second, redundant validator.
+# --------------------------------------------------------------------------
+@dataclass(frozen=True, slots=True)
+class CutoverReadinessReport:
+    parity: ParityReport
+    source_lineage_overlaps: list[SourceLineageOverlap]
+    unresolved_source_ownership_periods: list[str]
+    required_periods: list[str]
+    missing_required_periods: list[str]
+
+    def summary(self) -> dict[str, Any]:
+        parity_summary = self.parity.summary()
+        blockers: list[str] = []
+        if not parity_summary["is_clean"]:
+            blockers.append("volume_or_duplicate_or_reconciliation_failure")
+        if self.unresolved_source_ownership_periods:
+            blockers.append("unresolved_source_ownership")
+        if self.missing_required_periods:
+            blockers.append("missing_required_periods")
+        return {
+            "parity": parity_summary,
+            "source_lineage_overlaps": [
+                {"period": o.period, "excluded_source_kind": o.excluded_source_kind,
+                "units": o.units} for o in self.source_lineage_overlaps],
+            "unresolved_source_ownership_periods":
+                self.unresolved_source_ownership_periods,
+            "required_periods_total": len(self.required_periods),
+            "missing_required_periods": self.missing_required_periods,
+            # 100% identity agreement is deliberately not part of readiness -
+            # identity_disagreement/grain_difference_v2_coarser stay visible
+            # in parity_summary but never block cutover on their own.
+            "blockers": blockers,
+            "is_ready_for_cutover": not blockers,
+        }
+
+
+def build_cutover_readiness_report(
+    legacy_rows: Iterable[LegacyRegistrationRow],
+    v2_observations: Iterable[V2ObservationRow],
+    v2_facts: Iterable[V2FactRow],
+    crosswalk: Mapping[str, str], *,
+    boundary_period: Optional[str] = None,
+    required_periods: Iterable[str] = (),
+) -> CutoverReadinessReport:
+    v2_observations = list(v2_observations)
+    required_periods = sorted(required_periods)
+    populated_periods = {o.period for o in v2_observations}
+    return CutoverReadinessReport(
+        parity=build_parity_report(legacy_rows, v2_observations, v2_facts, crosswalk),
+        source_lineage_overlaps=find_source_lineage_overlaps(
+            v2_observations, boundary_period),
+        unresolved_source_ownership_periods=find_unresolved_source_ownership(
+            v2_observations, boundary_period),
+        required_periods=required_periods,
+        missing_required_periods=[p for p in required_periods
+                                  if p not in populated_periods],
+    )

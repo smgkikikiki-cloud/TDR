@@ -9,19 +9,31 @@ Reads every row of the live Supabase `public.registrations` table (paged),
 adapts each into a `RegistrationObservation`
 (`vehreg.registration_observation.from_legacy_registration_row`), resolves it
 against the canonical Vehicle Master catalog
-(`vehreg.resolution_v2.resolve_observation`), and upserts the result into the
+(`vehreg.resolution_v2.resolve_observation`), and writes the result into the
 three DLT v2 shadow tables (`supabase/migration_v29_registration_dlt_v2_shadow.sql`).
 
 Idempotent and resumable by construction, not by a checkpoint file: every
-observation/fact/review row is keyed by a deterministic id
-(`vehreg.registration_observation.observation_id`, a pure function of the
-legacy row's own uuid), and every write is a PostgREST upsert
-(`Prefer: resolution=merge-duplicates`) on that id. Re-running this tool -
-over the same period, a wider period, or the whole table again - reproduces
-the same rows; it never creates a duplicate fact and never needs a "resume
-from here" marker. `--period-from`/`--period-to` exist only to let an
-operator chunk a very large backfill into separate runs if useful, not
-because a rerun without them would be unsafe.
+row is keyed by a deterministic id (`vehreg.registration_observation.
+observation_id`, a pure function of the legacy row's own uuid). Re-running
+this tool - over the same period, a wider period, or the whole table again -
+reproduces the same rows; it never needs a "resume from here" marker.
+`--period-from`/`--period-to` exist only to let an operator chunk a very
+large backfill into separate runs if useful, not because a rerun without
+them would be unsafe.
+
+**Observations are write-once** (Phase 3 preflight fix): this tool fetches
+the persisted `payload_hash` for every observation id in this run's batch
+first, classifies each id via `vehreg.registration_v2_writer.
+plan_observation_writes` (new -> plain INSERT; unchanged -> skip; drifted ->
+blocker), and only ever plain-`INSERT`s a genuinely new observation row -
+never an upsert, never an UPDATE (the database itself also refuses one, see
+`supabase/migration_v30_registration_v2_immutable_observations.sql`). If
+*any* observation id in this run's batch is in conflict (the same id already
+persisted under a different payload hash, or two different payloads for the
+same id within this very batch), the whole run applies zero writes - not
+even for other, individually-clean ids - and exits non-zero; see
+`vehreg.registration_v2_writer.writes_to_apply`. Fact/review rows remain
+freely upsertable, since they are derived and may always be regenerated.
 
 Dry-run (no --apply) performs zero writes and prints the batch this run
 would produce - counts before writing, per the packet's own requirement.
@@ -58,11 +70,16 @@ from vehreg.catalog import DATA_DIR, DEFAULT_YEAR, Catalog, CatalogError  # noqa
 from vehreg import db  # noqa: E402
 from vehreg.ingest import Resolver  # noqa: E402
 from vehreg.registration_observation import from_legacy_registration_row  # noqa: E402
-from vehreg.registration_v2_writer import build_batch  # noqa: E402
+from vehreg.registration_v2_writer import (  # noqa: E402
+    build_batch,
+    plan_observation_writes,
+    writes_to_apply,
+)
 
 DEFAULT_WAREHOUSE = ROOT / "data" / "vehreg.sqlite3"
 PAGE_SIZE = 2000
 UPSERT_BATCH_SIZE = 500
+ID_FILTER_CHUNK = 200
 
 
 # --------------------------------------------------------------------------- Supabase REST
@@ -167,10 +184,47 @@ def fetch_legacy_registrations(*, period_from: Optional[str] = None,
 def upsert_rows(table: str, rows: list[dict[str, Any]], *,
                 on_conflict: str = "observation_id",
                 batch_size: int = UPSERT_BATCH_SIZE) -> None:
+    """Upsert -- only ever used for the two *derived* tables
+    (facts/review), which are expected to be freely regenerated. Never used
+    for `registration_observations_v2` -- see `insert_rows` below."""
     for start in range(0, len(rows), batch_size):
         chunk = rows[start:start + batch_size]
         _request("POST", f"{table}?on_conflict={on_conflict}", chunk,
                  prefer="resolution=merge-duplicates,return=minimal")
+
+
+def insert_rows(table: str, rows: list[dict[str, Any]], *,
+                batch_size: int = UPSERT_BATCH_SIZE) -> None:
+    """Plain INSERT, no `on_conflict`/merge -- used only for
+    `registration_observations_v2`, and only for ids
+    `plan_observation_writes` already classified as genuinely new. A unique-
+    violation here (a race between the hash-check read and this write) fails
+    loudly rather than silently overwriting anything, which is the correct
+    behavior for a write-once table -- the DB grants/trigger in
+    migration_v30 back this up independently."""
+    for start in range(0, len(rows), batch_size):
+        chunk = rows[start:start + batch_size]
+        _request("POST", table, chunk, prefer="return=minimal")
+
+
+def fetch_existing_observation_hashes(
+    observation_ids: list[str],
+) -> dict[str, str]:
+    """`{observation_id: payload_hash}` for every id in `observation_ids`
+    that is already persisted in `registration_observations_v2` -- read-only,
+    used only to classify this run's batch before writing anything."""
+    out: dict[str, str] = {}
+    for start in range(0, len(observation_ids), ID_FILTER_CHUNK):
+        chunk = observation_ids[start:start + ID_FILTER_CHUNK]
+        id_list = ",".join(quote(i, safe="") for i in chunk)
+        rows = _request(
+            "GET",
+            "registration_observations_v2?select=observation_id,payload_hash"
+            f"&observation_id=in.({id_list})",
+        ) or []
+        for row in rows:
+            out[row["observation_id"]] = row["payload_hash"]
+    return out
 
 
 # --------------------------------------------------------------------------- CLI
@@ -240,14 +294,49 @@ def main(argv: Optional[list[str]] = None) -> int:
     for key, value in summary.items():
         print(f"  {key}: {value}", file=sys.stderr)
 
+    if batch.drift_conflicts:
+        print(f"\nWITHIN-BATCH DRIFT CONFLICTS ({len(batch.drift_conflicts)}) -- "
+             "same observation id, different payload, within this run's own "
+             "read. Not written under any circumstance:", file=sys.stderr)
+        for c in batch.drift_conflicts:
+            print(f"    - {c.observation_id}: {c.payload_hashes} "
+                 f"({c.units:,.0f} units)", file=sys.stderr)
+
+    plan = None
     if args.apply:
-        print(f"\n--apply: upserting {len(batch.observation_rows)} observation(s), "
-             f"{len(batch.fact_rows)} fact(s), {len(batch.review_rows)} review "
-             "row(s)...", file=sys.stderr)
         try:
-            upsert_rows("registration_observations_v2", batch.observation_rows)
-            upsert_rows("registration_facts_v2", batch.fact_rows)
-            upsert_rows("registration_resolution_review_v2", batch.review_rows)
+            existing_hashes = fetch_existing_observation_hashes(
+                [row["observation_id"] for row in batch.observation_rows])
+        except RuntimeError as exc:
+            print(f"backfill: could not read existing observation hashes: {exc}",
+                 file=sys.stderr)
+            return 2
+        plan = plan_observation_writes(batch, existing_hashes)
+        applied = writes_to_apply(batch, plan)
+
+        print(f"\nwrite plan: {plan.summary()}", file=sys.stderr)
+        if plan.is_blocked:
+            against_existing = [c for c in plan.drift_conflicts if c.source == "existing"]
+            if against_existing:
+                print(f"\nSOURCE-DRIFT CONFLICTS AGAINST ALREADY-PERSISTED DATA "
+                     f"({len(against_existing)}) -- the same observation id is "
+                     "already stored with a different payload hash than this "
+                     "run computed. Never auto-resolved:", file=sys.stderr)
+                for c in against_existing:
+                    print(f"    - {c.observation_id}: {c.payload_hashes} "
+                         f"({c.units:,.0f} units)", file=sys.stderr)
+            print("\n--apply: BLOCKED -- zero writes this run (a run-wide "
+                 "fail-closed gate; see conflicts above). Resolve the drift, "
+                 "then rerun.", file=sys.stderr)
+            return 2
+
+        print(f"\n--apply: inserting {len(applied.observations)} new "
+             f"observation(s), upserting {len(applied.facts)} fact(s), "
+             f"{len(applied.reviews)} review row(s)...", file=sys.stderr)
+        try:
+            insert_rows("registration_observations_v2", applied.observations)
+            upsert_rows("registration_facts_v2", applied.facts)
+            upsert_rows("registration_resolution_review_v2", applied.reviews)
         except RuntimeError as exc:
             print(f"backfill: write failed: {exc}", file=sys.stderr)
             return 2
@@ -256,12 +345,16 @@ def main(argv: Optional[list[str]] = None) -> int:
         print("\ndry run: nothing written. Rerun with --apply to write.",
              file=sys.stderr)
 
+    output = dict(summary)
+    if plan is not None:
+        output["write_plan"] = plan.summary()
+
     if args.json_out:
-        args.json_out.write_text(json.dumps(summary, indent=2, sort_keys=True),
+        args.json_out.write_text(json.dumps(output, indent=2, sort_keys=True),
                                  encoding="utf-8")
         print(f"\nwrote JSON summary to {args.json_out}", file=sys.stderr)
     else:
-        print(json.dumps(summary, indent=2, sort_keys=True))
+        print(json.dumps(output, indent=2, sort_keys=True))
 
     return 0
 

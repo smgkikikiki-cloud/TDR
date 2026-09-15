@@ -5,15 +5,20 @@ is not automatically a unit mismatch."""
 import unittest
 
 from vehreg.registration_v2_parity import (
+    DLT_CKAN,
     CoverageParity,
     LegacyRegistrationRow,
     V2FactRow,
     V2ObservationRow,
+    authoritative_source_for_period,
+    build_cutover_readiness_report,
     build_parity_report,
     classify_pairs,
     coverage_parity,
     find_duplicate_source_refs,
     find_reconciliation_failures,
+    find_source_lineage_overlaps,
+    find_unresolved_source_ownership,
     model_component,
     volume_parity,
 )
@@ -263,6 +268,119 @@ class FullReportTests(unittest.TestCase):
         report = build_parity_report(legacy, v2_obs, v2_facts, {})
         self.assertEqual(report.grain_distribution,
                          {"MODEL": 10, "VARIANT": 5, "BRAND": 2})
+
+
+class SourceLineageOwnershipTests(unittest.TestCase):
+    def test_no_boundary_configured_defaults_to_backfill_authoritative(self):
+        self.assertEqual(
+            authoritative_source_for_period("2026-01", None), BACKFILL)
+        self.assertEqual(
+            authoritative_source_for_period("2099-12", None), BACKFILL)
+
+    def test_boundary_configured_splits_by_period(self):
+        self.assertEqual(
+            authoritative_source_for_period("2026-06", "2026-06"), BACKFILL)
+        self.assertEqual(
+            authoritative_source_for_period("2026-05", "2026-06"), BACKFILL)
+        self.assertEqual(
+            authoritative_source_for_period("2026-07", "2026-06"), DLT_CKAN)
+
+    def test_no_overlap_when_only_one_source_kind_exists_per_period(self):
+        v2_obs = [_v2_obs("o1", BACKFILL, "a", "2026-01", "RY1", 100),
+                 _v2_obs("o2", DLT_CKAN, "res:1", "2026-07", "RY1", 50)]
+        overlaps = find_source_lineage_overlaps(v2_obs, boundary_period="2026-06")
+        self.assertEqual(overlaps, [])
+
+    def test_overlap_reports_the_non_authoritative_source_and_its_units(self):
+        # Both sources have volume for 2026-06; boundary says backfill owns
+        # it, so the dlt_ckan volume is the excluded (shadow) side.
+        v2_obs = [_v2_obs("o1", BACKFILL, "a", "2026-06", "RY1", 100),
+                 _v2_obs("o2", DLT_CKAN, "res:1", "2026-06", "RY1", 30)]
+        overlaps = find_source_lineage_overlaps(v2_obs, boundary_period="2026-06")
+        self.assertEqual(len(overlaps), 1)
+        self.assertEqual(overlaps[0].period, "2026-06")
+        self.assertEqual(overlaps[0].excluded_source_kind, DLT_CKAN)
+        self.assertEqual(overlaps[0].units, 30)
+
+    def test_dlt_csv_never_participates_in_ownership(self):
+        v2_obs = [_v2_obs("o1", "dlt_csv", "file:0", "2026-01", "RY1", 100)]
+        self.assertEqual(find_source_lineage_overlaps(v2_obs, None), [])
+        self.assertEqual(find_unresolved_source_ownership(v2_obs, None), [])
+
+    def test_unresolved_ownership_flags_a_period_with_both_kinds_and_no_boundary(self):
+        v2_obs = [_v2_obs("o1", BACKFILL, "a", "2026-06", "RY1", 100),
+                 _v2_obs("o2", DLT_CKAN, "res:1", "2026-06", "RY1", 30)]
+        self.assertEqual(find_unresolved_source_ownership(v2_obs, None), ["2026-06"])
+
+    def test_unresolved_ownership_is_empty_once_a_boundary_is_set(self):
+        v2_obs = [_v2_obs("o1", BACKFILL, "a", "2026-06", "RY1", 100),
+                 _v2_obs("o2", DLT_CKAN, "res:1", "2026-06", "RY1", 30)]
+        self.assertEqual(
+            find_unresolved_source_ownership(v2_obs, boundary_period="2026-06"), [])
+
+    def test_unresolved_ownership_is_empty_when_only_one_kind_has_volume(self):
+        v2_obs = [_v2_obs("o1", BACKFILL, "a", "2026-06", "RY1", 100)]
+        self.assertEqual(find_unresolved_source_ownership(v2_obs, None), [])
+
+
+class CutoverReadinessReportTests(unittest.TestCase):
+    def test_ready_when_everything_is_clean_and_required_periods_populated(self):
+        legacy = [_legacy("a", "2026-01", "RY1", 100, model_id="uuid-1")]
+        v2_obs = [_v2_obs("o1", BACKFILL, "a", "2026-01", "RY1", 100)]
+        v2_facts = [_v2_fact("o1", "acme.gecko", "MODEL", 100)]
+        crosswalk = {"uuid-1": "acme.gecko"}
+        report = build_cutover_readiness_report(
+            legacy, v2_obs, v2_facts, crosswalk,
+            required_periods=["2026-01"])
+        summary = report.summary()
+        self.assertTrue(summary["is_ready_for_cutover"])
+        self.assertEqual(summary["blockers"], [])
+
+    def test_not_ready_when_required_period_is_missing(self):
+        legacy = [_legacy("a", "2026-01", "RY1", 100, model_id="uuid-1")]
+        v2_obs = [_v2_obs("o1", BACKFILL, "a", "2026-01", "RY1", 100)]
+        v2_facts = [_v2_fact("o1", "acme.gecko", "MODEL", 100)]
+        crosswalk = {"uuid-1": "acme.gecko"}
+        report = build_cutover_readiness_report(
+            legacy, v2_obs, v2_facts, crosswalk,
+            required_periods=["2026-01", "2026-02"])
+        summary = report.summary()
+        self.assertFalse(summary["is_ready_for_cutover"])
+        self.assertIn("missing_required_periods", summary["blockers"])
+        self.assertEqual(summary["missing_required_periods"], ["2026-02"])
+
+    def test_not_ready_when_source_ownership_is_unresolved(self):
+        v2_obs = [_v2_obs("o1", BACKFILL, "a", "2026-06", "RY1", 100),
+                 _v2_obs("o2", DLT_CKAN, "res:1", "2026-06", "RY1", 30)]
+        report = build_cutover_readiness_report([], v2_obs, [], {})
+        summary = report.summary()
+        self.assertFalse(summary["is_ready_for_cutover"])
+        self.assertIn("unresolved_source_ownership", summary["blockers"])
+
+    def test_not_ready_when_parity_has_a_reconciliation_failure(self):
+        legacy = [_legacy("a", "2026-01", "RY1", 100)]
+        v2_obs = [_v2_obs("o1", BACKFILL, "a", "2026-01", "RY1", 90)]
+        report = build_cutover_readiness_report(legacy, v2_obs, [], {})
+        summary = report.summary()
+        self.assertFalse(summary["is_ready_for_cutover"])
+        self.assertIn("volume_or_duplicate_or_reconciliation_failure",
+                      summary["blockers"])
+
+    def test_identity_disagreement_alone_does_not_block_readiness(self):
+        # 100% identity agreement is explicitly not required.
+        legacy = [_legacy("a", "2026-01", "RY1", 100, model_id="uuid-1")]
+        v2_obs = [_v2_obs("o1", BACKFILL, "a", "2026-01", "RY1", 100)]
+        v2_facts = [_v2_fact("o1", "acme.falcon_one", "MODEL", 100)]
+        crosswalk = {"uuid-1": "acme.gecko"}
+        report = build_cutover_readiness_report(legacy, v2_obs, v2_facts, crosswalk)
+        summary = report.summary()
+        self.assertTrue(summary["is_ready_for_cutover"])
+        self.assertEqual(summary["parity"]["pairs_by_classification"],
+                         {"identity_disagreement": 1})
+
+    def test_readiness_report_is_one_object_reusing_the_existing_parity_report(self):
+        report = build_cutover_readiness_report([], [], [], {})
+        self.assertIsInstance(report.parity, type(build_parity_report([], [], [], {})))
 
 
 if __name__ == "__main__":
