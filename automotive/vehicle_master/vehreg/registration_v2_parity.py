@@ -458,6 +458,37 @@ def find_source_lineage_overlaps(
     return sorted(out, key=lambda o: (o.period, o.excluded_source_kind))
 
 
+def authoritative_v2_observations(
+    v2_observations: Iterable[V2ObservationRow],
+    boundary_period: Optional[str],
+) -> list[V2ObservationRow]:
+    """The subset of ``v2_observations`` that ``registration_facts_v2_serving``
+    will actually serve for cutover-readiness purposes: only
+    ``legacy_registrations_backfill``/``dlt_ckan`` observations (the two
+    ownership participants - a ``dlt_csv`` row is never authoritative,
+    mirroring the SQL view's WHERE clause exactly), and only where the
+    observation's own ``source_kind`` is the one ``authoritative_source_for_period``
+    picks for its period. A period whose only v2 data is on the losing side
+    of the boundary contributes nothing here - exactly what
+    ``registration_facts_v2_serving`` would show (Phase 3 safety patch fix
+    #2: readiness parity must mirror serving, not all shadow data)."""
+    return [o for o in v2_observations
+           if o.source_kind in AUTHORITATIVE_SOURCE_KINDS
+           and o.source_kind == authoritative_source_for_period(o.period, boundary_period)]
+
+
+def authoritative_v2_facts(
+    v2_facts: Iterable[V2FactRow],
+    authoritative_observation_ids: Iterable[str],
+) -> list[V2FactRow]:
+    """Facts filtered *through their owning observation* - never by
+    independently inferring source ownership from a fact (``V2FactRow`` does
+    not even carry ``source_kind``; only the observation it derives from
+    does)."""
+    ids = set(authoritative_observation_ids)
+    return [f for f in v2_facts if f.observation_id in ids]
+
+
 def find_unresolved_source_ownership(
     v2_observations: Iterable[V2ObservationRow],
     boundary_period: Optional[str],
@@ -526,11 +557,34 @@ def build_cutover_readiness_report(
     boundary_period: Optional[str] = None,
     required_periods: Iterable[str] = (),
 ) -> CutoverReadinessReport:
+    """Cutover volume parity is computed against the *authoritative* v2
+    observation/fact subset under ``boundary_period`` - exactly what
+    ``registration_facts_v2_serving`` will actually serve - not against all
+    shadow data (Phase 3 safety patch fix #2). A plain diagnostic parity run
+    (``build_parity_report`` called directly, e.g. by
+    ``tools/registration_v2_parity.py`` without ``--readiness``) may still
+    show all shadow data; only this readiness path filters.
+
+    Excluded source-lineage rows stay fully visible in
+    ``source_lineage_overlaps`` (computed from the *full*, unfiltered
+    ``v2_observations`` - an operator must be able to see what is being
+    excluded and why), they are simply never counted toward
+    ``parity``/``missing_required_periods`` here.
+    """
     v2_observations = list(v2_observations)
     required_periods = sorted(required_periods)
-    populated_periods = {o.period for o in v2_observations}
+
+    authoritative_observations = authoritative_v2_observations(
+        v2_observations, boundary_period)
+    authoritative_ids = {o.observation_id for o in authoritative_observations}
+    authoritative_facts = authoritative_v2_facts(v2_facts, authoritative_ids)
+    # Required-period coverage means authoritative observation coverage, not
+    # merely "some shadow row exists somewhere for this period."
+    populated_periods = {o.period for o in authoritative_observations}
+
     return CutoverReadinessReport(
-        parity=build_parity_report(legacy_rows, v2_observations, v2_facts, crosswalk),
+        parity=build_parity_report(legacy_rows, authoritative_observations,
+                                   authoritative_facts, crosswalk),
         source_lineage_overlaps=find_source_lineage_overlaps(
             v2_observations, boundary_period),
         unresolved_source_ownership_periods=find_unresolved_source_ownership(

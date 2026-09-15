@@ -183,18 +183,21 @@ async function fetchRegistrationRows(
   const rows: any[] = [];
   for (let offset = 0; offset < MAX_FACT_ROWS; offset += PAGE_SIZE) {
     // Phase 3 compatibility boundary: registration_reporting_source is
-    // shape-identical to `registrations` (plus a canonical_model_id
-    // passthrough this query does not select) and transparently serves
-    // either legacy `registrations` or the v2 shadow projection depending
-    // on registration_serving_state.active_source -- see
+    // shape-identical to `registrations` plus a canonical_model_id
+    // passthrough, and transparently serves either legacy `registrations`
+    // or the v2 shadow projection depending on
+    // registration_serving_state.active_source -- see
     // supabase/migration_v31_registration_v2_serving_and_cutover.sql and
     // docs/vehicle-platform/PHASE3_CUTOVER.md. This is the one place the
     // market-slice path needs to change for the cutover switch to reach it;
     // every dimension view VIEW_CONFIG reads from (registration_monthly_model
     // etc.) is redirected at the SQL layer and needs no change here.
+    // canonical_model_id is selected so canonicalizeRegistrationRows can
+    // resolve a v2 row directly by canonical id, never requiring a reverse
+    // legacy uuid crosswalk for a correctly-resolved v2 model (see below).
     let query = db
       .from("registration_reporting_source")
-      .select("period,registration_type,brand_name_raw,model_name_raw,model_id,registrations")
+      .select("period,registration_type,brand_name_raw,model_name_raw,model_id,canonical_model_id,registrations")
       .gte("period", window.from)
       .lte("period", window.to)
       .order("period", { ascending: true })
@@ -249,6 +252,9 @@ async function canonicalizeRegistrationRows(
   const modelsByTdrId = new Map<string, CanonicalModelRow>(typedModels
     .filter((row) => row.tdr_model_id)
     .map((row) => [String(row.tdr_model_id), row]));
+  const modelsByCanonicalId = new Map<string, CanonicalModelRow>(typedModels
+    .filter((row) => row.canonical_id)
+    .map((row) => [String(row.canonical_id), row]));
   const brandsByCanonicalId = new Map<string, CanonicalBrandRow>(typedBrands
     .filter((row) => row.canonical_id)
     .map((row) => [String(row.canonical_id), row]));
@@ -259,7 +265,15 @@ async function canonicalizeRegistrationRows(
     .map((row) => [String(row.raw_brand_norm), String(row.brand_id)]));
 
   return rows.map((row: any) => {
-    const model = row.model_id ? modelsByTdrId.get(String(row.model_id)) : undefined;
+    // A v2-resolved row carries its own canonical_model_id directly -
+    // resolve by that first, with no legacy uuid required. Only a row with
+    // no canonical_model_id (every legacy row while active_source =
+    // 'legacy', or a v2 row registration_reporting_source could not
+    // reverse-crosswalk) falls back to the existing model_id -> tdr_model_id
+    // path, preserving legacy behavior unchanged.
+    const model = row.canonical_model_id
+      ? modelsByCanonicalId.get(String(row.canonical_model_id))
+      : row.model_id ? modelsByTdrId.get(String(row.model_id)) : undefined;
     const aliasBrandTdrId = brandAliases.get(normalizeRegistrationToken(row.brand_name_raw));
     const brand = model?.brand_id
       ? brandsByCanonicalId.get(String(model.brand_id))

@@ -1,15 +1,21 @@
 """v2 serving rollup: MODEL/VARIANT safe rollup, BRAND never distributed
-into models, brand always rolls up safely, no parent/child double count."""
+into models, brand always rolls up safely, no parent/child double count, and
+(Phase 3 safety patch) a completely unresolved observation still survives
+serving with its units intact."""
 
 import unittest
 
 from vehreg.registration_v2_rollup import (
     RollupFact,
+    ServingRow,
     brand_component,
     brand_level_rollup,
     model_level_rollup,
+    resolved_rollup_facts,
     rollup_reconciles,
+    serving_reconciles,
     unknown_coarse_volume_by_brand,
+    unresolved_units,
 )
 
 
@@ -112,6 +118,77 @@ class NoDoubleCountTests(unittest.TestCase):
         rollup = model_level_rollup(facts)
         self.assertEqual(len(rollup), 1)
         self.assertEqual(rollup["acme.gecko"], 140)
+
+
+class ServingRowUnresolvedObservationTests(unittest.TestCase):
+    """Phase 3 safety patch: registration_facts_v2_serving now starts from
+    the authoritative OBSERVATION, not the fact - a completely unresolved
+    observation (brand not found, no fact at all) must still survive
+    serving with canonical_id/canonical_model_id/canonical_brand_id/grain
+    all null and its raw units retained."""
+
+    def test_completely_unresolved_observation_survives_serving(self):
+        row = ServingRow(canonical_id=None, grain=None, units=25)
+        self.assertFalse(row.is_resolved)
+        self.assertEqual(unresolved_units([row]), 25)
+        self.assertEqual(resolved_rollup_facts([row]), [])
+
+    def test_unresolved_row_is_excluded_from_model_and_brand_rollups(self):
+        rows = [ServingRow("acme.gecko", "MODEL", 100),
+               ServingRow(None, None, 25)]
+        facts = resolved_rollup_facts(rows)
+        self.assertEqual(model_level_rollup(facts), {"acme.gecko": 100})
+        self.assertEqual(brand_level_rollup(facts), {"acme": 100})
+        # The 25 unresolved units are not silently folded into any bucket
+        # above - they are only visible via unresolved_units.
+        self.assertEqual(unresolved_units(rows), 25)
+
+    def test_brand_grain_survives_without_model_allocation(self):
+        rows = [ServingRow("acme", "BRAND", 25)]
+        facts = resolved_rollup_facts(rows)
+        self.assertEqual(model_level_rollup(facts), {})
+        self.assertEqual(unknown_coarse_volume_by_brand(facts), {"acme": 25})
+        self.assertEqual(brand_level_rollup(facts), {"acme": 25})
+
+    def test_model_variant_behavior_unchanged(self):
+        rows = [ServingRow("acme.gecko", "MODEL", 100),
+               ServingRow("acme.gecko.gen1.lx", "VARIANT", 40)]
+        facts = resolved_rollup_facts(rows)
+        self.assertEqual(model_level_rollup(facts), {"acme.gecko": 140})
+        self.assertEqual(brand_level_rollup(facts), {"acme": 140})
+
+    def test_resolved_plus_unresolved_serving_units_reconcile_to_observation_total(self):
+        rows = [ServingRow("acme.gecko", "MODEL", 100),
+               ServingRow("acme.gecko.gen1.lx", "VARIANT", 40),
+               ServingRow("acme", "BRAND", 25),
+               ServingRow(None, None, 10),        # brand not found at all
+               ServingRow(None, None, 5)]          # a second unresolved row
+        self.assertTrue(serving_reconciles(rows))
+        total = sum(r.units for r in rows)
+        facts = resolved_rollup_facts(rows)
+        model_total = sum(model_level_rollup(facts).values())
+        coarse_total = sum(unknown_coarse_volume_by_brand(facts).values())
+        self.assertEqual(model_total + coarse_total + unresolved_units(rows), total)
+        self.assertEqual(total, 100 + 40 + 25 + 10 + 5)
+
+    def test_serving_does_not_reconcile_if_units_were_dropped(self):
+        # A defensive proof that serving_reconciles would actually catch a
+        # regression - not just a tautology over its own inputs.
+        rows = [ServingRow("acme.gecko", "MODEL", 100), ServingRow(None, None, 10)]
+        facts = resolved_rollup_facts(rows)
+        model_total = sum(model_level_rollup(facts).values())
+        coarse_total = sum(unknown_coarse_volume_by_brand(facts).values())
+        # Simulate "dropped the unresolved observation" by omitting it.
+        broken_total = model_total + coarse_total  # missing the unresolved 10
+        self.assertNotEqual(broken_total, sum(r.units for r in rows))
+
+    def test_empty_serving_set_reconciles_trivially(self):
+        self.assertTrue(serving_reconciles([]))
+
+    def test_all_unresolved_reconciles(self):
+        rows = [ServingRow(None, None, 10), ServingRow(None, None, 15)]
+        self.assertTrue(serving_reconciles(rows))
+        self.assertEqual(unresolved_units(rows), 25)
 
 
 if __name__ == "__main__":

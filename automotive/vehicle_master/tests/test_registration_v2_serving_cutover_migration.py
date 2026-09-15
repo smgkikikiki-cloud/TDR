@@ -66,7 +66,56 @@ def test_boundary_function_is_service_role_only():
 def test_v2_serving_view_excludes_brand_grain_from_canonical_model_id():
     text = _text()
     assert "registration_facts_v2_serving" in text
-    assert "case when f.grain = 'BRAND' then null" in text
+    assert "case when f.grain is null or f.grain = 'BRAND' then null" in text
+
+
+def _serving_view_body() -> str:
+    text = _text().lower()
+    start = text.index("create or replace view public.registration_facts_v2_serving")
+    rest = text[start + 1:]
+    next_stmt = rest.find("revoke all on table public.registration_facts_v2_serving")
+    return rest[:next_stmt] if next_stmt != -1 else rest
+
+
+def test_v2_serving_view_starts_from_observations_left_joining_facts():
+    # Phase 3 safety patch: the authoritative OBSERVATION set is the volume
+    # source of truth and fact resolution is optional -- `registration_
+    # observations_v2 LEFT JOIN registration_facts_v2`, not the reverse. A
+    # completely unresolved observation (no fact at all) must still
+    # contribute a row.
+    body = _serving_view_body()
+    assert "from public.registration_observations_v2 o" in body
+    assert "left join public.registration_facts_v2 f on f.observation_id = o.observation_id" in body
+    # It must NOT be an inner join from facts (the pre-patch bug).
+    assert "from public.registration_facts_v2 f" not in body
+    assert "join public.registration_observations_v2 o on o.observation_id = f.observation_id" not in body
+
+
+def test_v2_serving_view_retains_raw_brand_model_and_units_from_the_observation():
+    # Units/raw_brand/raw_model must come from the observation (o), not the
+    # fact (f) -- an unresolved observation has no f.units to fall back to.
+    body = _serving_view_body()
+    select_list = body[:body.index("from public.registration_observations_v2 o")]
+    assert "o.units" in select_list
+    assert "o.raw_brand" in select_list
+    assert "o.raw_model" in select_list
+    assert "f.units" not in select_list
+
+
+def test_v2_serving_view_nulls_canonical_brand_id_only_when_unresolved():
+    body = _serving_view_body()
+    assert "case when f.grain is null then null" in body
+    assert "canonical_brand_id" in body
+
+
+def test_facts_v2_pk_is_observation_id_so_the_left_join_cannot_fan_out():
+    # registration_facts_v2's own primary key (migration_v29) is
+    # observation_id, so LEFT JOIN registration_facts_v2 f ON f.observation_id
+    # = o.observation_id can match at most one fact row per observation --
+    # every authoritative observation contributes its units exactly once.
+    v29_path = MIGRATION_PATH.parent / "migration_v29_registration_dlt_v2_shadow.sql"
+    v29_text = v29_path.read_text(encoding="utf-8").lower()
+    assert "observation_id     text primary key" in v29_text
 
 
 def test_reporting_source_v2_branch_does_not_rejoin_facts_v2_by_a_non_unique_key():
@@ -93,13 +142,15 @@ def test_reporting_source_view_exists_and_branches_on_active_source():
 
 def test_reporting_source_exposes_every_column_the_ts_consumer_selects():
     # lib/registration-analytics.ts::fetchRegistrationRows selects exactly
-    # these six columns from registration_reporting_source (the one TS
-    # change this cutover required) - a column this view stops exposing
-    # would break that query at runtime with no type-level warning, so it
-    # is pinned here directly against the view's own column list.
+    # these seven columns from registration_reporting_source (including
+    # canonical_model_id, the safety-patch fix #3 column) - a column this
+    # view stops exposing would break that query at runtime with no
+    # type-level warning, so it is pinned here directly against the view's
+    # own column list.
     text = _text().lower()
     for column in ("period", "registration_type", "brand_name_raw",
-                  "model_name_raw", "model_id", "registrations"):
+                  "model_name_raw", "model_id", "canonical_model_id",
+                  "registrations"):
         assert column in text
 
 

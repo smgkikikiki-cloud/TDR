@@ -128,8 +128,20 @@ grant execute on function public.set_registration_v2_source_boundary(text) to se
 comment on function public.set_registration_v2_source_boundary is
   'Sets the deterministic period/source ownership boundary (vehreg.registration_v2_parity.authoritative_source_for_period): periods on or before it are legacy_registrations_backfill-authoritative, after it are dlt_ckan-authoritative. Null (the default) means every period is still backfill-authoritative.';
 
--- 3. v2 serving projection: MODEL/VARIANT safe rollup, BRAND never
---    distributed, only the authoritative source per period.
+-- 3. v2 serving projection: the authoritative OBSERVATION set is the volume
+--    source of truth, and fact resolution is optional -- `registration_
+--    observations_v2 LEFT JOIN registration_facts_v2`, not the other way
+--    around. An observation whose resolution produced no fact at all (brand
+--    not found - Invariant 6) still contributes a row here, with
+--    canonical_id/canonical_model_id/canonical_brand_id/grain all null and
+--    its raw_brand/raw_model/units retained - it is not silently dropped.
+--    Every authoritative observation contributes its units exactly once:
+--    registration_facts_v2's primary key is observation_id, so this LEFT
+--    JOIN can never fan out to more than one row per observation. MODEL/
+--    VARIANT/BRAND rollup behavior is unchanged from before. Mirrors
+--    vehreg/registration_v2_rollup.py's ServingRow/serving_reconciles
+--    exactly - see that module for the offline-testable reference
+--    implementation this view's semantics must keep matching.
 create or replace view public.registration_facts_v2_serving
 with (security_invoker = true)
 as
@@ -139,36 +151,38 @@ with state as (
   where scope = 'registration_analytics'
 )
 select
-  f.observation_id,
-  f.period,
-  f.registration_type,
+  o.observation_id,
+  o.period,
+  o.registration_type,
   f.grain,
-  case when f.grain = 'BRAND' then null
+  case when f.grain is null or f.grain = 'BRAND' then null
        else split_part(f.canonical_id, '.', 1) || '.' || split_part(f.canonical_id, '.', 2)
   end as canonical_model_id,
-  split_part(f.canonical_id, '.', 1) as canonical_brand_id,
+  case when f.grain is null then null
+       else split_part(f.canonical_id, '.', 1)
+  end as canonical_brand_id,
   f.canonical_id,
-  f.units,
+  o.units,
   o.source_kind,
   o.raw_brand,
   o.raw_model
-from public.registration_facts_v2 f
-join public.registration_observations_v2 o on o.observation_id = f.observation_id
+from public.registration_observations_v2 o
+left join public.registration_facts_v2 f on f.observation_id = o.observation_id
 cross join state
 where
   (o.source_kind = 'legacy_registrations_backfill'
     and (state.v2_source_boundary_period is null
-         or f.period <= state.v2_source_boundary_period))
+         or o.period <= state.v2_source_boundary_period))
   or
   (o.source_kind = 'dlt_ckan'
     and state.v2_source_boundary_period is not null
-    and f.period > state.v2_source_boundary_period);
+    and o.period > state.v2_source_boundary_period);
 
 revoke all on table public.registration_facts_v2_serving from anon, authenticated;
 grant select on table public.registration_facts_v2_serving to service_role;
 
 comment on view public.registration_facts_v2_serving is
-  'v2 serving projection: only the period-authoritative source_kind (see set_registration_v2_source_boundary) contributes. canonical_model_id is null for BRAND-grain facts (never distributed into a model); canonical_brand_id is always populated. Mirrors vehreg/registration_v2_rollup.py exactly -- see that module for the offline-testable reference implementation.';
+  'v2 serving projection: authoritative OBSERVATIONS (registration_observations_v2, filtered by set_registration_v2_source_boundary''s period-ownership rule) LEFT JOIN their optional resolved fact. A completely unresolved observation still contributes a row -- canonical_id/canonical_model_id/canonical_brand_id/grain null, raw_brand/raw_model/units retained -- never silently dropped. canonical_model_id is null for BRAND-grain facts (never distributed into a model) and for unresolved rows; canonical_brand_id is populated for every resolved grain (BRAND/MODEL/VARIANT) and null only when unresolved. Every authoritative observation contributes exactly once (registration_facts_v2 is keyed by observation_id, so the LEFT JOIN cannot fan out). Mirrors vehreg/registration_v2_rollup.py exactly -- see that module for the offline-testable reference implementation.';
 
 -- 4. The one compatibility boundary.
 create or replace view public.registration_reporting_source

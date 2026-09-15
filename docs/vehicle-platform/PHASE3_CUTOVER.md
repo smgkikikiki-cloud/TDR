@@ -4,6 +4,26 @@
 gate — no Supabase credentials were available in this session (see "Live result" below), so
 nothing described here has been applied to, or switched on, the live production project.**
 
+**2026-09-15 safety patch.** Architecture review found three concrete cutover blockers in the
+original Phase 3 pass, all fixed in place (`migration_v31` had never been applied to production,
+so it was corrected directly rather than superseded by a new migration):
+
+1. `registration_facts_v2_serving` started from `registration_facts_v2` (an inner join), so a
+   completely unresolved observation — no fact at all — contributed nothing to serving. Fixed to
+   start from the authoritative *observation* set, `LEFT JOIN`ing the optional fact (§B).
+2. `build_cutover_readiness_report` passed **all** v2 observations/facts into parity, so a period
+   with both `legacy_registrations_backfill` and `dlt_ckan` volume could double-count even though
+   the serving boundary intentionally selects only one. Fixed to filter to the authoritative
+   subset before computing parity, while keeping excluded rows visible in
+   `source_lineage_overlaps` (§D).
+3. The market-slice path (`lib/registration-analytics.ts`) never selected/used
+   `registration_reporting_source`'s existing `canonical_model_id` column, so a v2-resolved row
+   was still sent through the reverse legacy-uuid crosswalk. Fixed minimally: select the column,
+   resolve by it directly when present, fall back to the unchanged legacy path otherwise (§C).
+
+This is a safety patch to Phase 3, not a new phase — no new migration file, no Phase 3A/3B, no
+Phase 4 work.
+
 This document records Phase 3:
 
 ```
@@ -72,9 +92,23 @@ decision made in one place.
 
 ## B. v2 serving projection
 
-`vehreg/registration_v2_rollup.py` (pure, offline-testable) is the reference implementation of the
-rollup rule `registration_facts_v2_serving`
-(`supabase/migration_v31_registration_v2_serving_and_cutover.sql`) mirrors in SQL:
+**The authoritative *observation* is the volume source of truth; fact resolution is optional.**
+`registration_facts_v2_serving` is `registration_observations_v2 LEFT JOIN registration_facts_v2`
+(filtered to the period-authoritative `source_kind`, §A2), never the reverse. Before the safety
+patch it started from `registration_facts_v2` (effectively an inner join), so a completely
+unresolved observation — brand not found at all, no fact row exists — contributed nothing to
+serving; its units simply vanished from every downstream total. `registration_facts_v2`'s own
+primary key is `observation_id` (`migration_v29`), so the `LEFT JOIN` can never fan out — every
+authoritative observation contributes its units exactly once, resolved or not.
+
+For a completely unresolved observation, `registration_facts_v2_serving` now emits a row with
+`canonical_id`/`canonical_model_id`/`canonical_brand_id`/`grain` all `NULL` and `raw_brand`/
+`raw_model`/`units` retained from the observation itself (never from the missing fact). For a
+BRAND-grain fact, `canonical_brand_id` is populated and `canonical_model_id` stays `NULL` — never
+distributed into a model. MODEL/VARIANT behavior is unchanged from the original pass.
+
+`vehreg/registration_v2_rollup.py` (pure, offline-testable) is the reference implementation this
+SQL mirrors:
 
 - a MODEL-grain fact counts directly, at its own canonical id.
 - a VARIANT-grain fact rolls up to its canonical model (`model_component` — the first two
@@ -85,13 +119,17 @@ rollup rule `registration_facts_v2_serving`
 - every grain rolls up safely to brand (`brand_level_rollup`) — a brand total is always a plain
   `sum(units) group by canonical_brand_id`, no separate "unknown" bucket needed there, because
   brand is always known whenever anything deeper is.
+- (safety patch) a completely unresolved observation's units are tracked separately
+  (`unresolved_units`) and are neither dropped nor folded into any grain bucket.
 
-Because each fact corresponds to exactly one observation (Phase 2's 1:1 invariant), no fact is
-ever counted under two buckets: `model_level_rollup + unknown_coarse_volume_by_brand ==
-brand_level_rollup == sum of all fact units`, exactly, proven by
-`tests/test_registration_v2_rollup.py::test_no_parent_child_double_count` and mirrored in SQL by
-`registration_facts_v2_serving`, which filters to only the period-authoritative `source_kind`
-(§A2) before any rollup happens.
+`RollupFact`/`model_level_rollup`/`brand_level_rollup`/`unknown_coarse_volume_by_brand`/
+`rollup_reconciles` describe only already-resolved facts (unchanged from the original pass); the
+new `ServingRow`/`resolved_rollup_facts`/`unresolved_units`/`serving_reconciles` describe the
+broader, observation-driven shape the corrected view now emits. Because each fact corresponds to
+exactly one observation, no unit is ever counted under two buckets, and none is dropped:
+`model_level_rollup + unknown_coarse_volume_by_brand + unresolved_units == sum of every serving
+row's units`, exactly, proven by
+`tests/test_registration_v2_rollup.py::test_resolved_plus_unresolved_serving_units_reconcile_to_observation_total`.
 
 ## C. Cutover compatibility
 
@@ -136,12 +174,25 @@ those seven dimension views is built, directly or transitively, on exactly three
   `SELECT`/`WHERE`/`GROUP BY` logic is byte-for-byte unchanged, only the `FROM` target moves. Every
   view built on top of these three inherits the switch with **zero changes of its own**.
 
-**TypeScript**: exactly one line changed, in `lib/registration-analytics.ts`'s
-`fetchRegistrationRows` (the only place in the TS layer that reads `registrations` directly) —
+**TypeScript**: `lib/registration-analytics.ts`'s `fetchRegistrationRows` (the only place in the TS
+layer that reads `registrations` directly) reads `registration_reporting_source` instead —
 `.from("registrations")` → `.from("registration_reporting_source")`. `getRegistrationAnalytics`'s
 dimension-view path needs **no TypeScript change at all**, since it already queries the view names
-that are now switch-aware at the SQL layer. This is the whole "read v2 without every UI being
-rewritten" requirement, satisfied literally: one file, one line.
+that are now switch-aware at the SQL layer.
+
+**Safety patch fix #3**: `registration_reporting_source` already exposed `canonical_model_id`, but
+`fetchRegistrationRows` did not select it and `canonicalizeRegistrationRows` never used it — so a
+correctly-resolved v2 row was still sent through the reverse legacy-uuid crosswalk
+(`model_id → current_vehicle_models.tdr_model_id`) a second time, gaining nothing from having a
+direct canonical id available. Fixed minimally: `fetchRegistrationRows` now also selects
+`canonical_model_id`; `canonicalizeRegistrationRows` builds a second lookup map
+(`modelsByCanonicalId`, keyed by `current_vehicle_models.canonical_id`) alongside the existing
+`modelsByTdrId`, and resolves `row.canonical_model_id ? modelsByCanonicalId.get(...) :
+(row.model_id ? modelsByTdrId.get(...) : undefined)` — a v2 row with a canonical id needs no legacy
+uuid at all; a legacy row (`canonical_model_id` always null while `active_source = 'legacy'`) falls
+through to the exact, unchanged prior behavior; a row with neither stays unresolved and renders as
+`"UNKNOWN"`/`canonically_mapped: false`, exactly as before — never guessed. No SQL dimension view
+and no other part of the registration UI was touched.
 
 `tools/registration_v2_cutover.py` is the switch's operator interface: `--status`, `--switch
 {legacy,v2}`, `--set-boundary YYYY-MM|none`. It performs no readiness check itself — it is a dumb,
@@ -165,6 +216,28 @@ Cutover eligibility (`is_ready_for_cutover`) requires:
   `legacy_registrations_backfill` and `dlt_ckan` and no boundary configured to adjudicate it.
 - **every required period populated in v2** — `--required-periods` names the periods a cutover
   needs; any missing one blocks readiness.
+
+**Safety patch fix #2 — readiness parity now mirrors what serving will actually count.** Before
+the patch, `build_cutover_readiness_report` passed *every* v2 observation/fact into
+`build_parity_report`, so a period straddling the source-ownership boundary (e.g. both a
+`legacy_registrations_backfill` row and a `dlt_ckan` row for the same period) could sum both
+sides' volume even though `registration_facts_v2_serving` would only ever serve one of them —
+readiness could pass on a total the running system would never actually produce. Fixed:
+`authoritative_v2_observations(v2_observations, boundary_period)` filters to exactly the
+`(source_kind, period)` combinations `authoritative_source_for_period` selects (the same rule the
+SQL serving view applies, and — like it — never treats `dlt_csv` as an ownership participant), and
+`authoritative_v2_facts` filters facts *through their owning observation's id* — never by
+independently inferring ownership from a fact, since `V2FactRow` does not even carry
+`source_kind`. `build_cutover_readiness_report` now builds `parity` from this authoritative
+subset, and `missing_required_periods` is computed from the authoritative subset's own periods —
+"some shadow row exists somewhere" no longer counts as required-period coverage.
+
+`source_lineage_overlaps` (§A2) is unaffected — computed from the *full*, unfiltered
+`v2_observations` — so the excluded volume stays fully visible for an operator to inspect, even
+though it no longer contributes to `parity` or `missing_required_periods`. A **plain** parity run
+(`tools/registration_v2_parity.py` without `--readiness`) is also unaffected: it still calls
+`build_parity_report` directly over all shadow data, unchanged — this fix touches only the
+readiness path.
 
 **100% identity agreement is explicitly not required.** `identity_disagreement` and
 `grain_difference_v2_coarser` stay fully visible in the report's `pairs_by_classification` and
@@ -207,57 +280,113 @@ production, no backfill/direct-ingest has run against production, no readiness r
 produced against live data, and the serving switch has never been flipped. This is **implementation
 complete; production cutover pending live gate execution** — not another architecture phase.
 
-The exact operator commands, in order, once credentials exist:
+### Deployment order (required, not just suggested)
+
+Application code (`lib/registration-analytics.ts`) already references
+`registration_reporting_source`, which **does not exist in production until `migration_v31` is
+applied** — so DB migrations must land, in order, before the application code that reads the view
+they create. The full order:
+
+1. Merge/apply DB migrations, **in order**, `migration_v29` → `migration_v30` → the corrected
+   `migration_v31`, while the serving switch still defaults to `'legacy'` (it does — applying all
+   three changes zero observed behavior on its own).
+2. Deploy the application code that reads `registration_reporting_source`
+   (`lib/registration-analytics.ts`). Steps 1 and 2 may land in the same release, but step 1's
+   migrations must be applied first — deploying step 2 against a database that has not yet run
+   `migration_v31` means `registration_reporting_source` does not exist and every registration
+   query fails.
+3. Historical backfill, dry-run: `python tools/backfill_registration_v2.py`.
+4. Historical backfill, apply: `python tools/backfill_registration_v2.py --apply`.
+5. Choose and set the source-ownership boundary:
+   `python tools/registration_v2_cutover.py --set-boundary <last-backfilled-period>`.
+6. Direct-DLT-ingest the appropriate shadow period(s), dry-run then apply:
+   `python tools/registration_v2_dlt_ingest.py --period <YYYY-MM>` then `... --apply`.
+7. Run the readiness gate:
+   `python tools/registration_v2_parity.py --readiness --required-periods <...>`.
+8. **Only if** readiness exits `0` (equivalently, `summary.is_ready_for_cutover: true`), flip the
+   switch: `python tools/registration_v2_cutover.py --switch v2`.
+9. Smoke-test `/api/report/registration` and `/api/report/market`.
+10. On any regression at step 9 (or at any later point), immediately roll back:
+    `python tools/registration_v2_cutover.py --switch legacy` — no data reconstruction required,
+    since `registrations` was never written by any part of this pipeline or by the switch itself.
 
 ```
 cd automotive/vehicle_master
 
-# 1. apply additive/hardening migrations (normal deployment path)
+# 1. apply migrations, in order (normal deployment path, not from this session)
 #    supabase/migration_v29_registration_dlt_v2_shadow.sql            (Phase 2)
 #    supabase/migration_v30_registration_v2_immutable_observations.sql
-#    supabase/migration_v31_registration_v2_serving_and_cutover.sql
+#    supabase/migration_v31_registration_v2_serving_and_cutover.sql   (corrected, safety-patched)
 
-# 2. dry-run backfill
-python tools/backfill_registration_v2.py
+# 2. deploy application code that reads registration_reporting_source (already merged to this branch)
 
-# 3. backfill historical range
+# 3-4. backfill
+python tools/backfill_registration_v2.py                 # dry run
 python tools/backfill_registration_v2.py --apply
 
-# 4. direct-ingest the current period (dry-run first, then apply)
+# 5. source-ownership boundary
+python tools/registration_v2_cutover.py --set-boundary 2026-08
+
+# 6. direct DLT ingest for the period(s) after the boundary
 python tools/registration_v2_dlt_ingest.py --period 2026-09
 python tools/registration_v2_dlt_ingest.py --period 2026-09 --apply
 
-# mark the boundary between backfilled history and direct-ingest periods
-python tools/registration_v2_cutover.py --set-boundary 2026-08
-
-# 5. parity / readiness
+# 7. readiness gate
 python tools/registration_v2_parity.py --readiness --required-periods 2026-01,2026-02,...,2026-09
 
-# 6. switch reads only if the gate is clean (exit 0, is_ready_for_cutover: true)
+# 8. switch reads only if the gate is clean (exit 0, is_ready_for_cutover: true)
 python tools/registration_v2_cutover.py --switch v2
 
-# 7. smoke-test /api/report/registration and /api/report/market
+# 9. smoke-test /api/report/registration and /api/report/market
 
-# rollback at any point, no data reconstruction:
+# 10. rollback at any point, no data reconstruction:
 python tools/registration_v2_cutover.py --switch legacy
 ```
 
 ## G. Tests
 
 Focused suites were run during implementation; the full suite runs exactly once at the end of this
-packet (see the completion report for the pass count). New coverage: `tests/
+packet (see the completion report for the pass count). Original-pass coverage: `tests/
 test_registration_v2_immutability.py` (idempotent no-op, within-batch and against-existing drift
 conflicts, the global apply gate, derived rows still upsert for clean ids), `tests/
 test_registration_v2_immutability_migration.py` (grants/trigger source-text regression), `tests/
 test_registration_v2_dlt_ingest.py` (classification reuse, skipped-class accounting, argument/
-credential guards), `tests/test_registration_v2_rollup.py` (MODEL/VARIANT rollup, BRAND never
-distributed, brand always safe, no parent/child double count), `tests/
-test_registration_v2_parity.py` (extended: source-lineage ownership rule, overlap detection,
-cutover-readiness report), `tests/test_registration_v2_serving_cutover_migration.py` (switch
-defaults to legacy, service-role-only single-UPDATE functions, the redirected views change only
-their `FROM` target, no grant to `anon`/`authenticated`, no mutation of `registrations`), `tests/
+credential guards), `tests/test_registration_v2_serving_cutover_migration.py` (switch defaults to
+legacy, service-role-only single-UPDATE functions, the redirected views change only their `FROM`
+target, no grant to `anon`/`authenticated`, no mutation of `registrations`), `tests/
 test_registration_v2_cutover.py` (argument validation, no-credentials fail-closed, rollback is the
 identical switch mechanism as cutover).
+
+**Safety patch coverage**: `tests/test_registration_v2_rollup.py` extended with
+`ServingRowUnresolvedObservationTests` (completely unresolved observation survives serving,
+BRAND-grain survives without model allocation, MODEL/VARIANT unchanged, resolved + unresolved
+serving units reconcile to authoritative observation units). `tests/test_registration_v2_parity.py`
+extended with backfill/DLT overlap where only the boundary-selected source counts toward
+authoritative parity, the excluded overlap staying reported, an authoritative total matching the
+legacy total letting readiness pass, and a non-authoritative-only required period correctly *not*
+satisfying required coverage (`CutoverReadinessReportTests`/`AuthoritativeFilteringTests`).
+`tests/test_registration_v2_serving_cutover_migration.py` extended to assert the serving view now
+reads `FROM registration_observations_v2 o ... LEFT JOIN registration_facts_v2 f`, never the
+reverse, and that units/raw_brand/raw_model come from the observation, not the fact.
+
+**Fix #3 (TypeScript) has no automated test in this repository.** `lib/registration-analytics.ts`
+imports via the `@/` path alias (`@/lib/supabase`, `@/lib/historical-model-state`,
+`@/lib/registration-market`), which only Next.js's own bundler/`tsc` resolve — this repository's
+existing offline TS test convention (`node --experimental-strip-types scripts/check-*.ts`, no test
+runner dependency) only ever exercises alias-free lib files, and every existing `check-*.ts` script
+respects that boundary. Building a custom module-resolution loader to force this one file through
+that convention was judged out of proportion for a "fix this minimally" patch. Verification for fix
+#3 is `tsc --noEmit` (part of `npm run check` — it fully resolves `@/` aliases and would catch a
+type error in the new `modelsByCanonicalId` map or the `row.canonical_model_id` fallback) plus
+direct code review of the three required properties, traced against the exact `canonicalizeRegistrationRows`
+code path: (1) a v2 row's `model` lookup now happens via `modelsByCanonicalId.get(row.canonical_model_id)`
+before any `model_id` is consulted, so no legacy uuid is required; (2) a legacy row always has
+`canonical_model_id: null` while `active_source = 'legacy'` (the SQL view only ever populates it in
+the `'v2'` branch), so it falls through to the untouched `row.model_id ? modelsByTdrId.get(...) :
+undefined` branch, byte-for-byte the prior logic; (3) a row with neither `canonical_model_id` nor
+`model_id` resolves `model` to `undefined`, which was already the exact "unresolved" path
+(`brand_name`/`model_name` fall back to raw text or `"UNKNOWN"`, `canonically_mapped: false`) —
+unchanged, never guessed.
 
 ## H. What Phase 3 explicitly does not do
 

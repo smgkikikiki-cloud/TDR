@@ -11,6 +11,8 @@ from vehreg.registration_v2_parity import (
     V2FactRow,
     V2ObservationRow,
     authoritative_source_for_period,
+    authoritative_v2_facts,
+    authoritative_v2_observations,
     build_cutover_readiness_report,
     build_parity_report,
     classify_pairs,
@@ -381,6 +383,89 @@ class CutoverReadinessReportTests(unittest.TestCase):
     def test_readiness_report_is_one_object_reusing_the_existing_parity_report(self):
         report = build_cutover_readiness_report([], [], [], {})
         self.assertIsInstance(report.parity, type(build_parity_report([], [], [], {})))
+
+    def test_only_the_boundary_selected_source_counts_toward_authoritative_parity(self):
+        # 2026-06 is after the boundary (2026-05), so dlt_ckan is
+        # authoritative for it; the backfill observation's 100 units must
+        # NOT be counted toward v2's authoritative volume, even though it
+        # physically exists in the shadow tables.
+        legacy = [_legacy("a", "2026-06", "RY1", 30)]
+        v2_obs = [_v2_obs("backfill-o", BACKFILL, "legacy-row-a", "2026-06", "RY1", 100),
+                 _v2_obs("dlt-o", DLT_CKAN, "res:1", "2026-06", "RY1", 30)]
+        report = build_cutover_readiness_report(
+            legacy, v2_obs, [], {}, boundary_period="2026-05")
+        volume_row = next(v for v in report.parity.volume_by_period if v.key == "2026-06")
+        self.assertEqual(volume_row.v1_units, 30)
+        self.assertEqual(volume_row.v2_units, 30)   # not 130
+        self.assertTrue(volume_row.matches)
+
+    def test_excluded_overlap_remains_reported_even_though_not_counted(self):
+        legacy = [_legacy("a", "2026-06", "RY1", 30)]
+        v2_obs = [_v2_obs("backfill-o", BACKFILL, "legacy-row-a", "2026-06", "RY1", 100),
+                 _v2_obs("dlt-o", DLT_CKAN, "res:1", "2026-06", "RY1", 30)]
+        report = build_cutover_readiness_report(
+            legacy, v2_obs, [], {}, boundary_period="2026-05")
+        self.assertEqual(len(report.source_lineage_overlaps), 1)
+        overlap = report.source_lineage_overlaps[0]
+        self.assertEqual(overlap.period, "2026-06")
+        self.assertEqual(overlap.excluded_source_kind, BACKFILL)
+        self.assertEqual(overlap.units, 100)
+
+    def test_authoritative_total_matching_legacy_total_lets_readiness_pass(self):
+        legacy = [_legacy("a", "2026-06", "RY1", 30)]
+        v2_obs = [_v2_obs("backfill-o", BACKFILL, "legacy-row-a", "2026-06", "RY1", 100),
+                 _v2_obs("dlt-o", DLT_CKAN, "res:1", "2026-06", "RY1", 30)]
+        report = build_cutover_readiness_report(
+            legacy, v2_obs, [], {}, boundary_period="2026-05",
+            required_periods=["2026-06"])
+        summary = report.summary()
+        self.assertTrue(summary["is_ready_for_cutover"])
+        self.assertEqual(summary["blockers"], [])
+
+    def test_non_authoritative_only_required_period_does_not_satisfy_coverage(self):
+        # v2 has a row for 2026-06, but only on the backfill (non-
+        # authoritative) side under this boundary - "some shadow row
+        # exists" must NOT be read as required-period coverage.
+        v2_obs = [_v2_obs("backfill-o", BACKFILL, "legacy-row-a", "2026-06", "RY1", 100)]
+        report = build_cutover_readiness_report(
+            [], v2_obs, [], {}, boundary_period="2026-05",
+            required_periods=["2026-06"])
+        summary = report.summary()
+        self.assertFalse(summary["is_ready_for_cutover"])
+        self.assertIn("missing_required_periods", summary["blockers"])
+        self.assertEqual(summary["missing_required_periods"], ["2026-06"])
+
+    def test_a_period_would_have_double_counted_without_the_authoritative_filter(self):
+        # Direct proof of the bug this patch fixes: summing both sources'
+        # raw units for the overlapping period would be 130, not 30.
+        v2_obs = [_v2_obs("backfill-o", BACKFILL, "legacy-row-a", "2026-06", "RY1", 100),
+                 _v2_obs("dlt-o", DLT_CKAN, "res:1", "2026-06", "RY1", 30)]
+        naive_total = sum(o.units for o in v2_obs)
+        self.assertEqual(naive_total, 130)
+        authoritative = authoritative_v2_observations(v2_obs, boundary_period="2026-05")
+        self.assertEqual(sum(o.units for o in authoritative), 30)
+
+
+class AuthoritativeFilteringTests(unittest.TestCase):
+    def test_dlt_csv_is_never_authoritative(self):
+        v2_obs = [_v2_obs("o1", "dlt_csv", "file:0", "2026-06", "RY1", 100)]
+        self.assertEqual(authoritative_v2_observations(v2_obs, None), [])
+
+    def test_facts_are_filtered_through_their_owning_observation(self):
+        v2_obs = [_v2_obs("backfill-o", BACKFILL, "a", "2026-06", "RY1", 100),
+                 _v2_obs("dlt-o", DLT_CKAN, "res:1", "2026-06", "RY1", 30)]
+        v2_facts = [_v2_fact("backfill-o", "acme.gecko", "MODEL", 100),
+                   _v2_fact("dlt-o", "acme.falcon_one", "MODEL", 30)]
+        authoritative_obs = authoritative_v2_observations(v2_obs, boundary_period="2026-05")
+        authoritative_ids = {o.observation_id for o in authoritative_obs}
+        facts = authoritative_v2_facts(v2_facts, authoritative_ids)
+        self.assertEqual([f.observation_id for f in facts], ["dlt-o"])
+
+    def test_no_boundary_means_only_backfill_is_authoritative(self):
+        v2_obs = [_v2_obs("backfill-o", BACKFILL, "a", "2026-06", "RY1", 100),
+                 _v2_obs("dlt-o", DLT_CKAN, "res:1", "2026-06", "RY1", 30)]
+        authoritative = authoritative_v2_observations(v2_obs, None)
+        self.assertEqual([o.observation_id for o in authoritative], ["backfill-o"])
 
 
 if __name__ == "__main__":

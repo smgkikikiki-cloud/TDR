@@ -30,6 +30,17 @@ counted under two different rollup buckets here: ``model_level_rollup`` and
 VARIANT vs. BRAND) with no overlap, and together they sum to exactly
 ``brand_level_rollup``'s total - proven directly by
 ``test_registration_v2_rollup.py::test_no_parent_child_double_count``.
+
+``RollupFact``/``model_level_rollup``/``brand_level_rollup``/
+``unknown_coarse_volume_by_brand``/``rollup_reconciles`` above describe only
+already-*resolved* facts - the shape the earlier `registration_facts_v2_
+serving` (fact-driven, ``registration_facts_v2 JOIN registration_observations_v2``)
+used to emit. That view now starts from the authoritative OBSERVATION set
+instead (``registration_observations_v2 LEFT JOIN registration_facts_v2``),
+so a completely unresolved observation still contributes a row. ``ServingRow``/
+``serving_reconciles`` below describe that broader, observation-driven shape;
+the resolved-facts-only functions above remain correct and reused unchanged
+for the portion of serving that did resolve.
 """
 
 from __future__ import annotations
@@ -105,3 +116,62 @@ def rollup_reconciles(facts: Iterable[RollupFact],
     brand_total = sum(brand_level_rollup(facts).values())
     return (abs((model_total + coarse_total) - total) <= tolerance
            and abs(brand_total - total) <= tolerance)
+
+
+# --------------------------------------------------------------------------
+# Serving semantics: the authoritative OBSERVATION set is the volume source
+# of truth; fact resolution is optional. Mirrors `registration_facts_v2_
+# serving`'s own `registration_observations_v2 LEFT JOIN registration_facts_v2`
+# (supabase/migration_v31_registration_v2_serving_and_cutover.sql) - every
+# authoritative observation contributes a ``ServingRow`` whether or not it
+# ever produced a fact, so this module's totals only ever agree with the SQL
+# view's if a completely unresolved observation's units are still counted
+# somewhere (``unresolved_units``), never dropped.
+# --------------------------------------------------------------------------
+@dataclass(frozen=True, slots=True)
+class ServingRow:
+    """One row of ``registration_facts_v2_serving``: an authoritative
+    observation, optionally joined to its resolved fact. ``canonical_id``/
+    ``grain`` are both ``None`` for a completely unresolved observation
+    (Invariant 6: the observation's units remain visible in serving even
+    when resolution produced nothing at all) - never partially populated,
+    since a fact either fully exists (canonical_id and grain both set) or
+    does not exist at all."""
+
+    canonical_id: str | None
+    grain: str | None    # 'BRAND' | 'MODEL' | 'VARIANT' | None (unresolved)
+    units: float
+
+    @property
+    def is_resolved(self) -> bool:
+        return self.grain is not None
+
+
+def resolved_rollup_facts(rows: Iterable[ServingRow]) -> list[RollupFact]:
+    """The subset of serving rows that did resolve to something, as the
+    plain ``RollupFact`` values ``model_level_rollup``/``brand_level_rollup``/
+    ``unknown_coarse_volume_by_brand`` already operate on unchanged."""
+    return [RollupFact(canonical_id=r.canonical_id, grain=r.grain, units=r.units)
+           for r in rows if r.is_resolved]
+
+
+def unresolved_units(rows: Iterable[ServingRow]) -> float:
+    """Units of completely unresolved observations - no fact at all, so
+    ``canonical_id``/``grain`` are both null. Visible on its own, exactly
+    mirroring the SQL view's LEFT JOIN miss, per Invariant 6."""
+    return sum(r.units for r in rows if not r.is_resolved)
+
+
+def serving_reconciles(rows: Iterable[ServingRow], tolerance: float = 0.001) -> bool:
+    """model_level_rollup + unknown_coarse_volume_by_brand (the BRAND-grain
+    bucket) + unresolved_units == the plain sum of every serving row's units
+    - the authoritative-observation volume ``registration_facts_v2_serving``
+    must never drop or double-count, regardless of resolution coverage.
+    Equivalent to, and a superset of, ``rollup_reconciles`` (which only ever
+    saw resolved facts and had no unresolved-observation concept to prove)."""
+    rows = list(rows)
+    total = sum(r.units for r in rows)
+    facts = resolved_rollup_facts(rows)
+    model_total = sum(model_level_rollup(facts).values())
+    coarse_total = sum(unknown_coarse_volume_by_brand(facts).values())
+    return abs((model_total + coarse_total + unresolved_units(rows)) - total) <= tolerance
