@@ -12,7 +12,7 @@ in the original Phase 0 pass — see `LIVE_IDENTITY_BASELINE_2026-09-15.md` and
 revised accordingly. This amendment was still Phase 0 (documentation only); it did not start
 Phase 1.
 
-**2026-09-16 — Phase 1A implemented.** Phase 0 is complete. The narrow first packet of Phase 1
+**2026-09-15 — Phase 1A implemented.** Phase 0 is complete. The narrow first packet of Phase 1
 (a read-only external-identity contract and audit engine — see the "Phase 1A" subsection under
 Phase 1 below, `EXTERNAL_IDENTITY_CONTRACT.md`, and `status/CURRENT.md`) is now implemented. The
 rest of Phase 1 — choosing a persistence design — remains unauthorized.
@@ -120,7 +120,7 @@ implying the other; every currently `verified` Mechanism B row is representable 
 the new contract; no existing consumer of either mechanism changes behavior as a result of the
 contract's introduction (this is an abstraction/design phase, not a cutover).
 
-### Phase 1A — implemented (this pass, 2026-09-16 — still Phase 1, not Phase 0)
+### Phase 1A — implemented (this pass, 2026-09-15 — still Phase 1, not Phase 0)
 
 **Phase 1A is done.** It was scoped narrowly to exactly the read-only audit/contract packet
 sketched above, and only that: `docs/vehicle-platform/EXTERNAL_IDENTITY_CONTRACT.md` defines the

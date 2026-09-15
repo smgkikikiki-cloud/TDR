@@ -11,8 +11,8 @@ import {
   type CanonicalEntityType,
   type ExternalEntityType,
   type ExternalIdentityAssertion,
-  type MappingState,
-  type TrustLevel,
+  type ResolvedAssertion,
+  type UnresolvedAssertion,
 } from "./types.ts";
 
 // ---------------------------------------------------------------------------
@@ -33,6 +33,9 @@ export interface MechanismAModelRow {
   tdr_model_id: string | null;
 }
 
+const MECHANISM_A_MATCH_BASIS =
+  "release-build crosswalk (name/alias match or reviewed override in integration_data/crosswalk_overrides.json; exact method is not persisted past release build into the serving projection)";
+
 /**
  * Mechanism A only ever asserts a mapping that exists — a canonical brand or
  * model with a non-null `tdr_*_id`. There is no live-observable "Mechanism A
@@ -41,8 +44,11 @@ export interface MechanismAModelRow {
  * `review` list) are never written to Supabase — they exist only in the
  * release JSON artifact. Rows with a null tdr id are therefore skipped
  * entirely, not turned into an "unmatched" assertion; skip them.
+ *
+ * Every Mechanism A assertion is, by construction, `resolved` + `derived` —
+ * that is encoded in the return type, not just documented.
  */
-export function assertionsFromMechanismABrands(rows: MechanismABrandRow[]): ExternalIdentityAssertion[] {
+export function assertionsFromMechanismABrands(rows: MechanismABrandRow[]): ResolvedAssertion[] {
   return rows
     .filter((row): row is MechanismABrandRow & { tdr_brand_id: string } => Boolean(row.tdr_brand_id))
     .map((row) => ({
@@ -55,8 +61,7 @@ export function assertionsFromMechanismABrands(rows: MechanismABrandRow[]): Exte
       trustLevel: "derived" as const,
       provenance: {
         mechanism: "mechanism_a_release_crosswalk" as const,
-        matchBasis:
-          "release-build crosswalk (name/alias match or reviewed override in integration_data/crosswalk_overrides.json; exact method is not persisted past release build into the serving projection)",
+        matchBasis: MECHANISM_A_MATCH_BASIS,
         verifiedBy: null,
         verifiedAt: null,
         notes: null,
@@ -64,7 +69,7 @@ export function assertionsFromMechanismABrands(rows: MechanismABrandRow[]): Exte
     }));
 }
 
-export function assertionsFromMechanismAModels(rows: MechanismAModelRow[]): ExternalIdentityAssertion[] {
+export function assertionsFromMechanismAModels(rows: MechanismAModelRow[]): ResolvedAssertion[] {
   return rows
     .filter((row): row is MechanismAModelRow & { tdr_model_id: string } => Boolean(row.tdr_model_id))
     .map((row) => ({
@@ -77,8 +82,7 @@ export function assertionsFromMechanismAModels(rows: MechanismAModelRow[]): Exte
       trustLevel: "derived" as const,
       provenance: {
         mechanism: "mechanism_a_release_crosswalk" as const,
-        matchBasis:
-          "release-build crosswalk (name/alias match or reviewed override in integration_data/crosswalk_overrides.json; exact method is not persisted past release build into the serving projection)",
+        matchBasis: MECHANISM_A_MATCH_BASIS,
         verifiedBy: null,
         verifiedAt: null,
         notes: null,
@@ -120,30 +124,28 @@ export const SOURCE_TABLE_TO_EXTERNAL_ENTITY_TYPE: Record<MechanismBSourceTable,
   trims: "trim",
 };
 
-function mappingStateForStatus(status: MechanismBStatus): MappingState {
-  switch (status) {
-    case "verified":
-      return "resolved";
-    case "ambiguous":
-      return "ambiguous";
-    case "retired":
-      return "retired";
-    case "unmatched":
-    default:
-      // Any status this contract does not recognize is treated as
-      // "unmatched" rather than silently promoted to "resolved" — an
-      // unrecognized status must never read as a resolved mapping.
-      return "unmatched";
-  }
-}
+/**
+ * Raised when a Mechanism B row cannot become a valid assertion under this
+ * contract's invariant. Fail-closed and visible: the caller must handle
+ * this explicitly (see `assertionsFromMechanismBRows`, which never lets one
+ * bad row silently vanish or get misclassified) rather than the adapter
+ * quietly manufacturing an ID or downgrading the row to `unmatched`.
+ */
+export class InvalidMechanismBRowError extends Error {
+  readonly row: MechanismBRow;
+  readonly reason: "verified_with_null_canonical_id";
 
-function trustLevelForStatus(status: MechanismBStatus): TrustLevel {
-  // Only an explicit 'verified' status carries verified trust. Every other
-  // status — including any future status this contract does not yet know
-  // about — carries none. This is the write-authority gate's own rule
-  // (lib/canonical-write-shadow.ts checks status === 'verified' exactly),
-  // mirrored here rather than reinterpreted.
-  return status === "verified" ? "verified" : "none";
+  constructor(row: MechanismBRow) {
+    super(
+      `mechanism B: a 'verified' row must have a non-null canonical_id ` +
+        `(source_table=${row.source_table}, source_id=${row.source_id}, ` +
+        `canonical_entity_type=${row.canonical_entity_type}). This is an invalid source row — ` +
+        `refusing to manufacture an id or silently downgrade it to unmatched.`,
+    );
+    this.name = "InvalidMechanismBRowError";
+    this.row = row;
+    this.reason = "verified_with_null_canonical_id";
+  }
 }
 
 function describeMatchBasis(matchBasis: unknown): string | null {
@@ -157,35 +159,118 @@ function describeMatchBasis(matchBasis: unknown): string | null {
   }
 }
 
+/**
+ * Convert one Mechanism B row into an assertion. Throws
+ * `InvalidMechanismBRowError` for a `verified` row with a null
+ * `canonical_id` — that combination cannot exist per
+ * `canonical_object_map`'s own check constraint
+ * (`(status = 'verified' and canonical_id is not null ...) or status <> 'verified'`
+ * in `supabase/migration_v12_canonical_write_pipeline.sql`), so encountering
+ * it live would mean the constraint was bypassed or the row is otherwise
+ * corrupt; this adapter must not paper over that.
+ */
 export function assertionFromMechanismBRow(row: MechanismBRow): ExternalIdentityAssertion {
   const externalEntityType = SOURCE_TABLE_TO_EXTERNAL_ENTITY_TYPE[row.source_table];
   if (!externalEntityType) {
     throw new Error(`mechanism B: unrecognized source_table "${row.source_table}"`);
   }
-  const mappingState = mappingStateForStatus(row.status);
-  const trustLevel = trustLevelForStatus(row.status);
-  return {
+
+  const provenance = {
+    mechanism: "mechanism_b_canonical_object_map" as const,
+    matchBasis: describeMatchBasis(row.match_basis),
+    verifiedBy: row.verified_by ?? null,
+    verifiedAt: row.verified_at ?? null,
+    notes: row.notes ?? null,
+  };
+
+  if (row.status === "verified") {
+    if (row.canonical_id == null) {
+      throw new InvalidMechanismBRowError(row);
+    }
+    const resolved: ResolvedAssertion = {
+      namespace: "legacy_tdr",
+      externalEntityType,
+      externalId: row.source_id,
+      canonicalEntityType: row.canonical_entity_type,
+      mappingState: "resolved",
+      canonicalId: row.canonical_id,
+      trustLevel: "verified",
+      provenance,
+    };
+    return resolved;
+  }
+
+  // ambiguous | retired | unmatched (an unrecognized status also lands here
+  // — see the exhaustive switch below — rather than ever being read as
+  // resolved). canonicalId is passed through as-is: it is contextual/
+  // historical data only (most relevant for `retired`) and never implies a
+  // resolution. See UnresolvedAssertion's doc comment in types.ts.
+  let mappingState: UnresolvedAssertion["mappingState"];
+  switch (row.status) {
+    case "ambiguous":
+      mappingState = "ambiguous";
+      break;
+    case "retired":
+      mappingState = "retired";
+      break;
+    case "unmatched":
+      mappingState = "unmatched";
+      break;
+    default:
+      // Any status this contract does not recognize is treated as
+      // "unmatched" rather than silently promoted to "resolved".
+      mappingState = "unmatched";
+      break;
+  }
+
+  const unresolved: UnresolvedAssertion = {
     namespace: "legacy_tdr",
     externalEntityType,
     externalId: row.source_id,
     canonicalEntityType: row.canonical_entity_type,
-    // Passed through as-is, independent of mappingState/trustLevel above —
-    // an unmatched/ambiguous/retired row is never reinterpreted as
-    // "resolved to null"; its canonicalId is just data, its mappingState
-    // governs classification.
-    canonicalId: row.canonical_id,
     mappingState,
-    trustLevel,
-    provenance: {
-      mechanism: "mechanism_b_canonical_object_map",
-      matchBasis: describeMatchBasis(row.match_basis),
-      verifiedBy: row.verified_by ?? null,
-      verifiedAt: row.verified_at ?? null,
-      notes: row.notes ?? null,
-    },
+    canonicalId: row.canonical_id,
+    trustLevel: "none",
+    provenance,
   };
+  return unresolved;
 }
 
-export function assertionsFromMechanismBRows(rows: MechanismBRow[]): ExternalIdentityAssertion[] {
-  return rows.map(assertionFromMechanismBRow);
+export interface InvalidMechanismBRow {
+  reason: "verified_with_null_canonical_id";
+  row: MechanismBRow;
+}
+
+export interface MechanismBAdapterResult {
+  assertions: ExternalIdentityAssertion[];
+  /**
+   * Rows that could not become an assertion at all — fail-closed and
+   * visible. Never silently dropped, never turned into an `unmatched`
+   * assertion, never allowed to abort the whole batch (one bad row must not
+   * hide every other row's result from an audit report).
+   */
+  invalidRows: InvalidMechanismBRow[];
+}
+
+/**
+ * Batch conversion. Unlike a plain `rows.map(assertionFromMechanismBRow)`,
+ * this never lets one invalid row (see `InvalidMechanismBRowError`) abort
+ * the whole read — it is routed to `invalidRows` instead, deterministically,
+ * in input order, and every other row is still converted normally.
+ */
+export function assertionsFromMechanismBRows(rows: MechanismBRow[]): MechanismBAdapterResult {
+  const assertions: ExternalIdentityAssertion[] = [];
+  const invalidRows: InvalidMechanismBRow[] = [];
+  for (const row of rows) {
+    try {
+      assertions.push(assertionFromMechanismBRow(row));
+    } catch (error) {
+      if (error instanceof InvalidMechanismBRowError) {
+        invalidRows.push({ reason: error.reason, row: error.row });
+        continue;
+      }
+      throw error;
+    }
+  }
+  return { assertions, invalidRows };
 }

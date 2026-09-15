@@ -37,8 +37,9 @@ export type CanonicalEntityType = "brand" | "model" | "generation" | "variant" |
 /**
  * The semantic state of a mapping attempt, independent of how much anyone
  * trusts it. `resolved` means "this mechanism landed on one specific
- * canonical entity" — it says nothing about whether that landing was derived
- * or verified; see `TrustLevel` for that axis.
+ * canonical entity." `unmatched` / `ambiguous` / `retired` all mean "no
+ * active resolution" — see the invariant on `ExternalIdentityAssertion`
+ * below for exactly how that interacts with `canonicalId`.
  */
 export type MappingState = "resolved" | "unmatched" | "ambiguous" | "retired";
 
@@ -47,8 +48,8 @@ export type MappingState = "resolved" | "unmatched" | "ambiguous" | "retired";
  * `derived` = produced by deterministic matching/aliasing/overrides, never
  * itself sufficient to unlock a write-sensitive operation. `verified` =
  * an explicit human/evidence action recorded the mapping as authoritative.
- * `none` = no assertion of identity was reached (unmatched/ambiguous/
- * retired all carry `none`).
+ * `none` = no active resolution exists (every `unmatched`/`ambiguous`/
+ * `retired` assertion carries `none` — see `UnresolvedAssertion` below).
  *
  * A `derived` assertion must never be silently promoted to `verified` by
  * this contract or by anything that consumes it — including agreeing with a
@@ -78,21 +79,65 @@ export interface Provenance {
   notes?: string | null;
 }
 
-/**
- * One mechanism's claim about how one external identity relates to one
- * canonical entity type. This is the atomic unit the audit engine compares.
- */
-export interface ExternalIdentityAssertion {
+interface AssertionCommon {
   namespace: ExternalNamespace;
   externalEntityType: ExternalEntityType;
   externalId: string;
   canonicalEntityType: CanonicalEntityType;
-  /** Null exactly when mappingState is not "resolved". */
-  canonicalId: string | null;
-  mappingState: MappingState;
-  trustLevel: TrustLevel;
   provenance: Provenance;
 }
+
+/**
+ * An active resolution: this mechanism landed on one specific canonical
+ * entity. `canonicalId` is therefore always a real, non-null string, and
+ * trust is either `derived` (Mechanism A today) or `verified` (Mechanism B's
+ * `status = 'verified'` today) — never `none`.
+ */
+export interface ResolvedAssertion extends AssertionCommon {
+  mappingState: "resolved";
+  canonicalId: string;
+  trustLevel: "derived" | "verified";
+}
+
+/**
+ * No active resolution. `canonicalId` may still be present as **contextual/
+ * historical data only** — most commonly on a `retired` Mechanism B row that
+ * remembers what it used to point at, but the type does not forbid it on
+ * `unmatched`/`ambiguous` either, since `canonical_object_map.canonical_id`
+ * is nullable independent of `status` at the database level and this
+ * contract must not assume more than the schema guarantees.
+ *
+ * That contextual ID must never be read as an active resolution: it does
+ * not make the assertion `resolved`, does not raise `trustLevel` above
+ * `none`, and — critically — must never participate in agreement/
+ * disagreement comparison as if it were a live answer. See
+ * `auditAssertions` in audit.ts: classification for an `unmatched` /
+ * `ambiguous` / `retired` assertion is driven entirely by `mappingState`,
+ * never by whether `canonicalId` happens to be non-null.
+ */
+export interface UnresolvedAssertion extends AssertionCommon {
+  mappingState: "unmatched" | "ambiguous" | "retired";
+  canonicalId: string | null;
+  trustLevel: "none";
+}
+
+/**
+ * One mechanism's claim about how one external identity relates to one
+ * canonical entity type. This is the atomic unit the audit engine compares.
+ *
+ * The invariant this discriminated union encodes:
+ *   mappingState === "resolved"  =>  canonicalId is non-null, trustLevel is "derived" | "verified"
+ *   mappingState !== "resolved"  =>  trustLevel is "none", canonicalId may be null OR a retained
+ *                                     contextual value that must never be treated as a resolution
+ *
+ * A loose `{ canonicalId: string | null; mappingState; trustLevel }` shape
+ * previously documented "canonicalId is null exactly when mappingState is
+ * not resolved" — that was wrong for `canonical_object_map`, where a
+ * `retired` row may legitimately keep the canonical_id it used to resolve
+ * to. This union makes the actually-correct invariant impossible to violate
+ * by construction rather than by convention.
+ */
+export type ExternalIdentityAssertion = ResolvedAssertion | UnresolvedAssertion;
 
 /**
  * The comparability rule (task requirement §5): two assertions may only be
@@ -102,14 +147,14 @@ export interface ExternalIdentityAssertion {
  * that tuple, joined deterministically for grouping/sorting.
  */
 export function comparabilityKey(
-  a: Pick<ExternalIdentityAssertion, "namespace" | "externalEntityType" | "externalId" | "canonicalEntityType">,
+  a: Pick<AssertionCommon, "namespace" | "externalEntityType" | "externalId" | "canonicalEntityType">,
 ): string {
   return `${a.namespace}::${a.externalEntityType}::${a.externalId}::${a.canonicalEntityType}`;
 }
 
 /** Groups assertions by external identity alone (namespace+entityType+id), ignoring canonical entity type. */
 export function externalIdentityKey(
-  a: Pick<ExternalIdentityAssertion, "namespace" | "externalEntityType" | "externalId">,
+  a: Pick<AssertionCommon, "namespace" | "externalEntityType" | "externalId">,
 ): string {
   return `${a.namespace}::${a.externalEntityType}::${a.externalId}`;
 }

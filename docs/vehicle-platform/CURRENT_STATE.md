@@ -368,7 +368,7 @@ it look more like Mechanism A. They currently have no shared contract. This dist
 competing crosswalks racing to the same answer," is the actual problem Phase 1 needs to address —
 see `MIGRATION_PLAN.md`'s Phase 1 section for the corrected problem statement.
 
-**As of Phase 1A (2026-09-16)**, "no shared contract" is narrowed to "no shared *persistence*."
+**As of Phase 1A (2026-09-15)**, "no shared contract" is narrowed to "no shared *persistence*."
 `docs/vehicle-platform/EXTERNAL_IDENTITY_CONTRACT.md` now defines a read-only vocabulary both
 mechanisms' rows can be converted into for comparison, implemented in `lib/external-identity/`
 and runnable live via `node --experimental-strip-types scripts/audit-external-identity.ts`

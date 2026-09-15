@@ -47,7 +47,11 @@ export interface AuditFinding {
   externalId: string;
   canonicalEntityType: CanonicalEntityType;
   classification: AuditClassification;
-  /** Every assertion found in this comparability group, sorted by mechanism id. Never mutated. */
+  /**
+   * At most one assertion per mechanism (a group with more than one from the
+   * same mechanism never becomes a finding — see `AuditAnomaly`). Never
+   * mutated.
+   */
   assertions: ExternalIdentityAssertion[];
   /**
    * Other canonical entity types asserted (by either mechanism) for this
@@ -59,9 +63,31 @@ export interface AuditFinding {
   otherCanonicalEntityTypesForSameExternalId: CanonicalEntityType[];
 }
 
+export type AuditAnomalyType = "duplicate_mechanism_assertions";
+
+/**
+ * Something the audit engine refuses to silently resolve. Today the only
+ * anomaly type is more than one assertion from the *same* mechanism landing
+ * under one comparability key — both mechanisms are expected to produce at
+ * most one assertion per key (Mechanism A by construction in
+ * `tdr_bridge/release.py`; Mechanism B by `canonical_object_map`'s
+ * `unique (source_table, source_id, canonical_entity_type)` index), so this
+ * should never happen live. If it ever does, the whole comparability group
+ * is excluded from `findings` (never arbitrarily reduced to one row and
+ * classified as if nothing were wrong) and reported here instead.
+ */
+export interface AuditAnomaly {
+  type: AuditAnomalyType;
+  comparabilityKey: string;
+  mechanism: MechanismId;
+  /** Every duplicate assertion for this mechanism in this group, deterministically ordered. Never mutated. */
+  assertions: ExternalIdentityAssertion[];
+}
+
 export interface AuditSummary {
   totalFindings: number;
   totalAssertions: number;
+  totalAnomalies: number;
   byClassification: Record<AuditClassification, number>;
   /** External identities whose assertions span more than one canonical entity type. */
   externalIdentitiesWithMultipleCanonicalEntityTypes: number;
@@ -69,22 +95,46 @@ export interface AuditSummary {
 
 export interface AuditReport {
   findings: AuditFinding[];
+  anomalies: AuditAnomaly[];
   summary: AuditSummary;
 }
 
-function byMechanism(
-  assertions: ExternalIdentityAssertion[],
-  mechanism: MechanismId,
-): ExternalIdentityAssertion | undefined {
-  // Both mechanisms are constrained (Mechanism A by construction in
-  // tdr_bridge/release.py; Mechanism B by canonical_object_map's unique
-  // (source_table, source_id, canonical_entity_type) index) to produce at
-  // most one assertion per comparability key. If that is ever violated —
-  // a data anomaly, not an expected state — take the first in sorted order
-  // rather than throwing, so a read-only audit never crashes on bad data.
-  return assertions
-    .filter((a) => a.provenance.mechanism === mechanism)
-    .sort((a, b) => compareKeys(a.canonicalId ?? "", b.canonicalId ?? ""))[0];
+function compareKeys(x: string, y: string): number {
+  return x < y ? -1 : x > y ? 1 : 0;
+}
+
+/**
+ * A total, deterministic order over assertions that does not depend on
+ * insertion order — used both to order a finding's/anomaly's `assertions`
+ * array and (for anomalies) to decide nothing about "which one wins," only
+ * how to print them reproducibly.
+ */
+function compareAssertions(x: ExternalIdentityAssertion, y: ExternalIdentityAssertion): number {
+  return (
+    compareKeys(x.canonicalId ?? "", y.canonicalId ?? "")
+    || compareKeys(x.mappingState, y.mappingState)
+    || compareKeys(JSON.stringify(x.provenance), JSON.stringify(y.provenance))
+  );
+}
+
+const MECHANISM_ORDER: Record<MechanismId, number> = {
+  mechanism_a_release_crosswalk: 0,
+  mechanism_b_canonical_object_map: 1,
+};
+
+const MECHANISM_IDS: readonly MechanismId[] = [
+  "mechanism_a_release_crosswalk",
+  "mechanism_b_canonical_object_map",
+];
+
+function groupByMechanism(assertions: ExternalIdentityAssertion[]): Map<MechanismId, ExternalIdentityAssertion[]> {
+  const map = new Map<MechanismId, ExternalIdentityAssertion[]>();
+  for (const assertion of assertions) {
+    const list = map.get(assertion.provenance.mechanism);
+    if (list) list.push(assertion);
+    else map.set(assertion.provenance.mechanism, [assertion]);
+  }
+  return map;
 }
 
 function classify(
@@ -95,36 +145,34 @@ function classify(
   // whether or not Mechanism A also has an opinion — losing that signal by
   // folding it into a generic "derived_only" bucket would hide exactly the
   // information Phase 1A exists to surface (see EXTERNAL_IDENTITY_CONTRACT.md).
+  // Classification is driven entirely by mappingState/trustLevel, never by
+  // whether a non-resolved assertion happens to carry a contextual
+  // canonicalId (see UnresolvedAssertion in types.ts).
   if (b?.mappingState === "ambiguous") return "mechanism_b_ambiguous";
   if (b?.mappingState === "retired") return "mechanism_b_retired";
   if (b?.mappingState === "unmatched") return "mechanism_b_unmatched";
 
-  if (a && b && b.trustLevel === "verified") {
+  if (a && b && b.mappingState === "resolved" && b.trustLevel === "verified") {
     return a.canonicalId === b.canonicalId ? "exact_agreement" : "disagreement";
   }
   if (a && !b) return "derived_only";
-  if (!a && b && b.trustLevel === "verified") return "verified_only";
+  if (!a && b && b.mappingState === "resolved" && b.trustLevel === "verified") return "verified_only";
 
-  // a is present, b is present but neither verified/unmatched/ambiguous/
-  // retired (a mechanism-B mapping_state this contract does not yet know
-  // about) — conservatively treat as "no verified counterpart" rather than
-  // guessing at agreement.
+  // a is present, b is present but not resolved/ambiguous/retired/unmatched
+  // (a mechanism-B mapping_state this contract does not yet know about) —
+  // conservatively treat as "no verified counterpart" rather than guessing.
   return "derived_only";
-}
-
-const MECHANISM_ORDER: Record<MechanismId, number> = {
-  mechanism_a_release_crosswalk: 0,
-  mechanism_b_canonical_object_map: 1,
-};
-
-function compareKeys(x: string, y: string): number {
-  return x < y ? -1 : x > y ? 1 : 0;
 }
 
 /**
  * Classify a flat list of assertions. Deterministic: output ordering depends
  * only on assertion content (comparability key, then mechanism id), never on
- * input array order — shuffling the input yields identical `findings` order.
+ * input array order — shuffling the input yields identical `findings` and
+ * `anomalies` order.
+ *
+ * A comparability group with more than one assertion from the same
+ * mechanism is never classified as a normal finding — see `AuditAnomaly`.
+ * No row is ever silently picked as "the" mechanism's answer.
  */
 export function auditAssertions(assertions: ExternalIdentityAssertion[]): AuditReport {
   const groups = new Map<string, ExternalIdentityAssertion[]>();
@@ -143,10 +191,32 @@ export function auditAssertions(assertions: ExternalIdentityAssertion[]): AuditR
   }
 
   const findings: AuditFinding[] = [];
+  const anomalies: AuditAnomaly[] = [];
+
   for (const [key, groupAssertions] of groups) {
+    const byMechanism = groupByMechanism(groupAssertions);
+
+    const duplicateMechanisms = MECHANISM_IDS.filter((m) => (byMechanism.get(m)?.length ?? 0) > 1);
+    if (duplicateMechanisms.length > 0) {
+      for (const mechanism of duplicateMechanisms) {
+        anomalies.push({
+          type: "duplicate_mechanism_assertions",
+          comparabilityKey: key,
+          mechanism,
+          assertions: [...(byMechanism.get(mechanism) ?? [])].sort(compareAssertions),
+        });
+      }
+      // The whole group is excluded from normal findings: with more than one
+      // assertion from one mechanism, there is no single "this mechanism's
+      // answer" to classify against the other mechanism, and picking one
+      // arbitrarily to produce a exact_agreement/disagreement verdict would
+      // be exactly the silent selection this anomaly exists to prevent.
+      continue;
+    }
+
     const sample = groupAssertions[0];
-    const a = byMechanism(groupAssertions, "mechanism_a_release_crosswalk");
-    const b = byMechanism(groupAssertions, "mechanism_b_canonical_object_map");
+    const a = byMechanism.get("mechanism_a_release_crosswalk")?.[0];
+    const b = byMechanism.get("mechanism_b_canonical_object_map")?.[0];
     const idKey = externalIdentityKey(sample);
     const allTypesForId = entityTypesByExternalId.get(idKey) ?? new Set<CanonicalEntityType>();
     const otherTypes = [...allTypesForId]
@@ -168,6 +238,9 @@ export function auditAssertions(assertions: ExternalIdentityAssertion[]): AuditR
   }
 
   findings.sort((x, y) => compareKeys(x.comparabilityKey, y.comparabilityKey));
+  anomalies.sort(
+    (x, y) => compareKeys(x.comparabilityKey, y.comparabilityKey) || compareKeys(x.mechanism, y.mechanism),
+  );
 
   const byClassification = Object.fromEntries(
     AUDIT_CLASSIFICATIONS.map((c) => [c, 0]),
@@ -180,9 +253,11 @@ export function auditAssertions(assertions: ExternalIdentityAssertion[]): AuditR
 
   return {
     findings,
+    anomalies,
     summary: {
       totalFindings: findings.length,
       totalAssertions: assertions.length,
+      totalAnomalies: anomalies.length,
       byClassification,
       externalIdentitiesWithMultipleCanonicalEntityTypes,
     },

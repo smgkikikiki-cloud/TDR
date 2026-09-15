@@ -3,6 +3,7 @@ import {
   type AuditClassification,
 } from "../lib/external-identity/audit.ts";
 import {
+  InvalidMechanismBRowError,
   assertionFromMechanismBRow,
   assertionsFromMechanismABrands,
   assertionsFromMechanismAModels,
@@ -40,10 +41,15 @@ function classificationCounts(report: ReturnType<typeof auditAssertions>) {
 }
 
 // ---------------------------------------------------------------------------
-// Mechanism adapters — source_table normalization and derived/skip rules
+// Mechanism adapters — source_table normalization, and the corrected
+// canonicalId / mappingState invariant:
+//   mappingState === "resolved"  => canonicalId non-null, trust derived|verified
+//   mappingState !== "resolved"  => trust "none", canonicalId may be null OR a
+//                                    retained contextual value that must never
+//                                    imply a resolution.
 // ---------------------------------------------------------------------------
 
-console.log("mechanism adapters — normalization and skip rules");
+console.log("mechanism adapters — normalization and the corrected mapping-state invariant");
 
 check(
   "source_table normalizes to singular external entity types",
@@ -59,21 +65,116 @@ check("mechanism A skips rows with no tdr id instead of asserting unmatched", sk
 ok("mechanism A never emits mappingState other than resolved", skippedNullBrand.every((a) => a.mappingState === "resolved"));
 ok("mechanism A assertions are always trustLevel derived", skippedNullBrand.every((a) => a.trustLevel === "derived"));
 
-const unmatchedBRow: MechanismBRow = {
-  source_table: "models",
-  source_id: "legacy-model-1",
-  canonical_entity_type: "model",
-  canonical_id: null,
-  status: "unmatched",
-};
-const unmatchedAssertion = assertionFromMechanismBRow(unmatchedBRow);
-check("unmatched mechanism B row maps to mappingState unmatched", unmatchedAssertion.mappingState, "unmatched");
-ok("unmatched mechanism B row must NOT be treated as verified", unmatchedAssertion.trustLevel !== "verified");
-check("unmatched mechanism B row trustLevel is none", unmatchedAssertion.trustLevel, "none");
+{
+  // Unmatched never becomes resolved solely because a canonical ID happens
+  // to be present — the type allows canonicalId on an UnresolvedAssertion,
+  // but classification/trust must never react to it.
+  const unmatchedWithContextualId = assertionFromMechanismBRow({
+    source_table: "models",
+    source_id: "legacy-model-unmatched-with-id",
+    canonical_entity_type: "model",
+    canonical_id: "some-canonical-id-left-over-from-a-prior-candidate",
+    status: "unmatched",
+  });
+  check("unmatched with a non-null contextual canonical id stays mappingState unmatched", unmatchedWithContextualId.mappingState, "unmatched");
+  check("unmatched with a non-null contextual canonical id stays trustLevel none", unmatchedWithContextualId.trustLevel, "none");
+
+  const unmatchedNoId = assertionFromMechanismBRow({
+    source_table: "models",
+    source_id: "legacy-model-unmatched-no-id",
+    canonical_entity_type: "model",
+    canonical_id: null,
+    status: "unmatched",
+  });
+  check("unmatched with no canonical id also stays mappingState unmatched", unmatchedNoId.mappingState, "unmatched");
+  ok("unmatched row must NOT be treated as verified", unmatchedNoId.trustLevel !== "verified");
+}
+
+{
+  // Ambiguous with a non-null contextual canonical ID remains ambiguous +
+  // trust none — no winner is ever inferred from the leftover value.
+  const ambiguousWithContextualId = assertionFromMechanismBRow({
+    source_table: "models",
+    source_id: "legacy-model-ambiguous-with-id",
+    canonical_entity_type: "model",
+    canonical_id: "one-of-the-ambiguous-candidates",
+    status: "ambiguous",
+  });
+  check("ambiguous with a non-null contextual canonical id stays mappingState ambiguous", ambiguousWithContextualId.mappingState, "ambiguous");
+  check("ambiguous with a non-null contextual canonical id stays trustLevel none", ambiguousWithContextualId.trustLevel, "none");
+}
+
+{
+  // Retired with a non-null canonical ID is the central case the contract
+  // fix exists for: canonical_object_map legitimately keeps the id a
+  // retired row used to resolve to, purely as historical/contextual data.
+  const retiredWithContextualId = assertionFromMechanismBRow({
+    source_table: "models",
+    source_id: "legacy-model-retired-with-id",
+    canonical_entity_type: "model",
+    canonical_id: "byd.byd_seal",
+    status: "retired",
+    notes: "superseded by a later verified mapping under a different canonical id",
+  });
+  check("retired with a non-null canonical id stays mappingState retired", retiredWithContextualId.mappingState, "retired");
+  check("retired with a non-null canonical id stays trustLevel none", retiredWithContextualId.trustLevel, "none");
+  check("retired assertion still carries the contextual canonical id as data", retiredWithContextualId.canonicalId, "byd.byd_seal");
+}
+
+{
+  // A Mechanism-B 'verified' row with a null canonical_id is an invalid
+  // source row (violates canonical_object_map's own check constraint).
+  // Fail-closed: throw, never manufacture an id, never silently degrade to
+  // unmatched.
+  const invalidVerifiedRow: MechanismBRow = {
+    source_table: "models",
+    source_id: "legacy-model-invalid-verified",
+    canonical_entity_type: "model",
+    canonical_id: null,
+    status: "verified",
+    verified_by: "reviewer@example.com",
+    verified_at: "2026-09-08T00:00:00Z",
+  };
+  let threwInvalid = false;
+  let threwCorrectType = false;
+  try {
+    assertionFromMechanismBRow(invalidVerifiedRow);
+  } catch (error) {
+    threwInvalid = true;
+    threwCorrectType = error instanceof InvalidMechanismBRowError;
+  }
+  ok("a verified row with a null canonical id throws rather than producing a resolved assertion", threwInvalid);
+  ok("the thrown error is specifically InvalidMechanismBRowError", threwCorrectType);
+
+  // The batch adapter must not let one invalid row abort every other row's
+  // result, and must never silently drop the invalid row either.
+  const validRow: MechanismBRow = {
+    source_table: "models",
+    source_id: "legacy-model-valid-alongside-invalid",
+    canonical_entity_type: "model",
+    canonical_id: "toyota.corolla_cross",
+    status: "verified",
+    verified_by: "reviewer@example.com",
+    verified_at: "2026-09-08T00:00:00Z",
+  };
+  const batch = assertionsFromMechanismBRows([invalidVerifiedRow, validRow]);
+  check("the invalid row is routed to invalidRows, not silently dropped", batch.invalidRows.length, 1);
+  check("the invalid row's reason is recorded", batch.invalidRows[0]?.reason, "verified_with_null_canonical_id");
+  check("the invalid row itself is preserved verbatim", batch.invalidRows[0]?.row, invalidVerifiedRow);
+  check("the invalid row never becomes an assertion", batch.assertions.length, 1);
+  check("the other, valid row in the same batch still converts normally", batch.assertions[0]?.externalId, "legacy-model-valid-alongside-invalid");
+  check("the valid row's assertion is resolved", batch.assertions[0]?.mappingState, "resolved");
+}
 
 let threw = false;
 try {
-  assertionFromMechanismBRow({ ...unmatchedBRow, source_table: "unknown_table" as never });
+  assertionFromMechanismBRow({
+    source_table: "unknown_table" as never,
+    source_id: "x",
+    canonical_entity_type: "model",
+    canonical_id: null,
+    status: "unmatched",
+  });
 } catch {
   threw = true;
 }
@@ -81,8 +182,7 @@ ok("unrecognized source_table throws rather than guessing a normalization", thre
 
 // ---------------------------------------------------------------------------
 // Audit classification — one scenario per required case, built from
-// synthetic fixtures only. The 2026-09-15 dated baseline counts are never
-// referenced here.
+// synthetic fixtures only. No dated live baseline counts are referenced here.
 // ---------------------------------------------------------------------------
 
 console.log("\naudit classification — comparability and trust semantics");
@@ -104,6 +204,7 @@ console.log("\naudit classification — comparability and trust semantics");
   const key = comparabilityKey(a);
   check("exact agreement classification", findingFor(report, key)?.classification, "exact_agreement");
   check("exact agreement finding carries both assertions", findingFor(report, key)?.assertions.length, 2);
+  check("exact agreement produces no anomalies", report.anomalies.length, 0);
 }
 
 {
@@ -274,7 +375,124 @@ console.log("\naudit classification — comparability and trust semantics");
 }
 
 // ---------------------------------------------------------------------------
-// Deterministic output
+// Duplicate-mechanism-assertion anomalies — a comparability group must never
+// silently pick a "first row" winner when the same mechanism asserts more
+// than once under one key.
+// ---------------------------------------------------------------------------
+
+console.log("\nduplicate mechanism assertions — surfaced as anomalies, never silently selected");
+
+{
+  // Duplicate Mechanism A, same target: two rows that happen to agree.
+  // Agreement does not excuse the duplication from being reported.
+  const sameExternalId = "legacy-model-dup-a-same-target";
+  const duplicateSameTarget: ExternalIdentityAssertion[] = [
+    ...assertionsFromMechanismAModels([{ canonical_id: "toyota.yaris_ativ", tdr_model_id: sameExternalId }]),
+    ...assertionsFromMechanismAModels([{ canonical_id: "toyota.yaris_ativ", tdr_model_id: sameExternalId }]),
+  ];
+  const report = auditAssertions(duplicateSameTarget);
+  const key = comparabilityKey(duplicateSameTarget[0]);
+  ok("duplicate mechanism-A group (same target) produces no finding", findingFor(report, key) === undefined);
+  check("duplicate mechanism-A group (same target) produces exactly one anomaly", report.anomalies.length, 1);
+  check("the anomaly names mechanism A", report.anomalies[0]?.mechanism, "mechanism_a_release_crosswalk");
+  check("the anomaly type is duplicate_mechanism_assertions", report.anomalies[0]?.type, "duplicate_mechanism_assertions");
+  check("the anomaly preserves both duplicate rows", report.anomalies[0]?.assertions.length, 2);
+  check("summary counts the anomaly", report.summary.totalAnomalies, 1);
+}
+
+{
+  // Duplicate Mechanism A, conflicting targets: two rows for the same
+  // external id that disagree about the canonical id. Still an anomaly, not
+  // a "disagreement" classification, and neither is picked as the answer.
+  const sameExternalId = "legacy-model-dup-a-conflicting-targets";
+  const duplicateConflicting: ExternalIdentityAssertion[] = [
+    ...assertionsFromMechanismAModels([{ canonical_id: "toyota.yaris_ativ", tdr_model_id: sameExternalId }]),
+    ...assertionsFromMechanismAModels([{ canonical_id: "toyota.corolla_cross", tdr_model_id: sameExternalId }]),
+  ];
+  const report = auditAssertions(duplicateConflicting);
+  const key = comparabilityKey(duplicateConflicting[0]);
+  ok("duplicate mechanism-A group (conflicting targets) produces no finding", findingFor(report, key) === undefined);
+  ok(
+    "duplicate mechanism-A group (conflicting targets) is never classified as a disagreement",
+    !report.findings.some((f) => f.comparabilityKey === key),
+  );
+  check("duplicate mechanism-A group (conflicting targets) produces exactly one anomaly", report.anomalies.length, 1);
+  const conflictingIds = report.anomalies[0]?.assertions.map((a) => a.canonicalId).sort();
+  check("the anomaly preserves both conflicting canonical ids, neither dropped", conflictingIds, ["toyota.corolla_cross", "toyota.yaris_ativ"]);
+}
+
+{
+  // Duplicate Mechanism B despite the live database uniqueness constraint:
+  // the audit engine must not assume the constraint holds and must not
+  // crash or silently collapse the duplicate if it is ever violated.
+  const sameExternalId = "legacy-model-dup-b";
+  const duplicateB: MechanismBRow[] = [
+    {
+      source_table: "models", source_id: sameExternalId, canonical_entity_type: "model",
+      canonical_id: "mg.mg4", status: "verified", verified_by: "reviewer-one@example.com", verified_at: "2026-09-08T00:00:00Z",
+    },
+    {
+      source_table: "models", source_id: sameExternalId, canonical_entity_type: "model",
+      canonical_id: "mg.mg5", status: "verified", verified_by: "reviewer-two@example.com", verified_at: "2026-09-09T00:00:00Z",
+    },
+  ];
+  const { assertions: bAssertions } = assertionsFromMechanismBRows(duplicateB);
+  const report = auditAssertions(bAssertions);
+  const key = comparabilityKey(bAssertions[0]);
+  ok("duplicate mechanism-B group produces no finding", findingFor(report, key) === undefined);
+  check("duplicate mechanism-B group produces exactly one anomaly", report.anomalies.length, 1);
+  check("the anomaly names mechanism B", report.anomalies[0]?.mechanism, "mechanism_b_canonical_object_map");
+  check("the anomaly preserves both duplicate mechanism-B rows", report.anomalies[0]?.assertions.length, 2);
+}
+
+{
+  // Both mechanisms duplicated in the same group at once.
+  const sameExternalId = "legacy-model-dup-both";
+  const assertions: ExternalIdentityAssertion[] = [
+    ...assertionsFromMechanismAModels([{ canonical_id: "gwm.haval_h6", tdr_model_id: sameExternalId }]),
+    ...assertionsFromMechanismAModels([{ canonical_id: "gwm.haval_jolion", tdr_model_id: sameExternalId }]),
+    assertionFromMechanismBRow({
+      source_table: "models", source_id: sameExternalId, canonical_entity_type: "model",
+      canonical_id: "gwm.haval_h6", status: "verified", verified_by: "r1", verified_at: "2026-09-08T00:00:00Z",
+    }),
+    assertionFromMechanismBRow({
+      source_table: "models", source_id: sameExternalId, canonical_entity_type: "model",
+      canonical_id: "gwm.haval_jolion", status: "verified", verified_by: "r2", verified_at: "2026-09-09T00:00:00Z",
+    }),
+  ];
+  const report = auditAssertions(assertions);
+  check("both mechanisms duplicated produces two anomalies, one per mechanism", report.anomalies.length, 2);
+  check(
+    "anomaly mechanisms are exactly mechanism A and mechanism B",
+    report.anomalies.map((a) => a.mechanism).sort(),
+    ["mechanism_a_release_crosswalk", "mechanism_b_canonical_object_map"],
+  );
+  check("the whole group is excluded from findings when both mechanisms are duplicated", report.findings.length, 0);
+}
+
+{
+  // Deterministic anomaly ordering: shuffling the input must not change the
+  // order anomalies are reported in.
+  const idOne = "legacy-model-dup-order-1";
+  const idTwo = "legacy-model-dup-order-2";
+  const build = (): ExternalIdentityAssertion[] => [
+    ...assertionsFromMechanismAModels([{ canonical_id: "a.one", tdr_model_id: idTwo }]),
+    ...assertionsFromMechanismAModels([{ canonical_id: "a.two", tdr_model_id: idTwo }]),
+    ...assertionsFromMechanismAModels([{ canonical_id: "b.one", tdr_model_id: idOne }]),
+    ...assertionsFromMechanismAModels([{ canonical_id: "b.two", tdr_model_id: idOne }]),
+  ];
+  const inOrder = auditAssertions(build());
+  const shuffled = auditAssertions([...build()].reverse());
+  check(
+    "anomaly order is identical regardless of input order",
+    shuffled.anomalies.map((a) => a.comparabilityKey),
+    inOrder.anomalies.map((a) => a.comparabilityKey),
+  );
+  check("anomaly contents are identical regardless of input order", shuffled.anomalies, inOrder.anomalies);
+}
+
+// ---------------------------------------------------------------------------
+// Deterministic output (findings + summary + anomalies)
 // ---------------------------------------------------------------------------
 
 console.log("\ndeterministic output — order-independent");
@@ -303,7 +521,7 @@ console.log("\ndeterministic output — order-independent");
   ): ExternalIdentityAssertion[] => [
     ...assertionsFromMechanismABrands(brands),
     ...assertionsFromMechanismAModels(models),
-    ...assertionsFromMechanismBRows(maps),
+    ...assertionsFromMechanismBRows(maps).assertions,
   ];
 
   const inOrder = auditAssertions(buildAssertions(brandRows, [...modelRows], [...mapRows]));
@@ -313,6 +531,7 @@ console.log("\ndeterministic output — order-independent");
 
   check("finding order is identical regardless of input order", shuffled.findings.map((f) => f.comparabilityKey), inOrder.findings.map((f) => f.comparabilityKey));
   check("summary is identical regardless of input order", shuffled.summary, inOrder.summary);
+  check("anomalies are identical (empty) regardless of input order", shuffled.anomalies, inOrder.anomalies);
   check("non-empty classification distribution sanity", classificationCounts(inOrder), {
     exact_agreement: 1,
     // brand-1/brand-2/brand-3 each have a Mechanism A assertion with no

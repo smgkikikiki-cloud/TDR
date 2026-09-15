@@ -40,10 +40,65 @@ none is inferable from another, and the code never infers one from another.
 | External entity type | `ExternalEntityType` | `brand \| model \| model_powertrain \| trim` | Normalized, singular. `canonical_object_map.source_table` uses TDR's raw Supabase table names (`brands`, `models`, `model_powertrains`, `trims`); the normalization table is `SOURCE_TABLE_TO_EXTERNAL_ENTITY_TYPE` in `lib/external-identity/mechanism-adapters.ts`. |
 | External ID | `string` | the legacy UUID | `canonical_object_map.source_id`, or `current_vehicle_{brands,models}.tdr_{brand,model}_id`. |
 | Canonical entity type | `CanonicalEntityType` | `brand \| model \| generation \| variant \| market_trim` | Matches `canonical_object_map.canonical_entity_type`'s existing check constraint exactly — no new values invented. **`variant` is not renamed to `Configuration`** — see "Relationship to the identity graph" below. |
-| Canonical ID | `string \| null` | canonical Vehicle Master slug ID | Null exactly when `mappingState` is not `resolved`. |
+| Canonical ID | `string` on a `resolved` assertion; `string \| null` on an unresolved one | canonical Vehicle Master slug ID | See "The `canonicalId` / mapping-state invariant" below — this is *not* simply "null when unresolved." |
 | Mapping state | `MappingState` | `resolved \| unmatched \| ambiguous \| retired` | The *semantic* state of a mapping attempt — did this mechanism land on one specific canonical entity, or not, and if not, why. Independent of trust level. |
 | Trust level | `TrustLevel` | `derived \| verified \| none` | How much authority the assertion carries. `unmatched`/`ambiguous`/`retired` always carry `none`. A `resolved` mapping is `derived` (Mechanism A today) or `verified` (Mechanism B's `status = 'verified'` today) — nothing else. |
 | Mechanism / provenance | `Provenance` | `{ mechanism, matchBasis?, verifiedBy?, verifiedAt?, notes? }` | Which mechanism produced the assertion, and whatever the source data can actually prove about how. |
+
+### The `canonicalId` / mapping-state invariant (corrected in this hardening pass)
+
+An earlier version of this contract stated "`canonicalId` is null exactly when `mappingState` is
+not `resolved`." **That was wrong**, and incompatible with `canonical_object_map`'s actual
+semantics: a `retired` row may legitimately keep the `canonical_id` it used to resolve to, purely
+as historical/contextual data — the schema does not null it out on retirement, and there is no
+reason it should. `unmatched`/`ambiguous` rows could in principle carry a leftover `canonical_id`
+too (the column is nullable independent of `status`), even though today's live data does not.
+
+The corrected, actually-enforced invariant, encoded as a TypeScript discriminated union in
+`lib/external-identity/types.ts` rather than left to convention:
+
+```ts
+type ExternalIdentityAssertion =
+  | {
+      mappingState: "resolved";
+      canonicalId: string;                    // always non-null
+      trustLevel: "derived" | "verified";      // never "none"
+      // + namespace, externalEntityType, externalId, canonicalEntityType, provenance
+    }
+  | {
+      mappingState: "unmatched" | "ambiguous" | "retired";
+      canonicalId: string | null;              // may be null OR a retained contextual value
+      trustLevel: "none";                      // always "none"
+      // + namespace, externalEntityType, externalId, canonicalEntityType, provenance
+    };
+```
+
+Rules that follow from this, all enforced by the type system (a caller cannot construct a
+`resolved` assertion with a null `canonicalId`, nor an `unmatched`/`ambiguous`/`retired` one with
+`trustLevel` other than `"none"`) rather than merely documented:
+
+- A contextual `canonicalId` on an unresolved assertion **never** makes it `resolved` and **never**
+  raises its `trustLevel` above `none`.
+- A contextual `canonicalId` on an unresolved assertion **never** participates in agreement/
+  disagreement comparison as though it were an active resolution — `auditAssertions()`'s
+  classification is driven entirely by `mappingState`/`trustLevel`, never by whether `canonicalId`
+  happens to be non-null. See `classify()` in `lib/external-identity/audit.ts`.
+- Mechanism A remains exactly `resolved` + `derived` (its adapters return the narrower
+  `ResolvedAssertion` type, not the full union — Mechanism A structurally cannot produce anything
+  else, see "Mechanism A's structural limitation" below).
+- Mechanism B's `status = 'verified'` normalizes to exactly `resolved` + `verified`.
+- **A Mechanism B `verified` row with a null `canonical_id` is invalid source data** —
+  `canonical_object_map`'s own check constraint (`(status = 'verified' and canonical_id is not
+  null and verified_at is not null) or status <> 'verified'`,
+  `supabase/migration_v12_canonical_write_pipeline.sql`) forbids this combination, so encountering
+  it live would mean the constraint was bypassed or the row is otherwise corrupt.
+  `assertionFromMechanismBRow()` throws `InvalidMechanismBRowError` rather than manufacturing an
+  ID or silently downgrading the row to `unmatched`. The batch adapter,
+  `assertionsFromMechanismBRows()`, does not let one such row abort the whole read: it routes the
+  row to a separate `invalidRows` result (fail-closed *and* visible — never dropped, never turned
+  into a misleading assertion, never allowed to hide every other row's result) while every other
+  row still converts normally. The live CLI (`scripts/audit-external-identity.ts`) prints a
+  warning and includes `invalidMechanismBRows` in its JSON output whenever this occurs.
 
 ### Why mapping state and trust level are two separate fields
 
@@ -102,11 +157,13 @@ level."
 
 ## Audit classifications
 
-Implemented in `lib/external-identity/audit.ts`, `auditAssertions()`. Every comparability group
-(at most one Mechanism A assertion and at most one Mechanism B assertion per group, guaranteed by
-`tdr_bridge/release.py`'s construction and by `canonical_object_map`'s
-`unique (source_table, source_id, canonical_entity_type)` index respectively) resolves to exactly
-one of:
+Implemented in `lib/external-identity/audit.ts`, `auditAssertions()`. Each mechanism is *expected*
+to produce at most one assertion per comparability group — Mechanism A by
+`tdr_bridge/release.py`'s construction, Mechanism B by `canonical_object_map`'s
+`unique (source_table, source_id, canonical_entity_type)` index. The audit engine does not simply
+trust that expectation, though: see "Duplicate-assertion anomalies" below for what happens when a
+group actually has more than one assertion from the same mechanism. A group with **no** such
+duplication resolves to exactly one of:
 
 | Classification | Meaning | Condition |
 |---|---|---|
@@ -136,13 +193,56 @@ consumers need different trust thresholds (a read-integration consumer may accep
 write-sensitive consumer must require `verified`); baking in one answer here would pre-empt that
 decision. See `MIGRATION_PLAN.md`'s Phase 1 problem statement.
 
+## Duplicate-assertion anomalies
+
+An audit tool that silently picks "the first row" when its own assumptions are violated is unsafe
+— it would report a confident-looking classification built on an arbitrary choice, with no trace
+that a choice was even made. `auditAssertions()` never does this. If a comparability group ever
+contains **more than one assertion from the same mechanism** — which should never happen live
+given the constraints named above, but the engine does not assume they always hold — that whole
+group is:
+
+1. **excluded from `findings` entirely** (no `exact_agreement`/`disagreement`/etc. is ever computed
+   for it — there is no single "this mechanism's answer" to classify against the other mechanism's);
+2. **reported instead in a separate `anomalies` array**, one `AuditAnomaly` entry per affected
+   mechanism, each carrying `type: "duplicate_mechanism_assertions"`, the `comparabilityKey`, the
+   `mechanism`, and **every** duplicate assertion for that mechanism in that group — never reduced
+   to one.
+
+```ts
+interface AuditAnomaly {
+  type: "duplicate_mechanism_assertions";
+  comparabilityKey: string;
+  mechanism: MechanismId;
+  assertions: ExternalIdentityAssertion[]; // all of them, never one arbitrarily chosen
+}
+```
+
+If *both* mechanisms are duplicated in the same group, that produces two `AuditAnomaly` entries
+(one per mechanism), and the group still contributes zero findings. The report remains usable —
+`auditAssertions()` never throws merely because an anomaly exists; `AuditSummary.totalAnomalies`
+makes the presence of anomalies visible in the summary without requiring a caller to inspect the
+array first. Anomaly ordering is deterministic (sorted by comparability key, then mechanism),
+exactly like `findings`.
+
+This is a distinct concept from the `canonicalId`/mapping-state invariant above: an anomaly means
+two (or more) individually well-formed assertions from one mechanism collided under one
+comparability key; an invalid Mechanism B row (`InvalidMechanismBRowError`) means one row could
+not become a well-formed assertion in the first place. Both are fail-closed and both are surfaced
+— neither is silently dropped or resolved by guessing — but they are reported through different
+channels (`report.anomalies` vs. the adapter's `invalidRows`) because they are different failures.
+
 ## Examples
 
 **Exact agreement.** Legacy model UUID `u1`. Mechanism A: `{externalId: "u1", canonicalEntityType: "model", canonicalId: "jaecoo.jaecoo_5_ev", trustLevel: "derived"}`. Mechanism B: `{externalId: "u1", canonicalEntityType: "model", canonicalId: "jaecoo.jaecoo_5_ev", status: "verified", trustLevel: "verified"}`. → one finding, `exact_agreement`, both assertions present, both trust levels untouched.
 
 **Non-comparable, not a disagreement.** Legacy model UUID `u2`. Mechanism A: `{externalId: "u2", canonicalEntityType: "model", canonicalId: "toyota.hilux_revo_double_cab"}`. Mechanism B: `{externalId: "u2", canonicalEntityType: "generation", canonicalId: "toyota.hilux_revo_double_cab.ah30", status: "verified"}`. → **two** findings: one at `model` scope (`derived_only`, since no Mechanism B assertion exists at `model` scope for `u2`), one at `generation` scope (`verified_only`, since no Mechanism A assertion exists at `generation` scope — Mechanism A never asserts at generation scope at all). Each finding's `otherCanonicalEntityTypesForSameExternalId` lists the other, so an operator sees both without either being mislabeled `disagreement`.
 
-**Unmatched, never verified.** Legacy model UUID `u3`, `canonical_object_map` row `status: "unmatched"`, `canonical_id: null`. → `mechanism_b_unmatched`, `trustLevel: "none"`. Even if a Mechanism A assertion for `u3` exists (the very common current-day case — most of the 326 `unmatched` Mechanism B model rows recorded on 2026-09-15 likely overlap with Mechanism A's 321 resolved model links), the classification stays `mechanism_b_unmatched`, not `exact_agreement` or `derived_only` — Mechanism A's presence is visible in `assertions`, not hidden, but it never upgrades or reclassifies Mechanism B's stated state.
+**Unmatched, never verified.** Legacy model UUID `u3`, `canonical_object_map` row `status: "unmatched"`, `canonical_id: null`. → `mechanism_b_unmatched`, `trustLevel: "none"`. Even if a Mechanism A assertion for `u3` exists (the very common current-day case — per the 2026-09-15 architecture-review live validation, `PHASE_1A_LIVE_VALIDATION_2026-09-15.md`, 326 of Mechanism B's rows are `mechanism_b_unmatched`), the classification stays `mechanism_b_unmatched`, not `exact_agreement` or `derived_only` — Mechanism A's presence is visible in `assertions`, not hidden, but it never upgrades or reclassifies Mechanism B's stated state.
+
+**Retired with a contextual canonical ID.** Legacy model UUID `u4`, `canonical_object_map` row `status: "retired"`, `canonical_id: "byd.byd_seal"` (the id it used to resolve to, kept for history). → `mechanism_b_retired`, `trustLevel: "none"`. The assertion's `canonicalId` field still reports `"byd.byd_seal"` — it is real data, not discarded — but it never makes the assertion `resolved`, never sets `trustLevel` above `none`, and never enters an agreement/disagreement comparison with a Mechanism A assertion at the same scope.
+
+**Duplicate Mechanism A assertions.** Legacy model UUID `u5` somehow has two Mechanism A rows (a data anomaly — the release builder should never produce this). → zero findings for `u5` at `model` scope; instead one `AuditAnomaly` with `mechanism: "mechanism_a_release_crosswalk"` and both assertions listed. No canonical ID is chosen as "the" Mechanism A answer, whether or not the two rows happen to agree.
 
 ## Future compatibility (not designed here)
 
@@ -166,12 +266,36 @@ This contract's types are written so that:
 None of the above is implemented, scoped, or authorized by Phase 1A. Recording the shape's
 extensibility here is not a commitment to build any specific extension.
 
+## Read-only boundary: what is code-enforced vs. credential-enforced
+
+`scripts/audit-external-identity.ts` performs only `SELECT` calls — that is true today, verified
+by direct inspection of the file, and covered by the fact that no test or code path in
+`lib/external-identity/` issues a write. Keep it that way; any future change to this script that
+adds an `insert`/`update`/`delete`/`upsert`/RPC call would break the contract this document
+describes.
+
+That guarantee is **code-enforced, not credential-enforced**. The script obtains its Supabase
+client from `adminDb()` (`lib/supabase.ts`), the same server-side admin/service-role client every
+other admin tool in this repository uses to write. That credential is fully write-capable — it
+simply happens that this particular script never calls a write method on it. Phase 1A introduces:
+
+- **no** dedicated least-privilege read-only database role,
+- **no** new API key scoped to `SELECT`,
+- **no** RLS policy narrowing what this credential can do.
+
+Creating a genuinely least-privilege read-only credential for this audit tool would be a real
+improvement, but it is an infrastructure/security decision independent of this observational
+contract, and it is **not authorized by Phase 1A**. A future packet could propose it explicitly
+(new Supabase read-only role, new key, updated script) — that has not been done here, and nothing
+in this document should be read as claiming otherwise. Until then, "read-only" means "this
+script's code never writes," not "this credential cannot write."
+
 ## Non-goals of this contract (restated from the Phase 1A task)
 
-This contract and its audit engine do not: create a new Supabase table; alter
-`canonical_object_map`; add a database migration; backfill or auto-verify any mapping; write
-Mechanism A data into Mechanism B; change `tdr_bridge/release.py`, `lib/canonical-write-shadow.ts`,
-the legacy editor, any serving consumer, registration ingestion/analytics, or any canonical ID;
-rename `Variant`; restructure `MarketTrim`; or choose which mechanism (or a new one) becomes an
-eventual persistence layer. That decision is explicitly deferred — see `MIGRATION_PLAN.md`'s
-Phase 1 section and `status/CURRENT.md`.
+This contract and its audit engine do not: create a new Supabase table, role, or API key; add a
+database migration or RPC; add or change an RLS policy; alter `canonical_object_map`; backfill or
+auto-verify any mapping; write Mechanism A data into Mechanism B; change
+`tdr_bridge/release.py`, `lib/canonical-write-shadow.ts`, the legacy editor, any serving consumer,
+registration ingestion/analytics, or any canonical ID; rename `Variant`; restructure `MarketTrim`;
+or choose which mechanism (or a new one) becomes an eventual persistence layer. That decision is
+explicitly deferred — see `MIGRATION_PLAN.md`'s Phase 1 section and `status/CURRENT.md`.

@@ -17,22 +17,37 @@ statement rewritten around derived-vs-verified trust semantics rather than "reco
 crosswalks. Both the 2026-09-14 pass and the 2026-09-15 amendment were documentation-only (the
 2026-09-14 pass also added one pure-Python regression test).
 
-**Phase 1A is implemented (2026-09-16).** Phase 1A was the narrow first packet of Phase 1: a
-read-only external-identity contract and audit engine. What now exists:
+**Phase 1A is implemented and architecture-reviewed (2026-09-15).** Phase 1A was the narrow first
+packet of Phase 1: a read-only external-identity contract and audit engine. It was implemented,
+reviewed, and then **hardened** in response to review findings, all on 2026-09-15. What now
+exists:
 
 - `docs/vehicle-platform/EXTERNAL_IDENTITY_CONTRACT.md` — the vocabulary (external namespace/
   entity type/ID, canonical entity type/ID, mapping state, trust level, provenance), the
-  comparability rule, and the audit classifications.
+  corrected `canonicalId`/mapping-state invariant (a discriminated union — `resolved` always has a
+  non-null `canonicalId` and `derived`/`verified` trust; `unmatched`/`ambiguous`/`retired` always
+  have `trustLevel: "none"`, with `canonicalId` allowed to be a retained contextual value that
+  never implies a resolution), the comparability rule, the audit classifications, the
+  duplicate-assertion anomaly channel, and the read-only-boundary clarification (below).
 - `lib/external-identity/types.ts`, `audit.ts`, `mechanism-adapters.ts` — pure TypeScript
-  (no I/O): the contract types, the classification engine, and adapters converting each
-  mechanism's actual row shape into the shared contract.
+  (no I/O): the contract types (as a discriminated union), the classification engine (now with
+  `AuditAnomaly` detection for duplicate same-mechanism assertions under one comparability key —
+  no such group is ever silently reduced to "the first row"), and adapters converting each
+  mechanism's actual row shape into the shared contract (a Mechanism B `verified` row with a null
+  `canonical_id` — invalid source data — throws `InvalidMechanismBRowError`; the batch adapter
+  routes it to a visible `invalidRows` result rather than crashing or silently dropping it).
 - `scripts/audit-external-identity.ts` — a live, **SELECT-only** command (no insert / update /
   delete / upsert / RPC of any kind) that reads `current_vehicle_brands`,
   `current_vehicle_models`, and `canonical_object_map` and prints a human-readable summary plus a
-  deterministic JSON report. Fails clearly (exit code 2, no fabricated output) when server-side
-  Supabase credentials are absent.
+  deterministic JSON report, including anomalies and invalid rows when present. Fails clearly
+  (exit code 2, no fabricated output) when server-side Supabase credentials are absent. Its
+  read-only behavior is code-enforced (SELECT-only calls), **not** credential-enforced — it uses
+  the same write-capable server-side admin credential every other admin tool in this repository
+  uses; Phase 1A introduces no dedicated read-only database role or key (see
+  `EXTERNAL_IDENTITY_CONTRACT.md`'s "Read-only boundary" section).
 - `scripts/check-external-identity-audit.ts` — pure tests against synthetic fixtures only (no
-  2026-09-15 counts hard-coded), wired into `npm run check`.
+  live-dated counts hard-coded), covering the corrected invariant and duplicate-anomaly behavior,
+  wired into `npm run check`.
 
 **Production identity behavior is unchanged.** Mechanism A (`tdr_bridge/release.py`, the
 `current_*` views) and Mechanism B (`canonical_object_map`, `lib/canonical-write-shadow.ts`)
@@ -43,13 +58,21 @@ external-identity registry wraps an existing mechanism, replaces one, or becomes
 see `MIGRATION_PLAN.md`'s Phase 1 section. **That decision, and the rest of Phase 1, remain
 unauthorized and unstarted; Phase 1A completing does not authorize it.**
 
-**Live audit status**: not run against a live Supabase project in this pass — no server-side
-credentials were available in this session (confirmed: no `SUPABASE_*` environment variables
-set). The tool was exercised against its own synthetic test fixtures only
-(`scripts/check-external-identity-audit.ts`, all passing) and its no-credentials failure path was
-verified directly (`node --experimental-strip-types scripts/audit-external-identity.ts` exits 2
-with a clear message, no live Supabase call attempted). No live result exists to compare against
-`LIVE_IDENTITY_BASELINE_2026-09-15.md` as of this pass.
+**Live audit status**: `scripts/audit-external-identity.ts` itself has still not been executed
+against a live Supabase project by any Claude session — no server-side credentials have been
+available in any session that has implemented or hardened Phase 1A (confirmed each time: no
+`SUPABASE_*` environment variables set, no local `.env`/`.env.local` with real values). The tool
+has only ever been exercised against its own synthetic test fixtures
+(`scripts/check-external-identity-audit.ts`, all passing) and its no-credentials failure path
+verified directly (exit 2, clear message, no live Supabase call attempted).
+
+**Live validation was independently supplied by architecture review on 2026-09-15**, not produced
+by running the checked-in CLI: the reviewer performed a separate, equivalent SELECT-only query
+against the production project and supplied the result, recorded in full in
+`PHASE_1A_LIVE_VALIDATION_2026-09-15.md` (383 Mechanism A assertions, 335 Mechanism B rows, 397
+comparability groups, 1 exact agreement, 0 disagreements, 0 observed duplicate-assertion
+anomalies). Treat that document, not this CLI's own execution history, as the current live
+evidence — and treat it as a dated snapshot, not a standing guarantee.
 
 Phases 1B (rest of Phase 1) and 2–7 (`MIGRATION_PLAN.md`) remain **not authorized and not
 started**.
@@ -95,6 +118,7 @@ started.
 | `test_enriched_release_identity_is_stable_and_covers_lifecycle_and_history` | 0 | Closed a confirmed gap: the production-published `release_enriched.enrich_release` payload had no dedicated determinism/shape test (only the base `ReleaseBuilder` output did). Added to `automotive/vehicle_master/tests/test_tdr_bridge.py`. Pure-Python, no Supabase required. |
 | Phase 0 amendment: identity-graph correction + live identity baseline | 0 | Reviewer-directed correction of `MASTER_ARCHITECTURE.md`/`MIGRATION_PLAN.md`'s identity structure and Phase 1 problem statement; added `LIVE_IDENTITY_BASELINE_2026-09-15.md` recording reviewer-supplied live Mechanism A/B evidence. Documentation only, no code change. |
 | Phase 1A: external-identity contract + read-only audit engine | 1 | Added `EXTERNAL_IDENTITY_CONTRACT.md`; `lib/external-identity/{types,audit,mechanism-adapters}.ts`; live SELECT-only `scripts/audit-external-identity.ts`; `scripts/check-external-identity-audit.ts` (wired into `npm run check`). No table created, no migration, no write to `canonical_object_map`, no change to `tdr_bridge/release.py` or `lib/canonical-write-shadow.ts`. |
+| Phase 1A hardening: corrected invariant, duplicate anomalies, read-only boundary, live validation | 1 | Architecture-review-directed amendment. Fixed the `canonicalId`/`mappingState` contract by encoding it as a discriminated union (a `retired`/`unmatched`/`ambiguous` row may legitimately keep a contextual `canonicalId` without becoming resolved/trusted); added `InvalidMechanismBRowError` fail-closed handling for a `verified` row with a null `canonical_id`; added `AuditAnomaly`/`report.anomalies` so duplicate same-mechanism assertions under one comparability key are surfaced, never silently reduced to the first row; precisely documented the read-only boundary as code-enforced, not credential-enforced; added `PHASE_1A_LIVE_VALIDATION_2026-09-15.md` recording architecture-review-supplied live results; corrected an internal `2026-09-16` date error to `2026-09-15` across `CURRENT_STATE.md`, `MIGRATION_PLAN.md`, and this file. Documentation + pure TypeScript only — no persistence, table, migration, or consumer change. |
 
 ## Known parity gaps (from Phase 0, updated as later packets affect them)
 
@@ -107,14 +131,17 @@ started.
    `LIVE_SUPABASE_VERIFICATION.md` (2026-09-09) confirmed the *prior* anon-read policy was live;
    this pass could not re-verify against a live project (no credentials available in this
    session). See `BASELINE.md`.
-3. **Resolved by Phase 1A**: a reusable, checked-in comparison now exists
+3. **Resolved by Phase 1A (hardened)**: a reusable, checked-in, tested comparison now exists
    (`scripts/audit-external-identity.ts` + `lib/external-identity/`), superseding the "no
-   automated/repeatable comparison" gap this item previously flagged. What remains open: the tool
-   has not yet been run against live production data in any pass (see "Live audit status" above)
-   — the 2026-09-15 manual comparison in `LIVE_IDENTITY_BASELINE_2026-09-15.md` is therefore still
-   the only live evidence on record, and it remains a point-in-time snapshot, not a standing
-   guarantee (both mechanisms move independently). Running the new tool against a live project and
-   recording the result as a dated addendum is the natural next check-in, not a new packet.
+   automated/repeatable comparison" gap this item previously flagged, and an independent live
+   validation of its semantics was supplied by architecture review on 2026-09-15
+   (`PHASE_1A_LIVE_VALIDATION_2026-09-15.md`: 397 comparability groups, 1 exact agreement, 0
+   disagreements, 0 observed anomalies). What remains open: the checked-in CLI itself has still
+   never been executed against production by any Claude session (see "Live audit status" above) —
+   running it directly and recording the result as a dated addendum is the natural next check-in,
+   not a new packet. Both the 2026-09-15 reviewer validation and the earlier
+   `LIVE_IDENTITY_BASELINE_2026-09-15.md` comparison remain point-in-time snapshots, not standing
+   guarantees (both mechanisms move independently).
 4. **Whether the legacy per-model serving projection path (§9 mechanism 2 in
    `CURRENT_STATE.md`) is still operationally exercised, or has been fully superseded by the
    full-release path, is not established from repository state alone.** Both are wired, tested,
