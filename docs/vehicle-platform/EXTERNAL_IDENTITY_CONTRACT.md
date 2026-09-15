@@ -7,6 +7,11 @@ currently assert, and where do they actually agree or disagree" is mechanically 
 instead of answered by a one-off manual query (as it was for
 `LIVE_IDENTITY_BASELINE_2026-09-15.md`).
 
+*(Phase 1B note: the persistence-ownership question this contract itself deliberately does not
+answer was subsequently decided — a split model with a new, separate Git-backed registry for
+pinned decisions, still in shadow/unconsumed mode. See `EXTERNAL_IDENTITY_PERSISTENCE.md`. That
+decision did not modify this contract, `lib/external-identity/`, or anything described below.)*
+
 This document assumes familiarity with `CURRENT_STATE.md` §10 (structural description of
 Mechanism A and Mechanism B) and `MASTER_ARCHITECTURE.md` (the target canonical identity graph).
 It does not repeat that material — it defines the vocabulary and rules the code in
@@ -28,6 +33,29 @@ It does not repeat that material — it defines the vocabulary and rules the cod
 
 This contract does not touch either mechanism's tables, schema, or behavior. It only defines a
 shared shape that a read of either mechanism's rows can be converted *into*, for comparison.
+
+### `verified` is an operational status, not proof of a reviewed identity decision
+
+A live inspection performed after Phase 1A (recorded in
+`EXTERNAL_IDENTITY_PERSISTENCE.md`'s "Phase-E verification finding") found that most current
+`canonical_object_map.status = 'verified'` rows were not produced by a human reviewing an identity
+— `apply_vehicle_serving_projection` (`supabase/migration_v14_serving_projection.sql`) writes
+`status = 'verified'`, `verified_by = 'phase-e-publisher'` automatically, every time it projects a
+legacy child row from canonical state. This does not change anything in this document or in
+`lib/external-identity/`: `trustLevel: "verified"` here still means exactly what it always meant —
+"Mechanism B currently asserts this mapping with `status = 'verified'`," an accurate description
+of current operational/serving-bridge trust. It has never meant, and still does not mean, "a human
+looked at this specific external identity and pinned it."
+
+**Operational verification (this contract's `trustLevel`) and canonical persistence ownership are
+two separate questions.** Provenance (`Provenance.matchBasis`/`verifiedBy`) can distinguish an
+explicitly-reviewed mapping (free-text narrative, a named reviewer) from one generated
+deterministically by a publisher (`verifiedBy: "phase-e-publisher"`, a fixed `matchBasis` literal)
+— but that distinction is about *provenance*, not about `trustLevel`, which stays `"verified"`
+either way. Phase 1B (`EXTERNAL_IDENTITY_PERSISTENCE.md`) answers the persistence-ownership
+question with a new, separate Git-backed registry for pinned decisions; it does not, and could
+not, retroactively change what `trustLevel: "verified"` means here, and no Mechanism B database
+`status` value is renamed by that decision.
 
 ## Vocabulary
 
@@ -297,5 +325,7 @@ database migration or RPC; add or change an RLS policy; alter `canonical_object_
 auto-verify any mapping; write Mechanism A data into Mechanism B; change
 `tdr_bridge/release.py`, `lib/canonical-write-shadow.ts`, the legacy editor, any serving consumer,
 registration ingestion/analytics, or any canonical ID; rename `Variant`; restructure `MarketTrim`;
-or choose which mechanism (or a new one) becomes an eventual persistence layer. That decision is
-explicitly deferred — see `MIGRATION_PLAN.md`'s Phase 1 section and `status/CURRENT.md`.
+or choose which mechanism (or a new one) becomes an eventual persistence layer. That decision was
+explicitly deferred by Phase 1A and made by a later, separate packet (Phase 1B) instead — see
+`EXTERNAL_IDENTITY_PERSISTENCE.md`, `MIGRATION_PLAN.md`'s Phase 1 section, and `status/CURRENT.md`.
+Phase 1A's own contract and audit engine remain exactly as described in this document.

@@ -74,8 +74,43 @@ comparability groups, 1 exact agreement, 0 disagreements, 0 observed duplicate-a
 anomalies). Treat that document, not this CLI's own execution history, as the current live
 evidence — and treat it as a dated snapshot, not a standing guarantee.
 
-Phases 1B (rest of Phase 1) and 2–7 (`MIGRATION_PLAN.md`) remain **not authorized and not
-started**.
+**Phase 1B (persistence decision) is implemented, in shadow mode (2026-09-15).** Phase 1B answered
+the persistence question Phase 1A deliberately left open. Full record:
+`docs/vehicle-platform/EXTERNAL_IDENTITY_PERSISTENCE.md`. The decision, fixed by architecture
+review:
+
+- **Git-backed pinned-binding registry now exists** —
+  `automotive/vehicle_master/integration_data/external_identity_registry.json`, loaded/validated
+  by `tdr_bridge/external_identity_registry.py`, offline-validated by
+  `tools/validate_external_identity_registry.py` (no Supabase, no network). It owns pinned,
+  non-reconstructible external-identity decisions and gets ordinary Git review like the rest of
+  canonical Vehicle Master truth.
+- **Initial registry contents: exactly one binding** — the `legacy_tdr` model mapping
+  `e1a0b9fd-2d57-477d-b13f-1647d36d0298` → `jaecoo.jaecoo_5_ev`, `authority_basis:
+  "explicit_review"`, the one `canonical_object_map` row (of nine currently `verified`) whose
+  provenance is an actual named human review rather than deterministic publisher output.
+- **Mechanism A's 383 derived Brand+Model links were NOT imported** — a derived, recomputed-every-
+  release match is not a pinned decision.
+- **The 8 Phase-E projection-owned `canonical_object_map` rows were NOT imported** — live
+  inspection confirmed `apply_vehicle_serving_projection`
+  (`supabase/migration_v14_serving_projection.sql`) auto-writes `status='verified',
+  verified_by='phase-e-publisher'` for every legacy child row it projects; these are deterministic,
+  reconstructible serving-projection output, not reviewed identity decisions.
+- **`canonical_object_map` remains production-load-bearing and completely unchanged** — no
+  Supabase migration, no write, no behavioral change. It continues to serve the Phase-C write gate,
+  review-state tracking, and Phase-E bookkeeping exactly as before.
+- **No consumer cutover has occurred.** Nothing reads from the new registry in production —
+  `tdr_bridge/release.py`, `lib/canonical-write-shadow.ts`, `apply_vehicle_serving_projection`,
+  every `current_vehicle_*` view, and every application page/compare/member-dashboard consumer are
+  byte-for-byte unchanged in behavior.
+
+**Phase 1 is not yet fully complete.** Phase 1B decided and shadow-introduced persistence; it did
+not build the projection/reconciliation layer between the Git registry and the operational
+Supabase mapping layer, and did not authorize any consumer to switch. That is Phase 1C's likely
+job (see `MIGRATION_PLAN.md`'s Phase 1B subsection) — **not started, not authorized automatically
+by Phase 1B completing.**
+
+Phase 1C and Phases 2–7 (`MIGRATION_PLAN.md`) remain **not authorized and not started**.
 
 The separate, pre-existing Masterplan Phase A–J sequence
 (`automotive/vehicle_master/docs/consolidation/MASTERPLAN.md`) is independent of this Phase
@@ -102,6 +137,10 @@ started.
   `.github/workflows/canonical-input.yml`) and the Streamlit direct-write admin
   (`pages/7_Prices.py`) are both still active, unreconciled write paths into the same
   `vehreg/data` files (`CURRENT_STATE.md` §11 item 3).
+- The new Phase 1B external-identity registry (`integration_data/external_identity_registry.json`)
+  exists but is read by nothing in production — no consumer, page, or pipeline queries it. It is
+  offline, Git-only infrastructure until an explicitly-authorized later packet wires a consumer to
+  it.
 
 ## Shadow paths currently active
 
@@ -119,6 +158,7 @@ started.
 | Phase 0 amendment: identity-graph correction + live identity baseline | 0 | Reviewer-directed correction of `MASTER_ARCHITECTURE.md`/`MIGRATION_PLAN.md`'s identity structure and Phase 1 problem statement; added `LIVE_IDENTITY_BASELINE_2026-09-15.md` recording reviewer-supplied live Mechanism A/B evidence. Documentation only, no code change. |
 | Phase 1A: external-identity contract + read-only audit engine | 1 | Added `EXTERNAL_IDENTITY_CONTRACT.md`; `lib/external-identity/{types,audit,mechanism-adapters}.ts`; live SELECT-only `scripts/audit-external-identity.ts`; `scripts/check-external-identity-audit.ts` (wired into `npm run check`). No table created, no migration, no write to `canonical_object_map`, no change to `tdr_bridge/release.py` or `lib/canonical-write-shadow.ts`. |
 | Phase 1A hardening: corrected invariant, duplicate anomalies, read-only boundary, live validation | 1 | Architecture-review-directed amendment. Fixed the `canonicalId`/`mappingState` contract by encoding it as a discriminated union (a `retired`/`unmatched`/`ambiguous` row may legitimately keep a contextual `canonicalId` without becoming resolved/trusted); added `InvalidMechanismBRowError` fail-closed handling for a `verified` row with a null `canonical_id`; added `AuditAnomaly`/`report.anomalies` so duplicate same-mechanism assertions under one comparability key are surfaced, never silently reduced to the first row; precisely documented the read-only boundary as code-enforced, not credential-enforced; added `PHASE_1A_LIVE_VALIDATION_2026-09-15.md` recording architecture-review-supplied live results; corrected an internal `2026-09-16` date error to `2026-09-15` across `CURRENT_STATE.md`, `MIGRATION_PLAN.md`, and this file. Documentation + pure TypeScript only — no persistence, table, migration, or consumer change. |
+| Phase 1B: Git-backed external-identity registry (shadow mode) | 1 | Added `docs/vehicle-platform/EXTERNAL_IDENTITY_PERSISTENCE.md` (ownership decision record); `automotive/vehicle_master/tdr_bridge/external_identity_registry.py` (dataclasses, loader, offline validator); `integration_data/external_identity_registry.json` (seeded with exactly the one explicitly-reviewed Jaecoo binding); `tools/validate_external_identity_registry.py` (offline CLI, no Supabase); `tests/test_external_identity_registry.py` (20 tests). Clarified `EXTERNAL_IDENTITY_CONTRACT.md` that `verified`/trust level and persistence ownership are separate dimensions, without changing any Phase 1A type, classification, or test. No Supabase migration, write, or consumer change; Mechanism A's 383 derived links and the 8 Phase-E projection-owned `canonical_object_map` rows were deliberately excluded from the seed. |
 
 ## Known parity gaps (from Phase 0, updated as later packets affect them)
 
@@ -152,19 +192,23 @@ started.
 
 ## Next approved step
 
-**None.** Phase 1A is complete; the rest of Phase 1 remains unauthorized until a separate,
-explicit task authorizes it. Completing Phase 1A does not itself authorize continuing Phase 1.
+**None.** Phase 1A and Phase 1B are complete; Phase 1C (and the rest of Phase 1) remains
+unauthorized until a separate, explicit task authorizes it. Completing Phase 1B does not itself
+authorize continuing Phase 1.
 
-Candidates for a future, separately-authorized **Phase 1B** (not implemented, not started, not
-scoped in detail here):
+Candidates for a future, separately-authorized **Phase 1C** (not implemented, not started, not
+scoped in detail here — see `MIGRATION_PLAN.md`'s Phase 1B subsection):
 - run `scripts/audit-external-identity.ts` against the live production project and record the
-  result as a dated addendum (this needs only credentials, not new code);
-- use that live result plus `EXTERNAL_IDENTITY_CONTRACT.md`'s vocabulary to actually decide the
-  Phase 1 persistence question — wrap an existing mechanism, replace one, or introduce a new
-  canonical abstraction — which Phase 1A deliberately left open;
-- if a persistence decision is made, design (not yet implement) the migration path for any
-  existing `canonical_object_map` `verified` rows and any Mechanism A consumer that would need to
-  read the new abstraction instead.
+  result as a dated addendum (this still needs only credentials, not new code — unaffected by
+  Phase 1B);
+- build deterministic projection/reconciliation from the Git pinned registry to the operational
+  Supabase mapping layer;
+- dual-run that projection against the existing `canonical_object_map` state without switching
+  any consumer, and prove no production behavior changes;
+- preserve Phase-E projection-owned child bindings and existing review states exactly as they are;
+- only much later, as a distinct and separately-authorized decision, consider switching the
+  Phase-C write gate (`lib/canonical-write-shadow.ts`) to consume a registry-derived projection
+  instead of reading `canonical_object_map` directly.
 
-Do not start Phase 1B work from this file alone — this file records state; it does not grant
+Do not start Phase 1C work from this file alone — this file records state; it does not grant
 authorization.

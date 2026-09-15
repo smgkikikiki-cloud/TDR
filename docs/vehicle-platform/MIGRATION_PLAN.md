@@ -139,9 +139,32 @@ order-independent determinism, entirely against synthetic fixtures.
 onto the new contract, change `tdr_bridge/release.py` or `lib/canonical-write-shadow.ts`, write
 anything to `canonical_object_map`, or auto-verify anything. See
 `EXTERNAL_IDENTITY_CONTRACT.md`'s "Non-goals" section and `status/CURRENT.md` for the exact
-boundary. **The rest of Phase 1 — actually deciding whether a future external-identity registry
-wraps an existing mechanism, replaces one, or becomes something new — remains unauthorized and
-unstarted.**
+boundary. The persistence-model question was answered by the next packet (Phase 1B, below).
+
+### Phase 1B — implemented in shadow mode (this pass, 2026-09-15 — still Phase 1, not Phase 2)
+
+**Phase 1B is done, in shadow mode.** It answered the persistence question Phase 1A deliberately
+left open, with a split-ownership decision fixed by architecture review — full record in
+`docs/vehicle-platform/EXTERNAL_IDENTITY_PERSISTENCE.md`: a new Git-backed registry
+(`automotive/vehicle_master/integration_data/external_identity_registry.json`, loader/validator in
+`tdr_bridge/external_identity_registry.py`) owns pinned, non-reconstructible identity decisions;
+Mechanism A remains derived; Supabase `canonical_object_map` remains the unchanged operational
+bridge; Phase-E serving-projection-generated rows are explicitly excluded from the registry as
+projection-owned, not pinned (a live finding: `apply_vehicle_serving_projection`
+auto-writes `status='verified', verified_by='phase-e-publisher'` for every child row it projects —
+see the persistence document's "Phase-E verification finding"). The registry was seeded with
+exactly the one binding whose provenance is an actual human review
+(`e1a0b9fd-2d57-477d-b13f-1647d36d0298` → `jaecoo.jaecoo_5_ev`), out of nine currently `verified`
+`canonical_object_map` rows — the other eight are Phase-E projection-owned and excluded by design.
+
+**What Phase 1B explicitly did not do**: switch any production consumer to read from the new
+registry (`tdr_bridge/release.py`, `lib/canonical-write-shadow.ts`,
+`apply_vehicle_serving_projection`, every application page, remain exactly as before); write to
+Supabase or add a migration; retire `crosswalk_overrides.json` or any Mechanism A/B path; rename
+any Mechanism B `status` value; or touch Phase 1A's TypeScript contract/audit behavior beyond
+documentation. **Phase 1C — building deterministic projection/reconciliation from the Git registry
+to the operational Supabase mapping layer, dual-run against `canonical_object_map`, and only much
+later considering a write-gate cutover — remains unauthorized and unstarted.**
 
 ## Phase 2 — Canonical DLT v2 shadow pipeline
 
