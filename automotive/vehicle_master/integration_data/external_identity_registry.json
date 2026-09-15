@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "bindings": [
+    {
+      "namespace": "legacy_tdr",
+      "external_entity_type": "model",
+      "external_id": "e1a0b9fd-2d57-477d-b13f-1647d36d0298",
+      "canonical_entity_type": "model",
+      "canonical_id": "jaecoo.jaecoo_5_ev",
+      "state": "active",
+      "authority_basis": "explicit_review",
+      "verified_at": "2026-09-09T06:06:07.164815+00:00",
+      "verified_by": "OpenAI GPT-5.6 Sol",
+      "evidence": {
+        "review": "manual live-row + canonical-file inspection 2026-09-09",
+        "tdr_id": "e1a0b9fd-2d57-477d-b13f-1647d36d0298",
+        "tdr_slug": "jaecoo-jaecoo-5-ev",
+        "tdr_name_en": "Jaecoo 5 EV",
+        "tdr_name_th": "เจคู 5",
+        "canonical_id": "jaecoo.jaecoo_5_ev",
+        "canonical_name_en": "Jaecoo 5 EV",
+        "canonical_name_th": "เจคู 5",
+        "source_mechanism": "canonical_object_map",
+        "source_status_at_import": "verified"
+      },
+      "notes": "First deliberately verified Phase C pilot. verified_at/verified_by above are preserved exactly as originally recorded in canonical_object_map on 2026-09-09 — do not read them as describing this registry's own import. This binding was imported into the Git canonical registry during Phase 1B; see imported_at/imported_by.",
+      "imported_at": "2026-09-15",
+      "imported_by": "phase-1b-registry-seed"
+    }
+  ]
+}
