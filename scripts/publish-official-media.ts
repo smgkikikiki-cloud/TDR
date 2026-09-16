@@ -8,6 +8,7 @@ const BUCKET = "vehicle-media";
 const MAX_BYTES = 20 * 1024 * 1024;
 const IMAGE_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif"]);
 const UPLOAD_ATTEMPTS = 3;
+const GENERATION_PREFLIGHT_CHUNK = 75;
 
 type MediaRow = {
   vehicle_id: string;
@@ -36,6 +37,11 @@ type ExistingAsset = {
 
 type UploadResult = {
   error: { message?: string } | null;
+};
+
+type CurrentGenerationRow = {
+  canonical_id: string;
+  release_id: string;
 };
 
 function arg(name: string, fallback: string) {
@@ -106,6 +112,44 @@ async function main() {
   const rows = readFileSync(manifestPath, "utf8")
     .split(/\r?\n/).filter(Boolean).map(line => JSON.parse(line) as MediaRow);
   const approvedRows = rows.filter(row => row.status === "approved");
+
+  // Media is a serving attachment, not an independent identity authority. Before
+  // touching Storage or media metadata, require every approved target to exist in
+  // the active immutable vehicle release through current_vehicle_generations.
+  // This prevents stale branches or typoed generation IDs from creating
+  // canonical-looking orphan media rows in production.
+  const targetVehicleIds = [...new Set(approvedRows.map(row => row.vehicle_id))];
+  if (targetVehicleIds.length) {
+    const currentGenerationIds = new Set<string>();
+    const activeReleaseIds = new Set<string>();
+    for (let offset = 0; offset < targetVehicleIds.length; offset += GENERATION_PREFLIGHT_CHUNK) {
+      const chunk = targetVehicleIds.slice(offset, offset + GENERATION_PREFLIGHT_CHUNK);
+      const { data, error } = await db.from("current_vehicle_generations")
+        .select("canonical_id,release_id")
+        .in("canonical_id", chunk);
+      if (error) throw new Error(`active-generation preflight failed: ${error.message}`);
+      for (const row of (data || []) as CurrentGenerationRow[]) {
+        currentGenerationIds.add(row.canonical_id);
+        activeReleaseIds.add(row.release_id);
+      }
+    }
+    const missing = targetVehicleIds.filter(vehicleId => !currentGenerationIds.has(vehicleId));
+    if (missing.length) {
+      throw new Error(
+        "media publish blocked: approved generation IDs are absent from the active canonical release: " +
+        missing.join(", "),
+      );
+    }
+    if (activeReleaseIds.size !== 1) {
+      throw new Error(
+        `media publish blocked: targets resolved across ${activeReleaseIds.size} active release IDs`,
+      );
+    }
+    console.log(
+      `canonical generation preflight ${targetVehicleIds.length}/${targetVehicleIds.length} ` +
+      `on active release ${[...activeReleaseIds][0]}`,
+    );
+  }
 
   // The public media layer is canonical by (vehicle, image type). Reject a
   // manifest that tries to publish two different approved files for one slot.
@@ -197,9 +241,8 @@ async function main() {
   // After every desired upload succeeds, make each successfully managed vehicle
   // an authoritative mirror of this manifest's approved set. This removes both
   // superseded hashes for an existing slot and slots that a stricter crawl no
-  // longer approves (for example a model-prefix false positive). Vehicles with
-  // zero approved rows are deliberately not reconciled so a transient crawl
-  // failure cannot erase their previously working public media.
+  // longer approves. Vehicles with zero approved rows are deliberately not
+  // reconciled so a transient crawl failure cannot erase working public media.
   if (failed === 0) {
     for (const [vehicleId, desired] of desiredByVehicle) {
       const { data, error: staleReadError } = await db

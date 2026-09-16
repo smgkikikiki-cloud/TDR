@@ -30,6 +30,13 @@ type CanonicalMediaRow = {
   source_type: string | null;
 };
 
+type CanonicalMediaBinding = {
+  entity_id: string;
+  entity_type: "generation" | "trim";
+  visual_key: string;
+  inherited_from: string | null;
+};
+
 function compareMedia(a: CanonicalMediaRow, b: CanonicalMediaRow) {
   const priority = (MEDIA_PRIORITY[a.image_type] ?? 99) - (MEDIA_PRIORITY[b.image_type] ?? 99);
   if (priority) return priority;
@@ -50,21 +57,45 @@ async function getCanonicalPrimaryMediaIndex() {
   const db = publicDb();
   const index = new Map<string, CanonicalMediaRow>();
   if (!db) return index;
-  const { data, error } = await db.from("vehicle_media_assets")
-    .select("vehicle_id,visual_key,public_url,image_type,confidence,width,height,source_url,source_type")
-    .in("image_type", ["hero", "front_3q"])
-    .order("confidence", { ascending: false });
-  if (error) throw error;
-  const grouped = new Map<string, CanonicalMediaRow[]>();
-  for (const row of (data || []) as CanonicalMediaRow[]) {
-    const bucket = grouped.get(row.vehicle_id) || [];
+
+  const [{ data: bindingData, error: bindingError }, { data: mediaData, error: mediaError }] = await Promise.all([
+    db.from("vehicle_media_bindings")
+      .select("entity_id,entity_type,visual_key,inherited_from")
+      .eq("entity_type", "generation"),
+    db.from("vehicle_media_assets")
+      .select("vehicle_id,visual_key,public_url,image_type,confidence,width,height,source_url,source_type")
+      .in("image_type", ["hero", "front_3q"])
+      .order("confidence", { ascending: false }),
+  ]);
+  if (bindingError) throw bindingError;
+  if (mediaError) throw mediaError;
+
+  const assetsByVisualKey = new Map<string, CanonicalMediaRow[]>();
+  for (const row of (mediaData || []) as CanonicalMediaRow[]) {
+    const bucket = assetsByVisualKey.get(row.visual_key) || [];
     bucket.push(row);
-    grouped.set(row.vehicle_id, bucket);
+    assetsByVisualKey.set(row.visual_key, bucket);
   }
-  for (const [vehicleId, rows] of grouped) {
+
+  for (const binding of (bindingData || []) as CanonicalMediaBinding[]) {
+    const chosen = primaryExteriorMedia(assetsByVisualKey.get(binding.visual_key) || []);
+    if (chosen) index.set(binding.entity_id, chosen);
+  }
+
+  // Backward-compatible fallback for media rows created before bindings were
+  // available. New publisher writes always create the generation binding.
+  const legacyByVehicle = new Map<string, CanonicalMediaRow[]>();
+  for (const row of (mediaData || []) as CanonicalMediaRow[]) {
+    if (index.has(row.vehicle_id)) continue;
+    const bucket = legacyByVehicle.get(row.vehicle_id) || [];
+    bucket.push(row);
+    legacyByVehicle.set(row.vehicle_id, bucket);
+  }
+  for (const [vehicleId, rows] of legacyByVehicle) {
     const chosen = primaryExteriorMedia(rows);
-    if (chosen) index.set(vehicleId, chosen);
+    if (chosen && !index.has(vehicleId)) index.set(vehicleId, chosen);
   }
+
   return index;
 }
 
@@ -130,12 +161,20 @@ function trimRow(row: any) {
   };
 }
 
-export async function getCanonicalVehicleMedia(vehicleId: string) {
+export async function getCanonicalVehicleMedia(entityId: string) {
   const db = publicDb();
-  if (!db || !vehicleId) return [];
+  if (!db || !entityId) return [];
+
+  const { data: binding, error: bindingError } = await db.from("vehicle_media_bindings")
+    .select("entity_id,entity_type,visual_key,inherited_from")
+    .eq("entity_id", entityId)
+    .maybeSingle();
+  if (bindingError) throw bindingError;
+
+  const visualKey = (binding as CanonicalMediaBinding | null)?.visual_key || entityId;
   const { data, error } = await db.from("vehicle_media_assets")
     .select("vehicle_id,visual_key,public_url,image_type,confidence,width,height,source_url,source_type")
-    .eq("vehicle_id", vehicleId)
+    .eq("visual_key", visualKey)
     .order("confidence", { ascending: false });
   if (error) throw error;
   return ((data || []) as CanonicalMediaRow[]).sort(compareMedia);

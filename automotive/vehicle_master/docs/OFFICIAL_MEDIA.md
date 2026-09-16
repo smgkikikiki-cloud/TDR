@@ -5,6 +5,39 @@ The crawler reads canonical Generation identity, discovers assets only from
 configured OEM-owned domains, scores candidates, downloads stable copies, and
 publishes approved metadata to Supabase.
 
+## Architecture boundary
+
+Vehicle identity, retail MarketTrim identity, prices, specs, campaigns and
+lifecycle remain owned by the Git-backed Vehicle Master and reach production
+through the immutable `release_enriched` -> `canonical_*_projection` ->
+`current_*` release path. Official media does **not** define or mutate any of
+those facts.
+
+Media is a serving attachment sidecar. Its public binaries live in Supabase
+Storage and its serving metadata lives in `vehicle_media_assets` /
+`vehicle_media_bindings`. The application joins that sidecar onto the active
+canonical release by stable Generation ID.
+
+That split has one mandatory safety rule: an approved media row may be published
+only when its `vehicle_id` exists in `current_vehicle_generations`, i.e. in the
+currently active immutable canonical release. `scripts/publish-official-media.ts`
+checks this before the first Storage or metadata write and fails closed if any
+approved target is absent. A stale branch, typoed ID, renamed generation or
+legacy-only identity therefore cannot create a new canonical-looking media
+attachment in production.
+
+The reverse dependency is forbidden: media rows never feed canonical identity,
+lifecycle or retail reconciliation, and an OEM image discovery result is never
+evidence that a model/trim is current. Current/withdrawn/orderable decisions
+must come from the canonical product/reconciliation path. If a later release
+removes a Generation, its old sidecar media may remain stored for audit/history,
+but the `current_*` application join no longer exposes it as a current vehicle.
+
+Source adapters, exact source-page hints and any curated direct-asset hints are
+Git-reviewed code/data. Scratch crawl manifests and downloaded cache files stay
+gitignored; production metadata is a projection of an approved run rather than
+a second vehicle master.
+
 ## Identity and inheritance
 
 The default `visual_key` is the canonical Generation ID. All MarketTrims under
@@ -66,9 +99,10 @@ and Supabase URL configured:
 npm run media:publish -- --year 2026
 ```
 
-The publisher uploads the content-addressed binaries to the public
-`vehicle-media` bucket, upserts `vehicle_media_assets`, and records the default
-Generation binding in `vehicle_media_bindings`.
+The publisher first verifies every approved Generation against
+`current_vehicle_generations`, then uploads the content-addressed binaries to the
+public `vehicle-media` bucket, upserts `vehicle_media_assets`, and records the
+default Generation binding in `vehicle_media_bindings`.
 
 Public RLS only exposes rows whose metadata status is `approved`. Canonical model
 bundles expose `hero_image_url` and `media[]`; review rows therefore remain out of
