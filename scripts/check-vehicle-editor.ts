@@ -1,15 +1,14 @@
 // Canonical Vehicle Editor (/admin/vehicles/[modelId]) regression tests.
 // Same two-layer convention as the rest of scripts/check-*.ts:
 //   - lib/spec-field-registry.ts, lib/canonical-command-builder.ts and
-//     lib/edit-proposal-token.ts carry zero "@/" alias imports, so this
-//     script loads and *executes* them directly with node
-//     --experimental-strip-types and asserts on real return values.
-//   - Files that need Next.js (server actions, pages, nav) are checked by
-//     source-text regression, the same way check-eco-trim-admin.ts /
+//     lib/admin-form.ts carry zero "@/" alias imports, so this script loads
+//     and *executes* them directly with node --experimental-strip-types and
+//     asserts on real return values.
+//   - Files that need Next.js/Supabase (server actions, the edit-session
+//     store, pages, nav, the migration file) are checked by source-text
+//     regression, the same way check-eco-trim-admin.ts /
 //     check-retail-lifecycle-review.ts test their own "@/"-aliased actions.
 import fs from "node:fs";
-
-process.env.ADMIN_SESSION_SECRET = process.env.ADMIN_SESSION_SECRET || "test-secret-at-least-16-bytes-long";
 
 let failed = 0;
 function check(name: string, got: unknown, want: unknown) {
@@ -27,10 +26,10 @@ const {
   loadSpecFieldRegistry, specFieldByKey, fieldAppliesToPowertrain, groupSpecFields,
 } = await import("../lib/spec-field-registry.ts");
 const {
-  buildModelGenerationBatch, buildMarketTrimBatch, buildSpecFactBatch,
-  diffPatch, findDuplicateMarketTrim, isStaleRelease, normalizedTrimName,
+  buildModelGenerationBatch, buildMarketTrimBatch, buildSpecDraftBatch, diffSpecDraft,
+  diffPatch, findDuplicateMarketTrim, isStaleRelease, normalizedTrimName, applySourceRefEdits,
 } = await import("../lib/canonical-command-builder.ts");
-const { signEditProposal, verifyEditProposal } = await import("../lib/edit-proposal-token.ts");
+const { evidenceUrl } = await import("../lib/admin-form.ts");
 
 console.log("spec field registry — reads the real canonical registry.json, not a hardcoded copy");
 {
@@ -108,38 +107,99 @@ console.log("\ncommand builder — duplicate MarketTrim identity detection never
   check("normalizedTrimName folds case/spacing/punctuation", normalizedTrimName("  Max-Plus!! "), "max plus");
 }
 
-console.log("\ncommand builder — spec facts never turn missing data into a false zero/default");
+console.log("\ncommand builder — a multi-field spec draft compiles into ONE batch, one command per touched field");
 {
-  for (const state of ["UNKNOWN", "NOT_AVAILABLE", "NOT_APPLICABLE"] as const) {
-    const command = buildSpecFactBatch({
-      batchId: `b-${state}`, year: 2026, submittedAt: "2026-01-01T00:00:00Z", reason: "review",
-      evidence: { sourceKind: "ADMIN", reviewedAt: "2026-01-01" },
-      trimId: "trim1", fieldKey: "powertrain.max_power_kw", valueState: state,
-      value: 999, unit: "kW", // deliberately supplied to prove the builder still nulls it out
-    }).payload.commands[0] as any;
-    check(`${state} forces value to null regardless of args.value`, command.payload.value, null);
-    check(`${state} forces unit to empty string`, command.payload.unit, "");
-  }
-  const known = buildSpecFactBatch({
-    batchId: "b-known", year: 2026, submittedAt: "2026-01-01T00:00:00Z", reason: "review",
-    evidence: { sourceKind: "OEM", sourceRef: "https://oem.example/spec", reviewedAt: "2026-01-01" },
-    trimId: "trim1", fieldKey: "powertrain.max_power_kw", valueState: "KNOWN", value: 150, unit: "kW",
-  }).payload.commands[0] as any;
-  check("KNOWN carries the actual value", known.payload.value, 150);
-  check("KNOWN carries the field's canonical unit", known.payload.unit, "kW");
-  check("APPEND_SPEC targets the trim as canonical_id", known.canonical_id, "trim1");
+  const evidence = { sourceKind: "OEM" as const, sourceRef: "https://oem.example/spec-sheet", reviewedAt: "2026-01-01" };
+  const entries = [
+    { fieldKey: "powertrain.max_power_kw", labelForDiff: "Maximum power", valueState: "KNOWN" as const, value: 150, unit: "kW", evidence },
+    { fieldKey: "powertrain.max_torque_nm", labelForDiff: "Maximum torque", valueState: "KNOWN" as const, value: 310, unit: "Nm", evidence },
+    { fieldKey: "powertrain.drivetrain", labelForDiff: "Drivetrain", valueState: "KNOWN" as const, value: "AWD", unit: "" },
+    { fieldKey: "battery.gross_capacity_kwh", labelForDiff: "Gross battery capacity", valueState: "NOT_APPLICABLE" as const, value: null, unit: "kWh" },
+    { fieldKey: "vehicle.wheelbase_mm", labelForDiff: "Wheelbase", valueState: "UNKNOWN" as const, value: null, unit: "mm" },
+  ];
+  const { payload } = buildSpecDraftBatch({
+    batchId: "admin-vehicle-spec-draft-test", year: 2026, submittedAt: "2026-01-01T00:00:00Z",
+    reason: "Official spec sheet for this trim", evidence, trimId: "acme.testmodel.gen1.trim.trim_a", entries,
+  });
+  check("one batch", payload.schema_version, 1);
+  check("one APPEND_SPEC command per entry, five entries -> five commands", payload.commands.length, 5);
+  ok("every command targets the same trim", payload.commands.every((c: any) => c.canonical_id === "acme.testmodel.gen1.trim.trim_a" && c.operation === "APPEND_SPEC"));
+  ok("batch reason is tagged with the draft's evidence kind once, not per field", payload.reason.startsWith("[OEM evidence]") && payload.commands.filter((c: any) => "reason" in c).length === 0);
+
+  const power = payload.commands[0] as any;
+  check("KNOWN entry carries its value and unit", power.payload.value, 150);
+  check("KNOWN entry carries the field's canonical unit", power.payload.unit, "kW");
+  check("KNOWN entry with its own evidence override uses that source_ref", power.payload.source_ref, "https://oem.example/spec-sheet");
+
+  const drivetrain = payload.commands[2] as any;
+  check("an entry without its own evidence falls back to the draft's default evidence", drivetrain.payload.source_ref, "https://oem.example/spec-sheet");
+
+  const notApplicable = payload.commands[3] as any;
+  check("NOT_APPLICABLE never carries a value even if one was passed in", notApplicable.payload.value, null);
+  check("NOT_APPLICABLE never carries a unit", notApplicable.payload.unit, "");
+
+  const unknown = payload.commands[4] as any;
+  check("UNKNOWN never carries a value", unknown.payload.value, null);
+
+  let threw = false;
+  try { buildSpecDraftBatch({ batchId: "empty", year: 2026, submittedAt: "2026-01-01T00:00:00Z", reason: "r", evidence, trimId: "t", entries: [] }); }
+  catch { threw = true; }
+  ok("an empty draft cannot be compiled into a batch", threw);
 }
 
-console.log("\ncommand builder — evidence is recorded even though batch source.kind stays ADMIN");
+console.log("\ncommand builder — spec draft diff shows current vs proposed per field, distinguishing UNKNOWN/NOT_AVAILABLE/NOT_APPLICABLE/KNOWN");
 {
-  const { payload } = buildMarketTrimBatch({
-    batchId: "b3", year: 2026, submittedAt: "2026-01-01T00:00:00Z", reason: "new trim",
-    evidence: { sourceKind: "OEM", sourceRef: "https://oem.example/page", reviewedAt: "2026-01-01" },
-    canonicalModelId: "m.x", brand: { id: "m", nameEn: "M" }, generationCode: "g1",
-    trim: { name: "X", powertrain: "ICE" },
+  const evidence = { sourceKind: "ADMIN" as const, reviewedAt: "2026-01-01" };
+  const currentByField = {
+    "powertrain.max_power_kw": { value_state: "KNOWN", value: 120 },
+    "battery.gross_capacity_kwh": { value_state: "UNKNOWN", value: null },
+  };
+  const entries = [
+    { fieldKey: "powertrain.max_power_kw", labelForDiff: "Maximum power", valueState: "KNOWN" as const, value: 150, unit: "kW" },
+    { fieldKey: "powertrain.max_torque_nm", labelForDiff: "Maximum torque", valueState: "KNOWN" as const, value: 310, unit: "Nm" },
+    { fieldKey: "battery.gross_capacity_kwh", labelForDiff: "Gross battery capacity", valueState: "NOT_APPLICABLE" as const, value: null, unit: "" },
+  ];
+  const diff = diffSpecDraft(currentByField, entries);
+  check("one diff row per drafted field", diff.length, 3);
+  const power = diff.find((row) => row.field === "powertrain.max_power_kw")!;
+  ok("a field whose value actually changed (120 -> 150) is marked changed", power.changed);
+  const torque = diff.find((row) => row.field === "powertrain.max_torque_nm")!;
+  check("a field with no prior fact defaults its current side to UNKNOWN/null, not a fabricated zero", torque.current, { value_state: "UNKNOWN", value: null });
+  ok("a brand-new fact is marked changed", torque.changed);
+  const battery = diff.find((row) => row.field === "battery.gross_capacity_kwh")!;
+  ok("UNKNOWN -> NOT_APPLICABLE is still a real, visible change (both are 'no value' but mean different things)", battery.changed);
+}
+
+console.log("\ncommand builder — structured source-ref add/remove compiles to the exact shape MarketTrim.source_refs already uses");
+{
+  const existing = { ecosticker: ["uuid-1"], official_omodajaecoo: ["https://oem.example/old"] };
+  const afterRemove = applySourceRefEdits(existing, { remove: [{ kind: "official_omodajaecoo", url: "https://oem.example/old" }], add: [] });
+  check("removing the only url under a kind drops that kind entirely", afterRemove, { ecosticker: ["uuid-1"] });
+
+  const afterAdd = applySourceRefEdits(existing, { remove: [], add: [{ kind: "owner_directory", url: "https://oem.example/new" }] });
+  check("adding a new kind creates it", afterAdd, { ecosticker: ["uuid-1"], official_omodajaecoo: ["https://oem.example/old"], owner_directory: ["https://oem.example/new"] });
+
+  const dedup = applySourceRefEdits(existing, { remove: [], add: [{ kind: "ecosticker", url: "uuid-1" }] });
+  check("re-adding an existing (kind, url) pair does not duplicate it", dedup.ecosticker, ["uuid-1"]);
+
+  const both = applySourceRefEdits(existing, {
+    remove: [{ kind: "ecosticker", url: "uuid-1" }],
+    add: [{ kind: "ecosticker", url: "uuid-2" }],
   });
-  check("evidence URL is carried as source.ref", payload.source.ref, "https://oem.example/page");
-  ok("reason is tagged with the evidence kind when it is not a plain admin note", payload.reason.startsWith("[OEM evidence]"));
+  check("remove and add can target the same kind in one edit", both.ecosticker, ["uuid-2"]);
+
+  ok("empty existing + no edits produces an empty object, not undefined/null", JSON.stringify(applySourceRefEdits({}, { remove: [], add: [] })) === "{}");
+}
+
+console.log("\nadmin-form — evidenceUrl rejects malformed source references (executed for real, not just grepped)");
+{
+  let threw = false;
+  try { evidenceUrl("not a url"); } catch { threw = true; }
+  ok("a non-URL string is rejected", threw);
+  threw = false;
+  try { evidenceUrl("javascript:alert(1)"); } catch { threw = true; }
+  ok("a non-http(s) scheme is rejected", threw);
+  check("a well-formed https URL round-trips", evidenceUrl("https://example.com/page"), "https://example.com/page");
 }
 
 console.log("\ndiffPatch — only fields the admin actually touched appear in the diff");
@@ -158,38 +218,50 @@ console.log("\nstale-edit protection");
   ok("a missing page fingerprint never blocks (treated as not-yet-established, not as stale)", !isStaleRelease("", "rel-2"));
 }
 
-console.log("\nedit-proposal-token — signed round trip, tamper and expiry rejection");
+console.log("\nsource-text regression — the token-in-URL design is fully removed");
 {
-  const proposal = {
-    kind: "MODEL_GENERATION" as const, modelId: "toyota.yaris_ativ", pageReleaseId: "rel-1",
-    batchPayload: { schema_version: 1 as const, batch_id: "b", year: 2026, submitted_at: "2026-01-01T00:00:00Z", source: { kind: "ADMIN" }, reason: "r", commands: [] },
-    diff: [], reason: "r", evidence: { sourceKind: "ADMIN" as const, reviewedAt: "2026-01-01" }, actor: "tester",
-  };
-  const token = signEditProposal(proposal);
-  const verified = verifyEditProposal(token);
-  check("a freshly signed token verifies and round-trips the modelId", verified?.modelId, "toyota.yaris_ativ");
-  ok("a tampered token is rejected", verifyEditProposal(token.slice(0, -1) + (token.at(-1) === "0" ? "1" : "0")) === null);
-  ok("garbage input is rejected, not thrown", verifyEditProposal("not-a-token") === null);
-  ok("an empty token is rejected", verifyEditProposal("") === null);
+  ok("lib/edit-proposal-token.ts no longer exists", !fs.existsSync("lib/edit-proposal-token.ts"));
+  ok("the old query-token review page no longer exists", !fs.existsSync("app/admin/(secure)/vehicles/[modelId]/review/page.tsx"));
+  ok("the new review route is a path-segment proposal id, not a query string", fs.existsSync("app/admin/(secure)/vehicles/[modelId]/review/[proposalId]/page.tsx"));
 }
 
-console.log("\nsource-text regression — server actions, pages and nav wiring");
+console.log("\nsource-text regression — edit-session-store.ts enforces ownership and one-time consumption in Postgres, not just in JS");
+{
+  const store = fs.readFileSync("lib/edit-session-store.ts", "utf8");
+  ok("proposal ids are high-entropy random tokens, not sequential/guessable", /randomBytes\(24\)/.test(store));
+  ok("every load is scoped by actor in the query itself (ownership at the DB layer)", (store.match(/\.eq\("actor", actor\)/g) || []).length >= 4);
+  ok("consumeProposal is one atomic conditional UPDATE (status PENDING_REVIEW -> CONSUMED), not read-then-write", /consumeProposal[\s\S]{0,400}status: "CONSUMED"[\s\S]{0,200}eq\("status", "PENDING_REVIEW"\)/.test(store));
+  ok("consumeProposal also re-checks expiry in the same query", /consumeProposal[\s\S]{0,600}gt\("expires_at"/.test(store));
+  ok("promoteDraftToProposal is conditioned on status='DRAFT' so a draft can only be promoted once", /promoteDraftToProposal[\s\S]{0,700}eq\("status", "DRAFT"\)/.test(store));
+  ok("no function returns a partial/ambiguous success on a failed ownership/expiry check -- all return null or throw", !/return (data|row) as EditSessionRow;/.test(store));
+}
+
+console.log("\nsource-text regression — server actions: ownership, atomic consume-first ordering, admin gating");
 {
   const actions = fs.readFileSync("app/admin/vehicle-editor-actions.ts", "utf8");
-  ok("prepareModelGenerationEdit is admin-gated", /export async function prepareModelGenerationEdit[\s\S]{0,200}isAdmin\(\)/.test(actions));
-  ok("prepareMarketTrimEdit is admin-gated", /export async function prepareMarketTrimEdit[\s\S]{0,200}isAdmin\(\)/.test(actions));
-  ok("prepareSpecFactEdit is admin-gated", /export async function prepareSpecFactEdit[\s\S]{0,200}isAdmin\(\)/.test(actions));
-  ok("confirmEditProposal is admin-gated", /export async function confirmEditProposal[\s\S]{0,200}isAdmin\(\)/.test(actions));
-  ok("every prepare action checks the release fingerprint before building a command", (actions.match(/assertNotStale\(/g) || []).length >= 3);
-  ok("confirm re-checks staleness against live state before enqueueing, not just the token's own claim", /liveModelReleaseId\(proposal\.modelId\)[\s\S]{0,200}assertNotStale/.test(actions));
+  for (const fn of [
+    "prepareModelGenerationEdit", "prepareMarketTrimEdit", "addSpecDraftEntry", "removeSpecDraftEntry",
+    "discardSpecDraft", "prepareSpecDraftReview", "confirmEditProposal",
+  ]) {
+    ok(`${fn} is admin-gated`, new RegExp(`export async function ${fn}[\\s\\S]{0,200}isAdmin\\(\\)`).test(actions));
+  }
+  ok("every proposal/draft is created or loaded against the authenticated editor's own name (requireEditor), never a shared fallback actor", !/\|\| "tdr-admin"/.test(actions));
+  ok("confirmEditProposal consumes the proposal BEFORE checking staleness (atomicity first, so a double-submit can never both pass)", /const consumed = await consumeProposal\(proposalId, editor\.name\)[\s\S]{0,400}assertNotStale\(consumed\.pageReleaseId/.test(actions));
+  ok("confirmEditProposal never enqueues without a successful consume", /if \(!consumed\) \{[\s\S]{0,200}throw new Error/.test(actions));
+  ok("every prepare action checks the release fingerprint before building/staging a command", (actions.match(/assertNotStale\(/g) || []).length >= 4);
   ok("MarketTrim create/edit requires evidence ref (requireRef: true)", /prepareMarketTrimEdit[\s\S]*?readEvidence\(formData, \{ requireRef: true \}\)/.test(actions));
-  ok("Spec KNOWN facts require evidence ref; dispositions do not", /requireRef: valueState === "KNOWN"/.test(actions));
+  ok("a KNOWN spec entry requires evidence ref; non-KNOWN dispositions do not", /requireRef: valueState === "KNOWN"/.test(actions));
   ok("duplicate MarketTrim identity is checked before building the command", /findDuplicateMarketTrim\(/.test(actions));
   ok("a MarketTrim edit is rejected if the trim is not already under this model (no wrong-model attach)", /workspace\.trims\.some\(\(row\) => row\.canonicalId === existingTrimId\)/.test(actions));
-  ok("a spec fact edit is rejected if the trim does not belong to this model", /trim\.modelId !== modelId/.test(actions));
+  ok("a spec draft entry is rejected if the trim does not belong to this model", /trim\.modelId !== modelId/.test(actions));
+  ok("source-ref edits validate malformed URLs via evidenceUrl before building any command", /function readSourceRefEdits[\s\S]{0,1200}evidenceUrl\(/.test(actions));
+  ok("source-ref kind free text is validated against a safe token pattern", /SOURCE_KIND_TOKEN/.test(actions));
+  ok("only the entries actually staged in a draft become commands -- prepareSpecDraftReview refuses an empty draft", /if \(!draft\.draftEntries\.length\) throw/.test(actions));
   ok("the only write path is enqueueCanonicalInputBatch — no direct Supabase .update/.insert on canonical tables", !/adminDb\(\)/.test(actions));
   ok("nothing in the actions file targets current_vehicle_ or canonical_ tables directly", !/\.from\(["'`](current_|canonical_)/.test(actions));
 }
+
+console.log("\nsource-text regression — canonical-editor.ts remains read-only");
 {
   const editor = fs.readFileSync("lib/canonical-editor.ts", "utf8");
   ok("canonical-editor.ts only ever selects from serving projections, never writes to them", !/\.(update|insert|upsert|delete)\(/.test(editor));
@@ -200,18 +272,40 @@ console.log("\nsource-text regression — server actions, pages and nav wiring")
   ok("MarketTrimFields never carries a price field (price stays owned by the Price Ledger)", !/price_thb|amount_thb/.test(builder));
   ok("no '@/' alias imports (keeps this module executable outside the bundler for tests)", !/from "@\//.test(builder));
 }
+
+console.log("\nsource-text regression — migration file for admin_edit_sessions is present, locked down, and not wired into any apply step");
+{
+  ok("migration file exists", fs.existsSync("supabase/migration_v35_admin_edit_sessions.sql"));
+  const migration = fs.readFileSync("supabase/migration_v35_admin_edit_sessions.sql", "utf8");
+  ok("RLS is enabled", /enable row level security/.test(migration));
+  ok("public/anon/authenticated are explicitly revoked (same lockdown as canonical_input_batches)", /revoke all on table public\.admin_edit_sessions from public, anon, authenticated/.test(migration));
+  ok("only service_role is granted access", /grant select, insert, update, delete on table public\.admin_edit_sessions to service_role/.test(migration));
+  ok("no anon/authenticated grant appears anywhere in the file", !/grant[^;]*to (anon|authenticated)/.test(migration));
+}
+
+console.log("\nsource-text regression — workspace page: multi-spec draft UI, structured source refs, no JSON textarea for routine work");
 {
   const workspace = fs.readFileSync("app/admin/(secure)/vehicles/[modelId]/page.tsx", "utf8");
+  ok("the spec section supports adding multiple fields to one draft before review", /addSpecDraftEntry/.test(workspace) && /prepareSpecDraftReview/.test(workspace));
+  ok("a pending draft entry can be individually removed", /removeSpecDraftEntry/.test(workspace));
+  ok("a whole draft can be discarded", /discardSpecDraft/.test(workspace));
+  ok("draft evidence is prefilled from the draft's own default (no retyping per field)", /draft\?\.defaultEvidence\?\.sourceRef/.test(workspace));
+  ok("MarketTrim source refs use structured remove checkboxes, not a source_refs JSON textarea", /name="remove_source"/.test(workspace) && !/name="source_refs"/.test(workspace));
+  ok("MarketTrim source refs can reuse a registered OEM evidence target by selection", /new_source_target_/.test(workspace));
   ok("workspace page links out to the existing Price Bench instead of embedding price editing", /Price Bench/.test(workspace) && /vehicle-input\?model=/.test(workspace));
   ok("workspace page links out to Retail lifecycle review", /retail-lifecycle\?model=/.test(workspace));
-  ok("workspace page links out to Editorial when a TDR model crosswalk exists", /models\/\$\{model\.tdrModelId\}\/edit/.test(workspace));
+  ok("workspace page links out to Editorial (+ industry/production context) when a TDR model crosswalk exists", /models\/\$\{model\.tdrModelId\}\/edit/.test(workspace));
+  ok("workspace has an explicit section nav across canonical/trims/specs/prices/lifecycle/editorial/evidence", /Vehicle workspace sections/.test(workspace));
   ok("spec field <select> is rendered from the loaded registry, not a hardcoded list of options", /groups\.entries\(\)/.test(workspace) && !/<option value="powertrain\.max_power_kw"/.test(workspace));
   ok("generation code is displayed but not an editable form field (identity-preserving)", !/name="code"/.test(workspace) && !/name="generation_code"/.test(workspace));
 }
 {
-  const review = fs.readFileSync("app/admin/(secure)/vehicles/[modelId]/review/page.tsx", "utf8");
+  const review = fs.readFileSync("app/admin/(secure)/vehicles/[modelId]/review/[proposalId]/page.tsx", "utf8");
+  ok("review page loads the proposal by id via params, not by reading payload out of searchParams/query", /params: Promise<\{ modelId: string; proposalId: string \}>/.test(review) && !/searchParams/.test(review));
+  ok("review page loads the proposal server-side through loadOwnedProposal (re-authenticates + ownership + expiry)", /loadOwnedProposal\(proposalId\)/.test(review));
   ok("review page renders a Current vs Proposed diff table", /Current/.test(review) && /Proposed/.test(review));
   ok("review page exposes the raw canonical JSON as an optional/secondary view", /<details/.test(review) && /Raw canonical command JSON/.test(review));
+  ok("confirming submits only the opaque proposal_id, not the payload/diff/evidence/reason", /name="proposal_id" value={proposalId}/.test(review) && !/name="payload"/.test(review) && !/name="diff"/.test(review));
   ok("confirming submits through confirmEditProposal, the one path into the queue", /action={confirmEditProposal}/.test(review));
 }
 {

@@ -1,33 +1,35 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { verifyEditProposal } from "@/lib/edit-proposal-token";
-import { confirmEditProposal } from "@/app/admin/vehicle-editor-actions";
+import { loadOwnedProposal, confirmEditProposal } from "@/app/admin/vehicle-editor-actions";
 
 const KIND_LABEL: Record<string, string> = {
   MODEL_GENERATION: "Model / Generation edit",
   MARKET_TRIM: "MarketTrim create/edit",
-  SPEC_FACT: "Spec field edit",
+  SPEC_DRAFT: "Spec draft (multi-field)",
 };
 
 function formatValue(value: unknown) {
   if (value === null || value === undefined || value === "") return "—";
   if (Array.isArray(value)) return value.join(", ");
+  if (typeof value === "object") return JSON.stringify(value);
   return String(value);
 }
 
 export default async function ReviewEditProposalPage({
-  params, searchParams,
+  params,
 }: {
-  params: Promise<{ modelId: string }>;
-  searchParams: Promise<{ token?: string }>;
+  params: Promise<{ modelId: string; proposalId: string }>;
 }) {
-  const { modelId } = await params;
-  const { token } = await searchParams;
-  const proposal = verifyEditProposal(token);
+  const { modelId, proposalId } = await params;
+  // loadOwnedProposal re-authenticates the current admin and only returns a
+  // proposal that both belongs to them AND is still PENDING_REVIEW AND has
+  // not expired -- the URL carries nothing but this opaque id.
+  const proposal = await loadOwnedProposal(proposalId);
   if (!proposal || proposal.modelId !== modelId) notFound();
 
-  const changedRows = proposal.diff.filter((row) => row.changed);
-  const unchangedRows = proposal.diff.filter((row) => !row.changed);
+  const diff = (proposal.diff || []) as Array<{ field: string; label: string; current: unknown; proposed: unknown; changed: boolean }>;
+  const changedRows = diff.filter((row) => row.changed);
+  const unchangedRows = diff.filter((row) => !row.changed);
 
   return <div className="adminEditor">
     <div className="adminHeader">
@@ -40,10 +42,10 @@ export default async function ReviewEditProposalPage({
     </div>
 
     <div className="adminNotice">
-      <b>Session นี้หมดอายุใน ~20 นาที และเช็ค release ซ้ำตอน confirm</b>
+      <b>Proposal นี้เก็บฝั่ง server เท่านั้น — URL มีแค่ id</b>
       <span>
-        ถ้า active canonical release เปลี่ยนระหว่างที่คุณเปิดหน้านี้ (มี revision ใหม่ publish ไปแล้ว) ระบบจะ reject ตอนกด
-        Confirm แทนที่จะเขียนทับของใหม่แบบเงียบ ๆ — ต้องกลับไปเปิด editor แล้ว preview ใหม่
+        หมดอายุใน ~20 นาทีนับจากสร้าง/แก้ล่าสุด, ใช้ยืนยันได้ครั้งเดียว (ใช้แล้วใช้ซ้ำไม่ได้), และเป็นของ {proposal.actor} เท่านั้น.
+        ถ้า active canonical release เปลี่ยนระหว่างที่คุณเปิดหน้านี้ ระบบจะ reject ตอนกด Confirm แทนที่จะเขียนทับของใหม่แบบเงียบ ๆ.
       </span>
       <code>submitted by {proposal.actor} · page release {proposal.pageReleaseId}</code>
     </div>
@@ -67,10 +69,11 @@ export default async function ReviewEditProposalPage({
 
     <div className="adminHeader"><div><small>EVIDENCE &amp; REASON</small><h2>สิ่งที่จะถูกบันทึกไว้ในคิว</h2></div></div>
     <div className="adminStatGrid">
-      <div className="adminStat"><span>Evidence kind</span><strong>{proposal.evidence.sourceKind}</strong><small>{proposal.evidence.reviewedAt}</small></div>
-      <div className="adminStat"><span>Evidence ref</span><strong>{proposal.evidence.sourceRef ? "มี URL" : "ไม่มี"}</strong>
-        <small>{proposal.evidence.sourceRef ? <a href={proposal.evidence.sourceRef} target="_blank" rel="noreferrer">เปิด ↗</a> : "—"}</small></div>
+      <div className="adminStat"><span>Evidence kind</span><strong>{proposal.evidence?.sourceKind}</strong><small>{proposal.evidence?.reviewedAt}</small></div>
+      <div className="adminStat"><span>Evidence ref</span><strong>{proposal.evidence?.sourceRef ? "มี URL" : "ไม่มี"}</strong>
+        <small>{proposal.evidence?.sourceRef ? <a href={proposal.evidence.sourceRef} target="_blank" rel="noreferrer">เปิด ↗</a> : "—"}</small></div>
       <div className="adminStat"><span>Reason</span><strong style={{ fontSize: "0.85rem" }}>{proposal.reason}</strong><small>บันทึกลง canonical revision</small></div>
+      <div className="adminStat"><span>Commands in this batch</span><strong>{((proposal.batchPayload as any)?.commands || []).length}</strong><small>1 batch, 1 confirm</small></div>
     </div>
 
     <details className="adminNotice">
@@ -79,11 +82,11 @@ export default async function ReviewEditProposalPage({
     </details>
 
     <form action={confirmEditProposal} className="adminForm">
-      <input type="hidden" name="token" value={token} />
+      <input type="hidden" name="proposal_id" value={proposalId} />
       <div className="adminFormActions">
         <button className="adminPrimary">Confirm &amp; queue this change</button>
       </div>
     </form>
-    <p><Link href={`/admin/vehicles/${encodeURIComponent(modelId)}`}>ยกเลิกและกลับไปแก้ไข</Link> — ไม่กด Confirm ก็เท่ากับยกเลิก, token หมดอายุเองใน ~20 นาที</p>
+    <p><Link href={`/admin/vehicles/${encodeURIComponent(modelId)}`}>ยกเลิกและกลับไปแก้ไข</Link> — ไม่กด Confirm ก็เท่ากับยกเลิก, proposal หมดอายุเองใน ~20 นาที</p>
   </div>;
 }

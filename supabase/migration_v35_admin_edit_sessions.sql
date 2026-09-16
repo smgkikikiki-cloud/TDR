@@ -1,0 +1,66 @@
+-- Server-side storage for the Canonical Vehicle Editor's review-before-queue
+-- step (app/admin/vehicle-editor-actions.ts, lib/edit-session-store.ts).
+--
+-- Replaces the earlier signed-token design: a token carries the full
+-- canonical command payload/diff/evidence/reason in the URL. This table lets
+-- the review page carry only an opaque id, with the actual proposal content
+-- read back server-side and every check (ownership, expiry, one-time
+-- consumption, active-release match) enforced in Postgres/application code
+-- instead of trusted client state.
+--
+-- Same admin-only, service-role-only access pattern as
+-- migration_v22_unified_vehicle_input.sql's canonical_input_batches: no
+-- anon/authenticated grants, RLS enabled with zero policies (default deny),
+-- application code enforces per-admin ownership since the server always
+-- connects with the service-role key.
+--
+-- NOT applied to production by this branch.
+
+create table if not exists public.admin_edit_sessions (
+  id text primary key,
+  kind text not null check (kind in ('MODEL_GENERATION', 'MARKET_TRIM', 'SPEC_DRAFT')),
+  status text not null default 'PENDING_REVIEW'
+    check (status in ('DRAFT', 'PENDING_REVIEW', 'CONSUMED')),
+  model_id text not null,
+  trim_id text,
+  actor text not null,
+  page_release_id text not null,
+
+  -- SPEC_DRAFT only, while status = 'DRAFT': one accumulated entry per
+  -- comparable-spec field being edited in this session, keyed by field_key.
+  -- Never read by the review page directly -- promoted into batch_payload/
+  -- diff below before status moves to PENDING_REVIEW.
+  draft_entries jsonb not null default '[]'::jsonb
+    check (jsonb_typeof(draft_entries) = 'array'),
+  default_evidence jsonb,
+
+  -- PENDING_REVIEW: the immutable, already-compiled canonical batch this
+  -- proposal will submit, and the human-readable diff the review page shows.
+  -- Both null while status = 'DRAFT'.
+  batch_payload jsonb check (batch_payload is null or jsonb_typeof(batch_payload) = 'object'),
+  diff jsonb check (diff is null or jsonb_typeof(diff) = 'array'),
+  reason text,
+  evidence jsonb,
+
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  expires_at timestamptz not null,
+  consumed_at timestamptz,
+
+  constraint admin_edit_sessions_pending_review_is_compiled
+    check (status <> 'PENDING_REVIEW' or (batch_payload is not null and diff is not null and reason is not null and evidence is not null)),
+  constraint admin_edit_sessions_consumed_has_timestamp
+    check (status <> 'CONSUMED' or consumed_at is not null)
+);
+
+create index if not exists admin_edit_sessions_owner_idx
+  on public.admin_edit_sessions(actor, status, model_id);
+create index if not exists admin_edit_sessions_expiry_idx
+  on public.admin_edit_sessions(expires_at);
+
+alter table public.admin_edit_sessions enable row level security;
+revoke all on table public.admin_edit_sessions from public, anon, authenticated;
+grant select, insert, update, delete on table public.admin_edit_sessions to service_role;
+
+comment on table public.admin_edit_sessions is
+  'Server-only: pending Canonical Vehicle Editor drafts/proposals awaiting human review before entering canonical_input_batches. An admin''s review URL carries only this table''s id -- never the payload, diff, evidence or reason.';

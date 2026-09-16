@@ -202,14 +202,15 @@ export function buildMarketTrimBatch(args: MarketTrimEditArgs): {
 export type SpecFactValueState = "KNOWN" | "UNKNOWN" | "NOT_AVAILABLE" | "NOT_APPLICABLE";
 export type SpecFactVerification = "VERIFIED" | "PROVISIONAL";
 
-export type SpecFactEditArgs = {
-  batchId: string;
-  year: number;
-  submittedAt: string;
-  reason: string;
-  evidence: Evidence;
-  trimId: string;
+/**
+ * One field's worth of a spec-draft edit session. A whole vehicle-spec draft
+ * (drivetrain, power, torque, battery, dimensions, ...) is just an array of
+ * these compiled into ONE batch by buildSpecDraftBatch -- one field per
+ * APPEND_SPEC command, never a "replace all specs" operation.
+ */
+export type SpecDraftEntry = {
   fieldKey: string;
+  labelForDiff: string;
   valueState: SpecFactValueState;
   /** Must be null unless valueState is KNOWN (vehreg SpecFieldDefinition.validate_value). */
   value: string | number | boolean | string[] | null;
@@ -217,20 +218,52 @@ export type SpecFactEditArgs = {
   qualifiers?: Record<string, string>;
   observedAt?: string;
   verificationStatus?: SpecFactVerification;
+  /** Per-field evidence override. Falls back to the draft's default evidence
+   * so the common case -- one source backs every field in the session --
+   * never requires retyping the same URL/date per field. */
+  evidence?: Evidence;
 };
 
-export function buildSpecFactBatch(args: SpecFactEditArgs): { payload: CanonicalBatchPayload } {
-  const factPayload: Record<string, unknown> = {
-    field_key: args.fieldKey,
-    value_state: args.valueState,
-    value: args.valueState === "KNOWN" ? args.value : null,
-    unit: args.valueState === "KNOWN" ? args.unit : "",
-    ...(args.qualifiers && Object.keys(args.qualifiers).length ? { qualifiers: args.qualifiers } : {}),
-    observed_at: args.observedAt || args.evidence.reviewedAt,
-    verification_status: args.verificationStatus || "VERIFIED",
-    source: args.evidence.sourceKind.toLowerCase(),
-    ...(args.evidence.sourceRef ? { source_ref: args.evidence.sourceRef } : {}),
+export type SpecDraftBatchArgs = {
+  batchId: string;
+  year: number;
+  submittedAt: string;
+  reason: string;
+  /** Draft-level default: used for the batch's own source.ref, and for any
+   * entry that does not carry its own evidence override. */
+  evidence: Evidence;
+  trimId: string;
+  entries: SpecDraftEntry[];
+};
+
+function specFactPayload(trimId: string, entry: SpecDraftEntry, fallbackEvidence: Evidence): Record<string, unknown> {
+  const evidence = entry.evidence || fallbackEvidence;
+  return {
+    field_key: entry.fieldKey,
+    value_state: entry.valueState,
+    value: entry.valueState === "KNOWN" ? entry.value : null,
+    unit: entry.valueState === "KNOWN" ? entry.unit : "",
+    ...(entry.qualifiers && Object.keys(entry.qualifiers).length ? { qualifiers: entry.qualifiers } : {}),
+    observed_at: entry.observedAt || evidence.reviewedAt,
+    verification_status: entry.verificationStatus || "VERIFIED",
+    source: evidence.sourceKind.toLowerCase(),
+    ...(evidence.sourceRef ? { source_ref: evidence.sourceRef } : {}),
   };
+}
+
+/**
+ * Compiles a whole spec-editing session into ONE canonical batch: one
+ * APPEND_SPEC command per changed field, nothing for fields the admin never
+ * touched (they simply never became a SpecDraftEntry). This is the single
+ * place "one draft -> one review -> one queued batch" is enforced for specs.
+ */
+export function buildSpecDraftBatch(args: SpecDraftBatchArgs): { payload: CanonicalBatchPayload } {
+  if (!args.entries.length) throw new Error("a spec draft needs at least one field before it can be queued");
+  const commands = args.entries.map((entry) => ({
+    operation: "APPEND_SPEC",
+    canonical_id: args.trimId,
+    payload: specFactPayload(args.trimId, entry, args.evidence),
+  }));
   return {
     payload: {
       schema_version: 1,
@@ -239,9 +272,53 @@ export function buildSpecFactBatch(args: SpecFactEditArgs): { payload: Canonical
       submitted_at: args.submittedAt,
       source: evidenceSource(args.evidence),
       reason: evidenceReasonPrefix(args.evidence) + args.reason,
-      commands: [{ operation: "APPEND_SPEC", canonical_id: args.trimId, payload: factPayload }],
+      commands,
     },
   };
+}
+
+/** Diff for a spec draft: current vs proposed {value_state, value} per field,
+ * reusing diffPatch's JSON-equality comparison (works fine on composite
+ * values, not just scalars). */
+export function diffSpecDraft(
+  currentByField: Record<string, { value_state: string; value: unknown }>,
+  entries: SpecDraftEntry[],
+): DiffRow[] {
+  const current: Record<string, unknown> = {};
+  const patch: Record<string, unknown> = {};
+  const labels: Record<string, string> = {};
+  for (const entry of entries) {
+    const existing = currentByField[entry.fieldKey];
+    current[entry.fieldKey] = existing ? { value_state: existing.value_state, value: existing.value } : { value_state: "UNKNOWN", value: null };
+    patch[entry.fieldKey] = { value_state: entry.valueState, value: entry.valueState === "KNOWN" ? entry.value : null };
+    labels[entry.fieldKey] = entry.labelForDiff;
+  }
+  return diffPatch(current, patch, labels);
+}
+
+export type SourceRefEdit = { kind: string; url: string };
+
+/**
+ * Compiles structured "remove these, add these" source-ref edits into the
+ * same {kind: [url, ...]} shape MarketTrim.source_refs already uses (see
+ * vehreg/entities.py's MarketTrim.source_refs) -- the routine editing UI
+ * never needs to know or reproduce that shape as raw JSON.
+ */
+export function applySourceRefEdits(
+  existing: Record<string, string[]>,
+  edits: { remove: SourceRefEdit[]; add: SourceRefEdit[] },
+): Record<string, string[]> {
+  const result: Record<string, string[]> = {};
+  for (const [kind, urls] of Object.entries(existing || {})) {
+    const kept = urls.filter((url) => !edits.remove.some((r) => r.kind === kind && r.url === url));
+    if (kept.length) result[kind] = [...kept];
+  }
+  for (const { kind, url } of edits.add) {
+    if (!kind || !url) continue;
+    const bucket = result[kind] || (result[kind] = []);
+    if (!bucket.includes(url)) bucket.push(url);
+  }
+  return result;
 }
 
 export function normalizedTrimName(value: string): string {

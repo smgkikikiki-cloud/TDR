@@ -3,36 +3,56 @@
 /**
  * Server actions behind the Canonical Vehicle Editor (/admin/vehicles/[id]).
  *
- * Every mutation here follows the same two-step shape:
- *   prepare*(formData)  -> validate, load current canonical state, build the
- *                          canonical batch payload + diff, sign it into a
- *                          short-lived token, redirect to the review page.
- *   confirmEditProposal -> re-verify the token, re-check the release has not
- *                          moved on (fail closed if it has), then hand the
- *                          exact payload the admin reviewed to
- *                          enqueueCanonicalInputBatch. Nothing here ever
- *                          touches current_vehicle_*, canonical_*_projection
- *                          or any release row directly -- those stay
- *                          reachable only through the same
- *                          queue -> validate -> revision -> PR -> release
- *                          path /admin/vehicle-input already uses.
+ * Model/Generation and MarketTrim edits are one-shot:
+ *   prepare*(formData) -> validate, load current canonical state, build the
+ *                         canonical batch payload + diff, store it as a
+ *                         PENDING_REVIEW proposal (lib/edit-session-store.ts),
+ *                         redirect to /review/[proposalId] (opaque id only).
+ *
+ * Comparable-spec edits go through an explicit multi-field draft so a whole
+ * vehicle's worth of specs can be reviewed and queued as ONE batch instead of
+ * one round trip per field:
+ *   addSpecDraftEntry     -> create-or-append one field into a DRAFT session
+ *   removeSpecDraftEntry  -> drop one field back out of the draft
+ *   prepareSpecDraftReview -> compile every entry into one batch + one diff,
+ *                             promote DRAFT -> PENDING_REVIEW, redirect
+ *
+ * confirmEditProposal is the one path into the real queue for every kind: it
+ * atomically consumes the proposal (so a duplicate confirm can never queue
+ * twice), re-checks the release has not moved on since the page/draft was
+ * opened (fail closed if it has), then hands the exact payload the admin
+ * reviewed to enqueueCanonicalInputBatch. Nothing here ever touches
+ * current_vehicle_*, canonical_*_projection or any release row directly --
+ * those stay reachable only through the same
+ * queue -> validate -> revision -> PR -> release path /admin/vehicle-input
+ * already uses.
  */
 import { redirect } from "next/navigation";
-import { currentEditor, isAdmin } from "@/lib/admin-auth";
+import { currentEditor, isAdmin, type AdminEditor } from "@/lib/admin-auth";
 import { field, requiredField, isoDate, safeSubmissionId, submissionTimestamp, evidenceUrl } from "@/lib/admin-form";
 import {
-  buildModelGenerationBatch, buildMarketTrimBatch, buildSpecFactBatch,
-  diffPatch, findDuplicateMarketTrim, isStaleRelease,
-  type Evidence, type EvidenceKind, type MarketTrimFields,
-  type SpecFactValueState, type SpecFactVerification,
+  buildModelGenerationBatch, buildMarketTrimBatch, buildSpecDraftBatch, diffSpecDraft,
+  diffPatch, findDuplicateMarketTrim, isStaleRelease, applySourceRefEdits,
+  type Evidence, type EvidenceKind, type MarketTrimFields, type SpecDraftEntry,
+  type SpecFactValueState, type SpecFactVerification, type SourceRefEdit,
 } from "@/lib/canonical-command-builder";
 import { loadVehicleWorkspace, liveModelReleaseId } from "@/lib/canonical-editor";
-import { signEditProposal, verifyEditProposal } from "@/lib/edit-proposal-token";
+import {
+  createProposal, createDraft, loadDraft, upsertDraftEntry, removeDraftEntry, discardDraft,
+  promoteDraftToProposal, loadProposal, consumeProposal,
+} from "@/lib/edit-session-store";
 import { enqueueCanonicalInputBatch } from "@/lib/canonical-input-queue";
-import { specFieldByKey } from "@/lib/spec-field-registry";
+import { specFieldByKey, type SpecFieldDefinition } from "@/lib/spec-field-registry";
 import { MARKET_TRIM_POWERTRAINS } from "@/lib/vehicle-taxonomy";
 
 const EVIDENCE_KINDS = new Set<EvidenceKind>(["ADMIN", "OEM", "MEDIA"]);
+const SOURCE_KIND_TOKEN = /^[a-z][a-z0-9_]{0,63}$/;
+
+async function requireEditor(): Promise<AdminEditor> {
+  const editor = await currentEditor();
+  if (!editor) redirect("/admin/login");
+  return editor;
+}
 
 function readEvidence(formData: FormData, opts: { requireRef: boolean }): Evidence {
   const sourceKind = requiredField(formData, "evidence_kind", "ชนิดหลักฐาน").toUpperCase() as EvidenceKind;
@@ -61,6 +81,7 @@ function assertNotStale(pageReleaseId: string, liveReleaseId: string) {
 
 export async function prepareModelGenerationEdit(formData: FormData) {
   if (!(await isAdmin())) redirect("/admin/login");
+  const editor = await requireEditor();
   const modelId = requiredField(formData, "model_id", "canonical model");
   const pageReleaseId = requiredField(formData, "page_release_id", "release fingerprint");
   const workspace = await loadWorkspaceOrThrow(modelId);
@@ -122,16 +143,41 @@ export async function prepareModelGenerationEdit(formData: FormData) {
     ),
   ];
 
-  const editor = await currentEditor();
-  const token = signEditProposal({
-    kind: "MODEL_GENERATION", modelId, pageReleaseId, batchPayload: payload, diff, reason, evidence,
-    actor: editor?.name || "tdr-admin",
+  const proposalId = await createProposal({
+    kind: "MODEL_GENERATION", modelId, actor: editor.name, pageReleaseId,
+    batchPayload: payload, diff, reason, evidence,
   });
-  redirect(`/admin/vehicles/${encodeURIComponent(modelId)}/review?token=${encodeURIComponent(token)}`);
+  redirect(`/admin/vehicles/${encodeURIComponent(modelId)}/review/${encodeURIComponent(proposalId)}`);
+}
+
+function readSourceRefEdits(formData: FormData): { remove: SourceRefEdit[]; add: SourceRefEdit[] } {
+  const remove: SourceRefEdit[] = formData.getAll("remove_source")
+    .filter((value): value is string => typeof value === "string" && value.includes("::"))
+    .map((value) => {
+      const separator = value.indexOf("::");
+      return { kind: value.slice(0, separator), url: value.slice(separator + 2) };
+    });
+
+  const add: SourceRefEdit[] = [];
+  for (let index = 1; index <= 3; index += 1) {
+    const targetId = field(formData, `new_source_target_${index}`);
+    const manualKind = field(formData, `new_source_kind_${index}`).toLowerCase();
+    const manualRef = field(formData, `new_source_ref_${index}`);
+    if (targetId) {
+      add.push({ kind: targetId, url: "" }); // resolved by the caller, which knows modelId
+    } else if (manualKind || manualRef) {
+      if (!manualKind || !SOURCE_KIND_TOKEN.test(manualKind)) {
+        throw new Error(`source kind แถวที่ ${index} ต้องเป็น a-z/0-9/_ (เช่น official_brandsite, ecosticker)`);
+      }
+      add.push({ kind: manualKind, url: evidenceUrl(manualRef || "") });
+    }
+  }
+  return { remove, add };
 }
 
 export async function prepareMarketTrimEdit(formData: FormData) {
   if (!(await isAdmin())) redirect("/admin/login");
+  const editor = await requireEditor();
   const modelId = requiredField(formData, "model_id", "canonical model");
   const pageReleaseId = requiredField(formData, "page_release_id", "release fingerprint");
   const workspace = await loadWorkspaceOrThrow(modelId);
@@ -206,11 +252,16 @@ export async function prepareMarketTrimEdit(formData: FormData) {
 
   const existing = existingTrimId ? workspace.trims.find((row) => row.canonicalId === existingTrimId) : undefined;
   const existingRefs = (existing?.sourceRefs || {}) as Record<string, string[]>;
-  const evidenceKey = evidence.sourceKind.toLowerCase();
-  const mergedSourceRefs = evidence.sourceRef ? {
-    ...existingRefs,
-    [evidenceKey]: [...new Set([...(existingRefs[evidenceKey] || []), evidence.sourceRef])],
-  } : (Object.keys(existingRefs).length ? existingRefs : undefined);
+
+  const { remove, add } = readSourceRefEdits(formData);
+  const resolvedAdd = add.map((row) => {
+    if (row.url) return row; // manual kind+url, already validated
+    const target = workspace.evidenceTargets.find((candidate) => candidate.id === row.kind);
+    if (!target) throw new Error("registered OEM evidence target ที่เลือกไม่ตรงกับ canonical model นี้");
+    return { kind: target.sourceId, url: target.url };
+  });
+  const sourceRefsTouched = remove.length > 0 || resolvedAdd.length > 0;
+  const newSourceRefs = sourceRefsTouched ? applySourceRefEdits(existingRefs, { remove, add: resolvedAdd }) : undefined;
 
   const { payload } = buildMarketTrimBatch({
     batchId: `admin-vehicle-trim-${submissionId}`,
@@ -223,7 +274,7 @@ export async function prepareMarketTrimEdit(formData: FormData) {
     generationCode: workspace.generation.code,
     existingTrimId,
     trim,
-    sourceRefs: mergedSourceRefs,
+    sourceRefs: newSourceRefs,
   });
 
   const diff = diffPatch(
@@ -234,114 +285,193 @@ export async function prepareMarketTrimEdit(formData: FormData) {
       width_mm: "Width mm", height_mm: "Height mm", wheelbase_mm: "Wheelbase mm", tire_front: "Tire front",
       tire_rear: "Tire rear", wheel_front: "Wheel front", wheel_rear: "Wheel rear", notes: "Notes" },
   );
+  if (sourceRefsTouched) {
+    diff.push(...diffPatch(
+      { source_refs: existingRefs },
+      { source_refs: newSourceRefs },
+      { source_refs: "Source refs" },
+    ));
+  }
 
-  const editor = await currentEditor();
-  const token = signEditProposal({
-    kind: "MARKET_TRIM", modelId, pageReleaseId, batchPayload: payload, diff, reason, evidence,
-    actor: editor?.name || "tdr-admin",
+  const proposalId = await createProposal({
+    kind: "MARKET_TRIM", modelId, trimId: existingTrimId, actor: editor.name, pageReleaseId,
+    batchPayload: payload, diff, reason, evidence,
   });
-  redirect(`/admin/vehicles/${encodeURIComponent(modelId)}/review?token=${encodeURIComponent(token)}`);
+  redirect(`/admin/vehicles/${encodeURIComponent(modelId)}/review/${encodeURIComponent(proposalId)}`);
 }
 
-export async function prepareSpecFactEdit(formData: FormData) {
+function parseSpecFieldValue(definition: SpecFieldDefinition, formData: FormData): {
+  valueState: SpecFactValueState; value: string | number | boolean | string[] | null;
+} {
+  const valueState = requiredField(formData, "value_state", "value state").toUpperCase() as SpecFactValueState;
+  if (!["KNOWN", "UNKNOWN", "NOT_AVAILABLE", "NOT_APPLICABLE"].includes(valueState)) {
+    throw new Error("value state ไม่ถูกต้อง");
+  }
+  if (valueState !== "KNOWN") return { valueState, value: null };
+
+  const raw = requiredField(formData, "value", `ค่าของ ${definition.labelEn}`);
+  if (definition.valueType === "NUMBER") {
+    const num = Number(raw);
+    if (!Number.isFinite(num) || num < 0) throw new Error(`${definition.labelEn} ต้องเป็นตัวเลขที่ไม่ติดลบ`);
+    return { valueState, value: num };
+  }
+  if (definition.valueType === "BOOLEAN") {
+    if (raw !== "true" && raw !== "false") throw new Error(`${definition.labelEn} ต้องเป็น true/false`);
+    return { valueState, value: raw === "true" };
+  }
+  if (definition.valueType === "SET") {
+    const items = raw.split(/[,\n]/).map((item) => item.trim()).filter(Boolean);
+    if (!items.length) throw new Error(`${definition.labelEn} ต้องมีอย่างน้อย 1 ค่า`);
+    return { valueState, value: items };
+  }
+  return { valueState, value: raw };
+}
+
+/** Adds (or overwrites, if the same field was already staged) one field into
+ * a multi-spec draft session, creating the session on first use. Every call
+ * re-checks the release fingerprint against live state -- the whole point of
+ * a multi-step draft is that it must not quietly drift onto stale data just
+ * because it spans several requests. */
+export async function addSpecDraftEntry(formData: FormData) {
   if (!(await isAdmin())) redirect("/admin/login");
+  const editor = await requireEditor();
   const modelId = requiredField(formData, "model_id", "canonical model");
+  const trimId = requiredField(formData, "trim_id", "MarketTrim");
   const pageReleaseId = requiredField(formData, "page_release_id", "release fingerprint");
   const workspace = await loadWorkspaceOrThrow(modelId);
   assertNotStale(pageReleaseId, workspace.releaseId);
-
-  const trimId = requiredField(formData, "trim_id", "MarketTrim");
   const trim = workspace.trims.find((row) => row.canonicalId === trimId);
   if (!trim || trim.modelId !== modelId) throw new Error("MarketTrim นี้ไม่อยู่ใต้ canonical model ที่เลือก");
 
   const fieldKey = requiredField(formData, "field_key", "spec field");
   const definition = specFieldByKey(workspace.releaseYear, fieldKey);
   if (!definition) throw new Error("ไม่พบ spec field นี้ใน canonical registry");
-
-  const valueState = requiredField(formData, "value_state", "value state").toUpperCase() as SpecFactValueState;
-  if (!["KNOWN", "UNKNOWN", "NOT_AVAILABLE", "NOT_APPLICABLE"].includes(valueState)) {
-    throw new Error("value state ไม่ถูกต้อง");
-  }
-
-  let value: string | number | boolean | string[] | null = null;
-  if (valueState === "KNOWN") {
-    const raw = requiredField(formData, "value", `ค่าของ ${definition.labelEn}`);
-    if (definition.valueType === "NUMBER") {
-      const num = Number(raw);
-      if (!Number.isFinite(num) || num < 0) throw new Error(`${definition.labelEn} ต้องเป็นตัวเลขที่ไม่ติดลบ`);
-      value = num;
-    } else if (definition.valueType === "BOOLEAN") {
-      if (raw !== "true" && raw !== "false") throw new Error(`${definition.labelEn} ต้องเป็น true/false`);
-      value = raw === "true";
-    } else if (definition.valueType === "SET") {
-      const items = raw.split(/[,\n]/).map((item) => item.trim()).filter(Boolean);
-      if (!items.length) throw new Error(`${definition.labelEn} ต้องมีอย่างน้อย 1 ค่า`);
-      value = items;
-    } else {
-      value = raw;
-    }
-  }
+  const { valueState, value } = parseSpecFieldValue(definition, formData);
 
   const qualifiers: Record<string, string> = {};
   for (const qualifierKey of definition.comparisonQualifiers) {
     const raw = field(formData, `qualifier__${qualifierKey}`);
     if (raw) qualifiers[qualifierKey] = raw;
   }
-
   const observedAt = isoDate(field(formData, "observed_at"), "วันที่สังเกต");
   const verificationStatus = (field(formData, "verification_status") || "VERIFIED").toUpperCase() as SpecFactVerification;
   if (!["VERIFIED", "PROVISIONAL"].includes(verificationStatus)) throw new Error("verification status ไม่ถูกต้อง");
-
-  const reason = requiredField(formData, "reason", "เหตุผล/review note");
-  // A KNOWN fact is a positive claim about the car and needs a traceable
-  // source; disposing a field as unknown/not-available/not-applicable still
-  // needs a reason but not necessarily a URL.
+  // A KNOWN fact is a positive claim and needs a traceable source; disposing
+  // a field as unknown/not-available/not-applicable still needs an evidence
+  // *kind* + review date, but not necessarily a URL.
   const evidence = readEvidence(formData, { requireRef: valueState === "KNOWN" });
+
+  const entry: SpecDraftEntry = {
+    fieldKey, labelForDiff: `${definition.labelEn} (${definition.canonicalUnit || definition.valueType})`,
+    valueState, value, unit: definition.canonicalUnit, qualifiers, observedAt, verificationStatus, evidence,
+  };
+
+  let draftId = field(formData, "draft_id");
+  if (!draftId) {
+    draftId = await createDraft({ modelId, trimId, actor: editor.name, pageReleaseId, defaultEvidence: evidence });
+  }
+  await upsertDraftEntry(draftId, editor.name, entry, evidence);
+  redirect(`/admin/vehicles/${encodeURIComponent(modelId)}?draft=${encodeURIComponent(draftId)}#specs-${encodeURIComponent(trimId)}`);
+}
+
+export async function removeSpecDraftEntry(formData: FormData) {
+  if (!(await isAdmin())) redirect("/admin/login");
+  const editor = await requireEditor();
+  const modelId = requiredField(formData, "model_id", "canonical model");
+  const trimId = requiredField(formData, "trim_id", "MarketTrim");
+  const draftId = requiredField(formData, "draft_id", "draft session");
+  const fieldKey = requiredField(formData, "field_key", "spec field");
+  await removeDraftEntry(draftId, editor.name, fieldKey);
+  redirect(`/admin/vehicles/${encodeURIComponent(modelId)}?draft=${encodeURIComponent(draftId)}#specs-${encodeURIComponent(trimId)}`);
+}
+
+export async function discardSpecDraft(formData: FormData) {
+  if (!(await isAdmin())) redirect("/admin/login");
+  const editor = await requireEditor();
+  const modelId = requiredField(formData, "model_id", "canonical model");
+  const draftId = requiredField(formData, "draft_id", "draft session");
+  await discardDraft(draftId, editor.name);
+  redirect(`/admin/vehicles/${encodeURIComponent(modelId)}`);
+}
+
+/** Compiles every entry currently staged in a spec draft into ONE canonical
+ * batch (one APPEND_SPEC command per changed field) and ONE combined diff,
+ * then promotes the draft to a PENDING_REVIEW proposal. This is the only
+ * place a multi-field spec edit becomes a canonical command -- fields the
+ * admin never added to the draft never produce a command at all. */
+export async function prepareSpecDraftReview(formData: FormData) {
+  if (!(await isAdmin())) redirect("/admin/login");
+  const editor = await requireEditor();
+  const modelId = requiredField(formData, "model_id", "canonical model");
+  const trimId = requiredField(formData, "trim_id", "MarketTrim");
+  const draftId = requiredField(formData, "draft_id", "draft session");
+  const pageReleaseId = requiredField(formData, "page_release_id", "release fingerprint");
+  const workspace = await loadWorkspaceOrThrow(modelId);
+  assertNotStale(pageReleaseId, workspace.releaseId);
+
+  const draft = await loadDraft(draftId, editor.name);
+  if (!draft) throw new Error("draft session หมดอายุหรือไม่พบ — กรุณาเริ่ม spec draft ใหม่");
+  if (draft.modelId !== modelId || draft.trimId !== trimId) throw new Error("draft session ไม่ตรงกับรุ่น/MarketTrim ที่เลือก");
+  if (!draft.draftEntries.length) throw new Error("ยังไม่มี field ใน draft นี้ — เพิ่มอย่างน้อย 1 field ก่อน review");
+
+  const reason = requiredField(formData, "reason", "เหตุผลรวมของ spec draft นี้");
   const submissionId = safeSubmissionId(formData);
   const submittedAt = submissionTimestamp(formData);
+  const defaultEvidence = (draft.defaultEvidence || draft.draftEntries[draft.draftEntries.length - 1].evidence) as Evidence;
+  if (!defaultEvidence) throw new Error("draft นี้ไม่มี evidence เริ่มต้น");
 
-  const { payload } = buildSpecFactBatch({
-    batchId: `admin-vehicle-spec-${submissionId}`,
+  const entries = draft.draftEntries as unknown as SpecDraftEntry[];
+  const { payload } = buildSpecDraftBatch({
+    batchId: `admin-vehicle-spec-draft-${submissionId}`,
     year: workspace.releaseYear,
     submittedAt,
     reason,
-    evidence,
+    evidence: defaultEvidence,
     trimId,
-    fieldKey,
-    valueState,
-    value,
-    unit: definition.canonicalUnit,
-    qualifiers,
-    observedAt,
-    verificationStatus,
+    entries,
   });
 
-  const existingFact = (workspace.specFactsByTrim.get(trimId) || []).find((row) => row.fieldKey === fieldKey);
-  const diff = diffPatch(
-    { value_state: existingFact?.payload?.value_state ?? "UNKNOWN", value: existingFact?.payload?.value ?? null },
-    { value_state: valueState, value },
-    { value_state: "Value state", value: `${definition.labelEn} (${definition.canonicalUnit || definition.valueType})` },
-  );
+  const existingFacts = workspace.specFactsByTrim.get(trimId) || [];
+  const currentByField: Record<string, { value_state: string; value: unknown }> = {};
+  for (const fact of existingFacts) {
+    currentByField[fact.fieldKey] = { value_state: String((fact.payload as any)?.value_state || "UNKNOWN"), value: (fact.payload as any)?.value ?? null };
+  }
+  const diff = diffSpecDraft(currentByField, entries);
 
-  const editor = await currentEditor();
-  const token = signEditProposal({
-    kind: "SPEC_FACT", modelId, pageReleaseId, batchPayload: payload, diff, reason, evidence,
-    actor: editor?.name || "tdr-admin",
+  const proposalId = await promoteDraftToProposal(draftId, editor.name, {
+    batchPayload: payload, diff, reason, evidence: defaultEvidence,
   });
-  redirect(`/admin/vehicles/${encodeURIComponent(modelId)}/review?token=${encodeURIComponent(token)}`);
+  redirect(`/admin/vehicles/${encodeURIComponent(modelId)}/review/${encodeURIComponent(proposalId)}`);
 }
 
 export async function confirmEditProposal(formData: FormData) {
   if (!(await isAdmin())) redirect("/admin/login");
-  const token = requiredField(formData, "token", "review token");
-  const proposal = verifyEditProposal(token);
-  if (!proposal) {
-    throw new Error("review session หมดอายุหรือไม่ถูกต้อง — กรุณากลับไปแก้ไขและ preview ใหม่");
-  }
-  const liveReleaseId = await liveModelReleaseId(proposal.modelId);
-  if (!liveReleaseId) throw new Error("ไม่พบ canonical model นี้ใน active release แล้ว");
-  assertNotStale(proposal.pageReleaseId, liveReleaseId);
+  const editor = await requireEditor();
+  const proposalId = requiredField(formData, "proposal_id", "proposal");
 
-  await enqueueCanonicalInputBatch(proposal.batchPayload);
-  redirect(`/admin/vehicles/${encodeURIComponent(proposal.modelId)}?queued=1&kind=${encodeURIComponent(proposal.kind)}`);
+  // Consume first (atomic, one-time): prevents a duplicate/concurrent
+  // confirm from ever queueing the same proposal twice. If the staleness
+  // check below then fails, the proposal is spent and cannot be replayed --
+  // the admin must redo the edit, which is correct: the diff they reviewed
+  // was against release state that no longer exists.
+  const consumed = await consumeProposal(proposalId, editor.name);
+  if (!consumed) {
+    throw new Error("proposal นี้หมดอายุ ถูกใช้ไปแล้ว หรือไม่ใช่ของคุณ — กรุณาทำรายการใหม่");
+  }
+  const liveReleaseId = await liveModelReleaseId(consumed.modelId);
+  if (!liveReleaseId) throw new Error("ไม่พบ canonical model นี้ใน active release แล้ว");
+  assertNotStale(consumed.pageReleaseId, liveReleaseId);
+
+  await enqueueCanonicalInputBatch(consumed.batchPayload as Record<string, unknown>);
+  redirect(`/admin/vehicles/${encodeURIComponent(consumed.modelId)}?queued=1&kind=${encodeURIComponent(consumed.kind)}`);
+}
+
+/** Read-only helper for the review page: loads a PENDING_REVIEW proposal
+ * owned by the current admin, or null (never distinguishes "not yours" from
+ * "expired" from "never existed" -- all three render the same generic
+ * message). */
+export async function loadOwnedProposal(proposalId: string) {
+  const editor = await currentEditor();
+  if (!editor) return null;
+  return loadProposal(proposalId, editor.name);
 }
