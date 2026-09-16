@@ -9,6 +9,10 @@ from urllib.parse import urljoin, urlparse
 from .models import ImageCandidate, SourceType
 
 _IMAGE_SUFFIXES = {".jpg", ".jpeg", ".png", ".webp", ".avif"}
+# Some first-party OEM image services use CGI/query URLs without a file suffix.
+# Keep this deliberately tiny: these hosts are known BMW media services and the
+# source page itself still has to pass the OEM allowlist/scoring gates.
+_IMAGE_SERVICE_HOSTS = {"prod.cosy.bmw.cloud", "bmw.scene7.com"}
 _EMBEDDED_IMAGE_RE = re.compile(
     r"(?P<url>(?:https?:)?(?:\\?/|/)[^\"'<>\s]{2,}?\.(?:jpe?g|png|webp|avif)(?:\\?[?#][^\"'<>\s]*)?)",
     re.I,
@@ -38,7 +42,11 @@ def _largest_srcset(value: str) -> str:
 def _looks_like_image(url: str, mime: str = "") -> bool:
     if mime:
         return mime.casefold().startswith("image/")
-    return any(urlparse(url).path.casefold().endswith(suffix) for suffix in _IMAGE_SUFFIXES)
+    parsed = urlparse(url)
+    host = (parsed.hostname or "").casefold()
+    if host in _IMAGE_SERVICE_HOSTS and parsed.scheme in {"http", "https"} and parsed.path:
+        return True
+    return any(parsed.path.casefold().endswith(suffix) for suffix in _IMAGE_SUFFIXES)
 
 
 def _decode_embedded_url(value: str) -> str:
@@ -46,6 +54,19 @@ def _decode_embedded_url(value: str) -> str:
     value = value.replace("\\/", "/")
     value = value.replace("\\u002F", "/").replace("\\u002f", "/")
     value = value.replace("\\u0026", "&").replace("\\u003D", "=")
+
+    # MG Thailand serializes optimized image sources as e.g.
+    # ``format=webp/static/car-banner/...`` or
+    # ``format=webp/https:/cdn.example/image.png``. These strings are image
+    # provider directives, not paths relative to the model page. urljoin() on
+    # the raw value produced /th/cars/format=webp/... and guaranteed a 404.
+    # Strip only the known format directive, then restore the real root/URL.
+    value = re.sub(r"^format=(?:webp|avif|jpe?g|png)/", "", value, flags=re.I)
+    if re.match(r"^https?:/[^/]", value, flags=re.I):
+        value = re.sub(r"^(https?):/", r"\1://", value, count=1, flags=re.I)
+    if value.startswith("static/"):
+        value = "/" + value
+
     if value.startswith("//"):
         return "https:" + value
     return value

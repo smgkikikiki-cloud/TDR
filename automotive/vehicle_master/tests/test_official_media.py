@@ -1,7 +1,7 @@
 from dataclasses import replace
 
 from vehreg.official_media.adapters import SOURCES
-from vehreg.official_media.models import ImageSlot, ReviewStatus, SourceType, VehicleIdentity
+from vehreg.official_media.models import ImageSlot, OfficialSource, ReviewStatus, SourceType, VehicleIdentity
 from vehreg.official_media.parsing import parse_page
 from vehreg.official_media.pipeline import _crawlable_page, _safe_url, select_canonical
 from vehreg.official_media.scoring import link_score, score_candidate
@@ -108,3 +108,83 @@ def test_canonical_set_keeps_one_per_slot():
     selected = select_canonical(score_candidate(item, IDENTITY, source) for item in images)
     assert any(item.slot is ImageSlot.FRONT_3Q for item in selected)
     assert any(item.slot is ImageSlot.SIDE for item in selected)
+
+
+def test_bmw_extensionless_cosy_image_is_kept_and_classified_as_exterior():
+    source = OfficialSource(
+        brand_id="bmw",
+        seed_urls=("https://www.bmw.co.th/en/all-models.html",),
+        allowed_hosts=("bmw.co.th",),
+    )
+    identity = VehicleIdentity(
+        brand_id="bmw",
+        model_id="bmw.x3",
+        generation_id="bmw.bmw_x3.g45",
+        model_name="X3",
+        generation_code="G45",
+        model_year=2026,
+    )
+    cosy = "https://prod.cosy.bmw.cloud/bmwweb/cosySec?COSY-EU-100-7331c9Nv2Z7d5c1Q"
+    html = f'''<title>BMW X3</title><img src="{cosy}" alt="BMW X3 20d xDrive M Sport Pro">'''
+    images, _, _ = parse_page(
+        html,
+        "https://www.bmw.co.th/en/all-models/x-series/x3/bmw-x3.html",
+        SourceType.OFFICIAL_SITE,
+    )
+    assert len(images) == 1
+    candidate = score_candidate(images[0], identity, source)
+    assert candidate.identity_evidence
+    assert candidate.slot is ImageSlot.FRONT_3Q
+    assert candidate.status is ReviewStatus.APPROVED
+
+
+def test_unknown_extensionless_host_is_not_treated_as_image():
+    html = '<title>BMW X3</title><img src="https://example.invalid/render?id=x3" alt="BMW X3">'
+    images, _, _ = parse_page(
+        html,
+        "https://www.bmw.co.th/en/all-models/x-series/x3/bmw-x3.html",
+        SourceType.OFFICIAL_SITE,
+    )
+    assert images == []
+
+
+def test_mg_format_proxy_is_unwrapped_before_urljoin_and_promoted_to_exterior():
+    source = SOURCES["mg"]
+    identity = VehicleIdentity(
+        brand_id="mg",
+        model_id="mg.mg_hs",
+        generation_id="mg.mg_hs.hsg",
+        model_name="MG HS",
+        generation_code="HSG",
+        model_year=2026,
+    )
+    html = '''<title>MG HS ราคา สเปค โปรโมชัน</title>
+    <img src="format=webp/static/car-banner/mghs/mghs-bg-dt.png" alt="MG HS" width="2000" height="1000">
+    <img src="format=webp/https:/mg-upload.sgp1.cdn.digitaloceanspaces.com/mg-hs.png" alt="MG HS">'''
+    images, _, _ = parse_page(html, "https://www.mgcars.com/th/cars/mg-hs", SourceType.OFFICIAL_SITE)
+    urls = {item.image_url for item in images}
+    assert "https://www.mgcars.com/static/car-banner/mghs/mghs-bg-dt.png" in urls
+    assert "https://mg-upload.sgp1.cdn.digitaloceanspaces.com/mg-hs.png" in urls
+    banner = next(item for item in images if "/static/car-banner/" in item.image_url)
+    candidate = score_candidate(banner, identity, source)
+    assert candidate.slot is ImageSlot.FRONT_3Q
+    assert candidate.status is ReviewStatus.APPROVED
+
+
+def test_gwm_360_colour_render_is_promoted_to_exterior():
+    source = SOURCES["gwm"]
+    identity = VehicleIdentity(
+        brand_id="gwm",
+        model_id="gwm.wey_g9",
+        generation_id="gwm.wey_g9.wey_g9",
+        model_name="WEY G9",
+        generation_code="WEY G9",
+        model_year=2026,
+    )
+    html = '''<title>GWM Thailand - WEY G9</title>
+    <img src="/content/dam/gwm/pages/th/en/model/wey-g9/360/aurora-white.png" alt="WEY G9">'''
+    images, _, _ = parse_page(html, "https://www.gwm.co.th/en/models/wey-g9", SourceType.OFFICIAL_SITE)
+    candidate = score_candidate(images[0], identity, source)
+    assert candidate.identity_evidence
+    assert candidate.slot is ImageSlot.FRONT_3Q
+    assert candidate.status is ReviewStatus.APPROVED

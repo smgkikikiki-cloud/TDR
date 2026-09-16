@@ -68,7 +68,9 @@ def score_candidate(candidate: ImageCandidate, identity: VehicleIdentity,
     score = 0
     page_text = f"{candidate.page_title} {candidate.source_page}".casefold()
     asset_text = unquote(f"{candidate.alt} {candidate.image_url}").casefold()
-    asset_path = unquote(urlparse(candidate.image_url).path).casefold()
+    parsed_asset = urlparse(candidate.image_url)
+    asset_path = unquote(parsed_asset.path).casefold()
+    asset_host = (parsed_asset.hostname or "").casefold()
     terms = _terms(identity)
     page_match = any(_matches(page_text, term) for term in terms)
     asset_match = any(_matches(asset_text, term) for term in terms)
@@ -125,6 +127,52 @@ def score_candidate(candidate: ImageCandidate, identity: VehicleIdentity,
         slot = ImageSlot.FRONT_3Q
         score += 10
         reasons.append("+10 Toyota grade vehicle render")
+
+    # BMW's model configurator serves clean exterior cut-outs from an
+    # extensionless COSY endpoint. Only promote them when their own alt/URL
+    # carries model identity evidence; generic campaign/detail images stay in
+    # review even when they came from the right model page.
+    bmw_config_render = (
+        identity.brand_id == "bmw"
+        and asset_host == "prod.cosy.bmw.cloud"
+        and asset_match
+    )
+    if bmw_config_render and slot is ImageSlot.UNKNOWN:
+        slot = ImageSlot.FRONT_3Q
+        score += 10
+        reasons.append("+10 BMW COSY configuration render")
+
+    # MG Thailand's current Nuxt catalogue exposes the main model artwork under
+    # /static/car-banner/ (and, for newer launches, its first-party upload CDN).
+    # The parser already requires model identity in the asset metadata before
+    # this can fire. Desktop/mobile duplicates collapse later to the highest
+    # scored canonical slot, so the larger desktop artwork wins naturally.
+    mg_model_banner = (
+        identity.brand_id == "mg"
+        and asset_match
+        and (
+            "/static/car-banner/" in asset_path
+            or asset_host == "mg-upload.sgp1.cdn.digitaloceanspaces.com"
+        )
+    )
+    if mg_model_banner and slot is ImageSlot.UNKNOWN:
+        slot = ImageSlot.FRONT_3Q
+        score += 10
+        reasons.append("+10 MG model banner exterior")
+
+    # GWM model pages expose colour-configurator vehicle cut-outs below /360/.
+    # They are exterior renders even when the filename is only a colour name.
+    # Identity still has to be present in URL/alt metadata, preventing generic
+    # component imagery from being promoted.
+    gwm_360_render = (
+        identity.brand_id == "gwm"
+        and "/360/" in asset_path
+        and asset_match
+    )
+    if gwm_360_render and slot is ImageSlot.UNKNOWN:
+        slot = ImageSlot.FRONT_3Q
+        score += 10
+        reasons.append("+10 GWM 360 exterior render")
 
     candidate.score = max(0, min(100, score))
     candidate.score_reasons = reasons

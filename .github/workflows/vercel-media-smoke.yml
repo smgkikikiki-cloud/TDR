@@ -1,0 +1,48 @@
+name: Vercel media smoke
+
+on:
+  push:
+    branches: [feat/official-media-scale-100]
+    paths:
+      - ".github/workflows/vercel-media-smoke.yml"
+      - "app/models/**"
+      - "lib/canonical-data.ts"
+      - "lib/supabase.ts"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      VERCEL_PREVIEW_URL: https://tdr-git-feat-official-media-scale-100-kiki-ed8b.vercel.app
+    steps:
+      - name: Inspect Vercel catalogue response
+        shell: bash
+        run: |
+          set -u
+          html=/tmp/vercel-models.html
+          headers=/tmp/vercel-headers.txt
+          meta=$(curl -sS -L --max-time 30 \
+            -D "$headers" \
+            -o "$html" \
+            -w 'status=%{http_code} effective=%{url_effective} bytes=%{size_download}' \
+            "${VERCEL_PREVIEW_URL}/models?media-smoke=${GITHUB_SHA}") || rc=$?
+          rc=${rc:-0}
+          echo "curl_rc=${rc} ${meta}"
+          echo "--- response headers (tail) ---"
+          tail -n 30 "$headers" || true
+          echo "--- response fingerprint ---"
+          title=$(grep -oi '<title[^>]*>[^<]*</title>' "$html" | head -1 || true)
+          refs=$(grep -o 'vehicle-media' "$html" | wc -l | tr -d ' ' || true)
+          bz4x=$(grep -o 'vehicle-media/toyota/toyota/bz4x/ea10/' "$html" | wc -l | tr -d ' ' || true)
+          printf 'title=%s\nvehicle_media_refs=%s\nbz4x_refs=%s\n' "$title" "${refs:-0}" "${bz4x:-0}"
+          echo "--- first 500 bytes ---"
+          head -c 500 "$html" || true
+          echo
+          if [ "$rc" -ne 0 ]; then
+            exit "$rc"
+          fi
