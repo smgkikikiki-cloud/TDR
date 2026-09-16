@@ -8,6 +8,7 @@ on:
       - .github/workflows/price-p2p5-pilot.yml
       - automotive/vehicle_master/vehreg/**
       - automotive/vehicle_master/tools/price*.py
+      - automotive/vehicle_master/tools/pilot_pricefetch.py
   workflow_dispatch:
 
 permissions:
@@ -19,6 +20,7 @@ jobs:
     defaults:
       run:
         working-directory: automotive/vehicle_master
+        shell: bash
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -30,8 +32,9 @@ jobs:
 
       - name: P2-P4 fetch, extract, and canonical trim match
         run: |
+          set -euo pipefail
           mkdir -p /tmp/price-pilot/snapshots
-          python tools/pricefetch_targets.py \
+          python tools/pilot_pricefetch.py \
             --target honda_th_crv \
             --target toyota_th_corolla_cross \
             --extract-prices \
@@ -43,6 +46,7 @@ jobs:
 
       - name: P5 reconcile without canonical writes
         run: |
+          set -euo pipefail
           python tools/price_reconcile_batch.py \
             --in /tmp/price-pilot/fetch.json \
             --candidate-state-out /tmp/price-pilot/candidates.json \
@@ -51,6 +55,7 @@ jobs:
 
       - name: Build human review queue
         run: |
+          set -euo pipefail
           python tools/price_review_queue.py \
             --candidate-state /tmp/price-pilot/candidates.json \
             --reconcile /tmp/price-pilot/reconcile.json \
@@ -60,6 +65,7 @@ jobs:
 
       - name: Summarize pilot
         run: |
+          set -euo pipefail
           python - <<'PY'
           import json
           from pathlib import Path
