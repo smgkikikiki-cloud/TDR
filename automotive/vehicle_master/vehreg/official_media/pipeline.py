@@ -69,7 +69,7 @@ def fetch_text(url: str, timeout: int = 20) -> str:
 
 def discover_pages(identity: VehicleIdentity, max_pages: int = 8) -> list[str]:
     source = get_source(identity.brand_id)
-    if not source:
+    if not source or not source.crawl_pages:
         return []
     chosen: list[str] = []
     ranked: list[tuple[int, str]] = []
