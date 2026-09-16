@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { adminDb } from "@/lib/supabase";
 import { saveModelEditorial } from "@/app/admin/catalog-actions";
@@ -11,10 +12,11 @@ export default async function EditModel({ params, searchParams }: {
   const sp = await searchParams;
   const db = adminDb();
   if (!db) notFound();
-  const [{ data: model }, { data: plants }, { data: programs }] = await Promise.all([
+  const [{ data: model }, { data: plants }, { data: programs }, { data: canonicalModel }] = await Promise.all([
     db.from("models").select("*, brands(name_th)").eq("id", id).maybeSingle(),
     db.from("plants").select("id,name_th,province,maker_group").order("maker_group").order("name_th"),
     db.from("production_programs").select("*").eq("model_id", id).order("created_at"),
+    db.from("current_vehicle_models").select("canonical_id").eq("tdr_model_id", id).maybeSingle(),
   ]);
   if (!model) notFound();
 
@@ -34,6 +36,7 @@ export default async function EditModel({ params, searchParams }: {
         <h1>{model.brands?.name_th ? `${model.brands.name_th} ` : ""}{model.name_th}</h1>
         <p>Identity, generation, trim, powertrain, spec และราคาแก้ที่ automotive/vehicle_master/ เท่านั้น หน้านี้รับเฉพาะ editorial กับ industry context ของ TDR</p>
       </div>
+      {canonicalModel ? <Link className="adminPrimaryLink" href={`/admin/vehicles/${encodeURIComponent(canonicalModel.canonical_id)}`}>เปิด Canonical Vehicle Editor →</Link> : null}
     </div>
     {sp.saved ? <div className="adminSaved">บันทึก editorial fields แล้ว</div> : null}
     <form action={saveModelEditorial} className="adminModelMasterForm">
