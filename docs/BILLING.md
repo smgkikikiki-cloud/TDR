@@ -93,9 +93,55 @@ policy, `lib/access-policy-server.ts` for its DB-backed wiring, and
 sales-assisted path (see `/pricing`), not a fourth self-service tier.
 
 Server-side usage metering (`tdr_usage_counters`/`tdr_usage_actions`,
-migration_v32) is atomic and Asia/Bangkok-boundary aware; quota is consumed
-once per logical user action (an `X-TDR-Action-Id` header lets a multi-call
-fan-out, e.g. the Sales Tools dashboard's 7 HTTP calls, share one decision).
+migration_v34) is atomic (via `pg_advisory_xact_lock`, race-free under
+concurrent identical calls) and Asia/Bangkok-boundary aware. Quota is
+consumed exactly once per logical user action by exactly one top-level
+route (e.g. `getRegistrationDashboard()` for the Sales Tools dashboard
+Run, `consumeMarketReportQuota()` for one Market Comparison request);
+lower-level fetchers it calls internally never consume quota themselves.
+There is no client-supplied action id anywhere in this design -- the
+dedup/idempotency key passed to `tdr_consume_usage` is always a
+server-computed, time-bucketed fingerprint of the request's own semantic
+parameters (`lib/access-policy-server.ts::requestFingerprint`), so a
+client cannot reuse one identifier to avoid paying for a materially
+different request.
+
+### Account activation
+
+A Free account is not usable for Compare/Sales Tools/Research/PDF until
+it is *activated*: confirmed email (Supabase Auth), a verified phone
+identity (a real `tdr_customer_phone_identities` row -- Supabase Auth
+phone OTP via `updateUser({phone})` + `verifyOtp({..., type:
+"phone_change"})`, never a typed `user_metadata` string), a postcode, and
+either a company name or explicit individual/not-affiliated status.
+`tdr_customer_profiles.activation_completed_at` is the single stored gate;
+`lib/access-policy-server.ts::requireActivatedAccess()` is the only check
+every tool route uses, so an incomplete account is blocked server-side
+regardless of which client calls the API. The pre-existing production
+`tdr_customer_profiles` row (a real paying legacy customer) is
+grandfathered as activated by migration_v34, since the pre-tiered signup
+flow never wired real phone verification into the UI.
+
+### Preventing double subscriptions
+
+`createCheckout()` refuses to create a second Stripe Checkout Session
+while the customer already has a `tdr_subscriptions` row in `ACTIVE`,
+`TRIALING`, `PAST_DUE`, `UNPAID` or `PAUSED` status (`BLOCKING_SUBSCRIPTION_STATUSES`
+in `lib/billing.ts`) -- it returns 409 and the billing UI hides the
+"subscribe" buttons entirely in that state, pointing to the Billing
+Portal instead. **Stripe plan switching (upgrade/downgrade) is
+intentionally not implemented yet** -- a customer who wants to change
+plans must cancel in the Portal and start a fresh Checkout once the old
+subscription is gone. Until real plan-switching is built, do not add a
+"change plan" flow that upserts a new `tier_*` entitlement without also
+expiring the old one: `setEntitlement()` keys on `(user_id, product)`, so
+an old `tier_pro` row is never touched by a webhook for a new
+`tier_individual` subscription (different product key) and would stay
+`ACTIVE` forever, letting `resolveTierFromEntitlements()` keep resolving
+to Pro after an intentional downgrade to Individual. Any future
+plan-switch implementation must explicitly expire the entitlement row for
+the plan being switched away from in the same transaction/webhook that
+activates the new one.
 
 ## PromptPay later
 

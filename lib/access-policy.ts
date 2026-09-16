@@ -1,11 +1,13 @@
 // Single authoritative access-policy module: tier definitions, per-tier
 // quotas/allowances, Asia/Bangkok cycle-key computation, and the Free-tier
-// sales-module catalog. Pure logic only (no `@/` imports, no DB calls) so
-// it can be unit-tested by scripts/check-access-policy.ts using this
-// repo's plain-Node `--experimental-strip-types` test convention, which
-// cannot resolve the `@/` bundler alias. Server-side wiring (DB reads,
-// token resolution, atomic quota consumption) lives in
-// lib/access-policy-server.ts.
+// sales-module catalog. Pure logic only (no `@/` imports, no DB calls, no
+// Node builtins) so it can be unit-tested by scripts/check-access-policy.ts
+// AND safely imported from client components (e.g. app/pricing/page.tsx
+// reads FEATURES) without pulling `node:crypto` into a browser bundle --
+// that's why requestFingerprint lives in the separate
+// lib/request-fingerprint.ts instead of here, even though it's just as
+// pure/alias-free. Server-side wiring (DB reads, token resolution, the
+// actual RPC call) lives in lib/access-policy-server.ts.
 
 export type Tier = "FREE" | "INDIVIDUAL" | "PRO";
 
@@ -151,7 +153,7 @@ export type FeatureState = "unavailable" | "teaser" | "limited" | "full" | "tail
 
 // Stable, generic keys only -- this union is meant to grow as more
 // high-value capabilities get reserved this way.
-export type FeatureKey = "provincial_registration";
+export type FeatureKey = "provincial_registration" | "research_reports" | "pdf_export_reports";
 
 // Corporate is sales-assisted, not a self-service Tier (see Tier above),
 // but still needs a place in a feature's ladder.
@@ -203,6 +205,32 @@ export const FEATURES: Record<FeatureKey, FeatureDefinition> = {
     },
     countsTowardSalesModuleSelection: false,
     consumesQuota: false,
+  },
+  // Both of these already have a real quota metric and TierPolicy fields
+  // (researchAccess/researchFullMonthlyLimit, pdfMonthlyLimit/pdfWatermark)
+  // -- what's missing is a real content model (research_reports) and a
+  // real PDF renderer (pdf_export_reports), neither of which exists in
+  // this repo yet. `released: false` keeps app/api/research and
+  // app/api/export/pdf returning 404 (hidden, not a working-but-fake
+  // feature) and keeps them off the pricing page's live feature lists
+  // until a real implementation lands -- see the delivery report.
+  research_reports: {
+    key: "research_reports",
+    label: "Research Reports",
+    labelTh: "รายงานวิจัย",
+    released: false,
+    stateByAudience: { FREE: "teaser", INDIVIDUAL: "full", PRO: "full", CORPORATE: "tailored" },
+    countsTowardSalesModuleSelection: false,
+    consumesQuota: true,
+  },
+  pdf_export_reports: {
+    key: "pdf_export_reports",
+    label: "PDF Export",
+    labelTh: "ส่งออก PDF",
+    released: false,
+    stateByAudience: { FREE: "teaser", INDIVIDUAL: "full", PRO: "full", CORPORATE: "tailored" },
+    countsTowardSalesModuleSelection: false,
+    consumesQuota: true,
   },
 };
 

@@ -71,8 +71,17 @@ check("missing active trim price makes model UNKNOWN", resolveModelPriceBand(fak
 
 console.log("\npaid market — trend keeps the full selected scope");
 const workspace = fs.readFileSync("app/member/market/MarketWorkspace.tsx", "utf8");
-check("trend uses a neutral non-UI dimension so Brand/Model/Segment/Body/Powertrain filters stay closed", workspace.includes('marketPath(trendFilters, period, 1, false, "oem_group")'), true);
 check("trend helper can override ranking dimension without changing applied filter state", workspace.includes('dimension: string = filters.dimension'), true);
+// The trend sparkline moved server-side (folded into the same paid
+// request that already consumed quota for the main ranking, instead of
+// the client making up to 6 more separate fetches) -- see
+// app/api/report/market/route.ts. It still uses the same neutral
+// non-UI-exposed oem_group dimension so every selected
+// Brand/Model/Segment/Body/Powertrain/DLT filter stays applied instead of
+// opening the currently ranked dimension.
+const marketRouteForTrend = fs.readFileSync("app/api/report/market/route.ts", "utf8");
+check("server-side trend uses the neutral oem_group dimension, not the ranked dimension", marketRouteForTrend.includes('dimension: "oem_group"'), true);
+check("server-side trend reuses the applied filters rather than reopening them", marketRouteForTrend.includes("const trendFilters = { ...filters }"), true);
 
 console.log("\npaid market — price API stays canonical and fail-closed");
 const marketApi = fs.readFileSync("app/api/report/market/route.ts", "utf8");

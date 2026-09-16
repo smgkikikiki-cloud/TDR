@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { resolveAccessContext, getSalesModuleSelection, setSalesModuleSelection, AccessPolicyError } from "@/lib/access-policy-server";
+import { requireActivatedAccess, getSalesModuleSelection, setSalesModuleSelection, AccessPolicyError } from "@/lib/access-policy-server";
 import { currentSalesModuleCycleKey, validateSalesModuleSelection, SALES_MODULES, type SalesModule } from "@/lib/access-policy";
 import { recordEvent } from "@/lib/telemetry";
 
@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
   if (!accessToken) return NextResponse.json({ error: "member bearer token required" }, { status: 401 });
 
   try {
-    const ctx = await resolveAccessContext(accessToken);
+    const ctx = await requireActivatedAccess(accessToken);
     const cycleKey = currentSalesModuleCycleKey();
     const selection = ctx.tier === "FREE" ? await getSalesModuleSelection(ctx.db, ctx.userId, cycleKey) : null;
     return NextResponse.json({
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
   const modules = Array.isArray(body.modules) ? body.modules.map(String) : [];
 
   try {
-    const ctx = await resolveAccessContext(accessToken);
+    const ctx = await requireActivatedAccess(accessToken);
     if (ctx.tier !== "FREE") {
       return NextResponse.json({ error: "module selection only applies to the Free tier -- paid tiers have every module" }, { status: 400 });
     }

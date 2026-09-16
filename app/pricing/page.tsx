@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect } from "react";
+import { FEATURES } from "@/lib/access-policy";
 import styles from "./pricing.module.css";
 
 function track(event: "upgrade_viewed" | "corporate_cta_clicked") {
@@ -11,6 +12,27 @@ function track(event: "upgrade_viewed" | "corporate_cta_clicked") {
     body: JSON.stringify({ event }),
   }).catch(() => {});
 }
+
+// Research/PDF are scaffolded, not live -- see lib/access-policy.ts's
+// FEATURES registry (research_reports / pdf_export_reports, both
+// `released: false` today). Reading the flag here means this copy updates
+// itself automatically once a real implementation ships, instead of
+// silently drifting out of sync with what the product actually does.
+const RESEARCH_LIVE = FEATURES.research_reports.released;
+const PDF_LIVE = FEATURES.pdf_export_reports.released;
+function researchCopy(liveCopy: string) {
+  return RESEARCH_LIVE ? liveCopy : "Research — เร็วๆ นี้ (อยู่ระหว่างพัฒนา)";
+}
+function pdfCopy(liveCopy: string) {
+  return PDF_LIVE ? liveCopy : "PDF export — เร็วๆ นี้ (อยู่ระหว่างพัฒนา)";
+}
+
+// Corporate contact is configuration-driven, never a guessed address.
+// Set NEXT_PUBLIC_TDR_CORPORATE_CONTACT_URL (a mailto: link or a contact
+// page URL) to enable the CTA; until it's set the button fails visibly
+// (disabled, with an explanatory label) instead of silently pointing
+// somewhere nobody confirmed.
+const CORPORATE_CONTACT_URL = process.env.NEXT_PUBLIC_TDR_CORPORATE_CONTACT_URL || "";
 
 export default function PricingPage() {
   useEffect(() => { track("upgrade_viewed"); }, []);
@@ -33,8 +55,8 @@ export default function PricingPage() {
             <li>✓ Vehicle Compare — 3 ครั้ง/วัน</li>
             <li>✓ Sales Tools — เลือก 4 จาก 6 โมดูล, 10 คำขอ/วัน</li>
             <li>✓ ประวัติข้อมูล — ปีปฏิทินปัจจุบัน</li>
-            <li>✓ Research — preview เท่านั้น</li>
-            <li>✓ PDF export — 1 ครั้ง/เดือน (มีลายน้ำ TDR Free)</li>
+            <li>{RESEARCH_LIVE ? "✓" : "○"} {researchCopy("Research — preview เท่านั้น")}</li>
+            <li>{PDF_LIVE ? "✓" : "○"} {pdfCopy("PDF export — 1 ครั้ง/เดือน (มีลายน้ำ TDR Free)")}</li>
             <li>— ไม่มี API, ไม่มี CSV/XLSX/raw export</li>
           </ul>
           <Link className={`${styles.cta} ${styles.ctaGhost}`} href="/member/login">เริ่มใช้ฟรี</Link>
@@ -49,8 +71,8 @@ export default function PricingPage() {
             <li>✓ Vehicle Compare — ไม่จำกัด ทุกรุ่น</li>
             <li>✓ Sales Tools — ทุกโมดูล ไม่จำกัดคำขอ</li>
             <li>✓ ประวัติข้อมูล — ย้อนหลัง 24 เดือน</li>
-            <li>✓ Research ฉบับเต็ม — 3 ชิ้น/เดือน</li>
-            <li>✓ PDF export — 10 ครั้ง/เดือน</li>
+            <li>{RESEARCH_LIVE ? "✓" : "○"} {researchCopy("Research ฉบับเต็ม — 3 ชิ้น/เดือน")}</li>
+            <li>{PDF_LIVE ? "✓" : "○"} {pdfCopy("PDF export — 10 ครั้ง/เดือน")}</li>
             <li>— ไม่มี API, ไม่มี CSV/XLSX/raw export</li>
           </ul>
           <Link className={styles.cta} href="/member/billing">สมัคร Individual</Link>
@@ -64,8 +86,8 @@ export default function PricingPage() {
           <ul className={styles.features}>
             <li>✓ ทุกอย่างใน Individual</li>
             <li>✓ ประวัติข้อมูล — เต็มรูปแบบเท่าที่มี</li>
-            <li>✓ Research ฉบับเต็ม — ไม่จำกัด</li>
-            <li>✓ PDF export — ไม่จำกัด</li>
+            <li>{RESEARCH_LIVE ? "✓" : "○"} {researchCopy("Research ฉบับเต็ม — ไม่จำกัด")}</li>
+            <li>{PDF_LIVE ? "✓" : "○"} {pdfCopy("PDF export — ไม่จำกัด")}</li>
             <li>— ไม่มี API สำหรับดึงข้อมูลดิบ (สงวนไว้สำหรับ Corporate)</li>
           </ul>
           <Link className={styles.cta} href="/member/billing">สมัคร Pro</Link>
@@ -84,13 +106,19 @@ export default function PricingPage() {
             <li>· Research support และรายงานที่ปรับแต่งได้</li>
           </ul>
         </div>
-        <a
-          className={styles.corporateCta}
-          href="mailto:sales@thailanddevelopmentreport.com?subject=TDR%20Corporate"
-          onClick={() => track("corporate_cta_clicked")}
-        >
-          Talk to TDR →
-        </a>
+        {CORPORATE_CONTACT_URL ? (
+          <a
+            className={styles.corporateCta}
+            href={CORPORATE_CONTACT_URL}
+            onClick={() => track("corporate_cta_clicked")}
+          >
+            Talk to TDR →
+          </a>
+        ) : (
+          <span className={styles.corporateCta} style={{ opacity: 0.6, cursor: "not-allowed" }} aria-disabled="true">
+            ช่องทางติดต่อ Corporate ยังไม่ได้ตั้งค่า
+          </span>
+        )}
       </section>
     </main>
   );

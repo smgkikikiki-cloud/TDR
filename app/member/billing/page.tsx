@@ -19,6 +19,7 @@ type BillingStatus = {
   entitlements: { product: string; status: string; valid_until: string | null }[];
   tier: "FREE" | "INDIVIDUAL" | "PRO";
   plans: { planCode: string; tier: string; interval: string; priceThb: number | null; configured: boolean }[];
+  hasActiveSubscription: boolean;
   checkoutConfigured: boolean;
   portalConfigured: boolean;
 };
@@ -131,16 +132,23 @@ export default function MemberBillingPage() {
             {data.subscription?.current_period_end ? <p>รอบปัจจุบันถึง <b>{date(data.subscription.current_period_end)}</b></p> : null}
           </div>
           <div className={styles.billingActions}>
-            {data.plans.filter((p) => p.interval === "monthly").map((plan) => (
+            {/* An active/trialing/past_due/unpaid/paused subscription
+                already exists -- no "subscribe again" button, ever. Plan
+                changes go through the Billing Portal; Stripe plan
+                switching is not wired up in this patch (see
+                docs/BILLING.md), so this intentionally does not offer an
+                in-app upgrade/downgrade flow yet. */}
+            {!data.hasActiveSubscription ? data.plans.filter((p) => p.interval === "monthly").map((plan) => (
               <button key={plan.planCode} disabled={busy || !plan.configured} onClick={() => startCheckout(plan.planCode)}>
                 {plan.configured ? `สมัคร ${plan.tier} — ฿${plan.priceThb}/เดือน` : `${plan.tier} (ยังไม่ตั้งค่า Stripe Price)`}
               </button>
-            ))}
+            )) : null}
             {data.customerBound ? (
-              <button className={styles.secondary} disabled={busy || !data.portalConfigured} onClick={openPortal}>จัดการบัตร / ใบเสร็จ / ยกเลิก</button>
+              <button className={styles.secondary} disabled={busy || !data.portalConfigured} onClick={openPortal}>จัดการบัตร / ใบเสร็จ / ยกเลิก / เปลี่ยนแพ็กเกจ</button>
             ) : null}
             <button className={styles.secondary} disabled={busy} onClick={() => location.reload()}>รีเฟรชสถานะ</button>
           </div>
+          {data.hasActiveSubscription ? <p className={styles.note}>บัญชีนี้มี subscription ที่ใช้งานอยู่แล้ว ({data.subscription?.plan_code} · {data.subscription?.status}) — จัดการหรือเปลี่ยนแพ็กเกจผ่าน Billing Portal เท่านั้น เพื่อป้องกันการสมัครซ้ำซ้อน</p> : null}
           <p className={styles.note}>แพ็กเกจรายปีอยู่ระหว่างกำหนดราคา — ยังไม่เปิดใช้งานจนกว่าจะตั้งราคาและตั้งค่า Stripe Price ID</p>
         </section>
       </>}

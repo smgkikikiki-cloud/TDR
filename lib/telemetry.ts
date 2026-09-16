@@ -20,6 +20,7 @@ export const PRODUCT_EVENT_NAMES = [
   "upgrade_viewed",
   "checkout_started",
   "subscription_started",
+  "subscription_renewed",
   "corporate_cta_clicked",
 ] as const;
 

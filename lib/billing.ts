@@ -180,6 +180,15 @@ function resolveCheckoutPlan(planCode: string): { planCode: string; product: str
   return { planCode: plan.planCode, product: plan.product, priceId };
 }
 
+// Subscription states that represent a live, currently-charging (or
+// recently so) Stripe relationship. A second Checkout session while one
+// of these exists would create a concurrent second subscription (e.g.
+// 399 + 990 both billing at once) rather than a plan change -- Stripe
+// plan switching is not implemented in this patch (see docs/BILLING.md),
+// so the safe behavior is to fail closed and send the customer to the
+// Billing Portal instead.
+export const BLOCKING_SUBSCRIPTION_STATUSES = ["ACTIVE", "TRIALING", "PAST_DUE", "UNPAID", "PAUSED"];
+
 export async function createCheckout(args: {
   accessToken: string;
   planCode: string;
@@ -188,6 +197,24 @@ export async function createCheckout(args: {
 }) {
   const resolved = resolveCheckoutPlan(args.planCode);
   const member = await requireMember(args.accessToken);
+  const db = adminDb();
+  if (!db) throw new BillingError(503, "member database is not configured");
+  const { data: existingSubscription, error: existingError } = await db
+    .from("tdr_subscriptions")
+    .select("status,plan_code")
+    .eq("customer_id", member.customerId)
+    .in("status", BLOCKING_SUBSCRIPTION_STATUSES)
+    .order("updated_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (existingError) throw new BillingError(503, "could not verify existing subscription status");
+  if (existingSubscription) {
+    throw new BillingError(
+      409,
+      `this account already has a ${existingSubscription.plan_code} subscription (${existingSubscription.status}) -- manage or cancel it from the Billing Portal before starting a new one`,
+    );
+  }
+
   const customerId = await ensureStripeCustomer(member);
   const session = await cardGateway().request("/v1/checkout/sessions", {
     mode: "subscription",
@@ -472,8 +499,21 @@ export async function processStripeWebhook(event: StripeObject) {
       if (context) {
         const periodEnd = isoFromUnix(object.lines?.data?.[0]?.period?.end) || await currentSubscriptionEnd(context.customerId);
         const product = productForPlanCode(metadataPlan(object));
+        // invoice.paid fires on every renewal, not just the first payment
+        // -- read whether this product was already ACTIVE before this
+        // event to tell a genuine new subscription/conversion apart from
+        // a routine renewal, so telemetry doesn't record every renewal as
+        // a fresh "subscription_started".
+        const { data: priorEntitlement } = await db
+          .from("tdr_entitlements").select("status").eq("user_id", context.userId).eq("product", product).maybeSingle();
+        const isRenewal = priorEntitlement?.status === "ACTIVE";
         await setEntitlement(context.userId, "ACTIVE", periodEnd, product);
-        await recordEvent({ eventName: "subscription_started", userId: context.userId, customerId: context.customerId, props: { product } });
+        await recordEvent({
+          eventName: isRenewal ? "subscription_renewed" : "subscription_started",
+          userId: context.userId,
+          customerId: context.customerId,
+          props: { product },
+        });
       }
     }
 

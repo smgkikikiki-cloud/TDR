@@ -14,6 +14,7 @@ import {
   validateSalesModuleSelection,
   type EntitlementRow,
 } from "../lib/access-policy.ts";
+import { requestFingerprint } from "../lib/request-fingerprint.ts";
 
 let failed = 0;
 function check(name: string, got: unknown, want: unknown) {
@@ -112,6 +113,39 @@ check("provincial_registration is not part of the 4-of-6 sales module catalog", 
 check("provincial_registration never counts toward sales module selection", FEATURES.provincial_registration.countsTowardSalesModuleSelection, false);
 check("provincial_registration never consumes quota", FEATURES.provincial_registration.consumesQuota, false);
 check("provincial_registration is not released yet", FEATURES.provincial_registration.released, false);
+
+console.log("\naccess policy — server-computed quota fingerprint (no client-trusted action id)");
+const T0 = 1_800_000_000_000; // fixed instant, same coalesce bucket for T0 and T0+1000ms at a 5s window
+check(
+  "identical request retried a moment later coalesces to the same fingerprint",
+  requestFingerprint("user-1", "sales_query", ["dashboard", "2026-06-01", "brand,model"], 5000, T0)
+    === requestFingerprint("user-1", "sales_query", ["dashboard", "2026-06-01", "brand,model"], 5000, T0 + 1000),
+  true,
+);
+check(
+  "a materially different request (different dimension set) never coalesces, even at the same instant",
+  requestFingerprint("user-1", "sales_query", ["dashboard", "2026-06-01", "brand,model"], 5000, T0)
+    === requestFingerprint("user-1", "sales_query", ["dashboard", "2026-06-01", "segment,powertrain"], 5000, T0),
+  false,
+);
+check(
+  "a different user never shares a fingerprint for the identical request",
+  requestFingerprint("user-1", "sales_query", ["dashboard", "2026-06-01", "brand,model"], 5000, T0)
+    === requestFingerprint("user-2", "sales_query", ["dashboard", "2026-06-01", "brand,model"], 5000, T0),
+  false,
+);
+check(
+  "the same request well outside the coalesce window pays fresh quota (not an infinite free pass)",
+  requestFingerprint("user-1", "vehicle_compare", ["a,b", false], 5000, T0)
+    === requestFingerprint("user-1", "vehicle_compare", ["a,b", false], 5000, T0 + 60_000),
+  false,
+);
+check(
+  "compare selection order does not matter once the caller sorts ids, but an actually different selection differs",
+  requestFingerprint("user-1", "vehicle_compare", [["a", "b"].sort().join(","), false], 5000, T0)
+    === requestFingerprint("user-1", "vehicle_compare", [["a", "c"].sort().join(","), false], 5000, T0),
+  false,
+);
 
 console.log(failed ? `\n${failed} check(s) failed` : "\nall access policy checks passed");
 process.exit(failed ? 1 : 0);

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { BillingError, getBillingStatus } from "@/lib/billing";
+import { BillingError, getBillingStatus, BLOCKING_SUBSCRIPTION_STATUSES } from "@/lib/billing";
 import { resolveTierFromEntitlements, type EntitlementRow } from "@/lib/access-policy";
 import { PLAN_CATALOG, isPlanConfigured } from "@/lib/plans";
 
@@ -24,7 +24,10 @@ export async function GET(request: NextRequest) {
       priceThb: plan.priceThb,
       configured: isPlanConfigured(plan),
     }));
-    return NextResponse.json({ ...status, tier, plans }, { headers: { "Cache-Control": "private, no-store" } });
+    const hasActiveSubscription = Boolean(
+      status.subscription && BLOCKING_SUBSCRIPTION_STATUSES.includes(status.subscription.status),
+    );
+    return NextResponse.json({ ...status, tier, plans, hasActiveSubscription }, { headers: { "Cache-Control": "private, no-store" } });
   } catch (error) {
     if (error instanceof BillingError) {
       return NextResponse.json({ error: error.message }, { status: error.status });

@@ -27,6 +27,8 @@ type MarketResponse = {
   period_to: string;
   rows: MarketRow[];
   comparison: null | { mode: MarketComparison; window: { from: string; to: string }; movement: MarketRow[] };
+  trend: TrendPoint[];
+  quota: { used: number; limit: number | null; remaining: number | null; resets_at: string };
 };
 type FilterState = {
   period: string;
@@ -77,10 +79,8 @@ function monthLabel(period: string) {
   return new Intl.DateTimeFormat("th-TH", { month: "short", year: "2-digit" }).format(new Date(`${normalized}T00:00:00Z`));
 }
 
-async function jsonFetch(path: string, token: string, actionId?: string) {
-  const headers: Record<string, string> = { Authorization: `Bearer ${token}` };
-  if (actionId) headers["X-TDR-Action-Id"] = actionId;
-  const response = await fetch(path, { headers, cache: "no-store" });
+async function jsonFetch(path: string, token: string) {
+  const response = await fetch(path, { headers: { Authorization: `Bearer ${token}` }, cache: "no-store" });
   const body = await response.json();
   if (!response.ok) throw Object.assign(new Error(body.error || "โหลดข้อมูลไม่สำเร็จ"), { status: response.status, body });
   return body;
@@ -121,7 +121,7 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
   const [applied, setApplied] = useState<FilterState | null>(null);
   const [data, setData] = useState<MarketResponse | null>(null);
   const [trend, setTrend] = useState<TrendPoint[]>([]);
-  const [status, setStatus] = useState<"loading" | "ready" | "forbidden" | "quota" | "error">("loading");
+  const [status, setStatus] = useState<"loading" | "ready" | "forbidden" | "activation" | "quota" | "error">("loading");
   const [message, setMessage] = useState("");
 
   const periods = useMemo(() => coverage.map((row) => periodKey(row.period)).filter(Boolean).sort(), [coverage]);
@@ -141,34 +141,20 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
     return missingReportPeriods(comparisonMarketWindow(resolveMarketWindow(period, window), comparison), available).length === 0;
   }
 
-  async function loadMarket(next: FilterState, accessToken: string, rows: CoverageRowLike[]) {
+  async function loadMarket(next: FilterState, accessToken: string) {
     setStatus("loading");
     setMessage("");
-    // One "Update market" click/boot load is one logical Sales Tools
-    // request even though it fans out into a main ranking call plus up to
-    // 6 trend calls -- all share this actionId so the server counts the
-    // sales_query quota once, not once per internal call (see
-    // lib/access-policy-server.ts::consumeUsage / migration_v32's
-    // tdr_consume_usage RPC).
-    const actionId = crypto.randomUUID();
+    // One "Update market" click = one HTTP request = one sales_query
+    // quota unit, consumed exactly once server-side. The trend sparkline
+    // (previously up to 6 separate client-side fetches trying to share one
+    // quota unit via a client-supplied action id) is now computed
+    // server-side in this same request and returned as `trend`.
     try {
-      const body = await jsonFetch(marketPath(next), accessToken, actionId) as MarketResponse;
+      const body = await jsonFetch(marketPath(next), accessToken) as MarketResponse;
       setData(body);
       setApplied(next);
+      setTrend(body.trend || []);
       setStatus("ready");
-      const trendPeriods = rows.map((row) => periodKey(row.period)).filter((period) => period && period <= next.period).sort().slice(-6);
-      const trendFilters = { ...next, window: "month" as MarketWindow, compare: "none" as const };
-      const points = await Promise.all(trendPeriods.map(async (period) => {
-        try {
-          // OEM group is deliberately neutral here: the customer-facing filter rail
-          // does not expose an OEM-group filter, so the API keeps every selected
-          // Brand/Model/Segment/Body/Powertrain/DLT filter instead of opening the
-          // currently ranked dimension. market_total is therefore the true scope total.
-          const trendBody = await jsonFetch(marketPath(trendFilters, period, 1, false, "oem_group"), accessToken, actionId) as MarketResponse;
-          return { period, total: Number(trendBody.rows?.[0]?.market_total || 0) };
-        } catch { return null; }
-      }));
-      setTrend(points.filter(Boolean) as TrendPoint[]);
     } catch (error: any) {
       if (error?.status === 401) {
         await browserDb()?.auth.signOut();
@@ -180,7 +166,12 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
         setMessage(error?.message || "ใช้โควตา Sales Tools ของวันนี้ครบแล้ว");
         return;
       }
-      setStatus(error?.status === 403 ? "forbidden" : "error");
+      if (error?.status === 403) {
+        setStatus(String(error?.message || "").includes("activation") ? "activation" : "forbidden");
+        setMessage(error?.message || "");
+        return;
+      }
+      setStatus("error");
       const missing = error?.body?.missing_periods;
       setMessage(Array.isArray(missing) && missing.length ? `ช่วงข้อมูลไม่ครบ: ${missing.map(periodKey).join(", ")}` : (error?.message || "โหลดข้อมูลไม่สำเร็จ"));
     }
@@ -205,10 +196,14 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
           registrationType: "", brand: "", model: "", segment: "", bodyType: "", powertrain: "", allScopes: false,
         };
         setToken(accessToken); setCoverage(rows); setFilters(initial);
-        await loadMarket(initial, accessToken, rows);
+        await loadMarket(initial, accessToken);
       } catch (error: any) {
         if (cancelled) return;
-        setStatus(error?.status === 403 ? "forbidden" : "error");
+        if (error?.status === 403) {
+          setStatus(String(error?.message || "").includes("activation") ? "activation" : "forbidden");
+        } else {
+          setStatus("error");
+        }
         setMessage(error?.message || "โหลดข้อมูลไม่สำเร็จ");
       }
     }
@@ -251,7 +246,7 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
   async function submit(event: React.FormEvent) {
     event.preventDefault();
     if (!token || !filters.period) return;
-    await loadMarket(filters, token, coverage);
+    await loadMarket(filters, token);
   }
   async function signOut() { await browserDb()?.auth.signOut(); router.replace("/member/login"); }
   // Raw CSV export used to live here (client-only Blob download of
@@ -261,6 +256,7 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
   // path found in the codebase (see the delivery report).
 
   if (status === "loading" && !data) return <main className={styles.shell}><div className={styles.stateCard}>กำลังเปิด Market Comparison…</div></main>;
+  if (status === "activation") return <main className={styles.shell}><section className={styles.stateCard}><h1>ยืนยันตัวตนก่อนใช้ Sales Tools</h1><p>ต้องยืนยันอีเมล ยืนยันเบอร์มือถือ และกรอกโปรไฟล์ให้ครบก่อน</p><Link href="/member/profile">ไปที่หน้าโปรไฟล์ →</Link></section></main>;
   if (status === "forbidden") return <main className={styles.shell}><section className={styles.stateCard}><h1>บัญชีนี้ยังไม่มีสิทธิ์ Registration Intelligence</h1><p>{message}</p><Link href="/reports">ดูแพ็กเกจ TDR Report</Link></section></main>;
   if (status === "quota") return <main className={styles.shell}><section className={styles.stateCard}><h1>ใช้โควตา Sales Tools ของวันนี้ครบแล้ว</h1><p>{message}</p><Link href="/pricing">ดูแพ็กเกจ</Link></section></main>;
   if (status === "error" && !data) return <main className={styles.shell}><section className={styles.stateCard}><h1>เปิด Market Comparison ไม่สำเร็จ</h1><p>{message}</p><button onClick={() => location.reload()}>ลองใหม่</button></section></main>;

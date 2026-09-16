@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCanonicalCompareTrims } from "@/lib/canonical-data";
 import { compareValue, rowIsDifferent, visibleCompareGroups, type FreeCompareTrim } from "@/lib/free-compare";
-import { resolveAccessContext, requireUsage, AccessPolicyError } from "@/lib/access-policy-server";
+import { requireActivatedAccess, requireUsage, AccessPolicyError } from "@/lib/access-policy-server";
 import { recordEvent } from "@/lib/telemetry";
 
 export const dynamic = "force-dynamic";
@@ -20,11 +20,17 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "select at least 2 trims to compare" }, { status: 400 });
   }
   const diffOnly = request.nextUrl.searchParams.get("diff") === "1";
-  const actionId = request.headers.get("x-tdr-action-id");
 
   try {
-    const ctx = await resolveAccessContext(accessToken);
-    const quota = await requireUsage(ctx, "vehicle_compare", ctx.policy.compareDailyLimit, actionId);
+    const ctx = await requireActivatedAccess(accessToken);
+    // Fingerprint is server-computed from the request's own semantic
+    // parameters (the sorted trim selection + diff flag) -- there is no
+    // client-supplied action id in this contract to trust or misuse. A
+    // materially different selection always pays fresh quota even if a
+    // client tries to reuse whatever it sent before.
+    const quota = await requireUsage(ctx, "vehicle_compare", ctx.policy.compareDailyLimit, [
+      [...requestedIds].sort().join(","), diffOnly,
+    ]);
 
     const all = (await getCanonicalCompareTrims(600)) as FreeCompareTrim[];
     const byId = new Map(all.map((trim) => [trim.id, trim]));
@@ -50,7 +56,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     if (error instanceof AccessPolicyError) {
       if (error.status === 429) {
-        const ctx = await resolveAccessContext(accessToken).catch(() => null);
+        const ctx = await requireActivatedAccess(accessToken).catch(() => null);
         if (ctx) await recordEvent({ eventName: "compare_quota_hit", userId: ctx.userId });
       }
       return NextResponse.json({ error: error.message }, { status: error.status });
