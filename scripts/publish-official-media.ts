@@ -26,6 +26,13 @@ type MediaRow = {
   status: "approved" | "review" | "rejected";
 };
 
+type ExistingAsset = {
+  id: number;
+  storage_path: string | null;
+  image_type: string;
+  sha256: string;
+};
+
 function arg(name: string, fallback: string) {
   const index = process.argv.indexOf(`--${name}`);
   return index >= 0 && process.argv[index + 1] ? process.argv[index + 1] : fallback;
@@ -48,6 +55,10 @@ function requiredEnv(...names: string[]) {
   throw new Error(`missing environment variable: ${names.join(" or ")}`);
 }
 
+function assetKey(row: Pick<MediaRow, "image_type" | "sha256">) {
+  return `${row.image_type}\u0000${row.sha256}`;
+}
+
 async function main() {
   const root = resolve(process.cwd(), "automotive/vehicle_master");
   const year = arg("year", "2026");
@@ -68,8 +79,8 @@ async function main() {
 
   // The public media layer is canonical by (vehicle, image type). Reject a
   // manifest that tries to publish two different approved files for one slot.
-  // This also makes the reconciliation step below safe and deterministic.
   const canonicalRows = new Map<string, MediaRow>();
+  const desiredByVehicle = new Map<string, Set<string>>();
   for (const row of approvedRows) {
     const slotKey = `${row.vehicle_id}\u0000${row.image_type}`;
     const prior = canonicalRows.get(slotKey);
@@ -79,6 +90,9 @@ async function main() {
       );
     }
     canonicalRows.set(slotKey, row);
+    const desired = desiredByVehicle.get(row.vehicle_id) ?? new Set<string>();
+    desired.add(assetKey(row));
+    desiredByVehicle.set(row.vehicle_id, desired);
   }
 
   let published = 0;
@@ -151,34 +165,36 @@ async function main() {
     }
   }
 
-  // Only prune superseded canonical metadata after every desired asset has
-  // published successfully. This prevents a transient upload failure from
-  // deleting the previously working image. Object cleanup is best-effort after
-  // metadata removal: an orphaned blob is preferable to a broken public row.
+  // After every desired upload succeeds, make each successfully managed vehicle
+  // an authoritative mirror of this manifest's approved set. This removes both
+  // superseded hashes for an existing slot and slots that a stricter crawl no
+  // longer approves (for example a model-prefix false positive). Vehicles with
+  // zero approved rows are deliberately not reconciled so a transient crawl
+  // failure cannot erase their previously working public media.
   if (failed === 0) {
-    for (const row of canonicalRows.values()) {
-      const { data: staleRows, error: staleReadError } = await db
+    for (const [vehicleId, desired] of desiredByVehicle) {
+      const { data, error: staleReadError } = await db
         .from("vehicle_media_assets")
-        .select("storage_path,sha256")
-        .eq("vehicle_id", row.vehicle_id)
-        .eq("image_type", row.image_type)
-        .neq("sha256", row.sha256);
+        .select("id,storage_path,image_type,sha256")
+        .eq("vehicle_id", vehicleId);
       if (staleReadError) {
         failed += 1;
-        console.error(`${row.vehicle_id}: stale lookup failed: ${staleReadError.message}`);
+        console.error(`${vehicleId}: reconciliation lookup failed: ${staleReadError.message}`);
         continue;
       }
-      if (!staleRows?.length) continue;
 
+      const existingRows = (data ?? []) as ExistingAsset[];
+      const staleRows = existingRows.filter(row => !desired.has(assetKey(row)));
+      if (!staleRows.length) continue;
+
+      const staleIds = staleRows.map(row => row.id);
       const { error: staleDeleteError } = await db
         .from("vehicle_media_assets")
         .delete()
-        .eq("vehicle_id", row.vehicle_id)
-        .eq("image_type", row.image_type)
-        .neq("sha256", row.sha256);
+        .in("id", staleIds);
       if (staleDeleteError) {
         failed += 1;
-        console.error(`${row.vehicle_id}: stale metadata prune failed: ${staleDeleteError.message}`);
+        console.error(`${vehicleId}: stale metadata prune failed: ${staleDeleteError.message}`);
         continue;
       }
 
@@ -192,7 +208,7 @@ async function main() {
         const { error: removeError } = await db.storage.from(BUCKET).remove(stalePaths);
         if (removeError) {
           orphanCleanupWarnings += stalePaths.length;
-          console.warn(`${row.vehicle_id}: stale object cleanup warning: ${removeError.message}`);
+          console.warn(`${vehicleId}: stale object cleanup warning: ${removeError.message}`);
         }
       }
     }
