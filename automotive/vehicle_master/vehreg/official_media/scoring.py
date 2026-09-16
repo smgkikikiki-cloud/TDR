@@ -57,6 +57,7 @@ def score_candidate(candidate: ImageCandidate, identity: VehicleIdentity,
     score = 0
     page_text = f"{candidate.page_title} {candidate.source_page}".casefold()
     asset_text = unquote(f"{candidate.alt} {candidate.image_url}").casefold()
+    asset_path = unquote(urlparse(candidate.image_url).path).casefold()
     terms = _terms(identity)
     page_match = any(_matches(page_text, term) for term in terms)
     asset_match = any(_matches(asset_text, term) for term in terms)
@@ -100,8 +101,22 @@ def score_candidate(candidate: ImageCandidate, identity: VehicleIdentity,
         score -= 30
         reasons.append("-30 accessory")
 
+    slot = classify_slot(candidate)
+    # Toyota publishes grade cut-outs under a stable first-party taxonomy. They
+    # are clean vehicle renders (not campaign/accessory banners) and work well as
+    # the canonical three-quarter view across the catalogue.
+    toyota_grade_render = (
+        identity.brand_id == "toyota"
+        and "/media/product/series/grades/v/" in asset_path
+        and asset_match
+    )
+    if toyota_grade_render:
+        slot = ImageSlot.FRONT_3Q
+        score += 10
+        reasons.append("+10 Toyota grade vehicle render")
+
     candidate.score = max(0, min(100, score))
     candidate.score_reasons = reasons
-    candidate.slot = classify_slot(candidate)
+    candidate.slot = slot
     candidate.identity_evidence = asset_match or generation_asset_match
     return candidate
