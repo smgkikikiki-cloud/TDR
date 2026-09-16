@@ -7,7 +7,7 @@ import { browserDb } from "@/lib/supabase-browser";
 import styles from "../member.module.css";
 
 type BillingStatus = {
-  user: { id: string; customerId: string; email: string | null; phone: string };
+  user: { id: string; customerId: string; email: string | null; phone: string | null };
   customerBound: boolean;
   subscription: null | {
     plan_code: string;
@@ -16,7 +16,10 @@ type BillingStatus = {
     cancel_at_period_end: boolean;
     provider: string;
   };
-  entitlement: null | { product: string; status: string; valid_until: string | null };
+  entitlements: { product: string; status: string; valid_until: string | null }[];
+  tier: "FREE" | "INDIVIDUAL" | "PRO";
+  plans: { planCode: string; tier: string; interval: string; priceThb: number | null; configured: boolean }[];
+  hasActiveSubscription: boolean;
   checkoutConfigured: boolean;
   portalConfigured: boolean;
 };
@@ -68,14 +71,14 @@ export default function MemberBillingPage() {
     boot();
   }, [router]);
 
-  async function startCheckout() {
+  async function startCheckout(planCode: string) {
     if (!token) return;
     setBusy(true); setMessage("");
     try {
       const result = await api(token, "/api/billing/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan: "registration_monthly" }),
+        body: JSON.stringify({ plan: planCode }),
       });
       window.location.assign(result.url);
     } catch (error) {
@@ -114,14 +117,14 @@ export default function MemberBillingPage() {
       ) : <>
         <section className={styles.kpis}>
           <article><span>Customer ID</span><strong className={styles.accountValue}>{data.user.customerId}</strong><small>stable TDR identity</small></article>
-          <article><span>เบอร์มือถือ</span><strong className={styles.accountValue}>{data.user.phone}</strong><small>ผูกกับ Customer ID</small></article>
+          <article><span>เบอร์มือถือ</span><strong className={styles.accountValue}>{data.user.phone || "ยังไม่ได้ยืนยัน"}</strong><small>{data.user.phone ? "ผูกกับ Customer ID" : <Link href="/member/profile">ยืนยันที่หน้าโปรไฟล์ →</Link>}</small></article>
           <article><span>Subscription</span><strong>{data.subscription?.status || "ยังไม่มี"}</strong><small>{data.subscription?.provider || "Stripe เมื่อเริ่มจ่าย"}</small></article>
-          <article><span>TDR Report access</span><strong>{data.entitlement?.status || "ยังไม่มี"}</strong><small>ถึง {date(data.entitlement?.valid_until)}</small></article>
+          <article><span>Tier</span><strong>{data.tier}</strong><small>{data.entitlements.map((e) => `${e.product}:${e.status}`).join(", ") || "ยังไม่มี"}</small></article>
         </section>
 
         <section className={styles.panel}>
           <div className={styles.panelHead}>
-            <div><div className={styles.eyebrow}>TDR REPORT</div><h2>Registration Intelligence · รายเดือน</h2></div>
+            <div><div className={styles.eyebrow}>TDR REPORT</div><h2>เลือกแพ็กเกจ</h2></div>
             <span>{data.subscription?.cancel_at_period_end ? "ยกเลิกเมื่อจบรอบ" : "subscription"}</span>
           </div>
           <div className={styles.billingCopy}>
@@ -129,17 +132,24 @@ export default function MemberBillingPage() {
             {data.subscription?.current_period_end ? <p>รอบปัจจุบันถึง <b>{date(data.subscription.current_period_end)}</b></p> : null}
           </div>
           <div className={styles.billingActions}>
-            {!data.subscription || ["CANCELED", "EXPIRED", "UNPAID"].includes(data.subscription.status) ? (
-              <button disabled={busy || !data.checkoutConfigured} onClick={startCheckout}>
-                {data.checkoutConfigured ? "สมัครด้วยบัตรเครดิต / เดบิต" : "รอตั้งค่า Stripe Price"}
+            {/* An active/trialing/past_due/unpaid/paused subscription
+                already exists -- no "subscribe again" button, ever. Plan
+                changes go through the Billing Portal; Stripe plan
+                switching is not wired up in this patch (see
+                docs/BILLING.md), so this intentionally does not offer an
+                in-app upgrade/downgrade flow yet. */}
+            {!data.hasActiveSubscription ? data.plans.filter((p) => p.interval === "monthly").map((plan) => (
+              <button key={plan.planCode} disabled={busy || !plan.configured} onClick={() => startCheckout(plan.planCode)}>
+                {plan.configured ? `สมัคร ${plan.tier} — ฿${plan.priceThb}/เดือน` : `${plan.tier} (ยังไม่ตั้งค่า Stripe Price)`}
               </button>
-            ) : null}
+            )) : null}
             {data.customerBound ? (
-              <button className={styles.secondary} disabled={busy || !data.portalConfigured} onClick={openPortal}>จัดการบัตร / ใบเสร็จ / ยกเลิก</button>
+              <button className={styles.secondary} disabled={busy || !data.portalConfigured} onClick={openPortal}>จัดการบัตร / ใบเสร็จ / ยกเลิก / เปลี่ยนแพ็กเกจ</button>
             ) : null}
             <button className={styles.secondary} disabled={busy} onClick={() => location.reload()}>รีเฟรชสถานะ</button>
           </div>
-          <p className={styles.note}>PromptPay จะต่อเป็น prepaid pass ภายหลังโดยใช้ entitlement ชุดเดียวกัน ไม่บังคับให้โครงสร้าง subscription หลักต้องผูกกับ QR</p>
+          {data.hasActiveSubscription ? <p className={styles.note}>บัญชีนี้มี subscription ที่ใช้งานอยู่แล้ว ({data.subscription?.plan_code} · {data.subscription?.status}) — จัดการหรือเปลี่ยนแพ็กเกจผ่าน Billing Portal เท่านั้น เพื่อป้องกันการสมัครซ้ำซ้อน</p> : null}
+          <p className={styles.note}>แพ็กเกจรายปีอยู่ระหว่างกำหนดราคา — ยังไม่เปิดใช้งานจนกว่าจะตั้งราคาและตั้งค่า Stripe Price ID</p>
         </section>
       </>}
     </main>

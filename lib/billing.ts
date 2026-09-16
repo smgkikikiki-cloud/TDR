@@ -1,5 +1,8 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { adminDb } from "@/lib/supabase";
+import { findPlan, planPriceId, type PlanDefinition } from "@/lib/plans";
+import { recordEvent } from "@/lib/telemetry";
+import { requireActivatedAccess } from "@/lib/access-policy-server";
 
 export const REGISTRATION_PLAN = "registration_monthly";
 export const REGISTRATION_PRODUCT = "registration_full";
@@ -16,7 +19,12 @@ type MemberContext = {
   userId: string;
   customerId: string;
   email: string | null;
-  phone: string;
+  // Trusted phone from tdr_customer_phone_identities only (never
+  // user_metadata). May be null: billing status and the Billing Portal
+  // must stay reachable for an account that hasn't completed phone
+  // verification yet -- see requireCheckoutEligibleMember() for the
+  // stricter, phone-required gate used to start a NEW subscription.
+  phone: string | null;
 };
 
 export interface CardPaymentGateway {
@@ -79,6 +87,14 @@ function cardGateway(): CardPaymentGateway {
   return new StripeCardPaymentGateway();
 }
 
+// Resolves the stable customer identity for this session. Does NOT
+// require a verified phone -- billing status and the Billing Portal must
+// stay reachable for an account that hasn't completed phone verification
+// yet. The phone field (if any) is read ONLY from the trusted
+// tdr_customer_phone_identities ledger (migration_v21, kept in sync by
+// the tdr_sync_customer_from_auth trigger) -- never from
+// `user_metadata`, which a client can set to an arbitrary, unverified
+// string.
 export async function requireMember(accessToken: string): Promise<MemberContext> {
   const db = adminDb();
   if (!db) throw new BillingError(503, "member database is not configured");
@@ -86,40 +102,47 @@ export async function requireMember(accessToken: string): Promise<MemberContext>
   const { data, error } = await db.auth.getUser(accessToken);
   if (error || !data.user) throw new BillingError(401, "invalid or expired member session");
 
-  const { data: profile, error: profileError } = await db.from("tdr_customer_profiles")
-  .select("phone_e164").eq("user_id", data.user.id).maybeSingle();
-if (profileError) throw new BillingError(503, "could not load customer profile");
+  let { data: customer, error: customerError } = await db.from("tdr_customers")
+    .select("id").eq("auth_user_id", data.user.id).maybeSingle();
+  if (customerError) throw new BillingError(503, "could not load customer identity");
+  if (!customer) {
+    const created = await db.from("tdr_customers").insert({ auth_user_id: data.user.id })
+      .select("id").single();
+    if (created.error) throw new BillingError(503, "could not create customer identity");
+    customer = created.data;
+  }
 
-const metadataPhone = typeof data.user.user_metadata?.phone_e164 === "string"
-  ? data.user.user_metadata.phone_e164 : null;
-const phone = data.user.phone || metadataPhone || profile?.phone_e164 || null;
-if (!phone || !/^\+[1-9][0-9]{7,14}$/.test(phone)) {
-  throw new BillingError(403, "add a valid mobile number to this member account before checkout");
+  const { data: trustedPhone, error: phoneError } = await db.from("tdr_customer_phone_identities")
+    .select("phone_e164").eq("customer_id", customer.id).eq("is_primary", true).is("revoked_at", null).maybeSingle();
+  if (phoneError) throw new BillingError(503, "could not resolve trusted phone identity");
+
+  return { userId: data.user.id, customerId: customer.id, email: data.user.email ?? null, phone: trustedPhone?.phone_e164 ?? null };
 }
 
-const { data: duplicatePhone, error: duplicatePhoneError } = await db.from("tdr_customer_profiles")
-  .select("user_id").eq("phone_e164", phone).neq("user_id", data.user.id).limit(1).maybeSingle();
-if (duplicatePhoneError) throw new BillingError(503, "could not validate customer phone");
-if (duplicatePhone) throw new BillingError(409, "this mobile number is already linked to another TDR account");
-
-const { error: profileUpsertError } = await db.from("tdr_customer_profiles").upsert({
-  user_id: data.user.id,
-  phone_e164: phone,
-  updated_at: new Date().toISOString(),
-}, { onConflict: "user_id" });
-if (profileUpsertError) throw new BillingError(503, "could not save customer profile");
-
-let { data: customer, error: customerError } = await db.from("tdr_customers")
-  .select("id").eq("auth_user_id", data.user.id).maybeSingle();
-if (customerError) throw new BillingError(503, "could not load customer identity");
-if (!customer) {
-  const created = await db.from("tdr_customers").insert({ auth_user_id: data.user.id })
-    .select("id").single();
-  if (created.error) throw new BillingError(503, "could not create customer identity");
-  customer = created.data;
-}
-
-return { userId: data.user.id, customerId: customer.id, email: data.user.email ?? null, phone };
+// Stricter gate for starting a brand-new self-service subscription: the
+// account must be fully TDR-activated (lib/access-policy-server.ts --
+// confirmed email, TDR-confirmed phone verification, complete profile;
+// the same centralized check every member tool route uses) AND have a
+// trusted phone on file to hand to Stripe. An account activated only
+// through the legacy-paid compatibility path (see migration_v34,
+// activation_source='LEGACY_PAID') has no real verified phone identity
+// and so cannot start a brand-new checkout until it completes real
+// verification -- this never touches that account's EXISTING
+// subscription/Billing Portal access, only a fresh Checkout session.
+export async function requireCheckoutEligibleMember(accessToken: string): Promise<MemberContext & { phone: string }> {
+  try {
+    await requireActivatedAccess(accessToken);
+  } catch (error) {
+    if (error instanceof Error && "status" in error) {
+      throw new BillingError((error as { status: number }).status, error.message);
+    }
+    throw new BillingError(503, "could not verify account activation");
+  }
+  const member = await requireMember(accessToken);
+  if (!member.phone) {
+    throw new BillingError(403, "verify your mobile phone before subscribing -- complete verification at /member/profile");
+  }
+  return { ...member, phone: member.phone };
 }
 
 async function providerCustomer(customerId: string) {
@@ -160,18 +183,65 @@ async function ensureStripeCustomer(member: MemberContext) {
   return String(customer.id);
 }
 
-export async function createRegistrationCheckout(args: {
+// Resolves a Stripe price ID for either the legacy single plan or a
+// catalog plan (lib/plans.ts). Keeping both paths here (rather than
+// requiring every caller to know about the legacy plan) is what lets
+// app/api/billing/checkout/route.ts accept any plan code without special
+// casing the legacy one.
+function resolveCheckoutPlan(planCode: string): { planCode: string; product: string; priceId: string } {
+  if (planCode === REGISTRATION_PLAN) {
+    return { planCode: REGISTRATION_PLAN, product: REGISTRATION_PRODUCT, priceId: registrationPriceId() };
+  }
+  const plan = findPlan(planCode);
+  if (!plan) throw new BillingError(400, `unknown plan: ${planCode}`);
+  const priceId = planPriceId(plan);
+  if (!priceId) {
+    throw new BillingError(503, `plan ${planCode} is not yet configured (missing ${plan.stripePriceEnvVar})`);
+  }
+  return { planCode: plan.planCode, product: plan.product, priceId };
+}
+
+// Subscription states that represent a live, currently-charging (or
+// recently so) Stripe relationship. A second Checkout session while one
+// of these exists would create a concurrent second subscription (e.g.
+// 399 + 990 both billing at once) rather than a plan change -- Stripe
+// plan switching is not implemented in this patch (see docs/BILLING.md),
+// so the safe behavior is to fail closed and send the customer to the
+// Billing Portal instead.
+export const BLOCKING_SUBSCRIPTION_STATUSES = ["ACTIVE", "TRIALING", "PAST_DUE", "UNPAID", "PAUSED"];
+
+export async function createCheckout(args: {
   accessToken: string;
+  planCode: string;
   successUrl: string;
   cancelUrl: string;
 }) {
-  const member = await requireMember(args.accessToken);
+  const resolved = resolveCheckoutPlan(args.planCode);
+  const member = await requireCheckoutEligibleMember(args.accessToken);
+  const db = adminDb();
+  if (!db) throw new BillingError(503, "member database is not configured");
+  const { data: existingSubscription, error: existingError } = await db
+    .from("tdr_subscriptions")
+    .select("status,plan_code")
+    .eq("customer_id", member.customerId)
+    .in("status", BLOCKING_SUBSCRIPTION_STATUSES)
+    .order("updated_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (existingError) throw new BillingError(503, "could not verify existing subscription status");
+  if (existingSubscription) {
+    throw new BillingError(
+      409,
+      `this account already has a ${existingSubscription.plan_code} subscription (${existingSubscription.status}) -- manage or cancel it from the Billing Portal before starting a new one`,
+    );
+  }
+
   const customerId = await ensureStripeCustomer(member);
   const session = await cardGateway().request("/v1/checkout/sessions", {
     mode: "subscription",
     customer: customerId,
     client_reference_id: member.customerId,
-    "line_items[0][price]": registrationPriceId(),
+    "line_items[0][price]": resolved.priceId,
     "line_items[0][quantity]": 1,
     success_url: args.successUrl,
     cancel_url: args.cancelUrl,
@@ -179,13 +249,23 @@ export async function createRegistrationCheckout(args: {
     "phone_number_collection[enabled]": true,
     "metadata[tdr_user_id]": member.userId,
     "metadata[tdr_customer_id]": member.customerId,
-    "metadata[plan_code]": REGISTRATION_PLAN,
+    "metadata[plan_code]": resolved.planCode,
     "subscription_data[metadata][tdr_user_id]": member.userId,
     "subscription_data[metadata][tdr_customer_id]": member.customerId,
-    "subscription_data[metadata][plan_code]": REGISTRATION_PLAN,
+    "subscription_data[metadata][plan_code]": resolved.planCode,
   });
   if (!session.url) throw new BillingError(502, "Stripe Checkout did not return a redirect URL");
+  await recordEvent({ eventName: "checkout_started", userId: member.userId, customerId: member.customerId, props: { plan_code: resolved.planCode } });
   return { id: session.id as string, url: session.url as string };
+}
+
+/** @deprecated use createCheckout({ planCode: REGISTRATION_PLAN, ... }) */
+export async function createRegistrationCheckout(args: {
+  accessToken: string;
+  successUrl: string;
+  cancelUrl: string;
+}) {
+  return createCheckout({ ...args, planCode: REGISTRATION_PLAN });
 }
 
 export async function createBillingPortal(args: { accessToken: string; returnUrl: string }) {
@@ -207,10 +287,10 @@ export async function getBillingStatus(accessToken: string) {
   const db = adminDb();
   if (!db) throw new BillingError(503, "member database is not configured");
 
-  const [{ data: profile, error: profileError }, { data: subscription, error: subscriptionError }, { data: entitlement, error: entitlementError }] = await Promise.all([
+  const [{ data: profile, error: profileError }, { data: subscription, error: subscriptionError }, { data: entitlements, error: entitlementError }] = await Promise.all([
     db.from("tdr_payment_customers").select("provider_customer_id").eq("provider", "stripe").eq("customer_id", member.customerId).maybeSingle(),
     db.from("tdr_subscriptions").select("plan_code,status,current_period_end,cancel_at_period_end,provider").eq("customer_id", member.customerId).order("updated_at", { ascending: false }).limit(1).maybeSingle(),
-    db.from("tdr_entitlements").select("product,status,valid_until").eq("user_id", member.userId).eq("product", REGISTRATION_PRODUCT).maybeSingle(),
+    db.from("tdr_entitlements").select("product,status,valid_until").eq("user_id", member.userId),
   ]);
   if (profileError || subscriptionError || entitlementError) {
     throw new BillingError(503, "could not load billing status");
@@ -220,8 +300,8 @@ export async function getBillingStatus(accessToken: string) {
     user: { id: member.userId, customerId: member.customerId, email: member.email, phone: member.phone },
     customerBound: Boolean(profile?.provider_customer_id),
     subscription: subscription ?? null,
-    entitlement: entitlement ?? null,
-    checkoutConfigured: Boolean(process.env.STRIPE_SECRET_KEY && process.env.STRIPE_PRICE_REGISTRATION_MONTHLY),
+    entitlements: entitlements ?? [],
+    checkoutConfigured: Boolean(process.env.STRIPE_SECRET_KEY),
     portalConfigured: Boolean(process.env.STRIPE_SECRET_KEY),
   };
 }
@@ -336,7 +416,7 @@ async function upsertSubscriptionFromObject(object: StripeObject, context: { cus
     provider: "stripe",
     provider_subscription_id: subscriptionId,
     plan_code: metadataPlan(object),
-    product: REGISTRATION_PRODUCT,
+    product: productForPlanCode(metadataPlan(object)),
     status: statusMap[String(object.status || "").toLowerCase()] || "INCOMPLETE",
     current_period_start: isoFromUnix(object.current_period_start),
     current_period_end: isoFromUnix(object.current_period_end),
@@ -360,12 +440,22 @@ async function entitlementContextFromEvent(object: StripeObject) {
     ? { customerId: String(data.customer_id), userId: String(data.user_id) } : null;
 }
 
-async function setEntitlement(userId: string, status: "ACTIVE" | "GRACE" | "EXPIRED", validUntil: string | null) {
+function productForPlanCode(planCode: string): string {
+  if (planCode === REGISTRATION_PLAN) return REGISTRATION_PRODUCT;
+  return findPlan(planCode)?.product ?? REGISTRATION_PRODUCT;
+}
+
+async function setEntitlement(
+  userId: string,
+  status: "ACTIVE" | "GRACE" | "EXPIRED",
+  validUntil: string | null,
+  product: string = REGISTRATION_PRODUCT,
+) {
   const db = adminDb();
   if (!db) throw new BillingError(503, "member database is not configured");
   const { error } = await db.from("tdr_entitlements").upsert({
     user_id: userId,
-    product: REGISTRATION_PRODUCT,
+    product,
     status,
     valid_until: validUntil,
     updated_at: new Date().toISOString(),
@@ -421,7 +511,7 @@ export async function processStripeWebhook(event: StripeObject) {
     if (event.type.startsWith("customer.subscription.")) {
       const result = await upsertSubscriptionFromObject(object, await customerContext(object));
       if (event.type === "customer.subscription.deleted" && result?.userId) {
-        await setEntitlement(result.userId, "EXPIRED", new Date().toISOString());
+        await setEntitlement(result.userId, "EXPIRED", new Date().toISOString(), productForPlanCode(metadataPlan(object)));
       }
     }
 
@@ -429,7 +519,22 @@ export async function processStripeWebhook(event: StripeObject) {
       const context = await entitlementContextFromEvent(object);
       if (context) {
         const periodEnd = isoFromUnix(object.lines?.data?.[0]?.period?.end) || await currentSubscriptionEnd(context.customerId);
-        await setEntitlement(context.userId, "ACTIVE", periodEnd);
+        const product = productForPlanCode(metadataPlan(object));
+        // invoice.paid fires on every renewal, not just the first payment
+        // -- read whether this product was already ACTIVE before this
+        // event to tell a genuine new subscription/conversion apart from
+        // a routine renewal, so telemetry doesn't record every renewal as
+        // a fresh "subscription_started".
+        const { data: priorEntitlement } = await db
+          .from("tdr_entitlements").select("status").eq("user_id", context.userId).eq("product", product).maybeSingle();
+        const isRenewal = priorEntitlement?.status === "ACTIVE";
+        await setEntitlement(context.userId, "ACTIVE", periodEnd, product);
+        await recordEvent({
+          eventName: isRenewal ? "subscription_renewed" : "subscription_started",
+          userId: context.userId,
+          customerId: context.customerId,
+          props: { product },
+        });
       }
     }
 
@@ -437,7 +542,7 @@ export async function processStripeWebhook(event: StripeObject) {
       const context = await entitlementContextFromEvent(object);
       if (context) {
         const until = graceUntil();
-        await setEntitlement(context.userId, until ? "GRACE" : "EXPIRED", until || new Date().toISOString());
+        await setEntitlement(context.userId, until ? "GRACE" : "EXPIRED", until || new Date().toISOString(), productForPlanCode(metadataPlan(object)));
       }
     }
 

@@ -1,116 +1,145 @@
+"use client";
+
 import Link from "next/link";
-import { getCanonicalCompareTrims } from "@/lib/canonical-data";
-import { compareValue, rowIsDifferent, visibleCompareGroups, type FreeCompareTrim } from "@/lib/free-compare";
+import { useEffect, useMemo, useState } from "react";
+import { browserDb } from "@/lib/supabase-browser";
 import { bodyLabel } from "@/lib/body-labels";
 
-type SearchParams = Record<string, string | string[] | undefined>;
+type TrimOption = { id: string; brand_name: string | null; model_name: string | null; name: string | null };
+type CompareRow = { key: string; label: string; different: boolean; values: (string | null)[] };
+type CompareGroup = { title: string; rows: CompareRow[] };
+type SelectedTrim = { id: string; brand_name: string | null; model_name: string | null; name: string | null; model_slug: string | null; image_url: string | null };
+type CompareResult = {
+  selected: SelectedTrim[];
+  missing_selection: boolean;
+  groups: CompareGroup[];
+  quota: { used: number; limit: number | null; remaining: number | null; resets_at: string };
+};
 
-function selectedValues(value: string | string[] | undefined) {
-  const raw = Array.isArray(value) ? value : value ? [value] : [];
-  return [...new Set(raw.filter(Boolean))].slice(0, 4);
-}
-
-function firstValue(value: string | string[] | undefined) {
-  return Array.isArray(value) ? value[0] : value;
-}
-
-function choiceLabel(trim: any) {
+function choiceLabel(trim: TrimOption) {
   return [trim.brand_name, trim.model_name, trim.name].filter(Boolean).join(" · ");
 }
 
-function displayValue(trim: FreeCompareTrim, key: Parameters<typeof compareValue>[1]) {
-  const value = compareValue(trim, key);
-  if (key === "body_type" && value) return bodyLabel(value);
-  return value;
-}
+export default function ComparePage() {
+  const [allTrims, setAllTrims] = useState<TrimOption[]>([]);
+  const [slots, setSlots] = useState<string[]>(["", "", "", ""]);
+  const [diffOnly, setDiffOnly] = useState(false);
+  const [token, setToken] = useState<string | null | undefined>(undefined);
+  const [result, setResult] = useState<CompareResult | null>(null);
+  const [status, setStatus] = useState<"idle" | "loading" | "quota" | "error">("idle");
+  const [message, setMessage] = useState("");
 
-export default async function ComparePage({ searchParams }: { searchParams: Promise<SearchParams> }) {
-  const sp = await searchParams;
-  const all = await getCanonicalCompareTrims(600) as FreeCompareTrim[];
-  const requested = selectedValues(sp.trims);
-  const byId = new Map(all.map((trim) => [trim.id, trim]));
-  const selected = requested.map((id) => byId.get(id)).filter(Boolean) as FreeCompareTrim[];
-  const diffOnly = firstValue(sp.diff) === "1";
-  const groups = visibleCompareGroups(selected, diffOnly);
-  const missingSelection = requested.length !== selected.length;
+  useEffect(() => {
+    fetch("/api/compare/trims").then((r) => r.json()).then((body) => setAllTrims(body.trims || []));
+    const db = browserDb();
+    if (!db) { setToken(null); return; }
+    db.auth.getSession().then(({ data }) => setToken(data.session?.access_token ?? null));
+  }, []);
+
+  const selectedCount = useMemo(() => slots.filter(Boolean).length, [slots]);
+
+  async function runCompare(event: React.FormEvent) {
+    event.preventDefault();
+    if (!token) return;
+    const ids = [...new Set(slots.filter(Boolean))];
+    if (ids.length < 2) return;
+    setStatus("loading"); setMessage("");
+    try {
+      const params = new URLSearchParams();
+      ids.forEach((id) => params.append("trims", id));
+      if (diffOnly) params.set("diff", "1");
+      const response = await fetch(`/api/tools/compare?${params.toString()}`, {
+        headers: { Authorization: `Bearer ${token}` },
+        cache: "no-store",
+      });
+      const body = await response.json();
+      if (!response.ok) throw Object.assign(new Error(body.error || "เทียบรถไม่สำเร็จ"), { status: response.status });
+      setResult(body);
+      setStatus("idle");
+    } catch (error: any) {
+      setStatus(error?.status === 429 ? "quota" : "error");
+      setMessage(error instanceof Error ? error.message : "เทียบรถไม่สำเร็จ");
+    }
+  }
 
   return <div className="comparePage">
     <section className="compareHero">
       <div>
-        <div className="sfEyebrow">FREE VEHICLE COMPARE</div>
+        <div className="sfEyebrow">VEHICLE COMPARE</div>
         <h1>เทียบรถแบบตรงรุ่นย่อย</h1>
-        <p>เลือก 2–4 รุ่นย่อยเพื่อเทียบราคา ขนาด ระบบขับเคลื่อน และข้อมูลพื้นฐานจาก Vehicle Master ชุดเดียวกับหน้าแคตตาล็อก ไม่มีฐานสเปคแยกอีกชุด</p>
+        <p>เลือก 2–4 รุ่นย่อยเพื่อเทียบราคา ขนาด ระบบขับเคลื่อน และข้อมูลพื้นฐานจาก Vehicle Master ชุดเดียวกับหน้าแคตตาล็อก ต้องมีบัญชี TDR (ฟรี) และมีโควตาเทียบรถต่อวันตามแพ็กเกจ</p>
       </div>
       <Link href="/models">กลับไปดูแคตตาล็อก →</Link>
     </section>
 
-    <form className="comparePicker" method="get">
-      {[0, 1, 2, 3].map((slot) => (
-        <label key={slot}>
-          <span>คันที่ {slot + 1}{slot < 2 ? " · ต้องเลือก" : " · ไม่บังคับ"}</span>
-          <select name="trims" defaultValue={selected[slot]?.id || ""} required={slot < 2}>
-            <option value="">เลือกรุ่นย่อย</option>
-            {all.map((trim: any) => <option key={`${slot}:${trim.id}`} value={trim.id}>{choiceLabel(trim)}</option>)}
-          </select>
-        </label>
-      ))}
-      <label className="compareDiffToggle">
-        <input type="checkbox" name="diff" value="1" defaultChecked={diffOnly} />
-        <span>แสดงเฉพาะจุดที่ต่างกัน</span>
-      </label>
-      <button type="submit">เทียบรถ</button>
-    </form>
-
-    {missingSelection ? <div className="compareNotice">มีรุ่นที่เลือกไว้ซึ่งไม่อยู่ใน active canonical release แล้ว ระบบจึงไม่นำมาเทียบ</div> : null}
-
-    {selected.length < 2 ? (
+    {token === null ? (
       <section className="compareEmpty">
-        <b>เลือกอย่างน้อย 2 รุ่นย่อยด้านบน</b>
-        <span>หน้าเทียบจะใช้ค่าจาก Trim จริง เพื่อไม่เอาราคา/สเปคของคนละรุ่นย่อยมาปนกัน</span>
+        <b>ต้องเข้าสู่ระบบก่อนเทียบรถ</b>
+        <span>เครื่องมือเทียบรถเป็นฟีเจอร์ของบัญชี TDR (สมัครฟรีได้ ไม่ต้องผูกบัตร) — ดูข้อมูลรุ่น/ราคายังเปิดสาธารณะตามปกติ</span>
+        <Link href="/member/login">เข้าสู่ระบบ / สมัครสมาชิกฟรี →</Link>
       </section>
     ) : (
+      <form className="comparePicker" onSubmit={runCompare}>
+        {[0, 1, 2, 3].map((slot) => (
+          <label key={slot}>
+            <span>คันที่ {slot + 1}{slot < 2 ? " · ต้องเลือก" : " · ไม่บังคับ"}</span>
+            <select value={slots[slot]} onChange={(event) => setSlots((prev) => prev.map((v, i) => i === slot ? event.target.value : v))} required={slot < 2}>
+              <option value="">เลือกรุ่นย่อย</option>
+              {allTrims.map((trim) => <option key={`${slot}:${trim.id}`} value={trim.id}>{choiceLabel(trim)}</option>)}
+            </select>
+          </label>
+        ))}
+        <label className="compareDiffToggle">
+          <input type="checkbox" checked={diffOnly} onChange={(event) => setDiffOnly(event.target.checked)} />
+          <span>แสดงเฉพาะจุดที่ต่างกัน</span>
+        </label>
+        <button type="submit" disabled={selectedCount < 2 || status === "loading"}>{status === "loading" ? "กำลังเทียบ…" : "เทียบรถ"}</button>
+      </form>
+    )}
+
+    {status === "quota" ? <div className="compareNotice">{message} — อัปเกรดบัญชีเพื่อเทียบรถไม่จำกัดต่อวัน <Link href="/pricing">ดูแพ็กเกจ</Link></div> : null}
+    {status === "error" ? <div className="compareNotice">{message}</div> : null}
+    {result?.missing_selection ? <div className="compareNotice">มีรุ่นที่เลือกไว้ซึ่งไม่อยู่ใน active canonical release แล้ว ระบบจึงไม่นำมาเทียบ</div> : null}
+
+    {result && result.selected.length >= 2 ? (
       <section className="compareTableWrap" aria-label="ตารางเปรียบเทียบรถ">
+        {result.quota.limit !== null ? <p className="compareQuota">เทียบรถวันนี้: {result.quota.used}/{result.quota.limit}</p> : null}
         <table className="compareTable">
           <thead>
             <tr>
               <th>หัวข้อ</th>
-              {selected.map((trim) => {
-                const imageUrl = (trim as any).image_url as string | null | undefined;
-                return (
-                  <th key={trim.id}>
-                    <div className={imageUrl ? "compareCarShot" : "compareCarShot empty"}>
-                      {imageUrl
-                        ? <img src={imageUrl} alt={`${trim.brand_name || ""} ${trim.model_name || ""}`.trim()} />
-                        : <span>{trim.model_name || "TDR"}</span>}
-                    </div>
-                    <small>{trim.brand_name}</small>
-                    <strong>{trim.model_name}</strong>
-                    <span>{trim.name}</span>
-                    {trim.model_slug ? <Link href={`/models/${trim.model_slug}`}>ดูหน้ารุ่น →</Link> : null}
-                  </th>
-                );
-              })}
+              {result.selected.map((trim) => (
+                <th key={trim.id}>
+                  <div className={trim.image_url ? "compareCarShot" : "compareCarShot empty"}>
+                    {trim.image_url
+                      ? <img src={trim.image_url} alt={`${trim.brand_name || ""} ${trim.model_name || ""}`.trim()} />
+                      : <span>{trim.model_name || "TDR"}</span>}
+                  </div>
+                  <small>{trim.brand_name}</small>
+                  <strong>{trim.model_name}</strong>
+                  <span>{trim.name}</span>
+                  {trim.model_slug ? <Link href={`/models/${trim.model_slug}`}>ดูหน้ารุ่น →</Link> : null}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>
-            {groups.map((group) => [
-              <tr className="compareGroup" key={`${group.title}:head`}><th colSpan={selected.length + 1}>{group.title}</th></tr>,
-              ...group.rows.map((row) => {
-                const different = rowIsDifferent(selected, row.key);
-                return <tr key={row.key} className={different ? "compareDifferent" : undefined}>
-                  <th>{row.label}{different ? <em>ต่าง</em> : null}</th>
-                  {selected.map((trim) => {
-                    const value = displayValue(trim, row.key);
-                    return <td key={`${row.key}:${trim.id}`} className={value ? undefined : "compareMissing"}>{value || "—"}</td>;
+            {result.groups.map((group) => [
+              <tr className="compareGroup" key={`${group.title}:head`}><th colSpan={result.selected.length + 1}>{group.title}</th></tr>,
+              ...group.rows.map((row) => (
+                <tr key={row.key} className={row.different ? "compareDifferent" : undefined}>
+                  <th>{row.label}{row.different ? <em>ต่าง</em> : null}</th>
+                  {row.values.map((value, index) => {
+                    const displayValue = row.key === "body_type" && value ? bodyLabel(value) : value;
+                    return <td key={`${row.key}:${index}`} className={displayValue ? undefined : "compareMissing"}>{displayValue || "—"}</td>;
                   })}
-                </tr>;
-              }),
+                </tr>
+              )),
             ])}
           </tbody>
         </table>
-        {!groups.length && diffOnly ? <div className="compareEmpty compact"><b>ค่าที่มีอยู่เหมือนกันทั้งหมด</b><span>ปิด “แสดงเฉพาะจุดที่ต่างกัน” เพื่อดูข้อมูลทั้งหมดที่มี</span></div> : null}
       </section>
-    )}
+    ) : null}
 
     <section className="compareFootnote">
       <b>หลักของหน้านี้</b>

@@ -41,7 +41,7 @@ export default function MemberLoginPage() {
         password,
         options: {
           data: { phone_e164: normalized },
-          emailRedirectTo: `${window.location.origin}/member/billing`,
+          emailRedirectTo: `${window.location.origin}/member/profile`,
         },
       });
       setBusy(false);
@@ -51,7 +51,7 @@ export default function MemberLoginPage() {
         setMode("login");
         return;
       }
-      router.replace("/member/billing");
+      router.replace("/member/profile");
       router.refresh();
       return;
     }
@@ -59,7 +59,7 @@ export default function MemberLoginPage() {
     const { data, error } = await db.auth.signInWithPassword({ email, password });
     setBusy(false);
     if (error || !data.session) return setMessage(error?.message || "เข้าสู่ระบบไม่สำเร็จ");
-    router.replace("/member/billing");
+    router.replace("/member");
     router.refresh();
   }
 

@@ -5,6 +5,8 @@ import {
   normalizeReportPeriod,
   RegistrationAccessError,
 } from "@/lib/registration-analytics";
+import { adminDb } from "@/lib/supabase";
+import { recordEvent } from "@/lib/telemetry";
 
 export const dynamic = "force-dynamic";
 
@@ -30,6 +32,9 @@ export async function GET(request: NextRequest) {
   const limit = Number.isFinite(limitValue) ? limitValue : 100;
 
   try {
+    // Quota fingerprinting is entirely server-side (see
+    // lib/access-policy-server.ts::requestFingerprint) -- there is no
+    // client-supplied action id in this contract to trust or misuse.
     const rows = await getRegistrationAnalytics({
       accessToken: match[1],
       dimension: dimensionValue,
@@ -37,12 +42,23 @@ export async function GET(request: NextRequest) {
       limit,
     });
 
+    if (dimensionValue !== "coverage") {
+      const db = adminDb();
+      const { data: userData } = db ? await db.auth.getUser(match[1]) : { data: null };
+      await recordEvent({ eventName: "sales_run", userId: userData?.user?.id ?? null, props: { dimension: dimensionValue, period } });
+    }
+
     return NextResponse.json(
       { dimension: dimensionValue, period, rows },
       { headers: { "Cache-Control": "private, no-store" } }
     );
   } catch (error) {
     if (error instanceof RegistrationAccessError) {
+      if (error.status === 429) {
+        const db = adminDb();
+        const { data: userData } = db ? await db.auth.getUser(match[1]) : { data: null };
+        await recordEvent({ eventName: "sales_quota_hit", userId: userData?.user?.id ?? null });
+      }
       return NextResponse.json({ error: error.message }, { status: error.status });
     }
     console.error("registration report error", error);

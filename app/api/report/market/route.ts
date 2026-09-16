@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import {
   compareMarketSliceRows,
   comparisonMarketWindow,
+  consumeMarketReportQuota,
   getRegistrationAvailablePeriods,
   getRegistrationMarketSlice,
   isMarketComparison,
@@ -11,12 +12,15 @@ import {
   normalizeReportPeriod,
   RegistrationAccessError,
   resolveMarketWindow,
+  resolveRegistrationAccess,
+  type AccessContext,
   type MarketPeriodWindow,
   type MarketSliceFilters,
   type MarketSliceRow,
 } from "@/lib/registration-analytics";
 import { normalizeRequestedMarketScopes } from "@/lib/market-scope";
 import { adminDb } from "@/lib/supabase";
+import { recordEvent } from "@/lib/telemetry";
 import {
   getActiveMarketPriceState,
   MARKET_PRICE_BANDS,
@@ -35,6 +39,19 @@ function values(request: NextRequest, name: string): string[] | undefined {
     .map((value) => value.trim())
     .filter(Boolean);
   return raw.length ? [...new Set(raw)] : undefined;
+}
+
+// Canonicalizes a filters object for fingerprinting: sorts each filter
+// array's values (query-parameter ordering, e.g. ?brand=A&brand=B vs
+// ?brand=B&brand=A, must not make an otherwise-identical request
+// fingerprint differently and pay twice) and sorts the object's own keys
+// for a stable JSON.stringify output.
+function canonicalFilterFingerprint(filters: MarketSliceFilters): string {
+  const sortedEntries = Object.keys(filters).sort().map((key) => {
+    const value = (filters as unknown as Record<string, unknown>)[key];
+    return [key, Array.isArray(value) ? [...value].sort() : value] as const;
+  });
+  return JSON.stringify(Object.fromEntries(sortedEntries));
 }
 
 function filtersFromRequest(request: NextRequest): MarketSliceFilters {
@@ -112,8 +129,13 @@ function eligibleModels(state: MarketPriceState | null, period: string, band: Ma
   return eligible;
 }
 
+// Quota-free: the caller (GET below) has already paid for this whole
+// request via consumeMarketReportQuota() exactly once. This may be called
+// several times per request (current window, comparison window, trend
+// months) and none of those calls pay again -- see
+// lib/registration-analytics.ts::getRegistrationMarketSlice.
 async function marketSliceWithPrice(args: {
-  accessToken: string;
+  ctx: AccessContext;
   dimension: Parameters<typeof getRegistrationMarketSlice>[0]["dimension"];
   window: MarketPeriodWindow;
   filters: MarketSliceFilters;
@@ -125,7 +147,7 @@ async function marketSliceWithPrice(args: {
   const eligible = args.priceBand ? eligibleModels(args.priceState, args.window.to, args.priceBand) : null;
   const filters = eligible ? intersectModelFilter(args.filters, eligible, args.dimension) : args.filters;
   const rows = await getRegistrationMarketSlice({
-    accessToken: args.accessToken,
+    ctx: args.ctx,
     dimension: args.dimension,
     window: args.window,
     filters,
@@ -186,10 +208,15 @@ export async function GET(request: NextRequest) {
     String(request.nextUrl.searchParams.get("include_unmapped") || "").toLowerCase(),
   );
   const filters = filtersFromRequest(request);
+  // How many trailing months of "Market Size Trend" sparkline data to
+  // return alongside the main ranking, folded into this same response so
+  // the client makes exactly ONE request per "Update market" click instead
+  // of the old up-to-6 separate client-side fetches.
+  const trendMonths = Math.min(Math.max(Number(request.nextUrl.searchParams.get("trend_months") || "6") || 0, 0), 12);
 
   try {
-    // Entitlement is checked before privileged canonical-price metadata is read.
-    const available = await getRegistrationAvailablePeriods(match[1]);
+    const ctx = await resolveRegistrationAccess(match[1]);
+    const available = await getRegistrationAvailablePeriods(ctx);
     const currentWindow = resolveMarketWindow(period, windowValue);
     const missingCurrent = missingReportPeriods(currentWindow, available);
     if (missingCurrent.length) {
@@ -211,12 +238,27 @@ export async function GET(request: NextRequest) {
       }, { status: 409 });
     }
 
+    // The ONE quota-consuming call for this entire request -- everything
+    // below (current window, comparison window, trend months) reuses this
+    // same ctx and pays nothing further, regardless of how many internal
+    // getRegistrationMarketSlice calls that takes. The fingerprint must
+    // cover every output-changing request parameter, not just the
+    // filters/window/dimension: `limit` and `trend_months` both change
+    // what the response actually contains, so two requests that differ
+    // only in those must not be treated as the same request and coalesce.
+    const quota = await consumeMarketReportQuota(ctx, [
+      dimensionValue, windowValue, currentWindow.from, currentWindow.to,
+      comparisonMode ?? "", priceBand ?? "", includeUnmapped,
+      limit, trendMonths,
+      canonicalFilterFingerprint(filters),
+    ]);
+
     // A comparison must be calculated from the full competitive set, not the
     // display limit. Otherwise rank 11 becomes a fake zero merely because the
     // caller asked to render a top-10 table.
     const queryLimit = comparisonMode ? 500 : limit;
     const currentRows = await marketSliceWithPrice({
-      accessToken: match[1],
+      ctx,
       dimension: dimensionValue,
       window: currentWindow,
       filters,
@@ -248,7 +290,7 @@ export async function GET(request: NextRequest) {
         }, { status: 409 });
       }
       const previousRows = await marketSliceWithPrice({
-        accessToken: match[1],
+        ctx,
         dimension: dimensionValue,
         window: previousWindow,
         filters,
@@ -266,6 +308,39 @@ export async function GET(request: NextRequest) {
       };
     }
 
+    // Trend sparkline, computed server-side within this same paid request.
+    // OEM group is deliberately neutral here: the customer-facing filter
+    // rail does not expose an OEM-group filter, so every selected
+    // Brand/Model/Segment/Body/Powertrain/DLT filter stays applied instead
+    // of opening up the currently ranked dimension -- market_total is
+    // therefore the true scope total for each trailing month.
+    let trend: Array<{ period: string; total: number }> = [];
+    if (trendMonths > 0) {
+      const trendPeriods = available.filter((p) => p <= currentWindow.to).slice(-trendMonths);
+      const trendFilters = { ...filters };
+      const points = await Promise.all(trendPeriods.map(async (trendPeriod) => {
+        try {
+          const trendWindow = resolveMarketWindow(trendPeriod, "month");
+          const rows = await marketSliceWithPrice({
+            ctx,
+            dimension: "oem_group",
+            window: trendWindow,
+            filters: trendFilters,
+            includeUnmapped,
+            limit: 1,
+            priceBand: null,
+            priceState,
+          });
+          return { period: trendPeriod, total: Number(rows[0]?.market_total || 0) };
+        } catch {
+          return null;
+        }
+      }));
+      trend = points.filter(Boolean) as Array<{ period: string; total: number }>;
+    }
+
+    await recordEvent({ eventName: "sales_run", userId: ctx.userId, props: { dimension: dimensionValue, window: windowValue, compare: comparisonMode } });
+
     return NextResponse.json({
       dimension: dimensionValue,
       period,
@@ -278,9 +353,16 @@ export async function GET(request: NextRequest) {
       include_unmapped: includeUnmapped,
       rows: currentRows.slice(0, limit),
       comparison,
+      trend,
+      quota,
     }, { headers: { "Cache-Control": "private, no-store" } });
   } catch (error) {
     if (error instanceof RegistrationAccessError) {
+      if (error.status === 429) {
+        const db = adminDb();
+        const { data: userData } = db ? await db.auth.getUser(match[1]) : { data: null };
+        await recordEvent({ eventName: "sales_quota_hit", userId: userData?.user?.id ?? null });
+      }
       return NextResponse.json({ error: error.message }, { status: error.status });
     }
     console.error("registration market report error", error);

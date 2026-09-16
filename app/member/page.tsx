@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { browserDb } from "@/lib/supabase-browser";
+import { SALES_MODULES, type SalesModule } from "@/lib/access-policy";
 import styles from "./member.module.css";
 
 type Row = Record<string, any>;
@@ -19,16 +20,39 @@ type DashboardData = {
   chineseBev: Row[];
 };
 
-async function loadDimension(token: string, dimension: string, period?: string) {
-  const params = new URLSearchParams({ dimension, limit: "100" });
-  if (period) params.set("period", period);
-  const response = await fetch(`/api/report/registration?${params.toString()}`, {
-    headers: { Authorization: `Bearer ${token}` },
-    cache: "no-store",
-  });
+const MODULE_LABEL: Record<SalesModule, string> = {
+  brand_share: "ส่วนแบ่งแบรนด์",
+  model_share: "ส่วนแบ่งรุ่น",
+  month_on_month: "เปรียบเทียบเดือนต่อเดือน",
+  segment_share: "ส่วนแบ่งตามเซกเมนต์",
+  powertrain_share: "ส่วนแบ่งระบบขับเคลื่อน",
+  chinese_bev_rank: "อันดับรถไฟฟ้าจีน",
+};
+
+type ModuleStatus = { tier: "FREE" | "INDIVIDUAL" | "PRO"; pickCount: number | null; selection: SalesModule[] | null };
+type FeatureLadderState = "unavailable" | "teaser" | "limited" | "full" | "tailored";
+type FeatureInfo = {
+  label: string;
+  label_th: string;
+  surface: "sales_tools" | "research" | "pdf_export";
+  released: boolean;
+  current_state: FeatureLadderState;
+  ladder: { FREE: FeatureLadderState; INDIVIDUAL: FeatureLadderState; PRO: FeatureLadderState; CORPORATE: FeatureLadderState };
+};
+
+const FEATURE_STATE_LABEL: Record<FeatureLadderState, string> = {
+  unavailable: "—",
+  teaser: "Teaser",
+  limited: "Limited (รายละเอียดยังไม่กำหนด)",
+  full: "Full",
+  tailored: "Tailored",
+};
+
+async function api(token: string, path: string) {
+  const response = await fetch(path, { headers: { Authorization: `Bearer ${token}` }, cache: "no-store" });
   const body = await response.json();
   if (!response.ok) throw Object.assign(new Error(body.error || "โหลดข้อมูลไม่สำเร็จ"), { status: response.status });
-  return body.rows as Row[];
+  return body;
 }
 
 function n(value: unknown) {
@@ -43,8 +67,48 @@ function pct(value: unknown, digits = 1) {
 export default function MemberDashboardPage() {
   const router = useRouter();
   const [data, setData] = useState<DashboardData | null>(null);
-  const [status, setStatus] = useState<"loading" | "ready" | "forbidden" | "error">("loading");
+  const [status, setStatus] = useState<"loading" | "ready" | "forbidden" | "activation" | "quota" | "picker" | "error">("loading");
   const [message, setMessage] = useState("");
+  const [moduleStatus, setModuleStatus] = useState<ModuleStatus | null>(null);
+  const [picked, setPicked] = useState<SalesModule[]>([]);
+  const [token, setToken] = useState<string | null>(null);
+  const [features, setFeatures] = useState<Record<string, FeatureInfo>>({});
+
+  // One HTTP request = the whole Sales Tools dashboard Run = one
+  // sales_query quota unit, consumed once server-side inside
+  // getRegistrationDashboard(). This replaced a 7-call client fan-out
+  // (1 coverage + 6 dimensions) that tried to share one quota unit via a
+  // client-supplied action id -- that design was both racy under
+  // concurrency and bypassable, so it's gone; there is no action id in
+  // this request at all now.
+  async function loadDashboard(accessToken: string) {
+    const db = browserDb();
+    try {
+      const body = await api(accessToken, "/api/tools/sales-dashboard");
+      if (!body.period) throw new Error("ยังไม่มีข้อมูลจดทะเบียนในระบบ");
+      setData({
+        period: body.period,
+        coverage: body.coverage,
+        brands: body.dimensions.brand ?? [],
+        models: body.dimensions.model ?? [],
+        mom: body.dimensions.mom ?? [],
+        segments: body.dimensions.segment ?? [],
+        powertrains: body.dimensions.powertrain ?? [],
+        chineseBev: body.dimensions["chinese-bev"] ?? [],
+      });
+      setStatus("ready");
+    } catch (error: any) {
+      if (error?.status === 401) {
+        await db?.auth.signOut();
+        router.replace("/member/login");
+        return;
+      }
+      if (error?.status === 429) setStatus("quota");
+      else if (error?.status === 403) setStatus("forbidden");
+      else setStatus("error");
+      setMessage(error instanceof Error ? error.message : "โหลดข้อมูลไม่สำเร็จ");
+    }
+  }
 
   useEffect(() => {
     let cancelled = false;
@@ -61,23 +125,28 @@ export default function MemberDashboardPage() {
         router.replace("/member/login");
         return;
       }
+      setToken(session.access_token);
 
       try {
-        const coverageRows = await loadDimension(session.access_token, "coverage");
-        const latest = [...coverageRows].sort((a, b) => String(a.period).localeCompare(String(b.period))).at(-1);
-        if (!latest) throw new Error("ยังไม่มีข้อมูลจดทะเบียนในระบบ");
-        const period = String(latest.period).slice(0, 10);
-        const [brands, models, mom, segments, powertrains, chineseBev] = await Promise.all([
-          loadDimension(session.access_token, "brand", period),
-          loadDimension(session.access_token, "model", period),
-          loadDimension(session.access_token, "mom", period),
-          loadDimension(session.access_token, "segment", period),
-          loadDimension(session.access_token, "powertrain", period),
-          loadDimension(session.access_token, "chinese-bev", period),
-        ]);
+        const moduleBody = await api(session.access_token, "/api/tools/sales-modules");
         if (cancelled) return;
-        setData({ period, coverage: latest, brands, models, mom, segments, powertrains, chineseBev });
-        setStatus("ready");
+        const modStatus: ModuleStatus = { tier: moduleBody.tier, pickCount: moduleBody.pick_count, selection: moduleBody.selection };
+        setModuleStatus(modStatus);
+
+        // Reserved capabilities (e.g. Provincial Registration) are fetched
+        // from the centralized policy, not hardcoded here -- this call
+        // never touches the unfinished data pipeline itself, it only
+        // reads the coming-soon/ladder state.
+        fetch("/api/tools/features", { headers: { Authorization: `Bearer ${session.access_token}` }, cache: "no-store" })
+          .then((r) => r.json())
+          .then((body) => { if (!cancelled && body.features) setFeatures(body.features); })
+          .catch(() => {});
+
+        if (modStatus.tier === "FREE" && !modStatus.selection) {
+          setStatus("picker");
+          return;
+        }
+        await loadDashboard(session.access_token);
       } catch (error: any) {
         if (cancelled) return;
         if (error?.status === 401) {
@@ -85,14 +154,47 @@ export default function MemberDashboardPage() {
           router.replace("/member/login");
           return;
         }
-        if (error?.status === 403) setStatus("forbidden");
-        else setStatus("error");
+        // requireActivatedAccess() on the server returns 403 for an
+        // incomplete/unverified account -- this is the same centralized
+        // gate direct API calls hit too, not a UI-only check.
+        if (error?.status === 403) {
+          setStatus("activation");
+          setMessage(error instanceof Error ? error.message : "ต้องยืนยันตัวตนก่อนใช้ Sales Tools");
+          return;
+        }
+        setStatus("error");
         setMessage(error instanceof Error ? error.message : "โหลดข้อมูลไม่สำเร็จ");
       }
     }
     boot();
     return () => { cancelled = true; };
   }, [router]);
+
+  function togglePicked(module: SalesModule) {
+    setPicked((prev) => {
+      if (prev.includes(module)) return prev.filter((m) => m !== module);
+      if (moduleStatus?.pickCount && prev.length >= moduleStatus.pickCount) return prev;
+      return [...prev, module];
+    });
+  }
+
+  async function confirmPicked() {
+    if (!token || !moduleStatus?.pickCount) return;
+    try {
+      const response = await fetch("/api/tools/sales-modules", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ modules: picked }),
+      });
+      const body = await response.json();
+      if (!response.ok) throw new Error(body.error || "บันทึกตัวเลือกไม่สำเร็จ");
+      setModuleStatus((prev) => (prev ? { ...prev, selection: body.selection } : prev));
+      setStatus("loading");
+      await loadDashboard(token);
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "บันทึกตัวเลือกไม่สำเร็จ");
+    }
+  }
 
   const movers = useMemo(() => {
     if (!data) return [];
@@ -108,7 +210,28 @@ export default function MemberDashboardPage() {
   }
 
   if (status === "loading") return <main className={styles.shell}><div className={styles.stateCard}>กำลังโหลด TDR Report…</div></main>;
-  if (status === "forbidden") return <main className={styles.shell}><section className={styles.stateCard}><div className={styles.eyebrow}>TDR REPORT</div><h1>บัญชีนี้ยังไม่มีสิทธิ์ข้อมูลจดทะเบียน</h1><p>{message}</p><p className={styles.muted}>สำหรับลูกค้าทดลอง ทีม TDR สามารถเปิดสิทธิ์ registration_full ให้บัญชีนี้ได้ทันทีหลังยืนยันแพ็กเกจ</p><button onClick={signOut}>ออกจากระบบ</button></section></main>;
+  if (status === "picker") return (
+    <main className={styles.shell}>
+      <section className={styles.stateCard}>
+        <div className={styles.eyebrow}>TDR REPORT · FREE</div>
+        <h1>เลือกโมดูล Sales Tools {moduleStatus?.pickCount || 4} จาก {SALES_MODULES.length}</h1>
+        <p>บัญชี Free เลือกได้ {moduleStatus?.pickCount || 4} โมดูลต่อรอบ (1 เดือนปฏิทิน เวลาไทย) แล้วจะล็อกไว้จนกว่าจะขึ้นรอบถัดไป อัปเกรดเป็น Individual หรือ Pro เพื่อใช้ได้ทุกโมดูลไม่จำกัด</p>
+        {message ? <p className={styles.message}>{message}</p> : null}
+        <div className={styles.moduleGrid}>
+          {SALES_MODULES.map((module) => (
+            <label key={module} className={picked.includes(module) ? styles.moduleChecked : undefined}>
+              <input type="checkbox" checked={picked.includes(module)} onChange={() => togglePicked(module)} />
+              <span>{MODULE_LABEL[module]}</span>
+            </label>
+          ))}
+        </div>
+        <button disabled={picked.length !== (moduleStatus?.pickCount || 4)} onClick={confirmPicked}>ยืนยันตัวเลือก</button>
+      </section>
+    </main>
+  );
+  if (status === "quota") return <main className={styles.shell}><section className={styles.stateCard}><div className={styles.eyebrow}>TDR REPORT</div><h1>ใช้โควตา Sales Tools ของวันนี้ครบแล้ว</h1><p>{message}</p><p className={styles.muted}>บัญชี Free ใช้ได้ 10 คำขอต่อวัน (เวลาไทย) อัปเกรดเป็น Individual หรือ Pro เพื่อใช้งานไม่จำกัด</p><Link href="/pricing">ดูแพ็กเกจ</Link></section></main>;
+  if (status === "activation") return <main className={styles.shell}><section className={styles.stateCard}><div className={styles.eyebrow}>TDR REPORT</div><h1>ยืนยันตัวตนก่อนใช้ Sales Tools</h1><p>ต้องยืนยันอีเมล ยืนยันเบอร์มือถือ และกรอกโปรไฟล์ให้ครบก่อนใช้เครื่องมือสมาชิก (ไม่ต้องผูกบัตร)</p><Link href="/member/profile">ไปที่หน้าโปรไฟล์ →</Link></section></main>;
+  if (status === "forbidden") return <main className={styles.shell}><section className={styles.stateCard}><div className={styles.eyebrow}>TDR REPORT</div><h1>บัญชีนี้ยังไม่มีสิทธิ์ข้อมูลจดทะเบียน</h1><p>{message}</p><button onClick={signOut}>ออกจากระบบ</button></section></main>;
   if (status === "error" || !data) return <main className={styles.shell}><section className={styles.stateCard}><h1>โหลดรายงานไม่สำเร็จ</h1><p>{message}</p><button onClick={() => location.reload()}>ลองใหม่</button></section></main>;
 
   const month = new Intl.DateTimeFormat("th-TH", { month: "long", year: "numeric" }).format(new Date(`${data.period}T00:00:00Z`));
@@ -156,6 +279,37 @@ export default function MemberDashboardPage() {
         <div className={styles.panelHead}><div><div className={styles.eyebrow}>MONTH-ON-MONTH</div><h2>รุ่นที่ขยับแรงจากเดือนก่อน</h2></div><span>เฉพาะ canonical model ที่เทียบข้ามเดือนได้</span></div>
         <div className={styles.tableWrap}><table><thead><tr><th>แบรนด์</th><th>รุ่น</th><th>เดือนก่อน</th><th>เดือนนี้</th><th>Δ คัน</th><th>MoM</th></tr></thead><tbody>{movers.map((row) => <tr key={row.entity_key}><td>{row.brand_name}</td><td><b>{row.model_name}</b></td><td>{n(row.previous_registrations)}</td><td>{n(row.registrations)}</td><td className={Number(row.mom_delta) >= 0 ? styles.positive : styles.negative}>{Number(row.mom_delta) >= 0 ? "+" : ""}{n(row.mom_delta)}</td><td>{row.mom_pct == null ? "—" : `${Number(row.mom_pct) >= 0 ? "+" : ""}${pct(row.mom_pct)}`}</td></tr>)}</tbody></table></div>
       </section>
+
+      {/* Only Sales-Tools-surfaced reserved capabilities may appear here --
+          Research/PDF are unreleased too, but they belong on the pricing
+          page's feature comparison and their own future routes, never as a
+          generic "coming soon" panel on this dashboard. Today this is
+          exactly Provincial Registration; the filter (not a hardcoded key)
+          is what keeps that true if another Sales Tools capability is ever
+          reserved the same way. Each card is a deliberate tool
+          launcher -- a disabled button with no onClick at all, so nothing
+          here ever queries data or consumes quota -- and shows both
+          today's state and the full planned tier ladder, so it can
+          communicate where this is headed without pretending any of it is
+          live yet. */}
+      {Object.entries(features)
+        .filter(([, feature]) => feature.surface === "sales_tools" && !feature.released)
+        .map(([key, feature]) => (
+          <section className={styles.panel} key={key}>
+            <div className={styles.panelHead}>
+              <div><div className={styles.eyebrow}>SALES TOOLS · COMING SOON</div><h2>{feature.label_th}</h2></div>
+              <span className={styles.comingSoonBadge}>Coming soon</span>
+            </div>
+            <p className={styles.muted}>เครื่องมือนี้ยังอยู่ระหว่างพัฒนาชุดข้อมูล ไม่มีการดึงข้อมูลหรือใช้โควตาใดๆ จนกว่าจะเปิดใช้งานจริง</p>
+            <div className={styles.featureLadder}>
+              <div><span>Free</span><b>{FEATURE_STATE_LABEL[feature.ladder.FREE]}</b></div>
+              <div><span>Individual</span><b>{FEATURE_STATE_LABEL[feature.ladder.INDIVIDUAL]}</b></div>
+              <div><span>Pro</span><b>{FEATURE_STATE_LABEL[feature.ladder.PRO]}</b></div>
+              <div><span>Corporate</span><b>{FEATURE_STATE_LABEL[feature.ladder.CORPORATE]}</b></div>
+            </div>
+            <button type="button" disabled aria-disabled="true">เปิดใช้งานเมื่อพร้อม (Coming soon)</button>
+          </section>
+        ))}
 
       <p className={styles.footnote}>August coverage may be lower than prior months when only the classless pivot source is available. Ambiguous pickup nameplates stay raw instead of being forced into Cab/Double Cab.</p>
     </main>

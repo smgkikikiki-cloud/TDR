@@ -27,6 +27,8 @@ type MarketResponse = {
   period_to: string;
   rows: MarketRow[];
   comparison: null | { mode: MarketComparison; window: { from: string; to: string }; movement: MarketRow[] };
+  trend: TrendPoint[];
+  quota: { used: number; limit: number | null; remaining: number | null; resets_at: string };
 };
 type FilterState = {
   period: string;
@@ -119,7 +121,7 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
   const [applied, setApplied] = useState<FilterState | null>(null);
   const [data, setData] = useState<MarketResponse | null>(null);
   const [trend, setTrend] = useState<TrendPoint[]>([]);
-  const [status, setStatus] = useState<"loading" | "ready" | "forbidden" | "error">("loading");
+  const [status, setStatus] = useState<"loading" | "ready" | "forbidden" | "activation" | "quota" | "error">("loading");
   const [message, setMessage] = useState("");
 
   const periods = useMemo(() => coverage.map((row) => periodKey(row.period)).filter(Boolean).sort(), [coverage]);
@@ -139,34 +141,37 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
     return missingReportPeriods(comparisonMarketWindow(resolveMarketWindow(period, window), comparison), available).length === 0;
   }
 
-  async function loadMarket(next: FilterState, accessToken: string, rows: CoverageRowLike[]) {
+  async function loadMarket(next: FilterState, accessToken: string) {
     setStatus("loading");
     setMessage("");
+    // One "Update market" click = one HTTP request = one sales_query
+    // quota unit, consumed exactly once server-side. The trend sparkline
+    // (previously up to 6 separate client-side fetches trying to share one
+    // quota unit via a client-supplied action id) is now computed
+    // server-side in this same request and returned as `trend`.
     try {
       const body = await jsonFetch(marketPath(next), accessToken) as MarketResponse;
       setData(body);
       setApplied(next);
+      setTrend(body.trend || []);
       setStatus("ready");
-      const trendPeriods = rows.map((row) => periodKey(row.period)).filter((period) => period && period <= next.period).sort().slice(-6);
-      const trendFilters = { ...next, window: "month" as MarketWindow, compare: "none" as const };
-      const points = await Promise.all(trendPeriods.map(async (period) => {
-        try {
-          // OEM group is deliberately neutral here: the customer-facing filter rail
-          // does not expose an OEM-group filter, so the API keeps every selected
-          // Brand/Model/Segment/Body/Powertrain/DLT filter instead of opening the
-          // currently ranked dimension. market_total is therefore the true scope total.
-          const trendBody = await jsonFetch(marketPath(trendFilters, period, 1, false, "oem_group"), accessToken) as MarketResponse;
-          return { period, total: Number(trendBody.rows?.[0]?.market_total || 0) };
-        } catch { return null; }
-      }));
-      setTrend(points.filter(Boolean) as TrendPoint[]);
     } catch (error: any) {
       if (error?.status === 401) {
         await browserDb()?.auth.signOut();
         router.replace("/member/login");
         return;
       }
-      setStatus(error?.status === 403 ? "forbidden" : "error");
+      if (error?.status === 429) {
+        setStatus("quota");
+        setMessage(error?.message || "ใช้โควตา Sales Tools ของวันนี้ครบแล้ว");
+        return;
+      }
+      if (error?.status === 403) {
+        setStatus(String(error?.message || "").includes("activation") ? "activation" : "forbidden");
+        setMessage(error?.message || "");
+        return;
+      }
+      setStatus("error");
       const missing = error?.body?.missing_periods;
       setMessage(Array.isArray(missing) && missing.length ? `ช่วงข้อมูลไม่ครบ: ${missing.map(periodKey).join(", ")}` : (error?.message || "โหลดข้อมูลไม่สำเร็จ"));
     }
@@ -191,10 +196,14 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
           registrationType: "", brand: "", model: "", segment: "", bodyType: "", powertrain: "", allScopes: false,
         };
         setToken(accessToken); setCoverage(rows); setFilters(initial);
-        await loadMarket(initial, accessToken, rows);
+        await loadMarket(initial, accessToken);
       } catch (error: any) {
         if (cancelled) return;
-        setStatus(error?.status === 403 ? "forbidden" : "error");
+        if (error?.status === 403) {
+          setStatus(String(error?.message || "").includes("activation") ? "activation" : "forbidden");
+        } else {
+          setStatus("error");
+        }
         setMessage(error?.message || "โหลดข้อมูลไม่สำเร็จ");
       }
     }
@@ -237,25 +246,19 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
   async function submit(event: React.FormEvent) {
     event.preventDefault();
     if (!token || !filters.period) return;
-    await loadMarket(filters, token, coverage);
+    await loadMarket(filters, token);
   }
   async function signOut() { await browserDb()?.auth.signOut(); router.replace("/member/login"); }
-  function downloadCsv() {
-    if (!data || !applied) return;
-    const header = ["rank", "entity", "registrations", "market_share_pct", "share_change_pp", "rank_change"];
-    const lines = [header.join(","), ...data.rows.map((row) => {
-      const move = movementByKey.get(row.entity_key);
-      return [row.market_rank, JSON.stringify(row.entity_label), row.registrations, row.market_share_pct, move?.share_change_pp ?? "", move?.rank_change ?? ""].join(",");
-    })];
-    const blob = new Blob(["\ufeff" + lines.join("\n")], { type: "text/csv;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url; link.download = `tdr-market-${applied.dimension}-${applied.period}.csv`; link.click();
-    URL.revokeObjectURL(url);
-  }
+  // Raw CSV export used to live here (client-only Blob download of
+  // `data.rows`, no server visibility, no quota). Removed: no self-service
+  // tier may expose a raw structured-data download under the product's
+  // raw-data-safety policy -- this was the one member-facing raw-export
+  // path found in the codebase (see the delivery report).
 
   if (status === "loading" && !data) return <main className={styles.shell}><div className={styles.stateCard}>กำลังเปิด Market Comparison…</div></main>;
+  if (status === "activation") return <main className={styles.shell}><section className={styles.stateCard}><h1>ยืนยันตัวตนก่อนใช้ Sales Tools</h1><p>ต้องยืนยันอีเมล ยืนยันเบอร์มือถือ และกรอกโปรไฟล์ให้ครบก่อน</p><Link href="/member/profile">ไปที่หน้าโปรไฟล์ →</Link></section></main>;
   if (status === "forbidden") return <main className={styles.shell}><section className={styles.stateCard}><h1>บัญชีนี้ยังไม่มีสิทธิ์ Registration Intelligence</h1><p>{message}</p><Link href="/reports">ดูแพ็กเกจ TDR Report</Link></section></main>;
+  if (status === "quota") return <main className={styles.shell}><section className={styles.stateCard}><h1>ใช้โควตา Sales Tools ของวันนี้ครบแล้ว</h1><p>{message}</p><Link href="/pricing">ดูแพ็กเกจ</Link></section></main>;
   if (status === "error" && !data) return <main className={styles.shell}><section className={styles.stateCard}><h1>เปิด Market Comparison ไม่สำเร็จ</h1><p>{message}</p><button onClick={() => location.reload()}>ลองใหม่</button></section></main>;
 
   return <main className={styles.shell}>
@@ -289,7 +292,7 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
         {ignoredValue ? <div className={styles.info}>ตอนจัดอันดับตาม {DIMENSIONS.find((item) => item.value === applied?.dimension)?.label} ระบบเปิด filter ของ dimension เดียวกันออกอัตโนมัติ เพื่อให้เห็นคู่แข่งและ denominator ที่ถูกต้อง</div> : null}
         {message && status === "error" ? <div className={styles.danger}>{message}</div> : null}
 
-        <div className={styles.contextRow}><div><span>MARKET SCOPE</span><b>{applied ? `${monthLabel(applied.period)} · ${WINDOWS.find((item) => item.value === applied.window)?.label}` : "—"}</b></div><div><span>ฐานตลาด</span><b>{applied?.allScopes ? "ALL SCOPES" : "CORE"}</b></div><button type="button" onClick={downloadCsv}>Export CSV</button></div>
+        <div className={styles.contextRow}><div><span>MARKET SCOPE</span><b>{applied ? `${monthLabel(applied.period)} · ${WINDOWS.find((item) => item.value === applied.window)?.label}` : "—"}</b></div><div><span>ฐานตลาด</span><b>{applied?.allScopes ? "ALL SCOPES" : "CORE"}</b></div></div>
 
         <section className={styles.kpis}>
           <article><span>ยอดจดในตลาดที่จัดอันดับได้</span><strong>{n(marketTotal)}</strong><small>คัน</small></article>

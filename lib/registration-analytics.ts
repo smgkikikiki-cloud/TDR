@@ -1,4 +1,3 @@
-import { adminDb } from "@/lib/supabase";
 import { getActiveHistoricalModelState, resolveHistoricalModelState } from "@/lib/historical-model-state";
 import {
   sliceMarketFacts,
@@ -8,6 +7,14 @@ import {
   type MarketSliceFilters,
   type MarketSliceRow,
 } from "@/lib/registration-market";
+import { requireActivatedAccess, requireUsage, getSalesModuleSelection, AccessPolicyError, type AccessContext } from "@/lib/access-policy-server";
+import {
+  currentSalesModuleCycleKey,
+  historyWindowStart,
+  isMarketDimensionAllowed,
+  isRegistrationDimensionAllowed,
+  type SalesModule,
+} from "@/lib/access-policy";
 
 export {
   compareMarketSliceRows,
@@ -33,6 +40,7 @@ export type {
   MarketSliceRow,
   MarketWindow,
 } from "@/lib/registration-market";
+export type { AccessContext } from "@/lib/access-policy-server";
 
 export type RegistrationDimension =
   | "coverage"
@@ -42,6 +50,10 @@ export type RegistrationDimension =
   | "segment"
   | "powertrain"
   | "chinese-bev";
+
+const ALL_REGISTRATION_DIMENSIONS: RegistrationDimension[] = [
+  "brand", "model", "mom", "segment", "powertrain", "chinese-bev",
+];
 
 type JsonObject = Record<string, unknown>;
 
@@ -70,7 +82,6 @@ type RegistrationBrandAliasRow = {
   brand_id: string;
 };
 
-const ACTIVE_STATUSES = new Set(["ACTIVE", "TRIALING", "GRACE"]);
 const PAGE_SIZE = 1000;
 const MAX_FACT_ROWS = 50000;
 
@@ -94,61 +105,162 @@ export function isRegistrationDimension(value: string | null): value is Registra
   return Boolean(value && value in VIEW_CONFIG);
 }
 
-async function requireRegistrationEntitlement(accessToken: string) {
-  const db = adminDb();
-  if (!db) throw new RegistrationAccessError(503, "registration analytics database is not configured");
-
-  const { data: userData, error: userError } = await db.auth.getUser(accessToken);
-  if (userError || !userData.user) {
-    throw new RegistrationAccessError(401, "invalid or expired member session");
+// A signed-in, ACTIVATED TDR account -- Free included -- may reach
+// registration analytics; access used to be gated by a binary
+// `registration_full` entitlement, but under the tiered model every
+// activated account gets Sales Tools, just at different quotas/module/
+// history scope. Legacy registration_full/registration_monthly
+// subscribers still resolve to PRO via resolveTierFromEntitlements, and
+// are grandfathered as activated by migration_v34, so their access is
+// unchanged. requireActivatedAccess (not the plain resolveAccessContext)
+// is what blocks an incomplete/unverified account here -- centralizing
+// the check so it applies to every route in this file, not just the UI.
+export async function resolveRegistrationAccess(accessToken: string): Promise<AccessContext> {
+  try {
+    return await requireActivatedAccess(accessToken);
+  } catch (error) {
+    if (error instanceof AccessPolicyError) throw new RegistrationAccessError(error.status, error.message);
+    throw new RegistrationAccessError(503, "could not verify member access");
   }
-
-  const { data: entitlement, error: entitlementError } = await db
-    .from("tdr_entitlements")
-    .select("status,valid_until")
-    .eq("user_id", userData.user.id)
-    .eq("product", "registration_full")
-    .maybeSingle();
-
-  if (entitlementError) {
-    throw new RegistrationAccessError(503, "could not verify registration entitlement");
-  }
-
-  const validUntil = entitlement?.valid_until ? new Date(entitlement.valid_until) : null;
-  const expired = validUntil ? validUntil.getTime() <= Date.now() : false;
-  if (!entitlement || !ACTIVE_STATUSES.has(entitlement.status) || expired) {
-    throw new RegistrationAccessError(403, "registration analytics entitlement required");
-  }
-
-  return db;
 }
 
+async function selectedModulesFor(ctx: AccessContext): Promise<SalesModule[] | null> {
+  if (ctx.tier !== "FREE") return null; // unrestricted -- no picker needed
+  try {
+    return await getSalesModuleSelection(ctx.db, ctx.userId, currentSalesModuleCycleKey());
+  } catch (error) {
+    if (error instanceof AccessPolicyError) throw new RegistrationAccessError(error.status, error.message);
+    throw error;
+  }
+}
+
+// Consumes exactly one sales_query quota unit for the CALLING top-level
+// action. Every function in this module that hits the network more than
+// once per logical action (getRegistrationDashboard, and the market
+// report orchestration in app/api/report/market/route.ts) must call this
+// itself exactly once and pass the resulting ctx/db down to quota-free
+// internal fetchers -- never call this per internal fetch.
+async function consumeSalesQueryQuota(
+  ctx: AccessContext,
+  fingerprintParts: Array<string | number | boolean | null | undefined>,
+) {
+  try {
+    return await requireUsage(ctx, "sales_query", ctx.policy.salesQueryDailyLimit, fingerprintParts);
+  } catch (error) {
+    if (error instanceof AccessPolicyError) throw new RegistrationAccessError(error.status, error.message);
+    throw error;
+  }
+}
+
+// --- Low-level, quota-free row fetcher -----------------------------------
+// Never resolves access and never consumes quota -- callers must already
+// hold a validated AccessContext and must have accounted for quota
+// themselves (once, per logical action) before calling this.
+async function fetchDimensionRowsInternal(
+  ctx: AccessContext,
+  dimension: RegistrationDimension,
+  period: string | null | undefined,
+  limit: number,
+): Promise<any[]> {
+  const config = VIEW_CONFIG[dimension];
+  const boundedLimit = Math.min(Math.max(limit ?? 100, 1), 500);
+
+  let query = ctx.db.from(config.table).select("*");
+  if (period) query = query.eq("period", period);
+  const historyStart = historyWindowStart(ctx.tier);
+  if (historyStart) query = query.gte("period", historyStart);
+  query = query.order(config.order, { ascending: config.ascending ?? true }).limit(boundedLimit);
+
+  const { data, error } = await query;
+  if (error) throw new RegistrationAccessError(500, `registration analytics query failed: ${error.message}`);
+  return data ?? [];
+}
+
+function assertRegistrationDimensionAllowed(ctx: AccessContext, dimension: RegistrationDimension, selectedModules: SalesModule[] | null) {
+  if (!isRegistrationDimensionAllowed(dimension, ctx.tier, selectedModules)) {
+    throw new RegistrationAccessError(403, `dimension "${dimension}" is not part of this cycle's selected sales modules`);
+  }
+}
+
+function assertPeriodWithinHistory(ctx: AccessContext, period: string | null | undefined) {
+  if (!period) return;
+  const start = historyWindowStart(ctx.tier);
+  if (start && period < start) {
+    throw new RegistrationAccessError(403, `period is outside this account's history window (from ${start})`);
+  }
+}
+
+// --- Top-level, quota-accounted entry points -----------------------------
+
+// Standalone single-dimension read. One call = one logical action = one
+// quota unit (except `coverage`, which is free boot/navigation metadata).
 export async function getRegistrationAnalytics(args: {
   accessToken: string;
   dimension: RegistrationDimension;
   period?: string | null;
   limit?: number;
 }) {
-  const db = await requireRegistrationEntitlement(args.accessToken);
-  const config = VIEW_CONFIG[args.dimension];
-  const limit = Math.min(Math.max(args.limit ?? 100, 1), 500);
+  const ctx = await resolveRegistrationAccess(args.accessToken);
+  const selectedModules = await selectedModulesFor(ctx);
+  assertRegistrationDimensionAllowed(ctx, args.dimension, selectedModules);
+  assertPeriodWithinHistory(ctx, args.period);
 
-  let query = db.from(config.table).select("*");
-  if (args.period) query = query.eq("period", args.period);
-  query = query.order(config.order, { ascending: config.ascending ?? true }).limit(limit);
+  if (args.dimension !== "coverage") {
+    await consumeSalesQueryQuota(ctx, ["dimension", args.dimension, args.period ?? "", String(args.limit ?? 100)]);
+  }
 
-  const { data, error } = await query;
-  if (error) throw new RegistrationAccessError(500, `registration analytics query failed: ${error.message}`);
-
-  return data ?? [];
+  return fetchDimensionRowsInternal(ctx, args.dimension, args.period, args.limit ?? 100);
 }
 
-export async function getRegistrationAvailablePeriods(accessToken: string): Promise<string[]> {
-  const db = await requireRegistrationEntitlement(accessToken);
-  const { data, error } = await db
+export interface RegistrationDashboard {
+  tier: AccessContext["tier"];
+  period: string | null;
+  coverage: any | null;
+  dimensions: Partial<Record<RegistrationDimension, any[]>>;
+  quota: Awaited<ReturnType<typeof consumeSalesQueryQuota>>;
+}
+
+// The composite "Sales Tools dashboard Run" endpoint: ONE top-level call
+// that resolves access, figures out the permitted dimension set, consumes
+// exactly ONE sales_query quota unit for the whole run, then fetches
+// coverage plus every permitted dimension server-side with no further
+// quota calls. Replaces the old client-side 7-call fan-out (1 coverage +
+// 6 dimensions), each of which used to try to share one quota unit via a
+// client-supplied action id -- the actual bug this rewrite fixes.
+export async function getRegistrationDashboard(accessToken: string): Promise<RegistrationDashboard> {
+  const ctx = await resolveRegistrationAccess(accessToken);
+  const selectedModules = await selectedModulesFor(ctx);
+
+  const coverageRows = await fetchDimensionRowsInternal(ctx, "coverage", null, 100);
+  const latest = [...coverageRows].sort((a, b) => String(a.period).localeCompare(String(b.period))).at(-1) ?? null;
+  const period = latest ? String(latest.period).slice(0, 10) : null;
+
+  const allowedDimensions = ALL_REGISTRATION_DIMENSIONS.filter((dimension) =>
+    isRegistrationDimensionAllowed(dimension, ctx.tier, selectedModules));
+
+  const quota = await consumeSalesQueryQuota(ctx, ["dashboard", period ?? "", allowedDimensions.slice().sort().join(",")]);
+
+  const results = await Promise.all(
+    allowedDimensions.map((dimension) => fetchDimensionRowsInternal(ctx, dimension, period, 100)),
+  );
+  const dimensions: Partial<Record<RegistrationDimension, any[]>> = {};
+  allowedDimensions.forEach((dimension, index) => { dimensions[dimension] = results[index]; });
+
+  return { tier: ctx.tier, period, coverage: latest, dimensions, quota };
+}
+
+// Boot/navigation metadata, never metered. Takes an already-resolved ctx
+// so a caller that needs both this and getRegistrationMarketSlice (i.e.
+// app/api/report/market/route.ts) resolves access exactly once per
+// request.
+export async function getRegistrationAvailablePeriods(ctx: AccessContext): Promise<string[]> {
+  let query = ctx.db
     .from("registration_analytics_coverage")
     .select("period")
     .order("period", { ascending: true });
+  const historyStart = historyWindowStart(ctx.tier);
+  if (historyStart) query = query.gte("period", historyStart);
+  const { data, error } = await query;
   if (error) throw new RegistrationAccessError(500, `registration period query failed: ${error.message}`);
   return (data ?? [])
     .map((row: any) => String(row.period).slice(0, 10))
@@ -319,15 +431,32 @@ async function canonicalizeRegistrationRows(
   });
 }
 
+// Lower-level market-slice fetcher: takes an ALREADY-RESOLVED AccessContext
+// and never consumes quota itself. app/api/report/market/route.ts resolves
+// access and consumes quota exactly ONCE per "Update market" request, then
+// calls this as many times as it genuinely needs data (current window,
+// optional comparison window, trend months) -- none of those internal
+// calls pay again. Module/history validation stays here as defense in
+// depth (it is not a billing action, so repeating it per call is fine).
 export async function getRegistrationMarketSlice(args: {
-  accessToken: string;
+  ctx: AccessContext;
   dimension: MarketDimension;
   window: MarketPeriodWindow;
   filters?: MarketSliceFilters;
   includeUnmapped?: boolean;
   limit?: number;
 }): Promise<MarketSliceRow[]> {
-  const db = await requireRegistrationEntitlement(args.accessToken);
+  const { ctx } = args;
+  const selectedModules = await selectedModulesFor(ctx);
+  if (!isMarketDimensionAllowed(args.dimension, ctx.tier, selectedModules)) {
+    throw new RegistrationAccessError(403, `dimension "${args.dimension}" is not available on this account's plan/selected modules`);
+  }
+  const historyStart = historyWindowStart(ctx.tier);
+  if (historyStart && args.window.from < historyStart) {
+    throw new RegistrationAccessError(403, `window is outside this account's history window (from ${historyStart})`);
+  }
+
+  const db = ctx.db;
   const filters = args.filters || {};
   const rows = await fetchRegistrationRows(
     db,
@@ -347,4 +476,16 @@ export async function getRegistrationMarketSlice(args: {
     includeUnmapped: args.includeUnmapped,
     limit: args.limit,
   });
+}
+
+// The ONE quota-consuming call site for the whole Market Comparison
+// request -- app/api/report/market/route.ts calls this exactly once per
+// "Update market" request, before any getRegistrationMarketSlice calls
+// (current window, comparison window, trend months all follow and pay
+// nothing further).
+export async function consumeMarketReportQuota(
+  ctx: AccessContext,
+  fingerprintParts: Array<string | number | boolean | null | undefined>,
+) {
+  return consumeSalesQueryQuota(ctx, ["market", ...fingerprintParts]);
 }

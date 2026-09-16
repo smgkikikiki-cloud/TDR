@@ -81,6 +81,67 @@ Payment-provider webhook delivery, not the browser success redirect, is the auth
 `tdr_entitlements`
 - remains the access-control source of truth
 - analytics code does not need to know which payment provider granted the entitlement
+- `product` is free text and already supports multiple tiers: `registration_full` (legacy, treated as Pro-equivalent), `tier_individual`, `tier_pro`. A Free account has no entitlement row at all.
+
+## Tiered access model (Free / Individual / Pro / Corporate)
+
+See `lib/access-policy.ts` for the single authoritative tier/quota/history
+policy, `lib/access-policy-server.ts` for its DB-backed wiring, and
+`lib/plans.ts` for the billing plan catalog. Legacy
+`registration_monthly`/`registration_full` subscribers resolve to Pro via
+`resolveTierFromEntitlements()` and are never rewritten. Corporate is a
+sales-assisted path (see `/pricing`), not a fourth self-service tier.
+
+Server-side usage metering (`tdr_usage_counters`/`tdr_usage_actions`,
+migration_v34) is atomic (via `pg_advisory_xact_lock`, race-free under
+concurrent identical calls) and Asia/Bangkok-boundary aware. Quota is
+consumed exactly once per logical user action by exactly one top-level
+route (e.g. `getRegistrationDashboard()` for the Sales Tools dashboard
+Run, `consumeMarketReportQuota()` for one Market Comparison request);
+lower-level fetchers it calls internally never consume quota themselves.
+There is no client-supplied action id anywhere in this design -- the
+dedup/idempotency key passed to `tdr_consume_usage` is always a
+server-computed, time-bucketed fingerprint of the request's own semantic
+parameters (`lib/access-policy-server.ts::requestFingerprint`), so a
+client cannot reuse one identifier to avoid paying for a materially
+different request.
+
+### Account activation
+
+A Free account is not usable for Compare/Sales Tools/Research/PDF until
+it is *activated*: confirmed email (Supabase Auth), a verified phone
+identity (a real `tdr_customer_phone_identities` row -- Supabase Auth
+phone OTP via `updateUser({phone})` + `verifyOtp({..., type:
+"phone_change"})`, never a typed `user_metadata` string), a postcode, and
+either a company name or explicit individual/not-affiliated status.
+`tdr_customer_profiles.activation_completed_at` is the single stored gate;
+`lib/access-policy-server.ts::requireActivatedAccess()` is the only check
+every tool route uses, so an incomplete account is blocked server-side
+regardless of which client calls the API. The pre-existing production
+`tdr_customer_profiles` row (a real paying legacy customer) is
+grandfathered as activated by migration_v34, since the pre-tiered signup
+flow never wired real phone verification into the UI.
+
+### Preventing double subscriptions
+
+`createCheckout()` refuses to create a second Stripe Checkout Session
+while the customer already has a `tdr_subscriptions` row in `ACTIVE`,
+`TRIALING`, `PAST_DUE`, `UNPAID` or `PAUSED` status (`BLOCKING_SUBSCRIPTION_STATUSES`
+in `lib/billing.ts`) -- it returns 409 and the billing UI hides the
+"subscribe" buttons entirely in that state, pointing to the Billing
+Portal instead. **Stripe plan switching (upgrade/downgrade) is
+intentionally not implemented yet** -- a customer who wants to change
+plans must cancel in the Portal and start a fresh Checkout once the old
+subscription is gone. Until real plan-switching is built, do not add a
+"change plan" flow that upserts a new `tier_*` entitlement without also
+expiring the old one: `setEntitlement()` keys on `(user_id, product)`, so
+an old `tier_pro` row is never touched by a webhook for a new
+`tier_individual` subscription (different product key) and would stay
+`ACTIVE` forever, letting `resolveTierFromEntitlements()` keep resolving
+to Pro after an intentional downgrade to Individual. Any future
+plan-switch implementation must explicitly expire the entitlement row for
+the plan being switched away from in the same transaction/webhook that
+activates the new one.
 
 ## PromptPay later
 
@@ -99,6 +160,13 @@ The code intentionally fails closed until these exist:
 - `STRIPE_SECRET_KEY`
 - `STRIPE_WEBHOOK_SECRET`
 - `STRIPE_PRICE_REGISTRATION_MONTHLY`
+
+New tiered plan catalog (all optional -- each plan checkouts fail closed
+with 503 until its price ID is set):
+
+- `STRIPE_PRICE_INDIVIDUAL_MONTHLY` (฿399/month)
+- `STRIPE_PRICE_PRO_MONTHLY` (฿990/month)
+- `STRIPE_PRICE_INDIVIDUAL_ANNUAL`, `STRIPE_PRICE_PRO_ANNUAL` -- annual prices are not decided yet; do not invent one. Set these only once product picks a price materially better than 12x monthly.
 
 Supabase Auth must also have Phone sign-in and an SMS provider enabled. Apply
 CAPTCHA and OTP rate limits before opening public signup.
