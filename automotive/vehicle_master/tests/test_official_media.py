@@ -3,7 +3,7 @@ from dataclasses import replace
 from vehreg.official_media.adapters import SOURCES
 from vehreg.official_media.models import ImageSlot, ReviewStatus, SourceType, VehicleIdentity
 from vehreg.official_media.parsing import parse_page
-from vehreg.official_media.pipeline import select_canonical
+from vehreg.official_media.pipeline import _crawlable_page, _safe_url, select_canonical
 from vehreg.official_media.scoring import link_score, score_candidate
 
 IDENTITY = VehicleIdentity(
@@ -31,6 +31,15 @@ def test_off_domain_links_are_never_crawled():
     source = SOURCES["honda"]
     assert link_score("https://example.invalid/honda/civic", "Civic", IDENTITY, source) < 0
     assert link_score("https://www.honda.co.th/civic", "Civic", IDENTITY, source) > 0
+
+
+def test_brochure_links_are_not_crawl_pages_and_spaces_are_encoded():
+    raw = "https://www.honda.co.th/assets/New Accord e:HEV leaflet .pdf?download=New Accord.pdf"
+    safe = _safe_url(raw)
+    assert " " not in safe
+    assert "%20" in safe
+    assert not _crawlable_page(safe)
+    assert _crawlable_page("https://www.honda.co.th/accord")
 
 
 def test_scoring_auto_approves_strong_official_candidate():
