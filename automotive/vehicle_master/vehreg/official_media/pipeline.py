@@ -13,8 +13,8 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
-from .adapters import get_page_hints, get_source
-from .models import ImageCandidate, ImageSlot, MediaAsset, ReviewStatus, VehicleIdentity
+from .adapters import get_asset_hints, get_page_hints, get_source
+from .models import ImageCandidate, ImageSlot, MediaAsset, ReviewStatus, SourceType, VehicleIdentity
 from .parsing import parse_page, source_type_for
 from .scoring import link_score, score_candidate
 
@@ -111,6 +111,21 @@ def collect_candidates(identity: VehicleIdentity, max_pages: int = 8) -> list[Im
     if not source:
         return []
     best: dict[str, ImageCandidate] = {}
+
+    page_hints = get_page_hints(identity.generation_id)
+    source_page = page_hints[0] if page_hints else source.seed_urls[0]
+    for image_url, label in get_asset_hints(identity.generation_id):
+        candidate = ImageCandidate(
+            source_page=source_page,
+            source_type=SourceType.OFFICIAL_SITE,
+            image_url=_safe_url(image_url),
+            page_title=identity.model_name,
+            alt=label,
+            is_og_image=True,
+        )
+        candidate = score_candidate(candidate, identity, source)
+        best[candidate.image_url] = candidate
+
     for page in discover_pages(identity, max_pages=max_pages):
         try:
             html = fetch_text(page)
