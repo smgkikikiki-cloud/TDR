@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 import sys
 
@@ -45,6 +46,7 @@ def main() -> int:
     )
     parser.add_argument("--limit", type=int, default=30)
     parser.add_argument("--max-pages", type=int, default=8)
+    parser.add_argument("--workers", type=int, default=5)
     parser.add_argument("--data-dir", type=Path, default=DATA_DIR)
     parser.add_argument("--output-dir", type=Path,
                         default=ROOT / "integration_data" / "official_media")
@@ -70,26 +72,41 @@ def main() -> int:
     store = ContentAddressedStore(args.cache_dir)
     manifest: list[dict] = []
     review: list[dict] = []
-    summary: list[dict] = []
-    for identity in vehicles:
+    summaries: dict[int, dict] = {}
+
+    def run_one(index: int, identity: VehicleIdentity):
         assets, flags = ingest(identity, store, max_pages=args.max_pages)
-        manifest.extend(asset.as_dict() for asset in assets)
-        review.extend(flags)
-        summary.append({
+        summary = {
             "vehicle_id": identity.generation_id,
             "brand": identity.brand_id,
             "model": identity.model_name,
             "assets": len(assets),
             "approved": sum(asset.status == "approved" for asset in assets),
             "review": len(flags),
-        })
-        print(f"{identity.generation_id}: {len(assets)} assets, {len(flags)} review")
+        }
+        return index, assets, flags, summary
 
+    workers = max(1, min(args.workers, len(vehicles) or 1))
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        futures = [pool.submit(run_one, index, identity)
+                   for index, identity in enumerate(vehicles)]
+        for future in as_completed(futures):
+            index, assets, flags, summary = future.result()
+            manifest.extend(asset.as_dict() for asset in assets)
+            review.extend(flags)
+            summaries[index] = summary
+            print(
+                f"{summary['vehicle_id']}: {summary['assets']} assets, "
+                f"{summary['approved']} approved, {summary['review']} review",
+                flush=True,
+            )
+
+    summary = [summaries[index] for index in range(len(vehicles))]
     args.output_dir.mkdir(parents=True, exist_ok=True)
     write_jsonl(args.output_dir / f"media_manifest_{args.year}.jsonl", manifest)
     write_jsonl(args.output_dir / f"review_queue_{args.year}.jsonl", review)
     write_jsonl(args.output_dir / f"run_summary_{args.year}.jsonl", summary)
-    print(f"wrote {len(manifest)} assets for {len(vehicles)} visual identities")
+    print(f"wrote {len(manifest)} assets for {len(vehicles)} visual identities", flush=True)
     return 0
 
 
