@@ -2,6 +2,9 @@
 
 The crawler never leaves an adapter's official host allowlist. Model-page hints
 cover OEM sites whose SPA navigation is not represented by ordinary HTML links.
+A very small set of asset hints covers pages where the public HTML is rendered
+through an image proxy that urllib cannot discover; every hint is tied to an
+exact official model page and still passes the normal scoring/hash gates.
 """
 from __future__ import annotations
 
@@ -77,9 +80,49 @@ MODEL_PAGE_HINTS: dict[str, tuple[str, ...]] = {
 }
 
 
+# (image URL, semantic label). These were read directly from the exact official
+# model pages above. The label intentionally includes the canonical model name,
+# providing explicit identity evidence for scoring rather than granting trust to
+# an anonymous CDN hash.
+MODEL_ASSET_HINTS: dict[str, tuple[tuple[str, str], ...]] = {
+    "honda.city.gn2": ((
+        "https://www.honda.co.th/_next/image?q=75&url=https%3A%2F%2Fassets.honda.co.th%2Fwww-assets%2Fmodel%2F2026%2F06%2F24%2FSKERbsE7s6sWdABI81aBOnYJp6dGLBtB.png&w=1920",
+        "Honda City official exterior hero",
+    ),),
+    "mg.mg3.mg3h": ((
+        "https://www.mgcars.com/cdn-cgi/image/width%3D3840%2Cquality%3D75%2Cformat%3Dwebp/https%3A//mg-upload.sgp1.cdn.digitaloceanspaces.com/4ba961ae9c7d561f100728488d21e07d.png",
+        "MG3 official hero",
+    ),),
+    "mg.mg4.mg4e": ((
+        "https://www.mgcars.com/cdn-cgi/image/width%3D3840%2Cquality%3D75%2Cformat%3Dwebp/https%3A//mg-upload.sgp1.cdn.digitaloceanspaces.com/a6d79e25ae46909487301a2f8e382e22.png",
+        "MG4 Electric official hero",
+    ),),
+    "mg.mg_s5_ev.gen1": ((
+        "https://www.mgcars.com/cdn-cgi/image/width%3D3840%2Cquality%3D75%2Cformat%3Dwebp/https%3A//mg-upload.sgp1.cdn.digitaloceanspaces.com/b4b9be2127b7e8b5fca955d26754dd4a.png",
+        "MG S5 EV official hero",
+    ),),
+    "mg.mg_im6.gen1": ((
+        "https://www.mgcars.com/cdn-cgi/image/width%3D3840%2Cquality%3D75%2Cformat%3Dwebp/https%3A//mg-upload.sgp1.cdn.digitaloceanspaces.com/c5ab9149a6033aa6a55517e80c87dbe9.png",
+        "MG IM6 official hero",
+    ),),
+    "mg.mg_cyberster.gen1": ((
+        "https://www.mgcars.com/cdn-cgi/image/width%3D3840%2Cquality%3D75%2Cformat%3Dwebp/https%3A//mg-upload.sgp1.cdn.digitaloceanspaces.com/e09c2003de5f52815f8ca2b3125d48e0.png",
+        "MG Cyberster official hero",
+    ),),
+    "mg.mg_maxus_9.mifa9": ((
+        "https://www.mgcars.com/cdn-cgi/image/width%3D3840%2Cquality%3D75%2Cformat%3Dwebp/https%3A//mg-upload.sgp1.cdn.digitaloceanspaces.com/9b17852986667fc582699b4dc436ace3.jpg",
+        "MG Maxus 9 official hero",
+    ),),
+}
+
+
 def get_source(brand_id: str) -> OfficialSource | None:
     return SOURCES.get(brand_id.casefold())
 
 
 def get_page_hints(generation_id: str) -> tuple[str, ...]:
     return MODEL_PAGE_HINTS.get(generation_id, ())
+
+
+def get_asset_hints(generation_id: str) -> tuple[tuple[str, str], ...]:
+    return MODEL_ASSET_HINTS.get(generation_id, ())
