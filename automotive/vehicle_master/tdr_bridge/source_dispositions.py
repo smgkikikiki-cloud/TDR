@@ -2,7 +2,7 @@
 
 A source row can be known-wrong for the current canonical retail surface without
 being "unknown": a source may describe an obsolete lineup, aggregate two real
-SKUs, or explicitly name a non-market concept.  Such rows remain auditable here
+SKUs, or explicitly name a non-market concept. Such rows remain auditable here
 instead of being counted forever as unresolved research debt.
 """
 from __future__ import annotations
@@ -143,7 +143,11 @@ def release_reconciliation_report_with_dispositions(
         row["source_dispositions"] = model_dispositions
         row["unresolved_source_trim_count"] = genuine_unresolved
         if genuine_unresolved == 0:
-            row["status"] = "RECONCILED" if disposed else "CANONICAL"
+            declared = str(row.get("declared_status") or "")
+            if declared == "NON_MARKET":
+                row["status"] = "NON_MARKET"
+            else:
+                row["status"] = "RECONCILED" if disposed else "CANONICAL"
             blocker_by_model.pop(model_id, None)
         total_disposed += disposed
         total_unresolved += genuine_unresolved
