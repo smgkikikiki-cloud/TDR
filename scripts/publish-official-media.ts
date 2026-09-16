@@ -7,6 +7,7 @@ const readFileAsync = promisify(readFile);
 const BUCKET = "vehicle-media";
 const MAX_BYTES = 20 * 1024 * 1024;
 const IMAGE_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif"]);
+const UPLOAD_ATTEMPTS = 3;
 
 type MediaRow = {
   vehicle_id: string;
@@ -57,6 +58,36 @@ function requiredEnv(...names: string[]) {
 
 function assetKey(row: Pick<MediaRow, "image_type" | "sha256">) {
   return `${row.image_type}\u0000${row.sha256}`;
+}
+
+function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function uploadWithRetry(
+  db: ReturnType<typeof createClient>,
+  row: MediaRow,
+  bytes: Buffer,
+) {
+  let lastMessage = "unknown storage error";
+  for (let attempt = 1; attempt <= UPLOAD_ATTEMPTS; attempt += 1) {
+    const { error } = await db.storage.from(BUCKET).upload(row.storage_path, bytes, {
+      contentType: contentType(row.storage_path),
+      cacheControl: "31536000",
+      upsert: true,
+    });
+    if (!error) return;
+
+    lastMessage = String(error.message || "unknown storage error");
+    if (attempt < UPLOAD_ATTEMPTS) {
+      console.warn(
+        `${row.vehicle_id}: storage upload attempt ${attempt}/${UPLOAD_ATTEMPTS} failed: ` +
+        `${lastMessage}; retrying`,
+      );
+      await sleep(500 * attempt);
+    }
+  }
+  throw new Error(`upload failed after ${UPLOAD_ATTEMPTS} attempts: ${lastMessage}`);
 }
 
 async function main() {
@@ -118,12 +149,7 @@ async function main() {
 
     try {
       const bytes = await readFileAsync(localPath);
-      const { error: uploadError } = await db.storage.from(BUCKET).upload(row.storage_path, bytes, {
-        contentType: contentType(row.storage_path),
-        cacheControl: "31536000",
-        upsert: true,
-      });
-      if (uploadError) throw new Error(`upload failed: ${uploadError.message}`);
+      await uploadWithRetry(db, row, bytes);
 
       const publicUrl = db.storage.from(BUCKET).getPublicUrl(row.storage_path).data.publicUrl;
       const { error: assetError } = await db.from("vehicle_media_assets").upsert({
