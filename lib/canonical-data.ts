@@ -17,6 +17,7 @@ function modelRow(row: any) {
     slug: row.slug,
     name_en: row.name_en,
     name_th: row.name_th,
+    generation_id: row.generation_id || payload.generation_id || null,
     generation: payload.generation || row.generation_id?.split(".").at(-1) || null,
     segment: row.segment,
     body_type: BODY[row.body_type] || row.body_type,
@@ -67,6 +68,22 @@ function trimRow(row: any) {
   };
 }
 
+export async function getCanonicalVehicleMedia(vehicleId: string) {
+  const db = publicDb();
+  if (!db || !vehicleId) return [];
+  const { data, error } = await db.from("vehicle_media_assets")
+    .select("vehicle_id,visual_key,public_url,image_type,confidence,width,height,source_url,source_type")
+    .eq("vehicle_id", vehicleId)
+    .order("confidence", { ascending: false });
+  if (error) throw error;
+  const rows = data || [];
+  return rows.sort((a: any, b: any) => {
+    if (a.image_type === "hero" && b.image_type !== "hero") return -1;
+    if (b.image_type === "hero" && a.image_type !== "hero") return 1;
+    return Number(b.confidence || 0) - Number(a.confidence || 0);
+  });
+}
+
 export async function getCanonicalBrands(limit = 150) {
   const db = publicDb();
   if (!db) return [];
@@ -112,8 +129,10 @@ export async function getCanonicalModelBundle(slug: string) {
     .select("*").eq("slug", slug).maybeSingle();
   if (modelError) throw modelError;
   if (!model) return null;
-  const { data: rawTrims, error: trimError } = await db.from("current_market_trims")
-    .select("*").eq("model_id", model.canonical_id).order("name");
+  const [{ data: rawTrims, error: trimError }, media] = await Promise.all([
+    db.from("current_market_trims").select("*").eq("model_id", model.canonical_id).order("name"),
+    getCanonicalVehicleMedia(model.generation_id || model.payload?.generation_id || ""),
+  ]);
   if (trimError) throw trimError;
   const trims = (rawTrims || []).map(trimRow);
   const powertrains = trims.map((trim: any) => trim._powertrain);
@@ -127,7 +146,9 @@ export async function getCanonicalModelBundle(slug: string) {
     const values = numeric(trimKey);
     if (!row[modelKey] && values.length && new Set(values).size === 1) row[modelKey] = values[0];
   }
-  return { ...row, powertrains_detail: powertrains,
+  const hero = media.find((item: any) => item.image_type === "hero") || media[0] || null;
+  return { ...row, hero_image_url: hero?.public_url || null, media,
+    powertrains_detail: powertrains,
     trims: trims.map(({ _powertrain, ...trim }: any) => trim) };
 }
 
