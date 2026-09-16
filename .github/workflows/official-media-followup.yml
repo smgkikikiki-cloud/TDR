@@ -10,7 +10,7 @@ on:
       - "automotive/vehicle_master/scripts/ingest_official_media_scale.py"
       - "automotive/vehicle_master/scripts/ingest_official_media.py"
       - "automotive/vehicle_master/vehreg/official_media/**"
-      - "automotive/vehicle_master/tests/test_official_media.py"
+      - "automotive/vehicle_master/tests/test_official_media*.py"
       - "scripts/publish-official-media.ts"
       - "lib/canonical-data.ts"
   push:
@@ -22,7 +22,7 @@ on:
       - "automotive/vehicle_master/scripts/ingest_official_media_scale.py"
       - "automotive/vehicle_master/scripts/ingest_official_media.py"
       - "automotive/vehicle_master/vehreg/official_media/**"
-      - "automotive/vehicle_master/tests/test_official_media.py"
+      - "automotive/vehicle_master/tests/test_official_media*.py"
       - "scripts/publish-official-media.ts"
       - "lib/canonical-data.ts"
   workflow_dispatch:
@@ -57,7 +57,7 @@ jobs:
 
       - name: Run official-media unit tests
         working-directory: automotive/vehicle_master
-        run: python -m pytest -q tests/test_official_media.py
+        run: python -m pytest -q tests/test_official_media.py tests/test_official_media_architecture.py
 
       - name: Ingest verified current-model batch
         working-directory: automotive/vehicle_master
@@ -89,13 +89,14 @@ jobs:
           PY
 
       - name: Preserve follow-up evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: official-media-followup-${{ github.sha }}
           path: |
             automotive/vehicle_master/integration_data/official_media
             automotive/vehicle_master/data/media/cache
-          if-no-files-found: error
+          if-no-files-found: warn
           retention-days: 7
 
       - uses: actions/setup-node@v4

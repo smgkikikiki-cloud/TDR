@@ -4,6 +4,7 @@ from __future__ import annotations
 import re
 from urllib.parse import unquote, urlparse
 
+from .adapters import get_page_hints
 from .models import ImageCandidate, ImageSlot, OfficialSource, VehicleIdentity
 
 
@@ -78,6 +79,11 @@ def score_candidate(candidate: ImageCandidate, identity: VehicleIdentity,
         identity.generation_code
         and _matches(asset_text, identity.generation_code)
     )
+    source_page_normalized = candidate.source_page.rstrip("/").casefold()
+    curated_page_match = any(
+        source_page_normalized == hint.rstrip("/").casefold()
+        for hint in get_page_hints(identity.generation_id)
+    )
 
     if source.host_allowed(urlparse(candidate.source_page).hostname or ""):
         score += 20
@@ -85,6 +91,13 @@ def score_candidate(candidate: ImageCandidate, identity: VehicleIdentity,
     if page_match:
         score += 15
         reasons.append("+15 relevant model page")
+    elif curated_page_match and asset_match:
+        # Some OEMs intentionally share one product-family route between sister
+        # nameplates (Toyota Alphard/Vellfire is one example). A curated exact
+        # page hint can supply page relevance only when the asset itself already
+        # names the requested model. The hint alone never establishes identity.
+        score += 15
+        reasons.append("+15 curated model-page provenance")
     if asset_match:
         score += 35
         reasons.append("+35 model in asset metadata")
