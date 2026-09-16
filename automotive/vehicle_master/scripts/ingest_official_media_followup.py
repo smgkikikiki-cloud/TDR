@@ -16,10 +16,18 @@ import ingest_official_media_scale  # noqa: F401,E402
 from vehreg.official_media.adapters import MODEL_ASSET_HINTS, MODEL_PAGE_HINTS  # noqa: E402
 
 MODEL_PAGE_HINTS.update({
+    # Current MG Thailand models verified during the 2026 lifecycle audit.
     "mg.mg_extender_cab.ext": ("https://www.mgcars.com/th/cars/mg-extender-gc",),
     "mg.mg_extender_double_cab.ext": ("https://www.mgcars.com/th/cars/mg-extender-dc",),
     "mg.mg_im5.mg_im5": ("https://www.mgcars.com/th/cars/mg-im5",),
     "mg.mg_maxus_7.gen1": ("https://www.mgcars.com/th/cars/mg-maxus7",),
+
+    # Current Honda Thailand models verified against the live 2026 model list.
+    # Start with discovery-only page hints; promote exact assets only if the
+    # normal parser/scoring path cannot produce a safe primary exterior.
+    "honda.city_hatchback.gn7": ("https://www.honda.co.th/cityhatchback",),
+    "honda.en2.en2": ("https://www.honda.co.th/en2",),
+    "honda.step_wgn.gen1": ("https://www.honda.co.th/stepwgnehev",),
 })
 
 # Exact hero assets observed on the official MG Thailand product pages above.
