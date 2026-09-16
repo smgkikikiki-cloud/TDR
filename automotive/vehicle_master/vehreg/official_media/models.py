@@ -79,10 +79,16 @@ class ImageCandidate:
     score: int = 0
     score_reasons: list[str] = field(default_factory=list)
     slot: ImageSlot = ImageSlot.UNKNOWN
+    identity_evidence: bool = False
 
     @property
     def status(self) -> ReviewStatus:
-        if self.score >= 85:
+        # High score alone is not identity evidence. Brand sites routinely reuse
+        # generic OG/background assets across every model route; those must never
+        # become public merely because the page URL contains a model name.
+        if self.slot is ImageSlot.UNKNOWN:
+            return ReviewStatus.REVIEW if self.score >= 60 else ReviewStatus.REJECTED
+        if self.score >= 85 and self.identity_evidence:
             return ReviewStatus.APPROVED
         if self.score >= 60:
             return ReviewStatus.REVIEW
