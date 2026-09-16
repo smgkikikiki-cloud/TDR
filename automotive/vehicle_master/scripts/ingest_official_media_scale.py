@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from vehreg.official_media import OfficialSource, SOURCES
 
+# First large-scale source expansion: BMW Thailand's first-party model index.
 SOURCES.setdefault(
     "bmw",
     OfficialSource(
