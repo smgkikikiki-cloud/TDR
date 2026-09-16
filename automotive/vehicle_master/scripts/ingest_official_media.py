@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 import sys
@@ -72,41 +73,83 @@ def main() -> int:
     store = ContentAddressedStore(args.cache_dir)
     manifest: list[dict] = []
     review: list[dict] = []
-    summaries: dict[int, dict] = {}
+    identity_meta: dict[str, dict] = {}
 
     def run_one(index: int, identity: VehicleIdentity):
         assets, flags = ingest(identity, store, max_pages=args.max_pages)
-        summary = {
-            "vehicle_id": identity.generation_id,
-            "brand": identity.brand_id,
-            "model": identity.model_name,
-            "assets": len(assets),
-            "approved": sum(asset.status == "approved" for asset in assets),
-            "review": len(flags),
-        }
-        return index, assets, flags, summary
+        return index, identity, assets, flags
 
     workers = max(1, min(args.workers, len(vehicles) or 1))
     with ThreadPoolExecutor(max_workers=workers) as pool:
         futures = [pool.submit(run_one, index, identity)
                    for index, identity in enumerate(vehicles)]
         for future in as_completed(futures):
-            index, assets, flags, summary = future.result()
-            manifest.extend(asset.as_dict() for asset in assets)
+            _, identity, assets, flags = future.result()
+            rows = [asset.as_dict() for asset in assets]
+            manifest.extend(rows)
             review.extend(flags)
-            summaries[index] = summary
+            identity_meta[identity.generation_id] = {
+                "brand": identity.brand_id,
+                "model": identity.model_name,
+            }
             print(
-                f"{summary['vehicle_id']}: {summary['assets']} assets, "
-                f"{summary['approved']} approved, {summary['review']} review",
+                f"{identity.generation_id}: {len(rows)} assets, "
+                f"{sum(row['status'] == 'approved' for row in rows)} provisional approved, "
+                f"{len(flags)} review",
                 flush=True,
             )
 
-    summary = [summaries[index] for index in range(len(vehicles))]
+    # Content hashes reveal brand-wide backgrounds and generic OG cards that
+    # page-level heuristics cannot. The same binary assigned to different visual
+    # identities is never safe to auto-publish without a human decision.
+    hash_vehicles: dict[str, set[str]] = defaultdict(set)
+    for row in manifest:
+        hash_vehicles[row["sha256"]].add(row["visual_key"])
+    duplicate_hashes = {digest for digest, keys in hash_vehicles.items() if len(keys) > 1}
+    for row in manifest:
+        if row["sha256"] in duplicate_hashes and row["status"] == "approved":
+            row["status"] = "review"
+            review.append({
+                "vehicle_id": row["vehicle_id"],
+                "visual_key": row["visual_key"],
+                "image_url": row["image_url_original"],
+                "sha256": row["sha256"],
+                "reason": "cross_vehicle_duplicate",
+                "status": "review",
+            })
+
+    by_vehicle: dict[str, list[dict]] = defaultdict(list)
+    review_count: dict[str, int] = defaultdict(int)
+    for row in manifest:
+        by_vehicle[row["vehicle_id"]].append(row)
+    for flag in review:
+        vehicle_id = flag.get("vehicle_id")
+        if vehicle_id:
+            review_count[vehicle_id] += 1
+
+    summary: list[dict] = []
+    for identity in vehicles:
+        rows = by_vehicle[identity.generation_id]
+        summary.append({
+            "vehicle_id": identity.generation_id,
+            "brand": identity.brand_id,
+            "model": identity.model_name,
+            "assets": len(rows),
+            "approved": sum(row["status"] == "approved" for row in rows),
+            "review": review_count[identity.generation_id],
+        })
+
     args.output_dir.mkdir(parents=True, exist_ok=True)
     write_jsonl(args.output_dir / f"media_manifest_{args.year}.jsonl", manifest)
     write_jsonl(args.output_dir / f"review_queue_{args.year}.jsonl", review)
     write_jsonl(args.output_dir / f"run_summary_{args.year}.jsonl", summary)
-    print(f"wrote {len(manifest)} assets for {len(vehicles)} visual identities", flush=True)
+    covered = sum(row["assets"] > 0 for row in summary)
+    approved = sum(row["approved"] > 0 for row in summary)
+    print(
+        f"wrote {len(manifest)} assets for {len(vehicles)} visual identities; "
+        f"coverage {covered}/{len(vehicles)}, approved {approved}/{len(vehicles)}",
+        flush=True,
+    )
     return 0
 
 
