@@ -11,6 +11,7 @@ export async function AdminNav() {
     </div>
     <nav>
       <Link href="/admin">ภาพรวม</Link>
+      <Link href="/admin/vehicles">Canonical Vehicle Editor</Link>
       <Link href="/admin/vehicle-input">Admin Bench · Vehicle input</Link>
       <Link href="/admin/retail-lifecycle">Retail lifecycle review</Link>
       <Link href="/admin/eco-trims">ECO → MarketTrim review</Link>
