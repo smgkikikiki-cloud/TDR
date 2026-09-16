@@ -9,6 +9,7 @@ const MAX_BYTES = 20 * 1024 * 1024;
 const IMAGE_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif"]);
 const UPLOAD_ATTEMPTS = 3;
 const GENERATION_PREFLIGHT_CHUNK = 75;
+const HASH_PREFLIGHT_CHUNK = 75;
 
 type MediaRow = {
   vehicle_id: string;
@@ -33,6 +34,16 @@ type ExistingAsset = {
   storage_path: string | null;
   image_type: string;
   sha256: string;
+};
+
+type ExistingHashAsset = {
+  vehicle_id: string;
+  sha256: string;
+  storage_path: string | null;
+};
+
+type ExistingCanonicalAsset = {
+  id: number;
 };
 
 type UploadResult = {
@@ -116,8 +127,6 @@ async function main() {
   // Media is a serving attachment, not an independent identity authority. Before
   // touching Storage or media metadata, require every approved target to exist in
   // the active immutable vehicle release through current_vehicle_generations.
-  // This prevents stale branches or typoed generation IDs from creating
-  // canonical-looking orphan media rows in production.
   const targetVehicleIds = [...new Set(approvedRows.map(row => row.vehicle_id))];
   if (targetVehicleIds.length) {
     const currentGenerationIds = new Set<string>();
@@ -151,6 +160,37 @@ async function main() {
     );
   }
 
+  // A content hash may legitimately back more than one slot for the SAME vehicle,
+  // but the same binary must never be silently attached to a different vehicle.
+  // The ingest layer catches duplicates inside one run; this production preflight
+  // closes the gap between separate historical runs by checking the live DB.
+  const approvedHashes = [...new Set(approvedRows.map(row => row.sha256).filter(Boolean))];
+  const existingByHash = new Map<string, ExistingHashAsset[]>();
+  for (let offset = 0; offset < approvedHashes.length; offset += HASH_PREFLIGHT_CHUNK) {
+    const chunk = approvedHashes.slice(offset, offset + HASH_PREFLIGHT_CHUNK);
+    const { data, error } = await db.from("vehicle_media_assets")
+      .select("vehicle_id,sha256,storage_path")
+      .eq("status", "approved")
+      .in("sha256", chunk);
+    if (error) throw new Error(`cross-vehicle hash preflight failed: ${error.message}`);
+    for (const item of (data || []) as ExistingHashAsset[]) {
+      const bucket = existingByHash.get(item.sha256) || [];
+      bucket.push(item);
+      existingByHash.set(item.sha256, bucket);
+    }
+  }
+  for (const row of approvedRows) {
+    const conflicts = (existingByHash.get(row.sha256) || [])
+      .filter(item => item.vehicle_id !== row.vehicle_id);
+    if (conflicts.length) {
+      const owners = [...new Set(conflicts.map(item => item.vehicle_id))].join(", ");
+      throw new Error(
+        `media publish blocked: ${row.vehicle_id} ${row.image_type} reuses production SHA ` +
+        `${row.sha256} already attached to ${owners}`,
+      );
+    }
+  }
+
   // The public media layer is canonical by (vehicle, image type). Reject a
   // manifest that tries to publish two different approved files for one slot.
   const canonicalRows = new Map<string, MediaRow>();
@@ -174,6 +214,7 @@ async function main() {
   let failed = 0;
   let pruned = 0;
   let orphanCleanupWarnings = 0;
+  let rollbackWarnings = 0;
 
   for (const row of approvedRows) {
     const extension = extname(row.storage_path).toLowerCase();
@@ -190,6 +231,20 @@ async function main() {
       continue;
     }
 
+    const { data: priorAsset, error: priorAssetError } = await db.from("vehicle_media_assets")
+      .select("id")
+      .eq("visual_key", row.visual_key)
+      .eq("image_type", row.image_type)
+      .eq("sha256", row.sha256)
+      .maybeSingle();
+    if (priorAssetError) {
+      failed += 1;
+      console.error(`${row.vehicle_id}: existing metadata lookup failed: ${priorAssetError.message}`);
+      continue;
+    }
+
+    let uploaded = false;
+    let writtenAssetId: number | null = null;
     try {
       const bytes = await readFileAsync(localPath);
       await uploadWithRetry(row, () => db.storage.from(BUCKET).upload(row.storage_path, bytes, {
@@ -197,9 +252,10 @@ async function main() {
         cacheControl: "31536000",
         upsert: true,
       }));
+      uploaded = true;
 
       const publicUrl = db.storage.from(BUCKET).getPublicUrl(row.storage_path).data.publicUrl;
-      const { error: assetError } = await db.from("vehicle_media_assets").upsert({
+      const { data: assetData, error: assetError } = await db.from("vehicle_media_assets").upsert({
         vehicle_id: row.vehicle_id,
         visual_key: row.visual_key,
         source_url: row.source_url,
@@ -218,8 +274,9 @@ async function main() {
         height: row.height,
         status: "approved",
         updated_at: new Date().toISOString(),
-      }, { onConflict: "visual_key,image_type,sha256" });
+      }, { onConflict: "visual_key,image_type,sha256" }).select("id").single();
       if (assetError) throw new Error(`metadata failed: ${assetError.message}`);
+      writtenAssetId = Number(assetData.id);
 
       const { error: bindingError } = await db.from("vehicle_media_bindings").upsert({
         entity_id: row.vehicle_id,
@@ -233,6 +290,26 @@ async function main() {
       published += 1;
       console.log(`${row.vehicle_id} ${row.image_type} approved -> ${publicUrl}`);
     } catch (error) {
+      // If this row did not exist before this publish attempt, compensate for a
+      // partial Storage/metadata write so a failed publish cannot manufacture
+      // another orphan object or metadata row. Existing good rows are preserved.
+      if (!priorAsset) {
+        if (writtenAssetId) {
+          const { error: rollbackMetadataError } = await db.from("vehicle_media_assets")
+            .delete().eq("id", writtenAssetId);
+          if (rollbackMetadataError) {
+            rollbackWarnings += 1;
+            console.warn(`${row.vehicle_id}: metadata rollback warning: ${rollbackMetadataError.message}`);
+          }
+        }
+        if (uploaded) {
+          const { error: rollbackStorageError } = await db.storage.from(BUCKET).remove([row.storage_path]);
+          if (rollbackStorageError) {
+            rollbackWarnings += 1;
+            console.warn(`${row.vehicle_id}: storage rollback warning: ${rollbackStorageError.message}`);
+          }
+        }
+      }
       failed += 1;
       console.error(`${row.vehicle_id}: ${error instanceof Error ? error.message : String(error)}`);
     }
@@ -288,9 +365,10 @@ async function main() {
 
   console.log(
     `published ${published}; skipped ${skipped}; pruned ${pruned}; ` +
-    `orphan cleanup warnings ${orphanCleanupWarnings}; failed ${failed}; bucket ${BUCKET}`,
+    `orphan cleanup warnings ${orphanCleanupWarnings}; rollback warnings ${rollbackWarnings}; ` +
+    `failed ${failed}; bucket ${BUCKET}`,
   );
-  if (failed) process.exitCode = 1;
+  if (failed || rollbackWarnings) process.exitCode = 1;
 }
 
 main().catch(error => {
