@@ -20,10 +20,8 @@ from vehreg.trim_reconciliation import apply_canonical_trim_overlay
 from tdr_bridge.historical_state import build_historical_model_state
 from tdr_bridge.lifecycle import apply_retail_lifecycle
 from tdr_bridge.release import ReleaseBuilder
-from tdr_bridge.trim_fragments import (
-    apply_verified_trim_fragments,
-    release_reconciliation_report_with_overrides,
-)
+from tdr_bridge.source_dispositions import release_reconciliation_report_with_dispositions
+from tdr_bridge.trim_fragments import apply_verified_trim_fragments
 
 SEMANTIC_KEYS = (
     "schema_version",
@@ -64,11 +62,10 @@ def enrich_release(
         source_aliases=source_aliases,
     )
 
-    # Every source row must either be represented by a canonical source-backed
-    # MarketTrim or remain explicitly unresolved/non-market/historical. Later
-    # evidence may supersede a model's reconciliation disposition, but cannot
-    # silently erase the original source-row accounting.
-    out["trim_reconciliation"] = release_reconciliation_report_with_overrides(
+    # Source rows have three honest outcomes: represented canonically, explicitly
+    # disposed (stale/aggregate/non-market), or genuinely unresolved. The last
+    # category is the only one that remains research debt.
+    out["trim_reconciliation"] = release_reconciliation_report_with_dispositions(
         out, data_dir=data_dir, year=year,
     )
     blockers = out["trim_reconciliation"].get("blockers", [])
@@ -127,6 +124,7 @@ def main(argv=None) -> int:
         "historical_changes": len(release["historical_model_state"]["monthly_changes"]),
         "aliased_historical_rows": release["historical_model_state"]["aliased_seed_rows"],
         "trim_reconciliation": release["trim_reconciliation"]["counts"],
+        "source_row_totals": release["trim_reconciliation"].get("source_row_totals", {}),
         "output": str(args.out),
     }, ensure_ascii=False))
     return 0
