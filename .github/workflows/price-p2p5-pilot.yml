@@ -9,6 +9,7 @@ on:
       - automotive/vehicle_master/vehreg/**
       - automotive/vehicle_master/tools/price*.py
       - automotive/vehicle_master/tools/pilot_pricefetch.py
+      - automotive/vehicle_master/tools/pilot_price_reconcile.py
   workflow_dispatch:
 
 permissions:
@@ -47,7 +48,7 @@ jobs:
       - name: P5 reconcile without canonical writes
         run: |
           set -euo pipefail
-          python tools/price_reconcile_batch.py \
+          python tools/pilot_price_reconcile.py \
             --in /tmp/price-pilot/fetch.json \
             --candidate-state-out /tmp/price-pilot/candidates.json \
             --out /tmp/price-pilot/reconcile.json \
