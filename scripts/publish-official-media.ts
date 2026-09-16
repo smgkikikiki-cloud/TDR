@@ -65,9 +65,27 @@ async function main() {
   const rows = readFileSync(manifestPath, "utf8")
     .split(/\r?\n/).filter(Boolean).map(line => JSON.parse(line) as MediaRow);
   const approvedRows = rows.filter(row => row.status === "approved");
+
+  // The public media layer is canonical by (vehicle, image type). Reject a
+  // manifest that tries to publish two different approved files for one slot.
+  // This also makes the reconciliation step below safe and deterministic.
+  const canonicalRows = new Map<string, MediaRow>();
+  for (const row of approvedRows) {
+    const slotKey = `${row.vehicle_id}\u0000${row.image_type}`;
+    const prior = canonicalRows.get(slotKey);
+    if (prior && prior.sha256 !== row.sha256) {
+      throw new Error(
+        `manifest contains multiple approved assets for ${row.vehicle_id} ${row.image_type}`,
+      );
+    }
+    canonicalRows.set(slotKey, row);
+  }
+
   let published = 0;
   let skipped = rows.length - approvedRows.length;
   let failed = 0;
+  let pruned = 0;
+  let orphanCleanupWarnings = 0;
 
   for (const row of approvedRows) {
     const extension = extname(row.storage_path).toLowerCase();
@@ -133,7 +151,57 @@ async function main() {
     }
   }
 
-  console.log(`published ${published}; skipped ${skipped}; failed ${failed}; bucket ${BUCKET}`);
+  // Only prune superseded canonical metadata after every desired asset has
+  // published successfully. This prevents a transient upload failure from
+  // deleting the previously working image. Object cleanup is best-effort after
+  // metadata removal: an orphaned blob is preferable to a broken public row.
+  if (failed === 0) {
+    for (const row of canonicalRows.values()) {
+      const { data: staleRows, error: staleReadError } = await db
+        .from("vehicle_media_assets")
+        .select("storage_path,sha256")
+        .eq("vehicle_id", row.vehicle_id)
+        .eq("image_type", row.image_type)
+        .neq("sha256", row.sha256);
+      if (staleReadError) {
+        failed += 1;
+        console.error(`${row.vehicle_id}: stale lookup failed: ${staleReadError.message}`);
+        continue;
+      }
+      if (!staleRows?.length) continue;
+
+      const { error: staleDeleteError } = await db
+        .from("vehicle_media_assets")
+        .delete()
+        .eq("vehicle_id", row.vehicle_id)
+        .eq("image_type", row.image_type)
+        .neq("sha256", row.sha256);
+      if (staleDeleteError) {
+        failed += 1;
+        console.error(`${row.vehicle_id}: stale metadata prune failed: ${staleDeleteError.message}`);
+        continue;
+      }
+
+      pruned += staleRows.length;
+      const stalePaths = [...new Set(
+        staleRows
+          .map(item => String(item.storage_path || "").trim())
+          .filter(Boolean),
+      )];
+      if (stalePaths.length) {
+        const { error: removeError } = await db.storage.from(BUCKET).remove(stalePaths);
+        if (removeError) {
+          orphanCleanupWarnings += stalePaths.length;
+          console.warn(`${row.vehicle_id}: stale object cleanup warning: ${removeError.message}`);
+        }
+      }
+    }
+  }
+
+  console.log(
+    `published ${published}; skipped ${skipped}; pruned ${pruned}; ` +
+    `orphan cleanup warnings ${orphanCleanupWarnings}; failed ${failed}; bucket ${BUCKET}`,
+  );
   if (failed) process.exitCode = 1;
 }
 
