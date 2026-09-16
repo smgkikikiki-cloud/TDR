@@ -9,6 +9,10 @@ from urllib.parse import urljoin, urlparse
 from .models import ImageCandidate, SourceType
 
 _IMAGE_SUFFIXES = {".jpg", ".jpeg", ".png", ".webp", ".avif"}
+# Some first-party OEM image services use CGI/query URLs without a file suffix.
+# Keep this deliberately tiny: these hosts are known BMW media services and the
+# source page itself still has to pass the OEM allowlist/scoring gates.
+_IMAGE_SERVICE_HOSTS = {"prod.cosy.bmw.cloud", "bmw.scene7.com"}
 _EMBEDDED_IMAGE_RE = re.compile(
     r"(?P<url>(?:https?:)?(?:\\?/|/)[^\"'<>\s]{2,}?\.(?:jpe?g|png|webp|avif)(?:\\?[?#][^\"'<>\s]*)?)",
     re.I,
@@ -38,7 +42,11 @@ def _largest_srcset(value: str) -> str:
 def _looks_like_image(url: str, mime: str = "") -> bool:
     if mime:
         return mime.casefold().startswith("image/")
-    return any(urlparse(url).path.casefold().endswith(suffix) for suffix in _IMAGE_SUFFIXES)
+    parsed = urlparse(url)
+    host = (parsed.hostname or "").casefold()
+    if host in _IMAGE_SERVICE_HOSTS and parsed.scheme in {"http", "https"} and parsed.path:
+        return True
+    return any(parsed.path.casefold().endswith(suffix) for suffix in _IMAGE_SUFFIXES)
 
 
 def _decode_embedded_url(value: str) -> str:
