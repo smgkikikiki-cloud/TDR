@@ -28,6 +28,7 @@ export async function GET(request: NextRequest) {
 
   const limitValue = Number(request.nextUrl.searchParams.get("limit") || "100");
   const limit = Number.isFinite(limitValue) ? limitValue : 100;
+  const actionId = request.headers.get("x-tdr-action-id");
 
   try {
     const rows = await getRegistrationAnalytics({
@@ -35,6 +36,7 @@ export async function GET(request: NextRequest) {
       dimension: dimensionValue,
       period,
       limit,
+      actionId,
     });
 
     return NextResponse.json(

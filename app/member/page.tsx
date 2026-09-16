@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { browserDb } from "@/lib/supabase-browser";
+import { REGISTRATION_DIMENSION_MODULE, SALES_MODULES, type SalesModule } from "@/lib/access-policy";
 import styles from "./member.module.css";
 
 type Row = Record<string, any>;
@@ -19,11 +20,29 @@ type DashboardData = {
   chineseBev: Row[];
 };
 
-async function loadDimension(token: string, dimension: string, period?: string) {
+const MODULE_LABEL: Record<SalesModule, string> = {
+  brand_share: "ส่วนแบ่งแบรนด์",
+  model_share: "ส่วนแบ่งรุ่น",
+  month_on_month: "เปรียบเทียบเดือนต่อเดือน",
+  segment_share: "ส่วนแบ่งตามเซกเมนต์",
+  powertrain_share: "ส่วนแบ่งระบบขับเคลื่อน",
+  chinese_bev_rank: "อันดับรถไฟฟ้าจีน",
+};
+
+// dimension -> selectable module, inverse of REGISTRATION_DIMENSION_MODULE.
+const DIMENSION_BY_MODULE: Record<SalesModule, string> = Object.fromEntries(
+  Object.entries(REGISTRATION_DIMENSION_MODULE)
+    .filter(([, module]) => module !== null)
+    .map(([dimension, module]) => [module as SalesModule, dimension]),
+) as Record<SalesModule, string>;
+
+type ModuleStatus = { tier: "FREE" | "INDIVIDUAL" | "PRO"; pickCount: number | null; selection: SalesModule[] | null };
+
+async function loadDimension(token: string, dimension: string, actionId: string, period?: string) {
   const params = new URLSearchParams({ dimension, limit: "100" });
   if (period) params.set("period", period);
   const response = await fetch(`/api/report/registration?${params.toString()}`, {
-    headers: { Authorization: `Bearer ${token}` },
+    headers: { Authorization: `Bearer ${token}`, "X-TDR-Action-Id": actionId },
     cache: "no-store",
   });
   const body = await response.json();
@@ -43,8 +62,44 @@ function pct(value: unknown, digits = 1) {
 export default function MemberDashboardPage() {
   const router = useRouter();
   const [data, setData] = useState<DashboardData | null>(null);
-  const [status, setStatus] = useState<"loading" | "ready" | "forbidden" | "error">("loading");
+  const [status, setStatus] = useState<"loading" | "ready" | "forbidden" | "quota" | "picker" | "error">("loading");
   const [message, setMessage] = useState("");
+  const [moduleStatus, setModuleStatus] = useState<ModuleStatus | null>(null);
+  const [picked, setPicked] = useState<SalesModule[]>([]);
+  const [token, setToken] = useState<string | null>(null);
+
+  async function loadDashboard(accessToken: string, modules: SalesModule[] | null) {
+    const db = browserDb();
+    const actionId = crypto.randomUUID();
+    try {
+      const coverageRows = await loadDimension(accessToken, "coverage", actionId);
+      const latest = [...coverageRows].sort((a, b) => String(a.period).localeCompare(String(b.period))).at(-1);
+      if (!latest) throw new Error("ยังไม่มีข้อมูลจดทะเบียนในระบบ");
+      const period = String(latest.period).slice(0, 10);
+      const activeModules = modules ?? SALES_MODULES;
+      const wanted = new Set(activeModules.map((m) => DIMENSION_BY_MODULE[m]));
+      const [brands, models, mom, segments, powertrains, chineseBev] = await Promise.all([
+        wanted.has("brand") ? loadDimension(accessToken, "brand", actionId, period) : Promise.resolve([]),
+        wanted.has("model") ? loadDimension(accessToken, "model", actionId, period) : Promise.resolve([]),
+        wanted.has("mom") ? loadDimension(accessToken, "mom", actionId, period) : Promise.resolve([]),
+        wanted.has("segment") ? loadDimension(accessToken, "segment", actionId, period) : Promise.resolve([]),
+        wanted.has("powertrain") ? loadDimension(accessToken, "powertrain", actionId, period) : Promise.resolve([]),
+        wanted.has("chinese-bev") ? loadDimension(accessToken, "chinese-bev", actionId, period) : Promise.resolve([]),
+      ]);
+      setData({ period, coverage: latest, brands, models, mom, segments, powertrains, chineseBev });
+      setStatus("ready");
+    } catch (error: any) {
+      if (error?.status === 401) {
+        await db?.auth.signOut();
+        router.replace("/member/login");
+        return;
+      }
+      if (error?.status === 429) setStatus("quota");
+      else if (error?.status === 403) setStatus("forbidden");
+      else setStatus("error");
+      setMessage(error instanceof Error ? error.message : "โหลดข้อมูลไม่สำเร็จ");
+    }
+  }
 
   useEffect(() => {
     let cancelled = false;
@@ -61,38 +116,59 @@ export default function MemberDashboardPage() {
         router.replace("/member/login");
         return;
       }
+      setToken(session.access_token);
 
       try {
-        const coverageRows = await loadDimension(session.access_token, "coverage");
-        const latest = [...coverageRows].sort((a, b) => String(a.period).localeCompare(String(b.period))).at(-1);
-        if (!latest) throw new Error("ยังไม่มีข้อมูลจดทะเบียนในระบบ");
-        const period = String(latest.period).slice(0, 10);
-        const [brands, models, mom, segments, powertrains, chineseBev] = await Promise.all([
-          loadDimension(session.access_token, "brand", period),
-          loadDimension(session.access_token, "model", period),
-          loadDimension(session.access_token, "mom", period),
-          loadDimension(session.access_token, "segment", period),
-          loadDimension(session.access_token, "powertrain", period),
-          loadDimension(session.access_token, "chinese-bev", period),
-        ]);
+        const moduleResponse = await fetch("/api/tools/sales-modules", {
+          headers: { Authorization: `Bearer ${session.access_token}` },
+          cache: "no-store",
+        });
+        const moduleBody = await moduleResponse.json();
+        if (!moduleResponse.ok) throw new Error(moduleBody.error || "โหลดสถานะ Sales Tools ไม่สำเร็จ");
         if (cancelled) return;
-        setData({ period, coverage: latest, brands, models, mom, segments, powertrains, chineseBev });
-        setStatus("ready");
-      } catch (error: any) {
-        if (cancelled) return;
-        if (error?.status === 401) {
-          await db.auth.signOut();
-          router.replace("/member/login");
+        const modStatus: ModuleStatus = { tier: moduleBody.tier, pickCount: moduleBody.pick_count, selection: moduleBody.selection };
+        setModuleStatus(modStatus);
+
+        if (modStatus.tier === "FREE" && !modStatus.selection) {
+          setStatus("picker");
           return;
         }
-        if (error?.status === 403) setStatus("forbidden");
-        else setStatus("error");
+        await loadDashboard(session.access_token, modStatus.selection);
+      } catch (error) {
+        if (cancelled) return;
+        setStatus("error");
         setMessage(error instanceof Error ? error.message : "โหลดข้อมูลไม่สำเร็จ");
       }
     }
     boot();
     return () => { cancelled = true; };
   }, [router]);
+
+  function togglePicked(module: SalesModule) {
+    setPicked((prev) => {
+      if (prev.includes(module)) return prev.filter((m) => m !== module);
+      if (moduleStatus?.pickCount && prev.length >= moduleStatus.pickCount) return prev;
+      return [...prev, module];
+    });
+  }
+
+  async function confirmPicked() {
+    if (!token || !moduleStatus?.pickCount) return;
+    try {
+      const response = await fetch("/api/tools/sales-modules", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ modules: picked }),
+      });
+      const body = await response.json();
+      if (!response.ok) throw new Error(body.error || "บันทึกตัวเลือกไม่สำเร็จ");
+      setModuleStatus((prev) => (prev ? { ...prev, selection: body.selection } : prev));
+      setStatus("loading");
+      await loadDashboard(token, body.selection);
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "บันทึกตัวเลือกไม่สำเร็จ");
+    }
+  }
 
   const movers = useMemo(() => {
     if (!data) return [];
@@ -108,7 +184,27 @@ export default function MemberDashboardPage() {
   }
 
   if (status === "loading") return <main className={styles.shell}><div className={styles.stateCard}>กำลังโหลด TDR Report…</div></main>;
-  if (status === "forbidden") return <main className={styles.shell}><section className={styles.stateCard}><div className={styles.eyebrow}>TDR REPORT</div><h1>บัญชีนี้ยังไม่มีสิทธิ์ข้อมูลจดทะเบียน</h1><p>{message}</p><p className={styles.muted}>สำหรับลูกค้าทดลอง ทีม TDR สามารถเปิดสิทธิ์ registration_full ให้บัญชีนี้ได้ทันทีหลังยืนยันแพ็กเกจ</p><button onClick={signOut}>ออกจากระบบ</button></section></main>;
+  if (status === "picker") return (
+    <main className={styles.shell}>
+      <section className={styles.stateCard}>
+        <div className={styles.eyebrow}>TDR REPORT · FREE</div>
+        <h1>เลือกโมดูล Sales Tools {moduleStatus?.pickCount || 4} จาก {SALES_MODULES.length}</h1>
+        <p>บัญชี Free เลือกได้ {moduleStatus?.pickCount || 4} โมดูลต่อรอบ (1 เดือนปฏิทิน เวลาไทย) แล้วจะล็อกไว้จนกว่าจะขึ้นรอบถัดไป อัปเกรดเป็น Individual หรือ Pro เพื่อใช้ได้ทุกโมดูลไม่จำกัด</p>
+        {message ? <p className={styles.message}>{message}</p> : null}
+        <div className={styles.moduleGrid}>
+          {SALES_MODULES.map((module) => (
+            <label key={module} className={picked.includes(module) ? styles.moduleChecked : undefined}>
+              <input type="checkbox" checked={picked.includes(module)} onChange={() => togglePicked(module)} />
+              <span>{MODULE_LABEL[module]}</span>
+            </label>
+          ))}
+        </div>
+        <button disabled={picked.length !== (moduleStatus?.pickCount || 4)} onClick={confirmPicked}>ยืนยันตัวเลือก</button>
+      </section>
+    </main>
+  );
+  if (status === "quota") return <main className={styles.shell}><section className={styles.stateCard}><div className={styles.eyebrow}>TDR REPORT</div><h1>ใช้โควตา Sales Tools ของวันนี้ครบแล้ว</h1><p>{message}</p><p className={styles.muted}>บัญชี Free ใช้ได้ 10 คำขอต่อวัน (เวลาไทย) อัปเกรดเป็น Individual หรือ Pro เพื่อใช้งานไม่จำกัด</p><Link href="/pricing">ดูแพ็กเกจ</Link></section></main>;
+  if (status === "forbidden") return <main className={styles.shell}><section className={styles.stateCard}><div className={styles.eyebrow}>TDR REPORT</div><h1>บัญชีนี้ยังไม่มีสิทธิ์ข้อมูลจดทะเบียน</h1><p>{message}</p><button onClick={signOut}>ออกจากระบบ</button></section></main>;
   if (status === "error" || !data) return <main className={styles.shell}><section className={styles.stateCard}><h1>โหลดรายงานไม่สำเร็จ</h1><p>{message}</p><button onClick={() => location.reload()}>ลองใหม่</button></section></main>;
 
   const month = new Intl.DateTimeFormat("th-TH", { month: "long", year: "numeric" }).format(new Date(`${data.period}T00:00:00Z`));

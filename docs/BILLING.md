@@ -81,6 +81,21 @@ Payment-provider webhook delivery, not the browser success redirect, is the auth
 `tdr_entitlements`
 - remains the access-control source of truth
 - analytics code does not need to know which payment provider granted the entitlement
+- `product` is free text and already supports multiple tiers: `registration_full` (legacy, treated as Pro-equivalent), `tier_individual`, `tier_pro`. A Free account has no entitlement row at all.
+
+## Tiered access model (Free / Individual / Pro / Corporate)
+
+See `lib/access-policy.ts` for the single authoritative tier/quota/history
+policy, `lib/access-policy-server.ts` for its DB-backed wiring, and
+`lib/plans.ts` for the billing plan catalog. Legacy
+`registration_monthly`/`registration_full` subscribers resolve to Pro via
+`resolveTierFromEntitlements()` and are never rewritten. Corporate is a
+sales-assisted path (see `/pricing`), not a fourth self-service tier.
+
+Server-side usage metering (`tdr_usage_counters`/`tdr_usage_actions`,
+migration_v32) is atomic and Asia/Bangkok-boundary aware; quota is consumed
+once per logical user action (an `X-TDR-Action-Id` header lets a multi-call
+fan-out, e.g. the Sales Tools dashboard's 7 HTTP calls, share one decision).
 
 ## PromptPay later
 
@@ -99,6 +114,13 @@ The code intentionally fails closed until these exist:
 - `STRIPE_SECRET_KEY`
 - `STRIPE_WEBHOOK_SECRET`
 - `STRIPE_PRICE_REGISTRATION_MONTHLY`
+
+New tiered plan catalog (all optional -- each plan checkouts fail closed
+with 503 until its price ID is set):
+
+- `STRIPE_PRICE_INDIVIDUAL_MONTHLY` (฿399/month)
+- `STRIPE_PRICE_PRO_MONTHLY` (฿990/month)
+- `STRIPE_PRICE_INDIVIDUAL_ANNUAL`, `STRIPE_PRICE_PRO_ANNUAL` -- annual prices are not decided yet; do not invent one. Set these only once product picks a price materially better than 12x monthly.
 
 Supabase Auth must also have Phone sign-in and an SMS provider enabled. Apply
 CAPTCHA and OTP rate limits before opening public signup.

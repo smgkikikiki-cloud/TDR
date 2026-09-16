@@ -1,5 +1,7 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { adminDb } from "@/lib/supabase";
+import { findPlan, planPriceId, type PlanDefinition } from "@/lib/plans";
+import { recordEvent } from "@/lib/telemetry";
 
 export const REGISTRATION_PLAN = "registration_monthly";
 export const REGISTRATION_PRODUCT = "registration_full";
@@ -160,18 +162,38 @@ async function ensureStripeCustomer(member: MemberContext) {
   return String(customer.id);
 }
 
-export async function createRegistrationCheckout(args: {
+// Resolves a Stripe price ID for either the legacy single plan or a
+// catalog plan (lib/plans.ts). Keeping both paths here (rather than
+// requiring every caller to know about the legacy plan) is what lets
+// app/api/billing/checkout/route.ts accept any plan code without special
+// casing the legacy one.
+function resolveCheckoutPlan(planCode: string): { planCode: string; product: string; priceId: string } {
+  if (planCode === REGISTRATION_PLAN) {
+    return { planCode: REGISTRATION_PLAN, product: REGISTRATION_PRODUCT, priceId: registrationPriceId() };
+  }
+  const plan = findPlan(planCode);
+  if (!plan) throw new BillingError(400, `unknown plan: ${planCode}`);
+  const priceId = planPriceId(plan);
+  if (!priceId) {
+    throw new BillingError(503, `plan ${planCode} is not yet configured (missing ${plan.stripePriceEnvVar})`);
+  }
+  return { planCode: plan.planCode, product: plan.product, priceId };
+}
+
+export async function createCheckout(args: {
   accessToken: string;
+  planCode: string;
   successUrl: string;
   cancelUrl: string;
 }) {
+  const resolved = resolveCheckoutPlan(args.planCode);
   const member = await requireMember(args.accessToken);
   const customerId = await ensureStripeCustomer(member);
   const session = await cardGateway().request("/v1/checkout/sessions", {
     mode: "subscription",
     customer: customerId,
     client_reference_id: member.customerId,
-    "line_items[0][price]": registrationPriceId(),
+    "line_items[0][price]": resolved.priceId,
     "line_items[0][quantity]": 1,
     success_url: args.successUrl,
     cancel_url: args.cancelUrl,
@@ -179,13 +201,23 @@ export async function createRegistrationCheckout(args: {
     "phone_number_collection[enabled]": true,
     "metadata[tdr_user_id]": member.userId,
     "metadata[tdr_customer_id]": member.customerId,
-    "metadata[plan_code]": REGISTRATION_PLAN,
+    "metadata[plan_code]": resolved.planCode,
     "subscription_data[metadata][tdr_user_id]": member.userId,
     "subscription_data[metadata][tdr_customer_id]": member.customerId,
-    "subscription_data[metadata][plan_code]": REGISTRATION_PLAN,
+    "subscription_data[metadata][plan_code]": resolved.planCode,
   });
   if (!session.url) throw new BillingError(502, "Stripe Checkout did not return a redirect URL");
+  await recordEvent({ eventName: "checkout_started", userId: member.userId, customerId: member.customerId, props: { plan_code: resolved.planCode } });
   return { id: session.id as string, url: session.url as string };
+}
+
+/** @deprecated use createCheckout({ planCode: REGISTRATION_PLAN, ... }) */
+export async function createRegistrationCheckout(args: {
+  accessToken: string;
+  successUrl: string;
+  cancelUrl: string;
+}) {
+  return createCheckout({ ...args, planCode: REGISTRATION_PLAN });
 }
 
 export async function createBillingPortal(args: { accessToken: string; returnUrl: string }) {
@@ -207,10 +239,10 @@ export async function getBillingStatus(accessToken: string) {
   const db = adminDb();
   if (!db) throw new BillingError(503, "member database is not configured");
 
-  const [{ data: profile, error: profileError }, { data: subscription, error: subscriptionError }, { data: entitlement, error: entitlementError }] = await Promise.all([
+  const [{ data: profile, error: profileError }, { data: subscription, error: subscriptionError }, { data: entitlements, error: entitlementError }] = await Promise.all([
     db.from("tdr_payment_customers").select("provider_customer_id").eq("provider", "stripe").eq("customer_id", member.customerId).maybeSingle(),
     db.from("tdr_subscriptions").select("plan_code,status,current_period_end,cancel_at_period_end,provider").eq("customer_id", member.customerId).order("updated_at", { ascending: false }).limit(1).maybeSingle(),
-    db.from("tdr_entitlements").select("product,status,valid_until").eq("user_id", member.userId).eq("product", REGISTRATION_PRODUCT).maybeSingle(),
+    db.from("tdr_entitlements").select("product,status,valid_until").eq("user_id", member.userId),
   ]);
   if (profileError || subscriptionError || entitlementError) {
     throw new BillingError(503, "could not load billing status");
@@ -220,8 +252,8 @@ export async function getBillingStatus(accessToken: string) {
     user: { id: member.userId, customerId: member.customerId, email: member.email, phone: member.phone },
     customerBound: Boolean(profile?.provider_customer_id),
     subscription: subscription ?? null,
-    entitlement: entitlement ?? null,
-    checkoutConfigured: Boolean(process.env.STRIPE_SECRET_KEY && process.env.STRIPE_PRICE_REGISTRATION_MONTHLY),
+    entitlements: entitlements ?? [],
+    checkoutConfigured: Boolean(process.env.STRIPE_SECRET_KEY),
     portalConfigured: Boolean(process.env.STRIPE_SECRET_KEY),
   };
 }
@@ -336,7 +368,7 @@ async function upsertSubscriptionFromObject(object: StripeObject, context: { cus
     provider: "stripe",
     provider_subscription_id: subscriptionId,
     plan_code: metadataPlan(object),
-    product: REGISTRATION_PRODUCT,
+    product: productForPlanCode(metadataPlan(object)),
     status: statusMap[String(object.status || "").toLowerCase()] || "INCOMPLETE",
     current_period_start: isoFromUnix(object.current_period_start),
     current_period_end: isoFromUnix(object.current_period_end),
@@ -360,12 +392,22 @@ async function entitlementContextFromEvent(object: StripeObject) {
     ? { customerId: String(data.customer_id), userId: String(data.user_id) } : null;
 }
 
-async function setEntitlement(userId: string, status: "ACTIVE" | "GRACE" | "EXPIRED", validUntil: string | null) {
+function productForPlanCode(planCode: string): string {
+  if (planCode === REGISTRATION_PLAN) return REGISTRATION_PRODUCT;
+  return findPlan(planCode)?.product ?? REGISTRATION_PRODUCT;
+}
+
+async function setEntitlement(
+  userId: string,
+  status: "ACTIVE" | "GRACE" | "EXPIRED",
+  validUntil: string | null,
+  product: string = REGISTRATION_PRODUCT,
+) {
   const db = adminDb();
   if (!db) throw new BillingError(503, "member database is not configured");
   const { error } = await db.from("tdr_entitlements").upsert({
     user_id: userId,
-    product: REGISTRATION_PRODUCT,
+    product,
     status,
     valid_until: validUntil,
     updated_at: new Date().toISOString(),
@@ -421,7 +463,7 @@ export async function processStripeWebhook(event: StripeObject) {
     if (event.type.startsWith("customer.subscription.")) {
       const result = await upsertSubscriptionFromObject(object, await customerContext(object));
       if (event.type === "customer.subscription.deleted" && result?.userId) {
-        await setEntitlement(result.userId, "EXPIRED", new Date().toISOString());
+        await setEntitlement(result.userId, "EXPIRED", new Date().toISOString(), productForPlanCode(metadataPlan(object)));
       }
     }
 
@@ -429,7 +471,9 @@ export async function processStripeWebhook(event: StripeObject) {
       const context = await entitlementContextFromEvent(object);
       if (context) {
         const periodEnd = isoFromUnix(object.lines?.data?.[0]?.period?.end) || await currentSubscriptionEnd(context.customerId);
-        await setEntitlement(context.userId, "ACTIVE", periodEnd);
+        const product = productForPlanCode(metadataPlan(object));
+        await setEntitlement(context.userId, "ACTIVE", periodEnd, product);
+        await recordEvent({ eventName: "subscription_started", userId: context.userId, customerId: context.customerId, props: { product } });
       }
     }
 
@@ -437,7 +481,7 @@ export async function processStripeWebhook(event: StripeObject) {
       const context = await entitlementContextFromEvent(object);
       if (context) {
         const until = graceUntil();
-        await setEntitlement(context.userId, until ? "GRACE" : "EXPIRED", until || new Date().toISOString());
+        await setEntitlement(context.userId, until ? "GRACE" : "EXPIRED", until || new Date().toISOString(), productForPlanCode(metadataPlan(object)));
       }
     }
 

@@ -1,4 +1,3 @@
-import { adminDb } from "@/lib/supabase";
 import { getActiveHistoricalModelState, resolveHistoricalModelState } from "@/lib/historical-model-state";
 import {
   sliceMarketFacts,
@@ -8,6 +7,14 @@ import {
   type MarketSliceFilters,
   type MarketSliceRow,
 } from "@/lib/registration-market";
+import { resolveAccessContext, requireUsage, getSalesModuleSelection, AccessPolicyError, type AccessContext } from "@/lib/access-policy-server";
+import {
+  currentSalesModuleCycleKey,
+  historyWindowStart,
+  isMarketDimensionAllowed,
+  isRegistrationDimensionAllowed,
+  type SalesModule,
+} from "@/lib/access-policy";
 
 export {
   compareMarketSliceRows,
@@ -70,7 +77,6 @@ type RegistrationBrandAliasRow = {
   brand_id: string;
 };
 
-const ACTIVE_STATUSES = new Set(["ACTIVE", "TRIALING", "GRACE"]);
 const PAGE_SIZE = 1000;
 const MAX_FACT_ROWS = 50000;
 
@@ -94,33 +100,39 @@ export function isRegistrationDimension(value: string | null): value is Registra
   return Boolean(value && value in VIEW_CONFIG);
 }
 
-async function requireRegistrationEntitlement(accessToken: string) {
-  const db = adminDb();
-  if (!db) throw new RegistrationAccessError(503, "registration analytics database is not configured");
-
-  const { data: userData, error: userError } = await db.auth.getUser(accessToken);
-  if (userError || !userData.user) {
-    throw new RegistrationAccessError(401, "invalid or expired member session");
+// A signed-in TDR account -- Free included -- may reach registration
+// analytics at all; access used to be gated by a binary
+// `registration_full` entitlement, but under the tiered model every
+// account gets Sales Tools, just at different quotas/module/history
+// scope. Legacy registration_full/registration_monthly subscribers still
+// resolve to PRO via resolveTierFromEntitlements, so their access is
+// unchanged.
+async function resolveRegistrationAccess(accessToken: string): Promise<AccessContext> {
+  try {
+    return await resolveAccessContext(accessToken);
+  } catch (error) {
+    if (error instanceof AccessPolicyError) throw new RegistrationAccessError(error.status, error.message);
+    throw new RegistrationAccessError(503, "could not verify member access");
   }
+}
 
-  const { data: entitlement, error: entitlementError } = await db
-    .from("tdr_entitlements")
-    .select("status,valid_until")
-    .eq("user_id", userData.user.id)
-    .eq("product", "registration_full")
-    .maybeSingle();
-
-  if (entitlementError) {
-    throw new RegistrationAccessError(503, "could not verify registration entitlement");
+async function selectedModulesFor(ctx: AccessContext): Promise<SalesModule[] | null> {
+  if (ctx.tier !== "FREE") return null; // unrestricted -- no picker needed
+  try {
+    return await getSalesModuleSelection(ctx.db, ctx.userId, currentSalesModuleCycleKey());
+  } catch (error) {
+    if (error instanceof AccessPolicyError) throw new RegistrationAccessError(error.status, error.message);
+    throw error;
   }
+}
 
-  const validUntil = entitlement?.valid_until ? new Date(entitlement.valid_until) : null;
-  const expired = validUntil ? validUntil.getTime() <= Date.now() : false;
-  if (!entitlement || !ACTIVE_STATUSES.has(entitlement.status) || expired) {
-    throw new RegistrationAccessError(403, "registration analytics entitlement required");
+async function enforceSalesQueryQuota(ctx: AccessContext, actionId?: string | null) {
+  try {
+    return await requireUsage(ctx, "sales_query", ctx.policy.salesQueryDailyLimit, actionId);
+  } catch (error) {
+    if (error instanceof AccessPolicyError) throw new RegistrationAccessError(error.status, error.message);
+    throw error;
   }
-
-  return db;
 }
 
 export async function getRegistrationAnalytics(args: {
@@ -128,13 +140,35 @@ export async function getRegistrationAnalytics(args: {
   dimension: RegistrationDimension;
   period?: string | null;
   limit?: number;
+  actionId?: string | null;
 }) {
-  const db = await requireRegistrationEntitlement(args.accessToken);
+  const ctx = await resolveRegistrationAccess(args.accessToken);
+  const selectedModules = await selectedModulesFor(ctx);
+  if (!isRegistrationDimensionAllowed(args.dimension, ctx.tier, selectedModules)) {
+    throw new RegistrationAccessError(403, `dimension "${args.dimension}" is not part of this cycle's selected sales modules`);
+  }
+  if (args.period) {
+    const start = historyWindowStart(ctx.tier);
+    if (start && args.period < start) {
+      throw new RegistrationAccessError(403, `period is outside this account's history window (from ${start})`);
+    }
+  }
+  // coverage is boot/navigation metadata, not a metered query, so every
+  // dimension call except coverage consumes the sales_query quota. All
+  // dimension calls that share one Sales Tools Run pass the same
+  // actionId, so this fan-out consumes quota once, not once per call.
+  if (args.dimension !== "coverage") {
+    await enforceSalesQueryQuota(ctx, args.actionId);
+  }
+
+  const db = ctx.db;
   const config = VIEW_CONFIG[args.dimension];
   const limit = Math.min(Math.max(args.limit ?? 100, 1), 500);
 
   let query = db.from(config.table).select("*");
   if (args.period) query = query.eq("period", args.period);
+  const historyStart = historyWindowStart(ctx.tier);
+  if (historyStart) query = query.gte("period", historyStart);
   query = query.order(config.order, { ascending: config.ascending ?? true }).limit(limit);
 
   const { data, error } = await query;
@@ -144,11 +178,14 @@ export async function getRegistrationAnalytics(args: {
 }
 
 export async function getRegistrationAvailablePeriods(accessToken: string): Promise<string[]> {
-  const db = await requireRegistrationEntitlement(accessToken);
-  const { data, error } = await db
+  const ctx = await resolveRegistrationAccess(accessToken);
+  let query = ctx.db
     .from("registration_analytics_coverage")
     .select("period")
     .order("period", { ascending: true });
+  const historyStart = historyWindowStart(ctx.tier);
+  if (historyStart) query = query.gte("period", historyStart);
+  const { data, error } = await query;
   if (error) throw new RegistrationAccessError(500, `registration period query failed: ${error.message}`);
   return (data ?? [])
     .map((row: any) => String(row.period).slice(0, 10))
@@ -326,8 +363,20 @@ export async function getRegistrationMarketSlice(args: {
   filters?: MarketSliceFilters;
   includeUnmapped?: boolean;
   limit?: number;
+  actionId?: string | null;
 }): Promise<MarketSliceRow[]> {
-  const db = await requireRegistrationEntitlement(args.accessToken);
+  const ctx = await resolveRegistrationAccess(args.accessToken);
+  const selectedModules = await selectedModulesFor(ctx);
+  if (!isMarketDimensionAllowed(args.dimension, ctx.tier, selectedModules)) {
+    throw new RegistrationAccessError(403, `dimension "${args.dimension}" is not available on this account's plan/selected modules`);
+  }
+  const historyStart = historyWindowStart(ctx.tier);
+  if (historyStart && args.window.from < historyStart) {
+    throw new RegistrationAccessError(403, `window is outside this account's history window (from ${historyStart})`);
+  }
+  await enforceSalesQueryQuota(ctx, args.actionId);
+
+  const db = ctx.db;
   const filters = args.filters || {};
   const rows = await fetchRegistrationRows(
     db,

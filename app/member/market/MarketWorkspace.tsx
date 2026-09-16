@@ -77,8 +77,10 @@ function monthLabel(period: string) {
   return new Intl.DateTimeFormat("th-TH", { month: "short", year: "2-digit" }).format(new Date(`${normalized}T00:00:00Z`));
 }
 
-async function jsonFetch(path: string, token: string) {
-  const response = await fetch(path, { headers: { Authorization: `Bearer ${token}` }, cache: "no-store" });
+async function jsonFetch(path: string, token: string, actionId?: string) {
+  const headers: Record<string, string> = { Authorization: `Bearer ${token}` };
+  if (actionId) headers["X-TDR-Action-Id"] = actionId;
+  const response = await fetch(path, { headers, cache: "no-store" });
   const body = await response.json();
   if (!response.ok) throw Object.assign(new Error(body.error || "โหลดข้อมูลไม่สำเร็จ"), { status: response.status, body });
   return body;
@@ -119,7 +121,7 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
   const [applied, setApplied] = useState<FilterState | null>(null);
   const [data, setData] = useState<MarketResponse | null>(null);
   const [trend, setTrend] = useState<TrendPoint[]>([]);
-  const [status, setStatus] = useState<"loading" | "ready" | "forbidden" | "error">("loading");
+  const [status, setStatus] = useState<"loading" | "ready" | "forbidden" | "quota" | "error">("loading");
   const [message, setMessage] = useState("");
 
   const periods = useMemo(() => coverage.map((row) => periodKey(row.period)).filter(Boolean).sort(), [coverage]);
@@ -142,8 +144,15 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
   async function loadMarket(next: FilterState, accessToken: string, rows: CoverageRowLike[]) {
     setStatus("loading");
     setMessage("");
+    // One "Update market" click/boot load is one logical Sales Tools
+    // request even though it fans out into a main ranking call plus up to
+    // 6 trend calls -- all share this actionId so the server counts the
+    // sales_query quota once, not once per internal call (see
+    // lib/access-policy-server.ts::consumeUsage / migration_v32's
+    // tdr_consume_usage RPC).
+    const actionId = crypto.randomUUID();
     try {
-      const body = await jsonFetch(marketPath(next), accessToken) as MarketResponse;
+      const body = await jsonFetch(marketPath(next), accessToken, actionId) as MarketResponse;
       setData(body);
       setApplied(next);
       setStatus("ready");
@@ -155,7 +164,7 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
           // does not expose an OEM-group filter, so the API keeps every selected
           // Brand/Model/Segment/Body/Powertrain/DLT filter instead of opening the
           // currently ranked dimension. market_total is therefore the true scope total.
-          const trendBody = await jsonFetch(marketPath(trendFilters, period, 1, false, "oem_group"), accessToken) as MarketResponse;
+          const trendBody = await jsonFetch(marketPath(trendFilters, period, 1, false, "oem_group"), accessToken, actionId) as MarketResponse;
           return { period, total: Number(trendBody.rows?.[0]?.market_total || 0) };
         } catch { return null; }
       }));
@@ -164,6 +173,11 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
       if (error?.status === 401) {
         await browserDb()?.auth.signOut();
         router.replace("/member/login");
+        return;
+      }
+      if (error?.status === 429) {
+        setStatus("quota");
+        setMessage(error?.message || "ใช้โควตา Sales Tools ของวันนี้ครบแล้ว");
         return;
       }
       setStatus(error?.status === 403 ? "forbidden" : "error");
@@ -240,22 +254,15 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
     await loadMarket(filters, token, coverage);
   }
   async function signOut() { await browserDb()?.auth.signOut(); router.replace("/member/login"); }
-  function downloadCsv() {
-    if (!data || !applied) return;
-    const header = ["rank", "entity", "registrations", "market_share_pct", "share_change_pp", "rank_change"];
-    const lines = [header.join(","), ...data.rows.map((row) => {
-      const move = movementByKey.get(row.entity_key);
-      return [row.market_rank, JSON.stringify(row.entity_label), row.registrations, row.market_share_pct, move?.share_change_pp ?? "", move?.rank_change ?? ""].join(",");
-    })];
-    const blob = new Blob(["\ufeff" + lines.join("\n")], { type: "text/csv;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url; link.download = `tdr-market-${applied.dimension}-${applied.period}.csv`; link.click();
-    URL.revokeObjectURL(url);
-  }
+  // Raw CSV export used to live here (client-only Blob download of
+  // `data.rows`, no server visibility, no quota). Removed: no self-service
+  // tier may expose a raw structured-data download under the product's
+  // raw-data-safety policy -- this was the one member-facing raw-export
+  // path found in the codebase (see the delivery report).
 
   if (status === "loading" && !data) return <main className={styles.shell}><div className={styles.stateCard}>กำลังเปิด Market Comparison…</div></main>;
   if (status === "forbidden") return <main className={styles.shell}><section className={styles.stateCard}><h1>บัญชีนี้ยังไม่มีสิทธิ์ Registration Intelligence</h1><p>{message}</p><Link href="/reports">ดูแพ็กเกจ TDR Report</Link></section></main>;
+  if (status === "quota") return <main className={styles.shell}><section className={styles.stateCard}><h1>ใช้โควตา Sales Tools ของวันนี้ครบแล้ว</h1><p>{message}</p><Link href="/pricing">ดูแพ็กเกจ</Link></section></main>;
   if (status === "error" && !data) return <main className={styles.shell}><section className={styles.stateCard}><h1>เปิด Market Comparison ไม่สำเร็จ</h1><p>{message}</p><button onClick={() => location.reload()}>ลองใหม่</button></section></main>;
 
   return <main className={styles.shell}>
@@ -289,7 +296,7 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
         {ignoredValue ? <div className={styles.info}>ตอนจัดอันดับตาม {DIMENSIONS.find((item) => item.value === applied?.dimension)?.label} ระบบเปิด filter ของ dimension เดียวกันออกอัตโนมัติ เพื่อให้เห็นคู่แข่งและ denominator ที่ถูกต้อง</div> : null}
         {message && status === "error" ? <div className={styles.danger}>{message}</div> : null}
 
-        <div className={styles.contextRow}><div><span>MARKET SCOPE</span><b>{applied ? `${monthLabel(applied.period)} · ${WINDOWS.find((item) => item.value === applied.window)?.label}` : "—"}</b></div><div><span>ฐานตลาด</span><b>{applied?.allScopes ? "ALL SCOPES" : "CORE"}</b></div><button type="button" onClick={downloadCsv}>Export CSV</button></div>
+        <div className={styles.contextRow}><div><span>MARKET SCOPE</span><b>{applied ? `${monthLabel(applied.period)} · ${WINDOWS.find((item) => item.value === applied.window)?.label}` : "—"}</b></div><div><span>ฐานตลาด</span><b>{applied?.allScopes ? "ALL SCOPES" : "CORE"}</b></div></div>
 
         <section className={styles.kpis}>
           <article><span>ยอดจดในตลาดที่จัดอันดับได้</span><strong>{n(marketTotal)}</strong><small>คัน</small></article>

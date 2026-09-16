@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { BillingError, getBillingStatus } from "@/lib/billing";
+import { resolveTierFromEntitlements, type EntitlementRow } from "@/lib/access-policy";
+import { PLAN_CATALOG, isPlanConfigured } from "@/lib/plans";
 
 export const dynamic = "force-dynamic";
 
@@ -14,7 +16,15 @@ export async function GET(request: NextRequest) {
 
   try {
     const status = await getBillingStatus(accessToken);
-    return NextResponse.json(status, { headers: { "Cache-Control": "private, no-store" } });
+    const tier = resolveTierFromEntitlements(status.entitlements as EntitlementRow[]);
+    const plans = PLAN_CATALOG.map((plan) => ({
+      planCode: plan.planCode,
+      tier: plan.tier,
+      interval: plan.interval,
+      priceThb: plan.priceThb,
+      configured: isPlanConfigured(plan),
+    }));
+    return NextResponse.json({ ...status, tier, plans }, { headers: { "Cache-Control": "private, no-store" } });
   } catch (error) {
     if (error instanceof BillingError) {
       return NextResponse.json({ error: error.message }, { status: error.status });

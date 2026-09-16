@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { BillingError, createRegistrationCheckout, REGISTRATION_PLAN } from "@/lib/billing";
+import { BillingError, createCheckout, REGISTRATION_PLAN } from "@/lib/billing";
+import { PLAN_CATALOG } from "@/lib/plans";
 
 export const dynamic = "force-dynamic";
 
@@ -39,12 +40,14 @@ export async function POST(request: NextRequest) {
   let body: Record<string, unknown> = {};
   try { body = await request.json(); } catch {}
   const plan = typeof body.plan === "string" ? body.plan : REGISTRATION_PLAN;
-  if (plan !== REGISTRATION_PLAN) return NextResponse.json({ error: "unsupported billing plan" }, { status: 400 });
+  const knownPlan = plan === REGISTRATION_PLAN || PLAN_CATALOG.some((entry) => entry.planCode === plan);
+  if (!knownPlan) return NextResponse.json({ error: "unsupported billing plan" }, { status: 400 });
 
   try {
     const origin = appOrigin(request);
-    const session = await createRegistrationCheckout({
+    const session = await createCheckout({
       accessToken,
+      planCode: plan,
       successUrl: `${origin}/member/billing?checkout=success`,
       cancelUrl: `${origin}/member/billing?checkout=cancelled`,
     });

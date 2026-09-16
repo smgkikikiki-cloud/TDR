@@ -121,6 +121,7 @@ async function marketSliceWithPrice(args: {
   limit: number;
   priceBand: MarketPriceBand | null;
   priceState: MarketPriceState | null;
+  actionId?: string | null;
 }) {
   const eligible = args.priceBand ? eligibleModels(args.priceState, args.window.to, args.priceBand) : null;
   const filters = eligible ? intersectModelFilter(args.filters, eligible, args.dimension) : args.filters;
@@ -131,6 +132,7 @@ async function marketSliceWithPrice(args: {
     filters,
     includeUnmapped: args.includeUnmapped,
     limit: args.dimension === "model" && eligible ? 500 : args.limit,
+    actionId: args.actionId,
   });
   return args.dimension === "model" && eligible ? rerankModelRows(rows, eligible).slice(0, args.limit) : rows;
 }
@@ -186,6 +188,7 @@ export async function GET(request: NextRequest) {
     String(request.nextUrl.searchParams.get("include_unmapped") || "").toLowerCase(),
   );
   const filters = filtersFromRequest(request);
+  const actionId = request.headers.get("x-tdr-action-id");
 
   try {
     // Entitlement is checked before privileged canonical-price metadata is read.
@@ -224,6 +227,7 @@ export async function GET(request: NextRequest) {
       limit: queryLimit,
       priceBand,
       priceState,
+      actionId,
     });
 
     let comparison = null;
@@ -256,6 +260,7 @@ export async function GET(request: NextRequest) {
         limit: 500,
         priceBand,
         priceState,
+        actionId,
       });
       comparison = {
         mode: comparisonMode,
