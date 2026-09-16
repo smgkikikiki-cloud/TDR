@@ -59,6 +59,11 @@ class OfficialSource:
     seed_urls: tuple[str, ...]
     allowed_hosts: tuple[str, ...]
     market: str = "TH"
+    # Some OEM model sites deliberately throttle or block cloud CI while their
+    # first-party media CDN remains public. In that case we can retain the
+    # exact model page as provenance and ingest only explicitly verified asset
+    # hints, instead of paying repeated page-fetch timeouts on every scale run.
+    crawl_pages: bool = True
 
     def host_allowed(self, host: str) -> bool:
         host = host.lower().split(":", 1)[0].strip(".")
