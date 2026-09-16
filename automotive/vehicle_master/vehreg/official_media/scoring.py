@@ -1,6 +1,7 @@
 """Deterministic discovery scoring and image-slot classification."""
 from __future__ import annotations
 
+import re
 from urllib.parse import unquote, urlparse
 
 from .models import ImageCandidate, ImageSlot, OfficialSource, VehicleIdentity
@@ -16,7 +17,17 @@ def _terms(identity: VehicleIdentity) -> tuple[str, ...]:
 
 
 def _matches(haystack: str, term: str) -> bool:
-    return term in haystack or (_compact(term) and _compact(term) in _compact(haystack))
+    """Match a model token without allowing prefix collisions.
+
+    Separators in the model name are optional so CR-V matches ``crv`` and
+    Corolla Cross matches ``corollacross``. Alphanumeric boundaries remain
+    mandatory, so Seal does not match Sealion or Seal5DMI.
+    """
+    parts = re.findall(r"[a-z0-9]+", term.casefold())
+    if not parts:
+        return False
+    pattern = r"(?<![a-z0-9])" + r"[\W_]*".join(re.escape(part) for part in parts) + r"(?![a-z0-9])"
+    return re.search(pattern, unquote(haystack).casefold()) is not None
 
 
 def link_score(url: str, text: str, identity: VehicleIdentity, source: OfficialSource) -> int:
@@ -25,7 +36,7 @@ def link_score(url: str, text: str, identity: VehicleIdentity, source: OfficialS
         return -999
     haystack = f"{url} {text}".casefold()
     score = 50 if any(_matches(haystack, term) for term in _terms(identity)) else 0
-    if identity.generation_code and identity.generation_code.casefold() in haystack:
+    if identity.generation_code and _matches(haystack, identity.generation_code):
         score += 20
     if any(x in haystack for x in ("model", "models", "vehicle", "car", "product")):
         score += 5
@@ -63,7 +74,7 @@ def score_candidate(candidate: ImageCandidate, identity: VehicleIdentity,
     asset_match = any(_matches(asset_text, term) for term in terms)
     generation_asset_match = bool(
         identity.generation_code
-        and identity.generation_code.casefold() in asset_text
+        and _matches(asset_text, identity.generation_code)
     )
 
     if source.host_allowed(urlparse(candidate.source_page).hostname or ""):
