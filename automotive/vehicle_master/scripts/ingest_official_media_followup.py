@@ -30,7 +30,9 @@ MODEL_PAGE_HINTS.update({
     # Do not add a direct asset hint unless the candidate itself carries
     # Vellfire identity evidence.
     "toyota.vellfire.gen1": ("https://www.toyota.co.th/model/alphard",),
-    "gwm.haval_jolion.jol": ("https://www1.gwm.co.th/HAVAL_JOLION.html",),
+    # Use GWM's current server-rendered Thailand route. The older www1 route is
+    # a JavaScript shell on cloud runners and exposes no media candidates.
+    "gwm.haval_jolion.jol": ("https://www.gwm.co.th/HAVAL_JOLION.html",),
 })
 
 # Previously verified current-model direct assets remain available to reproduce
