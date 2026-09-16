@@ -12,7 +12,7 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
-from .adapters import get_source
+from .adapters import get_page_hints, get_source
 from .models import ImageCandidate, ImageSlot, MediaAsset, ReviewStatus, VehicleIdentity
 from .parsing import parse_page, source_type_for
 from .scoring import link_score, score_candidate
@@ -26,12 +26,7 @@ _NON_PAGE_SUFFIXES = {
 
 
 def _safe_url(url: str) -> str:
-    """Remove control characters and percent-encode literal spaces.
-
-    OEM catalog links sometimes put a human filename in a query string. Python's
-    HTTP client rejects those URLs before a request is sent, so one bad brochure
-    link must not abort the whole batch.
-    """
+    """Remove control characters and percent-encode literal spaces."""
     clean = "".join(ch for ch in str(url).strip() if ord(ch) >= 32 and ord(ch) != 127)
     return clean.replace(" ", "%20")
 
@@ -67,9 +62,16 @@ def discover_pages(identity: VehicleIdentity, max_pages: int = 8) -> list[str]:
     chosen: list[str] = []
     ranked: list[tuple[int, str]] = []
     seen: set[str] = set()
-    for raw_seed in source.seed_urls:
+
+    # SPA-style OEM sites often do not expose model routes as ordinary anchors.
+    # Known current official model pages therefore get first shot, while the
+    # generic seed crawl still discovers news/press pages and future models.
+    starts = (*get_page_hints(identity.generation_id), *source.seed_urls)
+    for raw_seed in starts:
         seed = _safe_url(raw_seed)
-        if seed in seen:
+        if seed in seen or not _crawlable_page(seed):
+            continue
+        if not source.host_allowed(urlparse(seed).hostname or ""):
             continue
         seen.add(seed)
         try:
@@ -77,6 +79,8 @@ def discover_pages(identity: VehicleIdentity, max_pages: int = 8) -> list[str]:
         except (HTTPError, URLError, TimeoutError, OSError, ValueError):
             continue
         chosen.append(seed)
+        if not html:
+            continue
         _, links, _ = parse_page(html, seed, source_type_for(seed))
         for raw_url, text in links:
             url = _safe_url(raw_url)
@@ -86,12 +90,13 @@ def discover_pages(identity: VehicleIdentity, max_pages: int = 8) -> list[str]:
             if score > 0 and url not in seen:
                 ranked.append((score, url))
                 seen.add(url)
+
     ranked.sort(key=lambda item: (-item[0], item[1]))
     for _, url in ranked:
         if len(chosen) >= max_pages:
             break
         chosen.append(url)
-    return chosen
+    return chosen[:max_pages]
 
 
 def collect_candidates(identity: VehicleIdentity, max_pages: int = 8) -> list[ImageCandidate]:
