@@ -61,9 +61,11 @@ jobs:
               honda.hrv.rv \
               honda.city.gn2 \
               honda.wrv.dg \
+              byd.atto2.atto2 \
               byd.atto3.atto3 \
               byd.dolphin.dol \
               byd.seal.seal \
+              byd.sealion5.sealion5 \
               byd.sealion6.sl6 \
               byd.sealion7.sl7 \
               byd.byd_m6.m6 \
@@ -74,8 +76,6 @@ jobs:
               mg.mg_cyberster.gen1 \
               mg.mg_maxus_9.mifa9 \
               gwm.haval_h6.h6hev \
-              gwm.haval_jolion.jol \
-              gwm.ora_03.o03 \
               gwm.tank300.t300 \
               gwm.tank500.t500 \
               gwm.poer_sahar.gen1
@@ -136,5 +136,5 @@ jobs:
             exit 1
           fi
 
-      - name: Publish pilot assets and metadata
+      - name: Publish approved pilot assets and metadata
         run: npm run media:publish -- --year 2026
