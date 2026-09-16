@@ -72,6 +72,18 @@ MODEL_PAGE_HINTS.update({
 # same media reliably to cloud runners. They remain tied to an official product
 # page and still pass scoring, content hashing and deduplication.
 MODEL_ASSET_HINTS.update({
+    "tesla.model3.m3h": ((
+        "https://digitalassets.tesla.com/tesla-contents/image/upload/f_auto,q_auto/Model-3-Exterior-Hero-Mobile-LHD.jpg",
+        "Tesla Model 3 official exterior hero",
+    ),),
+    "tesla.modely.my": ((
+        "https://digitalassets.tesla.com/tesla-contents/image/upload/f_auto,q_auto/Model-Y-2-Hero-Desktop.jpg",
+        "Tesla Model Y official exterior hero",
+    ),),
+    "xpeng.xpeng_g6.g6": ((
+        "https://s-cdn.xpeng.com/commoncms/prod/2024-04-01/8e7dcbe0e06744449f91fe6981395eca.jpg?x-oss-process=image%2Fresize%2Cw_1920%2Fquality%2Cq_80%2Finterlace%2C1",
+        "XPENG G6 official exterior side",
+    ),),
     "gwm.haval_jolion.jol": ((
         "https://www.gwm.co.th/content/dam/gwm/pages/th/en/model/haval-jolion/360/new-sport/white-2.webp",
         "GWM HAVAL JOLION NEW SPORT official exterior hero",
