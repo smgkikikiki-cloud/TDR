@@ -7,6 +7,13 @@ mutated before the normal CLI resolves supported identities.
 """
 from __future__ import annotations
 
+from pathlib import Path
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
 from vehreg.official_media import OfficialSource, SOURCES
 
 # First large-scale source expansion: BMW Thailand's first-party model index.
