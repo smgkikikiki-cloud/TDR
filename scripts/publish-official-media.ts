@@ -34,6 +34,10 @@ type ExistingAsset = {
   sha256: string;
 };
 
+type UploadResult = {
+  error: { message?: string } | null;
+};
+
 function arg(name: string, fallback: string) {
   const index = process.argv.indexOf(`--${name}`);
   return index >= 0 && process.argv[index + 1] ? process.argv[index + 1] : fallback;
@@ -65,17 +69,12 @@ function sleep(ms: number) {
 }
 
 async function uploadWithRetry(
-  db: ReturnType<typeof createClient>,
   row: MediaRow,
-  bytes: Buffer,
+  upload: () => PromiseLike<UploadResult>,
 ) {
   let lastMessage = "unknown storage error";
   for (let attempt = 1; attempt <= UPLOAD_ATTEMPTS; attempt += 1) {
-    const { error } = await db.storage.from(BUCKET).upload(row.storage_path, bytes, {
-      contentType: contentType(row.storage_path),
-      cacheControl: "31536000",
-      upsert: true,
-    });
+    const { error } = await upload();
     if (!error) return;
 
     lastMessage = String(error.message || "unknown storage error");
@@ -149,7 +148,11 @@ async function main() {
 
     try {
       const bytes = await readFileAsync(localPath);
-      await uploadWithRetry(db, row, bytes);
+      await uploadWithRetry(row, () => db.storage.from(BUCKET).upload(row.storage_path, bytes, {
+        contentType: contentType(row.storage_path),
+        cacheControl: "31536000",
+        upsert: true,
+      }));
 
       const publicUrl = db.storage.from(BUCKET).getPublicUrl(row.storage_path).data.publicUrl;
       const { error: assetError } = await db.from("vehicle_media_assets").upsert({
