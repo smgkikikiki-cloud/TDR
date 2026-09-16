@@ -1,7 +1,7 @@
 """Official-site crawler, asset downloader and manifest writer."""
 from __future__ import annotations
 
-from dataclasses import asdict
+from dataclasses import asdict, replace
 import hashlib
 import json
 import mimetypes
@@ -13,7 +13,7 @@ from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
 from .adapters import get_source
-from .models import ImageCandidate, MediaAsset, ReviewStatus, VehicleIdentity
+from .models import ImageCandidate, ImageSlot, MediaAsset, ReviewStatus, VehicleIdentity
 from .parsing import parse_page, source_type_for
 from .scoring import link_score, score_candidate
 
@@ -125,7 +125,7 @@ def select_canonical(candidates: Iterable[ImageCandidate]) -> list[ImageCandidat
     if "hero" not in best:
         for preferred in ("front_3q", "side", "rear_3q"):
             if preferred in best:
-                best["hero"] = best[preferred]
+                best["hero"] = replace(best[preferred], slot=ImageSlot.HERO)
                 break
     return list(best.values()) + unknown[:3]
 
