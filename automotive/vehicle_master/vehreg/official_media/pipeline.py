@@ -18,16 +18,40 @@ from .parsing import parse_page, source_type_for
 from .scoring import link_score, score_candidate
 
 USER_AGENT = "TDR-Official-Media/1.0 (+vehicle research; official sources only)"
+_NON_PAGE_SUFFIXES = {
+    ".pdf", ".jpg", ".jpeg", ".png", ".webp", ".avif", ".svg", ".gif",
+    ".zip", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".mp4",
+    ".mov", ".avi", ".mp3", ".wav",
+}
+
+
+def _safe_url(url: str) -> str:
+    """Remove control characters and percent-encode literal spaces.
+
+    OEM catalog links sometimes put a human filename in a query string. Python's
+    HTTP client rejects those URLs before a request is sent, so one bad brochure
+    link must not abort the whole batch.
+    """
+    clean = "".join(ch for ch in str(url).strip() if ord(ch) >= 32 and ord(ch) != 127)
+    return clean.replace(" ", "%20")
+
+
+def _crawlable_page(url: str) -> bool:
+    parsed = urlparse(_safe_url(url))
+    return parsed.scheme in {"http", "https"} and Path(parsed.path).suffix.casefold() not in _NON_PAGE_SUFFIXES
 
 
 def fetch_bytes(url: str, timeout: int = 20) -> tuple[bytes, str]:
-    request = Request(url, headers={"User-Agent": USER_AGENT, "Accept": "text/html,image/*,*/*;q=0.8"})
+    request = Request(_safe_url(url), headers={"User-Agent": USER_AGENT, "Accept": "text/html,image/*,*/*;q=0.8"})
     with urlopen(request, timeout=timeout) as response:
         return response.read(), response.headers.get("Content-Type", "")
 
 
 def fetch_text(url: str, timeout: int = 20) -> str:
     body, content_type = fetch_bytes(url, timeout)
+    media_type = content_type.split(";", 1)[0].strip().casefold()
+    if media_type and not (media_type.startswith("text/") or media_type in {"application/json", "application/xhtml+xml"}):
+        return ""
     match = re.search(r"charset=([\w.-]+)", content_type, re.I)
     charset = match.group(1) if match else "utf-8"
     try:
@@ -43,17 +67,21 @@ def discover_pages(identity: VehicleIdentity, max_pages: int = 8) -> list[str]:
     chosen: list[str] = []
     ranked: list[tuple[int, str]] = []
     seen: set[str] = set()
-    for seed in source.seed_urls:
+    for raw_seed in source.seed_urls:
+        seed = _safe_url(raw_seed)
         if seed in seen:
             continue
         seen.add(seed)
         try:
             html = fetch_text(seed)
-        except (HTTPError, URLError, TimeoutError, OSError):
+        except (HTTPError, URLError, TimeoutError, OSError, ValueError):
             continue
         chosen.append(seed)
         _, links, _ = parse_page(html, seed, source_type_for(seed))
-        for url, text in links:
+        for raw_url, text in links:
+            url = _safe_url(raw_url)
+            if not _crawlable_page(url):
+                continue
             score = link_score(url, text, identity, source)
             if score > 0 and url not in seen:
                 ranked.append((score, url))
@@ -74,10 +102,13 @@ def collect_candidates(identity: VehicleIdentity, max_pages: int = 8) -> list[Im
     for page in discover_pages(identity, max_pages=max_pages):
         try:
             html = fetch_text(page)
-        except (HTTPError, URLError, TimeoutError, OSError):
+        except (HTTPError, URLError, TimeoutError, OSError, ValueError):
+            continue
+        if not html:
             continue
         images, _, _ = parse_page(html, page, source_type_for(page))
         for image in images:
+            image.image_url = _safe_url(image.image_url)
             image = score_candidate(image, identity, source)
             prior = best.get(image.image_url)
             if prior is None or image.score > prior.score:
@@ -142,7 +173,7 @@ def ingest(identity: VehicleIdentity, store: ContentAddressedStore, max_pages: i
                            **asdict(candidate), "status": candidate.status.value})
         try:
             digest, storage_path = store.put(identity, candidate)
-        except (HTTPError, URLError, TimeoutError, OSError) as exc:
+        except (HTTPError, URLError, TimeoutError, OSError, ValueError) as exc:
             review.append({"vehicle_id": identity.generation_id, "image_url": candidate.image_url,
                            "reason": f"download_failed:{type(exc).__name__}"})
             continue
