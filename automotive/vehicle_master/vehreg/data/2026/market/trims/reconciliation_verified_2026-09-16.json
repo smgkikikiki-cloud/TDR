@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "models": [
+    {
+      "model_id": "avatr.avatr_07",
+      "supersedes": true,
+      "status": "RESEARCH_UNRESOLVED",
+      "source_trim_count": 3,
+      "source_refs": ["owner_directory_2026_09_13:023"],
+      "reason": "Official Thailand specification confirms AVATR 07 Max RWD and Ultra AWD as BEV. Those two owner rows are promoted; the owner-directory Pro row has no matching Thailand grade in the verified lineup and remains unresolved rather than guessed."
+    },
+    {
+      "model_id": "bentley.flying_spur",
+      "supersedes": true,
+      "status": "RESEARCH_UNRESOLVED",
+      "source_trim_count": 5,
+      "source_refs": ["owner_directory_2026_09_13:026"],
+      "reason": "V8 and Hybrid were already promoted; Bentley now verifies S and Azure as hybrid grades, so those owner rows are promoted as PHEV. The owner row 'Speed / Mulliner' aggregates two distinct current Bentley grades, which are added separately from OEM evidence and the single aggregated owner row remains unresolved."
+    },
+    {
+      "model_id": "deepal.deepal_e07",
+      "supersedes": true,
+      "status": "RESEARCH_UNRESOLVED",
+      "source_trim_count": 4,
+      "source_refs": ["owner_directory_2026_09_13:070"],
+      "reason": "CHANGAN Thailand verifies the current E07 lineup as Plus and Performance AWD, both battery-electric. The owner directory instead lists Air/Pro/Max/Ultra under a BEV/EREV umbrella, so none of those four source rows can be mapped one-to-one. Two official Thailand trims are added separately while all four owner rows remain unresolved."
+    },
+    {
+      "model_id": "gac.gac_m8",
+      "supersedes": true,
+      "status": "READY",
+      "source_trim_count": 3,
+      "source_refs": ["owner_directory_2026_09_13:088"],
+      "reason": "GAC's Thailand launch evidence identifies both seven-seat and four-seat luxury M8 offerings as PHEV. The owner 4-Seater Supreme row is therefore promoted as the four-seat PHEV identity; the two previously promoted owner rows remain intact. A separate official seven-seat PHEV identity is added without inflating owner-row reconciliation."
+    },
+    {
+      "model_id": "land_rover.range_rover",
+      "supersedes": true,
+      "status": "RESEARCH_UNRESOLVED",
+      "source_trim_count": 3,
+      "source_refs": ["owner_directory_2026_09_13:144"],
+      "reason": "Land Rover Thailand showroom evidence verifies Long Wheelbase Autobiography P460e and Long Wheelbase SV P460e as PHEV, so those two owner rows are promoted. The generic SWB Autobiography row still does not identify one exact powertrain and remains unresolved."
+    },
+    {
+      "model_id": "land_rover.range_rover_velar",
+      "supersedes": true,
+      "status": "RESEARCH_UNRESOLVED",
+      "source_trim_count": 3,
+      "source_refs": ["owner_directory_2026_09_13:146"],
+      "reason": "Land Rover Thailand currently verifies a Standard Wheelbase Dynamic SE P400e PHEV, which is added as official identity. The owner directory's generic Dynamic SE, Dynamic HSE and Autobiography rows span an older/mixed powertrain taxonomy and cannot be mapped one-to-one, so all three remain unresolved."
+    },
+    {
+      "model_id": "leapmotor.leapmotor_c10",
+      "supersedes": true,
+      "status": "RESEARCH_UNRESOLVED",
+      "source_trim_count": 3,
+      "source_refs": ["owner_directory_2026_09_13:148"],
+      "reason": "Thailand evidence verifies C10 Style and Design as 69.9 kWh rear-wheel-drive BEVs; those two owner rows are promoted. No Thailand evidence was found tying the owner-directory Smart AWD row to the Thai lineup, so it remains unresolved."
+    },
+    {
+      "model_id": "toyota.hilux_travo_cab",
+      "supersedes": true,
+      "status": "RESEARCH_UNRESOLVED",
+      "source_trim_count": 2,
+      "source_refs": ["owner_directory_2026_09_13:288"],
+      "reason": "Toyota Thailand's verified Smart Cab lineup uses six Smart/Premium 2.8 diesel grades, not the owner directory's generic Standard/Highline names under a BEV/diesel umbrella. The six official ICE grades are added separately; the two owner rows remain unresolved because no one-to-one identity mapping is justified."
+    },
+    {
+      "model_id": "toyota.hilux_travo_double_cab",
+      "supersedes": true,
+      "status": "RESEARCH_UNRESOLVED",
+      "source_trim_count": 2,
+      "source_refs": ["owner_directory_2026_09_13:289"],
+      "reason": "Toyota Thailand's verified Double Cab lineup uses five Smart/Premium 2.8 diesel grades, not the owner directory's generic Standard/Highline names under a BEV/hybrid/diesel umbrella. The five official ICE grades are added separately; the two owner rows remain unresolved because no one-to-one identity mapping is justified."
+    }
+  ]
+}
