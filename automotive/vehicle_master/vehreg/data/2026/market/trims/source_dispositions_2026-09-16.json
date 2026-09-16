@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "dispositions": [
+    {
+      "model_id": "bentley.flying_spur",
+      "source_ref": "owner_directory_2026_09_13:026",
+      "source_name": "Flying Spur Speed / Mulliner",
+      "disposition": "AGGREGATE_SOURCE_ROW",
+      "reason": "The owner row collapses two separately marketed Bentley grades. Official Bentley evidence supports distinct Flying Spur Speed and Flying Spur Mulliner identities, both already added canonically from OEM evidence.",
+      "evidence_refs": [
+        "https://www.bentleymotors.com/en/models/flying-spur/flying-spur-speed.html",
+        "https://www.bentleymotors.com/en/models/flying-spur/flying-spur-mulliner.html"
+      ]
+    },
+    {
+      "model_id": "deepal.deepal_e07",
+      "source_ref": "owner_directory_2026_09_13:070",
+      "source_name": "Air (RWD)",
+      "disposition": "SUPERSEDED_BY_VERIFIED_LINEUP",
+      "reason": "CHANGAN Thailand's verified E07 retail lineup uses Plus and Performance AWD rather than the owner-directory Air/Pro/Max/Ultra taxonomy.",
+      "evidence_refs": ["https://www.changan.co.th/th/compare-cars/?compare1=43", "https://www.changan.co.th/th/compare-cars/?compare1=44"]
+    },
+    {
+      "model_id": "deepal.deepal_e07",
+      "source_ref": "owner_directory_2026_09_13:070",
+      "source_name": "Pro (RWD)",
+      "disposition": "SUPERSEDED_BY_VERIFIED_LINEUP",
+      "reason": "CHANGAN Thailand's verified E07 retail lineup uses Plus and Performance AWD rather than the owner-directory Air/Pro/Max/Ultra taxonomy.",
+      "evidence_refs": ["https://www.changan.co.th/th/compare-cars/?compare1=43", "https://www.changan.co.th/th/compare-cars/?compare1=44"]
+    },
+    {
+      "model_id": "deepal.deepal_e07",
+      "source_ref": "owner_directory_2026_09_13:070",
+      "source_name": "Max (AWD Dual Motor)",
+      "disposition": "SUPERSEDED_BY_VERIFIED_LINEUP",
+      "reason": "CHANGAN Thailand's verified E07 retail lineup uses Plus and Performance AWD rather than the owner-directory Air/Pro/Max/Ultra taxonomy.",
+      "evidence_refs": ["https://www.changan.co.th/th/compare-cars/?compare1=43", "https://www.changan.co.th/th/compare-cars/?compare1=44"]
+    },
+    {
+      "model_id": "deepal.deepal_e07",
+      "source_ref": "owner_directory_2026_09_13:070",
+      "source_name": "Ultra (AWD Air Suspension)",
+      "disposition": "SUPERSEDED_BY_VERIFIED_LINEUP",
+      "reason": "CHANGAN Thailand's verified E07 retail lineup uses Plus and Performance AWD rather than the owner-directory Air/Pro/Max/Ultra taxonomy.",
+      "evidence_refs": ["https://www.changan.co.th/th/compare-cars/?compare1=43", "https://www.changan.co.th/th/compare-cars/?compare1=44"]
+    },
+    {
+      "model_id": "honda.en2",
+      "source_ref": "owner_directory_2026_09_13:107",
+      "source_name": "e:N2 Concept / Future Production Trim",
+      "disposition": "NON_MARKET_SOURCE_ROW",
+      "reason": "The source row explicitly describes a concept/future-production item rather than a real retail MarketTrim.",
+      "evidence_refs": ["owner_directory_2026_09_13:107"]
+    },
+    {
+      "model_id": "toyota.hilux_travo_cab",
+      "source_ref": "owner_directory_2026_09_13:288",
+      "source_name": "Hilux Travo Smart Cab Multi-Utility Standard",
+      "disposition": "SUPERSEDED_BY_VERIFIED_LINEUP",
+      "reason": "Toyota Thailand's verified Smart Cab lineup uses exact Smart/Premium 2.8 diesel grades rather than the generic owner-directory Standard/Highline taxonomy.",
+      "evidence_refs": ["https://www.toyota.co.th/model/hilux_travo_prerunner_4trex/specification"]
+    },
+    {
+      "model_id": "toyota.hilux_travo_cab",
+      "source_ref": "owner_directory_2026_09_13:288",
+      "source_name": "Hilux Travo Smart Cab Highline",
+      "disposition": "SUPERSEDED_BY_VERIFIED_LINEUP",
+      "reason": "Toyota Thailand's verified Smart Cab lineup uses exact Smart/Premium 2.8 diesel grades rather than the generic owner-directory Standard/Highline taxonomy.",
+      "evidence_refs": ["https://www.toyota.co.th/model/hilux_travo_prerunner_4trex/specification"]
+    },
+    {
+      "model_id": "toyota.hilux_travo_double_cab",
+      "source_ref": "owner_directory_2026_09_13:289",
+      "source_name": "Hilux Travo Double Cab Standard 4x2",
+      "disposition": "SUPERSEDED_BY_VERIFIED_LINEUP",
+      "reason": "Toyota Thailand's verified Double Cab lineup uses exact Smart/Premium 2.8 diesel grades rather than the generic owner-directory Standard/Highline taxonomy.",
+      "evidence_refs": ["https://www.toyota.co.th/model/hilux_travo_prerunner_4trex/specification"]
+    },
+    {
+      "model_id": "toyota.hilux_travo_double_cab",
+      "source_ref": "owner_directory_2026_09_13:289",
+      "source_name": "Hilux Travo Double Cab Highline 4x4",
+      "disposition": "SUPERSEDED_BY_VERIFIED_LINEUP",
+      "reason": "Toyota Thailand's verified Double Cab lineup uses exact Smart/Premium 2.8 diesel grades rather than the generic owner-directory Standard/Highline taxonomy.",
+      "evidence_refs": ["https://www.toyota.co.th/model/hilux_travo_prerunner_4trex/specification"]
+    }
+  ]
+}
