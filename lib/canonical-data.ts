@@ -6,6 +6,68 @@ const BODY: Record<string, string> = {
   PICKUP: "PICKUP", WAGON: "WAGON", VAN: "VAN", TRUCK: "TRUCK", OTHER: "OTHER",
 };
 
+const MEDIA_PRIORITY: Record<string, number> = {
+  hero: 0,
+  front_3q: 1,
+  side: 2,
+  rear_3q: 3,
+  dashboard: 4,
+  interior: 5,
+  cargo: 6,
+  detail: 7,
+  unknown: 8,
+};
+
+type CanonicalMediaRow = {
+  vehicle_id: string;
+  visual_key: string;
+  public_url: string;
+  image_type: string;
+  confidence: number | null;
+  width: number | null;
+  height: number | null;
+  source_url: string | null;
+  source_type: string | null;
+};
+
+function compareMedia(a: CanonicalMediaRow, b: CanonicalMediaRow) {
+  const priority = (MEDIA_PRIORITY[a.image_type] ?? 99) - (MEDIA_PRIORITY[b.image_type] ?? 99);
+  if (priority) return priority;
+  return Number(b.confidence || 0) - Number(a.confidence || 0);
+}
+
+/** Card/detail hero selection is intentionally conservative: only a canonical
+ * hero or front three-quarter exterior may become the primary vehicle image.
+ * Interior/cargo/detail assets stay available in the media gallery but never
+ * silently become a catalogue thumbnail. */
+function primaryExteriorMedia(rows: CanonicalMediaRow[]) {
+  return rows
+    .filter((row) => row.image_type === "hero" || row.image_type === "front_3q")
+    .sort(compareMedia)[0] || null;
+}
+
+async function getCanonicalPrimaryMediaIndex() {
+  const db = publicDb();
+  const index = new Map<string, CanonicalMediaRow>();
+  if (!db) return index;
+  const { data, error } = await db.from("vehicle_media_assets")
+    .select("vehicle_id,visual_key,public_url,image_type,confidence,width,height,source_url,source_type")
+    .in("image_type", ["hero", "front_3q"])
+    .order("confidence", { ascending: false });
+  if (error) throw error;
+  const grouped = new Map<string, CanonicalMediaRow[]>();
+  for (const row of (data || []) as CanonicalMediaRow[]) {
+    const bucket = grouped.get(row.vehicle_id) || [];
+    bucket.push(row);
+    grouped.set(row.vehicle_id, bucket);
+  }
+  for (const [vehicleId, rows] of grouped) {
+    const chosen = primaryExteriorMedia(rows);
+    if (chosen) index.set(vehicleId, chosen);
+  }
+  return index;
+}
+
 function modelRow(row: any) {
   const payload = row.payload || {};
   const brand = payload.brand || {};
@@ -76,12 +138,7 @@ export async function getCanonicalVehicleMedia(vehicleId: string) {
     .eq("vehicle_id", vehicleId)
     .order("confidence", { ascending: false });
   if (error) throw error;
-  const rows = data || [];
-  return rows.sort((a: any, b: any) => {
-    if (a.image_type === "hero" && b.image_type !== "hero") return -1;
-    if (b.image_type === "hero" && a.image_type !== "hero") return 1;
-    return Number(b.confidence || 0) - Number(a.confidence || 0);
-  });
+  return ((data || []) as CanonicalMediaRow[]).sort(compareMedia);
 }
 
 export async function getCanonicalBrands(limit = 150) {
@@ -116,10 +173,21 @@ export async function getCanonicalModelsByBrand(brandId: string) {
 export async function getCanonicalModels(limit = 600) {
   const db = publicDb();
   if (!db) return [];
-  const { data, error } = await db.from("current_vehicle_models").select("*")
-    .order("name_en").limit(limit);
+  const [{ data, error }, mediaIndex] = await Promise.all([
+    db.from("current_vehicle_models").select("*").order("name_en").limit(limit),
+    getCanonicalPrimaryMediaIndex(),
+  ]);
   if (error) throw error;
-  return (data || []).map(modelRow);
+  return (data || []).map((raw: any) => {
+    const row: any = modelRow(raw);
+    const media = row.generation_id ? mediaIndex.get(row.generation_id) : null;
+    return {
+      ...row,
+      image_url: media?.public_url || null,
+      hero_image_url: media?.public_url || null,
+      image_type: media?.image_type || null,
+    };
+  });
 }
 
 export async function getCanonicalModelBundle(slug: string) {
@@ -146,10 +214,15 @@ export async function getCanonicalModelBundle(slug: string) {
     const values = numeric(trimKey);
     if (!row[modelKey] && values.length && new Set(values).size === 1) row[modelKey] = values[0];
   }
-  const hero = media.find((item: any) => item.image_type === "hero") || media[0] || null;
-  return { ...row, hero_image_url: hero?.public_url || null, media,
+  const hero = primaryExteriorMedia(media as CanonicalMediaRow[]);
+  return {
+    ...row,
+    image_url: hero?.public_url || null,
+    hero_image_url: hero?.public_url || null,
+    media,
     powertrains_detail: powertrains,
-    trims: trims.map(({ _powertrain, ...trim }: any) => trim) };
+    trims: trims.map(({ _powertrain, ...trim }: any) => trim),
+  };
 }
 
 /** Free compare reads the same active release as the catalogue. It deliberately
@@ -159,13 +232,12 @@ export async function getCanonicalModelBundle(slug: string) {
 export async function getCanonicalCompareTrims(limit = 600) {
   const db = publicDb();
   if (!db) return [];
-  const [{ data: rawTrims, error: trimError }, { data: rawModels, error: modelError }] = await Promise.all([
+  const [{ data: rawTrims, error: trimError }, modelRows] = await Promise.all([
     db.from("current_market_trims").select("*").order("name").limit(limit),
-    db.from("current_vehicle_models").select("*").limit(600),
+    getCanonicalModels(600),
   ]);
   if (trimError) throw trimError;
-  if (modelError) throw modelError;
-  const models = new Map((rawModels || []).map((row: any) => [row.canonical_id, modelRow(row)]));
+  const models = new Map((modelRows || []).map((row: any) => [row.canonical_id, row]));
   return (rawTrims || [])
     .map((raw: any) => {
       const trim = trimRow(raw);
@@ -176,6 +248,7 @@ export async function getCanonicalCompareTrims(limit = 600) {
         model_slug: model?.slug || null,
         brand_name: detail.brand || model?.brands?.name_en || "",
         model_name: detail.model || model?.name_en || raw.model_id,
+        image_url: model?.image_url || null,
         segment: model?.segment || null,
         body_type: model?.body_type || null,
         production_type: model?.production_type || null,
