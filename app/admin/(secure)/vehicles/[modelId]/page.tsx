@@ -289,21 +289,22 @@ function MarketTrimForm({
     </select></label>
     <label className="adminField"><span>Drivetrain</span><select name="drivetrain" defaultValue={p.drivetrain || ""}>
       <option value="">ไม่แก้ / ไม่ระบุ</option>{DRIVETRAINS.map((v) => <option key={v} value={v}>{v}</option>)}
-    </select></label>
-    <label className="adminField"><span>Engine code</span><input name="engine_code" type="text" defaultValue={p.engine_code || ""} /></label>
-    <label className="adminField"><span>Engine cc</span><input name="engine_cc" type="number" min="1" step="1" defaultValue={p.engine_cc || ""} /></label>
-    <label className="adminField"><span>Battery kWh</span><input name="battery_kwh" type="number" min="0" step="0.1" defaultValue={p.battery_kwh || ""} /></label>
-    <label className="adminField"><span>Transmission</span><input name="transmission" type="text" defaultValue={p.transmission || ""} /></label>
-    <label className="adminField"><span>Seats</span><input name="seats" type="number" min="1" step="1" defaultValue={p.seats || ""} /></label>
-    <label className="adminField"><span>Length mm</span><input name="length_mm" type="number" min="1" step="1" defaultValue={p.length_mm || ""} /></label>
-    <label className="adminField"><span>Width mm</span><input name="width_mm" type="number" min="1" step="1" defaultValue={p.width_mm || ""} /></label>
-    <label className="adminField"><span>Height mm</span><input name="height_mm" type="number" min="1" step="1" defaultValue={p.height_mm || ""} /></label>
-    <label className="adminField"><span>Wheelbase mm</span><input name="wheelbase_mm" type="number" min="1" step="1" defaultValue={p.wheelbase_mm || ""} /></label>
-    <label className="adminField"><span>Tire front</span><input name="tire_front" type="text" defaultValue={p.tire_front || ""} /></label>
-    <label className="adminField"><span>Tire rear</span><input name="tire_rear" type="text" defaultValue={p.tire_rear || ""} /></label>
-    <label className="adminField"><span>Wheel front</span><input name="wheel_front" type="text" defaultValue={p.wheel_front || ""} /></label>
-    <label className="adminField"><span>Wheel rear</span><input name="wheel_rear" type="text" defaultValue={p.wheel_rear || ""} /></label>
-    <label className="adminField adminFieldWide"><span>Notes</span><input name="notes" type="text" defaultValue={p.notes || ""} /></label>
+    </select>{existing ? <ClearToggle name="drivetrain" /> : null}</label>
+    <ClearableField existing={Boolean(existing)} name="engine_code" label="Engine code" type="text" defaultValue={p.engine_code || ""} />
+    <ClearableField existing={Boolean(existing)} name="engine_cc" label="Engine cc" type="number" min="1" step="1" defaultValue={p.engine_cc || ""} />
+    <ClearableField existing={Boolean(existing)} name="battery_kwh" label="Battery kWh" type="number" min="0" step="0.1" defaultValue={p.battery_kwh || ""} />
+    <ClearableField existing={Boolean(existing)} name="transmission" label="Transmission" type="text" defaultValue={p.transmission || ""} />
+    <ClearableField existing={Boolean(existing)} name="seats" label="Seats" type="number" min="1" step="1" defaultValue={p.seats || ""} />
+    <ClearableField existing={Boolean(existing)} name="length_mm" label="Length mm" type="number" min="1" step="1" defaultValue={p.length_mm || ""} />
+    <ClearableField existing={Boolean(existing)} name="width_mm" label="Width mm" type="number" min="1" step="1" defaultValue={p.width_mm || ""} />
+    <ClearableField existing={Boolean(existing)} name="height_mm" label="Height mm" type="number" min="1" step="1" defaultValue={p.height_mm || ""} />
+    <ClearableField existing={Boolean(existing)} name="wheelbase_mm" label="Wheelbase mm" type="number" min="1" step="1" defaultValue={p.wheelbase_mm || ""} />
+    <ClearableField existing={Boolean(existing)} name="tire_front" label="Tire front" type="text" defaultValue={p.tire_front || ""} />
+    <ClearableField existing={Boolean(existing)} name="tire_rear" label="Tire rear" type="text" defaultValue={p.tire_rear || ""} />
+    <ClearableField existing={Boolean(existing)} name="wheel_front" label="Wheel front" type="text" defaultValue={p.wheel_front || ""} />
+    <ClearableField existing={Boolean(existing)} name="wheel_rear" label="Wheel rear" type="text" defaultValue={p.wheel_rear || ""} />
+    <ClearableField existing={Boolean(existing)} name="notes" label="Notes" type="text" defaultValue={p.notes || ""} wide />
+    {existing ? <p className="adminHint adminFieldWide">ติ๊ก "ล้างค่า" เพื่อลบค่าที่มีอยู่ออกจริง — เว้นว่างเฉยๆ โดยไม่ติ๊ก จะไม่แก้ field นั้น (ค่าเดิมยังอยู่)</p> : null}
 
     <fieldset className="adminFieldWide">
       <legend>Source refs — structured, ไม่ต้องพิมพ์ JSON</legend>
@@ -330,4 +331,26 @@ function MarketTrimForm({
     <label className="adminField adminFieldWide"><span>เหตุผล/review note</span><input name="reason" type="text" placeholder="Official trim list / brochure confirms this configuration…" required /></label>
     <div className="adminFormActions"><button className="adminPrimary">Preview diff →</button></div>
   </form>;
+}
+
+/** A checked box beside a field means "explicitly clear this field",
+ * independent of whatever is left in the text/number input beside it (see
+ * app/admin/vehicle-editor-actions.ts's isClearing -- the checkbox wins).
+ * Only rendered for an existing MarketTrim: a brand-new trim has nothing to
+ * clear, so a blank optional field there simply stays unset already. */
+function ClearToggle({ name }: { name: string }) {
+  return <label className="adminClearToggle"><input type="checkbox" name={`clear_${name}`} /> ล้างค่า (unset)</label>;
+}
+
+function ClearableField({
+  existing, name, label, type, min, step, defaultValue, wide,
+}: {
+  existing: boolean; name: string; label: string; type: "text" | "number";
+  min?: string; step?: string; defaultValue: string; wide?: boolean;
+}) {
+  return <label className={wide ? "adminField adminFieldWide" : "adminField"}>
+    <span>{label}</span>
+    <input name={name} type={type} min={min} step={step} defaultValue={defaultValue} />
+    {existing ? <ClearToggle name={name} /> : null}
+  </label>;
 }

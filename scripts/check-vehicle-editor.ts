@@ -92,6 +92,36 @@ console.log("\ncommand builder — MarketTrim create vs edit preserves identity"
   ok("an omitted (untouched) field is absent from the patch, not overwritten with undefined/null", !("engine_cc" in edited.payload.trims[0]));
 }
 
+console.log("\ncommand builder — explicit clear semantics for optional MarketTrim fields: three states, not two");
+{
+  const base = {
+    batchId: "b-clear", year: 2026, submittedAt: "2026-01-01T00:00:00Z", reason: "clear a bad value",
+    evidence: { sourceKind: "ADMIN" as const, reviewedAt: "2026-01-01" },
+    canonicalModelId: "acme.testmodel", brand: { id: "acme", nameEn: "Acme" }, generationCode: "gen1",
+    existingTrimId: "acme.testmodel.gen1.trim.trim_a",
+  };
+
+  const clearedNumeric = buildMarketTrimBatch({ ...base, trim: { name: "Trim A", powertrain: "ICE", battery_kwh: null } }).payload.commands[0] as any;
+  check("an explicit null clears an optional numeric field in the emitted command", clearedNumeric.payload.trims[0].battery_kwh, null);
+  ok("the cleared field's key is present (not omitted) so the writer's dict.update() actually overwrites the old value", "battery_kwh" in clearedNumeric.payload.trims[0]);
+
+  const clearedText = buildMarketTrimBatch({ ...base, trim: { name: "Trim A", powertrain: "ICE", notes: "" } }).payload.commands[0] as any;
+  check("an explicit empty string clears an optional text field to MarketTrim's own canonical empty representation", clearedText.payload.trims[0].notes, "");
+  ok("the cleared text field's key is present, not omitted", "notes" in clearedText.payload.trims[0]);
+
+  const clearedEnum = buildMarketTrimBatch({ ...base, trim: { name: "Trim A", powertrain: "ICE", drivetrain: "UNKNOWN" } }).payload.commands[0] as any;
+  check("drivetrain (a non-nullable enum) clears to its own UNKNOWN sentinel, not null", clearedEnum.payload.trims[0].drivetrain, "UNKNOWN");
+
+  const untouched = buildMarketTrimBatch({ ...base, trim: { name: "Trim A", powertrain: "ICE" } }).payload.commands[0] as any;
+  ok("a field genuinely untouched (no clear, no new value) is absent entirely, so the existing value survives dict.update()", !("battery_kwh" in untouched.payload.trims[0]) && !("notes" in untouched.payload.trims[0]));
+
+  const setNewValue = buildMarketTrimBatch({ ...base, trim: { name: "Trim A", powertrain: "ICE", battery_kwh: 42 } }).payload.commands[0] as any;
+  check("setting a real new value still works alongside the clear mechanism", setNewValue.payload.trims[0].battery_kwh, 42);
+
+  const clearDiff = diffPatch({ battery_kwh: 60 }, { battery_kwh: null }, { battery_kwh: "Battery kWh" });
+  check("the diff for a cleared field shows Current: 60 -> Proposed: null exactly", clearDiff[0], { field: "battery_kwh", label: "Battery kWh", current: 60, proposed: null, changed: true });
+}
+
 console.log("\ncommand builder — duplicate MarketTrim identity detection never auto-merges");
 {
   const existing = [
@@ -246,8 +276,19 @@ console.log("\nsource-text regression — server actions: ownership, atomic cons
     ok(`${fn} is admin-gated`, new RegExp(`export async function ${fn}[\\s\\S]{0,200}isAdmin\\(\\)`).test(actions));
   }
   ok("every proposal/draft is created or loaded against the authenticated editor's own name (requireEditor), never a shared fallback actor", !/\|\| "tdr-admin"/.test(actions));
-  ok("confirmEditProposal consumes the proposal BEFORE checking staleness (atomicity first, so a double-submit can never both pass)", /const consumed = await consumeProposal\(proposalId, editor\.name\)[\s\S]{0,400}assertNotStale\(consumed\.pageReleaseId/.test(actions));
-  ok("confirmEditProposal never enqueues without a successful consume", /if \(!consumed\) \{[\s\S]{0,200}throw new Error/.test(actions));
+  ok(
+    "confirmEditProposal LOADS (does not consume) the proposal before enqueueing, so a transient enqueue failure leaves it PENDING_REVIEW and retryable",
+    /const proposal = await loadProposal\(proposalId, editor\.name\)[\s\S]{0,600}await enqueueCanonicalInputBatch\(proposal\.batchPayload/.test(actions),
+  );
+  ok(
+    "confirmEditProposal consumes the proposal only AFTER a successful enqueue -- relies on enqueueCanonicalInputBatch's own batch_key/payload-hash idempotency for retry and double-submit safety",
+    /await enqueueCanonicalInputBatch\(proposal\.batchPayload[\s\S]{0,200}await consumeProposal\(proposalId, editor\.name\)/.test(actions),
+  );
+  ok(
+    "a failed post-enqueue consume (e.g. a racing duplicate confirm already consumed it) is not treated as an error -- the edit is already safely queued",
+    !/consumeProposal\(proposalId, editor\.name\)[\s\S]{0,80}if \(!/.test(actions),
+  );
+  ok("confirmEditProposal no longer uses the old consume-first variable name", !/const consumed = await consumeProposal/.test(actions));
   ok("every prepare action checks the release fingerprint before building/staging a command", (actions.match(/assertNotStale\(/g) || []).length >= 4);
   ok("MarketTrim create/edit requires evidence ref (requireRef: true)", /prepareMarketTrimEdit[\s\S]*?readEvidence\(formData, \{ requireRef: true \}\)/.test(actions));
   ok("a KNOWN spec entry requires evidence ref; non-KNOWN dispositions do not", /requireRef: valueState === "KNOWN"/.test(actions));
@@ -259,6 +300,12 @@ console.log("\nsource-text regression — server actions: ownership, atomic cons
   ok("only the entries actually staged in a draft become commands -- prepareSpecDraftReview refuses an empty draft", /if \(!draft\.draftEntries\.length\) throw/.test(actions));
   ok("the only write path is enqueueCanonicalInputBatch — no direct Supabase .update/.insert on canonical tables", !/adminDb\(\)/.test(actions));
   ok("nothing in the actions file targets current_vehicle_ or canonical_ tables directly", !/\.from\(["'`](current_|canonical_)/.test(actions));
+  ok("an explicit clear_<field> checkbox, not a blank input alone, is what triggers clearing an optional MarketTrim field", /function isClearing\(name: string\): boolean \{\s*return field\(formData, `clear_\$\{name\}`\) === "on";/.test(actions));
+  ok("clearing takes priority over whatever is left in the text/number input", /function numberField[\s\S]{0,150}if \(isClearing\(name\)\) return null;/.test(actions));
+  ok("text fields clear to MarketTrim's own canonical empty string, not a separate null", /function textField[\s\S]{0,80}if \(isClearing\(name\)\) return "";/.test(actions));
+  ok("drivetrain clears to its own UNKNOWN sentinel, not the generic clear helper", /isClearing\("drivetrain"\) \? "UNKNOWN"/.test(actions));
+  ok("name (required MarketTrim identity) is never gated behind a clear checkbox", !/isClearing\("name"\)/.test(actions) && !/clear_name/.test(actions));
+  ok("powertrain (required MarketTrim identity) is never gated behind a clear checkbox", !/isClearing\("powertrain"\)/.test(actions) && !/clear_powertrain/.test(actions));
 }
 
 console.log("\nsource-text regression — canonical-editor.ts remains read-only");
@@ -292,6 +339,9 @@ console.log("\nsource-text regression — workspace page: multi-spec draft UI, s
   ok("draft evidence is prefilled from the draft's own default (no retyping per field)", /draft\?\.defaultEvidence\?\.sourceRef/.test(workspace));
   ok("MarketTrim source refs use structured remove checkboxes, not a source_refs JSON textarea", /name="remove_source"/.test(workspace) && !/name="source_refs"/.test(workspace));
   ok("MarketTrim source refs can reuse a registered OEM evidence target by selection", /new_source_target_/.test(workspace));
+  ok("optional MarketTrim fields render an explicit clear/unset checkbox (ClearToggle/ClearableField), not a bare blank input", /ClearableField/.test(workspace) && /clear_\$\{name\}/.test(workspace));
+  ok("the clear checkbox only renders for an EXISTING trim (nothing to clear on a brand-new one)", /existing\s*\?\s*<ClearToggle/.test(workspace));
+  ok("the workspace explains that a blank field alone (no checkbox) leaves the existing value untouched", /เว้นว่างเฉยๆ โดยไม่ติ๊ก จะไม่แก้ field นั้น/.test(workspace));
   ok("workspace page links out to the existing Price Bench instead of embedding price editing", /Price Bench/.test(workspace) && /vehicle-input\?model=/.test(workspace));
   ok("workspace page links out to Retail lifecycle review", /retail-lifecycle\?model=/.test(workspace));
   ok("workspace page links out to Editorial (+ industry/production context) when a TDR model crosswalk exists", /models\/\$\{model\.tdrModelId\}\/edit/.test(workspace));
@@ -307,6 +357,7 @@ console.log("\nsource-text regression — workspace page: multi-spec draft UI, s
   ok("review page exposes the raw canonical JSON as an optional/secondary view", /<details/.test(review) && /Raw canonical command JSON/.test(review));
   ok("confirming submits only the opaque proposal_id, not the payload/diff/evidence/reason", /name="proposal_id" value={proposalId}/.test(review) && !/name="payload"/.test(review) && !/name="diff"/.test(review));
   ok("confirming submits through confirmEditProposal, the one path into the queue", /action={confirmEditProposal}/.test(review));
+  ok("a cleared field's diff reads as an explicit 'null / unset', not a bare dash indistinguishable from 'nothing interesting here'", /"null \/ unset"/.test(review));
 }
 {
   const nav = fs.readFileSync("components/admin/AdminNav.tsx", "utf8");

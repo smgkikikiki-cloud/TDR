@@ -8,8 +8,14 @@ const KIND_LABEL: Record<string, string> = {
   SPEC_DRAFT: "Spec draft (multi-field)",
 };
 
+// null/undefined and "" are shown as distinct, explicit labels rather than a
+// bare "—": a diff row for a cleared optional field (see
+// lib/canonical-command-builder.ts's MarketTrimFields doc comment on the
+// three-state clear/set/untouched contract) must read as an obvious,
+// deliberate unset, not as if the row were simply empty/uninteresting.
 function formatValue(value: unknown) {
-  if (value === null || value === undefined || value === "") return "—";
+  if (value === null || value === undefined) return "null / unset";
+  if (value === "") return "(empty)";
   if (Array.isArray(value)) return value.join(", ");
   if (typeof value === "object") return JSON.stringify(value);
   return String(value);

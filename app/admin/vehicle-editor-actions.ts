@@ -200,7 +200,17 @@ export async function prepareMarketTrimEdit(formData: FormData) {
     throw new Error(`มี MarketTrim ชื่อ/powertrain เดียวกันในรุ่นนี้แล้ว: ${duplicate.canonicalId} — แก้ตัวที่มีอยู่แทนการสร้างใหม่`);
   }
 
-  function numberField(name: string, label: string, integer: boolean): number | undefined {
+  // Three states per optional field, never two: an explicit "clear_<name>"
+  // checkbox means "unset this field" (numeric -> null, text -> the field's
+  // canonical empty representation, drivetrain -> its UNKNOWN sentinel); a
+  // blank input with no clear checkbox means "untouched, leave whatever the
+  // canonical writer already has"; a filled input means "set this value".
+  // Blank alone is never destructive -- only the explicit checkbox is.
+  function isClearing(name: string): boolean {
+    return field(formData, `clear_${name}`) === "on";
+  }
+  function numberField(name: string, label: string, integer: boolean): number | null | undefined {
+    if (isClearing(name)) return null;
     const raw = field(formData, name);
     if (!raw) return undefined;
     const value = Number(raw);
@@ -209,18 +219,28 @@ export async function prepareMarketTrimEdit(formData: FormData) {
     }
     return value;
   }
+  /** Text fields default to `""` (their own canonical empty representation
+   * per vehreg/entities.py's MarketTrim dataclass), so clearing sets that
+   * same `""` rather than a separate null the writer would not recognize. */
+  function textField(name: string): string | undefined {
+    if (isClearing(name)) return "";
+    const raw = field(formData, name);
+    return raw || undefined;
+  }
 
   const trim: MarketTrimFields = { name, powertrain };
-  const drivetrain = field(formData, "drivetrain").toUpperCase();
+  // Drivetrain is an enum defaulting to UNKNOWN, not a nullable field --
+  // clearing it means resetting it to that sentinel, not null.
+  const drivetrain = isClearing("drivetrain") ? "UNKNOWN" : field(formData, "drivetrain").toUpperCase();
   if (drivetrain) trim.drivetrain = drivetrain;
-  const engineCode = field(formData, "engine_code");
-  if (engineCode) trim.engine_code = engineCode;
+  const engineCode = textField("engine_code");
+  if (engineCode !== undefined) trim.engine_code = engineCode;
   const engineCc = numberField("engine_cc", "ความจุเครื่องยนต์", true);
   if (engineCc !== undefined) trim.engine_cc = engineCc;
   const batteryKwh = numberField("battery_kwh", "ความจุแบตเตอรี่", false);
   if (batteryKwh !== undefined) trim.battery_kwh = batteryKwh;
-  const transmission = field(formData, "transmission");
-  if (transmission) trim.transmission = transmission;
+  const transmission = textField("transmission");
+  if (transmission !== undefined) trim.transmission = transmission;
   const seats = numberField("seats", "จำนวนที่นั่ง", true);
   if (seats !== undefined) trim.seats = seats;
   const lengthMm = numberField("length_mm", "ความยาว", true);
@@ -231,16 +251,16 @@ export async function prepareMarketTrimEdit(formData: FormData) {
   if (heightMm !== undefined) trim.height_mm = heightMm;
   const wheelbaseMm = numberField("wheelbase_mm", "ระยะฐานล้อ", true);
   if (wheelbaseMm !== undefined) trim.wheelbase_mm = wheelbaseMm;
-  const tireFront = field(formData, "tire_front");
-  if (tireFront) trim.tire_front = tireFront;
-  const tireRear = field(formData, "tire_rear");
-  if (tireRear) trim.tire_rear = tireRear;
-  const wheelFront = field(formData, "wheel_front");
-  if (wheelFront) trim.wheel_front = wheelFront;
-  const wheelRear = field(formData, "wheel_rear");
-  if (wheelRear) trim.wheel_rear = wheelRear;
-  const notes = field(formData, "notes");
-  if (notes) trim.notes = notes;
+  const tireFront = textField("tire_front");
+  if (tireFront !== undefined) trim.tire_front = tireFront;
+  const tireRear = textField("tire_rear");
+  if (tireRear !== undefined) trim.tire_rear = tireRear;
+  const wheelFront = textField("wheel_front");
+  if (wheelFront !== undefined) trim.wheel_front = wheelFront;
+  const wheelRear = textField("wheel_rear");
+  if (wheelRear !== undefined) trim.wheel_rear = wheelRear;
+  const notes = textField("notes");
+  if (notes !== undefined) trim.notes = notes;
 
   const reason = requiredField(formData, "reason", "เหตุผล/review note");
   // Manual MarketTrim identity always needs a traceable source -- the task's
@@ -444,26 +464,48 @@ export async function prepareSpecDraftReview(formData: FormData) {
   redirect(`/admin/vehicles/${encodeURIComponent(modelId)}/review/${encodeURIComponent(proposalId)}`);
 }
 
+/**
+ * Load -> re-check staleness -> enqueue -> consume, in that order, so a
+ * transient failure can never permanently lose a reviewed edit.
+ *
+ * canonical_input_batches is already idempotent on (batch_key, payload
+ * hash) -- see lib/canonical-input-queue.ts's enqueueCanonicalInputBatch,
+ * which on a batch_key conflict compares the payload hash and returns a
+ * no-op "duplicate" result instead of erroring when it matches. A proposal's
+ * batch_id/payload never changes between attempts (it was fixed at prepare
+ * time and stored as-is), so re-running enqueueCanonicalInputBatch against
+ * the same still-PENDING_REVIEW proposal -- whether that is this request
+ * retrying after the consume step below failed, or a genuinely concurrent
+ * duplicate confirm of the same proposal -- always resolves to the SAME
+ * queued batch, never a duplicate one.
+ *
+ * Consuming only after a successful enqueue means: if enqueue throws (a
+ * transient DB error), the proposal stays PENDING_REVIEW and the admin's
+ * retry (same proposal_id) starts this function over from a fresh load,
+ * eventually enqueueing (idempotently) and then consuming. If consume
+ * itself returns null -- most likely because a concurrent duplicate confirm
+ * of this same proposal already consumed it -- that is not a failure worth
+ * reporting: the edit is already safely queued either way, so this request
+ * still redirects to success rather than surfacing an error for work that
+ * in fact completed.
+ */
 export async function confirmEditProposal(formData: FormData) {
   if (!(await isAdmin())) redirect("/admin/login");
   const editor = await requireEditor();
   const proposalId = requiredField(formData, "proposal_id", "proposal");
 
-  // Consume first (atomic, one-time): prevents a duplicate/concurrent
-  // confirm from ever queueing the same proposal twice. If the staleness
-  // check below then fails, the proposal is spent and cannot be replayed --
-  // the admin must redo the edit, which is correct: the diff they reviewed
-  // was against release state that no longer exists.
-  const consumed = await consumeProposal(proposalId, editor.name);
-  if (!consumed) {
+  const proposal = await loadProposal(proposalId, editor.name);
+  if (!proposal) {
     throw new Error("proposal นี้หมดอายุ ถูกใช้ไปแล้ว หรือไม่ใช่ของคุณ — กรุณาทำรายการใหม่");
   }
-  const liveReleaseId = await liveModelReleaseId(consumed.modelId);
+  const liveReleaseId = await liveModelReleaseId(proposal.modelId);
   if (!liveReleaseId) throw new Error("ไม่พบ canonical model นี้ใน active release แล้ว");
-  assertNotStale(consumed.pageReleaseId, liveReleaseId);
+  assertNotStale(proposal.pageReleaseId, liveReleaseId);
 
-  await enqueueCanonicalInputBatch(consumed.batchPayload as Record<string, unknown>);
-  redirect(`/admin/vehicles/${encodeURIComponent(consumed.modelId)}?queued=1&kind=${encodeURIComponent(consumed.kind)}`);
+  await enqueueCanonicalInputBatch(proposal.batchPayload as Record<string, unknown>);
+  await consumeProposal(proposalId, editor.name);
+
+  redirect(`/admin/vehicles/${encodeURIComponent(proposal.modelId)}?queued=1&kind=${encodeURIComponent(proposal.kind)}`);
 }
 
 /** Read-only helper for the review page: loads a PENDING_REVIEW proposal

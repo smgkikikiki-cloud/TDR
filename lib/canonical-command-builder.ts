@@ -133,19 +133,31 @@ export function buildModelGenerationBatch(args: ModelGenerationEditArgs): {
   };
 }
 
+/**
+ * Optional fields are three-state, not two: a key absent from this object
+ * means "untouched, keep whatever the canonical writer already has" (dict
+ * .update() semantics in vehreg/canonical_write.py never sees the key at
+ * all); a key present with a real value means "set it"; a key present with
+ * `null` (numeric fields) or the field's own canonical empty string (text
+ * fields; `"UNKNOWN"` for the drivetrain enum) means "explicitly clear it" --
+ * still an ordinary dict.update() overwrite, just to the field's cleared
+ * representation instead of a new value. `name` and `powertrain` are
+ * required MarketTrim identity (vehreg/entities.py's MarketTrim.validate())
+ * and so are never optional/clearable here.
+ */
 export type MarketTrimFields = {
   name: string;
   powertrain: string;
   drivetrain?: string;
   engine_code?: string;
-  engine_cc?: number;
-  battery_kwh?: number;
+  engine_cc?: number | null;
+  battery_kwh?: number | null;
   transmission?: string;
-  seats?: number;
-  length_mm?: number;
-  width_mm?: number;
-  height_mm?: number;
-  wheelbase_mm?: number;
+  seats?: number | null;
+  length_mm?: number | null;
+  width_mm?: number | null;
+  height_mm?: number | null;
+  wheelbase_mm?: number | null;
   tire_front?: string;
   tire_rear?: string;
   wheel_front?: string;
