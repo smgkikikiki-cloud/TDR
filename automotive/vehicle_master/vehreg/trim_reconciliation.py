@@ -70,12 +70,14 @@ class TrimCandidate:
 
 
 # Word boundaries make bare EV safe: it matches "S05 EV 510" but not letters
-# embedded in another word. EREV is canonical REEV in this warehouse.
+# embedded in another word. Generic "electric" is intentionally not a BEV
+# signal: EREV/PHEV/HEV vehicles are routinely described as electrified or
+# electric-driven, so BEV needs an explicit BEV/EV/pure-electric token.
 _POWERTRAIN_PATTERNS: tuple[tuple[Powertrain, re.Pattern[str]], ...] = (
     (Powertrain.REEV, re.compile(r"\b(?:REEV|EREV|RANGE[- ]?EXTENDER)\b", re.I)),
     (Powertrain.PHEV, re.compile(r"\b(?:PHEV|PLUG[- ]?IN|DM[- ]?I)\b", re.I)),
     (Powertrain.HEV, re.compile(r"\b(?:HEV|FULL[- ]?HYBRID|E[- ]?POWER)\b", re.I)),
-    (Powertrain.BEV, re.compile(r"\b(?:BEV|EV|PURE[- ]?ELECTRIC|ELECTRIC)\b", re.I)),
+    (Powertrain.BEV, re.compile(r"\b(?:BEV|EV|PURE[- ]?ELECTRIC)\b", re.I)),
     (Powertrain.FCEV, re.compile(r"\b(?:FCEV|FUEL[- ]?CELL)\b", re.I)),
     (Powertrain.ICE, re.compile(r"\b(?:ICE|PETROL|GASOLINE|DIESEL|TFSI|TDI)\b", re.I)),
 )
