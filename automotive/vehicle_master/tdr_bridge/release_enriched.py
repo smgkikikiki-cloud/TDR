@@ -1,9 +1,9 @@
-"""Build the canonical TDR release with derived historical model state attached.
+"""Build the canonical TDR release with serving-only evidence enrichment.
 
 The base ReleaseBuilder remains the owner of catalog identity, price/spec facts
 and TDR crosswalks. This wrapper owns serving-only enrichment that must be part
-of the immutable release hash: fail-closed retail lifecycle semantics and the
-historical registration projection.
+of the immutable release hash: fail-closed retail lifecycle semantics,
+historical registration projection, and source-backed MarketTrim reconciliation.
 """
 from __future__ import annotations
 
@@ -14,6 +14,7 @@ import json
 from pathlib import Path
 
 from vehreg.catalog import DATA_DIR, DEFAULT_YEAR
+from vehreg.trim_reconciliation import release_reconciliation_report
 from tdr_bridge.historical_state import build_historical_model_state
 from tdr_bridge.lifecycle import apply_retail_lifecycle
 from tdr_bridge.release import ReleaseBuilder
@@ -30,6 +31,7 @@ SEMANTIC_KEYS = (
     "price_ledger",
     "spec_facts",
     "historical_model_state",
+    "trim_reconciliation",
 )
 
 
@@ -48,6 +50,23 @@ def enrich_release(
         data_dir=data_dir,
         source_aliases=source_aliases,
     )
+
+    # Source evidence is allowed to remain outside canonical MarketTrim only
+    # when its unresolved disposition is explicit. A READY source-backed model
+    # with zero canonical trims is silent data loss and must never publish.
+    out["trim_reconciliation"] = release_reconciliation_report(
+        out, data_dir=data_dir, year=year,
+    )
+    blockers = out["trim_reconciliation"].get("blockers", [])
+    if blockers:
+        sample = ", ".join(
+            f"{row.get('model_id')}:{row.get('blocker')}" for row in blockers[:5]
+        )
+        more = f" (+{len(blockers) - 5} more)" if len(blockers) > 5 else ""
+        raise ValueError(
+            "MarketTrim reconciliation blocks serving release: " + sample + more
+        )
+
     semantic = {key: out[key] for key in SEMANTIC_KEYS}
     source_hash = sha256(json.dumps(
         semantic, ensure_ascii=False, sort_keys=True, separators=(",", ":")
@@ -93,6 +112,7 @@ def main(argv=None) -> int:
         "historical_baselines": len(release["historical_model_state"]["model_year_baselines"]),
         "historical_changes": len(release["historical_model_state"]["monthly_changes"]),
         "aliased_historical_rows": release["historical_model_state"]["aliased_seed_rows"],
+        "trim_reconciliation": release["trim_reconciliation"]["counts"],
         "output": str(args.out),
     }, ensure_ascii=False))
     return 0
