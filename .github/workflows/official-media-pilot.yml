@@ -20,7 +20,7 @@ concurrency:
 jobs:
   pilot-30:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 25
     env:
       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
@@ -47,7 +47,7 @@ jobs:
         run: |
           python scripts/ingest_official_media.py \
             --year 2026 \
-            --max-pages 8 \
+            --max-pages 4 \
             --vehicle-ids \
               toyota.camry.xv80 \
               toyota.corolla_cross.xg10 \
