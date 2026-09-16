@@ -1,10 +1,12 @@
 import { createClient } from "@supabase/supabase-js";
-import { readFile, readFileSync } from "node:fs";
+import { readFile, readFileSync, statSync } from "node:fs";
 import { extname, resolve } from "node:path";
 import { promisify } from "node:util";
 
 const readFileAsync = promisify(readFile);
 const BUCKET = "vehicle-media";
+const MAX_BYTES = 20 * 1024 * 1024;
+const IMAGE_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif"]);
 
 type MediaRow = {
   vehicle_id: string;
@@ -62,55 +64,77 @@ async function main() {
 
   const rows = readFileSync(manifestPath, "utf8")
     .split(/\r?\n/).filter(Boolean).map(line => JSON.parse(line) as MediaRow);
+  const approvedRows = rows.filter(row => row.status === "approved");
   let published = 0;
+  let skipped = rows.length - approvedRows.length;
+  let failed = 0;
 
-  for (const row of rows) {
+  for (const row of approvedRows) {
+    const extension = extname(row.storage_path).toLowerCase();
     const localPath = resolve(cacheDir, row.storage_path);
-    const bytes = await readFileAsync(localPath);
-    const { error: uploadError } = await db.storage.from(BUCKET).upload(row.storage_path, bytes, {
-      contentType: contentType(row.storage_path),
-      cacheControl: "31536000",
-      upsert: true,
-    });
-    if (uploadError) throw new Error(`${row.vehicle_id}: upload failed: ${uploadError.message}`);
+    if (!IMAGE_EXTENSIONS.has(extension)) {
+      skipped += 1;
+      console.warn(`${row.vehicle_id}: skip non-image ${row.storage_path}`);
+      continue;
+    }
+    const size = statSync(localPath).size;
+    if (size > MAX_BYTES) {
+      skipped += 1;
+      console.warn(`${row.vehicle_id}: skip ${(size / 1024 / 1024).toFixed(1)}MB asset ${row.storage_path}`);
+      continue;
+    }
 
-    const publicUrl = db.storage.from(BUCKET).getPublicUrl(row.storage_path).data.publicUrl;
-    const { error: assetError } = await db.from("vehicle_media_assets").upsert({
-      vehicle_id: row.vehicle_id,
-      visual_key: row.visual_key,
-      source_url: row.source_url,
-      source_type: row.source_type,
-      source_domain: row.source_domain,
-      image_url_original: row.image_url_original,
-      storage_bucket: BUCKET,
-      storage_path: row.storage_path,
-      public_url: publicUrl,
-      image_type: row.image_type,
-      market: row.market,
-      model_year: row.model_year,
-      confidence: row.confidence,
-      sha256: row.sha256,
-      width: row.width,
-      height: row.height,
-      status: row.status,
-      updated_at: new Date().toISOString(),
-    }, { onConflict: "visual_key,image_type,sha256" });
-    if (assetError) throw new Error(`${row.vehicle_id}: metadata failed: ${assetError.message}`);
+    try {
+      const bytes = await readFileAsync(localPath);
+      const { error: uploadError } = await db.storage.from(BUCKET).upload(row.storage_path, bytes, {
+        contentType: contentType(row.storage_path),
+        cacheControl: "31536000",
+        upsert: true,
+      });
+      if (uploadError) throw new Error(`upload failed: ${uploadError.message}`);
 
-    const { error: bindingError } = await db.from("vehicle_media_bindings").upsert({
-      entity_id: row.vehicle_id,
-      entity_type: "generation",
-      visual_key: row.visual_key,
-      inherited_from: null,
-      updated_at: new Date().toISOString(),
-    }, { onConflict: "entity_id" });
-    if (bindingError) throw new Error(`${row.vehicle_id}: binding failed: ${bindingError.message}`);
+      const publicUrl = db.storage.from(BUCKET).getPublicUrl(row.storage_path).data.publicUrl;
+      const { error: assetError } = await db.from("vehicle_media_assets").upsert({
+        vehicle_id: row.vehicle_id,
+        visual_key: row.visual_key,
+        source_url: row.source_url,
+        source_type: row.source_type,
+        source_domain: row.source_domain,
+        image_url_original: row.image_url_original,
+        storage_bucket: BUCKET,
+        storage_path: row.storage_path,
+        public_url: publicUrl,
+        image_type: row.image_type,
+        market: row.market,
+        model_year: row.model_year,
+        confidence: row.confidence,
+        sha256: row.sha256,
+        width: row.width,
+        height: row.height,
+        status: "approved",
+        updated_at: new Date().toISOString(),
+      }, { onConflict: "visual_key,image_type,sha256" });
+      if (assetError) throw new Error(`metadata failed: ${assetError.message}`);
 
-    published += 1;
-    console.log(`${row.vehicle_id} ${row.image_type} ${row.status} -> ${publicUrl}`);
+      const { error: bindingError } = await db.from("vehicle_media_bindings").upsert({
+        entity_id: row.vehicle_id,
+        entity_type: "generation",
+        visual_key: row.visual_key,
+        inherited_from: null,
+        updated_at: new Date().toISOString(),
+      }, { onConflict: "entity_id" });
+      if (bindingError) throw new Error(`binding failed: ${bindingError.message}`);
+
+      published += 1;
+      console.log(`${row.vehicle_id} ${row.image_type} approved -> ${publicUrl}`);
+    } catch (error) {
+      failed += 1;
+      console.error(`${row.vehicle_id}: ${error instanceof Error ? error.message : String(error)}`);
+    }
   }
 
-  console.log(`published ${published} media rows to ${BUCKET}`);
+  console.log(`published ${published}; skipped ${skipped}; failed ${failed}; bucket ${BUCKET}`);
+  if (failed) process.exitCode = 1;
 }
 
 main().catch(error => {
