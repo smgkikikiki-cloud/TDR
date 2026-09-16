@@ -3,8 +3,8 @@
 The crawler never leaves an adapter's official host allowlist. Model-page hints
 cover OEM sites whose SPA navigation is not represented by ordinary HTML links.
 A very small set of asset hints covers pages where the public HTML is rendered
-through an image proxy that urllib cannot discover; every hint is tied to an
-exact official model page and still passes the normal scoring/hash gates.
+through an image proxy or anonymous CDN path; every hint is tied to an exact
+official model page and still passes the normal scoring/hash/duplicate gates.
 """
 from __future__ import annotations
 
@@ -58,7 +58,11 @@ MODEL_PAGE_HINTS: dict[str, tuple[str, ...]] = {
     "toyota.alphard.ah40": ("https://www.toyota.co.th/model/alphard",),
     "toyota.hilux_champ.champ": ("https://www.toyota.co.th/model/hilux_champ",),
     "honda.accord.cy": ("https://www.honda.co.th/accordehev",),
+    "honda.civic.fe": ("https://www.honda.co.th/civic",),
+    "honda.crv.rs": ("https://www.honda.co.th/crv",),
+    "honda.hrv.rv": ("https://www.honda.co.th/hrvehev",),
     "honda.city.gn2": ("https://www.honda.co.th/city",),
+    "honda.wrv.dg": ("https://www.honda.co.th/wrv",),
     "byd.atto2.atto2": ("https://www.byd.com/en-th/car/atto2",),
     "byd.atto3.atto3": ("https://www.byd.com/en-th/car/atto3",),
     "byd.dolphin.dol": ("https://www.byd.com/en-th/car/dolphin",),
@@ -80,14 +84,41 @@ MODEL_PAGE_HINTS: dict[str, tuple[str, ...]] = {
 }
 
 
-# (image URL, semantic label). These were read directly from the exact official
-# model pages above. The label intentionally includes the canonical model name,
-# providing explicit identity evidence for scoring rather than granting trust to
-# an anonymous CDN hash.
+# (image URL, semantic label). These URLs were observed on the exact official
+# pages represented above. The semantic label contains the canonical model name,
+# supplying model identity evidence without trusting an anonymous CDN filename.
 MODEL_ASSET_HINTS: dict[str, tuple[tuple[str, str], ...]] = {
+    "honda.accord.cy": ((
+        "https://assets.honda.co.th/www-assets/22d4d3f1-36a3-4f32-b2aa-b6566902bec0/360-view/2026/05/07/0bp2M8Q3hWsFp9fZSa106PrxoRRekoCY.jpeg",
+        "Honda Accord official exterior hero",
+    ),),
+    "honda.civic.fe": ((
+        "https://assets.honda.co.th/www-assets/213f6f71-e693-4e99-a9d5-5c27346b17f8/360-view/2026/07/16/FEzmxxcU3y9TTKRZC6F9V2Dg9ggz7bq5.jpeg",
+        "Honda Civic official exterior hero",
+    ),),
+    "honda.crv.rs": ((
+        "https://assets.honda.co.th/www-assets/8b5f75bb-0a73-4881-ad8c-e198b3305c2e/360-view/2025/11/20/iooqZ4KfnHtRrSSSDfcBod1TG5pVsqbC.jpeg",
+        "Honda CR-V official exterior hero",
+    ),),
+    "honda.hrv.rv": ((
+        "https://assets.honda.co.th/www-assets/b3905306-3450-4f89-a583-e8e71e7072ba/360-view/2025/11/19/KjoF6HhjeijTlRVZC49gjC1IvQKHLUhm.jpeg",
+        "Honda HR-V official exterior hero",
+    ),),
     "honda.city.gn2": ((
         "https://www.honda.co.th/_next/image?q=75&url=https%3A%2F%2Fassets.honda.co.th%2Fwww-assets%2Fmodel%2F2026%2F06%2F24%2FSKERbsE7s6sWdABI81aBOnYJp6dGLBtB.png&w=1920",
         "Honda City official exterior hero",
+    ),),
+    "honda.wrv.dg": ((
+        "https://assets.honda.co.th/www-assets/6894c89d-6430-4bb9-a732-55a42e279b53/360-view/2025/05/29/8U20otOggmMj3bBdLemS5yVh7Mzqdg0G.jpeg",
+        "Honda WR-V official wheel detail",
+    ),),
+    "byd.sealion6.sl6": ((
+        "https://www.byd.com/material/__CN/byd-site/th/home/model/sealion6.png",
+        "Sealion 6 DM-i official exterior hero",
+    ),),
+    "byd.sealion7.sl7": ((
+        "https://www.byd.com/material/__CN/byd-site/th/home/model/sealion7.png",
+        "Sealion 7 official exterior hero",
     ),),
     "mg.mg3.mg3h": ((
         "https://www.mgcars.com/cdn-cgi/image/width%3D3840%2Cquality%3D75%2Cformat%3Dwebp/https%3A//mg-upload.sgp1.cdn.digitaloceanspaces.com/4ba961ae9c7d561f100728488d21e07d.png",
@@ -112,6 +143,22 @@ MODEL_ASSET_HINTS: dict[str, tuple[tuple[str, str], ...]] = {
     "mg.mg_maxus_9.mifa9": ((
         "https://www.mgcars.com/cdn-cgi/image/width%3D3840%2Cquality%3D75%2Cformat%3Dwebp/https%3A//mg-upload.sgp1.cdn.digitaloceanspaces.com/9b17852986667fc582699b4dc436ace3.jpg",
         "MG Maxus 9 official hero",
+    ),),
+    "gwm.haval_h6.h6hev": ((
+        "https://www.gwm.co.th/content/dam/gwm/pages/th/en/model/haval-h6-hev/360/hev-pro/haval-h6-hev-pro-black.png",
+        "Haval H6 official exterior hero",
+    ),),
+    "gwm.tank300.t300": ((
+        "https://www.gwm.co.th/content/dam/gwm/pages/th/en/model/tank-300-diesel/360/2-4t-pro/tank300-diesel-pro-ayers-gray.png",
+        "Tank 300 official exterior hero",
+    ),),
+    "gwm.tank500.t500": ((
+        "https://www.gwm.co.th/content/dam/gwm/pages/th/en/homepage/kv/tank-500-kv-new-pc-1.jpg",
+        "Tank 500 official exterior hero",
+    ),),
+    "gwm.poer_sahar.gen1": ((
+        "https://www.gwm.co.th/content/dam/gwm/pages/th/en/model/poer-sahar-diesel/sahar-diesel-singal-cab-l.webp",
+        "Poer Sahar official exterior hero",
     ),),
 }
 
