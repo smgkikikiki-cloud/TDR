@@ -1,7 +1,7 @@
 from dataclasses import replace
 
 from vehreg.official_media.adapters import SOURCES
-from vehreg.official_media.models import ImageSlot, ReviewStatus, SourceType, VehicleIdentity
+from vehreg.official_media.models import ImageSlot, OfficialSource, ReviewStatus, SourceType, VehicleIdentity
 from vehreg.official_media.parsing import parse_page
 from vehreg.official_media.pipeline import _crawlable_page, _safe_url, select_canonical
 from vehreg.official_media.scoring import link_score, score_candidate
@@ -108,3 +108,41 @@ def test_canonical_set_keeps_one_per_slot():
     selected = select_canonical(score_candidate(item, IDENTITY, source) for item in images)
     assert any(item.slot is ImageSlot.FRONT_3Q for item in selected)
     assert any(item.slot is ImageSlot.SIDE for item in selected)
+
+
+def test_bmw_extensionless_cosy_image_is_kept_and_classified_as_exterior():
+    source = OfficialSource(
+        brand_id="bmw",
+        seed_urls=("https://www.bmw.co.th/en/all-models.html",),
+        allowed_hosts=("bmw.co.th",),
+    )
+    identity = VehicleIdentity(
+        brand_id="bmw",
+        model_id="bmw.x3",
+        generation_id="bmw.bmw_x3.g45",
+        model_name="X3",
+        generation_code="G45",
+        model_year=2026,
+    )
+    cosy = "https://prod.cosy.bmw.cloud/bmwweb/cosySec?COSY-EU-100-7331c9Nv2Z7d5c1Q"
+    html = f'''<title>BMW X3</title><img src="{cosy}" alt="BMW X3 20d xDrive M Sport Pro">'''
+    images, _, _ = parse_page(
+        html,
+        "https://www.bmw.co.th/en/all-models/x-series/x3/bmw-x3.html",
+        SourceType.OFFICIAL_SITE,
+    )
+    assert len(images) == 1
+    candidate = score_candidate(images[0], identity, source)
+    assert candidate.identity_evidence
+    assert candidate.slot is ImageSlot.FRONT_3Q
+    assert candidate.status is ReviewStatus.APPROVED
+
+
+def test_unknown_extensionless_host_is_not_treated_as_image():
+    html = '<title>BMW X3</title><img src="https://example.invalid/render?id=x3" alt="BMW X3">'
+    images, _, _ = parse_page(
+        html,
+        "https://www.bmw.co.th/en/all-models/x-series/x3/bmw-x3.html",
+        SourceType.OFFICIAL_SITE,
+    )
+    assert images == []
