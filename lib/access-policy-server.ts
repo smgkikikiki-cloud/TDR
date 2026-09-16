@@ -82,40 +82,74 @@ export interface ActivationStatus {
   phoneVerified: boolean;
   profileComplete: boolean;
   justActivated: boolean;
+  activationSource: "VERIFIED" | "LEGACY_PAID" | null;
 }
 
-async function hasVerifiedPhoneIdentity(db: AccessContext["db"], userId: string): Promise<boolean> {
+// "Phone verified" for activation purposes means a TDR-owned verification
+// attempt (lib/phone-verification.ts) reached CONFIRMED status for the
+// SAME phone that is this customer's current primary, non-revoked
+// tdr_customer_phone_identities row -- not merely that such a row exists.
+//
+// Why: Supabase resolves phone-change OTP verification through
+// auth.users.phone_change, which is not a unique column. Two different
+// pending auth users can carry the same phone_change value, so in a
+// theoretical collision Supabase's own verifyOtp could confirm a phone
+// onto a DIFFERENT auth user than the one who requested the change. The
+// tdr_sync_customer_from_auth trigger (migration_v21) would then still
+// correctly attribute the confirmed phone to whichever auth user it
+// actually landed on -- but that says nothing about which TDR *account*
+// the SMS was meant to activate. Requiring a TDR-owned reservation,
+// confirmed by re-reading the CALLER'S OWN current Auth state (never a
+// client claim) and checked against the phone THAT SAME CALLER reserved,
+// means activation can only ever be granted to the account that actually
+// completed its own verification -- see lib/phone-verification.ts for the
+// full reservation lifecycle.
+async function hasTdrConfirmedPhoneVerification(db: AccessContext["db"], userId: string): Promise<boolean> {
   const { data: customer, error: customerError } = await db
     .from("tdr_customers").select("id").eq("auth_user_id", userId).maybeSingle();
   if (customerError) throw new AccessPolicyError(503, "could not resolve customer identity");
   if (!customer) return false;
 
-  const { data: phone, error: phoneError } = await db
+  const { data: identity, error: identityError } = await db
     .from("tdr_customer_phone_identities")
     .select("phone_e164")
     .eq("customer_id", customer.id)
     .eq("is_primary", true)
     .is("revoked_at", null)
     .maybeSingle();
-  if (phoneError) throw new AccessPolicyError(503, "could not resolve verified phone status");
-  return Boolean(phone);
+  if (identityError) throw new AccessPolicyError(503, "could not resolve verified phone status");
+  if (!identity) return false;
+
+  const { data: reservation, error: reservationError } = await db
+    .from("tdr_phone_verification_attempts")
+    .select("id")
+    .eq("user_id", userId)
+    .eq("phone_e164", identity.phone_e164)
+    .eq("status", "CONFIRMED")
+    .limit(1)
+    .maybeSingle();
+  if (reservationError) throw new AccessPolicyError(503, "could not resolve phone verification status");
+  return Boolean(reservation);
 }
 
 // Recomputes activation from its constituent parts and persists
-// activation_completed_at the first time every part is true. Safe to call
-// repeatedly (idempotent past the first success). Called by the profile
-// save route and the phone-verification-confirm route -- never by a tool
-// route, which should only ever READ the stored flag via
-// requireActivatedAccess().
+// activation_completed_at (and activation_source='VERIFIED') the first
+// time every part is true. Safe to call repeatedly (idempotent past the
+// first success) -- it never un-sets an already-granted activation, which
+// is what preserves the migration_v34 legacy-paid grandfather
+// (activation_source='LEGACY_PAID') set directly by the migration rather
+// than computed here. Called by the profile save route and the
+// phone-verification-confirm route -- never by a tool route, which should
+// only ever READ the stored flag via requireActivatedAccess().
 export async function evaluateAndPersistActivation(ctx: AccessContext): Promise<ActivationStatus> {
   const { data: profile, error: profileError } = await ctx.db
     .from("tdr_customer_profiles")
-    .select("postcode,is_individual,company_name,activation_completed_at")
+    .select("postcode,is_individual,company_name,activation_completed_at,activation_source")
     .eq("user_id", ctx.userId)
     .maybeSingle();
   if (profileError) throw new AccessPolicyError(503, "could not load profile for activation check");
 
-  const phoneVerified = await hasVerifiedPhoneIdentity(ctx.db, ctx.userId);
+  const phoneVerified = await hasTdrConfirmedPhoneVerification(ctx.db, ctx.userId);
   const profileComplete = Boolean(
     profile?.postcode && (profile.is_individual || (profile.company_name && profile.company_name.trim())),
   );
@@ -124,7 +158,7 @@ export async function evaluateAndPersistActivation(ctx: AccessContext): Promise<
 
   if (activated && !wasAlreadyActivated) {
     const { error } = await ctx.db.from("tdr_customer_profiles")
-      .update({ activation_completed_at: new Date().toISOString(), updated_at: new Date().toISOString() })
+      .update({ activation_completed_at: new Date().toISOString(), activation_source: "VERIFIED", updated_at: new Date().toISOString() })
       .eq("user_id", ctx.userId);
     if (error) throw new AccessPolicyError(503, "could not record account activation");
   }
@@ -135,6 +169,7 @@ export async function evaluateAndPersistActivation(ctx: AccessContext): Promise<
     phoneVerified,
     profileComplete,
     justActivated: activated && !wasAlreadyActivated,
+    activationSource: (wasAlreadyActivated ? profile?.activation_source : activated ? "VERIFIED" : null) ?? null,
   };
 }
 

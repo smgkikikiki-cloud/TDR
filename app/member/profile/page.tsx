@@ -6,7 +6,13 @@ import { useRouter } from "next/navigation";
 import { browserDb } from "@/lib/supabase-browser";
 import styles from "../member.module.css";
 
-type Activation = { activated: boolean; emailConfirmed: boolean; phoneVerified: boolean; profileComplete: boolean };
+type Activation = {
+  activated: boolean;
+  emailConfirmed: boolean;
+  phoneVerified: boolean;
+  profileComplete: boolean;
+  activationSource: "VERIFIED" | "LEGACY_PAID" | null;
+};
 
 function normalizeThaiPhone(value: string) {
   const compact = value.replace(/[\s()-]/g, "");
@@ -95,23 +101,44 @@ export default function MemberProfilePage() {
     }
   }
 
-  // Real Supabase Auth phone verification (updateUser + verifyOtp with
-  // type "phone_change"), not a typed string stored as if it were
-  // verified. Once Supabase Auth confirms the phone, the existing
-  // tdr_sync_customer_from_auth trigger (migration_v21) links it into
-  // tdr_customer_phone_identities automatically -- this page only needs
-  // to trigger the OTP flow and then re-read activation status.
+  // TDR-owned phone verification, in three steps:
+  //  1. Reserve (this account, this phone) on TDR's own server BEFORE
+  //     triggering any SMS -- rejects a phone already verified or being
+  //     verified on a different TDR account.
+  //  2. The browser uses Supabase's documented phone-change OTP flow
+  //     (updateUser + verifyOtp) to actually send/verify the SMS.
+  //  3. TDR server-side confirmation: independently re-reads this
+  //     account's own current Supabase Auth state and only marks the
+  //     reservation (and therefore activation) confirmed if it matches
+  //     what was reserved. This closes a real Supabase gap where phone-
+  //     change OTP verification is resolved through the non-unique
+  //     auth.users.phone_change column -- see lib/phone-verification.ts.
   async function sendPhoneOtp() {
-    const db = browserDb();
-    if (!db) return;
+    if (!token) return;
     const normalized = normalizeThaiPhone(phone);
     if (!normalized) { setPhoneMessage("กรอกเบอร์มือถือไทย 10 หลัก หรือเบอร์แบบ +66 ให้ถูกต้อง"); return; }
     setPhoneBusy(true); setPhoneMessage("");
-    const { error } = await db.auth.updateUser({ phone: normalized });
-    setPhoneBusy(false);
-    if (error) { setPhoneMessage(error.message); return; }
-    setOtpSent(true);
-    setPhoneMessage("ส่งรหัสยืนยัน (OTP) ไปที่เบอร์นี้แล้ว กรุณากรอกรหัสด้านล่าง");
+    try {
+      const reserveResponse = await fetch("/api/account/phone/reserve", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ phone: normalized }),
+      });
+      const reserveBody = await reserveResponse.json();
+      if (!reserveResponse.ok) throw new Error(reserveBody.error || "จองเบอร์เพื่อยืนยันไม่สำเร็จ");
+
+      const db = browserDb();
+      if (!db) throw new Error("deployment นี้ยังไม่ได้ตั้งค่า Supabase client");
+      const { error } = await db.auth.updateUser({ phone: normalized });
+      if (error) throw new Error(error.message);
+
+      setOtpSent(true);
+      setPhoneMessage("ส่งรหัสยืนยัน (OTP) ไปที่เบอร์นี้แล้ว กรุณากรอกรหัสด้านล่าง");
+    } catch (error) {
+      setPhoneMessage(error instanceof Error ? error.message : "ส่งรหัสยืนยันไม่สำเร็จ");
+    } finally {
+      setPhoneBusy(false);
+    }
   }
 
   async function confirmPhoneOtp() {
@@ -127,12 +154,20 @@ export default function MemberProfilePage() {
       return;
     }
     try {
-      await refreshStatus(token);
+      // Supabase reporting success is not, by itself, trusted as proof
+      // THIS account is verified -- the server independently re-checks.
+      const confirmResponse = await fetch("/api/account/phone/confirm", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const confirmBody = await confirmResponse.json();
+      if (!confirmResponse.ok) throw new Error(confirmBody.error || "ยืนยันเบอร์มือถือไม่สำเร็จ");
+      setActivation(confirmBody.activation ?? null);
       setPhoneMessage("ยืนยันเบอร์มือถือสำเร็จ");
       setOtpSent(false);
       setOtpCode("");
-    } catch (refreshError) {
-      setPhoneMessage(refreshError instanceof Error ? refreshError.message : "ยืนยันสำเร็จ แต่โหลดสถานะไม่สำเร็จ");
+    } catch (confirmError) {
+      setPhoneMessage(confirmError instanceof Error ? confirmError.message : "ยืนยันไม่สำเร็จ");
     } finally {
       setPhoneBusy(false);
     }
@@ -150,7 +185,7 @@ export default function MemberProfilePage() {
             <li>{activation.emailConfirmed ? "✓" : "○"} ยืนยันอีเมลแล้ว</li>
             <li>{activation.phoneVerified ? "✓" : "○"} ยืนยันเบอร์มือถือแล้ว</li>
             <li>{activation.profileComplete ? "✓" : "○"} กรอกโปรไฟล์ครบ (รหัสไปรษณีย์ + องค์กร/บุคคลทั่วไป)</li>
-            {activation.activated ? <li><b>พร้อมใช้งาน Compare และ Sales Tools แล้ว</b></li> : null}
+            {activation.activated ? <li><b>พร้อมใช้งาน Compare และ Sales Tools แล้ว</b>{activation.activationSource === "LEGACY_PAID" ? " (บัญชีลูกค้าเดิมก่อนระบบยืนยันตัวตน — ยังไม่มีการยืนยันเบอร์มือถือจริงในระบบ)" : null}</li> : null}
           </ul>
         ) : null}
 

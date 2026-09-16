@@ -2,6 +2,7 @@ import { createHmac, timingSafeEqual } from "node:crypto";
 import { adminDb } from "@/lib/supabase";
 import { findPlan, planPriceId, type PlanDefinition } from "@/lib/plans";
 import { recordEvent } from "@/lib/telemetry";
+import { requireActivatedAccess } from "@/lib/access-policy-server";
 
 export const REGISTRATION_PLAN = "registration_monthly";
 export const REGISTRATION_PRODUCT = "registration_full";
@@ -18,7 +19,12 @@ type MemberContext = {
   userId: string;
   customerId: string;
   email: string | null;
-  phone: string;
+  // Trusted phone from tdr_customer_phone_identities only (never
+  // user_metadata). May be null: billing status and the Billing Portal
+  // must stay reachable for an account that hasn't completed phone
+  // verification yet -- see requireCheckoutEligibleMember() for the
+  // stricter, phone-required gate used to start a NEW subscription.
+  phone: string | null;
 };
 
 export interface CardPaymentGateway {
@@ -81,6 +87,14 @@ function cardGateway(): CardPaymentGateway {
   return new StripeCardPaymentGateway();
 }
 
+// Resolves the stable customer identity for this session. Does NOT
+// require a verified phone -- billing status and the Billing Portal must
+// stay reachable for an account that hasn't completed phone verification
+// yet. The phone field (if any) is read ONLY from the trusted
+// tdr_customer_phone_identities ledger (migration_v21, kept in sync by
+// the tdr_sync_customer_from_auth trigger) -- never from
+// `user_metadata`, which a client can set to an arbitrary, unverified
+// string.
 export async function requireMember(accessToken: string): Promise<MemberContext> {
   const db = adminDb();
   if (!db) throw new BillingError(503, "member database is not configured");
@@ -88,40 +102,47 @@ export async function requireMember(accessToken: string): Promise<MemberContext>
   const { data, error } = await db.auth.getUser(accessToken);
   if (error || !data.user) throw new BillingError(401, "invalid or expired member session");
 
-  const { data: profile, error: profileError } = await db.from("tdr_customer_profiles")
-  .select("phone_e164").eq("user_id", data.user.id).maybeSingle();
-if (profileError) throw new BillingError(503, "could not load customer profile");
+  let { data: customer, error: customerError } = await db.from("tdr_customers")
+    .select("id").eq("auth_user_id", data.user.id).maybeSingle();
+  if (customerError) throw new BillingError(503, "could not load customer identity");
+  if (!customer) {
+    const created = await db.from("tdr_customers").insert({ auth_user_id: data.user.id })
+      .select("id").single();
+    if (created.error) throw new BillingError(503, "could not create customer identity");
+    customer = created.data;
+  }
 
-const metadataPhone = typeof data.user.user_metadata?.phone_e164 === "string"
-  ? data.user.user_metadata.phone_e164 : null;
-const phone = data.user.phone || metadataPhone || profile?.phone_e164 || null;
-if (!phone || !/^\+[1-9][0-9]{7,14}$/.test(phone)) {
-  throw new BillingError(403, "add a valid mobile number to this member account before checkout");
+  const { data: trustedPhone, error: phoneError } = await db.from("tdr_customer_phone_identities")
+    .select("phone_e164").eq("customer_id", customer.id).eq("is_primary", true).is("revoked_at", null).maybeSingle();
+  if (phoneError) throw new BillingError(503, "could not resolve trusted phone identity");
+
+  return { userId: data.user.id, customerId: customer.id, email: data.user.email ?? null, phone: trustedPhone?.phone_e164 ?? null };
 }
 
-const { data: duplicatePhone, error: duplicatePhoneError } = await db.from("tdr_customer_profiles")
-  .select("user_id").eq("phone_e164", phone).neq("user_id", data.user.id).limit(1).maybeSingle();
-if (duplicatePhoneError) throw new BillingError(503, "could not validate customer phone");
-if (duplicatePhone) throw new BillingError(409, "this mobile number is already linked to another TDR account");
-
-const { error: profileUpsertError } = await db.from("tdr_customer_profiles").upsert({
-  user_id: data.user.id,
-  phone_e164: phone,
-  updated_at: new Date().toISOString(),
-}, { onConflict: "user_id" });
-if (profileUpsertError) throw new BillingError(503, "could not save customer profile");
-
-let { data: customer, error: customerError } = await db.from("tdr_customers")
-  .select("id").eq("auth_user_id", data.user.id).maybeSingle();
-if (customerError) throw new BillingError(503, "could not load customer identity");
-if (!customer) {
-  const created = await db.from("tdr_customers").insert({ auth_user_id: data.user.id })
-    .select("id").single();
-  if (created.error) throw new BillingError(503, "could not create customer identity");
-  customer = created.data;
-}
-
-return { userId: data.user.id, customerId: customer.id, email: data.user.email ?? null, phone };
+// Stricter gate for starting a brand-new self-service subscription: the
+// account must be fully TDR-activated (lib/access-policy-server.ts --
+// confirmed email, TDR-confirmed phone verification, complete profile;
+// the same centralized check every member tool route uses) AND have a
+// trusted phone on file to hand to Stripe. An account activated only
+// through the legacy-paid compatibility path (see migration_v34,
+// activation_source='LEGACY_PAID') has no real verified phone identity
+// and so cannot start a brand-new checkout until it completes real
+// verification -- this never touches that account's EXISTING
+// subscription/Billing Portal access, only a fresh Checkout session.
+export async function requireCheckoutEligibleMember(accessToken: string): Promise<MemberContext & { phone: string }> {
+  try {
+    await requireActivatedAccess(accessToken);
+  } catch (error) {
+    if (error instanceof Error && "status" in error) {
+      throw new BillingError((error as { status: number }).status, error.message);
+    }
+    throw new BillingError(503, "could not verify account activation");
+  }
+  const member = await requireMember(accessToken);
+  if (!member.phone) {
+    throw new BillingError(403, "verify your mobile phone before subscribing -- complete verification at /member/profile");
+  }
+  return { ...member, phone: member.phone };
 }
 
 async function providerCustomer(customerId: string) {
@@ -196,7 +217,7 @@ export async function createCheckout(args: {
   cancelUrl: string;
 }) {
   const resolved = resolveCheckoutPlan(args.planCode);
-  const member = await requireMember(args.accessToken);
+  const member = await requireCheckoutEligibleMember(args.accessToken);
   const db = adminDb();
   if (!db) throw new BillingError(503, "member database is not configured");
   const { data: existingSubscription, error: existingError } = await db

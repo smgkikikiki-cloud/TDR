@@ -55,11 +55,20 @@ alter table public.tdr_customer_profiles add column if not exists marketing_cons
 alter table public.tdr_customer_profiles add column if not exists profile_completed_at timestamptz;
 -- The single authoritative activation gate (see lib/access-policy-server.ts
 -- ::requireActivatedAccess). Set once all activation criteria are first
--- met (email confirmed + a verified phone identity + postcode + company-
--- or-individual), or by the legacy-compatibility backfill below for the
--- pre-existing paid row. A stored flag rather than a recomputed check so
--- activation, once granted, survives e.g. a later phone re-verification.
+-- met (email confirmed + a TDR-confirmed phone verification + postcode +
+-- company-or-individual), or by the legacy-compatibility backfill below
+-- for the pre-existing paid row. A stored flag rather than a recomputed
+-- check so activation, once granted, survives e.g. a later phone
+-- re-verification.
 alter table public.tdr_customer_profiles add column if not exists activation_completed_at timestamptz;
+-- Records HOW activation was granted, so a legacy grandfather is never
+-- mistaken for a real OTP-verified account. 'VERIFIED' = every criterion
+-- (including a real TDR-confirmed phone verification, see
+-- tdr_phone_verification_attempts below) was independently computed true.
+-- 'LEGACY_PAID' = granted once, by this migration, to the pre-existing
+-- paying customer who predates the verification flow -- never computed,
+-- never re-derived.
+alter table public.tdr_customer_profiles add column if not exists activation_source text;
 
 do $$ begin
   alter table public.tdr_customer_profiles add constraint tdr_customer_profiles_customer_id_fkey
@@ -69,6 +78,11 @@ exception when duplicate_object then null; end $$;
 do $$ begin
   alter table public.tdr_customer_profiles add constraint tdr_customer_profiles_postcode_format
     check (postcode is null or postcode ~ '^[0-9]{4,10}$');
+exception when duplicate_object then null; end $$;
+
+do $$ begin
+  alter table public.tdr_customer_profiles add constraint tdr_customer_profiles_activation_source_known
+    check (activation_source is null or activation_source in ('VERIFIED', 'LEGACY_PAID'));
 exception when duplicate_object then null; end $$;
 
 -- Both new columns default to values that trivially satisfy these checks
@@ -111,26 +125,26 @@ comment on table public.tdr_customer_profiles is
 -- paying customer(s) would otherwise be locked out of their own paid
 -- product on this migration alone. Grandfather exactly the rows that have
 -- already completed a real Stripe checkout (stripe_customer_id is not
--- null -- proof of a trusted, revenue-bearing relationship) as activated,
--- and grant them a verified phone identity from their on-file phone if
--- they don't already have one. New Free signups get none of this and
--- must complete real verification (see lib/access-policy-server.ts).
+-- null -- proof of a trusted, revenue-bearing relationship) as activated
+-- for TOOL USE (Compare/Sales Tools), tagged activation_source =
+-- 'LEGACY_PAID' so this is never confused with a real verification.
+--
+-- IMPORTANT: this does NOT insert into tdr_customer_phone_identities.
+-- That table (migration_v21) is defined as Supabase-Auth-OTP-verified
+-- phone identity -- writing the legacy row's old typed/billing phone into
+-- it as if Supabase had confirmed it would be a false provenance claim.
+-- The legacy row keeps activation without ever appearing to have
+-- completed real OTP verification; if this customer starts a brand-new
+-- Stripe Checkout in the future, requireCheckoutEligibleMember()
+-- (lib/billing.ts) still requires a REAL tdr_customer_phone_identities
+-- row before Stripe is involved -- this backfill grants activation for
+-- tool use only, not a trusted phone for billing. New Free signups get
+-- none of this and must complete real verification (see
+-- lib/access-policy-server.ts, lib/phone-verification.ts).
 -- ---------------------------------------------------------------------
-insert into public.tdr_customer_phone_identities (customer_id, phone_e164, verified_at, is_primary)
-select c.id, p.phone_e164, coalesce(p.updated_at, now()), true
-from public.tdr_customer_profiles p
-join public.tdr_customers c on c.auth_user_id = p.user_id
-where p.stripe_customer_id is not null
-  and p.phone_e164 is not null
-  and p.phone_e164 ~ '^\+[1-9][0-9]{7,14}$'
-  and not exists (
-    select 1 from public.tdr_customer_phone_identities pi
-    where pi.customer_id = c.id and pi.is_primary and pi.revoked_at is null
-  )
-on conflict (phone_e164) do nothing;
-
 update public.tdr_customer_profiles p
-set activation_completed_at = coalesce(p.activation_completed_at, now())
+set activation_completed_at = coalesce(p.activation_completed_at, now()),
+    activation_source = coalesce(p.activation_source, 'LEGACY_PAID')
 where p.stripe_customer_id is not null;
 
 -- ---------------------------------------------------------------------
@@ -328,3 +342,116 @@ grant select, insert on table public.tdr_product_events to service_role;
 
 comment on table public.tdr_product_events is
   'Minimal auditable server-side product-event ledger (account_created, compare_run, sales_quota_hit, upgrade_viewed, etc. -- see lib/telemetry.ts for the full event set). Never stores payment-card data. Service-role only.';
+
+-- ---------------------------------------------------------------------
+-- 5. TDR-owned phone verification reservation/binding layer.
+--
+-- Supabase resolves phone-change OTP verification
+-- (auth.updateUser({phone}) + auth.verifyOtp({type:"phone_change"}))
+-- through auth.users.phone_change, which is NOT a unique column -- two
+-- different pending auth users could in principle carry the same
+-- phone_change value. A phone-change OTP succeeding is therefore not, by
+-- itself, proof that a SPECIFIC TDR account is the one that completed
+-- verification. This table lets TDR reserve (user, phone) BEFORE any SMS
+-- is sent and only grant TDR-side confirmation after independently
+-- re-checking the calling account's own current Supabase Auth state
+-- matches what it reserved -- see lib/phone-verification.ts and
+-- lib/access-policy-server.ts::hasTdrConfirmedPhoneVerification.
+--
+-- tdr_customer_phone_identities (migration_v21) remains the canonical
+-- verified-phone ledger; this table is never written to it directly by
+-- application code, only read to check for cross-account phone reuse.
+-- ---------------------------------------------------------------------
+create table if not exists public.tdr_phone_verification_attempts (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  customer_id uuid not null references public.tdr_customers(id) on delete cascade,
+  phone_e164 text not null check (phone_e164 ~ '^\+[1-9][0-9]{7,14}$'),
+  status text not null default 'PENDING' check (status in ('PENDING','CONFIRMED','EXPIRED','CANCELLED')),
+  created_at timestamptz not null default now(),
+  expires_at timestamptz not null default (now() + interval '10 minutes'),
+  confirmed_at timestamptz,
+  updated_at timestamptz not null default now()
+);
+
+-- At most one ACTIVE (pending or confirmed) reservation may exist for a
+-- given phone at a time, across every TDR customer -- this is the
+-- database-level backstop (not just an application check-then-act) that
+-- makes "prevent two active reservations from legitimately claiming the
+-- same phone" race-safe under concurrent requests.
+create unique index if not exists tdr_phone_verification_attempts_active_phone_uq
+  on public.tdr_phone_verification_attempts(phone_e164)
+  where status in ('PENDING', 'CONFIRMED');
+
+create index if not exists tdr_phone_verification_attempts_user_idx
+  on public.tdr_phone_verification_attempts(user_id, status, created_at desc);
+
+alter table public.tdr_phone_verification_attempts enable row level security;
+revoke all on table public.tdr_phone_verification_attempts from public, anon, authenticated;
+grant select, insert, update, delete on table public.tdr_phone_verification_attempts to service_role;
+
+comment on table public.tdr_phone_verification_attempts is
+  'TDR-owned phone verification reservation/binding, closing a Supabase phone_change ambiguity gap (auth.users.phone_change is not unique). See lib/phone-verification.ts. Service-role only.';
+
+-- Maintenance: expire abandoned PENDING reservations. This table is
+-- fully TDR-owned, so unlike Supabase's own auth.users.phone_change
+-- staleness (see the operational note below), a runtime cleanup path is
+-- safe to implement here. Called lazily at the start of every new
+-- reservation request (lib/phone-verification.ts::reservePhoneVerification)
+-- so an abandoned attempt never permanently blocks a phone number; can
+-- also be invoked on a schedule (e.g. a periodic job) if the deployment
+-- has one, though that is not required for correctness.
+create or replace function public.tdr_expire_stale_phone_verification_attempts()
+returns integer
+language sql
+security invoker
+set search_path = public, pg_temp
+as $$
+  with expired as (
+    update public.tdr_phone_verification_attempts
+    set status = 'EXPIRED', updated_at = now()
+    where status = 'PENDING' and expires_at < now()
+    returning 1
+  )
+  select count(*)::integer from expired;
+$$;
+
+revoke all on function public.tdr_expire_stale_phone_verification_attempts() from public, anon, authenticated;
+grant execute on function public.tdr_expire_stale_phone_verification_attempts() to service_role;
+
+comment on function public.tdr_expire_stale_phone_verification_attempts is
+  'Marks abandoned PENDING tdr_phone_verification_attempts rows EXPIRED. Called lazily on every new reservation request; safe to also run on a schedule.';
+
+-- ---------------------------------------------------------------------
+-- Operational note: Supabase's own auth.users.phone_change staleness.
+--
+-- Separately from the TDR-owned table above, Supabase Auth itself can
+-- carry a stale, unconfirmed `phone_change` value on `auth.users` when a
+-- user starts (but never completes) a phone-change flow. There is no
+-- documented, supported Admin API method (auth.admin.updateUserById or
+-- otherwise) to directly clear a pending `phone_change` -- and
+-- `auth.users` is Supabase-managed schema that this project does not
+-- write to directly by convention (every other migration in this repo
+-- only reads `auth.users`/creates triggers on it, never ALTERs its rows'
+-- managed auth columns from application code). Implementing a "smallest
+-- safe runtime cleanup" for that specific column is therefore not done
+-- here -- there is nothing this repo's code can safely do to it.
+--
+-- In practice this is a non-issue for correctness: Supabase's documented
+-- behavior is that a fresh `auth.updateUser({phone})` call overwrites any
+-- prior pending `phone_change` for that same user, and TDR's own
+-- reservation-cancel-and-retry flow (reservePhoneVerification cancels the
+-- caller's previous PENDING reservation before creating a new one) always
+-- triggers exactly that fresh call. A stale `phone_change` left behind by
+-- a user who started verification and never returned is inert: it can
+-- never itself grant TDR activation (this migration's
+-- hasTdrConfirmedPhoneVerification check requires a matching CONFIRMED
+-- TDR reservation, which never exists for an abandoned attempt), and it
+-- does not block that phone number from anyone else's use of Supabase's
+-- own OTP flow. Production currently has zero pending `phone_change`
+-- rows (verified before writing this migration), so this is preventive
+-- documentation, not incident recovery. If a stale `phone_change` is ever
+-- suspected to require a fix, the supported path is the Supabase
+-- Dashboard (Authentication > Users) or Supabase support, not a
+-- migration or application code change against `auth.users`.
+-- ---------------------------------------------------------------------

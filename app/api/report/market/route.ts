@@ -41,6 +41,19 @@ function values(request: NextRequest, name: string): string[] | undefined {
   return raw.length ? [...new Set(raw)] : undefined;
 }
 
+// Canonicalizes a filters object for fingerprinting: sorts each filter
+// array's values (query-parameter ordering, e.g. ?brand=A&brand=B vs
+// ?brand=B&brand=A, must not make an otherwise-identical request
+// fingerprint differently and pay twice) and sorts the object's own keys
+// for a stable JSON.stringify output.
+function canonicalFilterFingerprint(filters: MarketSliceFilters): string {
+  const sortedEntries = Object.keys(filters).sort().map((key) => {
+    const value = (filters as unknown as Record<string, unknown>)[key];
+    return [key, Array.isArray(value) ? [...value].sort() : value] as const;
+  });
+  return JSON.stringify(Object.fromEntries(sortedEntries));
+}
+
 function filtersFromRequest(request: NextRequest): MarketSliceFilters {
   return {
     registrationTypes: values(request, "registration_type"),
@@ -228,11 +241,16 @@ export async function GET(request: NextRequest) {
     // The ONE quota-consuming call for this entire request -- everything
     // below (current window, comparison window, trend months) reuses this
     // same ctx and pays nothing further, regardless of how many internal
-    // getRegistrationMarketSlice calls that takes.
+    // getRegistrationMarketSlice calls that takes. The fingerprint must
+    // cover every output-changing request parameter, not just the
+    // filters/window/dimension: `limit` and `trend_months` both change
+    // what the response actually contains, so two requests that differ
+    // only in those must not be treated as the same request and coalesce.
     const quota = await consumeMarketReportQuota(ctx, [
       dimensionValue, windowValue, currentWindow.from, currentWindow.to,
       comparisonMode ?? "", priceBand ?? "", includeUnmapped,
-      JSON.stringify(filters),
+      limit, trendMonths,
+      canonicalFilterFingerprint(filters),
     ]);
 
     // A comparison must be calculated from the full competitive set, not the

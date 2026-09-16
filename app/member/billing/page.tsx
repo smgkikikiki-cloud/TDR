@@ -7,7 +7,7 @@ import { browserDb } from "@/lib/supabase-browser";
 import styles from "../member.module.css";
 
 type BillingStatus = {
-  user: { id: string; customerId: string; email: string | null; phone: string };
+  user: { id: string; customerId: string; email: string | null; phone: string | null };
   customerBound: boolean;
   subscription: null | {
     plan_code: string;
@@ -117,7 +117,7 @@ export default function MemberBillingPage() {
       ) : <>
         <section className={styles.kpis}>
           <article><span>Customer ID</span><strong className={styles.accountValue}>{data.user.customerId}</strong><small>stable TDR identity</small></article>
-          <article><span>เบอร์มือถือ</span><strong className={styles.accountValue}>{data.user.phone}</strong><small>ผูกกับ Customer ID</small></article>
+          <article><span>เบอร์มือถือ</span><strong className={styles.accountValue}>{data.user.phone || "ยังไม่ได้ยืนยัน"}</strong><small>{data.user.phone ? "ผูกกับ Customer ID" : <Link href="/member/profile">ยืนยันที่หน้าโปรไฟล์ →</Link>}</small></article>
           <article><span>Subscription</span><strong>{data.subscription?.status || "ยังไม่มี"}</strong><small>{data.subscription?.provider || "Stripe เมื่อเริ่มจ่าย"}</small></article>
           <article><span>Tier</span><strong>{data.tier}</strong><small>{data.entitlements.map((e) => `${e.product}:${e.status}`).join(", ") || "ยังไม่มี"}</small></article>
         </section>
