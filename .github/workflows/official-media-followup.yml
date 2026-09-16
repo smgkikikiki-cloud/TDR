@@ -10,7 +10,7 @@ on:
       - "automotive/vehicle_master/scripts/ingest_official_media_scale.py"
       - "automotive/vehicle_master/scripts/ingest_official_media.py"
       - "automotive/vehicle_master/vehreg/official_media/**"
-      - "automotive/vehicle_master/tests/test_official_media.py"
+      - "automotive/vehicle_master/tests/test_official_media*.py"
       - "scripts/publish-official-media.ts"
       - "lib/canonical-data.ts"
   push:
@@ -22,7 +22,7 @@ on:
       - "automotive/vehicle_master/scripts/ingest_official_media_scale.py"
       - "automotive/vehicle_master/scripts/ingest_official_media.py"
       - "automotive/vehicle_master/vehreg/official_media/**"
-      - "automotive/vehicle_master/tests/test_official_media.py"
+      - "automotive/vehicle_master/tests/test_official_media*.py"
       - "scripts/publish-official-media.ts"
       - "lib/canonical-data.ts"
   workflow_dispatch:
@@ -57,7 +57,7 @@ jobs:
 
       - name: Run official-media unit tests
         working-directory: automotive/vehicle_master
-        run: python -m pytest -q tests/test_official_media.py
+        run: python -m pytest -q 'tests/test_official_media*.py'
 
       - name: Ingest verified current-model batch
         working-directory: automotive/vehicle_master
