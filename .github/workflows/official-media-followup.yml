@@ -1,8 +1,8 @@
 name: Official media coverage follow-up
 
 on:
-  push:
-    branches: [feat/official-media-coverage-audit-v2]
+  pull_request:
+    branches: [main]
     paths:
       - ".github/workflows/official-media-followup.yml"
       - "automotive/vehicle_master/config/official_media_followup_2026.txt"
@@ -12,19 +12,32 @@ on:
       - "automotive/vehicle_master/vehreg/official_media/**"
       - "automotive/vehicle_master/tests/test_official_media.py"
       - "scripts/publish-official-media.ts"
+      - "lib/canonical-data.ts"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/official-media-followup.yml"
+      - "automotive/vehicle_master/config/official_media_followup_2026.txt"
+      - "automotive/vehicle_master/scripts/ingest_official_media_followup.py"
+      - "automotive/vehicle_master/scripts/ingest_official_media_scale.py"
+      - "automotive/vehicle_master/scripts/ingest_official_media.py"
+      - "automotive/vehicle_master/vehreg/official_media/**"
+      - "automotive/vehicle_master/tests/test_official_media.py"
+      - "scripts/publish-official-media.ts"
+      - "lib/canonical-data.ts"
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: official-media-coverage-followup-v2
+  group: official-media-coverage-followup-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   followup:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     env:
       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
@@ -93,7 +106,13 @@ jobs:
       - name: Install Node dependencies
         run: npm ci
 
+      - name: Build application against media binding contract
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
+        run: npm run build
+
       - name: Preflight publish credentials
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
         shell: bash
         run: |
           set -euo pipefail
@@ -104,4 +123,9 @@ jobs:
           fi
 
       - name: Publish approved follow-up assets
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
         run: npm run media:publish -- --year 2026
+
+      - name: Note non-production validation
+        if: github.ref != 'refs/heads/main' || github.event_name == 'pull_request'
+        run: echo "Validated crawl, approvals and production build without mutating production media; publishing is main-only."
