@@ -1,0 +1,263 @@
+{
+  "schema_version": 1,
+  "trims": [
+    {
+      "id": "max_rwd_bev",
+      "model_id": "avatr.avatr_07",
+      "generation_id": "avatr.avatr_07.avatr_07",
+      "name": "AVATR 07 Max RWD",
+      "powertrain": "BEV",
+      "source_refs": {
+        "owner_directory": ["owner_directory_2026_09_13:023"],
+        "official_oem": ["https://www.avatr.co.th/cd23266c-7032-4c10-b746-ff8b4822ad27/E-leaflet_Avatr07_TH_website.pdf"]
+      },
+      "specs": {"drivetrain": "RWD", "battery_kwh": 82.16}
+    },
+    {
+      "id": "ultra_awd_bev",
+      "model_id": "avatr.avatr_07",
+      "generation_id": "avatr.avatr_07.avatr_07",
+      "name": "AVATR 07 Ultra AWD",
+      "powertrain": "BEV",
+      "source_refs": {
+        "owner_directory": ["owner_directory_2026_09_13:023"],
+        "official_oem": ["https://www.avatr.co.th/cd23266c-7032-4c10-b746-ff8b4822ad27/E-leaflet_Avatr07_TH_website.pdf"]
+      },
+      "specs": {"drivetrain": "AWD", "battery_kwh": 82.16}
+    },
+    {
+      "id": "s_phev",
+      "model_id": "bentley.flying_spur",
+      "generation_id": "bentley.flying_spur.gen1",
+      "name": "Flying Spur S",
+      "powertrain": "PHEV",
+      "source_refs": {
+        "owner_directory": ["owner_directory_2026_09_13:026"],
+        "official_oem": ["https://www.bentleymotors.com/en/models/flying-spur/flying-spur-s.html"]
+      }
+    },
+    {
+      "id": "azure_phev",
+      "model_id": "bentley.flying_spur",
+      "generation_id": "bentley.flying_spur.gen1",
+      "name": "Flying Spur Azure",
+      "powertrain": "PHEV",
+      "source_refs": {
+        "owner_directory": ["owner_directory_2026_09_13:026"],
+        "official_oem": ["https://www.bentleymotors.com/en/models/flying-spur/flying-spur-azure.html"]
+      }
+    },
+    {
+      "id": "speed_phev",
+      "model_id": "bentley.flying_spur",
+      "generation_id": "bentley.flying_spur.gen1",
+      "name": "Flying Spur Speed",
+      "powertrain": "PHEV",
+      "source_refs": {
+        "official_oem": ["https://www.bentleymotors.com/en/models/flying-spur/flying-spur-speed.html"]
+      }
+    },
+    {
+      "id": "mulliner_phev",
+      "model_id": "bentley.flying_spur",
+      "generation_id": "bentley.flying_spur.gen1",
+      "name": "Flying Spur Mulliner",
+      "powertrain": "PHEV",
+      "source_refs": {
+        "official_oem": ["https://www.bentleymotors.com/en/models/flying-spur/flying-spur-mulliner.html"]
+      }
+    },
+    {
+      "id": "e07_plus_bev",
+      "model_id": "deepal.deepal_e07",
+      "generation_id": "deepal.deepal_e07.gen1",
+      "name": "DEEPAL E07 Plus",
+      "powertrain": "BEV",
+      "source_refs": {
+        "official_oem": ["https://www.changan.co.th/th/compare-cars/?compare1=43"]
+      },
+      "specs": {"battery_kwh": 89.98, "drivetrain": "RWD"}
+    },
+    {
+      "id": "e07_performance_awd_bev",
+      "model_id": "deepal.deepal_e07",
+      "generation_id": "deepal.deepal_e07.gen1",
+      "name": "DEEPAL E07 Performance AWD",
+      "powertrain": "BEV",
+      "source_refs": {
+        "official_oem": ["https://www.changan.co.th/th/compare-cars/?compare1=44"]
+      },
+      "specs": {"battery_kwh": 89.98, "drivetrain": "AWD"}
+    },
+    {
+      "id": "m8_phev_4_seater_luxury",
+      "model_id": "gac.gac_m8",
+      "generation_id": "gac.gac_m8.gen1",
+      "name": "M8 PHEV 4-Seater Luxury",
+      "powertrain": "PHEV",
+      "aliases": ["4-Seater Supreme"],
+      "source_refs": {
+        "owner_directory": ["owner_directory_2026_09_13:088"],
+        "official_oem": ["https://www.gacgroup.com/en/news/article/gac-m8-phev-proudly-launched-in-thailand--ushering-in-a-new-era-of-luxury-mpv-hybrids--172"]
+      },
+      "specs": {"seats": 4}
+    },
+    {
+      "id": "m8_phev_7_seater",
+      "model_id": "gac.gac_m8",
+      "generation_id": "gac.gac_m8.gen1",
+      "name": "M8 PHEV 7-Seater",
+      "powertrain": "PHEV",
+      "source_refs": {
+        "official_oem": ["https://www.gacgroup.com/th-th/news/article/gac-%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%97%E0%B8%A8%E0%B9%84%E0%B8%97%E0%B8%A2-%E0%B9%80%E0%B8%9B%E0%B8%B4%E0%B8%94%E0%B8%95%E0%B8%B1%E0%B8%A7-gac-m8-phev-%E0%B8%A2%E0%B8%99%E0%B8%95%E0%B8%A3%E0%B8%81%E0%B8%A3%E0%B8%A3%E0%B8%A1-mpv-plug-in-hybrid-%E0%B8%AA%E0%B8%B8%E0%B8%94%E0%B8%AB%E0%B8%A3%E0%B8%B9%E0%B8%A3%E0%B8%B0%E0%B8%94%E0%B8%B1%E0%B8%9A-masterpiece-%E0%B8%AD%E0%B8%A2%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B9%80%E0%B8%9B%E0%B9%87%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%87%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%84%E0%B8%A3%E0%B8%B1%E0%B9%89%E0%B8%87%E0%B9%81%E0%B8%A3%E0%B8%81%E0%B9%83%E0%B8%99%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B9%80%E0%B8%97%E0%B8%A2-29"]
+      },
+      "specs": {"seats": 7}
+    },
+    {
+      "id": "lwb_autobiography_p460e_phev",
+      "model_id": "land_rover.range_rover",
+      "generation_id": "land_rover.range_rover.gen1",
+      "name": "Long Wheelbase Autobiography P460e",
+      "powertrain": "PHEV",
+      "aliases": ["LWB Autobiography"],
+      "source_refs": {
+        "owner_directory": ["owner_directory_2026_09_13:144"],
+        "official_oem": ["https://www.landrover.co.th/showroom/new-range-rover-2026-phev-p460e-petrol-plug-in-hybrid-eiger-grey-88430"]
+      }
+    },
+    {
+      "id": "lwb_sv_p460e_phev",
+      "model_id": "land_rover.range_rover",
+      "generation_id": "land_rover.range_rover.gen1",
+      "name": "Long Wheelbase SV P460e",
+      "powertrain": "PHEV",
+      "aliases": ["LWB SV"],
+      "source_refs": {
+        "owner_directory": ["owner_directory_2026_09_13:144"],
+        "official_oem": ["https://www.landrover.co.th/showroom/new-range-rover-2024-phev-p460e-petrol-plug-in-hybrid-british-racing-green-40210"]
+      }
+    },
+    {
+      "id": "swb_dynamic_se_p400e_phev",
+      "model_id": "land_rover.range_rover_velar",
+      "generation_id": "land_rover.range_rover_velar.unresearched",
+      "name": "Standard Wheelbase Dynamic SE P400e",
+      "powertrain": "PHEV",
+      "source_refs": {
+        "official_oem": ["https://www.landrover.co.th/showroom/new-range-rover-velar-2025-phev-p400e-petrol-plug-in-electric-hybrid-giola-green-66159"]
+      }
+    },
+    {
+      "id": "style_bev",
+      "model_id": "leapmotor.leapmotor_c10",
+      "generation_id": "leapmotor.leapmotor_c10.gen1",
+      "name": "C10 Style",
+      "powertrain": "BEV",
+      "source_refs": {
+        "owner_directory": ["owner_directory_2026_09_13:148"],
+        "thai_market_source": ["https://www.autospinn.com/2025/04/leapmotor-c10-142315"]
+      },
+      "specs": {"battery_kwh": 69.9, "drivetrain": "RWD"}
+    },
+    {
+      "id": "design_bev",
+      "model_id": "leapmotor.leapmotor_c10",
+      "generation_id": "leapmotor.leapmotor_c10.gen1",
+      "name": "C10 Design",
+      "powertrain": "BEV",
+      "source_refs": {
+        "owner_directory": ["owner_directory_2026_09_13:148"],
+        "autolife_thailand": ["https://autolifethailand.tv/official-price-leapmotor-c10-ev-bev-jan-2026/"]
+      },
+      "specs": {"battery_kwh": 69.9, "drivetrain": "RWD"}
+    },
+    {
+      "id": "smart_cab_4trex_2_8_premium_at",
+      "model_id": "toyota.hilux_travo_cab",
+      "generation_id": "toyota.hilux_travo_cab.gen1",
+      "name": "Smart Cab 4TREX 2.8 Premium AT",
+      "powertrain": "ICE",
+      "source_refs": {"official_oem": ["https://www.toyota.co.th/model/hilux_travo_prerunner_4trex/specification"]}
+    },
+    {
+      "id": "smart_cab_4trex_2_8_premium_mt",
+      "model_id": "toyota.hilux_travo_cab",
+      "generation_id": "toyota.hilux_travo_cab.gen1",
+      "name": "Smart Cab 4TREX 2.8 Premium MT",
+      "powertrain": "ICE",
+      "source_refs": {"official_oem": ["https://www.toyota.co.th/model/hilux_travo_prerunner_4trex/specification"]}
+    },
+    {
+      "id": "smart_cab_prerunner_2_8_premium_at",
+      "model_id": "toyota.hilux_travo_cab",
+      "generation_id": "toyota.hilux_travo_cab.gen1",
+      "name": "Smart Cab Prerunner 2.8 Premium AT",
+      "powertrain": "ICE",
+      "source_refs": {"official_oem": ["https://www.toyota.co.th/model/hilux_travo_prerunner_4trex/specification"]}
+    },
+    {
+      "id": "smart_cab_prerunner_2_8_premium_mt",
+      "model_id": "toyota.hilux_travo_cab",
+      "generation_id": "toyota.hilux_travo_cab.gen1",
+      "name": "Smart Cab Prerunner 2.8 Premium MT",
+      "powertrain": "ICE",
+      "source_refs": {"official_oem": ["https://www.toyota.co.th/model/hilux_travo_prerunner_4trex/specification"]}
+    },
+    {
+      "id": "smart_cab_prerunner_2_8_smart_at",
+      "model_id": "toyota.hilux_travo_cab",
+      "generation_id": "toyota.hilux_travo_cab.gen1",
+      "name": "Smart Cab Prerunner 2.8 Smart AT",
+      "powertrain": "ICE",
+      "source_refs": {"official_oem": ["https://www.toyota.co.th/model/hilux_travo_prerunner_4trex/specification"]}
+    },
+    {
+      "id": "smart_cab_prerunner_2_8_smart_mt",
+      "model_id": "toyota.hilux_travo_cab",
+      "generation_id": "toyota.hilux_travo_cab.gen1",
+      "name": "Smart Cab Prerunner 2.8 Smart MT",
+      "powertrain": "ICE",
+      "source_refs": {"official_oem": ["https://www.toyota.co.th/model/hilux_travo_prerunner_4trex/specification"]}
+    },
+    {
+      "id": "double_cab_4trex_2_8_premium_mt",
+      "model_id": "toyota.hilux_travo_double_cab",
+      "generation_id": "toyota.hilux_travo_double_cab.gen1",
+      "name": "Double Cab 4TREX 2.8 Premium MT",
+      "powertrain": "ICE",
+      "source_refs": {"official_oem": ["https://www.toyota.co.th/model/hilux_travo_prerunner_4trex/specification"]}
+    },
+    {
+      "id": "double_cab_prerunner_2_8_premium_at",
+      "model_id": "toyota.hilux_travo_double_cab",
+      "generation_id": "toyota.hilux_travo_double_cab.gen1",
+      "name": "Double Cab Prerunner 2.8 Premium AT",
+      "powertrain": "ICE",
+      "source_refs": {"official_oem": ["https://www.toyota.co.th/model/hilux_travo_prerunner_4trex/specification"]}
+    },
+    {
+      "id": "double_cab_prerunner_2_8_premium_mt",
+      "model_id": "toyota.hilux_travo_double_cab",
+      "generation_id": "toyota.hilux_travo_double_cab.gen1",
+      "name": "Double Cab Prerunner 2.8 Premium MT",
+      "powertrain": "ICE",
+      "source_refs": {"official_oem": ["https://www.toyota.co.th/model/hilux_travo_prerunner_4trex/specification"]}
+    },
+    {
+      "id": "double_cab_prerunner_2_8_smart_at",
+      "model_id": "toyota.hilux_travo_double_cab",
+      "generation_id": "toyota.hilux_travo_double_cab.gen1",
+      "name": "Double Cab Prerunner 2.8 Smart AT",
+      "powertrain": "ICE",
+      "source_refs": {"official_oem": ["https://www.toyota.co.th/model/hilux_travo_prerunner_4trex/specification"]}
+    },
+    {
+      "id": "double_cab_prerunner_2_8_smart_mt",
+      "model_id": "toyota.hilux_travo_double_cab",
+      "generation_id": "toyota.hilux_travo_double_cab.gen1",
+      "name": "Double Cab Prerunner 2.8 Smart MT",
+      "powertrain": "ICE",
+      "source_refs": {"official_oem": ["https://www.toyota.co.th/model/hilux_travo_prerunner_4trex/specification"]}
+    }
+  ]
+}

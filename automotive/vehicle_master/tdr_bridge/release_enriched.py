@@ -1,9 +1,11 @@
-"""Build the canonical TDR release with derived historical model state attached.
+"""Build the canonical TDR release with retail and serving enrichment.
 
-The base ReleaseBuilder remains the owner of catalog identity, price/spec facts
-and TDR crosswalks. This wrapper owns serving-only enrichment that must be part
-of the immutable release hash: fail-closed retail lifecycle semantics and the
-historical registration projection.
+The base ReleaseBuilder remains the owner of analytical catalog identity,
+price/spec facts and TDR crosswalks. Dedicated retail MarketTrim identity is
+merged from the base owner-directory overlay and later verified fragments before
+lifecycle is evaluated. The resulting retail set, lifecycle state, historical
+registration projection and reconciliation report are all part of the immutable
+release hash.
 """
 from __future__ import annotations
 
@@ -14,9 +16,14 @@ import json
 from pathlib import Path
 
 from vehreg.catalog import DATA_DIR, DEFAULT_YEAR
+from vehreg.trim_reconciliation import apply_canonical_trim_overlay
 from tdr_bridge.historical_state import build_historical_model_state
 from tdr_bridge.lifecycle import apply_retail_lifecycle
 from tdr_bridge.release import ReleaseBuilder
+from tdr_bridge.trim_fragments import (
+    apply_verified_trim_fragments,
+    release_reconciliation_report_with_overrides,
+)
 
 SEMANTIC_KEYS = (
     "schema_version",
@@ -30,6 +37,7 @@ SEMANTIC_KEYS = (
     "price_ledger",
     "spec_facts",
     "historical_model_state",
+    "trim_reconciliation",
 )
 
 
@@ -39,15 +47,40 @@ def enrich_release(
     data_dir: Path | str = DATA_DIR,
     source_aliases: dict[str, str] | None = None,
 ) -> dict:
-    # Base release historically inherited legacy TDR model status and promoted
-    # every trim in an active generation to CURRENT. Normalize both before the
-    # semantic hash so rollback/versioning includes lifecycle review state.
     year = int(release.get("year") or DEFAULT_YEAR)
-    out = apply_retail_lifecycle(release, data_dir=data_dir, year=year)
+
+    # Retail MarketTrim is intentionally a separate authoring grain from the
+    # analytical registration Variant catalog. The first source-backed batch is
+    # followed by small append-only verified batches so retail research never
+    # has to churn analytical model files or rewrite one giant canonical file.
+    out = apply_canonical_trim_overlay(release, data_dir=data_dir, year=year)
+    out = apply_verified_trim_fragments(out, data_dir=data_dir, year=year)
+
+    # Canonical identity and "orderable today" are separate claims. Lifecycle
+    # remains fail-closed after every retail identity batch is present.
+    out = apply_retail_lifecycle(out, data_dir=data_dir, year=year)
     out["historical_model_state"] = build_historical_model_state(
         data_dir=data_dir,
         source_aliases=source_aliases,
     )
+
+    # Every source row must either be represented by a canonical source-backed
+    # MarketTrim or remain explicitly unresolved/non-market/historical. Later
+    # evidence may supersede a model's reconciliation disposition, but cannot
+    # silently erase the original source-row accounting.
+    out["trim_reconciliation"] = release_reconciliation_report_with_overrides(
+        out, data_dir=data_dir, year=year,
+    )
+    blockers = out["trim_reconciliation"].get("blockers", [])
+    if blockers:
+        sample = ", ".join(
+            f"{row.get('model_id')}:{row.get('blocker')}" for row in blockers[:5]
+        )
+        more = f" (+{len(blockers) - 5} more)" if len(blockers) > 5 else ""
+        raise ValueError(
+            "MarketTrim reconciliation blocks serving release: " + sample + more
+        )
+
     semantic = {key: out[key] for key in SEMANTIC_KEYS}
     source_hash = sha256(json.dumps(
         semantic, ensure_ascii=False, sort_keys=True, separators=(",", ":")
@@ -93,6 +126,7 @@ def main(argv=None) -> int:
         "historical_baselines": len(release["historical_model_state"]["model_year_baselines"]),
         "historical_changes": len(release["historical_model_state"]["monthly_changes"]),
         "aliased_historical_rows": release["historical_model_state"]["aliased_seed_rows"],
+        "trim_reconciliation": release["trim_reconciliation"]["counts"],
         "output": str(args.out),
     }, ensure_ascii=False))
     return 0
