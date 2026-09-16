@@ -1,0 +1,56 @@
+name: Diagnose BMW official media
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [feat/official-media-scale-100]
+    paths:
+      - ".github/workflows/official-media-bmw-diagnostic.yml"
+      - "automotive/vehicle_master/vehreg/official_media/parsing.py"
+      - "automotive/vehicle_master/vehreg/official_media/pipeline.py"
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Probe BMW Thailand pages with crawler transport
+        working-directory: automotive/vehicle_master
+        run: |
+          python - <<'PY'
+          from urllib.error import HTTPError, URLError
+          from vehreg.official_media.pipeline import fetch_bytes
+          from vehreg.official_media.parsing import parse_page
+          from vehreg.official_media.models import SourceType
+
+          urls = [
+              "https://www.bmw.co.th/en/all-models.html",
+              "https://www.bmw.co.th/en/all-models/x-series/x1/bmw-x1.html",
+              "https://www.bmw.co.th/en/all-models/x-series/x3/bmw-x3.html",
+              "https://www.bmw.co.th/en/all-models/3-series/bmw-3-series-sedan/bmw-3-series-sedan.html",
+          ]
+          for url in urls:
+              print(f"\n=== {url} ===")
+              try:
+                  body, ctype = fetch_bytes(url, timeout=25)
+                  print(f"bytes={len(body)} content_type={ctype!r}")
+                  text = body.decode("utf-8", errors="replace")
+                  print(f"head={text[:240]!r}")
+                  images, links, title = parse_page(text, url, SourceType.OFFICIAL_SITE)
+                  print(f"title={title!r} images={len(images)} links={len(links)}")
+                  for item in images[:8]:
+                      print(f"image url={item.image_url!r} alt={item.alt!r} width={item.width} height={item.height} og={item.is_og_image}")
+                  for link in links[:8]:
+                      print(f"link={link!r}")
+              except HTTPError as exc:
+                  print(f"HTTPError status={exc.code} reason={exc.reason!r} headers={dict(exc.headers)!r}")
+              except Exception as exc:
+                  print(f"ERROR {type(exc).__name__}: {exc}")
+          PY
