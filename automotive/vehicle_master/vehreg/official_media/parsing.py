@@ -61,8 +61,14 @@ class AssetParser(HTMLParser):
         self.links: list[tuple[str, str]] = []
         self.link_url: str | None = None
         self.link_text: list[str] = []
+        self.link_image_indexes: list[int] = []
         self.script_chunks: list[str] = []
         self.in_script = False
+
+    def _append_image(self, row: tuple[str, str, int | None, int | None, bool]) -> None:
+        self.images.append(row)
+        if self.link_url:
+            self.link_image_indexes.append(len(self.images) - 1)
 
     def handle_starttag(self, tag: str, attrs) -> None:
         values = {str(k).lower(): str(v or "") for k, v in attrs}
@@ -74,7 +80,11 @@ class AssetParser(HTMLParser):
         elif tag == "meta":
             key = (values.get("property") or values.get("name") or "").lower()
             if key in {"og:image", "twitter:image", "twitter:image:src"} and values.get("content"):
-                self.images.append((values["content"], key, None, None, True))
+                self._append_image((values["content"], key, None, None, True))
+        elif tag == "a" and values.get("href"):
+            self.link_url = urljoin(self.page_url, values["href"])
+            self.link_text = []
+            self.link_image_indexes = []
         elif tag == "img":
             url = (values.get("data-src") or values.get("data-lazy-src")
                    or values.get("data-original") or values.get("src") or "")
@@ -82,7 +92,7 @@ class AssetParser(HTMLParser):
             if srcset:
                 url = _largest_srcset(srcset) or url
             if url and not url.startswith("data:"):
-                self.images.append((url, values.get("alt") or values.get("title") or "",
+                self._append_image((url, values.get("alt") or values.get("title") or "",
                                     _integer(values.get("width")), _integer(values.get("height")), False))
         elif tag == "source":
             url = values.get("src") or ""
@@ -90,11 +100,8 @@ class AssetParser(HTMLParser):
             if srcset:
                 url = _largest_srcset(srcset) or url
             if url and not url.startswith("data:") and _looks_like_image(url, values.get("type", "")):
-                self.images.append((url, values.get("alt") or values.get("title") or "",
+                self._append_image((url, values.get("alt") or values.get("title") or "",
                                     _integer(values.get("width")), _integer(values.get("height")), False))
-        elif tag == "a" and values.get("href"):
-            self.link_url = urljoin(self.page_url, values["href"])
-            self.link_text = []
 
     def handle_endtag(self, tag: str) -> None:
         tag = tag.lower()
@@ -103,9 +110,16 @@ class AssetParser(HTMLParser):
         elif tag == "script":
             self.in_script = False
         elif tag == "a" and self.link_url:
-            self.links.append((self.link_url, " ".join(self.link_text)))
+            text = " ".join(self.link_text).strip()
+            self.links.append((self.link_url, text))
+            if text:
+                for index in self.link_image_indexes:
+                    url, alt, width, height, is_og = self.images[index]
+                    context = f"{alt} model-card {text} {self.link_url}".strip()
+                    self.images[index] = (url, context, width, height, is_og)
             self.link_url = None
             self.link_text = []
+            self.link_image_indexes = []
 
     def handle_data(self, data: str) -> None:
         if self.in_title:
@@ -120,9 +134,6 @@ def parse_page(html: str, page_url: str, source_type: SourceType):
     parser = AssetParser(page_url)
     parser.feed(html)
 
-    # Nuxt/Next and OEM configurators often keep asset URLs in serialized page
-    # data rather than <img>. Extract only image extensions; video/PDF are not
-    # media candidates for this pipeline.
     embedded = "\n".join(parser.script_chunks)
     for match in _EMBEDDED_IMAGE_RE.finditer(embedded):
         url = _decode_embedded_url(match.group("url"))
