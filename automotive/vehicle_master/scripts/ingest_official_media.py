@@ -39,6 +39,10 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--year", type=int, default=2026)
     parser.add_argument("--brands", nargs="*", default=[])
+    parser.add_argument(
+        "--vehicle-ids", nargs="*", default=[],
+        help="Exact canonical generation IDs to ingest, preserving this order.",
+    )
     parser.add_argument("--limit", type=int, default=30)
     parser.add_argument("--max-pages", type=int, default=8)
     parser.add_argument("--data-dir", type=Path, default=DATA_DIR)
@@ -50,9 +54,18 @@ def main() -> int:
 
     catalog = Catalog.load(args.data_dir, args.year)
     wanted = {item.casefold() for item in args.brands} or None
-    vehicles = list(identities(catalog, wanted))
-    if args.limit:
-        vehicles = vehicles[:args.limit]
+    available = list(identities(catalog, wanted))
+
+    if args.vehicle_ids:
+        by_id = {item.generation_id: item for item in available}
+        missing = [item for item in args.vehicle_ids if item not in by_id]
+        if missing:
+            parser.error("unknown or unsupported --vehicle-ids: " + ", ".join(missing))
+        vehicles = [by_id[item] for item in args.vehicle_ids]
+    else:
+        vehicles = available
+        if args.limit:
+            vehicles = vehicles[:args.limit]
 
     store = ContentAddressedStore(args.cache_dir)
     manifest: list[dict] = []
@@ -64,8 +77,10 @@ def main() -> int:
         review.extend(flags)
         summary.append({
             "vehicle_id": identity.generation_id,
+            "brand": identity.brand_id,
             "model": identity.model_name,
             "assets": len(assets),
+            "approved": sum(asset.status == "approved" for asset in assets),
             "review": len(flags),
         })
         print(f"{identity.generation_id}: {len(assets)} assets, {len(flags)} review")
