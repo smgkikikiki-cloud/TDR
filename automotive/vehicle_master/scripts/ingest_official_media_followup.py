@@ -15,16 +15,27 @@ import ingest_official_media_scale  # noqa: F401,E402
 
 from vehreg.official_media.adapters import MODEL_ASSET_HINTS, MODEL_PAGE_HINTS  # noqa: E402
 
+# This follow-up list is downstream of the serving-release lifecycle audit. It
+# must only contain Generation IDs classified TARGET_CURRENT; OEM pages below
+# are media provenance, never evidence that changes lifecycle.
 MODEL_PAGE_HINTS.update({
-    "mg.mg_extender_cab.ext": ("https://www.mgcars.com/th/cars/mg-extender-gc",),
-    "mg.mg_extender_double_cab.ext": ("https://www.mgcars.com/th/cars/mg-extender-dc",),
-    "mg.mg_im5.mg_im5": ("https://www.mgcars.com/th/cars/mg-im5",),
-    "mg.mg_maxus_7.gen1": ("https://www.mgcars.com/th/cars/mg-maxus7",),
+    "toyota.fortuner.an160": (
+        "https://www.toyota.co.th/model/fortuner_leader",
+        "https://www.toyota.co.th/model/fortuner_legender",
+    ),
+    "toyota.hilux_revo_double_cab.an120": (
+        "https://www.toyota.co.th/model/hilux_revo_zedition",
+    ),
+    # Toyota serves Alphard and Vellfire as one official product-family page.
+    # Do not add a direct asset hint unless the candidate itself carries
+    # Vellfire identity evidence.
+    "toyota.vellfire.gen1": ("https://www.toyota.co.th/model/alphard",),
+    "gwm.haval_jolion.jol": ("https://www1.gwm.co.th/HAVAL_JOLION.html",),
 })
 
-# Exact hero assets observed on the official MG Thailand product pages above.
-# Use the underlying first-party upload objects rather than the nested
-# Cloudflare optimizer URL; provenance remains the exact MG product page.
+# Previously verified current-model direct assets remain available to reproduce
+# their Git-backed provenance, but are not part of this batch unless listed in
+# official_media_followup_2026.txt.
 MODEL_ASSET_HINTS.update({
     "mg.mg_extender_cab.ext": ((
         "https://mg-upload.sgp1.cdn.digitaloceanspaces.com/a6b2f36e856e4c8c35a773a8e0a38068.png",
