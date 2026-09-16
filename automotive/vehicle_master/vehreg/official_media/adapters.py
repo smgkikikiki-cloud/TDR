@@ -33,7 +33,10 @@ SOURCES: dict[str, OfficialSource] = {
     ),
     "mg": OfficialSource(
         brand_id="mg",
-        seed_urls=("https://www.mgcars.com/th",),
+        seed_urls=(
+            "https://www.mgcars.com/th",
+            "https://new.mgcars.com/th",
+        ),
         allowed_hosts=("mgcars.com",),
     ),
     "gwm": OfficialSource(
@@ -44,9 +47,6 @@ SOURCES: dict[str, OfficialSource] = {
 }
 
 
-# Explicit current official pages are deliberately keyed by canonical generation
-# identity. They are discovery hints only: every URL still has to pass the OEM
-# host allowlist and candidate scoring before any asset can be approved.
 MODEL_PAGE_HINTS: dict[str, tuple[str, ...]] = {
     "toyota.camry.xv80": ("https://www.toyota.co.th/model/camry",),
     "toyota.corolla_cross.xg10": ("https://www.toyota.co.th/model/corollacross",),
@@ -54,7 +54,8 @@ MODEL_PAGE_HINTS: dict[str, tuple[str, ...]] = {
     "toyota.yaris_cross.ac200": ("https://www.toyota.co.th/model/yariscross",),
     "toyota.alphard.ah40": ("https://www.toyota.co.th/model/alphard",),
     "toyota.hilux_champ.champ": ("https://www.toyota.co.th/model/hilux_champ",),
-    "honda.accord.cy": ("https://www.honda.co.th/accordehev2023",),
+    "honda.accord.cy": ("https://www.honda.co.th/accordehev",),
+    "honda.city.gn2": ("https://www.honda.co.th/city",),
     "byd.atto2.atto2": ("https://www.byd.com/en-th/car/atto2",),
     "byd.atto3.atto3": ("https://www.byd.com/en-th/car/atto3",),
     "byd.dolphin.dol": ("https://www.byd.com/en-th/car/dolphin",),
@@ -63,9 +64,12 @@ MODEL_PAGE_HINTS: dict[str, tuple[str, ...]] = {
     "byd.sealion6.sl6": ("https://www.byd.com/en-th/car/sealion6",),
     "byd.sealion7.sl7": ("https://www.byd.com/en-th/car/sealion7",),
     "byd.byd_m6.m6": ("https://www.byd.com/en-th/car/m6",),
+    "mg.mg3.mg3h": ("https://www.mgcars.com/th/cars/all-new-mg3",),
     "mg.mg4.mg4e": ("https://www.mgcars.com/th/cars/mg4-my2026",),
+    "mg.mg_s5_ev.gen1": ("https://www.mgcars.com/th/cars/mg-s5-ev-plus",),
     "mg.mg_im6.gen1": ("https://www.mgcars.com/th/cars/mg-im6",),
     "mg.mg_cyberster.gen1": ("https://www.mgcars.com/th/cars/mg-cyberster",),
+    "mg.mg_maxus_9.mifa9": ("https://www.mgcars.com/th/cars/mg-maxus9-my26",),
     "gwm.haval_h6.h6hev": ("https://www.gwm.co.th/en/models/haval-h6",),
     "gwm.tank300.t300": ("https://www.gwm.co.th/en/models/tank-300-diesel",),
     "gwm.tank500.t500": ("https://www.gwm.co.th/en/models/tank-500-diesel",),
