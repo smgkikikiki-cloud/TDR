@@ -54,6 +54,19 @@ def _decode_embedded_url(value: str) -> str:
     value = value.replace("\\/", "/")
     value = value.replace("\\u002F", "/").replace("\\u002f", "/")
     value = value.replace("\\u0026", "&").replace("\\u003D", "=")
+
+    # MG Thailand serializes optimized image sources as e.g.
+    # ``format=webp/static/car-banner/...`` or
+    # ``format=webp/https:/cdn.example/image.png``. These strings are image
+    # provider directives, not paths relative to the model page. urljoin() on
+    # the raw value produced /th/cars/format=webp/... and guaranteed a 404.
+    # Strip only the known format directive, then restore the real root/URL.
+    value = re.sub(r"^format=(?:webp|avif|jpe?g|png)/", "", value, flags=re.I)
+    if re.match(r"^https?:/[^/]", value, flags=re.I):
+        value = re.sub(r"^(https?):/", r"\1://", value, count=1, flags=re.I)
+    if value.startswith("static/"):
+        value = "/" + value
+
     if value.startswith("//"):
         return "https:" + value
     return value
