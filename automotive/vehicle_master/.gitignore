@@ -7,6 +7,10 @@ __pycache__/
 data/private/
 data/provincial_raw/
 
+# Generated official media binaries and run manifests are scratch/publish inputs.
+data/media/cache/
+integration_data/official_media/
+
 # Local virtualenv for running the Streamlit app and tests.
 .venv/
 

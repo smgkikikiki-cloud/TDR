@@ -8,7 +8,7 @@ import { bodyLabel } from "@/lib/body-labels";
 type TrimOption = { id: string; brand_name: string | null; model_name: string | null; name: string | null };
 type CompareRow = { key: string; label: string; different: boolean; values: (string | null)[] };
 type CompareGroup = { title: string; rows: CompareRow[] };
-type SelectedTrim = { id: string; brand_name: string | null; model_name: string | null; name: string | null; model_slug: string | null };
+type SelectedTrim = { id: string; brand_name: string | null; model_name: string | null; name: string | null; model_slug: string | null; image_url: string | null };
 type CompareResult = {
   selected: SelectedTrim[];
   missing_selection: boolean;
@@ -24,7 +24,7 @@ export default function ComparePage() {
   const [allTrims, setAllTrims] = useState<TrimOption[]>([]);
   const [slots, setSlots] = useState<string[]>(["", "", "", ""]);
   const [diffOnly, setDiffOnly] = useState(false);
-  const [token, setToken] = useState<string | null | undefined>(undefined); // undefined = still checking
+  const [token, setToken] = useState<string | null | undefined>(undefined);
   const [result, setResult] = useState<CompareResult | null>(null);
   const [status, setStatus] = useState<"idle" | "loading" | "quota" | "error">("idle");
   const [message, setMessage] = useState("");
@@ -49,7 +49,7 @@ export default function ComparePage() {
       ids.forEach((id) => params.append("trims", id));
       if (diffOnly) params.set("diff", "1");
       const response = await fetch(`/api/tools/compare?${params.toString()}`, {
-        headers: { Authorization: `Bearer ${token}`, "X-TDR-Action-Id": crypto.randomUUID() },
+        headers: { Authorization: `Bearer ${token}` },
         cache: "no-store",
       });
       const body = await response.json();
@@ -99,7 +99,6 @@ export default function ComparePage() {
 
     {status === "quota" ? <div className="compareNotice">{message} — อัปเกรดบัญชีเพื่อเทียบรถไม่จำกัดต่อวัน <Link href="/pricing">ดูแพ็กเกจ</Link></div> : null}
     {status === "error" ? <div className="compareNotice">{message}</div> : null}
-
     {result?.missing_selection ? <div className="compareNotice">มีรุ่นที่เลือกไว้ซึ่งไม่อยู่ใน active canonical release แล้ว ระบบจึงไม่นำมาเทียบ</div> : null}
 
     {result && result.selected.length >= 2 ? (
@@ -111,6 +110,11 @@ export default function ComparePage() {
               <th>หัวข้อ</th>
               {result.selected.map((trim) => (
                 <th key={trim.id}>
+                  <div className={trim.image_url ? "compareCarShot" : "compareCarShot empty"}>
+                    {trim.image_url
+                      ? <img src={trim.image_url} alt={`${trim.brand_name || ""} ${trim.model_name || ""}`.trim()} />
+                      : <span>{trim.model_name || "TDR"}</span>}
+                  </div>
                   <small>{trim.brand_name}</small>
                   <strong>{trim.model_name}</strong>
                   <span>{trim.name}</span>

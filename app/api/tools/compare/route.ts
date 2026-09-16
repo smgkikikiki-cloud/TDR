@@ -23,11 +23,6 @@ export async function GET(request: NextRequest) {
 
   try {
     const ctx = await requireActivatedAccess(accessToken);
-    // Fingerprint is server-computed from the request's own semantic
-    // parameters (the sorted trim selection + diff flag) -- there is no
-    // client-supplied action id in this contract to trust or misuse. A
-    // materially different selection always pays fresh quota even if a
-    // client tries to reuse whatever it sent before.
     const quota = await requireUsage(ctx, "vehicle_compare", ctx.policy.compareDailyLimit, [
       [...requestedIds].sort().join(","), diffOnly,
     ]);
@@ -48,7 +43,14 @@ export async function GET(request: NextRequest) {
     await recordEvent({ eventName: "compare_run", userId: ctx.userId, props: { trim_count: selected.length } });
 
     return NextResponse.json({
-      selected: selected.map((trim) => ({ id: trim.id, brand_name: trim.brand_name, model_name: trim.model_name, name: trim.name, model_slug: trim.model_slug })),
+      selected: selected.map((trim) => ({
+        id: trim.id,
+        brand_name: trim.brand_name,
+        model_name: trim.model_name,
+        name: trim.name,
+        model_slug: trim.model_slug,
+        image_url: (trim as any).image_url ?? null,
+      })),
       missing_selection: requestedIds.length !== selected.length,
       groups,
       quota,
