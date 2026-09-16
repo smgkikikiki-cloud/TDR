@@ -109,8 +109,28 @@ MODEL_ASSET_HINTS: dict[str, tuple[tuple[str, str], ...]] = {
         "Honda City official exterior hero",
     ),),
     "honda.wrv.dg": ((
-        "https://assets.honda.co.th/www-assets/6894c89d-6430-4bb9-a732-55a42e279b53/360-view/2025/05/29/8U20otOggmMj3bBdLemS5yVh7Mzqdg0G.jpeg",
-        "Honda WR-V official wheel detail",
+        "https://assets.honda.co.th/www-assets/wrv/2025/02/21/R1qYatMmvyJosgxEb7sfFQ64csXik2eD.png",
+        "Honda WR-V official exterior hero",
+    ),),
+    "byd.atto2.atto2": ((
+        "https://www.byd.com/material/__CN/byd-site/th/home/model/atto2.png",
+        "BYD Atto 2 official exterior hero",
+    ),),
+    "byd.atto3.atto3": ((
+        "https://www.byd.com/material/__CN/byd-site/th/home/model/atto3-2.png",
+        "BYD Atto 3 official exterior hero",
+    ),),
+    "byd.dolphin.dol": ((
+        "https://www.byd.com/material/__CN/byd-site/th/home/model/dolphin.png",
+        "BYD Dolphin official exterior hero",
+    ),),
+    "byd.seal.seal": ((
+        "https://www.byd.com/material/__CN/byd-site/th/home/model/seal.png",
+        "BYD Seal official exterior hero",
+    ),),
+    "byd.sealion5.sealion5": ((
+        "https://www.byd.com/material/__CN/byd-site/th/home/model/sealion5dmi-2.png",
+        "BYD Sealion 5 DM-i official exterior hero",
     ),),
     "byd.sealion6.sl6": ((
         "https://www.byd.com/material/__CN/byd-site/th/home/model/sealion6.png",
@@ -119,6 +139,10 @@ MODEL_ASSET_HINTS: dict[str, tuple[tuple[str, str], ...]] = {
     "byd.sealion7.sl7": ((
         "https://www.byd.com/material/__CN/byd-site/th/home/model/sealion7.png",
         "Sealion 7 official exterior hero",
+    ),),
+    "byd.byd_m6.m6": ((
+        "https://www.byd.com/material/__CN/byd-site/th/home/model/m6.png",
+        "BYD M6 official exterior hero",
     ),),
     "mg.mg3.mg3h": ((
         "https://www.mgcars.com/cdn-cgi/image/width%3D3840%2Cquality%3D75%2Cformat%3Dwebp/https%3A//mg-upload.sgp1.cdn.digitaloceanspaces.com/4ba961ae9c7d561f100728488d21e07d.png",
