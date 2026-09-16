@@ -1,16 +1,19 @@
-"""Source-backed MarketTrim candidate resolution and coverage accounting.
+"""Source-backed MarketTrim resolution, canonical overlay, and coverage gates.
+
+Retail grades are a different grain from analytical registration Variants.  The
+legacy catalog can still carry nested ``generation.trims`` rows, but new retail
+identity may also live in the dedicated ``market/trims/canonical.json`` store.
+That keeps showroom churn out of analytical model files while preserving the
+same immutable serving-release schema.
 
 Research evidence is deliberately kept one step away from canonical MarketTrim
-rows.  A source may prove a marketed grade name while still being ambiguous
-about its exact powertrain or Thai retail lifecycle.  This module makes that
-state explicit instead of forcing a guess or silently deleting the evidence.
-
-The canonical catalog remains strict: a MarketTrim still requires one exact
-powertrain.  Reconciliation state explains why source-backed rows have (or have
-not) crossed that boundary yet.
+rows. A source may prove a marketed grade name while still being ambiguous
+about its exact powertrain or Thai retail lifecycle. Reconciliation state makes
+that gap explicit instead of forcing a guess or silently deleting evidence.
 """
 from __future__ import annotations
 
+from copy import deepcopy
 from dataclasses import asdict, dataclass
 from enum import Enum
 import json
@@ -35,15 +38,15 @@ class TrimResolutionStatus(str, Enum):
     RESEARCH_UNRESOLVED = "RESEARCH_UNRESOLVED"
 
 
-# These states explicitly explain why source evidence may have zero canonical
-# MarketTrim rows. READY is intentionally excluded: a READY zero-trim model is
-# a promotion bug and must block a serving release.
-ZERO_TRIM_EXEMPTIONS = frozenset({
+# READY is deliberately absent. Any source row that is ready to promote but is
+# not represented canonically is a release blocker.
+UNRESOLVED_EXEMPTIONS = frozenset({
     TrimResolutionStatus.AMBIGUOUS_POWERTRAIN,
     TrimResolutionStatus.NON_MARKET,
     TrimResolutionStatus.HISTORICAL_ONLY,
     TrimResolutionStatus.RESEARCH_UNRESOLVED,
 })
+ZERO_TRIM_EXEMPTIONS = UNRESOLVED_EXEMPTIONS  # backwards-compatible name
 
 
 @dataclass(frozen=True, slots=True)
@@ -66,10 +69,8 @@ class TrimCandidate:
         return row
 
 
-# Ordered from more explicit retail wording to broader wording. Word-boundary
-# patterns make bare "EV" safe here: it will match "S05 EV 510" but not text
-# where those two letters merely occur inside another word. EREV is canonical
-# REEV in this warehouse.
+# Word boundaries make bare EV safe: it matches "S05 EV 510" but not letters
+# embedded in another word. EREV is canonical REEV in this warehouse.
 _POWERTRAIN_PATTERNS: tuple[tuple[Powertrain, re.Pattern[str]], ...] = (
     (Powertrain.REEV, re.compile(r"\b(?:REEV|EREV|RANGE[- ]?EXTENDER)\b", re.I)),
     (Powertrain.PHEV, re.compile(r"\b(?:PHEV|PLUG[- ]?IN|DM[- ]?I)\b", re.I)),
@@ -78,6 +79,7 @@ _POWERTRAIN_PATTERNS: tuple[tuple[Powertrain, re.Pattern[str]], ...] = (
     (Powertrain.FCEV, re.compile(r"\b(?:FCEV|FUEL[- ]?CELL)\b", re.I)),
     (Powertrain.ICE, re.compile(r"\b(?:ICE|PETROL|GASOLINE|DIESEL|TFSI|TDI)\b", re.I)),
 )
+_LOCAL_ID = re.compile(r"^[a-z0-9][a-z0-9_]*$")
 
 
 def powertrain_hints(text: object) -> frozenset[Powertrain]:
@@ -105,33 +107,27 @@ def resolve_candidate_powertrain(
 ) -> tuple[Powertrain | None, TrimResolutionStatus, str]:
     """Resolve one candidate without guessing across a source ambiguity.
 
-    Trust order is deliberate:
-      1. an exact powertrain written in the trim/grade name;
+    Trust order:
+      1. one exact powertrain written in the trim/grade name;
       2. one exact powertrain written at source-model level;
-      3. one canonical analytical powertrain only when the source did not name
-         a powertrain at all.
+      3. one canonical analytical powertrain only when the source names none.
 
-    A source that explicitly says "BEV / EREV" stays ambiguous when the grade
-    name itself does not disambiguate it. We do *not* use an analytical Variant
-    to collapse that source ambiguity because Variant is a different layer and
-    may itself be the stale record under repair.
+    If source text explicitly says BEV / EREV and a grade does not disambiguate,
+    the row stays ambiguous. Analytical Variant is a different layer and may be
+    the stale record under repair, so it cannot collapse a source ambiguity.
     """
     if generation_id not in catalog.generations:
         raise CatalogError(f"unknown generation_id {generation_id!r}")
 
     trim_hints = powertrain_hints(raw_name)
     if len(trim_hints) == 1:
-        powertrain = next(iter(trim_hints))
-        return powertrain, TrimResolutionStatus.READY, "exact powertrain in trim name"
+        return next(iter(trim_hints)), TrimResolutionStatus.READY, "exact powertrain in trim name"
     if len(trim_hints) > 1:
-        return None, TrimResolutionStatus.AMBIGUOUS_POWERTRAIN, (
-            "trim name names multiple powertrains"
-        )
+        return None, TrimResolutionStatus.AMBIGUOUS_POWERTRAIN, "trim name names multiple powertrains"
 
     source_hints = powertrain_hints(source_powertrain_text)
     if len(source_hints) == 1:
-        powertrain = next(iter(source_hints))
-        return powertrain, TrimResolutionStatus.READY, "exact powertrain in source model text"
+        return next(iter(source_hints)), TrimResolutionStatus.READY, "exact powertrain in source model text"
     if len(source_hints) > 1:
         return None, TrimResolutionStatus.AMBIGUOUS_POWERTRAIN, (
             "source model text names multiple powertrains and trim name does not disambiguate"
@@ -139,8 +135,7 @@ def resolve_candidate_powertrain(
 
     canonical = _known_generation_powertrains(catalog, generation_id)
     if len(canonical) == 1:
-        powertrain = next(iter(canonical))
-        return powertrain, TrimResolutionStatus.READY, (
+        return next(iter(canonical)), TrimResolutionStatus.READY, (
             "source names no powertrain; generation has one canonical analytical powertrain"
         )
     if len(canonical) > 1:
@@ -190,26 +185,181 @@ def make_candidate(
     )
 
 
+def _trim_root(data_dir: Path | str, year: int) -> Path:
+    return Path(data_dir) / str(year) / "market" / "trims"
+
+
+def canonical_trim_overlay_path(data_dir: Path | str = DATA_DIR,
+                                year: int = DEFAULT_YEAR) -> Path:
+    return _trim_root(data_dir, year) / "canonical.json"
+
+
 def reconciliation_path(data_dir: Path | str = DATA_DIR,
                         year: int = DEFAULT_YEAR) -> Path:
-    return Path(data_dir) / str(year) / "market" / "trims" / "reconciliation.json"
+    return _trim_root(data_dir, year) / "reconciliation.json"
 
 
-def load_reconciliation_state(
-    data_dir: Path | str = DATA_DIR,
-    year: int = DEFAULT_YEAR,
-) -> dict:
-    path = reconciliation_path(data_dir, year)
+def _load_versioned(path: Path, key: str) -> dict:
     if not path.exists():
-        return {"schema_version": SCHEMA_VERSION, "models": []}
+        return {"schema_version": SCHEMA_VERSION, key: []}
     payload = json.loads(path.read_text(encoding="utf-8"))
     if payload.get("schema_version") != SCHEMA_VERSION:
         raise CatalogError(
-            f"{path}: unsupported reconciliation schema {payload.get('schema_version')!r}"
+            f"{path}: unsupported schema {payload.get('schema_version')!r}"
         )
-    if not isinstance(payload.get("models"), list):
-        raise CatalogError(f"{path}: models must be an array")
+    if not isinstance(payload.get(key), list):
+        raise CatalogError(f"{path}: {key} must be an array")
     return payload
+
+
+def load_canonical_trim_overlay(data_dir: Path | str = DATA_DIR,
+                                year: int = DEFAULT_YEAR) -> dict:
+    return _load_versioned(canonical_trim_overlay_path(data_dir, year), "trims")
+
+
+def load_reconciliation_state(data_dir: Path | str = DATA_DIR,
+                              year: int = DEFAULT_YEAR) -> dict:
+    return _load_versioned(reconciliation_path(data_dir, year), "models")
+
+
+def _normalize_source_refs(raw: object, *, label: str) -> dict[str, list[str]]:
+    if not isinstance(raw, Mapping) or not raw:
+        raise CatalogError(f"{label}: source_refs must be a nonempty object")
+    out: dict[str, list[str]] = {}
+    for key, value in raw.items():
+        source = str(key).strip()
+        values = [value] if isinstance(value, str) else value
+        if not source or not isinstance(values, list):
+            raise CatalogError(f"{label}: invalid source_refs")
+        refs = [str(ref).strip() for ref in values if str(ref).strip()]
+        if not refs:
+            raise CatalogError(f"{label}: source_refs entries must be nonempty")
+        out[source] = list(dict.fromkeys(refs))
+    return out
+
+
+def apply_canonical_trim_overlay(
+    release: Mapping,
+    *,
+    data_dir: Path | str = DATA_DIR,
+    year: int = DEFAULT_YEAR,
+) -> dict:
+    """Merge dedicated retail canonical rows into a serving release.
+
+    Overlay rows may not replace an existing canonical trim. They intentionally
+    carry no analytical ``variant_id`` until that cross-grain relationship is
+    separately reviewed. Prices/spec facts likewise stay empty until their own
+    evidence stores contain them.
+    """
+    out = deepcopy(dict(release))
+    overlay = load_canonical_trim_overlay(data_dir, year)
+    if not overlay.get("trims"):
+        return out
+
+    models = {
+        str(row.get("canonical_id") or ""): row
+        for row in out.get("models", []) if isinstance(row, Mapping)
+    }
+    generations = {
+        str(row.get("canonical_id") or ""): row
+        for row in out.get("generations", []) if isinstance(row, Mapping)
+    }
+    brands = {
+        str(row.get("canonical_id") or ""): row
+        for row in out.get("brands", []) if isinstance(row, Mapping)
+    }
+    existing_ids = {
+        str(row.get("canonical_id") or "")
+        for row in out.get("market_trims", []) if isinstance(row, Mapping)
+    }
+    additions: list[dict] = []
+
+    for raw in overlay["trims"]:
+        if not isinstance(raw, Mapping):
+            raise CatalogError("canonical trim overlay row must be an object")
+        local_id = str(raw.get("id") or "").strip()
+        model_id = str(raw.get("model_id") or "").strip()
+        generation_id = str(raw.get("generation_id") or "").strip()
+        name = str(raw.get("name") or "").strip()
+        if not _LOCAL_ID.fullmatch(local_id):
+            raise CatalogError(f"canonical trim overlay: invalid local id {local_id!r}")
+        if model_id not in models:
+            raise CatalogError(f"canonical trim overlay {local_id}: unknown model {model_id!r}")
+        generation = generations.get(generation_id)
+        if generation is None or str(generation.get("model_id") or "") != model_id:
+            raise CatalogError(
+                f"canonical trim overlay {local_id}: generation {generation_id!r} is not under {model_id!r}"
+            )
+        if not name:
+            raise CatalogError(f"canonical trim overlay {local_id}: name required")
+        try:
+            powertrain = Powertrain.parse(raw.get("powertrain"))
+        except ValueError as exc:
+            raise CatalogError(f"canonical trim overlay {local_id}: invalid powertrain") from exc
+        if powertrain is Powertrain.UNKNOWN:
+            raise CatalogError(f"canonical trim overlay {local_id}: exact powertrain required")
+        if raw.get("variant_id") not in (None, ""):
+            raise CatalogError(
+                f"canonical trim overlay {local_id}: variant_id must stay empty until cross-grain mapping is reviewed"
+            )
+        source_refs = _normalize_source_refs(raw.get("source_refs"), label=local_id)
+        canonical_id = f"{generation_id}.trim.{local_id}"
+        if canonical_id in existing_ids:
+            raise CatalogError(
+                f"canonical trim overlay {local_id}: {canonical_id} already exists in base catalog"
+            )
+        existing_ids.add(canonical_id)
+
+        aliases = raw.get("aliases") or []
+        if not isinstance(aliases, list) or not all(isinstance(alias, str) for alias in aliases):
+            raise CatalogError(f"canonical trim overlay {local_id}: aliases must be strings")
+        specs = raw.get("specs") or {}
+        if not isinstance(specs, Mapping):
+            raise CatalogError(f"canonical trim overlay {local_id}: specs must be an object")
+        model = models[model_id]
+        brand = brands.get(str(model.get("brand_id") or ""), {})
+        spec_payload = {
+            "id": canonical_id,
+            "generation_id": generation_id,
+            "name": name,
+            "powertrain": powertrain.value,
+            "variant_id": None,
+            "aliases": aliases,
+            "source_refs": source_refs,
+            **dict(specs),
+        }
+        additions.append({
+            "canonical_id": canonical_id,
+            "model_id": model_id,
+            "generation_id": generation_id,
+            "variant_id": None,
+            "name": name,
+            "powertrain": powertrain.value,
+            "status": "UNVERIFIED",
+            "payload": {
+                "catalog_year": year,
+                "price_as_of": out.get("as_of"),
+                "model_id": model_id,
+                "model": model.get("name_en"),
+                "brand": brand.get("name_en"),
+                "specs": spec_payload,
+                "current_list_price": None,
+                "price_history": [],
+                "ecosticker_evidence": None,
+                "comparable_specs": [],
+            },
+            "current_list_price": None,
+            "campaign_quote": {},
+            "price_history": [],
+            "source_refs": source_refs,
+        })
+
+    merged = list(out.get("market_trims", [])) + additions
+    out["market_trims"] = sorted(merged, key=lambda row: str(row.get("canonical_id") or ""))
+    counts = dict(out.get("counts") or {})
+    counts["market_trims"] = len(out["market_trims"])
+    out["counts"] = counts
+    return out
 
 
 def validate_reconciliation_state(catalog: Catalog, state: Mapping) -> list[str]:
@@ -229,10 +379,9 @@ def validate_reconciliation_state(catalog: Catalog, state: Mapping) -> list[str]
         if model_id not in catalog.models:
             problems.append(f"reconciliation unknown model_id {model_id}")
         try:
-            status = TrimResolutionStatus(str(row.get("status") or ""))
+            TrimResolutionStatus(str(row.get("status") or ""))
         except ValueError:
             problems.append(f"reconciliation {model_id}: invalid status {row.get('status')!r}")
-            status = None
         refs = row.get("source_refs")
         if not isinstance(refs, list) or not refs or not all(
                 isinstance(ref, str) and ref.strip() for ref in refs):
@@ -240,9 +389,22 @@ def validate_reconciliation_state(catalog: Catalog, state: Mapping) -> list[str]
         count = row.get("source_trim_count")
         if type(count) is not int or count < 0:
             problems.append(f"reconciliation {model_id}: source_trim_count must be >= 0 integer")
-        if status in ZERO_TRIM_EXEMPTIONS and not str(row.get("reason") or "").strip():
-            problems.append(f"reconciliation {model_id}: {status.value} requires reason")
+        if not str(row.get("reason") or "").strip():
+            problems.append(f"reconciliation {model_id}: reason required")
     return problems
+
+
+def _flatten_refs(trim: Mapping) -> set[str]:
+    refs = trim.get("source_refs")
+    if not isinstance(refs, Mapping):
+        return set()
+    out: set[str] = set()
+    for values in refs.values():
+        if isinstance(values, str):
+            values = [values]
+        if isinstance(values, list):
+            out.update(str(value).strip() for value in values if str(value).strip())
+    return out
 
 
 def release_reconciliation_report(
@@ -251,25 +413,21 @@ def release_reconciliation_report(
     data_dir: Path | str = DATA_DIR,
     year: int = DEFAULT_YEAR,
 ) -> dict:
-    """Explain every source-backed zero-trim model and flag silent loss.
+    """Prove source evidence is fully promoted or explicitly unresolved.
 
-    Only source evidence registered in ``reconciliation.json`` participates in
-    this gate. Importers are responsible for registering evidence when it
-    cannot immediately be promoted. Canonical models that already have trims
-    are reported as CANONICAL even if an older state row remains in the file.
+    Coverage is source-aware, not merely ``trim_count > 0``. If owner evidence
+    listed five rows and only three owner-backed canonical rows exist, the two
+    remaining rows stay visible and READY is not allowed to pass silently.
     """
     state = load_reconciliation_state(data_dir, year)
     model_ids = {
         str(row.get("canonical_id") or "")
-        for row in release.get("models", [])
-        if isinstance(row, Mapping)
+        for row in release.get("models", []) if isinstance(row, Mapping)
     }
-    trim_counts: dict[str, int] = {}
+    trims_by_model: dict[str, list[Mapping]] = {}
     for trim in release.get("market_trims", []):
-        if not isinstance(trim, Mapping):
-            continue
-        model_id = str(trim.get("model_id") or "")
-        trim_counts[model_id] = trim_counts.get(model_id, 0) + 1
+        if isinstance(trim, Mapping):
+            trims_by_model.setdefault(str(trim.get("model_id") or ""), []).append(trim)
 
     rows: list[dict] = []
     blockers: list[dict] = []
@@ -277,27 +435,34 @@ def release_reconciliation_report(
     for raw in state.get("models", []):
         model_id = str(raw.get("model_id") or "")
         declared = str(raw.get("status") or "")
-        canonical_count = trim_counts.get(model_id, 0)
-        effective = "CANONICAL" if canonical_count else declared
+        source_refs = {str(ref).strip() for ref in raw.get("source_refs") or [] if str(ref).strip()}
+        source_count = int(raw.get("source_trim_count") or 0)
+        canonical_rows = trims_by_model.get(model_id, [])
+        source_backed = [trim for trim in canonical_rows if _flatten_refs(trim) & source_refs]
+        promoted = len(source_backed)
+        unresolved = max(source_count - promoted, 0)
+        effective = "CANONICAL" if unresolved == 0 else declared
         row = {
             "model_id": model_id,
-            "source_trim_count": raw.get("source_trim_count", 0),
-            "canonical_trim_count": canonical_count,
+            "source_trim_count": source_count,
+            "canonical_trim_count": len(canonical_rows),
+            "canonical_source_trim_count": promoted,
+            "unresolved_source_trim_count": unresolved,
             "declared_status": declared,
             "status": effective,
             "reason": raw.get("reason", ""),
-            "source_refs": list(raw.get("source_refs") or []),
+            "source_refs": sorted(source_refs),
         }
         if model_id not in model_ids:
             row["blocker"] = "SOURCE_EVIDENCE_MODEL_NOT_IN_RELEASE"
             blockers.append(row)
-        elif not canonical_count:
+        elif unresolved:
             try:
                 status = TrimResolutionStatus(declared)
             except ValueError:
                 status = None
-            if status not in ZERO_TRIM_EXEMPTIONS:
-                row["blocker"] = "SOURCE_EVIDENCE_WITHOUT_CANONICAL_TRIM_OR_EXEMPTION"
+            if status not in UNRESOLVED_EXEMPTIONS:
+                row["blocker"] = "SOURCE_EVIDENCE_NOT_FULLY_PROMOTED"
                 blockers.append(row)
         counts[effective] = counts.get(effective, 0) + 1
         rows.append(row)
@@ -333,8 +498,12 @@ __all__ = [
     "SCHEMA_VERSION",
     "TrimCandidate",
     "TrimResolutionStatus",
+    "UNRESOLVED_EXEMPTIONS",
     "ZERO_TRIM_EXEMPTIONS",
+    "apply_canonical_trim_overlay",
+    "canonical_trim_overlay_path",
     "generation_powertrain_mismatches",
+    "load_canonical_trim_overlay",
     "load_reconciliation_state",
     "make_candidate",
     "powertrain_hints",
