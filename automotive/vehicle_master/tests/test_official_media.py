@@ -53,6 +53,48 @@ def test_scoring_auto_approves_strong_official_candidate():
     assert candidate.slot is ImageSlot.FRONT_3Q
 
 
+def test_model_tokens_allow_separator_variants_without_prefix_collisions():
+    byd = SOURCES["byd"]
+    seal = VehicleIdentity(
+        brand_id="byd",
+        model_id="byd.seal",
+        generation_id="byd.seal.seal",
+        model_name="Seal",
+        generation_code="",
+        model_year=2026,
+    )
+    html = """<title>BYD Seal</title>
+    <img src="https://www.byd.com/material/__CN/byd-site/th/home/model/sealion5dmi-2.png">
+    <img src="https://www.byd.com/material/__CN/byd-site/th/home/model/seal.png">"""
+    images, _, _ = parse_page(html, "https://www.byd.com/en-th/car/seal", SourceType.OFFICIAL_SITE)
+    scored = [score_candidate(item, seal, byd) for item in images]
+    by_url = {item.image_url: item for item in scored}
+    wrong = next(item for url, item in by_url.items() if "sealion5dmi" in url)
+    right = next(item for url, item in by_url.items() if url.endswith("/seal.png"))
+    assert not wrong.identity_evidence
+    assert right.identity_evidence
+
+    crv = VehicleIdentity(
+        brand_id="honda",
+        model_id="honda.crv",
+        generation_id="honda.crv.rs",
+        model_name="CR-V",
+        generation_code="RS",
+        model_year=2026,
+    )
+    assert link_score("https://www.honda.co.th/crv", "", crv, SOURCES["honda"]) > 0
+
+    atto3 = VehicleIdentity(
+        brand_id="byd",
+        model_id="byd.atto3",
+        generation_id="byd.atto3.atto3",
+        model_name="Atto 3",
+        generation_code="",
+        model_year=2026,
+    )
+    assert link_score("https://www.byd.com/en-th/car/atto3", "", atto3, byd) > 0
+
+
 def test_generation_visual_key_gives_trim_inheritance():
     assert IDENTITY.visual_key == "honda.civic.fe"
 
