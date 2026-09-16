@@ -16,7 +16,7 @@ from enum import Enum
 import json
 from pathlib import Path
 import re
-from typing import Iterable, Mapping, Sequence
+from typing import Mapping
 
 from .catalog import Catalog, CatalogError, DATA_DIR, DEFAULT_YEAR
 from .taxonomy import Powertrain
@@ -66,14 +66,15 @@ class TrimCandidate:
         return row
 
 
-# Ordered from more explicit retail wording to broader wording.  Word-boundary
-# patterns avoid reading the "EV" inside unrelated names.  EREV is normalized
-# to canonical REEV by Powertrain.parse elsewhere in the codebase.
+# Ordered from more explicit retail wording to broader wording. Word-boundary
+# patterns make bare "EV" safe here: it will match "S05 EV 510" but not text
+# where those two letters merely occur inside another word. EREV is canonical
+# REEV in this warehouse.
 _POWERTRAIN_PATTERNS: tuple[tuple[Powertrain, re.Pattern[str]], ...] = (
     (Powertrain.REEV, re.compile(r"\b(?:REEV|EREV|RANGE[- ]?EXTENDER)\b", re.I)),
     (Powertrain.PHEV, re.compile(r"\b(?:PHEV|PLUG[- ]?IN|DM[- ]?I)\b", re.I)),
     (Powertrain.HEV, re.compile(r"\b(?:HEV|FULL[- ]?HYBRID|E[- ]?POWER)\b", re.I)),
-    (Powertrain.BEV, re.compile(r"\b(?:BEV|PURE[- ]?ELECTRIC|ELECTRIC)\b", re.I)),
+    (Powertrain.BEV, re.compile(r"\b(?:BEV|EV|PURE[- ]?ELECTRIC|ELECTRIC)\b", re.I)),
     (Powertrain.FCEV, re.compile(r"\b(?:FCEV|FUEL[- ]?CELL)\b", re.I)),
     (Powertrain.ICE, re.compile(r"\b(?:ICE|PETROL|GASOLINE|DIESEL|TFSI|TDI)\b", re.I)),
 )
@@ -111,7 +112,7 @@ def resolve_candidate_powertrain(
          a powertrain at all.
 
     A source that explicitly says "BEV / EREV" stays ambiguous when the grade
-    name itself does not disambiguate it.  We do *not* use an analytical Variant
+    name itself does not disambiguate it. We do *not* use an analytical Variant
     to collapse that source ambiguity because Variant is a different layer and
     may itself be the stale record under repair.
     """
@@ -253,8 +254,8 @@ def release_reconciliation_report(
     """Explain every source-backed zero-trim model and flag silent loss.
 
     Only source evidence registered in ``reconciliation.json`` participates in
-    this gate.  Importers are responsible for registering evidence when it
-    cannot immediately be promoted.  Canonical models that already have trims
+    this gate. Importers are responsible for registering evidence when it
+    cannot immediately be promoted. Canonical models that already have trims
     are reported as CANONICAL even if an older state row remains in the file.
     """
     state = load_reconciliation_state(data_dir, year)
