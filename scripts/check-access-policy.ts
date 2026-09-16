@@ -2,17 +2,21 @@ import {
   currentSalesModuleCycleKey,
   dailyPeriodKey,
   FEATURES,
+  featuresForSurface,
   historyWindowStart,
   isMarketDimensionAllowed,
   isPeriodWithinHistoryWindow,
   isRegistrationDimensionAllowed,
   monthlyPeriodKey,
+  releaseSafetyViolations,
   resetsAtForMetric,
   resolveFeatureState,
   resolveTierFromEntitlements,
   SALES_MODULES,
   validateSalesModuleSelection,
   type EntitlementRow,
+  type FeatureDefinition,
+  type FeatureKey,
 } from "../lib/access-policy.ts";
 import { requestFingerprint } from "../lib/request-fingerprint.ts";
 
@@ -145,6 +149,70 @@ check(
   requestFingerprint("user-1", "vehicle_compare", [["a", "b"].sort().join(","), false], 5000, T0)
     === requestFingerprint("user-1", "vehicle_compare", [["a", "c"].sort().join(","), false], 5000, T0),
   false,
+);
+
+console.log("\naccess policy — Sales Tools surface filtering (reserved capabilities)");
+check(
+  "provincial_registration is surfaced on sales_tools (eligible for the Sales dashboard's launcher card)",
+  FEATURES.provincial_registration.surface,
+  "sales_tools",
+);
+check("research_reports is NOT surfaced on sales_tools", FEATURES.research_reports.surface !== "sales_tools", true);
+check("pdf_export_reports is NOT surfaced on sales_tools", FEATURES.pdf_export_reports.surface !== "sales_tools", true);
+check(
+  "featuresForSurface('sales_tools') returns exactly provincial_registration today",
+  featuresForSurface("sales_tools").map((f) => f.key),
+  ["provincial_registration"],
+);
+check(
+  "featuresForSurface('research') and ('pdf_export') never include provincial_registration",
+  featuresForSurface("research").some((f) => f.key === "provincial_registration")
+    || featuresForSurface("pdf_export").some((f) => f.key === "provincial_registration"),
+  false,
+);
+
+console.log("\naccess policy — launch guard: released cannot ship an undecided 'limited' policy");
+check("the live FEATURES catalog has zero release-safety violations (this also proves the module-load guard didn't throw)", releaseSafetyViolations(), []);
+
+function fixtureFeature(overrides: Partial<FeatureDefinition>): Record<FeatureKey, FeatureDefinition> {
+  const base: FeatureDefinition = {
+    key: "provincial_registration",
+    label: "Test Feature",
+    labelTh: "ทดสอบ",
+    surface: "sales_tools",
+    released: false,
+    stateByAudience: { FREE: "teaser", INDIVIDUAL: "limited", PRO: "full", CORPORATE: "tailored" },
+    countsTowardSalesModuleSelection: false,
+    consumesQuota: false,
+    limitedAccessPolicyDefined: false,
+    ...overrides,
+  };
+  return { provincial_registration: base } as Record<FeatureKey, FeatureDefinition>;
+}
+
+check(
+  "released=true + a 'limited' audience + limitedAccessPolicyDefined=false IS flagged as a violation",
+  releaseSafetyViolations(fixtureFeature({ released: true, limitedAccessPolicyDefined: false })).length > 0,
+  true,
+);
+check(
+  "released=true + a 'limited' audience + limitedAccessPolicyDefined=true is NOT flagged",
+  releaseSafetyViolations(fixtureFeature({ released: true, limitedAccessPolicyDefined: true })),
+  [],
+);
+check(
+  "released=false is never flagged regardless of limitedAccessPolicyDefined (the kill switch already forces teaser for everyone)",
+  releaseSafetyViolations(fixtureFeature({ released: false, limitedAccessPolicyDefined: false })),
+  [],
+);
+check(
+  "released=true with NO 'limited' audience anywhere in the ladder is never flagged, even with limitedAccessPolicyDefined=false",
+  releaseSafetyViolations(fixtureFeature({
+    released: true,
+    limitedAccessPolicyDefined: false,
+    stateByAudience: { FREE: "teaser", INDIVIDUAL: "full", PRO: "full", CORPORATE: "tailored" },
+  })),
+  [],
 );
 
 console.log(failed ? `\n${failed} check(s) failed` : "\nall access policy checks passed");

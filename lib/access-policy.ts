@@ -159,10 +159,19 @@ export type FeatureKey = "provincial_registration" | "research_reports" | "pdf_e
 // but still needs a place in a feature's ladder.
 export type FeatureAudience = Tier | "CORPORATE";
 
+// Which product surface a reserved capability belongs to. The Sales Tools
+// dashboard (app/member/page.tsx) renders a "coming soon" launcher card
+// ONLY for features tagged 'sales_tools' -- a Research or PDF teaser flag
+// must never leak into that surface as a generic panel; it has its own
+// home (the pricing page's feature comparison, and its own route once
+// released).
+export type FeatureSurface = "sales_tools" | "research" | "pdf_export";
+
 export interface FeatureDefinition {
   key: FeatureKey;
   label: string;
   labelTh: string;
+  surface: FeatureSurface;
   /**
    * Global kill switch. While false, the feature resolves to `teaser` for
    * every audience regardless of `stateByAudience` below -- the launch
@@ -181,6 +190,18 @@ export interface FeatureDefinition {
   /** Whether using this feature should ever consume a usage-quota metric.
    *  false while unreleased (and while no metric has been decided for it). */
   consumesQuota: boolean;
+  /**
+   * Set to true ONLY once a concrete, non-invented access policy (a real
+   * numeric quota, province count, history window, or equivalent rule --
+   * not a placeholder) has been decided for every audience this feature's
+   * `stateByAudience` marks 'limited'. Stays false while that policy is
+   * still undecided (e.g. provincial_registration's Individual tier today
+   * -- see the "do not invent the Individual limit" product direction).
+   * assertFeatureCatalogIsReleaseSafe() below refuses to let `released`
+   * ever become true for a feature with an undefined 'limited' policy, so
+   * flipping the kill switch can never silently ship an invented number.
+   */
+  limitedAccessPolicyDefined: boolean;
 }
 
 export const FEATURES: Record<FeatureKey, FeatureDefinition> = {
@@ -188,6 +209,7 @@ export const FEATURES: Record<FeatureKey, FeatureDefinition> = {
     key: "provincial_registration",
     label: "Provincial Registration",
     labelTh: "ยอดจดทะเบียนรายจังหวัด",
+    surface: "sales_tools",
     released: false,
     // Intended future ladder (per product direction, 2026-09): Free sees a
     // locked teaser; Plus/Individual gets *some* real use once released,
@@ -205,6 +227,11 @@ export const FEATURES: Record<FeatureKey, FeatureDefinition> = {
     },
     countsTowardSalesModuleSelection: false,
     consumesQuota: false,
+    // Individual's "limited" scope for provincial data has not been
+    // commercially decided (no province count, request quota, or history
+    // window exists) -- never invent one, and never let `released` flip
+    // true until it's a real, concrete policy.
+    limitedAccessPolicyDefined: false,
   },
   // Both of these already have a real quota metric and TierPolicy fields
   // (researchAccess/researchFullMonthlyLimit, pdfMonthlyLimit/pdfWatermark)
@@ -213,24 +240,31 @@ export const FEATURES: Record<FeatureKey, FeatureDefinition> = {
   // this repo yet. `released: false` keeps app/api/research and
   // app/api/export/pdf returning 404 (hidden, not a working-but-fake
   // feature) and keeps them off the pricing page's live feature lists
-  // until a real implementation lands -- see the delivery report.
+  // until a real implementation lands -- see the delivery report. Neither
+  // ladder has a 'limited' tier, so limitedAccessPolicyDefined doesn't
+  // gate them, but it's set true here since it's vacuously satisfied
+  // (no 'limited' audience to define a policy for).
   research_reports: {
     key: "research_reports",
     label: "Research Reports",
     labelTh: "รายงานวิจัย",
+    surface: "research",
     released: false,
     stateByAudience: { FREE: "teaser", INDIVIDUAL: "full", PRO: "full", CORPORATE: "tailored" },
     countsTowardSalesModuleSelection: false,
     consumesQuota: true,
+    limitedAccessPolicyDefined: true,
   },
   pdf_export_reports: {
     key: "pdf_export_reports",
     label: "PDF Export",
     labelTh: "ส่งออก PDF",
+    surface: "pdf_export",
     released: false,
     stateByAudience: { FREE: "teaser", INDIVIDUAL: "full", PRO: "full", CORPORATE: "tailored" },
     countsTowardSalesModuleSelection: false,
     consumesQuota: true,
+    limitedAccessPolicyDefined: true,
   },
 };
 
@@ -239,6 +273,53 @@ export function resolveFeatureState(featureKey: FeatureKey, audience: FeatureAud
   if (!feature.released) return "teaser";
   return feature.stateByAudience[audience];
 }
+
+// The one place that decides "which reserved capabilities may a given
+// product surface show." app/member/page.tsx (Sales Tools) uses this to
+// make sure a Research/PDF teaser flag can never leak into it as a
+// generic panel -- see FeatureSurface above.
+export function featuresForSurface(surface: FeatureSurface): FeatureDefinition[] {
+  return Object.values(FEATURES).filter((feature) => feature.surface === surface);
+}
+
+// --- Launch guard: a feature can never ship `released: true` with an
+// undecided 'limited' policy -----------------------------------------
+//
+// This is the concrete backstop for "do not invent the Individual
+// numerical limit yet": someone could otherwise flip a single boolean
+// (`released: true`) on a feature whose ladder promises Individual a
+// 'limited' tier without ever having decided what "limited" means,
+// silently shipping an undefined (or worse, ad-hoc invented) policy.
+// releaseSafetyViolations() is exported so tests can exercise both the
+// passing and failing case against constructed fixtures (not just the
+// live catalog); the module-load-time assertion below is the actual
+// launch guard -- it throws immediately, in every environment (dev,
+// build, test, prod), if the live FEATURES catalog is ever misconfigured
+// this way.
+export function releaseSafetyViolations(
+  features: Record<FeatureKey, FeatureDefinition> = FEATURES,
+): string[] {
+  const violations: string[] = [];
+  for (const feature of Object.values(features)) {
+    if (!feature.released) continue;
+    const hasLimitedAudience = (Object.values(feature.stateByAudience) as FeatureState[]).includes("limited");
+    if (hasLimitedAudience && !feature.limitedAccessPolicyDefined) {
+      violations.push(
+        `${feature.key} is released with a 'limited' tier in its ladder but limitedAccessPolicyDefined is false -- define a concrete (non-invented) access policy before releasing`,
+      );
+    }
+  }
+  return violations;
+}
+
+function assertFeatureCatalogIsReleaseSafe(features: Record<FeatureKey, FeatureDefinition>): void {
+  const violations = releaseSafetyViolations(features);
+  if (violations.length > 0) {
+    throw new Error(`Feature catalog release-safety check failed:\n${violations.join("\n")}`);
+  }
+}
+
+assertFeatureCatalogIsReleaseSafe(FEATURES);
 
 // --- Tier resolution from raw tdr_entitlements rows -------------------
 

@@ -30,7 +30,23 @@ const MODULE_LABEL: Record<SalesModule, string> = {
 };
 
 type ModuleStatus = { tier: "FREE" | "INDIVIDUAL" | "PRO"; pickCount: number | null; selection: SalesModule[] | null };
-type FeatureInfo = { label: string; label_th: string; state: "unavailable" | "teaser" | "limited" | "full" | "tailored" };
+type FeatureLadderState = "unavailable" | "teaser" | "limited" | "full" | "tailored";
+type FeatureInfo = {
+  label: string;
+  label_th: string;
+  surface: "sales_tools" | "research" | "pdf_export";
+  released: boolean;
+  current_state: FeatureLadderState;
+  ladder: { FREE: FeatureLadderState; INDIVIDUAL: FeatureLadderState; PRO: FeatureLadderState; CORPORATE: FeatureLadderState };
+};
+
+const FEATURE_STATE_LABEL: Record<FeatureLadderState, string> = {
+  unavailable: "—",
+  teaser: "Teaser",
+  limited: "Limited (รายละเอียดยังไม่กำหนด)",
+  full: "Full",
+  tailored: "Tailored",
+};
 
 async function api(token: string, path: string) {
   const response = await fetch(path, { headers: { Authorization: `Bearer ${token}` }, cache: "no-store" });
@@ -264,15 +280,36 @@ export default function MemberDashboardPage() {
         <div className={styles.tableWrap}><table><thead><tr><th>แบรนด์</th><th>รุ่น</th><th>เดือนก่อน</th><th>เดือนนี้</th><th>Δ คัน</th><th>MoM</th></tr></thead><tbody>{movers.map((row) => <tr key={row.entity_key}><td>{row.brand_name}</td><td><b>{row.model_name}</b></td><td>{n(row.previous_registrations)}</td><td>{n(row.registrations)}</td><td className={Number(row.mom_delta) >= 0 ? styles.positive : styles.negative}>{Number(row.mom_delta) >= 0 ? "+" : ""}{n(row.mom_delta)}</td><td>{row.mom_pct == null ? "—" : `${Number(row.mom_pct) >= 0 ? "+" : ""}${pct(row.mom_pct)}`}</td></tr>)}</tbody></table></div>
       </section>
 
-      {Object.entries(features).map(([key, feature]) => feature.state === "teaser" ? (
-        <section className={styles.panel} key={key}>
-          <div className={styles.panelHead}>
-            <div><div className={styles.eyebrow}>SALES TOOLS · COMING SOON</div><h2>{feature.label_th}</h2></div>
-            <span className={styles.comingSoonBadge}>Coming soon</span>
-          </div>
-          <p className={styles.muted}>เครื่องมือนี้ยังอยู่ระหว่างพัฒนาชุดข้อมูล ยังไม่มีตัวเลขให้แสดงในตอนนี้ — จะเปิดใช้งานเมื่อชุดข้อมูลรายจังหวัดพร้อม</p>
-        </section>
-      ) : null)}
+      {/* Only Sales-Tools-surfaced reserved capabilities may appear here --
+          Research/PDF are unreleased too, but they belong on the pricing
+          page's feature comparison and their own future routes, never as a
+          generic "coming soon" panel on this dashboard. Today this is
+          exactly Provincial Registration; the filter (not a hardcoded key)
+          is what keeps that true if another Sales Tools capability is ever
+          reserved the same way. Each card is a deliberate tool
+          launcher -- a disabled button with no onClick at all, so nothing
+          here ever queries data or consumes quota -- and shows both
+          today's state and the full planned tier ladder, so it can
+          communicate where this is headed without pretending any of it is
+          live yet. */}
+      {Object.entries(features)
+        .filter(([, feature]) => feature.surface === "sales_tools" && !feature.released)
+        .map(([key, feature]) => (
+          <section className={styles.panel} key={key}>
+            <div className={styles.panelHead}>
+              <div><div className={styles.eyebrow}>SALES TOOLS · COMING SOON</div><h2>{feature.label_th}</h2></div>
+              <span className={styles.comingSoonBadge}>Coming soon</span>
+            </div>
+            <p className={styles.muted}>เครื่องมือนี้ยังอยู่ระหว่างพัฒนาชุดข้อมูล ไม่มีการดึงข้อมูลหรือใช้โควตาใดๆ จนกว่าจะเปิดใช้งานจริง</p>
+            <div className={styles.featureLadder}>
+              <div><span>Free</span><b>{FEATURE_STATE_LABEL[feature.ladder.FREE]}</b></div>
+              <div><span>Individual</span><b>{FEATURE_STATE_LABEL[feature.ladder.INDIVIDUAL]}</b></div>
+              <div><span>Pro</span><b>{FEATURE_STATE_LABEL[feature.ladder.PRO]}</b></div>
+              <div><span>Corporate</span><b>{FEATURE_STATE_LABEL[feature.ladder.CORPORATE]}</b></div>
+            </div>
+            <button type="button" disabled aria-disabled="true">เปิดใช้งานเมื่อพร้อม (Coming soon)</button>
+          </section>
+        ))}
 
       <p className={styles.footnote}>August coverage may be lower than prior months when only the classless pivot source is available. Ambiguous pickup nameplates stay raw instead of being forced into Cab/Double Cab.</p>
     </main>

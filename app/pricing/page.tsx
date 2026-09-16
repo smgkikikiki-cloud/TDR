@@ -27,6 +27,33 @@ function pdfCopy(liveCopy: string) {
   return PDF_LIVE ? liveCopy : "PDF export — เร็วๆ นี้ (อยู่ระหว่างพัฒนา)";
 }
 
+// Provincial Registration: same pattern -- reads the ladder from
+// lib/access-policy.ts's FEATURES registry rather than hardcoding tier
+// copy here, so this stays in sync automatically if the ladder or the
+// release flag ever changes. `released` is false today, so every tier
+// shows "(Coming Soon)"; the ladder LABEL still communicates where this
+// is headed (Free teaser / Individual limited / Pro full / Corporate
+// tailored) without pretending any of it is live. Individual's "limited"
+// deliberately has no number attached -- that policy isn't decided yet
+// (see FEATURES.provincial_registration.limitedAccessPolicyDefined and
+// releaseSafetyViolations(), which refuses to let this feature ship
+// released while that stays undefined).
+const PROVINCIAL_LIVE = FEATURES.provincial_registration.released;
+const PROVINCIAL_LADDER = FEATURES.provincial_registration.stateByAudience;
+const PROVINCIAL_STATE_LABEL: Record<string, string> = {
+  unavailable: "—",
+  teaser: "Teaser",
+  limited: "Limited (รายละเอียดยังไม่กำหนด)",
+  full: "Full",
+  tailored: "Tailored",
+};
+function provincialCopy(audience: keyof typeof PROVINCIAL_LADDER) {
+  const label = PROVINCIAL_STATE_LABEL[PROVINCIAL_LADDER[audience]];
+  return PROVINCIAL_LIVE
+    ? `Provincial Registration — ${label}`
+    : `Provincial Registration — ${label} (Coming Soon)`;
+}
+
 // Corporate contact is configuration-driven, never a guessed address.
 // Set NEXT_PUBLIC_TDR_CORPORATE_CONTACT_URL (a mailto: link or a contact
 // page URL) to enable the CTA; until it's set the button fails visibly
@@ -57,6 +84,7 @@ export default function PricingPage() {
             <li>✓ ประวัติข้อมูล — ปีปฏิทินปัจจุบัน</li>
             <li>{RESEARCH_LIVE ? "✓" : "○"} {researchCopy("Research — preview เท่านั้น")}</li>
             <li>{PDF_LIVE ? "✓" : "○"} {pdfCopy("PDF export — 1 ครั้ง/เดือน (มีลายน้ำ TDR Free)")}</li>
+            <li>{PROVINCIAL_LIVE ? "✓" : "○"} {provincialCopy("FREE")}</li>
             <li>— ไม่มี API, ไม่มี CSV/XLSX/raw export</li>
           </ul>
           <Link className={`${styles.cta} ${styles.ctaGhost}`} href="/member/login">เริ่มใช้ฟรี</Link>
@@ -73,6 +101,7 @@ export default function PricingPage() {
             <li>✓ ประวัติข้อมูล — ย้อนหลัง 24 เดือน</li>
             <li>{RESEARCH_LIVE ? "✓" : "○"} {researchCopy("Research ฉบับเต็ม — 3 ชิ้น/เดือน")}</li>
             <li>{PDF_LIVE ? "✓" : "○"} {pdfCopy("PDF export — 10 ครั้ง/เดือน")}</li>
+            <li>{PROVINCIAL_LIVE ? "✓" : "○"} {provincialCopy("INDIVIDUAL")}</li>
             <li>— ไม่มี API, ไม่มี CSV/XLSX/raw export</li>
           </ul>
           <Link className={styles.cta} href="/member/billing">สมัคร Individual</Link>
@@ -88,6 +117,7 @@ export default function PricingPage() {
             <li>✓ ประวัติข้อมูล — เต็มรูปแบบเท่าที่มี</li>
             <li>{RESEARCH_LIVE ? "✓" : "○"} {researchCopy("Research ฉบับเต็ม — ไม่จำกัด")}</li>
             <li>{PDF_LIVE ? "✓" : "○"} {pdfCopy("PDF export — ไม่จำกัด")}</li>
+            <li>{PROVINCIAL_LIVE ? "✓" : "○"} {provincialCopy("PRO")}</li>
             <li>— ไม่มี API สำหรับดึงข้อมูลดิบ (สงวนไว้สำหรับ Corporate)</li>
           </ul>
           <Link className={styles.cta} href="/member/billing">สมัคร Pro</Link>
@@ -104,6 +134,7 @@ export default function PricingPage() {
             <li>· Workflow ที่ปรับให้เข้ากับทีมคุณ</li>
             <li>· API/data integration แบบมีขอบเขต (ไม่ใช่ raw data ทั้งชุด)</li>
             <li>· Research support และรายงานที่ปรับแต่งได้</li>
+            <li>· {provincialCopy("CORPORATE")}</li>
           </ul>
         </div>
         {CORPORATE_CONTACT_URL ? (
