@@ -1,0 +1,78 @@
+name: Official media target audit
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/official-media-target-audit.yml"
+      - "automotive/vehicle_master/tools/media_target_audit.py"
+      - "automotive/vehicle_master/tests/test_media_target_audit.py"
+      - "automotive/vehicle_master/tdr_bridge/**"
+      - "automotive/vehicle_master/vehreg/**"
+      - "automotive/vehicle_master/integration_data/**"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/official-media-target-audit.yml"
+      - "automotive/vehicle_master/tools/media_target_audit.py"
+      - "automotive/vehicle_master/tests/test_media_target_audit.py"
+      - "automotive/vehicle_master/tdr_bridge/**"
+      - "automotive/vehicle_master/vehreg/**"
+      - "automotive/vehicle_master/integration_data/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: automotive/vehicle_master
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: automotive/vehicle_master/requirements.txt
+
+      - run: python -m pip install -r requirements.txt pytest
+
+      - name: Test target classification
+        run: python -m pytest -q tests/test_media_target_audit.py tests/test_trim_reconciliation.py tests/test_source_dispositions.py
+
+      - name: Build enriched serving release
+        run: |
+          python -m tdr_bridge.release_enriched \
+            --inventory integration_data/tdr_2026-09-09.json \
+            --overrides integration_data/crosswalk_overrides.json \
+            --out /tmp/vehicle-release.json \
+            --revision "${GITHUB_SHA}" --as-of "$(date -u +%F)"
+
+      - name: Derive media eligibility from serving semantics
+        run: |
+          python tools/media_target_audit.py \
+            --release /tmp/vehicle-release.json \
+            --out /tmp/media-target-audit.json \
+            --targets-out /tmp/media-target-current.txt
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report = json.loads(Path('/tmp/media-target-audit.json').read_text())
+          print('media target counts:', json.dumps(report['counts'], sort_keys=True))
+          print('brands:', json.dumps(report['brand_counts'], sort_keys=True))
+          PY
+
+      - name: Preserve target audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: official-media-target-audit-${{ github.sha }}
+          path: |
+            /tmp/vehicle-release.json
+            /tmp/media-target-audit.json
+            /tmp/media-target-current.txt
+          if-no-files-found: error
+          retention-days: 14
