@@ -13,12 +13,50 @@ if str(ROOT) not in sys.path:
 # extensions without executing its CLI main block.
 import ingest_official_media_scale  # noqa: F401,E402
 
-from vehreg.official_media.adapters import MODEL_ASSET_HINTS, MODEL_PAGE_HINTS  # noqa: E402
+from vehreg.official_media.adapters import (  # noqa: E402
+    MODEL_ASSET_HINTS,
+    MODEL_PAGE_HINTS,
+    SOURCES,
+)
+from vehreg.official_media.models import OfficialSource  # noqa: E402
 
-# This follow-up list is downstream of the serving-release lifecycle audit. It
-# must only contain Generation IDs classified TARGET_CURRENT; OEM pages below
-# are media provenance, never evidence that changes lifecycle.
+# Follow-up sources are deliberately Thai-market first-party sites. Lifecycle is
+# still decided upstream by the serving-release audit; these adapters only find
+# media for identities already classified TARGET_CURRENT.
+SOURCES.update({
+    "aion": OfficialSource(
+        brand_id="aion",
+        seed_urls=("https://www.gacgroup.com/th-th",),
+        allowed_hosts=("gacgroup.com",),
+    ),
+    "tesla": OfficialSource(
+        brand_id="tesla",
+        seed_urls=("https://www.tesla.com/en_th/",),
+        allowed_hosts=("tesla.com",),
+    ),
+    "xpeng": OfficialSource(
+        brand_id="xpeng",
+        seed_urls=("https://www.xpeng.com/th/g6",),
+        allowed_hosts=("xpeng.com",),
+    ),
+    "zeekr": OfficialSource(
+        brand_id="zeekr",
+        seed_urls=("https://www.zeekrlife.com/th-th/",),
+        allowed_hosts=("zeekrlife.com",),
+    ),
+})
+
 MODEL_PAGE_HINTS.update({
+    "aion.aion_y_plus.ayp": ("https://www.gacgroup.com/th-th/suv/aion-y-plus",),
+    "aion.hyptec_ht.gen1": ("https://www.gacgroup.com/th-th/suv/hyptec-ht",),
+    "tesla.model3.m3h": ("https://www.tesla.com/en_th/model3",),
+    "tesla.modely.my": ("https://www.tesla.com/en_th/modely",),
+    "xpeng.xpeng_g6.g6": ("https://www.xpeng.com/th/g6",),
+    "zeekr.zeekr_009.z009": ("https://www.zeekrlife.com/en-th/models/009",),
+    "zeekr.zeekr_x.zx": ("https://www.zeekrlife.com/th-th/models/x",),
+
+    # Previously verified current-model provenance remains reproducible even
+    # when those identities are not part of the active follow-up target file.
     "toyota.fortuner.an160": (
         "https://www.toyota.co.th/model/fortuner_leader",
         "https://www.toyota.co.th/model/fortuner_legender",
@@ -26,18 +64,13 @@ MODEL_PAGE_HINTS.update({
     "toyota.hilux_revo_double_cab.an120": (
         "https://www.toyota.co.th/model/hilux_revo_zedition",
     ),
-    # Toyota serves Alphard and Vellfire as one official product-family page.
-    # Do not add a direct asset hint unless the candidate itself carries
-    # Vellfire identity evidence.
     "toyota.vellfire.gen1": ("https://www.toyota.co.th/model/alphard",),
-    # Use GWM's current server-rendered Thailand route. The older www1 route is
-    # a JavaScript shell on cloud runners and exposes no media candidates.
     "gwm.haval_jolion.jol": ("https://www.gwm.co.th/HAVAL_JOLION.html",),
 })
 
 # Exact first-party assets are used only where the OEM page does not expose the
-# same media reliably to cloud runners. They remain tied to the current official
-# product page above and still pass scoring, content hashing and deduplication.
+# same media reliably to cloud runners. They remain tied to an official product
+# page and still pass scoring, content hashing and deduplication.
 MODEL_ASSET_HINTS.update({
     "gwm.haval_jolion.jol": ((
         "https://www.gwm.co.th/content/dam/gwm/pages/th/en/model/haval-jolion/360/new-sport/white-2.webp",
