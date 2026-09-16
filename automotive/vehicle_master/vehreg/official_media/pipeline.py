@@ -18,7 +18,13 @@ from .models import ImageCandidate, ImageSlot, MediaAsset, ReviewStatus, Vehicle
 from .parsing import parse_page, source_type_for
 from .scoring import link_score, score_candidate
 
-USER_AGENT = "TDR-Official-Media/1.0 (+vehicle research; official sources only)"
+# Some OEM CDNs return an empty application shell to non-browser user agents.
+# Keep a normal browser signature while retaining the TDR identifier.
+USER_AGENT = (
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0 Safari/537.36 "
+    "TDR-Official-Media/1.0"
+)
 _NON_PAGE_SUFFIXES = {
     ".pdf", ".jpg", ".jpeg", ".png", ".webp", ".avif", ".svg", ".gif",
     ".zip", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".mp4",
@@ -38,7 +44,11 @@ def _crawlable_page(url: str) -> bool:
 
 
 def fetch_bytes(url: str, timeout: int = 20) -> tuple[bytes, str]:
-    request = Request(_safe_url(url), headers={"User-Agent": USER_AGENT, "Accept": "text/html,image/*,*/*;q=0.8"})
+    request = Request(_safe_url(url), headers={
+        "User-Agent": USER_AGENT,
+        "Accept": "text/html,application/xhtml+xml,image/avif,image/webp,image/*,*/*;q=0.8",
+        "Accept-Language": "th-TH,th;q=0.9,en;q=0.8",
+    })
     with urlopen(request, timeout=timeout) as response:
         return response.read(), response.headers.get("Content-Type", "")
 
