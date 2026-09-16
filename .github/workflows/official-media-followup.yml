@@ -89,6 +89,7 @@ jobs:
           PY
 
       - name: Preserve follow-up evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: official-media-followup-${{ github.sha }}
