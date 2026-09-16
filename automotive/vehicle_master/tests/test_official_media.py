@@ -146,3 +146,45 @@ def test_unknown_extensionless_host_is_not_treated_as_image():
         SourceType.OFFICIAL_SITE,
     )
     assert images == []
+
+
+def test_mg_format_proxy_is_unwrapped_before_urljoin_and_promoted_to_exterior():
+    source = SOURCES["mg"]
+    identity = VehicleIdentity(
+        brand_id="mg",
+        model_id="mg.mg_hs",
+        generation_id="mg.mg_hs.hsg",
+        model_name="MG HS",
+        generation_code="HSG",
+        model_year=2026,
+    )
+    html = '''<title>MG HS ราคา สเปค โปรโมชัน</title>
+    <img src="format=webp/static/car-banner/mghs/mghs-bg-dt.png" alt="MG HS" width="2000" height="1000">
+    <img src="format=webp/https:/mg-upload.sgp1.cdn.digitaloceanspaces.com/mg-hs.png" alt="MG HS">'''
+    images, _, _ = parse_page(html, "https://www.mgcars.com/th/cars/mg-hs", SourceType.OFFICIAL_SITE)
+    urls = {item.image_url for item in images}
+    assert "https://www.mgcars.com/static/car-banner/mghs/mghs-bg-dt.png" in urls
+    assert "https://mg-upload.sgp1.cdn.digitaloceanspaces.com/mg-hs.png" in urls
+    banner = next(item for item in images if "/static/car-banner/" in item.image_url)
+    candidate = score_candidate(banner, identity, source)
+    assert candidate.slot is ImageSlot.FRONT_3Q
+    assert candidate.status is ReviewStatus.APPROVED
+
+
+def test_gwm_360_colour_render_is_promoted_to_exterior():
+    source = SOURCES["gwm"]
+    identity = VehicleIdentity(
+        brand_id="gwm",
+        model_id="gwm.wey_g9",
+        generation_id="gwm.wey_g9.wey_g9",
+        model_name="WEY G9",
+        generation_code="WEY G9",
+        model_year=2026,
+    )
+    html = '''<title>GWM Thailand - WEY G9</title>
+    <img src="/content/dam/gwm/pages/th/en/model/wey-g9/360/aurora-white.png" alt="WEY G9">'''
+    images, _, _ = parse_page(html, "https://www.gwm.co.th/en/models/wey-g9", SourceType.OFFICIAL_SITE)
+    candidate = score_candidate(images[0], identity, source)
+    assert candidate.identity_evidence
+    assert candidate.slot is ImageSlot.FRONT_3Q
+    assert candidate.status is ReviewStatus.APPROVED
