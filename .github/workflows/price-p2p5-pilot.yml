@@ -1,0 +1,85 @@
+name: Price P2-P5 pilot
+
+on:
+  push:
+    branches:
+      - pilot/price-p2p5-backfill
+    paths:
+      - .github/workflows/price-p2p5-pilot.yml
+      - automotive/vehicle_master/vehreg/**
+      - automotive/vehicle_master/tools/price*.py
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pilot:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: automotive/vehicle_master
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: automotive/vehicle_master/requirements.txt
+      - run: python -m pip install -r requirements.txt
+
+      - name: P2-P4 fetch, extract, and canonical trim match
+        run: |
+          mkdir -p /tmp/price-pilot/snapshots
+          python tools/pricefetch_targets.py \
+            --target honda_th_crv \
+            --target toyota_th_corolla_cross \
+            --extract-prices \
+            --match-trims \
+            --out /tmp/price-pilot/fetch.json \
+            --state-out /tmp/price-pilot/fetch-state.json \
+            --snapshot-dir /tmp/price-pilot/snapshots \
+            | tee /tmp/price-pilot/fetch-summary.json
+
+      - name: P5 reconcile without canonical writes
+        run: |
+          python tools/price_reconcile_batch.py \
+            --in /tmp/price-pilot/fetch.json \
+            --candidate-state-out /tmp/price-pilot/candidates.json \
+            --out /tmp/price-pilot/reconcile.json \
+            | tee /tmp/price-pilot/reconcile-summary.json
+
+      - name: Build human review queue
+        run: |
+          python tools/price_review_queue.py \
+            --candidate-state /tmp/price-pilot/candidates.json \
+            --reconcile /tmp/price-pilot/reconcile.json \
+            --fetch /tmp/price-pilot/fetch.json \
+            --out /tmp/price-pilot/review-queue.json \
+            > /tmp/price-pilot/review-queue-stdout.json
+
+      - name: Summarize pilot
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root = Path('/tmp/price-pilot')
+          fetch = json.loads((root/'fetch.json').read_text())
+          rec = json.loads((root/'reconcile.json').read_text())
+          review = json.loads((root/'review-queue.json').read_text())
+          print(json.dumps({
+              'source_batch_id': fetch.get('source_batch_id'),
+              'match_counts': fetch.get('match_counts'),
+              'claims': sum(len(r.get('claims') or []) for r in fetch.get('results') or []),
+              'reconcile_summary': rec.get('summary'),
+              'promotion_reviews': len(review.get('promotion_reviews') or []),
+              'binding_reviews': len(review.get('binding_reviews') or []),
+          }, ensure_ascii=False, indent=2))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: price-p2p5-pilot
+          path: /tmp/price-pilot
+          if-no-files-found: error
+          retention-days: 7
