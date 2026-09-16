@@ -2,9 +2,10 @@
 
 The base ReleaseBuilder remains the owner of analytical catalog identity,
 price/spec facts and TDR crosswalks. Dedicated retail MarketTrim identity is
-merged from ``market/trims/canonical.json`` before lifecycle is evaluated. The
-resulting retail set, lifecycle state, historical registration projection and
-reconciliation report are all part of the immutable release hash.
+merged from the base owner-directory overlay and later verified fragments before
+lifecycle is evaluated. The resulting retail set, lifecycle state, historical
+registration projection and reconciliation report are all part of the immutable
+release hash.
 """
 from __future__ import annotations
 
@@ -15,13 +16,14 @@ import json
 from pathlib import Path
 
 from vehreg.catalog import DATA_DIR, DEFAULT_YEAR
-from vehreg.trim_reconciliation import (
-    apply_canonical_trim_overlay,
-    release_reconciliation_report,
-)
+from vehreg.trim_reconciliation import apply_canonical_trim_overlay
 from tdr_bridge.historical_state import build_historical_model_state
 from tdr_bridge.lifecycle import apply_retail_lifecycle
 from tdr_bridge.release import ReleaseBuilder
+from tdr_bridge.trim_fragments import (
+    apply_verified_trim_fragments,
+    release_reconciliation_report_with_overrides,
+)
 
 SEMANTIC_KEYS = (
     "schema_version",
@@ -48,13 +50,14 @@ def enrich_release(
     year = int(release.get("year") or DEFAULT_YEAR)
 
     # Retail MarketTrim is intentionally a separate authoring grain from the
-    # analytical registration Variant catalog. Merge the dedicated canonical
-    # retail store first so lifecycle and reconciliation operate on the exact
-    # payload that will be published.
+    # analytical registration Variant catalog. The first source-backed batch is
+    # followed by small append-only verified batches so retail research never
+    # has to churn analytical model files or rewrite one giant canonical file.
     out = apply_canonical_trim_overlay(release, data_dir=data_dir, year=year)
+    out = apply_verified_trim_fragments(out, data_dir=data_dir, year=year)
 
     # Canonical identity and "orderable today" are separate claims. Lifecycle
-    # remains fail-closed after the overlay is present.
+    # remains fail-closed after every retail identity batch is present.
     out = apply_retail_lifecycle(out, data_dir=data_dir, year=year)
     out["historical_model_state"] = build_historical_model_state(
         data_dir=data_dir,
@@ -62,9 +65,10 @@ def enrich_release(
     )
 
     # Every source row must either be represented by a canonical source-backed
-    # MarketTrim or remain explicitly unresolved/non-market/historical. Partial
-    # silent loss blocks publication just like total silent loss.
-    out["trim_reconciliation"] = release_reconciliation_report(
+    # MarketTrim or remain explicitly unresolved/non-market/historical. Later
+    # evidence may supersede a model's reconciliation disposition, but cannot
+    # silently erase the original source-row accounting.
+    out["trim_reconciliation"] = release_reconciliation_report_with_overrides(
         out, data_dir=data_dir, year=year,
     )
     blockers = out["trim_reconciliation"].get("blockers", [])
