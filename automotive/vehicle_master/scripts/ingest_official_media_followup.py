@@ -35,10 +35,14 @@ MODEL_PAGE_HINTS.update({
     "gwm.haval_jolion.jol": ("https://www.gwm.co.th/HAVAL_JOLION.html",),
 })
 
-# Previously verified current-model direct assets remain available to reproduce
-# their Git-backed provenance, but are not part of this batch unless listed in
-# official_media_followup_2026.txt.
+# Exact first-party assets are used only where the OEM page does not expose the
+# same media reliably to cloud runners. They remain tied to the current official
+# product page above and still pass scoring, content hashing and deduplication.
 MODEL_ASSET_HINTS.update({
+    "gwm.haval_jolion.jol": ((
+        "https://www.gwm.co.th/content/dam/gwm/pages/th/en/model/haval-jolion/360/new-sport/white-2.webp",
+        "GWM HAVAL JOLION NEW SPORT official exterior hero",
+    ),),
     "mg.mg_extender_cab.ext": ((
         "https://mg-upload.sgp1.cdn.digitaloceanspaces.com/a6b2f36e856e4c8c35a773a8e0a38068.png",
         "MG Extender Giant Cab official exterior hero",
