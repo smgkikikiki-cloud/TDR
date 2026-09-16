@@ -74,14 +74,22 @@ export default async function ComparePage({ searchParams }: { searchParams: Prom
           <thead>
             <tr>
               <th>หัวข้อ</th>
-              {selected.map((trim) => (
-                <th key={trim.id}>
-                  <small>{trim.brand_name}</small>
-                  <strong>{trim.model_name}</strong>
-                  <span>{trim.name}</span>
-                  {trim.model_slug ? <Link href={`/models/${trim.model_slug}`}>ดูหน้ารุ่น →</Link> : null}
-                </th>
-              ))}
+              {selected.map((trim) => {
+                const imageUrl = (trim as any).image_url as string | null | undefined;
+                return (
+                  <th key={trim.id}>
+                    <div className={imageUrl ? "compareCarShot" : "compareCarShot empty"}>
+                      {imageUrl
+                        ? <img src={imageUrl} alt={`${trim.brand_name || ""} ${trim.model_name || ""}`.trim()} />
+                        : <span>{trim.model_name || "TDR"}</span>}
+                    </div>
+                    <small>{trim.brand_name}</small>
+                    <strong>{trim.model_name}</strong>
+                    <span>{trim.name}</span>
+                    {trim.model_slug ? <Link href={`/models/${trim.model_slug}`}>ดูหน้ารุ่น →</Link> : null}
+                  </th>
+                );
+              })}
             </tr>
           </thead>
           <tbody>
