@@ -9,6 +9,7 @@ on:
       - "automotive/vehicle_master/scripts/ingest_official_media_scale.py"
       - "automotive/vehicle_master/scripts/ingest_official_media.py"
       - "automotive/vehicle_master/vehreg/official_media/**"
+      - "automotive/vehicle_master/tests/test_official_media.py"
       - "scripts/publish-official-media.ts"
   workflow_dispatch:
 
@@ -27,6 +28,7 @@ jobs:
       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
       SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      VERCEL_PREVIEW_URL: https://tdr-git-feat-official-media-scale-100-kiki-ed8b.vercel.app
     steps:
       - uses: actions/checkout@v4
 
@@ -140,3 +142,30 @@ jobs:
 
       - name: Publish approved scale assets and metadata
         run: npm run media:publish -- --year 2026
+
+      - name: Verify published media renders on Vercel preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          html=/tmp/vercel-models.html
+          ok=0
+          for attempt in $(seq 1 12); do
+            if curl -fsSL --max-time 30 "${VERCEL_PREVIEW_URL}/models?media-smoke=${GITHUB_SHA}" -o "$html"; then
+              refs=$(grep -o 'vehicle-media' "$html" | wc -l | tr -d ' ')
+              echo "Vercel /models vehicle-media refs: ${refs} (attempt ${attempt})"
+              if [ "$refs" -ge 35 ]; then
+                ok=1
+                break
+              fi
+            fi
+            sleep 10
+          done
+          if [ "$ok" -ne 1 ]; then
+            echo "::error::Vercel /models did not render at least 35 canonical vehicle-media references"
+            exit 1
+          fi
+          if ! grep -q 'vehicle-media/toyota/toyota/bz4x/ea10/' "$html"; then
+            echo "::error::Vercel catalogue did not render the newly ingested Toyota bZ4X media"
+            exit 1
+          fi
+          echo "Vercel media smoke passed: live catalogue is reading the published Supabase media."
