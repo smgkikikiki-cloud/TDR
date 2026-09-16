@@ -21,36 +21,24 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Probe BMW Thailand pages with crawler transport
+      - name: Probe BMW COSY assets with crawler transport
         working-directory: automotive/vehicle_master
+        env:
+          BMW_X1_COSY: "https://prod.cosy.bmw.cloud/bmwweb/cosySec?COSY-EU-100-7331c9Nv2Z7d5yKlHS9amvhz25GaRhj5sgXAOHCrmg0VoWNekx%25AkbH8OjnWzO1VJ00KEcw2FD4fX7IvyL3hwlvP5lk9rb1fNwf5dIlXvQFvVDD92YIxZU2hilpRBqSrxl5jAvmZ7dgMy8fRUQ8J2jD5lk1tcDVXOyzoVBDFhSaP059C3svlb4x8NF1HGhFUFlFNuou%25KXKM7HSfWQWly%25V1PaXlsfNEbnQVh10s9OaZQE4riInRdscZwBO5xrxRteJOGZ857Mu1vRUgChSU75GvloVmPgp2XHNaXv6jQ%25gZp2YDafvY8jmqn12mRDyLOEjZlqTJIsDxgL3uBrqKcJdSeZL0JuzVMRJ4XSkNh5EkTVA0ogsUkNF4HvrDx0Kc%252Z9%254WxfjRiTcP81D50zxbUEqY2A89GsLm7sUiprJyC4Gw6ZuTy5ptYRS3OM67m5VdKIYCygNOu9mlTv0IiiyX324B1TTQdjce0s3azDxMFcdnkq8kmzzOALUA6%25kIFJGFtrABKupK%25GFeWS6WFtKMPVYPb0WhbNmbMtPo90y%255wbHi4TfuO9%25wc31HFiftxdE%25Cw178zsfqtECBCmtOWN%25PduaWhcX826njl6JmADGbH8cLV04MOhFUbXK7="
+          BMW_X3_COSY: "https://prod.cosy.bmw.cloud/bmwweb/cosySec?COSY-EU-100-7331c9Nv2Z7d5yKlHS9amvhz25GaRhj5sgXAOHCrmg0VoWNekx%25AkbH8OjnWzO1VJ00KEcw2FD4fX7IvyL3hwlvP5lk9rb1fNwf5dIlXvQFvVrD92YIxZU2hilpRBqSrxl5jAvmZ7dgMy8rRUQ8J2jD5lk1tcDVXOyzoVBDFhSaP059C3svlb4x8NF1HGhFUFlFmIou%25KXKM7HSfWQlCE%25V1PaXSMfNEbnQrX10s9OaZ9E4riInR2scZwBL%255rxRteJxwZ857Mu8IRUgChSrP5GvloVORgp2XHNaDv6jQ%250nP2YDafvuLjmqn12HaDyLOEjgKqTJIsDvyL3uBrq3CJdSeZLgbuzVMRJvnSkNh5uyVVA0ogS6qNF4HvVYA0Kc%252Ni64Wxfj03scP81D4RnxbUEqc6x89GsLxYMUiprJ899Gw6ZuUAGptYRSDtb67m5VqztYCygNLc3mlTv0JnPyX324uOeTQdjcSmw3azDxK9Qdnkq8WeqzOALUPMykIFJGbPSABKup91ZFeWS6ilEKMPVY1wOWhbNmEpOPo90ysIIbHi4TrD99%25wc3ZyLiftxdRUVw178z5XdtECUkgX37slGAl9CCrXpFXPDlZQ6KQhSXRaYWaDKQ5nmPnQhagOybOiGnvIT9IBdO2B3iBvoIjedwq4hBDMztLjQeqhk7JDHMLoACuqGhJHFlSLtou%255%25ioZO3qICmsO2k1F8brUfbYiQGWBDFk6TdzvZ2aKB1s3="
+          BMW_330E_COSY: "https://prod.cosy.bmw.cloud/bmwweb/cosySec?COSY-EU-100-7331c9Nv2Z7d5yKlHS9amvhz25GaRhj5sgXAOHCrmg0VoWNekx%25AkbH8OjnWzO1VJ00KEcw2FD4fX7IvyL3hwlvP5lk9rb1fNwf5dIlXvQFvA8BX2YIxZU2hilpRBqSrxl5jAvmZ7dgMyDWRUQ8J2jD5lk1tcDVXOyzoVBDFhSaP059C3svlb4x8NF1HGhFURH9hrnTDO7YEnvIT9TqCO2B3i3UzIjedwdKiBDMztiljeqhk7wDiMLoACt%25whJHFl7f6ou%25KXC1ZHSfWQvC0%25V1Pa2MsfNEbnjNP10s9OD0QE4riIqtRscZwBL7zrxRtes2yZ857Mr1TRUgChZE85GvloRG4gp2XH5psv6jQ%25gEt2YDafv8jjmqn124RDyLOEjcmqTJIsDbgL3uBrq9PJdSeZLpouzVMRJuYSkNh5ucQVA0ogSkwNF4HvVmB0Kc%252Ny04Wxfj0UucP81D5PAxbUEqgmP89GsLvS6UiprJ2CrGw6ZujlAptYRSDUR67m5VqGoYCygNLpbmlTv0JwfyX324APlTQdjcFIj3azDxKBYdnkq8WerzOALUPRXkIFJGb5gABKup9bVFeWS6iERKMPVYwXsWhbNmtipPo90ys6IbHi4TrY99%25wc3ZkMiftxdRMMw178z5JttECUkgp07slGAvakCrXpFXillZQ6KQbqXRaYWaoVQ5nmPnK4agOybOLPnvIT9InHO2B3iBezIjedwe2HBDMztMN%25eqhk7h0tMLoACu8%25hJPR9Y7vmZ7dlBywHS9P3AKWL2Jei1RlP="
         run: |
           python - <<'PY'
-          from urllib.error import HTTPError, URLError
+          import hashlib, os
           from vehreg.official_media.pipeline import fetch_bytes
-          from vehreg.official_media.parsing import parse_page
-          from vehreg.official_media.models import SourceType
 
-          urls = [
-              "https://www.bmw.co.th/en/all-models.html",
-              "https://www.bmw.co.th/en/all-models/x-series/x1/bmw-x1.html",
-              "https://www.bmw.co.th/en/all-models/x-series/x3/bmw-x3.html",
-              "https://www.bmw.co.th/en/all-models/3-series/bmw-3-series-sedan/bmw-3-series-sedan.html",
-          ]
-          for url in urls:
-              print(f"\n=== {url} ===")
+          for label, key in (("X1", "BMW_X1_COSY"), ("X3", "BMW_X3_COSY"), ("330e", "BMW_330E_COSY")):
+              url = os.environ[key]
+              print(f"\n=== {label} COSY ===")
               try:
                   body, ctype = fetch_bytes(url, timeout=25)
-                  print(f"bytes={len(body)} content_type={ctype!r}")
-                  text = body.decode("utf-8", errors="replace")
-                  print(f"head={text[:240]!r}")
-                  images, links, title = parse_page(text, url, SourceType.OFFICIAL_SITE)
-                  print(f"title={title!r} images={len(images)} links={len(links)}")
-                  for item in images[:8]:
-                      print(f"image url={item.image_url!r} alt={item.alt!r} width={item.width} height={item.height} og={item.is_og_image}")
-                  for link in links[:8]:
-                      print(f"link={link!r}")
-              except HTTPError as exc:
-                  print(f"HTTPError status={exc.code} reason={exc.reason!r} headers={dict(exc.headers)!r}")
+                  print(f"bytes={len(body)} content_type={ctype!r} sha256={hashlib.sha256(body).hexdigest()}")
+                  print(f"magic={body[:16]!r}")
               except Exception as exc:
                   print(f"ERROR {type(exc).__name__}: {exc}")
           PY
