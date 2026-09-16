@@ -1,0 +1,142 @@
+name: Official media scale 103
+
+on:
+  push:
+    branches: [feat/official-media-scale-100]
+    paths:
+      - ".github/workflows/official-media-scale.yml"
+      - "automotive/vehicle_master/config/official_media_targets_2026.txt"
+      - "automotive/vehicle_master/scripts/ingest_official_media_scale.py"
+      - "automotive/vehicle_master/scripts/ingest_official_media.py"
+      - "automotive/vehicle_master/vehreg/official_media/**"
+      - "scripts/publish-official-media.ts"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: official-media-scale-103
+  cancel-in-progress: true
+
+jobs:
+  scale-103:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: automotive/vehicle_master/requirements.txt
+
+      - name: Install Python dependencies
+        working-directory: automotive/vehicle_master
+        run: python -m pip install -r requirements.txt pytest
+
+      - name: Run official-media unit tests
+        working-directory: automotive/vehicle_master
+        run: python -m pytest -q tests/test_official_media.py
+
+      - name: Validate scale target set
+        working-directory: automotive/vehicle_master
+        shell: bash
+        run: |
+          test "$(grep -cv '^\s*$' config/official_media_targets_2026.txt)" -eq 103
+          test "$(sort config/official_media_targets_2026.txt | uniq | wc -l)" -eq 103
+
+      - name: Crawl 103 active canonical visual identities
+        working-directory: automotive/vehicle_master
+        shell: bash
+        run: |
+          mapfile -t VEHICLE_IDS < config/official_media_targets_2026.txt
+          python scripts/ingest_official_media_scale.py \
+            --year 2026 \
+            --max-pages 5 \
+            --workers 10 \
+            --vehicle-ids "${VEHICLE_IDS[@]}"
+
+      - name: Summarize scale coverage
+        working-directory: automotive/vehicle_master
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from collections import defaultdict
+          from pathlib import Path
+
+          path = Path("integration_data/official_media/run_summary_2026.jsonl")
+          rows = [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
+          if len(rows) != 103:
+              raise SystemExit(f"expected 103 identities, got {len(rows)}")
+
+          grouped = defaultdict(lambda: {"models": 0, "covered": 0, "approved": 0, "assets": 0, "review": 0})
+          for row in rows:
+              item = grouped[row["brand"]]
+              item["models"] += 1
+              item["covered"] += row["assets"] > 0
+              item["approved"] += row.get("approved", 0) > 0
+              item["assets"] += row["assets"]
+              item["review"] += row["review"]
+
+          covered = sum(row["assets"] > 0 for row in rows)
+          approved = sum(row.get("approved", 0) > 0 for row in rows)
+          assets = sum(row["assets"] for row in rows)
+          reviews = sum(row["review"] for row in rows)
+
+          out = Path("/tmp/media-scale-summary.md")
+          with out.open("w") as fh:
+              fh.write("# Official media scale run\n\n")
+              fh.write(f"103 identities attempted. {covered}/103 produced assets; {approved}/103 produced at least one auto-approved asset. {assets} assets cached; {reviews} review flags.\n\n")
+              fh.write("| Brand | Target | Covered | Approved | Assets | Review |\n|---|---:|---:|---:|---:|---:|\n")
+              for brand in sorted(grouped):
+                  item = grouped[brand]
+                  fh.write(f"| {brand} | {item['models']} | {item['covered']} | {item['approved']} | {item['assets']} | {item['review']} |\n")
+              fh.write("\n## Missing approval\n\n")
+              for row in rows:
+                  if not row.get("approved", 0):
+                      fh.write(f"- `{row['vehicle_id']}` — {row['model']} ({row['assets']} assets, {row['review']} review)\n")
+          print(out.read_text())
+          PY
+          cat /tmp/media-scale-summary.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Preserve crawl evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: official-media-scale-${{ github.sha }}
+          path: |
+            automotive/vehicle_master/integration_data/official_media
+            automotive/vehicle_master/data/media/cache
+            /tmp/media-scale-summary.md
+          if-no-files-found: error
+          retention-days: 7
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Preflight publish credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${SUPABASE_URL}" ]; then
+            echo "::error::SUPABASE_URL is not configured in Actions secrets"
+            exit 1
+          fi
+          if [ -z "${SUPABASE_SECRET_KEY}" ] && [ -z "${SUPABASE_SERVICE_ROLE_KEY}" ]; then
+            echo "::error::SUPABASE_SECRET_KEY or SUPABASE_SERVICE_ROLE_KEY is required"
+            exit 1
+          fi
+
+      - name: Publish approved scale assets and metadata
+        run: npm run media:publish -- --year 2026
