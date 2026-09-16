@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict, replace
+from functools import lru_cache
 import hashlib
 import json
 import mimetypes
@@ -42,6 +43,7 @@ def fetch_bytes(url: str, timeout: int = 20) -> tuple[bytes, str]:
         return response.read(), response.headers.get("Content-Type", "")
 
 
+@lru_cache(maxsize=256)
 def fetch_text(url: str, timeout: int = 20) -> str:
     body, content_type = fetch_bytes(url, timeout)
     media_type = content_type.split(";", 1)[0].strip().casefold()
@@ -62,10 +64,6 @@ def discover_pages(identity: VehicleIdentity, max_pages: int = 8) -> list[str]:
     chosen: list[str] = []
     ranked: list[tuple[int, str]] = []
     seen: set[str] = set()
-
-    # SPA-style OEM sites often do not expose model routes as ordinary anchors.
-    # Known current official model pages therefore get first shot, while the
-    # generic seed crawl still discovers news/press pages and future models.
     starts = (*get_page_hints(identity.generation_id), *source.seed_urls)
     for raw_seed in starts:
         seed = _safe_url(raw_seed)
@@ -90,7 +88,6 @@ def discover_pages(identity: VehicleIdentity, max_pages: int = 8) -> list[str]:
             if score > 0 and url not in seen:
                 ranked.append((score, url))
                 seen.add(url)
-
     ranked.sort(key=lambda item: (-item[0], item[1]))
     for _, url in ranked:
         if len(chosen) >= max_pages:
