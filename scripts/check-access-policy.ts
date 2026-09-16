@@ -1,13 +1,16 @@
 import {
   currentSalesModuleCycleKey,
   dailyPeriodKey,
+  FEATURES,
   historyWindowStart,
   isMarketDimensionAllowed,
   isPeriodWithinHistoryWindow,
   isRegistrationDimensionAllowed,
   monthlyPeriodKey,
   resetsAtForMetric,
+  resolveFeatureState,
   resolveTierFromEntitlements,
+  SALES_MODULES,
   validateSalesModuleSelection,
   type EntitlementRow,
 } from "../lib/access-policy.ts";
@@ -99,6 +102,16 @@ check("market dimension mapped to a selected module is allowed on Free", isMarke
 check("market dimension mapped to an unselected module is blocked on Free", isMarketDimensionAllowed("model", "FREE", ["brand_share"]), false);
 check("market dimension with no module mapping is paid-tier-only on Free", isMarketDimensionAllowed("oem_group", "FREE", ["brand_share", "model_share", "segment_share", "powertrain_share"]), false);
 check("market dimension with no module mapping is allowed on Individual/Pro", isMarketDimensionAllowed("oem_group", "INDIVIDUAL", null), true);
+
+console.log("\naccess policy — reserved capabilities (provincial_registration)");
+check("unreleased feature resolves to teaser for Free", resolveFeatureState("provincial_registration", "FREE"), "teaser");
+check("unreleased feature resolves to teaser for Individual too (global kill switch)", resolveFeatureState("provincial_registration", "INDIVIDUAL"), "teaser");
+check("unreleased feature resolves to teaser for Pro too (global kill switch)", resolveFeatureState("provincial_registration", "PRO"), "teaser");
+check("unreleased feature resolves to teaser for Corporate too (global kill switch)", resolveFeatureState("provincial_registration", "CORPORATE"), "teaser");
+check("provincial_registration is not part of the 4-of-6 sales module catalog", (SALES_MODULES as readonly string[]).includes("provincial_registration"), false);
+check("provincial_registration never counts toward sales module selection", FEATURES.provincial_registration.countsTowardSalesModuleSelection, false);
+check("provincial_registration never consumes quota", FEATURES.provincial_registration.consumesQuota, false);
+check("provincial_registration is not released yet", FEATURES.provincial_registration.released, false);
 
 console.log(failed ? `\n${failed} check(s) failed` : "\nall access policy checks passed");
 process.exit(failed ? 1 : 0);

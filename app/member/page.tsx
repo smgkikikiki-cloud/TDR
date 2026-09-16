@@ -37,6 +37,7 @@ const DIMENSION_BY_MODULE: Record<SalesModule, string> = Object.fromEntries(
 ) as Record<SalesModule, string>;
 
 type ModuleStatus = { tier: "FREE" | "INDIVIDUAL" | "PRO"; pickCount: number | null; selection: SalesModule[] | null };
+type FeatureInfo = { label: string; label_th: string; state: "unavailable" | "teaser" | "limited" | "full" | "tailored" };
 
 async function loadDimension(token: string, dimension: string, actionId: string, period?: string) {
   const params = new URLSearchParams({ dimension, limit: "100" });
@@ -67,6 +68,7 @@ export default function MemberDashboardPage() {
   const [moduleStatus, setModuleStatus] = useState<ModuleStatus | null>(null);
   const [picked, setPicked] = useState<SalesModule[]>([]);
   const [token, setToken] = useState<string | null>(null);
+  const [features, setFeatures] = useState<Record<string, FeatureInfo>>({});
 
   async function loadDashboard(accessToken: string, modules: SalesModule[] | null) {
     const db = browserDb();
@@ -128,6 +130,15 @@ export default function MemberDashboardPage() {
         if (cancelled) return;
         const modStatus: ModuleStatus = { tier: moduleBody.tier, pickCount: moduleBody.pick_count, selection: moduleBody.selection };
         setModuleStatus(modStatus);
+
+        // Reserved capabilities (e.g. Provincial Registration) are fetched
+        // from the centralized policy, not hardcoded here -- this call
+        // never touches the unfinished data pipeline itself, it only
+        // reads the coming-soon/ladder state.
+        fetch("/api/tools/features", { headers: { Authorization: `Bearer ${session.access_token}` }, cache: "no-store" })
+          .then((r) => r.json())
+          .then((body) => { if (!cancelled && body.features) setFeatures(body.features); })
+          .catch(() => {});
 
         if (modStatus.tier === "FREE" && !modStatus.selection) {
           setStatus("picker");
@@ -252,6 +263,16 @@ export default function MemberDashboardPage() {
         <div className={styles.panelHead}><div><div className={styles.eyebrow}>MONTH-ON-MONTH</div><h2>รุ่นที่ขยับแรงจากเดือนก่อน</h2></div><span>เฉพาะ canonical model ที่เทียบข้ามเดือนได้</span></div>
         <div className={styles.tableWrap}><table><thead><tr><th>แบรนด์</th><th>รุ่น</th><th>เดือนก่อน</th><th>เดือนนี้</th><th>Δ คัน</th><th>MoM</th></tr></thead><tbody>{movers.map((row) => <tr key={row.entity_key}><td>{row.brand_name}</td><td><b>{row.model_name}</b></td><td>{n(row.previous_registrations)}</td><td>{n(row.registrations)}</td><td className={Number(row.mom_delta) >= 0 ? styles.positive : styles.negative}>{Number(row.mom_delta) >= 0 ? "+" : ""}{n(row.mom_delta)}</td><td>{row.mom_pct == null ? "—" : `${Number(row.mom_pct) >= 0 ? "+" : ""}${pct(row.mom_pct)}`}</td></tr>)}</tbody></table></div>
       </section>
+
+      {Object.entries(features).map(([key, feature]) => feature.state === "teaser" ? (
+        <section className={styles.panel} key={key}>
+          <div className={styles.panelHead}>
+            <div><div className={styles.eyebrow}>SALES TOOLS · COMING SOON</div><h2>{feature.label_th}</h2></div>
+            <span className={styles.comingSoonBadge}>Coming soon</span>
+          </div>
+          <p className={styles.muted}>เครื่องมือนี้ยังอยู่ระหว่างพัฒนาชุดข้อมูล ยังไม่มีตัวเลขให้แสดงในตอนนี้ — จะเปิดใช้งานเมื่อชุดข้อมูลรายจังหวัดพร้อม</p>
+        </section>
+      ) : null)}
 
       <p className={styles.footnote}>August coverage may be lower than prior months when only the classless pivot source is available. Ambiguous pickup nameplates stay raw instead of being forced into Cab/Double Cab.</p>
     </main>

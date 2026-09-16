@@ -137,6 +137,81 @@ export function getPolicy(tier: Tier): TierPolicy {
   return TIER_POLICIES[tier];
 }
 
+// --- Reserved high-value capabilities (richer than boolean access) ------
+//
+// Some future Sales Tools capabilities (starting with provincial
+// registration) don't fit "on for this tier / off for that tier": a
+// capability can be entirely unbuilt yet still need a visible "coming
+// soon" placeholder, then launch as a locked teaser, then a
+// commercially-limited tier, then a full tier, then a bespoke Corporate
+// scope -- all before any numeric quota/limit has been decided. This
+// registry is the one place that ladder lives, so a route or component
+// never hand-rolls its own tier-check for a reserved capability.
+export type FeatureState = "unavailable" | "teaser" | "limited" | "full" | "tailored";
+
+// Stable, generic keys only -- this union is meant to grow as more
+// high-value capabilities get reserved this way.
+export type FeatureKey = "provincial_registration";
+
+// Corporate is sales-assisted, not a self-service Tier (see Tier above),
+// but still needs a place in a feature's ladder.
+export type FeatureAudience = Tier | "CORPORATE";
+
+export interface FeatureDefinition {
+  key: FeatureKey;
+  label: string;
+  labelTh: string;
+  /**
+   * Global kill switch. While false, the feature resolves to `teaser` for
+   * every audience regardless of `stateByAudience` below -- the launch
+   * ladder only takes effect once the underlying data product is real and
+   * this is flipped by a future change here, not by any per-request logic.
+   */
+  released: boolean;
+  /** The intended ladder once `released` is true. Not yet commercially
+   *  finalized for every audience -- see the field-level comments below.
+   *  Never encode invented numeric limits (quotas, province counts,
+   *  history windows) here; `FeatureState` is deliberately just a label. */
+  stateByAudience: Record<FeatureAudience, FeatureState>;
+  /** Whether choosing this feature should ever occupy one of the Free
+   *  tier's 4-of-6 sales-module slots. false while unreleased. */
+  countsTowardSalesModuleSelection: boolean;
+  /** Whether using this feature should ever consume a usage-quota metric.
+   *  false while unreleased (and while no metric has been decided for it). */
+  consumesQuota: boolean;
+}
+
+export const FEATURES: Record<FeatureKey, FeatureDefinition> = {
+  provincial_registration: {
+    key: "provincial_registration",
+    label: "Provincial Registration",
+    labelTh: "ยอดจดทะเบียนรายจังหวัด",
+    released: false,
+    // Intended future ladder (per product direction, 2026-09): Free sees a
+    // locked teaser; Plus/Individual gets *some* real use once released,
+    // exact scope/limits not decided yet (never invent one); Pro gets the
+    // full professional experience (province coverage, multi-province
+    // compare, historical analysis, deeper filtering) *subject to whatever
+    // the data product actually supports at release time*; Corporate may
+    // get bespoke geographic/team workflows. None of this ladder is live
+    // yet -- `released: false` above forces `teaser` for everyone today.
+    stateByAudience: {
+      FREE: "teaser",
+      INDIVIDUAL: "limited",
+      PRO: "full",
+      CORPORATE: "tailored",
+    },
+    countsTowardSalesModuleSelection: false,
+    consumesQuota: false,
+  },
+};
+
+export function resolveFeatureState(featureKey: FeatureKey, audience: FeatureAudience): FeatureState {
+  const feature = FEATURES[featureKey];
+  if (!feature.released) return "teaser";
+  return feature.stateByAudience[audience];
+}
+
 // --- Tier resolution from raw tdr_entitlements rows -------------------
 
 const ACTIVE_ENTITLEMENT_STATUSES = new Set(["ACTIVE", "TRIALING", "GRACE"]);
