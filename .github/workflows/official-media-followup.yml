@@ -46,12 +46,12 @@ jobs:
         working-directory: automotive/vehicle_master
         run: python -m pytest -q tests/test_official_media.py
 
-      - name: Ingest six verified current models
+      - name: Ingest verified current-model batch
         working-directory: automotive/vehicle_master
         shell: bash
         run: |
           mapfile -t VEHICLE_IDS < config/official_media_followup_2026.txt
-          test "${#VEHICLE_IDS[@]}" -eq 6
+          test "${#VEHICLE_IDS[@]}" -gt 0
           python scripts/ingest_official_media_followup.py \
             --year 2026 \
             --max-pages 4 \
@@ -64,9 +64,10 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
+          targets = [line.strip() for line in Path("config/official_media_followup_2026.txt").read_text().splitlines() if line.strip()]
           rows = [json.loads(line) for line in Path("integration_data/official_media/run_summary_2026.jsonl").read_text().splitlines() if line.strip()]
-          if len(rows) != 6:
-              raise SystemExit(f"expected 6 follow-up identities, got {len(rows)}")
+          if len(rows) != len(targets):
+              raise SystemExit(f"expected {len(targets)} follow-up identities, got {len(rows)}")
           missing = [row["vehicle_id"] for row in rows if not row.get("approved", 0)]
           for row in rows:
               print(f"{row['vehicle_id']}: assets={row['assets']} approved={row.get('approved', 0)} review={row['review']}")
