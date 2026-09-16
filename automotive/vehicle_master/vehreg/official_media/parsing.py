@@ -1,11 +1,18 @@
 """Extract links and image candidates from OEM HTML without dependencies."""
 from __future__ import annotations
 
+from html import unescape
 from html.parser import HTMLParser
 import re
 from urllib.parse import urljoin, urlparse
 
 from .models import ImageCandidate, SourceType
+
+_IMAGE_SUFFIXES = {".jpg", ".jpeg", ".png", ".webp", ".avif"}
+_EMBEDDED_IMAGE_RE = re.compile(
+    r"(?P<url>(?:https?:)?(?:\\?/|/)[^\"'<>\s]{2,}?\.(?:jpe?g|png|webp|avif)(?:\\?[?#][^\"'<>\s]*)?)",
+    re.I,
+)
 
 
 def _integer(value: str | None) -> int | None:
@@ -28,27 +35,47 @@ def _largest_srcset(value: str) -> str:
     return max(choices, default=(0, ""))[1]
 
 
+def _looks_like_image(url: str, mime: str = "") -> bool:
+    if mime:
+        return mime.casefold().startswith("image/")
+    return any(urlparse(url).path.casefold().endswith(suffix) for suffix in _IMAGE_SUFFIXES)
+
+
+def _decode_embedded_url(value: str) -> str:
+    value = unescape(value)
+    value = value.replace("\\/", "/")
+    value = value.replace("\\u002F", "/").replace("\\u002f", "/")
+    value = value.replace("\\u0026", "&").replace("\\u003D", "=")
+    if value.startswith("//"):
+        return "https:" + value
+    return value
+
+
 class AssetParser(HTMLParser):
     def __init__(self, page_url: str) -> None:
         super().__init__(convert_charrefs=True)
         self.page_url = page_url
         self.title = ""
         self.in_title = False
-        self.images: list[dict] = []
+        self.images: list[tuple[str, str, int | None, int | None, bool]] = []
         self.links: list[tuple[str, str]] = []
         self.link_url: str | None = None
         self.link_text: list[str] = []
+        self.script_chunks: list[str] = []
+        self.in_script = False
 
     def handle_starttag(self, tag: str, attrs) -> None:
         values = {str(k).lower(): str(v or "") for k, v in attrs}
         tag = tag.lower()
         if tag == "title":
             self.in_title = True
+        elif tag == "script":
+            self.in_script = True
         elif tag == "meta":
             key = (values.get("property") or values.get("name") or "").lower()
             if key in {"og:image", "twitter:image", "twitter:image:src"} and values.get("content"):
                 self.images.append((values["content"], key, None, None, True))
-        elif tag in {"img", "source"}:
+        elif tag == "img":
             url = (values.get("data-src") or values.get("data-lazy-src")
                    or values.get("data-original") or values.get("src") or "")
             srcset = values.get("data-srcset") or values.get("srcset") or ""
@@ -57,14 +84,25 @@ class AssetParser(HTMLParser):
             if url and not url.startswith("data:"):
                 self.images.append((url, values.get("alt") or values.get("title") or "",
                                     _integer(values.get("width")), _integer(values.get("height")), False))
+        elif tag == "source":
+            url = values.get("src") or ""
+            srcset = values.get("srcset") or ""
+            if srcset:
+                url = _largest_srcset(srcset) or url
+            if url and not url.startswith("data:") and _looks_like_image(url, values.get("type", "")):
+                self.images.append((url, values.get("alt") or values.get("title") or "",
+                                    _integer(values.get("width")), _integer(values.get("height")), False))
         elif tag == "a" and values.get("href"):
             self.link_url = urljoin(self.page_url, values["href"])
             self.link_text = []
 
     def handle_endtag(self, tag: str) -> None:
-        if tag.lower() == "title":
+        tag = tag.lower()
+        if tag == "title":
             self.in_title = False
-        elif tag.lower() == "a" and self.link_url:
+        elif tag == "script":
+            self.in_script = False
+        elif tag == "a" and self.link_url:
             self.links.append((self.link_url, " ".join(self.link_text)))
             self.link_url = None
             self.link_text = []
@@ -72,6 +110,8 @@ class AssetParser(HTMLParser):
     def handle_data(self, data: str) -> None:
         if self.in_title:
             self.title += data
+        if self.in_script and data:
+            self.script_chunks.append(data)
         if self.link_url and data.strip():
             self.link_text.append(data.strip())
 
@@ -79,11 +119,21 @@ class AssetParser(HTMLParser):
 def parse_page(html: str, page_url: str, source_type: SourceType):
     parser = AssetParser(page_url)
     parser.feed(html)
+
+    # Nuxt/Next and OEM configurators often keep asset URLs in serialized page
+    # data rather than <img>. Extract only image extensions; video/PDF are not
+    # media candidates for this pipeline.
+    embedded = "\n".join(parser.script_chunks)
+    for match in _EMBEDDED_IMAGE_RE.finditer(embedded):
+        url = _decode_embedded_url(match.group("url"))
+        if _looks_like_image(url):
+            parser.images.append((url, "embedded-page-data", None, None, False))
+
     seen: set[str] = set()
     images: list[ImageCandidate] = []
     for url, alt, width, height, is_og in parser.images:
-        url = urljoin(page_url, url)
-        if url in seen:
+        url = urljoin(page_url, _decode_embedded_url(url))
+        if url in seen or not _looks_like_image(url):
             continue
         seen.add(url)
         images.append(ImageCandidate(
