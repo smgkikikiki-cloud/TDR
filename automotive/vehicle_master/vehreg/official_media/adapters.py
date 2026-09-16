@@ -55,15 +55,21 @@ MODEL_PAGE_HINTS: dict[str, tuple[str, ...]] = {
     "toyota.alphard.ah40": ("https://www.toyota.co.th/model/alphard",),
     "toyota.hilux_champ.champ": ("https://www.toyota.co.th/model/hilux_champ",),
     "honda.accord.cy": ("https://www.honda.co.th/accordehev2023",),
+    "byd.atto2.atto2": ("https://www.byd.com/en-th/car/atto2",),
     "byd.atto3.atto3": ("https://www.byd.com/en-th/car/atto3",),
     "byd.dolphin.dol": ("https://www.byd.com/en-th/car/dolphin",),
     "byd.seal.seal": ("https://www.byd.com/en-th/car/seal",),
+    "byd.sealion5.sealion5": ("https://www.byd.com/en-th/car/sealion5",),
     "byd.sealion6.sl6": ("https://www.byd.com/en-th/car/sealion6",),
     "byd.sealion7.sl7": ("https://www.byd.com/en-th/car/sealion7",),
     "byd.byd_m6.m6": ("https://www.byd.com/en-th/car/m6",),
     "mg.mg4.mg4e": ("https://www.mgcars.com/th/cars/mg4-my2026",),
     "mg.mg_im6.gen1": ("https://www.mgcars.com/th/cars/mg-im6",),
     "mg.mg_cyberster.gen1": ("https://www.mgcars.com/th/cars/mg-cyberster",),
+    "gwm.haval_h6.h6hev": ("https://www.gwm.co.th/en/models/haval-h6",),
+    "gwm.tank300.t300": ("https://www.gwm.co.th/en/models/tank-300-diesel",),
+    "gwm.tank500.t500": ("https://www.gwm.co.th/en/models/tank-500-diesel",),
+    "gwm.poer_sahar.gen1": ("https://www.gwm.co.th/en/models/sahar-diesel",),
 }
 
 
