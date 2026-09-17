@@ -26,6 +26,7 @@ from typing import Any, Optional
 from .comparable_specs import (
     ValueState, ValueType, battery_chemistry_family, transmission_family,
 )
+from .ecosticker_ingest import infer_powertrain
 
 #: Columns the export carries that this module deliberately drops.
 #:
@@ -129,29 +130,24 @@ def combustion_type(engine_name: Any) -> Optional[str]:
     return "OTHER"
 
 
-def powertrain(cartype_name: Any, engine_name: Any) -> Optional[str]:
+def powertrain(cartype_name: Any, engine_name: Any, label: str = "") -> Optional[str]:
     """The retail powertrain, which ``cartype_name`` alone cannot give.
 
     The export's own powertrain column has exactly three values -- ICE, BEV,
     PHEV -- and no HEV at all, so a Toyota Alphard Hybrid and a Honda Step WGN
     e:HEV both arrive filed as "ICE". Taking that column at face value would
-    record every hybrid in the country as a plain combustion car, so the
-    declared engine type decides whenever it disagrees.
+    record every hybrid in the country as a plain combustion car.
 
-    MHEV is folded into ICE: a mild hybrid cannot drive on its motor alone and
-    the catalogue's taxonomy has no separate value for it.
+    The rule for resolving that already exists: ``ecosticker_ingest`` has been
+    reading the same two source fields since the first ECO harvest, including
+    the REEV case a plug-in whose name says "range extender" needs. This
+    delegates to it rather than keeping a second copy that could drift.
     """
-    declared = _text(cartype_name).upper()
-    engine = combustion_type(engine_name)
-    if engine == "PHEV":
-        return "PHEV"
-    if engine == "HEV":
-        return "HEV"
-    if engine == "MHEV":
-        return "ICE"
-    if declared in {"BEV", "PHEV", "ICE"}:
-        return declared
-    return None
+    resolved, _basis = infer_powertrain(str(label or ""), {
+        "engine_name": _text(engine_name),
+        "cartype_name": _text(cartype_name),
+    })
+    return resolved
 
 
 #: Stored as the highest blend the car accepts: an E85 car runs E20 and plain
@@ -435,7 +431,8 @@ def normalize_row(row: dict) -> NormalizedVehicle:
         brand_raw=_text(row.get("brand")),
         model_raw=_text(row.get("model")),
         importer_raw=_text(row.get("company_name")),
-        powertrain=powertrain(row.get("cartype_name"), row.get("engine_name")),
+        powertrain=powertrain(row.get("cartype_name"), row.get("engine_name"),
+                              _text(row.get("model"))),
         body_type=body_type(row.get("car_style")),
         price_thb=_integer(row.get("recomend_retail_price_new")),
     )
