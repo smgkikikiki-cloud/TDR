@@ -1,8 +1,13 @@
-/** The free public surface is the canonical vehicle catalogue and basic compare.
- * Analytics and registration visualisations live behind the TDR Report entitlement. */
-export const primaryNav=[
-  {href:"/models",label:"รถ"},
-  {href:"/compare",label:"เทียบรถ"},
+/** The primary navigation IS the product: the free vehicle database and its
+ * comparison tool, then the two subscriber layers. Nothing else belongs here —
+ * brands, plants and search are views of the database, not sections of their
+ * own, and they are reached from inside it. */
+export const primaryNav = [
+  { href: "/models", label: "ฐานข้อมูลรถยนต์" },
+  { href: "/compare", label: "เปรียบเทียบสเปก" },
+  { href: "/reports", label: "ข้อมูลตลาดรถยนต์" },
+  { href: "/research", label: "บทวิเคราะห์เชิงลึก" },
 ];
 
-export const reportCta={href:"/reports",label:"TDR Report"};
+/** Where the header's account entry points. */
+export const memberEntry = { href: "/member/login", label: "เข้าสู่ระบบ" };

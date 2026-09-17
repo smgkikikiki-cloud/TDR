@@ -287,12 +287,6 @@
 .sfGroupNote { margin: -2px 0 9px; font-size: 12px; line-height: 1.55; color: var(--sf-muted); }
 
 /* ---------- header CTA: the one thing this site sells ---------- */
-.sfCta { display: flex; align-items: center; gap: 10px; border: 1px solid var(--navy); background: #fff; padding: 9px 14px; flex-shrink: 0; }
-.sfCta:hover { border-color: var(--red); color: var(--red); }
-.sfCta > svg { flex-shrink: 0; color: var(--red); }
-.sfCta b { display: block; font-size: 14px; font-weight: 800; letter-spacing: -.01em; }
-.sfCta em { display: block; font-style: normal; font-size: 12px; color: var(--sf-muted); margin-top: 1px; }
-.sfCta:hover em { color: var(--red); }
 
 /* ---------- buttons ---------- */
 .sfBtn { display: inline-block; background: var(--navy); color: #fff; font-size: 15px; font-weight: 700; padding: 13px 22px; border: 1px solid var(--navy); }
@@ -465,7 +459,6 @@
 }
 @media (max-width: 700px) {
   .topline { flex-wrap: wrap; gap: 14px; }
-  .sfCta { width: 100%; justify-content: center; }
 }
 @media (max-width: 640px) {
   .sfQGrid { grid-template-columns: minmax(0, 1fr); }

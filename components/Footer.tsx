@@ -5,7 +5,7 @@ export function Footer() {
     <footer className="siteFooter">
       <div>
         <strong>Thailand Development Report — Automotive Intelligence</strong>
-        <p>ฐานข้อมูลรถยนต์ การผลิต โรงงาน บริษัท และความเคลื่อนไหวของอุตสาหกรรมยานยนต์ไทย จากข้อมูลสาธารณะที่ตรวจสอบแหล่งที่มาได้</p>
+        <p>ฐานข้อมูลรถยนต์ การผลิต โรงงาน และอุตสาหกรรมยานยนต์ไทย</p>
       </div>
       <div className="footerNav">
         <div>

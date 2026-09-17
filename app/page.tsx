@@ -81,9 +81,9 @@ export default async function Home() {
     {lead ? (
       <section className="sfLead">
         <div className="sfLeadMain">
-          <div className="sfEyebrow">รุ่นเด่นในฐานข้อมูล</div>
+          <div className="sfEyebrow">จากฐานข้อมูล</div>
           <h1>{[displayName(lead.brands), displayName(lead)].filter(Boolean).join(" ")}</h1>
-          <p>{lead.consumer_description || "รุ่นปัจจุบันในแคตตาล็อก TDR พร้อมรุ่นย่อย ราคา ระบบขับเคลื่อน และแหล่งผลิตที่ตรวจสอบแหล่งที่มาได้"}</p>
+          {lead.consumer_description ? <p>{lead.consumer_description}</p> : null}
           <Link className="sfLeadSlot" href={`/models/${lead.slug}`}>
             {lead.image_url ? <img src={lead.image_url} alt="" /> : <><small>{(displayName(lead.brands) || "TDR").toUpperCase()}</small><b>{displayName(lead)}</b></>}
           </Link>
@@ -111,8 +111,8 @@ export default async function Home() {
     ) : (
       <section className="sfPageHead">
         <div>
-          <div className="sfEyebrow">TDR AUTOMOTIVE INTELLIGENCE</div>
-          <h1>รถที่ขายในไทย กับอุตสาหกรรมที่อยู่ข้างหลังมัน</h1>
+          <div className="sfEyebrow">ฐานข้อมูล</div>
+          <h1>ฐานข้อมูลรถยนต์ในประเทศไทย</h1>
           <p>ยังไม่มีรุ่นรถในฐานข้อมูล เมื่อบันทึกรุ่นแรกแล้ว แคตตาล็อกจะขึ้นที่หน้านี้</p>
         </div>
       </section>
@@ -121,7 +121,7 @@ export default async function Home() {
     {rest.length ? (
       <section className="sfHomeSec">
         <div className="sfZoneHead">
-          <div><div className="sfEyebrow ink">CATALOG</div><h2>รุ่นอื่นในแคตตาล็อก</h2></div>
+          <div><div className="sfEyebrow ink">แคตตาล็อก</div><h2>รุ่นอื่นในแคตตาล็อก</h2></div>
           <Link href="/models">ดูทั้งหมด →</Link>
         </div>
         <div className="sfGrid">{rest.map((r: any) => <GalleryCard key={r.id} r={r} />)}</div>
@@ -130,7 +130,7 @@ export default async function Home() {
 
     <section className="sfHomeSec">
       <div className="sfZoneHead">
-        <div><div className="sfEyebrow ink">LATEST</div><h2>ข่าวอุตสาหกรรม</h2></div>
+        <div><div className="sfEyebrow ink">อัปเดตล่าสุด</div><h2>ข่าวอุตสาหกรรม</h2></div>
         <Link href="/news">อ่านทั้งหมด →</Link>
       </div>
       {events.length ? (
@@ -150,7 +150,7 @@ export default async function Home() {
 
     <section className="sfHomeSec">
       <div className="sfZoneHead">
-        <div><div className="sfEyebrow ink">BRANDS</div><h2>แบรนด์ในฐานข้อมูล</h2></div>
+        <div><div className="sfEyebrow ink">แบรนด์</div><h2>แบรนด์ในฐานข้อมูล</h2></div>
         <Link href="/brands">ดูทั้งหมด →</Link>
       </div>
       {brands.length ? (
@@ -169,12 +169,12 @@ export default async function Home() {
 
     <section className="sfHomeSec">
       <div className="sfZoneHead">
-        <div><div className="sfEyebrow ink">INDUSTRY LAYER</div><h2>ข้อมูลอุตสาหกรรม</h2></div>
+        <div><div className="sfEyebrow ink">ข้อมูลอุตสาหกรรม</div><h2>ข้อมูลอุตสาหกรรม</h2></div>
       </div>
       <div className="sfIndustryLinks">
-        <Link href="/models"><b>ราคา สเปก และรุ่นย่อย</b><p>ข้อมูลตลาดรถเปิดฟรีจาก Vehicle Master ชุดเดียว พร้อมราคาแคมเปญและเงื่อนไข</p><span>เปิดดู →</span></Link>
+        <Link href="/models"><b>ราคา สเปก และรุ่นย่อย</b><p>แคตตาล็อกรถยนต์ที่จำหน่ายในประเทศไทย พร้อมราคาและสเปกรายรุ่นย่อย</p><span>เปิดดู →</span></Link>
         <Link href="/news"><b>ข่าวอุตสาหกรรม</b><p>ความเคลื่อนไหวของผู้ผลิต โรงงาน และนโยบายที่กระทบตลาดรถไทย</p><span>เปิดดู →</span></Link>
-        <Link href="/reports"><b>TDR Report · สำหรับสมาชิก</b><p>ยอดจดทะเบียนรายรุ่น ส่วนแบ่งตลาด และเทรนด์ย้อนหลัง ลึกถึงระดับรุ่นย่อย</p><span>ดูว่ามีอะไรบ้าง →</span></Link>
+        <Link href="/reports"><b>TDR Report · สำหรับสมาชิก</b><p>ยอดจดทะเบียนรายรุ่นและส่วนแบ่งตลาด</p><span>ดูว่ามีอะไรบ้าง →</span></Link>
       </div>
     </section>
   </>;

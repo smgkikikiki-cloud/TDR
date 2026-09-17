@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { NavLinks } from "@/components/NavLinks";
-import { reportCta } from "@/lib/navigation";
+import { memberEntry } from "@/lib/navigation";
 
 export function Header() {
   return (
@@ -11,10 +11,10 @@ export function Header() {
           <span className="brandText">DEVELOPMENT <b>REPORT</b></span>
           <span className="productTag">AUTOMOTIVE INTELLIGENCE</span>
         </Link>
-        <Link className="sfCta" href={reportCta.href}>
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><rect x="2.5" y="6" width="9" height="6" /><path d="M4.5 6V4a2.5 2.5 0 0 1 5 0v2" /></svg>
-          <span><b>{reportCta.label}</b><em>ข้อมูลตลาดสำหรับสมาชิก</em></span>
-        </Link>
+        {/* A padlock in a box advertising a section that is already in the nav
+            is decoration. The only thing a header needs on the right is the
+            way into an account. */}
+        <Link className="headerAccount" href={memberEntry.href}>{memberEntry.label}</Link>
       </div>
       <div className="navline">
         <NavLinks />

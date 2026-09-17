@@ -17,7 +17,7 @@ export default async function Search({ searchParams }: { searchParams: Promise<{
       <div>
         <div className="sfEyebrow">SEARCH</div>
         <h1>ค้นหาฐานข้อมูล</h1>
-        <p>ค้นหารุ่นรถและแบรนด์จาก Vehicle Master ชุดเดียว</p>
+        <p>ค้นหารุ่นรถและแบรนด์ในฐานข้อมูล</p>
       </div>
       {q ? (
         <div className="sfPageHeadAside">

@@ -9,7 +9,7 @@ export default async function Brands() {
       <div>
         <div className="sfEyebrow">BRANDS</div>
         <h1>แบรนด์รถในตลาดไทย</h1>
-        <p>เลือกแบรนด์เพื่อเปิดแคตตาล็อกรถทั้งหมดของแบรนด์นั้นในฐานข้อมูล TDR</p>
+        <p>แบรนด์รถยนต์ที่มีจำหน่ายในประเทศไทย</p>
       </div>
       <div className="sfPageHeadAside">
         <div className="sfEyebrow ink">ในฐานข้อมูล</div>

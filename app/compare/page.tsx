@@ -67,7 +67,7 @@ export default function ComparePage() {
       <div>
         <div className="sfEyebrow">VEHICLE COMPARE</div>
         <h1>เทียบรถแบบตรงรุ่นย่อย</h1>
-        <p>เลือก 2–4 รุ่นย่อยเพื่อเทียบราคา ขนาด ระบบขับเคลื่อน และข้อมูลพื้นฐานจาก Vehicle Master ชุดเดียวกับหน้าแคตตาล็อก ต้องมีบัญชี TDR (ฟรี) และมีโควตาเทียบรถต่อวันตามแพ็กเกจ</p>
+        <p>เลือก 2–4 รุ่นย่อยเพื่อเปรียบเทียบราคา ขนาด ระบบขับเคลื่อน และสเปกพื้นฐาน</p>
       </div>
       <Link href="/models">กลับไปดูแคตตาล็อก →</Link>
     </section>
@@ -99,7 +99,7 @@ export default function ComparePage() {
 
     {status === "quota" ? <div className="compareNotice">{message} — อัปเกรดบัญชีเพื่อเทียบรถไม่จำกัดต่อวัน <Link href="/pricing">ดูแพ็กเกจ</Link></div> : null}
     {status === "error" ? <div className="compareNotice">{message}</div> : null}
-    {result?.missing_selection ? <div className="compareNotice">มีรุ่นที่เลือกไว้ซึ่งไม่อยู่ใน active canonical release แล้ว ระบบจึงไม่นำมาเทียบ</div> : null}
+    {result?.missing_selection ? <div className="compareNotice">มีรุ่นที่เลือกไว้ซึ่งไม่อยู่ในฐานข้อมูลแล้ว ระบบจึงไม่นำมาเทียบ</div> : null}
 
     {result && result.selected.length >= 2 ? (
       <section className="compareTableWrap" aria-label="ตารางเปรียบเทียบรถ">
@@ -143,7 +143,7 @@ export default function ComparePage() {
 
     <section className="compareFootnote">
       <b>หลักของหน้านี้</b>
-      <p>แถวที่ไม่มีข้อมูลในทุกคันจะไม่แสดงเลย ส่วนช่อง “—” หมายถึงฐาน canonical ยังไม่มีค่าที่ตรวจสอบได้ ไม่ได้เดาจากเว็บอื่นหรือเอาค่าของรุ่นใกล้เคียงมาเติม. ราคาแคมเปญแยกจาก List price และข้อมูลยาง/ล้อยังไม่อยู่ใน public product scope ตอนนี้.</p>
+      <p>แถวที่ไม่มีข้อมูลในทุกคันจะไม่แสดงเลย ส่วนช่อง “—” หมายถึงยังไม่มีข้อมูลในฐานข้อมูล ไม่ได้เดาหรือนำค่าของรุ่นใกล้เคียงมาเติม. ราคาแคมเปญแยกจาก List price และข้อมูลยาง/ล้อยังไม่อยู่ใน public product scope ตอนนี้.</p>
     </section>
   </div>;
 }

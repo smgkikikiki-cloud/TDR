@@ -385,3 +385,8 @@ td { padding: 16px 10px; border-bottom: 1px solid var(--line); }
 .trimSourceRefs .trimGrid{margin-top:11px}
 @media(max-width:1000px){.trimGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){.trimGrid,.trimQualifiers{grid-template-columns:1fr}}
+
+/* Header account entry. A link, not a boxed advertisement for a section that
+   is already in the navigation. */
+.headerAccount { flex-shrink: 0; align-self: center; font-size: 14px; font-weight: 600; color: var(--navy); border-bottom: 1px solid var(--line); padding-bottom: 2px; }
+.headerAccount:hover { border-bottom-color: var(--navy); }
