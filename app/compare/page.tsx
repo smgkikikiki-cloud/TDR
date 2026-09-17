@@ -67,7 +67,6 @@ export default function ComparePage() {
       <div>
         <div className="sfEyebrow">VEHICLE COMPARE</div>
         <h1>เทียบรถแบบตรงรุ่นย่อย</h1>
-        <p>เลือก 2–4 รุ่นย่อยเพื่อเทียบราคา ขนาด ระบบขับเคลื่อน และข้อมูลพื้นฐานจาก Vehicle Master ชุดเดียวกับหน้าแคตตาล็อก ต้องมีบัญชี TDR (ฟรี) และมีโควตาเทียบรถต่อวันตามแพ็กเกจ</p>
       </div>
       <Link href="/models">กลับไปดูแคตตาล็อก →</Link>
     </section>
