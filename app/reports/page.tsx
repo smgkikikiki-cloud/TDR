@@ -109,7 +109,7 @@ export default async function ReportsPage() {
             </article>
           ))}
         </div>
-      ) : <div className="sfEmpty"><b>ยังไม่มีข่าวในฐานข้อมูล</b><span>ข่าวที่เผยแพร่แล้วจะแสดงที่นี่</span></div>}
+      ) : <div className="sfEmpty"><b>ยังไม่มีข่าวในฐานข้อมูล</b></div>}
     </section>
 
     <section className="sfBlock">
@@ -134,7 +134,7 @@ export default async function ReportsPage() {
           </article>
         ))}
       </div>
-      <p className="sfQFoot">ชื่อรุ่นและจำนวนด้านบนเป็นข้อมูลจริงจากแคตตาล็อก TDR ส่วนตัวเลขยอดจดทะเบียนและส่วนแบ่งตลาดอยู่ในชุดข้อมูลสำหรับสมาชิก</p>
+      
     </section>
 
     <section className="sfBlock" id="tdr-compare">
@@ -167,7 +167,7 @@ export default async function ReportsPage() {
 
     <section className="sfPitchFoot sfBleed" id="tdr-contact">
       <div>
-        <div className="sfEyebrow">TDR REPORT</div>
+        <div className="sfEyebrow">ข้อมูลตลาดรถยนต์</div>
         <h2>เข้าถึงข้อมูล</h2>
         <p>{MEMBER_SITE ? "เข้าใช้งานได้ที่ TDR Report" : "ระบบสมาชิกยังไม่เปิดให้บริการ"}</p>
       </div>

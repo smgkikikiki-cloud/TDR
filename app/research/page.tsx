@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export const dynamic = "force-dynamic";
 
 /**
@@ -22,10 +20,6 @@ export default async function ResearchPage() {
         </div>
         <span>{pieces.length} ชิ้น</span>
       </div>
-      <p className="sfLead">
-        บทวิเคราะห์ที่เขียนและตีความโดยทีม TDR จากข้อมูลยอดจดทะเบียนและแคตตาล็อกรถชุดเดียวกับที่ใช้บนเว็บนี้
-      </p>
-
       {pieces.length ? (
         <div className="sfNewsList">
           {pieces.map((p) => (
@@ -36,29 +30,9 @@ export default async function ResearchPage() {
           ))}
         </div>
       ) : (
-        <div className="sfEmpty">
-          <b>ยังไม่มีบทวิเคราะห์เผยแพร่</b>
-          <span>บทวิเคราะห์ที่เผยแพร่แล้วจะแสดงที่นี่</span>
-        </div>
+        <div className="sfEmpty"><b>ยังไม่มีบทวิเคราะห์เผยแพร่</b></div>
       )}
     </section>
 
-    <section className="sfBlock">
-      <div className="sfZoneHead">
-        <div><div className="sfEyebrow">ระหว่างนี้</div><h2>ข้อมูลที่เปิดให้ใช้แล้ว</h2></div>
-      </div>
-      <div className="sfQGrid">
-        <article className="sfQCard">
-          <h3>ฐานข้อมูลรถยนต์</h3>
-          <p className="sfQScope">สเปกและราคารายรุ่นย่อยของรถที่จำหน่ายในประเทศไทย</p>
-          <Link href="/models">เปิดฐานข้อมูล →</Link>
-        </article>
-        <article className="sfQCard">
-          <h3>ข้อมูลตลาดรถยนต์</h3>
-          <p className="sfQScope">ยอดจดทะเบียนรายรุ่นและส่วนแบ่งตลาด</p>
-          <Link href="/reports">ดูขอบเขตข้อมูล →</Link>
-        </article>
-      </div>
-    </section>
   </>;
 }

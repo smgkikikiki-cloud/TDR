@@ -69,7 +69,7 @@ export default function PricingPage() {
       <header className={styles.header}>
         <div className={styles.eyebrow}>TDR REPORT · แพ็กเกจ</div>
         <h1>เลือกแพ็กเกจที่ตรงกับการใช้งาน</h1>
-        <p>ข้อมูลรถ ราคา และสเปกยังเปิดสาธารณะเสมอ — แพ็กเกจด้านล่างคือสิทธิ์การใช้เครื่องมือวิเคราะห์ (Compare, Sales Tools, Research, Export)</p>
+        <p>ข้อมูลรถ ราคา และสเปก เปิดให้ดูฟรีเสมอ แพ็กเกจด้านล่างคือสิทธิ์ใช้เครื่องมือวิเคราะห์</p>
       </header>
 
       <section className={styles.grid}>
@@ -128,7 +128,7 @@ export default function PricingPage() {
         <div>
           <div className={styles.eyebrow} style={{ color: "#bbb" }}>CORPORATE</div>
           <h2>สำหรับองค์กร</h2>
-          <p>แพ็กเกจสำหรับทีม/องค์กร ไม่ใช่แค่ Pro ที่แพงขึ้น — ขอบเขตและราคาปรับตามการใช้งานจริง อาจถูกหรือแพงกว่า Pro คูณจำนวนที่นั่งก็ได้ ขึ้นกับ scope ที่ตกลงกัน</p>
+          <p>ขอบเขตและราคาปรับตามการใช้งานจริงของแต่ละทีม</p>
           <ul>
             <li>· Team access หลายที่นั่ง</li>
             <li>· Workflow ที่ปรับให้เข้ากับทีมคุณ</li>

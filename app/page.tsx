@@ -113,7 +113,7 @@ export default async function Home() {
         <div>
           <div className="sfEyebrow">ฐานข้อมูล</div>
           <h1>ฐานข้อมูลรถยนต์ในประเทศไทย</h1>
-          <p>ยังไม่มีรุ่นรถในฐานข้อมูล เมื่อบันทึกรุ่นแรกแล้ว แคตตาล็อกจะขึ้นที่หน้านี้</p>
+          <p>ยังไม่มีรุ่นรถในฐานข้อมูล</p>
         </div>
       </section>
     )}
@@ -144,7 +144,7 @@ export default async function Home() {
           ))}
         </div>
       ) : (
-        <div className="sfEmpty"><b>ยังไม่มีข่าวในฐานข้อมูล</b><span>ข่าวที่เผยแพร่แล้วจะแสดงที่นี่</span></div>
+        <div className="sfEmpty"><b>ยังไม่มีข่าวในฐานข้อมูล</b></div>
       )}
     </section>
 
@@ -163,7 +163,7 @@ export default async function Home() {
           ))}
         </div>
       ) : (
-        <div className="sfEmpty"><b>ยังไม่มีแบรนด์ในฐานข้อมูล</b><span>แบรนด์ที่บันทึกแล้วจะแสดงที่นี่</span></div>
+        <div className="sfEmpty"><b>ยังไม่มีแบรนด์ในฐานข้อมูล</b></div>
       )}
     </section>
 

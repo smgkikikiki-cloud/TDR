@@ -65,7 +65,7 @@ export default function ComparePage() {
   return <div className="comparePage">
     <section className="compareHero">
       <div>
-        <div className="sfEyebrow">VEHICLE COMPARE</div>
+        <div className="sfEyebrow">เปรียบเทียบสเปก</div>
         <h1>เทียบรถแบบตรงรุ่นย่อย</h1>
         <p>เลือก 2–4 รุ่นย่อยเพื่อเปรียบเทียบราคา ขนาด ระบบขับเคลื่อน และสเปกพื้นฐาน</p>
       </div>
@@ -143,7 +143,7 @@ export default function ComparePage() {
 
     <section className="compareFootnote">
       <b>หลักของหน้านี้</b>
-      <p>แถวที่ไม่มีข้อมูลในทุกคันจะไม่แสดงเลย ส่วนช่อง “—” หมายถึงยังไม่มีข้อมูลในฐานข้อมูล ไม่ได้เดาหรือนำค่าของรุ่นใกล้เคียงมาเติม. ราคาแคมเปญแยกจาก List price และข้อมูลยาง/ล้อยังไม่อยู่ใน public product scope ตอนนี้.</p>
+      <p>ช่อง “—” หมายถึงยังไม่มีข้อมูลในฐานข้อมูล ไม่ได้เดาหรือนำค่าของรุ่นใกล้เคียงมาเติม</p>
     </section>
   </div>;
 }
