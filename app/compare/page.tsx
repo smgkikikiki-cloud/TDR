@@ -74,7 +74,6 @@ export default function ComparePage() {
     {token === null ? (
       <section className="compareEmpty">
         <b>ต้องเข้าสู่ระบบก่อนเทียบรถ</b>
-        <span>เครื่องมือเทียบรถเป็นฟีเจอร์ของบัญชี TDR (สมัครฟรีได้ ไม่ต้องผูกบัตร) — ดูข้อมูลรุ่น/ราคายังเปิดสาธารณะตามปกติ</span>
         <Link href="/member/login">เข้าสู่ระบบ / สมัครสมาชิกฟรี →</Link>
       </section>
     ) : (
@@ -139,10 +138,5 @@ export default function ComparePage() {
         </table>
       </section>
     ) : null}
-
-    <section className="compareFootnote">
-      <b>หลักของหน้านี้</b>
-      <p>แถวที่ไม่มีข้อมูลในทุกคันจะไม่แสดงเลย ส่วนช่อง “—” หมายถึงฐาน canonical ยังไม่มีค่าที่ตรวจสอบได้ ไม่ได้เดาจากเว็บอื่นหรือเอาค่าของรุ่นใกล้เคียงมาเติม. ราคาแคมเปญแยกจาก List price และข้อมูลยาง/ล้อยังไม่อยู่ใน public product scope ตอนนี้.</p>
-    </section>
   </div>;
 }
