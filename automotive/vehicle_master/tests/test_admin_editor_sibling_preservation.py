@@ -1,16 +1,19 @@
 """Data-integrity gate for the Canonical Vehicle Editor's MarketTrim edit path.
 
-The editor (app/admin/vehicle-editor-actions.ts#prepareMarketTrimEdit) builds
-an UPSERT_MODEL_BUNDLE command via lib/canonical-command-builder.ts's
-buildMarketTrimBatch(), sending only the ONE MarketTrim being edited plus an
-empty `variants: []`. Before this branch can merge, that has to be proven
-non-destructive against the REAL Python canonical writer, not just asserted
-by reading vehreg/canonical_write.py's code.
+The editor (app/admin/vehicle-editor-actions.ts#prepareTrimEdit) builds one
+batch per trim via lib/canonical-command-builder.ts's buildTrimEditBatch():
+an UPSERT_MODEL_BUNDLE carrying only the ONE MarketTrim being edited (plus an
+empty `variants: []`), followed by one APPEND_SPEC per comparable-spec fact
+touched in the same pass. Both halves have to be proven against the REAL
+Python canonical writer, not just asserted by reading
+vehreg/canonical_write.py's code: that the partial trim payload is
+non-destructive to siblings, and that a batch mixing both command types
+applies cleanly.
 
-This test does not hand-write the command JSON. It shells out to
+These tests do not hand-write the command JSON. They shell out to
 scripts/print-market-trim-edit-command.ts, which imports and calls the exact
-same buildMarketTrimBatch() the editor's server action calls, so the command
-under test is byte-for-byte what production would send.
+same buildTrimEditBatch() the editor's server action calls, so what is under
+test is byte-for-byte what production would send.
 
 Writer semantics this proves (see also CanonicalWritePipeline._upsert_model_bundle
 in vehreg/canonical_write.py):
@@ -38,6 +41,8 @@ import pytest
 
 from vehreg.canonical_write import CanonicalWritePipeline
 from vehreg.catalog import Catalog
+from vehreg.comparable_specs import SpecLedger, SpecRegistry, ValueState
+from vehreg.input_pipeline import CanonicalInputPipeline
 
 YEAR = 2026
 MODEL_ID = "acme.testmodel"
@@ -289,3 +294,104 @@ def test_market_trim_edit_command_cannot_attach_to_a_different_generation(tmp_pa
     catalog = Catalog.load(data, YEAR)
     assert catalog.trims[TRIM_A_ID].name == "Trim A"
     assert len(catalog.trims_of(MODEL_ID)) == 2
+
+
+SPEC_REGISTRY_SEED = {
+    "schema_version": 1,
+    "fields": [
+        {
+            "key": "powertrain.max_power_kw", "group": "powertrain",
+            "label_th": "กำลังสูงสุด", "label_en": "Maximum power",
+            "value_type": "NUMBER", "comparison_rule": "HIGHER_BETTER",
+            "canonical_unit": "kW", "display_precision": 1,
+        },
+        {
+            "key": "safety.aeb", "group": "safety",
+            "label_th": "ระบบเบรกฉุกเฉินอัตโนมัติ", "label_en": "Autonomous emergency braking",
+            "value_type": "BOOLEAN", "comparison_rule": "PRESENCE",
+        },
+    ],
+}
+
+
+def _batch(args: dict, batch_id: str) -> dict:
+    """The whole batch the editor produces, normalized the way
+    lib/canonical-input-queue.ts's enqueueCanonicalInputBatch normalizes it
+    (actor + submitted_at stamped onto the batch) before the worker pulls it."""
+    if shutil.which("node") is None:
+        pytest.skip("node is not available to run the real TypeScript command builder")
+    result = subprocess.run(
+        ["node", "--experimental-strip-types", str(BUILDER_SCRIPT)],
+        input=json.dumps(args), capture_output=True, text=True, cwd=REPO_ROOT, timeout=60,
+    )
+    assert result.returncode == 0, f"buildTrimEditBatch bridge failed: {result.stderr}"
+    payload = json.loads(result.stdout)
+    payload["batch_id"] = batch_id
+    payload["actor"] = "trim-editor-test"
+    return payload
+
+
+def test_one_trim_edit_carries_marketrim_fields_and_spec_facts_in_one_batch(tmp_path: Path):
+    """The editor's core promise: an admin opens one trim, changes its own
+    fields AND its comparable-spec facts, and that lands as ONE canonical
+    batch. Proven through the real CanonicalInputPipeline, which is what the
+    worker actually runs -- mixing UPSERT_MODEL_BUNDLE and APPEND_SPEC in a
+    single batch has to work for the unified editor to be honest."""
+    data = _seed(tmp_path)
+    _write_json(data / str(YEAR) / "product" / "comparable_specs" / "registry.json", SPEC_REGISTRY_SEED)
+
+    args = _edit_trim_a_args()
+    args["trim"] = {"name": "Trim A", "powertrain": "ICE", "seats": 7}
+    args["specEntries"] = [
+        {"fieldKey": "powertrain.max_power_kw", "labelForDiff": "Maximum power (kW)",
+         "valueState": "KNOWN", "value": 150, "unit": "kW"},
+        {"fieldKey": "safety.aeb", "labelForDiff": "AEB",
+         "valueState": "KNOWN", "value": True, "unit": ""},
+    ]
+    batch = _batch(args, "admin-vehicle-trim-combined-001")
+    operations = [command["operation"] for command in batch["commands"]]
+    assert operations == ["UPSERT_MODEL_BUNDLE", "APPEND_SPEC", "APPEND_SPEC"]
+
+    result = CanonicalInputPipeline(data).apply(batch)
+    assert result.status == "APPLIED"
+
+    catalog = Catalog.load(data, YEAR)
+    assert catalog.validate() == []
+
+    # -- the MarketTrim field landed --
+    assert catalog.trims[TRIM_A_ID].seats == 7
+    # -- its untouched fields and its sibling trim are still intact --
+    assert catalog.trims[TRIM_A_ID].tire_front == TRIM_A_SEED["tire_front"]
+    assert catalog.trims[TRIM_B_ID].name == TRIM_B_SEED["name"]
+    assert len(catalog.trims_of(MODEL_ID)) == 2
+
+    # -- and both spec facts landed against that same trim --
+    registry = SpecRegistry.load(data, YEAR)
+    ledger = SpecLedger.load(data, YEAR, registry=registry, catalog=catalog)
+    facts = {fact.field_key: fact for fact in ledger.facts if fact.trim_id == TRIM_A_ID}
+    assert facts["powertrain.max_power_kw"].value == 150
+    assert facts["powertrain.max_power_kw"].unit == "kW"
+    assert facts["safety.aeb"].value is True
+    assert facts["powertrain.max_power_kw"].value_state is ValueState.KNOWN
+
+
+def test_not_applicable_spec_is_recorded_as_a_state_not_a_zero(tmp_path: Path):
+    """A field marked "ไม่มี/ไม่เกี่ยว" in the editor must reach the ledger as
+    NOT_APPLICABLE with no value -- never as 0, false, or a silent omission."""
+    data = _seed(tmp_path)
+    _write_json(data / str(YEAR) / "product" / "comparable_specs" / "registry.json", SPEC_REGISTRY_SEED)
+
+    args = _edit_trim_a_args()
+    args["trim"] = {"name": "Trim A", "powertrain": "ICE"}
+    args["specEntries"] = [
+        {"fieldKey": "safety.aeb", "labelForDiff": "AEB",
+         "valueState": "NOT_APPLICABLE", "value": None, "unit": ""},
+    ]
+    CanonicalInputPipeline(data).apply(_batch(args, "admin-vehicle-trim-na-001"))
+
+    catalog = Catalog.load(data, YEAR)
+    ledger = SpecLedger.load(data, YEAR, registry=SpecRegistry.load(data, YEAR), catalog=catalog)
+    fact = next(f for f in ledger.facts if f.trim_id == TRIM_A_ID and f.field_key == "safety.aeb")
+    assert fact.value_state is ValueState.NOT_APPLICABLE
+    assert fact.value is None
+    assert fact.value is not False

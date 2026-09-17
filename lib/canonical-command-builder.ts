@@ -66,6 +66,17 @@ export function evidenceReasonPrefix(evidence: Evidence): string {
 }
 
 /**
+ * Reason is optional for the editor's users but never empty in the audit
+ * trail: a blank one becomes a plain statement of what happened. Nothing
+ * downstream rejects an empty reason, so this is about keeping the canonical
+ * revision log readable, not about gating the save.
+ */
+export function composeReason(evidence: Evidence, reason: string): string {
+  const text = reason.trim() || "Manual edit via Canonical Vehicle Editor";
+  return evidenceReasonPrefix(evidence) + text;
+}
+
+/**
  * Only fields present as own keys of `patch` are considered "touched" by the
  * admin — this is what keeps untouched sibling fields out of the diff and,
  * downstream, out of the emitted command (UPSERT_MODEL_BUNDLE merges patches
@@ -126,7 +137,7 @@ export function buildModelGenerationBatch(args: ModelGenerationEditArgs): {
       year: args.year,
       submitted_at: args.submittedAt,
       source: evidenceSource(args.evidence),
-      reason: evidenceReasonPrefix(args.evidence) + args.reason,
+      reason: composeReason(args.evidence, args.reason),
       commands: [{ operation: "UPSERT_MODEL_BUNDLE", canonical_id: args.canonicalModelId, payload: commandPayload }],
     },
     diff: [],
@@ -180,7 +191,7 @@ export type MarketTrimEditArgs = {
   sourceRefs?: Record<string, string[]>;
 };
 
-export function buildMarketTrimBatch(args: MarketTrimEditArgs): {
+function buildMarketTrimBatch(args: MarketTrimEditArgs): {
   payload: CanonicalBatchPayload;
 } {
   const trimPayload: Record<string, unknown> = {
@@ -195,7 +206,7 @@ export function buildMarketTrimBatch(args: MarketTrimEditArgs): {
       year: args.year,
       submitted_at: args.submittedAt,
       source: evidenceSource(args.evidence),
-      reason: evidenceReasonPrefix(args.evidence) + args.reason,
+      reason: composeReason(args.evidence, args.reason),
       commands: [{
         operation: "UPSERT_MODEL_BUNDLE",
         canonical_id: args.canonicalModelId,
@@ -215,97 +226,130 @@ export type SpecFactValueState = "KNOWN" | "UNKNOWN" | "NOT_AVAILABLE" | "NOT_AP
 export type SpecFactVerification = "VERIFIED" | "PROVISIONAL";
 
 /**
- * One field's worth of a spec-draft edit session. A whole vehicle-spec draft
- * (drivetrain, power, torque, battery, dimensions, ...) is just an array of
- * these compiled into ONE batch by buildSpecDraftBatch -- one field per
- * APPEND_SPEC command, never a "replace all specs" operation.
+ * One comparable-spec field the admin actually touched in a trim edit.
+ * Fields left alone never become an entry, so they never produce a command.
  */
-export type SpecDraftEntry = {
+export type TrimSpecEntry = {
   fieldKey: string;
   labelForDiff: string;
   valueState: SpecFactValueState;
   /** Must be null unless valueState is KNOWN (vehreg SpecFieldDefinition.validate_value). */
   value: string | number | boolean | string[] | null;
   unit: string;
-  qualifiers?: Record<string, string>;
-  observedAt?: string;
-  verificationStatus?: SpecFactVerification;
-  /** Per-field evidence override. Falls back to the draft's default evidence
-   * so the common case -- one source backs every field in the session --
-   * never requires retyping the same URL/date per field. */
-  evidence?: Evidence;
 };
 
-export type SpecDraftBatchArgs = {
+export type TrimEditArgs = {
   batchId: string;
   year: number;
   submittedAt: string;
+  /** Free text; may be empty. Nothing downstream requires it -- both
+   * CanonicalInputBatch.from_dict and CanonicalWriteCommand.from_dict accept
+   * an empty reason -- so the editor never blocks a save on it. */
   reason: string;
-  /** Draft-level default: used for the batch's own source.ref, and for any
-   * entry that does not carry its own evidence override. */
+  /** sourceRef is free text (a URL, a brochure name, a note) or absent. */
   evidence: Evidence;
-  trimId: string;
-  entries: SpecDraftEntry[];
+  canonicalModelId: string;
+  brand: { id: string; nameEn: string; nameTh?: string };
+  generationCode: string;
+  /** Present when editing an existing MarketTrim; absent when creating one. */
+  existingTrimId?: string;
+  trim: MarketTrimFields;
+  sourceRefs?: Record<string, string[]>;
+  /**
+   * Comparable-spec facts edited in the same pass. Only meaningful for an
+   * existing trim: APPEND_SPEC attaches a fact to a trim_id, and a brand-new
+   * trim has no stable canonical_id until the UPSERT_MODEL_BUNDLE command
+   * above actually creates it. Callers pass [] when creating.
+   */
+  specEntries?: TrimSpecEntry[];
 };
 
-function specFactPayload(trimId: string, entry: SpecDraftEntry, fallbackEvidence: Evidence): Record<string, unknown> {
-  const evidence = entry.evidence || fallbackEvidence;
+/**
+ * SpecLedger requires a fact_id, refuses to let an existing one change its
+ * content, and resolves a field's current value by taking the
+ * lexicographically last active fact (vehreg/comparable_specs.py's
+ * SpecLedger.resolved). So the id has to be unique per save AND sort
+ * chronologically: trim + field + the submission's own ISO timestamp does
+ * both, and makes a re-submitted identical batch an idempotent replay rather
+ * than a conflict.
+ */
+function specFactId(trimId: string, fieldKey: string, submittedAt: string): string {
+  return `admin:${trimId}:${fieldKey}:${submittedAt}`;
+}
+
+function specFactPayload(entry: TrimSpecEntry, evidence: Evidence, trimId: string, submittedAt: string): Record<string, unknown> {
   return {
+    fact_id: specFactId(trimId, entry.fieldKey, submittedAt),
+    trim_id: trimId,
     field_key: entry.fieldKey,
     value_state: entry.valueState,
     value: entry.valueState === "KNOWN" ? entry.value : null,
     unit: entry.valueState === "KNOWN" ? entry.unit : "",
-    ...(entry.qualifiers && Object.keys(entry.qualifiers).length ? { qualifiers: entry.qualifiers } : {}),
-    observed_at: entry.observedAt || evidence.reviewedAt,
-    verification_status: entry.verificationStatus || "VERIFIED",
+    observed_at: evidence.reviewedAt,
+    verification_status: "VERIFIED",
     source: evidence.sourceKind.toLowerCase(),
     ...(evidence.sourceRef ? { source_ref: evidence.sourceRef } : {}),
   };
 }
 
 /**
- * Compiles a whole spec-editing session into ONE canonical batch: one
- * APPEND_SPEC command per changed field, nothing for fields the admin never
- * touched (they simply never became a SpecDraftEntry). This is the single
- * place "one draft -> one review -> one queued batch" is enforced for specs.
+ * Compiles ONE trim's whole edit -- the MarketTrim's own fields (name,
+ * powertrain, engine, dimensions, tyres, seats, ...) AND every comparable-spec
+ * fact touched in the same pass (power, torque, ADAS, battery chemistry, ...)
+ * -- into ONE canonical batch.
+ *
+ * The admin edits "this trim" once; the split between an UPSERT_MODEL_BUNDLE
+ * command and N APPEND_SPEC commands is an internal detail of the canonical
+ * command language, not something the editing UI should expose. The input
+ * pipeline applies every command in a batch sequentially against one staged
+ * tree (vehreg/input_pipeline.py's CanonicalInputPipeline.apply), so the trim
+ * patch and its spec facts land together or not at all.
  */
-export function buildSpecDraftBatch(args: SpecDraftBatchArgs): { payload: CanonicalBatchPayload } {
-  if (!args.entries.length) throw new Error("a spec draft needs at least one field before it can be queued");
-  const commands = args.entries.map((entry) => ({
+export function buildTrimEditBatch(args: TrimEditArgs): { payload: CanonicalBatchPayload } {
+  const specEntries = args.specEntries || [];
+  if (specEntries.length && !args.existingTrimId) {
+    throw new Error("spec facts need an existing trim: save the new MarketTrim first, then add its specs");
+  }
+  const { payload } = buildMarketTrimBatch(args);
+  const specCommands = specEntries.map((entry) => ({
     operation: "APPEND_SPEC",
-    canonical_id: args.trimId,
-    payload: specFactPayload(args.trimId, entry, args.evidence),
+    canonical_id: args.existingTrimId!,
+    payload: specFactPayload(entry, args.evidence, args.existingTrimId!, args.submittedAt),
   }));
-  return {
-    payload: {
-      schema_version: 1,
-      batch_id: args.batchId,
-      year: args.year,
-      submitted_at: args.submittedAt,
-      source: evidenceSource(args.evidence),
-      reason: evidenceReasonPrefix(args.evidence) + args.reason,
-      commands,
-    },
-  };
+  return { payload: { ...payload, commands: [...payload.commands, ...specCommands] } };
 }
 
-/** Diff for a spec draft: current vs proposed {value_state, value} per field,
- * reusing diffPatch's JSON-equality comparison (works fine on composite
- * values, not just scalars). */
-export function diffSpecDraft(
-  currentByField: Record<string, { value_state: string; value: unknown }>,
-  entries: SpecDraftEntry[],
-): DiffRow[] {
-  const current: Record<string, unknown> = {};
-  const patch: Record<string, unknown> = {};
-  const labels: Record<string, string> = {};
-  for (const entry of entries) {
-    const existing = currentByField[entry.fieldKey];
-    current[entry.fieldKey] = existing ? { value_state: existing.value_state, value: existing.value } : { value_state: "UNKNOWN", value: null };
-    patch[entry.fieldKey] = { value_state: entry.valueState, value: entry.valueState === "KNOWN" ? entry.value : null };
-    labels[entry.fieldKey] = entry.labelForDiff;
+/**
+ * One combined Current-vs-Proposed diff for a trim edit: the MarketTrim's own
+ * fields and its comparable-spec facts in a single list, in the order the
+ * editor shows them, so the review step reads as "this trim" rather than two
+ * unrelated change sets.
+ */
+export function diffTrimEdit(args: {
+  currentTrimFields: Record<string, unknown>;
+  trimPatch: Record<string, unknown>;
+  trimLabels: Record<string, string>;
+  currentSpecsByField: Record<string, { value_state: string; value: unknown }>;
+  specEntries: TrimSpecEntry[];
+}): DiffRow[] {
+  const specCurrent: Record<string, unknown> = {};
+  const specPatch: Record<string, unknown> = {};
+  const specLabels: Record<string, string> = {};
+  for (const entry of args.specEntries) {
+    const existing = args.currentSpecsByField[entry.fieldKey];
+    specCurrent[entry.fieldKey] = existing
+      ? { value_state: existing.value_state, value: existing.value }
+      : { value_state: "UNKNOWN", value: null };
+    specPatch[entry.fieldKey] = {
+      value_state: entry.valueState,
+      value: entry.valueState === "KNOWN" ? entry.value : null,
+    };
+    specLabels[entry.fieldKey] = entry.labelForDiff;
   }
-  return diffPatch(current, patch, labels);
+  return [
+    ...diffPatch(args.currentTrimFields, args.trimPatch, args.trimLabels),
+    ...diffPatch(specCurrent, specPatch, specLabels),
+  ];
 }
 
 export type SourceRefEdit = { kind: string; url: string };
