@@ -127,7 +127,7 @@ export default function PricingPage() {
       <section className={styles.corporate}>
         <div>
           <div className={styles.eyebrow} style={{ color: "#bbb" }}>CORPORATE</div>
-          <h2>Solutions tailored for your team</h2>
+          <h2>สำหรับองค์กร</h2>
           <p>แพ็กเกจสำหรับทีม/องค์กร ไม่ใช่แค่ Pro ที่แพงขึ้น — ขอบเขตและราคาปรับตามการใช้งานจริง อาจถูกหรือแพงกว่า Pro คูณจำนวนที่นั่งก็ได้ ขึ้นกับ scope ที่ตกลงกัน</p>
           <ul>
             <li>· Team access หลายที่นั่ง</li>

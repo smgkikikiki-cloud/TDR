@@ -19,7 +19,7 @@
 /* full-bleed inside the padded page column */
 .sfBleed { margin-inline: calc(var(--pagePad) * -1); padding-inline: var(--pagePad); }
 
-.sfEyebrow { color: var(--red); font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.sfEyebrow { color: var(--eyebrow); font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
 .sfEyebrow.ink { color: var(--sf-muted); }
 .sfNum { font-variant-numeric: tabular-nums; }
 .sfMissing { color: var(--sf-slot-ink); font-style: italic; font-weight: 500; font-size: 13px; }
@@ -351,20 +351,13 @@
 .sfPitchPanel { border: 1px solid var(--navy); background: #fff; }
 .sfPanelHead { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 18px 20px 15px; border-bottom: 1px solid var(--line); }
 .sfPanelHead h2 { margin: 7px 0 0; font-size: 19px; font-weight: 700; letter-spacing: -.015em; }
-.sfLockBadge { display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; border: 1px solid var(--red); color: var(--red); background: var(--soft-red); padding: 4px 9px; font-size: 12px; font-weight: 700; }
-.sfPanelFade { position: relative; padding: 24px 20px 22px; min-height: 300px; }
-.sfPanelOverlay { position: absolute; left: 0; right: 0; bottom: 0; padding: 62px 20px 22px; text-align: center;
-  background: linear-gradient(180deg, rgba(252,252,252,0) 0%, rgba(252,252,252,.88) 46%, var(--white) 76%); }
-.sfPanelOverlay strong { display: block; font-size: 16px; font-weight: 700; margin-bottom: 13px; }
+.sfLockBadge { display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; border: 1px solid var(--line); color: var(--sf-muted); background: var(--paper); padding: 4px 9px; font-size: 12px; font-weight: 700; }
+.sfPanelFade { padding: 22px 20px; }
+/* No gradient curtain: there is nothing behind it to hide any more. This is
+   just the panel's own footer. */
+.sfPanelOverlay { border-top: 1px solid var(--line); margin-top: 20px; padding: 18px 0 0; }
+.sfPanelOverlay strong { display: block; font-size: 15px; font-weight: 600; margin-bottom: 12px; }
 
-/* a chart-shaped texture: no label is attached to any bar, so it claims nothing */
-.sfBlurChart { display: flex; flex-direction: column; gap: 11px; filter: blur(4px); opacity: .55; user-select: none; }
-.sfBlurChart.tall { gap: 13px; }
-.sfBlurChart > span { display: grid; grid-template-columns: minmax(0, 1fr) 38px; align-items: center; gap: 12px; }
-.sfBlurChart i { display: block; height: 13px; background: var(--navy); }
-.sfBlurChart > span:nth-child(even) i { background: var(--navy-2); }
-.sfBlurChart > span:nth-child(3n) i { background: var(--red); }
-.sfBlurChart em { font-style: normal; font-size: 13px; font-weight: 700; color: var(--sf-muted); text-align: right; letter-spacing: .08em; }
 
 .sfQGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
 .sfQCard { border: 1px solid var(--line); background: #fff; padding: 18px 18px 16px; display: flex; flex-direction: column; }
@@ -492,3 +485,8 @@
   .sfMakerHead { flex-direction: column; align-items: flex-start; gap: 4px; }
   .sfMakerHead span { text-align: left; }
 }
+
+/* What the member view contains, listed rather than pictured. */
+.sfScopeList { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.sfScopeList li { position: relative; padding-left: 18px; font-size: 14px; line-height: 1.55; color: var(--ink); }
+.sfScopeList li::before { content: ""; position: absolute; left: 0; top: 9px; width: 8px; height: 1px; background: var(--navy); }

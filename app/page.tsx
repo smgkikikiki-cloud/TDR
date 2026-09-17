@@ -38,12 +38,42 @@ function GalleryCard({ r }: { r: any }) {
   );
 }
 
+/** Scores a model for the front-page lead.
+ *
+ * Completeness first -- every empty fact in the hero reads as "this database
+ * has nothing" -- then mainstream over exotic, since the site is about the
+ * cars Thai buyers actually register (รย.1 / รย.3), not supercars. */
+function leadScore(r: any): number {
+  const price = r.retail_price_min || r.retail_price_max ? 4 : 0;
+  const powertrain = (r.powertrains || []).length ? 2 : 0;
+  const body = r.body_type ? 2 : 0;
+  const seats = r.seats ? 1 : 0;
+  const mass = String(r.market_position || "").toLowerCase() === "mass" ? 3 : 0;
+  const local = r.production_type === "CKD" || r.production_type === "SKD" ? 1 : 0;
+  return price + powertrain + body + seats + mass + local;
+}
+
+function pickLead(rows: any[]): any | undefined {
+  let best: any; let bestScore = -1;
+  for (const row of rows) {
+    const score = leadScore(row);
+    if (score > bestScore) { best = row; bestScore = score; }
+  }
+  // A hero with no price and no powertrain is worse than no hero section.
+  return bestScore >= 6 ? best : undefined;
+}
+
 export default async function Home() {
   const [brands, events, models] = await Promise.all([getCanonicalBrands(30), getEvents(5), getCanonicalModels(600)]);
   const recent = (models as any[]).filter((r) => r.status !== "discontinued");
   const featured = recent.filter((r) => r.featured);
   const current = (featured.length ? featured.slice(0, 6) : recent.slice(0, 6)) as any[];
-  const lead = current[0];
+  // The front page used to lead with whatever the query returned first, which
+  // was a Ferrari: a car with no price, no dimensions and no relevance to the
+  // market this site is about. The lead has to be a car the catalogue can
+  // actually describe, and a mainstream one -- an empty hero says the database
+  // is empty, whatever else is on the page.
+  const lead = pickLead(featured.length ? featured : recent) || current[0];
   const side = recent.filter((r) => !lead || r.id !== lead.id).slice(0, 5);
   const rest = current.slice(1, 7);
 
@@ -139,7 +169,7 @@ export default async function Home() {
 
     <section className="sfHomeSec">
       <div className="sfZoneHead">
-        <div><div className="sfEyebrow ink">INDUSTRY LAYER</div><h2>ดูรถในอีกมุม</h2></div>
+        <div><div className="sfEyebrow ink">INDUSTRY LAYER</div><h2>ข้อมูลอุตสาหกรรม</h2></div>
       </div>
       <div className="sfIndustryLinks">
         <Link href="/models"><b>ราคา สเปก และรุ่นย่อย</b><p>ข้อมูลตลาดรถเปิดฟรีจาก Vehicle Master ชุดเดียว พร้อมราคาแคมเปญและเงื่อนไข</p><span>เปิดดู →</span></Link>

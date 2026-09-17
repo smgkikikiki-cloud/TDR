@@ -9,29 +9,38 @@ export const dynamic = "force-dynamic";
  *  buttons fall back to the contact block instead of inventing a URL. */
 const MEMBER_SITE = "";
 
-/** The pitch. Every label on this page is real — model names come out of the
- *  catalog, counts are computed from it. Only values a subscriber pays for are
- *  hidden, and what sits behind the blur is "••" and abstract shapes, never a
- *  fabricated number: the blur is a curtain, not a security boundary. */
+/** Every label on this page is real: model names come out of the catalog and
+ *  counts are computed from it. Nothing is mocked up — where a number is for
+ *  subscribers, the page says so in words rather than showing a fake of it. */
 const QUESTIONS: { scope: string; question: string; pick: (r: any) => boolean }[] = [
-  { scope: "กระบะ · Double Cab", question: "เดือนที่แล้วกระบะรุ่นไหนขายนำ และทิ้งห่างรุ่นรองเท่าไหร่", pick: (r) => r.body_type === "PICKUP" },
-  { scope: "PPV พื้นฐานกระบะ", question: "PPV รุ่นไหนกำลังกินส่วนแบ่งของรุ่นอื่นอยู่", pick: (r) => r.body_type === "PPV" },
-  { scope: "รถไฟฟ้า BEV", question: "รถไฟฟ้ารุ่นไหนขายได้จริง รุ่นไหนแค่เปิดตัวแล้วเงียบ", pick: (r) => (r.powertrains || []).includes("BEV") },
-  { scope: "ไฮบริด HEV", question: "ไฮบริดแซงเครื่องยนต์สันดาปในเซกเมนต์ไหนไปแล้วบ้าง", pick: (r) => (r.powertrains || []).includes("HEV") },
-  { scope: "ครอสโอเวอร์", question: "ครอสโอเวอร์รุ่นไหนโตเร็วที่สุดใน 6 เดือนล่าสุด", pick: (r) => r.body_type === "CROSSOVER" },
-  { scope: "ประกอบไทย เทียบ นำเข้า", question: "รุ่นที่ประกอบในไทยเสียส่วนแบ่งให้รถนำเข้าไปเท่าไหร่", pick: (r) => r.production_type === "CKD" || r.production_type === "SKD" },
+  { scope: "กระบะ · Double Cab", question: "ยอดจดทะเบียนกระบะรายรุ่นและส่วนแบ่งตลาด", pick: (r) => r.body_type === "PICKUP" },
+  { scope: "PPV พื้นฐานกระบะ", question: "การเปลี่ยนแปลงส่วนแบ่งตลาดกลุ่ม PPV", pick: (r) => r.body_type === "PPV" },
+  { scope: "รถไฟฟ้า BEV", question: "ยอดจดทะเบียนรถไฟฟ้ารายรุ่น", pick: (r) => (r.powertrains || []).includes("BEV") },
+  { scope: "ไฮบริด HEV", question: "สัดส่วนไฮบริดเทียบเครื่องยนต์สันดาป แยกตามเซกเมนต์", pick: (r) => (r.powertrains || []).includes("HEV") },
+  { scope: "ครอสโอเวอร์", question: "อัตราการเติบโตของครอสโอเวอร์รายรุ่น", pick: (r) => r.body_type === "CROSSOVER" },
+  { scope: "ประกอบไทย เทียบ นำเข้า", question: "สัดส่วนรถประกอบในไทยเทียบรถนำเข้า", pick: (r) => r.production_type === "CKD" || r.production_type === "SKD" },
 ];
 
-/** A chart-shaped texture. No label is attached to any bar, so it states
- *  nothing — it only shows that a chart lives here. */
-function BlurChart({ tall }: { tall?: boolean }) {
-  const bars = tall ? [92, 74, 61, 48, 39, 27, 19] : [88, 66, 51, 34, 22];
+/** What the member view actually contains, stated plainly.
+ *
+ *  This used to be a blurred bar-chart texture. A blurred chart says "there is
+ *  nothing here" far more loudly than it says "there is something worth paying
+ *  for", and it is a picture of data we do not have on this page. A list of the
+ *  cuts that exist is both honest and more persuasive. */
+function MemberScope({ items }: { items: readonly string[] }) {
   return (
-    <div className={tall ? "sfBlurChart tall" : "sfBlurChart"} aria-hidden="true">
-      {bars.map((w, i) => <span key={i}><i style={{ width: `${w}%` }} /><em>••</em></span>)}
-    </div>
+    <ul className="sfScopeList">
+      {items.map((item) => <li key={item}>{item}</li>)}
+    </ul>
   );
 }
+
+const MONTHLY_CUTS = [
+  "ยอดจดทะเบียนรายเดือน ย้อนหลังถึง 2565",
+  "ส่วนแบ่งตลาดรายแบรนด์และรายรุ่น",
+  "แยกตามเซกเมนต์ ช่วงราคา และประเทศที่ผลิต",
+  "เปรียบเทียบเดือนต่อเดือนและปีต่อปี",
+] as const;
 
 export default async function ReportsPage() {
   const [brands, events, models] = await Promise.all([getCanonicalBrands(250), getEvents(6), getCanonicalModels(600)]);
@@ -39,7 +48,7 @@ export default async function ReportsPage() {
   const assembled = current.filter((r) => r.production_type === "CKD" || r.production_type === "SKD").length;
 
   const cta = MEMBER_SITE || "#tdr-contact";
-  const ctaLabel = MEMBER_SITE ? "เข้าสู่ TDR Report ↗" : "ขอเข้าถึงข้อมูลชุดเต็ม";
+  const ctaLabel = MEMBER_SITE ? "เข้าสู่ TDR Report ↗" : "ดูรายละเอียดแพ็กเกจ";
 
   const cards = QUESTIONS.map((q) => {
     const hits = current.filter(q.pick);
@@ -50,11 +59,11 @@ export default async function ReportsPage() {
     <section className="sfPitchHero">
       <div>
         <div className="sfEyebrow">TDR REPORT · สำหรับสมาชิก</div>
-        <h1>ยอดจดทะเบียนรถไทย ลึกถึงระดับรุ่นย่อย</h1>
-        <p>ข้อมูลรถ โรงงาน และการผลิตบนเว็บนี้เปิดให้ดูฟรีทั้งหมด ส่วนตัวเลขตลาด — ใครขายได้เท่าไหร่ รุ่นย่อยไหนขายดี ส่วนแบ่งเปลี่ยนไปทางไหน — อยู่ใน TDR Report</p>
+        <h1>ยอดจดทะเบียนรถยนต์ในประเทศไทย</h1>
+        <p>ข้อมูลรถ โรงงาน และการผลิตบนเว็บนี้เปิดให้ดูฟรีทั้งหมด ส่วนข้อมูลยอดจดทะเบียนและส่วนแบ่งตลาดอยู่ใน TDR Report</p>
         <div className="sfPitchActions">
           <Link className="sfBtn" href={cta}>{ctaLabel}</Link>
-          <Link className="sfBtnGhost" href="#tdr-compare">ฟรีกับสมาชิกต่างกันยังไง</Link>
+          <Link className="sfBtnGhost" href="#tdr-compare">เปรียบเทียบแพ็กเกจ</Link>
         </div>
       </div>
       <div className="sfPitchPanel">
@@ -69,9 +78,9 @@ export default async function ReportsPage() {
           </span>
         </div>
         <div className="sfPanelFade">
-          <BlurChart tall />
+          <MemberScope items={MONTHLY_CUTS} />
           <div className="sfPanelOverlay">
-            <strong>ตัวเลขจริงอยู่ใน TDR Report</strong>
+            <strong>ดูตัวเลขได้เมื่อเข้าสู่ระบบ</strong>
             <Link className="sfBtn" href={cta}>{ctaLabel}</Link>
           </div>
         </div>
@@ -83,7 +92,7 @@ export default async function ReportsPage() {
       <div className="sfStripItem"><b className="sfNum">{brands.length.toLocaleString()}</b><span>แบรนด์</span></div>
       <div className="sfStripItem"><b className="sfNum">{assembled.toLocaleString()}</b><span>ประกอบในไทย</span></div>
       <div className="sfStripItem"><b className="sfNum">สมาชิก</b><span>ข้อมูลจดทะเบียน</span></div>
-      <div className="sfStripNote">ตัวเลขตลาดจริงไม่ถูกอ่านผ่าน public client; การเข้าถึงชุดข้อมูลเต็มต้องผ่านสิทธิ์สมาชิกของ TDR</div>
+      <div className="sfStripNote">ข้อมูลยอดจดทะเบียนเข้าถึงได้ผ่านสิทธิ์สมาชิกเท่านั้น</div>
     </div>
 
     <section className="sfBlock">
@@ -105,7 +114,7 @@ export default async function ReportsPage() {
 
     <section className="sfBlock">
       <div className="sfZoneHead">
-        <div><div className="sfEyebrow">คำถามที่ตอบได้เฉพาะสมาชิก</div><h2>คำถามที่ฐานข้อมูลนี้ตอบได้</h2></div>
+        <div><div className="sfEyebrow">ขอบเขตข้อมูล</div><h2>คำถามที่ฐานข้อมูลนี้ตอบได้</h2></div>
         <span>{cards.length} มุมมอง</span>
       </div>
       <div className="sfQGrid">
@@ -119,19 +128,18 @@ export default async function ReportsPage() {
               </span>
             </div>
             <h3>{c.question}</h3>
-            <BlurChart />
             <p className="sfQScope">
               เทียบ <b className="sfNum">{c.total}</b> รุ่นในฐานข้อมูล · {c.names.join(", ")}{c.total > c.names.length ? ` +${c.total - c.names.length}` : ""}
             </p>
           </article>
         ))}
       </div>
-      <p className="sfQFoot">ชื่อรุ่นและจำนวนด้านบนเป็นข้อมูลจริงจากแคตตาล็อก TDR ส่วนที่เบลอคือตัวเลขยอดจดทะเบียนและส่วนแบ่ง ซึ่งอยู่ในชุดข้อมูลสำหรับสมาชิก</p>
+      <p className="sfQFoot">ชื่อรุ่นและจำนวนด้านบนเป็นข้อมูลจริงจากแคตตาล็อก TDR ส่วนตัวเลขยอดจดทะเบียนและส่วนแบ่งตลาดอยู่ในชุดข้อมูลสำหรับสมาชิก</p>
     </section>
 
     <section className="sfBlock" id="tdr-compare">
       <div className="sfZoneHead">
-        <div><div className="sfEyebrow ink">แพ็กเกจ</div><h2>ฟรี กับ สมาชิก ต่างกันยังไง</h2></div>
+        <div><div className="sfEyebrow ink">แพ็กเกจ</div><h2>ขอบเขตของแต่ละแพ็กเกจ</h2></div>
       </div>
       <table className="sfCompare">
         <thead>
@@ -160,11 +168,11 @@ export default async function ReportsPage() {
     <section className="sfPitchFoot sfBleed" id="tdr-contact">
       <div>
         <div className="sfEyebrow">TDR REPORT</div>
-        <h2>อยากเห็นตัวเลขจริง</h2>
-        <p>{MEMBER_SITE ? "เข้าใช้งานได้ที่ TDR Report" : "ระบบสมาชิกกำลังเปิด ติดต่อทีม TDR เพื่อขอดูตัวอย่างข้อมูลชุดเต็มหรือสอบถามแพ็กเกจ"}</p>
+        <h2>เข้าถึงข้อมูล</h2>
+        <p>{MEMBER_SITE ? "เข้าใช้งานได้ที่ TDR Report" : "ระบบสมาชิกยังไม่เปิดให้บริการ"}</p>
       </div>
       <div className="sfPitchFootActions">
-        {MEMBER_SITE ? <Link className="sfBtn" href={MEMBER_SITE}>เข้าสู่ TDR Report ↗</Link> : <span className="sfBtn sfBtnDisabled">ระบบสมาชิกกำลังเปิด</span>}
+        {MEMBER_SITE ? <Link className="sfBtn" href={MEMBER_SITE}>เข้าสู่ TDR Report ↗</Link> : <span className="sfBtn sfBtnDisabled">ยังไม่เปิดให้บริการ</span>}
         <Link className="sfBtnGhost" href="/models">ดูข้อมูลที่เปิดฟรีก่อน</Link>
       </div>
     </section>

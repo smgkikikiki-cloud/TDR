@@ -307,7 +307,7 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
         </section>
 
         {data?.comparison ? <section className={styles.panel}>
-          <div className={styles.panelHead}><div><span>SHARE MOVEMENT</span><h2>ใครกำลังกินตลาด ใครเสียตลาด</h2></div><small>จัดตาม percentage-point change ไม่ใช่ unit growth</small></div>
+          <div className={styles.panelHead}><div><span>SHARE MOVEMENT</span><h2>การเปลี่ยนแปลงส่วนแบ่งตลาด</h2></div><small>จัดตาม percentage-point change ไม่ใช่ unit growth</small></div>
           <div className={styles.movementGrid}><div><h3>Gainers</h3>{gainers.map((row) => <div className={styles.moveRow} key={row.entity_key}><span>{row.entity_label}</span><div className={styles.moveTrack}><i className={styles.gain} style={{ width: `${Math.abs(Number(row.share_change_pp)) / maxMove * 100}%` }} /></div><b>{pp(row.share_change_pp)}</b></div>)}</div><div><h3>Losers</h3>{losers.map((row) => <div className={styles.moveRow} key={row.entity_key}><span>{row.entity_label}</span><div className={styles.moveTrack}><i className={styles.loss} style={{ width: `${Math.abs(Number(row.share_change_pp)) / maxMove * 100}%` }} /></div><b>{pp(row.share_change_pp)}</b></div>)}</div></div>
         </section> : null}
 
