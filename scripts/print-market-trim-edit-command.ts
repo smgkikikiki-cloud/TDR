@@ -10,13 +10,20 @@
 // editor produces.
 //
 // Usage: node --experimental-strip-types scripts/print-market-trim-edit-command.ts < args.json
-// where args.json is a MarketTrimEditArgs object (see canonical-command-builder.ts).
+// where args.json is a TrimEditArgs object minus `fields` (see
+// canonical-command-builder.ts). The field catalog is resolved here from the
+// real comparable-spec registry, exactly as the editor page resolves it, so
+// the caller cannot accidentally test against an invented field list.
 import { buildTrimEditBatch, type TrimEditArgs } from "../lib/canonical-command-builder.ts";
+import { loadSpecFieldRegistry } from "../lib/spec-field-registry.ts";
+import { resolveTrimEditorFields, fieldAppliesTo } from "../lib/trim-editor-fields.ts";
 
 let raw = "";
 process.stdin.setEncoding("utf8");
 for await (const chunk of process.stdin) raw += chunk;
 
-const args = JSON.parse(raw) as TrimEditArgs;
-const { payload } = buildTrimEditBatch(args);
+const args = JSON.parse(raw) as Omit<TrimEditArgs, "fields">;
+const fields = resolveTrimEditorFields(loadSpecFieldRegistry(args.year))
+  .filter((field) => fieldAppliesTo(field, args.identity.powertrain));
+const { payload } = buildTrimEditBatch({ ...args, fields });
 process.stdout.write(JSON.stringify(payload));

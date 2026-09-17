@@ -23,7 +23,7 @@ from typing import Any, Optional
 
 from .catalog import Catalog, CatalogError, DATA_DIR, DEFAULT_YEAR, year_dir
 from .comparable_specs import ComparableSpecError, SpecLedger, SpecRegistry
-from .normalize import slug
+from .normalize import slug, trim_identity, trim_local_id
 from .pricing import PriceLedger, PricingError, PriceType
 from .entities import to_jsonable
 from .product import close_price, correct_price, save_campaign
@@ -145,6 +145,49 @@ def _existing_target_matches(path: Path, payload: dict[str, Any]) -> bool:
         return _load_json(path) == payload
     except CanonicalWriteError:
         return False
+
+
+def _fact_filename(fact_id: str) -> str:
+    """A filesystem-safe, collision-free stem for one spec fact.
+
+    A fact_id carries ':' and '.' separators and can be long, so it is folded
+    to a safe stem; the sha suffix keeps two ids that fold together -- or one
+    that had to be truncated -- in separate files.
+    """
+    safe = re.sub(r"[^A-Za-z0-9_.-]", "_", fact_id)
+    digest = hashlib.sha256(fact_id.encode("utf-8")).hexdigest()[:12]
+    return f"canonical_{safe[:120]}_{digest}"
+
+
+def _spec_facts_on_disk(path: Path) -> Optional[list[dict[str, Any]]]:
+    """The facts a spec command wrote last time, or None if it never ran."""
+    if not path.is_file():
+        return None
+    try:
+        payload = _load_json(path)
+    except CanonicalWriteError:
+        return None
+    facts = payload.get("facts") if isinstance(payload, dict) else None
+    if not isinstance(facts, list) or not all(isinstance(row, dict) for row in facts):
+        return None
+    return facts
+
+
+def _load_spec_ledger(data_dir: Path | str, year: int, registry: SpecRegistry,
+                      catalog: Catalog, *, skip: Optional[Path] = None) -> SpecLedger:
+    """``SpecLedger.load`` with one file left out -- the one the running
+    command is about to replace with its own new revision."""
+    if skip is None:
+        return SpecLedger.load(data_dir, year, registry=registry, catalog=catalog)
+    ledger = SpecLedger(registry, year, catalog=catalog)
+    root = Path(data_dir) / str(year) / "product" / "comparable_specs" / "facts"
+    skip = skip.resolve()
+    if root.is_dir():
+        for path in sorted(root.glob("*.json")):
+            if path.resolve() == skip:
+                continue
+            ledger.add_payload(_load_json(path), source=str(path))
+    return ledger
 
 
 def _state_dir(data_dir: Path | str, year: int) -> Path:
@@ -493,9 +536,12 @@ class CanonicalWritePipeline:
                 if not full.startswith(prefix):
                     raise CanonicalWriteError("trim canonical_id has wrong parent")
                 incoming["id"] = full[len(prefix):]
+            # Same identity rule the catalog loader uses, so an incoming trim
+            # matches the row it is meant to update.
             _upsert_by_identity(
                 generation["trims"], incoming,
-                lambda row: slug(row.get("id") or f"{row.get('name','')} {row.get('powertrain','')}")
+                lambda row: trim_local_id(row.get("id"), row.get("name", ""),
+                                          row.get("powertrain", ""))
             )
         payloads[brand_id] = brand_payload
         catalog = _validate_payloads(payloads, command.year)
@@ -650,22 +696,68 @@ class CanonicalWritePipeline:
     def _append_spec(self, command: CanonicalWriteCommand):
         fact = deepcopy(command.payload)
         trim_id = command.canonical_id or str(fact.get("trim_id") or "")
+        # A trim being created by an earlier command in this same batch has no
+        # canonical_id the author could have known: it is derived by a rule
+        # that folds Thai marks and strips corporate words, so it is not
+        # reproducible outside this module. Such a command names the trim by
+        # reference instead and we resolve it here, with the one rule.
+        reference = fact.pop("trim_ref", None)
+        if reference is not None:
+            if not isinstance(reference, dict):
+                raise CanonicalWriteError("APPEND_SPEC trim_ref must be an object")
+            generation_id = str(reference.get("generation_id") or "")
+            if not generation_id:
+                raise CanonicalWriteError("APPEND_SPEC trim_ref requires generation_id")
+            if not (reference.get("id") or reference.get("name")):
+                raise CanonicalWriteError("APPEND_SPEC trim_ref requires id or name")
+            resolved = trim_identity(generation_id, reference.get("id"),
+                                     reference.get("name", ""),
+                                     reference.get("powertrain", ""))
+            if trim_id and trim_id != resolved:
+                raise CanonicalWriteError(
+                    f"APPEND_SPEC trim_ref resolves to {resolved!r}, "
+                    f"which contradicts trim_id {trim_id!r}")
+            trim_id = resolved
         if not trim_id:
             raise CanonicalWriteError("APPEND_SPEC requires trim_id/canonical_id")
         fact["trim_id"] = trim_id
+        field_key = str(fact.get("field_key") or "")
+        if not field_key:
+            raise CanonicalWriteError("APPEND_SPEC requires field_key")
+        # A caller that cannot know the trim_id cannot compose a fact_id out of
+        # it either, so the same rule that resolved the trim derives the id:
+        # one fact per trim per field, which is exactly what the editor's one
+        # box per field means.
+        if not str(fact.get("fact_id") or "").strip():
+            fact["fact_id"] = f"admin:{trim_id}:{field_key}"
+
         catalog = Catalog.load(self.data_dir, command.year)
         registry = SpecRegistry.load(self.data_dir, command.year)
-        ledger = SpecLedger.load(self.data_dir, command.year, registry=registry, catalog=catalog)
-        before = [to_jsonable(row) for row in ledger.facts if row.trim_id == trim_id]
+        root = Path(self.data_dir) / str(command.year) / "product" / "comparable_specs" / "facts"
+        target = root / f"{_fact_filename(str(fact['fact_id']))}.json"
+        target_payload = {"schema_version": 1, "facts": [fact]}
+
+        # The file is named after the fact it holds, not the command that
+        # happened to write it, so re-stating a fact revises it in place. That
+        # is what makes correcting a value ordinary: a second file for the same
+        # field would be a second fact with the same start date and a different
+        # value, which SpecLedger.validate rejects as a conflict, forever. A
+        # file holding some *other* fact is a genuine collision and still stops.
+        prior = _spec_facts_on_disk(target)
+        revises_own = prior is not None and \
+            [row.get("fact_id") for row in prior] == [fact["fact_id"]]
+        if target.exists() and not revises_own \
+                and not _existing_target_matches(target, target_payload):
+            raise CanonicalWriteError("spec fact file already exists for another fact; manual recovery required")
+
+        live = SpecLedger.load(self.data_dir, command.year, registry=registry, catalog=catalog)
+        before = [to_jsonable(row) for row in live.facts if row.trim_id == trim_id]
+        ledger = _load_spec_ledger(self.data_dir, command.year, registry, catalog,
+                                   skip=target if revises_own else None)
         ledger.add_payload({"schema_version": 1, "facts": [fact]}, source=f"<command {command.command_id}>")
         problems = ledger.validate()
         if problems:
             raise CanonicalWriteError("spec validation failed: " + "; ".join(problems))
-        root = Path(self.data_dir) / str(command.year) / "product" / "comparable_specs" / "facts"
-        target = root / f"canonical_{command.command_id}.json"
-        target_payload = {"schema_version": 1, "facts": [fact]}
-        if target.exists() and not _existing_target_matches(target, target_payload):
-            raise CanonicalWriteError("command file already exists without a revision; manual recovery required")
         _atomic_json(target, target_payload)
         after_ledger = SpecLedger.load(self.data_dir, command.year, registry=registry, catalog=catalog)
         after = [to_jsonable(row) for row in after_ledger.facts if row.trim_id == trim_id]

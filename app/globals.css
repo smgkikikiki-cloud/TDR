@@ -353,3 +353,34 @@ td { padding: 16px 10px; border-bottom: 1px solid var(--line); }
 .adminClearToggle input{margin:0}
 .adminClearToggle:has(input:checked){color:var(--red)}
 .adminHint{font-size:12px;color:#777;line-height:1.5;margin:6px 0 0}
+
+/* ---- Canonical trim editor: one trim, one form, one box per concept ---- */
+.trimForm{background:#fff;border-top:3px solid var(--navy);padding:20px;display:block}
+.trimFormError{border:1px solid var(--red);background:#fff4f3;color:#a11408;font-size:13px;font-weight:700;padding:11px 13px;margin:0 0 16px}
+.trimSection{border-top:2px solid var(--navy);padding-top:13px;margin-top:20px}
+.trimSection:first-of-type{margin-top:0}
+.trimSection>h3{font-size:15px;margin:0 0 12px}
+.trimSection>h3 em{font-style:normal;font-weight:400;color:#777;font-size:12px;margin-left:7px}
+.trimGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.trimField{display:flex;flex-direction:column;gap:4px;min-width:0}
+.trimField>label{display:flex;flex-direction:column;gap:5px}
+.trimFieldLabel{color:#50545c;font-size:12px;font-weight:700}
+.trimFieldLabel em{font-style:normal;color:#888;font-weight:400}
+.trimField input,.trimField select{width:100%;border:1px solid #cfd3da;background:#fff;padding:9px 10px;outline:none;font:inherit;font-size:14px}
+.trimField input:focus,.trimField select:focus{border-color:var(--navy)}
+.trimField input:disabled,.trimField select:disabled{background:#f3f4f6;color:#999}
+.trimFieldHint{font-size:11px;color:#8a8d93;line-height:1.4}
+.trimFieldError input,.trimFieldError select{border-color:var(--red)}
+.trimFieldMessage{color:#a11408;font-size:11px;font-weight:700;margin:2px 0 0}
+.trimQualifiers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;border-left:2px solid #e3e4e7;padding-left:9px;margin-top:2px}
+.trimQualifier{display:flex;flex-direction:column;gap:3px}
+.trimQualifier span{font-size:10px;font-weight:700;color:#8a8d93;text-transform:uppercase;letter-spacing:.04em}
+.trimQualifier input,.trimQualifier select{width:100%;border:1px solid #dcdfe4;background:#fff;padding:6px 7px;outline:none;font:inherit;font-size:12px}
+.trimNotApplicable{display:inline-flex;align-items:center;gap:5px;width:max-content;font-size:11px;font-weight:700;color:#999;cursor:pointer;user-select:none}
+.trimNotApplicable input{margin:0}
+.trimNotApplicable:has(input:checked){color:var(--red)}
+.trimSourceRefs{grid-column:1/-1;margin-top:14px;border:1px solid #e3e4e7;padding:11px}
+.trimSourceRefs>summary{font-size:12px;font-weight:700;color:#777;cursor:pointer}
+.trimSourceRefs .trimGrid{margin-top:11px}
+@media(max-width:1000px){.trimGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.trimGrid,.trimQualifiers{grid-template-columns:1fr}}

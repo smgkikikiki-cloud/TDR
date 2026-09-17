@@ -2,11 +2,12 @@ import { randomUUID } from "node:crypto";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { currentEditor } from "@/lib/admin-auth";
-import { loadVehicleWorkspace, type WorkspaceTrim } from "@/lib/canonical-editor";
-import { loadSpecFieldRegistry, fieldAppliesToPowertrain, type SpecFieldDefinition } from "@/lib/spec-field-registry";
-import { BODY_TYPES, SEGMENTS, MARKET_TRIM_POWERTRAINS, DRIVETRAINS } from "@/lib/vehicle-taxonomy";
-import { prepareModelGenerationEdit, prepareTrimEdit } from "@/app/admin/vehicle-editor-actions";
-import type { OemEvidenceTarget } from "@/lib/price-evidence-registry";
+import { loadVehicleWorkspace } from "@/lib/canonical-editor";
+import { trimEditorFields } from "@/lib/spec-field-registry";
+import { fieldAppliesTo } from "@/lib/trim-editor-fields";
+import { BODY_TYPES, SEGMENTS } from "@/lib/vehicle-taxonomy";
+import { prepareModelGenerationEdit } from "@/app/admin/vehicle-editor-actions";
+import TrimEditorForm from "@/components/admin/TrimEditorForm";
 
 function money(value: unknown) {
   const number = Number(value);
@@ -17,23 +18,6 @@ const KIND_LABEL: Record<string, string> = {
   MODEL_GENERATION: "Model / Generation",
   TRIM: "MarketTrim",
 };
-
-/** The registry's 13 technical groups, folded into the four buckets a person
- * actually thinks in when they open a trim. Driven by the registry's own
- * `group`, so a new field added there lands in the right bucket by itself. */
-const CATEGORY_OF_GROUP: Record<string, string> = {
-  powertrain: "powertrain", performance: "powertrain", battery: "powertrain",
-  efficiency: "powertrain", charging: "powertrain",
-  dimensions: "body", utility: "body", chassis: "body",
-  safety: "safety", comfort: "safety", technology: "safety",
-  identity: "other", manufacturing: "other",
-};
-const CATEGORIES = [
-  { key: "powertrain", title: "Powertrain & Performance", hint: "ระบบขับเคลื่อน แรงม้า แรงบิด แบตเตอรี่ การชาร์จ" },
-  { key: "body", title: "Body, Chassis & Wheels", hint: "มิติตัวถัง ที่นั่ง ยาง ล้อ ช่วงล่าง" },
-  { key: "safety", title: "Safety, ADAS & Comfort", hint: "ถุงลม ADAS ระบบช่วยขับ ออปชันความสบาย" },
-  { key: "other", title: "Other", hint: "รุ่นปี โรงงานผลิต และข้อมูลอื่น" },
-] as const;
 
 export default async function VehicleWorkspacePage({
   params, searchParams,
@@ -51,7 +35,7 @@ export default async function VehicleWorkspacePage({
   const { brand, model, generation, trims, specFactsByTrim, evidenceTargets, relatedBatches, releaseId, releaseYear } = workspace;
   const submittedAt = new Date().toISOString();
   const today = submittedAt.slice(0, 10);
-  const registry = loadSpecFieldRegistry(releaseYear);
+  const allFields = trimEditorFields(releaseYear);
 
   return <div className="adminEditor">
     <div className="adminHeader">
@@ -97,10 +81,10 @@ export default async function VehicleWorkspacePage({
     </form>
 
     {/* ---------- Trims: one complete editor per trim ---------- */}
-    <div id="trims" className="adminHeader"><div><small>CANONICAL</small><h2>MarketTrims ({trims.length})</h2>
+    <div id="trims" className="adminHeader"><div><small>CANONICAL</small><h2>รุ่นย่อย / Trims ({trims.length})</h2>
       <p>
-        เปิด trim แล้วแก้ได้ครบในที่เดียว — ทั้งข้อมูล trim เอง (ยาง ล้อ ที่นั่ง เครื่อง แบต) และสเปคเทียบ
-        ({registry.length} fields: แรงม้า แรงบิด ADAS ฯลฯ) กดบันทึกครั้งเดียว เข้าคิวเป็นชุดเดียว
+        เปิดรุ่นย่อยแล้วแก้ได้ครบในฟอร์มเดียว — {allFields.length} ช่อง ตั้งแต่ระบบขับเคลื่อน แบตเตอรี่ ระยะทาง
+        มิติตัวถัง ยาง ไปจนถึง ADAS. หนึ่งช่องต่อหนึ่งเรื่อง กดบันทึกครั้งเดียว ตรวจ diff เดียว เข้าคิวเป็นชุดเดียว
       </p>
     </div></div>
     <div className="libraryTable"><table><thead><tr>
@@ -117,21 +101,33 @@ export default async function VehicleWorkspacePage({
 
     {trims.map((trim) => <details key={trim.canonicalId} id={`trim-${trim.canonicalId}`} className="adminNotice">
       <summary><b>แก้ {trim.name}</b> · {trim.powertrain} · <code>{trim.canonicalId}</code></summary>
-      <TrimEditor
-        modelId={modelId} releaseId={releaseId} submittedAt={submittedAt} today={today}
-        registry={registry} evidenceTargets={evidenceTargets} existing={trim}
-        currentSpecs={specFactsByTrim.get(trim.canonicalId) || []}
+      <TrimEditorForm
+        modelId={modelId} releaseId={releaseId} submittedAt={submittedAt}
+        submissionId={randomUUID()} today={today}
+        // Powertrain is part of the canonical_id, so an existing trim keeps
+        // its own and the box is not offered.
+        fields={allFields.filter((entry) =>
+          !entry.identityLocked && fieldAppliesTo(entry, trim.powertrain))}
+        current={trim.editor.editableSpecs}
+        sourceRefs={trim.editor.sourceRefs}
+        evidenceTargets={evidenceTargets}
+        trimId={trim.canonicalId} trimName={trim.name}
       />
     </details>)}
 
     {generation ? <details className="adminNotice">
-      <summary><b>+ เพิ่ม MarketTrim ใหม่</b></summary>
-      <p className="adminHint">สร้าง trim ก่อน แล้วค่อยเปิดกลับมาแก้เพื่อใส่สเปคละเอียด (แรงม้า แรงบิด ADAS) — สเปคต้องผูกกับ trim ที่มี id แล้ว</p>
-      <TrimEditor
-        modelId={modelId} releaseId={releaseId} submittedAt={submittedAt} today={today}
-        registry={registry} evidenceTargets={evidenceTargets} currentSpecs={[]}
+      <summary><b>+ เพิ่มรุ่นย่อยใหม่</b></summary>
+      <p className="adminHint">
+        กรอกชื่อ powertrain และสเปคให้ครบในฟอร์มเดียว แล้วกดบันทึกครั้งเดียว —
+        รุ่นย่อยและสเปคทั้งหมดถูกสร้างพร้อมกันใน batch เดียว
+      </p>
+      <TrimEditorForm
+        modelId={modelId} releaseId={releaseId} submittedAt={submittedAt}
+        submissionId={randomUUID()} today={today}
+        fields={allFields}
+        current={{}} sourceRefs={{}} evidenceTargets={evidenceTargets}
       />
-    </details> : <div className="adminNotice"><span>รุ่นนี้ไม่มี active generation — เพิ่ม/แก้ MarketTrim ไม่ได้จนกว่าจะแก้ generation ผ่าน Advanced JSON</span></div>}
+    </details> : <div className="adminNotice"><span>รุ่นนี้ไม่มี active generation — เพิ่ม/แก้รุ่นย่อยไม่ได้จนกว่าจะแก้ generation ผ่าน Advanced JSON</span></div>}
 
     {/* ---------- Evidence ---------- */}
     {evidenceTargets.length ? <>
@@ -169,163 +165,4 @@ function EvidenceFields({ today }: { today: string }) {
     <input type="hidden" name="reviewed_at" value={today} />
     <label className="adminField adminFieldWide"><span>เหตุผล (ไม่บังคับ)</span><input name="reason" type="text" placeholder="เว้นว่างได้" /></label>
   </>;
-}
-
-function ClearToggle({ name }: { name: string }) {
-  return <label className="adminClearToggle"><input type="checkbox" name={`clear_${name}`} /> ล้างค่า</label>;
-}
-
-function TrimField({
-  existing, name, label, type, min, step, defaultValue, wide,
-}: {
-  existing: boolean; name: string; label: string; type: "text" | "number";
-  min?: string; step?: string; defaultValue: string; wide?: boolean;
-}) {
-  return <label className={wide ? "adminField adminFieldWide" : "adminField"}>
-    <span>{label}</span>
-    <input name={name} type={type} min={min} step={step} defaultValue={defaultValue} />
-    {existing ? <ClearToggle name={name} /> : null}
-  </label>;
-}
-
-/** One comparable-spec field, rendered from its registry definition: a value
- * input (blank = ไม่แก้) plus an explicit "ไม่มี/ไม่เกี่ยว" box that records
- * NOT_APPLICABLE instead of silently writing a zero or a false. */
-function SpecField({ definition, current }: {
-  definition: SpecFieldDefinition;
-  current?: { value_state: string; value: unknown };
-}) {
-  const known = current?.value_state === "KNOWN";
-  const label = `${definition.labelEn}${definition.canonicalUnit ? ` (${definition.canonicalUnit})` : ""}`;
-  const naDefault = current?.value_state === "NOT_APPLICABLE";
-  const name = `spec__${definition.key}`;
-  const shared = <>
-    <small>{definition.labelTh}{current ? ` · ตอนนี้: ${known ? String(current.value) : current.value_state}` : ""}</small>
-    <label className="adminClearToggle"><input type="checkbox" name={`spec_na__${definition.key}`} defaultChecked={naDefault} /> ไม่มี/ไม่เกี่ยว</label>
-  </>;
-
-  if (definition.valueType === "BOOLEAN") {
-    return <label className="adminField"><span>{label}</span>
-      <select name={name} defaultValue={known ? String(current!.value) : ""}>
-        <option value="">ไม่แก้</option><option value="true">มี</option><option value="false">ไม่มี</option>
-      </select>{shared}
-    </label>;
-  }
-  return <label className="adminField"><span>{label}</span>
-    <input
-      name={name}
-      type={definition.valueType === "NUMBER" ? "number" : "text"}
-      step={definition.valueType === "NUMBER" ? "any" : undefined}
-      min={definition.valueType === "NUMBER" ? "0" : undefined}
-      defaultValue={known ? String(Array.isArray(current!.value) ? current!.value.join(", ") : current!.value) : ""}
-    />{shared}
-  </label>;
-}
-
-function TrimEditor({
-  modelId, releaseId, submittedAt, today, registry, evidenceTargets, existing, currentSpecs,
-}: {
-  modelId: string; releaseId: string; submittedAt: string; today: string;
-  registry: SpecFieldDefinition[];
-  evidenceTargets: OemEvidenceTarget[];
-  existing?: WorkspaceTrim;
-  currentSpecs: Array<{ fieldKey: string; payload: Record<string, unknown> }>;
-}) {
-  const p = (existing?.payload || {}) as any;
-  const isExisting = Boolean(existing);
-  const powertrain = existing?.powertrain || "";
-  const existingRefs = existing?.sourceRefs || {};
-  const existingRefRows = Object.entries(existingRefs).flatMap(([kind, urls]) => urls.map((url) => ({ kind, url })));
-  const currentSpecByKey: Record<string, { value_state: string; value: unknown }> = {};
-  for (const fact of currentSpecs) {
-    currentSpecByKey[fact.fieldKey] = {
-      value_state: String((fact.payload as any)?.value_state || "UNKNOWN"),
-      value: (fact.payload as any)?.value ?? null,
-    };
-  }
-  // Only specs that apply to this trim's powertrain, bucketed into the four
-  // human categories. A brand-new trim has no id yet, so it gets none.
-  const specsByCategory: Record<string, SpecFieldDefinition[]> = { powertrain: [], body: [], safety: [], other: [] };
-  if (isExisting) {
-    for (const definition of registry) {
-      if (!fieldAppliesToPowertrain(definition, powertrain)) continue;
-      const category = CATEGORY_OF_GROUP[definition.group] || "other";
-      specsByCategory[category].push(definition);
-    }
-  }
-
-  const ownFields: Record<string, React.ReactNode[]> = {
-    powertrain: [
-      <label key="dt" className="adminField"><span>Drivetrain</span>
-        <select name="drivetrain" defaultValue={p.drivetrain || ""}>
-          <option value="">ไม่แก้</option>{DRIVETRAINS.map((v) => <option key={v} value={v}>{v}</option>)}
-        </select>{isExisting ? <ClearToggle name="drivetrain" /> : null}
-      </label>,
-      <TrimField key="ec" existing={isExisting} name="engine_code" label="Engine code" type="text" defaultValue={p.engine_code || ""} />,
-      <TrimField key="cc" existing={isExisting} name="engine_cc" label="Engine cc" type="number" min="1" step="1" defaultValue={p.engine_cc || ""} />,
-      <TrimField key="bk" existing={isExisting} name="battery_kwh" label="Battery kWh" type="number" min="0" step="0.1" defaultValue={p.battery_kwh || ""} />,
-      <TrimField key="tm" existing={isExisting} name="transmission" label="Transmission" type="text" defaultValue={p.transmission || ""} />,
-    ],
-    body: [
-      <TrimField key="st" existing={isExisting} name="seats" label="Seats" type="number" min="1" step="1" defaultValue={p.seats || ""} />,
-      <TrimField key="l" existing={isExisting} name="length_mm" label="Length mm" type="number" min="1" step="1" defaultValue={p.length_mm || ""} />,
-      <TrimField key="w" existing={isExisting} name="width_mm" label="Width mm" type="number" min="1" step="1" defaultValue={p.width_mm || ""} />,
-      <TrimField key="h" existing={isExisting} name="height_mm" label="Height mm" type="number" min="1" step="1" defaultValue={p.height_mm || ""} />,
-      <TrimField key="wb" existing={isExisting} name="wheelbase_mm" label="Wheelbase mm" type="number" min="1" step="1" defaultValue={p.wheelbase_mm || ""} />,
-      <TrimField key="tf" existing={isExisting} name="tire_front" label="Tire front" type="text" defaultValue={p.tire_front || ""} />,
-      <TrimField key="tr" existing={isExisting} name="tire_rear" label="Tire rear" type="text" defaultValue={p.tire_rear || ""} />,
-      <TrimField key="wf" existing={isExisting} name="wheel_front" label="Wheel front" type="text" defaultValue={p.wheel_front || ""} />,
-      <TrimField key="wr" existing={isExisting} name="wheel_rear" label="Wheel rear" type="text" defaultValue={p.wheel_rear || ""} />,
-    ],
-    safety: [],
-    other: [],
-  };
-
-  return <form action={prepareTrimEdit} className="adminForm">
-    <input type="hidden" name="model_id" value={modelId} />
-    <input type="hidden" name="page_release_id" value={releaseId} />
-    <input type="hidden" name="submission_id" value={randomUUID()} />
-    <input type="hidden" name="submitted_at" value={submittedAt} />
-    {existing ? <input type="hidden" name="trim_id" value={existing.canonicalId} /> : null}
-
-    <label className="adminField"><span>ชื่อ MarketTrim</span><input name="name" type="text" defaultValue={existing?.name || ""} required /></label>
-    <label className="adminField"><span>Powertrain</span><select name="powertrain" defaultValue={powertrain} required>
-      <option value="" disabled>เลือก…</option>{MARKET_TRIM_POWERTRAINS.map((v) => <option key={v} value={v}>{v}</option>)}
-    </select></label>
-
-    {CATEGORIES.map((category) => {
-      const own = ownFields[category.key] || [];
-      const specs = specsByCategory[category.key] || [];
-      if (!own.length && !specs.length) return null;
-      return <details key={category.key} className="adminFieldWide adminNotice" open>
-        <summary><b>{category.title}</b> — {category.hint}</summary>
-        <div className="adminEmbeddedGrid">
-          {own}
-          {specs.map((definition) => <SpecField key={definition.key} definition={definition} current={currentSpecByKey[definition.key]} />)}
-        </div>
-      </details>;
-    })}
-
-    <TrimField existing={isExisting} name="notes" label="Notes" type="text" defaultValue={p.notes || ""} wide />
-
-    <details className="adminFieldWide adminNotice">
-      <summary><b>Source refs</b> ({existingRefRows.length})</summary>
-      {existingRefRows.length ? <div className="adminEmbeddedGrid">{existingRefRows.map(({ kind, url }) => <label key={`${kind}::${url}`} className="adminField">
-        <span><input type="checkbox" name="remove_source" value={`${kind}::${url}`} /> ลบ</span>
-        <small>{kind} · <a href={url} target="_blank" rel="noreferrer">{url}</a></small>
-      </label>)}</div> : <p className="adminHint">ยังไม่มี source ref</p>}
-      {[1, 2].map((row) => <div key={row} className="adminEmbeddedGrid">
-        <label className="adminField"><span>เพิ่ม source {row} — จาก registry</span><select name={`new_source_target_${row}`} defaultValue="">
-          <option value="">— ไม่ใช้ —</option>
-          {evidenceTargets.map((target) => <option key={target.id} value={target.id}>{target.sourceId} · {target.role}</option>)}
-        </select></label>
-        <label className="adminField"><span>หรือพิมพ์เอง — kind</span><input name={`new_source_kind_${row}`} type="text" placeholder="ecosticker, official_brandsite…" /></label>
-        <label className="adminField"><span>URL / อ้างอิง</span><input name={`new_source_ref_${row}`} type="text" /></label>
-      </div>)}
-    </details>
-
-    <EvidenceFields today={today} />
-    {isExisting ? <p className="adminHint adminFieldWide">เว้นว่าง = ไม่แก้ field นั้น · ติ๊ก "ล้างค่า"/"ไม่มี/ไม่เกี่ยว" = ลบค่าเดิมออกจริง</p> : null}
-    <div className="adminFormActions"><button className="adminPrimary">ตรวจก่อนบันทึก →</button></div>
-  </form>;
 }

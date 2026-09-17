@@ -32,7 +32,7 @@ from .entities import (
     Brand, Generation, MarketTrim, Model, ResolvedVehicle, Variant, cross_check, resolve,
     to_jsonable,
 )
-from .normalize import MatchIndex, base_nameplate, slug
+from .normalize import MatchIndex, base_nameplate, slug, trim_identity
 from .taxonomy import (
     BodyType, BrandSegment, CabType, Drivetrain, ImportType, MarketScope,
     RetailStatus,
@@ -343,9 +343,8 @@ class Catalog:
 
         # Explicit IDs stay stable. If omitted, powertrain participates in the
         # generated identity so Premium BEV and Premium PHEV cannot collide.
-        raw_id = raw.get("id")
-        identity = raw_id or f"{raw['name']} {trim_powertrain.value}"
-        trim_id = f"{gen_id}.trim.{slug(identity)}"
+        trim_id = trim_identity(gen_id, raw.get("id"), raw["name"],
+                                trim_powertrain.value)
         if trim_id in self.trims:
             raise CatalogError(f"{source}: duplicate trim id {trim_id!r}")
         variant_id = self._resolve_trim_variant_ref(

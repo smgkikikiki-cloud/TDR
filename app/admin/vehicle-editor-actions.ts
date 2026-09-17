@@ -31,25 +31,21 @@ import { field, requiredField, isoDate, safeSubmissionId, submissionTimestamp } 
 import {
   buildModelGenerationBatch, buildTrimEditBatch, diffPatch, diffTrimEdit,
   findDuplicateMarketTrim, isStaleRelease, applySourceRefEdits,
-  type Evidence, type EvidenceKind, type MarketTrimFields,
-  type SpecFactValueState, type TrimSpecEntry, type SourceRefEdit,
+  type Evidence, type EvidenceKind,
+  type SpecFactValueState, type TrimFieldSubmission, type SourceRefEdit,
 } from "@/lib/canonical-command-builder";
 import { loadVehicleWorkspace, liveModelReleaseId } from "@/lib/canonical-editor";
 import { createProposal, loadProposal, consumeProposal } from "@/lib/edit-session-store";
 import { enqueueCanonicalInputBatch } from "@/lib/canonical-input-queue";
-import { loadSpecFieldRegistry, fieldAppliesToPowertrain, type SpecFieldDefinition } from "@/lib/spec-field-registry";
+import { trimEditorFields } from "@/lib/spec-field-registry";
+import {
+  fieldAppliesTo, validateFieldValue, validateTrimConsistency,
+  valueInputName, naInputName, qualifierInputName, type TrimEditState,
+} from "@/lib/trim-editor-fields";
 import { MARKET_TRIM_POWERTRAINS } from "@/lib/vehicle-taxonomy";
 
 const EVIDENCE_KINDS = new Set<EvidenceKind>(["ADMIN", "OEM", "MEDIA"]);
 const SOURCE_KIND_TOKEN = /^[a-z][a-z0-9_]{0,63}$/;
-
-const TRIM_FIELD_LABELS: Record<string, string> = {
-  name: "Name", powertrain: "Powertrain", drivetrain: "Drivetrain", engine_code: "Engine code",
-  engine_cc: "Engine cc", battery_kwh: "Battery kWh", transmission: "Transmission", seats: "Seats",
-  length_mm: "Length mm", width_mm: "Width mm", height_mm: "Height mm", wheelbase_mm: "Wheelbase mm",
-  tire_front: "Tire front", tire_rear: "Tire rear", wheel_front: "Wheel front", wheel_rear: "Wheel rear",
-  notes: "Notes", source_refs: "Source refs",
-};
 
 async function requireEditor(): Promise<AdminEditor> {
   const editor = await currentEditor();
@@ -180,168 +176,139 @@ function readSourceRefEdits(formData: FormData): { remove: SourceRefEdit[]; add:
   return { remove, add };
 }
 
-function parseSpecValue(definition: SpecFieldDefinition, raw: string): string | number | boolean | string[] {
-  if (definition.valueType === "NUMBER") {
-    const num = Number(raw);
-    if (!Number.isFinite(num) || num < 0) throw new Error(`${definition.labelEn} ต้องเป็นตัวเลขที่ไม่ติดลบ`);
-    return num;
-  }
-  if (definition.valueType === "BOOLEAN") {
-    if (raw !== "true" && raw !== "false") throw new Error(`${definition.labelEn} ต้องเป็น มี/ไม่มี`);
-    return raw === "true";
-  }
-  if (definition.valueType === "SET") {
-    const items = raw.split(/[,\n]/).map((item) => item.trim()).filter(Boolean);
-    if (!items.length) throw new Error(`${definition.labelEn} ต้องมีอย่างน้อย 1 ค่า`);
-    return items;
-  }
-  return raw;
-}
-
 /**
- * ONE trim, edited whole. The form carries the MarketTrim's own fields and
- * every applicable comparable-spec field side by side; this action turns
- * whatever actually changed into one batch (an UPSERT_MODEL_BUNDLE for the
- * trim patch plus one APPEND_SPEC per changed spec fact) and one diff.
+ * ONE trim, edited whole, in one pass.
  *
- * Fields the admin left alone produce nothing at all: a blank input is
- * "untouched", a filled input that matches the current value is skipped, and
- * only an explicit clear/NA checkbox writes an emptied value.
+ * The form carries one box per concept -- Seats, Drivetrain, Battery capacity,
+ * Range -- with no hint of which backend each lands in. This action reads the
+ * same field catalog the page rendered (lib/trim-editor-fields.ts), validates
+ * each value with the same function the page used, and hands the touched ones
+ * to the builder, which fans each out to every backend representation its
+ * entry declares. One form, one diff, one proposal, one batch.
+ *
+ * A brand-new trim carries its specs in that same save. The old flow -- create
+ * the trim, come back, then add specs -- existed only because the builder could
+ * not know the new trim's canonical_id; the spec commands now name the trim by
+ * reference and the canonical writer resolves it with the one identity rule.
  */
-export async function prepareTrimEdit(formData: FormData) {
+export async function prepareTrimEdit(
+  _previous: TrimEditState, formData: FormData,
+): Promise<TrimEditState> {
   if (!(await isAdmin())) redirect("/admin/login");
   const editor = await requireEditor();
   const modelId = requiredField(formData, "model_id", "canonical model");
   const pageReleaseId = requiredField(formData, "page_release_id", "release fingerprint");
   const workspace = await loadWorkspaceOrThrow(modelId);
-  assertNotStale(pageReleaseId, workspace.releaseId);
   if (!workspace.generation) throw new Error("รุ่นนี้ไม่มี active generation ให้เพิ่ม/แก้ MarketTrim");
 
+  // A release activating under an open form is an ordinary race, not a bug:
+  // the admin needs to see it on the page they are typing in.
+  if (isStaleRelease(pageReleaseId, workspace.releaseId)) {
+    return {
+      fieldErrors: {},
+      formError: "มี canonical release ใหม่ออกมาระหว่างที่เปิดหน้านี้ ข้อมูลบนหน้าจอจึงอาจไม่ตรงกับของจริงแล้ว "
+        + "กรุณา refresh หน้านี้แล้วแก้ไขใหม่อีกครั้ง",
+    };
+  }
+
   const existingTrimId = field(formData, "trim_id") || undefined;
-  const existing = existingTrimId ? workspace.trims.find((row) => row.canonicalId === existingTrimId) : undefined;
+  const existing = existingTrimId
+    ? workspace.trims.find((row) => row.canonicalId === existingTrimId) : undefined;
   if (existingTrimId && !existing) throw new Error("MarketTrim นี้ไม่อยู่ใต้ canonical model ที่เลือก");
 
-  const name = requiredField(formData, "name", "ชื่อ MarketTrim");
-  const powertrain = requiredField(formData, "powertrain", "powertrain").toUpperCase();
-  if (!MARKET_TRIM_POWERTRAINS.includes(powertrain as any)) throw new Error("powertrain ไม่อยู่ใน canonical taxonomy");
+  const fields = trimEditorFields(workspace.releaseYear)
+    .filter((entry) => !entry.identityLocked || !existing);
+  const fieldErrors: Record<string, string> = {};
+
+  const name = field(formData, valueInputName("name")) || existing?.name || "";
+  if (!name) fieldErrors.name = "ต้องระบุชื่อรุ่นย่อย";
+  // Powertrain is part of the canonical_id, so an existing trim keeps its own.
+  const powertrain = existing
+    ? existing.powertrain
+    : field(formData, valueInputName("powertrain")).toUpperCase();
+  if (!powertrain) fieldErrors.powertrain = "ต้องเลือก powertrain";
+  else if (!MARKET_TRIM_POWERTRAINS.includes(powertrain as any)) {
+    fieldErrors.powertrain = "powertrain ไม่อยู่ใน canonical taxonomy";
+  }
+
+  const applicable = fields.filter((entry) => fieldAppliesTo(entry, powertrain));
+  const current = existing?.editor.editableSpecs || {};
+
+  const submissions: TrimFieldSubmission[] = [];
+  const submittedValues: Record<string, string | number | boolean | null> = {};
+  for (const entry of applicable) {
+    const notApplicable = field(formData, naInputName(entry.key)) === "on";
+    const raw = field(formData, valueInputName(entry.key));
+    const before = current[entry.key] || { value: "", valueState: "UNKNOWN" as const, qualifiers: {} };
+
+    let valueState: SpecFactValueState;
+    let value: string | number | boolean | null = null;
+    if (notApplicable) {
+      valueState = "NOT_APPLICABLE";
+    } else if (raw) {
+      const parsed = validateFieldValue(entry, raw);
+      if (!parsed.ok) { fieldErrors[entry.key] = parsed.message; continue; }
+      valueState = "KNOWN";
+      value = parsed.value;
+      submittedValues[entry.key] = parsed.value;
+    } else {
+      // Blank is "untouched" while the field has never been set, and an
+      // explicit clear once it has -- there is no third box to tick.
+      if (before.valueState === "UNKNOWN") continue;
+      valueState = "UNKNOWN";
+    }
+
+    const qualifiers: Record<string, string> = {};
+    for (const qualifier of entry.qualifiers) {
+      const chosen = field(formData, qualifierInputName(entry.key, qualifier.key));
+      if (chosen) qualifiers[qualifier.key] = chosen;
+    }
+
+    const unchanged = before.valueState === valueState
+      && String(before.value) === String(value ?? "")
+      && JSON.stringify(before.qualifiers) === JSON.stringify(qualifiers);
+    if (unchanged) continue;
+    submissions.push({ key: entry.key, valueState, value, qualifiers });
+  }
+
+  for (const [key, message] of Object.entries(
+    validateTrimConsistency(submittedValues, powertrain))) {
+    fieldErrors[key] = message;
+  }
+  if (Object.keys(fieldErrors).length) return { formError: "", fieldErrors };
 
   const duplicate = findDuplicateMarketTrim(
-    workspace.trims.map((row) => ({ canonicalId: row.canonicalId, generationId: row.generationId, name: row.name, powertrain: row.powertrain })),
+    workspace.trims.map((row) => ({
+      canonicalId: row.canonicalId, generationId: row.generationId,
+      name: row.name, powertrain: row.powertrain,
+    })),
     { generationId: workspace.generation.canonicalId, name, powertrain, excludeCanonicalId: existingTrimId },
   );
   if (duplicate) {
-    throw new Error(`มี MarketTrim ชื่อ/powertrain เดียวกันในรุ่นนี้แล้ว: ${duplicate.canonicalId} — แก้ตัวที่มีอยู่แทนการสร้างใหม่`);
-  }
-
-  const current = (existing?.payload || {}) as Record<string, unknown>;
-  const currentTrimFields: Record<string, unknown> = {
-    ...current, name: existing?.name, powertrain: existing?.powertrain,
-  };
-
-  // Three states per optional field: an explicit clear_<name> checkbox means
-  // "unset it", a blank input means "untouched", a filled input means "set it".
-  // A value identical to what is already stored is dropped so an unchanged
-  // field never produces a command or a diff row.
-  function isClearing(fieldName: string): boolean {
-    return field(formData, `clear_${fieldName}`) === "on";
-  }
-  const trim: MarketTrimFields = { name, powertrain };
-  function assignNumber(fieldName: keyof MarketTrimFields, label: string, integer: boolean) {
-    const currentValue = current[fieldName as string] ?? null;
-    if (isClearing(fieldName as string)) {
-      if (currentValue !== null && currentValue !== undefined) (trim as any)[fieldName] = null;
-      return;
-    }
-    const raw = field(formData, fieldName as string);
-    if (!raw) return;
-    const value = Number(raw);
-    if (!Number.isFinite(value) || value <= 0 || (integer && !Number.isInteger(value))) {
-      throw new Error(`${label} ต้องเป็นจำนวนบวกที่ถูกต้อง`);
-    }
-    if (value !== Number(currentValue)) (trim as any)[fieldName] = value;
-  }
-  function assignText(fieldName: keyof MarketTrimFields, emptyValue = "") {
-    const currentValue = String(current[fieldName as string] ?? "");
-    if (isClearing(fieldName as string)) {
-      if (currentValue) (trim as any)[fieldName] = emptyValue;
-      return;
-    }
-    const raw = field(formData, fieldName as string);
-    if (!raw || raw === currentValue) return;
-    (trim as any)[fieldName] = raw;
-  }
-
-  // Drivetrain is an enum defaulting to UNKNOWN, not a nullable field.
-  assignText("drivetrain", "UNKNOWN");
-  if (trim.drivetrain) trim.drivetrain = trim.drivetrain.toUpperCase();
-  assignText("engine_code");
-  assignNumber("engine_cc", "ความจุเครื่องยนต์", true);
-  assignNumber("battery_kwh", "ความจุแบตเตอรี่", false);
-  assignText("transmission");
-  assignNumber("seats", "จำนวนที่นั่ง", true);
-  assignNumber("length_mm", "ความยาว", true);
-  assignNumber("width_mm", "ความกว้าง", true);
-  assignNumber("height_mm", "ความสูง", true);
-  assignNumber("wheelbase_mm", "ระยะฐานล้อ", true);
-  assignText("tire_front");
-  assignText("tire_rear");
-  assignText("wheel_front");
-  assignText("wheel_rear");
-  assignText("notes");
-
-  // Comparable-spec facts, read straight off the same form.
-  const registry = loadSpecFieldRegistry(workspace.releaseYear);
-  const currentSpecsByField: Record<string, { value_state: string; value: unknown }> = {};
-  for (const fact of workspace.specFactsByTrim.get(existingTrimId || "") || []) {
-    currentSpecsByField[fact.fieldKey] = {
-      value_state: String((fact.payload as any)?.value_state || "UNKNOWN"),
-      value: (fact.payload as any)?.value ?? null,
+    return {
+      formError: `มีรุ่นย่อยชื่อ/powertrain เดียวกันในรุ่นนี้แล้ว: ${duplicate.canonicalId} — แก้ตัวที่มีอยู่แทนการสร้างใหม่`,
+      fieldErrors: {},
     };
-  }
-  const specEntries: TrimSpecEntry[] = [];
-  if (existingTrimId) {
-    for (const definition of registry) {
-      if (!fieldAppliesToPowertrain(definition, powertrain)) continue;
-      const notApplicable = field(formData, `spec_na__${definition.key}`) === "on";
-      const raw = field(formData, `spec__${definition.key}`);
-      const currentFact = currentSpecsByField[definition.key];
-      const currentState = currentFact?.value_state || "UNKNOWN";
-
-      let valueState: SpecFactValueState | null = null;
-      let value: string | number | boolean | string[] | null = null;
-      if (notApplicable) {
-        if (currentState === "NOT_APPLICABLE") continue;
-        valueState = "NOT_APPLICABLE";
-      } else if (raw) {
-        const parsed = parseSpecValue(definition, raw);
-        if (currentState === "KNOWN" && JSON.stringify(currentFact?.value) === JSON.stringify(parsed)) continue;
-        valueState = "KNOWN";
-        value = parsed;
-      }
-      if (!valueState) continue;
-      specEntries.push({
-        fieldKey: definition.key,
-        labelForDiff: `${definition.labelEn}${definition.canonicalUnit ? ` (${definition.canonicalUnit})` : ""}`,
-        valueState, value, unit: definition.canonicalUnit,
-      });
-    }
   }
 
   const { remove, add } = readSourceRefEdits(formData);
-  const existingRefs = (existing?.sourceRefs || {}) as Record<string, string[]>;
-  const resolvedAdd = add.map((row) => {
-    if (row.url) return row;
+  const existingRefs = existing?.editor.sourceRefs || {};
+  const resolvedAdd: SourceRefEdit[] = [];
+  for (const row of add) {
+    if (row.url) { resolvedAdd.push(row); continue; }
     const target = workspace.evidenceTargets.find((candidate) => candidate.id === row.kind);
-    if (!target) throw new Error("registered OEM evidence target ที่เลือกไม่ตรงกับ canonical model นี้");
-    return { kind: target.sourceId, url: target.url };
-  });
+    if (!target) {
+      return { formError: "แหล่งข้อมูล OEM ที่เลือกไม่ตรงกับรุ่นนี้", fieldErrors: {} };
+    }
+    resolvedAdd.push({ kind: target.sourceId, url: target.url });
+  }
   const sourceRefsTouched = remove.length > 0 || resolvedAdd.length > 0;
-  const newSourceRefs = sourceRefsTouched ? applySourceRefEdits(existingRefs, { remove, add: resolvedAdd }) : undefined;
+  const newSourceRefs = sourceRefsTouched
+    ? applySourceRefEdits(existingRefs, { remove, add: resolvedAdd }) : undefined;
 
-  const trimFieldsTouched = Object.keys(trim).some((key) => key !== "name" && key !== "powertrain");
-  const identityChanged = !existing || existing.name !== name || existing.powertrain !== powertrain;
-  if (existing && !trimFieldsTouched && !identityChanged && !sourceRefsTouched && !specEntries.length) {
-    throw new Error("ไม่มีอะไรเปลี่ยน — แก้อย่างน้อย 1 ช่องก่อนกดบันทึก");
+  const identityChanged = !existing || existing.name !== name;
+  if (existing && !submissions.length && !sourceRefsTouched && !identityChanged) {
+    return { formError: "ไม่มีอะไรเปลี่ยน — แก้อย่างน้อย 1 ช่องก่อนกดบันทึก", fieldErrors: {} };
   }
 
   const reason = field(formData, "reason");
@@ -356,24 +323,27 @@ export async function prepareTrimEdit(formData: FormData) {
     reason,
     evidence,
     canonicalModelId: modelId,
-    brand: { id: workspace.brand.canonicalId, nameEn: workspace.brand.nameEn, nameTh: workspace.brand.nameTh || undefined },
+    brand: {
+      id: workspace.brand.canonicalId, nameEn: workspace.brand.nameEn,
+      nameTh: workspace.brand.nameTh || undefined,
+    },
     generationCode: workspace.generation.code,
+    generationId: workspace.generation.canonicalId,
     existingTrimId,
-    trim,
+    identity: { name, powertrain },
+    submissions,
+    fields: applicable,
     sourceRefs: newSourceRefs,
-    specEntries,
   });
 
-  const trimPatch = { ...(trim as unknown as Record<string, unknown>) };
-  if (!identityChanged) { delete trimPatch.name; delete trimPatch.powertrain; }
-  if (sourceRefsTouched) trimPatch.source_refs = newSourceRefs;
-  const diff = diffTrimEdit({
-    currentTrimFields: existing ? { ...currentTrimFields, source_refs: existingRefs } : {},
-    trimPatch,
-    trimLabels: TRIM_FIELD_LABELS,
-    currentSpecsByField,
-    specEntries,
-  });
+  const diff = diffTrimEdit({ current, submissions, fields: applicable });
+  if (sourceRefsTouched) {
+    diff.push({
+      field: "source_refs", label: "Source references",
+      current: JSON.stringify(existingRefs), proposed: JSON.stringify(newSourceRefs),
+      changed: JSON.stringify(existingRefs) !== JSON.stringify(newSourceRefs),
+    });
+  }
 
   const proposalId = await createProposal({
     kind: "TRIM", modelId, trimId: existingTrimId, actor: editor.name, pageReleaseId,

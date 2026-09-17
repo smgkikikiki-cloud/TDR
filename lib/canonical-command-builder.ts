@@ -15,6 +15,8 @@
  * one place with Supabase/admin-auth access.
  */
 
+import type { TrimEditorField } from "./trim-editor-fields.ts";
+
 export type CanonicalCommand = Record<string, unknown>;
 
 export type CanonicalBatchPayload = {
@@ -144,98 +146,22 @@ export function buildModelGenerationBatch(args: ModelGenerationEditArgs): {
   };
 }
 
-/**
- * Optional fields are three-state, not two: a key absent from this object
- * means "untouched, keep whatever the canonical writer already has" (dict
- * .update() semantics in vehreg/canonical_write.py never sees the key at
- * all); a key present with a real value means "set it"; a key present with
- * `null` (numeric fields) or the field's own canonical empty string (text
- * fields; `"UNKNOWN"` for the drivetrain enum) means "explicitly clear it" --
- * still an ordinary dict.update() overwrite, just to the field's cleared
- * representation instead of a new value. `name` and `powertrain` are
- * required MarketTrim identity (vehreg/entities.py's MarketTrim.validate())
- * and so are never optional/clearable here.
- */
-export type MarketTrimFields = {
-  name: string;
-  powertrain: string;
-  drivetrain?: string;
-  engine_code?: string;
-  engine_cc?: number | null;
-  battery_kwh?: number | null;
-  transmission?: string;
-  seats?: number | null;
-  length_mm?: number | null;
-  width_mm?: number | null;
-  height_mm?: number | null;
-  wheelbase_mm?: number | null;
-  tire_front?: string;
-  tire_rear?: string;
-  wheel_front?: string;
-  wheel_rear?: string;
-  notes?: string;
-};
-
-export type MarketTrimEditArgs = {
-  batchId: string;
-  year: number;
-  submittedAt: string;
-  reason: string;
-  evidence: Evidence;
-  canonicalModelId: string;
-  brand: { id: string; nameEn: string; nameTh?: string };
-  generationCode: string;
-  /** Present when editing an existing MarketTrim; absent when creating one. */
-  existingTrimId?: string;
-  trim: MarketTrimFields;
-  sourceRefs?: Record<string, string[]>;
-};
-
-function buildMarketTrimBatch(args: MarketTrimEditArgs): {
-  payload: CanonicalBatchPayload;
-} {
-  const trimPayload: Record<string, unknown> = {
-    ...(args.existingTrimId ? { canonical_id: args.existingTrimId } : {}),
-    ...args.trim,
-    ...(args.sourceRefs ? { source_refs: args.sourceRefs } : {}),
-  };
-  return {
-    payload: {
-      schema_version: 1,
-      batch_id: args.batchId,
-      year: args.year,
-      submitted_at: args.submittedAt,
-      source: evidenceSource(args.evidence),
-      reason: composeReason(args.evidence, args.reason),
-      commands: [{
-        operation: "UPSERT_MODEL_BUNDLE",
-        canonical_id: args.canonicalModelId,
-        payload: {
-          brand: { id: args.brand.id, name_en: args.brand.nameEn, ...(args.brand.nameTh ? { name_th: args.brand.nameTh } : {}) },
-          model: {},
-          generation: { code: args.generationCode },
-          variants: [],
-          trims: [trimPayload],
-        },
-      }],
-    },
-  };
-}
-
 export type SpecFactValueState = "KNOWN" | "UNKNOWN" | "NOT_AVAILABLE" | "NOT_APPLICABLE";
 export type SpecFactVerification = "VERIFIED" | "PROVISIONAL";
 
 /**
- * One comparable-spec field the admin actually touched in a trim edit.
- * Fields left alone never become an entry, so they never produce a command.
+ * One UI field the admin actually touched, already validated and coerced.
+ * Fields left alone never become a submission, so they never produce a
+ * command and never appear in the diff.
  */
-export type TrimSpecEntry = {
-  fieldKey: string;
-  labelForDiff: string;
+export type TrimFieldSubmission = {
+  /** The UI field key from lib/trim-editor-fields.ts, not a backend key. */
+  key: string;
   valueState: SpecFactValueState;
-  /** Must be null unless valueState is KNOWN (vehreg SpecFieldDefinition.validate_value). */
-  value: string | number | boolean | string[] | null;
-  unit: string;
+  /** Must be null unless valueState is KNOWN (SpecFieldDefinition.validate_value). */
+  value: string | number | boolean | null;
+  /** Only the qualifiers the field's registry definition declares. */
+  qualifiers?: Record<string, string>;
 };
 
 export type TrimEditArgs = {
@@ -246,110 +172,214 @@ export type TrimEditArgs = {
    * CanonicalInputBatch.from_dict and CanonicalWriteCommand.from_dict accept
    * an empty reason -- so the editor never blocks a save on it. */
   reason: string;
-  /** sourceRef is free text (a URL, a brochure name, a note) or absent. */
+  /** One source context for the whole trim edit, chosen once. */
   evidence: Evidence;
   canonicalModelId: string;
   brand: { id: string; nameEn: string; nameTh?: string };
   generationCode: string;
+  /** Needed to name a brand-new trim by reference (see below). */
+  generationId: string;
   /** Present when editing an existing MarketTrim; absent when creating one. */
   existingTrimId?: string;
-  trim: MarketTrimFields;
+  /** The trim's identity as it will stand after this edit. */
+  identity: { name: string; powertrain: string };
+  /** Every touched field, in editor order. */
+  submissions: TrimFieldSubmission[];
+  /** The resolved field catalog the page rendered, so the builder fans out to
+   * exactly the backends the UI promised and no others. */
+  fields: TrimEditorField[];
   sourceRefs?: Record<string, string[]>;
-  /**
-   * Comparable-spec facts edited in the same pass. Only meaningful for an
-   * existing trim: APPEND_SPEC attaches a fact to a trim_id, and a brand-new
-   * trim has no stable canonical_id until the UPSERT_MODEL_BUNDLE command
-   * above actually creates it. Callers pass [] when creating.
-   */
-  specEntries?: TrimSpecEntry[];
 };
 
 /**
- * SpecLedger requires a fact_id, refuses to let an existing one change its
- * content, and resolves a field's current value by taking the
- * lexicographically last active fact (vehreg/comparable_specs.py's
- * SpecLedger.resolved). So the id has to be unique per save AND sort
- * chronologically: trim + field + the submission's own ISO timestamp does
- * both, and makes a re-submitted identical batch an idempotent replay rather
- * than a conflict.
+ * The cleared representation of a MarketTrim column. Clearing is an ordinary
+ * dict.update() overwrite, so each column needs the empty value its own type
+ * uses: null for numbers, "UNKNOWN" for the drivetrain enum, "" for text.
  */
-function specFactId(trimId: string, fieldKey: string, submittedAt: string): string {
-  return `admin:${trimId}:${fieldKey}:${submittedAt}`;
+function clearedTrimValue(field: TrimEditorField): string | number | null {
+  if (field.input === "number") return null;
+  if (field.targets.trimField === "drivetrain") return "UNKNOWN";
+  return "";
 }
 
-function specFactPayload(entry: TrimSpecEntry, evidence: Evidence, trimId: string, submittedAt: string): Record<string, unknown> {
+function marketTrimPatch(args: TrimEditArgs): Record<string, unknown> {
+  const byKey = new Map(args.fields.map((field) => [field.key, field]));
+  // name and powertrain are required MarketTrim identity (MarketTrim.validate)
+  // and are always sent, whether or not this edit touched them.
+  const patch: Record<string, unknown> = {
+    name: args.identity.name,
+    powertrain: args.identity.powertrain,
+  };
+  for (const submission of args.submissions) {
+    const field = byKey.get(submission.key);
+    if (!field?.targets.trimField) continue;
+    if (field.targets.trimField === "name" || field.targets.trimField === "powertrain") continue;
+    patch[field.targets.trimField] = submission.valueState === "KNOWN"
+      ? submission.value : clearedTrimValue(field);
+  }
+  return patch;
+}
+
+/**
+ * Comparable-spec facts do not carry a unit for a non-KNOWN state, and must
+ * carry exactly the canonical unit when KNOWN (SpecFieldDefinition
+ * .validate_value), which is why the unit comes from the resolved field rather
+ * than from whatever the form posted.
+ *
+ * fact_id is deliberately omitted. It is derived by the canonical writer as
+ * admin:{trim_id}:{field_key} once the trim is resolved -- which is the only
+ * place that can compose it when the trim is being created by the very same
+ * batch, and which makes re-editing a field revise its fact instead of filing
+ * a second, conflicting one.
+ */
+function specFactPayload(
+  field: TrimEditorField,
+  submission: TrimFieldSubmission,
+  evidence: Evidence,
+  trimRef: { trimId?: string; ref?: Record<string, string> },
+): Record<string, unknown> {
+  const known = submission.valueState === "KNOWN";
+  const qualifiers: Record<string, string> = {};
+  for (const qualifier of field.qualifiers) {
+    const value = submission.qualifiers?.[qualifier.key];
+    if (value) qualifiers[qualifier.key] = value;
+  }
   return {
-    fact_id: specFactId(trimId, entry.fieldKey, submittedAt),
-    trim_id: trimId,
-    field_key: entry.fieldKey,
-    value_state: entry.valueState,
-    value: entry.valueState === "KNOWN" ? entry.value : null,
-    unit: entry.valueState === "KNOWN" ? entry.unit : "",
+    ...(trimRef.trimId ? { trim_id: trimRef.trimId } : { trim_ref: trimRef.ref }),
+    field_key: field.targets.specKey,
+    value_state: submission.valueState,
+    value: known ? submission.value : null,
+    unit: known && field.unit ? field.unit : "",
+    ...(Object.keys(qualifiers).length ? { qualifiers } : {}),
     observed_at: evidence.reviewedAt,
     verification_status: "VERIFIED",
     source: evidence.sourceKind.toLowerCase(),
-    ...(evidence.sourceRef ? { source_ref: evidence.sourceRef } : {}),
+    source_ref: evidence.sourceRef || evidence.sourceKind.toLowerCase(),
   };
 }
 
 /**
- * Compiles ONE trim's whole edit -- the MarketTrim's own fields (name,
- * powertrain, engine, dimensions, tyres, seats, ...) AND every comparable-spec
- * fact touched in the same pass (power, torque, ADAS, battery chemistry, ...)
- * -- into ONE canonical batch.
+ * Compiles ONE trim's whole edit into ONE canonical batch.
  *
- * The admin edits "this trim" once; the split between an UPSERT_MODEL_BUNDLE
+ * The admin edits "this trim" once. The split into an UPSERT_MODEL_BUNDLE
  * command and N APPEND_SPEC commands is an internal detail of the canonical
- * command language, not something the editing UI should expose. The input
- * pipeline applies every command in a batch sequentially against one staged
- * tree (vehreg/input_pipeline.py's CanonicalInputPipeline.apply), so the trim
- * patch and its spec facts land together or not at all.
+ * command language, and a single UI field routinely produces both -- Seats
+ * becomes MarketTrim `seats` *and* a `vehicle.seats` fact, from one box, so
+ * the two representations cannot drift apart. The fan-out is entirely decided
+ * by each field's `targets` in lib/trim-editor-fields.ts.
+ *
+ * A brand-new trim gets its specs in this same batch. It has no canonical_id
+ * yet and its id is not computable outside Python (vehreg/normalize.py's
+ * trim_identity folds Thai marks and strips corporate words), so rather than
+ * reimplement that rule here -- two algorithms that would drift, silently
+ * attaching facts to a trim that does not exist -- the spec commands name the
+ * trim by reference and the writer resolves it with the same one rule. The
+ * pipeline applies a batch's commands sequentially against one staged tree
+ * (CanonicalInputPipeline.apply), so the trim and its facts land together or
+ * not at all.
  */
 export function buildTrimEditBatch(args: TrimEditArgs): { payload: CanonicalBatchPayload } {
-  const specEntries = args.specEntries || [];
-  if (specEntries.length && !args.existingTrimId) {
-    throw new Error("spec facts need an existing trim: save the new MarketTrim first, then add its specs");
-  }
-  const { payload } = buildMarketTrimBatch(args);
-  const specCommands = specEntries.map((entry) => ({
-    operation: "APPEND_SPEC",
-    canonical_id: args.existingTrimId!,
-    payload: specFactPayload(entry, args.evidence, args.existingTrimId!, args.submittedAt),
-  }));
-  return { payload: { ...payload, commands: [...payload.commands, ...specCommands] } };
+  const byKey = new Map(args.fields.map((field) => [field.key, field]));
+  const trimRow: Record<string, unknown> = {
+    ...(args.existingTrimId ? { canonical_id: args.existingTrimId } : {}),
+    ...marketTrimPatch(args),
+    ...(args.sourceRefs ? { source_refs: args.sourceRefs } : {}),
+  };
+
+  const trimRef = args.existingTrimId
+    ? { trimId: args.existingTrimId }
+    : { ref: {
+        generation_id: args.generationId,
+        name: args.identity.name,
+        powertrain: args.identity.powertrain,
+      } };
+
+  const specCommands = args.submissions
+    .map((submission) => ({ submission, field: byKey.get(submission.key) }))
+    .filter((row): row is { submission: TrimFieldSubmission; field: TrimEditorField } =>
+      Boolean(row.field?.targets.specKey))
+    .map(({ submission, field }) => ({
+      operation: "APPEND_SPEC",
+      ...(args.existingTrimId ? { canonical_id: args.existingTrimId } : {}),
+      payload: specFactPayload(field, submission, args.evidence, trimRef),
+    }));
+
+  return {
+    payload: {
+      schema_version: 1,
+      batch_id: args.batchId,
+      year: args.year,
+      submitted_at: args.submittedAt,
+      source: evidenceSource(args.evidence),
+      reason: composeReason(args.evidence, args.reason),
+      commands: [
+        {
+          operation: "UPSERT_MODEL_BUNDLE",
+          canonical_id: args.canonicalModelId,
+          payload: {
+            brand: {
+              id: args.brand.id, name_en: args.brand.nameEn,
+              ...(args.brand.nameTh ? { name_th: args.brand.nameTh } : {}),
+            },
+            model: {},
+            generation: { code: args.generationCode },
+            variants: [],
+            trims: [trimRow],
+          },
+        },
+        ...specCommands,
+      ],
+    },
+  };
 }
 
 /**
- * One combined Current-vs-Proposed diff for a trim edit: the MarketTrim's own
- * fields and its comparable-spec facts in a single list, in the order the
- * editor shows them, so the review step reads as "this trim" rather than two
- * unrelated change sets.
+ * ONE Current-vs-Proposed diff for the whole trim edit, in the order the
+ * editor shows the fields. Deliberately not split into "MarketTrim changes"
+ * and "comparable-spec changes": the admin changed Seats, once, and which
+ * backends that lands in is not a thing they should have to reconcile in
+ * review. A field whose value carries qualifiers shows them inline, so a range
+ * reads "442 km (NEDC)" and losing the NEDC would be visible.
  */
 export function diffTrimEdit(args: {
-  currentTrimFields: Record<string, unknown>;
-  trimPatch: Record<string, unknown>;
-  trimLabels: Record<string, string>;
-  currentSpecsByField: Record<string, { value_state: string; value: unknown }>;
-  specEntries: TrimSpecEntry[];
+  current: Record<string, { value: string; valueState: string; qualifiers: Record<string, string> }>;
+  submissions: TrimFieldSubmission[];
+  fields: TrimEditorField[];
 }): DiffRow[] {
-  const specCurrent: Record<string, unknown> = {};
-  const specPatch: Record<string, unknown> = {};
-  const specLabels: Record<string, string> = {};
-  for (const entry of args.specEntries) {
-    const existing = args.currentSpecsByField[entry.fieldKey];
-    specCurrent[entry.fieldKey] = existing
-      ? { value_state: existing.value_state, value: existing.value }
-      : { value_state: "UNKNOWN", value: null };
-    specPatch[entry.fieldKey] = {
-      value_state: entry.valueState,
-      value: entry.valueState === "KNOWN" ? entry.value : null,
+  const byKey = new Map(args.fields.map((field) => [field.key, field]));
+  return args.submissions.map((submission) => {
+    const field = byKey.get(submission.key);
+    const before = args.current[submission.key]
+      || { value: "", valueState: "UNKNOWN", qualifiers: {} };
+    const after = {
+      value: submission.valueState === "KNOWN" ? String(submission.value ?? "") : "",
+      valueState: submission.valueState,
+      qualifiers: submission.qualifiers || {},
     };
-    specLabels[entry.fieldKey] = entry.labelForDiff;
+    return {
+      field: submission.key,
+      label: field ? field.labelEn : submission.key,
+      current: describeValue(before, field),
+      proposed: describeValue(after, field),
+      changed: normalizeForCompare([before.valueState, before.value, before.qualifiers])
+        !== normalizeForCompare([after.valueState, after.value, after.qualifiers]),
+    };
+  });
+}
+
+/** "442 km (NEDC)" -- one readable cell, unit and qualifiers included. */
+export function describeValue(
+  state: { value: string; valueState: string; qualifiers: Record<string, string> },
+  field?: TrimEditorField,
+): string {
+  if (state.valueState !== "KNOWN") {
+    return state.valueState === "UNKNOWN" ? "—" : state.valueState.replace(/_/g, " ").toLowerCase();
   }
-  return [
-    ...diffPatch(args.currentTrimFields, args.trimPatch, args.trimLabels),
-    ...diffPatch(specCurrent, specPatch, specLabels),
-  ];
+  const unit = field?.unit ? ` ${field.unit}` : "";
+  const qualifiers = Object.entries(state.qualifiers)
+    .filter(([, value]) => value)
+    .map(([, value]) => value);
+  return `${state.value}${unit}${qualifiers.length ? ` (${qualifiers.join(", ")})` : ""}`;
 }
 
 export type SourceRefEdit = { kind: string; url: string };

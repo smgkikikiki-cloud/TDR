@@ -1,7 +1,9 @@
 /**
  * Server-side storage for the Canonical Vehicle Editor's review-before-queue
- * step, backing supabase/migration_v35_admin_edit_sessions.sql's
- * admin_edit_sessions table (not applied to production by this branch).
+ * step, backing the admin_edit_sessions table created by
+ * supabase/migration_v35_admin_edit_sessions.sql (applied in production) and
+ * carried to this module's shape -- kind 'TRIM', no DRAFT status -- by
+ * supabase/migration_v36_admin_edit_sessions_trim_kind.sql.
  *
  * The review URL carries only an opaque, high-entropy id; the proposal's
  * canonical payload, diff, evidence and reason never leave the server except
