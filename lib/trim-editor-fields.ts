@@ -162,12 +162,37 @@ const CONCEPTS: readonly FieldConcept[] = [
     // family here means the hand-entered value and the ingested one compare.
     options: ["AUTOMATIC", "CVT", "MANUAL", "OTHER"],
   },
-  { key: "motor_type", category: "powertrain", labelEn: "Motor type", labelTh: "ชนิดมอเตอร์", targets: { specKey: "powertrain.motor_type" }, placeholder: "PMSM" },
+  {
+    key: "fuel_type", category: "powertrain", labelEn: "Fuel type", labelTh: "เชื้อเพลิงที่เติมได้",
+    targets: { specKey: "engine.fuel_type" }, input: "enum",
+    // Stored as the highest blend the car accepts: an E85 car runs E20 and
+    // plain gasoline too, so one value answers the question.
+    options: ["GASOLINE", "E10", "E20", "E85", "DIESEL", "B10", "B20", "OTHER"],
+  },
+  {
+    key: "combustion_type", category: "powertrain", labelEn: "Combustion type", labelTh: "ประเภทเครื่องยนต์",
+    targets: { specKey: "engine.combustion_type" }, input: "enum",
+    options: ["GASOLINE", "DIESEL", "HEV", "PHEV", "OTHER"],
+    help: "แยกจากประเภทระบบขับเคลื่อน — ECO Sticker จัดไฮบริดเป็นเครื่องสันดาป จึงต้องบันทึกแยก",
+  },
+  { key: "motor_type", category: "powertrain", labelEn: "Motor type", labelTh: "ชนิดมอเตอร์", targets: { specKey: "powertrain.motor_type" }, input: "enum", options: ["PMSM", "AC_INDUCTION", "SEPARATELY_EXCITED", "OTHER"] },
+  { key: "motor_count", category: "powertrain", labelEn: "Number of motors", labelTh: "จำนวนมอเตอร์", targets: { specKey: "powertrain.motor_count" }, integer: true },
+  { key: "gear_count", category: "powertrain", labelEn: "Number of gears", labelTh: "จำนวนเกียร์", targets: { specKey: "powertrain.gear_count" }, integer: true },
   { key: "max_power_kw", category: "powertrain", labelEn: "Max power", labelTh: "กำลังสูงสุด", targets: { specKey: "powertrain.max_power_kw" } },
   { key: "max_torque_nm", category: "powertrain", labelEn: "Max torque", labelTh: "แรงบิดสูงสุด", targets: { specKey: "powertrain.max_torque_nm" } },
   { key: "acceleration_0_100_s", category: "powertrain", labelEn: "0-100 km/h", labelTh: "อัตราเร่ง 0-100 กม./ชม.", targets: { specKey: "performance.acceleration_0_100_s" } },
   { key: "top_speed_kmh", category: "powertrain", labelEn: "Top speed", labelTh: "ความเร็วสูงสุด", targets: { specKey: "performance.top_speed_kmh" } },
+  { key: "fuel_consumption", category: "powertrain", labelEn: "Fuel consumption (combined)", labelTh: "อัตราสิ้นเปลืองรวม", targets: { specKey: "efficiency.fuel_consumption_l_100km" } },
+  { key: "fuel_consumption_urban", category: "powertrain", labelEn: "Fuel consumption (urban)", labelTh: "อัตราสิ้นเปลืองในเมือง", targets: { specKey: "efficiency.fuel_consumption_urban_l_100km" } },
+  { key: "fuel_consumption_extra_urban", category: "powertrain", labelEn: "Fuel consumption (extra-urban)", labelTh: "อัตราสิ้นเปลืองนอกเมือง", targets: { specKey: "efficiency.fuel_consumption_extra_urban_l_100km" } },
   { key: "co2_g_km", category: "powertrain", labelEn: "CO2 emissions", labelTh: "การปล่อย CO2", targets: { specKey: "emissions.co2_g_km" } },
+  { key: "nox_g_km", category: "powertrain", labelEn: "NOx emissions", labelTh: "ไนโตรเจนออกไซด์", targets: { specKey: "emissions.nox_g_km" } },
+  { key: "pm_g_km", category: "powertrain", labelEn: "Particulate matter", labelTh: "ฝุ่นละออง", targets: { specKey: "emissions.pm_g_km" } },
+  {
+    key: "emissions_standard", category: "powertrain", labelEn: "Emissions standard", labelTh: "มาตรฐานไอเสีย",
+    targets: { specKey: "emissions.standard" }, input: "enum",
+    options: ["TIS", "EURO4", "EURO5", "EURO6", "OTHER"],
+  },
 
   // ---- Battery, charging & range -----------------------------------------
   {
@@ -197,6 +222,20 @@ const CONCEPTS: readonly FieldConcept[] = [
   { key: "charging_ac_kw", category: "energy", labelEn: "AC charging (max)", labelTh: "ชาร์จ AC สูงสุด", targets: { specKey: "charging.ac_max_kw" } },
   { key: "charging_dc_kw", category: "energy", labelEn: "DC charging (max)", labelTh: "ชาร์จ DC สูงสุด", targets: { specKey: "charging.dc_max_kw" } },
   { key: "charging_dc_time_min", category: "energy", labelEn: "DC charging time", labelTh: "เวลาชาร์จ DC", targets: { specKey: "charging.dc_time_min" } },
+  {
+    key: "charging_connector", category: "energy", labelEn: "Charging connector", labelTh: "หัวชาร์จ",
+    targets: { specKey: "charging.connector_type" }, input: "enum",
+    // GB/T matters in Thailand: a car with it cannot use most public chargers.
+    options: ["CCS2", "TYPE2", "GBT", "CHADEMO", "OTHER"],
+  },
+  {
+    key: "charging_port_type", category: "energy", labelEn: "Charging method", labelTh: "รูปแบบการชาร์จ",
+    targets: { specKey: "charging.port_type" }, input: "enum",
+    options: ["ONBOARD_AC", "EXTERNAL_DC", "BOTH", "OTHER"],
+  },
+  { key: "charging_onboard_spec", category: "energy", labelEn: "On-board charger", labelTh: "สเปก On-board charger", targets: { specKey: "charging.onboard_charger_spec" } },
+  { key: "battery_warranty_years", category: "energy", labelEn: "Battery warranty (years)", labelTh: "รับประกันแบตเตอรี่ (ปี)", targets: { specKey: "battery.warranty_years" }, integer: true },
+  { key: "battery_warranty_km", category: "energy", labelEn: "Battery warranty (km)", labelTh: "รับประกันแบตเตอรี่ (กม.)", targets: { specKey: "battery.warranty_km" }, integer: true },
 
   // ---- Dimensions & weight ------------------------------------------------
   { key: "seats", category: "dimensions", labelEn: "Seats", labelTh: "จำนวนที่นั่ง", targets: { trimField: "seats", specKey: "vehicle.seats" }, integer: true, positive: true, max: 100 },
@@ -213,11 +252,13 @@ const CONCEPTS: readonly FieldConcept[] = [
   // ---- Wheels, tyres & chassis -------------------------------------------
   { key: "tire_front", category: "chassis", labelEn: "Front tyre", labelTh: "ยางหน้า", targets: { trimField: "tire_front", specKey: "fitment.tyre_front" }, placeholder: "215/55 R17" },
   { key: "tire_rear", category: "chassis", labelEn: "Rear tyre", labelTh: "ยางหลัง", targets: { trimField: "tire_rear", specKey: "fitment.tyre_rear" }, placeholder: "215/55 R17" },
+  { key: "tyre_size", category: "chassis", labelEn: "Tyre size", labelTh: "ขนาดยาง", targets: { specKey: "fitment.tyre_size" }, placeholder: "215/55 R17", help: "ใช้เมื่อยางหน้า/หลังขนาดเท่ากัน" },
   { key: "wheel_front", category: "chassis", labelEn: "Front wheel", labelTh: "ล้อหน้า", targets: { trimField: "wheel_front" }, input: "text", placeholder: "17x7.0J" },
   { key: "wheel_rear", category: "chassis", labelEn: "Rear wheel", labelTh: "ล้อหลัง", targets: { trimField: "wheel_rear" }, input: "text", placeholder: "17x7.0J" },
 
   // ---- Manufacturing & other ---------------------------------------------
   { key: "model_year", category: "manufacturing", labelEn: "Model year", labelTh: "ปีรุ่น", targets: { specKey: "vehicle.model_year" } },
+  { key: "excise_tax_rate", category: "manufacturing", labelEn: "Excise tax rate", labelTh: "อัตราภาษีสรรพสามิต", targets: { specKey: "manufacturing.excise_tax_rate" }, max: 100 },
   { key: "factory", category: "manufacturing", labelEn: "Plant / factory", labelTh: "โรงงานผลิต", targets: { specKey: "manufacturing.factory" } },
   { key: "notes", category: "manufacturing", labelEn: "Internal note", labelTh: "บันทึกภายใน", targets: { trimField: "notes" }, input: "text" },
 ] as const;
@@ -232,13 +273,16 @@ const CONCEPTS: readonly FieldConcept[] = [
  * the ECO sticker ingest, which knows what the document literally said; a hand
  * editor has no better answer than the canonical value it already entered.
  *
- * `fitment.tyre_size` is the pre-split single-size key. Front and rear tyres
- * own that concept here.
+ * `fitment.tyre_size` is NOT on this list, despite looking like a duplicate of
+ * the front/rear pair. The ECO sticker export gives a single wheel_size for
+ * 1,390 of 1,647 vehicles but separate front and rear sizes for only 257 --
+ * staggered fitment is the exception. Dropping it would throw away the tyre
+ * size of most cars in the catalogue to avoid a duplication that, for those
+ * cars, does not exist.
  */
 export const UNSURFACED_SPEC_KEYS: readonly string[] = [
   "battery.chemistry_as_declared",
   "powertrain.transmission_as_declared",
-  "fitment.tyre_size",
 ];
 
 /** Which category an unmapped registry field lands in, by its registry group.

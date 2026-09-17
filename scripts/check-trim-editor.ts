@@ -84,7 +84,7 @@ console.log("TEST 1 — one UI field fans out to every backend that stores the c
   const missing = REGISTRY.map((d) => d.key)
     .filter((key) => !surfaced.has(key) && !UNSURFACED_SPEC_KEYS.includes(key));
   check("every registry field is rendered or explicitly unsurfaced", missing, []);
-  ok("the unsurfaced list is short and deliberate", UNSURFACED_SPEC_KEYS.length === 3);
+  ok("the unsurfaced list is short and deliberate", UNSURFACED_SPEC_KEYS.length === 2);
 
   check("every category in the catalog is one the editor renders",
     FIELDS.filter((f) => !TRIM_CATEGORIES.some((c) => c.id === f.category)).map((f) => f.key), []);
@@ -104,6 +104,7 @@ console.log("\nACCEPTANCE — opening AION ES Comfort shows exactly one box per 
     "Drivetrain", "Motor type", "Max power", "Max torque", "Battery capacity",
     "Battery chemistry", "Battery manufacturer / supplier", "Rated driving range",
     "Seats", "Length", "Width", "Height", "Wheelbase", "Front tyre", "Rear tyre",
+    "Tyre size", "Charging connector", "Excise tax rate", "Emissions standard",
   ]) {
     check(`exactly one "${label}" box`, shown.filter((l) => l === label).length, 1);
   }
@@ -113,8 +114,19 @@ console.log("\nACCEPTANCE — opening AION ES Comfort shows exactly one box per 
   // The trap the user named: a BEV must not be asked for engine displacement.
   ok("a BEV form offers no engine displacement box", !shown.includes("Engine displacement"));
   ok("a BEV form offers no engine code box", !shown.includes("Engine code"));
-  ok("an ICE form does offer engine displacement",
-    FIELDS.filter((f) => fieldAppliesTo(f, "ICE")).some((f) => f.key === "engine_cc"));
+  ok("a BEV form offers no fuel type or combustion type box",
+    !shown.includes("Fuel type") && !shown.includes("Combustion type"));
+
+  const ice = FIELDS.filter((f) => fieldAppliesTo(f, "ICE")).map((f) => f.key);
+  ok("an ICE form does offer engine displacement", ice.includes("engine_cc"));
+  // The fuel a car takes (E20/E85/B20) is what a Thai buyer filters on, and
+  // combustion_type is the only field that can tell a hybrid from a plain
+  // engine, because the ECO export files both as "ICE".
+  ok("an ICE form offers fuel type and combustion type",
+    ice.includes("fuel_type") && ice.includes("combustion_type"));
+  ok("an ICE form offers combined fuel consumption", ice.includes("fuel_consumption"));
+  ok("a BEV form does not ask for fuel consumption",
+    !FIELDS.filter((f) => fieldAppliesTo(f, "BEV")).some((f) => f.key === "fuel_consumption"));
 
   // Test cycle is a qualifier of range, rendered beside it — not a field of
   // its own and not something that can go missing.
