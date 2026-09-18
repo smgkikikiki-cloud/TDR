@@ -5,7 +5,11 @@ import { useEffect, useMemo, useState } from "react";
 import { browserDb } from "@/lib/supabase-browser";
 import { bodyLabel } from "@/lib/body-labels";
 
-type TrimOption = { id: string; brand_name: string | null; model_name: string | null; name: string | null };
+type TrimOption = {
+  id: string; model_id: string | null; brand_name: string | null; model_name: string | null;
+  name: string | null; powertrain: string | null; price_baht: number | null;
+};
+type ModelOption = { id: string; brand: string; model: string; trims: TrimOption[] };
 type CompareRow = { key: string; label: string; different: boolean; values: (string | null)[] };
 type CompareGroup = { title: string; rows: CompareRow[] };
 type SelectedTrim = { id: string; brand_name: string | null; model_name: string | null; name: string | null; model_slug: string | null; image_url: string | null };
@@ -16,13 +20,40 @@ type CompareResult = {
   quota: { used: number; limit: number | null; remaining: number | null; resets_at: string };
 };
 
-function choiceLabel(trim: TrimOption) {
-  return [trim.brand_name, trim.model_name, trim.name].filter(Boolean).join(" · ");
+function trimLabel(trim: TrimOption) {
+  const bits = [trim.name || "รุ่นย่อย"];
+  if (trim.powertrain) bits.push(trim.powertrain);
+  if (trim.price_baht) bits.push(`฿${Math.round(trim.price_baht).toLocaleString("th-TH")}`);
+  return bits.join(" · ");
+}
+
+/** Trims grouped into the cars they belong to.
+ *
+ *  The picker used to be one <select> holding every trim in the catalogue --
+ *  over a thousand options, so finding a car meant scrolling past every other
+ *  car. Nobody chooses a vehicle that way; they know the model and then pick
+ *  the version. Grouping here keeps that a pure transformation of what the
+ *  API already sends rather than a second endpoint.
+ */
+function groupByModel(trims: TrimOption[]): ModelOption[] {
+  const models = new Map<string, ModelOption>();
+  for (const trim of trims) {
+    const id = trim.model_id || `${trim.brand_name}:${trim.model_name}`;
+    const existing = models.get(id);
+    if (existing) { existing.trims.push(trim); continue; }
+    models.set(id, {
+      id, brand: trim.brand_name || "", model: trim.model_name || "", trims: [trim],
+    });
+  }
+  return [...models.values()].sort((a, b) =>
+    `${a.brand} ${a.model}`.localeCompare(`${b.brand} ${b.model}`, "th"));
 }
 
 export default function ComparePage() {
   const [allTrims, setAllTrims] = useState<TrimOption[]>([]);
-  const [slots, setSlots] = useState<string[]>(["", "", "", ""]);
+  const [chosen, setChosen] = useState<string[]>([]);
+  const [query, setQuery] = useState("");
+  const [modelId, setModelId] = useState("");
   const [diffOnly, setDiffOnly] = useState(false);
   const [token, setToken] = useState<string | null | undefined>(undefined);
   const [result, setResult] = useState<CompareResult | null>(null);
@@ -30,18 +61,38 @@ export default function ComparePage() {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    fetch("/api/compare/trims").then((r) => r.json()).then((body) => setAllTrims(body.trims || []));
+    fetch("/api/compare/trims").then((r) => r.json()).then((body) => {
+      setAllTrims(body.trims || []);
+      // A trim page links here with its own car already chosen.
+      const wanted = new URLSearchParams(window.location.search).getAll("trims").filter(Boolean);
+      if (wanted.length) setChosen(wanted.slice(0, 4));
+    });
     const db = browserDb();
     if (!db) { setToken(null); return; }
     db.auth.getSession().then(({ data }) => setToken(data.session?.access_token ?? null));
   }, []);
 
-  const selectedCount = useMemo(() => slots.filter(Boolean).length, [slots]);
+  const byId = useMemo(() => new Map(allTrims.map((trim) => [trim.id, trim])), [allTrims]);
+  const models = useMemo(() => groupByModel(allTrims), [allTrims]);
+  const matches = useMemo(() => {
+    const needle = query.trim().toLowerCase();
+    if (!needle) return models;
+    return models.filter((model) => `${model.brand} ${model.model}`.toLowerCase().includes(needle));
+  }, [models, query]);
+  const openModel = useMemo(() => models.find((model) => model.id === modelId) || null, [models, modelId]);
+  const selectedCount = chosen.length;
+
+  function addTrim(id: string) {
+    setChosen((current) => (current.includes(id) || current.length >= 4 ? current : [...current, id]));
+  }
+  function removeTrim(id: string) {
+    setChosen((current) => current.filter((value) => value !== id));
+  }
 
   async function runCompare(event: React.FormEvent) {
     event.preventDefault();
     if (!token) return;
-    const ids = [...new Set(slots.filter(Boolean))];
+    const ids = [...new Set(chosen)];
     if (ids.length < 2) return;
     setStatus("loading"); setMessage("");
     try {
@@ -71,29 +122,82 @@ export default function ComparePage() {
       <Link href="/models">กลับไปดูแคตตาล็อก →</Link>
     </section>
 
-    {token === null ? (
-      <section className="compareEmpty">
-        <b>ต้องเข้าสู่ระบบก่อนเทียบรถ</b>
-        <Link href="/member/login">เข้าสู่ระบบ / สมัครสมาชิกฟรี →</Link>
-      </section>
-    ) : (
-      <form className="comparePicker" onSubmit={runCompare}>
-        {[0, 1, 2, 3].map((slot) => (
-          <label key={slot}>
-            <span>คันที่ {slot + 1}{slot < 2 ? " · ต้องเลือก" : " · ไม่บังคับ"}</span>
-            <select value={slots[slot]} onChange={(event) => setSlots((prev) => prev.map((v, i) => i === slot ? event.target.value : v))} required={slot < 2}>
-              <option value="">เลือกรุ่นย่อย</option>
-              {allTrims.map((trim) => <option key={`${slot}:${trim.id}`} value={trim.id}>{choiceLabel(trim)}</option>)}
-            </select>
+    <form className="comparePicker" onSubmit={runCompare}>
+        <div className="comparePickStep">
+          <label className="comparePickSearch">
+            <span>1. เลือกรุ่น</span>
+            <input type="search" value={query} placeholder="พิมพ์ชื่อแบรนด์หรือรุ่น"
+                   onChange={(event) => { setQuery(event.target.value); setModelId(""); }} />
           </label>
-        ))}
-        <label className="compareDiffToggle">
-          <input type="checkbox" checked={diffOnly} onChange={(event) => setDiffOnly(event.target.checked)} />
-          <span>แสดงเฉพาะจุดที่ต่างกัน</span>
-        </label>
-        <button type="submit" disabled={selectedCount < 2 || status === "loading"}>{status === "loading" ? "กำลังเทียบ…" : "เทียบรถ"}</button>
+          <select value={modelId} size={1} aria-label="รุ่นรถ"
+                  onChange={(event) => setModelId(event.target.value)}>
+            <option value="">{matches.length ? `เลือกจาก ${matches.length} รุ่น` : "ไม่พบรุ่นที่ค้นหา"}</option>
+            {matches.map((model) => (
+              <option key={model.id} value={model.id}>
+                {[model.brand, model.model].filter(Boolean).join(" ")} · {model.trims.length} รุ่นย่อย
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="comparePickStep">
+          <span className="comparePickLabel">2. เลือกรุ่นย่อย</span>
+          {openModel ? (
+            <div className="compareTrimChoices">
+              {openModel.trims.map((trim) => {
+                const picked = chosen.includes(trim.id);
+                return (
+                  <button type="button" key={trim.id}
+                          className={picked ? "compareTrimChoice on" : "compareTrimChoice"}
+                          aria-pressed={picked}
+                          disabled={!picked && chosen.length >= 4}
+                          onClick={() => (picked ? removeTrim(trim.id) : addTrim(trim.id))}>
+                    {trimLabel(trim)}
+                  </button>
+                );
+              })}
+            </div>
+          ) : (
+            <p className="comparePickHint">เลือกรุ่นก่อน แล้วรุ่นย่อยจะขึ้นตรงนี้</p>
+          )}
+        </div>
+
+        <div className="compareTray" aria-label="รถที่เลือกไว้">
+          <span className="comparePickLabel">3. เทียบ ({selectedCount}/4)</span>
+          {selectedCount ? (
+            <ul>
+              {chosen.map((id) => {
+                const trim = byId.get(id);
+                return (
+                  <li key={id}>
+                    <b>{[trim?.brand_name, trim?.model_name].filter(Boolean).join(" ") || id}</b>
+                    <span>{trim?.name}</span>
+                    <button type="button" aria-label={`เอา ${trim?.name || id} ออก`} onClick={() => removeTrim(id)}>×</button>
+                  </li>
+                );
+              })}
+            </ul>
+          ) : <p className="comparePickHint">ยังไม่ได้เลือก เลือกอย่างน้อย 2 คัน</p>}
+
+          <label className="compareDiffToggle">
+            <input type="checkbox" checked={diffOnly} onChange={(event) => setDiffOnly(event.target.checked)} />
+            <span>แสดงเฉพาะจุดที่ต่างกัน</span>
+          </label>
+          {token === null ? (
+            <Link className="compareSignIn"
+                  href={`/member/login?next=${encodeURIComponent(`/compare?${chosen.map((id) => `trims=${encodeURIComponent(id)}`).join("&")}`)}`}>
+              เข้าสู่ระบบเพื่อเทียบ · สมัครฟรี
+            </Link>
+          ) : (
+            <button type="submit" disabled={selectedCount < 2 || status === "loading"}>
+              {status === "loading" ? "กำลังเทียบ…" : "เทียบรถ"}
+            </button>
+          )}
+          {token === null && selectedCount >= 2
+            ? <p className="comparePickHint">รถที่เลือกไว้จะยังอยู่หลังเข้าสู่ระบบ</p>
+            : null}
+        </div>
       </form>
-    )}
 
     {status === "quota" ? <div className="compareNotice">{message} — อัปเกรดบัญชีเพื่อเทียบรถไม่จำกัดต่อวัน <Link href="/pricing">ดูแพ็กเกจ</Link></div> : null}
     {status === "error" ? <div className="compareNotice">{message}</div> : null}
