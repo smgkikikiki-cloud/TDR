@@ -61,6 +61,8 @@ check("page loads versioned ECO review state", page.includes("review/2026-09-08.
 check("page hides HUMAN reject/defer groups by default", page.includes("showReviewed || !row.reviewDisposition"), true);
 check("page exposes reject/defer queue", page.includes("Queue disposition"), true);
 check("page exposes audited reopen", page.includes("Reopen candidate"), true);
+check("page links source UUIDs directly to validated ECO detail path", page.includes("https://car.ecosticker.go.th/landing-page/detail/"), true);
+check("ECO evidence links open separately", page.includes('target="_blank"') && page.includes('rel="noreferrer"'), true);
 check("page labels ECO price as evidence only", page.includes("ECO evidence price"), true);
 check("server bundle explicitly traces normalized snapshot", nextConfig.includes("normalized.jsonl.gz"), true);
 check("server bundle explicitly traces manifest", nextConfig.includes("manifest.json"), true);
