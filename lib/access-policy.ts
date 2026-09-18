@@ -82,7 +82,9 @@ export interface TierPolicy {
   salesQueryDailyLimit: number | null;
   salesModulePickCount: number | null; // null = all modules available, no picker needed
   historyWindow: "current_calendar_year" | "rolling_24_months" | "full";
-  researchAccess: "preview" | "full";
+  /** How many full articles a member may unlock per calendar month. null =
+   *  unlimited. The real gate -- rereading an already-unlocked article is
+   *  always free -- lives in app/api/research/read/route.ts, not here. */
   researchFullMonthlyLimit: number | null;
   pdfMonthlyLimit: number | null;
   pdfWatermark: boolean;
@@ -101,7 +103,6 @@ export const TIER_POLICIES: Record<Tier, TierPolicy> = {
     salesQueryDailyLimit: 5,
     salesModulePickCount: FREE_SALES_MODULE_PICK_COUNT,
     historyWindow: "current_calendar_year",
-    researchAccess: "preview",
     researchFullMonthlyLimit: 2,
     pdfMonthlyLimit: 1,
     pdfWatermark: true,
@@ -115,7 +116,6 @@ export const TIER_POLICIES: Record<Tier, TierPolicy> = {
     salesQueryDailyLimit: null,
     salesModulePickCount: null,
     historyWindow: "rolling_24_months",
-    researchAccess: "full",
     researchFullMonthlyLimit: 3,
     pdfMonthlyLimit: 10,
     pdfWatermark: false,
@@ -129,7 +129,6 @@ export const TIER_POLICIES: Record<Tier, TierPolicy> = {
     salesQueryDailyLimit: null,
     salesModulePickCount: null,
     historyWindow: "full",
-    researchAccess: "full",
     researchFullMonthlyLimit: null,
     pdfMonthlyLimit: null,
     pdfWatermark: false,
@@ -236,24 +235,28 @@ export const FEATURES: Record<FeatureKey, FeatureDefinition> = {
     // true until it's a real, concrete policy.
     limitedAccessPolicyDefined: false,
   },
-  // Both of these already have a real quota metric and TierPolicy fields
-  // (researchAccess/researchFullMonthlyLimit, pdfMonthlyLimit/pdfWatermark)
-  // -- what's missing is a real content model (research_reports) and a
-  // real PDF renderer (pdf_export_reports), neither of which exists in
-  // this repo yet. `released: false` keeps app/api/research and
-  // app/api/export/pdf returning 404 (hidden, not a working-but-fake
-  // feature) and keeps them off the pricing page's live feature lists
-  // until a real implementation lands -- see the delivery report. Neither
-  // ladder has a 'limited' tier, so limitedAccessPolicyDefined doesn't
-  // gate them, but it's set true here since it's vacuously satisfied
-  // (no 'limited' audience to define a policy for).
+  // research_reports is released: a real content model exists
+  // (research_articles/research_article_reads, migration_v38) and
+  // app/api/research/read/route.ts is the real gate, not a stub. Free's
+  // 'limited' state is two full articles a month -- a concrete, decided
+  // number in TierPolicy.researchFullMonthlyLimit, which is exactly what
+  // limitedAccessPolicyDefined below is asserting is true.
+  //
+  // pdf_export_reports has a quota metric and TierPolicy fields
+  // (pdfMonthlyLimit/pdfWatermark) but no real PDF renderer yet.
+  // `released: false` keeps app/api/export/pdf returning 404 (hidden, not
+  // a working-but-fake feature) and off the pricing page's live feature
+  // list until one exists. Its ladder has no 'limited' tier, so
+  // limitedAccessPolicyDefined doesn't gate it, but it's set true here
+  // since that is vacuously satisfied (no 'limited' audience to define a
+  // policy for).
   research_reports: {
     key: "research_reports",
     label: "Research Reports",
     labelTh: "รายงานวิจัย",
     surface: "research",
-    released: false,
-    stateByAudience: { FREE: "teaser", INDIVIDUAL: "full", PRO: "full", CORPORATE: "tailored" },
+    released: true,
+    stateByAudience: { FREE: "limited", INDIVIDUAL: "full", PRO: "full", CORPORATE: "tailored" },
     countsTowardSalesModuleSelection: false,
     consumesQuota: true,
     limitedAccessPolicyDefined: true,
