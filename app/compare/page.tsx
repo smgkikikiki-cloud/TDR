@@ -18,6 +18,7 @@ type CompareResult = {
   missing_selection: boolean;
   groups: CompareGroup[];
   quota: { used: number; limit: number | null; remaining: number | null; resets_at: string };
+  anonymous?: { remaining: number; limit: number };
 };
 
 function trimLabel(trim: TrimOption) {
@@ -57,7 +58,7 @@ export default function ComparePage() {
   const [diffOnly, setDiffOnly] = useState(false);
   const [token, setToken] = useState<string | null | undefined>(undefined);
   const [result, setResult] = useState<CompareResult | null>(null);
-  const [status, setStatus] = useState<"idle" | "loading" | "quota" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "quota" | "signup" | "error">("idle");
   const [message, setMessage] = useState("");
 
   useEffect(() => {
@@ -91,7 +92,6 @@ export default function ComparePage() {
 
   async function runCompare(event: React.FormEvent) {
     event.preventDefault();
-    if (!token) return;
     const ids = [...new Set(chosen)];
     if (ids.length < 2) return;
     setStatus("loading"); setMessage("");
@@ -100,7 +100,7 @@ export default function ComparePage() {
       ids.forEach((id) => params.append("trims", id));
       if (diffOnly) params.set("diff", "1");
       const response = await fetch(`/api/tools/compare?${params.toString()}`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: token ? { Authorization: `Bearer ${token}` } : undefined,
         cache: "no-store",
       });
       const body = await response.json();
@@ -108,7 +108,7 @@ export default function ComparePage() {
       setResult(body);
       setStatus("idle");
     } catch (error: any) {
-      setStatus(error?.status === 429 ? "quota" : "error");
+      setStatus(error?.status === 429 ? "quota" : error?.status === 401 ? "signup" : "error");
       setMessage(error instanceof Error ? error.message : "เทียบรถไม่สำเร็จ");
     }
   }
@@ -183,22 +183,27 @@ export default function ComparePage() {
             <input type="checkbox" checked={diffOnly} onChange={(event) => setDiffOnly(event.target.checked)} />
             <span>แสดงเฉพาะจุดที่ต่างกัน</span>
           </label>
-          {token === null ? (
-            <Link className="compareSignIn"
-                  href={`/member/login?next=${encodeURIComponent(`/compare?${chosen.map((id) => `trims=${encodeURIComponent(id)}`).join("&")}`)}`}>
-              เข้าสู่ระบบเพื่อเทียบ · สมัครฟรี
-            </Link>
-          ) : (
-            <button type="submit" disabled={selectedCount < 2 || status === "loading"}>
-              {status === "loading" ? "กำลังเทียบ…" : "เทียบรถ"}
-            </button>
-          )}
-          {token === null && selectedCount >= 2
-            ? <p className="comparePickHint">รถที่เลือกไว้จะยังอยู่หลังเข้าสู่ระบบ</p>
+          <button type="submit" disabled={selectedCount < 2 || status === "loading"}>
+            {status === "loading" ? "กำลังเทียบ…" : "เทียบรถ"}
+          </button>
+          {token === null && result?.anonymous
+            ? <p className="comparePickHint">
+                เทียบได้อีก {result.anonymous.remaining} ครั้งโดยไม่ต้องสมัคร · สมัครฟรีแล้วเทียบได้ไม่จำกัด
+              </p>
             : null}
         </div>
       </form>
 
+    {status === "signup" ? (
+      <div className="compareSignupWall">
+        <b>{message}</b>
+        <Link className="compareSignIn"
+              href={`/member/login?next=${encodeURIComponent(`/compare?${chosen.map((id) => `trims=${encodeURIComponent(id)}`).join("&")}`)}`}>
+          สมัครฟรี / เข้าสู่ระบบ
+        </Link>
+        <span>รถที่เลือกไว้จะยังอยู่หลังเข้าสู่ระบบ</span>
+      </div>
+    ) : null}
     {status === "quota" ? <div className="compareNotice">{message} — อัปเกรดบัญชีเพื่อเทียบรถไม่จำกัดต่อวัน <Link href="/pricing">ดูแพ็กเกจ</Link></div> : null}
     {status === "error" ? <div className="compareNotice">{message}</div> : null}
     {result?.missing_selection ? <div className="compareNotice">มีรุ่นที่เลือกไว้ซึ่งไม่อยู่ในฐานข้อมูลแล้ว ระบบจึงไม่นำมาเทียบ</div> : null}

@@ -626,3 +626,15 @@
   .marketCuts { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .marketCuts a { white-space: nowrap; padding: 10px 12px; }
 }
+
+/* The day's free view is spent. What is behind the cover is the real page,
+   blurred -- not a picture of one. It carries aria-hidden because a blurred
+   chart is not content a screen reader should be read. */
+.marketLock { position: relative; }
+.marketLockBody { filter: blur(9px) saturate(.6); opacity: .55; pointer-events: none; user-select: none; }
+.marketLockCard { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center;
+                  justify-content: center; gap: 10px; text-align: center; padding: 24px;
+                  background: linear-gradient(to bottom, rgba(252,252,252,.55), rgba(252,252,252,.92)); }
+.marketLockCard b { font-size: 19px; }
+.marketLockCard span { max-width: 460px; color: var(--sf-muted); font-size: 13px; line-height: 1.7; }
+.marketLockCard .sfBtn { margin-top: 4px; }

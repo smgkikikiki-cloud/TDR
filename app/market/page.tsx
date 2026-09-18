@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { headers } from "next/headers";
 import { getPublicMarket, isPublicDimension, PUBLIC_BRAND_LIMIT, PUBLIC_DIMENSIONS } from "@/lib/public-market";
 import { MarketCharts } from "./MarketCharts";
 import { groupedNumber } from "@/components/charts/format";
@@ -20,6 +21,10 @@ export default async function MarketPage({ searchParams }: {
 }) {
   const { by } = await searchParams;
   const dimension = isPublicDimension(by) ? by : "brand";
+  // middleware.ts counts the anonymous day's views and leaves what is left
+  // here. A signed-in reader is never counted, so the header is absent.
+  const remaining = (await headers()).get("x-tdr-market-remaining");
+  const locked = remaining !== null && Number(remaining) <= 0;
   const market = await getPublicMarket(dimension);
   const dimensionLabel = PUBLIC_DIMENSIONS.find((item) => item.value === dimension)!.label;
 
@@ -50,7 +55,18 @@ export default async function MarketPage({ searchParams }: {
       ))}
     </nav>
 
-    {market ? (
+    {locked ? (
+      <section className="marketLock">
+        <div className="marketLockBody" aria-hidden="true">
+          {market ? <MarketCharts market={market} title={dimensionLabel} /> : null}
+        </div>
+        <div className="marketLockCard">
+          <b>ดูฟรีได้วันละ 1 ครั้ง · วันนี้ใช้ไปแล้ว</b>
+          <span>สมัครบัญชีฟรีเพื่อดูได้ทุกวัน เปลี่ยนมุมมองได้ 5 ครั้งต่อวัน และดาวน์โหลดได้เดือนละครั้ง</span>
+          <Link className="sfBtn" href="/member/login?next=%2Fmarket">สมัครฟรี / เข้าสู่ระบบ</Link>
+        </div>
+      </section>
+    ) : market ? (
       <>
         <MarketCharts market={market} title={dimensionLabel} />
 

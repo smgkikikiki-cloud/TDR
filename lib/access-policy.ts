@@ -94,12 +94,15 @@ export const TIER_POLICIES: Record<Tier, TierPolicy> = {
   FREE: {
     tier: "FREE",
     label: "Free",
-    compareDailyLimit: 3,
-    salesQueryDailyLimit: 10,
+    // Comparing specifications is the free product and an account is what
+    // unlocks it without limit -- a signed-in reader capped below the four an
+    // anonymous one gets would be punished for signing up.
+    compareDailyLimit: null,
+    salesQueryDailyLimit: 5,
     salesModulePickCount: FREE_SALES_MODULE_PICK_COUNT,
     historyWindow: "current_calendar_year",
     researchAccess: "preview",
-    researchFullMonthlyLimit: 0,
+    researchFullMonthlyLimit: 2,
     pdfMonthlyLimit: 1,
     pdfWatermark: true,
     apiAccess: false,

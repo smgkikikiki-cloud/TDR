@@ -52,3 +52,8 @@
                  font-size: 14px; font-weight: 700; transition: background .12s ease; }
 .compareSignIn:hover { background: var(--navy-2); color: #fff; }
 .compareSignIn:active { background: #001741; }
+.compareSignupWall { margin: 22px 0 0; border: 1px solid var(--line); border-left: 3px solid var(--red);
+                     background: #fff; padding: 20px; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+.compareSignupWall b { font-size: 16px; }
+.compareSignupWall span { color: var(--muted); font-size: 12px; }
+.compareSignupWall .compareSignIn { display: inline-block; width: auto; padding: 11px 18px; }
