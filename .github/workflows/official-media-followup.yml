@@ -1,0 +1,143 @@
+name: Official media coverage follow-up
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/official-media-followup.yml"
+      - "automotive/vehicle_master/config/official_media_followup_2026.txt"
+      - "automotive/vehicle_master/scripts/ingest_official_media_followup.py"
+      - "automotive/vehicle_master/scripts/ingest_official_media_scale.py"
+      - "automotive/vehicle_master/scripts/ingest_official_media.py"
+      - "automotive/vehicle_master/vehreg/official_media/**"
+      - "automotive/vehicle_master/tests/test_official_media*.py"
+      - "scripts/publish-official-media.ts"
+      - "scripts/prune-official-media-storage.ts"
+      - "package.json"
+      - "lib/canonical-data.ts"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/official-media-followup.yml"
+      - "automotive/vehicle_master/config/official_media_followup_2026.txt"
+      - "automotive/vehicle_master/scripts/ingest_official_media_followup.py"
+      - "automotive/vehicle_master/scripts/ingest_official_media_scale.py"
+      - "automotive/vehicle_master/scripts/ingest_official_media.py"
+      - "automotive/vehicle_master/vehreg/official_media/**"
+      - "automotive/vehicle_master/tests/test_official_media*.py"
+      - "scripts/publish-official-media.ts"
+      - "scripts/prune-official-media-storage.ts"
+      - "package.json"
+      - "lib/canonical-data.ts"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: official-media-coverage-followup-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  followup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: automotive/vehicle_master/requirements.txt
+
+      - name: Install Python dependencies
+        working-directory: automotive/vehicle_master
+        run: python -m pip install -r requirements.txt pytest
+
+      - name: Run official-media unit tests
+        working-directory: automotive/vehicle_master
+        run: python -m pytest -q tests/test_official_media.py tests/test_official_media_architecture.py
+
+      - name: Ingest verified current-model batch
+        working-directory: automotive/vehicle_master
+        shell: bash
+        run: |
+          mapfile -t VEHICLE_IDS < config/official_media_followup_2026.txt
+          test "${#VEHICLE_IDS[@]}" -gt 0
+          python scripts/ingest_official_media_followup.py \
+            --year 2026 \
+            --max-pages 4 \
+            --workers 6 \
+            --vehicle-ids "${VEHICLE_IDS[@]}"
+
+      - name: Require approval for the verified batch
+        working-directory: automotive/vehicle_master
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          targets = [line.strip() for line in Path("config/official_media_followup_2026.txt").read_text().splitlines() if line.strip()]
+          rows = [json.loads(line) for line in Path("integration_data/official_media/run_summary_2026.jsonl").read_text().splitlines() if line.strip()]
+          if len(rows) != len(targets):
+              raise SystemExit(f"expected {len(targets)} follow-up identities, got {len(rows)}")
+          missing = [row["vehicle_id"] for row in rows if not row.get("approved", 0)]
+          for row in rows:
+              print(f"{row['vehicle_id']}: assets={row['assets']} approved={row.get('approved', 0)} review={row['review']}")
+          if missing:
+              raise SystemExit("verified follow-up models missing approval: " + ", ".join(missing))
+          PY
+
+      - name: Preserve follow-up evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: official-media-followup-${{ github.sha }}
+          path: |
+            automotive/vehicle_master/integration_data/official_media
+            automotive/vehicle_master/data/media/cache
+          if-no-files-found: warn
+          retention-days: 7
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Typecheck media integrity scripts
+        run: npm run typecheck
+
+      - name: Build application against media binding contract
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
+        run: npm run build
+
+      - name: Preflight publish credentials
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${SUPABASE_URL}" || { echo "::error::SUPABASE_URL missing"; exit 1; }
+          if [ -z "${SUPABASE_SECRET_KEY}" ] && [ -z "${SUPABASE_SERVICE_ROLE_KEY}" ]; then
+            echo "::error::SUPABASE_SECRET_KEY or SUPABASE_SERVICE_ROLE_KEY is required"
+            exit 1
+          fi
+
+      - name: Publish approved follow-up assets
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+        run: npm run media:publish -- --year 2026
+
+      - name: Prune unreferenced official-media storage objects
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+        run: npm run media:prune-orphans -- --apply
+
+      - name: Note non-production validation
+        if: github.ref != 'refs/heads/main' || github.event_name == 'pull_request'
+        run: echo "Validated crawl, approvals, media integrity scripts and production build without mutating production media; publishing and storage cleanup are main-only."

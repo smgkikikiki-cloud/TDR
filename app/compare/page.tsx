@@ -67,7 +67,6 @@ export default function ComparePage() {
       <div>
         <div className="sfEyebrow">เปรียบเทียบสเปก</div>
         <h1>เทียบรถแบบตรงรุ่นย่อย</h1>
-        <p>เลือก 2–4 รุ่นย่อยเพื่อเปรียบเทียบราคา ขนาด ระบบขับเคลื่อน และสเปกพื้นฐาน</p>
       </div>
       <Link href="/models">กลับไปดูแคตตาล็อก →</Link>
     </section>
@@ -75,7 +74,6 @@ export default function ComparePage() {
     {token === null ? (
       <section className="compareEmpty">
         <b>ต้องเข้าสู่ระบบก่อนเทียบรถ</b>
-        <span>เครื่องมือเทียบรถเป็นฟีเจอร์ของบัญชี TDR (สมัครฟรีได้ ไม่ต้องผูกบัตร) — ดูข้อมูลรุ่น/ราคายังเปิดสาธารณะตามปกติ</span>
         <Link href="/member/login">เข้าสู่ระบบ / สมัครสมาชิกฟรี →</Link>
       </section>
     ) : (
@@ -140,10 +138,5 @@ export default function ComparePage() {
         </table>
       </section>
     ) : null}
-
-    <section className="compareFootnote">
-      <b>หลักของหน้านี้</b>
-      <p>ช่อง “—” หมายถึงยังไม่มีข้อมูลในฐานข้อมูล ไม่ได้เดาหรือนำค่าของรุ่นใกล้เคียงมาเติม</p>
-    </section>
   </div>;
 }

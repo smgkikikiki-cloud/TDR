@@ -133,7 +133,6 @@ export default async function ModelsPage({ searchParams }: { searchParams: Promi
       <div>
         <div className="sfEyebrow">ฐานข้อมูลรถยนต์</div>
         <h1>รถที่จำหน่ายในประเทศไทย</h1>
-        
       </div>
       <div className="sfPageHeadAside">
         <div className="sfEyebrow ink">ตรงกับตัวกรอง</div>

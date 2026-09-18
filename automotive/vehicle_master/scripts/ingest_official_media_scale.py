@@ -59,8 +59,14 @@ MODEL_PAGE_HINTS.update({
     "bmw.2_series_gran_coupe.gen1": (
         "https://www.bmw.co.th/en/all-models/2-series/gran-coupe/bmw-2-series-gran-coupe.html",
     ),
+    "bmw.bmw_3.g20": (
+        "https://www.bmw.co.th/en/all-models/3-series/bmw-3-series-sedan/bmw-3-series-sedan.html",
+    ),
     "bmw.4_series.gen1": (
         "https://www.bmw.co.th/en/all-models/4-series/4-series-coupe/bmw-4-series-coupe.html",
+    ),
+    "bmw.bmw_5.g60": (
+        "https://www.bmw.co.th/en/all-models/5-series/sedan/bmw-5-series-sedan-overview.html",
     ),
     "bmw.7_series.gen1": (
         "https://www.bmw.co.th/en/all-models/7-series/7-series-sedan/bmw-7-series-sedan.html",
@@ -102,15 +108,6 @@ MODEL_PAGE_HINTS.update({
         "https://www.bmw.co.th/en/all-models/z-series/z4-roadster/bmw-z4-roadster.html",
     ),
 
-    # Known BMW pages not promoted yet because their current first visual is a
-    # campaign/video frame or still needs a clean model-specific Scene7 choice.
-    "bmw.bmw_3.g20": (
-        "https://www.bmw.co.th/en/all-models/3-series/bmw-3-series-sedan/bmw-3-series-sedan.html",
-    ),
-    "bmw.bmw_5.g60": (
-        "https://www.bmw.co.th/en/all-models/5-series/sedan/bmw-5-series-sedan-phev-overview.html",
-    ),
-
     # Review-queue models whose exact official page identity is already known.
     "byd.seal_5_dmi.gen1": ("https://www.byd.com/en-th/car/seal5dmi",),
     "honda.brv.dg3": ("https://www.honda.co.th/models",),
@@ -135,15 +132,22 @@ MODEL_ASSET_HINTS.update({
     ),),
 
     # BMW Scene7 stage imagery: first-party static media, verified reachable
-    # from GitHub Actions. We intentionally exclude campaign/video-first pages
-    # until a clean exterior still is selected for them.
+    # from GitHub Actions. Model-specific first-party pages remain provenance.
     "bmw.2_series_gran_coupe.gen1": ((
         "https://bmw.scene7.com/is/image/BMW/f74_ice_stage_dsk_fb?fmt=webp&qlt=80&wid=1920",
         "BMW 2 Series Gran Coupe official exterior hero",
     ),),
+    "bmw.bmw_3.g20": ((
+        "https://bmw.scene7.com/is/image/BMW/g20_ice_stage-50-years%3A16to7?fit=wrap%2C+1&fmt=webp&wid=2560",
+        "BMW 3 Series official exterior hero",
+    ),),
     "bmw.4_series.gen1": ((
         "https://bmw.scene7.com/is/image/BMW/g22_stage%3A16to7?fit=wrap%2C+1&fmt=webp&wid=2560",
         "BMW 4 Series official exterior hero",
+    ),),
+    "bmw.bmw_5.g60": ((
+        "https://bmw.scene7.com/is/image/BMW/g60-ice-stage-ext-dsk-sl?fmt=webp&qlt=80&wid=1920",
+        "BMW 5 Series official exterior hero",
     ),),
     "bmw.7_series.gen1": ((
         "https://bmw.scene7.com/is/image/BMW/g70-ice-phev_stage%3A16to7?fit=wrap%2C+1&fmt=webp&wid=2560",

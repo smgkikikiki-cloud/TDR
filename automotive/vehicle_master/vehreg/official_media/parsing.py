@@ -17,6 +17,10 @@ _EMBEDDED_IMAGE_RE = re.compile(
     r"(?P<url>(?:https?:)?(?:\\?/|/)[^\"'<>\s]{2,}?\.(?:jpe?g|png|webp|avif)(?:\\?[?#][^\"'<>\s]*)?)",
     re.I,
 )
+_CSS_URL_RE = re.compile(r"url\(\s*['\"]?(?P<url>[^)'\"\s]+)['\"]?\s*\)", re.I)
+_BACKGROUND_ATTRS = (
+    "data-background", "data-bg", "data-lazy-background", "data-background-image",
+)
 
 
 def _integer(value: str | None) -> int | None:
@@ -91,9 +95,25 @@ class AssetParser(HTMLParser):
         if self.link_url:
             self.link_image_indexes.append(len(self.images) - 1)
 
+    def _append_background_images(self, values: dict[str, str]) -> None:
+        context = values.get("aria-label") or values.get("title") or values.get("class") or "background-image"
+        for attr in _BACKGROUND_ATTRS:
+            url = values.get(attr, "").strip()
+            if url and not url.startswith("data:"):
+                self._append_image((url, context, None, None, False))
+        style = values.get("style", "")
+        for match in _CSS_URL_RE.finditer(style):
+            url = match.group("url").strip()
+            if url and not url.startswith("data:"):
+                self._append_image((url, context, None, None, False))
+
     def handle_starttag(self, tag: str, attrs) -> None:
         values = {str(k).lower(): str(v or "") for k, v in attrs}
         tag = tag.lower()
+        # Legacy OEM/Adobe pages often render vehicle galleries on div/span
+        # backgrounds rather than img/source tags. Treat those as candidates;
+        # normal image suffix, OEM provenance and identity scoring still apply.
+        self._append_background_images(values)
         if tag == "title":
             self.in_title = True
         elif tag == "script":
