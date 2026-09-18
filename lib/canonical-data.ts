@@ -151,6 +151,10 @@ function trimRow(row: any) {
     campaign_quote: row.campaign_quote || {},
     price_history: row.price_history || [],
     source_refs: row.source_refs || {},
+    // SpecLedger.resolved() as of the release. The trim page and the
+    // comparison both read it; without it a trim can only show the handful of
+    // columns MarketTrim itself carries.
+    comparable_specs: Array.isArray(detail.comparable_specs) ? detail.comparable_specs : null,
     trim_powertrains: [{ powertrain_id: powertrainId }],
     _powertrain: {
       id: powertrainId,
@@ -321,9 +325,6 @@ export async function getCanonicalCompareTrims(limit = 600) {
         production_type: model?.production_type || null,
         production_country: model?.production_country || null,
         model_seats: model?.seats || null,
-        // SpecLedger.resolved() as of the release. Without this the comparison
-        // can only show the handful of columns MarketTrim itself carries.
-        comparable_specs: Array.isArray(detail.comparable_specs) ? detail.comparable_specs : null,
       };
     })
     .filter((row: any) => String(row.status || "current").toLowerCase() !== "discontinued")

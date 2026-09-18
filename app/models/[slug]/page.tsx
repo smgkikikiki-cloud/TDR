@@ -4,6 +4,7 @@ import { getCanonicalModelBundle, getCanonicalRelatedModels, getModelMarketTease
 import { getRelatedEvents, getProductionProgramsByModel } from "@/lib/data";
 import { bodyLabel } from "@/lib/body-labels";
 import { displayName, initials } from "@/lib/display-name";
+import { trimLocalId } from "@/lib/trim-editor-state";
 
 function launch(r: any) { return [r.launch_quarter, r.launch_year].filter(Boolean).join(" ") || null }
 function baht(n: any) { return n ? `฿${Number(n).toLocaleString()}` : null }
@@ -38,7 +39,7 @@ function officialRangeLabel(trims: any[]) {
 }
 
 /** One trim row. Shared by the current and the discontinued list. */
-function TrimRow({ t, ptById, muted }: { t: any; ptById: Map<any, any>; muted?: boolean }) {
+function TrimRow({ t, ptById, muted, slug }: { t: any; ptById: Map<any, any>; muted?: boolean; slug: string }) {
   const linked = (t.trim_powertrains || []).map((x: any) => ptById.get(x.powertrain_id)).filter(Boolean);
   const price = baht(t.price_baht);
   const offers = (t.campaign_quote?.campaign_options || []).filter((offer: any) => offer.status_as_of === "ACTIVE");
@@ -72,6 +73,9 @@ function TrimRow({ t, ptById, muted }: { t: any; ptById: Map<any, any>; muted?: 
             <b>{baht(offer.amount_thb) || `ลด ${baht(offer.discount_thb)}`}</b>
           </div>)}
         </div> : null}
+        <Link className="sfTrimMore" href={`/models/${slug}/${encodeURIComponent(trimLocalId(t.canonical_id || t.id))}`}>
+          ดูสเปกทั้งหมดของรุ่นย่อยนี้ →
+        </Link>
         {t.range_source_url ? <a className="sfSourceLink" href={t.range_source_url} target="_blank" rel="noreferrer">แหล่งข้อมูล Range ↗</a> : null}
         {offers.map((offer: any) => offer.source_ref ? <a className="sfSourceLink" key={offer.source_ref} href={offer.source_ref} target="_blank" rel="noreferrer">ที่มาราคาแคมเปญ ↗</a> : null)}
       </div>
@@ -153,12 +157,12 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
         <span>{currentTrims.length} Trim</span>
       </div>
       {currentTrims.length
-        ? <div>{currentTrims.map((t: any) => <TrimRow key={t.id} t={t} ptById={ptById} />)}</div>
+        ? <div>{currentTrims.map((t: any) => <TrimRow key={t.id} t={t} ptById={ptById} slug={slug} />)}</div>
         : <div className="sfEmpty"><b>ยังไม่มีรุ่นย่อยในฐานข้อมูล</b></div>}
       {pastTrims.length ? (
         <details style={{ marginTop: 18 }}>
           <summary className="sfEyebrow ink" style={{ cursor: "pointer", padding: "10px 0" }}>รุ่นย่อยที่เลิกจำหน่ายแล้ว ({pastTrims.length})</summary>
-          <div>{pastTrims.map((t: any) => <TrimRow key={t.id} t={t} ptById={ptById} muted />)}</div>
+          <div>{pastTrims.map((t: any) => <TrimRow key={t.id} t={t} ptById={ptById} slug={slug} muted />)}</div>
         </details>
       ) : null}
     </section>

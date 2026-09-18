@@ -354,6 +354,27 @@ export function compareGroupDefinitions(fields: CompareSpecField[] = []): Compar
   return groups;
 }
 
+/** One trim's comparable specs, grouped and formatted the way the comparison
+ *  shows them.
+ *
+ *  The trim page and the comparison are the same question asked of one car
+ *  instead of four, so they share the grouping, the headings and the
+ *  formatting rather than growing a second copy that drifts. Empty groups are
+ *  dropped; a field with no fact is simply absent, which is what a blank cell
+ *  already means everywhere else on the site. */
+export function specGroupsForTrim(trim: FreeCompareTrim, fields: CompareSpecField[] = []) {
+  const definitions = indexSpecFields(fields);
+  return compareGroupDefinitions(fields)
+    .map((group) => ({
+      title: group.title,
+      rows: group.rows
+        .map((row) => ({ key: row.key, label: row.label,
+                         value: compareValue(trim, row.key, definitions) }))
+        .filter((row) => row.value !== null),
+    }))
+    .filter((group) => group.rows.length > 0);
+}
+
 export function visibleCompareGroups(trims: FreeCompareTrim[], differencesOnly = false,
                                      fields: CompareSpecField[] = []) {
   const definitions = indexSpecFields(fields);
