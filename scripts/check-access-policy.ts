@@ -87,10 +87,14 @@ check(
 
 console.log("\naccess policy — history window enforcement");
 check("Pro has no history floor", historyWindowStart("PRO", new Date("2026-06-15T00:00:00Z")), null);
-check("Free is clamped to the current Bangkok calendar year", historyWindowStart("FREE", new Date("2026-06-15T00:00:00Z")), "2026-01-01");
+// Free was clamped to the calendar year, which made January a cliff: on the
+// 1st a reader lost eleven months of context overnight. A rolling twelve is
+// the same amount of history on every day of the year.
+check("Free reaches back twelve rolling months", historyWindowStart("FREE", new Date("2026-06-15T00:00:00Z")), "2025-07-01");
 check("Individual gets a 24-month rolling floor", historyWindowStart("INDIVIDUAL", new Date("2026-06-15T00:00:00Z")), "2024-07-01");
 check("period inside Free's window is allowed", isPeriodWithinHistoryWindow("FREE", "2026-03-01", new Date("2026-06-15T00:00:00Z")), true);
-check("period before Free's window is rejected", isPeriodWithinHistoryWindow("FREE", "2025-12-01", new Date("2026-06-15T00:00:00Z")), false);
+check("period before Free's window is rejected", isPeriodWithinHistoryWindow("FREE", "2025-06-01", new Date("2026-06-15T00:00:00Z")), false);
+check("a period inside the rolling year is allowed even though it is last year", isPeriodWithinHistoryWindow("FREE", "2025-12-01", new Date("2026-06-15T00:00:00Z")), true);
 
 console.log("\naccess policy — sales module selection + dimension gating");
 check("exactly 4 known modules validates", validateSalesModuleSelection(["brand_share", "model_share", "month_on_month", "segment_share"], 4), null);
@@ -103,9 +107,13 @@ check("unselected dimension is blocked on Free", isRegistrationDimensionAllowed(
 check("selected dimension is allowed on Free", isRegistrationDimensionAllowed("brand", "FREE", ["brand_share"]), true);
 check("every dimension is allowed on Pro regardless of selection", isRegistrationDimensionAllowed("brand", "PRO", null), true);
 
-check("market dimension mapped to a selected module is allowed on Free", isMarketDimensionAllowed("model", "FREE", ["model_share"]), true);
+// Market depth no longer runs through the 4-of-6 module picker: the line is
+// the grain. Every cut that describes the shape of the market is free, and
+// only ranking an individual model is reserved -- module selection does not
+// change that, which is exactly what the next two assert.
+check("selecting model_share does not buy Free the model grain", isMarketDimensionAllowed("model", "FREE", ["model_share"]), false);
 check("market dimension mapped to an unselected module is blocked on Free", isMarketDimensionAllowed("model", "FREE", ["brand_share"]), false);
-check("market dimension with no module mapping is paid-tier-only on Free", isMarketDimensionAllowed("oem_group", "FREE", ["brand_share", "model_share", "segment_share", "powertrain_share"]), false);
+check("a structural cut is free whether or not a module was picked", isMarketDimensionAllowed("oem_group", "FREE", []), true);
 check("market dimension with no module mapping is allowed on Individual/Pro", isMarketDimensionAllowed("oem_group", "INDIVIDUAL", null), true);
 
 console.log("\naccess policy — reserved capabilities (provincial_registration)");

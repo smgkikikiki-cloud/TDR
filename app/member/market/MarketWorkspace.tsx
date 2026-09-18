@@ -59,6 +59,19 @@ const WINDOWS: Array<{ value: MarketWindow; label: string }> = [
   { value: "rolling12", label: "12 เดือน" },
   { value: "ytd", label: "YTD" },
 ];
+/** What this account may ask for, as the last response reported it. Until the
+ *  first response arrives nothing is marked paid: guessing would either
+ *  disable a control a paid reader owns or dangle one a free reader does not. */
+type PlanCaps = {
+  tier: string;
+  model_grain: boolean;
+  windows: string[] | null;
+  comparisons: string[] | null;
+  filters: boolean;
+  history_from: string | null;
+};
+const PAID = " · แพ็กเกจเสียค่าบริการ";
+
 const FILTER_BY_DIMENSION: Record<string, keyof FilterState | undefined> = {
   brand: "brand", model: "model", segment: "segment", body_type: "bodyType", powertrain: "powertrain",
 };
@@ -121,7 +134,8 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
   const [applied, setApplied] = useState<FilterState | null>(null);
   const [data, setData] = useState<MarketResponse | null>(null);
   const [trend, setTrend] = useState<TrendPoint[]>([]);
-  const [status, setStatus] = useState<"loading" | "ready" | "forbidden" | "activation" | "quota" | "error">("loading");
+  const [status, setStatus] = useState<"loading" | "ready" | "forbidden" | "activation" | "quota" | "upgrade" | "error">("loading");
+  const [plan, setPlan] = useState<PlanCaps | null>(null);
   const [message, setMessage] = useState("");
 
   const periods = useMemo(() => coverage.map((row) => periodKey(row.period)).filter(Boolean).sort(), [coverage]);
@@ -152,6 +166,7 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
     try {
       const body = await jsonFetch(marketPath(next), accessToken) as MarketResponse;
       setData(body);
+      if ((body as any).plan) setPlan((body as any).plan as PlanCaps);
       setApplied(next);
       setTrend(body.trend || []);
       setStatus("ready");
@@ -164,6 +179,11 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
       if (error?.status === 429) {
         setStatus("quota");
         setMessage(error?.message || "ใช้โควตา Sales Tools ของวันนี้ครบแล้ว");
+        return;
+      }
+      if (error?.status === 403 && error?.body?.upgrade_required) {
+        setStatus("upgrade");
+        setMessage(error?.message || "");
         return;
       }
       if (error?.status === 403) {
@@ -258,6 +278,7 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
   if (status === "loading" && !data) return <main className={styles.shell}><div className={styles.stateCard}>กำลังเปิด Market Comparison…</div></main>;
   if (status === "activation") return <main className={styles.shell}><section className={styles.stateCard}><h1>ยืนยันตัวตนก่อนใช้ Sales Tools</h1><p>ต้องยืนยันอีเมล ยืนยันเบอร์มือถือ และกรอกโปรไฟล์ให้ครบก่อน</p><Link href="/member/profile">ไปที่หน้าโปรไฟล์ →</Link></section></main>;
   if (status === "forbidden") return <main className={styles.shell}><section className={styles.stateCard}><h1>บัญชีนี้ยังไม่มีสิทธิ์ Registration Intelligence</h1><p>{message}</p><Link href="/reports">ดูแพ็กเกจ TDR Report</Link></section></main>;
+  if (status === "upgrade") return <main className={styles.shell}><section className={styles.stateCard}><h1>อยู่ในแพ็กเกจแบบเสียค่าบริการ</h1><p>{message}</p><Link href="/pricing">ดูแพ็กเกจ</Link></section></main>;
   if (status === "quota") return <main className={styles.shell}><section className={styles.stateCard}><h1>ใช้โควตา Sales Tools ของวันนี้ครบแล้ว</h1><p>{message}</p><Link href="/pricing">ดูแพ็กเกจ</Link></section></main>;
   if (status === "error" && !data) return <main className={styles.shell}><section className={styles.stateCard}><h1>เปิด Market Comparison ไม่สำเร็จ</h1><p>{message}</p><button onClick={() => location.reload()}>ลองใหม่</button></section></main>;
 
@@ -271,17 +292,32 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
       <aside className={styles.filters}>
         <div className={styles.filterHead}><div><span>DEFINE MARKET</span><b>กำหนดตลาด</b></div><button type="button" onClick={() => setFilters((current) => ({ ...current, registrationType: "", brand: "", model: "", segment: "", bodyType: "", powertrain: "", allScopes: false }))}>ล้าง scope</button></div>
         <label><span>เดือนข้อมูล</span><select value={filters.period} onChange={(event) => changePeriod(event.target.value)}>{periods.map((period) => <option key={period} value={period}>{monthLabel(period)}{provisional.has(period) ? " · provisional" : ""}</option>)}</select></label>
-        <label><span>ช่วงเวลา</span><select value={filters.window} onChange={(event) => changeWindow(event.target.value as MarketWindow)}>{WINDOWS.map((item) => <option key={item.value} value={item.value} disabled={!windowAvailable(filters.period, item.value)}>{item.label}{!windowAvailable(filters.period, item.value) ? " · ข้อมูลยังไม่ครบ" : ""}</option>)}</select></label>
-        <label><span>เทียบกับ</span><select value={filters.compare} onChange={(event) => setFilters((current) => ({ ...current, compare: event.target.value as FilterState["compare"] }))}><option value="none">ไม่เทียบ</option><option value="previous" disabled={!comparisonAvailable(filters.period, filters.window, "previous")}>ช่วงก่อนหน้า</option><option value="yoy" disabled={!comparisonAvailable(filters.period, filters.window, "yoy")}>ช่วงเดียวกันปีก่อน</option></select></label>
-        <label><span>จัดอันดับตาม</span><select value={filters.dimension} onChange={(event) => setFilters((current) => ({ ...current, dimension: event.target.value as FilterState["dimension"] }))}>{DIMENSIONS.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}</select></label>
+        <label><span>ช่วงเวลา</span><select value={filters.window} onChange={(event) => changeWindow(event.target.value as MarketWindow)}>{WINDOWS.map((item) => {
+            const locked = plan?.windows ? !plan.windows.includes(item.value) : false;
+            const short = !windowAvailable(filters.period, item.value);
+            return <option key={item.value} value={item.value} disabled={locked || short}>
+              {item.label}{locked ? PAID : short ? " · ข้อมูลยังไม่ครบ" : ""}
+            </option>;
+          })}</select></label>
+        <label><span>เทียบกับ</span><select value={filters.compare} onChange={(event) => setFilters((current) => ({ ...current, compare: event.target.value as FilterState["compare"] }))}><option value="none">ไม่เทียบ</option><option value="previous" disabled={!comparisonAvailable(filters.period, filters.window, "previous")}>ช่วงก่อนหน้า</option><option value="yoy" disabled={(plan?.comparisons ? !plan.comparisons.includes("yoy") : false) || !comparisonAvailable(filters.period, filters.window, "yoy")}>ช่วงเดียวกันปีก่อน{plan?.comparisons && !plan.comparisons.includes("yoy") ? PAID : ""}</option></select></label>
+        <label><span>จัดอันดับตาม</span><select value={filters.dimension} onChange={(event) => setFilters((current) => ({ ...current, dimension: event.target.value as FilterState["dimension"] }))}>{DIMENSIONS.map((item) => {
+            const locked = item.value === "model" && plan ? !plan.model_grain : false;
+            return <option key={item.value} value={item.value} disabled={locked}>{item.label}{locked ? PAID : ""}</option>;
+          })}</select></label>
         <div className={styles.rule} />
         <label><span>ประเภทรถ DLT</span><select value={filters.registrationType} onChange={(event) => setFilters((current) => ({ ...current, registrationType: event.target.value }))}><option value="">ทั้งหมด</option><option value="RY1">RY1</option><option value="RY2">RY2</option><option value="RY3">RY3</option></select></label>
-        <label><span>แบรนด์</span><select value={filters.brand} onChange={(event) => changeBrand(event.target.value)}><option value="">ทุกแบรนด์</option>{brands.map((brand) => <option key={brand.id} value={brand.id}>{brand.name}</option>)}</select></label>
-        <label><span>รุ่น</span><select value={filters.model} onChange={(event) => setFilters((current) => ({ ...current, model: event.target.value }))}><option value="">ทุกรุ่น</option>{modelOptions.map((model) => <option key={model.id} value={model.id}>{model.brandName} · {model.name}</option>)}</select></label>
-        <label><span>Segment</span><select value={filters.segment} onChange={(event) => setFilters((current) => ({ ...current, segment: event.target.value }))}><option value="">ทุก Segment</option>{segments.map((segment) => <option key={segment}>{segment}</option>)}</select></label>
-        <label><span>ตัวถัง</span><select value={filters.bodyType} onChange={(event) => setFilters((current) => ({ ...current, bodyType: event.target.value }))}><option value="">ทุกตัวถัง</option>{bodyTypes.map((body) => <option key={body} value={body}>{bodyLabel(body)}</option>)}</select></label>
-        <label><span>Powertrain</span><select value={filters.powertrain} onChange={(event) => setFilters((current) => ({ ...current, powertrain: event.target.value }))}><option value="">ทุก Powertrain</option>{powertrains.map((powertrain) => <option key={powertrain}>{powertrain}</option>)}</select></label>
+        <label><span>แบรนด์</span><select disabled={plan ? !plan.filters : false} value={filters.brand} onChange={(event) => changeBrand(event.target.value)}><option value="">ทุกแบรนด์</option>{brands.map((brand) => <option key={brand.id} value={brand.id}>{brand.name}</option>)}</select></label>
+        <label><span>รุ่น</span><select disabled={plan ? !plan.filters : false} value={filters.model} onChange={(event) => setFilters((current) => ({ ...current, model: event.target.value }))}><option value="">ทุกรุ่น</option>{modelOptions.map((model) => <option key={model.id} value={model.id}>{model.brandName} · {model.name}</option>)}</select></label>
+        <label><span>Segment</span><select disabled={plan ? !plan.filters : false} value={filters.segment} onChange={(event) => setFilters((current) => ({ ...current, segment: event.target.value }))}><option value="">ทุก Segment</option>{segments.map((segment) => <option key={segment}>{segment}</option>)}</select></label>
+        <label><span>ตัวถัง</span><select disabled={plan ? !plan.filters : false} value={filters.bodyType} onChange={(event) => setFilters((current) => ({ ...current, bodyType: event.target.value }))}><option value="">ทุกตัวถัง</option>{bodyTypes.map((body) => <option key={body} value={body}>{bodyLabel(body)}</option>)}</select></label>
+        <label><span>Powertrain</span><select disabled={plan ? !plan.filters : false} value={filters.powertrain} onChange={(event) => setFilters((current) => ({ ...current, powertrain: event.target.value }))}><option value="">ทุก Powertrain</option>{powertrains.map((powertrain) => <option key={powertrain}>{powertrain}</option>)}</select></label>
         <label className={styles.disabled}><span>Price range</span><select disabled><option>รอ canonical Price Ledger coverage</option></select></label>
+        {plan && !plan.filters ? (
+          <p className={styles.planNote}>
+            การกรองตามแบรนด์ รุ่น Segment ตัวถัง และ Powertrain อยู่ในแพ็กเกจแบบเสียค่าบริการ ·{" "}
+            <Link href="/pricing">ดูแพ็กเกจ</Link>
+          </p>
+        ) : null}
         <label className={styles.check}><input type="checkbox" checked={filters.allScopes} onChange={(event) => setFilters((current) => ({ ...current, allScopes: event.target.checked }))} /><span>รวม NICHE / GREY / COMMERCIAL</span></label>
         <button className={styles.apply} type="submit" disabled={status === "loading"}>{status === "loading" ? "กำลังคำนวณ…" : "อัปเดตตลาด"}</button>
       </aside>

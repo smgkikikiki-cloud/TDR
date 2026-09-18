@@ -44,6 +44,12 @@ export type SalesModule = (typeof SALES_MODULES)[number];
 
 export const FREE_SALES_MODULE_PICK_COUNT = 4;
 
+/** Named here rather than imported from lib/registration-market so this module
+ *  stays free of that dependency; the two are kept in step by
+ *  scripts/check-market-depth.ts. */
+export type MarketWindowName = "month" | "rolling3" | "rolling6" | "rolling12" | "ytd";
+export type MarketComparisonName = "previous" | "yoy";
+
 // Maps a registration-analytics dimension to the sales module that gates
 // it for the Free tier. `coverage` maps to null (always allowed). Market
 // dimensions with no equivalent in the six-module catalog (body_type,
@@ -81,7 +87,18 @@ export interface TierPolicy {
   compareDailyLimit: number | null;
   salesQueryDailyLimit: number | null;
   salesModulePickCount: number | null; // null = all modules available, no picker needed
-  historyWindow: "current_calendar_year" | "rolling_24_months" | "full";
+  historyWindow: "rolling_12_months" | "current_calendar_year" | "rolling_24_months" | "full";
+  /** Ranking a single model is the paid question: what is selling as a
+   *  category is the shape of the market, which car is selling is a product's
+   *  performance. Everything else in MarketDimension is open. */
+  marketModelGrain: boolean;
+  /** Which aggregation windows may be asked for. null means every window. */
+  marketWindows: readonly MarketWindowName[] | null;
+  /** Which comparison periods may be asked for. null means every one. */
+  marketComparisons: readonly MarketComparisonName[] | null;
+  /** Whether a slice may be narrowed to chosen brands, models, segments and
+   *  so on -- the difference between reading the market and interrogating it. */
+  marketFilters: boolean;
   researchAccess: "preview" | "full";
   researchFullMonthlyLimit: number | null;
   pdfMonthlyLimit: number | null;
@@ -100,7 +117,11 @@ export const TIER_POLICIES: Record<Tier, TierPolicy> = {
     compareDailyLimit: null,
     salesQueryDailyLimit: 5,
     salesModulePickCount: FREE_SALES_MODULE_PICK_COUNT,
-    historyWindow: "current_calendar_year",
+    historyWindow: "rolling_12_months",
+    marketModelGrain: false,
+    marketWindows: ["month", "rolling3"],
+    marketComparisons: ["previous"],
+    marketFilters: false,
     researchAccess: "preview",
     researchFullMonthlyLimit: 2,
     pdfMonthlyLimit: 1,
@@ -115,6 +136,10 @@ export const TIER_POLICIES: Record<Tier, TierPolicy> = {
     salesQueryDailyLimit: null,
     salesModulePickCount: null,
     historyWindow: "rolling_24_months",
+    marketModelGrain: true,
+    marketWindows: null,
+    marketComparisons: null,
+    marketFilters: true,
     researchAccess: "full",
     researchFullMonthlyLimit: 3,
     pdfMonthlyLimit: 10,
@@ -129,6 +154,10 @@ export const TIER_POLICIES: Record<Tier, TierPolicy> = {
     salesQueryDailyLimit: null,
     salesModulePickCount: null,
     historyWindow: "full",
+    marketModelGrain: true,
+    marketWindows: null,
+    marketComparisons: null,
+    marketFilters: true,
     researchAccess: "full",
     researchFullMonthlyLimit: null,
     pdfMonthlyLimit: null,
@@ -430,6 +459,12 @@ export function historyWindowStart(tier: Tier, now: Date = new Date()): string |
   if (policy.historyWindow === "current_calendar_year") {
     return `${year}-01-01`;
   }
+  if (policy.historyWindow === "rolling_12_months") {
+    // The current month plus the eleven before it: enough to read a trend,
+    // not enough to do research with.
+    const start = new Date(Date.UTC(year, month - 1 - 11, 1));
+    return `${start.getUTCFullYear()}-${pad(start.getUTCMonth() + 1)}-01`;
+  }
   // rolling_24_months: current month plus the 23 preceding months.
   const startMonthIndex = month - 1 - 23; // 0-based month arithmetic
   const startDate = new Date(Date.UTC(year, startMonthIndex, 1));
@@ -469,17 +504,35 @@ export function isRegistrationDimensionAllowed(
   return Boolean(selectedModules?.includes(requiredModule));
 }
 
+/** One line separates the free market view from the paid one, and it is the
+ *  grain rather than the dimension list: a reader may cut the market any way
+ *  that describes its shape -- by brand, powertrain, body type, segment,
+ *  origin, whatever the engine ranks -- and only ranking an individual model
+ *  is reserved. "What is selling as a category" is the public question;
+ *  "which car is selling" is the one an account is for.
+ *
+ *  This replaces an earlier 4-of-6 module picker for market slices, which is
+ *  still how the sales-tools surface works (isRegistrationDimensionAllowed).
+ */
 export function isMarketDimensionAllowed(
   dimension: string,
   tier: Tier,
-  selectedModules: SalesModule[] | null,
+  _selectedModules: SalesModule[] | null,
 ): boolean {
-  if (tier !== "FREE") return true;
-  const requiredModule = MARKET_DIMENSION_MODULE[dimension];
-  // Dimensions with no module mapping at all (body_type, oem_group,
-  // registration_type, import_type, origin_country, brand_origin,
-  // market_scope) are advanced filters reserved for paid tiers.
-  if (requiredModule === undefined) return false;
-  if (requiredModule === null) return true;
-  return Boolean(selectedModules?.includes(requiredModule));
+  if (dimension === "model") return getPolicy(tier).marketModelGrain;
+  return true;
+}
+
+export function isMarketWindowAllowed(window: string, tier: Tier): boolean {
+  const allowed = getPolicy(tier).marketWindows;
+  return allowed === null || (allowed as readonly string[]).includes(window);
+}
+
+export function isMarketComparisonAllowed(comparison: string, tier: Tier): boolean {
+  const allowed = getPolicy(tier).marketComparisons;
+  return allowed === null || (allowed as readonly string[]).includes(comparison);
+}
+
+export function areMarketFiltersAllowed(tier: Tier): boolean {
+  return getPolicy(tier).marketFilters;
 }

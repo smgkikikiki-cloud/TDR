@@ -11,6 +11,7 @@ import { requireActivatedAccess, requireUsage, getSalesModuleSelection, AccessPo
 import {
   currentSalesModuleCycleKey,
   historyWindowStart,
+  areMarketFiltersAllowed,
   isMarketDimensionAllowed,
   isRegistrationDimensionAllowed,
   type SalesModule,
@@ -438,6 +439,24 @@ export async function canonicalizeRegistrationRows(
 // optional comparison window, trend months) -- none of those internal
 // calls pay again. Module/history validation stays here as defense in
 // depth (it is not a billing action, so repeating it per call is fine).
+/** Whether a filter set asks for a subset rather than the whole market.
+ *
+ *  registrationTypes is deliberately excluded: it selects which DLT vehicle
+ *  classes are in scope at all, which every tier needs to read a coherent
+ *  total, and it is not a way of singling anything out. */
+function hasNarrowingFilter(filters: MarketSliceFilters | undefined): boolean {
+  if (!filters) return false;
+  const narrowing: (keyof MarketSliceFilters)[] = [
+    "brandIds", "modelIds", "segments", "bodyTypes", "powertrains",
+    "oemGroups", "importTypes", "originCountries", "brandOrigins",
+    "marketPositions", "marketScopes",
+  ];
+  return narrowing.some((key) => {
+    const value = filters[key] as unknown;
+    return Array.isArray(value) && value.length > 0;
+  });
+}
+
 export async function getRegistrationMarketSlice(args: {
   ctx: AccessContext;
   dimension: MarketDimension;
@@ -449,11 +468,18 @@ export async function getRegistrationMarketSlice(args: {
   const { ctx } = args;
   const selectedModules = await selectedModulesFor(ctx);
   if (!isMarketDimensionAllowed(args.dimension, ctx.tier, selectedModules)) {
-    throw new RegistrationAccessError(403, `dimension "${args.dimension}" is not available on this account's plan/selected modules`);
+    throw new RegistrationAccessError(403, `dimension "${args.dimension}" is not available on this account's plan`);
   }
   const historyStart = historyWindowStart(ctx.tier);
   if (historyStart && args.window.from < historyStart) {
     throw new RegistrationAccessError(403, `window is outside this account's history window (from ${historyStart})`);
+  }
+  // Narrowing a slice to chosen brands, models or segments is the difference
+  // between reading the market and interrogating it, so it is checked here
+  // where the rows are actually read rather than only in the controls. A
+  // caller that hides the inputs but still sends the parameter gets a 403.
+  if (!areMarketFiltersAllowed(ctx.tier) && hasNarrowingFilter(args.filters)) {
+    throw new RegistrationAccessError(403, "filtering a market slice is not available on this account's plan");
   }
 
   const db = ctx.db;

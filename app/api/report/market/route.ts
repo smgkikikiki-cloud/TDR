@@ -1,5 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
+  areMarketFiltersAllowed,
+  getPolicy,
+  historyWindowStart,
+  isMarketComparisonAllowed,
+  isMarketDimensionAllowed,
+  isMarketWindowAllowed,
+} from "@/lib/access-policy";
+import {
   compareMarketSliceRows,
   comparisonMarketWindow,
   consumeMarketReportQuota,
@@ -216,6 +224,23 @@ export async function GET(request: NextRequest) {
 
   try {
     const ctx = await resolveRegistrationAccess(match[1]);
+
+    // The aggregation window and the comparison period are depth, the same as
+    // the dimension is, so they are checked against the plan here -- before a
+    // row is read and regardless of what the controls offered.
+    if (!isMarketWindowAllowed(windowValue, ctx.tier)) {
+      return NextResponse.json({
+        error: `ช่วงเวลานี้อยู่ในแพ็กเกจแบบเสียค่าบริการ`,
+        upgrade_required: true,
+      }, { status: 403 });
+    }
+    if (comparisonMode && !isMarketComparisonAllowed(comparisonMode, ctx.tier)) {
+      return NextResponse.json({
+        error: `การเทียบแบบนี้อยู่ในแพ็กเกจแบบเสียค่าบริการ`,
+        upgrade_required: true,
+      }, { status: 403 });
+    }
+
     const available = await getRegistrationAvailablePeriods(ctx);
     const currentWindow = resolveMarketWindow(period, windowValue);
     const missingCurrent = missingReportPeriods(currentWindow, available);
@@ -342,6 +367,17 @@ export async function GET(request: NextRequest) {
     await recordEvent({ eventName: "sales_run", userId: ctx.userId, props: { dimension: dimensionValue, window: windowValue, compare: comparisonMode } });
 
     return NextResponse.json({
+      // What this account may ask for, so the controls can say which options
+      // cost money instead of offering them and then failing. The checks above
+      // are the enforcement; this is only how the page explains itself.
+      plan: {
+        tier: ctx.tier,
+        model_grain: isMarketDimensionAllowed("model", ctx.tier, null),
+        windows: getPolicy(ctx.tier).marketWindows,
+        comparisons: getPolicy(ctx.tier).marketComparisons,
+        filters: areMarketFiltersAllowed(ctx.tier),
+        history_from: historyWindowStart(ctx.tier),
+      },
       dimension: dimensionValue,
       period,
       window: windowValue,
