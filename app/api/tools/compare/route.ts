@@ -4,6 +4,9 @@ import { compareValue, indexSpecFields, rowIsDifferent, visibleCompareGroups, ty
 import { loadSpecFieldRegistry } from "@/lib/spec-field-registry";
 import { requireActivatedAccess, requireUsage, AccessPolicyError } from "@/lib/access-policy-server";
 import { recordEvent } from "@/lib/telemetry";
+import {
+  ANON_COMPARE_COOKIE, ANON_COMPARE_LIMIT, allowanceFrom, cookieOptions, encodeCount,
+} from "@/lib/anon-allowance";
 
 export const dynamic = "force-dynamic";
 
@@ -12,15 +15,79 @@ function bearer(request: NextRequest) {
   return match?.[1] || null;
 }
 
+/** The comparison itself, which is the same work whoever asked for it.
+ *
+ *  Entitlement decides whether it runs and what quota line comes back with
+ *  it; it does not change a single number in the table. */
+async function buildComparison(requestedIds: string[], diffOnly: boolean) {
+  const all = (await getCanonicalCompareTrims()) as FreeCompareTrim[];
+  const byId = new Map(all.map((trim) => [trim.id, trim]));
+  const selected = requestedIds.map((id) => byId.get(id)).filter(Boolean) as FreeCompareTrim[];
+  // Which fields are comparable, and what they are called, comes from the
+  // canonical registry rather than a list kept here -- the same file
+  // APPEND_SPEC validates against, so a field is comparable the day it is
+  // defined.
+  const specFields = loadSpecFieldRegistry(new Date().getFullYear()) as unknown as CompareSpecField[];
+  const definitions = indexSpecFields(specFields);
+  const groups = visibleCompareGroups(selected, diffOnly, specFields).map((group) => ({
+    title: group.title,
+    rows: group.rows.map((row) => ({
+      key: row.key,
+      label: row.label,
+      different: rowIsDifferent(selected, row.key, definitions),
+      values: selected.map((trim) => compareValue(trim, row.key, definitions)),
+    })),
+  }));
+  return {
+    selected: selected.map((trim) => ({
+      id: trim.id,
+      brand_name: trim.brand_name,
+      model_name: trim.model_name,
+      name: trim.name,
+      model_slug: trim.model_slug,
+      image_url: (trim as any).image_url ?? null,
+    })),
+    missing_selection: requestedIds.length !== selected.length,
+    groups,
+  };
+}
+
+async function anonymousComparison(requestedIds: string[], diffOnly: boolean, remaining: number) {
+  const body = await buildComparison(requestedIds, diffOnly);
+  return NextResponse.json({
+    ...body,
+    quota: { used: 0, limit: null, remaining: null, resets_at: "" },
+    anonymous: { remaining, limit: ANON_COMPARE_LIMIT },
+  }, { headers: { "Cache-Control": "private, no-store" } });
+}
+
 export async function GET(request: NextRequest) {
   const accessToken = bearer(request);
-  if (!accessToken) return NextResponse.json({ error: "sign in with a free TDR account to compare vehicles" }, { status: 401 });
 
   const requestedIds = [...new Set(request.nextUrl.searchParams.getAll("trims").filter(Boolean))].slice(0, 4);
   if (requestedIds.length < 2) {
     return NextResponse.json({ error: "select at least 2 trims to compare" }, { status: 400 });
   }
   const diffOnly = request.nextUrl.searchParams.get("diff") === "1";
+
+  // Comparing specifications is the free product. An anonymous reader gets a
+  // real trial of it -- four comparisons, counted per press of the button --
+  // before being asked for an account, because a tool nobody has used is a
+  // tool nobody signs up for. The allowance is a cookie: see lib/anon-allowance.
+  if (!accessToken) {
+    const allowance = allowanceFrom(
+      request.cookies.get(ANON_COMPARE_COOKIE)?.value, "life", ANON_COMPARE_LIMIT);
+    if (allowance.exhausted) {
+      return NextResponse.json({
+        error: "ใช้สิทธิ์เทียบรถแบบไม่ต้องสมัครครบแล้ว สมัครบัญชีฟรีเพื่อเทียบต่อได้ไม่จำกัด",
+        signup_required: true,
+      }, { status: 401 });
+    }
+    const response = await anonymousComparison(requestedIds, diffOnly, allowance.remaining - 1);
+    response.cookies.set(
+      ANON_COMPARE_COOKIE, encodeCount("life", allowance.used + 1), cookieOptions());
+    return response;
+  }
 
   try {
     const ctx = await requireActivatedAccess(accessToken);
@@ -31,40 +98,12 @@ export async function GET(request: NextRequest) {
     // Every trim, not the first page of them: a selection made from the
     // catalogue must resolve, and reporting a real car as missing is worse
     // than the query being a little larger.
-    const all = (await getCanonicalCompareTrims()) as FreeCompareTrim[];
-    const byId = new Map(all.map((trim) => [trim.id, trim]));
-    const selected = requestedIds.map((id) => byId.get(id)).filter(Boolean) as FreeCompareTrim[];
-    // Which fields are comparable, and what they are called, comes from the
-    // canonical registry rather than a list kept here -- the same file
-    // APPEND_SPEC validates against, so a field is comparable the day it is
-    // defined.
-    const specFields = loadSpecFieldRegistry(new Date().getFullYear()) as unknown as CompareSpecField[];
-    const definitions = indexSpecFields(specFields);
-    const groups = visibleCompareGroups(selected, diffOnly, specFields).map((group) => ({
-      title: group.title,
-      rows: group.rows.map((row) => ({
-        key: row.key,
-        label: row.label,
-        different: rowIsDifferent(selected, row.key, definitions),
-        values: selected.map((trim) => compareValue(trim, row.key, definitions)),
-      })),
-    }));
+    const body = await buildComparison(requestedIds, diffOnly);
 
-    await recordEvent({ eventName: "compare_run", userId: ctx.userId, props: { trim_count: selected.length } });
+    await recordEvent({ eventName: "compare_run", userId: ctx.userId, props: { trim_count: body.selected.length } });
 
-    return NextResponse.json({
-      selected: selected.map((trim) => ({
-        id: trim.id,
-        brand_name: trim.brand_name,
-        model_name: trim.model_name,
-        name: trim.name,
-        model_slug: trim.model_slug,
-        image_url: (trim as any).image_url ?? null,
-      })),
-      missing_selection: requestedIds.length !== selected.length,
-      groups,
-      quota,
-    }, { headers: { "Cache-Control": "private, no-store" } });
+    return NextResponse.json({ ...body, quota },
+      { headers: { "Cache-Control": "private, no-store" } });
   } catch (error) {
     if (error instanceof AccessPolicyError) {
       if (error.status === 429) {
