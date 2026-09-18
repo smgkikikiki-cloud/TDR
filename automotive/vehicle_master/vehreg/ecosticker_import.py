@@ -88,6 +88,11 @@ class RowPlan:
     specs: dict[str, Any] = field(default_factory=dict)
     dropped: list[str] = field(default_factory=list)
     reason: str = ""
+    #: Another row already writes this trim's specs, so this one contributes
+    #: its price observation and nothing else.
+    price_only: bool = False
+    #: Why this row's price is not written, if it is not.
+    price_suppressed: str = ""
 
 
 @dataclass
@@ -102,7 +107,12 @@ class ImportPlan:
         for row in self.rows:
             counts[row.status] = counts.get(row.status, 0) + 1
         counts["spec_facts"] = sum(len(row.specs) for row in self.rows
-                                   if row.status != UNRESOLVED)
+                                   if row.status != UNRESOLVED and not row.price_only)
+        counts["price_observations"] = sum(
+            1 for row in self.rows
+            if row.status != UNRESOLVED and row.vehicle.price_thb and not row.price_suppressed)
+        counts["price_only_rows"] = sum(1 for row in self.rows if row.price_only)
+        counts["prices_suppressed"] = sum(1 for row in self.rows if row.price_suppressed)
         counts["rows"] = len(self.rows)
         return counts
 
@@ -185,9 +195,18 @@ def plan_import(rows: Iterable[dict], catalog: Catalog,
     for raw in rows:
         plan.rows.append(plan_row(raw, catalog, registry))
 
-    # One source row per trim. The export occasionally files the same grade
-    # twice (a re-approval keeps the old row), and two rows writing the same
-    # facts would be an idempotent replay at best and a conflict at worst.
+    # Specs are deduplicated; price observations are not.
+    #
+    # The export files the same grade more than once -- a re-approval keeps
+    # the old record, and a facelift is a new one. Those rows state the same
+    # specification, so only the first writes it: a second write would be a
+    # replay at best and a same-day conflict at worst.
+    #
+    # Their prices are a different matter. Each record is the manufacturer's
+    # filed price on its own approval date, so a trim with four ECO records
+    # has four dated price observations, which is exactly the history the
+    # ledger exists to hold. Discarding the row wholesale, as this used to,
+    # threw 172 of them away.
     seen: dict[str, RowPlan] = {}
     for row in plan.rows:
         if row.status == UNRESOLVED or not row.trim_id:
@@ -196,17 +215,62 @@ def plan_import(rows: Iterable[dict], catalog: Catalog,
         if first is None:
             seen[row.trim_id] = row
             continue
-        row.status = UNRESOLVED
-        row.reason = (f"ซ้ำกับ source_id {first.source_id} "
-                      f"ซึ่งชี้ไปที่ trim เดียวกัน ({row.trim_id})")
+        row.price_only = True
+        row.reason = (f"สเปกซ้ำกับ source_id {first.source_id} ซึ่งชี้ไปที่ trim "
+                      f"เดียวกัน ({row.trim_id}) จึงเก็บเฉพาะราคาเป็น observation")
+
+    _resolve_price_observations(plan)
     return plan
+
+
+def _resolve_price_observations(plan: ImportPlan) -> None:
+    """Decide which of a trim's price observations can actually be written.
+
+    A ledger keys a price by (trim, type, start), so two records for one trim
+    on one date have to agree. Two things can break that:
+
+    * the same record filed twice -- identical date and amount, which is one
+      observation written once rather than two;
+    * two different amounts on one date, which means the trim identity is too
+      coarse for what the source is describing (three prices for one Alphard
+      Eclipse grade on one day are three configurations the catalogue does not
+      distinguish yet). Neither amount can be attributed, so neither is
+      written and both are reported -- the answer is a finer trim, not a
+      guess about which price is the real one.
+    """
+    by_key: dict[tuple[str, str], list[RowPlan]] = {}
+    for row in plan.rows:
+        if row.status == UNRESOLVED or not row.trim_id or not row.vehicle.price_thb:
+            continue
+        by_key.setdefault((row.trim_id, row.vehicle.approved_at), []).append(row)
+
+    for (trim_id, observed), rows in by_key.items():
+        amounts = {int(row.vehicle.price_thb) for row in rows}
+        if len(amounts) > 1:
+            listed = ", ".join(f"{amount:,}" for amount in sorted(amounts))
+            for row in rows:
+                row.price_suppressed = (
+                    f"{trim_id} มีราคา ECO ต่างกัน {len(amounts)} ค่า ({listed}) "
+                    f"ในวันเดียวกัน ({observed}) แปลว่า trim identity ยังหยาบเกินไป "
+                    "จึงไม่บันทึกราคาใดเลยจนกว่าจะแยก trim ได้")
+            continue
+        # Same record filed twice: one observation, written once.
+        for row in rows[1:]:
+            row.price_suppressed = (f"ราคาเดียวกัน ({int(row.vehicle.price_thb):,}) "
+                                    f"และวันเดียวกัน ({observed}) กับ source_id "
+                                    f"{rows[0].source_id} จึงนับเป็น observation เดียว")
 
 
 def _trim_row(plan: RowPlan) -> dict[str, Any]:
     """The MarketTrim patch for one planned row.
 
     Only the columns MarketTrim owns, and only where the export actually said
-    something. `id` is sent for a trim that exists so the writer updates it
+    something. Battery is deliberately absent: MarketTrim's ``battery_kwh`` is
+    the capacity a catalogue quotes, and what the export yields is the
+    nameplate pack derived from charge and voltage. They are different
+    quantities, so the derived one stays a comparable-spec fact
+    (``battery.gross_capacity_kwh``) and is never written into a column that
+    means something else. `id` is sent for a trim that exists so the writer updates it
     rather than deriving a new identity from a name that may have been
     re-spelled upstream.
     """
@@ -219,13 +283,45 @@ def _trim_row(plan: RowPlan) -> dict[str, Any]:
                         ("vehicle.width_mm", "width_mm"),
                         ("vehicle.height_mm", "height_mm"),
                         ("engine.displacement_cc", "engine_cc"),
-                        ("battery.gross_capacity_kwh", "battery_kwh"),
                         ("powertrain.transmission", "transmission"),
                         ("fitment.tyre_front", "tire_front"),
                         ("fitment.tyre_rear", "tire_rear")):
         if key in specs:
             row[column] = specs[key]
     return row
+
+
+def _price_command(plan: RowPlan, *, observed_at: str) -> Optional[dict[str, Any]]:
+    """The recommended retail price the manufacturer filed, as an observation.
+
+    ``observed_at`` carries the record's approval date and ``effective_from``
+    is deliberately absent. Those two fields make different claims: observed
+    says only that this is what the source stated on that day, while effective
+    asserts that the price took force then and held. An ECO record establishes
+    the first and says nothing about the second -- it is a homologation filing,
+    not a price list -- so inventing a validity window from it would be the
+    same overreach as calling the figure a current MSRP.
+
+    The type is ECO_STICKER_PRICE for the same reason.
+    PriceLedger.current_list_price() resolves the LIST_PRICE stream only, so
+    nothing written here can surface as the price a reader is shown.
+    """
+    if plan.price_suppressed or not plan.vehicle.price_thb or plan.vehicle.price_thb <= 0:
+        return None
+    return {
+        "operation": "APPEND_PRICE",
+        "canonical_id": plan.trim_id,
+        "payload": {
+            "trim_id": plan.trim_id,
+            "amount_thb": int(plan.vehicle.price_thb),
+            "price_type": "ECO_STICKER_PRICE",
+            "observed_at": plan.vehicle.approved_at or observed_at,
+            "source": "ecosticker",
+            "source_ref": plan.vehicle.source_url,
+            "notes": ("ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ "
+                      "เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน"),
+        },
+    }
 
 
 def commands_for(plan: RowPlan, registry: SpecRegistry, *,
@@ -243,6 +339,10 @@ def commands_for(plan: RowPlan, registry: SpecRegistry, *,
     """
     if plan.status == UNRESOLVED or not plan.model_id:
         return []
+    price_command = _price_command(plan, observed_at=observed_at)
+    if plan.price_only:
+        # Another row writes this trim. This one is here for its price.
+        return [price_command] if price_command else []
     # The writer requires all three objects to be present even when only the
     # trim list is being changed: brand and model are sent empty-but-identified
     # so their own fields are left exactly as they are (dict.update() with
@@ -260,31 +360,8 @@ def commands_for(plan: RowPlan, registry: SpecRegistry, *,
     }]
     source_ref = plan.vehicle.source_url
     observed = plan.vehicle.approved_at or observed_at
-
-    # The recommended retail price the manufacturer filed with the programme.
-    #
-    # It is recorded as ECO_STICKER_PRICE and dated to the day the record was
-    # approved, never as a current MSRP: an ECO record can be years old, and
-    # PriceLedger.current_list_price() resolves LIST_PRICE only, so nothing
-    # here can become the price a reader is shown today. It is evidence of
-    # what the price was when the car was homologated, which is a real fact
-    # with a real date, and that is all it claims to be.
-    if plan.vehicle.price_thb and plan.vehicle.price_thb > 0:
-        commands.append({
-            "operation": "APPEND_PRICE",
-            "canonical_id": plan.trim_id,
-            "payload": {
-                "trim_id": plan.trim_id,
-                "amount_thb": int(plan.vehicle.price_thb),
-                "price_type": "ECO_STICKER_PRICE",
-                "effective_from": observed,
-                "observed_at": observed,
-                "source": "ecosticker",
-                "source_ref": source_ref,
-                "notes": ("ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ "
-                          "เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน"),
-            },
-        })
+    if price_command:
+        commands.append(price_command)
 
     for key, value in sorted(plan.specs.items()):
         fact: dict[str, Any] = {

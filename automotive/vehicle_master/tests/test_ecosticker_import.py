@@ -183,14 +183,17 @@ def test_a_row_whose_powertrain_cannot_be_established_is_not_imported(catalog, r
     assert plan.vehicle.powertrain is None
 
 
-def test_two_rows_for_the_same_trim_do_not_both_write(catalog, registry):
+def test_two_rows_for_the_same_trim_write_its_specs_once(catalog, registry):
     """A re-approval leaves the previous row in the export. Two rows writing
-    the same facts is a replay at best and a conflict at worst."""
+    the same specification is a replay at best and a same-day conflict at
+    worst, so only the first writes it -- the second stays in the plan for
+    its price, which is its own dated observation."""
     plan = plan_import([row("Runner Premium"),
                         row("Runner Premium", id="c055ec20-0af5-46b3-95d1-c7e7183a35b8")],
                        catalog, registry)
-    assert [p.status for p in plan.rows] == [MATCHED, UNRESOLVED]
-    assert "ซ้ำ" in plan.rows[1].reason
+    assert [p.status for p in plan.rows] == [MATCHED, MATCHED]
+    assert [p.price_only for p in plan.rows] == [False, True]
+    assert "สเปกซ้ำ" in plan.rows[1].reason
 
 
 def test_the_summary_counts_what_will_be_written(catalog, registry):
@@ -324,7 +327,6 @@ def test_the_eco_price_is_recorded_at_the_date_it_was_filed(catalog, registry):
     assert price["amount_thb"] == 899000
     # Dated 2023, not today. An ECO record can be years old, and the date it
     # carries is the only honest one.
-    assert price["effective_from"] == "2023-04-11"
     assert price["observed_at"] == "2023-04-11"
 
 
@@ -372,3 +374,96 @@ def test_the_eco_price_survives_the_real_pipeline(tree, catalog, registry):
     assert rows[0].price_type is PriceType.ECO_STICKER_PRICE
     # The thing that must not happen: it is not the current list price.
     assert ledger.current_list_amount(trim_id) is None
+
+
+# ---------------------------------------------------------------------------
+# What a price observation claims, and what it does not
+# ---------------------------------------------------------------------------
+
+def test_an_eco_price_is_observed_on_a_date_not_effective_from_it(catalog, registry):
+    """``observed_at`` only. ``effective_from`` would be a claim the source
+    never makes: an ECO record is a homologation filing, not a price list, so
+    it establishes what was stated on a day and nothing about how long that
+    price held."""
+    plan = plan_row(row("Runner Premium", approve_date="2023-04-11T09:00:00+07:00",
+                        recomend_retail_price_new="899000"), catalog, registry)
+    price = [c["payload"] for c in commands_for(plan, registry, observed_at="2026-09-18")
+             if c["operation"] == "APPEND_PRICE"][0]
+    assert price["observed_at"] == "2023-04-11"
+    assert "effective_from" not in price
+
+
+def test_a_second_record_for_one_trim_keeps_its_price_and_drops_its_specs(catalog, registry):
+    """Specs are deduplicated; price history is not.
+
+    Two ECO records for one grade state the same specification but two dated
+    prices. Discarding the second row wholesale threw the observation away.
+    """
+    plan = plan_import([
+        row("Runner Premium", approve_date="2024-01-10T09:00:00+07:00",
+            recomend_retail_price_new="899000"),
+        row("Runner Premium", approve_date="2026-02-20T09:00:00+07:00",
+            recomend_retail_price_new="949000"),
+    ], catalog, registry)
+    first, second = plan.rows
+    assert first.status == MATCHED and not first.price_only
+    assert second.status == MATCHED and second.price_only
+
+    second_commands = commands_for(second, registry, observed_at="2026-09-18")
+    assert [c["operation"] for c in second_commands] == ["APPEND_PRICE"]
+    assert second_commands[0]["payload"]["observed_at"] == "2026-02-20"
+    assert second_commands[0]["payload"]["amount_thb"] == 949000
+
+    first_ops = {c["operation"] for c in commands_for(first, registry, observed_at="2026-09-18")}
+    assert first_ops == {"UPSERT_MODEL_BUNDLE", "APPEND_SPEC", "APPEND_PRICE"}
+    # The specs are written once, not twice.
+    assert plan.summary()["price_observations"] == 2
+
+
+def test_the_same_record_filed_twice_is_one_observation(catalog, registry):
+    plan = plan_import([
+        row("Runner Premium", approve_date="2024-01-10T09:00:00+07:00",
+            recomend_retail_price_new="899000"),
+        row("Runner Premium", approve_date="2024-01-10T09:00:00+07:00",
+            recomend_retail_price_new="899000"),
+    ], catalog, registry)
+    assert plan.summary()["price_observations"] == 1
+    assert plan.rows[1].price_suppressed
+
+
+def test_two_prices_on_one_day_mean_the_trim_is_too_coarse_to_price(catalog, registry):
+    """Neither amount can be attributed, so neither is written.
+
+    A ledger keys a price by (trim, type, start). Three prices for one grade
+    on one day are three configurations the catalogue does not distinguish;
+    the answer is a finer trim, not a guess about which one is real.
+    """
+    plan = plan_import([
+        row("Runner Premium", approve_date="2026-06-23T09:00:00+07:00",
+            recomend_retail_price_new="4290000"),
+        row("Runner Premium", approve_date="2026-06-23T09:00:00+07:00",
+            recomend_retail_price_new="4420000"),
+    ], catalog, registry)
+    assert plan.summary()["price_observations"] == 0
+    assert all(r.price_suppressed for r in plan.rows)
+    assert "trim identity ยังหยาบเกินไป" in plan.rows[0].price_suppressed
+    # The specs still land: only the price is unattributable.
+    assert "APPEND_SPEC" in {c["operation"] for c in commands_for(
+        plan.rows[0], registry, observed_at="2026-09-18")}
+
+
+def test_gross_battery_capacity_never_reaches_the_market_trim_column(catalog, registry):
+    """MarketTrim.battery_kwh means catalog capacity. What the export yields
+    is the nameplate pack derived from charge and voltage -- a different
+    quantity, so it stays a comparable-spec fact."""
+    plan = plan_row(row("Runner EV", cartype_name="BEV", engine_name="ไฟฟ้า",
+                        capacity_cylinder="-", fuel_name="-",
+                        battery_capacity="169", nominal_voltage="326.4"),
+                    catalog, registry)
+    bundle = [c for c in commands_for(plan, registry, observed_at="2026-09-18")
+              if c["operation"] == "UPSERT_MODEL_BUNDLE"][0]
+    trim = bundle["payload"]["trims"][0]
+    assert "battery_kwh" not in trim, trim
+    facts = {c["payload"]["field_key"] for c in commands_for(plan, registry, observed_at="2026-09-18")
+             if c["operation"] == "APPEND_SPEC"}
+    assert "battery.gross_capacity_kwh" in facts

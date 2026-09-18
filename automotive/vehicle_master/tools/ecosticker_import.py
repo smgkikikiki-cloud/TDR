@@ -86,7 +86,9 @@ def applied_report(plan: ImportPlan, *, source: str, observed_at: str) -> dict[s
         "trim_name": row.trim_name,
         "powertrain": row.vehicle.powertrain,
         "approved_at": row.vehicle.approved_at,
-        "facts": len(row.specs),
+        "facts": 0 if row.price_only else len(row.specs),
+        "price_only": row.price_only,
+        "price_thb": (None if row.price_suppressed else row.vehicle.price_thb),
     } for row in plan.rows if row.status != UNRESOLVED]
     return {
         "schema_version": 1,
@@ -104,13 +106,21 @@ def repaired_report(plan: ImportPlan, *, source: str) -> dict[str, Any]:
     A silent correction is indistinguishable from a silent error, so each one
     says what the source stated and what was done about it.
     """
-    rows = [{
-        "source_id": row.source_id,
-        "brand": row.brand_raw,
-        "model": row.model_raw,
-        "eco_url": row.vehicle.source_url,
-        "repairs": row.vehicle.repairs,
-    } for row in plan.rows if row.vehicle.repairs]
+    rows = []
+    for row in plan.rows:
+        repairs = dict(row.vehicle.repairs)
+        if row.price_suppressed:
+            repairs["price"] = row.price_suppressed
+        if not repairs:
+            continue
+        rows.append({
+            "source_id": row.source_id,
+            "brand": row.brand_raw,
+            "model": row.model_raw,
+            "trim_id": row.trim_id,
+            "eco_url": row.vehicle.source_url,
+            "repairs": repairs,
+        })
     return {
         "schema_version": 1,
         "generated_from": source,
@@ -187,9 +197,13 @@ def main(argv=None) -> int:
     print(f"rows {summary['rows']}  matched {summary[MATCHED]}  "
           f"new trims {summary[NEW_TRIM]}  unresolved {summary[UNRESOLVED]}")
     print(f"spec facts {summary['spec_facts']} in {len(batches)} batches")
-    repaired = sum(1 for row in plan.rows if row.vehicle.repairs)
+    print(f"price observations {summary['price_observations']} "
+          f"({summary['price_only_rows']} rows contribute a price only, "
+          f"{summary['prices_suppressed']} withheld)")
+    repaired = sum(1 for row in plan.rows
+                   if row.vehicle.repairs or row.price_suppressed)
     if repaired:
-        print(f"source measurements corrected or withheld on {repaired} rows")
+        print(f"source values corrected or withheld on {repaired} rows")
     print(f"reports -> {report_dir}/{stem}_*.json")
 
     if not args.apply:
