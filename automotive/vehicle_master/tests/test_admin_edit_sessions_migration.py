@@ -30,6 +30,15 @@ import pytest
 REPO_ROOT = Path(__file__).resolve().parents[3]
 V35 = REPO_ROOT / "supabase" / "migration_v35_admin_edit_sessions.sql"
 V36 = REPO_ROOT / "supabase" / "migration_v36_admin_edit_sessions_trim_kind.sql"
+VERIFY = REPO_ROOT / "supabase" / "migration_v36_verify.sql"
+
+
+def verify_section(number: int) -> str:
+    """One numbered section of the operator runbook, as the operator pastes it."""
+    text = VERIFY.read_text(encoding="utf-8")
+    start = text.index(f"-- SECTION {number} ")
+    end = text.find(f"-- SECTION {number + 1} ")
+    return text[start:end if end != -1 else len(text)]
 
 PG_BIN = next((p for p in (
     Path("/usr/lib/postgresql/16/bin"),
@@ -353,3 +362,37 @@ def test_v36_applies_to_an_empty_table_too(pg: Cluster):
                 'r', '{}'::jsonb, now() + interval '1 hour');
     """)
     assert ok
+
+
+def test_the_operator_runbook_passes_against_a_migrated_database(pg: Cluster):
+    """The SQL a person is told to paste into production has to work there.
+
+    This is the same trap the migration itself fell into: SQL that reads
+    correctly and does not run. Sections 1, 3 and 4 of the runbook are
+    executed against a database that really has been through v35 -> v36, and
+    section 3's assertions all have to come back PASS -- if the migration were
+    wrong, or the runbook's own queries were, this fails rather than a person
+    discovering it against the live table.
+    """
+    _seed_applied_v35(pg)
+    before = pg.rows(verify_section(1))
+    total_before = [row for row in before if row[:2] == ["rows", "TOTAL"]]
+    assert total_before == [["rows", "TOTAL", "5"]], before
+
+    pg.file(V36)
+
+    checks = pg.rows(verify_section(3))
+    assert checks, "the runbook's after-state query returned nothing"
+    failed = [row for row in checks if row[-1] != "PASS"]
+    assert not failed, failed
+
+    after = pg.rows(verify_section(1))
+    assert [row for row in after if row[:2] == ["rows", "TOTAL"]] == total_before
+
+    # The smoke test writes a row and rolls it back; its last statement must
+    # report that nothing was left behind.
+    smoke = pg.rows(verify_section(4))
+    assert ["loadProposal finds it", "1"] in smoke, smoke
+    assert ["consumeProposal left it CONSUMED", "CONSUMED"] in smoke, smoke
+    assert ["rows left behind (must be 0)", "0"] in smoke, smoke
+    assert pg.scalar("select count(*) from public.admin_edit_sessions;") == "5"
