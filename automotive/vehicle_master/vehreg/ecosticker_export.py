@@ -413,13 +413,11 @@ _NUMERIC_SPECS: tuple[tuple[str, str, str], ...] = (
     ("model_year", "vehicle.model_year", "int"),
     ("capacity_cylinder", "engine.displacement_cc", "int"),
     ("gear_speed", "powertrain.gear_count", "int"),
-    ("battery_capacity", "battery.catalog_capacity_kwh", "float"),
+
     ("nominal_voltage", "battery.nominal_voltage_v", "float"),
     ("driving_range", "ev.rated_range_km", "float"),
     ("energy_consumption", "ev.energy_consumption_wh_km", "float"),
     ("emissions_CO2", "emissions.co2_g_km", "float"),
-    ("nox_amount", "emissions.nox_g_km", "float"),
-    ("particulate_matters", "emissions.pm_g_km", "float"),
     ("energy_combined_rate", "efficiency.fuel_consumption_l_100km", "float"),
     ("rate_energy_urban", "efficiency.fuel_consumption_urban_l_100km", "float"),
     ("rate_energy_ex_urban", "efficiency.fuel_consumption_extra_urban_l_100km", "float"),
@@ -493,6 +491,36 @@ def normalize_row(row: dict) -> NormalizedVehicle:
     ):
         if value is not None:
             specs[key] = value
+
+    # The export's ``battery_capacity`` is the pack's charge in ampere-hours,
+    # not its energy in kilowatt-hours, and reading it as kWh put a 169 kWh
+    # battery in a compact taxi. Energy is charge times voltage, and the
+    # export states the nominal voltage on every row that states a capacity.
+    #
+    # Checked against the source's own range and consumption figures, which
+    # are collected independently of the battery columns: read as kWh the
+    # column is 2.48x the energy the car's own range implies and only 48 of
+    # 490 rows are plausible; derived this way the median is 0.91x with 399
+    # plausible -- and 0.91 is what it should be, because voltage times charge
+    # is the gross pack and range times consumption is what is usable from it.
+    #
+    # It is filed as gross rather than catalog capacity for the same reason:
+    # this is the nameplate pack, not the figure a brochure quotes.
+    # NOx and particulates are quoted in milligrams per kilometre, the unit
+    # the regulation is written in; the registry compares grams. Published as
+    # they arrive, the median NOx figure would be 263 times the Euro 5 petrol
+    # limit -- a number no homologated car could carry. Divided by a thousand
+    # it is 0.26 times the limit, which is where a compliant car sits.
+    for column, key in (("nox_amount", "emissions.nox_g_km"),
+                        ("particulate_matters", "emissions.pm_g_km")):
+        mg = _number(row.get(column))
+        if mg is not None and mg > 0:
+            specs[key] = round(mg / 1000, 5)
+
+    charge_ah = _number(row.get("battery_capacity"))
+    volts = _number(row.get("nominal_voltage"))
+    if charge_ah and volts and charge_ah > 0 and volts > 0:
+        specs["battery.gross_capacity_kwh"] = round(charge_ah * volts / 1000, 2)
 
     regulations = un_regulations(row)
     if regulations:

@@ -356,3 +356,66 @@ def test_the_re_listing_timestamp_is_not_read():
     reading it would re-date a specification that never changed."""
     assert "approval_at_latest" in IGNORED_COLUMNS
     assert "approve_date" not in IGNORED_COLUMNS
+
+
+# ---------------------------------------------------------------------------
+# The column that is not what its name suggests
+# ---------------------------------------------------------------------------
+
+def test_battery_capacity_is_charge_not_energy():
+    """``battery_capacity`` is ampere-hours; the catalogue compares kilowatt-hours.
+
+    Read literally the column put a 169 kWh pack in a compact taxi. Energy is
+    charge times voltage, and the export states the voltage on every row that
+    states a capacity: 169 Ah at 326.4 V is 55.16 kWh, which is the car.
+    """
+    specs = normalize_row(row(battery_capacity="169", nominal_voltage="326.4")).specs
+    assert specs["battery.gross_capacity_kwh"] == 55.16
+    # The raw figure is never published as an energy.
+    assert "battery.catalog_capacity_kwh" not in specs
+    assert specs["battery.nominal_voltage_v"] == 326.4
+
+
+def test_no_voltage_means_no_derived_capacity():
+    """Half the identity is not an answer. A pack with a stated charge and no
+    stated voltage has no energy this module is entitled to publish."""
+    for volts in ("", "-", "0", None):
+        specs = normalize_row(row(battery_capacity="169", nominal_voltage=volts)).specs
+        assert "battery.gross_capacity_kwh" not in specs
+    specs = normalize_row(row(battery_capacity="-", nominal_voltage="326.4")).specs
+    assert "battery.gross_capacity_kwh" not in specs
+
+
+def test_the_derived_capacity_agrees_with_the_range_the_source_states(registry):
+    """An independent check on the unit, from columns the battery ones do not feed.
+
+    Range times consumption is the energy the car actually uses. Voltage times
+    charge is the gross pack, which is a little larger -- if the derivation
+    were out by a factor, these two would not sit next to each other.
+    """
+    vehicle = normalize_row(row(cartype_name="BEV", engine_name="ไฟฟ้า",
+                                capacity_cylinder="-", fuel_name="-",
+                                battery_capacity="169", nominal_voltage="326.4",
+                                driving_range="442", energy_consumption="115"))
+    gross = vehicle.specs["battery.gross_capacity_kwh"]
+    usable = 442 * 115 / 1000
+    assert 0.8 <= usable / gross <= 1.05, (gross, usable)
+
+
+def test_emissions_are_converted_from_the_unit_the_regulation_uses():
+    """The export quotes NOx and particulates in mg/km; the registry compares g/km.
+
+    Published as they arrive, the median NOx figure is 263 times the Euro 5
+    petrol limit -- a number no car that passed homologation could carry, which
+    is what makes the unit error detectable at all.
+    """
+    specs = normalize_row(row(nox_amount="15.8", particulate_matters="0.38")).specs
+    assert specs["emissions.nox_g_km"] == 0.0158
+    assert specs["emissions.pm_g_km"] == 0.00038
+
+
+def test_no_emission_reading_is_not_a_reading_of_zero():
+    for blank in ("", "-", "0", None):
+        specs = normalize_row(row(nox_amount=blank, particulate_matters=blank)).specs
+        assert "emissions.nox_g_km" not in specs
+        assert "emissions.pm_g_km" not in specs

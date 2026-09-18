@@ -219,7 +219,7 @@ def _trim_row(plan: RowPlan) -> dict[str, Any]:
                         ("vehicle.width_mm", "width_mm"),
                         ("vehicle.height_mm", "height_mm"),
                         ("engine.displacement_cc", "engine_cc"),
-                        ("battery.catalog_capacity_kwh", "battery_kwh"),
+                        ("battery.gross_capacity_kwh", "battery_kwh"),
                         ("powertrain.transmission", "transmission"),
                         ("fitment.tyre_front", "tire_front"),
                         ("fitment.tyre_rear", "tire_rear")):
