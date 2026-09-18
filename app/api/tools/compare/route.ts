@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCanonicalCompareTrims } from "@/lib/canonical-data";
-import { compareValue, rowIsDifferent, visibleCompareGroups, type FreeCompareTrim } from "@/lib/free-compare";
+import { compareValue, indexSpecFields, rowIsDifferent, visibleCompareGroups, type CompareSpecField, type FreeCompareTrim } from "@/lib/free-compare";
+import { loadSpecFieldRegistry } from "@/lib/spec-field-registry";
 import { requireActivatedAccess, requireUsage, AccessPolicyError } from "@/lib/access-policy-server";
 import { recordEvent } from "@/lib/telemetry";
 
@@ -30,13 +31,19 @@ export async function GET(request: NextRequest) {
     const all = (await getCanonicalCompareTrims(600)) as FreeCompareTrim[];
     const byId = new Map(all.map((trim) => [trim.id, trim]));
     const selected = requestedIds.map((id) => byId.get(id)).filter(Boolean) as FreeCompareTrim[];
-    const groups = visibleCompareGroups(selected, diffOnly).map((group) => ({
+    // Which fields are comparable, and what they are called, comes from the
+    // canonical registry rather than a list kept here -- the same file
+    // APPEND_SPEC validates against, so a field is comparable the day it is
+    // defined.
+    const specFields = loadSpecFieldRegistry(new Date().getFullYear()) as unknown as CompareSpecField[];
+    const definitions = indexSpecFields(specFields);
+    const groups = visibleCompareGroups(selected, diffOnly, specFields).map((group) => ({
       title: group.title,
       rows: group.rows.map((row) => ({
         key: row.key,
         label: row.label,
-        different: rowIsDifferent(selected, row.key),
-        values: selected.map((trim) => compareValue(trim, row.key)),
+        different: rowIsDifferent(selected, row.key, definitions),
+        values: selected.map((trim) => compareValue(trim, row.key, definitions)),
       })),
     }));
 

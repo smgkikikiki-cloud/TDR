@@ -12,10 +12,10 @@ import pytest
 from vehreg.catalog import DATA_DIR
 from vehreg.comparable_specs import SpecRegistry
 from vehreg.ecosticker_export import (
-    ECO_MEASUREMENT_BASIS, airbag_count, applicable_specs, body_type,
-    charging_port_type, combustion_type, emissions_standard, equipment_flags,
-    fuel_type, motor_count, motor_type, normalize_row, powertrain,
-    un_regulations,
+    ECO_MEASUREMENT_BASIS, IGNORED_COLUMNS, airbag_count, applicable_specs,
+    body_type, charging_port_type, combustion_type, emissions_standard,
+    equipment_flags, fuel_type, motor_count, motor_type, normalize_row,
+    powertrain, un_regulations,
 )
 
 
@@ -329,3 +329,30 @@ def test_a_full_row_produces_a_useful_number_of_comparable_facts(registry):
     assert accepted["engine.fuel_type"] == "GASOLINE"
     assert accepted["safety.aeb"] is True
     assert accepted["manufacturing.factory"] == "TRENDY INFORMATION CO., LTD."
+
+
+# ---------------------------------------------------------------------------
+# When the source says it observed what it states
+# ---------------------------------------------------------------------------
+
+def test_the_approval_date_is_kept_as_the_date_the_source_observed():
+    """The export's approval timestamp, reduced to the date.
+
+    It is not decoration: it is the start date every fact this row produces
+    gets filed under, so an unchanged record re-imported next month is the
+    same fact rather than a specification that changed on import day.
+    """
+    vehicle = normalize_row(row(approve_date="2026-09-15T09:27:32.055971+07:00"))
+    assert vehicle.approved_at == "2026-09-15"
+
+
+def test_a_row_with_no_usable_approval_date_states_none():
+    for value in ("", "-", "ไม่ระบุ", "2026", "not a date", None):
+        assert normalize_row(row(approve_date=value)).approved_at == ""
+
+
+def test_the_re_listing_timestamp_is_not_read():
+    """``approval_at_latest`` moves when a record is merely re-listed, so
+    reading it would re-date a specification that never changed."""
+    assert "approval_at_latest" in IGNORED_COLUMNS
+    assert "approve_date" not in IGNORED_COLUMNS

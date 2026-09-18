@@ -15,7 +15,7 @@ import pytest
 from vehreg.catalog import Catalog
 from vehreg.comparable_specs import SpecLedger, SpecRegistry
 from vehreg.ecosticker_import import (
-    MATCHED, NEW_TRIM, UNRESOLVED, batches_from_plan, plan_import, plan_row,
+    MATCHED, NEW_TRIM, UNRESOLVED, batches_from_plan, commands_for, plan_import, plan_row,
     trim_label,
 )
 from vehreg.input_pipeline import CanonicalInputPipeline
@@ -280,3 +280,31 @@ def test_applying_the_same_export_twice_changes_nothing(tree, catalog, registry)
              if f.trim_id == "acme.runner.gen1.trim.premium"
              and f.field_key == "vehicle.seats"]
     assert len(seats) == 1, "one fact per field, not one per import run"
+
+
+# ---------------------------------------------------------------------------
+# When a fact says it was observed
+# ---------------------------------------------------------------------------
+
+def test_facts_are_dated_by_the_source_not_by_the_import(catalog, registry):
+    """Every fact carries the row's own ECO approval date.
+
+    The ledger keys a fact by its start, so dating facts by the day the import
+    ran would file next month's re-import of an unchanged record as a fresh
+    specification dated that day -- a change the source never made, in a
+    history that is supposed to be the record of what was observed.
+    """
+    plan = plan_row(row("Runner Premium", approve_date="2026-07-23T09:59:38.117744+07:00"),
+                    catalog, registry)
+    facts = [command["payload"] for command in commands_for(plan, registry, observed_at="2026-09-18")
+             if command["operation"] == "APPEND_SPEC"]
+    assert facts
+    assert {fact["observed_at"] for fact in facts} == {"2026-07-23"}
+
+
+def test_a_row_with_no_approval_date_falls_back_to_the_run(catalog, registry):
+    plan = plan_row(row("Runner Premium", approve_date="-"), catalog, registry)
+    facts = [command["payload"] for command in commands_for(plan, registry, observed_at="2026-09-18")
+             if command["operation"] == "APPEND_SPEC"]
+    assert facts
+    assert {fact["observed_at"] for fact in facts} == {"2026-09-18"}

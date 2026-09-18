@@ -234,6 +234,12 @@ def commands_for(plan: RowPlan, registry: SpecRegistry, *,
 
     The registry is needed for the unit: a numeric fact must carry exactly the
     field's canonical unit or the writer rejects the whole batch.
+
+    Facts are dated by the row's own ECO approval date, not by the day the
+    import runs. The ledger keys a fact by its start, so an import-day stamp
+    would file next month's re-import of an unchanged record as a fresh
+    specification dated that day -- a change the source never made. Where the
+    export states no approval date, ``observed_at`` is the fallback.
     """
     if plan.status == UNRESOLVED or not plan.model_id:
         return []
@@ -253,13 +259,14 @@ def commands_for(plan: RowPlan, registry: SpecRegistry, *,
         },
     }]
     source_ref = plan.vehicle.source_url
+    observed = plan.vehicle.approved_at or observed_at
     for key, value in sorted(plan.specs.items()):
         fact: dict[str, Any] = {
             "trim_id": plan.trim_id,
             "field_key": key,
             "value_state": "KNOWN",
             "value": value,
-            "observed_at": observed_at,
+            "observed_at": observed,
             "verification_status": "VERIFIED",
             "source": "ecosticker",
             "source_ref": source_ref,

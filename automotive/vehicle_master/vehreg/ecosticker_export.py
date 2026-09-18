@@ -36,10 +36,14 @@ from .ecosticker_ingest import infer_powertrain
 #: ``car_tyre`` arrives as the literal string "[object Object]" on every row
 #: (the harvester is broken upstream); ``car_equip_parts_of_engine`` is empty
 #: in every row; ``year`` duplicates ``model_year``.
+#:
+#: ``approve_date`` is not dropped -- it dates every fact the row produces --
+#: but ``approval_at_latest`` is: it moves when the record is merely re-listed,
+#: so using it would re-date a specification that never changed.
 IGNORED_COLUMNS = (
     "rate_energy", "fuel_consumption_combined", "rate_energy_elec",
     "capacity_cylinder_str", "car_tyre", "car_equip_parts_of_engine", "year",
-    "_synced_at", "approve_date",
+    "_synced_at", "approval_at_latest",
 )
 
 #: Values the export uses to mean "no value".
@@ -94,6 +98,23 @@ _BODY_RULES: tuple[tuple[tuple[str, ...], str], ...] = (
     (("รถตู้", "van"), "VAN"),
     (("cab & chassis", "บรรทุก", "truck"), "TRUCK"),
 )
+
+
+def approval_date(raw: Any) -> str:
+    """The date part of the export's approval timestamp, or "".
+
+    The column arrives as a full ISO timestamp in Bangkok time
+    ("2026-09-15T09:27:32.055971+07:00"); only the date is kept, because that
+    is the resolution a homologation record is meaningful at and the ledger
+    keys facts by date.
+    """
+    text = _text(raw)
+    if len(text) < 10:
+        return ""
+    head = text[:10]
+    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", head):
+        return ""
+    return head
 
 
 def body_type(car_style: Any) -> Optional[str]:
@@ -364,6 +385,12 @@ class NormalizedVehicle:
     powertrain: Optional[str]
     body_type: Optional[str]
     price_thb: Optional[int]
+    #: The date this ECO record was approved (YYYY-MM-DD), which is when the
+    #: source observed what it states. Facts are dated by this rather than by
+    #: the day an import happens to run: the ledger keys a fact by its start,
+    #: so an import-day stamp would invent a specification change on every
+    #: monthly re-import and collapse the source's own chronology.
+    approved_at: str = ""
     #: registry key -> canonical value, ready for an APPEND_SPEC fact.
     specs: dict[str, Any] = field(default_factory=dict)
     #: registry key -> {qualifier: value}
@@ -435,6 +462,7 @@ def normalize_row(row: dict) -> NormalizedVehicle:
                               _text(row.get("model"))),
         body_type=body_type(row.get("car_style")),
         price_thb=_integer(row.get("recomend_retail_price_new")),
+        approved_at=approval_date(row.get("approve_date")),
     )
     specs = vehicle.specs
 

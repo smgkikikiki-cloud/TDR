@@ -390,3 +390,22 @@ td { padding: 16px 10px; border-bottom: 1px solid var(--line); }
    is already in the navigation. */
 .headerAccount { flex-shrink: 0; align-self: center; font-size: 14px; font-weight: 600; color: var(--navy); border-bottom: 1px solid var(--line); padding-bottom: 2px; }
 .headerAccount:hover { border-bottom-color: var(--navy); }
+
+/* Admin sidebar: one primary door, then queues, then the folded-away tools.
+   The flat list this replaces gave a raw-input escape hatch the same weight
+   as the editor, so the two read as alternatives rather than as a default and
+   a fallback. */
+.adminNavPrimary{display:flex;flex-direction:column;gap:3px;background:var(--navy);color:#fff;padding:13px 12px!important;border-bottom:0!important;margin-bottom:6px}
+.adminNavPrimary b{font-size:15px;font-weight:800}
+.adminNavPrimary em{font-style:normal;font-size:11px;font-weight:600;color:#c3cbd8;line-height:1.5}
+.adminNavPrimary:hover{background:#101f38}
+.adminNavPrimary:hover b{color:#fff}
+.adminNavHeading{display:block;padding:14px 4px 6px;color:#8b9099;font-size:10px;font-weight:900;letter-spacing:.14em;border-bottom:1px solid #e1e3e7}
+.adminNavGroup{border-bottom:1px solid #e1e3e7}
+.adminNavGroup>summary{padding:11px 4px;font-size:13px;font-weight:700;color:#777;cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between}
+.adminNavGroup>summary::-webkit-details-marker{display:none}
+.adminNavGroup>summary::after{content:"+";font-size:14px;font-weight:700}
+.adminNavGroup[open]>summary::after{content:"–"}
+.adminNavGroup>summary:hover{color:var(--red)}
+.adminNavGroup a{display:block;padding:9px 4px 9px 14px!important;border-bottom:0!important;font-size:13px!important;font-weight:600!important;color:#5c616a}
+.adminNavGroup a:hover{color:var(--red)}
