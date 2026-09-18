@@ -20,7 +20,6 @@ for (const cut of ["brand", "powertrain", "body_type", "segment", "origin_countr
   check(`free may cut by ${cut}`, isMarketDimensionAllowed(cut, "FREE", null), true);
 }
 check("free may not rank a single model", isMarketDimensionAllowed("model", "FREE", null), false);
-check("individual may", isMarketDimensionAllowed("model", "INDIVIDUAL", null), true);
 check("pro may", isMarketDimensionAllowed("model", "PRO", null), true);
 
 console.log("\nwindows and comparisons");
@@ -32,7 +31,7 @@ for (const w of ["rolling6", "rolling12", "ytd"]) {
 }
 check("free compares with the previous period", isMarketComparisonAllowed("previous", "FREE"), true);
 check("free does not compare year on year", isMarketComparisonAllowed("yoy", "FREE"), false);
-check("individual does", isMarketComparisonAllowed("yoy", "INDIVIDUAL"), true);
+check("pro does", isMarketComparisonAllowed("yoy", "PRO"), true);
 
 console.log("\nhistory and filters");
 const now = new Date("2026-09-18T00:00:00Z");
@@ -40,7 +39,7 @@ check("free reaches back twelve months, not to January",
   historyWindowStart("FREE", now), "2025-10-01");
 check("pro has no lower bound", historyWindowStart("PRO", now), null);
 check("free cannot narrow a slice", areMarketFiltersAllowed("FREE"), false);
-check("individual can", areMarketFiltersAllowed("INDIVIDUAL"), true);
+check("pro can", areMarketFiltersAllowed("PRO"), true);
 
 console.log("\nevery tier states its market depth, so a new one cannot be silent");
 for (const [name, policy] of Object.entries(TIER_POLICIES)) {

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { browserDb } from "@/lib/supabase-browser";
-import { SALES_MODULES, type SalesModule } from "@/lib/access-policy";
+import { SALES_MODULES, TIER_POLICIES, type SalesModule } from "@/lib/access-policy";
 import styles from "./member.module.css";
 
 type Row = Record<string, any>;
@@ -29,7 +29,7 @@ const MODULE_LABEL: Record<SalesModule, string> = {
   chinese_bev_rank: "อันดับรถไฟฟ้าจีน",
 };
 
-type ModuleStatus = { tier: "FREE" | "INDIVIDUAL" | "PRO"; pickCount: number | null; selection: SalesModule[] | null };
+type ModuleStatus = { tier: "FREE" | "PRO"; pickCount: number | null; selection: SalesModule[] | null };
 type FeatureLadderState = "unavailable" | "teaser" | "limited" | "full" | "tailored";
 type FeatureInfo = {
   label: string;
@@ -37,7 +37,7 @@ type FeatureInfo = {
   surface: "sales_tools" | "research" | "pdf_export";
   released: boolean;
   current_state: FeatureLadderState;
-  ladder: { FREE: FeatureLadderState; INDIVIDUAL: FeatureLadderState; PRO: FeatureLadderState; CORPORATE: FeatureLadderState };
+  ladder: { FREE: FeatureLadderState; PRO: FeatureLadderState; CORPORATE: FeatureLadderState };
 };
 
 const FEATURE_STATE_LABEL: Record<FeatureLadderState, string> = {
@@ -215,7 +215,7 @@ export default function MemberDashboardPage() {
       <section className={styles.stateCard}>
         <div className={styles.eyebrow}>TDR REPORT · FREE</div>
         <h1>เลือกโมดูล Sales Tools {moduleStatus?.pickCount || 4} จาก {SALES_MODULES.length}</h1>
-        <p>บัญชี Free เลือกได้ {moduleStatus?.pickCount || 4} โมดูลต่อรอบ (1 เดือนปฏิทิน เวลาไทย) แล้วจะล็อกไว้จนกว่าจะขึ้นรอบถัดไป อัปเกรดเป็น Individual หรือ Pro เพื่อใช้ได้ทุกโมดูลไม่จำกัด</p>
+        <p>บัญชี Free เลือกได้ {moduleStatus?.pickCount || 4} โมดูลต่อรอบ (1 เดือนปฏิทิน เวลาไทย) แล้วจะล็อกไว้จนกว่าจะขึ้นรอบถัดไป อัปเกรดเป็น Pro เพื่อใช้ได้ทุกโมดูลไม่จำกัด</p>
         {message ? <p className={styles.message}>{message}</p> : null}
         <div className={styles.moduleGrid}>
           {SALES_MODULES.map((module) => (
@@ -229,7 +229,7 @@ export default function MemberDashboardPage() {
       </section>
     </main>
   );
-  if (status === "quota") return <main className={styles.shell}><section className={styles.stateCard}><div className={styles.eyebrow}>TDR REPORT</div><h1>ใช้โควตา Sales Tools ของวันนี้ครบแล้ว</h1><p>{message}</p><p className={styles.muted}>บัญชี Free ใช้ได้ 10 คำขอต่อวัน (เวลาไทย) อัปเกรดเป็น Individual หรือ Pro เพื่อใช้งานไม่จำกัด</p><Link href="/pricing">ดูแพ็กเกจ</Link></section></main>;
+  if (status === "quota") return <main className={styles.shell}><section className={styles.stateCard}><div className={styles.eyebrow}>TDR REPORT</div><h1>ใช้โควตา Sales Tools ของวันนี้ครบแล้ว</h1><p>{message}</p><p className={styles.muted}>บัญชี Free ใช้ได้ {TIER_POLICIES.FREE.salesQueryDailyLimit} คำขอต่อวัน (เวลาไทย) อัปเกรดเป็น Pro เพื่อใช้งานไม่จำกัด</p><Link href="/pricing">ดูแพ็กเกจ</Link></section></main>;
   if (status === "activation") return <main className={styles.shell}><section className={styles.stateCard}><div className={styles.eyebrow}>TDR REPORT</div><h1>ยืนยันตัวตนก่อนใช้ Sales Tools</h1><p>ต้องยืนยันอีเมล ยืนยันเบอร์มือถือ และกรอกโปรไฟล์ให้ครบก่อนใช้เครื่องมือสมาชิก (ไม่ต้องผูกบัตร)</p><Link href="/member/profile">ไปที่หน้าโปรไฟล์ →</Link></section></main>;
   if (status === "forbidden") return <main className={styles.shell}><section className={styles.stateCard}><div className={styles.eyebrow}>TDR REPORT</div><h1>บัญชีนี้ยังไม่มีสิทธิ์ข้อมูลจดทะเบียน</h1><p>{message}</p><button onClick={signOut}>ออกจากระบบ</button></section></main>;
   if (status === "error" || !data) return <main className={styles.shell}><section className={styles.stateCard}><h1>โหลดรายงานไม่สำเร็จ</h1><p>{message}</p><button onClick={() => location.reload()}>ลองใหม่</button></section></main>;
@@ -303,7 +303,6 @@ export default function MemberDashboardPage() {
             <p className={styles.muted}>เครื่องมือนี้ยังอยู่ระหว่างพัฒนาชุดข้อมูล ไม่มีการดึงข้อมูลหรือใช้โควตาใดๆ จนกว่าจะเปิดใช้งานจริง</p>
             <div className={styles.featureLadder}>
               <div><span>Free</span><b>{FEATURE_STATE_LABEL[feature.ladder.FREE]}</b></div>
-              <div><span>Individual</span><b>{FEATURE_STATE_LABEL[feature.ladder.INDIVIDUAL]}</b></div>
               <div><span>Pro</span><b>{FEATURE_STATE_LABEL[feature.ladder.PRO]}</b></div>
               <div><span>Corporate</span><b>{FEATURE_STATE_LABEL[feature.ladder.CORPORATE]}</b></div>
             </div>

@@ -21,7 +21,8 @@ export async function GET(request: NextRequest) {
       planCode: plan.planCode,
       tier: plan.tier,
       interval: plan.interval,
-      priceThb: plan.priceThb,
+      priceThbPerMonth: plan.priceThbPerMonth,
+      priceThbPerInterval: plan.priceThbPerInterval,
       configured: isPlanConfigured(plan),
     }));
     const hasActiveSubscription = Boolean(

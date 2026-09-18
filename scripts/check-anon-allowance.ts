@@ -56,7 +56,7 @@ check("the blurred copy is hidden from assistive technology",
   market.includes('aria-hidden="true"'), true);
 
 const policy = fs.readFileSync("lib/access-policy.ts", "utf8");
-const free = policy.slice(policy.indexOf("FREE: {"), policy.indexOf("INDIVIDUAL: {"));
+const free = policy.slice(policy.indexOf("FREE: {"), policy.indexOf("PRO: {"));
 check("an account removes the comparison limit", /compareDailyLimit: null/.test(free), true);
 check("five market queries a day", /salesQueryDailyLimit: 5/.test(free), true);
 check("two full analyses a month", /researchFullMonthlyLimit: 2/.test(free), true);

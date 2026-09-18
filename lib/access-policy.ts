@@ -9,7 +9,7 @@
 // pure/alias-free. Server-side wiring (DB reads, token resolution, the
 // actual RPC call) lives in lib/access-policy-server.ts.
 
-export type Tier = "FREE" | "INDIVIDUAL" | "PRO";
+export type Tier = "FREE" | "PRO";
 
 export type UsageMetric = "vehicle_compare" | "sales_query" | "research_full" | "pdf_export";
 
@@ -71,9 +71,9 @@ export const REGISTRATION_DIMENSION_MODULE: Record<string, SalesModule | null> =
 // Everything else in MarketDimension (body_type, oem_group,
 // registration_type, import_type, origin_country, brand_origin,
 // market_scope) is an advanced filter outside the 4-of-6 picker's scope
-// and is Individual/Pro only on the Free tier -- a product decision made
-// here in the absence of an explicit mapping from the spec, and called
-// out as such in the delivery report.
+// and is Pro-only on the Free tier -- a product decision made here in the
+// absence of an explicit mapping from the spec, and called out as such in
+// the delivery report.
 export const MARKET_DIMENSION_MODULE: Record<string, SalesModule | null> = {
   model: "model_share",
   brand: "brand_share",
@@ -87,7 +87,7 @@ export interface TierPolicy {
   compareDailyLimit: number | null;
   salesQueryDailyLimit: number | null;
   salesModulePickCount: number | null; // null = all modules available, no picker needed
-  historyWindow: "rolling_12_months" | "current_calendar_year" | "rolling_24_months" | "full";
+  historyWindow: "rolling_12_months" | "current_calendar_year" | "full";
   /** Ranking a single model is the paid question: what is selling as a
    *  category is the shape of the market, which car is selling is a product's
    *  performance. Everything else in MarketDimension is open. */
@@ -109,6 +109,12 @@ export interface TierPolicy {
   rawStructuredExport: false;
 }
 
+// Individual (the ฿399/month middle tier) was scrapped as a sellable
+// product -- too close to Pro's price to help anyone decide (see
+// docs/PRODUCT_ACCESS.md). Pro is the only paid tier now, sold at three
+// commitment lengths (see lib/plans.ts) but a single, unlimited quota
+// policy here -- billing cadence is a checkout-time choice, not a
+// separate access tier.
 export const TIER_POLICIES: Record<Tier, TierPolicy> = {
   FREE: {
     tier: "FREE",
@@ -127,23 +133,6 @@ export const TIER_POLICIES: Record<Tier, TierPolicy> = {
     researchFullMonthlyLimit: 2,
     pdfMonthlyLimit: 1,
     pdfWatermark: true,
-    apiAccess: false,
-    rawStructuredExport: false,
-  },
-  INDIVIDUAL: {
-    tier: "INDIVIDUAL",
-    label: "Individual",
-    compareDailyLimit: null,
-    salesQueryDailyLimit: null,
-    salesModulePickCount: null,
-    historyWindow: "rolling_24_months",
-    marketModelGrain: true,
-    marketWindows: null,
-    marketComparisons: null,
-    marketFilters: true,
-    researchFullMonthlyLimit: 3,
-    pdfMonthlyLimit: 10,
-    pdfWatermark: false,
     apiAccess: false,
     rawStructuredExport: false,
   },
@@ -226,8 +215,10 @@ export interface FeatureDefinition {
    * numeric quota, province count, history window, or equivalent rule --
    * not a placeholder) has been decided for every audience this feature's
    * `stateByAudience` marks 'limited'. Stays false while that policy is
-   * still undecided (e.g. provincial_registration's Individual tier today
-   * -- see the "do not invent the Individual limit" product direction).
+   * still undecided for some audience in the ladder. Vacuously true when
+   * no audience is 'limited' at all (every feature in the live catalog
+   * today -- there is currently no middle tier between Free and Pro to
+   * leave a policy undecided for).
    * assertFeatureCatalogIsReleaseSafe() below refuses to let `released`
    * ever become true for a feature with an undefined 'limited' policy, so
    * flipping the kill switch can never silently ship an invented number.
@@ -243,26 +234,25 @@ export const FEATURES: Record<FeatureKey, FeatureDefinition> = {
     surface: "sales_tools",
     released: false,
     // Intended future ladder (per product direction, 2026-09): Free sees a
-    // locked teaser; Plus/Individual gets *some* real use once released,
-    // exact scope/limits not decided yet (never invent one); Pro gets the
-    // full professional experience (province coverage, multi-province
-    // compare, historical analysis, deeper filtering) *subject to whatever
-    // the data product actually supports at release time*; Corporate may
-    // get bespoke geographic/team workflows. None of this ladder is live
-    // yet -- `released: false` above forces `teaser` for everyone today.
+    // locked teaser; Pro -- the only paid tier now that Individual is
+    // scrapped -- gets the full professional experience (province
+    // coverage, multi-province compare, historical analysis, deeper
+    // filtering) *subject to whatever the data product actually supports
+    // at release time*; Corporate may get bespoke geographic/team
+    // workflows. None of this ladder is live yet -- `released: false`
+    // above forces `teaser` for everyone today.
     stateByAudience: {
       FREE: "teaser",
-      INDIVIDUAL: "limited",
       PRO: "full",
       CORPORATE: "tailored",
     },
     countsTowardSalesModuleSelection: false,
     consumesQuota: false,
-    // Individual's "limited" scope for provincial data has not been
-    // commercially decided (no province count, request quota, or history
-    // window exists) -- never invent one, and never let `released` flip
-    // true until it's a real, concrete policy.
-    limitedAccessPolicyDefined: false,
+    // No audience in this ladder is 'limited' any more -- collapsing to a
+    // single paid tier also collapsed the one commercially-undecided case
+    // (Individual's partial scope) along with it. Vacuously true, same as
+    // research_reports/pdf_export_reports below.
+    limitedAccessPolicyDefined: true,
   },
   // research_reports is released: a real content model exists
   // (research_articles/research_article_reads, migration_v38) and
@@ -285,7 +275,7 @@ export const FEATURES: Record<FeatureKey, FeatureDefinition> = {
     labelTh: "รายงานวิจัย",
     surface: "research",
     released: true,
-    stateByAudience: { FREE: "limited", INDIVIDUAL: "full", PRO: "full", CORPORATE: "tailored" },
+    stateByAudience: { FREE: "limited", PRO: "full", CORPORATE: "tailored" },
     countsTowardSalesModuleSelection: false,
     consumesQuota: true,
     limitedAccessPolicyDefined: true,
@@ -296,7 +286,7 @@ export const FEATURES: Record<FeatureKey, FeatureDefinition> = {
     labelTh: "ส่งออก PDF",
     surface: "pdf_export",
     released: false,
-    stateByAudience: { FREE: "teaser", INDIVIDUAL: "full", PRO: "full", CORPORATE: "tailored" },
+    stateByAudience: { FREE: "teaser", PRO: "full", CORPORATE: "tailored" },
     countsTowardSalesModuleSelection: false,
     consumesQuota: true,
     limitedAccessPolicyDefined: true,
@@ -320,11 +310,11 @@ export function featuresForSurface(surface: FeatureSurface): FeatureDefinition[]
 // --- Launch guard: a feature can never ship `released: true` with an
 // undecided 'limited' policy -----------------------------------------
 //
-// This is the concrete backstop for "do not invent the Individual
-// numerical limit yet": someone could otherwise flip a single boolean
-// (`released: true`) on a feature whose ladder promises Individual a
-// 'limited' tier without ever having decided what "limited" means,
-// silently shipping an undefined (or worse, ad-hoc invented) policy.
+// This is the concrete backstop for "do not invent a numerical limit
+// yet": someone could otherwise flip a single boolean (`released: true`)
+// on a feature whose ladder promises some audience a 'limited' tier
+// without ever having decided what "limited" means, silently shipping an
+// undefined (or worse, ad-hoc invented) policy.
 // releaseSafetyViolations() is exported so tests can exercise both the
 // passing and failing case against constructed fixtures (not just the
 // live catalog); the module-load-time assertion below is the actual
@@ -365,8 +355,13 @@ const ACTIVE_ENTITLEMENT_STATUSES = new Set(["ACTIVE", "TRIALING", "GRACE"]);
 // access; they are treated as Pro-equivalent until an explicit future
 // migration, per product decision -- never rewritten in place.
 export const LEGACY_REGISTRATION_PRODUCT = "registration_full";
+// Individual was scrapped as a sellable tier (docs/PRODUCT_ACCESS.md) --
+// nothing issues this product any more, so it is not listed in
+// TIER_PRODUCT. Any pre-existing tier_individual entitlement is
+// grandfathered into Pro below rather than silently dropped to Free,
+// exactly like LEGACY_REGISTRATION_PRODUCT above.
+const LEGACY_INDIVIDUAL_PRODUCT = "tier_individual";
 export const TIER_PRODUCT: Record<Exclude<Tier, "FREE">, string> = {
-  INDIVIDUAL: "tier_individual",
   PRO: "tier_pro",
 };
 
@@ -384,10 +379,11 @@ function isEntitlementRowActive(row: EntitlementRow, now: Date): boolean {
 
 export function resolveTierFromEntitlements(rows: EntitlementRow[], now: Date = new Date()): Tier {
   const active = rows.filter((row) => isEntitlementRowActive(row, now));
-  const hasPro = active.some((row) => row.product === TIER_PRODUCT.PRO || row.product === LEGACY_REGISTRATION_PRODUCT);
+  const hasPro = active.some((row) =>
+    row.product === TIER_PRODUCT.PRO ||
+    row.product === LEGACY_REGISTRATION_PRODUCT ||
+    row.product === LEGACY_INDIVIDUAL_PRODUCT);
   if (hasPro) return "PRO";
-  const hasIndividual = active.some((row) => row.product === TIER_PRODUCT.INDIVIDUAL);
-  if (hasIndividual) return "INDIVIDUAL";
   return "FREE";
 }
 
@@ -457,21 +453,15 @@ export function resetsAtForMetric(metric: UsageMetric, date: Date = new Date()):
 // for "no lower bound" (Pro: full available history).
 export function historyWindowStart(tier: Tier, now: Date = new Date()): string | null {
   const policy = getPolicy(tier);
-  const { year, month } = bangkokParts(now);
   if (policy.historyWindow === "full") return null;
+  const { year, month } = bangkokParts(now);
   if (policy.historyWindow === "current_calendar_year") {
     return `${year}-01-01`;
   }
-  if (policy.historyWindow === "rolling_12_months") {
-    // The current month plus the eleven before it: enough to read a trend,
-    // not enough to do research with.
-    const start = new Date(Date.UTC(year, month - 1 - 11, 1));
-    return `${start.getUTCFullYear()}-${pad(start.getUTCMonth() + 1)}-01`;
-  }
-  // rolling_24_months: current month plus the 23 preceding months.
-  const startMonthIndex = month - 1 - 23; // 0-based month arithmetic
-  const startDate = new Date(Date.UTC(year, startMonthIndex, 1));
-  return `${startDate.getUTCFullYear()}-${pad(startDate.getUTCMonth() + 1)}-01`;
+  // rolling_12_months: the current month plus the eleven before it -- enough
+  // to read a trend, not enough to do research with.
+  const start = new Date(Date.UTC(year, month - 1 - 11, 1));
+  return `${start.getUTCFullYear()}-${pad(start.getUTCMonth() + 1)}-01`;
 }
 
 export function isPeriodWithinHistoryWindow(tier: Tier, period: string, now: Date = new Date()): boolean {

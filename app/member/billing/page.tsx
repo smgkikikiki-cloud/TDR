@@ -17,8 +17,8 @@ type BillingStatus = {
     provider: string;
   };
   entitlements: { product: string; status: string; valid_until: string | null }[];
-  tier: "FREE" | "INDIVIDUAL" | "PRO";
-  plans: { planCode: string; tier: string; interval: string; priceThb: number | null; configured: boolean }[];
+  tier: "FREE" | "PRO";
+  plans: { planCode: string; tier: string; interval: string; priceThbPerMonth: number; priceThbPerInterval: number; configured: boolean }[];
   hasActiveSubscription: boolean;
   checkoutConfigured: boolean;
   portalConfigured: boolean;
@@ -39,6 +39,12 @@ function date(value: string | null | undefined) {
   if (!value) return "—";
   return new Intl.DateTimeFormat("th-TH", { dateStyle: "medium" }).format(new Date(value));
 }
+
+const INTERVAL_LABEL: Record<string, string> = {
+  monthly: "รายเดือน",
+  quarterly: "ผูกมัด 3 เดือน",
+  annual: "รายปี",
+};
 
 export default function MemberBillingPage() {
   const router = useRouter();
@@ -138,9 +144,11 @@ export default function MemberBillingPage() {
                 switching is not wired up in this patch (see
                 docs/BILLING.md), so this intentionally does not offer an
                 in-app upgrade/downgrade flow yet. */}
-            {!data.hasActiveSubscription ? data.plans.filter((p) => p.interval === "monthly").map((plan) => (
+            {!data.hasActiveSubscription ? data.plans.map((plan) => (
               <button key={plan.planCode} disabled={busy || !plan.configured} onClick={() => startCheckout(plan.planCode)}>
-                {plan.configured ? `สมัคร ${plan.tier} — ฿${plan.priceThb}/เดือน` : `${plan.tier} (ยังไม่ตั้งค่า Stripe Price)`}
+                {plan.configured
+                  ? `สมัคร ${plan.tier} · ${INTERVAL_LABEL[plan.interval] || plan.interval} — ฿${plan.priceThbPerMonth}/เดือน (เรียกเก็บ ฿${plan.priceThbPerInterval} ต่อรอบ)`
+                  : `${plan.tier} · ${INTERVAL_LABEL[plan.interval] || plan.interval} (ยังไม่ตั้งค่า Stripe Price)`}
               </button>
             )) : null}
             {data.customerBound ? (
@@ -149,7 +157,6 @@ export default function MemberBillingPage() {
             <button className={styles.secondary} disabled={busy} onClick={() => location.reload()}>รีเฟรชสถานะ</button>
           </div>
           {data.hasActiveSubscription ? <p className={styles.note}>บัญชีนี้มี subscription ที่ใช้งานอยู่แล้ว ({data.subscription?.plan_code} · {data.subscription?.status}) — จัดการหรือเปลี่ยนแพ็กเกจผ่าน Billing Portal เท่านั้น เพื่อป้องกันการสมัครซ้ำซ้อน</p> : null}
-          <p className={styles.note}>แพ็กเกจรายปีอยู่ระหว่างกำหนดราคา — ยังไม่เปิดใช้งานจนกว่าจะตั้งราคาและตั้งค่า Stripe Price ID</p>
         </section>
       </>}
     </main>

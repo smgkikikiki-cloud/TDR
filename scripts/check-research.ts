@@ -41,10 +41,7 @@ check("researchAccess (the old binary preview/full gate) is gone",
   !fs.readFileSync("lib/access-policy.ts", "utf8").includes("researchAccess"));
 check("Free gets a concrete, decided number of full reads a month",
   TIER_POLICIES.FREE.researchFullMonthlyLimit, 2);
-check("Individual and Pro are not capped at Free's number", [
-  TIER_POLICIES.INDIVIDUAL.researchFullMonthlyLimit !== 2,
-  TIER_POLICIES.PRO.researchFullMonthlyLimit,
-], [true, null]);
+check("Pro is not capped at Free's number -- unlimited", TIER_POLICIES.PRO.researchFullMonthlyLimit, null);
 check("the feature is released", FEATURES.research_reports.released, true);
 check("Free's ladder state is 'limited', not 'teaser' -- it is a real product now",
   FEATURES.research_reports.stateByAudience.FREE, "limited");
@@ -90,7 +87,7 @@ check("hitting the monthly cap reads as an upgrade path, not a dead end",
 
 const pricing = fs.readFileSync("app/pricing/page.tsx", "utf8");
 check("the pricing page's Free bullet states the real number, not an invented one",
-  pricing.includes("FREE_RESEARCH_LIMIT = TIER_POLICIES.FREE.researchFullMonthlyLimit"));
+  pricing.includes("FREE_POLICY = TIER_POLICIES.FREE") && pricing.includes("FREE_POLICY.researchFullMonthlyLimit"));
 
 console.log(failed ? `\n${failed} check(s) failed` : "\nall research checks passed");
 process.exit(failed ? 1 : 0);
