@@ -419,3 +419,41 @@ def test_no_emission_reading_is_not_a_reading_of_zero():
         specs = normalize_row(row(nox_amount=blank, particulate_matters=blank)).specs
         assert "emissions.nox_g_km" not in specs
         assert "emissions.pm_g_km" not in specs
+
+
+# ---------------------------------------------------------------------------
+# When the source itself is wrong
+# ---------------------------------------------------------------------------
+
+def test_a_transposed_length_and_width_is_corrected_not_published():
+    """Eight rows file the car the wrong way round. A road vehicle is never
+    wider than it is long, so this is a certainty, not a guess."""
+    vehicle = normalize_row(row(car_length="1890", car_width="4595", car_height="1405"))
+    assert vehicle.specs["vehicle.length_mm"] == 4595
+    assert vehicle.specs["vehicle.width_mm"] == 1890
+    assert "dimensions" in vehicle.repairs
+
+
+def test_a_measurement_nothing_can_recover_is_withheld_and_reported():
+    """A 47-metre Mustang. No rule turns that into the right number, so the
+    length is not published -- and the other two measurements still are."""
+    vehicle = normalize_row(row(car_length="47874", car_width="1916", car_height="1381"))
+    assert "vehicle.length_mm" not in vehicle.specs
+    assert vehicle.specs["vehicle.width_mm"] == 1916
+    assert vehicle.specs["vehicle.height_mm"] == 1381
+    assert "vehicle.length_mm" in vehicle.repairs
+
+
+def test_an_ordinary_car_is_left_alone():
+    vehicle = normalize_row(row(car_length="4995", car_width="1850", car_height="1935"))
+    assert vehicle.specs["vehicle.length_mm"] == 4995
+    assert vehicle.specs["vehicle.width_mm"] == 1850
+    assert vehicle.specs["vehicle.height_mm"] == 1935
+    assert vehicle.repairs == {}
+
+
+def test_a_narrow_cargo_vehicle_is_not_mistaken_for_an_error():
+    """1,200mm wide is a real micro-cargo EV in this export, not a fault."""
+    vehicle = normalize_row(row(car_length="3495", car_width="1200", car_height="1860"))
+    assert vehicle.specs["vehicle.width_mm"] == 1200
+    assert vehicle.repairs == {}

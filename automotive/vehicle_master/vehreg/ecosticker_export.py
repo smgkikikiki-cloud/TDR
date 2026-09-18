@@ -117,6 +117,55 @@ def approval_date(raw: Any) -> str:
     return head
 
 
+#: What a road vehicle's body can physically measure, in millimetres. Checked
+#: against the whole 1,647-row export: once transposed rows are corrected this
+#: rejects three lengths and nothing else -- no width and no height at all.
+_DIMENSION_BANDS = {
+    "vehicle.length_mm": (2500, 8000),
+    "vehicle.width_mm": (1200, 2600),
+    "vehicle.height_mm": (1100, 3000),
+}
+
+
+def dimensions(row: dict) -> tuple[dict[str, int], dict[str, str]]:
+    """Length, width and height, with the source's own mistakes handled.
+
+    Two faults appear in the export and they need opposite treatment.
+
+    Eight rows have length and width the wrong way round -- a Civic Type R
+    filed as 1,890 long and 4,595 wide. A road vehicle is never wider than it
+    is long, so the transposition is certain rather than probable, and every
+    one of the eight is a car whose real dimensions the swap restores exactly.
+    That is a correction, not a guess.
+
+    Three rows are simply wrong in a way nothing can recover: an Alphard
+    1,950mm long, a Mustang 47,874mm long. There is no rule that turns those
+    into the right number, so the measurement is withheld and reported. A
+    missing dimension shows as a blank; a wrong one shows as a fact.
+    """
+    values = {"vehicle.length_mm": _integer(row.get("car_length")),
+              "vehicle.width_mm": _integer(row.get("car_width")),
+              "vehicle.height_mm": _integer(row.get("car_height"))}
+    repairs: dict[str, str] = {}
+
+    length, width = values["vehicle.length_mm"], values["vehicle.width_mm"]
+    if length and width and length > 0 and width > 0 and length <= width:
+        values["vehicle.length_mm"], values["vehicle.width_mm"] = width, length
+        repairs["dimensions"] = (f"ต้นทางสลับ length/width ({length}/{width}) "
+                                 f"สลับกลับเป็น {width}/{length}")
+
+    specs: dict[str, int] = {}
+    for key, value in values.items():
+        if value is None or value <= 0:
+            continue
+        low, high = _DIMENSION_BANDS[key]
+        if low <= value <= high:
+            specs[key] = value
+        else:
+            repairs[key] = f"{value} mm อยู่นอกช่วงที่เป็นไปได้ ({low}-{high}) จึงไม่บันทึก"
+    return specs, repairs
+
+
 def body_type(car_style: Any) -> Optional[str]:
     text = _text(car_style).lower()
     if not text:
@@ -397,6 +446,8 @@ class NormalizedVehicle:
     qualifiers: dict[str, dict[str, str]] = field(default_factory=dict)
     #: Source text kept for a human to read, never compared.
     notes: dict[str, str] = field(default_factory=dict)
+    #: What had to be corrected or withheld, and why, so a person can audit it.
+    repairs: dict[str, str] = field(default_factory=dict)
 
     @property
     def source_url(self) -> str:
@@ -406,9 +457,6 @@ class NormalizedVehicle:
 #: Straight number columns: export column -> (registry key, converter).
 _NUMERIC_SPECS: tuple[tuple[str, str, str], ...] = (
     ("car_seats", "vehicle.seats", "int"),
-    ("car_length", "vehicle.length_mm", "int"),
-    ("car_width", "vehicle.width_mm", "int"),
-    ("car_height", "vehicle.height_mm", "int"),
     ("total_weight", "vehicle.declared_total_weight_kg", "int"),
     ("model_year", "vehicle.model_year", "int"),
     ("capacity_cylinder", "engine.displacement_cc", "int"),
@@ -521,6 +569,10 @@ def normalize_row(row: dict) -> NormalizedVehicle:
     volts = _number(row.get("nominal_voltage"))
     if charge_ah and volts and charge_ah > 0 and volts > 0:
         specs["battery.gross_capacity_kwh"] = round(charge_ah * volts / 1000, 2)
+
+    body_specs, repairs = dimensions(row)
+    specs.update(body_specs)
+    vehicle.repairs.update(repairs)
 
     regulations = un_regulations(row)
     if regulations:

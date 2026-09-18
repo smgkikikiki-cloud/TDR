@@ -18,6 +18,7 @@ worked:
   applied     one line per row that became catalogue content
   unresolved  one line per row that did not, with the reason in Thai
   dropped     source values the registry refused, counted by field
+  repaired    rows whose source measurements were corrected or withheld
 
 The unresolved report is the point of the whole exercise. A row nobody can
 place is not an error to be suppressed: it is a brand, a model or a generation
@@ -97,6 +98,27 @@ def applied_report(plan: ImportPlan, *, source: str, observed_at: str) -> dict[s
     }
 
 
+def repaired_report(plan: ImportPlan, *, source: str) -> dict[str, Any]:
+    """Every source value this run corrected or refused to publish.
+
+    A silent correction is indistinguishable from a silent error, so each one
+    says what the source stated and what was done about it.
+    """
+    rows = [{
+        "source_id": row.source_id,
+        "brand": row.brand_raw,
+        "model": row.model_raw,
+        "eco_url": row.vehicle.source_url,
+        "repairs": row.vehicle.repairs,
+    } for row in plan.rows if row.vehicle.repairs]
+    return {
+        "schema_version": 1,
+        "generated_from": source,
+        "count": len(rows),
+        "rows": sorted(rows, key=lambda row: (row["brand"], row["model"])),
+    }
+
+
 def dropped_report(plan: ImportPlan) -> dict[str, int]:
     counts: Counter[str] = Counter()
     for row in plan.rows:
@@ -155,6 +177,8 @@ def main(argv=None) -> int:
     _write(report_dir / f"{stem}_applied.json",
            applied_report(plan, source=args.export.name, observed_at=args.observed_at))
     _write(report_dir / f"{stem}_dropped.json", dropped_report(plan))
+    _write(report_dir / f"{stem}_repaired.json",
+           repaired_report(plan, source=args.export.name))
 
     batches = batches_from_plan(
         plan, registry, year=args.year, actor=args.actor,
@@ -163,6 +187,9 @@ def main(argv=None) -> int:
     print(f"rows {summary['rows']}  matched {summary[MATCHED]}  "
           f"new trims {summary[NEW_TRIM]}  unresolved {summary[UNRESOLVED]}")
     print(f"spec facts {summary['spec_facts']} in {len(batches)} batches")
+    repaired = sum(1 for row in plan.rows if row.vehicle.repairs)
+    if repaired:
+        print(f"source measurements corrected or withheld on {repaired} rows")
     print(f"reports -> {report_dir}/{stem}_*.json")
 
     if not args.apply:
