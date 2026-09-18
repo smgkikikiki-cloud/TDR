@@ -15,9 +15,9 @@ export default async function Search({ searchParams }: { searchParams: Promise<{
   return <>
     <section className="sfPageHead">
       <div>
-        <div className="sfEyebrow">SEARCH</div>
+        <div className="sfEyebrow">ค้นหา</div>
         <h1>ค้นหาฐานข้อมูล</h1>
-        <p>ค้นหารุ่นรถและแบรนด์จาก Vehicle Master ชุดเดียว</p>
+        
       </div>
       {q ? (
         <div className="sfPageHeadAside">
@@ -59,7 +59,6 @@ export default async function Search({ searchParams }: { searchParams: Promise<{
     ) : (
       <div className="sfEmpty" style={{ marginTop: 26 }}>
         <b>พิมพ์คำค้นเพื่อเริ่มค้นฐานข้อมูล</b>
-        <span>ค้นได้ทั้งชื่อรุ่นรถและแบรนด์</span>
       </div>
     )}
   </>;

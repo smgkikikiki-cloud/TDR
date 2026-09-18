@@ -73,7 +73,7 @@ export default async function BrandPage({ params }: { params: Promise<{ slug: st
     {events.length ? (
       <section className="sfBlock">
         <div className="sfZoneHead">
-          <div><div className="sfEyebrow ink">LATEST</div><h2>อัปเดตล่าสุด</h2></div>
+          <div><div className="sfEyebrow ink">อัปเดตล่าสุด</div><h2>อัปเดตล่าสุด</h2></div>
           <Link href="/news">ข่าวทั้งหมด →</Link>
         </div>
         <div className="sfNewsList">

@@ -12,6 +12,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import { resolveTrimEditorFields, type TrimEditorField } from "./trim-editor-fields.ts";
 
 export type SpecValueType = "NUMBER" | "BOOLEAN" | "ENUM" | "TEXT" | "SET";
 export type SpecComparisonRule =
@@ -85,6 +86,20 @@ export function loadSpecFieldRegistry(year: number): SpecFieldDefinition[] {
   })).filter((field: SpecFieldDefinition) => field.key && field.group);
   cache.set(resolvedYear, fields);
   return fields;
+}
+
+const editorFieldCache = new Map<number, TrimEditorField[]>();
+
+/** The trim editor's resolved field catalog for a release year. Lives here
+ * because this is the module that reads the registry file; the catalog itself
+ * (lib/trim-editor-fields.ts) stays pure so the editor form can share its
+ * validation. */
+export function trimEditorFields(year: number): TrimEditorField[] {
+  const cached = editorFieldCache.get(year);
+  if (cached) return cached;
+  const resolved = resolveTrimEditorFields(loadSpecFieldRegistry(year));
+  editorFieldCache.set(year, resolved);
+  return resolved;
 }
 
 export function specFieldByKey(year: number, key: string): SpecFieldDefinition | null {

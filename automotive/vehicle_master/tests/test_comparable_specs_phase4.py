@@ -56,7 +56,10 @@ def payload(*facts):
 
 def test_registry_and_c_crossover_cohort_are_closed_and_valid():
     registry = SpecRegistry.load()
-    assert len(registry.fields) == 60
+    # 60 originally; +36 to accept the monthly ECO Sticker export, which
+    # carried fuel consumption, emissions standards, equipment booleans and
+    # the EV charging/warranty facts the registry had no home for.
+    assert len(registry.fields) == 96
     assert set(registry.profiles) == {
         "c_crossover_core", "c_crossover_safety", "c_crossover_comfort",
         "c_crossover_fitment",

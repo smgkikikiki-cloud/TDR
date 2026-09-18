@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { NavLinks } from "@/components/NavLinks";
+import { MobileNav } from "@/components/MobileNav";
+import { memberEntry } from "@/lib/navigation";
 
 export function Header() {
   return (
@@ -10,6 +12,13 @@ export function Header() {
           <span className="brandText">DEVELOPMENT <b>REPORT</b></span>
           <span className="productTag">AUTOMOTIVE INTELLIGENCE</span>
         </Link>
+        {/* A padlock in a box advertising a section that is already in the nav
+            is decoration. The only thing a header needs on the right is the
+            way into an account. */}
+        <Link className="headerAccount" href={memberEntry.href}>{memberEntry.label}</Link>
+        {/* Below 700px the nav row is replaced by this drawer: a scrollable
+            row gives no hint that more sections exist off-screen. */}
+        <MobileNav />
       </div>
       <div className="navline">
         <NavLinks />

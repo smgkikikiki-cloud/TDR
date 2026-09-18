@@ -65,7 +65,7 @@ export default function ComparePage() {
   return <div className="comparePage">
     <section className="compareHero">
       <div>
-        <div className="sfEyebrow">VEHICLE COMPARE</div>
+        <div className="sfEyebrow">เปรียบเทียบสเปก</div>
         <h1>เทียบรถแบบตรงรุ่นย่อย</h1>
       </div>
       <Link href="/models">กลับไปดูแคตตาล็อก →</Link>
@@ -97,7 +97,7 @@ export default function ComparePage() {
 
     {status === "quota" ? <div className="compareNotice">{message} — อัปเกรดบัญชีเพื่อเทียบรถไม่จำกัดต่อวัน <Link href="/pricing">ดูแพ็กเกจ</Link></div> : null}
     {status === "error" ? <div className="compareNotice">{message}</div> : null}
-    {result?.missing_selection ? <div className="compareNotice">มีรุ่นที่เลือกไว้ซึ่งไม่อยู่ใน active canonical release แล้ว ระบบจึงไม่นำมาเทียบ</div> : null}
+    {result?.missing_selection ? <div className="compareNotice">มีรุ่นที่เลือกไว้ซึ่งไม่อยู่ในฐานข้อมูลแล้ว ระบบจึงไม่นำมาเทียบ</div> : null}
 
     {result && result.selected.length >= 2 ? (
       <section className="compareTableWrap" aria-label="ตารางเปรียบเทียบรถ">

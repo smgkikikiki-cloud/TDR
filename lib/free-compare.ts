@@ -30,9 +30,22 @@ export type FreeCompareTrim = {
   vehicle_warranty?: string | null;
   price_baht?: number | string | null;
   campaign_quote?: any;
+  /** `payload.comparable_specs` as the release published it: SpecLedger.resolved(),
+   *  one row per field that has a fact. Absent on a trim nobody has filed specs
+   *  for yet, which is most of them until an import runs. */
+  comparable_specs?: ResolvedSpec[] | null;
 };
 
-export type CompareRowKey =
+/** One resolved fact, exactly as vehreg/comparable_specs.py writes it. */
+export type ResolvedSpec = {
+  field_key?: string | null;
+  value?: unknown;
+  value_state?: string | null;
+  unit?: string | null;
+  qualifiers?: Record<string, unknown> | null;
+};
+
+export type BuiltinCompareRowKey =
   | "price"
   | "campaign"
   | "segment"
@@ -54,6 +67,11 @@ export type CompareRowKey =
   | "production_type"
   | "production_country"
   | "warranty";
+
+/** A row is either one of the built-in rows above -- which draw on model-level
+ *  and price data the spec ledger does not carry -- or a comparable-spec field,
+ *  named by its registry key. */
+export type CompareRowKey = BuiltinCompareRowKey | `spec:${string}`;
 
 export type CompareRowDefinition = {
   key: CompareRowKey;
@@ -143,8 +161,89 @@ function power(trim: FreeCompareTrim): string | null {
   return kw;
 }
 
-export function compareValue(trim: FreeCompareTrim, key: CompareRowKey): string | null {
-  switch (key) {
+/** Registry keys that say the same thing as a built-in row.
+ *
+ *  Both sources are real: the MarketTrim column is what the catalogue has
+ *  always carried, and the ledger fact is what a dated, sourced observation
+ *  put there. Showing both would print one car's engine size twice under two
+ *  labels, so the ledger wins where it has an answer and the column is the
+ *  fallback -- one row either way. */
+const SPEC_BACKED_ROWS: Partial<Record<BuiltinCompareRowKey, string>> = {
+  powertrain: "identity.powertrain",
+  engine_cc: "engine.displacement_cc",
+  battery_kwh: "battery.catalog_capacity_kwh",
+  power: "powertrain.max_power_kw",
+  torque_nm: "powertrain.max_torque_nm",
+  drivetrain: "powertrain.drivetrain",
+  transmission: "powertrain.transmission",
+  range: "ev.rated_range_km",
+  length_mm: "vehicle.length_mm",
+  width_mm: "vehicle.width_mm",
+  height_mm: "vehicle.height_mm",
+  wheelbase_mm: "vehicle.wheelbase_mm",
+  ground_clearance_mm: "vehicle.ground_clearance_mm",
+  seats: "vehicle.seats",
+};
+
+function resolvedSpec(trim: FreeCompareTrim, fieldKey: string): ResolvedSpec | null {
+  const rows = trim.comparable_specs;
+  if (!Array.isArray(rows)) return null;
+  return rows.find((row) => row && row.field_key === fieldKey) || null;
+}
+
+/** A fact's value as a reader sees it, or null.
+ *
+ *  Only KNOWN carries a value. The other states are the ledger saying, on the
+ *  record, that a field does not apply to this car or that nobody has found
+ *  the number yet -- neither is a value, and printing "UNKNOWN" in a
+ *  comparison cell is worse than leaving it blank, which already means
+ *  "we do not have this". */
+export function formatSpecValue(spec: ResolvedSpec | null,
+                                definition?: { valueType?: string; canonicalUnit?: string;
+                                               displayPrecision?: number | null } | null): string | null {
+  if (!spec || (spec.value_state && spec.value_state !== "KNOWN")) return null;
+  const value = spec.value;
+  if (value === null || value === undefined || value === "") return null;
+
+  let text: string;
+  if (typeof value === "boolean") {
+    text = value ? "มี" : "ไม่มี";
+  } else if (Array.isArray(value)) {
+    if (!value.length) return null;
+    text = value.join(" · ");
+  } else if (typeof value === "number") {
+    // No definition means no rounding. Defaulting to whole numbers would turn
+    // a 60.2 kWh battery into a 60 kWh one for any field this build's registry
+    // does not describe -- quietly changing the figure rather than showing it.
+    const digits = definition?.displayPrecision ?? 20;
+    text = value.toLocaleString("th-TH", { maximumFractionDigits: digits });
+    const unit = spec.unit || definition?.canonicalUnit || "";
+    if (unit) text = `${text} ${unit}`;
+  } else {
+    text = String(value);
+  }
+
+  // A range measured on NEDC and a range measured on WLTP are not the same
+  // claim, so the basis travels with the number rather than being dropped to
+  // make the cell tidier.
+  const basis = spec.qualifiers?.measurement_basis;
+  if (basis) text = `${text} (${String(basis)})`;
+  return text;
+}
+
+export function compareValue(trim: FreeCompareTrim, key: CompareRowKey,
+                             definitions?: Map<string, { valueType?: string; canonicalUnit?: string;
+                                                         displayPrecision?: number | null }>): string | null {
+  if (key.startsWith("spec:")) {
+    const fieldKey = key.slice(5);
+    return formatSpecValue(resolvedSpec(trim, fieldKey), definitions?.get(fieldKey));
+  }
+  const backing = SPEC_BACKED_ROWS[key as BuiltinCompareRowKey];
+  if (backing) {
+    const fromLedger = formatSpecValue(resolvedSpec(trim, backing), definitions?.get(backing));
+    if (fromLedger !== null) return fromLedger;
+  }
+  switch (key as BuiltinCompareRowKey) {
     case "price": return baht(trim.price_baht);
     case "campaign": return activeCampaign(trim);
     case "segment": return trim.segment || null;
@@ -172,22 +271,118 @@ export function compareValue(trim: FreeCompareTrim, key: CompareRowKey): string 
   }
 }
 
-export function rowHasAnyValue(trims: FreeCompareTrim[], key: CompareRowKey): boolean {
-  return trims.some((trim) => compareValue(trim, key) !== null);
+export function rowHasAnyValue(trims: FreeCompareTrim[], key: CompareRowKey,
+                               definitions?: SpecDefinitionIndex): boolean {
+  return trims.some((trim) => compareValue(trim, key, definitions) !== null);
 }
 
-export function rowIsDifferent(trims: FreeCompareTrim[], key: CompareRowKey): boolean {
+export function rowIsDifferent(trims: FreeCompareTrim[], key: CompareRowKey,
+                               definitions?: SpecDefinitionIndex): boolean {
   if (trims.length < 2) return false;
-  const values = trims.map((trim) => compareValue(trim, key) ?? "__MISSING__");
+  const values = trims.map((trim) => compareValue(trim, key, definitions) ?? "__MISSING__");
   return new Set(values).size > 1;
 }
 
-export function visibleCompareGroups(trims: FreeCompareTrim[], differencesOnly = false) {
-  return FREE_COMPARE_GROUPS
+/** What a comparable-spec field needs to be rendered and grouped. Structurally
+ *  the subset of lib/spec-field-registry.ts's SpecFieldDefinition this module
+ *  uses, declared here so free-compare stays readable without fs access. */
+export type CompareSpecField = {
+  key: string;
+  group: string;
+  labelTh: string;
+  labelEn?: string;
+  valueType?: string;
+  canonicalUnit?: string;
+  displayPrecision?: number | null;
+};
+
+export type SpecDefinitionIndex = Map<string, CompareSpecField>;
+
+/** Registry group -> the heading a reader sees, in the order the table shows
+ *  them. A group missing from here still appears, under its own name: a new
+ *  field should show up in the comparison the day it is defined, not the day
+ *  somebody remembers to translate its heading. */
+const SPEC_GROUP_TITLES: Record<string, string> = {
+  identity: "ระบบขับเคลื่อน",
+  powertrain: "เครื่องยนต์และการส่งกำลัง",
+  battery: "แบตเตอรี่",
+  charging: "การชาร์จ",
+  efficiency: "อัตราสิ้นเปลืองและมลพิษ",
+  performance: "สมรรถนะ",
+  dimensions: "ขนาดตัวถัง",
+  utility: "การบรรทุก",
+  chassis: "ช่วงล่าง ล้อ และยาง",
+  safety: "ความปลอดภัยและ ADAS",
+  comfort: "ความสะดวกสบาย",
+  technology: "เทคโนโลยีและการเชื่อมต่อ",
+  manufacturing: "ภาษีและการผลิต",
+};
+
+const SPEC_GROUP_ORDER = Object.keys(SPEC_GROUP_TITLES);
+
+/** Every registry field that a built-in row already shows. */
+const COVERED_BY_BUILTIN = new Set(Object.values(SPEC_BACKED_ROWS));
+
+export function indexSpecFields(fields: CompareSpecField[]): SpecDefinitionIndex {
+  return new Map(fields.map((field) => [field.key, field]));
+}
+
+/** The built-in groups, then one group per registry group.
+ *
+ *  The registry is the source of which fields exist and what they are called,
+ *  so a field added to the canonical registry is comparable here without this
+ *  file changing. Fields a built-in row already covers are skipped rather than
+ *  printed twice. */
+export function compareGroupDefinitions(fields: CompareSpecField[] = []): CompareGroupDefinition[] {
+  const groups: CompareGroupDefinition[] = FREE_COMPARE_GROUPS.map((group) => ({
+    ...group, rows: [...group.rows],
+  }));
+  const byGroup = new Map<string, CompareRowDefinition[]>();
+  for (const field of fields) {
+    if (COVERED_BY_BUILTIN.has(field.key)) continue;
+    const bucket = byGroup.get(field.group) || [];
+    bucket.push({ key: `spec:${field.key}`, label: field.labelTh || field.labelEn || field.key });
+    byGroup.set(field.group, bucket);
+  }
+  const ordered = [
+    ...SPEC_GROUP_ORDER.filter((name) => byGroup.has(name)),
+    ...[...byGroup.keys()].filter((name) => !SPEC_GROUP_TITLES[name]).sort(),
+  ];
+  for (const name of ordered) {
+    groups.push({ title: SPEC_GROUP_TITLES[name] || name, rows: byGroup.get(name) || [] });
+  }
+  return groups;
+}
+
+/** One trim's comparable specs, grouped and formatted the way the comparison
+ *  shows them.
+ *
+ *  The trim page and the comparison are the same question asked of one car
+ *  instead of four, so they share the grouping, the headings and the
+ *  formatting rather than growing a second copy that drifts. Empty groups are
+ *  dropped; a field with no fact is simply absent, which is what a blank cell
+ *  already means everywhere else on the site. */
+export function specGroupsForTrim(trim: FreeCompareTrim, fields: CompareSpecField[] = []) {
+  const definitions = indexSpecFields(fields);
+  return compareGroupDefinitions(fields)
+    .map((group) => ({
+      title: group.title,
+      rows: group.rows
+        .map((row) => ({ key: row.key, label: row.label,
+                         value: compareValue(trim, row.key, definitions) }))
+        .filter((row) => row.value !== null),
+    }))
+    .filter((group) => group.rows.length > 0);
+}
+
+export function visibleCompareGroups(trims: FreeCompareTrim[], differencesOnly = false,
+                                     fields: CompareSpecField[] = []) {
+  const definitions = indexSpecFields(fields);
+  return compareGroupDefinitions(fields)
     .map((group) => ({
       ...group,
-      rows: group.rows.filter((row) => rowHasAnyValue(trims, row.key)
-        && (!differencesOnly || rowIsDifferent(trims, row.key))),
+      rows: group.rows.filter((row) => rowHasAnyValue(trims, row.key, definitions)
+        && (!differencesOnly || rowIsDifferent(trims, row.key, definitions))),
     }))
     .filter((group) => group.rows.length > 0);
 }

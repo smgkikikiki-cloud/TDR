@@ -23,7 +23,7 @@ from typing import Any, Optional
 
 from .catalog import Catalog, CatalogError, DATA_DIR, DEFAULT_YEAR, year_dir
 from .comparable_specs import ComparableSpecError, SpecLedger, SpecRegistry
-from .normalize import slug
+from .normalize import slug, trim_identity, trim_local_id
 from .pricing import PriceLedger, PricingError, PriceType
 from .entities import to_jsonable
 from .product import close_price, correct_price, save_campaign
@@ -145,6 +145,32 @@ def _existing_target_matches(path: Path, payload: dict[str, Any]) -> bool:
         return _load_json(path) == payload
     except CanonicalWriteError:
         return False
+
+
+def _fact_filename(fact_id: str) -> str:
+    """A filesystem-safe, collision-free stem for one spec fact.
+
+    A fact_id carries ':' and '.' separators and can be long, so it is folded
+    to a safe stem; the sha suffix keeps two ids that fold together -- or one
+    that had to be truncated -- in separate files.
+    """
+    safe = re.sub(r"[^A-Za-z0-9_.-]", "_", fact_id)
+    digest = hashlib.sha256(fact_id.encode("utf-8")).hexdigest()[:12]
+    return f"canonical_{safe[:120]}_{digest}"
+
+
+def _spec_facts_on_disk(path: Path) -> Optional[list[dict[str, Any]]]:
+    """The facts a spec command wrote last time, or None if it never ran."""
+    if not path.is_file():
+        return None
+    try:
+        payload = _load_json(path)
+    except CanonicalWriteError:
+        return None
+    facts = payload.get("facts") if isinstance(payload, dict) else None
+    if not isinstance(facts, list) or not all(isinstance(row, dict) for row in facts):
+        return None
+    return facts
 
 
 def _state_dir(data_dir: Path | str, year: int) -> Path:
@@ -336,11 +362,116 @@ class CanonicalWritePipeline:
 
     def __init__(self, data_dir: Path | str = DATA_DIR) -> None:
         self.data_dir = Path(data_dir)
+        # One instance writes one batch, so what it reads it can keep.
+        #
+        # Without this, every APPEND_SPEC re-read the whole catalogue and every
+        # spec fact file three times over. That is unnoticeable for an admin
+        # editing one trim and quadratic for a bulk import: 36,000 facts meant
+        # roughly two billion file reads, and the monthly ECO Sticker import
+        # simply could not finish. The caches below are per instance and are
+        # updated by this pipeline's own writes, so a command still sees
+        # everything the commands before it in the same batch did.
+        self._catalog_cache: dict[int, Catalog] = {}
+        self._registry_cache: dict[int, SpecRegistry] = {}
+        #: year -> trim_id -> {fact file -> payload}
+        self._fact_index: dict[int, dict[str, dict[Path, dict[str, Any]]]] = {}
+        #: year -> command_id -> revision row, for the replay check every
+        #: command starts with.
+        self._revision_index: dict[int, dict[str, dict[str, Any]]] = {}
+
+    def _catalog(self, year: int) -> Catalog:
+        if year not in self._catalog_cache:
+            self._catalog_cache[year] = Catalog.load(self.data_dir, year)
+        return self._catalog_cache[year]
+
+    def _registry(self, year: int) -> SpecRegistry:
+        if year not in self._registry_cache:
+            self._registry_cache[year] = SpecRegistry.load(self.data_dir, year)
+        return self._registry_cache[year]
+
+    def _facts_by_trim(self, year: int) -> dict[str, dict[Path, dict[str, Any]]]:
+        """Every spec fact on disk, indexed by the trim it describes.
+
+        Read once per instance. A fact about one trim can never conflict with a
+        fact about another -- SpecLedger.validate groups by
+        (trim_id, field_key, qualifier, start) -- so a command only ever needs
+        its own trim's facts, and reading the other 36,000 to prove that was
+        the whole cost.
+        """
+        if year in self._fact_index:
+            return self._fact_index[year]
+        index: dict[str, dict[Path, dict[str, Any]]] = {}
+        root = Path(self.data_dir) / str(year) / "product" / "comparable_specs" / "facts"
+        if root.is_dir():
+            for path in sorted(root.glob("*.json")):
+                try:
+                    payload = _load_json(path)
+                except CanonicalWriteError:
+                    continue
+                for fact in (payload.get("facts") or []) if isinstance(payload, dict) else []:
+                    if isinstance(fact, dict):
+                        index.setdefault(str(fact.get("trim_id") or ""), {})[path] = payload
+        self._fact_index[year] = index
+        return index
+
+    def _trim_ledger(self, year: int, trim_id: str, *, skip: Optional[Path] = None,
+                     extra: Optional[dict[str, Any]] = None) -> SpecLedger:
+        """A ledger holding one trim's facts, optionally without one file and
+        with one staged payload added."""
+        ledger = SpecLedger(self._registry(year), year, catalog=self._catalog(year))
+        for path, payload in sorted(self._facts_by_trim(year).get(trim_id, {}).items()):
+            if skip is not None and path == skip:
+                continue
+            ledger.add_payload(payload, source=str(path))
+        if extra is not None:
+            ledger.add_payload(extra, source="<staged>")
+        return ledger
+
+    def _remember_fact_file(self, year: int, path: Path, payload: dict[str, Any]) -> None:
+        """Keep the index true after this pipeline writes a fact file."""
+        index = self._facts_by_trim(year)
+        for facts in index.values():
+            facts.pop(path, None)
+        for fact in (payload.get("facts") or []):
+            if isinstance(fact, dict):
+                index.setdefault(str(fact.get("trim_id") or ""), {})[path] = payload
+
+    def _forget_catalog(self, year: int) -> None:
+        """A command that rewrote a model file invalidates the loaded catalogue."""
+        self._catalog_cache.pop(year, None)
+
+    def _replayed(self, year: int, command_id: str) -> Optional[dict[str, Any]]:
+        """The revision this command already wrote, if it has run before.
+
+        Every command begins with this question, and answering it used to mean
+        reading and parsing the entire revision log -- one JSON object per edit
+        the catalogue has ever taken. At 18,000 revisions that is 18,000 parses
+        to answer a dictionary lookup, per command, and it grows with every
+        command that answers it. The log is read once per instance and kept as
+        an index that this pipeline's own writes append to.
+
+        Later rows win, matching the reversed scan this replaces: a command_id
+        is not supposed to repeat, but if it does, the most recent revision is
+        the one that describes the tree.
+        """
+        if year not in self._revision_index:
+            index: dict[str, dict[str, Any]] = {}
+            for row in _revision_rows(self.data_dir, year):
+                command = row.get("command_id")
+                if command:
+                    index[str(command)] = row
+            self._revision_index[year] = index
+        return self._revision_index[year].get(command_id)
+
+    def _remember_revision(self, year: int, revision: dict[str, Any]) -> None:
+        command_id = revision.get("command_id")
+        if command_id and year in self._revision_index:
+            self._revision_index[year][str(command_id)] = revision
 
     def apply(self, raw_command: dict[str, Any] | CanonicalWriteCommand) -> WriteResult:
         command = (raw_command if isinstance(raw_command, CanonicalWriteCommand)
                    else CanonicalWriteCommand.from_dict(raw_command))
-        replay = _find_revision(self.data_dir, command.year, command.command_id)
+        replay = self._replayed(command.year, command.command_id)
         if replay:
             repaired = _repair_replay_audit(self.data_dir, command.year, replay)
             replay_files = tuple(
@@ -400,6 +531,7 @@ class CanonicalWritePipeline:
         }
         state = _state_dir(self.data_dir, command.year)
         _append_jsonl(state / "revisions.jsonl", revision)
+        self._remember_revision(command.year, revision)
         event = {
             "schema_version": 1,
             "event_id": f"{revision_id}:{topic}",
@@ -493,9 +625,12 @@ class CanonicalWritePipeline:
                 if not full.startswith(prefix):
                     raise CanonicalWriteError("trim canonical_id has wrong parent")
                 incoming["id"] = full[len(prefix):]
+            # Same identity rule the catalog loader uses, so an incoming trim
+            # matches the row it is meant to update.
             _upsert_by_identity(
                 generation["trims"], incoming,
-                lambda row: slug(row.get("id") or f"{row.get('name','')} {row.get('powertrain','')}")
+                lambda row: trim_local_id(row.get("id"), row.get("name", ""),
+                                          row.get("powertrain", ""))
             )
         payloads[brand_id] = brand_payload
         catalog = _validate_payloads(payloads, command.year)
@@ -504,6 +639,7 @@ class CanonicalWritePipeline:
         after = _catalog_snapshot(catalog, canonical_id)
         target = year_dir(self.data_dir, command.year) / f"{brand_id}.json"
         _atomic_json(target, brand_payload)
+        self._forget_catalog(command.year)
         return "catalog", "model", canonical_id, before, after, (str(target),)
 
     def _withdraw_model(self, command: CanonicalWriteCommand):
@@ -529,6 +665,7 @@ class CanonicalWritePipeline:
         after = _catalog_snapshot(catalog, model_id)
         target = year_dir(self.data_dir, command.year) / f"{brand_id}.json"
         _atomic_json(target, brand_payload)
+        self._forget_catalog(command.year)
         return "catalog", "model", model_id, before, after, (str(target),)
 
     def _append_price(self, command: CanonicalWriteCommand):
@@ -537,7 +674,7 @@ class CanonicalWritePipeline:
         if not trim_id:
             raise CanonicalWriteError("APPEND_PRICE requires trim_id/canonical_id")
         record["trim_id"] = trim_id
-        catalog = Catalog.load(self.data_dir, command.year)
+        catalog = self._catalog(command.year)
         if trim_id not in catalog.trims:
             raise CanonicalWriteError(f"unknown MarketTrim {trim_id!r}")
         ledger = PriceLedger.load(self.data_dir, year=command.year, catalog=catalog)
@@ -563,7 +700,7 @@ class CanonicalWritePipeline:
             raise CanonicalWriteError("CORRECT_PRICE requires trim_id/canonical_id")
         if not command.reason:
             raise CanonicalWriteError("CORRECT_PRICE requires command.reason")
-        catalog = Catalog.load(self.data_dir, command.year)
+        catalog = self._catalog(command.year)
         if trim_id not in catalog.trims:
             raise CanonicalWriteError(f"unknown MarketTrim {trim_id!r}")
         before = _price_snapshot(self.data_dir, command.year, trim_id)
@@ -602,7 +739,7 @@ class CanonicalWritePipeline:
         ends = str(payload.get("ends") or "")
         if not ends:
             raise CanonicalWriteError("CLOSE_PRICE requires ends")
-        catalog = Catalog.load(self.data_dir, command.year)
+        catalog = self._catalog(command.year)
         if trim_id not in catalog.trims:
             raise CanonicalWriteError(f"unknown MarketTrim {trim_id!r}")
         before = _price_snapshot(self.data_dir, command.year, trim_id)
@@ -650,25 +787,77 @@ class CanonicalWritePipeline:
     def _append_spec(self, command: CanonicalWriteCommand):
         fact = deepcopy(command.payload)
         trim_id = command.canonical_id or str(fact.get("trim_id") or "")
+        # A trim being created by an earlier command in this same batch has no
+        # canonical_id the author could have known: it is derived by a rule
+        # that folds Thai marks and strips corporate words, so it is not
+        # reproducible outside this module. Such a command names the trim by
+        # reference instead and we resolve it here, with the one rule.
+        reference = fact.pop("trim_ref", None)
+        if reference is not None:
+            if not isinstance(reference, dict):
+                raise CanonicalWriteError("APPEND_SPEC trim_ref must be an object")
+            generation_id = str(reference.get("generation_id") or "")
+            if not generation_id:
+                raise CanonicalWriteError("APPEND_SPEC trim_ref requires generation_id")
+            if not (reference.get("id") or reference.get("name")):
+                raise CanonicalWriteError("APPEND_SPEC trim_ref requires id or name")
+            resolved = trim_identity(generation_id, reference.get("id"),
+                                     reference.get("name", ""),
+                                     reference.get("powertrain", ""))
+            if trim_id and trim_id != resolved:
+                raise CanonicalWriteError(
+                    f"APPEND_SPEC trim_ref resolves to {resolved!r}, "
+                    f"which contradicts trim_id {trim_id!r}")
+            trim_id = resolved
         if not trim_id:
             raise CanonicalWriteError("APPEND_SPEC requires trim_id/canonical_id")
         fact["trim_id"] = trim_id
-        catalog = Catalog.load(self.data_dir, command.year)
-        registry = SpecRegistry.load(self.data_dir, command.year)
-        ledger = SpecLedger.load(self.data_dir, command.year, registry=registry, catalog=catalog)
-        before = [to_jsonable(row) for row in ledger.facts if row.trim_id == trim_id]
-        ledger.add_payload({"schema_version": 1, "facts": [fact]}, source=f"<command {command.command_id}>")
-        problems = ledger.validate()
+        field_key = str(fact.get("field_key") or "")
+        if not field_key:
+            raise CanonicalWriteError("APPEND_SPEC requires field_key")
+        # A caller that cannot know the trim_id cannot compose a fact_id out of
+        # it either, so the same rule that resolved the trim derives the id:
+        # one fact per trim per field, which is exactly what the editor's one
+        # box per field means.
+        if not str(fact.get("fact_id") or "").strip():
+            fact["fact_id"] = f"admin:{trim_id}:{field_key}"
+
+        catalog = self._catalog(command.year)
+        root = Path(self.data_dir) / str(command.year) / "product" / "comparable_specs" / "facts"
+        target = root / f"{_fact_filename(str(fact['fact_id']))}.json"
+        target_payload = {"schema_version": 1, "facts": [fact]}
+
+        # The file is named after the fact it holds, not the command that
+        # happened to write it, so re-stating a fact revises it in place. That
+        # is what makes correcting a value ordinary: a second file for the same
+        # field would be a second fact with the same start date and a different
+        # value, which SpecLedger.validate rejects as a conflict, forever. A
+        # file holding some *other* fact is a genuine collision and still stops.
+        prior = _spec_facts_on_disk(target)
+        revises_own = prior is not None and \
+            [row.get("fact_id") for row in prior] == [fact["fact_id"]]
+        if target.exists() and not revises_own \
+                and not _existing_target_matches(target, target_payload):
+            raise CanonicalWriteError("spec fact file already exists for another fact; manual recovery required")
+
+        # Only this trim's facts are read. Validation groups by
+        # (trim_id, field_key, qualifier, start), so another trim's facts can
+        # neither create nor hide a conflict here -- and a problem sitting in
+        # some unrelated trim is not this command's to refuse, which is the
+        # one behaviour that changes: the whole-tree read used to fail an edit
+        # over data it was not touching.
+        before = [to_jsonable(row) for row in self._trim_ledger(command.year, trim_id).facts]
+        staged = self._trim_ledger(command.year, trim_id,
+                                   skip=target if revises_own else None,
+                                   extra={"schema_version": 1, "facts": [fact]})
+        problems = staged.validate()
         if problems:
             raise CanonicalWriteError("spec validation failed: " + "; ".join(problems))
-        root = Path(self.data_dir) / str(command.year) / "product" / "comparable_specs" / "facts"
-        target = root / f"canonical_{command.command_id}.json"
-        target_payload = {"schema_version": 1, "facts": [fact]}
-        if target.exists() and not _existing_target_matches(target, target_payload):
-            raise CanonicalWriteError("command file already exists without a revision; manual recovery required")
         _atomic_json(target, target_payload)
-        after_ledger = SpecLedger.load(self.data_dir, command.year, registry=registry, catalog=catalog)
-        after = [to_jsonable(row) for row in after_ledger.facts if row.trim_id == trim_id]
+        self._remember_fact_file(command.year, target, target_payload)
+        # The staged ledger is, by construction, the tree as it now stands for
+        # this trim, so the post-write state does not have to be read back.
+        after = [to_jsonable(row) for row in staged.facts]
         return "spec", "market_trim", trim_id, before, after, (str(target),)
 
 

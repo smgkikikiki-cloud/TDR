@@ -4,15 +4,14 @@ import { loadOwnedProposal, confirmEditProposal } from "@/app/admin/vehicle-edit
 
 const KIND_LABEL: Record<string, string> = {
   MODEL_GENERATION: "Model / Generation edit",
-  MARKET_TRIM: "MarketTrim create/edit",
-  SPEC_DRAFT: "Spec draft (multi-field)",
+  TRIM: "Trim edit",
 };
 
-// null/undefined and "" are shown as distinct, explicit labels rather than a
-// bare "—": a diff row for a cleared optional field (see
-// lib/canonical-command-builder.ts's MarketTrimFields doc comment on the
-// three-state clear/set/untouched contract) must read as an obvious,
-// deliberate unset, not as if the row were simply empty/uninteresting.
+// The builder already renders each side as one readable cell -- "442 km
+// (NEDC)", "—" for an unknown -- so the review shows what the admin typed
+// rather than a backend value. This only has to survive the odd row that is
+// not a trim field (source_refs), and an explicit unset has to read as a
+// deliberate clear rather than as an uninteresting blank.
 function formatValue(value: unknown) {
   if (value === null || value === undefined) return "null / unset";
   if (value === "") return "(empty)";
@@ -50,7 +49,7 @@ export default async function ReviewEditProposalPage({
     <div className="adminNotice">
       <b>Proposal นี้เก็บฝั่ง server เท่านั้น — URL มีแค่ id</b>
       <span>
-        หมดอายุใน ~20 นาทีนับจากสร้าง/แก้ล่าสุด, ใช้ยืนยันได้ครั้งเดียว (ใช้แล้วใช้ซ้ำไม่ได้), และเป็นของ {proposal.actor} เท่านั้น.
+        หมดอายุใน ~1 ชั่วโมงนับจากสร้าง, ใช้ยืนยันได้ครั้งเดียว (ใช้แล้วใช้ซ้ำไม่ได้), และเป็นของ {proposal.actor} เท่านั้น.
         ถ้า active canonical release เปลี่ยนระหว่างที่คุณเปิดหน้านี้ ระบบจะ reject ตอนกด Confirm แทนที่จะเขียนทับของใหม่แบบเงียบ ๆ.
       </span>
       <code>submitted by {proposal.actor} · page release {proposal.pageReleaseId}</code>
@@ -93,6 +92,6 @@ export default async function ReviewEditProposalPage({
         <button className="adminPrimary">Confirm &amp; queue this change</button>
       </div>
     </form>
-    <p><Link href={`/admin/vehicles/${encodeURIComponent(modelId)}`}>ยกเลิกและกลับไปแก้ไข</Link> — ไม่กด Confirm ก็เท่ากับยกเลิก, proposal หมดอายุเองใน ~20 นาที</p>
+    <p><Link href={`/admin/vehicles/${encodeURIComponent(modelId)}`}>ยกเลิกและกลับไปแก้ไข</Link> — ไม่กด Confirm ก็เท่ากับยกเลิก, proposal หมดอายุเองใน ~1 ชั่วโมง</p>
   </div>;
 }

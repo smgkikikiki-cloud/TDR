@@ -49,5 +49,28 @@ check("price maintenance UI is wired", prices.includes("enqueueCorrectPrice") &&
 check("price maintenance uses canonical commands", ["CORRECT_PRICE","CLOSE_PRICE","UPSERT_CAMPAIGN"].every((operation) => priceActions.includes(operation)));
 check("price maintenance reuses canonical input queue", priceActions.includes("enqueueVehicleInput"));
 
+// Editing a car is one job. It had two front doors -- the editor and the raw
+// input queue -- sitting side by side in a flat sixteen-item list, which is
+// what made the admin unreadable. These checks hold the hierarchy in place.
+const home = text("app/admin/(secure)/page.tsx");
+const inputPage = text("app/admin/(secure)/vehicle-input/page.tsx");
+check("the editor is the sidebar's one primary entry", nav.includes('className="adminNavPrimary" href="/admin/vehicles"'));
+check("raw input is not a top-level sibling of the editor",
+  nav.indexOf('href="/admin/vehicle-input"') > nav.indexOf("adminNavGroup"));
+check("industry and editorial forms are not top-level",
+  ["/admin/plants/new", "/admin/companies/new", "/admin/events/new"]
+    .every((route) => nav.indexOf(`href="${route}"`) > nav.indexOf("Industry &amp; editorial")));
+check("the daily queues stay reachable without opening a group",
+  ["/admin/prices", "/admin/prices/coverage", "/admin/retail-lifecycle", "/admin/eco-trims",
+   "/admin/registrations", "/admin/data-quality"]
+    .every((route) => nav.indexOf(`href="${route}"`) < nav.indexOf("adminNavGroup")));
+check("the admin home leads with editing a car", home.includes('className="adminPrimaryLink" href="/admin/vehicles"'));
+check("the home tiles are queues, not a second way to author a vehicle",
+  !home.includes('href="/admin/vehicle-input"'));
+check("raw input says what it is for instead of claiming to be the one door",
+  !inputPage.includes("แก้ข้อมูลรถจากจุดเดียว") && inputPage.includes("Raw canonical input"));
+check("raw input points at the editor for ordinary work",
+  inputPage.includes('href="/admin/vehicles"'));
+
 console.log(failed ? `\n${failed} check(s) failed` : "\nall admin parity smoke checks passed");
 process.exit(failed ? 1 : 0);

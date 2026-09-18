@@ -19,7 +19,7 @@
 /* full-bleed inside the padded page column */
 .sfBleed { margin-inline: calc(var(--pagePad) * -1); padding-inline: var(--pagePad); }
 
-.sfEyebrow { color: var(--red); font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.sfEyebrow { color: var(--eyebrow); font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
 .sfEyebrow.ink { color: var(--sf-muted); }
 .sfNum { font-variant-numeric: tabular-nums; }
 .sfMissing { color: var(--sf-slot-ink); font-style: italic; font-weight: 500; font-size: 13px; }
@@ -287,12 +287,6 @@
 .sfGroupNote { margin: -2px 0 9px; font-size: 12px; line-height: 1.55; color: var(--sf-muted); }
 
 /* ---------- header CTA: the one thing this site sells ---------- */
-.sfCta { display: flex; align-items: center; gap: 10px; border: 1px solid var(--navy); background: #fff; padding: 9px 14px; flex-shrink: 0; }
-.sfCta:hover { border-color: var(--red); color: var(--red); }
-.sfCta > svg { flex-shrink: 0; color: var(--red); }
-.sfCta b { display: block; font-size: 14px; font-weight: 800; letter-spacing: -.01em; }
-.sfCta em { display: block; font-style: normal; font-size: 12px; color: var(--sf-muted); margin-top: 1px; }
-.sfCta:hover em { color: var(--red); }
 
 /* ---------- buttons ---------- */
 .sfBtn { display: inline-block; background: var(--navy); color: #fff; font-size: 15px; font-weight: 700; padding: 13px 22px; border: 1px solid var(--navy); }
@@ -351,20 +345,13 @@
 .sfPitchPanel { border: 1px solid var(--navy); background: #fff; }
 .sfPanelHead { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 18px 20px 15px; border-bottom: 1px solid var(--line); }
 .sfPanelHead h2 { margin: 7px 0 0; font-size: 19px; font-weight: 700; letter-spacing: -.015em; }
-.sfLockBadge { display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; border: 1px solid var(--red); color: var(--red); background: var(--soft-red); padding: 4px 9px; font-size: 12px; font-weight: 700; }
-.sfPanelFade { position: relative; padding: 24px 20px 22px; min-height: 300px; }
-.sfPanelOverlay { position: absolute; left: 0; right: 0; bottom: 0; padding: 62px 20px 22px; text-align: center;
-  background: linear-gradient(180deg, rgba(252,252,252,0) 0%, rgba(252,252,252,.88) 46%, var(--white) 76%); }
-.sfPanelOverlay strong { display: block; font-size: 16px; font-weight: 700; margin-bottom: 13px; }
+.sfLockBadge { display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; border: 1px solid var(--line); color: var(--sf-muted); background: var(--paper); padding: 4px 9px; font-size: 12px; font-weight: 700; }
+.sfPanelFade { padding: 22px 20px; }
+/* No gradient curtain: there is nothing behind it to hide any more. This is
+   just the panel's own footer. */
+.sfPanelOverlay { border-top: 1px solid var(--line); margin-top: 20px; padding: 18px 0 0; }
+.sfPanelOverlay strong { display: block; font-size: 15px; font-weight: 600; margin-bottom: 12px; }
 
-/* a chart-shaped texture: no label is attached to any bar, so it claims nothing */
-.sfBlurChart { display: flex; flex-direction: column; gap: 11px; filter: blur(4px); opacity: .55; user-select: none; }
-.sfBlurChart.tall { gap: 13px; }
-.sfBlurChart > span { display: grid; grid-template-columns: minmax(0, 1fr) 38px; align-items: center; gap: 12px; }
-.sfBlurChart i { display: block; height: 13px; background: var(--navy); }
-.sfBlurChart > span:nth-child(even) i { background: var(--navy-2); }
-.sfBlurChart > span:nth-child(3n) i { background: var(--red); }
-.sfBlurChart em { font-style: normal; font-size: 13px; font-weight: 700; color: var(--sf-muted); text-align: right; letter-spacing: .08em; }
 
 .sfQGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
 .sfQCard { border: 1px solid var(--line); background: #fff; padding: 18px 18px 16px; display: flex; flex-direction: column; }
@@ -472,7 +459,6 @@
 }
 @media (max-width: 700px) {
   .topline { flex-wrap: wrap; gap: 14px; }
-  .sfCta { width: 100%; justify-content: center; }
 }
 @media (max-width: 640px) {
   .sfQGrid { grid-template-columns: minmax(0, 1fr); }
@@ -491,4 +477,78 @@
   .sfPlantCap b { font-size: 17px; }
   .sfMakerHead { flex-direction: column; align-items: flex-start; gap: 4px; }
   .sfMakerHead span { text-align: left; }
+}
+
+/* What the member view contains, listed rather than pictured. */
+.sfScopeList { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.sfScopeList li { position: relative; padding-left: 18px; font-size: 14px; line-height: 1.55; color: var(--ink); }
+.sfScopeList li::before { content: ""; position: absolute; left: 0; top: 9px; width: 8px; height: 1px; background: var(--navy); }
+
+/* ---------------------------------------------------------------------------
+   One trim's own page.
+   A model page can only summarise its trims; this is where a reader lands
+   once they know which car they mean. It reuses the comparison's grouping and
+   headings so the same fact reads the same way in both places.
+--------------------------------------------------------------------------- */
+.sfCrumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 20px 0 0; font-size: 12px; color: var(--sf-muted); }
+.sfCrumbs a { color: var(--sf-muted); }
+.sfCrumbs a:hover { color: var(--red); }
+.sfCrumbs span { color: var(--line); }
+.sfCrumbs b { color: var(--ink); font-weight: 700; }
+
+.trimPage { padding-bottom: 70px; }
+
+.trimHero { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 32px; align-items: end;
+            padding: 24px 0 26px; border-bottom: 2px solid var(--navy); margin-bottom: 30px; }
+.trimHero h1 { margin: 7px 0 12px; font-size: clamp(28px, 4vw, 44px); line-height: 1.08; letter-spacing: -.035em; }
+.trimHeroTags { display: flex; flex-wrap: wrap; gap: 7px; }
+.trimHeroTags span { border: 1px solid var(--line); background: #fff; padding: 4px 10px; font-size: 12px; font-weight: 700; }
+.trimHeroTags .trimTagMuted { color: var(--sf-muted); border-style: dashed; }
+.trimHeroPrice { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; text-align: right; }
+.trimHeroPrice small { color: var(--eyebrow); font-size: 11px; font-weight: 900; letter-spacing: .12em; }
+.trimHeroPrice strong { font-size: clamp(22px, 3vw, 32px); letter-spacing: -.03em; }
+.trimHeroPrice .sfMissing { font-size: 14px; }
+.trimCompareCta { margin-top: 10px; background: var(--navy); color: #fff; padding: 10px 15px; font-size: 13px; font-weight: 700;
+                  transition: background .12s ease; }
+.trimCompareCta:hover { background: var(--navy-2); color: #fff; }
+.trimCompareCta:active { background: #001741; }
+
+.trimOffers { margin-bottom: 30px; }
+.trimOffers h2 { font-size: 17px; margin: 0 0 10px; }
+.trimOffer { display: flex; justify-content: space-between; align-items: center; gap: 20px;
+             border: 1px solid var(--line); border-left: 3px solid var(--red); background: #fff; padding: 13px 15px; margin-bottom: 7px; }
+.trimOffer small { display: block; margin-top: 3px; color: var(--sf-muted); font-size: 12px; }
+
+.trimSpecs { margin-bottom: 36px; }
+.trimSpecGroup { margin-bottom: 22px; }
+.trimSpecGroup h3 { font-size: 13px; font-weight: 900; letter-spacing: .06em; color: var(--eyebrow);
+                    text-transform: uppercase; margin: 0 0 8px; }
+.trimSpecGroup dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; margin: 0;
+                    border-top: 1px solid var(--line); }
+.trimSpecGroup dl > div { display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+                          padding: 10px 2px; border-bottom: 1px solid var(--line); }
+.trimSpecGroup dl > div:nth-child(odd) { border-right: 1px solid var(--line); padding-right: 16px; }
+.trimSpecGroup dl > div:nth-child(even) { padding-left: 16px; }
+.trimSpecGroup dt { color: var(--sf-muted); font-size: 13px; }
+.trimSpecGroup dd { margin: 0; font-size: 14px; font-weight: 700; text-align: right; }
+
+.trimSiblings { margin-top: 10px; }
+.trimSiblingList { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 8px; }
+.trimSibling { border: 1px solid var(--line); background: #fff; padding: 12px 14px; display: flex; flex-direction: column; gap: 3px;
+               transition: border-color .12s ease; }
+.trimSibling b { font-size: 14px; }
+.trimSibling span { color: var(--sf-muted); font-size: 12px; }
+.trimSibling:hover { border-color: var(--navy); }
+.trimSibling.on { border-color: var(--navy); border-left-width: 3px; background: var(--soft-blue); }
+
+.sfTrimMore { display: inline-block; margin-top: 12px; font-size: 13px; font-weight: 700; color: var(--navy); }
+.sfTrimMore:hover { color: var(--red); }
+
+@media (max-width: 780px) {
+  .trimHero { grid-template-columns: 1fr; gap: 18px; align-items: start; }
+  .trimHeroPrice { align-items: flex-start; text-align: left; }
+  .trimSpecGroup dl { grid-template-columns: 1fr; }
+  .trimSpecGroup dl > div:nth-child(odd) { border-right: 0; padding-right: 2px; }
+  .trimSpecGroup dl > div:nth-child(even) { padding-left: 2px; }
+  .trimSiblingList { grid-template-columns: 1fr; }
 }

@@ -7,9 +7,9 @@ export default async function Brands() {
   return <>
     <section className="sfPageHead">
       <div>
-        <div className="sfEyebrow">BRANDS</div>
+        <div className="sfEyebrow">แบรนด์</div>
         <h1>แบรนด์รถในตลาดไทย</h1>
-        <p>เลือกแบรนด์เพื่อเปิดแคตตาล็อกรถทั้งหมดของแบรนด์นั้นในฐานข้อมูล TDR</p>
+        <p>แบรนด์รถยนต์ที่มีจำหน่ายในประเทศไทย</p>
       </div>
       <div className="sfPageHeadAside">
         <div className="sfEyebrow ink">ในฐานข้อมูล</div>
@@ -31,7 +31,7 @@ export default async function Brands() {
         ))}
       </div>
     ) : (
-      <div className="sfEmpty" style={{ marginTop: 28 }}><b>ยังไม่มีข้อมูลแบรนด์</b><span>ยังไม่ได้บันทึกแบรนด์ลงฐานข้อมูล</span></div>
+      <div className="sfEmpty" style={{ marginTop: 28 }}><b>ยังไม่มีข้อมูลแบรนด์</b></div>
     )}
   </>;
 }

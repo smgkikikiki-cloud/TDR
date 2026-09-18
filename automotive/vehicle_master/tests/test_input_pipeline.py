@@ -142,3 +142,37 @@ def test_retry_repairs_audit_files_after_interrupted_copy(tmp_path: Path):
     assert outbox.is_file()
     assert shadow.is_file()
     assert len(outbox.read_text(encoding="utf-8").splitlines()) == 1
+
+
+def test_a_batch_only_commits_the_audit_files_it_wrote(tmp_path: Path):
+    """The shadow copy-back is per batch, not per catalogue.
+
+    Every command writes one shadow revision file, and they accumulate: a
+    catalogue that has taken 20,000 edits has 20,000 of them. The copy-back
+    used to glob the whole directory, so each batch carried every shadow file
+    ever written back out of the sandbox -- quadratic work that made a bulk
+    import slower with every batch it completed, and the single slowest thing
+    in one. A batch knows which revisions it created; the rest are identical
+    on both sides and copying them achieves nothing.
+    """
+    data = _seed(tmp_path)
+    pipeline = CanonicalInputPipeline(data)
+
+    first = pipeline.apply(_batch())
+    first_shadows = [f for f in first.changed_files if "shadow" in f]
+    assert len(first_shadows) == 1, first.changed_files
+
+    second = _batch(950_000)
+    second["batch_id"] = "admin-j5-price-20260910"
+    second["commands"][0]["payload"]["effective_from"] = "2026-09-10"
+    second["commands"][0]["payload"]["observed_at"] = "2026-09-10"
+    result = pipeline.apply(second)
+
+    shadows = [f for f in result.changed_files if "shadow" in f]
+    assert len(shadows) == 1, shadows
+    assert shadows[0] not in first_shadows
+
+    # Both shadow files are still on disk: this is about what each batch
+    # copies, never about dropping an audit record.
+    on_disk = sorted((data / "2026/canonical_state/shadow").glob("*.json"))
+    assert len(on_disk) == 2, on_disk

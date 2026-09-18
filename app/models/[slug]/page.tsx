@@ -4,6 +4,7 @@ import { getCanonicalModelBundle, getCanonicalRelatedModels, getModelMarketTease
 import { getRelatedEvents, getProductionProgramsByModel } from "@/lib/data";
 import { bodyLabel } from "@/lib/body-labels";
 import { displayName, initials } from "@/lib/display-name";
+import { trimLocalId } from "@/lib/trim-editor-state";
 
 function launch(r: any) { return [r.launch_quarter, r.launch_year].filter(Boolean).join(" ") || null }
 function baht(n: any) { return n ? `฿${Number(n).toLocaleString()}` : null }
@@ -38,7 +39,7 @@ function officialRangeLabel(trims: any[]) {
 }
 
 /** One trim row. Shared by the current and the discontinued list. */
-function TrimRow({ t, ptById, muted }: { t: any; ptById: Map<any, any>; muted?: boolean }) {
+function TrimRow({ t, ptById, muted, slug }: { t: any; ptById: Map<any, any>; muted?: boolean; slug: string }) {
   const linked = (t.trim_powertrains || []).map((x: any) => ptById.get(x.powertrain_id)).filter(Boolean);
   const price = baht(t.price_baht);
   const offers = (t.campaign_quote?.campaign_options || []).filter((offer: any) => offer.status_as_of === "ACTIVE");
@@ -56,13 +57,13 @@ function TrimRow({ t, ptById, muted }: { t: any; ptById: Map<any, any>; muted?: 
       </summary>
       <div className="sfTrimBody">
         <div className="sfSpecGrid">
-          {linked.map((p: any) => <div key={p.id}><small>Powertrain</small><b>{ptSummary(p)}</b></div>)}
-          {t.published_range_km ? <div><small>Range ที่ผู้ผลิตประกาศ</small><b>{Number(t.published_range_km).toLocaleString()} km {t.published_range_cycle || ""}</b></div> : null}
-          {t.standardized_wltp_km ? <div><small>TDR standardized</small><b>~{Number(t.standardized_wltp_km).toLocaleString()} km WLTP-equivalent</b></div> : null}
-          {t.standardized_epa_km ? <div><small>EPA / equivalent</small><b>~{Number(t.standardized_epa_km).toLocaleString()} km</b></div> : null}
+          {linked.map((p: any) => <div key={p.id}><small>ระบบขับเคลื่อน</small><b>{ptSummary(p)}</b></div>)}
+          {t.published_range_km ? <div><small>ระยะทางที่ผู้ผลิตประกาศ</small><b>{Number(t.published_range_km).toLocaleString()} km {t.published_range_cycle || ""}</b></div> : null}
+          {t.standardized_wltp_km ? <div><small>เทียบเท่า WLTP</small><b>~{Number(t.standardized_wltp_km).toLocaleString()} km WLTP-equivalent</b></div> : null}
+          {t.standardized_epa_km ? <div><small>เทียบเท่า EPA</small><b>~{Number(t.standardized_epa_km).toLocaleString()} km</b></div> : null}
           {(t.seats_override || t.payload_capacity_kg_override) ? <div><small>ความจุ</small><b>{[t.seats_override ? `${t.seats_override} ที่นั่ง` : null, t.payload_capacity_kg_override ? `Payload ${t.payload_capacity_kg_override} kg` : null].filter(Boolean).join(" · ")}</b></div> : null}
         </div>
-        {t.description ? <p>{t.description}</p> : <p className="sfMissing">ยังไม่มีรายละเอียดอุปกรณ์ของ Trim นี้</p>}
+        {t.description ? <p>{t.description}</p> : <p className="sfMissing">ยังไม่มีรายละเอียดอุปกรณ์ของรุ่นย่อยนี้</p>}
         {offers.length ? <div className="sfRows">
           {offers.map((offer: any) => <div className="sfRow" key={`${offer.campaign_id}:${offer.option_id}`}>
             <span>
@@ -72,6 +73,9 @@ function TrimRow({ t, ptById, muted }: { t: any; ptById: Map<any, any>; muted?: 
             <b>{baht(offer.amount_thb) || `ลด ${baht(offer.discount_thb)}`}</b>
           </div>)}
         </div> : null}
+        <Link className="sfTrimMore" href={`/models/${slug}/${encodeURIComponent(trimLocalId(t.canonical_id || t.id))}`}>
+          ดูสเปกทั้งหมดของรุ่นย่อยนี้ →
+        </Link>
         {t.range_source_url ? <a className="sfSourceLink" href={t.range_source_url} target="_blank" rel="noreferrer">แหล่งข้อมูล Range ↗</a> : null}
         {offers.map((offer: any) => offer.source_ref ? <a className="sfSourceLink" key={offer.source_ref} href={offer.source_ref} target="_blank" rel="noreferrer">ที่มาราคาแคมเปญ ↗</a> : null)}
       </div>
@@ -119,20 +123,22 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
       <div className="sfHeroCopy">
         <div className="sfEyebrow">{[brand, bodyLabel(r.body_type)].filter(Boolean).join(" · ") || "MODEL"}</div>
         <h1>{displayName(r)}</h1>
-        {r.generation ? <p className="sfGeneration">{r.generation}</p> : null}
+        
         <div className="sfBadges">
-          {[r.segment, r.market_position, ...(r.powertrains || []), r.production_type, r.production_country, r.seats ? `${r.seats} ที่นั่ง` : null].filter(Boolean).map((x: string) => <span key={x}>{x}</span>)}
+          {[r.segment, ...(r.powertrains || []), r.production_type, r.production_country, r.seats ? `${r.seats} ที่นั่ง` : null]
+            .filter((x) => x && String(x).toUpperCase() !== "UNKNOWN")
+            .map((x: any) => <span key={String(x)}>{String(x)}</span>)}
         </div>
         <div className="sfKeyBlock">
           <div>
             <small>ราคาปัจจุบัน</small>
             {heroPrice ? <strong>{heroPrice}</strong> : <strong className="sfMissing">ยังไม่ประกาศราคา</strong>}
-            <em>{trimPrices.length ? "คำนวณจาก Trim ที่จำหน่ายอยู่" : "ยังไม่มีราคา Trim ในฐานข้อมูล"}</em>
+            <em>{trimPrices.length ? "คำนวณจากรุ่นย่อยที่จำหน่ายอยู่" : ""}</em>
           </div>
           <div className={heroRange ? "mark" : undefined}>
             <small>ระยะทางที่ผู้ผลิตประกาศ</small>
             {heroRange ? <strong>{heroRange.range}</strong> : <strong className="sfMissing">ยังไม่มีข้อมูล</strong>}
-            <em>{heroRange ? heroRange.cycle : "ผู้ผลิตยังไม่ประกาศ หรือยังไม่ได้บันทึก"}</em>
+            <em>{heroRange ? heroRange.cycle : ""}</em>
           </div>
         </div>
       </div>
@@ -140,23 +146,23 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
 
     {r.consumer_description ? (
       <section className="sfBlock">
-        <div className="sfEyebrow ink">TDR MODEL CONTEXT</div>
+        <div className="sfEyebrow ink">ข้อมูลรุ่น</div>
         <p className="sfContext" style={{ marginTop: 12 }}>{r.consumer_description}</p>
       </section>
     ) : null}
 
     <section className="sfBlock">
       <div className="sfZoneHead">
-        <div><div className="sfEyebrow">TRIMS &amp; PRICE</div><h2>รุ่นย่อยที่จำหน่าย</h2></div>
+        <div><div className="sfEyebrow">รุ่นย่อยและราคา</div><h2>รุ่นย่อยที่จำหน่าย</h2></div>
         <span>{currentTrims.length} Trim</span>
       </div>
       {currentTrims.length
-        ? <div>{currentTrims.map((t: any) => <TrimRow key={t.id} t={t} ptById={ptById} />)}</div>
-        : <div className="sfEmpty"><b>ยังไม่ได้กรอกรุ่นย่อย</b><span>ข้อมูล Trim ของรุ่นนี้ยังไม่อยู่ในฐานข้อมูล</span></div>}
+        ? <div>{currentTrims.map((t: any) => <TrimRow key={t.id} t={t} ptById={ptById} slug={slug} />)}</div>
+        : <div className="sfEmpty"><b>ยังไม่มีรุ่นย่อยในฐานข้อมูล</b></div>}
       {pastTrims.length ? (
         <details style={{ marginTop: 18 }}>
           <summary className="sfEyebrow ink" style={{ cursor: "pointer", padding: "10px 0" }}>รุ่นย่อยที่เลิกจำหน่ายแล้ว ({pastTrims.length})</summary>
-          <div>{pastTrims.map((t: any) => <TrimRow key={t.id} t={t} ptById={ptById} muted />)}</div>
+          <div>{pastTrims.map((t: any) => <TrimRow key={t.id} t={t} ptById={ptById} slug={slug} muted />)}</div>
         </details>
       ) : null}
     </section>
@@ -164,7 +170,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
     {/* ---------- Zone B · ข้อมูลทางเทคนิค ---------- */}
     <section className="sfTechZone sfBleed">
       <div className="sfZoneHead">
-        <div><div className="sfEyebrow ink">TECHNICAL</div><h2>ข้อมูลทางเทคนิค</h2></div>
+        <div><div className="sfEyebrow ink">ข้อมูลทางเทคนิค</div><h2>ข้อมูลทางเทคนิค</h2></div>
       </div>
       <div className="sfIndGrid">
         <div>
@@ -194,7 +200,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
                 </dl>
               </details>
             ))
-            : <div className="sfEmpty"><b>ยังไม่มีรายละเอียดระบบขับเคลื่อน</b><span>ยังไม่ได้บันทึกสเปกเครื่องยนต์หรือมอเตอร์ของรุ่นนี้</span></div>}
+            : <div className="sfEmpty"><b>ยังไม่มีรายละเอียดระบบขับเคลื่อน</b></div>}
         </div>
       </div>
     </section>
@@ -202,10 +208,10 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
     {/* ---------- Zone C · อุตสาหกรรม ---------- */}
     <section className="sfIndZone sfBleed">
       <div className="sfZoneHead">
-        <div><div className="sfEyebrow">INDUSTRY LAYER</div><h2 style={{ color: "#fff" }}>รุ่นนี้ในฐานะสินค้าอุตสาหกรรม</h2></div>
+        <div><div className="sfEyebrow">ข้อมูลอุตสาหกรรม</div><h2 style={{ color: "#fff" }}>รุ่นนี้ในฐานะสินค้าอุตสาหกรรม</h2></div>
       </div>
       <div className="sfIndGrid">
-        <p>ข้อมูลตลาดและยอดจดทะเบียนแยกจาก MarketTrim โดยตั้งใจ รถที่ไม่มีข้อมูลจดทะเบียนยังอยู่ในแคตตาล็อกได้ครบ ส่วนกราฟและเครื่องมือวิเคราะห์เปิดสำหรับสมาชิก TDR Market.</p>
+        
         <div>
           <div className="sfEmpty">
             <b>{teasers.length ? "มีข้อมูลตลาดสำหรับรุ่นนี้" : "ยังไม่มีข้อมูลตลาดที่จับคู่กับรุ่นนี้"}</b>
@@ -217,29 +223,29 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
       {programs.length ? (
         <div className="sfBridge">
           <div>
-            <div className="sfEyebrow">THAILAND PRODUCTION</div>
+            <div className="sfEyebrow">การผลิตในไทย</div>
             <h3>รุ่นนี้มีข้อมูลการผลิตในประเทศไทย</h3>
             <p>{programs.map((program: any) => [program.plants?.name_th || program.plants?.name_en, program.status].filter(Boolean).join(" · ")).join(" / ")}</p>
           </div>
-          <span>Industry context</span>
+          <span>ข้อมูลอุตสาหกรรม</span>
         </div>
       ) : null}
     </section>
 
     <section className="sfBlock">
       <div className="sfZoneHead">
-        <div><div className="sfEyebrow ink">LATEST</div><h2>ข่าวและอัปเดต</h2></div>
+        <div><div className="sfEyebrow ink">ข่าวและอัปเดต</div><h2>ข่าวและอัปเดต</h2></div>
         <Link href="/news">ข่าวทั้งหมด →</Link>
       </div>
       {events.length
         ? <div className="sfNewsList">{events.map((e: any) => <article key={e.id}><time>{e.event_date}</time><div><b>{e.title_th}</b>{e.summary_th || e.source_name ? <p>{e.summary_th || e.source_name}</p> : null}</div></article>)}</div>
-        : <div className="sfEmpty"><b>ยังไม่มีข่าวที่เชื่อมกับรุ่นนี้</b><span>ข่าวที่ระบุรุ่นนี้ไว้จะแสดงที่นี่</span></div>}
+        : <div className="sfEmpty"><b>ยังไม่มีข่าวที่เชื่อมกับรุ่นนี้</b></div>}
     </section>
 
     {related.length ? (
       <section className="sfBlock">
         <div className="sfZoneHead">
-          <div><div className="sfEyebrow ink">SAME BRAND</div><h2>รถรุ่นอื่นจาก {brand || "แบรนด์เดียวกัน"}</h2></div>
+          <div><div className="sfEyebrow ink">แบรนด์เดียวกัน</div><h2>รถรุ่นอื่นจาก {brand || "แบรนด์เดียวกัน"}</h2></div>
           {r.brands?.slug ? <Link href={`/brands/${r.brands.slug}`}>ดูทั้งแบรนด์ →</Link> : null}
         </div>
         <div className="sfGrid">

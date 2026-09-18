@@ -335,3 +335,29 @@ def base_nameplate(name: str) -> str:
 def slug(text: str) -> str:
     s = fold(text, split_digits=False).replace(" ", "_")
     return re.sub(r"_+", "_", s).strip("_") or "unnamed"
+
+
+def trim_local_id(raw_id: object, name: object = "", powertrain: object = "") -> str:
+    """The one rule for a MarketTrim's local id segment.
+
+    Explicit ids stay stable; without one, powertrain participates so that
+    Premium BEV and Premium PHEV cannot collide. This is deliberately the
+    exact expression the catalog loader has always used -- it is extracted
+    here, unchanged, so the writer and anything that needs to know a trim's
+    canonical_id *before* the batch runs share one implementation instead of
+    three copies that can drift.
+
+    It is not predictable from outside Python: ``slug`` folds Thai combining
+    marks and strips corporate words, so a trim named "Dual Motor" loses
+    "Motor" and one named "Auto" collapses to "unnamed". That is why callers
+    that need the id ahead of time (the admin editor) ask this module for it
+    rather than reimplementing it.
+    """
+    text = raw_id if raw_id else f"{name or ''} {powertrain or ''}"
+    return slug(str(text))
+
+
+def trim_identity(generation_id: str, raw_id: object,
+                  name: object = "", powertrain: object = "") -> str:
+    """The full canonical_id of a MarketTrim under ``generation_id``."""
+    return f"{generation_id}.trim.{trim_local_id(raw_id, name, powertrain)}"

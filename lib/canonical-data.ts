@@ -122,6 +122,10 @@ function modelRow(row: any) {
       slug: brand.slug,
       name_en: brand.name_en,
       name_th: brand.name_th,
+      // Not the brand logo: the canonical model payload carries the brand's
+      // identity, not its presentation, and this row has no tdr_brand_id to
+      // link one through. Every page that renders a logo reads it from
+      // getCanonicalBrands() instead.
       logo_url: null,
     },
   };
@@ -147,6 +151,10 @@ function trimRow(row: any) {
     campaign_quote: row.campaign_quote || {},
     price_history: row.price_history || [],
     source_refs: row.source_refs || {},
+    // SpecLedger.resolved() as of the release. The trim page and the
+    // comparison both read it; without it a trim can only show the handful of
+    // columns MarketTrim itself carries.
+    comparable_specs: Array.isArray(detail.comparable_specs) ? detail.comparable_specs : null,
     trim_powertrains: [{ powertrain_id: powertrainId }],
     _powertrain: {
       id: powertrainId,
@@ -186,7 +194,31 @@ export async function getCanonicalBrands(limit = 150) {
   const { data, error } = await db.from("current_vehicle_brands").select("*")
     .order("name_en").limit(limit);
   if (error) throw error;
-  return (data || []).map((row: any) => ({
+  const rows = data || [];
+
+  // logo_url is a TDR presentation overlay, not canonical brand identity, so
+  // it is read from the editorial table and linked through the projection's
+  // stable tdr_brand_id -- never through a slug, which is allowed to change.
+  //
+  // This used to be a hardcoded null, which meant the four pages that render
+  // `logo_url ? <img> : <initials>` could only ever take the second branch.
+  //
+  // The read is fail-open on purpose: a logo is decoration, and losing the
+  // optional editorial table must not take the catalogue down with it. A
+  // failure leaves every brand on the initials fallback it was already using.
+  const editorialIds = [...new Set(rows.map((row: any) => row.tdr_brand_id).filter(Boolean))];
+  const logoByEditorialId = new Map<string, string>();
+  if (editorialIds.length) {
+    const { data: editorial, error: editorialError } = await db.from("brands")
+      .select("id,logo_url").in("id", editorialIds);
+    if (!editorialError) {
+      for (const row of editorial || []) {
+        if (row.logo_url) logoByEditorialId.set(row.id, row.logo_url);
+      }
+    }
+  }
+
+  return rows.map((row: any) => ({
     ...(row.payload || {}),
     id: row.canonical_id,
     canonical_id: row.canonical_id,
@@ -195,7 +227,7 @@ export async function getCanonicalBrands(limit = 150) {
     name_en: row.name_en,
     name_th: row.name_th,
     country_origin: row.origin_country,
-    logo_url: null,
+    logo_url: row.tdr_brand_id ? (logoByEditorialId.get(row.tdr_brand_id) || null) : null,
   }));
 }
 

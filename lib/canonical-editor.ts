@@ -10,6 +10,8 @@
  */
 import { adminDb } from "@/lib/supabase";
 import { oemTargetsForModel, type OemEvidenceTarget } from "@/lib/price-evidence-registry";
+import { trimEditorFields } from "@/lib/spec-field-registry";
+import { normalizeTrimForEditor, type NormalizedTrim } from "@/lib/trim-editor-state";
 
 export type WorkspaceBrand = { canonicalId: string; nameEn: string; nameTh: string; originCountry: string | null };
 export type WorkspaceModel = {
@@ -40,9 +42,16 @@ export type WorkspaceTrim = {
   name: string;
   powertrain: string;
   status: string;
+  /** The raw projection row. Kept for provenance/debugging only -- nothing
+   * reads a field out of it directly, because the nesting is not something
+   * callers should have to know (see lib/trim-editor-state.ts). */
   payload: Record<string, unknown>;
   currentListPrice: { amount_thb?: number; price_type?: string } | null;
   sourceRefs: Record<string, string[]>;
+  /** THE editor state: flat, one entry per UI field, MarketTrim columns and
+   * comparable-spec facts already folded together. Page, diff, server action
+   * and validation all read this and nothing else. */
+  editor: NormalizedTrim;
 };
 export type WorkspaceSpecFact = {
   factId: string;
@@ -118,20 +127,7 @@ export async function loadVehicleWorkspace(modelId: string): Promise<VehicleWork
   if (batchesError) throw batchesError;
   if (!brand) throw new Error("หา canonical brand ของรุ่นนี้ไม่ได้");
 
-  const trimRows: WorkspaceTrim[] = (trims || []).map((row: any) => ({
-    canonicalId: row.canonical_id,
-    modelId: row.model_id,
-    generationId: row.generation_id,
-    variantId: row.variant_id,
-    name: row.name,
-    powertrain: row.powertrain,
-    status: row.status,
-    payload: row.payload || {},
-    currentListPrice: row.current_list_price || null,
-    sourceRefs: row.source_refs || {},
-  }));
-
-  const trimIds = trimRows.map((row) => row.canonicalId);
+  const trimIds = (trims || []).map((row: any) => row.canonical_id);
   const { data: specFacts, error: specError } = trimIds.length
     ? await db.from("current_spec_facts")
         .select("fact_id,trim_id,field_key,verification_status,payload")
@@ -149,6 +145,36 @@ export async function loadVehicleWorkspace(modelId: string): Promise<VehicleWork
     specFactsByTrim.set(fact.trim_id, bucket);
   }
 
+  // One normalization pass, here, for every trim. Everything downstream --
+  // the form, the diff, the server action's validation -- reads
+  // trim.editor.editableSpecs and never the raw payload nesting.
+  const releaseYear = releaseYearFromPayload(release);
+  const fields = trimEditorFields(releaseYear);
+  const trimRows: WorkspaceTrim[] = (trims || []).map((row: any) => ({
+    canonicalId: row.canonical_id,
+    modelId: row.model_id,
+    generationId: row.generation_id,
+    variantId: row.variant_id,
+    name: row.name,
+    powertrain: row.powertrain,
+    status: row.status,
+    payload: row.payload || {},
+    currentListPrice: row.current_list_price || null,
+    sourceRefs: row.source_refs || {},
+    editor: normalizeTrimForEditor({
+      payload: row.payload || {},
+      fields,
+      extraFacts: (specFactsByTrim.get(row.canonical_id) || []).map((fact) => ({
+        field_key: fact.fieldKey, ...fact.payload,
+      })),
+      canonicalId: row.canonical_id,
+      generationId: row.generation_id,
+      name: row.name,
+      powertrain: row.powertrain,
+      sourceRefs: row.source_refs || {},
+    }),
+  }));
+
   // canonical_input_batches carries no model FK; a batch is "related" when its
   // payload mentions this model's canonical_id anywhere in its commands. Good
   // enough at admin-bench data volumes (60 most recent batches), same
@@ -165,7 +191,7 @@ export async function loadVehicleWorkspace(modelId: string): Promise<VehicleWork
 
   return {
     releaseId: model.release_id,
-    releaseYear: releaseYearFromPayload(release),
+    releaseYear,
     brand: { canonicalId: brand.canonical_id, nameEn: brand.name_en, nameTh: brand.name_th || "", originCountry: brand.origin_country || null },
     model: {
       canonicalId: model.canonical_id, tdrModelId: model.tdr_model_id || null, brandId: model.brand_id,

@@ -68,3 +68,16 @@
     min-width: 220px;
   }
 }
+
+/* The source UUIDs are the evidence. A reviewer deciding a trim identity has
+   to be able to open the regulator's own record, and retyping a UUID into the
+   address bar is not a workflow. Truncated to the first segment because the
+   full UUID tells a reader nothing the link does not. */
+.evidenceLinks { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 3px; }
+.evidenceLinks a {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px; padding: 1px 5px; border: 1px solid #ccd0d7;
+  background: #fff; color: #444;
+}
+.evidenceLinks a:hover { border-color: var(--navy); color: var(--navy); }
+.evidenceLinks span { font-size: 11px; color: #8b9099; align-self: center; }

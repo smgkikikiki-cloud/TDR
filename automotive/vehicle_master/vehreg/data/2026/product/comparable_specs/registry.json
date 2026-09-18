@@ -684,6 +684,408 @@
       "comparison_rule": "INFORMATION_ONLY",
       "canonical_unit": "Ah",
       "display_precision": 0
+    },
+    {
+      "key": "efficiency.fuel_consumption_l_100km",
+      "group": "efficiency",
+      "label_th": "อัตราสิ้นเปลืองรวม",
+      "label_en": "Fuel consumption (combined)",
+      "value_type": "NUMBER",
+      "comparison_rule": "LOWER_BETTER",
+      "canonical_unit": "L/100km",
+      "applicable_powertrains": [
+        "ICE",
+        "HEV",
+        "PHEV",
+        "REEV"
+      ],
+      "comparison_qualifiers": [
+        "measurement_basis"
+      ],
+      "display_precision": 1
+    },
+    {
+      "key": "efficiency.fuel_consumption_urban_l_100km",
+      "group": "efficiency",
+      "label_th": "อัตราสิ้นเปลืองในเมือง",
+      "label_en": "Fuel consumption (urban)",
+      "value_type": "NUMBER",
+      "comparison_rule": "LOWER_BETTER",
+      "canonical_unit": "L/100km",
+      "applicable_powertrains": [
+        "ICE",
+        "HEV",
+        "PHEV",
+        "REEV"
+      ],
+      "comparison_qualifiers": [
+        "measurement_basis"
+      ],
+      "display_precision": 1
+    },
+    {
+      "key": "efficiency.fuel_consumption_extra_urban_l_100km",
+      "group": "efficiency",
+      "label_th": "อัตราสิ้นเปลืองนอกเมือง",
+      "label_en": "Fuel consumption (extra-urban)",
+      "value_type": "NUMBER",
+      "comparison_rule": "LOWER_BETTER",
+      "canonical_unit": "L/100km",
+      "applicable_powertrains": [
+        "ICE",
+        "HEV",
+        "PHEV",
+        "REEV"
+      ],
+      "comparison_qualifiers": [
+        "measurement_basis"
+      ],
+      "display_precision": 1
+    },
+    {
+      "key": "engine.fuel_type",
+      "group": "powertrain",
+      "label_th": "เชื้อเพลิงที่เติมได้",
+      "label_en": "Fuel type",
+      "value_type": "ENUM",
+      "comparison_rule": "INFORMATION_ONLY",
+      "applicable_powertrains": [
+        "ICE",
+        "HEV",
+        "PHEV",
+        "REEV"
+      ]
+    },
+    {
+      "key": "engine.combustion_type",
+      "group": "powertrain",
+      "label_th": "ประเภทเครื่องยนต์",
+      "label_en": "Combustion type",
+      "value_type": "ENUM",
+      "comparison_rule": "INFORMATION_ONLY",
+      "applicable_powertrains": [
+        "ICE",
+        "HEV",
+        "PHEV",
+        "REEV"
+      ]
+    },
+    {
+      "key": "powertrain.gear_count",
+      "group": "powertrain",
+      "label_th": "จำนวนเกียร์",
+      "label_en": "Number of gears",
+      "value_type": "NUMBER",
+      "comparison_rule": "INFORMATION_ONLY",
+      "canonical_unit": "gear",
+      "display_precision": 0
+    },
+    {
+      "key": "charging.connector_type",
+      "group": "charging",
+      "label_th": "หัวชาร์จ",
+      "label_en": "Charging connector",
+      "value_type": "ENUM",
+      "comparison_rule": "INFORMATION_ONLY",
+      "applicable_powertrains": [
+        "PHEV",
+        "REEV",
+        "BEV"
+      ]
+    },
+    {
+      "key": "charging.port_type",
+      "group": "charging",
+      "label_th": "รูปแบบการชาร์จ",
+      "label_en": "Charging method",
+      "value_type": "ENUM",
+      "comparison_rule": "INFORMATION_ONLY",
+      "applicable_powertrains": [
+        "PHEV",
+        "REEV",
+        "BEV"
+      ]
+    },
+    {
+      "key": "charging.onboard_charger_spec",
+      "group": "charging",
+      "label_th": "สเปก On-board charger",
+      "label_en": "On-board charger",
+      "value_type": "TEXT",
+      "comparison_rule": "INFORMATION_ONLY",
+      "applicable_powertrains": [
+        "PHEV",
+        "REEV",
+        "BEV"
+      ]
+    },
+    {
+      "key": "charging.v2l_supported",
+      "group": "charging",
+      "label_th": "จ่ายไฟออก (V2L)",
+      "label_en": "Vehicle-to-load (V2L)",
+      "value_type": "BOOLEAN",
+      "comparison_rule": "PRESENCE",
+      "applicable_powertrains": [
+        "PHEV",
+        "REEV",
+        "BEV"
+      ]
+    },
+    {
+      "key": "battery.warranty_years",
+      "group": "battery",
+      "label_th": "รับประกันแบตเตอรี่ (ปี)",
+      "label_en": "Battery warranty (years)",
+      "value_type": "NUMBER",
+      "comparison_rule": "HIGHER_BETTER",
+      "canonical_unit": "year",
+      "applicable_powertrains": [
+        "HEV",
+        "PHEV",
+        "REEV",
+        "BEV"
+      ],
+      "display_precision": 0
+    },
+    {
+      "key": "battery.warranty_km",
+      "group": "battery",
+      "label_th": "รับประกันแบตเตอรี่ (กม.)",
+      "label_en": "Battery warranty (km)",
+      "value_type": "NUMBER",
+      "comparison_rule": "HIGHER_BETTER",
+      "canonical_unit": "km",
+      "applicable_powertrains": [
+        "HEV",
+        "PHEV",
+        "REEV",
+        "BEV"
+      ],
+      "display_precision": 0
+    },
+    {
+      "key": "powertrain.motor_count",
+      "group": "powertrain",
+      "label_th": "จำนวนมอเตอร์",
+      "label_en": "Number of motors",
+      "value_type": "NUMBER",
+      "comparison_rule": "INFORMATION_ONLY",
+      "canonical_unit": "motor",
+      "applicable_powertrains": [
+        "HEV",
+        "PHEV",
+        "REEV",
+        "BEV"
+      ],
+      "display_precision": 0
+    },
+    {
+      "key": "emissions.nox_g_km",
+      "group": "efficiency",
+      "label_th": "ไนโตรเจนออกไซด์ (NOx)",
+      "label_en": "NOx emissions",
+      "value_type": "NUMBER",
+      "comparison_rule": "LOWER_BETTER",
+      "canonical_unit": "g/km",
+      "applicable_powertrains": [
+        "ICE",
+        "HEV",
+        "PHEV",
+        "REEV"
+      ],
+      "display_precision": 3
+    },
+    {
+      "key": "emissions.pm_g_km",
+      "group": "efficiency",
+      "label_th": "ฝุ่นละออง (PM)",
+      "label_en": "Particulate matter",
+      "value_type": "NUMBER",
+      "comparison_rule": "LOWER_BETTER",
+      "canonical_unit": "g/km",
+      "applicable_powertrains": [
+        "ICE",
+        "HEV",
+        "PHEV",
+        "REEV"
+      ],
+      "display_precision": 3
+    },
+    {
+      "key": "emissions.standard",
+      "group": "efficiency",
+      "label_th": "มาตรฐานไอเสีย",
+      "label_en": "Emissions standard",
+      "value_type": "ENUM",
+      "comparison_rule": "INFORMATION_ONLY"
+    },
+    {
+      "key": "safety.un_regulations",
+      "group": "safety",
+      "label_th": "มาตรฐาน UN ที่ผ่าน",
+      "label_en": "UN regulations met",
+      "value_type": "SET",
+      "comparison_rule": "SET_DIFFERENCE"
+    },
+    {
+      "key": "safety.abs",
+      "group": "safety",
+      "label_th": "เบรก ABS",
+      "label_en": "Anti-lock braking (ABS)",
+      "value_type": "BOOLEAN",
+      "comparison_rule": "PRESENCE"
+    },
+    {
+      "key": "safety.esc",
+      "group": "safety",
+      "label_th": "ควบคุมการทรงตัว (ESC)",
+      "label_en": "Electronic stability control",
+      "value_type": "BOOLEAN",
+      "comparison_rule": "PRESENCE"
+    },
+    {
+      "key": "safety.side_airbag",
+      "group": "safety",
+      "label_th": "ถุงลมด้านข้าง",
+      "label_en": "Side airbags",
+      "value_type": "BOOLEAN",
+      "comparison_rule": "PRESENCE"
+    },
+    {
+      "key": "safety.curtain_airbag",
+      "group": "safety",
+      "label_th": "ถุงลมม่าน",
+      "label_en": "Curtain airbags",
+      "value_type": "BOOLEAN",
+      "comparison_rule": "PRESENCE"
+    },
+    {
+      "key": "safety.knee_airbag",
+      "group": "safety",
+      "label_th": "ถุงลมหัวเข่า",
+      "label_en": "Knee airbag",
+      "value_type": "BOOLEAN",
+      "comparison_rule": "PRESENCE"
+    },
+    {
+      "key": "safety.driver_attention_alert",
+      "group": "safety",
+      "label_th": "เตือนอาการเหนื่อยล้า",
+      "label_en": "Driver attention alert",
+      "value_type": "BOOLEAN",
+      "comparison_rule": "PRESENCE"
+    },
+    {
+      "key": "safety.forward_collision_warning",
+      "group": "safety",
+      "label_th": "เตือนการชนด้านหน้า",
+      "label_en": "Forward collision warning",
+      "value_type": "BOOLEAN",
+      "comparison_rule": "PRESENCE"
+    },
+    {
+      "key": "safety.lane_departure_warning",
+      "group": "safety",
+      "label_th": "เตือนออกนอกเลน",
+      "label_en": "Lane departure warning",
+      "value_type": "BOOLEAN",
+      "comparison_rule": "PRESENCE"
+    },
+    {
+      "key": "comfort.power_windows",
+      "group": "comfort",
+      "label_th": "กระจกไฟฟ้า",
+      "label_en": "Power windows",
+      "value_type": "BOOLEAN",
+      "comparison_rule": "PRESENCE"
+    },
+    {
+      "key": "comfort.keyless_entry",
+      "group": "comfort",
+      "label_th": "กุญแจรีโมท / Keyless",
+      "label_en": "Keyless entry",
+      "value_type": "BOOLEAN",
+      "comparison_rule": "PRESENCE"
+    },
+    {
+      "key": "comfort.auto_climate",
+      "group": "comfort",
+      "label_th": "ปรับอากาศอัตโนมัติ",
+      "label_en": "Automatic climate control",
+      "value_type": "BOOLEAN",
+      "comparison_rule": "PRESENCE"
+    },
+    {
+      "key": "comfort.electric_parking_brake",
+      "group": "comfort",
+      "label_th": "เบรกมือไฟฟ้า",
+      "label_en": "Electric parking brake",
+      "value_type": "BOOLEAN",
+      "comparison_rule": "PRESENCE"
+    },
+    {
+      "key": "comfort.heat_pump",
+      "group": "comfort",
+      "label_th": "ฮีตปั๊ม",
+      "label_en": "Heat pump",
+      "value_type": "BOOLEAN",
+      "comparison_rule": "PRESENCE",
+      "applicable_powertrains": [
+        "PHEV",
+        "REEV",
+        "BEV"
+      ]
+    },
+    {
+      "key": "technology.smartphone_mirroring",
+      "group": "technology",
+      "label_th": "เชื่อมต่อสมาร์ตโฟน (CarPlay/Android Auto)",
+      "label_en": "Smartphone mirroring",
+      "value_type": "BOOLEAN",
+      "comparison_rule": "PRESENCE"
+    },
+    {
+      "key": "technology.connected_services",
+      "group": "technology",
+      "label_th": "เชื่อมต่ออินเทอร์เน็ตในรถ",
+      "label_en": "Connected services",
+      "value_type": "BOOLEAN",
+      "comparison_rule": "PRESENCE"
+    },
+    {
+      "key": "technology.ota_update",
+      "group": "technology",
+      "label_th": "อัปเดตซอฟต์แวร์ผ่าน OTA",
+      "label_en": "Over-the-air updates",
+      "value_type": "BOOLEAN",
+      "comparison_rule": "PRESENCE"
+    },
+    {
+      "key": "technology.surround_view_camera",
+      "group": "technology",
+      "label_th": "กล้องมองรอบคัน 360°",
+      "label_en": "Surround-view camera",
+      "value_type": "BOOLEAN",
+      "comparison_rule": "PRESENCE"
+    },
+    {
+      "key": "technology.led_headlights",
+      "group": "technology",
+      "label_th": "ไฟหน้า LED",
+      "label_en": "LED headlights",
+      "value_type": "BOOLEAN",
+      "comparison_rule": "PRESENCE"
+    },
+    {
+      "key": "manufacturing.excise_tax_rate",
+      "group": "manufacturing",
+      "label_th": "อัตราภาษีสรรพสามิต",
+      "label_en": "Excise tax rate",
+      "value_type": "NUMBER",
+      "comparison_rule": "LOWER_BETTER",
+      "canonical_unit": "%",
+      "display_precision": 1
     }
   ]
 }

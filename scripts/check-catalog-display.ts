@@ -58,5 +58,28 @@ check("an empty registrations table still orders newest first",
 check("the sales scale is per body type, so a pickup is not measured against a coupe",
   byRelevance(models.filter((m) => m.body_type === "Crossover"), sales, now).map((m) => m.id), ["suv"]);
 
+console.log("\nbrand logos — the field the pages render must actually be read");
+// Four pages render `logo_url ? <img> : <initials>`. For years the second
+// branch was the only reachable one, because the loader hardcoded null. These
+// hold the wiring in place from both ends.
+const fs = await import("node:fs");
+const canonical = fs.readFileSync("lib/canonical-data.ts", "utf8");
+const brandsLoader = canonical.slice(canonical.indexOf("export async function getCanonicalBrands"));
+check("getCanonicalBrands no longer hardcodes a null logo",
+  /logo_url: null,\s*\}\)\);/.test(brandsLoader), false);
+check("the logo is linked through tdr_brand_id, not a mutable slug",
+  brandsLoader.includes("logoByEditorialId.get(row.tdr_brand_id)"), true);
+check("a missing editorial table leaves the catalogue standing",
+  brandsLoader.includes("if (!editorialError)"), true);
+for (const page of ["app/brands/page.tsx", "app/brands/[slug]/page.tsx",
+                    "app/models/page.tsx", "app/page.tsx"]) {
+  check(`${page} still falls back to initials`,
+    /logo_url \? <img[^>]*\/> : <span>\{initials\(/.test(fs.readFileSync(page, "utf8")), true);
+}
+const backfill = fs.readFileSync("supabase/migration_v37_brand_logos.sql", "utf8");
+check("the backfill never overwrites a curated logo",
+  backfill.split("\n").filter((line: string) => line.startsWith("update public.brands"))
+    .every((line: string) => line.includes("and logo_url is null")), true);
+
 console.log(failed ? `\n${failed} check(s) failed` : "\nall checks passed");
 process.exit(failed ? 1 : 0);

@@ -111,9 +111,9 @@ export default async function VehicleInputPage({
   return <div className="adminEditor">
     <div className="adminHeader">
       <div>
-        <small>VEHICLE MASTER · ADMIN BENCH</small>
-        <h1>แก้ข้อมูลรถจากจุดเดียว</h1>
-        <p>Quick input ทุกอันเข้าคิวเดียวกับ canonical pipeline: validate → revision → PR → release. ไม่เขียน Catalog หรือ Paid analytics ตรง ๆ</p>
+        <small>VEHICLE MASTER · ADVANCED</small>
+        <h1>Raw canonical input</h1>
+        <p>หน้านี้ไว้สำหรับกรณีที่ <Link href="/admin/vehicles">Canonical Vehicle Editor</Link> แสดงไม่ได้ เช่น ถอนรุ่น แก้ taxonomy หรือส่ง batch ดิบ. งานแก้รถตามปกติ — รุ่น เจเนอเรชัน รุ่นย่อย สเปก — ทำที่ editor. ทุกอย่างที่นี่เข้าคิวเดียวกัน: validate → revision → PR → release</p>
       </div>
       <Link className="adminPrimaryLink" href="/admin/library?table=canonical_input_batches">เปิด Input library</Link>
     </div>
