@@ -375,6 +375,9 @@ class CanonicalWritePipeline:
         self._registry_cache: dict[int, SpecRegistry] = {}
         #: year -> trim_id -> {fact file -> payload}
         self._fact_index: dict[int, dict[str, dict[Path, dict[str, Any]]]] = {}
+        #: year -> command_id -> revision row, for the replay check every
+        #: command starts with.
+        self._revision_index: dict[int, dict[str, dict[str, Any]]] = {}
 
     def _catalog(self, year: int) -> Catalog:
         if year not in self._catalog_cache:
@@ -437,10 +440,38 @@ class CanonicalWritePipeline:
         """A command that rewrote a model file invalidates the loaded catalogue."""
         self._catalog_cache.pop(year, None)
 
+    def _replayed(self, year: int, command_id: str) -> Optional[dict[str, Any]]:
+        """The revision this command already wrote, if it has run before.
+
+        Every command begins with this question, and answering it used to mean
+        reading and parsing the entire revision log -- one JSON object per edit
+        the catalogue has ever taken. At 18,000 revisions that is 18,000 parses
+        to answer a dictionary lookup, per command, and it grows with every
+        command that answers it. The log is read once per instance and kept as
+        an index that this pipeline's own writes append to.
+
+        Later rows win, matching the reversed scan this replaces: a command_id
+        is not supposed to repeat, but if it does, the most recent revision is
+        the one that describes the tree.
+        """
+        if year not in self._revision_index:
+            index: dict[str, dict[str, Any]] = {}
+            for row in _revision_rows(self.data_dir, year):
+                command = row.get("command_id")
+                if command:
+                    index[str(command)] = row
+            self._revision_index[year] = index
+        return self._revision_index[year].get(command_id)
+
+    def _remember_revision(self, year: int, revision: dict[str, Any]) -> None:
+        command_id = revision.get("command_id")
+        if command_id and year in self._revision_index:
+            self._revision_index[year][str(command_id)] = revision
+
     def apply(self, raw_command: dict[str, Any] | CanonicalWriteCommand) -> WriteResult:
         command = (raw_command if isinstance(raw_command, CanonicalWriteCommand)
                    else CanonicalWriteCommand.from_dict(raw_command))
-        replay = _find_revision(self.data_dir, command.year, command.command_id)
+        replay = self._replayed(command.year, command.command_id)
         if replay:
             repaired = _repair_replay_audit(self.data_dir, command.year, replay)
             replay_files = tuple(
@@ -500,6 +531,7 @@ class CanonicalWritePipeline:
         }
         state = _state_dir(self.data_dir, command.year)
         _append_jsonl(state / "revisions.jsonl", revision)
+        self._remember_revision(command.year, revision)
         event = {
             "schema_version": 1,
             "event_id": f"{revision_id}:{topic}",
