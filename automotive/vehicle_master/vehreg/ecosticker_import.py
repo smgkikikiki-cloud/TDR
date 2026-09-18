@@ -230,7 +230,7 @@ def _trim_row(plan: RowPlan) -> dict[str, Any]:
 
 def commands_for(plan: RowPlan, registry: SpecRegistry, *,
                  observed_at: str) -> list[dict[str, Any]]:
-    """One UPSERT_MODEL_BUNDLE plus one APPEND_SPEC per accepted value.
+    """One UPSERT_MODEL_BUNDLE, the row's ECO price, and one APPEND_SPEC per value.
 
     The registry is needed for the unit: a numeric fact must carry exactly the
     field's canonical unit or the writer rejects the whole batch.
@@ -260,6 +260,32 @@ def commands_for(plan: RowPlan, registry: SpecRegistry, *,
     }]
     source_ref = plan.vehicle.source_url
     observed = plan.vehicle.approved_at or observed_at
+
+    # The recommended retail price the manufacturer filed with the programme.
+    #
+    # It is recorded as ECO_STICKER_PRICE and dated to the day the record was
+    # approved, never as a current MSRP: an ECO record can be years old, and
+    # PriceLedger.current_list_price() resolves LIST_PRICE only, so nothing
+    # here can become the price a reader is shown today. It is evidence of
+    # what the price was when the car was homologated, which is a real fact
+    # with a real date, and that is all it claims to be.
+    if plan.vehicle.price_thb and plan.vehicle.price_thb > 0:
+        commands.append({
+            "operation": "APPEND_PRICE",
+            "canonical_id": plan.trim_id,
+            "payload": {
+                "trim_id": plan.trim_id,
+                "amount_thb": int(plan.vehicle.price_thb),
+                "price_type": "ECO_STICKER_PRICE",
+                "effective_from": observed,
+                "observed_at": observed,
+                "source": "ecosticker",
+                "source_ref": source_ref,
+                "notes": ("ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ "
+                          "เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน"),
+            },
+        })
+
     for key, value in sorted(plan.specs.items()):
         fact: dict[str, Any] = {
             "trim_id": plan.trim_id,

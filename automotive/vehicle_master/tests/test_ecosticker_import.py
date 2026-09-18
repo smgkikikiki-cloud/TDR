@@ -308,3 +308,67 @@ def test_a_row_with_no_approval_date_falls_back_to_the_run(catalog, registry):
              if command["operation"] == "APPEND_SPEC"]
     assert facts
     assert {fact["observed_at"] for fact in facts} == {"2026-09-18"}
+
+
+# ---------------------------------------------------------------------------
+# The price the manufacturer filed, and what it is not
+# ---------------------------------------------------------------------------
+
+def test_the_eco_price_is_recorded_at_the_date_it_was_filed(catalog, registry):
+    plan = plan_row(row("Runner Premium", approve_date="2023-04-11T09:00:00+07:00",
+                        recomend_retail_price_new="899000"), catalog, registry)
+    prices = [c["payload"] for c in commands_for(plan, registry, observed_at="2026-09-18")
+              if c["operation"] == "APPEND_PRICE"]
+    assert len(prices) == 1
+    price = prices[0]
+    assert price["amount_thb"] == 899000
+    # Dated 2023, not today. An ECO record can be years old, and the date it
+    # carries is the only honest one.
+    assert price["effective_from"] == "2023-04-11"
+    assert price["observed_at"] == "2023-04-11"
+
+
+def test_the_eco_price_can_never_become_the_price_a_reader_is_shown(catalog, registry):
+    """ECO_STICKER_PRICE, not LIST_PRICE.
+
+    PriceLedger.current_list_price() resolves the LIST_PRICE stream only, so
+    a homologation figure from three years ago cannot surface as this week's
+    MSRP no matter how recent its start date is.
+    """
+    plan = plan_row(row("Runner Premium", recomend_retail_price_new="899000"),
+                    catalog, registry)
+    prices = [c["payload"] for c in commands_for(plan, registry, observed_at="2026-09-18")
+              if c["operation"] == "APPEND_PRICE"]
+    assert prices and prices[0]["price_type"] == "ECO_STICKER_PRICE"
+    assert prices[0]["source"] == "ecosticker"
+    assert prices[0]["source_ref"].startswith("https://car.ecosticker.go.th/")
+
+
+def test_a_row_with_no_price_produces_no_price_command(catalog, registry):
+    for blank in ("", "-", "0", None):
+        plan = plan_row(row("Runner Premium", recomend_retail_price_new=blank),
+                        catalog, registry)
+        assert not [c for c in commands_for(plan, registry, observed_at="2026-09-18")
+                    if c["operation"] == "APPEND_PRICE"]
+
+
+def test_the_eco_price_survives_the_real_pipeline(tree, catalog, registry):
+    """The price lands in the ledger, and the catalogue still validates."""
+    from vehreg.pricing import PriceLedger, PriceType
+    plan = plan_import([row("Runner Premium", recomend_retail_price_new="899000")],
+                       catalog, registry)
+    batches = batches_from_plan(plan, registry, year=YEAR, actor="test",
+                                observed_at="2026-09-18", batch_prefix="eco-price")
+    pipeline = CanonicalInputPipeline(tree)
+    for batch in batches:
+        assert pipeline.apply(batch).status == "APPLIED", batch["batch_id"]
+
+    final = Catalog.load(tree, YEAR)
+    assert final.validate() == []
+    ledger = PriceLedger.load(tree, year=YEAR, catalog=final)
+    trim_id = plan.of(MATCHED)[0].trim_id
+    rows = ledger.records_for(trim_id)
+    assert [r.amount_thb for r in rows] == [899000]
+    assert rows[0].price_type is PriceType.ECO_STICKER_PRICE
+    # The thing that must not happen: it is not the current list price.
+    assert ledger.current_list_amount(trim_id) is None
