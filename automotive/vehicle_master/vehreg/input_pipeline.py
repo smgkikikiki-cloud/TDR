@@ -434,6 +434,7 @@ class CanonicalInputPipeline:
             writer = CanonicalWritePipeline(staged)
             write_results: list[dict[str, Any]] = []
             changed_relative: set[Path] = set()
+            revision_ids: list[str] = []
             canonical_write_applied = False
             for command in batch.commands:
                 operation = str(command.get("operation") or "").strip().upper()
@@ -462,6 +463,7 @@ class CanonicalInputPipeline:
                         f"batch {batch.batch_id!r} rejected at {command['command_id']}: {exc}"
                     ) from exc
                 canonical_write_applied = True
+                revision_ids.append(result.revision_id)
                 write_results.append({
                     "command_id": result.command_id,
                     "revision_id": result.revision_id,
@@ -499,8 +501,17 @@ class CanonicalInputPipeline:
                     path = state / name
                     if path.is_file():
                         changed_relative.add(path.relative_to(staged))
-                for path in (state / "shadow").glob("*.json"):
-                    changed_relative.add(path.relative_to(staged))
+                # One shadow file per revision, and this batch knows exactly
+                # which revisions it wrote. Globbing the directory instead used
+                # to work out to copying every shadow file the catalogue had
+                # ever accumulated back out of the sandbox on every batch --
+                # quadratic, and by 20,000 revisions it was the single slowest
+                # thing in a bulk import. The ones this batch did not create
+                # are, by definition, identical on both sides.
+                for revision_id in revision_ids:
+                    path = state / "shadow" / f"{revision_id}.json"
+                    if path.is_file():
+                        changed_relative.add(path.relative_to(staged))
 
             # Data/review artifacts first and audit state second. Canonical
             # writes can recover identical targets if a process dies between
