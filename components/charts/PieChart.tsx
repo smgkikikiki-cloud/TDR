@@ -2,17 +2,25 @@
 
 export type Slice = { label: string; value: number; color: string };
 
+/** Three decimals is a thousandth of a pixel at any size this chart is drawn
+ *  at, and it is also what keeps the markup identical on both sides of a
+ *  hydration: Math.cos and Math.sin are not required to agree to the last bit
+ *  between Node and a browser engine, and React compares these path strings
+ *  character by character. Unrounded, every arc reports a mismatch and React
+ *  discards the subtree. */
+const px = (value: number) => value.toFixed(3);
+
 function arcPath(cx: number, cy: number, rOuter: number, rInner: number, startDeg: number, endDeg: number) {
   const toXY = (deg: number, radius: number) => {
     const rad = (deg * Math.PI) / 180;
-    return [cx + radius * Math.cos(rad), cy + radius * Math.sin(rad)];
+    return [px(cx + radius * Math.cos(rad)), px(cy + radius * Math.sin(rad))];
   };
   const large = endDeg - startDeg > 180 ? 1 : 0;
   const [x1, y1] = toXY(startDeg, rOuter);
   const [x2, y2] = toXY(endDeg, rOuter);
   const [x3, y3] = toXY(endDeg, rInner);
   const [x4, y4] = toXY(startDeg, rInner);
-  return `M ${x1} ${y1} A ${rOuter} ${rOuter} 0 ${large} 1 ${x2} ${y2} L ${x3} ${y3} A ${rInner} ${rInner} 0 ${large} 0 ${x4} ${y4} Z`;
+  return `M ${x1} ${y1} A ${px(rOuter)} ${px(rOuter)} 0 ${large} 1 ${x2} ${y2} L ${x3} ${y3} A ${px(rInner)} ${px(rInner)} 0 ${large} 0 ${x4} ${y4} Z`;
 }
 
 /** A donut, not a pie: the hole holds the total so the chart carries a number,

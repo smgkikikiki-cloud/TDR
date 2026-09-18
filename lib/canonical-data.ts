@@ -300,14 +300,36 @@ export async function getCanonicalModelBundle(slug: string) {
  * returns exact MarketTrim grain so price/spec values are never mixed between
  * variants. Tyre/wheel fields remain canonical data but are not projected onto
  * the public compare object in this product phase. */
-export async function getCanonicalCompareTrims(limit = 600) {
+/** Every row of a table, not the first page of it.
+ *
+ *  PostgREST caps a response at a thousand rows however large a limit is
+ *  asked for, so a single `.limit(n)` silently returns a prefix once a table
+ *  outgrows that. The catalogue has, and the effect was not a shorter list
+ *  but a wrong one: the comparison loaded the first six hundred trims by
+ *  name, and a car outside that slice came back as "no longer in the
+ *  database" to a reader who had just chosen it from the catalogue.
+ */
+async function allRows(db: any, table: string, orderBy: string, pageSize = 1000) {
+  const rows: any[] = [];
+  for (let from = 0; ; from += pageSize) {
+    const { data, error } = await db.from(table).select("*")
+      .order(orderBy).range(from, from + pageSize - 1);
+    if (error) throw error;
+    rows.push(...(data || []));
+    if (!data || data.length < pageSize) return rows;
+  }
+}
+
+export async function getCanonicalCompareTrims(limit?: number) {
   const db = publicDb();
   if (!db) return [];
-  const [{ data: rawTrims, error: trimError }, modelRows] = await Promise.all([
-    db.from("current_market_trims").select("*").order("name").limit(limit),
-    getCanonicalModels(600),
+  const [rawTrims, modelRows] = await Promise.all([
+    limit
+      ? db.from("current_market_trims").select("*").order("name").limit(limit)
+          .then(({ data, error }: any) => { if (error) throw error; return data || []; })
+      : allRows(db, "current_market_trims", "name"),
+    getCanonicalModels(1000),
   ]);
-  if (trimError) throw trimError;
   const models = new Map((modelRows || []).map((row: any) => [row.canonical_id, row]));
   return (rawTrims || [])
     .map((raw: any) => {

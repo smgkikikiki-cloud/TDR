@@ -27,8 +27,16 @@ export function LineChart({
 }) {
   const padL = 46, padR = 10, padT = 12, padB = 24;
   const values = series.flatMap((s) => s.points).filter((v): v is number => v !== null && Number.isFinite(v));
-  const hi = values.length ? Math.max(...values) : 1;
-  const lo = Math.min(0, ...(values.length ? values : [0]));
+  // A line is not a bar: it encodes position, not length, so it does not owe
+  // the reader a zero baseline -- and forcing one on a series that lives
+  // between 46k and 61k squeezes every month into the top eighth of the frame
+  // and hides the very change the chart exists to show. The range is padded
+  // instead, so the shape is readable and the axis labels state the level.
+  const rawHi = values.length ? Math.max(...values) : 1;
+  const rawLo = values.length ? Math.min(...values) : 0;
+  const pad = (rawHi - rawLo) * 0.15 || Math.max(1, rawHi * 0.1);
+  const hi = rawHi + pad;
+  const lo = Math.max(0, rawLo - pad);
   const span = hi - lo || 1;
   const innerW = width - padL - padR;
   const innerH = height - padT - padB;

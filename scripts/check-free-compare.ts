@@ -117,5 +117,27 @@ check("a spec group with no values at all stays hidden",
   specGroups.some((group) => group.rows.some((row) => row.key === "spec:performance.top_speed_kmh")), false);
 check("safety reaches the table", specGroups.some((group) => group.title.includes("ความปลอดภัย")), true);
 
+console.log("\nfree compare — every car in the catalogue can be compared");
+// PostgREST returns at most a thousand rows whatever limit is asked for, so a
+// single .limit() silently returns a prefix once a table outgrows it. The
+// catalogue has 1,152 trims: the comparison used to load the first 600 by
+// name and report a real car outside that slice as no longer in the database.
+const fs2 = await import("node:fs");
+const canonicalData = fs2.readFileSync("lib/canonical-data.ts", "utf8");
+check("trims are paged rather than cut off at a limit",
+  canonicalData.includes("async function allRows") && canonicalData.includes(".range(from, from + pageSize - 1)"), true);
+check("a short page ends the paging", canonicalData.includes("data.length < pageSize"), true);
+for (const route of ["app/api/compare/trims/route.ts", "app/api/tools/compare/route.ts"]) {
+  check(`${route} asks for every trim, not the first page`,
+    /getCanonicalCompareTrims\(\s*\)/.test(fs2.readFileSync(route, "utf8")), true);
+}
+const picker = fs2.readFileSync("app/compare/page.tsx", "utf8");
+check("the picker is model then trim, not one list of every trim",
+  picker.includes("groupByModel"), true);
+check("choosing a car does not require an account",
+  picker.includes("compareSignIn") && !picker.includes('ต้องเข้าสู่ระบบก่อนเทียบรถ'), true);
+check("a selection survives being sent to the login page",
+  picker.includes("/member/login?next="), true);
+
 console.log(failed ? `\n${failed} check(s) failed` : "\nall free compare checks passed");
 process.exit(failed ? 1 : 0);

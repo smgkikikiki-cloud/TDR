@@ -28,7 +28,10 @@ export async function GET(request: NextRequest) {
       [...requestedIds].sort().join(","), diffOnly,
     ]);
 
-    const all = (await getCanonicalCompareTrims(600)) as FreeCompareTrim[];
+    // Every trim, not the first page of them: a selection made from the
+    // catalogue must resolve, and reporting a real car as missing is worse
+    // than the query being a little larger.
+    const all = (await getCanonicalCompareTrims()) as FreeCompareTrim[];
     const byId = new Map(all.map((trim) => [trim.id, trim]));
     const selected = requestedIds.map((id) => byId.get(id)).filter(Boolean) as FreeCompareTrim[];
     // Which fields are comparable, and what they are called, comes from the
