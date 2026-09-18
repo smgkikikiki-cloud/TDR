@@ -65,5 +65,16 @@ check("page labels ECO price as evidence only", page.includes("ECO evidence pric
 check("server bundle explicitly traces normalized snapshot", nextConfig.includes("normalized.jsonl.gz"), true);
 check("server bundle explicitly traces manifest", nextConfig.includes("manifest.json"), true);
 
+console.log("\nevidence — a reviewer can open the record they are deciding on");
+const ecoLib = fs.readFileSync("lib/eco-sticker.ts", "utf8");
+check("the official ECO detail path is pinned in one place",
+  ecoLib.includes('"https://car.ecosticker.go.th/landing-page/detail"'), true);
+check("a source id is escaped into the URL, not concatenated raw",
+  ecoLib.includes("encodeURIComponent(sourceId)"), true);
+check("review rows link to the evidence instead of printing the id",
+  page.includes("href={ecoStickerUrl(id)}"), true);
+check("evidence opens beside the review, so the form state survives",
+  /target="_blank" rel="noreferrer noopener"/.test(page), true);
+
 console.log(failed ? `\n${failed} check(s) failed` : "\nall ECO MarketTrim admin checks passed");
 process.exit(failed ? 1 : 0);

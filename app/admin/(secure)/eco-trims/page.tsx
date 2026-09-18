@@ -1,4 +1,5 @@
 import { randomUUID } from "node:crypto";
+import { ecoStickerUrl } from "@/lib/eco-sticker";
 import Link from "next/link";
 import { enqueueEcoAttachExistingTrim, enqueueEcoMarketTrim, enqueueEcoReviewDisposition } from "@/app/admin/eco-trim-actions";
 import ecoReviewState from "@/automotive/vehicle_master/vehreg/data/2026/ingest/ecosticker/review/2026-09-08.json";
@@ -192,7 +193,7 @@ export default async function EcoTrimReviewPage({ searchParams }: { searchParams
       <tbody>{shown.map((row) => <tr key={row.key}>
         <td className={styles.impactCell}><b>{n(row.registrations3m)}</b><br/><small>{Number(row.registrationSharePct || 0).toFixed(2)}% of mapped 3M · {row.priceBlocker}</small></td>
         <td className={styles.targetCell}><b>{row.brand} {row.modelName}</b><br/><small>{row.generationId} · {row.powertrain}</small></td>
-        <td className={styles.evidenceCell}><b>{row.rawLabel}</b><br/><small>{row.sourceCount} ECO UUID{row.sourceCount === 1 ? "" : "s"} · ECO evidence price {money(row.ecoPriceMinThb, row.ecoPriceMaxThb)}</small><br/><small>{row.sourceIds.slice(0,2).join(" · ")}{row.sourceIds.length > 2 ? ` · +${row.sourceIds.length - 2}` : ""}</small></td>
+        <td className={styles.evidenceCell}><b>{row.rawLabel}</b><br/><small>{row.sourceCount} ECO UUID{row.sourceCount === 1 ? "" : "s"} · ECO evidence price {money(row.ecoPriceMinThb, row.ecoPriceMaxThb)}</small><br/><small className={styles.evidenceLinks}>{row.sourceIds.slice(0,3).map((id) => <a key={id} href={ecoStickerUrl(id)} target="_blank" rel="noreferrer noopener">{id.slice(0, 8)}</a>)}{row.sourceIds.length > 3 ? <span>+{row.sourceIds.length - 3}</span> : null}</small></td>
         <td>{row.attached ? <><b>ATTACHED</b><br/><small>อย่างน้อยหนึ่ง source UUID อยู่ใน canonical trim แล้ว</small></> : row.reviewDisposition ? <><b>{row.reviewDisposition.toUpperCase()}</b><br/><small>{row.reviewSummary || "HUMAN reviewed"}</small></> : <><b>{row.currentTrimCount} current trims</b><br/><small>{row.humanReviewedCount ? `${row.humanReviewedCount}/${row.sourceCount} source refs มี partial HUMAN decision` : row.existingTrimOptions.length ? `${row.existingTrimOptions.length} same-generation/powertrain trim candidates` : row.currentTrimCount ? "มี trim แต่ไม่มี candidate ที่ generation/powertrain ตรง" : "NO_MARKET_TRIM priority"}</small></>}</td>
         <td>{row.attached ? <span>ไม่เสนอ review ซ้ำ</span> : row.reviewDisposition ? <form action={enqueueEcoReviewDisposition} className={styles.reviewForm}>
           <input type="hidden" name="group_key" value={row.key}/>

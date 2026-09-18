@@ -471,7 +471,24 @@ class CanonicalInputPipeline:
                     "idempotent_replay": result.idempotent_replay,
                 })
                 for changed in result.changed_files:
-                    changed_relative.add(Path(changed).relative_to(staged))
+                    # A write that lands outside the staged copy has already
+                    # bypassed the whole point of staging: it edited the live
+                    # tree directly, without validation rollback and without
+                    # appearing in the file list this batch commits. Today
+                    # every writer derives its paths from the staged root, so
+                    # this cannot happen -- and it is asserted here so that the
+                    # next command to hardcode a path off the repository root
+                    # fails loudly instead of quietly escaping the sandbox.
+                    path = Path(changed)
+                    try:
+                        changed_relative.add(path.relative_to(staged))
+                    except ValueError:
+                        raise CanonicalInputError(
+                            f"batch {batch.batch_id!r} at {command['command_id']}: "
+                            f"wrote {path} outside the staged tree {staged}; a "
+                            "canonical writer must resolve every path from the "
+                            "data directory it was given"
+                        ) from None
 
             # Review-only batches must not pretend pre-existing revision/outbox/
             # shadow files changed. Those audit artifacts belong only to normal
