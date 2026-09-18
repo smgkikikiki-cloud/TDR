@@ -5,7 +5,7 @@
 export const primaryNav = [
   { href: "/models", label: "ฐานข้อมูลรถยนต์" },
   { href: "/compare", label: "เปรียบเทียบสเปก" },
-  { href: "/reports", label: "ข้อมูลตลาดรถยนต์" },
+  { href: "/market", label: "ข้อมูลตลาดรถยนต์" },
   { href: "/research", label: "บทวิเคราะห์เชิงลึก" },
 ];
 

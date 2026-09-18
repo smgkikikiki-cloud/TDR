@@ -6,12 +6,13 @@ import { specGroupsForTrim, type CompareSpecField, type FreeCompareTrim } from "
 import { trimLocalId } from "@/lib/trim-editor-state";
 import { displayName } from "@/lib/display-name";
 import { bodyLabel } from "@/lib/body-labels";
+import { groupedNumber } from "@/components/charts/format";
 
 export const dynamic = "force-dynamic";
 
 function baht(value: unknown) {
   const n = Number(value);
-  return Number.isFinite(n) && n > 0 ? `฿${n.toLocaleString("th-TH")}` : null;
+  return Number.isFinite(n) && n > 0 ? `฿${groupedNumber(n)}` : null;
 }
 
 /** The trim's own page: everything the catalogue knows about one car.

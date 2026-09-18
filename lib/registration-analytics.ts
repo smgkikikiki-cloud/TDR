@@ -286,7 +286,7 @@ function needsHistoricalImportOrigin(dimension: MarketDimension, filters: Market
     || Boolean(filters.originCountries?.length);
 }
 
-async function fetchRegistrationRows(
+export async function fetchRegistrationRows(
   db: any,
   window: MarketPeriodWindow,
   registrationTypes: string[] | undefined,
@@ -328,7 +328,7 @@ async function fetchRegistrationRows(
   throw new RegistrationAccessError(413, `registration market window exceeds ${MAX_FACT_ROWS.toLocaleString()} fact rows`);
 }
 
-async function canonicalizeRegistrationRows(
+export async function canonicalizeRegistrationRows(
   db: any,
   rows: any[],
   requireHistoricalImportOrigin: boolean,
