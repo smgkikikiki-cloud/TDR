@@ -2,58 +2,61 @@
 // (REGISTRATION_PLAN/REGISTRATION_PRODUCT in lib/billing.ts, kept for
 // backward compatibility) with a small, explicit table of self-service
 // plans. Each plan's Stripe Price ID comes from an env var so no live
-// Stripe price is ever hardcoded here; annual prices are intentionally
-// not decided yet (see docs/BILLING.md) and are reported as unconfigured
-// until product sets a price and the corresponding env var.
+// Stripe price is ever hardcoded here -- setting the prices below only
+// changes what this app *displays* and *expects*; the amount actually
+// charged is whatever the Stripe Price object behind that env var was
+// created with. Keeping the two in sync is an operational step outside
+// this repo (create/update the Price in Stripe, then point the env var
+// at it), not something code can enforce.
+//
+// Individual was scrapped as a sellable tier (docs/PRODUCT_ACCESS.md) --
+// Pro is the only paid product now, offered at three commitment lengths
+// instead of two separate tiers. Quarterly and annual bill the full
+// period upfront (Stripe's native recurring interval + interval_count),
+// not a discounted monthly charge.
 import { TIER_PRODUCT, type Tier } from "@/lib/access-policy";
 
-export type BillingInterval = "monthly" | "annual";
+export type BillingInterval = "monthly" | "quarterly" | "annual";
 
 export interface PlanDefinition {
   planCode: string;
-  tier: Extract<Tier, "INDIVIDUAL" | "PRO">;
+  tier: Extract<Tier, "PRO">;
   product: string;
   interval: BillingInterval;
-  /** THB, or null when the price has not been decided yet (annual plans). */
-  priceThb: number | null;
+  /** THB per month, for display/comparison across intervals. */
+  priceThbPerMonth: number;
+  /** THB actually billed per Stripe invoice at this interval. */
+  priceThbPerInterval: number;
   /** Env var holding this plan's Stripe Price ID. */
   stripePriceEnvVar: string;
 }
 
 export const PLAN_CATALOG: PlanDefinition[] = [
   {
-    planCode: "individual_monthly",
-    tier: "INDIVIDUAL",
-    product: TIER_PRODUCT.INDIVIDUAL,
-    interval: "monthly",
-    priceThb: 399,
-    stripePriceEnvVar: "STRIPE_PRICE_INDIVIDUAL_MONTHLY",
-  },
-  {
-    planCode: "individual_annual",
-    tier: "INDIVIDUAL",
-    product: TIER_PRODUCT.INDIVIDUAL,
-    interval: "annual",
-    // Not decided yet -- must be materially better than 12x monthly per
-    // product requirement, but the exact figure is a pricing decision this
-    // implementation must not invent.
-    priceThb: null,
-    stripePriceEnvVar: "STRIPE_PRICE_INDIVIDUAL_ANNUAL",
-  },
-  {
     planCode: "pro_monthly",
     tier: "PRO",
     product: TIER_PRODUCT.PRO,
     interval: "monthly",
-    priceThb: 990,
+    priceThbPerMonth: 1290,
+    priceThbPerInterval: 1290,
     stripePriceEnvVar: "STRIPE_PRICE_PRO_MONTHLY",
+  },
+  {
+    planCode: "pro_quarterly",
+    tier: "PRO",
+    product: TIER_PRODUCT.PRO,
+    interval: "quarterly",
+    priceThbPerMonth: 990,
+    priceThbPerInterval: 990 * 3,
+    stripePriceEnvVar: "STRIPE_PRICE_PRO_QUARTERLY",
   },
   {
     planCode: "pro_annual",
     tier: "PRO",
     product: TIER_PRODUCT.PRO,
     interval: "annual",
-    priceThb: null,
+    priceThbPerMonth: 790,
+    priceThbPerInterval: 790 * 12,
     stripePriceEnvVar: "STRIPE_PRICE_PRO_ANNUAL",
   },
 ];

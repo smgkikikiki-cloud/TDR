@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
     }
 
     if (ctx.policy.researchAccess !== "full") {
-      return NextResponse.json({ error: "full research requires an Individual or Pro plan" }, { status: 403 });
+      return NextResponse.json({ error: "full research requires a Pro plan" }, { status: 403 });
     }
     // Server-computed fingerprint (the requested item ids), never a raw
     // client-supplied token -- see lib/access-policy-server.ts::requireUsage.

@@ -14,7 +14,7 @@ export const dynamic = "force-dynamic";
 // pretending any of it is live yet -- and `surface`, so a consumer (e.g.
 // the Sales Tools dashboard) can filter to only the reserved capabilities
 // that actually belong on it.
-const LADDER_AUDIENCES: FeatureAudience[] = ["FREE", "INDIVIDUAL", "PRO", "CORPORATE"];
+const LADDER_AUDIENCES: FeatureAudience[] = ["FREE", "PRO", "CORPORATE"];
 
 function bearer(request: NextRequest) {
   const match = /^Bearer\s+(.+)$/i.exec(request.headers.get("authorization") || "");
