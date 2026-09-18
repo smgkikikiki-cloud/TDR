@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "automotive/vehicle_master/vehreg/**"
+      - "automotive/vehicle_master/data/**"
       - "automotive/vehicle_master/integration_data/**"
       - "automotive/vehicle_master/tdr_bridge/**"
       - ".github/workflows/vehicle-release.yml"

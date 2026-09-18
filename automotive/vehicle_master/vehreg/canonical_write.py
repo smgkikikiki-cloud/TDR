@@ -14,6 +14,7 @@ from __future__ import annotations
 from copy import deepcopy
 from dataclasses import dataclass
 from datetime import date, datetime, timezone
+import csv
 import hashlib
 import json
 import os
@@ -27,6 +28,8 @@ from .normalize import slug
 from .pricing import PriceLedger, PricingError, PriceType
 from .entities import to_jsonable
 from .product import close_price, correct_price, save_campaign
+from .state_seed import SEED_COLUMNS as _STATE_SEED_COLUMNS
+from .taxonomy import ImportType, normalize_country
 
 
 class CanonicalWriteError(ValueError):
@@ -41,7 +44,9 @@ _ALLOWED_COMMANDS = {
     "CLOSE_PRICE",
     "UPSERT_CAMPAIGN",
     "APPEND_SPEC",
+    "APPEND_PRODUCTION_STATE",
 }
+_STATE_MONTH_RE = re.compile(r"^\d{4}-(0[1-9]|1[0-2])$")
 _SAFE_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$")
 
 
@@ -334,8 +339,15 @@ def _as_of_date(value: Any) -> Optional[date]:
 class CanonicalWritePipeline:
     """Validated, idempotent, revisioned writer for canonical vehicle facts."""
 
-    def __init__(self, data_dir: Path | str = DATA_DIR) -> None:
+    def __init__(self, data_dir: Path | str = DATA_DIR, *,
+                 production_state_path: Path | str | None = None) -> None:
         self.data_dir = Path(data_dir)
+        #: Override for tests only. Production always resolves off the real
+        #: DATA_DIR, independent of ``data_dir`` above, because the seed CSV
+        #: lives at a fixed repo location (data/research/), not per-catalog.
+        self._production_state_path_override = (
+            Path(production_state_path) if production_state_path is not None else None
+        )
 
     def apply(self, raw_command: dict[str, Any] | CanonicalWriteCommand) -> WriteResult:
         command = (raw_command if isinstance(raw_command, CanonicalWriteCommand)
@@ -371,6 +383,8 @@ class CanonicalWritePipeline:
             topic, entity_type, entity_id, before, after, changed = self._upsert_campaign(command)
         elif command.operation == "APPEND_SPEC":
             topic, entity_type, entity_id, before, after, changed = self._append_spec(command)
+        elif command.operation == "APPEND_PRODUCTION_STATE":
+            topic, entity_type, entity_id, before, after, changed = self._append_production_state(command)
         else:
             raise CanonicalWriteError(f"unsupported operation {command.operation}")
 
@@ -378,7 +392,10 @@ class CanonicalWritePipeline:
             f"{command.year}:{command.command_id}:{_hash(before)}:{_hash(after)}".encode()
         ).hexdigest()[:24]
         now = datetime.now(timezone.utc).isoformat(timespec="seconds")
-        durable_changed = [str(Path(path).relative_to(self.data_dir)) for path in changed]
+        # os.path.relpath (not Path.relative_to) because APPEND_PRODUCTION_STATE
+        # writes data/research/monthly_production_state.csv, a sibling of
+        # self.data_dir rather than a child -- relative_to would raise there.
+        durable_changed = [os.path.relpath(path, self.data_dir) for path in changed]
         revision = {
             "schema_version": 1,
             "revision_id": revision_id,
@@ -670,6 +687,97 @@ class CanonicalWritePipeline:
         after_ledger = SpecLedger.load(self.data_dir, command.year, registry=registry, catalog=catalog)
         after = [to_jsonable(row) for row in after_ledger.facts if row.trim_id == trim_id]
         return "spec", "market_trim", trim_id, before, after, (str(target),)
+
+    def _production_state_path(self) -> Path:
+        """``data/research/monthly_production_state.csv`` -- a fixed repo
+        location, not per-catalog, so it resolves off the real DATA_DIR
+        rather than ``self.data_dir`` (which tests may point at a tmp
+        sandbox). historical_state.py already reads this exact path as the
+        reviewed seed for period-aware serving, so writing here (rather than
+        inventing a second file) means a new release build picks this up
+        with no other change. Tests override via ``production_state_path``."""
+        if self._production_state_path_override is not None:
+            return self._production_state_path_override
+        vehicle_master_root = Path(DATA_DIR).resolve().parent.parent
+        return vehicle_master_root / "data" / "research" / "monthly_production_state.csv"
+
+    def _load_production_state_rows(self, path: Path) -> list[dict[str, str]]:
+        if not path.exists():
+            return []
+        with path.open("r", encoding="utf-8-sig", newline="") as handle:
+            reader = csv.DictReader(handle)
+            return [dict(row) for row in reader]
+
+    def _write_production_state_rows(self, path: Path, rows: list[dict[str, str]]) -> None:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        tmp = path.with_suffix(path.suffix + ".tmp")
+        with tmp.open("w", encoding="utf-8", newline="") as handle:
+            writer = csv.DictWriter(handle, fieldnames=list(_STATE_SEED_COLUMNS))
+            writer.writeheader()
+            for row in rows:
+                writer.writerow({column: row.get(column, "") or "" for column in _STATE_SEED_COLUMNS})
+        os.replace(tmp, path)
+
+    def _append_production_state(self, command: CanonicalWriteCommand):
+        """APPEND_PRODUCTION_STATE: one reviewed origin/import-type change-point.
+
+        This is deliberately a *new row*, never an edit of another command's
+        row in place -- the same append-only discipline as APPEND_PRICE. A
+        correction is a later effective_month with the corrected value, or
+        (rarely) the same unit/grain/effective_month re-submitted, which
+        replaces only that one change-point and is recorded as before/after
+        in the revision, exactly like every other command here.
+        """
+        payload = deepcopy(command.payload)
+        unit_id = command.canonical_id or str(payload.get("unit_id") or "").strip()
+        if not unit_id:
+            raise CanonicalWriteError("APPEND_PRODUCTION_STATE requires unit_id/canonical_id")
+        grain = str(payload.get("grain") or "MODEL").strip().upper()
+        if grain not in {"MODEL", "VARIANT"}:
+            raise CanonicalWriteError("APPEND_PRODUCTION_STATE grain must be MODEL or VARIANT")
+        month = str(payload.get("effective_month") or "").strip()
+        if not _STATE_MONTH_RE.match(month):
+            raise CanonicalWriteError("APPEND_PRODUCTION_STATE effective_month must be YYYY-MM")
+
+        catalog = Catalog.load(self.data_dir, command.year)
+        registry = catalog.models if grain == "MODEL" else catalog.variants
+        if unit_id not in registry:
+            raise CanonicalWriteError(f"unknown {grain.lower()} {unit_id!r} in catalog year {command.year}")
+
+        origin_raw = str(payload.get("origin_country") or "").strip()
+        import_raw = str(payload.get("import_type") or "").strip()
+        if not origin_raw and not import_raw:
+            raise CanonicalWriteError("APPEND_PRODUCTION_STATE requires origin_country and/or import_type")
+        origin_country = normalize_country(origin_raw) if origin_raw else ""
+        try:
+            import_type = ImportType.parse(import_raw).value if import_raw else ""
+        except ValueError as exc:
+            raise CanonicalWriteError(f"APPEND_PRODUCTION_STATE: {exc}") from exc
+
+        evidence = str(payload.get("evidence") or "").strip()
+        if not evidence:
+            raise CanonicalWriteError("APPEND_PRODUCTION_STATE requires evidence (why this change-point is true)")
+        source_url = str(payload.get("source_url") or "").strip()
+
+        path = self._production_state_path()
+        rows = self._load_production_state_rows(path)
+        key = (unit_id, grain, month)
+
+        def row_key(row: dict[str, str]) -> tuple[str, str, str]:
+            return (str(row.get("unit_id") or ""), str(row.get("grain") or "MODEL").upper(),
+                    str(row.get("effective_month") or ""))
+
+        before = deepcopy(next((row for row in rows if row_key(row) == key), None))
+        new_row = {
+            "unit_id": unit_id, "grain": grain, "effective_month": month,
+            "origin_country": origin_country, "import_type": import_type,
+            "source_url": source_url, "evidence": evidence,
+        }
+        rows = [row for row in rows if row_key(row) != key]
+        rows.append(new_row)
+        rows.sort(key=row_key)
+        self._write_production_state_rows(path, rows)
+        return "production_state", grain.lower(), unit_id, before, new_row, (str(path),)
 
 
 __all__ = [

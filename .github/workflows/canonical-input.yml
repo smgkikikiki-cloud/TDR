@@ -89,7 +89,7 @@ jobs:
           git config user.name "TDR canonical input"
           git config user.email "noreply@github.com"
           git checkout -b "$branch"
-          git add vehreg/data
+          git add vehreg/data data/research
           git commit -m "Apply ${{ steps.changes.outputs.count }} canonical input batch(es)"
           git push -u origin "$branch"
           pr_url=$(gh pr create --title "Canonical vehicle input (${GITHUB_RUN_ID})" \
