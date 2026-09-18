@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getPublicMarket, PUBLIC_BRAND_LIMIT } from "@/lib/public-market";
+import { getPublicMarket, isPublicDimension, PUBLIC_BRAND_LIMIT, PUBLIC_DIMENSIONS } from "@/lib/public-market";
 import { MarketCharts } from "./MarketCharts";
 import { groupedNumber } from "@/components/charts/format";
 
@@ -15,8 +15,13 @@ export const dynamic = "force-dynamic";
  * dimension and the filters, reading it per model, going back further, and
  * taking it away as a file are what an account is for, and they are unchanged.
  */
-export default async function MarketPage() {
-  const market = await getPublicMarket();
+export default async function MarketPage({ searchParams }: {
+  searchParams: Promise<{ by?: string }>;
+}) {
+  const { by } = await searchParams;
+  const dimension = isPublicDimension(by) ? by : "brand";
+  const market = await getPublicMarket(dimension);
+  const dimensionLabel = PUBLIC_DIMENSIONS.find((item) => item.value === dimension)!.label;
 
   return <div className="marketPage">
     <section className="sfPageHead">
@@ -33,16 +38,28 @@ export default async function MarketPage() {
       ) : null}
     </section>
 
+    {/* What the market is cut BY is open; which slice of it you look at is
+        not. Links rather than a control, so each cut is its own address. */}
+    <nav className="marketCuts" aria-label="มุมมองตลาด">
+      {PUBLIC_DIMENSIONS.map((item) => (
+        <Link key={item.value} href={item.value === "brand" ? "/market" : `/market?by=${item.value}`}
+              className={item.value === dimension ? "on" : undefined}
+              aria-current={item.value === dimension ? "page" : undefined}>
+          {item.label}
+        </Link>
+      ))}
+    </nav>
+
     {market ? (
       <>
-        <MarketCharts market={market} />
+        <MarketCharts market={market} title={dimensionLabel} />
 
         <section className="marketTableWrap" aria-label="ตารางส่วนแบ่งตลาดรายแบรนด์">
           {/* The table is not a duplicate of the donut: three of the palette's
               hues sit below 3:1 against this surface, and exact figures beside
               the chart are the relief that requires. */}
           <table className="marketTable">
-            <thead><tr><th>#</th><th>แบรนด์</th><th>จดทะเบียน</th><th>ส่วนแบ่ง</th></tr></thead>
+            <thead><tr><th>#</th><th>{dimensionLabel}</th><th>จดทะเบียน</th><th>ส่วนแบ่ง</th></tr></thead>
             <tbody>
               {market.brands.map((brand, index) => (
                 <tr key={brand.key}>
@@ -55,7 +72,7 @@ export default async function MarketPage() {
               {market.others ? (
                 <tr className="marketTableOthers">
                   <td>—</td>
-                  <td><b>แบรนด์อื่น</b></td>
+                  <td><b>อื่นๆ</b></td>
                   <td>{groupedNumber(market.others.registrations)}</td>
                   <td>{groupedNumber(market.others.sharePct, 2)}%</td>
                 </tr>
@@ -66,8 +83,8 @@ export default async function MarketPage() {
 
         <section className="marketMore">
           <div>
-            <b>หน้านี้แสดงงวดล่าสุด ระดับแบรนด์ {PUBLIC_BRAND_LIMIT} อันดับแรก</b>
-            <span>เลือกช่วงเวลาเอง ดูรายรุ่น แยกตามเซกเมนต์/ประเภทจดทะเบียน ย้อนหลังมากกว่านี้ และดาวน์โหลด อยู่ในบัญชีสมาชิก</span>
+            <b>หน้านี้แสดงงวดล่าสุด {PUBLIC_BRAND_LIMIT} อันดับแรกของแต่ละมุมมอง</b>
+            <span>เลือกช่วงเวลาเอง (rolling 3/6/12, YTD) เทียบปีต่อปี ดูรายรุ่น กรองตามแบรนด์/segment/ตัวถัง/ประเภทจดทะเบียน ย้อนหลังมากกว่านี้ และดาวน์โหลด อยู่ในบัญชีสมาชิก</span>
           </div>
           <Link className="sfBtn" href="/member/market">เปิดมุมมองเต็ม</Link>
         </section>

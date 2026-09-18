@@ -29,10 +29,35 @@ import {
   resolveMarketWindow,
   shiftReportPeriod,
   sliceMarketFacts,
+  type MarketDimension,
   type MarketSliceRow,
 } from "@/lib/registration-market";
 
-/** How many brands are named before the rest become one slice. Eight is the
+/** The cuts a public reader may take.
+ *
+ *  The engine ranks twelve dimensions. These six are the ones that describe
+ *  the shape of the market rather than the performance of a product: what is
+ *  selling as a category, not which car. `model` is deliberately absent, and
+ *  so are the filters -- a reader here changes what the market is cut BY,
+ *  never which slice of it they are looking at. That distinction is the whole
+ *  boundary: the shape is published, the interrogation is sold.
+ */
+export const PUBLIC_DIMENSIONS = [
+  { value: "brand", label: "แบรนด์" },
+  { value: "powertrain", label: "ระบบขับเคลื่อน" },
+  { value: "body_type", label: "ประเภทตัวถัง" },
+  { value: "segment", label: "Segment" },
+  { value: "origin_country", label: "ประเทศที่ผลิต" },
+  { value: "oem_group", label: "กลุ่มผู้ผลิต" },
+] as const satisfies readonly { value: MarketDimension; label: string }[];
+
+export type PublicDimension = (typeof PUBLIC_DIMENSIONS)[number]["value"];
+
+export function isPublicDimension(value: string | null | undefined): value is PublicDimension {
+  return PUBLIC_DIMENSIONS.some((item) => item.value === value);
+}
+
+/** How many entries are named before the rest become one slice. Eight is the
  *  categorical palette's length: a ninth hue would have to be invented, and an
  *  invented hue is how a chart stops being readable. */
 export const PUBLIC_BRAND_LIMIT = 8;
@@ -43,10 +68,11 @@ export const PUBLIC_TREND_MONTHS = 12;
 export type PublicMarketMover = { key: string; label: string; delta: number; sharePct: number };
 
 export type PublicMarket = {
+  dimension: PublicDimension;
   period: string;
   previousPeriod: string | null;
   totalRegistrations: number;
-  /** Brand share for the latest month, largest first, with the tail folded in. */
+  /** Share for the latest month, largest first, with the tail folded in. */
   brands: { key: string; label: string; registrations: number; sharePct: number }[];
   others: { registrations: number; sharePct: number } | null;
   /** Month-on-month change in units, biggest movement either way first. */
@@ -56,11 +82,14 @@ export type PublicMarket = {
   trend: { period: string; total: number | null }[];
 };
 
-async function periodTotal(db: any, period: string): Promise<{ rows: MarketSliceRow[]; total: number }> {
+async function periodTotal(db: any, period: string, dimension: PublicDimension,
+): Promise<{ rows: MarketSliceRow[]; total: number }> {
   const window = resolveMarketWindow(period, "month");
+  // No registration-type filter is ever applied here, and registration_type is
+  // not a public cut, so the "keep it open" flag has nothing to keep open.
   const raw = await fetchRegistrationRows(db, window, undefined, false);
   const facts = await canonicalizeRegistrationRows(db, raw, false);
-  const rows = sliceMarketFacts({ facts, dimension: "brand", limit: 500 });
+  const rows = sliceMarketFacts({ facts, dimension, limit: 500 });
   return { rows, total: rows.reduce((sum, row) => sum + Number(row.registrations || 0), 0) };
 }
 
@@ -75,7 +104,7 @@ async function latestPublishedPeriod(db: any): Promise<string | null> {
   return String(data[0].period);
 }
 
-export async function getPublicMarket(): Promise<PublicMarket | null> {
+export async function getPublicMarket(dimension: PublicDimension = "brand"): Promise<PublicMarket | null> {
   const db = adminDb();
   if (!db) return null;
 
@@ -84,8 +113,8 @@ export async function getPublicMarket(): Promise<PublicMarket | null> {
   const previousPeriod = shiftReportPeriod(period, -1);
 
   const [current, previous] = await Promise.all([
-    periodTotal(db, period),
-    periodTotal(db, previousPeriod).catch(() => ({ rows: [] as MarketSliceRow[], total: 0 })),
+    periodTotal(db, period, dimension),
+    periodTotal(db, previousPeriod, dimension).catch(() => ({ rows: [] as MarketSliceRow[], total: 0 })),
   ]);
 
   const named = current.rows.slice(0, PUBLIC_BRAND_LIMIT).map((row) => ({
@@ -122,7 +151,7 @@ export async function getPublicMarket(): Promise<PublicMarket | null> {
     if (month === period) return current.total;
     if (month === previousPeriod) return previous.total || null;
     try {
-      const slice = await periodTotal(db, month);
+      const slice = await periodTotal(db, month, dimension);
       return slice.total || null;
     } catch {
       return null;
@@ -130,6 +159,7 @@ export async function getPublicMarket(): Promise<PublicMarket | null> {
   }));
 
   return {
+    dimension,
     period,
     previousPeriod,
     totalRegistrations: current.total,

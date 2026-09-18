@@ -16,12 +16,23 @@ console.log("public market — the opening in the paywall stays the size it was 
 // the one deliberate way any of it reaches an anonymous reader. These hold the
 // shape of that opening; widening it should have to be a decision, not a diff.
 check("it runs on the server credential, never the browser's", lib.includes("adminDb()"));
-check("brand grain only — no model, trim or segment cut",
-  /dimension: "brand"/.test(lib) && !/dimension: "(model|trim|segment|body_type)"/.test(lib));
+// The cut can change; the grain cannot. A reader may ask what the market
+// looks like by powertrain or by body type -- that is its shape. Asking about
+// one model is asking about a product, and that is the paid question.
+check("the public cuts are declared in one list", lib.includes("PUBLIC_DIMENSIONS"));
+check("model grain is never one of them", !/value: "model"/.test(lib));
+check("neither is any per-row filter",
+  !/brandIds|modelIds|segments:|registrationTypes:/.test(lib));
+check("an unknown cut falls back rather than being passed through",
+  fs.readFileSync("app/market/page.tsx", "utf8").includes('isPublicDimension(by) ? by : "brand"'));
 check("the window is the latest published month, never a caller's choice",
   lib.includes("latestPublishedPeriod") && !/window:\s*args\./.test(lib));
+check("no rolling or year-to-date window is offered",
+  !/rolling3|rolling6|rolling12|"ytd"/.test(lib));
+check("no year-on-year comparison is offered", !/"yoy"/.test(lib));
 check("the named ranking is capped", lib.includes("PUBLIC_BRAND_LIMIT"));
-check("the tail is folded into one bucket rather than published", lib.includes("แบรนด์อื่น") || page.includes("แบรนด์อื่น"));
+check("the tail is folded into one bucket rather than published",
+  lib.includes("others") && page.includes("อื่นๆ"));
 check("the trend is a total, not a per-brand series",
   lib.includes('key: "total"') || fs.readFileSync("app/market/MarketCharts.tsx", "utf8").includes('key: "total"'));
 check("no export path is offered from the public page",

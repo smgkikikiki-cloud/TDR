@@ -614,3 +614,15 @@
   .marketBarRow, .marketMoverRow { grid-template-columns: minmax(84px, 1fr) minmax(0, 1.1fr) auto; gap: 8px; }
   .marketMore { flex-direction: column; align-items: stretch; gap: 12px; }
 }
+
+/* The cut selector. Links, not a control: each view of the market is its own
+   address, so it can be shared, bookmarked and reached by a search engine. */
+.marketCuts { display: flex; flex-wrap: wrap; gap: 0; border-bottom: 1px solid var(--line); margin-bottom: 18px; }
+.marketCuts a { padding: 10px 15px; font-size: 13px; font-weight: 700; color: var(--sf-muted);
+                border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.marketCuts a:hover { color: var(--ink); }
+.marketCuts a.on { color: var(--navy); border-bottom-color: var(--navy); }
+@media (max-width: 600px) {
+  .marketCuts { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .marketCuts a { white-space: nowrap; padding: 10px 12px; }
+}

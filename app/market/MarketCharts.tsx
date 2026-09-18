@@ -20,12 +20,12 @@ function brandColors(market: PublicMarket) {
   return colors;
 }
 
-export function MarketCharts({ market }: { market: PublicMarket }) {
+export function MarketCharts({ market, title }: { market: PublicMarket; title: string }) {
   const colors = brandColors(market);
 
   const slices: Slice[] = [
     ...market.brands.map((b) => ({ label: b.label, value: b.registrations, color: colors.get(b.key)! })),
-    ...(market.others ? [{ label: "แบรนด์อื่น", value: market.others.registrations, color: "#c3c8d2" }] : []),
+    ...(market.others ? [{ label: "อื่นๆ", value: market.others.registrations, color: "#c3c8d2" }] : []),
   ];
 
   const trendPoints = market.trend.map((t) => t.total);
@@ -35,7 +35,7 @@ export function MarketCharts({ market }: { market: PublicMarket }) {
     <section className="marketGrid">
       <figure className="marketCard">
         <figcaption>
-          <b>ส่วนแบ่งตลาดรายแบรนด์</b>
+          <b>ส่วนแบ่งตลาด · {title}</b>
           <span>{market.period} · {units(market.totalRegistrations)} คัน</span>
         </figcaption>
         <div className="marketDonutWrap">
@@ -48,7 +48,7 @@ export function MarketCharts({ market }: { market: PublicMarket }) {
 
       <figure className="marketCard">
         <figcaption>
-          <b>อันดับแบรนด์</b>
+          <b>อันดับ · {title}</b>
           <span>{market.period}</span>
         </figcaption>
         <BarChart
