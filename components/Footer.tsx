@@ -25,6 +25,7 @@ export function Footer() {
           <Link href="/reports">TDR Report</Link>
           <Link href="/companies">บริษัท</Link>
           <Link href="/upcoming">รุ่นที่กำลังมา</Link>
+          <Link href="/pricing">แพ็กเกจและราคา</Link>
         </div>
       </div>
     </footer>

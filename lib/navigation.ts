@@ -1,12 +1,13 @@
 /** The primary navigation IS the product: the free vehicle database and its
- * comparison tool, then the two subscriber layers. Nothing else belongs here —
- * brands, plants and search are views of the database, not sections of their
- * own, and they are reached from inside it. */
+ * comparison tool, then the two subscriber layers, then how to get more of
+ * it. Nothing else belongs here — brands, plants and search are views of the
+ * database, not sections of their own, and they are reached from inside it. */
 export const primaryNav = [
   { href: "/models", label: "ฐานข้อมูลรถยนต์" },
   { href: "/compare", label: "เปรียบเทียบสเปก" },
   { href: "/market", label: "ข้อมูลตลาดรถยนต์" },
   { href: "/research", label: "บทวิเคราะห์เชิงลึก" },
+  { href: "/pricing", label: "แพ็กเกจ" },
 ];
 
 /** Where the header's account entry points. */
