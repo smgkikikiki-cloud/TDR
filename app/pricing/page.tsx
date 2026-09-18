@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect } from "react";
-import { FEATURES } from "@/lib/access-policy";
+import { FEATURES, TIER_POLICIES } from "@/lib/access-policy";
 import styles from "./pricing.module.css";
 
 function track(event: "upgrade_viewed" | "corporate_cta_clicked") {
@@ -23,6 +23,10 @@ const PDF_LIVE = FEATURES.pdf_export_reports.released;
 function researchCopy(liveCopy: string) {
   return RESEARCH_LIVE ? liveCopy : "Research — เร็วๆ นี้ (อยู่ระหว่างพัฒนา)";
 }
+// Free's real, decided limit -- see lib/access-policy.ts's
+// TIER_POLICIES.FREE.researchFullMonthlyLimit -- rather than a copy of the
+// number that can drift from it.
+const FREE_RESEARCH_LIMIT = TIER_POLICIES.FREE.researchFullMonthlyLimit;
 function pdfCopy(liveCopy: string) {
   return PDF_LIVE ? liveCopy : "PDF export — เร็วๆ นี้ (อยู่ระหว่างพัฒนา)";
 }
@@ -82,7 +86,7 @@ export default function PricingPage() {
             <li>✓ Vehicle Compare — 3 ครั้ง/วัน</li>
             <li>✓ Sales Tools — เลือก 4 จาก 6 โมดูล, 10 คำขอ/วัน</li>
             <li>✓ ประวัติข้อมูล — ปีปฏิทินปัจจุบัน</li>
-            <li>{RESEARCH_LIVE ? "✓" : "○"} {researchCopy("Research — preview เท่านั้น")}</li>
+            <li>{RESEARCH_LIVE ? "✓" : "○"} {researchCopy(`Research ฉบับเต็ม — ${FREE_RESEARCH_LIMIT} ชิ้น/เดือน`)}</li>
             <li>{PDF_LIVE ? "✓" : "○"} {pdfCopy("PDF export — 1 ครั้ง/เดือน (มีลายน้ำ TDR Free)")}</li>
             <li>{PROVINCIAL_LIVE ? "✓" : "○"} {provincialCopy("FREE")}</li>
             <li>— ไม่มี API, ไม่มี CSV/XLSX/raw export</li>
