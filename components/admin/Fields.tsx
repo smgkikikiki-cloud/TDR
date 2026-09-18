@@ -3,8 +3,8 @@ import { Children, isValidElement, ReactNode } from "react";
 export function Field({ label, name, defaultValue, type = "text", required = false, placeholder }: { label: string; name: string; defaultValue?: string | number | null; type?: string; required?: boolean; placeholder?: string }) {
   return <label className="adminField"><span>{label}</span><input name={name} type={type} defaultValue={defaultValue ?? ""} required={required} placeholder={placeholder}/></label>;
 }
-export function TextArea({ label, name, defaultValue }: { label: string; name: string; defaultValue?: string | null }) {
-  return <label className="adminField adminFieldWide"><span>{label}</span><textarea name={name} rows={5} defaultValue={defaultValue ?? ""}/></label>;
+export function TextArea({ label, name, defaultValue, rows = 5 }: { label: string; name: string; defaultValue?: string | null; rows?: number }) {
+  return <label className="adminField adminFieldWide"><span>{label}</span><textarea name={name} rows={rows} defaultValue={defaultValue ?? ""}/></label>;
 }
 /** A value the record already holds but the option list no longer offers — a
  *  retired option, or one written straight into the database — has to stay

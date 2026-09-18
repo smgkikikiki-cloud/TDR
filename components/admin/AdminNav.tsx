@@ -51,6 +51,7 @@ export async function AdminNav() {
         <Link href="/admin/plants/new">+ เพิ่มโรงงาน</Link>
         <Link href="/admin/companies/new">+ เพิ่มบริษัท</Link>
         <Link href="/admin/events/new">+ เพิ่มข่าว / Event</Link>
+        <Link href="/admin/research/new">+ เขียนบทวิเคราะห์</Link>
       </details>
 
       <Link href="/" target="_blank">เปิดเว็บ Public ↗</Link>
