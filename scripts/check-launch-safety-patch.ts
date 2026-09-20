@@ -22,7 +22,7 @@ const toolRoutes: Record<string, string> = {
   "app/api/tools/sales-dashboard/route.ts": fs.readFileSync("app/api/tools/sales-dashboard/route.ts", "utf8"),
   "app/api/report/registration/route.ts": fs.readFileSync("app/api/report/registration/route.ts", "utf8"),
   "app/api/report/market/route.ts": fs.readFileSync("app/api/report/market/route.ts", "utf8"),
-  "app/api/research/route.ts": fs.readFileSync("app/api/research/route.ts", "utf8"),
+  "app/api/research/read/route.ts": fs.readFileSync("app/api/research/read/route.ts", "utf8"),
   "app/api/export/pdf/route.ts": fs.readFileSync("app/api/export/pdf/route.ts", "utf8"),
 };
 const registrationAnalytics = fs.readFileSync("lib/registration-analytics.ts", "utf8");
@@ -34,7 +34,7 @@ const reachesActivationDirectly = new Set([
   "app/api/tools/compare/route.ts",
   "app/api/tools/sales-modules/route.ts",
   "app/api/tools/sales-dashboard/route.ts",
-  "app/api/research/route.ts",
+  "app/api/research/read/route.ts",
   "app/api/export/pdf/route.ts",
 ]);
 for (const [path, source] of Object.entries(toolRoutes)) {
@@ -66,13 +66,27 @@ check("an existing blocking subscription throws instead of proceeding to Stripe"
 check("billing UI hides the subscribe buttons once hasActiveSubscription is true", fs.readFileSync("app/member/billing/page.tsx", "utf8").includes("!data.hasActiveSubscription ?"), true);
 check("the plan-transition (stale entitlement) risk is documented for a future plan-switch implementation", fs.readFileSync("docs/BILLING.md", "utf8").includes("Stripe plan switching (upgrade/downgrade) is\nintentionally not implemented yet"), true);
 
-console.log("\nlaunch safety — Research/PDF stay hidden until a real implementation ships");
+console.log("\nlaunch safety — Research is a real, released product; PDF stays hidden until it is one");
 const accessPolicy = fs.readFileSync("lib/access-policy.ts", "utf8");
-check("research_reports is registered as an unreleased feature", accessPolicy.includes('research_reports: {') && accessPolicy.includes("released: false"), true);
-check("pdf_export_reports is registered as an unreleased feature", accessPolicy.includes("pdf_export_reports: {"), true);
-const researchRoute = fs.readFileSync("app/api/research/route.ts", "utf8");
+// research_reports went live once a real content model (migration_v38),
+// admin authoring surface and unlock route existed -- see
+// scripts/check-research.ts for the full picture. This file's job is
+// narrower: the launch-safety invariants (gate before work, no
+// hardcoded-live copy) still hold on the other side of that flip.
+check("research_reports is registered as released with a real, decided Free limit",
+  accessPolicy.includes('research_reports: {') && accessPolicy.includes("released: true"), true);
+check("pdf_export_reports is still registered as an unreleased feature", accessPolicy.includes("pdf_export_reports: {") && accessPolicy.includes("released: false"), true);
+const researchRoute = fs.readFileSync("app/api/research/read/route.ts", "utf8");
 const pdfRoute = fs.readFileSync("app/api/export/pdf/route.ts", "utf8");
-check("the research route 404s while unreleased, before doing any auth/DB work", researchRoute.indexOf("FEATURES.research_reports.released") < researchRoute.indexOf("bearer(request)"), true);
+{
+  // Compare the 401 return's position against the actual call site
+  // requireActivatedAccess(accessToken) -- not the bare identifier, which
+  // also appears earlier in this file's own import statement.
+  const unauthorizedReturnIndex = researchRoute.indexOf('{ status: 401 }');
+  const activationCallIndex = researchRoute.indexOf("requireActivatedAccess(accessToken)");
+  check("the research route refuses a request with no bearer token before it ever queries the DB",
+    unauthorizedReturnIndex > -1 && activationCallIndex > -1 && unauthorizedReturnIndex < activationCallIndex, true);
+}
 check("the PDF export route 404s while unreleased, before doing any auth/DB work", pdfRoute.indexOf("FEATURES.pdf_export_reports.released") < pdfRoute.indexOf("bearer(request)"), true);
 const pricingPage = fs.readFileSync("app/pricing/page.tsx", "utf8");
 check("pricing copy reads the research release flag rather than hardcoding it as live", pricingPage.includes("FEATURES.research_reports.released"), true);

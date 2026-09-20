@@ -1,15 +1,20 @@
+import Link from "next/link";
+import { getPublishedResearchArticles } from "@/lib/research";
+
 export const dynamic = "force-dynamic";
 
 /**
- * Layer 3: analysis written and interpreted by a person, published as a piece.
+ * Layer 4: analysis written and interpreted by a person, published as a
+ * piece -- app/admin/(secure)/research authors it, app/api/research/read
+ * is where a signed-in member unlocks the full text.
  *
- * Nothing is published yet. The page says so, in the same way /news does,
- * rather than dressing the gap up as "coming soon" or filling it with a
- * placeholder — an empty section that admits it is empty costs nothing, while
- * a fake one costs the reader's trust in every number elsewhere on the site.
+ * Everyone sees this list and every summary on it; nobody unlocks the full
+ * text without an account. An empty list stays an honest empty state --
+ * "ยังไม่มีบทวิเคราะห์เผยแพร่" costs nothing, while a fake placeholder piece
+ * costs the reader's trust in every real number elsewhere on the site.
  */
 export default async function ResearchPage() {
-  const pieces: Array<{ id: string; title: string; published: string; summary: string }> = [];
+  const pieces = await getPublishedResearchArticles(100);
 
   return <>
     <section className="sfBlock">
@@ -22,10 +27,13 @@ export default async function ResearchPage() {
       </div>
       {pieces.length ? (
         <div className="sfNewsList">
-          {pieces.map((p) => (
-            <article key={p.id}>
-              <time>{p.published}</time>
-              <div><b>{p.title}</b><p>{p.summary}</p></div>
+          {pieces.map((piece) => (
+            <article key={piece.id}>
+              <time>{piece.publishedAt.slice(0, 10)}</time>
+              <div>
+                <Link href={`/research/${piece.slug}`}><b>{piece.titleTh}</b></Link>
+                <p>{piece.summaryTh}</p>
+              </div>
             </article>
           ))}
         </div>
@@ -33,6 +41,5 @@ export default async function ResearchPage() {
         <div className="sfEmpty"><b>ยังไม่มีบทวิเคราะห์เผยแพร่</b></div>
       )}
     </section>
-
   </>;
 }

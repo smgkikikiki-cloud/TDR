@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { adminDb } from "@/lib/supabase";
 
-const allowed = ["canonical_vehicle_releases", "models", "production_programs", "brands", "plants", "companies", "events", "sources", "registrations"] as const;
+const allowed = ["canonical_vehicle_releases", "models", "production_programs", "brands", "plants", "companies", "events", "research_articles", "sources", "registrations"] as const;
 type TableName = typeof allowed[number];
 const config: Record<TableName, { label: string; columns: string[]; add?: string; editBase?: string }> = {
   canonical_vehicle_releases: { label: "Vehicle releases", columns: ["release_id", "canonical_revision", "as_of", "status", "counts", "activated_at", "created_at"] },
@@ -11,6 +11,7 @@ const config: Record<TableName, { label: string; columns: string[]; add?: string
   plants: { label: "โรงงาน", columns: ["name_th", "maker_group", "province", "capacity_annual", "estimated_production_annual", "status", "updated_at"], add: "/admin/plants/new", editBase: "/admin/plants" },
   companies: { label: "บริษัท", columns: ["name_th", "company_type", "parent_company", "province", "updated_at"], add: "/admin/companies/new", editBase: "/admin/companies" },
   events: { label: "ข่าว / Events", columns: ["event_date", "title_th", "event_type", "source_name", "published", "updated_at"], add: "/admin/events/new", editBase: "/admin/events" },
+  research_articles: { label: "บทวิเคราะห์เชิงลึก", columns: ["title_th", "author", "status", "published_at", "updated_at"], add: "/admin/research/new", editBase: "/admin/research" },
   sources: { label: "Sources", columns: ["published_date", "publisher", "title", "url", "retrieved_at"] },
   registrations: { label: "Registration data · paid", columns: ["period", "brand_name_raw", "model_name_raw", "registrations", "created_at"] },
 };
@@ -30,7 +31,7 @@ export default async function Library({ searchParams }: { searchParams: Promise<
   let rows: any[] = [];
   if (db) {
     let query = db.from(table).select("*").limit(300);
-    const order = table === "events" ? "event_date" : table === "registrations" ? "period" : table === "canonical_vehicle_releases" ? "created_at" : "updated_at";
+    const order = table === "events" ? "event_date" : table === "registrations" ? "period" : table === "canonical_vehicle_releases" ? "created_at" : table === "research_articles" ? "created_at" : "updated_at";
     query = query.order(order, { ascending: false });
     const { data } = await query;
     rows = data || [];

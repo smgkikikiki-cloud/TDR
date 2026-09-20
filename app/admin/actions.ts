@@ -119,6 +119,33 @@ export async function saveProductionProgram(formData: FormData) {
   redirect(`/admin/models/${modelId}/edit?production_saved=1`);
 }
 
+export async function saveResearchArticle(formData: FormData) {
+  await requireAdmin(); const db = dbOrThrow();
+  const id = val(formData, "id");
+  const title = val(formData, "title_th"); if (!title) throw new Error("กรุณาใส่หัวข้อ");
+  const summary = val(formData, "summary_th"); if (!summary) throw new Error("กรุณาใส่สรุป");
+  const body = val(formData, "body_th"); if (!body) throw new Error("กรุณาใส่เนื้อหาฉบับเต็ม");
+  const status = val(formData, "status") === "published" ? "published" : "draft";
+  const slug = await uniqueSlug(db, "research_articles", val(formData, "slug") || title, id);
+  // Publishing for the first time stamps today; re-saving an already-published
+  // piece (a typo fix, a correction) keeps its original published_at rather
+  // than jumping it to the top of the list every time an admin touches it.
+  let publishedAt: string | null = null;
+  if (status === "published") {
+    const existing = id ? (await db.from("research_articles").select("published_at").eq("id", id).maybeSingle()).data : null;
+    publishedAt = existing?.published_at || new Date().toISOString();
+  }
+  const payload = { slug, title_th: title, title_en: val(formData, "title_en"), summary_th: summary, body_th: body, author: val(formData, "author"), status, published_at: publishedAt };
+  const r = id ? await db.from("research_articles").update(payload).eq("id", id) : await db.from("research_articles").insert(payload);
+  if (r.error) throw r.error;
+  redirect("/admin/library?table=research_articles&saved=1");
+}
+export async function deleteResearchArticle(formData: FormData) {
+  await requireAdmin(); const db = dbOrThrow(); const id = val(formData, "id");
+  if (id) { const r = await db.from("research_articles").delete().eq("id", id); if (r.error) throw r.error; }
+  redirect("/admin/library?table=research_articles&deleted=1");
+}
+
 export async function deleteBrand(){await requireAdmin();throw new Error("Brand identity is canonical. Edit automotive/vehicle_master and publish one release.");}
 export async function deletePlant(formData:FormData){await requireAdmin();const db=dbOrThrow();const id=val(formData,"id");if(id){const r=await db.from("plants").delete().eq("id",id);if(r.error)throw r.error;}redirect("/admin/library?table=plants&deleted=1");}
 export async function deleteCompany(formData:FormData){await requireAdmin();const db=dbOrThrow();const id=val(formData,"id");if(id){const r=await db.from("companies").delete().eq("id",id);if(r.error)throw r.error;}redirect("/admin/library?table=companies&deleted=1");}
