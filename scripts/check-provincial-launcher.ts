@@ -3,9 +3,11 @@
 // Research/PDF teaser leaking in as a generic panel), the Provincial
 // Registration launcher is a deliberate, non-interactive card (no data
 // query, no quota consumption), and the pricing page communicates its
-// full planned tier ladder -- Coming Soon throughout, no invented
-// Individual number -- for Free/Individual/Pro/Corporate alike. Same
-// convention as check-quota-architecture.ts / check-launch-safety-patch.ts.
+// full planned tier ladder -- Coming Soon throughout -- for Free/Pro/
+// Corporate alike (Individual was scrapped as a sellable tier, see
+// docs/PRODUCT_ACCESS.md, which also collapsed the one commercially-
+// undecided case out of this ladder). Same convention as
+// check-quota-architecture.ts / check-launch-safety-patch.ts.
 import fs from "node:fs";
 
 let failed = 0;
@@ -48,7 +50,7 @@ console.log("\nprovincial launcher — a deliberate card, not the old generic lo
   check("the old generic 'every teaser feature gets a panel' loop is gone", genericLoopPattern.test(memberPage), false);
 }
 check("the launcher shows a Coming Soon badge", memberPage.includes("comingSoonBadge"), true);
-check("the launcher shows the planned tier ladder (Free/Individual/Pro/Corporate), not just today's state", memberPage.includes("featureLadder"), true);
+check("the launcher shows the planned tier ladder (Free/Pro/Corporate), not just today's state", memberPage.includes("featureLadder"), true);
 {
   const launcherButtonMatch = /<button type="button" disabled aria-disabled="true">[^<]*<\/button>/.exec(memberPage);
   check("the launcher's button exists and is disabled", Boolean(launcherButtonMatch), true);
@@ -58,32 +60,29 @@ check("the launcher shows the planned tier ladder (Free/Individual/Pro/Corporate
 console.log("\nprovincial launcher — current state AND planned ladder are both preserved, not just one");
 check("the dashboard's FeatureInfo type carries current_state (today)", memberPage.includes("current_state:"), true);
 check("the dashboard's FeatureInfo type carries ladder (planned)", memberPage.includes("ladder:"), true);
-check("the dashboard reads feature.ladder.FREE / INDIVIDUAL / PRO / CORPORATE explicitly",
-  ["FREE", "INDIVIDUAL", "PRO", "CORPORATE"].every((audience) => memberPage.includes(`feature.ladder.${audience}`)),
+check("the dashboard reads feature.ladder.FREE / PRO / CORPORATE explicitly",
+  ["FREE", "PRO", "CORPORATE"].every((audience) => memberPage.includes(`feature.ladder.${audience}`)),
   true,
 );
 check("the API response includes both current_state and the full ladder per feature", featuresRoute.includes("current_state: resolveFeatureState") && featuresRoute.includes("ladder: Object.fromEntries"), true);
 
-console.log("\nprovincial launcher — pricing page adds Provincial Registration to all four audiences, Coming Soon throughout");
+console.log("\nprovincial launcher — pricing page adds Provincial Registration to Free and Pro, Coming Soon throughout");
 check("Free card includes the provincial line", pricingPage.includes('provincialCopy("FREE")'), true);
-check("Individual card includes the provincial line", pricingPage.includes('provincialCopy("INDIVIDUAL")'), true);
 check("Pro card includes the provincial line", pricingPage.includes('provincialCopy("PRO")'), true);
-check("Corporate section includes the provincial line", pricingPage.includes('provincialCopy("CORPORATE")'), true);
 check(
   "provincialCopy always appends '(Coming Soon)' while the feature is unreleased",
   pricingPage.includes("PROVINCIAL_LIVE") && pricingPage.includes("(Coming Soon)"),
-  true,
-);
-check(
-  "the Individual ladder label does not hardcode a numeric limit -- it stays a qualitative 'Limited (TBD)' label",
-  /limited:\s*"Limited \(รายละเอียดยังไม่กำหนด\)"/.test(pricingPage) && !/limited.*\d+\s*(ครั้ง|จังหวัด|province)/i.test(pricingPage),
   true,
 );
 
 console.log("\nprovincial launcher — the launch guard is real code, not just documentation");
 check("lib/access-policy.ts exports releaseSafetyViolations for tests to exercise directly", accessPolicy.includes("export function releaseSafetyViolations("), true);
 check("lib/access-policy.ts asserts the live catalog is release-safe at module load (the actual launch guard)", accessPolicy.includes("assertFeatureCatalogIsReleaseSafe(FEATURES)"), true);
-check("provincial_registration's Individual 'limited' policy is explicitly marked undefined today", accessPolicy.includes("limitedAccessPolicyDefined: false"), true);
+// Collapsing to a single paid tier (Individual scrapped) also collapsed
+// the one commercially-undecided case out of provincial_registration's
+// ladder -- there is no 'limited' audience left to leave undefined, so
+// this is now vacuously true rather than an explicit false.
+check("provincial_registration's ladder has no 'limited' audience left, so its policy gate is vacuously satisfied", accessPolicy.includes("limitedAccessPolicyDefined: true"), true);
 
 console.log(failed ? `\n${failed} check(s) failed` : "\nall provincial launcher checks passed");
 process.exit(failed ? 1 : 0);

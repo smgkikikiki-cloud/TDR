@@ -46,17 +46,14 @@ check(
   resolveTierFromEntitlements([{ product: "registration_full", status: "ACTIVE", valid_until: "2020-01-01T00:00:00Z" }] as EntitlementRow[]),
   "FREE",
 );
+// Individual was scrapped as a sellable tier (docs/PRODUCT_ACCESS.md) --
+// Pro is the only paid product now. A pre-existing tier_individual
+// entitlement (from before the scrap) grandfathers into Pro rather than
+// silently dropping that reader to Free, same as the older
+// registration_full legacy product.
 check(
-  "tier_individual ACTIVE -> INDIVIDUAL",
+  "legacy tier_individual ACTIVE grandfathers into PRO (Individual was scrapped, never silently downgraded)",
   resolveTierFromEntitlements([{ product: "tier_individual", status: "ACTIVE", valid_until: null }] as EntitlementRow[]),
-  "INDIVIDUAL",
-);
-check(
-  "tier_pro beats tier_individual when both present",
-  resolveTierFromEntitlements([
-    { product: "tier_individual", status: "ACTIVE", valid_until: null },
-    { product: "tier_pro", status: "ACTIVE", valid_until: null },
-  ] as EntitlementRow[]),
   "PRO",
 );
 check(
@@ -91,7 +88,6 @@ check("Pro has no history floor", historyWindowStart("PRO", new Date("2026-06-15
 // 1st a reader lost eleven months of context overnight. A rolling twelve is
 // the same amount of history on every day of the year.
 check("Free reaches back twelve rolling months", historyWindowStart("FREE", new Date("2026-06-15T00:00:00Z")), "2025-07-01");
-check("Individual gets a 24-month rolling floor", historyWindowStart("INDIVIDUAL", new Date("2026-06-15T00:00:00Z")), "2024-07-01");
 check("period inside Free's window is allowed", isPeriodWithinHistoryWindow("FREE", "2026-03-01", new Date("2026-06-15T00:00:00Z")), true);
 check("period before Free's window is rejected", isPeriodWithinHistoryWindow("FREE", "2025-06-01", new Date("2026-06-15T00:00:00Z")), false);
 check("a period inside the rolling year is allowed even though it is last year", isPeriodWithinHistoryWindow("FREE", "2025-12-01", new Date("2026-06-15T00:00:00Z")), true);
@@ -114,11 +110,10 @@ check("every dimension is allowed on Pro regardless of selection", isRegistratio
 check("selecting model_share does not buy Free the model grain", isMarketDimensionAllowed("model", "FREE", ["model_share"]), false);
 check("market dimension mapped to an unselected module is blocked on Free", isMarketDimensionAllowed("model", "FREE", ["brand_share"]), false);
 check("a structural cut is free whether or not a module was picked", isMarketDimensionAllowed("oem_group", "FREE", []), true);
-check("market dimension with no module mapping is allowed on Individual/Pro", isMarketDimensionAllowed("oem_group", "INDIVIDUAL", null), true);
+check("a structural cut is free on Pro too", isMarketDimensionAllowed("oem_group", "PRO", null), true);
 
 console.log("\naccess policy — reserved capabilities (provincial_registration)");
 check("unreleased feature resolves to teaser for Free", resolveFeatureState("provincial_registration", "FREE"), "teaser");
-check("unreleased feature resolves to teaser for Individual too (global kill switch)", resolveFeatureState("provincial_registration", "INDIVIDUAL"), "teaser");
 check("unreleased feature resolves to teaser for Pro too (global kill switch)", resolveFeatureState("provincial_registration", "PRO"), "teaser");
 check("unreleased feature resolves to teaser for Corporate too (global kill switch)", resolveFeatureState("provincial_registration", "CORPORATE"), "teaser");
 check("provincial_registration is not part of the 4-of-6 sales module catalog", (SALES_MODULES as readonly string[]).includes("provincial_registration"), false);
@@ -189,7 +184,7 @@ function fixtureFeature(overrides: Partial<FeatureDefinition>): Record<FeatureKe
     labelTh: "ทดสอบ",
     surface: "sales_tools",
     released: false,
-    stateByAudience: { FREE: "teaser", INDIVIDUAL: "limited", PRO: "full", CORPORATE: "tailored" },
+    stateByAudience: { FREE: "limited", PRO: "full", CORPORATE: "tailored" },
     countsTowardSalesModuleSelection: false,
     consumesQuota: false,
     limitedAccessPolicyDefined: false,
@@ -218,7 +213,7 @@ check(
   releaseSafetyViolations(fixtureFeature({
     released: true,
     limitedAccessPolicyDefined: false,
-    stateByAudience: { FREE: "teaser", INDIVIDUAL: "full", PRO: "full", CORPORATE: "tailored" },
+    stateByAudience: { FREE: "teaser", PRO: "full", CORPORATE: "tailored" },
   })),
   [],
 );

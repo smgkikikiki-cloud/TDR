@@ -204,10 +204,10 @@ function resolveCheckoutPlan(planCode: string): { planCode: string; product: str
 // Subscription states that represent a live, currently-charging (or
 // recently so) Stripe relationship. A second Checkout session while one
 // of these exists would create a concurrent second subscription (e.g.
-// 399 + 990 both billing at once) rather than a plan change -- Stripe
-// plan switching is not implemented in this patch (see docs/BILLING.md),
-// so the safe behavior is to fail closed and send the customer to the
-// Billing Portal instead.
+// two Pro plans at different commitment lengths both billing at once)
+// rather than a plan change -- Stripe plan switching is not implemented
+// in this patch (see docs/BILLING.md), so the safe behavior is to fail
+// closed and send the customer to the Billing Portal instead.
 export const BLOCKING_SUBSCRIPTION_STATUSES = ["ACTIVE", "TRIALING", "PAST_DUE", "UNPAID", "PAUSED"];
 
 export async function createCheckout(args: {

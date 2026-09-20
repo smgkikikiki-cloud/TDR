@@ -81,16 +81,20 @@ Payment-provider webhook delivery, not the browser success redirect, is the auth
 `tdr_entitlements`
 - remains the access-control source of truth
 - analytics code does not need to know which payment provider granted the entitlement
-- `product` is free text and already supports multiple tiers: `registration_full` (legacy, treated as Pro-equivalent), `tier_individual`, `tier_pro`. A Free account has no entitlement row at all.
+- `product` is free text and already supports multiple tiers: `registration_full` (legacy, treated as Pro-equivalent), `tier_individual` (legacy -- Individual was scrapped as a sellable tier; any pre-existing row grandfathers into Pro, see below), `tier_pro`. A Free account has no entitlement row at all.
 
-## Tiered access model (Free / Individual / Pro / Corporate)
+## Tiered access model (Free / Pro / Corporate)
 
 See `lib/access-policy.ts` for the single authoritative tier/quota/history
 policy, `lib/access-policy-server.ts` for its DB-backed wiring, and
-`lib/plans.ts` for the billing plan catalog. Legacy
-`registration_monthly`/`registration_full` subscribers resolve to Pro via
+`lib/plans.ts` for the billing plan catalog. Pro is the only self-service
+paid tier (Individual was scrapped -- see docs/PRODUCT_ACCESS.md), sold
+at three commitment lengths that all share the same `tier_pro` product
+key. Legacy `registration_monthly`/`registration_full` subscribers, and
+any pre-existing `tier_individual` entitlement, resolve to Pro via
 `resolveTierFromEntitlements()` and are never rewritten. Corporate is a
-sales-assisted path (see `/pricing`), not a fourth self-service tier.
+sales-assisted path (see `/pricing`'s "TDR Enterprise package"), not a
+fourth self-service tier.
 
 Server-side usage metering (`tdr_usage_counters`/`tdr_usage_actions`,
 migration_v34) is atomic (via `pg_advisory_xact_lock`, race-free under
@@ -131,17 +135,17 @@ in `lib/billing.ts`) -- it returns 409 and the billing UI hides the
 "subscribe" buttons entirely in that state, pointing to the Billing
 Portal instead. **Stripe plan switching (upgrade/downgrade) is
 intentionally not implemented yet** -- a customer who wants to change
-plans must cancel in the Portal and start a fresh Checkout once the old
-subscription is gone. Until real plan-switching is built, do not add a
-"change plan" flow that upserts a new `tier_*` entitlement without also
-expiring the old one: `setEntitlement()` keys on `(user_id, product)`, so
-an old `tier_pro` row is never touched by a webhook for a new
-`tier_individual` subscription (different product key) and would stay
-`ACTIVE` forever, letting `resolveTierFromEntitlements()` keep resolving
-to Pro after an intentional downgrade to Individual. Any future
-plan-switch implementation must explicitly expire the entitlement row for
-the plan being switched away from in the same transaction/webhook that
-activates the new one.
+commitment length (e.g. monthly to annual) must cancel in the Portal and
+start a fresh Checkout once the old subscription is gone. All three Pro
+plans share the same `tier_pro` product key, so `setEntitlement()`'s
+upsert on `(user_id, product)` naturally overwrites the same row rather
+than leaving a stale duplicate -- the cross-product danger this warning
+used to describe (an old `tier_pro` row surviving untouched after a
+switch to the differently-keyed `tier_individual`) no longer exists now
+that Individual is scrapped and nothing sells a second product. Any
+future plan-switch implementation still needs its own care around
+Stripe's proration/timing for the interval change itself, even though the
+entitlement-key hazard is gone.
 
 ## PromptPay later
 
@@ -161,12 +165,17 @@ The code intentionally fails closed until these exist:
 - `STRIPE_WEBHOOK_SECRET`
 - `STRIPE_PRICE_REGISTRATION_MONTHLY`
 
-New tiered plan catalog (all optional -- each plan checkouts fail closed
-with 503 until its price ID is set):
+Tiered plan catalog (all optional -- each plan's checkout fails closed
+with 503 until its price ID is set). Pro is the only paid tier now --
+Individual was scrapped (see docs/PRODUCT_ACCESS.md) -- sold at three
+commitment lengths, each billed as its own Stripe recurring Price
+(quarterly/annual bill the full period upfront, not a discounted monthly
+charge -- interval "month" with interval_count 3 for quarterly, interval
+"year" for annual):
 
-- `STRIPE_PRICE_INDIVIDUAL_MONTHLY` (฿399/month)
-- `STRIPE_PRICE_PRO_MONTHLY` (฿990/month)
-- `STRIPE_PRICE_INDIVIDUAL_ANNUAL`, `STRIPE_PRICE_PRO_ANNUAL` -- annual prices are not decided yet; do not invent one. Set these only once product picks a price materially better than 12x monthly.
+- `STRIPE_PRICE_PRO_MONTHLY` (฿1,290/month, billed ฿1,290/invoice)
+- `STRIPE_PRICE_PRO_QUARTERLY` (฿990/month, billed ฿2,970/invoice every 3 months)
+- `STRIPE_PRICE_PRO_ANNUAL` (฿790/month, billed ฿9,480/invoice every year)
 
 Supabase Auth must also have Phone sign-in and an SMS provider enabled. Apply
 CAPTCHA and OTP rate limits before opening public signup.

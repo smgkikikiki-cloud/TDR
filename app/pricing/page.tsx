@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useEffect } from "react";
-import { FEATURES, TIER_POLICIES } from "@/lib/access-policy";
+import { FEATURES, TIER_POLICIES, SALES_MODULES } from "@/lib/access-policy";
+import { PLAN_CATALOG } from "@/lib/plans";
 import styles from "./pricing.module.css";
 
 function track(event: "upgrade_viewed" | "corporate_cta_clicked") {
@@ -23,10 +24,6 @@ const PDF_LIVE = FEATURES.pdf_export_reports.released;
 function researchCopy(liveCopy: string) {
   return RESEARCH_LIVE ? liveCopy : "Research — เร็วๆ นี้ (อยู่ระหว่างพัฒนา)";
 }
-// Free's real, decided limit -- see lib/access-policy.ts's
-// TIER_POLICIES.FREE.researchFullMonthlyLimit -- rather than a copy of the
-// number that can drift from it.
-const FREE_RESEARCH_LIMIT = TIER_POLICIES.FREE.researchFullMonthlyLimit;
 function pdfCopy(liveCopy: string) {
   return PDF_LIVE ? liveCopy : "PDF export — เร็วๆ นี้ (อยู่ระหว่างพัฒนา)";
 }
@@ -36,12 +33,8 @@ function pdfCopy(liveCopy: string) {
 // copy here, so this stays in sync automatically if the ladder or the
 // release flag ever changes. `released` is false today, so every tier
 // shows "(Coming Soon)"; the ladder LABEL still communicates where this
-// is headed (Free teaser / Individual limited / Pro full / Corporate
-// tailored) without pretending any of it is live. Individual's "limited"
-// deliberately has no number attached -- that policy isn't decided yet
-// (see FEATURES.provincial_registration.limitedAccessPolicyDefined and
-// releaseSafetyViolations(), which refuses to let this feature ship
-// released while that stays undefined).
+// is headed (Free teaser / Pro full / Enterprise tailored) without
+// pretending any of it is live.
 const PROVINCIAL_LIVE = FEATURES.provincial_registration.released;
 const PROVINCIAL_LADDER = FEATURES.provincial_registration.stateByAudience;
 const PROVINCIAL_STATE_LABEL: Record<string, string> = {
@@ -58,7 +51,22 @@ function provincialCopy(audience: keyof typeof PROVINCIAL_LADDER) {
     : `Provincial Registration — ${label} (Coming Soon)`;
 }
 
-// Corporate contact is configuration-driven, never a guessed address.
+// Free's real, decided limits -- read from lib/access-policy.ts's
+// TIER_POLICIES.FREE rather than copied numbers that can drift from it.
+const FREE_POLICY = TIER_POLICIES.FREE;
+
+// Pro's three commitment lengths, read from lib/plans.ts's PLAN_CATALOG
+// rather than re-typing the prices here -- this page can never show a
+// number that disagrees with what checkout actually charges.
+const PRO_PLANS = PLAN_CATALOG;
+const PRO_PRICE_RANGE = `฿${Math.min(...PRO_PLANS.map((p) => p.priceThbPerMonth))}–${Math.max(...PRO_PLANS.map((p) => p.priceThbPerMonth))}`;
+const INTERVAL_LABEL: Record<string, string> = {
+  monthly: "รายเดือน",
+  quarterly: "ผูกมัด 3 เดือน",
+  annual: "รายปี",
+};
+
+// Enterprise contact is configuration-driven, never a guessed address.
 // Set NEXT_PUBLIC_TDR_CORPORATE_CONTACT_URL (a mailto: link or a contact
 // page URL) to enable the CTA; until it's set the button fails visibly
 // (disabled, with an explanatory label) instead of silently pointing
@@ -83,11 +91,11 @@ export default function PricingPage() {
             <div className={styles.price}>฿0</div>
           </div>
           <ul className={styles.features}>
-            <li>✓ Vehicle Compare — 3 ครั้ง/วัน</li>
-            <li>✓ Sales Tools — เลือก 4 จาก 6 โมดูล, 10 คำขอ/วัน</li>
-            <li>✓ ประวัติข้อมูล — ปีปฏิทินปัจจุบัน</li>
-            <li>{RESEARCH_LIVE ? "✓" : "○"} {researchCopy(`Research ฉบับเต็ม — ${FREE_RESEARCH_LIMIT} ชิ้น/เดือน`)}</li>
-            <li>{PDF_LIVE ? "✓" : "○"} {pdfCopy("PDF export — 1 ครั้ง/เดือน (มีลายน้ำ TDR Free)")}</li>
+            <li>✓ Vehicle Compare — {FREE_POLICY.compareDailyLimit === null ? "ไม่จำกัด" : `${FREE_POLICY.compareDailyLimit} ครั้ง/วัน`}</li>
+            <li>✓ Sales Tools — เลือก {FREE_POLICY.salesModulePickCount} จาก {SALES_MODULES.length} โมดูล, {FREE_POLICY.salesQueryDailyLimit} คำขอ/วัน</li>
+            <li>✓ ประวัติข้อมูล — ย้อนหลัง 12 เดือน (rolling)</li>
+            <li>{RESEARCH_LIVE ? "✓" : "○"} {researchCopy(`Research ฉบับเต็ม — ${FREE_POLICY.researchFullMonthlyLimit} ชิ้น/เดือน`)}</li>
+            <li>{PDF_LIVE ? "✓" : "○"} {pdfCopy(`PDF export — ${FREE_POLICY.pdfMonthlyLimit} ครั้ง/เดือน (มีลายน้ำ TDR Free)`)}</li>
             <li>{PROVINCIAL_LIVE ? "✓" : "○"} {provincialCopy("FREE")}</li>
             <li>— ไม่มี API, ไม่มี CSV/XLSX/raw export</li>
           </ul>
@@ -96,33 +104,24 @@ export default function PricingPage() {
 
         <article className={styles.card}>
           <div>
-            <div className={styles.cardName}>Individual</div>
-            <div className={styles.price}>฿399<small>/เดือน</small></div>
-          </div>
-          <ul className={styles.features}>
-            <li>✓ Vehicle Compare — ไม่จำกัด ทุกรุ่น</li>
-            <li>✓ Sales Tools — ทุกโมดูล ไม่จำกัดคำขอ</li>
-            <li>✓ ประวัติข้อมูล — ย้อนหลัง 24 เดือน</li>
-            <li>{RESEARCH_LIVE ? "✓" : "○"} {researchCopy("Research ฉบับเต็ม — 3 ชิ้น/เดือน")}</li>
-            <li>{PDF_LIVE ? "✓" : "○"} {pdfCopy("PDF export — 10 ครั้ง/เดือน")}</li>
-            <li>{PROVINCIAL_LIVE ? "✓" : "○"} {provincialCopy("INDIVIDUAL")}</li>
-            <li>— ไม่มี API, ไม่มี CSV/XLSX/raw export</li>
-          </ul>
-          <Link className={styles.cta} href="/member/billing">สมัคร Individual</Link>
-        </article>
-
-        <article className={styles.card}>
-          <div>
             <div className={styles.cardName}>Pro</div>
-            <div className={styles.price}>฿990<small>/เดือน</small></div>
+            <div className={styles.price}>{PRO_PRICE_RANGE}<small>/เดือน</small></div>
           </div>
+          <ul className={styles.priceOptions}>
+            {PRO_PLANS.map((plan) => (
+              <li key={plan.planCode}>
+                <span>{INTERVAL_LABEL[plan.interval] || plan.interval}</span>
+                <span><b>฿{plan.priceThbPerMonth}/เดือน</b> <small>(เรียกเก็บ ฿{plan.priceThbPerInterval})</small></span>
+              </li>
+            ))}
+          </ul>
           <ul className={styles.features}>
-            <li>✓ ทุกอย่างใน Individual</li>
+            <li>✓ Vehicle Compare / Sales Tools — ไม่จำกัด</li>
             <li>✓ ประวัติข้อมูล — เต็มรูปแบบเท่าที่มี</li>
             <li>{RESEARCH_LIVE ? "✓" : "○"} {researchCopy("Research ฉบับเต็ม — ไม่จำกัด")}</li>
             <li>{PDF_LIVE ? "✓" : "○"} {pdfCopy("PDF export — ไม่จำกัด")}</li>
             <li>{PROVINCIAL_LIVE ? "✓" : "○"} {provincialCopy("PRO")}</li>
-            <li>— ไม่มี API สำหรับดึงข้อมูลดิบ (สงวนไว้สำหรับ Corporate)</li>
+            <li>— ไม่มี API สำหรับดึงข้อมูลดิบ (สงวนไว้สำหรับ Enterprise)</li>
           </ul>
           <Link className={styles.cta} href="/member/billing">สมัคร Pro</Link>
         </article>
@@ -130,16 +129,9 @@ export default function PricingPage() {
 
       <section className={styles.corporate}>
         <div>
-          <div className={styles.eyebrow} style={{ color: "#bbb" }}>CORPORATE</div>
-          <h2>สำหรับองค์กร</h2>
-          <p>ขอบเขตและราคาปรับตามการใช้งานจริงของแต่ละทีม</p>
-          <ul>
-            <li>· Team access หลายที่นั่ง</li>
-            <li>· Workflow ที่ปรับให้เข้ากับทีมคุณ</li>
-            <li>· API/data integration แบบมีขอบเขต (ไม่ใช่ raw data ทั้งชุด)</li>
-            <li>· Research support และรายงานที่ปรับแต่งได้</li>
-            <li>· {provincialCopy("CORPORATE")}</li>
-          </ul>
+          <div className={styles.eyebrow} style={{ color: "#bbb" }}>ENTERPRISE</div>
+          <h2>TDR Enterprise package</h2>
+          <p>ขอบเขต ที่นั่ง และราคาปรับตามการใช้งานจริงของแต่ละองค์กร — API/data integration, raw export และทีมสนับสนุนเฉพาะ ติดต่อทีม TDR เพื่อคุยรายละเอียด</p>
         </div>
         {CORPORATE_CONTACT_URL ? (
           <a
@@ -147,11 +139,11 @@ export default function PricingPage() {
             href={CORPORATE_CONTACT_URL}
             onClick={() => track("corporate_cta_clicked")}
           >
-            Talk to TDR →
+            Contact TDR Enterprise →
           </a>
         ) : (
           <span className={styles.corporateCta} style={{ opacity: 0.6, cursor: "not-allowed" }} aria-disabled="true">
-            ช่องทางติดต่อ Corporate ยังไม่ได้ตั้งค่า
+            ช่องทางติดต่อ Enterprise ยังไม่ได้ตั้งค่า
           </span>
         )}
       </section>
