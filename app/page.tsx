@@ -5,8 +5,8 @@ import { displayName, initials } from "@/lib/display-name";
 import { getPublishedResearchArticles } from "@/lib/research";
 import { getHomeMarket } from "@/lib/home-market";
 import { PLAN_CATALOG } from "@/lib/plans";
-import { LineChart } from "@/components/charts/LineChart";
-import { compactNumber, groupedNumber } from "@/components/charts/format";
+import { HomeMarketLine } from "@/components/HomeMarketLine";
+import { groupedNumber } from "@/components/charts/format";
 
 export const dynamic = "force-dynamic";
 
@@ -79,8 +79,8 @@ export default async function Home() {
 
   const current = (models as any[]).filter((r) => String(r.status || "current").toLowerCase() !== "discontinued");
   const compareModels = [...current].sort((a, b) => modelScore(b) - modelScore(a)).slice(0, 2);
-  const currentBrands = new Set(current.map((r) => r.brands?.id).filter(Boolean));
-  const brandRows = (brands as any[]).filter((brand) => currentBrands.has(brand.id)).slice(0, 12);
+  const currentBrands = new Set(current.map((r) => r.brands?.slug).filter(Boolean));
+  const brandRows = (brands as any[]).filter((brand) => currentBrands.has(brand.slug)).slice(0, 12);
   const proFrom = Math.min(...PLAN_CATALOG.map((plan) => plan.priceThbPerMonth));
   const maxBrand = market?.brands?.[0]?.registrations || 1;
   const positiveMover = market?.movers?.find((row) => row.delta > 0) || null;
@@ -144,12 +144,9 @@ export default async function Home() {
               <div><span>MARKET SIZE TREND</span><b>ยอดจดทะเบียนรวมรายเดือน</b></div>
               <small>ย้อนหลัง {market.trend.length} เดือน</small>
             </div>
-            <LineChart
+            <HomeMarketLine
               labels={market.trend.map((point) => monthLabel(point.period, true))}
-              series={[{ key: "total", label: "ยอดจดทะเบียน", color: "#012061", points: market.trend.map((point) => point.total) }]}
-              formatValue={compactNumber}
-              height={230}
-              className="homeMarketLine"
+              points={market.trend.map((point) => point.total)}
             />
           </div>
 
@@ -188,7 +185,7 @@ export default async function Home() {
         </div>
         <div className="homeCompareFacts">
           <div><span>เลือกได้สูงสุด</span><strong>4</strong><small>รุ่นย่อยต่อครั้ง</small></div>
-          <div><span>ผู้ใช้ทั่วไป</span><strong>10</strong><small>ครั้ง / วัน</small></div>
+          <div><span>ไม่เข้าสู่ระบบ</span><strong>10</strong><small>ครั้ง / วัน</small></div>
           <Link href="/compare">เริ่มเปรียบเทียบ →</Link>
         </div>
       </div>
