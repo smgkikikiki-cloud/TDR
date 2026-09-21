@@ -26,12 +26,6 @@ const INTERVAL_LABEL: Record<string, string> = {
   annual: "รายปี",
 };
 
-const INTERVAL_NOTE: Record<string, string> = {
-  monthly: "ไม่ผูกมัด · เรียกเก็บทุกเดือน",
-  quarterly: "เรียกเก็บล่วงหน้าทุก 3 เดือน",
-  annual: "ราคาต่อเดือนต่ำสุด · เรียกเก็บล่วงหน้ารายปี",
-};
-
 function money(value: number) {
   return value.toLocaleString("th-TH");
 }
@@ -186,7 +180,6 @@ export default function PricingPage() {
               <div className={styles.billingName}>{INTERVAL_LABEL[plan.interval] || plan.interval}</div>
               <div className={styles.billingPrice}>฿{money(plan.priceThbPerMonth)}<small>/เดือน</small></div>
               <div className={styles.billingInvoice}>เรียกเก็บ ฿{money(plan.priceThbPerInterval)} ต่อรอบ</div>
-              <div className={styles.billingNote}>{INTERVAL_NOTE[plan.interval]}</div>
               <span>เลือกแพ็กเกจ →</span>
             </Link>
           ))}
