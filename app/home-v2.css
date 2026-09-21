@@ -1,0 +1,386 @@
+/* Homepage intelligence redesign. Font intentionally inherits the existing Prompt stack. */
+
+/* ---------- compact public header ---------- */
+.siteHeader.siteHeaderV2 {
+  padding: 0 var(--pagePad);
+  border-top: 4px solid var(--red);
+  border-bottom: 1px solid var(--line);
+  background: var(--white);
+}
+.headerV2Row {
+  min-height: 76px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.headerV2Brand { flex: 0 0 auto; }
+.headerV2Brand .tdrMark { font-size: 24px; }
+.headerV2Brand .brandText { font-size: 10px; }
+.headerV2Brand .productTag { font-size: 10px; padding-left: 11px; }
+.headerV2Nav { margin-left: auto; }
+.headerV2Nav nav { display: flex; align-items: stretch; gap: 4px; }
+.headerV2Nav nav a {
+  display: flex;
+  align-items: center;
+  min-height: 72px;
+  padding: 0 11px;
+  border-bottom: 3px solid transparent;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.headerV2Nav nav a:hover { color: var(--red); }
+.headerV2Nav nav a.navOn { color: var(--red); border-bottom-color: var(--red); }
+.headerV2Search {
+  min-width: 205px;
+  width: 205px;
+  padding: 7px 9px;
+  border-color: var(--line);
+}
+.headerV2Search:focus-within { border-color: var(--navy); }
+.headerV2Search input { font-size: 12px; }
+.headerV2Account {
+  flex: 0 0 auto;
+  border: 1px solid var(--navy);
+  padding: 9px 12px;
+  font-size: 12px;
+  font-weight: 800;
+}
+.headerV2Account:hover { background: var(--navy); color: #fff; }
+.siteHeaderV2 .mobileNavToggle { flex: 0 0 auto; }
+
+/* ---------- homepage shared ---------- */
+.homeV2 { color: var(--ink); }
+.homeV2 h1, .homeV2 h2, .homeV2 h3, .homeV2 p { margin-top: 0; }
+.homeSectionHead {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+.homeSectionHead h2 {
+  margin: 6px 0 0;
+  font-size: clamp(27px, 3vw, 38px);
+  line-height: 1.15;
+  letter-spacing: -.035em;
+  font-weight: 800;
+}
+.homeSectionHead > a {
+  flex: 0 0 auto;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--red);
+}
+.homeSectionHead > a:hover { text-decoration: underline; }
+
+/* ---------- hero ---------- */
+.homeHero {
+  min-height: 610px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.18fr) minmax(330px, .82fr);
+  gap: 52px;
+  align-items: center;
+  padding: 62px 0 58px;
+  border-bottom: 1px solid var(--navy);
+}
+.homeHeroCopy h1 {
+  margin: 12px 0 17px;
+  font-size: clamp(52px, 6vw, 82px);
+  line-height: .98;
+  letter-spacing: -.055em;
+  font-weight: 800;
+}
+.homeFactLine {
+  color: var(--sf-muted, var(--muted));
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.7;
+}
+.homeSearch {
+  margin-top: 30px;
+  width: min(720px, 100%);
+  min-height: 60px;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--navy);
+  background: #fff;
+  padding-left: 16px;
+  box-shadow: 6px 6px 0 #e8ebf1;
+}
+.homeSearch svg { color: var(--navy); }
+.homeSearch input {
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-size: 15px;
+}
+.homeSearch button {
+  align-self: stretch;
+  border: 0;
+  border-left: 1px solid var(--navy);
+  background: var(--navy);
+  color: #fff;
+  padding: 0 23px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.homeSearch button:hover { background: var(--navy-2); }
+.homeEntrances {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 34px;
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+.homeEntrances a {
+  min-height: 132px;
+  position: relative;
+  display: grid;
+  align-content: start;
+  padding: 16px 18px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+}
+.homeEntrances a:hover { background: var(--paper); }
+.homeEntrances span {
+  font-size: 10px;
+  color: var(--sf-muted, var(--muted));
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+.homeEntrances b { margin-top: 17px; font-size: 15px; }
+.homeEntrances small { margin-top: 5px; color: var(--sf-muted, var(--muted)); font-size: 11px; line-height: 1.45; }
+.homeEntrances i { position: absolute; right: 14px; top: 13px; font-style: normal; font-weight: 800; }
+
+.homeHeroMarket {
+  min-height: 485px;
+  display: flex;
+  flex-direction: column;
+  background: var(--navy);
+  color: #fff;
+  padding: 27px 28px 25px;
+  border-bottom: 7px solid var(--red);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.homeHeroMarket:hover { transform: translateY(-3px); box-shadow: 0 16px 34px rgba(1,32,97,.15); }
+.homeHeroMarketHead { display: flex; justify-content: space-between; gap: 20px; }
+.homeHeroMarketHead div { display: grid; gap: 4px; }
+.homeHeroMarketHead span { color: #9eafd0; font-size: 9px; font-weight: 900; letter-spacing: .14em; }
+.homeHeroMarketHead b { font-size: 16px; }
+.homeHeroMarketHead i { font-style: normal; font-size: 23px; color: #9eafd0; }
+.homeMarketTotal { padding: 30px 0 24px; border-bottom: 1px solid rgba(255,255,255,.2); }
+.homeMarketTotal strong { display: block; font-size: clamp(48px, 5vw, 68px); line-height: 1; letter-spacing: -.055em; }
+.homeMarketTotal span { display: block; margin-top: 8px; color: #bac6dd; font-size: 12px; }
+.homeHeroRanking { padding-top: 16px; }
+.homeHeroRanking > div {
+  display: grid;
+  grid-template-columns: 24px minmax(0,1fr) auto;
+  gap: 8px;
+  padding: 7px 0;
+  border-bottom: 1px solid rgba(255,255,255,.11);
+  font-size: 12px;
+}
+.homeHeroRanking span { color: #8295bb; }
+.homeHeroRanking em { font-style: normal; font-variant-numeric: tabular-nums; color: #d8e0ef; }
+.homeHeroMover { margin-top: auto; display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 3px 12px; padding-top: 18px; }
+.homeHeroMover span { grid-column: 1 / -1; color: #9eafd0; font-size: 10px; font-weight: 800; }
+.homeHeroMover b { font-size: 14px; }
+.homeHeroMover em { font-style: normal; color: #fff; font-size: 12px; }
+.homeMarketUnavailable { margin: auto 0; color: #cbd4e5; }
+
+/* ---------- market preview ---------- */
+.homeMarketSection, .homeDatabaseSection, .homeAnalysisSection { padding: 54px 0 58px; border-bottom: 1px solid var(--navy); }
+.homeMarketPreview {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(330px, .65fr);
+  border: 1px solid var(--line);
+  background: #fff;
+  transition: border-color .18s ease, transform .18s ease, box-shadow .18s ease;
+}
+.homeMarketPreview:hover { border-color: var(--navy); transform: translateY(-2px); box-shadow: 0 14px 28px rgba(1,32,97,.08); }
+.homeTrendPanel, .homeRankingPanel { padding: 24px 25px; min-width: 0; }
+.homeTrendPanel { border-right: 1px solid var(--line); }
+.homePanelHead { display: flex; justify-content: space-between; align-items: start; gap: 16px; margin-bottom: 14px; }
+.homePanelHead div { display: grid; gap: 4px; }
+.homePanelHead span { color: var(--sf-muted, var(--muted)); font-size: 9px; font-weight: 900; letter-spacing: .13em; }
+.homePanelHead b { font-size: 18px; }
+.homePanelHead small { color: var(--sf-muted, var(--muted)); font-size: 10px; }
+.homeMarketLine { color: var(--ink); }
+.homeRankBars { display: grid; gap: 12px; margin-top: 21px; }
+.homeRankRow {
+  display: grid;
+  grid-template-columns: 20px 90px minmax(80px,1fr) 43px;
+  gap: 8px;
+  align-items: center;
+  font-size: 11px;
+}
+.homeRankRow > span { color: var(--sf-muted, var(--muted)); }
+.homeRankRow > b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.homeRankRow > div { height: 9px; background: #edf0f4; overflow: hidden; }
+.homeRankRow > div i { display: block; height: 100%; background: var(--navy); }
+.homeRankRow > em { text-align: right; font-style: normal; font-variant-numeric: tabular-nums; }
+.homeMarketOpen { margin-top: 25px; padding-top: 16px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 16px; font-size: 11px; font-weight: 700; color: var(--red); }
+.homeMarketEmpty { display: flex; justify-content: space-between; padding: 30px; }
+
+/* ---------- compare ---------- */
+.homeCompareSection {
+  margin-inline: calc(var(--pagePad) * -1);
+  padding: 56px var(--pagePad) 60px;
+  background: var(--paper);
+  border-bottom: 1px solid var(--navy);
+}
+.homeCompareLayout { display: grid; grid-template-columns: minmax(0,1fr) 270px; gap: 24px; }
+.homeCompareCars { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; position: relative; }
+.homeCompareCar { border: 1px solid var(--line); background: #fff; min-width: 0; }
+.homeCompareShot { height: 225px; display: flex; align-items: center; justify-content: center; background: #eceff3; overflow: hidden; text-align: center; }
+.homeCompareShot img { width: 100%; height: 100%; object-fit: cover; }
+.homeCompareShot small, .homeCompareShot b { display: block; color: #979fab; }
+.homeCompareCopy { padding: 16px 18px 18px; }
+.homeCompareCopy small { color: var(--sf-muted, var(--muted)); font-size: 10px; font-weight: 800; letter-spacing: .08em; }
+.homeCompareCopy h3 { margin: 5px 0 6px; font-size: 20px; }
+.homeCompareCopy p { min-height: 38px; margin: 0 0 11px; color: var(--sf-muted, var(--muted)); font-size: 11px; line-height: 1.6; }
+.homeCompareCopy strong { font-size: 16px; }
+.homeCompareVs {
+  position: absolute;
+  z-index: 2;
+  left: 50%; top: 91px;
+  transform: translate(-50%, -50%);
+  width: 44px; height: 44px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: var(--navy); color: #fff;
+  border: 4px solid var(--paper);
+  font-size: 10px; font-weight: 900;
+}
+.homeCompareFacts { border: 1px solid var(--navy); background: var(--navy); color: #fff; display: grid; grid-template-columns: 1fr 1fr; align-content: start; }
+.homeCompareFacts > div { padding: 22px 18px; border-bottom: 1px solid rgba(255,255,255,.15); }
+.homeCompareFacts > div + div { border-left: 1px solid rgba(255,255,255,.15); }
+.homeCompareFacts span, .homeCompareFacts small { display: block; color: #aebbd3; font-size: 10px; }
+.homeCompareFacts strong { display: block; margin: 7px 0 2px; font-size: 34px; line-height: 1; }
+.homeCompareFacts > a { grid-column: 1 / -1; align-self: end; margin-top: auto; padding: 20px 18px; background: var(--red); font-size: 13px; font-weight: 800; }
+.homeCompareFacts > a:hover { background: var(--red-dark); }
+
+/* ---------- database ---------- */
+.homeDatabaseStats { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); background: var(--navy); color: #fff; }
+.homeDatabaseStats > div { padding: 22px 24px; border-right: 1px solid rgba(255,255,255,.18); }
+.homeDatabaseStats > div:last-child { border-right: 0; }
+.homeDatabaseStats strong { display: block; font-size: 34px; line-height: 1; letter-spacing: -.04em; }
+.homeDatabaseStats span { display: block; margin-top: 6px; color: #b9c5dc; font-size: 11px; }
+.homeBodyLinks { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); border-left: 1px solid var(--line); margin-top: 22px; }
+.homeBodyLinks a { min-height: 78px; padding: 15px 13px; border-right: 1px solid var(--line); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); display: flex; flex-direction: column; justify-content: space-between; gap: 8px; }
+.homeBodyLinks a:hover { background: var(--paper); color: var(--red); }
+.homeBodyLinks b { font-size: 12px; }
+.homeBodyLinks span { font-size: 11px; color: var(--sf-muted, var(--muted)); }
+.homeBrandRail { display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); border-left: 1px solid var(--line); margin-top: 16px; overflow: hidden; }
+.homeBrandRail a { min-width: 0; min-height: 94px; padding: 14px 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 9px; border-right: 1px solid var(--line); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: center; }
+.homeBrandRail a:hover { background: var(--paper); }
+.homeBrandRail img { max-width: 48px; max-height: 28px; object-fit: contain; }
+.homeBrandRail span { width: 42px; height: 28px; display: grid; place-items: center; background: var(--paper); font-size: 10px; font-weight: 900; }
+.homeBrandRail b { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10px; }
+
+/* ---------- analysis reserved slot ---------- */
+.homeAnalysisGrid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); border-left: 1px solid var(--line); }
+.homeAnalysisGrid a { min-height: 220px; padding: 20px; border-right: 1px solid var(--line); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.homeAnalysisGrid time { color: var(--sf-muted, var(--muted)); font-size: 10px; }
+.homeAnalysisGrid h3 { margin: 30px 0 8px; font-size: 18px; line-height: 1.4; }
+.homeAnalysisGrid p { color: var(--sf-muted, var(--muted)); font-size: 11px; line-height: 1.65; }
+.homeAnalysisReserved {
+  min-height: 210px;
+  display: grid;
+  place-items: center;
+  border: 1px dashed #b8bec9;
+  background: #fafbfc;
+  color: var(--sf-muted, var(--muted));
+  font-size: 13px;
+}
+
+/* ---------- commercial ---------- */
+.homeCommercial {
+  margin-inline: calc(var(--pagePad) * -1);
+  margin-bottom: -68px;
+  display: grid;
+  grid-template-columns: 1.35fr .65fr;
+}
+.homeProBlock { min-height: 300px; padding: 43px var(--pagePad); background: var(--navy); color: #fff; }
+.homeProBlock .sfEyebrow { color: #a8b6d0; }
+.homeProBlock h2, .homeEnterpriseBlock h2 { margin: 9px 0 20px; font-size: 31px; letter-spacing: -.035em; }
+.homeProFacts { display: flex; flex-wrap: wrap; gap: 8px; }
+.homeProFacts span { border: 1px solid rgba(255,255,255,.28); padding: 5px 8px; font-size: 10px; }
+.homeProPrice { margin-top: 35px; font-size: 18px; font-weight: 800; }
+.homeProBlock > a { display: inline-block; margin-top: 16px; padding: 10px 14px; background: #fff; color: var(--navy); font-size: 12px; font-weight: 800; }
+.homeEnterpriseBlock { min-height: 300px; padding: 43px 34px; background: #e9ecf1; }
+.homeEnterpriseFacts { max-width: 350px; color: var(--sf-muted, var(--muted)); font-size: 12px; line-height: 1.7; }
+.homeEnterpriseBlock > a { display: inline-block; margin-top: 34px; color: var(--red); font-size: 12px; font-weight: 800; }
+
+@media (max-width: 1240px) {
+  .headerV2Search { display: none; }
+  .headerV2Row { gap: 14px; }
+  .headerV2Nav nav a { padding-inline: 9px; }
+  .homeHero { grid-template-columns: minmax(0,1.08fr) minmax(320px,.92fr); gap: 30px; }
+  .homeBrandRail { grid-template-columns: repeat(6, minmax(0,1fr)); }
+  .homeBrandRail a:nth-child(n+7) { border-top: 0; }
+}
+
+@media (max-width: 980px) {
+  .headerV2Brand .productTag { display: none; }
+  .headerV2Nav nav { gap: 0; }
+  .headerV2Nav nav a { font-size: 12px; padding-inline: 7px; }
+  .homeHero { grid-template-columns: 1fr; min-height: 0; }
+  .homeHeroMarket { min-height: 0; }
+  .homeMarketPreview { grid-template-columns: 1fr; }
+  .homeTrendPanel { border-right: 0; border-bottom: 1px solid var(--line); }
+  .homeCompareLayout { grid-template-columns: 1fr; }
+  .homeCompareFacts { grid-template-columns: 1fr 1fr; }
+  .homeBodyLinks { grid-template-columns: repeat(3, 1fr); }
+  .homeBodyLinks a:nth-child(n+4) { border-top: 0; }
+  .homeAnalysisGrid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .homeCommercial { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 700px) {
+  .siteHeader.siteHeaderV2 { padding-inline: 16px; }
+  .headerV2Row { min-height: 65px; }
+  .headerV2Brand .tdrMark { font-size: 21px; }
+  .headerV2Brand .brandText { font-size: 9px; }
+  .headerV2Nav, .headerV2Search, .headerV2Account { display: none; }
+  .homeHero { padding: 42px 0 40px; gap: 28px; }
+  .homeHeroCopy h1 { font-size: clamp(45px, 15vw, 62px); }
+  .homeFactLine { font-size: 12px; }
+  .homeSearch { min-height: 54px; margin-top: 24px; }
+  .homeSearch button { padding-inline: 16px; }
+  .homeEntrances { grid-template-columns: 1fr; }
+  .homeEntrances a { min-height: 100px; }
+  .homeSectionHead { align-items: start; }
+  .homeSectionHead h2 { font-size: 27px; }
+  .homeSectionHead > a { font-size: 11px; text-align: right; }
+  .homeMarketSection, .homeDatabaseSection, .homeAnalysisSection { padding: 42px 0; }
+  .homeTrendPanel, .homeRankingPanel { padding: 19px 16px; }
+  .homeRankRow { grid-template-columns: 18px 74px minmax(70px,1fr) 40px; }
+  .homeCompareSection { padding-top: 42px; padding-bottom: 46px; }
+  .homeCompareCars { grid-template-columns: 1fr; }
+  .homeCompareVs { top: 50%; }
+  .homeCompareShot { height: 205px; }
+  .homeDatabaseStats { grid-template-columns: 1fr; }
+  .homeDatabaseStats > div { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.18); }
+  .homeBodyLinks { grid-template-columns: 1fr 1fr; }
+  .homeBrandRail { grid-template-columns: repeat(3, 1fr); }
+  .homeAnalysisGrid { grid-template-columns: 1fr; }
+  .homeProBlock, .homeEnterpriseBlock { min-height: 0; padding: 34px 24px; }
+  .homeCommercial { margin-bottom: -68px; }
+}
+
+@media (max-width: 430px) {
+  .homeSectionHead { display: block; }
+  .homeSectionHead > a { display: inline-block; margin-top: 11px; }
+  .homePanelHead { display: block; }
+  .homePanelHead small { display: block; margin-top: 5px; }
+  .homeCompareFacts { grid-template-columns: 1fr; }
+  .homeCompareFacts > div + div { border-left: 0; }
+  .homeBodyLinks { grid-template-columns: 1fr; }
+  .homeBrandRail { grid-template-columns: repeat(2, 1fr); }
+}
