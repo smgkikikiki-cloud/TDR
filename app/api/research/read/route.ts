@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { periodKeyForMetric } from "@/lib/access-policy";
-import { AccessPolicyError, requireActivatedAccess, requireUsage } from "@/lib/access-policy-server";
+import { AccessPolicyError, requireMemberAccess, requireUsage } from "@/lib/access-policy-server";
 import { recordEvent } from "@/lib/telemetry";
 
 export const dynamic = "force-dynamic";
@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
   if (!slug) return NextResponse.json({ error: "missing slug" }, { status: 400 });
 
   try {
-    const ctx = await requireActivatedAccess(accessToken);
+    const ctx = await requireMemberAccess(accessToken);
 
     const { data: article, error: articleError } = await ctx.db
       .from("research_articles")

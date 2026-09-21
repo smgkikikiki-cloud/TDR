@@ -26,10 +26,11 @@ const toolRoutes: Record<string, string> = {
   "app/api/export/pdf/route.ts": fs.readFileSync("app/api/export/pdf/route.ts", "utf8"),
 };
 const registrationAnalytics = fs.readFileSync("lib/registration-analytics.ts", "utf8");
-// registration/market routes reach activation indirectly through
-// lib/registration-analytics.ts::resolveRegistrationAccess (which itself
-// must call requireActivatedAccess, checked separately below) rather than
-// calling requireActivatedAccess directly -- both paths are accepted here.
+// Every member tool must resolve a real session before it does anything,
+// but signing in is the entitlement: tier and quota decide what comes
+// back, not whether a profile is filled in. Registration/market routes
+// reach that check indirectly through
+// lib/registration-analytics.ts::resolveRegistrationAccess.
 const reachesActivationDirectly = new Set([
   "app/api/tools/compare/route.ts",
   "app/api/tools/sales-modules/route.ts",
@@ -39,17 +40,25 @@ const reachesActivationDirectly = new Set([
 ]);
 for (const [path, source] of Object.entries(toolRoutes)) {
   if (reachesActivationDirectly.has(path)) {
-    check(`${path} calls requireActivatedAccess or getRegistrationDashboard (which does)`, source.includes("requireActivatedAccess") || source.includes("getRegistrationDashboard"), true);
+    check(`${path} resolves a member session before serving`, source.includes("requireMemberAccess") || source.includes("getRegistrationDashboard"), true);
+    check(`${path} does not gate the product behind profile completion`, !source.includes("requireActivatedAccess"), true);
   }
 }
 check(
-  "lib/registration-analytics.ts's resolveRegistrationAccess uses requireActivatedAccess, not the weaker resolveAccessContext",
-  registrationAnalytics.includes("return await requireActivatedAccess(accessToken)"),
+  "lib/registration-analytics.ts's resolveRegistrationAccess resolves a member session centrally",
+  registrationAnalytics.includes("return await requireMemberAccess(accessToken)"),
+  true,
+);
+// Verified identity still exists for the operations that turn on who the
+// member is -- checkout moves money -- it is just not what a dashboard asks.
+check(
+  "verified identity is still available for identity-sensitive operations",
+  fs.readFileSync("lib/access-policy-server.ts", "utf8").includes("export async function requireActivatedAccess"),
   true,
 );
 check(
-  "lib/access-policy-server.ts's plain resolveAccessContext is never itself sufficient for a tool route",
-  fs.readFileSync("lib/access-policy-server.ts", "utf8").includes("export async function requireActivatedAccess"),
+  "paying still requires verified identity",
+  fs.readFileSync("lib/billing.ts", "utf8").includes("requireActivatedAccess("),
   true,
 );
 
@@ -80,10 +89,10 @@ const researchRoute = fs.readFileSync("app/api/research/read/route.ts", "utf8");
 const pdfRoute = fs.readFileSync("app/api/export/pdf/route.ts", "utf8");
 {
   // Compare the 401 return's position against the actual call site
-  // requireActivatedAccess(accessToken) -- not the bare identifier, which
+  // requireMemberAccess(accessToken) -- not the bare identifier, which
   // also appears earlier in this file's own import statement.
   const unauthorizedReturnIndex = researchRoute.indexOf('{ status: 401 }');
-  const activationCallIndex = researchRoute.indexOf("requireActivatedAccess(accessToken)");
+  const activationCallIndex = researchRoute.indexOf("requireMemberAccess(accessToken)");
   check("the research route refuses a request with no bearer token before it ever queries the DB",
     unauthorizedReturnIndex > -1 && activationCallIndex > -1 && unauthorizedReturnIndex < activationCallIndex, true);
 }

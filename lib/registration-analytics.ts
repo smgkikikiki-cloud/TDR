@@ -7,7 +7,7 @@ import {
   type MarketSliceFilters,
   type MarketSliceRow,
 } from "@/lib/registration-market";
-import { requireActivatedAccess, requireUsage, getSalesModuleSelection, AccessPolicyError, type AccessContext } from "@/lib/access-policy-server";
+import { requireMemberAccess, requireUsage, getSalesModuleSelection, AccessPolicyError, type AccessContext } from "@/lib/access-policy-server";
 import {
   currentSalesModuleCycleKey,
   historyWindowStart,
@@ -112,13 +112,13 @@ export function isRegistrationDimension(value: string | null): value is Registra
 // activated account gets Sales Tools, just at different quotas/module/
 // history scope. Legacy registration_full/registration_monthly
 // subscribers still resolve to PRO via resolveTierFromEntitlements, and
-// are grandfathered as activated by migration_v34, so their access is
-// unchanged. requireActivatedAccess (not the plain resolveAccessContext)
-// is what blocks an incomplete/unverified account here -- centralizing
-// the check so it applies to every route in this file, not just the UI.
+// are grandfathered by migration_v34, so their access is unchanged.
+// Signing in is the entitlement: tier and quota decide what comes back,
+// and an unverified phone or a half-filled profile does not withhold a
+// dashboard the member is already entitled to.
 export async function resolveRegistrationAccess(accessToken: string): Promise<AccessContext> {
   try {
-    return await requireActivatedAccess(accessToken);
+    return await requireMemberAccess(accessToken);
   } catch (error) {
     if (error instanceof AccessPolicyError) throw new RegistrationAccessError(error.status, error.message);
     throw new RegistrationAccessError(503, "could not verify member access");

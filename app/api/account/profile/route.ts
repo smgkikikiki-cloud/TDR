@@ -43,15 +43,16 @@ export async function POST(request: NextRequest) {
   let body: Record<string, unknown> = {};
   try { body = await request.json(); } catch {}
 
+  // Enrichment, not a form to complete: a member may save a postcode and
+  // leave the rest, or save nothing at all. Only a value that is actually
+  // present has to be well formed, because storing a malformed postcode
+  // helps nobody -- an absent one costs nothing.
   const postcode = typeof body.postcode === "string" ? body.postcode.trim() : "";
-  if (!/^[0-9]{4,10}$/.test(postcode)) {
+  if (postcode && !/^[0-9]{4,10}$/.test(postcode)) {
     return NextResponse.json({ error: "postcode must be 4-10 digits" }, { status: 400 });
   }
   const isIndividual = body.is_individual !== false; // default: individual / not affiliated
   const companyName = typeof body.company_name === "string" ? body.company_name.trim() : "";
-  if (!isIndividual && !companyName) {
-    return NextResponse.json({ error: "company name is required unless this is an individual / not-affiliated account" }, { status: 400 });
-  }
   // Optional, unchecked-by-default marketing consent. Account creation and
   // profile completion must both work with this left false.
   const marketingConsent = body.marketing_consent === true;

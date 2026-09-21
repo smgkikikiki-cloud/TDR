@@ -177,15 +177,18 @@ export default function MemberProfilePage() {
     <main className={styles.shell}>
       <section className={styles.loginCard}>
         <div className={styles.eyebrow}>TDR REPORT · PROFILE</div>
-        <h1>ยืนยันตัวตนและข้อมูลบัญชี</h1>
-        <p className={styles.muted}>ต้องยืนยันอีเมล ยืนยันเบอร์มือถือ และกรอกโปรไฟล์ให้ครบก่อนใช้เครื่องมือสมาชิก (Compare / Sales Tools) — ไม่ต้องผูกบัตร</p>
+        <h1>ข้อมูลบัญชี</h1>
+        <p className={styles.muted}>
+          เข้าสู่ระบบแล้วใช้ Compare และ Sales Tools ได้ทันทีตามสิทธิ์ของบัญชี —
+          ข้อมูลด้านล่างกรอกเพิ่มได้ตามสะดวก ไม่กรอกก็ไม่กระทบการใช้งาน
+          (ยืนยันเบอร์มือถือจำเป็นเฉพาะตอนสมัครแพ็กเกจแบบชำระเงิน)
+        </p>
 
         {activation ? (
           <ul className={styles.form} style={{ marginTop: 0 }}>
-            <li>{activation.emailConfirmed ? "✓" : "○"} ยืนยันอีเมลแล้ว</li>
-            <li>{activation.phoneVerified ? "✓" : "○"} ยืนยันเบอร์มือถือแล้ว</li>
-            <li>{activation.profileComplete ? "✓" : "○"} กรอกโปรไฟล์ครบ (รหัสไปรษณีย์ + องค์กร/บุคคลทั่วไป)</li>
-            {activation.activated ? <li><b>พร้อมใช้งาน Compare และ Sales Tools แล้ว</b>{activation.activationSource === "LEGACY_PAID" ? " (บัญชีลูกค้าเดิมก่อนระบบยืนยันตัวตน — ยังไม่มีการยืนยันเบอร์มือถือจริงในระบบ)" : null}</li> : null}
+            <li>{activation.emailConfirmed ? "✓" : "○"} ยืนยันอีเมล</li>
+            <li>{activation.phoneVerified ? "✓" : "○"} ยืนยันเบอร์มือถือ</li>
+            <li>{activation.profileComplete ? "✓" : "○"} ข้อมูลโปรไฟล์</li>
           </ul>
         ) : null}
 
@@ -204,7 +207,7 @@ export default function MemberProfilePage() {
         </div>
 
         <form onSubmit={submit} className={styles.form}>
-          <label>รหัสไปรษณีย์<input required pattern="[0-9]{4,10}" value={postcode} onChange={(event) => setPostcode(event.target.value)} /></label>
+          <label>รหัสไปรษณีย์ (ไม่บังคับ)<input pattern="[0-9]{4,10}" value={postcode} onChange={(event) => setPostcode(event.target.value)} /></label>
           <label className={styles.check}>
             <input type="checkbox" checked={!isIndividual} onChange={(event) => setIsIndividual(!event.target.checked)} />
             <span>สมัครในนามองค์กร/บริษัท (ไม่เลือก = บุคคลทั่วไป / Individual / Not affiliated)</span>

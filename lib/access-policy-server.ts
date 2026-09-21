@@ -173,9 +173,28 @@ export async function evaluateAndPersistActivation(ctx: AccessContext): Promise<
   };
 }
 
-// The gate every member-tool route must use. Blocks direct API calls just
-// as much as the UI: an incomplete/unverified account gets 403 here
-// regardless of which client hits the route.
+/** What an ordinary member tool asks for: a real session, and the tier and
+ *  quota that come with it.
+ *
+ *  Signing in is the entitlement. A member who cannot receive an OTP still
+ *  paid for Pro, or still counts as the Free reader the tier was written
+ *  for, and holding the product shut until they complete a profile
+ *  withholds what they already have rather than protecting anything.
+ *  Phone, postcode and company are enrichment, collected at /member/profile
+ *  because they are useful, never because a dashboard depends on them.
+ *
+ *  requireActivatedAccess below still exists for the operations where
+ *  identity is the point -- paying is one -- and nothing else should reach
+ *  for it. */
+export async function requireMemberAccess(accessToken: string): Promise<AccessContext> {
+  return resolveAccessContext(accessToken);
+}
+
+// Verified identity, for the few operations that genuinely turn on who the
+// member is rather than what they are entitled to. Checkout is the case:
+// money moves, so a confirmed email, an OTP-verified phone and a complete
+// billing profile are the operation's own requirements. Product routes use
+// requireMemberAccess() instead -- see the note there.
 export async function requireActivatedAccess(accessToken: string): Promise<AccessContext> {
   const ctx = await resolveAccessContext(accessToken);
   const { data: profile, error } = await ctx.db
