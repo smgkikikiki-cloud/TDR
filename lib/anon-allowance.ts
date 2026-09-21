@@ -14,8 +14,10 @@
  * route handler.
  */
 
-/** Total comparisons an anonymous reader may run, ever. */
-export const ANON_COMPARE_LIMIT = 4;
+/** Comparisons an anonymous reader may run per day. Daily rather than a
+ *  lifetime total, so a return visitor keeps getting a reason to come back
+ *  (and keeps generating page views) instead of hitting a wall once, ever. */
+export const ANON_COMPARE_DAILY_LIMIT = 10;
 
 /** Market views an anonymous reader may take per day. */
 export const ANON_MARKET_DAILY_LIMIT = 1;
