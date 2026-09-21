@@ -137,7 +137,7 @@ export default function PricingPage() {
         <article className={`${styles.tierCard} ${styles.enterpriseCard}`}>
           <div className={styles.tierTop}>
             <div className={styles.cardName}>TDR ENTERPRISE</div>
-            <div className={styles.enterprisePrice}>Tailored for your team</div>
+            <div className={styles.enterprisePrice}>Tailored package for your team</div>
             <p>จำนวนผู้ใช้ ขอบเขตข้อมูล วิธีเข้าถึง และราคา ปรับตาม workflow ของแต่ละองค์กร</p>
           </div>
 
