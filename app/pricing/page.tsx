@@ -136,32 +136,37 @@ export default function PricingPage() {
 
         <article className={`${styles.tierCard} ${styles.enterpriseCard}`}>
           <div className={styles.tierTop}>
-            <div className={styles.cardName}>ENTERPRISE</div>
-            <div className={styles.enterprisePrice}>ติดต่อ TDR</div>
-            <p>สำหรับองค์กรและการเชื่อมต่อข้อมูลตามขอบเขตการใช้งานจริง</p>
+            <div className={styles.cardName}>TDR ENTERPRISE</div>
+            <div className={styles.enterprisePrice}>Tailored for your team</div>
+            <p>จำนวนผู้ใช้ ขอบเขตข้อมูล วิธีเข้าถึง และราคา ปรับตาม workflow ของแต่ละองค์กร</p>
           </div>
 
           <div className={styles.featureGroup}>
-            <h2>รวมสิทธิ์ TDR Pro</h2>
+            <h2>สิ่งที่ปรับตามทีม</h2>
             <ul>
-              <li>Market Intelligence และ TDR Analysis ตามสิทธิ์ Pro</li>
+              <li>จำนวนผู้ใช้และสิทธิ์การเข้าถึง</li>
+              <li>ขอบเขตข้อมูลและตลาดที่ต้องใช้</li>
+              <li>รูปแบบการส่งมอบข้อมูล</li>
+              <li>ราคาและเงื่อนไขตาม scope จริง</li>
             </ul>
           </div>
 
           <div className={styles.featureGroup}>
-            <h2>สำหรับองค์กร</h2>
+            <h2>เครื่องมือสำหรับองค์กร</h2>
             <ul>
-              <li>API</li>
+              <li>รวมสิทธิ์ TDR Pro</li>
+              <li>API / Raw export</li>
               <li>Data integration</li>
-              <li>Raw export</li>
-              <li>การสนับสนุนตามการใช้งานขององค์กร</li>
+              <li>Team onboarding &amp; support</li>
             </ul>
           </div>
+
+          <p className={styles.enterpriseNote}>ไม่มีราคาแพ็กเกจตายตัว — เสนอราคาตามจำนวนผู้ใช้ ขอบเขตข้อมูล และรูปแบบการใช้งานของทีม</p>
 
           {CORPORATE_CONTACT_URL ? (
-            <a className={`${styles.cta} ${styles.enterpriseCta}`} href={CORPORATE_CONTACT_URL} onClick={() => track("corporate_cta_clicked")}>ติดต่อ TDR</a>
+            <a className={`${styles.cta} ${styles.enterpriseCta}`} href={CORPORATE_CONTACT_URL} onClick={() => track("corporate_cta_clicked")}>คุยกับ TDR Enterprise →</a>
           ) : (
-            <span className={`${styles.cta} ${styles.enterpriseCta} ${styles.disabledCta}`} aria-disabled="true">ติดต่อ TDR</span>
+            <span className={`${styles.cta} ${styles.enterpriseCta} ${styles.disabledCta}`} aria-disabled="true">คุยกับ TDR Enterprise →</span>
           )}
         </article>
       </section>
@@ -213,7 +218,7 @@ export default function PricingPage() {
               <tr><th>ตัวกรองตลาดขั้นสูง</th><td>—</td><td>✓</td><td>✓</td></tr>
               <tr><th>TDR Analysis</th><td>{RESEARCH_LIVE ? `${FREE_POLICY.researchFullMonthlyLimit} บท / เดือน` : "เร็วๆ นี้"}</td><td>{RESEARCH_LIVE ? "ไม่จำกัด" : "เร็วๆ นี้"}</td><td>{RESEARCH_LIVE ? "ไม่จำกัด" : "เร็วๆ นี้"}</td></tr>
               <tr><th>PDF export</th><td>{PDF_LIVE ? `${FREE_POLICY.pdfMonthlyLimit} / เดือน · มีลายน้ำ` : "เร็วๆ นี้"}</td><td>{PDF_LIVE ? "ไม่จำกัด · ไม่มีลายน้ำ" : "เร็วๆ นี้"}</td><td>{PDF_LIVE ? "ตามข้อตกลง" : "เร็วๆ นี้"}</td></tr>
-              <tr><th>API / Raw export / Data integration</th><td>—</td><td>—</td><td>ตามข้อตกลงองค์กร</td></tr>
+              <tr><th>API / Raw export / Data integration</th><td>—</td><td>—</td><td>ปรับตาม scope ขององค์กร</td></tr>
             </tbody>
           </table>
         </div>
