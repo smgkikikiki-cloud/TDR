@@ -14,138 +14,210 @@ function track(event: "upgrade_viewed" | "corporate_cta_clicked") {
   }).catch(() => {});
 }
 
-// Research/PDF are scaffolded, not live -- see lib/access-policy.ts's
-// FEATURES registry (research_reports / pdf_export_reports, both
-// `released: false` today). Reading the flag here means this copy updates
-// itself automatically once a real implementation ships, instead of
-// silently drifting out of sync with what the product actually does.
+const FREE_POLICY = TIER_POLICIES.FREE;
+const PRO_POLICY = TIER_POLICIES.PRO;
 const RESEARCH_LIVE = FEATURES.research_reports.released;
 const PDF_LIVE = FEATURES.pdf_export_reports.released;
-function researchCopy(liveCopy: string) {
-  return RESEARCH_LIVE ? liveCopy : "Research — เร็วๆ นี้ (อยู่ระหว่างพัฒนา)";
-}
-function pdfCopy(liveCopy: string) {
-  return PDF_LIVE ? liveCopy : "PDF export — เร็วๆ นี้ (อยู่ระหว่างพัฒนา)";
-}
+const CORPORATE_CONTACT_URL = process.env.NEXT_PUBLIC_TDR_CORPORATE_CONTACT_URL || "";
 
-// Provincial Registration: same pattern -- reads the ladder from
-// lib/access-policy.ts's FEATURES registry rather than hardcoding tier
-// copy here, so this stays in sync automatically if the ladder or the
-// release flag ever changes. `released` is false today, so every tier
-// shows "(Coming Soon)"; the ladder LABEL still communicates where this
-// is headed (Free teaser / Pro full / Enterprise tailored) without
-// pretending any of it is live.
-const PROVINCIAL_LIVE = FEATURES.provincial_registration.released;
-const PROVINCIAL_LADDER = FEATURES.provincial_registration.stateByAudience;
-const PROVINCIAL_STATE_LABEL: Record<string, string> = {
-  unavailable: "—",
-  teaser: "Teaser",
-  limited: "Limited (รายละเอียดยังไม่กำหนด)",
-  full: "Full",
-  tailored: "Tailored",
-};
-function provincialCopy(audience: keyof typeof PROVINCIAL_LADDER) {
-  const label = PROVINCIAL_STATE_LABEL[PROVINCIAL_LADDER[audience]];
-  return PROVINCIAL_LIVE
-    ? `Provincial Registration — ${label}`
-    : `Provincial Registration — ${label} (Coming Soon)`;
-}
-
-// Free's real, decided limits -- read from lib/access-policy.ts's
-// TIER_POLICIES.FREE rather than copied numbers that can drift from it.
-const FREE_POLICY = TIER_POLICIES.FREE;
-
-// Pro's three commitment lengths, read from lib/plans.ts's PLAN_CATALOG
-// rather than re-typing the prices here -- this page can never show a
-// number that disagrees with what checkout actually charges.
-const PRO_PLANS = PLAN_CATALOG;
-const PRO_PRICE_RANGE = `฿${Math.min(...PRO_PLANS.map((p) => p.priceThbPerMonth))}–${Math.max(...PRO_PLANS.map((p) => p.priceThbPerMonth))}`;
 const INTERVAL_LABEL: Record<string, string> = {
   monthly: "รายเดือน",
-  quarterly: "ผูกมัด 3 เดือน",
+  quarterly: "3 เดือน",
   annual: "รายปี",
 };
 
-// Enterprise contact is configuration-driven, never a guessed address.
-// Set NEXT_PUBLIC_TDR_CORPORATE_CONTACT_URL (a mailto: link or a contact
-// page URL) to enable the CTA; until it's set the button fails visibly
-// (disabled, with an explanatory label) instead of silently pointing
-// somewhere nobody confirmed.
-const CORPORATE_CONTACT_URL = process.env.NEXT_PUBLIC_TDR_CORPORATE_CONTACT_URL || "";
+const INTERVAL_NOTE: Record<string, string> = {
+  monthly: "ไม่ผูกมัด · เรียกเก็บทุกเดือน",
+  quarterly: "เรียกเก็บล่วงหน้าทุก 3 เดือน",
+  annual: "ราคาต่อเดือนต่ำสุด · เรียกเก็บล่วงหน้ารายปี",
+};
+
+function money(value: number) {
+  return value.toLocaleString("th-TH");
+}
+
+function limit(value: number | null, unit: string) {
+  return value === null ? "ไม่จำกัด" : `${value} ${unit}`;
+}
 
 export default function PricingPage() {
   useEffect(() => { track("upgrade_viewed"); }, []);
 
+  const proFrom = Math.min(...PLAN_CATALOG.map((plan) => plan.priceThbPerMonth));
+
   return (
     <main className={styles.shell}>
       <header className={styles.header}>
-        <div className={styles.eyebrow}>TDR REPORT · แพ็กเกจ</div>
-        <h1>เลือกแพ็กเกจที่ตรงกับการใช้งาน</h1>
-        <p>ข้อมูลรถ ราคา และสเปก เปิดให้ดูฟรีเสมอ แพ็กเกจด้านล่างคือสิทธิ์ใช้เครื่องมือวิเคราะห์</p>
+        <div className={styles.eyebrow}>TDR AUTOMOTIVE INTELLIGENCE · แพ็กเกจ</div>
+        <h1>แพ็กเกจ TDR Automotive Intelligence</h1>
+        <p>ฐานข้อมูลรถ ราคา รุ่นย่อย และสเปกเปิดใช้ฟรี · Pro เพิ่มความลึกของ Market Intelligence และบทวิเคราะห์</p>
       </header>
 
-      <section className={styles.grid}>
-        <article className={styles.card}>
-          <div>
-            <div className={styles.cardName}>Free</div>
+      <div className={styles.anonymousNote}>
+        <b>ยังไม่เข้าสู่ระบบ</b>
+        <span>เทียบรถได้ 10 ครั้ง/วัน</span>
+        <span>เปิด Market ได้ 1 ครั้ง/วัน</span>
+      </div>
+
+      <section className={styles.tierGrid} aria-label="แพ็กเกจ TDR">
+        <article className={styles.tierCard}>
+          <div className={styles.tierTop}>
+            <div className={styles.cardName}>FREE</div>
             <div className={styles.price}>฿0</div>
+            <p>บัญชีฟรีสำหรับใช้งานข้อมูลและเครื่องมือพื้นฐาน</p>
           </div>
-          <ul className={styles.features}>
-            <li>✓ Vehicle Compare — {FREE_POLICY.compareDailyLimit === null ? "ไม่จำกัด" : `${FREE_POLICY.compareDailyLimit} ครั้ง/วัน`}</li>
-            <li>✓ Sales Tools — เลือก {FREE_POLICY.salesModulePickCount} จาก {SALES_MODULES.length} โมดูล, {FREE_POLICY.salesQueryDailyLimit} คำขอ/วัน</li>
-            <li>✓ ประวัติข้อมูล — ย้อนหลัง 12 เดือน (rolling)</li>
-            <li>{RESEARCH_LIVE ? "✓" : "○"} {researchCopy(`Research ฉบับเต็ม — ${FREE_POLICY.researchFullMonthlyLimit} ชิ้น/เดือน`)}</li>
-            <li>{PDF_LIVE ? "✓" : "○"} {pdfCopy(`PDF export — ${FREE_POLICY.pdfMonthlyLimit} ครั้ง/เดือน (มีลายน้ำ TDR Free)`)}</li>
-            <li>{PROVINCIAL_LIVE ? "✓" : "○"} {provincialCopy("FREE")}</li>
-            <li>— ไม่มี API, ไม่มี CSV/XLSX/raw export</li>
-          </ul>
+
+          <div className={styles.featureGroup}>
+            <h2>ข้อมูลรถ</h2>
+            <ul>
+              <li>แคตตาล็อก / รุ่น / รุ่นย่อย / สเปก — ไม่จำกัด</li>
+              <li>Vehicle Compare — {limit(FREE_POLICY.compareDailyLimit, "ครั้ง/วัน")}</li>
+            </ul>
+          </div>
+
+          <div className={styles.featureGroup}>
+            <h2>Market Intelligence</h2>
+            <ul>
+              <li>{FREE_POLICY.salesQueryDailyLimit} queries / วัน</li>
+              <li>Sales Tools — เลือก {FREE_POLICY.salesModulePickCount} จาก {SALES_MODULES.length} โมดูล</li>
+              <li>เดือนเดียว + Rolling 3 เดือน</li>
+              <li>ประวัติย้อนหลัง 12 เดือน</li>
+              <li>เทียบกับเดือนก่อนหน้า</li>
+              <li>ไม่มีตัวกรองตลาดขั้นสูง</li>
+            </ul>
+          </div>
+
+          <div className={styles.featureGroup}>
+            <h2>TDR Analysis</h2>
+            <ul>
+              <li>{RESEARCH_LIVE ? `อ่านเต็ม ${FREE_POLICY.researchFullMonthlyLimit} บทความ / เดือน` : "เร็วๆ นี้"}</li>
+            </ul>
+          </div>
+
           <Link className={`${styles.cta} ${styles.ctaGhost}`} href="/member/login">เริ่มใช้ฟรี</Link>
         </article>
 
-        <article className={styles.card}>
-          <div>
-            <div className={styles.cardName}>Pro</div>
-            <div className={styles.price}>{PRO_PRICE_RANGE}<small>/เดือน</small></div>
+        <article className={`${styles.tierCard} ${styles.proCard}`}>
+          <div className={styles.proFlag}>PRO</div>
+          <div className={styles.tierTop}>
+            <div className={styles.cardName}>TDR PRO</div>
+            <div className={styles.price}>เริ่ม ฿{money(proFrom)}<small>/เดือน</small></div>
+            <p>Market Intelligence แบบเต็ม สิทธิ์เท่ากันทุกระยะการชำระ</p>
           </div>
-          <ul className={styles.priceOptions}>
-            {PRO_PLANS.map((plan) => (
-              <li key={plan.planCode}>
-                <span>{INTERVAL_LABEL[plan.interval] || plan.interval}</span>
-                <span><b>฿{plan.priceThbPerMonth}/เดือน</b> <small>(เรียกเก็บ ฿{plan.priceThbPerInterval})</small></span>
-              </li>
-            ))}
-          </ul>
-          <ul className={styles.features}>
-            <li>✓ Vehicle Compare / Sales Tools — ไม่จำกัด</li>
-            <li>✓ ประวัติข้อมูล — เต็มรูปแบบเท่าที่มี</li>
-            <li>{RESEARCH_LIVE ? "✓" : "○"} {researchCopy("Research ฉบับเต็ม — ไม่จำกัด")}</li>
-            <li>{PDF_LIVE ? "✓" : "○"} {pdfCopy("PDF export — ไม่จำกัด")}</li>
-            <li>{PROVINCIAL_LIVE ? "✓" : "○"} {provincialCopy("PRO")}</li>
-            <li>— ไม่มี API สำหรับดึงข้อมูลดิบ (สงวนไว้สำหรับ Enterprise)</li>
-          </ul>
-          <Link className={styles.cta} href="/member/billing">สมัคร Pro</Link>
+
+          <div className={styles.featureGroup}>
+            <h2>ทุกอย่างใน Free</h2>
+            <ul>
+              <li>Vehicle Compare — ไม่จำกัด</li>
+              <li>Sales Tools / Market queries — ไม่จำกัด</li>
+            </ul>
+          </div>
+
+          <div className={styles.featureGroup}>
+            <h2>Market Intelligence</h2>
+            <ul>
+              <li>ครบทุกมุมมอง รวมข้อมูลระดับรายรุ่น</li>
+              <li>เดือน / Rolling 3 / 6 / 12 เดือน / YTD</li>
+              <li>ประวัติข้อมูลทั้งคลัง</li>
+              <li>เทียบเดือนก่อนหน้า + YoY</li>
+              <li>ตัวกรองตลาดขั้นสูง</li>
+            </ul>
+          </div>
+
+          <div className={styles.featureGroup}>
+            <h2>TDR Analysis</h2>
+            <ul>
+              <li>{RESEARCH_LIVE ? "อ่านบทวิเคราะห์ไม่จำกัด" : "เร็วๆ นี้"}</li>
+            </ul>
+          </div>
+
+          <Link className={styles.cta} href="/member/billing">สมัคร TDR Pro</Link>
+        </article>
+
+        <article className={`${styles.tierCard} ${styles.enterpriseCard}`}>
+          <div className={styles.tierTop}>
+            <div className={styles.cardName}>ENTERPRISE</div>
+            <div className={styles.enterprisePrice}>ติดต่อ TDR</div>
+            <p>สำหรับองค์กรและการเชื่อมต่อข้อมูลตามขอบเขตการใช้งานจริง</p>
+          </div>
+
+          <div className={styles.featureGroup}>
+            <h2>รวมสิทธิ์ TDR Pro</h2>
+            <ul>
+              <li>Market Intelligence และ TDR Analysis ตามสิทธิ์ Pro</li>
+            </ul>
+          </div>
+
+          <div className={styles.featureGroup}>
+            <h2>สำหรับองค์กร</h2>
+            <ul>
+              <li>API</li>
+              <li>Data integration</li>
+              <li>Raw export</li>
+              <li>การสนับสนุนตามการใช้งานขององค์กร</li>
+            </ul>
+          </div>
+
+          {CORPORATE_CONTACT_URL ? (
+            <a className={`${styles.cta} ${styles.enterpriseCta}`} href={CORPORATE_CONTACT_URL} onClick={() => track("corporate_cta_clicked")}>ติดต่อ TDR</a>
+          ) : (
+            <span className={`${styles.cta} ${styles.enterpriseCta} ${styles.disabledCta}`} aria-disabled="true">ติดต่อ TDR</span>
+          )}
         </article>
       </section>
 
-      <section className={styles.corporate}>
-        <div>
-          <div className={styles.eyebrow} style={{ color: "#bbb" }}>ENTERPRISE</div>
-          <h2>TDR Enterprise package</h2>
-          <p>ขอบเขต ที่นั่ง และราคาปรับตามการใช้งานจริงของแต่ละองค์กร — API/data integration, raw export และทีมสนับสนุนเฉพาะ ติดต่อทีม TDR เพื่อคุยรายละเอียด</p>
+      <section className={styles.billingSection} aria-labelledby="pro-billing-title">
+        <div className={styles.sectionHead}>
+          <div>
+            <div className={styles.eyebrow}>TDR PRO · การชำระเงิน</div>
+            <h2 id="pro-billing-title">เลือกการชำระสำหรับ TDR Pro</h2>
+          </div>
+          <p>ทุกตัวเลือกได้สิทธิ์ Pro เหมือนกัน ต่างกันเฉพาะระยะผูกมัดและรอบเรียกเก็บ</p>
         </div>
-        {CORPORATE_CONTACT_URL ? (
-          <a
-            className={styles.corporateCta}
-            href={CORPORATE_CONTACT_URL}
-            onClick={() => track("corporate_cta_clicked")}
-          >
-            Contact TDR Enterprise →
-          </a>
-        ) : (
-          <span className={styles.corporateCta} style={{ opacity: 0.6, cursor: "not-allowed" }} aria-disabled="true">
-            ช่องทางติดต่อ Enterprise ยังไม่ได้ตั้งค่า
-          </span>
-        )}
+
+        <div className={styles.billingGrid}>
+          {PLAN_CATALOG.map((plan) => (
+            <Link className={styles.billingCard} href="/member/billing" key={plan.planCode}>
+              <div className={styles.billingName}>{INTERVAL_LABEL[plan.interval] || plan.interval}</div>
+              <div className={styles.billingPrice}>฿{money(plan.priceThbPerMonth)}<small>/เดือน</small></div>
+              <div className={styles.billingInvoice}>เรียกเก็บ ฿{money(plan.priceThbPerInterval)} ต่อรอบ</div>
+              <div className={styles.billingNote}>{INTERVAL_NOTE[plan.interval]}</div>
+              <span>เลือกแพ็กเกจ →</span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className={styles.compareSection} aria-labelledby="compare-plans-title">
+        <div className={styles.sectionHead}>
+          <div>
+            <div className={styles.eyebrow}>สิทธิ์การใช้งาน</div>
+            <h2 id="compare-plans-title">เปรียบเทียบแพ็กเกจ</h2>
+          </div>
+        </div>
+
+        <div className={styles.tableWrap}>
+          <table className={styles.compareTable}>
+            <thead>
+              <tr><th>ฟีเจอร์ / ข้อมูล</th><th>Free</th><th>Pro</th><th>Enterprise</th></tr>
+            </thead>
+            <tbody>
+              <tr><th>แคตตาล็อก / รุ่น / รุ่นย่อย / สเปก</th><td>ไม่จำกัด</td><td>ไม่จำกัด</td><td>ไม่จำกัด</td></tr>
+              <tr><th>Vehicle Compare</th><td>ไม่จำกัด</td><td>ไม่จำกัด</td><td>ไม่จำกัด</td></tr>
+              <tr><th>Sales Tools</th><td>{FREE_POLICY.salesModulePickCount} จาก {SALES_MODULES.length} โมดูล</td><td>ทั้งหมด</td><td>ทั้งหมด</td></tr>
+              <tr><th>Market queries</th><td>{FREE_POLICY.salesQueryDailyLimit} / วัน</td><td>ไม่จำกัด</td><td>ไม่จำกัด</td></tr>
+              <tr><th>ข้อมูลระดับรายรุ่น</th><td>—</td><td>✓</td><td>✓</td></tr>
+              <tr><th>ช่วงเวลา Market</th><td>เดือน + Rolling 3</td><td>เดือน + Rolling 3 / 6 / 12 + YTD</td><td>ตาม Pro</td></tr>
+              <tr><th>ประวัติย้อนหลัง</th><td>12 เดือน</td><td>ทั้งคลัง</td><td>ทั้งคลัง</td></tr>
+              <tr><th>การเปรียบเทียบช่วงเวลา</th><td>เดือนก่อนหน้า</td><td>เดือนก่อนหน้า + YoY</td><td>ตาม Pro</td></tr>
+              <tr><th>ตัวกรองตลาดขั้นสูง</th><td>—</td><td>✓</td><td>✓</td></tr>
+              <tr><th>TDR Analysis</th><td>{RESEARCH_LIVE ? `${FREE_POLICY.researchFullMonthlyLimit} บท / เดือน` : "เร็วๆ นี้"}</td><td>{RESEARCH_LIVE ? "ไม่จำกัด" : "เร็วๆ นี้"}</td><td>{RESEARCH_LIVE ? "ไม่จำกัด" : "เร็วๆ นี้"}</td></tr>
+              <tr><th>PDF export</th><td>{PDF_LIVE ? `${FREE_POLICY.pdfMonthlyLimit} / เดือน · มีลายน้ำ` : "เร็วๆ นี้"}</td><td>{PDF_LIVE ? "ไม่จำกัด · ไม่มีลายน้ำ" : "เร็วๆ นี้"}</td><td>{PDF_LIVE ? "ตามข้อตกลง" : "เร็วๆ นี้"}</td></tr>
+              <tr><th>API / Raw export / Data integration</th><td>—</td><td>—</td><td>ตามข้อตกลงองค์กร</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p className={styles.tableNote}>Enterprise เป็นแพ็กเกจแบบปรับตามการใช้งานจริงของแต่ละองค์กร ไม่มีราคาและจำนวนที่นั่งตายตัวบนหน้าเว็บ</p>
       </section>
     </main>
   );
