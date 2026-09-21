@@ -183,11 +183,32 @@ def test_a_repeat_import_of_the_same_record_compiles_to_nothing():
 
 
 def test_batches_stay_within_the_command_ceiling():
-    commands = [{"operation": "UPSERT_MODEL_BUNDLE"}] * 900
+    commands = [{"operation": "UPSERT_MODEL_BUNDLE", "canonical_id": f"m{i}"}
+                for i in range(900)]
     batches = batches_from_commands(commands, year=2026, source_kind="ECO",
-                                    source_ref="ref", batch_prefix="eco")
+                                    source_ref="ref", batch_prefix="eco",
+                                    submitted_at="2026-09-21T00:00:00+00:00")
     assert [len(b["commands"]) for b in batches] == [400, 400, 100]
     assert {b["source"]["kind"] for b in batches} == {"ECO"}
+
+
+def test_the_same_import_run_again_produces_the_same_batches():
+    """A retry has to be recognisable as one, or it collides with itself."""
+    commands = [{"operation": "UPSERT_MODEL_BUNDLE", "canonical_id": "toyota.camry"}]
+    first = batches_from_commands(commands, year=2026, source_kind="ECO",
+                                  source_ref="book.xlsx", batch_prefix="eco",
+                                  submitted_at="2026-09-21T00:00:00+00:00")
+    again = batches_from_commands(commands, year=2026, source_kind="ECO",
+                                  source_ref="book.xlsx", batch_prefix="eco",
+                                  submitted_at="2026-09-21T00:00:00+00:00")
+    assert first == again
+
+    changed = batches_from_commands(
+        [{"operation": "UPSERT_MODEL_BUNDLE", "canonical_id": "toyota.corolla"}],
+        year=2026, source_kind="ECO", source_ref="book.xlsx", batch_prefix="eco",
+        submitted_at="2026-09-21T00:00:00+00:00")
+    # Different work, different batch -- not the same id carrying something else.
+    assert changed[0]["batch_id"] != first[0]["batch_id"]
 
 
 def test_the_summary_counts_every_row():

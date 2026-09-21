@@ -110,6 +110,11 @@ def main(argv=None) -> int:
     parser.add_argument("--data-dir", type=Path, default=DATA_DIR)
     parser.add_argument("--year", type=int, default=DEFAULT_YEAR)
     parser.add_argument("--actor", default="bulk-import")
+    # The moment this import was submitted, which the worker passes from
+    # the run row so a retry of that run is the same import, not a new one.
+    parser.add_argument("--submitted-at",
+                        default=datetime.now(timezone.utc).isoformat(timespec="seconds"),
+                        help="ISO-8601 timestamp for the batches this run submits")
     parser.add_argument("--report-dir", type=Path, default=None)
     parser.add_argument("--apply", action="store_true",
                         help="write through the canonical pipeline instead of reporting only")
@@ -151,16 +156,19 @@ def main(argv=None) -> int:
         "applied": False,
     }
 
+    # The run's own timestamp, not the clock at the moment each batch is
+    # sent. A retry has to produce the same batches to be recognised as a
+    # retry; a fresh `now()` per batch made an interrupted import fail on
+    # the batch that had already landed.
     batches = batches_from_commands(
         commands, year=args.year, source_kind=args.source,
         source_ref=args.source_ref or str(args.export.name),
-        batch_prefix=f"import-{args.source.lower()}-{args.export.stem[:24]}")
+        batch_prefix=f"import-{args.source.lower()}-{args.export.stem[:24]}",
+        submitted_at=args.submitted_at, actor=args.actor)
 
     if args.apply and batches:
         pipeline = CanonicalInputPipeline(args.data_dir)
         for batch in batches:
-            batch = {**batch, "actor": args.actor,
-                     "submitted_at": datetime.now(timezone.utc).isoformat()}
             result = pipeline.apply(batch)
             if result.status != "APPLIED":
                 raise SystemExit(f"batch {batch['batch_id']} returned {result.status}")

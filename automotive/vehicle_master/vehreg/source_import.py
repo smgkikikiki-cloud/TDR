@@ -25,6 +25,8 @@ is an exception for a person, and is never guessed at.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+import hashlib
+import json
 import re
 import unicodedata
 from typing import Any, Iterable
@@ -354,16 +356,35 @@ def batches_from_commands(
     source_kind: str,
     source_ref: str,
     batch_prefix: str,
+    submitted_at: str,
+    actor: str = "source-import",
     batch_size: int = DEFAULT_BATCH_SIZE,
 ) -> list[dict]:
+    """Split the commands into batches the input pipeline will accept.
+
+    The batch id carries a digest of what is in it, and ``submitted_at``
+    is the caller's, not the clock's. Together that is what makes a retry
+    a retry: an import interrupted halfway and run again produces the
+    same batches, which the pipeline recognises and replays instead of
+    rejecting as "already used with different content" -- which is what
+    a positional id plus ``now()`` produced, so re-uploading a corrected
+    file after a failure crashed on the batch that had already landed.
+    """
     batches = []
     for index in range(0, len(commands), batch_size):
+        slice_ = commands[index:index + batch_size]
+        digest = hashlib.sha256(
+            json.dumps(slice_, sort_keys=True, ensure_ascii=False).encode()
+        ).hexdigest()[:12]
         batches.append({
             "schema_version": 1,
-            "batch_id": f"{batch_prefix}-{index // batch_size + 1:03d}",
+            "batch_id": f"{batch_prefix}-{index // batch_size + 1:03d}-{digest}",
             "year": year,
             "source": {"kind": source_kind.upper(), "ref": source_ref},
-            "commands": commands[index:index + batch_size],
+            "actor": actor,
+            "reason": f"bulk import from {source_ref}",
+            "submitted_at": submitted_at,
+            "commands": slice_,
         })
     return batches
 

@@ -101,11 +101,15 @@ def _read_rows(path: Path) -> list[dict]:
 # source's parser.
 
 def _import_eco(source_file: Path, original_name: str, workdir: Path,
-                run_id: str) -> tuple[dict, list[dict]]:
+                run_id: str, submitted_at: str) -> tuple[dict, list[dict]]:
     report_dir = workdir / "report"
     run_eco_import([
         str(source_file), "--source", "ECO", "--source-ref", original_name,
         "--report-dir", str(report_dir), "--apply",
+        # The run's own submission time, so a run picked up again after a
+        # failure sends the same batches and the pipeline replays them
+        # instead of rejecting the one that already landed.
+        "--submitted-at", submitted_at,
     ])
     report = json.loads(next(report_dir.glob("*_report.json")).read_text(encoding="utf-8"))
     payload = json.loads(next(report_dir.glob("*_exceptions.json")).read_text(encoding="utf-8"))
@@ -154,7 +158,7 @@ def _trim_detail_brands() -> frozenset[str]:
 
 
 def _import_dlt(source_file: Path, original_name: str, workdir: Path,
-                run_id: str) -> tuple[dict, list[dict]]:
+                run_id: str, submitted_at: str) -> tuple[dict, list[dict]]:
     rows, rejected = parse_registration_rows(_read_rows(source_file))
     periods = sorted({row.period for row in rows})
     if len(periods) != 1:
@@ -207,7 +211,7 @@ HANDLERS = {"ECO": _import_eco, "DLT": _import_dlt}
 
 
 def process(limit: int) -> int:
-    rows = _rest("GET", "import_runs?select=id,storage_path,original_name,source_kind"
+    rows = _rest("GET", "import_runs?select=id,storage_path,original_name,source_kind,created_at"
                         f"&status=eq.UPLOADED&order=created_at.asc&limit={limit}") or []
     if not rows:
         print(json.dumps({"claimed": 0}))
@@ -233,7 +237,8 @@ def process(limit: int) -> int:
             try:
                 source_file = _download(str(row["storage_path"]), work)
                 counts, exceptions = handler(
-                    source_file, str(row["original_name"]), work, run_id)
+                    source_file, str(row["original_name"]), work, run_id,
+                    str(row.get("created_at") or datetime.now(timezone.utc).isoformat()))
             except UnsupportedRegistrationSchema as exc:
                 _finish_failed(run_id, f"unsupported schema: {exc}")
                 continue
