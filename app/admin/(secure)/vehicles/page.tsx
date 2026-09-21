@@ -17,8 +17,7 @@ export default async function VehiclesIndexPage({
         <h1>เปิดรถทีละคันเพื่อแก้ canonical data</h1>
         <p>
           เลือกรุ่นเพื่อดูและแก้ Brand → Model → Generation → MarketTrims แบบมีฟอร์ม
-          แทนการเขียน JSON เอง — ทุกการแก้ยังผ่านคิว canonical เดียวกับ{" "}
-          <Link href="/admin/vehicle-input">Vehicle input</Link>
+          แทนการเขียน JSON เอง — ทุกการแก้ผ่านคิว canonical เดียวกัน
         </p>
       </div>
     </div>

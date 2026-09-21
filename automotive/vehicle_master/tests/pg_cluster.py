@@ -113,7 +113,18 @@ class Cluster:
     def rows(self, query: str) -> list[list[str]]:
         result = self._psql(["-t", "-A", "-F", "\x1f"], query)
         assert result.returncode == 0, f"{query}\n{result.stderr}"
-        return [line.split("\x1f") for line in result.stdout.strip().splitlines() if line]
+        # Not `.strip().splitlines()`: \x1f (unit separator) is whitespace
+        # by Python's own definition (`"\x1f".isspace()` is True), so
+        # stripping the whole blob silently ate the leading field whenever
+        # the FIRST selected column of the FIRST row was NULL -- a query
+        # returning (NULL, 'x') read back as ['x'], one column short, with
+        # every value shifted left. Only the blank line(s) psql's own
+        # trailing newline produces are dropped here, and only from the
+        # end, so an interior leading \x1f (a real NULL) survives.
+        lines = result.stdout.split("\n")
+        while lines and lines[-1] == "":
+            lines.pop()
+        return [line.split("\x1f") for line in lines]
 
     def scalar(self, query: str) -> str:
         rows = self.rows(query)

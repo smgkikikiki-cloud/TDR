@@ -60,11 +60,23 @@ export function planProfileUpdate(
   const isIndividual = sent("is_individual")
     ? body.is_individual !== false
     : existing?.is_individual !== false;
-  // A company name belongs to a company account, so declaring yourself an
-  // individual clears it. That is the edit, not a side effect of one.
-  if (sent("company_name") || sent("is_individual")) {
+  // A company name belongs to a company account. Two things can touch it:
+  // the request naming it directly, or the account switching TO individual
+  // -- which clears it, because a company name has no home on an
+  // individual account. Switching (or staying) a company account with no
+  // company_name in the request is not an edit to the name at all: the
+  // stored value survives untouched. This is the exact distinction the
+  // earlier `sent("company_name") || sent("is_individual")` check
+  // collapsed -- it cleared company_name any time is_individual was sent,
+  // even `is_individual: false` with no company_name in the body.
+  if (sent("company_name")) {
     const companyName = typeof body.company_name === "string" ? body.company_name.trim() : "";
     changes.company_name = isIndividual ? null : (companyName || null);
+  } else if (sent("is_individual") && isIndividual && existing?.company_name) {
+    // Only when THIS request is the one declaring individual status --
+    // never as a side effect of some other field being edited on an
+    // account that happens to already be (or default to) individual.
+    changes.company_name = null;
   }
 
   if (sent("marketing_consent")) {

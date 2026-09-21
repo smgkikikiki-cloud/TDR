@@ -15,6 +15,7 @@ import {
   type UsageMetric,
 } from "@/lib/access-policy";
 import { requestFingerprint } from "@/lib/request-fingerprint";
+import { evaluateCurrentVerifiedIdentity } from "@/lib/checkout-identity";
 
 export class AccessPolicyError extends Error {
   constructor(public status: number, message: string) {
@@ -193,45 +194,48 @@ export async function requireMemberAccess(accessToken: string): Promise<AccessCo
 }
 
 // Verified identity, for the few operations that genuinely turn on who the
-// member is rather than what they are entitled to. Checkout is the case:
-// money moves, so a confirmed email, an OTP-verified phone and a complete
-// billing profile are the operation's own requirements. Product routes use
-// requireMemberAccess() instead -- see the note there.
+// member is rather than what they are entitled to -- starting a brand-new
+// self-service subscription is the one in this codebase: money is about
+// to move to a NEW charge, so a confirmed email, an OTP-verified phone and
+// a complete billing profile are the operation's own requirements, checked
+// as of right now. Product routes use requireMemberAccess() instead -- see
+// the note there.
 //
-// Computed now, from the parts, every time. activation_completed_at is a
-// record that the account once satisfied all of this; it is not a standing
-// permission, and reading it as one meant an account whose phone identity
-// had since been revoked still passed the gate that exists precisely to
-// know whose card is being charged.
-//
-// The one exception is deliberate and narrow: the paying customer who
-// predates the verification flow was grandfathered by migration_v34 with
-// activation_source='LEGACY_PAID'. Recomputing would lock a real customer
-// out of their own billing, so that grant still stands -- and it is the
-// only thing the stored flag is allowed to decide.
+// Computed from the parts, every time, for every account -- including the
+// customer grandfathered by migration_v34 with
+// activation_source='LEGACY_PAID'. That grant means "this account's
+// EXISTING billing relationship survives the migration": requireMember()
+// (lib/billing.ts) already lets it reach billing status and the Billing
+// Portal with no identity check at all, so its existing subscription and
+// portal access are untouched by anything here. It has never meant "this
+// account's identity for a NEW charge is settled" -- a stored flag is a
+// record that the account once satisfied every criterion, not a standing
+// permission, and treating it as one here let an account whose phone
+// identity had since been revoked, or which had simply never given a
+// postcode, start a brand-new subscription anyway. There is exactly one
+// caller of this function (requireCheckoutEligibleMember, for new
+// Checkout sessions), and grandfathering it would defeat the reason that
+// caller exists.
 export async function requireCurrentVerifiedIdentity(accessToken: string): Promise<AccessContext> {
   const ctx = await resolveAccessContext(accessToken);
+  // Deliberately NOT selecting activation_completed_at/activation_source:
+  // the decision below (evaluateCurrentVerifiedIdentity) has no field to
+  // key a bypass on, by construction.
   const { data: profile, error } = await ctx.db
     .from("tdr_customer_profiles")
-    .select("postcode,is_individual,company_name,activation_completed_at,activation_source")
+    .select("postcode,is_individual,company_name")
     .eq("user_id", ctx.userId)
     .maybeSingle();
   if (error) throw new AccessPolicyError(503, "could not verify account activation");
 
-  if (profile?.activation_completed_at && profile.activation_source === "LEGACY_PAID") {
-    return ctx;
-  }
-
-  const missing: string[] = [];
-  if (!ctx.emailConfirmed) missing.push("confirm your email");
-  if (!(await hasTdrConfirmedPhoneVerification(ctx.db, ctx.userId))) {
-    missing.push("verify your mobile phone");
-  }
-  if (!profile?.postcode) missing.push("add your postcode");
-  if (!profile?.is_individual && !(profile?.company_name || "").trim()) {
-    missing.push("name your organization, or say you are an individual");
-  }
-  if (missing.length) {
+  const { ok, missing } = evaluateCurrentVerifiedIdentity({
+    emailConfirmed: ctx.emailConfirmed,
+    phoneVerified: await hasTdrConfirmedPhoneVerification(ctx.db, ctx.userId),
+    postcode: profile?.postcode ?? null,
+    isIndividual: profile?.is_individual !== false,
+    companyName: profile?.company_name ?? null,
+  });
+  if (!ok) {
     throw new AccessPolicyError(
       403,
       `account verification required: ${missing.join(", ")} at /member/profile`,

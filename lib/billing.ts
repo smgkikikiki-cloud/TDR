@@ -121,19 +121,22 @@ export async function requireMember(accessToken: string): Promise<MemberContext>
 
 // Starting a brand-new self-service subscription is where identity is the
 // operation's own subject, so this is the one place that asks for all of
-// it: the account must be fully TDR-verified (lib/access-policy-server.ts
-// -- confirmed email, TDR-confirmed phone verification, complete profile)
-// AND have a trusted phone on file to hand to Stripe. Member tools ask for
-// none of this; they resolve a session and serve by tier and quota.
+// it: the account must be fully TDR-verified as of right now
+// (lib/access-policy-server.ts -- confirmed email, TDR-confirmed phone
+// verification, complete profile) AND have a trusted phone on file to hand
+// to Stripe. Member tools ask for none of this; they resolve a session and
+// serve by tier and quota.
 //
 // The identity is recomputed here rather than read off a stored flag: an
 // account that was verified last year but whose phone identity has since
 // been revoked is not a verified identity today, and this is the gate
-// that exists to know whose card is being charged. The legacy-paid
-// account grandfathered by migration_v34 still passes -- it is a real
-// paying customer who predates the flow -- but it has no trusted phone on
-// file, so the phone check below still stops a fresh Checkout session
-// while leaving its existing subscription and Billing Portal untouched.
+// that exists to know whose card is being charged for a NEW subscription.
+// The legacy-paid account grandfathered by migration_v34
+// (activation_source='LEGACY_PAID') does NOT bypass this -- that grant
+// only ever meant its EXISTING subscription and Billing Portal access
+// survive the migration (requireMember() above already gives it those
+// with no identity check), never that a fresh charge can be started
+// without a real, current, verified identity.
 export async function requireCheckoutEligibleMember(accessToken: string): Promise<MemberContext & { phone: string }> {
   try {
     await requireCurrentVerifiedIdentity(accessToken);

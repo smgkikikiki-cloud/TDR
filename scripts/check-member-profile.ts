@@ -104,5 +104,75 @@ console.log("\nthe edges the cases above imply");
   check("and does not re-date the consent", "marketing_consent_at" in withdrawn.changes, false);
 }
 
+console.log("\nG — the exact blocker case: is_individual alone must not erase the company");
+{
+  // Literal case, do not alter: an existing company account, a request
+  // that names only is_individual (already false), and company_name must
+  // survive untouched. The earlier bug collapsed
+  // `sent("company_name") || sent("is_individual")` into one branch, so
+  // sending is_individual at all -- even unchanged, even false -- blanked
+  // company_name to "" and wrote null over "Toyota Thailand".
+  const existing = {
+    postcode: "10110", is_individual: false, company_name: "Toyota Thailand",
+    profile_completed_at: "2026-09-01T00:00:00.000Z",
+  };
+  const p = plan({ is_individual: false }, existing);
+  check("company_name is not in the write at all -- this is the bug", "company_name" in p.changes, false);
+  check("postcode is untouched", "postcode" in p.changes, false);
+  check("marketing_consent is untouched", "marketing_consent" in p.changes, false);
+  // is_individual itself is written (presence-is-an-edit, same rule as
+  // postcode) even though the value matches what is already stored --
+  // that mirrors the request. company_name is the only column the old
+  // code wrongly dragged along with it.
+  check("only is_individual is written, not company_name too",
+    Object.keys(p.changes), ["is_individual"]);
+  check("profile stays complete (a company with its name and postcode)", p.profileComplete);
+  check("completion is not re-stamped", "profile_completed_at" in p.changes, false);
+}
+
+console.log("\nH — postcode-only edit on the same company account preserves company");
+{
+  const existing = {
+    postcode: "10110", is_individual: false, company_name: "Toyota Thailand",
+    profile_completed_at: "2026-09-01T00:00:00.000Z",
+  };
+  const p = plan({ postcode: "10330" }, existing);
+  check("only postcode is written", Object.keys(p.changes), ["postcode"]);
+  check("company_name survives", p.profileComplete);
+}
+
+console.log("\nI — withdrawing marketing consent on the same account preserves company");
+{
+  const existing = {
+    postcode: "10110", is_individual: false, company_name: "Toyota Thailand",
+    profile_completed_at: "2026-09-01T00:00:00.000Z",
+  };
+  const p = plan({ marketing_consent: false }, existing);
+  check("only marketing_consent is written", Object.keys(p.changes), ["marketing_consent"]);
+  check("company_name is not touched", "company_name" in p.changes, false);
+}
+
+console.log("\nJ — declaring individual on a company account clears the name");
+{
+  const existing = {
+    postcode: "10110", is_individual: false, company_name: "Toyota Thailand",
+    profile_completed_at: "2026-09-01T00:00:00.000Z",
+  };
+  const p = plan({ is_individual: true }, existing);
+  check("company_name is explicitly cleared", p.changes.company_name, null);
+  check("is_individual flips", p.changes.is_individual, true);
+}
+
+console.log("\nK — an empty body changes no domain field");
+{
+  const existing = {
+    postcode: "10110", is_individual: false, company_name: "Toyota Thailand",
+    profile_completed_at: "2026-09-01T00:00:00.000Z",
+  };
+  const p = plan({}, existing);
+  check("nothing is written", Object.keys(p.changes), []);
+  check("the save reports nothing touched", p.touched, false);
+}
+
 console.log(failed ? `\n${failed} check(s) failed` : "\nall member profile checks passed");
 process.exit(failed ? 1 : 0);

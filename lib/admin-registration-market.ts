@@ -1,5 +1,6 @@
 import { adminDb } from "@/lib/supabase";
 import { getActiveHistoricalModelState, resolveHistoricalModelState } from "@/lib/historical-model-state";
+import { resolveCanonicalModelId } from "@/lib/registration-canonical-resolve";
 import {
   sliceMarketFacts,
   type CanonicalRegistrationFact,
@@ -58,7 +59,7 @@ async function fetchRows(window: MarketPeriodWindow, filters: MarketSliceFilters
   const rows: any[] = [];
   for (let offset = 0; offset < MAX_FACT_ROWS; offset += PAGE_SIZE) {
     let query = db.from("registrations")
-      .select("period,registration_type,brand_name_raw,model_name_raw,model_id,registrations,mapping_method")
+      .select("period,registration_type,brand_name_raw,model_name_raw,model_id,canonical_model_id,registrations,mapping_method")
       .gte("period", window.from).lte("period", window.to)
       .order("period", { ascending: true })
       .order("brand_name_raw", { ascending: true })
@@ -105,19 +106,40 @@ async function canonicalize(
   const brands = (brandRows || []) as CanonicalBrandRow[];
   const aliases = (aliasRows || []) as RegistrationBrandAliasRow[];
   const modelsByTdrId = new Map(models.filter((row) => row.tdr_model_id).map((row) => [String(row.tdr_model_id), row]));
+  const modelsByCanonicalId = new Map(models.filter((row) => row.canonical_id).map((row) => [String(row.canonical_id), row]));
   const brandsByCanonicalId = new Map(brands.filter((row) => row.canonical_id).map((row) => [String(row.canonical_id), row]));
   const brandsByTdrId = new Map(brands.filter((row) => row.tdr_brand_id).map((row) => [String(row.tdr_brand_id), row]));
   const brandAliases = new Map(aliases.map((row) => [String(row.raw_brand_norm), String(row.brand_id)]));
+  // The legacy crosswalk, exposed as a lookup so the precedence rule
+  // (lib/registration-canonical-resolve.ts) is the one place that decides
+  // when to fall back to it.
+  const reverseCrosswalk = (legacyModelId: string) => {
+    const row = modelsByTdrId.get(legacyModelId);
+    return row?.canonical_id ? String(row.canonical_id) : null;
+  };
 
   return rows.map((row: any) => {
-    const model = row.model_id ? modelsByTdrId.get(String(row.model_id)) : undefined;
+    // canonical_model_id set directly on the row outranks the legacy
+    // model_id -> tdr_model_id reverse crosswalk. A car created in the
+    // admin today has no legacy row until a release rebuilds the
+    // crosswalk, and before this precedence, such a row could never be
+    // told apart from a genuinely unmapped one.
+    const resolvedCanonicalId = resolveCanonicalModelId(
+      { canonicalModelId: row.canonical_model_id ? String(row.canonical_model_id) : null,
+        legacyModelId: row.model_id ? String(row.model_id) : null },
+      reverseCrosswalk,
+    );
+    const model = resolvedCanonicalId ? modelsByCanonicalId.get(resolvedCanonicalId) : undefined;
     const aliasBrandTdrId = brandAliases.get(normalizeRegistrationToken(row.brand_name_raw));
     const brand = model?.brand_id
       ? brandsByCanonicalId.get(String(model.brand_id))
       : aliasBrandTdrId ? brandsByTdrId.get(aliasBrandTdrId) : undefined;
     const payload = model?.payload || {};
     const brandPayload = brand?.payload || {};
-    const canonicalModelId = model?.canonical_id ? String(model.canonical_id) : null;
+    // model may be undefined even with a resolved id, when the release's
+    // current_vehicle_models projection does not (yet) contain that
+    // canonical id -- the row is still attributed, just not enriched.
+    const canonicalModelId = model?.canonical_id ? String(model.canonical_id) : resolvedCanonicalId;
     const canonicalBrandId = model?.brand_id
       ? String(model.brand_id)
       : brand?.canonical_id ? String(brand.canonical_id) : null;
@@ -204,9 +226,15 @@ export async function getAdminRegistrationMarketSlice(args: {
 export async function getAdminUnmappedRegistrationSummary(limit = 200) {
   const db = adminDb();
   if (!db) return [];
+  // Unresolved means BOTH halves of the precedence are empty: no legacy
+  // model_id and no canonical_model_id set directly. A row with model_id
+  // NULL but canonical_model_id set (a car created in the admin, with no
+  // legacy row yet) is mapped, and must not show up here as work still to
+  // do -- see lib/registration-canonical-resolve.ts.
   const { data, error } = await db.from("registrations")
     .select("period,registration_type,brand_name_raw,model_name_raw,registrations,mapping_method")
-    .is("model_id", null).order("period", { ascending: false }).limit(5000);
+    .is("model_id", null).is("canonical_model_id", null)
+    .order("period", { ascending: false }).limit(5000);
   if (error) throw new Error(`unmapped registration query failed: ${error.message}`);
   const grouped = new Map<string, any>();
   for (const row of data || []) {
