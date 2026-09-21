@@ -143,7 +143,17 @@ jobs:
           PYTHONPATH=. python tools/canonical_input_worker.py staged-batches \
             --result-file /tmp/canonical-staged.json --limit 50
           revision=$(python -c "import json; print(json.load(open('/tmp/canonical-staged.json')).get('revision') or '')")
+          already_published=$(python -c "import json; print(json.load(open('/tmp/canonical-staged.json')).get('already_published_release_id') or '')")
           echo "revision=$revision" >> "$GITHUB_OUTPUT"
+          echo "already_published_release_id=$already_published" >> "$GITHUB_OUTPUT"
+      # A later batch's own publish can already carry this stuck commit's
+      # canonical changes into the release that is serving right now --
+      # staged-batches checked real git ancestry (never ordinals) against
+      # the active release's canonical_revision to know this, not a guess.
+      # When true there is nothing left to publish: republishing the old
+      # commit here is exactly what migration_v44 correctly refuses (it is
+      # older than what is already active), which is the bug this branch
+      # exists to stop retrying forever.
       - name: Retry publishing that exact commit -- no re-apply, no new diff
         if: steps.preflight.outputs.ready == 'true' && steps.staged.outputs.revision != ''
         id: republish
@@ -162,10 +172,14 @@ jobs:
       # "every STAGED row", which would mark a batch PUBLISHED under a
       # release built from a different commit's tree than the one that
       # carries its write. A failed retry here leaves those rows STAGED,
-      # for the next tick to find and try again.
+      # for the next tick to find and try again. release_id comes from
+      # whichever branch actually ran: a fresh republish, or the active
+      # release staged-batches already proved contains this commit.
       - name: Mark the recovered batches PUBLISHED
-        if: steps.preflight.outputs.ready == 'true' && steps.staged.outputs.revision != ''
+        if: >-
+          steps.preflight.outputs.ready == 'true' &&
+          (steps.staged.outputs.revision != '' || steps.staged.outputs.already_published_release_id != '')
         run: |
           PYTHONPATH=. python tools/canonical_input_worker.py mark-published \
             --result-file /tmp/canonical-staged.json \
-            --release-id "${{ steps.republish.outputs.release_id }}"
+            --release-id "${{ steps.republish.outputs.release_id || steps.staged.outputs.already_published_release_id }}"

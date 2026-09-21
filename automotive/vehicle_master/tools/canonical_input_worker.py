@@ -7,6 +7,8 @@ from datetime import datetime, timedelta, timezone
 import json
 import os
 from pathlib import Path
+import subprocess
+from typing import Callable
 from urllib.error import HTTPError
 from urllib.parse import quote
 from urllib.request import Request, urlopen
@@ -199,52 +201,182 @@ def _commit_sha_from_commit_url(url: str) -> str | None:
     return sha or None
 
 
+def _active_vehicle_catalog_release() -> dict | None:
+    """The release currently serving scope 'vehicle_catalog', read through
+    the same canonical_vehicle_state -> canonical_vehicle_releases join
+    every other reader of "what is live right now" uses (migration_v15).
+    No new storage: this is the existing DB shape, read once here.
+
+    Returns None on any read failure or missing/incomplete row -- callers
+    treat that as "cannot determine ancestry", never as "nothing is live".
+    """
+    try:
+        state = _request(
+            "GET", "canonical_vehicle_state?select=active_release_id&scope=eq.vehicle_catalog",
+        ) or []
+        active_release_id = str(state[0].get("active_release_id") or "") if state else ""
+        if not active_release_id:
+            return None
+        releases = _request(
+            "GET", "canonical_vehicle_releases?select=release_id,canonical_revision"
+            f"&release_id=eq.{quote(active_release_id)}",
+        ) or []
+        if not releases:
+            return None
+        release_id = str(releases[0].get("release_id") or "")
+        canonical_revision = str(releases[0].get("canonical_revision") or "")
+        if not release_id or not canonical_revision:
+            return None
+        return {"release_id": release_id, "canonical_revision": canonical_revision}
+    except (RuntimeError, KeyError, IndexError, TypeError):
+        return None
+
+
+def _git_is_ancestor(ancestor_sha: str, descendant_sha: str) -> bool | None:
+    """True/False from real git ancestry (`git merge-base --is-ancestor`),
+    never from revision counting or ordinals: an active revision that is
+    numerically newer is not proof it descends from a given commit if
+    history ever diverged, and main normally fast-forwarding is not a
+    guarantee worth trusting here when a one-line, authoritative check is
+    just as easy to run.
+
+    Returns None when the check itself could not be run or answered
+    (unknown revision, no git binary, timeout, garbled repo state) -- the
+    caller must not treat that as either a yes or a no.
+    """
+    try:
+        result = subprocess.run(
+            ["git", "merge-base", "--is-ancestor", ancestor_sha, descendant_sha],
+            capture_output=True, timeout=30,
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    if result.returncode == 0:
+        return True
+    if result.returncode == 1:
+        return False
+    return None  # unknown/invalid revision or another git-level error
+
+
+def _resolve_staged_recovery(
+    rows: list[dict],
+    active_release: dict | None,
+    is_ancestor: Callable[[str, str], bool | None],
+) -> dict:
+    """Decide, for the oldest commit still stuck STAGED, whether its
+    canonical changes are already served by the active release (in which
+    case nothing needs republishing -- the batch is simply marked
+    PUBLISHED under that release) or whether it genuinely still needs the
+    existing republish-exact-SHA recovery path.
+
+    Pure decision logic, kept apart from the Supabase/git I/O in
+    staged_batches() so scripts/check-*.ts's Python counterpart --
+    tests/test_canonical_staged_publish_recovery.py -- can drive it with
+    fakes for `active_release` and `is_ancestor` and assert the exact
+    outcome, the same separation lib/canonical-vehicle-create.ts's
+    classifyCreatedVehicleStatus already uses on the TypeScript side.
+
+    Returns one of:
+      {"mode": "none"}                                    -- nothing STAGED
+      {"mode": "already_published", "release_id", "applied"}
+      {"mode": "republish", "revision", "applied"}
+      {"mode": "no_commit_url", "batch_id"}                -- unrecoverable automatically
+    """
+    if not rows:
+        return {"mode": "none"}
+
+    oldest_sha = _commit_sha_from_commit_url(str(rows[0].get("pull_request_url") or ""))
+    if not oldest_sha:
+        return {"mode": "no_commit_url", "batch_id": rows[0]["id"]}
+
+    matching = [row for row in rows
+               if _commit_sha_from_commit_url(str(row.get("pull_request_url") or "")) == oldest_sha]
+    applied = [{"id": row["id"], "batch_key": row["batch_key"]} for row in matching]
+
+    # Never guess "already live". Any uncertainty here -- no active release
+    # on record, an incomplete row, ancestry that could not be checked --
+    # falls through to the existing, already-safe republish path rather
+    # than marking anything PUBLISHED on a hunch.
+    if active_release is not None:
+        active_revision = active_release.get("canonical_revision")
+        if active_revision:
+            if oldest_sha == active_revision:
+                return {"mode": "already_published",
+                       "release_id": active_release["release_id"], "applied": applied}
+            ancestor = is_ancestor(oldest_sha, active_revision)
+            if ancestor is True:
+                return {"mode": "already_published",
+                       "release_id": active_release["release_id"], "applied": applied}
+
+    return {"mode": "republish", "revision": oldest_sha, "applied": applied}
+
+
 def staged_batches(result_file: Path, limit: int) -> int:
     """The oldest commit still stuck STAGED, so a failed publish can be
-    retried without re-applying any canonical write.
+    retried without re-applying any canonical write -- or, when a LATER
+    batch's own publish already carried this commit's changes into the
+    active release (this commit is a git ancestor of what is serving now),
+    marked PUBLISHED directly with no republish at all.
 
     A STAGED batch already has its commit pushed -- mark_staged() only
-    ever runs after that succeeds -- so nothing here re-runs
-    CanonicalInputPipeline.apply(); it only asks tools.publish_canonical to
-    build and activate a release from the tree that commit already put on
-    disk. Only the SINGLE oldest commit is recovered per call: one workflow
-    run's own "Apply N canonical input batch(es)" commit can carry several
-    batches together, and grouping strictly by that shared commit is what
-    keeps a batch from ever being marked PUBLISHED under a release actually
-    built from a different commit's tree. A later tick recovers the next
-    stuck commit, if there still is one.
+    ever runs after that succeeds -- so nothing here ever re-runs
+    CanonicalInputPipeline.apply(); either it asks tools.publish_canonical
+    to build and activate a release from the tree that commit already put
+    on disk, or it does not touch the write path at all. Only the SINGLE
+    oldest commit is recovered per call: one workflow run's own "Apply N
+    canonical input batch(es)" commit can carry several batches together,
+    and grouping strictly by that shared commit is what keeps a batch from
+    ever being marked PUBLISHED under a release built from a different
+    commit's tree. A later tick recovers the next stuck commit, if there
+    still is one.
     """
     rows = _request(
         "GET",
         "canonical_input_batches?select=id,batch_key,pull_request_url,created_at"
         f"&status=eq.STAGED&order=created_at.asc&limit={limit}",
     ) or []
-    if not rows:
-        result_file.write_text(json.dumps({"applied": [], "revision": None}), encoding="utf-8")
+
+    decision = _resolve_staged_recovery(rows, _active_vehicle_catalog_release(), _git_is_ancestor)
+
+    if decision["mode"] == "none":
+        result_file.write_text(json.dumps(
+            {"applied": [], "revision": None, "already_published_release_id": None}), encoding="utf-8")
         print(json.dumps({"staged": 0, "revision": None}))
         return 0
 
-    oldest_sha = _commit_sha_from_commit_url(str(rows[0].get("pull_request_url") or ""))
-    if not oldest_sha:
+    if decision["mode"] == "no_commit_url":
         # Nothing to recover automatically -- surfaced on the row itself
         # so an operator sees why, rather than this retrying forever with
         # no revision to publish.
-        _request("PATCH", f"canonical_input_batches?id=eq.{quote(str(rows[0]['id']))}", {
+        _request("PATCH", f"canonical_input_batches?id=eq.{quote(str(decision['batch_id']))}", {
             "error": "STAGED with no recorded commit URL; cannot recover automatically",
             "updated_at": datetime.now(timezone.utc).isoformat(),
         })
-        result_file.write_text(json.dumps({"applied": [], "revision": None}), encoding="utf-8")
+        result_file.write_text(json.dumps(
+            {"applied": [], "revision": None, "already_published_release_id": None}), encoding="utf-8")
         print(json.dumps({"staged": len(rows), "revision": None, "recovering": 0}))
         return 0
 
-    matching = [row for row in rows
-               if _commit_sha_from_commit_url(str(row.get("pull_request_url") or "")) == oldest_sha]
+    if decision["mode"] == "already_published":
+        output = {
+            "applied": decision["applied"], "revision": None,
+            "already_published_release_id": decision["release_id"],
+        }
+        result_file.write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        print(json.dumps({
+            "staged": len(rows), "revision": None, "already_published": True,
+            "release_id": decision["release_id"], "recovering": len(decision["applied"]),
+        }))
+        return 0
+
     output = {
-        "applied": [{"id": row["id"], "batch_key": row["batch_key"]} for row in matching],
-        "revision": oldest_sha,
+        "applied": decision["applied"], "revision": decision["revision"],
+        "already_published_release_id": None,
     }
     result_file.write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({"staged": len(rows), "revision": oldest_sha, "recovering": len(matching)}))
+    print(json.dumps({
+        "staged": len(rows), "revision": decision["revision"], "recovering": len(decision["applied"]),
+    }))
     return 0
 
 
