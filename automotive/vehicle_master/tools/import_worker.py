@@ -186,14 +186,21 @@ def _import_dlt(source_file: Path, original_name: str, workdir: Path,
             "an official monthly export covers exactly one period; this file has "
             + (", ".join(periods) if periods else "none"))
 
+    # The token is whichever brand identity the row carries -- the legacy
+    # brand_id when the brand has one, else its canonical_brand_id. Both
+    # kinds resolve the same way in resolve_registrations(), so a brand
+    # new enough to have no legacy row at all still matches.
     brand_aliases = {
-        str(row["raw_brand_norm"]): str(row["brand_id"])
-        for row in _rest("GET", "registration_brand_aliases?select=raw_brand_norm,brand_id&limit=5000") or []
+        str(row["raw_brand_norm"]): str(row["brand_id"] or row["canonical_brand_id"])
+        for row in _rest(
+            "GET", "registration_brand_aliases?select=raw_brand_norm,brand_id,"
+                   "canonical_brand_id&limit=5000") or []
+        if row.get("brand_id") or row.get("canonical_brand_id")
     }
     model_aliases = _rest(
         "GET",
-        "registration_model_aliases?select=brand_id,registration_type,alias_norm,"
-        "model_id,canonical_model_id,canonical_trim_id,match_mode&limit=20000",
+        "registration_model_aliases?select=brand_id,canonical_brand_id,registration_type,"
+        "alias_norm,model_id,canonical_model_id,canonical_trim_id,match_mode&limit=20000",
     ) or []
 
     resolved = resolve_registrations(rows, brand_aliases, model_aliases)

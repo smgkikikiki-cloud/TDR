@@ -929,6 +929,13 @@ def _item(first: PriceClaim, group: list[PriceClaim], verdict: Verdict,
         "sources": sorted({claim.source_id for claim in group}),
         "urls": sorted({documents[claim.document_id].url for claim in group
                         if claim.document_id in documents}),
+        # The immutable SHA-256 identity of the exact fetched page that
+        # supported this price, so the ledger records what was actually
+        # read rather than only a URL a publisher can edit later without
+        # changing what evidence backed the number. PriceRecord already
+        # has a column for this (vehreg/pricing.py); nothing upstream of
+        # here was ever putting a value in it.
+        "source_document_id": first.document_id,
     }
 
 

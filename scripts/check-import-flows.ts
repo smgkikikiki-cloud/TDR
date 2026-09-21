@@ -107,8 +107,14 @@ check("no legacy models row is forged behind the crosswalk's back",
 check("a car with no legacy row yet can still be given a label",
   exceptionActions.includes("canonical_model_id: target.canonicalModelId")
     && exceptionActions.includes("legacyModelId: model.tdr_model_id ? String(model.tdr_model_id) : null"));
-check("a brand with no registration identity says so instead of guessing",
-  exceptionActions.includes("ยังไม่มี registration identity"));
+// A brand with no legacy row is exactly the case migration_v45 exists
+// for -- it must bind through canonical_brand_id, not be refused.
+check("a brand with no legacy row can still be given a label",
+  exceptionActions.includes("canonicalBrandId: String(brand.canonical_id)")
+    && !exceptionActions.includes("ยังไม่มี registration identity"));
+check("the model alias write no longer assumes a plain unique column list",
+  exceptionActions.includes("coalesce(brand_id, canonical_brand_id)")
+  || exceptionActions.includes("existingAlias"));
 check("grain comes from the stored exception, not from the form",
   exceptionActions.includes("recordedGrain"));
 check("a model-level label cannot be bound to a trim",
@@ -144,6 +150,12 @@ check("market is read-only, with no ingest or review tabs",
 const workspace = read("app/admin/(secure)/vehicles/[modelId]/page.tsx");
 check("the vehicle page does not send the owner to the raw queue",
   !workspace.includes("/admin/vehicle-input"));
+const vehiclesList = read("app/admin/(secure)/vehicles/page.tsx");
+check("the vehicles list page does not send the owner to the raw queue either",
+  !vehiclesList.includes("/admin/vehicle-input"));
+check("an exception's Create-new link lands on Vehicles, not the legacy input workflow",
+  exceptionsPage.includes('href="/admin/vehicles?return=exceptions"')
+    && !exceptionsPage.includes("/admin/vehicle-input"));
 
 console.log("\nuploads advertise a size that actually works");
 check("the server action body limit is configured", read("next.config.ts").includes("bodySizeLimit"));

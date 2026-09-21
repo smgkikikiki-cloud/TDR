@@ -270,3 +270,54 @@ def test_the_catalogue_is_what_says_which_marques_file_grades():
     brands = _trim_detail_brands()
     assert "aion" in brands and "byd" in brands
     assert "toyota" not in brands and "honda" not in brands
+
+
+def test_dlt_py_and_the_browser_importer_share_one_units_rule():
+    """Two readers of the same source shape, one rule for what a count
+    means -- not two that can silently disagree. dlt.py._to_rows() used
+    to accept an unparsable count and write 0 for it; this importer
+    already rejected the same input as malformed. Both now go through
+    parse_units_cell."""
+    from vehreg import dlt
+    from vehreg.registration_import import parse_units_cell
+
+    for raw in ("4213", "1,234", "-", "", None, "-5", "abc"):
+        expected = parse_units_cell(raw)
+        rows, skipped, _ = dlt._to_rows(
+            [{"ประเภทรถ": "รถยนต์นั่งส่วนบุคคลไม่เกิน 7 คน", "ยี่ห้อ": "X",
+              "รุ่น": "Y", "จำนวน": raw}], "2026-01")
+        if expected[0] is None:
+            assert not rows, f"{raw!r} should have been skipped, not kept"
+        else:
+            assert rows and rows[0]["จำนวน"] == expected[0]
+
+
+def test_a_brand_new_marque_with_no_legacy_row_still_resolves_through_canonical_ids():
+    """A brand and model both created today: neither has a legacy id at
+    all, and the row must still resolve through canonical ids alone."""
+    brand_aliases = {"newmarque": "newbrand"}  # the token IS the canonical id
+    model_aliases = [{"canonical_brand_id": "newbrand", "registration_type": "*",
+                      "alias_norm": "firstmodel", "canonical_model_id": "newbrand.firstmodel",
+                      "match_mode": "prefix"}]
+    rows, _ = parse_registration_rows(csv_rows(brand="NEWMARQUE", model="FIRSTMODEL"))
+    resolved = resolve_registrations(rows, brand_aliases, model_aliases)
+    assert resolved[0].status == MATCHED
+    assert resolved[0].canonical_model_id == "newbrand.firstmodel"
+    assert resolved[0].model_id is None
+
+
+def test_the_same_raw_label_auto_matches_next_month_through_canonical_ids_alone():
+    """Case C of the create-return-assign flow: once taught, the label
+    never asks again -- with no legacy brand or model row at all."""
+    brand_aliases = {"newmarque": "newbrand"}
+    model_aliases = [{"canonical_brand_id": "newbrand", "registration_type": "*",
+                      "alias_norm": "firstmodel", "canonical_model_id": "newbrand.firstmodel",
+                      "match_mode": "prefix"}]
+    june, _ = parse_registration_rows(csv_rows(brand="NEWMARQUE", model="FIRSTMODEL",
+                                               period="2026-06"))
+    july, _ = parse_registration_rows(csv_rows(brand="NEWMARQUE", model="FIRSTMODEL",
+                                               period="2026-07"))
+    for rows in (june, july):
+        resolved = resolve_registrations(rows, brand_aliases, model_aliases)
+        assert resolved[0].status == MATCHED
+        assert resolved[0].canonical_model_id == "newbrand.firstmodel"

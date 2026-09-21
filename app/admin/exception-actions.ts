@@ -31,7 +31,8 @@ type Target = {
   canonicalModelId: string;
   /** The legacy registration identity, where a release has crosswalked one. */
   legacyModelId: string | null;
-  legacyBrandId: string;
+  legacyBrandId: string | null;
+  canonicalBrandId: string;
 };
 
 /** What a canonical model can be bound to, without forging anything.
@@ -44,12 +45,13 @@ type Target = {
  *  a models row inserted here would be an identity the next release has
  *  never heard of.
  *
- *  A car created today simply has no legacy row yet, and that used to make
- *  it unbindable -- exactly the cars most likely to turn up in an
- *  exception. Since v41 the mapping can name the canonical model directly,
- *  so the legacy id is recorded when it exists and left null when it does
- *  not. The brand still resolves through the legacy brand row, which is
- *  what the alias tables are keyed by. */
+ *  A car -- or a whole brand -- created today simply has no legacy row
+ *  yet, and that used to make it unbindable: the model half since v41,
+ *  the brand half since v45 (registration_brand_aliases.canonical_brand_id,
+ *  registration_model_aliases.canonical_brand_id). Both legacy ids are
+ *  recorded when they exist and left null when they do not; the
+ *  canonical model id and canonical brand id are always known, and are
+ *  what a genuinely new marque's alias is written against. */
 async function resolveTarget(db: any, canonicalModelId: string): Promise<Target> {
   const { data: model, error } = await db.from("current_vehicle_models")
     .select("canonical_id,tdr_model_id,brand_id,name_en")
@@ -61,16 +63,14 @@ async function resolveTarget(db: any, canonicalModelId: string): Promise<Target>
     .select("canonical_id,tdr_brand_id,name_en")
     .eq("canonical_id", model.brand_id).maybeSingle();
   if (brandError) throw brandError;
-  if (!brand?.tdr_brand_id) {
-    throw new Error(
-      `ยี่ห้อ "${brand?.name_en || model.brand_id}" ยังไม่มี registration identity `
-      + "— ผูกป้ายชื่อกับยี่ห้อนี้ยังไม่ได้จนกว่า crosswalk จะเชื่อมให้",
-    );
+  if (!brand?.canonical_id) {
+    throw new Error(`ไม่พบยี่ห้อของรถคันนี้ใน active canonical release`);
   }
   return {
     canonicalModelId: String(model.canonical_id),
     legacyModelId: model.tdr_model_id ? String(model.tdr_model_id) : null,
-    legacyBrandId: String(brand.tdr_brand_id),
+    legacyBrandId: brand.tdr_brand_id ? String(brand.tdr_brand_id) : null,
+    canonicalBrandId: String(brand.canonical_id),
   };
 }
 
@@ -139,19 +139,38 @@ export async function assignRegistrationIdentity(formData: FormData) {
   const notes = `assigned in TDR Admin by ${editor?.name || "tdr-admin"}`;
   const reviewedAt = new Date().toISOString();
   const { error: brandError } = await db.from("registration_brand_aliases").upsert(
-    { raw_brand_norm: brandNorm, brand_id: target.legacyBrandId, notes, reviewed_at: reviewedAt },
+    {
+      raw_brand_norm: brandNorm, brand_id: target.legacyBrandId,
+      canonical_brand_id: target.canonicalBrandId, notes, reviewed_at: reviewedAt,
+    },
     { onConflict: "raw_brand_norm" });
   if (brandError) throw new Error(`brand alias write failed: ${brandError.message}`);
-  const { error: aliasError } = await db.from("registration_model_aliases").upsert(
-    {
-      brand_id: target.legacyBrandId, registration_type: registrationType,
-      alias_norm: aliasNorm, model_id: target.legacyModelId,
-      canonical_model_id: target.canonicalModelId,
-      canonical_trim_id: canonicalTrimId,
-      grain: canonicalTrimId ? "TRIM" : "MODEL",
-      match_mode: "exact", notes, reviewed_at: reviewedAt,
-    },
-    { onConflict: "brand_id,registration_type,alias_norm" });
+
+  // registration_model_aliases has no plain unique column list to upsert
+  // against any more: brand_id used to be part of its primary key, and
+  // making it nullable (migration_v45, for a brand with no legacy row)
+  // meant replacing that key with an expression index --
+  // coalesce(brand_id, canonical_brand_id) -- which .upsert()'s onConflict
+  // cannot target directly. Read the row by that same identity, then
+  // update it by its own id or insert a new one, explicitly.
+  let existingAlias = db.from("registration_model_aliases")
+    .select("id").eq("registration_type", registrationType).eq("alias_norm", aliasNorm);
+  existingAlias = target.legacyBrandId
+    ? existingAlias.eq("brand_id", target.legacyBrandId)
+    : existingAlias.is("brand_id", null).eq("canonical_brand_id", target.canonicalBrandId);
+  const { data: existingAliasRow, error: existingAliasError } = await existingAlias.maybeSingle();
+  if (existingAliasError) throw new Error(`model alias lookup failed: ${existingAliasError.message}`);
+
+  const aliasFields = {
+    brand_id: target.legacyBrandId, canonical_brand_id: target.canonicalBrandId,
+    registration_type: registrationType, alias_norm: aliasNorm,
+    model_id: target.legacyModelId, canonical_model_id: target.canonicalModelId,
+    canonical_trim_id: canonicalTrimId, grain: canonicalTrimId ? "TRIM" : "MODEL",
+    match_mode: "exact", notes, reviewed_at: reviewedAt,
+  };
+  const { error: aliasError } = existingAliasRow
+    ? await db.from("registration_model_aliases").update(aliasFields).eq("id", existingAliasRow.id)
+    : await db.from("registration_model_aliases").insert(aliasFields);
   if (aliasError) throw new Error(`model alias write failed: ${aliasError.message}`);
 
   // Months already loaded carry the mapping too, so assigning once fixes the

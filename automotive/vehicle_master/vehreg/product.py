@@ -358,7 +358,8 @@ def _day_before(day: str) -> str:
 def correct_price(data_dir, year, *, trim_id, price_type, amount_thb,
                   reason, reviewer, mode="supersede", effective_from=None,
                   campaign_id=None, option_id=None, source="", source_ref="",
-                  reference_price_thb=None, as_of=None, write=False):
+                  source_document_id="", reference_price_thb=None,
+                  as_of=None, write=False):
     """Replace the live price for one trim, keeping the old row readable.
 
     ``mode="supersede"`` means the price changed: the old row is given an end
@@ -397,7 +398,8 @@ def correct_price(data_dir, year, *, trim_id, price_type, amount_thb,
             "notes": reason, "reviewed_by": reviewer,
         }
         for name, value in (("campaign_id", campaign_id), ("option_id", option_id),
-                            ("reference_price_thb", reference_price_thb)):
+                            ("reference_price_thb", reference_price_thb),
+                            ("source_document_id", source_document_id or None)):
             if value is not None:
                 replacement[name] = value
         edits = [{"path": target["path"], "index": target["index"], "changes": closing},

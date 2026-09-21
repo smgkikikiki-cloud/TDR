@@ -134,6 +134,32 @@ def _cell(record: dict[str, Any], key: str) -> str:
     return str(value if value is not None else "").strip()
 
 
+def parse_units_cell(raw: object) -> tuple[Optional[int], Optional[str]]:
+    """The one rule for what a registration count means, shared by every
+    reader of a DLT-shaped export -- this browser importer and
+    ``dlt.py``'s own CKAN fetcher alike.
+
+    Returns ``(units, None)`` when the cell is a valid non-negative count,
+    or ``(None, reason)`` when it is not. A count that cannot be trusted
+    is never silently coerced to 0 or dropped by its caller without that
+    caller knowing it happened -- two readers of the same source shape
+    that disagreed here (one rejecting an unparsable count, the other
+    quietly writing 0 for it) is exactly the kind of drift that lets the
+    same bad row look like two different facts depending which path read
+    it.
+    """
+    text = str(raw if raw is not None else "").strip().replace(",", "")
+    if not text:
+        return None, "units is required"
+    try:
+        units = int(float(text))
+    except ValueError:
+        return None, f"units is not a number: {text!r}"
+    if units < 0:
+        return None, "units cannot be negative"
+    return units, None
+
+
 def parse_registration_rows(records: list[dict[str, Any]]) -> tuple[list[RegistrationRow], list[dict]]:
     """Read an export into rows. Raises when the file is not one at all."""
     if not records:
@@ -146,18 +172,14 @@ def parse_registration_rows(records: list[dict[str, Any]]) -> tuple[list[Registr
         period = _cell(record, mapping["period"])
         brand = _cell(record, mapping["brand"])
         model = _cell(record, mapping["model"])
-        raw_units = _cell(record, mapping["units"]).replace(",", "")
+        raw_units = _cell(record, mapping["units"])
         registration_type = _cell(record, mapping["registration_type"]) or "*"
         if not (period and brand and model):
             rejected.append({"row": index, "reason": "period, brand and model are all required"})
             continue
-        try:
-            units = int(float(raw_units))
-        except ValueError:
-            rejected.append({"row": index, "reason": f"units is not a number: {raw_units!r}"})
-            continue
-        if units < 0:
-            rejected.append({"row": index, "reason": "units cannot be negative"})
+        units, reason = parse_units_cell(raw_units)
+        if reason is not None:
+            rejected.append({"row": index, "reason": reason})
             continue
         rows.append(RegistrationRow(
             period=period, registration_type=registration_type,
@@ -173,7 +195,17 @@ def resolve_registrations(
     brand_aliases: dict[str, str],
     model_aliases: Iterable[dict[str, Any]],
 ) -> list[ResolvedRegistration]:
-    """Match each row to a legacy model id through the saved crosswalk."""
+    """Match each row to a legacy model id through the saved crosswalk.
+
+    ``brand_aliases`` maps a normalised raw brand label to one token --
+    the legacy ``brand_id`` (uuid) when the brand has one, else its
+    ``canonical_brand_id``, whichever the caller's own query preferred.
+    Either kind resolves the same way here: a model alias is a candidate
+    for a brand when ITS OWN ``brand_id`` or ``canonical_brand_id``
+    equals that same token, so a brand new enough to have no legacy row
+    at all -- and therefore no ``brand_id`` anywhere -- still matches
+    through the canonical id alone.
+    """
     aliases = list(model_aliases)
     out: list[ResolvedRegistration] = []
     for row in rows:
@@ -188,7 +220,8 @@ def resolve_registrations(
                          if brand_norm and model_norm.startswith(brand_norm) else model_norm)
         candidates = []
         for alias in aliases:
-            if str(alias.get("brand_id")) != brand_id:
+            alias_brand = str(alias.get("brand_id") or alias.get("canonical_brand_id") or "")
+            if alias_brand != brand_id:
                 continue
             if str(alias.get("registration_type")) not in ("*", row.registration_type):
                 continue

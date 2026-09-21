@@ -38,6 +38,7 @@ from pathlib import Path
 from typing import Any, Iterable, Iterator, Optional
 
 from .normalize import THAI_MONTHS, period_key
+from .registration_import import parse_units_cell
 from .taxonomy import RegistrationType
 
 CKAN_BASE = "https://gdcatalog.dlt.go.th/api/3/action"
@@ -174,11 +175,18 @@ def _to_rows(records: Iterable[dict], period: str
     for record in records:
         thai_type = str(record.get("ประเภทรถ", "")).strip()
         registration = REGISTRATION_BY_THAI_TYPE.get(thai_type)
-        count = record.get("จำนวน")
-        try:
-            count = int(str(count).replace(",", ""))
-        except (TypeError, ValueError):
-            count = 0
+        # The one rule for what a count means (registration_import.py),
+        # not a second copy of it: an unparsable count used to be
+        # silently written as 0, which is indistinguishable from DLT
+        # genuinely reporting zero registrations. Now it is skipped and
+        # counted like any other row this feed could not place, rather
+        # than turned into a fabricated fact the browser importer would
+        # have no way to tell from a real one.
+        count, reason = parse_units_cell(record.get("จำนวน"))
+        if count is None:
+            bucket = f"(invalid count: {reason})"
+            skipped[bucket] = skipped.get(bucket, 0) + 1
+            continue
         if registration is None:
             skipped[thai_type or "(ว่าง)"] = skipped.get(thai_type or "(ว่าง)",
                                                          0) + count

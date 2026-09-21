@@ -17,6 +17,7 @@ import pytest
 
 from tools import pricefeed_write
 from vehreg.catalog import Catalog
+from vehreg.entities import to_jsonable
 from vehreg.input_pipeline import CanonicalInputPipeline
 from vehreg.pricefeed import content_id
 from vehreg.pricing import PriceLedger, PriceType
@@ -370,3 +371,60 @@ def test_the_cli_no_longer_accepts_a_decisions_flag(data: Path):
         [sys.executable, "-m", "tools.pricefeed_write", "--help"],
         cwd=Path(__file__).resolve().parents[1], capture_output=True, text=True)
     assert "--decisions" not in result.stdout
+
+
+# --- I: provenance reaches the ledger and survives a re-run ---------------
+
+def test_provenance_reaches_the_ledger_and_a_re_run_of_the_same_evidence_is_a_no_op(data: Path):
+    """The acceptance case: Tier-A document (document_id, url), one claim,
+    accepted price, read back off the ledger with its document id and
+    URL/source ref intact -- and re-running the exact same evidence
+    writes nothing new."""
+    batch = _batch_file(data, amount=899_000, name="batch-i", published="2026-09-10")
+    payload = json.loads(batch.read_text(encoding="utf-8"))
+    document_id = payload["documents"][0]["document_id"]
+    url = payload["documents"][0]["url"]
+    assert document_id.startswith("sha256:")
+
+    summary = _run(data, batch, "2026-09-10")
+    assert summary["planned"]["WRITTEN"] == 1
+
+    row = _rows(data)[0]
+    assert row.source_document_id == document_id
+    assert row.source_ref == url
+    assert row.source == "price_harvest"
+
+    # The release payload the ledger's own export carries this in too --
+    # not just the in-memory PriceRecord.
+    exported = _rows_exported(data)
+    assert exported[0]["source_document_id"] == document_id
+
+    again = _run(data, batch, "2026-09-11")
+    assert again["planned"]["UNCHANGED"] == 1
+    assert again["planned"]["WRITTEN"] == 0
+    assert len(_rows(data)) == 1
+    assert _rows(data)[0].source_document_id == document_id
+
+
+def test_provenance_survives_a_supersede_too(data: Path):
+    """The more common path -- a second, later observation supersedes the
+    first -- must not drop the new row's own document id."""
+    first_batch = _batch_file(data, amount=899_000, name="batch-i2a", published="2026-09-10")
+    _run(data, first_batch, "2026-09-10")
+
+    second_batch = _batch_file(data, amount=929_000, name="batch-i2b", published="2026-10-01")
+    second_document_id = json.loads(second_batch.read_text(encoding="utf-8"))["documents"][0]["document_id"]
+    _run(data, second_batch, "2026-10-01")
+
+    rows = sorted(_rows(data), key=lambda r: r.amount_thb)
+    assert rows[1].amount_thb == 929_000
+    assert rows[1].source_document_id == second_document_id
+    # The superseded row keeps ITS OWN original document id -- history is
+    # not rewritten by what replaced it.
+    assert rows[0].source_document_id and rows[0].source_document_id != second_document_id
+
+
+def _rows_exported(data: Path) -> list[dict]:
+    catalog = Catalog.load(data, YEAR)
+    ledger = PriceLedger.load(data, year=YEAR, catalog=catalog)
+    return [to_jsonable(row) for row in ledger.records_for(TRIM_ID, include_retracted=True)]

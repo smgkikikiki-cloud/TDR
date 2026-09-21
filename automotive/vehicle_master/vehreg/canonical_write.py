@@ -752,6 +752,7 @@ class CanonicalWritePipeline:
                 option_id=(str(record.get("option_id")) if record.get("option_id") else None),
                 source=str(record.get("source") or ""),
                 source_ref=str(record.get("source_ref") or ""),
+                source_document_id=str(record.get("source_document_id") or ""),
                 reference_price_thb=(int(record["reference_price_thb"])
                                      if record.get("reference_price_thb") not in (None, "") else None),
                 as_of=date.fromisoformat(start),
@@ -787,6 +788,7 @@ class CanonicalWritePipeline:
                 option_id=(str(payload.get("option_id")) if payload.get("option_id") else None),
                 source=str(payload.get("source") or ""),
                 source_ref=str(payload.get("source_ref") or ""),
+                source_document_id=str(payload.get("source_document_id") or ""),
                 reference_price_thb=(int(payload["reference_price_thb"]) if payload.get("reference_price_thb") not in (None, "") else None),
                 as_of=_as_of_date(payload.get("as_of")),
                 write=True,
