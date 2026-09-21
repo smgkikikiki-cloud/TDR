@@ -154,6 +154,19 @@ def main(argv=None) -> int:
         "conflicts": len(conflicts),
         "commands": len(commands),
         "applied": False,
+        # Whether the canonical Vehicle Master tree actually has a change
+        # that needs a commit and a publish. Never inferred from `patched`
+        # alone: a row classified PATCHED still runs through the same
+        # write pipeline as every other command, and that pipeline always
+        # appends an audit trail (revisions.jsonl/outbox.jsonl/shadow) even
+        # when the underlying catalogue data ends up identical, so "a
+        # command was generated" is not the same fact as "a command wrote
+        # a real change". Below, `commands` empty (every row UNCHANGED or
+        # EXCEPTION) already answers this before anything is applied; once
+        # applied, a batch that turned out to be a byte-identical replay
+        # of one already committed (idempotent_replay=True) does not count
+        # either.
+        "canonical_changed": False,
     }
 
     # The run's own timestamp, not the clock at the moment each batch is
@@ -172,7 +185,13 @@ def main(argv=None) -> int:
             result = pipeline.apply(batch)
             if result.status != "APPLIED":
                 raise SystemExit(f"batch {batch['batch_id']} returned {result.status}")
+            if not result.idempotent_replay and result.changed_files:
+                report["canonical_changed"] = True
         report["applied"] = True
+    elif not args.apply:
+        # Dry run: no pipeline was asked to write anything, so the closest
+        # honest answer is "would a command have been sent at all".
+        report["canonical_changed"] = bool(commands)
 
     report_dir = args.report_dir or (args.data_dir / str(args.year) / "market" / "trims")
     report_dir.mkdir(parents=True, exist_ok=True)

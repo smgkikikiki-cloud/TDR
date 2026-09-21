@@ -329,3 +329,83 @@ export async function liveModelReleaseId(modelId: string): Promise<string | null
   if (error) throw error;
   return data?.release_id || null;
 }
+
+/** Every canonical brand, for the "เลือกยี่ห้อที่มีอยู่" picker on the
+ *  create-vehicle form. Small table (dozens of rows), so no search term. */
+export async function listVehicleBrandsForPicker(): Promise<Array<{
+  canonicalId: string; nameEn: string; nameTh: string;
+}>> {
+  const db = adminDb();
+  if (!db) return [];
+  const { data, error } = await db.from("current_vehicle_brands")
+    .select("canonical_id,name_en,name_th").order("name_en", { ascending: true }).limit(500);
+  if (error) throw error;
+  return (data || []).map((row: any) => ({
+    canonicalId: row.canonical_id, nameEn: row.name_en, nameTh: row.name_th || "",
+  }));
+}
+
+export type CanonicalBatchStatus = {
+  status: string;
+  error: string | null;
+  releaseId: string | null;
+};
+
+/** Where a queued canonical write actually is. Read by /admin/exceptions
+ *  after a "+ สร้างรถใหม่" round trip -- not to drive anything itself, only
+ *  to tell the owner whether the row below is still publishing or ready. */
+export async function canonicalInputBatchStatus(batchKey: string): Promise<CanonicalBatchStatus | null> {
+  const db = adminDb();
+  if (!db || !batchKey) return null;
+  const { data, error } = await db.from("canonical_input_batches")
+    .select("status,error,release_id").eq("batch_key", batchKey).maybeSingle();
+  if (error) throw error;
+  if (!data) return null;
+  return { status: data.status, error: data.error || null, releaseId: data.release_id || null };
+}
+
+/** The canonical id a brand-new car actually got, read back from the live
+ *  serving projection rather than guessed. A model's canonical_id is
+ *  derived server-side (vehreg/canonical_write.py: slug(brand.name_en) is
+ *  not something this codebase re-derives in TypeScript -- see
+ *  lib/canonical-vehicle-create.ts's module docstring for why) so the only
+ *  honest way to know it is to ask the release the write actually landed
+ *  in. Returns null while the write has not published yet, which the
+ *  caller reads as "still creating, not a failure". */
+export async function findCreatedModel(
+  brandId: string, nameEn: string,
+): Promise<{ canonicalId: string } | null> {
+  const db = adminDb();
+  if (!db || !brandId || !nameEn) return null;
+  const { data, error } = await db.from("current_vehicle_models")
+    .select("canonical_id").eq("brand_id", brandId).eq("name_en", nameEn)
+    .order("release_id", { ascending: false }).limit(1).maybeSingle();
+  if (error) throw error;
+  return data ? { canonicalId: data.canonical_id } : null;
+}
+
+/** The brand half of the same read-back, for the "new brand" path where
+ *  brandId is not known until the write has published either. */
+export async function findCreatedBrand(nameEn: string): Promise<{ canonicalId: string } | null> {
+  const db = adminDb();
+  if (!db || !nameEn) return null;
+  const { data, error } = await db.from("current_vehicle_brands")
+    .select("canonical_id").eq("name_en", nameEn).limit(1).maybeSingle();
+  if (error) throw error;
+  return data ? { canonicalId: data.canonical_id } : null;
+}
+
+/** The trim half: once the model is live, its starter trim is found by the
+ *  same (name, powertrain) the create form submitted -- both already known
+ *  to the caller, so this is a lookup, not a guess either. */
+export async function findCreatedTrim(
+  modelId: string, name: string, powertrain: string,
+): Promise<{ canonicalId: string } | null> {
+  const db = adminDb();
+  if (!db || !modelId || !name) return null;
+  const { data, error } = await db.from("current_market_trims")
+    .select("canonical_id").eq("model_id", modelId).eq("name", name)
+    .eq("powertrain", powertrain.toUpperCase()).limit(1).maybeSingle();
+  if (error) throw error;
+  return data ? { canonicalId: data.canonical_id } : null;
+}

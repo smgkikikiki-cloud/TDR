@@ -140,6 +140,12 @@ def _import_eco(source_file: Path, original_name: str, workdir: Path,
     return {
         "rows_read": report.get("rows_read"), "patched": report.get("patched"),
         "created": report.get("created"), "exceptions": len(exceptions),
+        # Not an import_runs column -- popped back off in process() before
+        # the counts dict is spread into the row patch. This is the real
+        # "does the canonical tree need a commit and a publish" signal;
+        # see the comment on tools/import_source.py's report field of the
+        # same name for why `patched`/`created` alone cannot answer that.
+        "canonical_changed": bool(report.get("canonical_changed")),
     }, exceptions
 
 
@@ -281,11 +287,20 @@ def process(limit: int) -> int:
         # Every unresolved row, not the first five hundred of them.
         _store_exceptions(run_id, source_kind, exceptions)
 
-        # A canonical source is not finished until its files are committed
-        # AND the release carrying them is published; it waits for
-        # finalize. A DLT run has already landed in registrations, and
-        # never goes near the canonical release.
-        pending = source_kind in CANONICAL_SOURCES
+        # Not an import_runs column -- must not reach _patch()'s spread.
+        canonical_changed = bool(counts.pop("canonical_changed", True))
+
+        # A canonical source whose write actually changed the tree is not
+        # finished until those files are committed AND the release
+        # carrying them is published; it waits for finalize(). A run that
+        # read cleanly but produced nothing to write -- every row already
+        # matched the catalogue, or every unplaced row became a durable
+        # exception instead of a command -- has no diff for Git to carry,
+        # so parking it at WRITTEN_PENDING_PUBLISH would wait forever on a
+        # publish that will never have anything of this run's to publish.
+        # A DLT run has already landed in registrations directly and never
+        # goes near the canonical release either way.
+        pending = source_kind in CANONICAL_SOURCES and canonical_changed
         _patch(run_id, {
             **counts,
             "status": "WRITTEN_PENDING_PUBLISH" if pending else "COMPLETED",

@@ -1,10 +1,47 @@
 import Link from "next/link";
-import { listVehicleModelsForPicker, listVehicleTrimsForPicker } from "@/lib/canonical-editor";
+import {
+  canonicalInputBatchStatus, findCreatedBrand, findCreatedModel, findCreatedTrim,
+  listVehicleModelsForPicker, listVehicleTrimsForPicker,
+} from "@/lib/canonical-editor";
 import {
   DEFAULT_PAGE_SIZE, REGISTRATION_KIND, listOpenExceptionsPage, listRegistrationGaps,
 } from "@/lib/import-exceptions";
 import { importExceptions } from "@/lib/import-runs";
 import { assignRegistrationIdentity, resolveException } from "@/app/admin/exception-actions";
+
+type CreatedVehicleQuery = {
+  created?: string; exception_ids?: string; raw_brand?: string; raw_model?: string;
+  registration_type?: string; grain?: string; brand_mode?: string; brand_id?: string;
+  brand_name_en?: string; model_name_en?: string; model_id?: string; trim_name?: string;
+  powertrain?: string;
+};
+
+/** Where a "+ สร้างรถใหม่" round trip actually is, read from the live
+ *  serving projection (never guessed -- see lib/canonical-vehicle-create.ts).
+ *  `target` is null until the write has published AND (for a TRIM-grain
+ *  return) its starter trim is visible too; the page shows a pending
+ *  notice for that whole window instead of a broken preselect. */
+async function resolveCreatedTarget(query: CreatedVehicleQuery): Promise<{
+  status: string | null; target: string | null;
+} | null> {
+  if (!query.created) return null;
+  const batch = await canonicalInputBatchStatus(query.created).catch(() => null);
+  let modelId = query.model_id || null;
+  if (!modelId) {
+    let brandId = query.brand_id || null;
+    if (!brandId && query.brand_name_en) {
+      brandId = (await findCreatedBrand(query.brand_name_en).catch(() => null))?.canonicalId || null;
+    }
+    if (brandId && query.model_name_en) {
+      modelId = (await findCreatedModel(brandId, query.model_name_en).catch(() => null))?.canonicalId || null;
+    }
+  }
+  const status = batch?.status || null;
+  if (!modelId) return { status, target: null };
+  if (query.grain !== "TRIM" || !query.trim_name) return { status, target: modelId };
+  const trim = await findCreatedTrim(modelId, query.trim_name, query.powertrain || "").catch(() => null);
+  return { status, target: trim ? `${modelId}::${trim.canonicalId}` : null };
+}
 
 export const dynamic = "force-dynamic";
 
@@ -42,8 +79,8 @@ function pageHref(term: string, chain: string[]): string {
 export default async function ExceptionsPage({
   searchParams,
 }: {
-  searchParams: Promise<{
-    q?: string; assigned?: string; created?: string; resolved?: string; cursors?: string;
+  searchParams: Promise<CreatedVehicleQuery & {
+    q?: string; assigned?: string; resolved?: string; cursors?: string;
   }>;
 }) {
   const query = await searchParams;
@@ -52,14 +89,22 @@ export default async function ExceptionsPage({
   const chain = cursorChain(query.cursors);
   const currentCursor = chain.length ? chain[chain.length - 1] : null;
 
-  const [gaps, models, page] = await Promise.all([
+  const [gaps, models, page, created] = await Promise.all([
     // Grouped server-side, over every OPEN row -- never a page read into
     // memory. See public.import_run_registration_gaps (migration_v43).
     listRegistrationGaps().catch(() => []),
     listVehicleModelsForPicker("").catch(() => []),
     listOpenExceptionsPage({ cursor: currentCursor, excludeKind: REGISTRATION_KIND })
       .catch(() => ({ rows: [], total: 0, nextCursor: null })),
+    resolveCreatedTarget(query).catch(() => null),
   ]);
+  const createdIds = new Set((query.exception_ids || "").split(",").map((id) => id.trim()).filter(Boolean));
+  const isCreatedRow = (gap: { ids: string[]; brandRaw: string; modelRaw: string; registrationType: string }) =>
+    createdIds.size
+      ? gap.ids.some((id) => createdIds.has(id))
+      : Boolean(query.raw_brand) && norm(gap.brandRaw) === norm(query.raw_brand || "")
+        && norm(gap.modelRaw) === norm(query.raw_model || "")
+        && gap.registrationType === query.registration_type;
 
   // A grade picker only where the source itself printed the grade, and only
   // for the brands in play -- the whole trim catalogue in a select is not a
@@ -93,6 +138,15 @@ export default async function ExceptionsPage({
   const nextChain = page.nextCursor ? [...chain, page.nextCursor] : null;
   const prevChain = chain.length ? chain.slice(0, -1) : null;
 
+  // Reloading the exact same URL is "ตรวจสอบอีกครั้ง" -- it carries every
+  // created=... param forward so the pending notice keeps re-resolving
+  // until the write publishes, instead of losing that context on refresh.
+  const retryParams = new URLSearchParams();
+  for (const [key, value] of Object.entries(query)) {
+    if (typeof value === "string" && value) retryParams.set(key, value);
+  }
+  const retryHref = `/admin/exceptions?${retryParams.toString()}`;
+
   return <div className="adminEditor">
     <div className="adminHeader">
       <div>
@@ -108,9 +162,18 @@ export default async function ExceptionsPage({
     {query.assigned ? <div className="adminSaved">
       ผูกรถเรียบร้อย — ป้ายชื่อนี้จะจับคู่เองอัตโนมัติในเดือนถัดไป และยอดเดือนก่อนๆ ถูกผูกย้อนหลังให้แล้ว
     </div> : null}
-    {query.created ? <div className="adminSaved">
-      สร้างรถใหม่แล้ว — เลือกรถคันนั้นในช่อง “ผูกกับรถ” ด้านล่างเพื่อปิดรายการนี้
-    </div> : null}
+    {query.created ? (
+      created?.target
+        ? <div className="adminSaved">
+            สร้างรถใหม่แล้วและพร้อมใช้งาน — เลือกไว้ให้แล้วในแถวด้านล่าง กด “ผูก” เพื่อปิดรายการนี้
+          </div>
+        : <div className="adminNotice">
+            <span>
+              กำลังสร้างรถใหม่ (สถานะ: {created?.status || "กำลังประมวลผล"}) — การเขียนและ publish
+              ยังไม่เสร็จ ปกติใช้เวลาไม่กี่นาที <Link href={retryHref}>ตรวจสอบอีกครั้ง</Link>
+            </span>
+          </div>
+    ) : null}
     {query.resolved ? <div className="adminSaved">ปิดรายการแล้ว</div> : null}
 
     <form className="adminForm" action="/admin/exceptions">
@@ -137,7 +200,17 @@ export default async function ExceptionsPage({
       <tbody>
         {visibleGaps.length ? visibleGaps.map((gap) => {
           const trimGrained = gap.grain === "TRIM";
-          return <tr key={gapKey(gap)}>
+          const isThisRow = Boolean(query.created) && isCreatedRow(gap);
+          const preselected = isThisRow ? created?.target || null : null;
+          const createVehicleParams = new URLSearchParams({
+            return: "exceptions",
+            exception_ids: gap.ids.join(","),
+            raw_brand: gap.brandRaw,
+            raw_model: gap.modelRaw,
+            registration_type: gap.registrationType,
+            grain: gap.grain,
+          });
+          return <tr key={gapKey(gap)} className={preselected ? "adminHighlightRow" : undefined}>
             <td>
               <b>{gap.brandRaw}</b><br />{gap.modelRaw}<br />
               <small>{gap.registrationType} · {trimGrained ? "ต้นทางระบุรุ่นย่อย" : "ต้นทางระบุแค่รุ่น"}</small>
@@ -150,8 +223,9 @@ export default async function ExceptionsPage({
                 <input type="hidden" name="raw_model" value={gap.modelRaw} />
                 <input type="hidden" name="registration_type" value={gap.registrationType} />
                 <input type="hidden" name="exception_ids" value={gap.ids.join(",")} />
-                <select name="target" defaultValue="" required aria-label={`รถสำหรับ ${gap.modelRaw}`}>
+                <select name="target" defaultValue={preselected || ""} required aria-label={`รถสำหรับ ${gap.modelRaw}`}>
                   <option value="" disabled>เลือกรถที่มีอยู่…</option>
+                  {preselected ? <option value={preselected}>รถที่เพิ่งสร้าง (แนะนำ) →</option> : null}
                   {(models as any[]).map((model: any) => {
                     const grades = trimGrained ? trimsByModel.get(model.canonicalId) || [] : [];
                     const label = `${model.brandId} ${model.nameEn}`;
@@ -169,7 +243,7 @@ export default async function ExceptionsPage({
                 </select>
                 <button className="adminPrimary">ผูก</button>
               </form>
-              <Link href="/admin/vehicles?return=exceptions">+ สร้างรถใหม่</Link>
+              <Link href={`/admin/vehicles/new?${createVehicleParams.toString()}`}>+ สร้างรถใหม่</Link>
             </td>
           </tr>;
         }) : <tr><td colSpan={4}>ไม่มีป้ายชื่อค้าง</td></tr>}

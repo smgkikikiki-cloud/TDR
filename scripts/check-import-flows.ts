@@ -153,8 +153,17 @@ check("the vehicle page does not send the owner to the raw queue",
 const vehiclesList = read("app/admin/(secure)/vehicles/page.tsx");
 check("the vehicles list page does not send the owner to the raw queue either",
   !vehiclesList.includes("/admin/vehicle-input"));
-check("an exception's Create-new link lands on Vehicles, not the legacy input workflow",
-  exceptionsPage.includes('href="/admin/vehicles?return=exceptions"')
+check("an exception's Create-new link lands on the Vehicles create form, not the legacy input workflow",
+  // /admin/vehicles/new (added this round for the FINAL FUNCTIONAL BLOCKER
+  // PASS) replaces the old bare "/admin/vehicles?return=exceptions" link,
+  // which pointed at the Vehicles index -- a page with no create form at
+  // all -- and carried none of the context 1D requires. The href is built
+  // with URLSearchParams rather than a literal string, so this checks for
+  // the pieces that construction has to touch, not one exact string.
+  exceptionsPage.includes("/admin/vehicles/new?")
+    && exceptionsPage.includes('return: "exceptions"')
+    && exceptionsPage.includes("exception_ids: gap.ids.join")
+    && exceptionsPage.includes("grain: gap.grain")
     && !exceptionsPage.includes("/admin/vehicle-input"));
 
 console.log("\nuploads advertise a size that actually works");

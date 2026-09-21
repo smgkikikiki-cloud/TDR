@@ -20,6 +20,7 @@ export default async function VehiclesIndexPage({
           แทนการเขียน JSON เอง — ทุกการแก้ผ่านคิว canonical เดียวกัน
         </p>
       </div>
+      <Link className="adminPrimaryLink" href="/admin/vehicles/new">+ สร้างรถใหม่</Link>
     </div>
 
     <form className="adminForm" action="/admin/vehicles">

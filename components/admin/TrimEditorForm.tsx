@@ -37,6 +37,15 @@ type TrimEditorFormProps = {
   evidenceTargets: OemEvidenceTarget[];
   trimId?: string;
   trimName?: string;
+  /** Present only when this "+ เพิ่มรุ่นย่อยใหม่" form was opened from an
+   *  Exceptions row (/admin/vehicles/new's grain=TRIM path): carries the
+   *  exception back through the save so prepareTrimEdit can redirect to
+   *  /admin/exceptions instead of this page, with the new trim preselected
+   *  there once it publishes. Never set for an edit of an existing trim. */
+  returnContext?: {
+    exceptionIds: string; rawBrand: string; rawModel: string;
+    registrationType: string; grain: string;
+  };
 };
 
 function QualifierInput({ fieldKey, qualifier, value }: {
@@ -139,6 +148,14 @@ export default function TrimEditorForm(props: TrimEditorFormProps) {
     <input type="hidden" name="submitted_at" value={props.submittedAt} />
     <input type="hidden" name="reviewed_at" value={props.today} />
     {props.trimId ? <input type="hidden" name="trim_id" value={props.trimId} /> : null}
+    {props.returnContext ? <>
+      <input type="hidden" name="return" value="exceptions" />
+      <input type="hidden" name="exception_ids" value={props.returnContext.exceptionIds} />
+      <input type="hidden" name="raw_brand" value={props.returnContext.rawBrand} />
+      <input type="hidden" name="raw_model" value={props.returnContext.rawModel} />
+      <input type="hidden" name="registration_type" value={props.returnContext.registrationType} />
+      <input type="hidden" name="grain" value={props.returnContext.grain} />
+    </> : null}
 
     {state.formError ? <p className="trimFormError" role="alert">{state.formError}</p> : null}
 

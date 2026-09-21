@@ -25,10 +25,20 @@ export default async function VehicleWorkspacePage({
   params, searchParams,
 }: {
   params: Promise<{ modelId: string }>;
-  searchParams: Promise<{ saved?: string }>;
+  searchParams: Promise<{
+    saved?: string; return?: string; exception_ids?: string; raw_brand?: string;
+    raw_model?: string; registration_type?: string; grain?: string;
+  }>;
 }) {
   const { modelId } = await params;
-  const saved = (await searchParams).saved;
+  const query = await searchParams;
+  const saved = query.saved;
+  const fromExceptions = query.return === "exceptions";
+  const returnContext = fromExceptions ? {
+    exceptionIds: query.exception_ids || "", rawBrand: query.raw_brand || "",
+    rawModel: query.raw_model || "", registrationType: query.registration_type || "",
+    grain: query.grain || "",
+  } : undefined;
   const editor = await currentEditor();
   if (!editor) redirect("/admin/login");
   const workspace = await loadVehicleWorkspace(modelId);
@@ -51,6 +61,13 @@ export default async function VehicleWorkspacePage({
 
     {saved ? <div className="adminSaved">
       บันทึก {KIND_LABEL[saved] || "canonical"} แล้ว — ระบบกำลังเขียนและ publish ให้อัตโนมัติ ใช้เวลาสักครู่แล้วรีเฟรช
+    </div> : null}
+
+    {fromExceptions ? <div className="adminNotice">
+      <span>
+        มาจากรายการค้าง: <b>{query.raw_brand}</b> {query.raw_model} — เพิ่มรุ่นย่อยที่ตรงกับป้ายนี้ที่ส่วน
+        “+ เพิ่มรุ่นย่อยใหม่” ด้านล่าง แล้วบันทึก ระบบจะพากลับไปหน้า Exceptions พร้อมเลือกไว้ให้เอง
+      </span>
     </div> : null}
 
     <nav className="adminQuickGrid" aria-label="Vehicle workspace sections">
@@ -128,6 +145,7 @@ export default async function VehicleWorkspacePage({
         submissionId={randomUUID()} today={today}
         fields={allFields}
         current={{}} sourceRefs={{}} evidenceTargets={evidenceTargets}
+        returnContext={returnContext}
       />
     </details> : <div className="adminNotice"><span>รุ่นนี้ยังไม่มี generation ที่ใช้งานอยู่ — เพิ่มรุ่นย่อยไม่ได้จนกว่าจะตั้ง generation ให้รุ่นนี้ก่อน</span></div>}
 

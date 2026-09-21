@@ -320,6 +320,28 @@ export async function prepareTrimEdit(
     sourceRefs: newSourceRefs,
   });
 
-  await enqueueCanonicalInputBatch(payload as Record<string, unknown>);
+  const { batchKey } = await enqueueCanonicalInputBatch(payload as Record<string, unknown>);
+
+  // A brand-new trim opened from an Exceptions row: hand the save back to
+  // Exceptions instead of this page, carrying exactly what it needs to
+  // find the new trim once the write publishes (see
+  // lib/canonical-editor.ts's findCreatedTrim) and preselect it against
+  // the row that sent us here. An edit of an existing trim never carries
+  // this context (TrimEditorForm only sets it on the blank "+ เพิ่มรุ่นย่อยใหม่"
+  // form), so existingTrimId already rules that case out on its own.
+  if (!existingTrimId && field(formData, "return") === "exceptions") {
+    const params = new URLSearchParams({
+      created: batchKey,
+      exception_ids: field(formData, "exception_ids"),
+      raw_brand: field(formData, "raw_brand"),
+      raw_model: field(formData, "raw_model"),
+      registration_type: field(formData, "registration_type"),
+      grain: field(formData, "grain") || "TRIM",
+      model_id: modelId,
+      trim_name: name,
+      powertrain,
+    });
+    redirect(`/admin/exceptions?${params.toString()}`);
+  }
   redirect(`/admin/vehicles/${encodeURIComponent(modelId)}?saved=TRIM`);
 }
