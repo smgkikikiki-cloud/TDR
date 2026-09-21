@@ -26,6 +26,17 @@ export type FreeCompareTrim = {
   published_range_cycle?: string | null;
   production_type?: string | null;
   production_country?: string | null;
+  /** Model-layer field, only ever meaningful when body_type is PICKUP -- see
+   *  PICKUP_BODY_TYPE in lib/body-labels.ts. NOT_APPLICABLE (or absent) on
+   *  every other body type reads as no value, same as everywhere else. */
+  cab_type?: string | null;
+  /** RetailStatus (CURRENT/HISTORICAL/UNVERIFIED) -- header metadata, not a
+   *  comparable row (see FREE_COMPARE_GROUPS' doc comment). */
+  retail_status?: string | null;
+  /** Header metadata, not a comparable row. Year precision, from the
+   *  canonical model's current generation launch date. */
+  launch_year?: number | string | null;
+  launch_quarter?: number | string | null;
   warranty?: string | null;
   vehicle_warranty?: string | null;
   price_baht?: number | string | null;
@@ -66,6 +77,7 @@ export type BuiltinCompareRowKey =
   | "seats"
   | "production_type"
   | "production_country"
+  | "cab_type"
   | "warranty";
 
 /** A row is either one of the built-in rows above -- which draw on model-level
@@ -122,10 +134,21 @@ export const FREE_COMPARE_GROUPS: CompareGroupDefinition[] = [
     rows: [
       { key: "production_type", label: "นำเข้า / ประกอบ (ระดับรุ่น)" },
       { key: "production_country", label: "ประเทศที่ผลิต (ระดับรุ่น)" },
+      // Only ever has a value when every/any selected trim is a pickup --
+      // rowHasAnyValue() (below) drops this row entirely from the table when
+      // nobody selected is one, so it never shows up "against" another body
+      // type; a pickup alongside a sedan just leaves the sedan's cell as the
+      // ordinary missing-value dash.
+      { key: "cab_type", label: "รูปแบบห้องโดยสาร (กระบะ)" },
       { key: "warranty", label: "การรับประกันรถ" },
     ],
   },
 ];
+
+// retail_status and launch_year/launch_quarter are deliberately NOT rows
+// here -- the product call is header metadata (a status badge, a launch
+// year under the trim name), not another line in the spec table. See
+// FreeCompareTrim's doc comments and app/compare/page.tsx's <thead>.
 
 function number(value: unknown): number | null {
   if (value === null || value === undefined || value === "") return null;
@@ -267,6 +290,12 @@ export function compareValue(trim: FreeCompareTrim, key: CompareRowKey,
     case "seats": return numericUnit(trim.seats ?? trim.model_seats, "ที่นั่ง");
     case "production_type": return trim.production_type === "MIXED" ? "MIXED · ต่างกันตามรุ่นย่อย/ช่วงเวลา" : trim.production_type || null;
     case "production_country": return trim.production_country === "MIXED" ? "MIXED · ต่างกันตามรุ่นย่อย/ช่วงเวลา" : trim.production_country || null;
+    case "cab_type":
+      // "PICKUP" is BodyType.PICKUP's exact canonical string (vehreg/taxonomy.py)
+      // -- this file stays import-free like lib/access-policy.ts, so it is
+      // written out rather than imported from lib/body-labels.ts.
+      return trim.body_type === "PICKUP" && trim.cab_type && trim.cab_type !== "NOT_APPLICABLE"
+        ? trim.cab_type : null;
     case "warranty": return trim.vehicle_warranty || trim.warranty || null;
   }
 }

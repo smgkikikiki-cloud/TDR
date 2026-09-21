@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { browserDb } from "@/lib/supabase-browser";
-import { bodyLabel } from "@/lib/body-labels";
+import { bodyLabel, cabLabel, retailStatusLabel } from "@/lib/body-labels";
 
 type TrimOption = {
   id: string; model_id: string | null; brand_name: string | null; model_name: string | null;
@@ -12,7 +12,11 @@ type TrimOption = {
 type ModelOption = { id: string; brand: string; model: string; trims: TrimOption[] };
 type CompareRow = { key: string; label: string; different: boolean; values: (string | null)[] };
 type CompareGroup = { title: string; rows: CompareRow[] };
-type SelectedTrim = { id: string; brand_name: string | null; model_name: string | null; name: string | null; model_slug: string | null; image_url: string | null };
+type SelectedTrim = {
+  id: string; brand_name: string | null; model_name: string | null; name: string | null;
+  model_slug: string | null; image_url: string | null;
+  retail_status: string | null; launch_year: number | string | null; launch_quarter: number | string | null;
+};
 type CompareResult = {
   selected: SelectedTrim[];
   missing_selection: boolean;
@@ -20,6 +24,17 @@ type CompareResult = {
   quota: { used: number; limit: number | null; remaining: number | null; resets_at: string };
   anonymous?: { remaining: number; limit: number };
 };
+
+const RETAIL_STATUS_BADGE_CLASS: Record<string, string> = {
+  CURRENT: "compareStatusCurrent",
+  HISTORICAL: "compareStatusHistorical",
+  UNVERIFIED: "compareStatusUnverified",
+};
+
+function launchLabel(year: number | string | null, quarter: number | string | null) {
+  if (!year) return null;
+  return quarter ? `เปิดตัว Q${quarter} ${year}` : `เปิดตัว ${year}`;
+}
 
 function trimLabel(trim: TrimOption) {
   const bits = [trim.name || "รุ่นย่อย"];
@@ -222,9 +237,17 @@ export default function ComparePage() {
                       ? <img src={trim.image_url} alt={`${trim.brand_name || ""} ${trim.model_name || ""}`.trim()} />
                       : <span>{trim.model_name || "TDR"}</span>}
                   </div>
+                  {trim.retail_status ? (
+                    <span className={`compareStatusBadge ${RETAIL_STATUS_BADGE_CLASS[trim.retail_status] || ""}`}>
+                      {retailStatusLabel(trim.retail_status)}
+                    </span>
+                  ) : null}
                   <small>{trim.brand_name}</small>
                   <strong>{trim.model_name}</strong>
                   <span>{trim.name}</span>
+                  {launchLabel(trim.launch_year, trim.launch_quarter) ? (
+                    <span className="compareLaunchMeta">{launchLabel(trim.launch_year, trim.launch_quarter)}</span>
+                  ) : null}
                   {trim.model_slug ? <Link href={`/models/${trim.model_slug}`}>ดูหน้ารุ่น →</Link> : null}
                 </th>
               ))}
@@ -237,7 +260,9 @@ export default function ComparePage() {
                 <tr key={row.key} className={row.different ? "compareDifferent" : undefined}>
                   <th>{row.label}{row.different ? <em>ต่าง</em> : null}</th>
                   {row.values.map((value, index) => {
-                    const displayValue = row.key === "body_type" && value ? bodyLabel(value) : value;
+                    const displayValue = row.key === "body_type" && value ? bodyLabel(value)
+                      : row.key === "cab_type" && value ? cabLabel(value)
+                      : value;
                     return <td key={`${row.key}:${index}`} className={displayValue ? undefined : "compareMissing"}>{displayValue || "—"}</td>;
                   })}
                 </tr>

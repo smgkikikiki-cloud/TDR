@@ -139,5 +139,61 @@ check("choosing a car does not require an account",
 check("a selection survives being sent to the login page",
   picker.includes("/member/login?next="), true);
 
+console.log("\nfree compare — origin/import are already live, under production_type/production_country");
+check("origin_country reuses the existing production_country row, not a second field",
+  keys.includes("production_country") && keys.filter((k) => k.includes("origin")).length, 0);
+check("import_type reuses the existing production_type row, not a second field",
+  keys.includes("production_type") && keys.filter((k) => k.includes("import_type")).length, 0);
+
+console.log("\nfree compare — cab type is a pickup-only concept, never shown against another body type");
+const pickupA: FreeCompareTrim = { id: "p1", body_type: "PICKUP", cab_type: "DOUBLE_CAB" };
+const pickupB: FreeCompareTrim = { id: "p2", body_type: "PICKUP", cab_type: "SMART_CAB" };
+const sedan: FreeCompareTrim = { id: "s1", body_type: "SEDAN", cab_type: "NOT_APPLICABLE" };
+check("a pickup's cab type reads through", compareValue(pickupA, "cab_type"), "DOUBLE_CAB");
+check("a sedan's cab type is never shown, even if the column carries a stray value",
+  compareValue({ ...sedan, cab_type: "DOUBLE_CAB" }, "cab_type"), null);
+check("a pickup's own NOT_APPLICABLE cab type never prints as a value",
+  compareValue({ id: "p3", body_type: "PICKUP", cab_type: "NOT_APPLICABLE" }, "cab_type"), null);
+check("comparing two pickups shows the row", visibleCompareGroups([pickupA, pickupB])
+  .flatMap((g) => g.rows.map((r) => r.key)).includes("cab_type"), true);
+check("comparing two sedans hides the row entirely -- never shown against another body type",
+  visibleCompareGroups([sedan, { ...sedan, id: "s2" }])
+    .flatMap((g) => g.rows.map((r) => r.key)).includes("cab_type"), false);
+check("a pickup next to a sedan still shows the row (the sedan's cell is the ordinary missing dash)",
+  visibleCompareGroups([pickupA, sedan]).flatMap((g) => g.rows.map((r) => r.key)).includes("cab_type"), true);
+
+console.log("\nfree compare — retail_status and launch date are header metadata, never a spec row");
+check("retail_status is not a comparable row key", keys.includes("retail_status"), false);
+check("launch_year is not a comparable row key", keys.includes("launch_year"), false);
+
+console.log("\nfree compare — nothing internal-only reaches the public tool");
+for (const forbidden of ["registration_type", "market_scope", "nameplate", "variant_id", "price_min_thb", "price_max_thb"]) {
+  check(`${forbidden} is never a compare row key`, keys.includes(forbidden), false);
+}
+const routeSource = fs2.readFileSync("app/api/tools/compare/route.ts", "utf8");
+for (const forbidden of ["registration_type", "market_scope", "nameplate", "price_min_thb", "price_max_thb"]) {
+  check(`${forbidden} does not appear in the compare API route at all`, routeSource.includes(forbidden), false);
+}
+check("price comes from the real MarketTrim/Price Ledger column (price_baht), not an analytical Variant range",
+  canonicalData.includes("price_baht: list?.amount_thb") && !canonicalData.includes("price_min_thb") && !canonicalData.includes("price_max_thb"), true);
+
+console.log("\nfree compare — retail_status/launch wiring reuses existing canonical fields, no new query");
+const canonicalData2 = fs2.readFileSync("lib/canonical-data.ts", "utf8");
+check("cab_type is read from the already-fetched model payload, not a new column",
+  canonicalData2.includes("cab_type: model?.cab_type"), true);
+check("retail_status reuses trim.status -- the field trimRow() already sets -- under its Compare-facing name",
+  canonicalData2.includes("retail_status: trim.status"), true);
+check("launch_year/launch_quarter are read from the already-fetched model payload, not a new query",
+  canonicalData2.includes("launch_year: model?.launch_year") && canonicalData2.includes("launch_quarter: model?.launch_quarter"), true);
+check("the route surfaces retail_status/launch on the header projection, not as a comparable row",
+  routeSource.includes("retail_status: trim.retail_status") && routeSource.includes("launch_year: trim.launch_year"), true);
+const comparePage2 = fs2.readFileSync("app/compare/page.tsx", "utf8");
+check("the page renders a retail-status badge in the column header",
+  comparePage2.includes("compareStatusBadge"), true);
+check("the page renders launch date as header metadata under the trim name, not a table row",
+  comparePage2.includes("compareLaunchMeta"), true);
+check("cab type reuses the canonical Thai label map (no second translation invented)",
+  comparePage2.includes("cabLabel"), true);
+
 console.log(failed ? `\n${failed} check(s) failed` : "\nall free compare checks passed");
 process.exit(failed ? 1 : 0);

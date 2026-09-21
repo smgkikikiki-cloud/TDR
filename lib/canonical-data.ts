@@ -347,6 +347,17 @@ export async function getCanonicalCompareTrims(limit?: number) {
         production_type: model?.production_type || null,
         production_country: model?.production_country || null,
         model_seats: model?.seats || null,
+        // Model-layer field, only meaningful for a pickup -- see
+        // lib/free-compare.ts's "cab_type" case.
+        cab_type: model?.cab_type || null,
+        // Same field trimRow() already put on `trim` as `status`; carried
+        // under its Compare-facing name here rather than a second concept.
+        retail_status: trim.status || null,
+        // Year/quarter precision, already computed onto the model payload by
+        // the release bridge (current_generation.launched) -- reused as-is,
+        // no new query.
+        launch_year: model?.launch_year || null,
+        launch_quarter: model?.launch_quarter || null,
       };
     })
     .filter((row: any) => String(row.status || "current").toLowerCase() !== "discontinued")
