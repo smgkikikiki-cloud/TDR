@@ -63,7 +63,10 @@ check("focused quick input removes deferred trims from actionable list", inputPa
 check("focused quick input exposes defer and reopen controls", inputPage.includes("Defer from actionable queue") && inputPage.includes("Reopen"), true);
 check("focused quick input exposes registered OEM targets", inputPage.includes("Registered OEM target") && inputPage.includes("oemTargetsForModel(focusedModel)"), true);
 check("registry target stays optional when the registered page has no usable price", inputPage.includes("ไม่ใช้ registry target — ใช้ source ref ด้านล่าง"), true);
-check("admin navigation exposes the worklist", nav.includes('href="/admin/prices/coverage"'), true);
+// Coverage is a report on the data, not a job queue: a missing price is
+// filled on the car's own page, so the nav does not send anybody here.
+check("the coverage report is not handed to the operator as a queue",
+  !nav.includes('href="/admin/prices/coverage"'), true);
 
 console.log(failed ? `\n${failed} check(s) failed` : "\nall price coverage worklist checks passed");
 process.exit(failed ? 1 : 0);

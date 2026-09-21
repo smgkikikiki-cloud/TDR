@@ -1,6 +1,11 @@
 name: Process canonical vehicle input
 
 on:
+  # A save dispatches this directly, so the write starts in seconds rather
+  # than whenever the next tick comes round. The schedule stays only as a
+  # sweeper for a dispatch that never arrived; nobody waits on it.
+  repository_dispatch:
+    types: [canonical-input]
   schedule:
     - cron: "*/10 * * * *"
   workflow_dispatch:
@@ -79,21 +84,20 @@ jobs:
             --revision "input-${GITHUB_RUN_ID}" --as-of "$(date -u +%F)" \
             --out /tmp/vehicle-release.json
           python -m tdr_bridge.publish /tmp/vehicle-release.json
-      - name: Open one reviewed input PR
+      - name: Commit the validated write
         if: steps.preflight.outputs.ready == 'true' && steps.changes.outputs.count != '0'
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          branch="canonical-input/${GITHUB_RUN_ID}"
+          # Straight to main. The owner of the data already decided; the
+          # checks above are the only gate, and they have passed. The commit
+          # is the audit trail, not a request for permission -- pushing it
+          # here is what triggers vehicle-release.yml to publish.
           git config user.name "TDR canonical input"
           git config user.email "noreply@github.com"
-          git checkout -b "$branch"
           git add vehreg/data
           git commit -m "Apply ${{ steps.changes.outputs.count }} canonical input batch(es)"
-          git push -u origin "$branch"
-          pr_url=$(gh pr create --title "Canonical vehicle input (${GITHUB_RUN_ID})" \
-            --body "Validated one-input Vehicle Master batch. Registration facts remain outside this PR." \
-            --base main --head "$branch")
+          git pull --rebase origin main
+          git push origin HEAD:main
           PYTHONPATH=. python tools/canonical_input_worker.py mark-staged \
-            --result-file /tmp/canonical-input.json --pull-request-url "$pr_url"
+            --result-file /tmp/canonical-input.json \
+            --pull-request-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/$(git rev-parse HEAD)"

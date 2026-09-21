@@ -17,8 +17,16 @@ for (const path of [
 ]) check(path, fs.existsSync(path));
 
 const nav = text("components/admin/AdminNav.tsx");
-for (const route of ["/admin/market","/admin/registrations","/admin/prices","/admin/eco-trims","/admin/data-quality"]) {
+// Six doors, one per job somebody does. The machinery pages that used to
+// sit here (ECO review, price coverage, retail lifecycle, data quality,
+// raw input, queue, releases) run behind a save now, so a nav entry for
+// them would be asking an operator to drive something that drives itself.
+for (const route of ["/admin/vehicles","/admin/import","/admin/exceptions","/admin/market"]) {
   check(`nav exposes ${route}`, nav.includes(`href=\"${route}\"`));
+}
+for (const route of ["/admin/eco-trims","/admin/prices/coverage","/admin/retail-lifecycle",
+                     "/admin/data-quality","/admin/vehicle-input"]) {
+  check(`nav does not hand the operator ${route}`, !nav.includes(`href=\"${route}\"`));
 }
 
 const market = text("app/admin/(secure)/market/page.tsx");
@@ -55,8 +63,6 @@ check("price maintenance reuses canonical input queue", priceActions.includes("e
 const home = text("app/admin/(secure)/page.tsx");
 const inputPage = text("app/admin/(secure)/vehicle-input/page.tsx");
 check("the editor is the sidebar's one primary entry", nav.includes('className="adminNavPrimary" href="/admin/vehicles"'));
-check("raw input is not a top-level sibling of the editor",
-  nav.indexOf('href="/admin/vehicle-input"') > nav.indexOf("adminNavGroup"));
 check("industry and editorial forms are not top-level",
   ["/admin/plants/new", "/admin/companies/new", "/admin/events/new"]
     .every((route) => nav.indexOf(`href="${route}"`) > nav.indexOf("Industry &amp; editorial")));

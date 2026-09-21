@@ -23,16 +23,16 @@ export default async function VehicleWorkspacePage({
   params, searchParams,
 }: {
   params: Promise<{ modelId: string }>;
-  searchParams: Promise<{ queued?: string; kind?: string }>;
+  searchParams: Promise<{ saved?: string }>;
 }) {
   const { modelId } = await params;
-  const query = await searchParams;
+  const saved = (await searchParams).saved;
   const editor = await currentEditor();
   if (!editor) redirect("/admin/login");
   const workspace = await loadVehicleWorkspace(modelId);
   if (!workspace) notFound();
 
-  const { brand, model, generation, trims, specFactsByTrim, evidenceTargets, relatedBatches, releaseId, releaseYear } = workspace;
+  const { brand, model, generation, trims, specFactsByTrim, evidenceTargets, releaseId, releaseYear } = workspace;
   const submittedAt = new Date().toISOString();
   const today = submittedAt.slice(0, 10);
   const allFields = trimEditorFields(releaseYear);
@@ -42,20 +42,18 @@ export default async function VehicleWorkspacePage({
       <div>
         <small>VEHICLE MASTER · CANONICAL VEHICLE EDITOR</small>
         <h1>{brand.nameEn} {model.nameEn}{model.nameTh ? ` · ${model.nameTh}` : ""}</h1>
-        <p><code>{modelId}</code> · generation {generation?.code || "—"} · active release <code>{releaseId}</code> · editing as <b>{editor.name}</b></p>
+        <p><code>{modelId}</code> · generation {generation?.code || "—"} · editing as <b>{editor.name}</b></p>
       </div>
       <Link className="adminPrimaryLink" href="/admin/vehicles">← กลับรายการรถ</Link>
     </div>
 
-    {query.queued ? <div className="adminSaved">
-      บันทึก {KIND_LABEL[query.kind || ""] || "canonical"} เข้าคิวแล้ว — ข้อมูลจะขึ้นจริงหลัง PR ถูก merge และ release ใหม่ถูก publish (ดูสถานะที่ตาราง Input queue ด้านล่าง)
+    {saved ? <div className="adminSaved">
+      บันทึก {KIND_LABEL[saved] || "canonical"} แล้ว — ระบบกำลังเขียนและ publish ให้อัตโนมัติ ใช้เวลาสักครู่แล้วรีเฟรช
     </div> : null}
 
     <nav className="adminQuickGrid" aria-label="Vehicle workspace sections">
       <a href="#model-generation"><b>Canonical vehicle</b><span>Model / Generation ↓</span></a>
       <a href="#trims"><b>Trims &amp; specs</b><span>{trims.length} trims ↓</span></a>
-      <a href={`/admin/vehicle-input?model=${encodeURIComponent(modelId)}`}><b>Prices</b><span>Price Bench ↗</span></a>
-      <a href={`/admin/retail-lifecycle?model=${encodeURIComponent(modelId)}`}><b>Lifecycle</b><span>Retail lifecycle review ↗</span></a>
       {model.tdrModelId ? <a href={`/admin/models/${model.tdrModelId}/edit`}><b>Editorial</b><span>+ Industry/production context ↗</span></a> : null}
       <a href="#evidence"><b>Evidence</b><span>Registered OEM sources ↓</span></a>
     </nav>
@@ -77,7 +75,7 @@ export default async function VehicleWorkspacePage({
       <label className="adminField"><span>Launched (ปัจจุบัน: {generation?.launched || "—"})</span><input name="launched" type="date" /></label>
       <label className="adminField"><span>Ended (ปัจจุบัน: {generation?.ended || "—"})</span><input name="ended" type="date" /></label>
       <EvidenceFields today={today} />
-      <div className="adminFormActions"><button className="adminPrimary">ตรวจก่อนบันทึก →</button></div>
+      <div className="adminFormActions"><button className="adminPrimary">บันทึก</button></div>
     </form>
 
     {/* ---------- Trims: one complete editor per trim ---------- */}
@@ -139,19 +137,6 @@ export default async function VehicleWorkspacePage({
       </a>)}</div>
     </> : null}
 
-    {/* ---------- Input queue ---------- */}
-    <div className="adminHeader"><div><small>INPUT QUEUE</small><h2>Batch ล่าสุดที่พูดถึงรุ่นนี้</h2>
-      <p>QUEUED = รอ worker ดึงไปทำ (ทุก ~10 นาที) · STAGED = เปิด PR แล้ว รอ merge · PUBLISHED = ขึ้น release จริงแล้ว</p>
-    </div></div>
-    <div className="libraryTable"><table><thead><tr>
-      <th>Batch</th><th>Source</th><th>Items</th><th>Status</th><th>Result</th>
-    </tr></thead><tbody>
-      {relatedBatches.length ? relatedBatches.map((row) => <tr key={row.batchKey}>
-        <td><b>{row.batchKey}</b><small>{new Date(row.createdAt).toLocaleString("th-TH")} · {row.actor}</small></td>
-        <td>{row.sourceKind}</td><td>{row.itemCount}</td><td>{row.status}</td>
-        <td>{row.pullRequestUrl ? <a href={row.pullRequestUrl} target="_blank" rel="noreferrer">PR ↗</a> : row.releaseId || row.error || "—"}</td>
-      </tr>) : <tr><td colSpan={5}>ยังไม่มี batch ที่อ้างถึงรุ่นนี้ใน 60 รายการล่าสุด</td></tr>}
-    </tbody></table></div>
   </div>;
 }
 

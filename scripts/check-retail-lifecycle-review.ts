@@ -50,7 +50,11 @@ check("selected registry target id is posted for server re-resolution", page.inc
 check("registry-bound URL is read-only in browser form", page.includes("readOnly={Boolean(selectedTarget)}"), true);
 check("bulk HUMAN review session is surfaced on lifecycle bench", page.includes("BulkRetailLifecycleReview") && page.includes("bulkQueued"), true);
 check("workbench explains identity is not retail evidence", page.includes("Identity, ECO record, registration") && page.includes("ไม่ใช่ retail evidence"), true);
-check("admin nav exposes lifecycle workbench", nav.includes('href="/admin/retail-lifecycle"'), true);
+// The lifecycle bench is no longer an operator destination: retail status is
+// a field on the car, edited where the car is. The page still exists for the
+// bulk review it can express, but the nav does not send anybody to it.
+check("lifecycle workbench is not handed to the operator as a queue",
+  !nav.includes('href="/admin/retail-lifecycle"'), true);
 
 console.log(failed ? `\n${failed} check(s) failed` : "\nall retail lifecycle review checks passed");
 process.exit(failed ? 1 : 0);
