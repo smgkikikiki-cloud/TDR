@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getCanonicalBrands, getCanonicalModels } from "@/lib/canonical-data";
 import { bodyLabel } from "@/lib/body-labels";
 import { displayName, initials } from "@/lib/display-name";
+import { resolveBrandLogo } from "@/lib/brand-logo-fallback";
 import { getPublishedResearchArticles } from "@/lib/research";
 import { getHomeMarket } from "@/lib/home-market";
 import { PLAN_CATALOG } from "@/lib/plans";
@@ -13,7 +14,7 @@ export const dynamic = "force-dynamic";
 function baht(min: any, max: any) {
   const f = (n: number) => groupedNumber(Number(n));
   if (!min && !max) return null;
-  return min && max && min !== max ? `฿${f(min)}–${f(max)}` : `฿${f(min || max)}`;
+  return min && max && min !== max ? `฿${f(min)}–฿${f(max)}` : `฿${f(min || max)}`;
 }
 
 function modelScore(r: any): number {
@@ -35,6 +36,17 @@ function monthLabel(period: string, short = false) {
     year: short ? "2-digit" : "numeric",
     timeZone: "UTC",
   }).format(date);
+}
+
+function normalizedBrandKey(value: unknown) {
+  return String(value || "").normalize("NFKD").toLowerCase().replace(/[^a-z0-9ก-๙]+/g, "");
+}
+
+function textInitials(value: string) {
+  const words = String(value || "").trim().split(/\s+/).filter(Boolean);
+  if (!words.length) return "TDR";
+  if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
+  return `${words[0][0] || ""}${words[1][0] || ""}`.toUpperCase();
 }
 
 const BODY_ENTRIES = [
@@ -85,11 +97,24 @@ export default async function Home() {
   const maxBrand = market?.brands?.[0]?.registrations || 1;
   const positiveMover = market?.movers?.find((row) => row.delta > 0) || null;
 
+  const logoByBrandKey = new Map<string, string>();
+  for (const brand of brands as any[]) {
+    const logo = resolveBrandLogo(brand.slug, brand.logo_url);
+    if (!logo) continue;
+    for (const value of [brand.slug, brand.name_en, brand.name_th, displayName(brand), brand.id, brand.canonical_id, brand.editorial_id]) {
+      const key = normalizedBrandKey(value);
+      if (key) logoByBrandKey.set(key, logo);
+    }
+  }
+  const marketLogo = (row: any) => logoByBrandKey.get(normalizedBrandKey(row.key))
+    || logoByBrandKey.get(normalizedBrandKey(row.label))
+    || null;
+
   return <div className="homeV2">
     <section className="homeHero">
       <div className="homeHeroCopy">
         <div className="sfEyebrow">TDR AUTOMOTIVE INTELLIGENCE</div>
-        <h1>ตลาดรถไทย<br />อยู่ตรงนี้</h1>
+        <h1>ข้อมูลตลาด<br />รถยนต์ไทย</h1>
         <div className="homeFactLine">ยอดจดทะเบียน · ราคา · รุ่นย่อย · สเปก · ส่วนแบ่งตลาด</div>
 
         <form className="homeSearch" action="/search" role="search">
@@ -115,12 +140,19 @@ export default async function Home() {
             <strong>{groupedNumber(market.totalRegistrations)}</strong>
             <span>คัน · {monthLabel(market.period)}</span>
           </div>
-          <div className="homeHeroRanking">
-            {market.brands.slice(0, 5).map((brand, index) => (
-              <div key={brand.key}>
-                <span>{index + 1}</span><b>{brand.label}</b><em>{groupedNumber(brand.sharePct, 1)}%</em>
-              </div>
-            ))}
+          <div className="homeHeroShareBlock">
+            <span className="homeHeroShareLabel">ส่วนแบ่งแบรนด์อันดับต้น</span>
+            <div className="homeHeroBrands">
+              {market.brands.slice(0, 3).map((brand) => {
+                const logo = marketLogo(brand);
+                return <div className="homeHeroBrand" key={brand.key}>
+                  <span className="homeHeroBrandLogo">
+                    {logo ? <img src={logo} alt="" /> : <b>{textInitials(brand.label)}</b>}
+                  </span>
+                  <span className="homeHeroBrandCopy"><b>{brand.label}</b><em>{groupedNumber(brand.sharePct, 1)}%</em></span>
+                </div>;
+              })}
+            </div>
           </div>
           {positiveMover ? <div className="homeHeroMover">
             <span>เพิ่มขึ้นจากเดือนก่อน</span>
@@ -134,7 +166,7 @@ export default async function Home() {
     <section className="homeMarketSection">
       <div className="homeSectionHead">
         <div><div className="sfEyebrow ink">MARKET INTELLIGENCE</div><h2>สำรวจตลาดรถยนต์ไทย</h2></div>
-        <Link href="/market">เปิด Market Intelligence →</Link>
+        <Link href="/market">เปิดข้อมูลตลาด →</Link>
       </div>
 
       {market ? (
@@ -176,7 +208,7 @@ export default async function Home() {
     <section className="homeCompareSection">
       <div className="homeSectionHead">
         <div><div className="sfEyebrow ink">VEHICLE COMPARE</div><h2>เทียบรถตรงรุ่นย่อย</h2></div>
-        <Link href="/compare">เปิดเครื่องมือเปรียบเทียบ →</Link>
+        <Link href="/compare">เริ่มเปรียบเทียบรถ →</Link>
       </div>
       <div className="homeCompareLayout">
         <div className="homeCompareCars">
@@ -194,7 +226,7 @@ export default async function Home() {
     <section className="homeDatabaseSection">
       <div className="homeSectionHead">
         <div><div className="sfEyebrow ink">VEHICLE DATABASE</div><h2>ฐานข้อมูลรถยนต์ในประเทศไทย</h2></div>
-        <Link href="/models">ดูรถทั้งหมด →</Link>
+        <Link href="/models">ดูฐานข้อมูลรถทั้งหมด →</Link>
       </div>
 
       <div className="homeDatabaseStats">
@@ -211,12 +243,13 @@ export default async function Home() {
       </div>
 
       <div className="homeBrandRail">
-        {brandRows.map((brand: any) => (
-          <Link key={brand.id} href={`/brands/${brand.slug}`}>
-            {brand.logo_url ? <img src={brand.logo_url} alt="" /> : <span>{initials(brand)}</span>}
+        {brandRows.map((brand: any) => {
+          const logo = resolveBrandLogo(brand.slug, brand.logo_url);
+          return <Link key={brand.id} href={`/brands/${brand.slug}`}>
+            {logo ? <img src={logo} alt="" /> : <span>{initials(brand)}</span>}
             <b>{displayName(brand)}</b>
-          </Link>
-        ))}
+          </Link>;
+        })}
       </div>
     </section>
 

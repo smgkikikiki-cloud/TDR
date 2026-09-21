@@ -1,0 +1,153 @@
+/* Round-two homepage polish. Imported after home-v2.css so these are narrow,
+   reviewable overrides rather than another layout rewrite. */
+
+/* Section actions should read as actions, not footnotes. */
+.homeV2 .homeSectionHead > a {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 14px;
+  border: 1px solid var(--navy);
+  background: #fff;
+  color: var(--navy);
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+.homeV2 .homeSectionHead > a:hover {
+  background: var(--navy);
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Hero market snapshot: one market total, three recognizable brands, one
+   movement signal. The full ranking remains in the actual market panel below. */
+.homeHeroShareBlock {
+  padding-top: 18px;
+}
+.homeHeroShareLabel {
+  display: block;
+  color: #9eafd0;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .03em;
+}
+.homeHeroBrands {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+.homeHeroBrand {
+  min-width: 0;
+  padding: 9px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.035);
+}
+.homeHeroBrandLogo {
+  height: 40px;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  overflow: hidden;
+}
+.homeHeroBrandLogo img {
+  display: block;
+  max-width: 72px;
+  max-height: 27px;
+  object-fit: contain;
+}
+.homeHeroBrandLogo > b {
+  color: var(--navy);
+  font-size: 11px;
+  letter-spacing: .04em;
+}
+.homeHeroBrandCopy {
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px;
+  margin-top: 8px;
+}
+.homeHeroBrandCopy b {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11px;
+}
+.homeHeroBrandCopy em {
+  flex: 0 0 auto;
+  color: #d8e0ef;
+  font-size: 11px;
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+}
+.homeHeroMover {
+  margin-top: auto;
+  border-top: 1px solid rgba(255,255,255,.16);
+}
+
+/* Logos should be visually useful once present, not postage stamps. */
+.homeBrandRail a { min-height: 102px; }
+.homeBrandRail img { max-width: 64px; max-height: 34px; }
+
+/* Zero published analyses should reserve the product slot without leaving a
+   giant dead rectangle in the middle of the page. */
+.homeAnalysisReserved { min-height: 118px; }
+
+/* Bottom-of-page content had fallen below a comfortable reading size. */
+.homeProFacts { gap: 9px; }
+.homeProFacts span {
+  padding: 6px 9px;
+  font-size: 13px;
+  line-height: 1.35;
+}
+.homeProPrice { font-size: 20px; }
+.homeProBlock > a,
+.homeEnterpriseBlock > a {
+  font-size: 14px;
+  padding: 11px 14px;
+}
+.homeEnterpriseFacts {
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.siteFooter strong { font-size: 17px; }
+.siteFooter .footerNav {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+}
+.siteFooter .footerNav h3 {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+.siteFooter .footerNav a {
+  display: block;
+  font-size: 14px;
+  line-height: 2;
+}
+
+@media (max-width: 700px) {
+  .homeV2 .homeSectionHead { gap: 14px; }
+  .homeV2 .homeSectionHead > a {
+    min-height: 38px;
+    padding-inline: 10px;
+    font-size: 12px;
+    white-space: normal;
+    text-align: center;
+  }
+  .homeHeroBrands { gap: 6px; }
+  .homeHeroBrand { padding: 7px; }
+  .homeHeroBrandLogo { height: 36px; }
+  .homeHeroBrandLogo img { max-width: 60px; max-height: 24px; }
+  .homeHeroBrandCopy { align-items: flex-start; flex-direction: column; gap: 1px; }
+  .homeAnalysisReserved { min-height: 94px; }
+  .siteFooter .footerNav { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+}
