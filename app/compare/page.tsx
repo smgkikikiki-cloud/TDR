@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { browserDb } from "@/lib/supabase-browser";
 import { bodyLabel, cabLabel, retailStatusLabel } from "@/lib/body-labels";
+import "./compare-slots.css";
 
 type TrimOption = {
   id: string; model_id: string | null; brand_name: string | null; model_name: string | null;
@@ -43,18 +44,14 @@ function trimLabel(trim: TrimOption) {
   return bits.join(" · ");
 }
 
-/** Trims grouped into the cars they belong to.
- *
- *  The picker used to be one <select> holding every trim in the catalogue --
- *  over a thousand options, so finding a car meant scrolling past every other
- *  car. Nobody chooses a vehicle that way; they know the model and then pick
- *  the version. Grouping here keeps that a pure transformation of what the
- *  API already sends rather than a second endpoint.
- */
+function trimModelKey(trim: TrimOption) {
+  return trim.model_id || `${trim.brand_name}:${trim.model_name}`;
+}
+
 function groupByModel(trims: TrimOption[]): ModelOption[] {
   const models = new Map<string, ModelOption>();
   for (const trim of trims) {
-    const id = trim.model_id || `${trim.brand_name}:${trim.model_name}`;
+    const id = trimModelKey(trim);
     const existing = models.get(id);
     if (existing) { existing.trims.push(trim); continue; }
     models.set(id, {
@@ -67,9 +64,11 @@ function groupByModel(trims: TrimOption[]): ModelOption[] {
 
 export default function ComparePage() {
   const [allTrims, setAllTrims] = useState<TrimOption[]>([]);
-  const [chosen, setChosen] = useState<string[]>([]);
+  const [slots, setSlots] = useState<(string | null)[]>([null, null, null, null]);
+  const [activeSlot, setActiveSlot] = useState<number | null>(null);
   const [query, setQuery] = useState("");
   const [modelId, setModelId] = useState("");
+  const [pendingTrimId, setPendingTrimId] = useState("");
   const [diffOnly, setDiffOnly] = useState(false);
   const [token, setToken] = useState<string | null | undefined>(undefined);
   const [result, setResult] = useState<CompareResult | null>(null);
@@ -79,9 +78,10 @@ export default function ComparePage() {
   useEffect(() => {
     fetch("/api/compare/trims").then((r) => r.json()).then((body) => {
       setAllTrims(body.trims || []);
-      // A trim page links here with its own car already chosen.
-      const wanted = new URLSearchParams(window.location.search).getAll("trims").filter(Boolean);
-      if (wanted.length) setChosen(wanted.slice(0, 4));
+      const wanted = [...new Set(new URLSearchParams(window.location.search).getAll("trims").filter(Boolean))].slice(0, 4);
+      if (wanted.length) {
+        setSlots([wanted[0] || null, wanted[1] || null, wanted[2] || null, wanted[3] || null]);
+      }
     });
     const db = browserDb();
     if (!db) { setToken(null); return; }
@@ -96,13 +96,36 @@ export default function ComparePage() {
     return models.filter((model) => `${model.brand} ${model.model}`.toLowerCase().includes(needle));
   }, [models, query]);
   const openModel = useMemo(() => models.find((model) => model.id === modelId) || null, [models, modelId]);
+  const chosen = useMemo(() => slots.filter((id): id is string => Boolean(id)), [slots]);
   const selectedCount = chosen.length;
 
-  function addTrim(id: string) {
-    setChosen((current) => (current.includes(id) || current.length >= 4 ? current : [...current, id]));
+  function openPicker(index: number) {
+    const currentId = slots[index];
+    const currentTrim = currentId ? byId.get(currentId) : null;
+    setActiveSlot(index);
+    setQuery("");
+    setModelId(currentTrim ? trimModelKey(currentTrim) : "");
+    setPendingTrimId(currentId || "");
   }
-  function removeTrim(id: string) {
-    setChosen((current) => current.filter((value) => value !== id));
+
+  function closePicker() {
+    setActiveSlot(null);
+    setQuery("");
+    setModelId("");
+    setPendingTrimId("");
+  }
+
+  function confirmPicker() {
+    if (activeSlot === null || !pendingTrimId) return;
+    setSlots((current) => current.map((value, index) => index === activeSlot ? pendingTrimId : value));
+    setResult(null);
+    closePicker();
+  }
+
+  function removeSlot(index: number) {
+    setSlots((current) => current.map((value, slotIndex) => slotIndex === index ? null : value));
+    setResult(null);
+    if (activeSlot === index) closePicker();
   }
 
   async function runCompare(event: React.FormEvent) {
@@ -137,77 +160,102 @@ export default function ComparePage() {
       <Link href="/models">กลับไปดูแคตตาล็อก →</Link>
     </section>
 
-    <form className="comparePicker" onSubmit={runCompare}>
-        <div className="comparePickStep">
-          <label className="comparePickSearch">
-            <span>1. เลือกรุ่น</span>
+    <form className="compareSlotForm" onSubmit={runCompare}>
+      <div className="compareSlotsHead">
+        <b>รถที่ต้องการเปรียบเทียบ</b>
+        <span>เลือกได้สูงสุด 4 รุ่นย่อย · ต้องมีอย่างน้อย 2 คัน</span>
+      </div>
+
+      <div className="compareSlots" aria-label="รถที่เลือกไว้">
+        {slots.map((id, index) => {
+          const trim = id ? byId.get(id) : null;
+          return (
+            <article className={trim ? "compareSlot compareSlotFilled" : "compareSlot"} key={index}>
+              {trim ? <>
+                <span className="compareSlotNo">รถคันที่ {index + 1}</span>
+                <strong>{[trim.brand_name, trim.model_name].filter(Boolean).join(" ")}</strong>
+                <span>{trim.name || "รุ่นย่อย"}</span>
+                <small>{trim.powertrain || ""}</small>
+                <div className="compareSlotActions">
+                  <button type="button" onClick={() => openPicker(index)}>เปลี่ยนรถ</button>
+                  <button type="button" onClick={() => removeSlot(index)} aria-label={`เอารถคันที่ ${index + 1} ออก`}>ลบ</button>
+                </div>
+              </> : (
+                <button type="button" className="compareSlotAdd" onClick={() => openPicker(index)}>
+                  <i aria-hidden="true">+</i>
+                  <b>เพิ่มรถคันที่ {index + 1}</b>
+                  <small>เลือกรุ่นและรุ่นย่อย</small>
+                </button>
+              )}
+            </article>
+          );
+        })}
+      </div>
+
+      {activeSlot !== null ? (
+        <div className="compareSlotPicker">
+          <div className="compareSlotPickerHead">
+            <b>{slots[activeSlot] ? `เปลี่ยนรถคันที่ ${activeSlot + 1}` : `เพิ่มรถคันที่ ${activeSlot + 1}`}</b>
+            <button type="button" onClick={closePicker} aria-label="ปิดตัวเลือกรถ">×</button>
+          </div>
+
+          <label className="compareSlotField">
+            <span>เลือกรุ่น</span>
             <input type="search" value={query} placeholder="พิมพ์ชื่อแบรนด์หรือรุ่น"
-                   onChange={(event) => { setQuery(event.target.value); setModelId(""); }} />
+                   onChange={(event) => { setQuery(event.target.value); setModelId(""); setPendingTrimId(""); }} />
+            <select value={modelId} aria-label="รุ่นรถ"
+                    onChange={(event) => { setModelId(event.target.value); setPendingTrimId(""); }}>
+              <option value="">{matches.length ? `เลือกจาก ${matches.length} รุ่น` : "ไม่พบรุ่นที่ค้นหา"}</option>
+              {matches.map((model) => (
+                <option key={model.id} value={model.id}>
+                  {[model.brand, model.model].filter(Boolean).join(" ")} · {model.trims.length} รุ่นย่อย
+                </option>
+              ))}
+            </select>
           </label>
-          <select value={modelId} size={1} aria-label="รุ่นรถ"
-                  onChange={(event) => setModelId(event.target.value)}>
-            <option value="">{matches.length ? `เลือกจาก ${matches.length} รุ่น` : "ไม่พบรุ่นที่ค้นหา"}</option>
-            {matches.map((model) => (
-              <option key={model.id} value={model.id}>
-                {[model.brand, model.model].filter(Boolean).join(" ")} · {model.trims.length} รุ่นย่อย
-              </option>
-            ))}
-          </select>
-        </div>
 
-        <div className="comparePickStep">
-          <span className="comparePickLabel">2. เลือกรุ่นย่อย</span>
-          {openModel ? (
-            <div className="compareTrimChoices">
-              {openModel.trims.map((trim) => {
-                const picked = chosen.includes(trim.id);
-                return (
-                  <button type="button" key={trim.id}
-                          className={picked ? "compareTrimChoice on" : "compareTrimChoice"}
-                          aria-pressed={picked}
-                          disabled={!picked && chosen.length >= 4}
-                          onClick={() => (picked ? removeTrim(trim.id) : addTrim(trim.id))}>
-                    {trimLabel(trim)}
-                  </button>
-                );
-              })}
-            </div>
-          ) : (
-            <p className="comparePickHint">เลือกรุ่นก่อน แล้วรุ่นย่อยจะขึ้นตรงนี้</p>
-          )}
-        </div>
+          <div className="compareSlotField">
+            <span>เลือกรุ่นย่อย</span>
+            {openModel ? (
+              <div className="compareSlotTrimList">
+                {openModel.trims.map((trim) => {
+                  const usedElsewhere = slots.some((slotId, slotIndex) => slotId === trim.id && slotIndex !== activeSlot);
+                  return (
+                    <button type="button" key={trim.id}
+                            className={pendingTrimId === trim.id ? "compareSlotTrim on" : "compareSlotTrim"}
+                            aria-pressed={pendingTrimId === trim.id}
+                            disabled={usedElsewhere}
+                            onClick={() => setPendingTrimId(trim.id)}>
+                      {trimLabel(trim)}{usedElsewhere ? " · เลือกไว้แล้ว" : ""}
+                    </button>
+                  );
+                })}
+              </div>
+            ) : <p className="comparePickHint">เลือกรุ่นก่อน แล้วรุ่นย่อยจะขึ้นตรงนี้</p>}
+          </div>
 
-        <div className="compareTray" aria-label="รถที่เลือกไว้">
-          <span className="comparePickLabel">3. เทียบ ({selectedCount}/4)</span>
-          {selectedCount ? (
-            <ul>
-              {chosen.map((id) => {
-                const trim = byId.get(id);
-                return (
-                  <li key={id}>
-                    <b>{[trim?.brand_name, trim?.model_name].filter(Boolean).join(" ") || id}</b>
-                    <span>{trim?.name}</span>
-                    <button type="button" aria-label={`เอา ${trim?.name || id} ออก`} onClick={() => removeTrim(id)}>×</button>
-                  </li>
-                );
-              })}
-            </ul>
-          ) : <p className="comparePickHint">ยังไม่ได้เลือก เลือกอย่างน้อย 2 คัน</p>}
-
-          <label className="compareDiffToggle">
-            <input type="checkbox" checked={diffOnly} onChange={(event) => setDiffOnly(event.target.checked)} />
-            <span>แสดงเฉพาะจุดที่ต่างกัน</span>
-          </label>
-          <button type="submit" disabled={selectedCount < 2 || status === "loading"}>
-            {status === "loading" ? "กำลังเทียบ…" : "เทียบรถ"}
-          </button>
-          {token === null && result?.anonymous
-            ? <p className="comparePickHint">
-                เทียบได้อีก {result.anonymous.remaining} ครั้งโดยไม่ต้องสมัคร · สมัครฟรีแล้วเทียบได้ไม่จำกัด
-              </p>
-            : null}
+          <div className="compareSlotPickerFoot">
+            <button type="button" className="compareSlotCancel" onClick={closePicker}>ยกเลิก</button>
+            <button type="button" className="compareSlotConfirm" disabled={!pendingTrimId} onClick={confirmPicker}>
+              {slots[activeSlot] ? "บันทึกการเปลี่ยนรถ" : "เพิ่มรถคันนี้"}
+            </button>
+          </div>
         </div>
-      </form>
+      ) : null}
+
+      <div className="compareRunBar">
+        <label className="compareDiffToggle">
+          <input type="checkbox" checked={diffOnly} onChange={(event) => setDiffOnly(event.target.checked)} />
+          <span>แสดงเฉพาะจุดที่ต่างกัน</span>
+        </label>
+        <button type="submit" disabled={selectedCount < 2 || status === "loading"}>
+          {status === "loading" ? "กำลังเทียบ…" : `เทียบรถ${selectedCount ? ` (${selectedCount})` : ""}`}
+        </button>
+      </div>
+      {token === null && result?.anonymous
+        ? <p className="compareAnonHint">เทียบได้อีก {result.anonymous.remaining} ครั้งโดยไม่ต้องสมัคร · สมัครฟรีแล้วเทียบได้ไม่จำกัด</p>
+        : null}
+    </form>
 
     {status === "signup" ? (
       <div className="compareSignupWall">
