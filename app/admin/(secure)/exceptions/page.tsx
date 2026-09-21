@@ -3,6 +3,7 @@ import {
   canonicalInputBatchStatus, findCreatedBrand, findCreatedModel, findCreatedTrim,
   listVehicleModelsForPicker, listVehicleTrimsForPicker,
 } from "@/lib/canonical-editor";
+import { classifyCreatedVehicleStatus, type CreatedVehicleStatus } from "@/lib/canonical-vehicle-create";
 import {
   DEFAULT_PAGE_SIZE, REGISTRATION_KIND, listOpenExceptionsPage, listRegistrationGaps,
 } from "@/lib/import-exceptions";
@@ -17,13 +18,12 @@ type CreatedVehicleQuery = {
 };
 
 /** Where a "+ สร้างรถใหม่" round trip actually is, read from the live
- *  serving projection (never guessed -- see lib/canonical-vehicle-create.ts).
- *  `target` is null until the write has published AND (for a TRIM-grain
- *  return) its starter trim is visible too; the page shows a pending
- *  notice for that whole window instead of a broken preselect. */
-async function resolveCreatedTarget(query: CreatedVehicleQuery): Promise<{
-  status: string | null; target: string | null;
-} | null> {
+ *  serving projection (never guessed -- see lib/canonical-vehicle-create.ts)
+ *  and the batch's own status -- classifyCreatedVehicleStatus (also in
+ *  lib/canonical-vehicle-create.ts) is what turns those two facts into
+ *  pending/ready/failed/readback_error, so this function only has to
+ *  gather them. */
+async function resolveCreatedTarget(query: CreatedVehicleQuery): Promise<CreatedVehicleStatus | null> {
   if (!query.created) return null;
   const batch = await canonicalInputBatchStatus(query.created).catch(() => null);
   let modelId = query.model_id || null;
@@ -36,11 +36,51 @@ async function resolveCreatedTarget(query: CreatedVehicleQuery): Promise<{
       modelId = (await findCreatedModel(brandId, query.model_name_en).catch(() => null))?.canonicalId || null;
     }
   }
-  const status = batch?.status || null;
-  if (!modelId) return { status, target: null };
-  if (query.grain !== "TRIM" || !query.trim_name) return { status, target: modelId };
-  const trim = await findCreatedTrim(modelId, query.trim_name, query.powertrain || "").catch(() => null);
-  return { status, target: trim ? `${modelId}::${trim.canonicalId}` : null };
+  let target: string | null = null;
+  if (modelId) {
+    if (query.grain !== "TRIM" || !query.trim_name) {
+      target = modelId;
+    } else {
+      const trim = await findCreatedTrim(modelId, query.trim_name, query.powertrain || "").catch(() => null);
+      target = trim ? `${modelId}::${trim.canonicalId}` : null;
+    }
+  }
+  return classifyCreatedVehicleStatus({ status: batch?.status || null, error: batch?.error || null, target });
+}
+
+/** The banner for a "+ สร้างรถใหม่" round trip -- one branch per
+ *  classifyCreatedVehicleStatus() outcome, so FAILED can never fall into
+ *  the same UI as still-in-flight (the bug this fixes) or as PUBLISHED. */
+function CreatedVehicleBanner({ created, retryHref, recreateHref }: {
+  created: CreatedVehicleStatus; retryHref: string; recreateHref: string;
+}) {
+  if (created.kind === "ready") {
+    return <div className="adminSaved">
+      สร้างรถใหม่แล้วและพร้อมใช้งาน — เลือกไว้ให้แล้วในแถวด้านล่าง กด "ผูก" เพื่อปิดรายการนี้
+    </div>;
+  }
+  if (created.kind === "failed") {
+    return <div className="adminNotice">
+      <span>
+        <b>สร้างรถไม่สำเร็จ</b> (สถานะ: {created.status}) — {created.error || "ไม่มีรายละเอียดข้อผิดพลาด"}
+      </span>
+      <span><Link href={recreateHref}>กลับไปสร้างใหม่</Link></span>
+    </div>;
+  }
+  if (created.kind === "readback_error") {
+    return <div className="adminNotice">
+      <span>
+        publish สำเร็จแต่หา canonical vehicle ที่สร้างไม่เจอในระบบ — อาจเป็นความล่าช้าของ release ล่าสุด
+        <Link href={retryHref}>ตรวจสอบอีกครั้ง</Link> ถ้ายังไม่เจอ <Link href={recreateHref}>กลับไปสร้างใหม่</Link>
+      </span>
+    </div>;
+  }
+  return <div className="adminNotice">
+    <span>
+      กำลังสร้างรถใหม่ (สถานะ: {created.status || "กำลังประมวลผล"}) — การเขียนและ publish
+      ยังไม่เสร็จ ปกติใช้เวลาไม่กี่นาที <Link href={retryHref}>ตรวจสอบอีกครั้ง</Link>
+    </span>
+  </div>;
 }
 
 export const dynamic = "force-dynamic";
@@ -147,6 +187,20 @@ export default async function ExceptionsPage({
   }
   const retryHref = `/admin/exceptions?${retryParams.toString()}`;
 
+  // A FAILED batch never becomes ready on its own (migration_v22's status
+  // check constraint has no path from FAILED back to QUEUED) -- so the
+  // only useful next step is to go recreate it, carrying the exact same
+  // exception context this save started from, not "go find it yourself".
+  const recreateParams = new URLSearchParams({
+    return: "exceptions",
+    exception_ids: query.exception_ids || "",
+    raw_brand: query.raw_brand || "",
+    raw_model: query.raw_model || "",
+    registration_type: query.registration_type || "",
+    grain: query.grain || "",
+  });
+  const recreateHref = `/admin/vehicles/new?${recreateParams.toString()}`;
+
   return <div className="adminEditor">
     <div className="adminHeader">
       <div>
@@ -162,18 +216,9 @@ export default async function ExceptionsPage({
     {query.assigned ? <div className="adminSaved">
       ผูกรถเรียบร้อย — ป้ายชื่อนี้จะจับคู่เองอัตโนมัติในเดือนถัดไป และยอดเดือนก่อนๆ ถูกผูกย้อนหลังให้แล้ว
     </div> : null}
-    {query.created ? (
-      created?.target
-        ? <div className="adminSaved">
-            สร้างรถใหม่แล้วและพร้อมใช้งาน — เลือกไว้ให้แล้วในแถวด้านล่าง กด “ผูก” เพื่อปิดรายการนี้
-          </div>
-        : <div className="adminNotice">
-            <span>
-              กำลังสร้างรถใหม่ (สถานะ: {created?.status || "กำลังประมวลผล"}) — การเขียนและ publish
-              ยังไม่เสร็จ ปกติใช้เวลาไม่กี่นาที <Link href={retryHref}>ตรวจสอบอีกครั้ง</Link>
-            </span>
-          </div>
-    ) : null}
+    {query.created && created ? <CreatedVehicleBanner
+      created={created} retryHref={retryHref} recreateHref={recreateHref}
+    /> : null}
     {query.resolved ? <div className="adminSaved">ปิดรายการแล้ว</div> : null}
 
     <form className="adminForm" action="/admin/exceptions">

@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "batch_id": "check-model-only-existing-1",
+  "year": 2026,
+  "submitted_at": "2026-09-21T00:00:00+00:00",
+  "source": {
+    "kind": "ADMIN"
+  },
+  "reason": "Created via TDR Admin Vehicles → + สร้างรถใหม่",
+  "commands": [
+    {
+      "operation": "UPSERT_MODEL_BUNDLE",
+      "payload": {
+        "brand": {
+          "id": "toyota"
+        },
+        "model": {
+          "name_en": "Test Model Y",
+          "incomplete": true
+        },
+        "generation": {
+          "code": "Y1"
+        },
+        "variants": [],
+        "trims": []
+      }
+    }
+  ]
+}

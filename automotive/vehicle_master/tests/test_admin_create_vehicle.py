@@ -114,3 +114,48 @@ def test_b_new_brand_and_new_model_no_legacy_row_needed(tmp_path: Path):
     assert "test_new_brand.model_one" in catalog.models
     assert catalog.models["test_new_brand.model_one"].incomplete is True
     assert catalog.validate() == []
+
+
+def test_1a_model_grain_existing_brand_creates_no_trim(data: Path):
+    """MODEL-grain: DLT named a car, never a grade or a powertrain
+    (lib/canonical-vehicle-create.ts's buildNewVehicleBatch with trim
+    omitted). Literal proof of "no trim/no powertrain" -- the fixture's own
+    commands[0].payload.trims is [], asserted here and again on the
+    catalogue the pipeline actually wrote."""
+    payload = _fixture("admin_create_model_only_existing_brand.json")
+    assert payload["commands"][0]["payload"]["trims"] == []
+    assert "trim_powertrain" not in json.dumps(payload)
+
+    result = CanonicalInputPipeline(data).apply(payload)
+    assert result.status == "APPLIED"
+
+    catalog = Catalog.load(data, YEAR)
+    assert "toyota.test_model_y" in catalog.models
+    model = catalog.models["toyota.test_model_y"]
+    assert model.name_en == "Test Model Y"
+    assert model.incomplete is True
+    assert catalog.generations_of("toyota.test_model_y")[0].code == "Y1"
+    assert catalog.trims_of("toyota.test_model_y") == []
+
+    # Catalog.validate() passes precisely because incomplete=True skips the
+    # "no variants"/"body_type not set" checks -- not because this test
+    # relaxed anything.
+    assert catalog.validate() == []
+
+
+def test_1b_model_grain_new_brand_creates_no_trim_no_legacy_row(tmp_path: Path):
+    data = tmp_path / "data"
+    (data / str(YEAR) / "models").mkdir(parents=True)
+
+    payload = _fixture("admin_create_model_only_new_brand.json")
+    assert payload["commands"][0]["payload"]["trims"] == []
+
+    result = CanonicalInputPipeline(data).apply(payload)
+    assert result.status == "APPLIED"
+
+    catalog = Catalog.load(data, YEAR)
+    assert "test_model_only_brand" in catalog.brands
+    assert "test_model_only_brand.model_two" in catalog.models
+    assert catalog.models["test_model_only_brand.model_two"].incomplete is True
+    assert catalog.trims_of("test_model_only_brand.model_two") == []
+    assert catalog.validate() == []

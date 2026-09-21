@@ -185,6 +185,69 @@ def mark_published(result_file: Path, release_id: str) -> int:
     return 0
 
 
+def _commit_sha_from_commit_url(url: str) -> str | None:
+    """pull_request_url is actually a commit URL for this repo -- it pushes
+    straight to main rather than through a PR (see mark_staged()'s own
+    caller in canonical-input.yml, which passes
+    ``.../commit/$(git rev-parse HEAD)``). Its trailing path segment is
+    exactly the commit sha a stuck batch was pushed in, so recovering a
+    STAGED batch needs no new column: this field already carries it."""
+    trimmed = str(url or "").rstrip("/")
+    if not trimmed:
+        return None
+    sha = trimmed.rsplit("/", 1)[-1]
+    return sha or None
+
+
+def staged_batches(result_file: Path, limit: int) -> int:
+    """The oldest commit still stuck STAGED, so a failed publish can be
+    retried without re-applying any canonical write.
+
+    A STAGED batch already has its commit pushed -- mark_staged() only
+    ever runs after that succeeds -- so nothing here re-runs
+    CanonicalInputPipeline.apply(); it only asks tools.publish_canonical to
+    build and activate a release from the tree that commit already put on
+    disk. Only the SINGLE oldest commit is recovered per call: one workflow
+    run's own "Apply N canonical input batch(es)" commit can carry several
+    batches together, and grouping strictly by that shared commit is what
+    keeps a batch from ever being marked PUBLISHED under a release actually
+    built from a different commit's tree. A later tick recovers the next
+    stuck commit, if there still is one.
+    """
+    rows = _request(
+        "GET",
+        "canonical_input_batches?select=id,batch_key,pull_request_url,created_at"
+        f"&status=eq.STAGED&order=created_at.asc&limit={limit}",
+    ) or []
+    if not rows:
+        result_file.write_text(json.dumps({"applied": [], "revision": None}), encoding="utf-8")
+        print(json.dumps({"staged": 0, "revision": None}))
+        return 0
+
+    oldest_sha = _commit_sha_from_commit_url(str(rows[0].get("pull_request_url") or ""))
+    if not oldest_sha:
+        # Nothing to recover automatically -- surfaced on the row itself
+        # so an operator sees why, rather than this retrying forever with
+        # no revision to publish.
+        _request("PATCH", f"canonical_input_batches?id=eq.{quote(str(rows[0]['id']))}", {
+            "error": "STAGED with no recorded commit URL; cannot recover automatically",
+            "updated_at": datetime.now(timezone.utc).isoformat(),
+        })
+        result_file.write_text(json.dumps({"applied": [], "revision": None}), encoding="utf-8")
+        print(json.dumps({"staged": len(rows), "revision": None, "recovering": 0}))
+        return 0
+
+    matching = [row for row in rows
+               if _commit_sha_from_commit_url(str(row.get("pull_request_url") or "")) == oldest_sha]
+    output = {
+        "applied": [{"id": row["id"], "batch_key": row["batch_key"]} for row in matching],
+        "revision": oldest_sha,
+    }
+    result_file.write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps({"staged": len(rows), "revision": oldest_sha, "recovering": len(matching)}))
+    return 0
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -199,6 +262,9 @@ def main(argv=None) -> int:
     p_publish = sub.add_parser("mark-published")
     p_publish.add_argument("--result-file", type=Path, required=True)
     p_publish.add_argument("--release-id", required=True)
+    p_staged = sub.add_parser("staged-batches")
+    p_staged.add_argument("--result-file", type=Path, required=True)
+    p_staged.add_argument("--limit", type=int, default=50)
     args = parser.parse_args(argv)
     if args.command == "check":
         try:
@@ -210,6 +276,8 @@ def main(argv=None) -> int:
         return pull(args.data_dir, args.result_file, max(1, min(args.limit, 50)))
     if args.command == "mark-staged":
         return mark_staged(args.result_file, args.pull_request_url)
+    if args.command == "staged-batches":
+        return staged_batches(args.result_file, max(1, min(args.limit, 200)))
     return mark_published(args.result_file, args.release_id)
 
 

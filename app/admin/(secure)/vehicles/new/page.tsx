@@ -21,6 +21,12 @@ export default async function CreateVehiclePage({
   const query = await searchParams;
   const fromExceptions = query.return === "exceptions";
   const trimGrained = query.grain === "TRIM";
+  // grain=MODEL (or no grain at all -- a plain non-exception model gap):
+  // the source names a car, never a grade or a powertrain, so the trim
+  // section is not offered at all here -- see readTrim() in
+  // app/admin/vehicle-create-actions.ts for why it is ignored server-side
+  // even if this were somehow submitted.
+  const modelGrained = fromExceptions && query.grain !== "TRIM";
   const [brands, existingModels] = await Promise.all([
     listVehicleBrandsForPicker(),
     fromExceptions && query.raw_brand ? listVehicleModelsForPicker(query.raw_brand) : Promise.resolve([]),
@@ -55,6 +61,10 @@ export default async function CreateVehiclePage({
         {query.registration_type ? ` · ${query.registration_type}` : ""} —
         บันทึกแล้วจะพากลับไปหน้า Exceptions พร้อมเลือกรถคันนี้ไว้ให้ กด "ผูก" ได้เลย
       </span>
+      {modelGrained ? <span>
+        ต้นทางระบุแค่ <b>ชื่อรุ่น</b> ไม่มีรุ่นย่อย/powertrain — ฟอร์มนี้จะสร้างแค่ Brand → Model → Generation
+        ไว้ก่อน (ทำเครื่องหมาย "incomplete" ให้อัตโนมัติ) เพิ่มรุ่นย่อยทีหลังที่หน้ารถได้เมื่อรู้ข้อมูลแล้ว
+      </span> : null}
     </div> : null}
 
     {trimGrained ? <div className="adminNotice">
@@ -133,25 +143,59 @@ export default async function CreateVehiclePage({
         </label>
       </fieldset>
 
-      <fieldset className="adminFieldset">
-        <legend>รุ่นย่อยแรก (MarketTrim)</legend>
+      {modelGrained ? (
+        // TRIM-grain requires a real name+powertrain the source actually
+        // published; MODEL-grain has neither, and asking for one here would
+        // be fabricating a fact -- see readTrim() in
+        // app/admin/vehicle-create-actions.ts. No fieldset, no hidden
+        // trim_powertrain either: MarketTrim.powertrain cannot be UNKNOWN, so
+        // there is no safe default to send even silently.
         <p className="adminHint">
-          รถที่เพิ่งเจอในไฟล์ทะเบียนมักยังไม่รู้สเปกครบ — สร้างรุ่นย่อยนี้ไว้ก่อนเพื่อผูกยอดได้
-          แล้วมาเติมสเปกทีหลังที่หน้ารถได้ (ระบบทำเครื่องหมาย "incomplete" ให้อัตโนมัติ ไม่ปิดกั้นการ publish)
+          ไม่มีช่องรุ่นย่อยในฟอร์มนี้ — ต้นทางระบุแค่ระดับรุ่น ระบบจะไม่สร้างรุ่นย่อยปลอมให้
         </p>
-        <label className="adminField adminFieldWide">
-          <span>ชื่อรุ่นย่อย</span>
-          <input name="trim_name" type="text" required
-            defaultValue={fromExceptions ? query.raw_model || "" : ""} placeholder="เช่น Standard" />
-        </label>
-        <label className="adminField">
-          <span>Powertrain</span>
-          <select name="trim_powertrain" required defaultValue="">
-            <option value="" disabled>เลือก powertrain</option>
-            {MARKET_TRIM_POWERTRAINS.map((value) => <option key={value} value={value}>{value}</option>)}
-          </select>
-        </label>
-      </fieldset>
+      ) : trimGrained ? (
+        <fieldset className="adminFieldset">
+          <legend>รุ่นย่อยแรก (MarketTrim)</legend>
+          <p className="adminHint">ต้นทางระบุรุ่นย่อยมาด้วย — ต้องกรอกชื่อและ powertrain ให้ตรง</p>
+          <label className="adminField adminFieldWide">
+            <span>ชื่อรุ่นย่อย</span>
+            <input name="trim_name" type="text" required
+              defaultValue={query.raw_model || ""} placeholder="เช่น Standard" />
+          </label>
+          <label className="adminField">
+            <span>Powertrain</span>
+            <select name="trim_powertrain" required defaultValue="">
+              <option value="" disabled>เลือก powertrain</option>
+              {MARKET_TRIM_POWERTRAINS.map((value) => <option key={value} value={value}>{value}</option>)}
+            </select>
+          </label>
+        </fieldset>
+      ) : (
+        <fieldset className="adminFieldset">
+          <legend>รุ่นย่อยแรก (MarketTrim) — ไม่บังคับ</legend>
+          <label className="adminField">
+            <span><input type="radio" name="create_mode" value="model_only" defaultChecked /> สร้างแค่ Model ก่อน</span>
+          </label>
+          <label className="adminField">
+            <span><input type="radio" name="create_mode" value="with_trim" /> สร้างพร้อมรุ่นย่อยแรก</span>
+          </label>
+          <p className="adminHint">
+            กรอกชื่อ/Powertrain ด้านล่างเฉพาะตอนที่เลือก “สร้างพร้อมรุ่นย่อยแรก” — ถ้าเลือก “สร้างแค่ Model ก่อน”
+            สองช่องนี้จะไม่ถูกใช้เลย
+          </p>
+          <label className="adminField adminFieldWide">
+            <span>ชื่อรุ่นย่อย</span>
+            <input name="trim_name" type="text" placeholder="เช่น Standard" />
+          </label>
+          <label className="adminField">
+            <span>Powertrain</span>
+            <select name="trim_powertrain" defaultValue="">
+              <option value="">— ไม่ใช้ —</option>
+              {MARKET_TRIM_POWERTRAINS.map((value) => <option key={value} value={value}>{value}</option>)}
+            </select>
+          </label>
+        </fieldset>
+      )}
 
       <label className="adminField adminFieldWide">
         <span>เหตุผล (ไม่บังคับ)</span>

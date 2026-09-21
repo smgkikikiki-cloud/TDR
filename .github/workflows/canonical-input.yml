@@ -127,3 +127,45 @@ jobs:
           PYTHONPATH=. python tools/canonical_input_worker.py mark-published \
             --result-file /tmp/canonical-input.json \
             --release-id "${{ steps.publish.outputs.release_id }}"
+      # A STAGED batch already has its write committed and pushed
+      # (mark-staged only runs after that); what did not finish is the
+      # publish immediately after. That can fail for reasons unrelated to
+      # this run having anything new of its own -- pull() above only ever
+      # looks at QUEUED/stale-PROCESSING, never STAGED, so without this a
+      # stuck batch waited forever for some unrelated future upload to
+      # happen to produce a fresh diff. Runs only when this tick had
+      # nothing new to apply: a run that just committed+published its own
+      # batches already covered any STAGED work from this same run.
+      - name: Look for a commit stuck STAGED behind a failed publish
+        if: steps.preflight.outputs.ready == 'true' && steps.changes.outputs.count == '0'
+        id: staged
+        run: |
+          PYTHONPATH=. python tools/canonical_input_worker.py staged-batches \
+            --result-file /tmp/canonical-staged.json --limit 50
+          revision=$(python -c "import json; print(json.load(open('/tmp/canonical-staged.json')).get('revision') or '')")
+          echo "revision=$revision" >> "$GITHUB_OUTPUT"
+      - name: Retry publishing that exact commit -- no re-apply, no new diff
+        if: steps.preflight.outputs.ready == 'true' && steps.staged.outputs.revision != ''
+        id: republish
+        run: |
+          set -euo pipefail
+          # Only vehreg/data is restored to that commit's tree; every other
+          # file (this workflow's own tooling included) stays at whatever
+          # this checkout already has, so the recovery steps themselves are
+          # never reverted to an older, pre-recovery version of themselves.
+          git checkout "${{ steps.staged.outputs.revision }}" -- vehreg/data
+          result=$(PYTHONPATH=. python -m tools.publish_canonical --revision "${{ steps.staged.outputs.revision }}")
+          echo "$result"
+          echo "release_id=$(echo "$result" | python -c 'import json,sys; print(json.load(sys.stdin)["release_id"])')" >> "$GITHUB_OUTPUT"
+      # Only the commits that actually shared this exact sha (staged-batches
+      # wrote just those into the result file) are marked PUBLISHED -- never
+      # "every STAGED row", which would mark a batch PUBLISHED under a
+      # release built from a different commit's tree than the one that
+      # carries its write. A failed retry here leaves those rows STAGED,
+      # for the next tick to find and try again.
+      - name: Mark the recovered batches PUBLISHED
+        if: steps.preflight.outputs.ready == 'true' && steps.staged.outputs.revision != ''
+        run: |
+          PYTHONPATH=. python tools/canonical_input_worker.py mark-published \
+            --result-file /tmp/canonical-staged.json \
+            --release-id "${{ steps.republish.outputs.release_id }}"

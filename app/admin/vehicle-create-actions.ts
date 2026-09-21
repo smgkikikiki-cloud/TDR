@@ -23,7 +23,9 @@
 import { redirect } from "next/navigation";
 import { currentEditor, isAdmin } from "@/lib/admin-auth";
 import { field, requiredField, safeSubmissionId, submissionTimestamp } from "@/lib/admin-form";
-import { buildNewVehicleBatch, type BrandChoice } from "@/lib/canonical-vehicle-create";
+import {
+  buildNewVehicleBatch, resolveTrimInput, trimIsRequired, type BrandChoice,
+} from "@/lib/canonical-vehicle-create";
 import { enqueueCanonicalInputBatch } from "@/lib/canonical-input-queue";
 import { MARKET_TRIM_POWERTRAINS } from "@/lib/vehicle-taxonomy";
 
@@ -54,6 +56,23 @@ function returnContext(formData: FormData) {
   };
 }
 
+/** Reads the trim this FormData submitted -- the FormData-shaped edge only;
+ *  the actual "may this save even have a trim" and "is what was submitted
+ *  valid" decisions are lib/canonical-vehicle-create.ts's trimIsRequired
+ *  and resolveTrimInput, so scripts/check-vehicle-create.ts can exercise
+ *  the exact logic this calls, not a copy of it. */
+function readTrim(
+  formData: FormData, ctx: ReturnType<typeof returnContext>,
+): { name: string; powertrain: string } | undefined {
+  const required = trimIsRequired(ctx?.grain ?? null, field(formData, "create_mode") || null);
+  return resolveTrimInput({
+    required,
+    name: field(formData, "trim_name"),
+    powertrain: field(formData, "trim_powertrain"),
+    allowedPowertrains: MARKET_TRIM_POWERTRAINS,
+  });
+}
+
 export async function createCanonicalVehicle(formData: FormData) {
   if (!(await isAdmin())) redirect("/admin/login");
   const editor = await currentEditor();
@@ -62,11 +81,8 @@ export async function createCanonicalVehicle(formData: FormData) {
   const modelNameEn = requiredField(formData, "model_name_en", "ชื่อรุ่น (EN)");
   const modelNameTh = field(formData, "model_name_th") || undefined;
   const generationCode = requiredField(formData, "generation_code", "รหัส generation");
-  const trimName = requiredField(formData, "trim_name", "ชื่อรุ่นย่อย");
-  const powertrain = requiredField(formData, "trim_powertrain", "powertrain").toUpperCase();
-  if (!MARKET_TRIM_POWERTRAINS.includes(powertrain as any)) {
-    throw new Error("powertrain ไม่อยู่ใน canonical taxonomy");
-  }
+  const ctx = returnContext(formData);
+  const trim = readTrim(formData, ctx);
 
   const submissionId = safeSubmissionId(formData);
   const submittedAt = submissionTimestamp(formData);
@@ -79,11 +95,10 @@ export async function createCanonicalVehicle(formData: FormData) {
     brand,
     model: { nameEn: modelNameEn, nameTh: modelNameTh },
     generationCode,
-    trim: { name: trimName, powertrain },
+    trim,
   });
   const { batchKey } = await enqueueCanonicalInputBatch(payload as Record<string, unknown>);
 
-  const ctx = returnContext(formData);
   if (ctx) {
     const params = new URLSearchParams({
       created: batchKey,
@@ -96,8 +111,8 @@ export async function createCanonicalVehicle(formData: FormData) {
       brand_id: brand.mode === "existing" ? brand.id : "",
       brand_name_en: brand.mode === "new" ? brand.nameEn : "",
       model_name_en: modelNameEn,
-      trim_name: trimName,
-      powertrain,
+      trim_name: trim?.name || "",
+      powertrain: trim?.powertrain || "",
     });
     redirect(`/admin/exceptions?${params.toString()}`);
   }
