@@ -43,25 +43,26 @@ export async function POST(request: NextRequest) {
   let body: Record<string, unknown> = {};
   try { body = await request.json(); } catch {}
 
-  // Enrichment, not a form to complete: a member may save a postcode and
-  // leave the rest, or save nothing at all. Only a value that is actually
-  // present has to be well formed, because storing a malformed postcode
-  // helps nobody -- an absent one costs nothing.
-  const postcode = typeof body.postcode === "string" ? body.postcode.trim() : "";
-  if (postcode && !/^[0-9]{4,10}$/.test(postcode)) {
-    return NextResponse.json({ error: "postcode must be 4-10 digits" }, { status: 400 });
+  // Enrichment, edited a field at a time. Only what the request actually
+  // sends is written: a member updating their postcode is not also saying
+  // they withdrew marketing consent and are no longer a company, and a
+  // body that omits a key must leave that key exactly as it was. Presence
+  // is what counts, so an explicit false or empty string still writes --
+  // clearing a field is an edit, omitting it is not.
+  const sent = (key: string) => Object.prototype.hasOwnProperty.call(body, key);
+
+  if (sent("postcode")) {
+    const postcode = typeof body.postcode === "string" ? body.postcode.trim() : "";
+    if (postcode && !/^[0-9]{4,10}$/.test(postcode)) {
+      return NextResponse.json({ error: "postcode must be 4-10 digits" }, { status: 400 });
+    }
   }
-  const isIndividual = body.is_individual !== false; // default: individual / not affiliated
-  const companyName = typeof body.company_name === "string" ? body.company_name.trim() : "";
-  // Optional, unchecked-by-default marketing consent. Account creation and
-  // profile completion must both work with this left false.
-  const marketingConsent = body.marketing_consent === true;
 
   try {
     const ctx = await resolveAccessContext(accessToken);
 
     const { data: existing } = await ctx.db.from("tdr_customer_profiles")
-      .select("user_id").eq("user_id", ctx.userId).maybeSingle();
+      .select("user_id,is_individual").eq("user_id", ctx.userId).maybeSingle();
     const isFirstProfile = !existing;
 
     const { data: customer } = await ctx.db.from("tdr_customers")
@@ -72,25 +73,46 @@ export async function POST(request: NextRequest) {
       user_id: ctx.userId,
       customer_id: customer?.id ?? null,
       email: ctx.email,
-      postcode,
-      is_individual: isIndividual,
-      company_name: isIndividual ? null : companyName,
-      profile_completed_at: now,
       updated_at: now,
     };
-    if (marketingConsent) {
-      update.marketing_consent = true;
-      update.marketing_consent_at = now;
-      update.marketing_consent_version = MARKETING_CONSENT_VERSION;
-    } else {
-      update.marketing_consent = false;
+    if (sent("postcode")) {
+      update.postcode = typeof body.postcode === "string" ? body.postcode.trim() : null;
     }
+    if (sent("is_individual")) update.is_individual = body.is_individual !== false;
+    // Company name belongs to a company account, so declaring yourself an
+    // individual clears it -- that is the edit, not a side effect of an
+    // unrelated one. Whether this is a company account is read from the
+    // request when it says, and from the stored row when it does not.
+    const isIndividual = sent("is_individual")
+      ? body.is_individual !== false
+      : existing?.is_individual !== false;
+    if (sent("company_name") || sent("is_individual")) {
+      const companyName = typeof body.company_name === "string" ? body.company_name.trim() : "";
+      update.company_name = isIndividual ? null : (companyName || null);
+    }
+    if (sent("marketing_consent")) {
+      const marketingConsent = body.marketing_consent === true;
+      update.marketing_consent = marketingConsent;
+      if (marketingConsent) {
+        update.marketing_consent_at = now;
+        update.marketing_consent_version = MARKETING_CONSENT_VERSION;
+      }
+    }
+    // Only a request that carried something counts as having filled the
+    // profile in; an empty body must not stamp it as done.
+    const touchedFields = Object.keys(update).length > 4;
+    if (touchedFields) update.profile_completed_at = now;
 
     const { error } = await ctx.db.from("tdr_customer_profiles").upsert(update, { onConflict: "user_id" });
     if (error) return NextResponse.json({ error: "could not save profile" }, { status: 503 });
 
     if (isFirstProfile) await recordEvent({ eventName: "account_created", userId: ctx.userId, customerId: customer?.id ?? null });
-    await recordEvent({ eventName: "profile_completed", userId: ctx.userId, customerId: customer?.id ?? null, props: { marketing_consent: marketingConsent, is_individual: isIndividual } });
+    if (touchedFields) {
+      await recordEvent({
+        eventName: "profile_completed", userId: ctx.userId, customerId: customer?.id ?? null,
+        props: { fields: Object.keys(body), is_individual: isIndividual },
+      });
+    }
 
     const activation = await evaluateAndPersistActivation(ctx);
     return NextResponse.json({ ok: true, activation }, { headers: { "Cache-Control": "private, no-store" } });

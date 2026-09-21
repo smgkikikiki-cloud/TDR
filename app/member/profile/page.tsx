@@ -181,15 +181,25 @@ export default function MemberProfilePage() {
         <p className={styles.muted}>
           เข้าสู่ระบบแล้วใช้ Compare และ Sales Tools ได้ทันทีตามสิทธิ์ของบัญชี —
           ข้อมูลด้านล่างกรอกเพิ่มได้ตามสะดวก ไม่กรอกก็ไม่กระทบการใช้งาน
-          (ยืนยันเบอร์มือถือจำเป็นเฉพาะตอนสมัครแพ็กเกจแบบชำระเงิน)
         </p>
 
         {activation ? (
-          <ul className={styles.form} style={{ marginTop: 0 }}>
-            <li>{activation.emailConfirmed ? "✓" : "○"} ยืนยันอีเมล</li>
-            <li>{activation.phoneVerified ? "✓" : "○"} ยืนยันเบอร์มือถือ</li>
-            <li>{activation.profileComplete ? "✓" : "○"} ข้อมูลโปรไฟล์</li>
-          </ul>
+          <>
+            <ul className={styles.form} style={{ marginTop: 0 }}>
+              <li>{activation.emailConfirmed ? "✓" : "○"} ยืนยันอีเมล</li>
+              <li>{activation.phoneVerified ? "✓" : "○"} ยืนยันเบอร์มือถือ</li>
+              <li>{activation.profileComplete ? "✓" : "○"} รหัสไปรษณีย์ + บุคคล/องค์กร</li>
+            </ul>
+            {/* Checkout is the one thing that needs all three, not just the
+                phone -- saying otherwise would send somebody to Stripe only
+                to be turned away there. */}
+            {!activation.activated ? (
+              <p className={styles.muted}>
+                สามข้อด้านบนต้องครบทั้งหมดเฉพาะตอน<b>สมัครแพ็กเกจแบบชำระเงินครั้งแรก</b>เท่านั้น
+                — การใช้งานปกติไม่ต้องใช้
+              </p>
+            ) : null}
+          </>
         ) : null}
 
         <div className={styles.form}>

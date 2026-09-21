@@ -1,6 +1,6 @@
 // Server-side wiring for the access-policy module: token resolution, tier
-// lookup, account-activation enforcement, and the atomic quota-consumption
-// RPC call. Split from lib/access-policy.ts (which stays `@/`-import-free
+// lookup, verified-identity checks for the operations that need them, and
+// the atomic quota-consumption RPC call. Split from lib/access-policy.ts (which stays `@/`-import-free
 // and unit-testable) because this file needs the Supabase admin client.
 import { adminDb } from "@/lib/supabase";
 import {
@@ -31,11 +31,11 @@ export interface AccessContext {
   policy: TierPolicy;
 }
 
-// Auth + tier only -- does NOT require account activation. Used by routes
-// a not-yet-activated account must still be able to reach (billing status,
-// checkout, the profile/activation endpoints themselves). Any route that
-// lets an account actually USE a member tool (Compare, Sales Tools,
-// Research, PDF export) must use requireActivatedAccess() below instead.
+// Auth + tier. This is what a member tool resolves: Compare, Sales Tools,
+// Research and PDF export all reach it through requireMemberAccess(), and
+// what comes back is decided by tier and quota. Verified identity is a
+// separate question, asked only where identity is the subject of the
+// operation -- see requireActivatedAccess() below.
 export async function resolveAccessContext(accessToken: string): Promise<AccessContext> {
   const db = adminDb();
   if (!db) throw new AccessPolicyError(503, "access policy database is not configured");
@@ -62,19 +62,21 @@ export async function resolveAccessContext(accessToken: string): Promise<AccessC
   };
 }
 
-// --- Account activation -----------------------------------------------
+// --- Verified identity ------------------------------------------------
 //
-// Free's business purpose is converting an anonymous visitor into a real,
-// identifiable user -- a typed phone string in user_metadata is not
-// verification and must never be treated as trusted identity. Activation
-// requires: confirmed email (Supabase Auth), a verified phone identity
-// (a real tdr_customer_phone_identities row -- OTP-confirmed by Supabase
-// Auth, the same trusted table lib/billing.ts already relies on), a
-// postcode, and either an organization name or explicit
-// individual/not-affiliated status. `tdr_customer_profiles
-// .activation_completed_at` is the single stored gate every tool route
-// checks; evaluateAndPersistActivation() is the only place that computes
-// and writes it.
+// Not a gate on the product. Signing in is what entitles a member to the
+// tools; this is the stronger claim that an account belongs to an
+// identifiable person, and only an operation whose subject is that person
+// asks for it. Checkout is the case in the codebase today: money moves,
+// so lib/billing.ts requires it before creating a Stripe session.
+//
+// It means all of: confirmed email (Supabase Auth), a verified phone
+// identity (a real tdr_customer_phone_identities row -- OTP-confirmed by
+// Supabase Auth, never a typed user_metadata string), a postcode, and
+// either an organization name or explicit individual/not-affiliated
+// status. `tdr_customer_profiles.activation_completed_at` is where the
+// result is stored, and evaluateAndPersistActivation() is the only place
+// that computes and writes it.
 
 export interface ActivationStatus {
   activated: boolean;
@@ -139,8 +141,8 @@ async function hasTdrConfirmedPhoneVerification(db: AccessContext["db"], userId:
 // is what preserves the migration_v34 legacy-paid grandfather
 // (activation_source='LEGACY_PAID') set directly by the migration rather
 // than computed here. Called by the profile save route and the
-// phone-verification-confirm route -- never by a tool route, which should
-// only ever READ the stored flag via requireActivatedAccess().
+// phone-verification-confirm route, which are where its parts change.
+// Nothing that serves a member tool calls it at all.
 export async function evaluateAndPersistActivation(ctx: AccessContext): Promise<ActivationStatus> {
   const { data: profile, error: profileError } = await ctx.db
     .from("tdr_customer_profiles")

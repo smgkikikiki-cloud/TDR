@@ -119,11 +119,12 @@ export async function requireMember(accessToken: string): Promise<MemberContext>
   return { userId: data.user.id, customerId: customer.id, email: data.user.email ?? null, phone: trustedPhone?.phone_e164 ?? null };
 }
 
-// Stricter gate for starting a brand-new self-service subscription: the
-// account must be fully TDR-activated (lib/access-policy-server.ts --
-// confirmed email, TDR-confirmed phone verification, complete profile;
-// the same centralized check every member tool route uses) AND have a
-// trusted phone on file to hand to Stripe. An account activated only
+// Starting a brand-new self-service subscription is where identity is the
+// operation's own subject, so this is the one place that asks for all of
+// it: the account must be fully TDR-verified (lib/access-policy-server.ts
+// -- confirmed email, TDR-confirmed phone verification, complete profile)
+// AND have a trusted phone on file to hand to Stripe. Member tools ask for
+// none of this; they resolve a session and serve by tier and quota. An account activated only
 // through the legacy-paid compatibility path (see migration_v34,
 // activation_source='LEGACY_PAID') has no real verified phone identity
 // and so cannot start a brand-new checkout until it completes real

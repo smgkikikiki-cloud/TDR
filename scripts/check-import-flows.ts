@@ -124,6 +124,38 @@ for (const path of ["app/api/tools/compare/route.ts", "app/api/tools/sales-modul
 }
 check("paying still asks for verified identity", read("lib/billing.ts").includes("requireActivatedAccess("));
 
+console.log("\nprofile is edited a field at a time, not re-submitted whole");
+const profileRoute = read("app/api/account/profile/route.ts");
+// A member updating one field is not also saying they withdrew consent and
+// are no longer a company. Only keys the request actually carries are written.
+check("only keys the request sends are written", profileRoute.includes("hasOwnProperty.call(body,"));
+for (const field of ["postcode", "is_individual", "company_name", "marketing_consent"]) {
+  check(`${field} is only touched when sent`, profileRoute.includes(`sent("${field}")`));
+}
+check("an omitted consent no longer writes false",
+  !/const marketingConsent = body\.marketing_consent === true;\n\n/.test(profileRoute));
+check("an empty body does not stamp the profile as filled in",
+  profileRoute.includes("touchedFields"));
+
+console.log("\ncopy matches the policy it describes");
+const profilePage = read("app/member/profile/page.tsx");
+check("the page does not claim the product needs a profile",
+  profilePage.includes("ใช้ Compare และ Sales Tools ได้ทันที"));
+// Checkout needs all three, not the phone alone -- saying otherwise sends
+// somebody to Stripe to be turned away.
+check("checkout is described as needing all three, not just a phone",
+  profilePage.includes("สามข้อด้านบนต้องครบทั้งหมด")
+  && !profilePage.includes("ยืนยันเบอร์มือถือจำเป็นเฉพาะ"));
+
+console.log("\ncomments describe the gate that actually exists");
+const policyServer = read("lib/access-policy-server.ts");
+check("no comment still claims every tool route checks activation",
+  !policyServer.includes("the single stored gate every tool route"));
+check("resolveAccessContext is not described as insufficient for tools",
+  !policyServer.includes("must use requireActivatedAccess() below instead"));
+check("billing does not call activation the check every tool route uses",
+  !read("lib/billing.ts").includes("the same centralized check every member tool route uses"));
+
 console.log("\nresearch: the admin library is private, the public surface untouched");
 check("public research still reads articles", fs.existsSync("app/research/[slug]/page.tsx"));
 check("the research unlock route is still there", fs.existsSync("app/api/research/read/route.ts"));
