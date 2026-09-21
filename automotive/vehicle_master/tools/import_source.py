@@ -28,8 +28,9 @@ from vehreg.ecosticker_export import normalize_row
 from vehreg.ecosticker_import import UNRESOLVED, plan_row
 from vehreg.input_pipeline import CanonicalInputPipeline
 from vehreg.source_import import (
-    CREATED, EXCEPTION, PATCHED, ExistingTrim, RowOutcome, SourceRow,
-    batches_from_commands, commands_from_outcomes, resolve_rows, summarize,
+    CREATED, EXCEPTION, FIELD_TO_COLUMN, PATCHED, ExistingTrim, RowOutcome,
+    SourceRow, batches_from_commands, commands_from_outcomes, resolve_rows,
+    summarize,
 )
 
 DEFAULT_YEAR = 2026
@@ -51,11 +52,14 @@ def existing_trims(catalog: Catalog) -> list[ExistingTrim]:
                 canonical_id=trim.id, model_id=model_id,
                 generation_id=trim.generation_id, name=trim.name,
                 powertrain=trim.powertrain.value,
+                # Read straight off FIELD_TO_COLUMN rather than a hand-kept
+                # second list. A column that is mapped for writing but
+                # missing here reads as blank, so the import would treat a
+                # value somebody set by hand as absent and overwrite it --
+                # the protection would be there and do nothing.
                 columns={
-                    "seats": trim.seats, "length_mm": trim.length_mm,
-                    "width_mm": trim.width_mm, "height_mm": trim.height_mm,
-                    "engine_cc": trim.engine_cc, "tire_front": trim.tire_front,
-                    "tire_rear": trim.tire_rear,
+                    **{column: getattr(trim, column, None)
+                       for column in FIELD_TO_COLUMN.values()},
                     "source_refs": {k: list(v) for k, v in (trim.source_refs or {}).items()},
                 },
                 source_ids=tuple(

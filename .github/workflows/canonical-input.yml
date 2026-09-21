@@ -86,18 +86,27 @@ jobs:
           python -m tdr_bridge.publish /tmp/vehicle-release.json
       - name: Commit the validated write
         if: steps.preflight.outputs.ready == 'true' && steps.changes.outputs.count != '0'
+        id: commit
         run: |
           set -euo pipefail
           # Straight to main. The owner of the data already decided; the
           # checks above are the only gate, and they have passed. The commit
-          # is the audit trail, not a request for permission -- pushing it
-          # here is what triggers vehicle-release.yml to publish.
+          # is the audit trail, not a request for permission. Publishing is
+          # the next step in this job, not something another workflow is
+          # trusted to notice.
           git config user.name "TDR canonical input"
           git config user.email "noreply@github.com"
           git add vehreg/data
           git commit -m "Apply ${{ steps.changes.outputs.count }} canonical input batch(es)"
           git pull --rebase origin main
           git push origin HEAD:main
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
           PYTHONPATH=. python tools/canonical_input_worker.py mark-staged \
             --result-file /tmp/canonical-input.json \
             --pull-request-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/$(git rev-parse HEAD)"
+      # Publish the exact commit just pushed, in this job, and wait for it.
+      # A saved edit is not live because a file moved; it is live because a
+      # release carrying it is serving.
+      - name: Publish the pushed revision
+        if: steps.preflight.outputs.ready == 'true' && steps.changes.outputs.count != '0'
+        run: PYTHONPATH=. python -m tools.publish_canonical --revision "${{ steps.commit.outputs.sha }}"

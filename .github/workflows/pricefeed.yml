@@ -20,6 +20,10 @@ concurrency:
 jobs:
   harvest:
     runs-on: ubuntu-latest
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
     defaults:
       run:
         working-directory: automotive/vehicle_master
@@ -46,25 +50,47 @@ jobs:
           python tools/pricefeed_harvest.py \
             --since "${{ steps.window.outputs.since }}" --limit 60 --delay 1.0 \
             --out vehreg/data/2026/market/pricefeed/batch-$(date -u +%Y-%m-%dT%H%M).json
-      - name: Apply publish policy
+      # The writer, not the evidence report. `market price-run` reads a batch
+      # and says what it thinks of it; it has never been able to write, so
+      # calling it with --write failed on every tick and no harvested price
+      # has ever reached the ledger. This applies them through the same
+      # canonical pipeline a Save in the admin goes through.
+      - name: Write the resolved prices into the ledger
         run: |
+          set -euo pipefail
           latest=$(ls -1 vehreg/data/2026/market/pricefeed/batch-*.json | tail -1)
-          python -m vehreg market price-run "$latest" \
+          PYTHONPATH=. python -m tools.pricefeed_write "$latest" \
             --decisions vehreg/data/2026/market/pricefeed/review/decisions.json \
-            --write | tee /tmp/price-run.json
+            --observed-at "$(date -u +%F)" | tee /tmp/price-write.json
       - run: python tools/pricefeed_guard.py --base origin/main --repo-prefix automotive/vehicle_master/
       - run: pytest -q
       # A deterministic price the resolver already accepted has nothing left
       # for a person to decide, so it goes to main and publishes. What the
       # resolver could not settle -- an ambiguous identity, a genuine
-      # conflict -- never reached this step; it stays unresolved for the
-      # owner rather than holding every unambiguous price behind a merge.
-      - name: Publish the resolved prices
+      # conflict -- is a durable exception row by the time this runs; it
+      # waits for the owner instead of holding every other price behind it.
+      - name: Commit the resolved prices
+        id: commit
         run: |
-          if git diff --quiet; then echo "no price changes"; exit 0; fi
+          set -euo pipefail
+          # Untracked too: a canonical write's price file, batch marker and
+          # exception report are all new files, and `git diff` cannot see
+          # them -- which is how a run reports "nothing changed" over a
+          # price it just wrote.
+          if [ -z "$(git status --porcelain vehreg/data)" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"; exit 0
+          fi
           git config user.name "TDR price watcher"
           git config user.email "noreply@github.com"
-          git add vehreg/data/2026/market
-          git commit -m "Price feed: $(python -c "import json; d=json.load(open('/tmp/price-run.json')); print(f\"{d['canonical_offers']} offers, {d['review_items']} unresolved\")")"
+          git add vehreg/data
+          git commit -m "Price feed: $(python -c "import json; d=json.load(open('/tmp/price-write.json')); p=d['planned']; print(f\"{p['WRITTEN']} written, {p['UNCHANGED']} unchanged, {d['exceptions_stored']['count']} unresolved\")")"
           git pull --rebase origin main
           git push origin HEAD:main
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      # A price nobody is serving is not a price change. Publish the exact
+      # commit here and wait for it, rather than pushing and hoping another
+      # workflow picks it up.
+      - name: Publish the pushed revision
+        if: steps.commit.outputs.changed == 'true'
+        run: PYTHONPATH=. python -m tools.publish_canonical --revision "${{ steps.commit.outputs.sha }}"

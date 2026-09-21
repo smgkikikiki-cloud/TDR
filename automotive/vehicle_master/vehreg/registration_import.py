@@ -57,7 +57,15 @@ class RegistrationRow:
 class ResolvedRegistration:
     row: RegistrationRow
     status: str
+    #: Legacy registration identity (models.id), when the crosswalk has one.
     model_id: str | None = None
+    #: Canonical vehicle identity, preferred and usable the day a car is
+    #: created -- no legacy row has to exist first.
+    canonical_model_id: str | None = None
+    #: Only ever set where the source itself published trim detail and a
+    #: deterministic mapping exists for it. Never inferred from a
+    #: model-level row.
+    canonical_trim_id: str | None = None
     reason: str = ""
 
 
@@ -146,27 +154,52 @@ def resolve_registrations(
             if hit:
                 candidates.append((
                     1 if str(alias.get("registration_type")) == row.registration_type else 0,
-                    len(token), str(alias.get("model_id")),
+                    len(token),
+                    str(alias.get("model_id") or ""),
+                    str(alias.get("canonical_model_id") or ""),
+                    str(alias.get("canonical_trim_id") or ""),
                 ))
         if not candidates:
             out.append(ResolvedRegistration(
                 row=row, status=UNKNOWN, reason=f"no saved mapping for {row.model_raw!r}"))
             continue
-        candidates.sort(reverse=True)
+        candidates.sort(reverse=True, key=lambda c: (c[0], c[1]))
         best = [c for c in candidates if (c[0], c[1]) == (candidates[0][0], candidates[0][1])]
-        model_ids = {c[2] for c in best}
-        if len(model_ids) != 1:
+        targets = {(c[2], c[3], c[4]) for c in best}
+        if len(targets) != 1:
             out.append(ResolvedRegistration(
                 row=row, status=UNKNOWN,
-                reason=f"{len(model_ids)} saved mappings match {row.model_raw!r} equally well"))
+                reason=f"{len(targets)} saved mappings match {row.model_raw!r} equally well"))
             continue
-        out.append(ResolvedRegistration(row=row, status=MATCHED, model_id=model_ids.pop()))
+        model_id, canonical_model_id, canonical_trim_id = targets.pop()
+        out.append(ResolvedRegistration(
+            row=row, status=MATCHED, model_id=model_id or None,
+            canonical_model_id=canonical_model_id or None,
+            canonical_trim_id=canonical_trim_id or None))
     return out
 
 
-def registration_payload(resolved: ResolvedRegistration, *, mapping_method: str) -> dict:
-    """One upsert row, keyed the way the table already keys itself."""
+def snapshot_rows(resolved: Iterable[ResolvedRegistration]) -> list[dict]:
+    """Every row of the month, matched or not.
+
+    An unmatched row is still a registration fact: the month's total does
+    not change because nobody has taught the crosswalk what that label is
+    yet. It is written with no canonical mapping and its raw labels intact,
+    and the exception beside it is the mapping work, not the number.
+    """
+    return [registration_payload(item) for item in resolved]
+
+
+def registration_payload(resolved: ResolvedRegistration) -> dict:
+    """One row of the snapshot, matched or not.
+
+    The raw labels go in exactly as the source filed them -- the grade
+    detail some marques print inside the model field is part of what was
+    published, and folding it away would turn a trim-level row into a
+    model-level one.
+    """
     row = resolved.row
+    matched = resolved.status == MATCHED
     return {
         "period": row.period,
         "registration_type": row.registration_type,
@@ -174,5 +207,26 @@ def registration_payload(resolved: ResolvedRegistration, *, mapping_method: str)
         "model_name_raw": row.model_raw,
         "registrations": row.units,
         "model_id": resolved.model_id,
-        "mapping_method": mapping_method,
+        "canonical_model_id": resolved.canonical_model_id,
+        "canonical_trim_id": resolved.canonical_trim_id,
+        "mapping_method": "import-alias" if matched else "unmapped",
     }
+
+
+def exception_rows(resolved: Iterable[ResolvedRegistration]) -> list[dict]:
+    """The mapping work an import leaves behind, one row per unknown label."""
+    return [{
+        "kind": "REGISTRATION_IDENTITY",
+        "reason": item.reason,
+        "source_identity": {
+            "period": item.row.period,
+            "registration_type": item.row.registration_type,
+            "brand": item.row.brand_raw,
+            "model": item.row.model_raw,
+            "units": item.row.units,
+            # Grain is whatever the source published. A label with no trim
+            # detail is a model-level exception and must not be handed a
+            # trim picker.
+            "grain": "MODEL",
+        },
+    } for item in resolved if item.status != MATCHED]

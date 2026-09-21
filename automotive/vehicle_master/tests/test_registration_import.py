@@ -1,10 +1,12 @@
 """A DLT file is registration data, and is read as registration data."""
 
+from pathlib import Path
+
 import pytest
 
 from vehreg.registration_import import (
-    MATCHED, UNKNOWN, UnsupportedRegistrationSchema, parse_registration_rows,
-    registration_payload, resolve_registrations,
+    MATCHED, UNKNOWN, UnsupportedRegistrationSchema, exception_rows,
+    parse_registration_rows, resolve_registrations, snapshot_rows,
 )
 
 BRAND_ALIASES = {"toyota": "brand-uuid-toyota"}
@@ -100,48 +102,117 @@ def test_a_class_specific_alias_beats_a_wildcard_one():
 
 
 # ---------------------------------------------------------------------------
-# Writing it twice
+# A month is a snapshot, and nothing in it is allowed to vanish
 # ---------------------------------------------------------------------------
 
-def test_the_upsert_key_is_what_makes_a_re_import_replace_rather_than_duplicate():
-    """The table is unique on (period, registration_type, brand, model), so
-    the same month re-uploaded lands on the same row."""
+def test_an_unmatched_row_is_still_a_registration_fact():
+    """Nobody has taught the crosswalk this label yet. That is a mapping
+    problem, not a reason for the month to lose 40 cars."""
+    rows, _ = parse_registration_rows(csv_rows(brand="NOTABRAND", model="MYSTERY", units="40"))
+    written = snapshot_rows(resolve_registrations(rows, BRAND_ALIASES, MODEL_ALIASES))
+    assert len(written) == 1
+    assert written[0]["registrations"] == 40
+    assert written[0]["canonical_model_id"] is None and written[0]["model_id"] is None
+    assert written[0]["brand_name_raw"] == "NOTABRAND"
+    assert written[0]["mapping_method"] == "unmapped"
+
+
+def test_the_month_total_is_the_same_before_and_after_mapping():
+    known, _ = parse_registration_rows(csv_rows(units="100"))
+    unknown, _ = parse_registration_rows(csv_rows(brand="NOTABRAND", model="MYSTERY", units="40"))
+    written = snapshot_rows(resolve_registrations(known + unknown, BRAND_ALIASES, MODEL_ALIASES))
+    assert sum(row["registrations"] for row in written) == 140
+    assert sum(1 for row in written if row["canonical_model_id"] or row["model_id"]) == 1
+
+
+def test_every_unknown_label_leaves_one_piece_of_mapping_work():
+    rows, _ = parse_registration_rows(csv_rows(brand="NOTABRAND", model="MYSTERY"))
+    work = exception_rows(resolve_registrations(rows, BRAND_ALIASES, MODEL_ALIASES))
+    assert len(work) == 1
+    assert work[0]["kind"] == "REGISTRATION_IDENTITY"
+    assert work[0]["source_identity"]["model"] == "MYSTERY"
+    # The source published no trim detail, so this is model-level work.
+    assert work[0]["source_identity"]["grain"] == "MODEL"
+
+
+def test_a_matched_row_leaves_no_mapping_work():
     rows, _ = parse_registration_rows(csv_rows())
-    first = registration_payload(
-        resolve_registrations(rows, BRAND_ALIASES, MODEL_ALIASES)[0], mapping_method="import-alias")
-    again = registration_payload(
-        resolve_registrations(rows, BRAND_ALIASES, MODEL_ALIASES)[0], mapping_method="import-alias")
-    key = ("period", "registration_type", "brand_name_raw", "model_name_raw")
-    assert tuple(first[k] for k in key) == tuple(again[k] for k in key)
+    assert exception_rows(resolve_registrations(rows, BRAND_ALIASES, MODEL_ALIASES)) == []
 
 
-def test_a_corrected_file_carries_the_new_number_on_the_same_key():
-    original, _ = parse_registration_rows(csv_rows(units="120"))
-    corrected, _ = parse_registration_rows(csv_rows(units="131"))
-    a = registration_payload(resolve_registrations(original, BRAND_ALIASES, MODEL_ALIASES)[0],
-                             mapping_method="import-alias")
-    b = registration_payload(resolve_registrations(corrected, BRAND_ALIASES, MODEL_ALIASES)[0],
-                             mapping_method="import-alias")
-    assert a["period"] == b["period"] and a["model_name_raw"] == b["model_name_raw"]
-    assert a["registrations"] == 120 and b["registrations"] == 131
+# ---------------------------------------------------------------------------
+# Canonical identity, without waiting for a legacy row
+# ---------------------------------------------------------------------------
 
-
-def test_a_new_month_is_a_different_row():
-    august, _ = parse_registration_rows(csv_rows(period="2026-08"))
-    september, _ = parse_registration_rows(csv_rows(period="2026-09"))
-    a = registration_payload(resolve_registrations(august, BRAND_ALIASES, MODEL_ALIASES)[0],
-                             mapping_method="import-alias")
-    b = registration_payload(resolve_registrations(september, BRAND_ALIASES, MODEL_ALIASES)[0],
-                             mapping_method="import-alias")
-    assert a["period"] != b["period"]
-
-
-def test_registration_rows_never_carry_vehicle_specs():
-    """Registration says how many, never what the car is made of."""
+def test_an_alias_carrying_a_canonical_id_attributes_the_row_directly():
+    """A car created today has no legacy models row yet, and does not need
+    one to receive a label."""
+    aliases = [{"brand_id": "brand-uuid-toyota", "registration_type": "*",
+                "alias_norm": "camry", "model_id": None,
+                "canonical_model_id": "toyota.camry", "match_mode": "prefix"}]
     rows, _ = parse_registration_rows(csv_rows())
-    payload = registration_payload(
-        resolve_registrations(rows, BRAND_ALIASES, MODEL_ALIASES)[0], mapping_method="import-alias")
-    assert set(payload) == {
-        "period", "registration_type", "brand_name_raw", "model_name_raw",
-        "registrations", "model_id", "mapping_method",
-    }
+    written = snapshot_rows(resolve_registrations(rows, BRAND_ALIASES, aliases))
+    assert written[0]["canonical_model_id"] == "toyota.camry"
+    assert written[0]["model_id"] is None
+
+
+def test_a_legacy_alias_still_resolves_so_old_data_keeps_working():
+    rows, _ = parse_registration_rows(csv_rows())
+    written = snapshot_rows(resolve_registrations(rows, BRAND_ALIASES, MODEL_ALIASES))
+    assert written[0]["model_id"] == "legacy-camry"
+
+
+def test_a_model_level_row_never_receives_a_trim():
+    rows, _ = parse_registration_rows(csv_rows())
+    written = snapshot_rows(resolve_registrations(rows, BRAND_ALIASES, MODEL_ALIASES))
+    assert written[0]["canonical_trim_id"] is None
+
+
+def test_a_trim_grained_mapping_is_honoured_where_the_source_has_the_detail():
+    """Some marques print the grade in the model field. Where a mapping for
+    that exact label exists, the trim is kept -- it is not invented."""
+    aliases = [{"brand_id": "brand-uuid-toyota", "registration_type": "*",
+                "alias_norm": "camryhevpremium", "model_id": "legacy-camry",
+                "canonical_model_id": "toyota.camry",
+                "canonical_trim_id": "toyota.camry.axvh70.trim.hev_premium",
+                "match_mode": "exact"}]
+    rows, _ = parse_registration_rows(csv_rows(model="CAMRY HEV PREMIUM"))
+    written = snapshot_rows(resolve_registrations(rows, BRAND_ALIASES, aliases))
+    assert written[0]["canonical_trim_id"] == "toyota.camry.axvh70.trim.hev_premium"
+    assert written[0]["model_name_raw"] == "CAMRY HEV PREMIUM"
+
+
+# ---------------------------------------------------------------------------
+# The files TDR actually uploads
+# ---------------------------------------------------------------------------
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+
+
+@pytest.mark.parametrize("fixture", [
+    "data/raw/dlt_2025-06.csv",          # the DLT export, Thai headers
+    "data/raw_pivot/long_2021-06.csv",   # the normalized long form
+])
+def test_a_real_monthly_export_parses(fixture):
+    """Not a synthetic dict: the two shapes a real month arrives in."""
+    import pandas
+
+    path = REPO_ROOT / fixture
+    rows, rejected = parse_registration_rows(pandas.read_csv(path).to_dict(orient="records"))
+    assert rows and not rejected
+    assert all(row.period and row.brand_raw and row.model_raw for row in rows)
+    assert sum(row.units for row in rows) > 0
+
+
+def test_a_real_month_is_written_whole_even_with_an_empty_crosswalk():
+    """With nothing taught yet every row is unknown -- and every row is
+    still written, so the month's total survives."""
+    import pandas
+
+    path = REPO_ROOT / "data/raw/dlt_2025-06.csv"
+    rows, _ = parse_registration_rows(pandas.read_csv(path).to_dict(orient="records"))
+    resolved = resolve_registrations(rows, {}, [])
+    written = snapshot_rows(resolved)
+    assert len(written) == len(rows)
+    assert sum(r["registrations"] for r in written) == sum(r.units for r in rows)
+    assert len(exception_rows(resolved)) == len(rows)

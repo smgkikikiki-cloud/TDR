@@ -50,17 +50,21 @@ jobs:
       - name: Import every uploaded file
         if: steps.preflight.outputs.ready == 'true'
         run: PYTHONPATH=. python tools/import_worker.py run --limit 5
-      # A canonical run stays WRITTEN_PENDING_PUBLISH until its files are
-      # pushed, so these two steps are what finish it. If the push fails the
-      # finalize never runs and the run does not claim to be complete.
+      # Which runs this publish will carry, captured before the push so the
+      # finalize afterwards names them instead of sweeping whatever happens
+      # to be pending -- another run's work is not this run's to complete.
+      - name: Which runs are waiting on this publish
+        if: steps.preflight.outputs.ready == 'true'
+        id: pending
+        run: echo "runs=$(PYTHONPATH=. python tools/import_worker.py pending-runs)" >> "$GITHUB_OUTPUT"
       - name: Commit what the import wrote
         if: steps.preflight.outputs.ready == 'true'
+        id: commit
         shell: bash
         run: |
           set -euo pipefail
           if [ -z "$(git status --porcelain vehreg/data)" ]; then
-            echo "no canonical change to commit"
-            exit 0
+            echo "changed=false" >> "$GITHUB_OUTPUT"; exit 0
           fi
           git config user.name "TDR source import"
           git config user.email "noreply@github.com"
@@ -68,6 +72,26 @@ jobs:
           git commit -m "Apply uploaded source import"
           git pull --rebase origin main
           git push origin HEAD:main
-      - name: Mark pushed runs complete
-        if: steps.preflight.outputs.ready == 'true'
-        run: PYTHONPATH=. python tools/import_worker.py finalize
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      # Publish here, in this job, for the exact commit just pushed. Pushing
+      # and trusting vehicle-release.yml to notice is not a publish path:
+      # nothing fails if it never fires, and the run would report success
+      # over data nobody is serving.
+      - name: Publish the pushed revision
+        if: steps.preflight.outputs.ready == 'true' && steps.commit.outputs.changed == 'true'
+        id: publish
+        run: |
+          set -euo pipefail
+          result=$(PYTHONPATH=. python -m tools.publish_canonical --revision "${{ steps.commit.outputs.sha }}")
+          echo "$result"
+          echo "release_id=$(echo "$result" | python -c 'import json,sys; print(json.load(sys.stdin)["release_id"])')" >> "$GITHUB_OUTPUT"
+      - name: Complete the runs this publish carried
+        if: steps.preflight.outputs.ready == 'true' && steps.commit.outputs.changed == 'true'
+        run: |
+          set -euo pipefail
+          args=""
+          for run in ${{ steps.pending.outputs.runs }}; do args="$args --run-id $run"; done
+          PYTHONPATH=. python tools/import_worker.py finalize $args \
+            --commit-sha "${{ steps.commit.outputs.sha }}" \
+            --release-id "${{ steps.publish.outputs.release_id }}"
