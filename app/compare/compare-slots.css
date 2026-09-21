@@ -1,0 +1,52 @@
+/* Slot-based compare picker. The compare API is unchanged; this only changes the selection mental model. */
+.compareSlotForm{margin-bottom:24px}
+.compareSlotsHead{display:flex;align-items:end;justify-content:space-between;gap:24px;margin:20px 0 12px}
+.compareSlotsHead b{font-size:16px}
+.compareSlotsHead span{color:var(--muted);font-size:12px}
+.compareSlots{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.compareSlot{min-height:142px;border:1px solid var(--line);background:#fff;position:relative;min-width:0}
+.compareSlotFilled{padding:16px;display:flex;flex-direction:column;align-items:stretch;text-align:left}
+.compareSlotFilled:hover{border-color:var(--navy)}
+.compareSlotNo{color:var(--eyebrow);font-size:10px;font-weight:900;letter-spacing:.1em}
+.compareSlotFilled>strong{font-size:16px;line-height:1.3;margin-top:20px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.compareSlotFilled>span:not(.compareSlotNo){font-size:13px;color:#444;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.compareSlotFilled>small{font-size:11px;color:var(--muted);margin-top:5px}
+.compareSlotActions{display:flex;align-items:center;gap:8px;margin-top:auto;padding-top:18px}
+.compareSlotActions button{border:0;background:none;padding:0;font:inherit;font-size:11px;font-weight:800;cursor:pointer;color:var(--navy)}
+.compareSlotActions button:last-child{color:var(--muted);margin-left:auto}
+.compareSlotActions button:hover{color:var(--red)}
+.compareSlotAdd{width:100%;height:100%;min-height:142px;border:0;background:#fafbfc;display:grid;place-items:center;align-content:center;gap:8px;cursor:pointer;color:var(--navy)}
+.compareSlotAdd:hover{background:var(--soft-blue);outline:1px solid var(--navy)}
+.compareSlotAdd i{width:38px;height:38px;border:1px solid var(--navy);border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:25px;font-weight:400;line-height:1}
+.compareSlotAdd b{font-size:13px}
+.compareSlotAdd small{font-size:10px;color:var(--muted)}
+
+.compareSlotPicker{margin-top:12px;border:1px solid var(--navy);background:#fff;padding:18px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;position:relative}
+.compareSlotPickerHead{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:18px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.compareSlotPickerHead b{font-size:15px}
+.compareSlotPickerHead button{border:0;background:none;color:var(--muted);font-size:20px;cursor:pointer;line-height:1}
+.compareSlotPickerHead button:hover{color:var(--red)}
+.compareSlotField{display:flex;flex-direction:column;gap:7px;min-width:0}
+.compareSlotField>span{color:var(--eyebrow);font-size:10px;font-weight:900;letter-spacing:.1em}
+.compareSlotField input[type="search"],.compareSlotField select{width:100%;border:1px solid #cfd3da;background:#fff;padding:10px 11px;font:inherit;font-size:14px;outline:none}
+.compareSlotField input[type="search"]:focus,.compareSlotField select:focus{border-color:var(--navy)}
+.compareSlotTrimList{display:flex;flex-direction:column;gap:5px;max-height:210px;overflow:auto}
+.compareSlotTrim{border:1px solid var(--line);background:#fff;text-align:left;padding:10px 11px;font:inherit;font-size:13px;cursor:pointer}
+.compareSlotTrim:hover:not(:disabled){border-color:var(--navy)}
+.compareSlotTrim.on{border-color:var(--navy);border-left-width:3px;background:var(--soft-blue);font-weight:700}
+.compareSlotTrim:disabled{opacity:.45;cursor:not-allowed}
+.compareSlotPickerFoot{grid-column:1/-1;display:flex;justify-content:flex-end;gap:10px;padding-top:2px}
+.compareSlotPickerFoot button{border:1px solid var(--navy);padding:10px 16px;font:inherit;font-size:13px;font-weight:800;cursor:pointer}
+.compareSlotPickerFoot .compareSlotCancel{background:#fff;color:var(--navy)}
+.compareSlotPickerFoot .compareSlotConfirm{background:var(--navy);color:#fff}
+.compareSlotPickerFoot .compareSlotConfirm:disabled{background:#b7bcc6;border-color:#b7bcc6;cursor:not-allowed}
+
+.compareRunBar{display:flex;align-items:center;justify-content:flex-end;gap:18px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+.compareRunBar .compareDiffToggle{display:flex;align-items:center;gap:8px;cursor:pointer}
+.compareRunBar>button{min-width:180px;border:0;background:var(--navy);color:#fff;padding:13px 20px;font:inherit;font-size:14px;font-weight:800;cursor:pointer}
+.compareRunBar>button:hover:not(:disabled){background:var(--navy-2)}
+.compareRunBar>button:disabled{background:#b7bcc6;cursor:not-allowed}
+.compareAnonHint{margin:8px 0 0;text-align:right;color:var(--muted);font-size:11px}
+
+@media(max-width:900px){.compareSlots{grid-template-columns:repeat(2,minmax(0,1fr))}.compareSlotPicker{grid-template-columns:1fr}.compareSlotPickerHead,.compareSlotPickerFoot{grid-column:1}.compareSlotTrimList{max-height:none}}
+@media(max-width:620px){.compareSlots{grid-template-columns:1fr}.compareSlotsHead{align-items:flex-start;flex-direction:column;gap:5px}.compareRunBar{align-items:stretch;flex-direction:column}.compareRunBar>button{width:100%}.compareAnonHint{text-align:left}}
