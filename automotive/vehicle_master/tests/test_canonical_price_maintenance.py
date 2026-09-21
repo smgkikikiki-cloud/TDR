@@ -198,3 +198,58 @@ def test_input_batch_accepts_price_maintenance_and_stages_atomically(tmp_path: P
     assert any(path.endswith("observations.json") for path in result.changed_files)
     ledger = PriceLedger.load(data, year=YEAR, catalog=Catalog.load(data, YEAR))
     assert ledger.current_list_amount(TRIM_ID, as_of=date(2026, 9, 10)) == 859000
+
+
+def test_the_owner_can_change_a_price_twice_in_one_day(tmp_path: Path):
+    """A second save today is the same decision again, not a conflict.
+
+    The owner is the authority on their own price. Appending a second
+    LIST_PRICE for the same day used to leave two live rows and the
+    resolver raised `conflicting LIST_PRICE ... review required`, so the
+    save failed and the number on the site stayed wrong.
+    """
+    data = _seed(tmp_path)
+    pipeline = CanonicalWritePipeline(data)
+    _append_initial(pipeline, amount=899000, start="2026-09-10")
+
+    pipeline.apply(_command("price-same-day", "APPEND_PRICE", {
+        "trim_id": TRIM_ID, "amount_thb": 869000, "price_type": "LIST_PRICE",
+        "observed_at": "2026-09-10", "source": "admin",
+    }, reason="typed the wrong number"))
+
+    ledger = PriceLedger.load(data, year=YEAR, catalog=Catalog.load(data, YEAR))
+    assert ledger.current_list_amount(TRIM_ID, as_of=date(2026, 9, 10)) == 869000
+    # The mistake is kept, marked as never having been true.
+    rows = _records(data)
+    assert sorted(r.amount_thb for r in rows) == [869000, 899000]
+    wrong = next(r for r in rows if r.amount_thb == 899000)
+    assert wrong.retracted and wrong.retraction_reason
+
+
+def test_a_third_save_the_same_day_still_leaves_one_live_price(tmp_path: Path):
+    data = _seed(tmp_path)
+    pipeline = CanonicalWritePipeline(data)
+    _append_initial(pipeline, amount=899000, start="2026-09-10")
+    for index, amount_thb in enumerate((869000, 879000), start=1):
+        pipeline.apply(_command(f"price-again-{index}", "APPEND_PRICE", {
+            "trim_id": TRIM_ID, "amount_thb": amount_thb, "price_type": "LIST_PRICE",
+            "observed_at": "2026-09-10", "source": "admin",
+        }, reason="owner correction"))
+
+    ledger = PriceLedger.load(data, year=YEAR, catalog=Catalog.load(data, YEAR))
+    assert ledger.current_list_amount(TRIM_ID, as_of=date(2026, 9, 10)) == 879000
+    assert len([r for r in _records(data) if not r.retracted]) == 1
+
+
+def test_saving_the_same_price_again_the_same_day_changes_nothing(tmp_path: Path):
+    data = _seed(tmp_path)
+    pipeline = CanonicalWritePipeline(data)
+    _append_initial(pipeline, amount=899000, start="2026-09-10")
+
+    pipeline.apply(_command("price-identical", "APPEND_PRICE", {
+        "trim_id": TRIM_ID, "amount_thb": 899000, "price_type": "LIST_PRICE",
+        "observed_at": "2026-09-10", "source": "admin",
+    }, reason="re-saved unchanged"))
+
+    rows = [r for r in _records(data) if not r.retracted]
+    assert [r.amount_thb for r in rows] == [899000]

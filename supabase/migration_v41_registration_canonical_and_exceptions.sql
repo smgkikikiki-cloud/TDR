@@ -197,3 +197,36 @@ alter table public.import_runs add constraint import_runs_source_kind_check
 
 comment on column public.import_runs.source_kind is
   'Where the rows came from. PRICE is the automated price feed, which has no uploaded file: its storage_path names the harvest batch instead.';
+
+-- --- 6. A label can be bound to a car created today ------------------
+--
+-- registration_model_aliases.model_id was NOT NULL, so the only way to
+-- teach the crosswalk a DLT label was to point it at a legacy models row.
+-- A car created in the admin today has no legacy row until a release
+-- rebuilds the crosswalk, which made "resolve this exception" impossible
+-- for exactly the cars most likely to appear in an exception. The column
+-- stays, and stays authoritative where it is set; it is simply no longer
+-- the only way to name the target.
+
+alter table public.registration_model_aliases alter column model_id drop not null;
+
+alter table public.registration_model_aliases
+  drop constraint if exists registration_model_aliases_identity_check;
+alter table public.registration_model_aliases
+  add constraint registration_model_aliases_identity_check
+  check (model_id is not null or canonical_model_id is not null);
+
+-- Grain is the source's, not the resolver's. A mapping is trim-grained
+-- only where the file itself published trim detail; a model-level row
+-- never acquires a trim by being resolved.
+alter table public.registration_model_aliases
+  add column if not exists grain text not null default 'MODEL';
+alter table public.registration_model_aliases
+  drop constraint if exists registration_model_aliases_grain_check;
+alter table public.registration_model_aliases
+  add constraint registration_model_aliases_grain_check
+  check (grain in ('MODEL','TRIM')
+         and (grain = 'TRIM') = (canonical_trim_id is not null));
+
+comment on column public.registration_model_aliases.grain is
+  'MODEL when the source names only a model, TRIM when the source itself publishes the grade. Never inferred: a model-level label cannot become trim-grained by being resolved.';

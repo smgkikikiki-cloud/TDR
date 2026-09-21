@@ -24,12 +24,19 @@ check("upload only accepts sources that have a parser",
   uploadAction.includes('new Set(["ECO", "DLT"])'));
 
 console.log("\nimport results outlive the worker");
-check("exceptions are written onto the run row, not a temp directory",
-  worker.includes("exception_rows"));
-check("the run row has somewhere durable to keep them",
-  read("supabase/migration_v40_import_run_results.sql").includes("exception_rows jsonb"));
-check("/admin/exceptions reads them back from the run",
-  read("app/admin/(secure)/exceptions/page.tsx").includes("listRunExceptions"));
+// The run row's JSON array came first and was capped at 500, so a file with
+// 900 unplaceable rows lost 400 of them in silence. Every unresolved row now
+// has a row of its own, and it stays until somebody resolves it.
+check("every unresolved row gets its own durable record",
+  worker.includes("import_run_exceptions") && !worker.includes("MAX_STORED_EXCEPTIONS"));
+check("the table it is kept in exists",
+  read("supabase/migration_v41_registration_canonical_and_exceptions.sql")
+    .includes("create table if not exists public.import_run_exceptions"));
+const exceptionsPage = read("app/admin/(secure)/exceptions/page.tsx");
+check("/admin/exceptions reads the open ones back out of it",
+  exceptionsPage.includes("listOpenExceptions"));
+check("and can close one",
+  exceptionsPage.includes("resolveException"));
 check("a canonical run waits for its push before it claims to be done",
   worker.includes("WRITTEN_PENDING_PUBLISH") && worker.includes("CANONICAL_SOURCES"));
 const importFlow = read(".github/workflows/source-import.yml");
@@ -40,9 +47,19 @@ console.log("\nno human approval in a deterministic write path");
 check("uploaded imports go to main rather than a pull request",
   !importFlow.includes("gh pr create"));
 const pricefeed = read(".github/workflows/pricefeed.yml");
+const canonicalInput = read(".github/workflows/canonical-input.yml");
 check("the price tracker publishes instead of opening a PR to merge",
   !pricefeed.includes("gh pr create") && pricefeed.includes("git push origin HEAD:main"));
-const canonicalInput = read(".github/workflows/canonical-input.yml");
+// `market price-run` is an evidence report and rejects --write; the workflow
+// called it with --write anyway, so it failed on every tick and no harvested
+// price ever reached the ledger.
+check("the price tracker calls a writer that can write",
+  pricefeed.includes("tools.pricefeed_write") && !pricefeed.includes("market price-run"));
+for (const flow of [importFlow, pricefeed, canonicalInput]) {
+  check("what is pushed is published in the same job",
+    !flow.includes("git push origin HEAD:main")
+      || (flow.includes("tools.publish_canonical") && flow.includes("--revision")));
+}
 check("a saved canonical edit is not held behind a merge",
   !canonicalInput.includes("gh pr create"));
 
@@ -77,8 +94,22 @@ console.log("\nregistration identity: one bridge, not a second one");
 const exceptionActions = read("app/admin/exception-actions.ts");
 check("no legacy models row is forged behind the crosswalk's back",
   !exceptionActions.includes('from("models")\n    .insert'));
-check("a model with no registration identity says so instead of guessing",
-  exceptionActions.includes("ยังไม่ได้เชื่อมกับ registration identity"));
+// A car created in the admin today has no legacy models row until a release
+// rebuilds the crosswalk. Requiring one made exactly those cars unbindable,
+// which is the opposite of what an exception list is for.
+check("a car with no legacy row yet can still be given a label",
+  exceptionActions.includes("canonical_model_id: target.canonicalModelId")
+    && exceptionActions.includes("legacyModelId: model.tdr_model_id ? String(model.tdr_model_id) : null"));
+check("a brand with no registration identity says so instead of guessing",
+  exceptionActions.includes("ยังไม่มี registration identity"));
+check("grain comes from the stored exception, not from the form",
+  exceptionActions.includes("recordedGrain"));
+check("a model-level label cannot be bound to a trim",
+  exceptionActions.includes("ต้นทางรายงานแค่ระดับรุ่น"));
+check("the source decides which marques file grades at all",
+  read("automotive/vehicle_master/tools/import_worker.py").includes("trim_detail_brands"));
+check("the exceptions page says the grain per row, not per source",
+  !exceptionsPage.includes("DLT รายงานระดับรุ่น ไม่ใช่รุ่นย่อย"));
 check("assigning a label writes the alias that makes next month automatic",
   exceptionActions.includes("registration_model_aliases"));
 check("and fixes the months already loaded",

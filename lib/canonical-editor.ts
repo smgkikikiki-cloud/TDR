@@ -295,6 +295,28 @@ export async function listVehicleModelsForPicker(searchTerm: string): Promise<Ar
   }));
 }
 
+/** Every trim of a set of models, for a picker that must not guess.
+ *
+ *  Used where a source published the grade itself and the owner is binding
+ *  that label to the trim it names. Scoped to the models in play rather
+ *  than listing the whole catalogue: a thousand options in a select is not
+ *  a choice anybody can make. */
+export async function listVehicleTrimsForPicker(modelIds: string[]): Promise<Array<{
+  canonicalId: string; modelId: string; name: string;
+}>> {
+  const db = adminDb();
+  if (!db || !modelIds.length) return [];
+  const { data, error } = await db.from("current_market_trims")
+    .select("canonical_id,model_id,name")
+    .in("model_id", modelIds)
+    .order("model_id", { ascending: true }).order("name", { ascending: true }).limit(2000);
+  if (error) throw error;
+  return (data || []).map((row: any) => ({
+    canonicalId: row.canonical_id, modelId: row.model_id, name: row.name,
+  }));
+}
+
+
 /** Live release_id for one model, used by prepare/confirm actions to compare
  * against the fingerprint carried in the edit session (see
  * lib/canonical-command-builder.ts's isStaleRelease). Deliberately its own

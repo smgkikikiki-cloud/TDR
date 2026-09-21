@@ -213,8 +213,18 @@ def registration_payload(resolved: ResolvedRegistration) -> dict:
     }
 
 
-def exception_rows(resolved: Iterable[ResolvedRegistration]) -> list[dict]:
-    """The mapping work an import leaves behind, one row per unknown label."""
+def exception_rows(resolved: Iterable[ResolvedRegistration],
+                   *, trim_detail_brands: Iterable[str] = ()) -> list[dict]:
+    """The mapping work an import leaves behind, one row per unknown label.
+
+    ``trim_detail_brands`` holds the normalised labels of the marques whose
+    files print the grade inside the model field. It is the source's
+    behaviour, passed in by the caller that knows the catalogue, and it is
+    the only thing that can make an exception trim-grained: a label from a
+    marque that files model names only must never be handed a trim picker,
+    because the number behind it was never counted per trim.
+    """
+    detailed = frozenset(trim_detail_brands)
     return [{
         "kind": "REGISTRATION_IDENTITY",
         "reason": item.reason,
@@ -224,9 +234,7 @@ def exception_rows(resolved: Iterable[ResolvedRegistration]) -> list[dict]:
             "brand": item.row.brand_raw,
             "model": item.row.model_raw,
             "units": item.row.units,
-            # Grain is whatever the source published. A label with no trim
-            # detail is a model-level exception and must not be handed a
-            # trim picker.
-            "grain": "MODEL",
+            "grain": ("TRIM" if normalize_token(item.row.brand_raw) in detailed
+                      else "MODEL"),
         },
     } for item in resolved if item.status != MATCHED]

@@ -50,10 +50,10 @@ jobs:
           python tools/pricefeed_harvest.py \
             --since "${{ steps.window.outputs.since }}" --limit 60 --delay 1.0 \
             --out vehreg/data/2026/market/pricefeed/batch-$(date -u +%Y-%m-%dT%H%M).json
-      # The writer, not the evidence report. `market price-run` reads a batch
-      # and says what it thinks of it; it has never been able to write, so
-      # calling it with --write failed on every tick and no harvested price
-      # has ever reached the ledger. This applies them through the same
+      # The writer, not the evidence report. The old command here read a
+      # batch and said what it thought of it; it has never been able to
+      # write, so this step failed on every tick and no harvested price has
+      # ever reached the ledger. This applies them through the same
       # canonical pipeline a Save in the admin goes through.
       - name: Write the resolved prices into the ledger
         run: |

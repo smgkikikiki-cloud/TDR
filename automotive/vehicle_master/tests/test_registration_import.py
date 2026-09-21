@@ -5,8 +5,8 @@ from pathlib import Path
 import pytest
 
 from vehreg.registration_import import (
-    MATCHED, UNKNOWN, UnsupportedRegistrationSchema, exception_rows,
-    parse_registration_rows, resolve_registrations, snapshot_rows,
+    MATCHED, UNKNOWN, RegistrationRow, UnsupportedRegistrationSchema,
+    exception_rows, parse_registration_rows, resolve_registrations, snapshot_rows,
 )
 
 BRAND_ALIASES = {"toyota": "brand-uuid-toyota"}
@@ -216,3 +216,35 @@ def test_a_real_month_is_written_whole_even_with_an_empty_crosswalk():
     assert len(written) == len(rows)
     assert sum(r["registrations"] for r in written) == sum(r.units for r in rows)
     assert len(exception_rows(resolved)) == len(rows)
+
+
+def test_an_unknown_label_from_a_marque_that_files_grades_is_trim_grained():
+    """AION files 'AION V 602 LUXURY'; Toyota files 'YARIS'. Not the same row."""
+    rows = [
+        RegistrationRow(period="2026-06", registration_type="RY1",
+                        brand_raw="AION", model_raw="AION V 602 LUXURY", units=419),
+        RegistrationRow(period="2026-06", registration_type="RY1",
+                        brand_raw="TOYOTA", model_raw="YARIS", units=1200),
+    ]
+    resolved = resolve_registrations(rows, {}, [])
+    exceptions = exception_rows(resolved, trim_detail_brands={"aion"})
+
+    grains = {row["source_identity"]["model"]: row["source_identity"]["grain"]
+              for row in exceptions}
+    assert grains == {"AION V 602 LUXURY": "TRIM", "YARIS": "MODEL"}
+
+
+def test_nothing_is_trim_grained_when_no_marque_is_known_to_file_grades():
+    rows = [RegistrationRow(period="2026-06", registration_type="RY1",
+                            brand_raw="AION", model_raw="AION V 602 LUXURY", units=419)]
+    exceptions = exception_rows(resolve_registrations(rows, {}, []))
+    assert exceptions[0]["source_identity"]["grain"] == "MODEL"
+
+
+def test_the_catalogue_is_what_says_which_marques_file_grades():
+    """The flag is data, not a list kept in the importer."""
+    from tools.import_worker import _trim_detail_brands
+
+    brands = _trim_detail_brands()
+    assert "aion" in brands and "byd" in brands
+    assert "toyota" not in brands and "honda" not in brands

@@ -33,8 +33,9 @@ from urllib.request import Request, urlopen
 
 from tools.canonical_input_worker import _env
 from tools.import_source import main as run_eco_import
+from vehreg.catalog import DATA_DIR, DEFAULT_YEAR, Catalog, CatalogError
 from vehreg.registration_import import (
-    MATCHED, UnsupportedRegistrationSchema, exception_rows,
+    MATCHED, UnsupportedRegistrationSchema, exception_rows, normalize_token,
     parse_registration_rows, resolve_registrations, snapshot_rows,
 )
 
@@ -126,6 +127,32 @@ def _import_eco(source_file: Path, original_name: str, workdir: Path,
     }, exceptions
 
 
+def _trim_detail_brands() -> frozenset[str]:
+    """Marques whose registration files print the grade inside the model field.
+
+    Whether a label can be resolved to a trim at all is a property of the
+    source, and the catalogue is where that is recorded (``Brand.trim_detail``,
+    true for the Chinese marques and Tesla). Reading it here keeps the
+    registration importer itself free of vehicle data while still refusing
+    to offer a trim for a marque that never files one.
+    """
+    try:
+        catalog = Catalog.load(DATA_DIR, DEFAULT_YEAR)
+    except (CatalogError, OSError, ValueError):
+        # Without the catalogue nothing is known to carry trim detail, and
+        # model grain is the safe answer.
+        return frozenset()
+    tokens: set[str] = set()
+    for brand in catalog.brands.values():
+        if not brand.trim_detail:
+            continue
+        for label in (brand.id, brand.name_en, brand.name_th, *brand.aliases):
+            token = normalize_token(label)
+            if token:
+                tokens.add(token)
+    return frozenset(tokens)
+
+
 def _import_dlt(source_file: Path, original_name: str, workdir: Path,
                 run_id: str) -> tuple[dict, list[dict]]:
     rows, rejected = parse_registration_rows(_read_rows(source_file))
@@ -162,7 +189,7 @@ def _import_dlt(source_file: Path, original_name: str, workdir: Path,
         "p_source_reference": original_name,
     })
 
-    exceptions = exception_rows(resolved)
+    exceptions = exception_rows(resolved, trim_detail_brands=_trim_detail_brands())
     exceptions.extend({
         "kind": "MALFORMED_ROW", "reason": item["reason"],
         "source_identity": {"row": item.get("row"), "period": periods[0]},

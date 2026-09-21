@@ -305,6 +305,55 @@ def test_a_month_is_named_the_way_the_importers_name_it(db):
     assert not ok and "is not a month" in error
 
 
+# --- a car created today can be given a DLT label ------------------------
+
+def test_a_label_can_be_bound_to_a_car_with_no_legacy_row_yet(db):
+    """The case that used to be impossible, and was the common one."""
+    _apply_v41(db)
+    ok, error = db.try_sql(f"""
+        insert into public.registration_model_aliases
+          (brand_id, registration_type, alias_norm, model_id, canonical_model_id, match_mode)
+        values ('{BRAND}', 'PC', 'yariscross', null, 'toyota.yaris_cross', 'exact')""")
+    assert ok, error
+    assert db.scalar("select canonical_model_id from public.registration_model_aliases"
+                     " where alias_norm='yariscross'") == "toyota.yaris_cross"
+
+
+def test_an_alias_still_has_to_name_something(db):
+    _apply_v41(db)
+    ok, error = db.try_sql(f"""
+        insert into public.registration_model_aliases
+          (brand_id, registration_type, alias_norm, model_id, canonical_model_id)
+        values ('{BRAND}', 'PC', 'nothing', null, null)""")
+    assert not ok and "registration_model_aliases_identity_check" in error
+
+
+def test_a_trim_grained_mapping_must_actually_name_a_trim(db):
+    _apply_v41(db)
+    ok, error = db.try_sql(f"""
+        insert into public.registration_model_aliases
+          (brand_id, registration_type, alias_norm, canonical_model_id, grain)
+        values ('{BRAND}', 'PC', 'aionv602', 'aion.aion_v', 'TRIM')""")
+    assert not ok and "registration_model_aliases_grain_check" in error
+
+    ok, error = db.try_sql(f"""
+        insert into public.registration_model_aliases
+          (brand_id, registration_type, alias_norm, canonical_model_id,
+           canonical_trim_id, grain)
+        values ('{BRAND}', 'PC', 'aionv602luxury', 'aion.aion_v',
+                'aion.aion_v.v1.trim.luxury', 'TRIM')""")
+    assert ok, error
+
+
+def test_every_mapping_that_already_exists_stays_model_grained(db):
+    """Nothing acquires a trim by the upgrade running."""
+    _apply_v41(db)
+    assert db.scalar("select count(*) from public.registration_model_aliases"
+                     " where grain <> 'MODEL'") == "0"
+    assert db.scalar("select count(*) from public.registration_model_aliases"
+                     " where canonical_trim_id is not null") == "0"
+
+
 def test_the_replace_function_is_not_reachable_by_a_logged_in_visitor(db):
     _apply_v41(db)
     assert db.scalar("""
