@@ -256,6 +256,10 @@ class Campaign:
     #: 1,996. A cap that really is per-option belongs on the option instead, and
     #: an option may not restate a campaign-level cap as its own.
     quota_units: Optional[int] = None
+    #: What comes with the car rather than off its price -- insurance, film,
+    #: a wallbox. Free text because brands describe it in prose and nothing
+    #: downstream computes on it; a discount belongs in the price instead.
+    gifts: str = ""
     notes: str = ""
 
     def validate(self) -> list[str]:
@@ -387,6 +391,7 @@ def _parse_campaign(raw: object, source: str) -> Campaign:
         source_ref=str(raw.get("source_ref") or "").strip(),
         options=tuple(parsed),
         quota_units=_quota(raw.get("quota_units"), source),
+        gifts=str(raw.get("gifts") or ""),
         notes=str(raw.get("notes") or ""),
     )
 

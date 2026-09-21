@@ -63,13 +63,14 @@ check("price maintenance reuses canonical input queue", priceActions.includes("e
 const home = text("app/admin/(secure)/page.tsx");
 const inputPage = text("app/admin/(secure)/vehicle-input/page.tsx");
 check("the editor is the sidebar's one primary entry", nav.includes('className="adminNavPrimary" href="/admin/vehicles"'));
-check("industry and editorial forms are not top-level",
+// Industry and editorial are not part of the six doors, and the admin does
+// not launch with those workflows. The routes still exist; the nav does not
+// offer them, and they were not folded into another page to hide that.
+check("industry and editorial are off the operator surface",
   ["/admin/plants/new", "/admin/companies/new", "/admin/events/new"]
-    .every((route) => nav.indexOf(`href="${route}"`) > nav.indexOf("Industry &amp; editorial")));
-check("the daily queues stay reachable without opening a group",
-  ["/admin/prices", "/admin/prices/coverage", "/admin/retail-lifecycle", "/admin/eco-trims",
-   "/admin/registrations", "/admin/data-quality"]
-    .every((route) => nav.indexOf(`href="${route}"`) < nav.indexOf("adminNavGroup")));
+    .every((route) => !nav.includes(`href="${route}"`)));
+check("every door is top-level; there is no group to open first",
+  !nav.includes("adminNavGroup"));
 check("the admin home leads with editing a car", home.includes('className="adminPrimaryLink" href="/admin/vehicles"'));
 check("the home tiles are queues, not a second way to author a vehicle",
   !home.includes('href="/admin/vehicle-input"'));

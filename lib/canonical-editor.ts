@@ -47,11 +47,23 @@ export type WorkspaceTrim = {
    * callers should have to know (see lib/trim-editor-state.ts). */
   payload: Record<string, unknown>;
   currentListPrice: { amount_thb?: number; price_type?: string } | null;
+  /** Every price ever recorded for this trim, newest first. */
+  prices: WorkspacePrice[];
   sourceRefs: Record<string, string[]>;
   /** THE editor state: flat, one entry per UI field, MarketTrim columns and
    * comparable-spec facts already folded together. Page, diff, server action
    * and validation all read this and nothing else. */
   editor: NormalizedTrim;
+};
+export type WorkspacePrice = {
+  amountThb: number;
+  priceType: string;
+  effectiveFrom: string | null;
+  effectiveTo: string | null;
+  observedAt: string | null;
+  campaignId: string | null;
+  source: string | null;
+  gifts: string | null;
 };
 export type WorkspaceSpecFact = {
   factId: string;
@@ -107,6 +119,7 @@ export async function loadVehicleWorkspace(modelId: string): Promise<VehicleWork
     { data: trims, error: trimsError },
     { data: release, error: releaseError },
     { data: batches, error: batchesError },
+    { data: prices },
   ] = await Promise.all([
     db.from("current_vehicle_brands").select("canonical_id,name_en,name_th,origin_country").eq("canonical_id", model.brand_id).maybeSingle(),
     model.generation_id
@@ -119,6 +132,11 @@ export async function loadVehicleWorkspace(modelId: string): Promise<VehicleWork
     db.from("canonical_input_batches")
       .select("batch_key,source_kind,item_count,status,pull_request_url,release_id,error,created_at,actor,payload")
       .order("created_at", { ascending: false }).limit(60),
+    // Price history belongs on the car, not on a separate bench: the trim's
+    // own row is where somebody asks what it costs and what it cost before.
+    db.from("canonical_price_projection")
+      .select("trim_id,amount_thb,price_type,effective_from,effective_to,observed_at,campaign_id,source,payload")
+      .order("observed_at", { ascending: false }).limit(2000),
   ]);
   if (brandError) throw brandError;
   if (generationError) throw generationError;
@@ -150,7 +168,21 @@ export async function loadVehicleWorkspace(modelId: string): Promise<VehicleWork
   // trim.editor.editableSpecs and never the raw payload nesting.
   const releaseYear = releaseYearFromPayload(release);
   const fields = trimEditorFields(releaseYear);
+  const pricesByTrim = new Map<string, WorkspacePrice[]>();
+  for (const row of (prices || []) as any[]) {
+    const bucket = pricesByTrim.get(row.trim_id) || [];
+    bucket.push({
+      amountThb: Number(row.amount_thb), priceType: String(row.price_type || ""),
+      effectiveFrom: row.effective_from || null, effectiveTo: row.effective_to || null,
+      observedAt: row.observed_at || null, campaignId: row.campaign_id || null,
+      source: row.source || null,
+      gifts: String((row.payload as any)?.gifts || "") || null,
+    });
+    pricesByTrim.set(row.trim_id, bucket);
+  }
+
   const trimRows: WorkspaceTrim[] = (trims || []).map((row: any) => ({
+    prices: pricesByTrim.get(row.canonical_id) || [],
     canonicalId: row.canonical_id,
     modelId: row.model_id,
     generationId: row.generation_id,

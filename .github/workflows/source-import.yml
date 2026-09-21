@@ -1,0 +1,67 @@
+name: Run uploaded source imports
+
+on:
+  # An upload dispatches this directly; the schedule is only a sweeper for a
+  # dispatch that never arrived. Nobody waits on the clock.
+  repository_dispatch:
+    types: [source-import]
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: canonical-vehicle-input
+  cancel-in-progress: false
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    defaults:
+      run:
+        working-directory: automotive/vehicle_master
+    steps:
+      - uses: actions/checkout@v4
+      - name: Preflight
+        id: preflight
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${SUPABASE_URL}" ] || [ -z "${SUPABASE_SECRET_KEY}${SUPABASE_SERVICE_ROLE_KEY}" ]; then
+            echo "::warning::Source import is paused until Supabase credentials are configured."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "ready=true" >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-python@v5
+        if: steps.preflight.outputs.ready == 'true'
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: automotive/vehicle_master/requirements.txt
+      - if: steps.preflight.outputs.ready == 'true'
+        run: python -m pip install -r requirements.txt
+      - name: Import every uploaded file
+        if: steps.preflight.outputs.ready == 'true'
+        run: PYTHONPATH=. python tools/import_worker.py --limit 5
+      - name: Commit what the import wrote
+        if: steps.preflight.outputs.ready == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "$(git status --porcelain vehreg/data)" ]; then
+            echo "no canonical change to commit"
+            exit 0
+          fi
+          git config user.name "TDR source import"
+          git config user.email "noreply@github.com"
+          git add vehreg/data
+          git commit -m "Apply uploaded source import"
+          git pull --rebase origin main
+          git push origin HEAD:main

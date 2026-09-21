@@ -1,5 +1,44 @@
 import { readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
+import { adminDb } from "@/lib/supabase";
+
+/** Where an uploaded source file waits for the worker. */
+export const IMPORT_BUCKET = "source-imports";
+
+export function safeImportName(raw: string): string {
+  const name = raw.normalize("NFKC").trim().replace(/[^\w.\-]+/g, "_");
+  if (!name || name.length > 120) throw new Error("ชื่อไฟล์ไม่ถูกต้อง");
+  return name;
+}
+
+export type ImportRun = {
+  id: string;
+  originalName: string;
+  sourceKind: string;
+  status: string;
+  rowsRead: number | null;
+  patched: number | null;
+  created: number | null;
+  exceptions: number | null;
+  error: string | null;
+  createdAt: string;
+};
+
+/** What the owner watches: upload -> processing -> completed. */
+export async function listImportRuns(limit = 25): Promise<ImportRun[]> {
+  const db = adminDb();
+  if (!db) return [];
+  const { data, error } = await db.from("import_runs")
+    .select("id,original_name,source_kind,status,rows_read,patched,created,exceptions,error,created_at")
+    .order("created_at", { ascending: false }).limit(limit);
+  if (error) return [];
+  return (data || []).map((row: any) => ({
+    id: String(row.id), originalName: row.original_name, sourceKind: row.source_kind,
+    status: row.status, rowsRead: row.rows_read, patched: row.patched,
+    created: row.created, exceptions: row.exceptions, error: row.error,
+    createdAt: row.created_at,
+  }));
+}
 
 /** Where tools/import_source.py leaves what it did. Read straight from the
  *  repo, the same way the catalogue itself is read -- an import run is a

@@ -64,7 +64,12 @@ const library = fs.readFileSync("app/admin/(secure)/library/page.tsx", "utf8");
 check("research_articles is reachable from the generic library viewer",
   library.includes('"research_articles"') && library.includes('add: "/admin/research/new"'));
 const nav = fs.readFileSync("components/admin/AdminNav.tsx", "utf8");
-check("authoring is reachable from the sidebar", nav.includes('href="/admin/research/new"'));
+// The sidebar's Research door is the internal file library, not the article
+// editor. Published articles, their access policy and their quota are
+// untouched -- authoring still lives behind the generic library viewer
+// (asserted above), it is just not one of the six operator doors.
+check("the sidebar's research door is the file library", nav.includes('href="/admin/research"'));
+check("article authoring is not an operator door", !nav.includes('href="/admin/research/new"'));
 
 console.log("\npublic pages: everyone sees the list, nobody free-rides the body");
 const listPage = fs.readFileSync("app/research/page.tsx", "utf8");

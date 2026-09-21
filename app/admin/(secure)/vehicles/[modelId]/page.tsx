@@ -7,6 +7,8 @@ import { trimEditorFields } from "@/lib/spec-field-registry";
 import { fieldAppliesTo } from "@/lib/trim-editor-fields";
 import { BODY_TYPES, SEGMENTS } from "@/lib/vehicle-taxonomy";
 import { prepareModelGenerationEdit } from "@/app/admin/vehicle-editor-actions";
+import { saveTrimPrice } from "@/app/admin/trim-price-actions";
+import type { WorkspaceTrim } from "@/lib/canonical-editor";
 import TrimEditorForm from "@/components/admin/TrimEditorForm";
 
 function money(value: unknown) {
@@ -99,6 +101,9 @@ export default async function VehicleWorkspacePage({
 
     {trims.map((trim) => <details key={trim.canonicalId} id={`trim-${trim.canonicalId}`} className="adminNotice">
       <summary><b>แก้ {trim.name}</b> · {trim.powertrain} · <code>{trim.canonicalId}</code></summary>
+
+      <TrimPriceSection trim={trim} modelId={modelId} submittedAt={submittedAt} />
+
       <TrimEditorForm
         modelId={modelId} releaseId={releaseId} submittedAt={submittedAt}
         submissionId={randomUUID()} today={today}
@@ -138,6 +143,49 @@ export default async function VehicleWorkspacePage({
     </> : null}
 
   </div>;
+}
+
+/** What a showroom quotes, saved in one go.
+ *
+ *  Campaign bookkeeping -- the campaign id, its option, the effective dates
+ *  the ledger keys a promotion by -- is derived in the action from these
+ *  fields, so the owner fills in prices and dates and nothing else. */
+function TrimPriceSection({ trim, modelId, submittedAt }: {
+  trim: WorkspaceTrim; modelId: string; submittedAt: string;
+}) {
+  const list = trim.prices.find((row) => row.priceType === "LIST_PRICE");
+  const campaign = trim.prices.find((row) => row.priceType === "CAMPAIGN_PRICE");
+  return <>
+    <form action={saveTrimPrice} className="adminForm">
+      <input type="hidden" name="trim_id" value={trim.canonicalId} />
+      <input type="hidden" name="model_id" value={modelId} />
+      <input type="hidden" name="submission_id" value={randomUUID()} />
+      <input type="hidden" name="submitted_at" value={submittedAt} />
+      <label className="adminField"><span>ราคาปกติ (ปัจจุบัน: {money(list?.amountThb)})</span>
+        <input name="list_price" type="number" min="1" step="1" placeholder="เช่น 1290000" /></label>
+      <label className="adminField"><span>ราคาโปร (ปัจจุบัน: {money(campaign?.amountThb)})</span>
+        <input name="campaign_price" type="number" min="1" step="1" /></label>
+      <label className="adminField adminFieldWide"><span>ของแถม / รายละเอียดแคมเปญ</span>
+        <input name="gifts" type="text" defaultValue={campaign?.gifts || ""}
+          placeholder="ประกันชั้น 1, ฟิล์ม, Wall charger…" /></label>
+      <label className="adminField"><span>เริ่ม</span><input name="starts" type="date" defaultValue={campaign?.effectiveFrom || ""} /></label>
+      <label className="adminField"><span>สิ้นสุด</span><input name="ends" type="date" defaultValue={campaign?.effectiveTo || ""} /></label>
+      <div className="adminFormActions"><button className="adminPrimary">บันทึกราคา</button></div>
+    </form>
+    {trim.prices.length ? <details>
+      <summary>ประวัติราคา ({trim.prices.length})</summary>
+      <div className="libraryTable"><table>
+        <thead><tr><th>ราคา</th><th>ประเภท</th><th>ช่วง</th><th>บันทึกเมื่อ</th><th>ที่มา</th></tr></thead>
+        <tbody>{trim.prices.map((row, index) => <tr key={`${row.priceType}-${row.observedAt}-${index}`}>
+          <td>{money(row.amountThb)}</td>
+          <td>{row.priceType}</td>
+          <td>{row.effectiveFrom || "—"}{row.effectiveTo ? ` → ${row.effectiveTo}` : ""}</td>
+          <td>{row.observedAt || "—"}</td>
+          <td>{row.source || "—"}</td>
+        </tr>)}</tbody>
+      </table></div>
+    </details> : null}
+  </>;
 }
 
 /** Optional source/reason, shown once per form. Never required. */
