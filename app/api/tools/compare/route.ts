@@ -5,7 +5,7 @@ import { loadSpecFieldRegistry } from "@/lib/spec-field-registry";
 import { requireActivatedAccess, requireUsage, AccessPolicyError } from "@/lib/access-policy-server";
 import { recordEvent } from "@/lib/telemetry";
 import {
-  ANON_COMPARE_COOKIE, ANON_COMPARE_LIMIT, allowanceFrom, cookieOptions, encodeCount,
+  ANON_COMPARE_COOKIE, ANON_COMPARE_DAILY_LIMIT, allowanceFrom, bangkokDayKey, cookieOptions, encodeCount,
 } from "@/lib/anon-allowance";
 
 export const dynamic = "force-dynamic";
@@ -57,7 +57,7 @@ async function anonymousComparison(requestedIds: string[], diffOnly: boolean, re
   return NextResponse.json({
     ...body,
     quota: { used: 0, limit: null, remaining: null, resets_at: "" },
-    anonymous: { remaining, limit: ANON_COMPARE_LIMIT },
+    anonymous: { remaining, limit: ANON_COMPARE_DAILY_LIMIT },
   }, { headers: { "Cache-Control": "private, no-store" } });
 }
 
@@ -71,21 +71,23 @@ export async function GET(request: NextRequest) {
   const diffOnly = request.nextUrl.searchParams.get("diff") === "1";
 
   // Comparing specifications is the free product. An anonymous reader gets a
-  // real trial of it -- four comparisons, counted per press of the button --
-  // before being asked for an account, because a tool nobody has used is a
-  // tool nobody signs up for. The allowance is a cookie: see lib/anon-allowance.
+  // real trial of it -- ten comparisons a day, counted per press of the
+  // button -- before being asked for an account, because a tool nobody has
+  // used is a tool nobody signs up for. The allowance is a cookie: see
+  // lib/anon-allowance.
   if (!accessToken) {
+    const scope = bangkokDayKey();
     const allowance = allowanceFrom(
-      request.cookies.get(ANON_COMPARE_COOKIE)?.value, "life", ANON_COMPARE_LIMIT);
+      request.cookies.get(ANON_COMPARE_COOKIE)?.value, scope, ANON_COMPARE_DAILY_LIMIT);
     if (allowance.exhausted) {
       return NextResponse.json({
-        error: "ใช้สิทธิ์เทียบรถแบบไม่ต้องสมัครครบแล้ว สมัครบัญชีฟรีเพื่อเทียบต่อได้ไม่จำกัด",
+        error: "ใช้สิทธิ์เทียบรถวันนี้ครบแล้ว สมัครบัญชีฟรีเพื่อเทียบได้ไม่จำกัด หรือกลับมาใหม่พรุ่งนี้",
         signup_required: true,
       }, { status: 401 });
     }
     const response = await anonymousComparison(requestedIds, diffOnly, allowance.remaining - 1);
     response.cookies.set(
-      ANON_COMPARE_COOKIE, encodeCount("life", allowance.used + 1), cookieOptions());
+      ANON_COMPARE_COOKIE, encodeCount(scope, allowance.used + 1), cookieOptions());
     return response;
   }
 
