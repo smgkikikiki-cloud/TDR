@@ -33,11 +33,21 @@ function toPreview(row: any): ResearchArticlePreview {
 
 /** A deployment may ship the research UI before migration_v38 has been applied
  * to its database. In that state research is simply an empty catalogue; an
- * optional content layer must not take the public homepage down. */
+ * optional content layer must not take the public homepage down.
+ *
+ * Supabase can report a missing relation in two ways depending on where it is
+ * observed: PostgreSQL itself uses 42P01, while PostgREST returns PGRST205 when
+ * the table is absent from its schema cache. Both describe the same expected
+ * pre-migration state here. */
 function researchTableMissing(error: any): boolean {
-  if (String(error?.code || "") === "42P01") return true;
+  const code = String(error?.code || "");
+  if (code === "42P01" || code === "PGRST205") return true;
   const message = String(error?.message || "").toLowerCase();
-  return message.includes("research_articles") && (message.includes("does not exist") || message.includes("not found"));
+  if (!message.includes("research_articles")) return false;
+  return message.includes("does not exist")
+    || message.includes("not found")
+    || message.includes("could not find")
+    || message.includes("schema cache");
 }
 
 /** Every published piece, newest first. What the public list and the
