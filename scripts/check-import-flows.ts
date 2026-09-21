@@ -151,22 +151,32 @@ console.log("\nmember access: signing in is the entitlement");
 for (const path of ["app/api/tools/compare/route.ts", "app/api/tools/sales-modules/route.ts",
                     "app/api/research/read/route.ts", "app/api/export/pdf/route.ts",
                     "lib/registration-analytics.ts"]) {
-  check(`${path} does not gate the product on a profile`, !read(path).includes("requireActivatedAccess"));
+  check(`${path} does not gate the product on a profile`, !read(path).includes("requireCurrentVerifiedIdentity"));
 }
-check("paying still asks for verified identity", read("lib/billing.ts").includes("requireActivatedAccess("));
+check("paying still asks for verified identity", read("lib/billing.ts").includes("requireCurrentVerifiedIdentity("));
+// A stored activation is a record that the account once qualified, not a
+// standing permission: an account whose phone identity has since been
+// revoked is not a verified identity today.
+check("and works it out from the current state, not a stored flag",
+  !/requireCurrentVerifiedIdentity[\s\S]{0,1200}?if \(!profile\?\.activation_completed_at\) \{/.test(
+    read("lib/access-policy-server.ts")));
 
 console.log("\nprofile is edited a field at a time, not re-submitted whole");
+// What a save changes, case by case, is asserted by running it:
+// scripts/check-member-profile.ts. These two only keep the route wired to
+// that one decision instead of growing a second copy of it.
 const profileRoute = read("app/api/account/profile/route.ts");
+check("the route applies the shared plan rather than its own rules",
+  profileRoute.includes("planProfileUpdate(body, existing"));
+check("and does not re-read the body field by field on the side",
+  !profileRoute.includes("hasOwnProperty.call(body,"));
+const profilePlan = read("lib/profile-update.ts");
 // A member updating one field is not also saying they withdrew consent and
 // are no longer a company. Only keys the request actually carries are written.
-check("only keys the request sends are written", profileRoute.includes("hasOwnProperty.call(body,"));
-for (const field of ["postcode", "is_individual", "company_name", "marketing_consent"]) {
-  check(`${field} is only touched when sent`, profileRoute.includes(`sent("${field}")`));
-}
-check("an omitted consent no longer writes false",
-  !/const marketingConsent = body\.marketing_consent === true;\n\n/.test(profileRoute));
-check("an empty body does not stamp the profile as filled in",
-  profileRoute.includes("touchedFields"));
+check("absence means untouched, in one place",
+  profilePlan.includes("hasOwnProperty.call(body, key)"));
+check("completion is computed, not stamped on any edit",
+  profilePlan.includes("const justCompleted = profileComplete && !existing?.profile_completed_at"));
 
 console.log("\ncopy matches the policy it describes");
 const profilePage = read("app/member/profile/page.tsx");
@@ -183,7 +193,7 @@ const policyServer = read("lib/access-policy-server.ts");
 check("no comment still claims every tool route checks activation",
   !policyServer.includes("the single stored gate every tool route"));
 check("resolveAccessContext is not described as insufficient for tools",
-  !policyServer.includes("must use requireActivatedAccess() below instead"));
+  !policyServer.includes("must use requireCurrentVerifiedIdentity() below instead"));
 check("billing does not call activation the check every tool route uses",
   !read("lib/billing.ts").includes("the same centralized check every member tool route uses"));
 

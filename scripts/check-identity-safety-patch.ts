@@ -158,7 +158,7 @@ check("billing.ts never reads a user_metadata property anywhere in code (mention
 const createCheckoutFn = functionBody(billing, "export async function createCheckout(");
 check("createCheckout resolves the member via requireCheckoutEligibleMember (not the phone-optional requireMember)", createCheckoutFn.includes("requireCheckoutEligibleMember("), true);
 const eligibleMemberFn = functionBody(billing, "export async function requireCheckoutEligibleMember(");
-check("requireCheckoutEligibleMember enforces the same centralized activation gate every tool route uses", eligibleMemberFn.includes("requireActivatedAccess("), true);
+check("requireCheckoutEligibleMember recomputes verified identity rather than trusting a stored flag", eligibleMemberFn.includes("requireCurrentVerifiedIdentity("), true);
 check("requireCheckoutEligibleMember refuses to proceed without a trusted phone on file", eligibleMemberFn.includes("if (!member.phone)"), true);
 const requireMemberFn = functionBody(billing, "export async function requireMember(");
 check("requireMember resolves phone ONLY from the trusted tdr_customer_phone_identities ledger", requireMemberFn.includes('.from("tdr_customer_phone_identities")'), true);

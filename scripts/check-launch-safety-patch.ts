@@ -41,7 +41,7 @@ const reachesActivationDirectly = new Set([
 for (const [path, source] of Object.entries(toolRoutes)) {
   if (reachesActivationDirectly.has(path)) {
     check(`${path} resolves a member session before serving`, source.includes("requireMemberAccess") || source.includes("getRegistrationDashboard"), true);
-    check(`${path} does not gate the product behind profile completion`, !source.includes("requireActivatedAccess"), true);
+    check(`${path} does not gate the product behind profile completion`, !source.includes("requireCurrentVerifiedIdentity"), true);
   }
 }
 check(
@@ -53,12 +53,12 @@ check(
 // member is -- checkout moves money -- it is just not what a dashboard asks.
 check(
   "verified identity is still available for identity-sensitive operations",
-  fs.readFileSync("lib/access-policy-server.ts", "utf8").includes("export async function requireActivatedAccess"),
+  fs.readFileSync("lib/access-policy-server.ts", "utf8").includes("export async function requireCurrentVerifiedIdentity"),
   true,
 );
 check(
   "paying still requires verified identity",
-  fs.readFileSync("lib/billing.ts", "utf8").includes("requireActivatedAccess("),
+  fs.readFileSync("lib/billing.ts", "utf8").includes("requireCurrentVerifiedIdentity("),
   true,
 );
 

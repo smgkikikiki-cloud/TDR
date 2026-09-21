@@ -35,7 +35,7 @@ export interface AccessContext {
 // Research and PDF export all reach it through requireMemberAccess(), and
 // what comes back is decided by tier and quota. Verified identity is a
 // separate question, asked only where identity is the subject of the
-// operation -- see requireActivatedAccess() below.
+// operation -- see requireCurrentVerifiedIdentity() below.
 export async function resolveAccessContext(accessToken: string): Promise<AccessContext> {
   const db = adminDb();
   if (!db) throw new AccessPolicyError(503, "access policy database is not configured");
@@ -185,7 +185,7 @@ export async function evaluateAndPersistActivation(ctx: AccessContext): Promise<
  *  Phone, postcode and company are enrichment, collected at /member/profile
  *  because they are useful, never because a dashboard depends on them.
  *
- *  requireActivatedAccess below still exists for the operations where
+ *  requireCurrentVerifiedIdentity below still exists for the operations where
  *  identity is the point -- paying is one -- and nothing else should reach
  *  for it. */
 export async function requireMemberAccess(accessToken: string): Promise<AccessContext> {
@@ -197,18 +197,44 @@ export async function requireMemberAccess(accessToken: string): Promise<AccessCo
 // money moves, so a confirmed email, an OTP-verified phone and a complete
 // billing profile are the operation's own requirements. Product routes use
 // requireMemberAccess() instead -- see the note there.
-export async function requireActivatedAccess(accessToken: string): Promise<AccessContext> {
+//
+// Computed now, from the parts, every time. activation_completed_at is a
+// record that the account once satisfied all of this; it is not a standing
+// permission, and reading it as one meant an account whose phone identity
+// had since been revoked still passed the gate that exists precisely to
+// know whose card is being charged.
+//
+// The one exception is deliberate and narrow: the paying customer who
+// predates the verification flow was grandfathered by migration_v34 with
+// activation_source='LEGACY_PAID'. Recomputing would lock a real customer
+// out of their own billing, so that grant still stands -- and it is the
+// only thing the stored flag is allowed to decide.
+export async function requireCurrentVerifiedIdentity(accessToken: string): Promise<AccessContext> {
   const ctx = await resolveAccessContext(accessToken);
   const { data: profile, error } = await ctx.db
     .from("tdr_customer_profiles")
-    .select("activation_completed_at")
+    .select("postcode,is_individual,company_name,activation_completed_at,activation_source")
     .eq("user_id", ctx.userId)
     .maybeSingle();
   if (error) throw new AccessPolicyError(503, "could not verify account activation");
-  if (!profile?.activation_completed_at) {
+
+  if (profile?.activation_completed_at && profile.activation_source === "LEGACY_PAID") {
+    return ctx;
+  }
+
+  const missing: string[] = [];
+  if (!ctx.emailConfirmed) missing.push("confirm your email");
+  if (!(await hasTdrConfirmedPhoneVerification(ctx.db, ctx.userId))) {
+    missing.push("verify your mobile phone");
+  }
+  if (!profile?.postcode) missing.push("add your postcode");
+  if (!profile?.is_individual && !(profile?.company_name || "").trim()) {
+    missing.push("name your organization, or say you are an individual");
+  }
+  if (missing.length) {
     throw new AccessPolicyError(
       403,
-      "account activation required: confirm your email, verify your mobile phone, and complete your profile at /member/profile",
+      `account verification required: ${missing.join(", ")} at /member/profile`,
     );
   }
   return ctx;

@@ -2,7 +2,7 @@ import { createHmac, timingSafeEqual } from "node:crypto";
 import { adminDb } from "@/lib/supabase";
 import { findPlan, planPriceId, type PlanDefinition } from "@/lib/plans";
 import { recordEvent } from "@/lib/telemetry";
-import { requireActivatedAccess } from "@/lib/access-policy-server";
+import { requireCurrentVerifiedIdentity } from "@/lib/access-policy-server";
 
 export const REGISTRATION_PLAN = "registration_monthly";
 export const REGISTRATION_PRODUCT = "registration_full";
@@ -124,15 +124,19 @@ export async function requireMember(accessToken: string): Promise<MemberContext>
 // it: the account must be fully TDR-verified (lib/access-policy-server.ts
 // -- confirmed email, TDR-confirmed phone verification, complete profile)
 // AND have a trusted phone on file to hand to Stripe. Member tools ask for
-// none of this; they resolve a session and serve by tier and quota. An account activated only
-// through the legacy-paid compatibility path (see migration_v34,
-// activation_source='LEGACY_PAID') has no real verified phone identity
-// and so cannot start a brand-new checkout until it completes real
-// verification -- this never touches that account's EXISTING
-// subscription/Billing Portal access, only a fresh Checkout session.
+// none of this; they resolve a session and serve by tier and quota.
+//
+// The identity is recomputed here rather than read off a stored flag: an
+// account that was verified last year but whose phone identity has since
+// been revoked is not a verified identity today, and this is the gate
+// that exists to know whose card is being charged. The legacy-paid
+// account grandfathered by migration_v34 still passes -- it is a real
+// paying customer who predates the flow -- but it has no trusted phone on
+// file, so the phone check below still stops a fresh Checkout session
+// while leaving its existing subscription and Billing Portal untouched.
 export async function requireCheckoutEligibleMember(accessToken: string): Promise<MemberContext & { phone: string }> {
   try {
-    await requireActivatedAccess(accessToken);
+    await requireCurrentVerifiedIdentity(accessToken);
   } catch (error) {
     if (error instanceof Error && "status" in error) {
       throw new BillingError((error as { status: number }).status, error.message);
