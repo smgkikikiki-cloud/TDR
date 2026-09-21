@@ -4,6 +4,7 @@ import "./catalog-v12.css";
 import "./storefront.css";
 import "./compare.css";
 import "./home-v2.css";
+import "./home-polish.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { PublicChrome } from "@/components/PublicChrome";
