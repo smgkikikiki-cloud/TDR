@@ -97,6 +97,17 @@ def main(argv=None) -> int:
     parser.add_argument("--as-of", type=date.fromisoformat)
     parser.add_argument("--overrides", type=Path)
     parser.add_argument("--data-dir", type=Path, default=DATA_DIR)
+    # How far along the git history the tree this release was built from
+    # sits -- typically `git rev-list --count <revision>`. Not part of the
+    # release's own content (SEMANTIC_KEYS/source_hash), and never
+    # required: it exists only so the publish RPC can refuse to activate a
+    # release built from an OLDER commit than what is already serving, when
+    # two publish jobs for different commits happen to race. Main only
+    # ever fast-forwards here (every writer rebases before it pushes), so
+    # this count is monotonic with real commit order as long as it is
+    # measured from a full clone -- a shallow one undercounts and must not
+    # supply this.
+    parser.add_argument("--revision-ordinal", type=int, default=None)
     args = parser.parse_args(argv)
     inventory = json.loads(args.inventory.read_text(encoding="utf-8"))
     overrides = (json.loads(args.overrides.read_text(encoding="utf-8"))
@@ -113,6 +124,8 @@ def main(argv=None) -> int:
         data_dir=args.data_dir,
         source_aliases=overrides.get("source_aliases", {}),
     )
+    if args.revision_ordinal is not None:
+        release["revision_ordinal"] = args.revision_ordinal
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(release, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({

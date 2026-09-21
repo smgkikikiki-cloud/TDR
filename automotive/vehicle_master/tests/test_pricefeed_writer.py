@@ -93,7 +93,7 @@ def _batch_file(data: Path, *, amount: int, name: str, published: str,
 
 
 def _run(data: Path, path: Path, observed_at: str, **kwargs) -> dict:
-    return pricefeed_write.run(path, data_dir=data, year=YEAR, decisions_path=None,
+    return pricefeed_write.run(path, data_dir=data, year=YEAR,
                                observed_at=observed_at, apply=kwargs.pop("apply", True),
                                **kwargs)
 
@@ -186,7 +186,7 @@ def test_the_same_commands_are_the_same_batch_and_apply_once(data: Path, tmp_pat
 
 def _planned_batch(data: Path, path: Path, observed_at: str) -> dict:
     """Plan the file without applying, to get the batch it would send."""
-    summary = pricefeed_write.run(path, data_dir=data, year=YEAR, decisions_path=None,
+    summary = pricefeed_write.run(path, data_dir=data, year=YEAR,
                                   observed_at=observed_at, apply=False)
     return {
         "schema_version": 1, "batch_id": summary["batch_id"], "year": YEAR,
@@ -317,3 +317,56 @@ def test_two_feed_observations_for_one_day_are_an_exception_not_a_coin_toss(data
     assert _serving(data, "2026-09-10") == 899_000
     stored = json.loads(Path(summary["exceptions_stored"]["file"]).read_text(encoding="utf-8"))
     assert stored["exceptions"][0]["kind"] == "PRICE_CONFLICT"
+
+
+# --- H: a human decision file cannot promote a price in the automated path
+
+def test_a_single_source_tier_b_claim_is_never_promoted_even_with_a_publish_decision_on_disk(data: Path):
+    """The exact regression: the writer used to load
+    review/decisions.json and pass it through, so a HUMAN "publish"
+    decision left over from manual review of an EARLIER batch could
+    silently promote an unrelated single-source claim on a later,
+    unattended run. tools.pricefeed_write.run() no longer accepts a
+    decisions argument at all -- this proves the file's presence, in the
+    exact path the removed --decisions flag used to point at, changes
+    nothing."""
+    _write(data / f"{YEAR}/market/pricefeed/sources.json", {"sources": [{
+        "id": "car-blog", "name": "A Car Blog", "tier": "B",
+        "base_url": "https://carblog.example", "adapter": "static",
+    }]})
+    claim_id = "claim-899000-2026-09-10"
+    batch = _batch_file(data, amount=899_000, name="batch-h", published="2026-09-10")
+    payload = json.loads(batch.read_text(encoding="utf-8"))
+    payload["documents"][0]["source_id"] = "car-blog"
+    payload["claims"][0]["source_id"] = "car-blog"
+    payload["claims"][0]["claim_id"] = claim_id
+    batch.write_text(json.dumps(payload), encoding="utf-8")
+
+    decisions_path = data / f"{YEAR}/market/pricefeed/review/decisions.json"
+    decisions_path.parent.mkdir(parents=True, exist_ok=True)
+    decisions_path.write_text(json.dumps({"decisions": [{
+        "claim_id": claim_id, "action": "publish",
+        "reviewer": "owner", "origin": "human",
+    }]}), encoding="utf-8")
+
+    summary = _run(data, batch, "2026-09-10")
+
+    # A single Tier-B voice is "provisional" by the resolver's own rule
+    # (single_tier_b) and never becomes a canonical offer without a
+    # decision promoting it -- which nothing here can apply anymore.
+    assert summary["canonical_offers"] == 0
+    assert summary["planned"]["WRITTEN"] == 0
+    assert _serving(data, "2026-09-10") is None
+    assert _rows(data) == []
+
+
+def test_the_cli_no_longer_accepts_a_decisions_flag(data: Path):
+    """Structural: the flag that made the regression possible is gone,
+    not merely unused."""
+    import subprocess
+    import sys
+
+    result = subprocess.run(
+        [sys.executable, "-m", "tools.pricefeed_write", "--help"],
+        cwd=Path(__file__).resolve().parents[1], capture_output=True, text=True)
+    assert "--decisions" not in result.stdout

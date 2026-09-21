@@ -48,3 +48,50 @@ def test_a_workflow_that_pushes_also_publishes_what_it_pushed(workflow: str):
         f"{workflow} pushes to main without publishing; the data would sit unserved")
     assert "--revision" in script, (
         f"{workflow} must publish the exact commit it pushed, not whatever is on main")
+
+
+def test_all_four_canonical_publishers_share_one_concurrency_group():
+    """The primary defense against the race migration_v44 also guards:
+    no two of these can run at the same time at all. See
+    test_release_activation_staleness_guard_migration_v44.py for the
+    behavioural half (an out-of-order queue within that serialization)."""
+    for workflow in ("source-import.yml", "canonical-input.yml",
+                     "pricefeed.yml", "vehicle-release.yml"):
+        document = yaml.safe_load((WORKFLOWS / workflow).read_text(encoding="utf-8"))
+        assert document["concurrency"]["group"] == "canonical-vehicle-input", workflow
+
+
+def test_every_publisher_that_needs_the_ordinal_guard_fetches_full_history():
+    """git rev-list --count undercounts on a shallow clone, silently
+    disabling migration_v44's guard for that workflow."""
+    for workflow in ("source-import.yml", "canonical-input.yml",
+                     "pricefeed.yml", "vehicle-release.yml"):
+        checkouts = [step for step in _steps(workflow) if step.get("uses", "").startswith("actions/checkout")]
+        assert checkouts, workflow
+        assert any((step.get("with") or {}).get("fetch-depth") == 0 for step in checkouts), workflow
+
+
+def test_canonical_input_marks_its_own_batches_published_after_a_real_publish():
+    script = _script("canonical-input.yml")
+    assert "mark-published" in script
+    assert script.index("tools.publish_canonical") < script.index("mark-published")
+
+
+def test_source_import_recovers_a_stuck_publish_before_doing_anything_else():
+    script = _script("source-import.yml")
+    assert "stuck-runs" in script and "mark-committed" in script
+    # Recovery has to run before the normal import/commit/publish sequence,
+    # so it can fix a prior failure even when this tick has no new work.
+    names = [str(step.get("name") or "") for step in _steps("source-import.yml")]
+    recover_index = next(i for i, n in enumerate(names) if "stuck" in n.lower())
+    import_index = next(i for i, n in enumerate(names) if n == "Import every uploaded file")
+    assert recover_index < import_index
+
+
+def test_the_price_feed_never_loads_a_human_decisions_file():
+    """No human publish/approval gate in the normal automated price path
+    -- see test_pricefeed_writer.py for the behavioural proof that a
+    decisions.json on disk cannot promote a price even if one exists."""
+    script = _script("pricefeed.yml")
+    assert "--decisions" not in script
+    assert "review/decisions.json" not in script

@@ -15,6 +15,8 @@ permissions:
   pull-requests: write
 
 concurrency:
+  # Shared with source-import, pricefeed and vehicle-release -- see
+  # pricefeed.yml's concurrency comment.
   group: canonical-vehicle-input
   cancel-in-progress: false
 
@@ -109,4 +111,19 @@ jobs:
       # release carrying it is serving.
       - name: Publish the pushed revision
         if: steps.preflight.outputs.ready == 'true' && steps.changes.outputs.count != '0'
-        run: PYTHONPATH=. python -m tools.publish_canonical --revision "${{ steps.commit.outputs.sha }}"
+        id: publish
+        run: |
+          set -euo pipefail
+          result=$(PYTHONPATH=. python -m tools.publish_canonical --revision "${{ steps.commit.outputs.sha }}")
+          echo "$result"
+          echo "release_id=$(echo "$result" | python -c 'import json,sys; print(json.load(sys.stdin)["release_id"])')" >> "$GITHUB_OUTPUT"
+      # Named batches only (from the same result file mark-staged used),
+      # and only once publish above has actually succeeded -- a batch
+      # whose publish fails is never marked PUBLISHED; it stays STAGED,
+      # exactly where the next successful publish will find and finish it.
+      - name: Mark the applied batches PUBLISHED
+        if: steps.preflight.outputs.ready == 'true' && steps.changes.outputs.count != '0'
+        run: |
+          PYTHONPATH=. python tools/canonical_input_worker.py mark-published \
+            --result-file /tmp/canonical-input.json \
+            --release-id "${{ steps.publish.outputs.release_id }}"

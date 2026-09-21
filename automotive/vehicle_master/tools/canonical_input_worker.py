@@ -150,13 +150,25 @@ def mark_staged(result_file: Path, pull_request_url: str) -> int:
     return 0
 
 
-def mark_published(data_dir: Path, release_file: Path) -> int:
-    release = json.loads(release_file.read_text(encoding="utf-8"))
-    release_id = str(release["release_id"])
-    markers = data_dir.glob("*/canonical_state/input_batches/*.json")
+def mark_published(result_file: Path, release_id: str) -> int:
+    """Mark PUBLISHED exactly the batches this run's own pull applied.
+
+    Named batches only, read from the same result file mark_staged() used
+    -- not a glob over every input_batches marker ever written to the
+    tree. A marker sweep would mark PUBLISHED any STAGED batch whose file
+    still happens to be on disk regardless of which run applied it or
+    which release call is doing the marking, the same class of bug
+    tools.import_worker.finalize()'s own "named runs only" rule exists to
+    avoid. Called only after publish has actually succeeded, so a batch
+    whose publish failed is never marked PUBLISHED at all -- it stays
+    STAGED, exactly where a retried publish will find and finish it.
+    """
+    if not release_id:
+        raise SystemExit("mark-published needs the release_id the publish produced")
+    payload = json.loads(result_file.read_text(encoding="utf-8"))
+    batch_keys = [str(row["batch_key"]) for row in payload.get("applied", [])]
     count = 0
-    for marker in markers:
-        batch_key = str(json.loads(marker.read_text(encoding="utf-8"))["batch_id"])
+    for batch_key in batch_keys:
         rows = _request(
             "PATCH",
             "canonical_input_batches?batch_key=eq."
@@ -185,8 +197,8 @@ def main(argv=None) -> int:
     p_stage.add_argument("--result-file", type=Path, required=True)
     p_stage.add_argument("--pull-request-url", required=True)
     p_publish = sub.add_parser("mark-published")
-    p_publish.add_argument("--data-dir", type=Path, default=DATA_DIR)
-    p_publish.add_argument("--release-file", type=Path, required=True)
+    p_publish.add_argument("--result-file", type=Path, required=True)
+    p_publish.add_argument("--release-id", required=True)
     args = parser.parse_args(argv)
     if args.command == "check":
         try:
@@ -198,7 +210,7 @@ def main(argv=None) -> int:
         return pull(args.data_dir, args.result_file, max(1, min(args.limit, 50)))
     if args.command == "mark-staged":
         return mark_staged(args.result_file, args.pull_request_url)
-    return mark_published(args.data_dir, args.release_file)
+    return mark_published(args.result_file, args.release_id)
 
 
 if __name__ == "__main__":

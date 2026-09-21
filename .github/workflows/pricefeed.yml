@@ -14,7 +14,12 @@ permissions:
   pull-requests: write
 
 concurrency:
-  group: tdr-pricefeed
+  # Shared with every other workflow that can activate a canonical vehicle
+  # release (source-import, canonical-input, vehicle-release), so no two
+  # of them can publish concurrently -- see migration_v44's ordinal guard
+  # for the case a shared group alone cannot fully prevent (an
+  # out-of-order queue, not true concurrency).
+  group: canonical-vehicle-input
   cancel-in-progress: false
 
 jobs:
@@ -54,13 +59,18 @@ jobs:
       # batch and said what it thought of it; it has never been able to
       # write, so this step failed on every tick and no harvested price has
       # ever reached the ledger. This applies them through the same
-      # canonical pipeline a Save in the admin goes through.
+      # canonical pipeline a Save in the admin goes through -- evidence in,
+      # canonical OR exception out, deterministically. No --decisions file:
+      # that let a person's earlier call on an unrelated claim silently
+      # promote a single-source price to canonical on a later, unattended
+      # run. Manual review of a batch is still possible with the legacy,
+      # evidence-only `vehreg market price-run --decisions`, which was
+      # never wired to write.
       - name: Write the resolved prices into the ledger
         run: |
           set -euo pipefail
           latest=$(ls -1 vehreg/data/2026/market/pricefeed/batch-*.json | tail -1)
           PYTHONPATH=. python -m tools.pricefeed_write "$latest" \
-            --decisions vehreg/data/2026/market/pricefeed/review/decisions.json \
             --observed-at "$(date -u +%F)" | tee /tmp/price-write.json
       - run: python tools/pricefeed_guard.py --base origin/main --repo-prefix automotive/vehicle_master/
       - run: pytest -q

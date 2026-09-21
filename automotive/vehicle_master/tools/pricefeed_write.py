@@ -152,16 +152,30 @@ def _post_exceptions(rows: list[dict], *, batch_ref: str) -> str:
     return run_id
 
 
-def run(path: Path, *, data_dir: Path, year: int, decisions_path: Path | None,
+def run(path: Path, *, data_dir: Path, year: int,
         observed_at: str, apply: bool) -> dict:
+    """The normal, automated production path: evidence in, canonical OR
+    exception out, deterministically -- never a human decision file.
+
+    A decision entry with origin HUMAN and action "publish" is what
+    ``pricefeed.run`` uses to promote a single-source ("provisional")
+    price to canonical; the production workflow used to pass one in
+    (``--decisions review/decisions.json``), which meant a person's
+    earlier call on an unrelated claim could silently promote a
+    provisional price the very next time this ran, with no review
+    happening in that run at all. There is never a decisions argument
+    here, by construction, so that path cannot be reopened by a future
+    caller passing one back in. Manual review of a batch is still
+    possible -- ``vehreg market price-run --decisions`` -- but that
+    command is evidence-only and was never wired to a writer.
+    """
     documents, claims = pricefeed.load_batch(path)
     catalog = Catalog.load(data_dir, year)
     ledger = PriceLedger.load(data_dir, year=year, catalog=catalog)
-    decisions = (pricefeed.load_decisions(decisions_path) if decisions_path else {})
     result = pricefeed.run(documents, claims,
                            pricefeed.load_sources(data_dir, year),
                            catalog, campaigns=ledger.campaigns,
-                           decisions=decisions, ledger=ledger)
+                           decisions={}, ledger=ledger)
 
     as_of = date.fromisoformat(observed_at)
     held, unresolvable = held_prices(ledger, result.offers, as_of=as_of)
@@ -222,15 +236,13 @@ def main(argv=None) -> int:
     parser.add_argument("path", type=Path, help="a harvest batch produced by pricefeed_harvest")
     parser.add_argument("--data-dir", type=Path, default=DATA_DIR)
     parser.add_argument("--year", type=int, default=DEFAULT_YEAR)
-    parser.add_argument("--decisions", type=Path, default=None)
     parser.add_argument("--observed-at", default=date.today().isoformat())
     parser.add_argument("--plan-only", action="store_true",
                         help="decide and record exceptions without writing prices")
     args = parser.parse_args(argv)
 
     summary = run(args.path, data_dir=args.data_dir, year=args.year,
-                  decisions_path=args.decisions, observed_at=args.observed_at,
-                  apply=not args.plan_only)
+                  observed_at=args.observed_at, apply=not args.plan_only)
     print(json.dumps(summary, ensure_ascii=False, indent=2, allow_nan=False))
     mismatched = [row for row in summary.get("now_serving", [])
                   if row["serving_thb"] != row["expected_thb"]]

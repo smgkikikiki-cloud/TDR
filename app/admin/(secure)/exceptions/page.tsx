@@ -1,15 +1,14 @@
 import Link from "next/link";
-import { getAdminUnmappedRegistrationSummary } from "@/lib/admin-registration-market";
 import { listVehicleModelsForPicker, listVehicleTrimsForPicker } from "@/lib/canonical-editor";
 import {
-  type RegistrationGap, listOpenExceptions, otherExceptions, registrationGaps,
+  DEFAULT_PAGE_SIZE, REGISTRATION_KIND, listOpenExceptionsPage, listRegistrationGaps,
 } from "@/lib/import-exceptions";
 import { importExceptions } from "@/lib/import-runs";
 import { assignRegistrationIdentity, resolveException } from "@/app/admin/exception-actions";
 
 export const dynamic = "force-dynamic";
 
-const PAGE_LIMIT = 200;
+const ON_DISK_LIMIT = 200;
 
 function n(value: number) {
   return Number(value || 0).toLocaleString("th-TH");
@@ -24,44 +23,43 @@ function gapKey(gap: { registrationType: string; brandRaw: string; modelRaw: str
   return `${gap.registrationType}|${gap.brandRaw}|${gap.modelRaw}`;
 }
 
+/** The chain of keyset cursors already used to reach the current page,
+ *  comma-joined in the URL. Its length is the (0-based) page index; its
+ *  last entry is the cursor the current page's query needs; dropping the
+ *  last entry is "back one page" without ever re-scanning from the top. */
+function cursorChain(raw: string | undefined): string[] {
+  return (raw || "").split(",").map((part) => part.trim()).filter(Boolean);
+}
+
+function pageHref(term: string, chain: string[]): string {
+  const params = new URLSearchParams();
+  if (term) params.set("q", term);
+  if (chain.length) params.set("cursors", chain.join(","));
+  const qs = params.toString();
+  return qs ? `/admin/exceptions?${qs}` : "/admin/exceptions";
+}
+
 export default async function ExceptionsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; assigned?: string; created?: string; resolved?: string }>;
+  searchParams: Promise<{
+    q?: string; assigned?: string; created?: string; resolved?: string; cursors?: string;
+  }>;
 }) {
   const query = await searchParams;
   const term = (query.q || "").trim().toLowerCase();
   const year = new Date().getFullYear();
+  const chain = cursorChain(query.cursors);
+  const currentCursor = chain.length ? chain[chain.length - 1] : null;
 
-  const [unmapped, models, open] = await Promise.all([
-    getAdminUnmappedRegistrationSummary(200).catch(() => [] as any[]),
+  const [gaps, models, page] = await Promise.all([
+    // Grouped server-side, over every OPEN row -- never a page read into
+    // memory. See public.import_run_registration_gaps (migration_v43).
+    listRegistrationGaps().catch(() => []),
     listVehicleModelsForPicker("").catch(() => []),
-    listOpenExceptions().catch(() => []),
+    listOpenExceptionsPage({ cursor: currentCursor, excludeKind: REGISTRATION_KIND })
+      .catch(() => ({ rows: [], total: 0, nextCursor: null })),
   ]);
-
-  // The work list is the exception store: one durable row per unresolved
-  // thing, with the grain the source published. Labels already sitting
-  // unmapped in the registration table from before that store existed are
-  // folded in beside them, so nothing waits for a file to be re-uploaded
-  // before it can be resolved.
-  const gaps: RegistrationGap[] = registrationGaps(open);
-  const known = new Set(gaps.map(gapKey));
-  for (const row of unmapped as any[]) {
-    const gap: RegistrationGap = {
-      ids: [],
-      brandRaw: String(row.brand_name_raw || ""),
-      modelRaw: String(row.model_name_raw || ""),
-      registrationType: String(row.registration_type || "*"),
-      grain: "MODEL",
-      units: Number(row.registrations || 0),
-      months: Number(row.months || 0),
-      latestPeriod: String(row.latest_period || ""),
-      reason: "ยังไม่มี mapping ที่บันทึกไว้",
-    };
-    if (!gap.brandRaw || !gap.modelRaw || known.has(gapKey(gap))) continue;
-    known.add(gapKey(gap));
-    gaps.push(gap);
-  }
 
   // A grade picker only where the source itself printed the grade, and only
   // for the brands in play -- the whole trim catalogue in a select is not a
@@ -82,16 +80,18 @@ export default async function ExceptionsPage({
     trimsByModel.set(trim.modelId, list);
   }
 
-  const others = otherExceptions(open)
+  const visibleGaps = gaps
+    .filter((gap) => !term || `${gap.brandRaw} ${gap.modelRaw}`.toLowerCase().includes(term));
+  const others = page.rows
     .filter((row) => !term || JSON.stringify(row).toLowerCase().includes(term));
   // What the CLI path left on disk, for runs that never went through a
   // queue row at all.
   const onDisk = importExceptions(year).flatMap((run) =>
     run.rows.map((row) => ({ ...row, runLabel: run.stem })));
 
-  const visible = gaps
-    .filter((gap) => !term || `${gap.brandRaw} ${gap.modelRaw}`.toLowerCase().includes(term))
-    .slice(0, PAGE_LIMIT);
+  const pageNumber = chain.length + 1;
+  const nextChain = page.nextCursor ? [...chain, page.nextCursor] : null;
+  const prevChain = chain.length ? chain.slice(0, -1) : null;
 
   return <div className="adminEditor">
     <div className="adminHeader">
@@ -124,17 +124,18 @@ export default async function ExceptionsPage({
     {/* ---------- registration labels with no car yet ---------- */}
     <div className="adminHeader"><div>
       <small>ยอดจดทะเบียน</small>
-      <h2>ป้ายชื่อจากต้นทางที่ยังไม่รู้ว่าเป็นรถคันไหน ({n(gaps.length)})</h2>
+      <h2>ป้ายชื่อจากต้นทางที่ยังไม่รู้ว่าเป็นรถคันไหน ({n(visibleGaps.length)})</h2>
       <p>
         ผูกตามที่ต้นทางบอกเท่านั้น — ไฟล์ที่บอกแค่ชื่อรุ่น ผูกได้แค่ระดับรุ่น
         ไฟล์ที่พิมพ์รุ่นย่อยมาด้วย (หลายยี่ห้อทำแบบนี้) ถึงจะเลือกรุ่นย่อยได้
         ถ้าเป็นรถที่ยังไม่มีในระบบ กด “สร้างรถใหม่” แล้วกลับมาผูกที่แถวเดิม
+        รายการนี้รวมทุกเดือนที่ค้างจริงเสมอ ไม่ตัดที่หน้าแรก
       </p>
     </div></div>
     <div className="libraryTable"><table>
       <thead><tr><th>ป้ายชื่อจากต้นทาง</th><th>ยอด</th><th>ล่าสุด</th><th>ผูกกับรถ</th></tr></thead>
       <tbody>
-        {visible.length ? visible.map((gap) => {
+        {visibleGaps.length ? visibleGaps.map((gap) => {
           const trimGrained = gap.grain === "TRIM";
           return <tr key={gapKey(gap)}>
             <td>
@@ -178,13 +179,13 @@ export default async function ExceptionsPage({
     {/* ---------- everything else an import could not place ---------- */}
     <div className="adminHeader"><div>
       <small>ไฟล์นำเข้า</small>
-      <h2>แถวจากไฟล์ที่ระบุตัวรถไม่ได้ ({n(others.length)})</h2>
+      <h2>แถวจากไฟล์ที่ระบุตัวรถไม่ได้ ({n(page.total)} ทั้งหมด)</h2>
       <p>แก้ที่หน้ารถแล้วอัปไฟล์เดิมซ้ำได้เลย — แถวที่ผูกได้แล้วจะไม่ถูกเขียนซ้ำ</p>
     </div></div>
     <div className="libraryTable"><table>
       <thead><tr><th>จากต้นทาง</th><th>ทำไมตัดสินไม่ได้</th><th>ไฟล์</th><th>ปิดรายการ</th></tr></thead>
       <tbody>
-        {others.length ? others.slice(0, PAGE_LIMIT).map((row) => <tr key={row.id}>
+        {others.length ? others.map((row) => <tr key={row.id}>
           <td>
             <b>{String(row.identity.model_id || row.identity.trim_id
               || `${row.identity.brand || ""} ${row.identity.model || ""}`.trim() || "—")}</b>
@@ -206,6 +207,18 @@ export default async function ExceptionsPage({
         </tr>) : <tr><td colSpan={4}>ไม่มีรายการค้าง</td></tr>}
       </tbody>
     </table></div>
+    <div className="adminPagination">
+      <span>หน้า {n(pageNumber)} — {n(others.length)} จาก {n(page.total)} แถวทั้งหมด (แสดง {n(DEFAULT_PAGE_SIZE)} ต่อหน้า)</span>
+      <span>
+        {prevChain !== null
+          ? <Link href={pageHref(term, prevChain)}>← ก่อนหน้า</Link>
+          : <span aria-disabled="true">← ก่อนหน้า</span>}
+        {" · "}
+        {nextChain
+          ? <Link href={pageHref(term, nextChain)}>ถัดไป →</Link>
+          : <span aria-disabled="true">ถัดไป →</span>}
+      </span>
+    </div>
 
     {onDisk.length ? <>
       <div className="adminHeader"><div>
@@ -216,7 +229,7 @@ export default async function ExceptionsPage({
       <div className="libraryTable"><table>
         <thead><tr><th>รถ</th><th>จากต้นทาง</th><th>ทำไมตัดสินไม่ได้</th><th>ไฟล์</th></tr></thead>
         <tbody>
-          {onDisk.slice(0, PAGE_LIMIT).map((row, index) => <tr key={`${row.runLabel}-${index}`}>
+          {onDisk.slice(0, ON_DISK_LIMIT).map((row, index) => <tr key={`${row.runLabel}-${index}`}>
             <td>{row.model_id || `${row.brand || ""} ${row.model || ""}`.trim() || "—"}</td>
             <td>{row.trim_name || row.model || "—"}</td>
             <td>{row.reason}</td>

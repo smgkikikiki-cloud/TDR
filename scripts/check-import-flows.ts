@@ -40,8 +40,13 @@ check("and can close one",
 check("a canonical run waits for its push before it claims to be done",
   worker.includes("WRITTEN_PENDING_PUBLISH") && worker.includes("CANONICAL_SOURCES"));
 const importFlow = read(".github/workflows/source-import.yml");
+// lastIndexOf on both sides: a stuck-publish recovery step (added for
+// blocker 7A) legitimately finalizes an EARLIER commit's runs before
+// this run's own push happens; what still has to hold is that THIS
+// run's own finalize (the last one in the file) comes after THIS run's
+// own push (also the last one in the file).
 check("finalize runs after the push, not before",
-  importFlow.indexOf("git push origin HEAD:main") < importFlow.indexOf("import_worker.py finalize"));
+  importFlow.lastIndexOf("git push origin HEAD:main") < importFlow.lastIndexOf("import_worker.py finalize"));
 
 console.log("\nno human approval in a deterministic write path");
 check("uploaded imports go to main rather than a pull request",
@@ -54,7 +59,9 @@ check("the price tracker publishes instead of opening a PR to merge",
 // called it with --write anyway, so it failed on every tick and no harvested
 // price ever reached the ledger.
 check("the price tracker calls a writer that can write",
-  pricefeed.includes("tools.pricefeed_write") && !pricefeed.includes("market price-run"));
+  pricefeed.includes("tools.pricefeed_write")
+    && !/(?<!`)python -m vehreg market price-run/.test(pricefeed)
+    && !/\bpython\s.*price-run.*--write/.test(pricefeed));
 for (const flow of [importFlow, pricefeed, canonicalInput]) {
   check("what is pushed is published in the same job",
     !flow.includes("git push origin HEAD:main")

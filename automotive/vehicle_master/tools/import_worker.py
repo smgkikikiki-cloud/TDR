@@ -35,8 +35,9 @@ from tools.canonical_input_worker import _env
 from tools.import_source import main as run_eco_import
 from vehreg.catalog import DATA_DIR, DEFAULT_YEAR, Catalog, CatalogError
 from vehreg.registration_import import (
-    MATCHED, UnsupportedRegistrationSchema, exception_rows, normalize_token,
-    parse_registration_rows, resolve_registrations, snapshot_rows,
+    MATCHED, MalformedSnapshotError, UnsupportedRegistrationSchema,
+    exception_rows, normalize_token, parse_registration_rows,
+    resolve_registrations, snapshot_rows,
 )
 
 BUCKET = "source-imports"
@@ -91,8 +92,19 @@ def _patch(run_id: str, patch: dict, *, expected_status: str | None = None):
 def _read_rows(path: Path) -> list[dict]:
     import pandas
 
-    frame = (pandas.read_csv(path) if path.suffix.lower() == ".csv"
-             else pandas.read_excel(path))
+    # keep_default_na=False: pandas' default NA-string list includes
+    # 'None', 'NULL', 'NA', 'n/a' and others, and silently rewrites any of
+    # them to float NaN on read -- discarding a real cell's content, not
+    # normalising a blank one. A DLT export that legitimately prints
+    # "None" in a field (seen in production: a model column reading
+    # literally "None") lost that value entirely, was reported as a
+    # matched, well-formed row with model_raw="nan", and could never be
+    # distinguished from a genuinely empty cell. With this off, a truly
+    # empty cell still reads back as an empty string, which
+    # vehreg.registration_import._cell() already treats as missing.
+    frame = (pandas.read_csv(path, keep_default_na=False)
+             if path.suffix.lower() == ".csv"
+             else pandas.read_excel(path, keep_default_na=False))
     return frame.to_dict(orient="records")
 
 
@@ -160,6 +172,14 @@ def _trim_detail_brands() -> frozenset[str]:
 def _import_dlt(source_file: Path, original_name: str, workdir: Path,
                 run_id: str, submitted_at: str) -> tuple[dict, list[dict]]:
     rows, rejected = parse_registration_rows(_read_rows(source_file))
+    # An official monthly export is a complete snapshot: writing only the
+    # rows that parsed and reporting the rest as exceptions -- the old
+    # behaviour -- silently replaced the month with a partial one before
+    # anybody could see anything was wrong. A row that cannot be trusted
+    # as a fact at all fails the whole run before the replace RPC is ever
+    # called, so the month is left exactly as it was.
+    if rejected:
+        raise MalformedSnapshotError(rejected)
     periods = sorted({row.period for row in rows})
     if len(periods) != 1:
         raise UnsupportedRegistrationSchema(
@@ -194,12 +214,8 @@ def _import_dlt(source_file: Path, original_name: str, workdir: Path,
     })
 
     exceptions = exception_rows(resolved, trim_detail_brands=_trim_detail_brands())
-    exceptions.extend({
-        "kind": "MALFORMED_ROW", "reason": item["reason"],
-        "source_identity": {"row": item.get("row"), "period": periods[0]},
-    } for item in rejected)
     return {
-        "rows_read": len(rows) + len(rejected),
+        "rows_read": len(rows),
         "patched": len(matched),
         "created": 0,
         "exceptions": len(exceptions),
@@ -241,6 +257,15 @@ def process(limit: int) -> int:
                     str(row.get("created_at") or datetime.now(timezone.utc).isoformat()))
             except UnsupportedRegistrationSchema as exc:
                 _finish_failed(run_id, f"unsupported schema: {exc}")
+                continue
+            except MalformedSnapshotError as exc:
+                # Deliberately no _store_exceptions call: the run failed
+                # before producing any resolved rows, and the month it was
+                # replacing is untouched. The rejected rows are on the
+                # error message itself, in full, for the person fixing
+                # the file -- there is no run-scoped write to hang durable
+                # exception rows off yet.
+                _finish_failed(run_id, str(exc)[:2000])
                 continue
             except Exception as exc:  # noqa: BLE001 - the row must record any failure
                 _finish_failed(run_id, str(exc)[:2000])
@@ -323,12 +348,62 @@ def pending_runs() -> int:
     return 0
 
 
+def mark_committed(run_ids: list[str], commit_sha: str) -> int:
+    """Record the commit a run's write landed in, the moment the push
+    that carries it succeeds -- not the moment publish does.
+
+    Status stays WRITTEN_PENDING_PUBLISH; only commit_sha is set. This is
+    what makes a failed publish recoverable: before this, a run learned
+    its commit_sha only from finalize(), which runs after publish
+    succeeds, so a push that landed cleanly followed by a publish that
+    failed left the run with no record of what it had actually pushed --
+    stuck_runs() below would have nothing to find.
+    """
+    if not run_ids:
+        print(json.dumps({"marked": 0}))
+        return 0
+    if not commit_sha:
+        raise SystemExit("mark-committed needs the commit these runs landed in")
+    marked = 0
+    for run_id in run_ids:
+        rows = _patch(run_id, {"commit_sha": commit_sha},
+                      expected_status="WRITTEN_PENDING_PUBLISH")
+        marked += len(rows)
+    print(json.dumps({"marked": marked, "commit_sha": commit_sha}))
+    return 0
+
+
+def stuck_runs() -> int:
+    """Runs that pushed cleanly but whose publish never completed.
+
+    WRITTEN_PENDING_PUBLISH with a commit_sha and no release_id: the
+    write is on main, mark_committed() ran, and finalize() never did --
+    the publish step in between failed, or the job was cancelled after
+    it. The next scheduled tick used to see a clean working tree
+    (nothing new to commit) and skip publishing entirely, so a run in
+    this state stayed here forever until some unrelated future import
+    happened to produce a fresh diff. This is what lets a tick recover
+    one even when it has no new work of its own.
+    """
+    rows = _rest(
+        "GET",
+        "import_runs?select=id&status=eq.WRITTEN_PENDING_PUBLISH"
+        "&commit_sha=not.is.null&release_id=is.null&limit=200",
+    ) or []
+    print(" ".join(str(row["id"]) for row in rows))
+    return 0
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
     p_run = sub.add_parser("run")
     p_run.add_argument("--limit", type=int, default=5)
     sub.add_parser("pending-runs")
+    sub.add_parser("stuck-runs")
+    p_mark = sub.add_parser("mark-committed")
+    p_mark.add_argument("--run-id", action="append", default=[])
+    p_mark.add_argument("--commit-sha", default="")
     p_final = sub.add_parser("finalize")
     p_final.add_argument("--run-id", action="append", default=[])
     p_final.add_argument("--commit-sha", default="")
@@ -338,6 +413,10 @@ def main(argv=None) -> int:
         raise SystemExit("SUPABASE_URL is required")
     if args.command == "pending-runs":
         return pending_runs()
+    if args.command == "stuck-runs":
+        return stuck_runs()
+    if args.command == "mark-committed":
+        return mark_committed(args.run_id, args.commit_sha)
     if args.command == "finalize":
         return finalize(args.run_id, args.commit_sha, args.release_id)
     return process(max(1, min(args.limit, 20)))

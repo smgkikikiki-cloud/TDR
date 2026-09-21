@@ -52,13 +52,43 @@ def _get(path: str):
     return json.loads(body) if body else None
 
 
+def _revision_ordinal(revision: str) -> str | None:
+    """How far along git history ``revision`` sits, as a monotonic proxy
+    for commit order the publish RPC uses to refuse activating a release
+    older than what is already serving (migration_v44).
+
+    Requires a full clone (``fetch-depth: 0``); a shallow one undercounts
+    and would produce a WRONG, too-low ordinal for a genuinely later
+    commit, so this returns ``None`` -- no ordinal, no guard, degrade to
+    the pre-v44 behavior -- rather than pass a number that could reject a
+    legitimate publish.
+    """
+    try:
+        shallow = subprocess.run(
+            ["git", "rev-parse", "--is-shallow-repository"],
+            cwd=REPO_ROOT, check=True, capture_output=True, text=True,
+        ).stdout.strip()
+        if shallow == "true":
+            return None
+        return subprocess.run(
+            ["git", "rev-list", "--count", revision],
+            cwd=REPO_ROOT, check=True, capture_output=True, text=True,
+        ).stdout.strip()
+    except (subprocess.CalledProcessError, OSError):
+        return None
+
+
 def build(revision: str, as_of: str, out: Path) -> dict:
-    subprocess.run([
+    ordinal = _revision_ordinal(revision)
+    command = [
         sys.executable, "-m", "tdr_bridge.release_enriched",
         "--inventory", "integration_data/tdr_2026-09-09.json",
         "--overrides", "integration_data/crosswalk_overrides.json",
         "--revision", revision, "--as-of", as_of, "--out", str(out),
-    ], cwd=REPO_ROOT, check=True, capture_output=True, text=True)
+    ]
+    if ordinal is not None:
+        command += ["--revision-ordinal", ordinal]
+    subprocess.run(command, cwd=REPO_ROOT, check=True, capture_output=True, text=True)
     return json.loads(out.read_text(encoding="utf-8"))
 
 

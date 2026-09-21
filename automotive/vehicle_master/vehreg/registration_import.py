@@ -44,6 +44,33 @@ class UnsupportedRegistrationSchema(Exception):
     """The file is not a registration export this importer understands."""
 
 
+class MalformedSnapshotError(Exception):
+    """A row inside an otherwise-recognised file cannot be trusted as a fact.
+
+    An official monthly export is a complete snapshot, and the replace RPC
+    (tdr_replace_registration_period) deletes the whole month before
+    re-inserting it. Writing only the rows that parsed and quietly
+    dropping the rest would silently delete units the malformed rows
+    represented -- the month goes from N to (N minus whatever was
+    unreadable), and nothing says so. This is raised BEFORE any write is
+    attempted, so the month is left exactly as it was and the file can be
+    fixed and re-uploaded.
+
+    An unknown brand or model is not this: the row is well-formed, it is
+    just not yet resolvable, and it is written as a fact with the
+    resolution left open (see resolve_registrations/exception_rows). Only
+    a row that cannot be trusted as a registration fact at all -- a
+    missing period/brand/model, non-numeric units, a mixed period across
+    the file -- raises this.
+    """
+
+    def __init__(self, rejected: list[dict]):
+        self.rejected = rejected
+        reasons = "; ".join(f"row {item.get('row')}: {item.get('reason')}" for item in rejected[:10])
+        more = f" (+{len(rejected) - 10} more)" if len(rejected) > 10 else ""
+        super().__init__(f"{len(rejected)} row(s) cannot be trusted as registration facts: {reasons}{more}")
+
+
 @dataclass(frozen=True)
 class RegistrationRow:
     period: str
@@ -89,6 +116,24 @@ def _column_map(fieldnames: Iterable[str]) -> dict[str, str]:
     return mapping
 
 
+def _cell(record: dict[str, Any], key: str) -> str:
+    """A raw field, blank meaning blank -- including a pandas NaN.
+
+    ``pandas.read_csv``/``read_excel`` turn an empty cell into a float
+    ``NaN``, and ``NaN`` is truthy in Python (``bool(float("nan"))`` is
+    True), so ``record.get(key) or ""`` never falls through to the
+    default and an empty brand or model cell silently became the four
+    literal characters ``"nan"`` -- a value that passed the "brand and
+    model are required" check it was supposed to fail. NaN is the one
+    float that is never equal to itself; that is the only test used here,
+    so this module still never has to import pandas to know about it.
+    """
+    value = record.get(key)
+    if isinstance(value, float) and value != value:
+        return ""
+    return str(value if value is not None else "").strip()
+
+
 def parse_registration_rows(records: list[dict[str, Any]]) -> tuple[list[RegistrationRow], list[dict]]:
     """Read an export into rows. Raises when the file is not one at all."""
     if not records:
@@ -98,11 +143,11 @@ def parse_registration_rows(records: list[dict[str, Any]]) -> tuple[list[Registr
     rows: list[RegistrationRow] = []
     rejected: list[dict] = []
     for index, record in enumerate(records, start=1):
-        period = str(record.get(mapping["period"]) or "").strip()
-        brand = str(record.get(mapping["brand"]) or "").strip()
-        model = str(record.get(mapping["model"]) or "").strip()
-        raw_units = str(record.get(mapping["units"]) or "").strip().replace(",", "")
-        registration_type = str(record.get(mapping["registration_type"]) or "").strip() or "*"
+        period = _cell(record, mapping["period"])
+        brand = _cell(record, mapping["brand"])
+        model = _cell(record, mapping["model"])
+        raw_units = _cell(record, mapping["units"]).replace(",", "")
+        registration_type = _cell(record, mapping["registration_type"]) or "*"
         if not (period and brand and model):
             rejected.append({"row": index, "reason": "period, brand and model are all required"})
             continue

@@ -194,14 +194,36 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
     "data/raw_pivot/long_2021-06.csv",   # the normalized long form
 ])
 def test_a_real_monthly_export_parses(fixture):
-    """Not a synthetic dict: the two shapes a real month arrives in."""
+    """Not a synthetic dict: the two shapes a real month arrives in.
+
+    Read the way tools.import_worker._read_rows reads it -- pandas, with
+    the default NA-string coercion turned off. Left on, pandas treats the
+    literal string "None" (which this export genuinely contains, 5 times,
+    for a model field DLT itself did not fill in) as a missing value and
+    silently replaces it with NaN, which downstream read back as the
+    fabricated text "nan" -- a corrupted fact, not the source's own.
+    """
     import pandas
 
     path = REPO_ROOT / fixture
-    rows, rejected = parse_registration_rows(pandas.read_csv(path).to_dict(orient="records"))
+    rows, rejected = parse_registration_rows(
+        pandas.read_csv(path, keep_default_na=False).to_dict(orient="records"))
     assert rows and not rejected
     assert all(row.period and row.brand_raw and row.model_raw for row in rows)
     assert sum(row.units for row in rows) > 0
+
+
+def test_the_literal_source_text_none_survives_and_is_not_coerced_to_missing():
+    """The exact real rows the NA-coercion bug corrupted."""
+    import pandas
+
+    path = REPO_ROOT / "data/raw/dlt_2025-06.csv"
+    rows, rejected = parse_registration_rows(
+        pandas.read_csv(path, keep_default_na=False).to_dict(orient="records"))
+    literal_none = [row for row in rows if row.model_raw == "None"]
+    assert len(literal_none) == 5
+    assert not rejected
+    assert all(row.model_raw != "nan" for row in rows)
 
 
 def test_a_real_month_is_written_whole_even_with_an_empty_crosswalk():
