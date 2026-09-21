@@ -31,6 +31,15 @@ function toPreview(row: any): ResearchArticlePreview {
   };
 }
 
+/** A deployment may ship the research UI before migration_v38 has been applied
+ * to its database. In that state research is simply an empty catalogue; an
+ * optional content layer must not take the public homepage down. */
+function researchTableMissing(error: any): boolean {
+  if (String(error?.code || "") === "42P01") return true;
+  const message = String(error?.message || "").toLowerCase();
+  return message.includes("research_articles") && (message.includes("does not exist") || message.includes("not found"));
+}
+
 /** Every published piece, newest first. What the public list and the
  *  admin-facing "which article did I unlock" checks both need -- never the
  *  body, which only the unlock route reads. */
@@ -43,7 +52,10 @@ export async function getPublishedResearchArticles(limit = 100): Promise<Researc
     .eq("status", "published")
     .order("published_at", { ascending: false })
     .limit(limit);
-  if (error) throw error;
+  if (error) {
+    if (researchTableMissing(error)) return [];
+    throw error;
+  }
   return (data || []).map(toPreview);
 }
 
@@ -59,6 +71,9 @@ export async function getPublishedResearchArticleBySlug(slug: string): Promise<R
     .eq("slug", slug)
     .eq("status", "published")
     .maybeSingle();
-  if (error) throw error;
+  if (error) {
+    if (researchTableMissing(error)) return null;
+    throw error;
+  }
   return data ? { ...toPreview(data), bodyTh: data.body_th } : null;
 }
