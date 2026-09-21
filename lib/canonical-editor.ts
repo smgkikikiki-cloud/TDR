@@ -49,6 +49,8 @@ export type WorkspaceTrim = {
   currentListPrice: { amount_thb?: number; price_type?: string } | null;
   /** Every price ever recorded for this trim, newest first. */
   prices: WorkspacePrice[];
+  /** The campaign currently quoted for this trim, if any. */
+  campaign: WorkspaceCampaign | null;
   sourceRefs: Record<string, string[]>;
   /** THE editor state: flat, one entry per UI field, MarketTrim columns and
    * comparable-spec facts already folded together. Page, diff, server action
@@ -62,8 +64,18 @@ export type WorkspacePrice = {
   effectiveTo: string | null;
   observedAt: string | null;
   campaignId: string | null;
+  optionId: string | null;
   source: string | null;
-  gifts: string | null;
+};
+/** The live campaign behind a trim's promotion price, as the release
+ *  projected it. Gifts and the window belong to the campaign. */
+export type WorkspaceCampaign = {
+  campaignId: string | null;
+  optionId: string | null;
+  amountThb: number | null;
+  gifts: string;
+  starts: string | null;
+  ends: string | null;
 };
 export type WorkspaceSpecFact = {
   factId: string;
@@ -103,6 +115,23 @@ function releaseYearFromPayload(release: { as_of?: string; payload?: unknown } |
   return Number.isInteger(year) && year >= 2000 && year <= 2100 ? year : new Date().getFullYear();
 }
 
+/** The campaign a trim is currently quoting, out of the release's own
+ *  campaign_quote. Options are alternatives, and the manual price form
+ *  edits one promotion, so the first live option is the one it shows. */
+function firstCampaignOffer(quote: unknown): WorkspaceCampaign | null {
+  const offers = (quote as any)?.campaign_options;
+  const offer = Array.isArray(offers) ? offers[0] : null;
+  if (!offer) return null;
+  return {
+    campaignId: offer.campaign_id ?? null,
+    optionId: offer.option_id ?? null,
+    amountThb: typeof offer.amount_thb === "number" ? offer.amount_thb : null,
+    gifts: String(offer.gifts || ""),
+    starts: offer.campaign_starts ?? null,
+    ends: offer.campaign_ends ?? offer.valid_to ?? null,
+  };
+}
+
 export async function loadVehicleWorkspace(modelId: string): Promise<VehicleWorkspace | null> {
   const db = adminDb();
   if (!db) throw new Error("ยังไม่ได้ตั้งค่า Supabase server credential");
@@ -126,7 +155,7 @@ export async function loadVehicleWorkspace(modelId: string): Promise<VehicleWork
       ? db.from("current_vehicle_generations").select("canonical_id,model_id,code,segment,launched,ended").eq("canonical_id", model.generation_id).maybeSingle()
       : Promise.resolve({ data: null, error: null }),
     db.from("current_market_trims")
-      .select("canonical_id,model_id,generation_id,variant_id,name,powertrain,status,payload,current_list_price,source_refs")
+      .select("canonical_id,model_id,generation_id,variant_id,name,powertrain,status,payload,current_list_price,campaign_quote,source_refs")
       .eq("model_id", modelId).order("name", { ascending: true }).limit(500),
     db.from("canonical_vehicle_releases").select("release_id,as_of,payload").eq("release_id", model.release_id).maybeSingle(),
     db.from("canonical_input_batches")
@@ -134,8 +163,12 @@ export async function loadVehicleWorkspace(modelId: string): Promise<VehicleWork
       .order("created_at", { ascending: false }).limit(60),
     // Price history belongs on the car, not on a separate bench: the trim's
     // own row is where somebody asks what it costs and what it cost before.
+    // Scoped to this model's release -- the projection is keyed by release,
+    // so reading it unfiltered stacks every release's prices on top of each
+    // other and the newest one wins by luck of the sort order.
     db.from("canonical_price_projection")
-      .select("trim_id,amount_thb,price_type,effective_from,effective_to,observed_at,campaign_id,source,payload")
+      .select("trim_id,amount_thb,price_type,effective_from,effective_to,observed_at,campaign_id,option_id,source,payload")
+      .eq("release_id", model.release_id)
       .order("observed_at", { ascending: false }).limit(2000),
   ]);
   if (brandError) throw brandError;
@@ -175,14 +208,16 @@ export async function loadVehicleWorkspace(modelId: string): Promise<VehicleWork
       amountThb: Number(row.amount_thb), priceType: String(row.price_type || ""),
       effectiveFrom: row.effective_from || null, effectiveTo: row.effective_to || null,
       observedAt: row.observed_at || null, campaignId: row.campaign_id || null,
-      source: row.source || null,
-      gifts: String((row.payload as any)?.gifts || "") || null,
+      optionId: row.option_id || null, source: row.source || null,
     });
     pricesByTrim.set(row.trim_id, bucket);
   }
 
   const trimRows: WorkspaceTrim[] = (trims || []).map((row: any) => ({
     prices: pricesByTrim.get(row.canonical_id) || [],
+    // Gifts and the campaign window live on the campaign, so they are read
+    // from the trim's own quote rather than guessed at from a price row.
+    campaign: firstCampaignOffer(row.campaign_quote),
     canonicalId: row.canonical_id,
     modelId: row.model_id,
     generationId: row.generation_id,
@@ -243,18 +278,20 @@ export async function loadVehicleWorkspace(modelId: string): Promise<VehicleWork
 
 export async function listVehicleModelsForPicker(searchTerm: string): Promise<Array<{
   canonicalId: string; brandId: string; nameEn: string; nameTh: string; status: string | null;
+  tdrModelId: string | null;
 }>> {
   const db = adminDb();
   if (!db) return [];
   let query = db.from("current_vehicle_models")
-    .select("canonical_id,brand_id,name_en,name_th,status")
+    .select("canonical_id,brand_id,name_en,name_th,status,tdr_model_id")
     .order("brand_id", { ascending: true }).order("name_en", { ascending: true }).limit(500);
   const term = searchTerm.trim();
   if (term) query = query.or(`name_en.ilike.%${term}%,name_th.ilike.%${term}%,canonical_id.ilike.%${term}%`);
   const { data, error } = await query;
   if (error) throw error;
   return (data || []).map((row: any) => ({
-    canonicalId: row.canonical_id, brandId: row.brand_id, nameEn: row.name_en, nameTh: row.name_th || "", status: row.status,
+    canonicalId: row.canonical_id, brandId: row.brand_id, nameEn: row.name_en,
+    nameTh: row.name_th || "", status: row.status, tdrModelId: row.tdr_model_id || null,
   }));
 }
 

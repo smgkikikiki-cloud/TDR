@@ -11,6 +11,9 @@ function n(value: number | null | undefined) {
 const STATUS_LABEL: Record<string, string> = {
   UPLOADED: "รอประมวลผล",
   PROCESSING: "กำลังประมวลผล",
+  // Written, but not published yet: a canonical run only says "เสร็จแล้ว"
+  // once its files are committed and pushed.
+  WRITTEN_PENDING_PUBLISH: "กำลัง publish",
   COMPLETED: "เสร็จแล้ว",
   FAILED: "ไม่สำเร็จ",
 };
@@ -36,16 +39,18 @@ export default async function ImportPage() {
 
     <form action={uploadImportFileAction} className="adminForm">
       <label className="adminField adminFieldWide">
-        <span>ไฟล์ CSV หรือ XLSX (สูงสุด 40 MB)</span>
+        <span>ไฟล์ CSV หรือ XLSX (สูงสุด 4 MB)</span>
         <input name="file" type="file" accept=".csv,.xlsx,.xls" required />
       </label>
       <label className="adminField">
         <span>แหล่งข้อมูล</span>
+        {/* Only sources with a parser of their own are offered. A file
+            has to be read by something that understands it, and running
+            one source's file through another's parser produces confident
+            nonsense rather than an error. */}
         <select name="source_kind" defaultValue="ECO">
           <option value="ECO">ECO Sticker</option>
-          <option value="OEM">OEM / ผู้ผลิต</option>
           <option value="DLT">DLT / ยอดจดทะเบียน</option>
-          <option value="MEDIA">สื่อ</option>
         </select>
       </label>
       <div className="adminFormActions"><button className="adminPrimary">อัปโหลดและนำเข้า</button></div>

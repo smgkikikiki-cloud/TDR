@@ -49,7 +49,10 @@ jobs:
         run: python -m pip install -r requirements.txt
       - name: Import every uploaded file
         if: steps.preflight.outputs.ready == 'true'
-        run: PYTHONPATH=. python tools/import_worker.py --limit 5
+        run: PYTHONPATH=. python tools/import_worker.py run --limit 5
+      # A canonical run stays WRITTEN_PENDING_PUBLISH until its files are
+      # pushed, so these two steps are what finish it. If the push fails the
+      # finalize never runs and the run does not claim to be complete.
       - name: Commit what the import wrote
         if: steps.preflight.outputs.ready == 'true'
         shell: bash
@@ -65,3 +68,6 @@ jobs:
           git commit -m "Apply uploaded source import"
           git pull --rebase origin main
           git push origin HEAD:main
+      - name: Mark pushed runs complete
+        if: steps.preflight.outputs.ready == 'true'
+        run: PYTHONPATH=. python tools/import_worker.py finalize

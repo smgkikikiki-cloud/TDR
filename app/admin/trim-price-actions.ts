@@ -20,6 +20,7 @@ import { redirect } from "next/navigation";
 import { isAdmin } from "@/lib/admin-auth";
 import { field, isoDate, safeSubmissionId, submissionTimestamp } from "@/lib/admin-form";
 import { enqueueCanonicalInputBatch } from "@/lib/canonical-input-queue";
+import { campaignIdFor } from "@/lib/campaign-identity";
 import { adminDb } from "@/lib/supabase";
 
 function amount(raw: string, label: string): number | null {
@@ -46,6 +47,44 @@ async function trimContext(trimId: string) {
   return { modelId: String(trim.model_id), brandId: String(trim.model_id).split(".", 1)[0], year };
 }
 
+/** End a promotion that was saved without an end date.
+ *
+ *  CLOSE_PRICE wants a reason for the ledger's own history; the owner is not
+ *  asked for one, because ending your own campaign is not a decision that
+ *  needs justifying to anybody. The reason is written for them. */
+export async function closeTrimCampaign(formData: FormData) {
+  if (!(await isAdmin())) redirect("/admin/login");
+  const trimId = field(formData, "trim_id");
+  const campaignId = field(formData, "campaign_id");
+  const optionId = field(formData, "option_id") || "default";
+  const modelIdForReturn = field(formData, "model_id");
+  if (!trimId || !campaignId) throw new Error("ไม่พบแคมเปญที่จะปิด");
+
+  const submissionId = safeSubmissionId(formData);
+  const submittedAt = submissionTimestamp(formData);
+  const today = submittedAt.slice(0, 10);
+  const { year } = await trimContext(trimId);
+
+  await enqueueCanonicalInputBatch({
+    schema_version: 1,
+    batch_id: `admin-close-campaign-${submissionId}`,
+    year,
+    submitted_at: submittedAt,
+    source: { kind: "ADMIN" },
+    reason: `campaign ended by owner on ${today}`,
+    commands: [{
+      operation: "CLOSE_PRICE",
+      canonical_id: trimId,
+      reason: `campaign ended by owner on ${today}`,
+      payload: {
+        trim_id: trimId, price_type: "CAMPAIGN_PRICE",
+        campaign_id: campaignId, option_id: optionId, ends: today,
+      },
+    }],
+  });
+  redirect(`/admin/vehicles/${encodeURIComponent(modelIdForReturn)}?saved=PRICE`);
+}
+
 /** One save for everything a trim's price row shows. */
 export async function saveTrimPrice(formData: FormData) {
   if (!(await isAdmin())) redirect("/admin/login");
@@ -68,12 +107,15 @@ export async function saveTrimPrice(formData: FormData) {
 
   const commands: Record<string, unknown>[] = [];
   if (listPrice) {
+    // The campaign window is the campaign's, not the list price's. A list
+    // price saved by hand carries no effective date of its own, so it is
+    // recorded as observed today and nothing pretends to know when it began.
     commands.push({
       operation: "APPEND_PRICE",
       canonical_id: trimId,
       payload: {
         trim_id: trimId, amount_thb: listPrice, price_type: "LIST_PRICE",
-        effective_from: starts || today, observed_at: today, source: "admin",
+        observed_at: today, source: "admin",
       },
     });
   }
@@ -81,7 +123,10 @@ export async function saveTrimPrice(formData: FormData) {
     // The campaign exists so the ledger can key a promotion price; its shape
     // is derived from the trim and the window rather than asked for, so the
     // same promotion re-saved lands on the same campaign instead of a new one.
-    const campaignId = `${brandId}.campaign.${trimId.split(".").pop()}.${starts || today}`;
+    // Keyed on the whole canonical trim id: a grade name like "premium" is
+    // not unique across models, and two brands' campaigns colliding on one
+    // id would merge two promotions into one.
+    const campaignId = campaignIdFor(trimId, starts || today);
     const optionId = "default";
     commands.push({
       operation: "UPSERT_CAMPAIGN",

@@ -40,6 +40,36 @@ export async function listImportRuns(limit = 25): Promise<ImportRun[]> {
   }));
 }
 
+export type RunException = ImportException & {
+  runId: string;
+  runLabel: string;
+  sourceKind: string;
+  kind?: string;
+  period?: string;
+  units?: number;
+};
+
+/** Unresolved rows from uploaded files, read from the run that produced
+ *  them. The worker's temp directory is long gone by now; this is why the
+ *  rows were stored on the row itself. */
+export async function listRunExceptions(limit = 50): Promise<RunException[]> {
+  const db = adminDb();
+  if (!db) return [];
+  const { data, error } = await db.from("import_runs")
+    .select("id,original_name,source_kind,exception_rows,created_at")
+    .not("exception_rows", "eq", "[]")
+    .order("created_at", { ascending: false }).limit(limit);
+  if (error) return [];
+  return (data || []).flatMap((run: any) =>
+    (Array.isArray(run.exception_rows) ? run.exception_rows : []).map((row: any) => ({
+      ...row,
+      runId: String(run.id),
+      runLabel: String(run.original_name || run.id),
+      sourceKind: String(run.source_kind || ""),
+      reason: String(row?.reason || "ระบุสาเหตุไม่ได้"),
+    })));
+}
+
 /** Where tools/import_source.py leaves what it did. Read straight from the
  *  repo, the same way the catalogue itself is read -- an import run is a
  *  fact about the data, so it lives with the data rather than in a table. */

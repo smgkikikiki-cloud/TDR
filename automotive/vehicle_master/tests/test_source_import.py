@@ -198,3 +198,53 @@ def test_the_summary_counts_every_row():
     counts = summarize(outcomes)
     assert counts[PATCHED] == 1 and counts[CREATED] == 1
     assert sum(counts.values()) == 2
+
+
+# ---------------------------------------------------------------------------
+# Which ECO fields reach a served column
+# ---------------------------------------------------------------------------
+
+def test_every_mapped_field_lands_on_a_real_markettrim_column():
+    """A mapping to a column the trim row does not have would write
+    nowhere. MarketTrim's own fields are the list."""
+    from dataclasses import fields as dataclass_fields
+    from vehreg.entities import MarketTrim
+    from vehreg.source_import import FIELD_TO_COLUMN
+
+    columns = {field.name for field in dataclass_fields(MarketTrim)}
+    assert set(FIELD_TO_COLUMN.values()) <= columns
+
+
+def test_the_fields_eco_can_fill_are_all_mapped():
+    """A field the source carries and the served row can hold must not be
+    dropped just because nobody wrote the mapping line."""
+    from vehreg.source_import import FIELD_TO_COLUMN
+
+    for key in ("vehicle.seats", "vehicle.length_mm", "vehicle.width_mm",
+                "vehicle.height_mm", "engine.displacement_cc",
+                "fitment.tyre_front", "fitment.tyre_rear",
+                "powertrain.transmission"):
+        assert key in FIELD_TO_COLUMN, f"{key} has a column and is being dropped"
+
+
+def test_a_coarse_source_fills_a_blank_but_does_not_overrule_a_set_value():
+    """ECO's gear wording is coarser than a transmission somebody set by
+    hand, so it may fill an empty field and no more."""
+    filled = only(resolve_rows([row(**{"powertrain.transmission": "AUTOMATIC"})], [trim()]))
+    assert filled.patch["transmission"] == "AUTOMATIC"
+
+    held = only(resolve_rows([row(**{"powertrain.transmission": "CVT"})],
+                             [trim(transmission="AUTOMATIC")]))
+    assert held.patch == {}
+    assert held.conflicts == [{"column": "transmission", "held": "AUTOMATIC", "incoming": "CVT"}]
+
+
+def test_identity_and_unserved_fields_stay_out_of_the_write():
+    """Powertrain is the trim's identity, and a field with no served column
+    has nowhere to go -- neither may be patched in by an import."""
+    from vehreg.source_import import FIELD_TO_COLUMN
+
+    for key in ("identity.powertrain", "battery.gross_capacity_kwh",
+                "manufacturing.factory", "emissions.co2_g_km",
+                "ev.rated_range_km", "vehicle.declared_total_weight_kg"):
+        assert key not in FIELD_TO_COLUMN

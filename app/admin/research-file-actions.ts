@@ -8,7 +8,7 @@ import {
   deleteResearchFile, renameResearchFile, signResearchFile, uploadResearchFile,
 } from "@/lib/research-files";
 
-const MAX_BYTES = 50 * 1024 * 1024;
+const MAX_BYTES = 4 * 1024 * 1024;
 
 async function guard() {
   if (!(await isAdmin())) redirect("/admin/login");
@@ -18,7 +18,7 @@ export async function uploadResearchFileAction(formData: FormData) {
   await guard();
   const file = formData.get("file");
   if (!(file instanceof File) || !file.size) throw new Error("เลือกไฟล์ก่อน");
-  if (file.size > MAX_BYTES) throw new Error("ไฟล์ใหญ่เกิน 50 MB");
+  if (file.size > MAX_BYTES) throw new Error("ไฟล์ใหญ่เกิน 4 MB");
   await uploadResearchFile(file.name, await file.arrayBuffer(),
     file.type || "application/octet-stream");
   revalidatePath("/admin/research");

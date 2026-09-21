@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getAdminUnmappedRegistrationSummary } from "@/lib/admin-registration-market";
 import { listVehicleModelsForPicker } from "@/lib/canonical-editor";
-import { importExceptions } from "@/lib/import-runs";
+import { importExceptions, listRunExceptions } from "@/lib/import-runs";
 import { assignRegistrationIdentity } from "@/app/admin/exception-actions";
 
 export const dynamic = "force-dynamic";
@@ -21,11 +21,21 @@ export default async function ExceptionsPage({
   const term = (query.q || "").trim().toLowerCase();
   const year = new Date().getFullYear();
 
-  const [unmapped, models] = await Promise.all([
+  const [unmapped, models, runRows] = await Promise.all([
     getAdminUnmappedRegistrationSummary(200).catch(() => [] as any[]),
     listVehicleModelsForPicker("").catch(() => []),
+    listRunExceptions().catch(() => []),
   ]);
-  const fileRows = importExceptions(year).flatMap((run) => run.rows);
+  // Uploaded-file exceptions come from the run row, which survives the
+  // worker; the on-disk reports are only what the CLI path left behind.
+  const fileRows = [
+    ...runRows,
+    ...importExceptions(year).flatMap((run) => run.rows),
+  ];
+  // Only cars the crosswalk has already linked to a registration identity can
+  // receive a DLT label; offering the rest would hand the owner a choice that
+  // fails on submit.
+  const registrationReady = (models as any[]).filter((model) => model.tdrModelId);
 
   const dlt = (unmapped as any[])
     .filter((row) => !term || `${row.brand_name_raw} ${row.model_name_raw}`.toLowerCase().includes(term))
@@ -86,7 +96,7 @@ export default async function ExceptionsPage({
                 <input type="hidden" name="registration_type" value={row.registration_type} />
                 <select name="canonical_model_id" defaultValue="" required aria-label={`รถสำหรับ ${row.model_name_raw}`}>
                   <option value="" disabled>เลือกรถที่มีอยู่…</option>
-                  {models.map((model: any) => <option key={model.canonicalId} value={model.canonicalId}>
+                  {registrationReady.map((model: any) => <option key={model.canonicalId} value={model.canonicalId}>
                     {model.brandId} {model.nameEn}
                   </option>)}
                 </select>
@@ -106,7 +116,7 @@ export default async function ExceptionsPage({
       <p>แก้ที่หน้ารถแล้วอัปไฟล์เดิมซ้ำได้เลย — แถวที่ผูกได้แล้วจะไม่ถูกเขียนซ้ำ</p>
     </div></div>
     <div className="libraryTable"><table>
-      <thead><tr><th>รถ</th><th>รุ่นย่อยจากต้นทาง</th><th>ทำไมตัดสินไม่ได้</th></tr></thead>
+      <thead><tr><th>รถ</th><th>จากต้นทาง</th><th>ทำไมตัดสินไม่ได้</th><th>ไฟล์</th></tr></thead>
       <tbody>
         {files.length ? files.map((row, index) => <tr key={`${row.source_id || index}-${index}`}>
           <td>
@@ -115,9 +125,10 @@ export default async function ExceptionsPage({
               ? <><br /><Link href={`/admin/vehicles/${encodeURIComponent(row.model_id)}`}>เปิดหน้ารถ →</Link></>
               : null}
           </td>
-          <td>{row.trim_name || "—"}{row.powertrain ? <><br /><small>{row.powertrain}</small></> : null}</td>
+          <td>{row.trim_name || (row as any).model || "—"}{row.powertrain ? <><br /><small>{row.powertrain}</small></> : null}</td>
           <td>{row.reason}</td>
-        </tr>) : <tr><td colSpan={3}>ไม่มีรายการค้าง</td></tr>}
+          <td><small>{(row as any).runLabel || "—"}</small></td>
+        </tr>) : <tr><td colSpan={4}>ไม่มีรายการค้าง</td></tr>}
       </tbody>
     </table></div>
   </div>;

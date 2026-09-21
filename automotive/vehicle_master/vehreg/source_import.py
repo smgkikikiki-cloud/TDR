@@ -51,7 +51,24 @@ FIELD_TO_COLUMN: dict[str, str] = {
     "engine.displacement_cc": "engine_cc",
     "fitment.tyre_front": "tire_front",
     "fitment.tyre_rear": "tire_rear",
+    "powertrain.transmission": "transmission",
 }
+
+#: Deliberately unmapped, with the reason, so the next person does not read
+#: an absence as an oversight:
+#:   identity.powertrain      part of the canonical id; an import may not
+#:                            change which car a trim is
+#:   battery.gross_capacity_kwh  the nameplate pack derived from charge and
+#:                            voltage, which is not MarketTrim.battery_kwh's
+#:                            catalog capacity -- a different quantity
+#:   manufacturing.factory    the source names the company, not the plant the
+#:                            column means
+#:   emissions.*, efficiency.*, ev.*, battery.*, charging.*, engine.fuel_type,
+#:   engine.combustion_type, powertrain.gear_count, powertrain.motor_type,
+#:   fitment.tyre_size, vehicle.model_year, vehicle.declared_total_weight_kg
+#:                            no column on the served trim row, and the spec
+#:                            ledger publishes nothing, so writing them would
+#:                            put data where the site cannot read it
 
 #: Which columns a source kind may overwrite when the stored value differs.
 #: ECO Sticker is a homologation filing, so its measured dimensions and

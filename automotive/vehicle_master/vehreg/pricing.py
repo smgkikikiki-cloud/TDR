@@ -713,6 +713,12 @@ class PriceLedger:
                 "discount_thb": record.discount_thb,
                 "campaign_id": record.campaign_id,
                 "campaign_name": campaign.name if campaign else "",
+                # What comes with the car. It lives on the campaign, so the
+                # quote is where a page reads it from; a price record has no
+                # business carrying it.
+                "gifts": campaign.gifts if campaign else "",
+                "campaign_starts": campaign.starts if campaign else None,
+                "campaign_ends": campaign.ends if campaign else None,
                 "option_id": record.option_id,
                 "option_label": option.label if option else "",
                 "status_as_of": option.status_on(when).value if option else None,

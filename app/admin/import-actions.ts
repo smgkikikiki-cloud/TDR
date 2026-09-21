@@ -17,14 +17,17 @@ import { field } from "@/lib/admin-form";
 import { adminDb } from "@/lib/supabase";
 import { IMPORT_BUCKET, safeImportName } from "@/lib/import-runs";
 
-const MAX_BYTES = 40 * 1024 * 1024;
-const SOURCE_KINDS = new Set(["ECO", "OEM", "MEDIA", "DLT"]);
+const MAX_BYTES = 4 * 1024 * 1024;
+// Sources with a parser of their own. Anything else has no import
+// profile yet, and is refused here rather than routed to whichever
+// parser is nearest.
+const SOURCE_KINDS = new Set(["ECO", "DLT"]);
 
 export async function uploadImportFileAction(formData: FormData) {
   if (!(await isAdmin())) redirect("/admin/login");
   const file = formData.get("file");
   if (!(file instanceof File) || !file.size) throw new Error("เลือกไฟล์ก่อน");
-  if (file.size > MAX_BYTES) throw new Error("ไฟล์ใหญ่เกิน 40 MB");
+  if (file.size > MAX_BYTES) throw new Error("ไฟล์ใหญ่เกิน 4 MB");
   const sourceKind = (field(formData, "source_kind") || "ECO").toUpperCase();
   if (!SOURCE_KINDS.has(sourceKind)) throw new Error("ชนิดแหล่งข้อมูลไม่รองรับ");
 

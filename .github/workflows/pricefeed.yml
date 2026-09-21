@@ -54,18 +54,17 @@ jobs:
             --write | tee /tmp/price-run.json
       - run: python tools/pricefeed_guard.py --base origin/main --repo-prefix automotive/vehicle_master/
       - run: pytest -q
-      - name: Open a data-only pull request in TDR
-        env:
-          GH_TOKEN: ${{ github.token }}
+      # A deterministic price the resolver already accepted has nothing left
+      # for a person to decide, so it goes to main and publishes. What the
+      # resolver could not settle -- an ambiguous identity, a genuine
+      # conflict -- never reached this step; it stays unresolved for the
+      # owner rather than holding every unambiguous price behind a merge.
+      - name: Publish the resolved prices
         run: |
           if git diff --quiet; then echo "no price changes"; exit 0; fi
-          branch="pricefeed/$(date -u +%Y%m%d-%H%M)"
           git config user.name "TDR price watcher"
           git config user.email "noreply@github.com"
-          git checkout -b "$branch"
           git add vehreg/data/2026/market
-          git commit -m "Price feed: $(python -c "import json; d=json.load(open('/tmp/price-run.json')); print(f\"{d['canonical_offers']} offers, {d['review_items']} for review\")")"
-          git push -u origin "$branch"
-          gh pr create --title "Price feed $(date -u +%Y-%m-%d\ %H:%M)" \
-            --body "Automated TDR price harvest. Canonical offers only; ambiguity remains in review." \
-            --base main --head "$branch"
+          git commit -m "Price feed: $(python -c "import json; d=json.load(open('/tmp/price-run.json')); print(f\"{d['canonical_offers']} offers, {d['review_items']} unresolved\")")"
+          git pull --rebase origin main
+          git push origin HEAD:main

@@ -26,7 +26,7 @@ export default async function ResearchFilesPage() {
 
     <form action={uploadResearchFileAction} className="adminForm">
       <label className="adminField adminFieldWide">
-        <span>อัปโหลดไฟล์ (สูงสุด 50 MB)</span>
+        <span>อัปโหลดไฟล์ (สูงสุด 4 MB)</span>
         <input name="file" type="file" required />
       </label>
       <div className="adminFormActions"><button className="adminPrimary">อัปโหลด</button></div>

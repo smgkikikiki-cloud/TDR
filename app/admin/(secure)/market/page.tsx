@@ -130,7 +130,9 @@ export default async function AdminMarketPage({ searchParams }: { searchParams: 
   return <div className={styles.bench}>
     <div className="adminHeader"><div><small>ADMIN BENCH · FULL MARKET INTELLIGENCE</small><h1>ตลาด / Share / Movement</h1><p>พอร์ตจาก analyst deck เดิม แต่ใช้ registration facts + active canonical Vehicle Master ของ TDR โดยตรง. หน้านี้เป็นหลังบ้านเต็ม; `/member/market` คือเวอร์ชันที่ตัดให้เซลใช้.</p></div><Link className="adminPrimaryLink" href="/member/market">เปิด Paid workspace ↗</Link></div>
 
-    <div className={styles.tabs}><Link href="/admin/market">Market bench</Link><Link href="/admin/registrations">Registration ingest / review</Link><Link href="/admin/prices">Prices / review</Link><Link href="/admin/data-quality">Data quality</Link></div>
+    {/* Market reads; it does not run ingest, price review or data quality.
+        Those were operator workflows onto machinery, and the machinery runs
+        behind Import and a save now. */}
 
     <form className={styles.filters} method="get">
       <label><span>เดือนอ้างอิง</span><select name="period" defaultValue={period}>{periods.map((p) => <option key={p} value={p}>{monthLabel(p)}{provisional.has(p) ? " · PROVISIONAL" : ""}</option>)}</select></label>

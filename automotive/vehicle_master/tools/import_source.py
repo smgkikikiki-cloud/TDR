@@ -1,4 +1,4 @@
-"""Import a source export into MarketTrim columns: resolve, patch, write.
+"""Import an ECO Sticker export into MarketTrim columns: resolve, patch, write.
 
     python -m tools.import_source export.xlsx --source ECO [--apply]
 
@@ -6,6 +6,13 @@ Without ``--apply`` it resolves and reports and writes nothing. With it, the
 batches go straight through the canonical pipeline -- no queue, no review, no
 PR. Rows the catalogue cannot place deterministically are written to an
 exceptions file instead of being guessed at or parked in a review queue.
+
+This is the ECO path specifically. Every source has its own shape, and
+running one through another's normalizer produces confident nonsense:
+registration files go to ``vehreg.registration_import`` instead, and a
+source with no parser of its own is reported unsupported rather than fed to
+whichever parser happens to be nearest. ``tools/import_worker.py`` is what
+routes an uploaded file to the right one.
 """
 
 from __future__ import annotations
@@ -93,7 +100,8 @@ def exception_record(outcome: RowOutcome) -> dict:
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("export", type=Path)
-    parser.add_argument("--source", default="ECO", help="source kind: ECO / OEM / MEDIA")
+    parser.add_argument("--source", default="ECO",
+                        help="source kind; only ECO has a parser on this path")
     parser.add_argument("--source-ref", default="", help="where the export came from")
     parser.add_argument("--data-dir", type=Path, default=DATA_DIR)
     parser.add_argument("--year", type=int, default=DEFAULT_YEAR)
@@ -102,6 +110,10 @@ def main(argv=None) -> int:
     parser.add_argument("--apply", action="store_true",
                         help="write through the canonical pipeline instead of reporting only")
     args = parser.parse_args(argv)
+    if args.source.upper() != "ECO":
+        raise SystemExit(
+            f"{args.source.upper()} has no parser on the ECO path; "
+            "route it to its own importer instead of normalizing it as ECO")
 
     catalog = Catalog.load(args.data_dir, args.year)
     registry = SpecRegistry.load(args.data_dir, args.year)

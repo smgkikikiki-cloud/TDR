@@ -7,7 +7,7 @@ import { trimEditorFields } from "@/lib/spec-field-registry";
 import { fieldAppliesTo } from "@/lib/trim-editor-fields";
 import { BODY_TYPES, SEGMENTS } from "@/lib/vehicle-taxonomy";
 import { prepareModelGenerationEdit } from "@/app/admin/vehicle-editor-actions";
-import { saveTrimPrice } from "@/app/admin/trim-price-actions";
+import { saveTrimPrice, closeTrimCampaign } from "@/app/admin/trim-price-actions";
 import type { WorkspaceTrim } from "@/lib/canonical-editor";
 import TrimEditorForm from "@/components/admin/TrimEditorForm";
 
@@ -56,7 +56,6 @@ export default async function VehicleWorkspacePage({
     <nav className="adminQuickGrid" aria-label="Vehicle workspace sections">
       <a href="#model-generation"><b>Canonical vehicle</b><span>Model / Generation ↓</span></a>
       <a href="#trims"><b>Trims &amp; specs</b><span>{trims.length} trims ↓</span></a>
-      {model.tdrModelId ? <a href={`/admin/models/${model.tdrModelId}/edit`}><b>Editorial</b><span>+ Industry/production context ↗</span></a> : null}
       <a href="#evidence"><b>Evidence</b><span>Registered OEM sources ↓</span></a>
     </nav>
 
@@ -84,7 +83,7 @@ export default async function VehicleWorkspacePage({
     <div id="trims" className="adminHeader"><div><small>CANONICAL</small><h2>รุ่นย่อย / Trims ({trims.length})</h2>
       <p>
         เปิดรุ่นย่อยแล้วแก้ได้ครบในฟอร์มเดียว — {allFields.length} ช่อง ตั้งแต่ระบบขับเคลื่อน แบตเตอรี่ ระยะทาง
-        มิติตัวถัง ยาง ไปจนถึง ADAS. หนึ่งช่องต่อหนึ่งเรื่อง กดบันทึกครั้งเดียว ตรวจ diff เดียว เข้าคิวเป็นชุดเดียว
+        มิติตัวถัง ยาง ไปจนถึง ADAS. หนึ่งช่องต่อหนึ่งเรื่อง กดบันทึกครั้งเดียว
       </p>
     </div></div>
     <div className="libraryTable"><table><thead><tr>
@@ -122,7 +121,7 @@ export default async function VehicleWorkspacePage({
       <summary><b>+ เพิ่มรุ่นย่อยใหม่</b></summary>
       <p className="adminHint">
         กรอกชื่อ powertrain และสเปคให้ครบในฟอร์มเดียว แล้วกดบันทึกครั้งเดียว —
-        รุ่นย่อยและสเปคทั้งหมดถูกสร้างพร้อมกันใน batch เดียว
+        รุ่นย่อยและสเปคทั้งหมดถูกสร้างพร้อมกัน
       </p>
       <TrimEditorForm
         modelId={modelId} releaseId={releaseId} submittedAt={submittedAt}
@@ -130,7 +129,7 @@ export default async function VehicleWorkspacePage({
         fields={allFields}
         current={{}} sourceRefs={{}} evidenceTargets={evidenceTargets}
       />
-    </details> : <div className="adminNotice"><span>รุ่นนี้ไม่มี active generation — เพิ่ม/แก้รุ่นย่อยไม่ได้จนกว่าจะแก้ generation ผ่าน Advanced JSON</span></div>}
+    </details> : <div className="adminNotice"><span>รุ่นนี้ยังไม่มี generation ที่ใช้งานอยู่ — เพิ่มรุ่นย่อยไม่ได้จนกว่าจะตั้ง generation ให้รุ่นนี้ก่อน</span></div>}
 
     {/* ---------- Evidence ---------- */}
     {evidenceTargets.length ? <>
@@ -154,7 +153,7 @@ function TrimPriceSection({ trim, modelId, submittedAt }: {
   trim: WorkspaceTrim; modelId: string; submittedAt: string;
 }) {
   const list = trim.prices.find((row) => row.priceType === "LIST_PRICE");
-  const campaign = trim.prices.find((row) => row.priceType === "CAMPAIGN_PRICE");
+  const campaign = trim.campaign;
   return <>
     <form action={saveTrimPrice} className="adminForm">
       <input type="hidden" name="trim_id" value={trim.canonicalId} />
@@ -168,10 +167,20 @@ function TrimPriceSection({ trim, modelId, submittedAt }: {
       <label className="adminField adminFieldWide"><span>ของแถม / รายละเอียดแคมเปญ</span>
         <input name="gifts" type="text" defaultValue={campaign?.gifts || ""}
           placeholder="ประกันชั้น 1, ฟิล์ม, Wall charger…" /></label>
-      <label className="adminField"><span>เริ่ม</span><input name="starts" type="date" defaultValue={campaign?.effectiveFrom || ""} /></label>
-      <label className="adminField"><span>สิ้นสุด</span><input name="ends" type="date" defaultValue={campaign?.effectiveTo || ""} /></label>
+      <label className="adminField"><span>เริ่ม</span><input name="starts" type="date" defaultValue={campaign?.starts || ""} /></label>
+      <label className="adminField"><span>สิ้นสุด</span><input name="ends" type="date" defaultValue={campaign?.ends || ""} /></label>
       <div className="adminFormActions"><button className="adminPrimary">บันทึกราคา</button></div>
     </form>
+    {campaign?.campaignId && !campaign.ends ? <form action={closeTrimCampaign} className="adminInlineForm">
+      <input type="hidden" name="trim_id" value={trim.canonicalId} />
+      <input type="hidden" name="model_id" value={modelId} />
+      <input type="hidden" name="campaign_id" value={campaign.campaignId} />
+      <input type="hidden" name="option_id" value={campaign.optionId || "default"} />
+      <input type="hidden" name="submission_id" value={randomUUID()} />
+      <input type="hidden" name="submitted_at" value={submittedAt} />
+      <span>แคมเปญนี้ยังไม่มีวันสิ้นสุด</span>
+      <button>ปิดแคมเปญวันนี้</button>
+    </form> : null}
     {trim.prices.length ? <details>
       <summary>ประวัติราคา ({trim.prices.length})</summary>
       <div className="libraryTable"><table>

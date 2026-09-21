@@ -28,6 +28,16 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/*": ecoSnapshotFiles,
   },
+  experimental: {
+    // Uploads reach the importer through a Server Action, and the default
+    // body limit is 1MB -- the real 1,647-row ECO workbook is 0.91MB, which
+    // would have squeaked through and the next month's would not. 4MB is
+    // the most that is honest to offer: the serverless request cap above
+    // this app is 4.5MB, so advertising more would fail at the platform
+    // rather than here. A bigger file needs a different upload path, not a
+    // bigger number in a form label.
+    serverActions: { bodySizeLimit: "4mb" },
+  },
   async headers() {
     return [
       {

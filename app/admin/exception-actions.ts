@@ -26,27 +26,32 @@ function normalize(value: string) {
 
 /** The legacy registration identity a canonical model joins through.
  *
- *  Registration still joins on models.id (see migration_v31), so a canonical
- *  model created today has nothing to bind a label to until that row exists.
- *  Minting it is bookkeeping -- the owner asked for this car to be the answer,
- *  not to go and create a second record of it somewhere else first. */
+ *  Registration joins on models.id (migration_v31), and which legacy row a
+ *  canonical model owns is decided by the release build's crosswalk --
+ *  integration_data/crosswalk_overrides.json plus the source markers
+ *  tdr_bridge/release.py::_model_crosswalk reads. That is the bridge, and
+ *  there is exactly one of it.
+ *
+ *  So this reads the link and never forges one. Inserting a models row here
+ *  would create an identity the crosswalk has never heard of: the next
+ *  release resolves tdr_model_id from its own inventory snapshot, would not
+ *  find this row, and the alias written against it would point at a car
+ *  canonical does not recognise. A model with no link yet is a real blocker,
+ *  reported as one. */
 async function legacyModelId(db: any, canonicalModelId: string): Promise<string> {
   const { data: model, error } = await db.from("current_vehicle_models")
-    .select("canonical_id,tdr_model_id,brand_id,name_en,name_th")
+    .select("canonical_id,tdr_model_id,name_en")
     .eq("canonical_id", canonicalModelId).maybeSingle();
   if (error) throw error;
   if (!model) throw new Error("ไม่พบรถคันนี้ใน active canonical release");
-  if (model.tdr_model_id) return String(model.tdr_model_id);
-
-  const { data: created, error: createError } = await db.from("models")
-    .insert({
-      brand_id: model.brand_id,
-      name_en: model.name_en || model.canonical_id,
-      name_th: model.name_th || model.name_en || model.canonical_id,
-    })
-    .select("id").single();
-  if (createError) throw new Error(`สร้าง registration identity ไม่สำเร็จ: ${createError.message}`);
-  return String(created.id);
+  if (!model.tdr_model_id) {
+    throw new Error(
+      `"${model.name_en || canonicalModelId}" ยังไม่ได้เชื่อมกับ registration identity `
+      + "(crosswalk ยังไม่มี tdr_model_id ให้รุ่นนี้) — ผูกยอดจดทะเบียนกับรุ่นนี้ยังไม่ได้ "
+      + "จนกว่า crosswalk จะเชื่อมให้ เลือกรุ่นอื่นที่เชื่อมแล้วไปก่อน",
+    );
+  }
+  return String(model.tdr_model_id);
 }
 
 /** Bind one unmatched DLT label to a canonical model, for good. */
