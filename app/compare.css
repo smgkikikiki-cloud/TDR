@@ -57,3 +57,12 @@
 .compareSignupWall b { font-size: 16px; }
 .compareSignupWall span { color: var(--muted); font-size: 12px; }
 .compareSignupWall .compareSignIn { display: inline-block; width: auto; padding: 11px 18px; }
+
+/* Retail-status badge and launch metadata: header-area facts about the car
+   itself, not another comparable spec row -- see lib/free-compare.ts. */
+.compareStatusBadge { display: inline-block; margin: -2px 0 8px; padding: 2px 8px; border-radius: 3px;
+                       font-size: 10px; font-weight: 800; letter-spacing: .04em; }
+.compareStatusCurrent { background: #e6f4ea; color: #1b7a3d; }
+.compareStatusHistorical { background: #eceff1; color: #5c6266; }
+.compareStatusUnverified { background: #fff4e0; color: #8a5a00; }
+.compareTable thead span.compareLaunchMeta { color: var(--sf-slot-ink); font-size: 10px; margin-top: 5px; }

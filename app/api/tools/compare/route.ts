@@ -46,6 +46,10 @@ async function buildComparison(requestedIds: string[], diffOnly: boolean) {
       name: trim.name,
       model_slug: trim.model_slug,
       image_url: (trim as any).image_url ?? null,
+      // Header metadata, not comparable rows -- see lib/free-compare.ts.
+      retail_status: trim.retail_status ?? null,
+      launch_year: trim.launch_year ?? null,
+      launch_quarter: trim.launch_quarter ?? null,
     })),
     missing_selection: requestedIds.length !== selected.length,
     groups,
