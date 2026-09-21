@@ -3,6 +3,7 @@ import "./globals.css";
 import "./catalog-v12.css";
 import "./storefront.css";
 import "./compare.css";
+import "./home-v2.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { PublicChrome } from "@/components/PublicChrome";
