@@ -23,6 +23,7 @@ import {
 } from "@/lib/trim-editor-fields";
 import type { EditableField } from "@/lib/trim-editor-state";
 import { prepareTrimEdit } from "@/app/admin/vehicle-editor-actions";
+import { deleteCanonicalTrim } from "@/app/admin/trim-delete-actions";
 import type { OemEvidenceTarget } from "@/lib/price-evidence-registry";
 
 type TrimEditorFormProps = {
@@ -224,6 +225,18 @@ export default function TrimEditorForm(props: TrimEditorFormProps) {
       <button className="adminPrimary" disabled={pending}>
         {pending ? "กำลังตรวจ…" : "ตรวจก่อนบันทึก →"}
       </button>
+      {props.trimId ? <button
+        type="submit"
+        formAction={deleteCanonicalTrim}
+        formNoValidate
+        disabled={pending}
+        onClick={(event) => {
+          const label = props.trimName || props.trimId || "รุ่นย่อยนี้";
+          if (!window.confirm(`ลบ ${label} ออกจาก canonical Vehicle Master จริงหรือไม่?\n\nลบได้เฉพาะ trim ที่ยังไม่มีราคา สเปค หรือข้อมูลจดทะเบียนผูกอยู่`)) {
+            event.preventDefault();
+          }
+        }}
+      >ลบรุ่นย่อย</button> : null}
     </div>
   </form>;
 }
