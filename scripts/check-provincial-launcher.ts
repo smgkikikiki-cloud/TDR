@@ -1,12 +1,9 @@
 // Source-text regression tests proving: the Sales Tools dashboard only
 // ever surfaces Sales-Tools-tagged reserved capabilities (never a
-// Research/PDF teaser leaking in as a generic panel), the Provincial
-// Registration launcher is a deliberate, non-interactive card (no data
-// query, no quota consumption), and the pricing page communicates its
-// full planned tier ladder -- Coming Soon throughout -- for Free/Pro/
-// Corporate alike (Individual was scrapped as a sellable tier, see
-// docs/PRODUCT_ACCESS.md, which also collapsed the one commercially-
-// undecided case out of this ladder). Same convention as
+// Research/PDF teaser leaking in as a generic panel), Provincial
+// Registration remains a deliberate non-interactive Coming Soon card,
+// and the public pricing page does not accidentally advertise an
+// unreleased capability as part of a sellable plan. Same convention as
 // check-quota-architecture.ts / check-launch-safety-patch.ts.
 import fs from "node:fs";
 
@@ -43,9 +40,6 @@ check(
 
 console.log("\nprovincial launcher — a deliberate card, not the old generic loop");
 {
-  // The old generic implementation rendered a panel for every feature
-  // with `state === "teaser"` regardless of what kind of capability it
-  // was -- that string must be gone from the dashboard's render logic.
   const genericLoopPattern = /Object\.entries\(features\)\.map\(\(\[key, feature\]\) => feature\.state === "teaser"/;
   check("the old generic 'every teaser feature gets a panel' loop is gone", genericLoopPattern.test(memberPage), false);
 }
@@ -66,22 +60,23 @@ check("the dashboard reads feature.ladder.FREE / PRO / CORPORATE explicitly",
 );
 check("the API response includes both current_state and the full ladder per feature", featuresRoute.includes("current_state: resolveFeatureState") && featuresRoute.includes("ladder: Object.fromEntries"), true);
 
-console.log("\nprovincial launcher — pricing page adds Provincial Registration to Free and Pro, Coming Soon throughout");
-check("Free card includes the provincial line", pricingPage.includes('provincialCopy("FREE")'), true);
-check("Pro card includes the provincial line", pricingPage.includes('provincialCopy("PRO")'), true);
-check(
-  "provincialCopy always appends '(Coming Soon)' while the feature is unreleased",
-  pricingPage.includes("PROVINCIAL_LIVE") && pricingPage.includes("(Coming Soon)"),
-  true,
-);
+console.log("\nprovincial launcher — unreleased capability stays off the public sellable-plan copy");
+check("the policy still registers Provincial Registration as a reserved capability",
+  accessPolicy.includes('key: "provincial_registration"') && accessPolicy.includes('label: "Provincial Registration"'), true);
+{
+  const provincialStart = accessPolicy.indexOf("provincial_registration: {");
+  const nextFeature = accessPolicy.indexOf("research_reports: {", provincialStart);
+  const provincialBlock = provincialStart >= 0
+    ? accessPolicy.slice(provincialStart, nextFeature > provincialStart ? nextFeature : undefined)
+    : "";
+  check("Provincial Registration remains globally unreleased", provincialBlock.includes("released: false"), true);
+}
+check("pricing does not hardcode an unreleased Provincial Registration promise",
+  pricingPage.includes("provincialCopy(") || pricingPage.includes("PROVINCIAL_LIVE"), false);
 
 console.log("\nprovincial launcher — the launch guard is real code, not just documentation");
 check("lib/access-policy.ts exports releaseSafetyViolations for tests to exercise directly", accessPolicy.includes("export function releaseSafetyViolations("), true);
 check("lib/access-policy.ts asserts the live catalog is release-safe at module load (the actual launch guard)", accessPolicy.includes("assertFeatureCatalogIsReleaseSafe(FEATURES)"), true);
-// Collapsing to a single paid tier (Individual scrapped) also collapsed
-// the one commercially-undecided case out of provincial_registration's
-// ladder -- there is no 'limited' audience left to leave undefined, so
-// this is now vacuously true rather than an explicit false.
 check("provincial_registration's ladder has no 'limited' audience left, so its policy gate is vacuously satisfied", accessPolicy.includes("limitedAccessPolicyDefined: true"), true);
 
 console.log(failed ? `\n${failed} check(s) failed` : "\nall provincial launcher checks passed");
