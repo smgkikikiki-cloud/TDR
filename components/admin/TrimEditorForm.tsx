@@ -23,6 +23,7 @@ import {
 } from "@/lib/trim-editor-fields";
 import type { EditableField } from "@/lib/trim-editor-state";
 import { prepareTrimEdit } from "@/app/admin/vehicle-editor-actions";
+import { deleteCanonicalTrim } from "@/app/admin/trim-delete-actions";
 import type { OemEvidenceTarget } from "@/lib/price-evidence-registry";
 
 type TrimEditorFormProps = {
@@ -37,6 +38,15 @@ type TrimEditorFormProps = {
   evidenceTargets: OemEvidenceTarget[];
   trimId?: string;
   trimName?: string;
+  /** Present only when this "+ เพิ่มรุ่นย่อยใหม่" form was opened from an
+   *  Exceptions row (/admin/vehicles/new's grain=TRIM path): carries the
+   *  exception back through the save so prepareTrimEdit can redirect to
+   *  /admin/exceptions instead of this page, with the new trim preselected
+   *  there once it publishes. Never set for an edit of an existing trim. */
+  returnContext?: {
+    exceptionIds: string; rawBrand: string; rawModel: string;
+    registrationType: string; grain: string;
+  };
 };
 
 function QualifierInput({ fieldKey, qualifier, value }: {
@@ -139,6 +149,14 @@ export default function TrimEditorForm(props: TrimEditorFormProps) {
     <input type="hidden" name="submitted_at" value={props.submittedAt} />
     <input type="hidden" name="reviewed_at" value={props.today} />
     {props.trimId ? <input type="hidden" name="trim_id" value={props.trimId} /> : null}
+    {props.returnContext ? <>
+      <input type="hidden" name="return" value="exceptions" />
+      <input type="hidden" name="exception_ids" value={props.returnContext.exceptionIds} />
+      <input type="hidden" name="raw_brand" value={props.returnContext.rawBrand} />
+      <input type="hidden" name="raw_model" value={props.returnContext.rawModel} />
+      <input type="hidden" name="registration_type" value={props.returnContext.registrationType} />
+      <input type="hidden" name="grain" value={props.returnContext.grain} />
+    </> : null}
 
     {state.formError ? <p className="trimFormError" role="alert">{state.formError}</p> : null}
 
@@ -207,6 +225,18 @@ export default function TrimEditorForm(props: TrimEditorFormProps) {
       <button className="adminPrimary" disabled={pending}>
         {pending ? "กำลังตรวจ…" : "ตรวจก่อนบันทึก →"}
       </button>
+      {props.trimId ? <button
+        type="submit"
+        formAction={deleteCanonicalTrim}
+        formNoValidate
+        disabled={pending}
+        onClick={(event) => {
+          const label = props.trimName || props.trimId || "รุ่นย่อยนี้";
+          if (!window.confirm(`ลบ ${label} ออกจาก canonical Vehicle Master จริงหรือไม่?\n\nลบได้เฉพาะ trim ที่ยังไม่มีราคา สเปค หรือข้อมูลจดทะเบียนผูกอยู่`)) {
+            event.preventDefault();
+          }
+        }}
+      >ลบรุ่นย่อย</button> : null}
     </div>
   </form>;
 }

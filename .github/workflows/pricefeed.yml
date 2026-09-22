@@ -14,12 +14,21 @@ permissions:
   pull-requests: write
 
 concurrency:
-  group: tdr-pricefeed
+  # Shared with every other workflow that can activate a canonical vehicle
+  # release (source-import, canonical-input, vehicle-release), so no two
+  # of them can publish concurrently -- see migration_v44's ordinal guard
+  # for the case a shared group alone cannot fully prevent (an
+  # out-of-order queue, not true concurrency).
+  group: canonical-vehicle-input
   cancel-in-progress: false
 
 jobs:
   harvest:
     runs-on: ubuntu-latest
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
     defaults:
       run:
         working-directory: automotive/vehicle_master
@@ -46,26 +55,52 @@ jobs:
           python tools/pricefeed_harvest.py \
             --since "${{ steps.window.outputs.since }}" --limit 60 --delay 1.0 \
             --out vehreg/data/2026/market/pricefeed/batch-$(date -u +%Y-%m-%dT%H%M).json
-      - name: Apply publish policy
+      # The writer, not the evidence report. The old command here read a
+      # batch and said what it thought of it; it has never been able to
+      # write, so this step failed on every tick and no harvested price has
+      # ever reached the ledger. This applies them through the same
+      # canonical pipeline a Save in the admin goes through -- evidence in,
+      # canonical OR exception out, deterministically. No --decisions file:
+      # that let a person's earlier call on an unrelated claim silently
+      # promote a single-source price to canonical on a later, unattended
+      # run. Manual review of a batch is still possible with the legacy,
+      # evidence-only `vehreg market price-run --decisions`, which was
+      # never wired to write.
+      - name: Write the resolved prices into the ledger
         run: |
+          set -euo pipefail
           latest=$(ls -1 vehreg/data/2026/market/pricefeed/batch-*.json | tail -1)
-          python -m vehreg market price-run "$latest" \
-            --decisions vehreg/data/2026/market/pricefeed/review/decisions.json \
-            --write | tee /tmp/price-run.json
+          PYTHONPATH=. python -m tools.pricefeed_write "$latest" \
+            --observed-at "$(date -u +%F)" | tee /tmp/price-write.json
       - run: python tools/pricefeed_guard.py --base origin/main --repo-prefix automotive/vehicle_master/
       - run: pytest -q
-      - name: Open a data-only pull request in TDR
-        env:
-          GH_TOKEN: ${{ github.token }}
+      # A deterministic price the resolver already accepted has nothing left
+      # for a person to decide, so it goes to main and publishes. What the
+      # resolver could not settle -- an ambiguous identity, a genuine
+      # conflict -- is a durable exception row by the time this runs; it
+      # waits for the owner instead of holding every other price behind it.
+      - name: Commit the resolved prices
+        id: commit
         run: |
-          if git diff --quiet; then echo "no price changes"; exit 0; fi
-          branch="pricefeed/$(date -u +%Y%m%d-%H%M)"
+          set -euo pipefail
+          # Untracked too: a canonical write's price file, batch marker and
+          # exception report are all new files, and `git diff` cannot see
+          # them -- which is how a run reports "nothing changed" over a
+          # price it just wrote.
+          if [ -z "$(git status --porcelain vehreg/data)" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"; exit 0
+          fi
           git config user.name "TDR price watcher"
           git config user.email "noreply@github.com"
-          git checkout -b "$branch"
-          git add vehreg/data/2026/market
-          git commit -m "Price feed: $(python -c "import json; d=json.load(open('/tmp/price-run.json')); print(f\"{d['canonical_offers']} offers, {d['review_items']} for review\")")"
-          git push -u origin "$branch"
-          gh pr create --title "Price feed $(date -u +%Y-%m-%d\ %H:%M)" \
-            --body "Automated TDR price harvest. Canonical offers only; ambiguity remains in review." \
-            --base main --head "$branch"
+          git add vehreg/data
+          git commit -m "Price feed: $(python -c "import json; d=json.load(open('/tmp/price-write.json')); p=d['planned']; print(f\"{p['WRITTEN']} written, {p['UNCHANGED']} unchanged, {d['exceptions_stored']['count']} unresolved\")")"
+          git pull --rebase origin main
+          git push origin HEAD:main
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      # A price nobody is serving is not a price change. Publish the exact
+      # commit here and wait for it, rather than pushing and hoping another
+      # workflow picks it up.
+      - name: Publish the pushed revision
+        if: steps.commit.outputs.changed == 'true'
+        run: PYTHONPATH=. python -m tools.publish_canonical --revision "${{ steps.commit.outputs.sha }}"

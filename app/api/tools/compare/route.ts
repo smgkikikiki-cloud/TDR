@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getCanonicalCompareTrims } from "@/lib/canonical-data";
 import { compareValue, indexSpecFields, rowIsDifferent, visibleCompareGroups, type CompareSpecField, type FreeCompareTrim } from "@/lib/free-compare";
 import { loadSpecFieldRegistry } from "@/lib/spec-field-registry";
-import { requireActivatedAccess, requireUsage, AccessPolicyError } from "@/lib/access-policy-server";
+import { requireMemberAccess, requireUsage, AccessPolicyError } from "@/lib/access-policy-server";
 import { recordEvent } from "@/lib/telemetry";
 import {
   ANON_COMPARE_COOKIE, ANON_COMPARE_DAILY_LIMIT, allowanceFrom, bangkokDayKey, cookieOptions, encodeCount,
@@ -96,7 +96,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const ctx = await requireActivatedAccess(accessToken);
+    const ctx = await requireMemberAccess(accessToken);
     const quota = await requireUsage(ctx, "vehicle_compare", ctx.policy.compareDailyLimit, [
       [...requestedIds].sort().join(","), diffOnly,
     ]);
@@ -113,7 +113,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     if (error instanceof AccessPolicyError) {
       if (error.status === 429) {
-        const ctx = await requireActivatedAccess(accessToken).catch(() => null);
+        const ctx = await requireMemberAccess(accessToken).catch(() => null);
         if (ctx) await recordEvent({ eventName: "compare_quota_hit", userId: ctx.userId });
       }
       return NextResponse.json({ error: error.message }, { status: error.status });

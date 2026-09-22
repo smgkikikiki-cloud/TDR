@@ -7,6 +7,8 @@ from datetime import datetime, timedelta, timezone
 import json
 import os
 from pathlib import Path
+import subprocess
+from typing import Callable
 from urllib.error import HTTPError
 from urllib.parse import quote
 from urllib.request import Request, urlopen
@@ -150,13 +152,25 @@ def mark_staged(result_file: Path, pull_request_url: str) -> int:
     return 0
 
 
-def mark_published(data_dir: Path, release_file: Path) -> int:
-    release = json.loads(release_file.read_text(encoding="utf-8"))
-    release_id = str(release["release_id"])
-    markers = data_dir.glob("*/canonical_state/input_batches/*.json")
+def mark_published(result_file: Path, release_id: str) -> int:
+    """Mark PUBLISHED exactly the batches this run's own pull applied.
+
+    Named batches only, read from the same result file mark_staged() used
+    -- not a glob over every input_batches marker ever written to the
+    tree. A marker sweep would mark PUBLISHED any STAGED batch whose file
+    still happens to be on disk regardless of which run applied it or
+    which release call is doing the marking, the same class of bug
+    tools.import_worker.finalize()'s own "named runs only" rule exists to
+    avoid. Called only after publish has actually succeeded, so a batch
+    whose publish failed is never marked PUBLISHED at all -- it stays
+    STAGED, exactly where a retried publish will find and finish it.
+    """
+    if not release_id:
+        raise SystemExit("mark-published needs the release_id the publish produced")
+    payload = json.loads(result_file.read_text(encoding="utf-8"))
+    batch_keys = [str(row["batch_key"]) for row in payload.get("applied", [])]
     count = 0
-    for marker in markers:
-        batch_key = str(json.loads(marker.read_text(encoding="utf-8"))["batch_id"])
+    for batch_key in batch_keys:
         rows = _request(
             "PATCH",
             "canonical_input_batches?batch_key=eq."
@@ -173,6 +187,199 @@ def mark_published(data_dir: Path, release_file: Path) -> int:
     return 0
 
 
+def _commit_sha_from_commit_url(url: str) -> str | None:
+    """pull_request_url is actually a commit URL for this repo -- it pushes
+    straight to main rather than through a PR (see mark_staged()'s own
+    caller in canonical-input.yml, which passes
+    ``.../commit/$(git rev-parse HEAD)``). Its trailing path segment is
+    exactly the commit sha a stuck batch was pushed in, so recovering a
+    STAGED batch needs no new column: this field already carries it."""
+    trimmed = str(url or "").rstrip("/")
+    if not trimmed:
+        return None
+    sha = trimmed.rsplit("/", 1)[-1]
+    return sha or None
+
+
+def _active_vehicle_catalog_release() -> dict | None:
+    """The release currently serving scope 'vehicle_catalog', read through
+    the same canonical_vehicle_state -> canonical_vehicle_releases join
+    every other reader of "what is live right now" uses (migration_v15).
+    No new storage: this is the existing DB shape, read once here.
+
+    Returns None on any read failure or missing/incomplete row -- callers
+    treat that as "cannot determine ancestry", never as "nothing is live".
+    """
+    try:
+        state = _request(
+            "GET", "canonical_vehicle_state?select=active_release_id&scope=eq.vehicle_catalog",
+        ) or []
+        active_release_id = str(state[0].get("active_release_id") or "") if state else ""
+        if not active_release_id:
+            return None
+        releases = _request(
+            "GET", "canonical_vehicle_releases?select=release_id,canonical_revision"
+            f"&release_id=eq.{quote(active_release_id)}",
+        ) or []
+        if not releases:
+            return None
+        release_id = str(releases[0].get("release_id") or "")
+        canonical_revision = str(releases[0].get("canonical_revision") or "")
+        if not release_id or not canonical_revision:
+            return None
+        return {"release_id": release_id, "canonical_revision": canonical_revision}
+    except (RuntimeError, KeyError, IndexError, TypeError):
+        return None
+
+
+def _git_is_ancestor(ancestor_sha: str, descendant_sha: str) -> bool | None:
+    """True/False from real git ancestry (`git merge-base --is-ancestor`),
+    never from revision counting or ordinals: an active revision that is
+    numerically newer is not proof it descends from a given commit if
+    history ever diverged, and main normally fast-forwarding is not a
+    guarantee worth trusting here when a one-line, authoritative check is
+    just as easy to run.
+
+    Returns None when the check itself could not be run or answered
+    (unknown revision, no git binary, timeout, garbled repo state) -- the
+    caller must not treat that as either a yes or a no.
+    """
+    try:
+        result = subprocess.run(
+            ["git", "merge-base", "--is-ancestor", ancestor_sha, descendant_sha],
+            capture_output=True, timeout=30,
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    if result.returncode == 0:
+        return True
+    if result.returncode == 1:
+        return False
+    return None  # unknown/invalid revision or another git-level error
+
+
+def _resolve_staged_recovery(
+    rows: list[dict],
+    active_release: dict | None,
+    is_ancestor: Callable[[str, str], bool | None],
+) -> dict:
+    """Decide, for the oldest commit still stuck STAGED, whether its
+    canonical changes are already served by the active release (in which
+    case nothing needs republishing -- the batch is simply marked
+    PUBLISHED under that release) or whether it genuinely still needs the
+    existing republish-exact-SHA recovery path.
+
+    Pure decision logic, kept apart from the Supabase/git I/O in
+    staged_batches() so scripts/check-*.ts's Python counterpart --
+    tests/test_canonical_staged_publish_recovery.py -- can drive it with
+    fakes for `active_release` and `is_ancestor` and assert the exact
+    outcome, the same separation lib/canonical-vehicle-create.ts's
+    classifyCreatedVehicleStatus already uses on the TypeScript side.
+
+    Returns one of:
+      {"mode": "none"}                                    -- nothing STAGED
+      {"mode": "already_published", "release_id", "applied"}
+      {"mode": "republish", "revision", "applied"}
+      {"mode": "no_commit_url", "batch_id"}                -- unrecoverable automatically
+    """
+    if not rows:
+        return {"mode": "none"}
+
+    oldest_sha = _commit_sha_from_commit_url(str(rows[0].get("pull_request_url") or ""))
+    if not oldest_sha:
+        return {"mode": "no_commit_url", "batch_id": rows[0]["id"]}
+
+    matching = [row for row in rows
+               if _commit_sha_from_commit_url(str(row.get("pull_request_url") or "")) == oldest_sha]
+    applied = [{"id": row["id"], "batch_key": row["batch_key"]} for row in matching]
+
+    # Never guess "already live". Any uncertainty here -- no active release
+    # on record, an incomplete row, ancestry that could not be checked --
+    # falls through to the existing, already-safe republish path rather
+    # than marking anything PUBLISHED on a hunch.
+    if active_release is not None:
+        active_revision = active_release.get("canonical_revision")
+        if active_revision:
+            if oldest_sha == active_revision:
+                return {"mode": "already_published",
+                       "release_id": active_release["release_id"], "applied": applied}
+            ancestor = is_ancestor(oldest_sha, active_revision)
+            if ancestor is True:
+                return {"mode": "already_published",
+                       "release_id": active_release["release_id"], "applied": applied}
+
+    return {"mode": "republish", "revision": oldest_sha, "applied": applied}
+
+
+def staged_batches(result_file: Path, limit: int) -> int:
+    """The oldest commit still stuck STAGED, so a failed publish can be
+    retried without re-applying any canonical write -- or, when a LATER
+    batch's own publish already carried this commit's changes into the
+    active release (this commit is a git ancestor of what is serving now),
+    marked PUBLISHED directly with no republish at all.
+
+    A STAGED batch already has its commit pushed -- mark_staged() only
+    ever runs after that succeeds -- so nothing here ever re-runs
+    CanonicalInputPipeline.apply(); either it asks tools.publish_canonical
+    to build and activate a release from the tree that commit already put
+    on disk, or it does not touch the write path at all. Only the SINGLE
+    oldest commit is recovered per call: one workflow run's own "Apply N
+    canonical input batch(es)" commit can carry several batches together,
+    and grouping strictly by that shared commit is what keeps a batch from
+    ever being marked PUBLISHED under a release built from a different
+    commit's tree. A later tick recovers the next stuck commit, if there
+    still is one.
+    """
+    rows = _request(
+        "GET",
+        "canonical_input_batches?select=id,batch_key,pull_request_url,created_at"
+        f"&status=eq.STAGED&order=created_at.asc&limit={limit}",
+    ) or []
+
+    decision = _resolve_staged_recovery(rows, _active_vehicle_catalog_release(), _git_is_ancestor)
+
+    if decision["mode"] == "none":
+        result_file.write_text(json.dumps(
+            {"applied": [], "revision": None, "already_published_release_id": None}), encoding="utf-8")
+        print(json.dumps({"staged": 0, "revision": None}))
+        return 0
+
+    if decision["mode"] == "no_commit_url":
+        # Nothing to recover automatically -- surfaced on the row itself
+        # so an operator sees why, rather than this retrying forever with
+        # no revision to publish.
+        _request("PATCH", f"canonical_input_batches?id=eq.{quote(str(decision['batch_id']))}", {
+            "error": "STAGED with no recorded commit URL; cannot recover automatically",
+            "updated_at": datetime.now(timezone.utc).isoformat(),
+        })
+        result_file.write_text(json.dumps(
+            {"applied": [], "revision": None, "already_published_release_id": None}), encoding="utf-8")
+        print(json.dumps({"staged": len(rows), "revision": None, "recovering": 0}))
+        return 0
+
+    if decision["mode"] == "already_published":
+        output = {
+            "applied": decision["applied"], "revision": None,
+            "already_published_release_id": decision["release_id"],
+        }
+        result_file.write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        print(json.dumps({
+            "staged": len(rows), "revision": None, "already_published": True,
+            "release_id": decision["release_id"], "recovering": len(decision["applied"]),
+        }))
+        return 0
+
+    output = {
+        "applied": decision["applied"], "revision": decision["revision"],
+        "already_published_release_id": None,
+    }
+    result_file.write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps({
+        "staged": len(rows), "revision": decision["revision"], "recovering": len(decision["applied"]),
+    }))
+    return 0
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -185,8 +392,11 @@ def main(argv=None) -> int:
     p_stage.add_argument("--result-file", type=Path, required=True)
     p_stage.add_argument("--pull-request-url", required=True)
     p_publish = sub.add_parser("mark-published")
-    p_publish.add_argument("--data-dir", type=Path, default=DATA_DIR)
-    p_publish.add_argument("--release-file", type=Path, required=True)
+    p_publish.add_argument("--result-file", type=Path, required=True)
+    p_publish.add_argument("--release-id", required=True)
+    p_staged = sub.add_parser("staged-batches")
+    p_staged.add_argument("--result-file", type=Path, required=True)
+    p_staged.add_argument("--limit", type=int, default=50)
     args = parser.parse_args(argv)
     if args.command == "check":
         try:
@@ -198,7 +408,9 @@ def main(argv=None) -> int:
         return pull(args.data_dir, args.result_file, max(1, min(args.limit, 50)))
     if args.command == "mark-staged":
         return mark_staged(args.result_file, args.pull_request_url)
-    return mark_published(args.data_dir, args.release_file)
+    if args.command == "staged-batches":
+        return staged_batches(args.result_file, max(1, min(args.limit, 200)))
+    return mark_published(args.result_file, args.release_id)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,209 @@
+"""Import an ECO Sticker export into MarketTrim columns: resolve, patch, write.
+
+    python -m tools.import_source export.xlsx --source ECO [--apply]
+
+Without ``--apply`` it resolves and reports and writes nothing. With it, the
+batches go straight through the canonical pipeline -- no queue, no review, no
+PR. Rows the catalogue cannot place deterministically are written to an
+exceptions file instead of being guessed at or parked in a review queue.
+
+This is the ECO path specifically. Every source has its own shape, and
+running one through another's normalizer produces confident nonsense:
+registration files go to ``vehreg.registration_import`` instead, and a
+source with no parser of its own is reported unsupported rather than fed to
+whichever parser happens to be nearest. ``tools/import_worker.py`` is what
+routes an uploaded file to the right one.
+"""
+
+from __future__ import annotations
+
+import argparse
+from datetime import datetime, timezone
+import json
+from pathlib import Path
+
+from vehreg.catalog import Catalog, DATA_DIR
+from vehreg.comparable_specs import SpecRegistry
+from vehreg.ecosticker_export import normalize_row
+from vehreg.ecosticker_import import UNRESOLVED, plan_row
+from vehreg.input_pipeline import CanonicalInputPipeline
+from vehreg.source_import import (
+    CREATED, EXCEPTION, FIELD_TO_COLUMN, PATCHED, ExistingTrim, RowOutcome,
+    SourceRow, batches_from_commands, commands_from_outcomes, resolve_rows,
+    summarize,
+)
+
+DEFAULT_YEAR = 2026
+
+
+def read_rows(path: Path) -> list[dict]:
+    import pandas
+
+    frame = (pandas.read_csv(path) if path.suffix.lower() == ".csv"
+             else pandas.read_excel(path))
+    return frame.to_dict(orient="records")
+
+
+def existing_trims(catalog: Catalog) -> list[ExistingTrim]:
+    out = []
+    for model_id in catalog.models:
+        for trim in catalog.trims_of(model_id):
+            out.append(ExistingTrim(
+                canonical_id=trim.id, model_id=model_id,
+                generation_id=trim.generation_id, name=trim.name,
+                powertrain=trim.powertrain.value,
+                # Read straight off FIELD_TO_COLUMN rather than a hand-kept
+                # second list. A column that is mapped for writing but
+                # missing here reads as blank, so the import would treat a
+                # value somebody set by hand as absent and overwrite it --
+                # the protection would be there and do nothing.
+                columns={
+                    **{column: getattr(trim, column, None)
+                       for column in FIELD_TO_COLUMN.values()},
+                    "source_refs": {k: list(v) for k, v in (trim.source_refs or {}).items()},
+                },
+                source_ids=tuple(
+                    str(v) for values in (trim.source_refs or {}).values() for v in values),
+            ))
+    return out
+
+
+def source_rows(raw_rows, catalog: Catalog, registry: SpecRegistry,
+                source_kind: str) -> tuple[list[SourceRow], list[dict]]:
+    """Normalize and place each export row; unplaceable rows become exceptions."""
+    rows: list[SourceRow] = []
+    exceptions: list[dict] = []
+    for raw in raw_rows:
+        plan = plan_row(raw, catalog, registry)
+        if plan.status == UNRESOLVED or not plan.model_id:
+            exceptions.append({
+                "source_id": plan.source_id, "brand": plan.brand_raw,
+                "model": plan.model_raw, "reason": plan.reason or "identity unresolved",
+            })
+            continue
+        rows.append(SourceRow(
+            source_id=plan.source_id, source_kind=source_kind,
+            model_id=plan.model_id, generation_id=plan.generation_id or "",
+            powertrain=plan.vehicle.powertrain or "",
+            trim_name=plan.trim_name or "",
+            values=dict(normalize_row(raw).specs),
+        ))
+    return rows, exceptions
+
+
+def exception_record(outcome: RowOutcome) -> dict:
+    return {
+        "source_id": outcome.row.source_id,
+        "model_id": outcome.row.model_id,
+        "trim_name": outcome.row.trim_name,
+        "powertrain": outcome.row.powertrain,
+        "reason": outcome.reason,
+    }
+
+
+def main(argv=None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("export", type=Path)
+    parser.add_argument("--source", default="ECO",
+                        help="source kind; only ECO has a parser on this path")
+    parser.add_argument("--source-ref", default="", help="where the export came from")
+    parser.add_argument("--data-dir", type=Path, default=DATA_DIR)
+    parser.add_argument("--year", type=int, default=DEFAULT_YEAR)
+    parser.add_argument("--actor", default="bulk-import")
+    # The moment this import was submitted, which the worker passes from
+    # the run row so a retry of that run is the same import, not a new one.
+    parser.add_argument("--submitted-at",
+                        default=datetime.now(timezone.utc).isoformat(timespec="seconds"),
+                        help="ISO-8601 timestamp for the batches this run submits")
+    parser.add_argument("--report-dir", type=Path, default=None)
+    parser.add_argument("--apply", action="store_true",
+                        help="write through the canonical pipeline instead of reporting only")
+    args = parser.parse_args(argv)
+    if args.source.upper() != "ECO":
+        raise SystemExit(
+            f"{args.source.upper()} has no parser on the ECO path; "
+            "route it to its own importer instead of normalizing it as ECO")
+
+    catalog = Catalog.load(args.data_dir, args.year)
+    registry = SpecRegistry.load(args.data_dir, args.year)
+    raw_rows = read_rows(args.export)
+
+    rows, unplaced = source_rows(raw_rows, catalog, registry, args.source)
+    trims = existing_trims(catalog)
+    generation_codes = {g.id: g.code for model_id in catalog.models
+                        for g in catalog.generations_of(model_id) if g.code}
+    outcomes = resolve_rows(rows, trims, known_generations=generation_codes)
+    commands, stranded = commands_from_outcomes(
+        outcomes, generation_codes=generation_codes,
+        existing_by_trim={t.canonical_id: t for t in trims})
+
+    exceptions = unplaced + [exception_record(o) for o in outcomes
+                             if o.status == EXCEPTION] + [
+        exception_record(o) for o in stranded]
+    conflicts = [{"source_id": o.row.source_id, "trim_id": o.trim_id,
+                  "conflicts": o.conflicts} for o in outcomes if o.conflicts]
+
+    counts = summarize(outcomes)
+    report = {
+        "rows_read": len(raw_rows),
+        "rows_placed": len(rows),
+        "patched": counts.get(PATCHED, 0),
+        "created": counts.get(CREATED, 0),
+        "unchanged": counts.get("UNCHANGED", 0),
+        "exceptions": len(exceptions),
+        "conflicts": len(conflicts),
+        "commands": len(commands),
+        "applied": False,
+        # Whether the canonical Vehicle Master tree actually has a change
+        # that needs a commit and a publish. Never inferred from `patched`
+        # alone: a row classified PATCHED still runs through the same
+        # write pipeline as every other command, and that pipeline always
+        # appends an audit trail (revisions.jsonl/outbox.jsonl/shadow) even
+        # when the underlying catalogue data ends up identical, so "a
+        # command was generated" is not the same fact as "a command wrote
+        # a real change". Below, `commands` empty (every row UNCHANGED or
+        # EXCEPTION) already answers this before anything is applied; once
+        # applied, a batch that turned out to be a byte-identical replay
+        # of one already committed (idempotent_replay=True) does not count
+        # either.
+        "canonical_changed": False,
+    }
+
+    # The run's own timestamp, not the clock at the moment each batch is
+    # sent. A retry has to produce the same batches to be recognised as a
+    # retry; a fresh `now()` per batch made an interrupted import fail on
+    # the batch that had already landed.
+    batches = batches_from_commands(
+        commands, year=args.year, source_kind=args.source,
+        source_ref=args.source_ref or str(args.export.name),
+        batch_prefix=f"import-{args.source.lower()}-{args.export.stem[:24]}",
+        submitted_at=args.submitted_at, actor=args.actor)
+
+    if args.apply and batches:
+        pipeline = CanonicalInputPipeline(args.data_dir)
+        for batch in batches:
+            result = pipeline.apply(batch)
+            if result.status != "APPLIED":
+                raise SystemExit(f"batch {batch['batch_id']} returned {result.status}")
+            if not result.idempotent_replay and result.changed_files:
+                report["canonical_changed"] = True
+        report["applied"] = True
+    elif not args.apply:
+        # Dry run: no pipeline was asked to write anything, so the closest
+        # honest answer is "would a command have been sent at all".
+        report["canonical_changed"] = bool(commands)
+
+    report_dir = args.report_dir or (args.data_dir / str(args.year) / "market" / "trims")
+    report_dir.mkdir(parents=True, exist_ok=True)
+    stem = f"import_{args.source.lower()}_{args.export.stem[:24]}"
+    (report_dir / f"{stem}_report.json").write_text(
+        json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (report_dir / f"{stem}_exceptions.json").write_text(
+        json.dumps({"exceptions": exceptions, "conflicts": conflicts},
+                   ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(json.dumps(report, ensure_ascii=False))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

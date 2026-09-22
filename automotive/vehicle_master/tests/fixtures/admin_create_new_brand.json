@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "batch_id": "check-new-brand-1",
+  "year": 2026,
+  "submitted_at": "2026-09-21T00:00:00+00:00",
+  "source": {
+    "kind": "ADMIN"
+  },
+  "reason": "Created via TDR Admin Vehicles → + สร้างรถใหม่",
+  "commands": [
+    {
+      "operation": "UPSERT_MODEL_BUNDLE",
+      "payload": {
+        "brand": {
+          "name_en": "Test New Brand"
+        },
+        "model": {
+          "name_en": "Model One",
+          "incomplete": true
+        },
+        "generation": {
+          "code": "GEN1"
+        },
+        "variants": [],
+        "trims": [
+          {
+            "name": "Standard",
+            "powertrain": "ICE"
+          }
+        ]
+      }
+    }
+  ]
+}

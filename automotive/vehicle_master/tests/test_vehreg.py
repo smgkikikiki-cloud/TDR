@@ -726,10 +726,16 @@ class DltFeedTests(unittest.TestCase):
         self.assertEqual({r["แบบรถ"] for r in rows}, {"HILUX REVO"})
 
     def test_unreadable_counts_do_not_crash_the_load(self):
-        rows, _, units = dlt._to_rows(
+        # Skipped, not kept with a fabricated 0: registration_import.py's
+        # parse_units_cell is the one place "what counts as a valid
+        # count" is decided, shared with the browser importer, and an
+        # unparsable value silently written as 0 used to be
+        # indistinguishable from DLT genuinely reporting zero.
+        rows, skipped, units = dlt._to_rows(
             [{"ประเภทรถ": "รถยนต์นั่งส่วนบุคคลไม่เกิน 7 คน", "ยี่ห้อ": "X",
               "รุ่น": "Y", "จำนวน": "-"}], "2026-01")
-        self.assertEqual((len(rows), units), (1, 0))
+        self.assertEqual((len(rows), units), (0, 0))
+        self.assertEqual(len(skipped), 1)
 
     def test_the_written_columns_match_the_declared_column_map(self):
         mapping = dlt.column_map()

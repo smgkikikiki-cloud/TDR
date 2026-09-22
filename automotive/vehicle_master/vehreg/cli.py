@@ -485,8 +485,9 @@ def cmd_market(args) -> int:
         from .pricing import PriceLedger
         if args.write:
             raise CatalogError(
-                "market price-run is evidence-only; canonical automated writes "
-                "must go through P5 reconciliation and the P6 HUMAN promotion gate")
+                "market price-run is evidence-only and reports what the resolver "
+                "thinks of a batch; the writer is tools/pricefeed_write.py, which "
+                "applies the accepted offers through the canonical pipeline")
         documents, claims = pricefeed.load_batch(args.path)
         catalog = Catalog.load(args.data_dir, args.year)
         ledger = PriceLedger.load(args.data_dir, year=args.year, catalog=catalog)
@@ -500,7 +501,7 @@ def cmd_market(args) -> int:
             **result.summary(),
             "legacy_consensus_offers": len(result.offers),
             "written": False,
-            "note": "evidence only; use P5 -> P6 for canonical price changes",
+            "note": "evidence only; tools/pricefeed_write.py writes these offers",
             "review": result.review[:40],
             "trim_proposals": result.trim_proposals[:40],
         }, ensure_ascii=False, indent=2, allow_nan=False))
@@ -665,11 +666,12 @@ def build_parser() -> argparse.ArgumentParser:
         if name == "price-run":
             m.add_argument("path", help="harvested batch JSON")
             m.add_argument("--decisions", help="reviewer decisions JSON")
-            # Kept as a compatibility trap for old scripts: the handler rejects
-            # it. Removing the flag outright would make a stale script fail at
-            # argparse with no explanation of the P5/P6 migration path.
+            # Kept as a compatibility trap for old scripts: the handler
+            # rejects it and names the writer. Removing the flag outright
+            # would make a stale caller fail at argparse with no hint of
+            # where the write actually happens now.
             m.add_argument("--write", action="store_true",
-                           help="disabled: canonical writes now require P5 -> P6")
+                           help="disabled: use tools/pricefeed_write.py to write")
         if name == "quote":
             m.add_argument("trim_id")
             m.add_argument("--as-of", help="date YYYY-MM-DD")

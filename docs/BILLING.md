@@ -110,21 +110,26 @@ parameters (`lib/access-policy-server.ts::requestFingerprint`), so a
 client cannot reuse one identifier to avoid paying for a materially
 different request.
 
-### Account activation
+### Verified identity, and what it is *not* for
 
-A Free account is not usable for Compare/Sales Tools/Research/PDF until
-it is *activated*: confirmed email (Supabase Auth), a verified phone
-identity (a real `tdr_customer_phone_identities` row -- Supabase Auth
-phone OTP via `updateUser({phone})` + `verifyOtp({..., type:
-"phone_change"})`, never a typed `user_metadata` string), a postcode, and
-either a company name or explicit individual/not-affiliated status.
-`tdr_customer_profiles.activation_completed_at` is the single stored gate;
-`lib/access-policy-server.ts::requireActivatedAccess()` is the only check
-every tool route uses, so an incomplete account is blocked server-side
-regardless of which client calls the API. The pre-existing production
-`tdr_customer_profiles` row (a real paying legacy customer) is
-grandfathered as activated by migration_v34, since the pre-tiered signup
-flow never wired real phone verification into the UI.
+Signing in is the entitlement. A member who has confirmed their email and
+logged in gets Compare, Sales Tools, Research and PDF export at whatever
+their tier and quota allow -- `lib/access-policy-server.ts::requireMemberAccess()`
+resolves the session and the tier, and nothing else stands in the way.
+Phone, postcode, individual/company and marketing consent are optional
+profile enrichment collected at `/member/profile`; a member who never
+fills them in, or who cannot receive an OTP, still has the product they
+are entitled to.
+
+Verified identity -- confirmed email, an OTP-verified
+`tdr_customer_phone_identities` row (Supabase Auth `updateUser({phone})` +
+`verifyOtp({..., type: "phone_change"})`, never a typed `user_metadata`
+string), and a complete billing profile -- is required only where identity
+is the operation's own subject. Checkout is that case: money moves, so
+`lib/billing.ts` calls `requireActivatedAccess()` before creating a Stripe
+session. `tdr_customer_profiles.activation_completed_at` remains the stored
+flag for it, and the pre-existing production customer is grandfathered by
+migration_v34. No product route may reach for this gate.
 
 ### Preventing double subscriptions
 

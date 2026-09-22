@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { requireActivatedAccess, requireUsage, AccessPolicyError } from "@/lib/access-policy-server";
+import { requireMemberAccess, requireUsage, AccessPolicyError } from "@/lib/access-policy-server";
 import { FEATURES } from "@/lib/access-policy";
 import { recordEvent } from "@/lib/telemetry";
 
@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
   if (!accessToken) return NextResponse.json({ error: "member bearer token required" }, { status: 401 });
 
   try {
-    const ctx = await requireActivatedAccess(accessToken);
+    const ctx = await requireMemberAccess(accessToken);
     const reportId = request.nextUrl.searchParams.get("report") || "summary";
     const quota = await requireUsage(ctx, "pdf_export", ctx.policy.pdfMonthlyLimit, ["pdf_export", reportId]);
 

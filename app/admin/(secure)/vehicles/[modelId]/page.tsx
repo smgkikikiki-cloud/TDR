@@ -7,6 +7,8 @@ import { trimEditorFields } from "@/lib/spec-field-registry";
 import { fieldAppliesTo } from "@/lib/trim-editor-fields";
 import { BODY_TYPES, SEGMENTS } from "@/lib/vehicle-taxonomy";
 import { prepareModelGenerationEdit } from "@/app/admin/vehicle-editor-actions";
+import { saveTrimPrice, closeTrimCampaign } from "@/app/admin/trim-price-actions";
+import type { WorkspaceTrim } from "@/lib/canonical-editor";
 import TrimEditorForm from "@/components/admin/TrimEditorForm";
 
 function money(value: unknown) {
@@ -23,16 +25,26 @@ export default async function VehicleWorkspacePage({
   params, searchParams,
 }: {
   params: Promise<{ modelId: string }>;
-  searchParams: Promise<{ queued?: string; kind?: string }>;
+  searchParams: Promise<{
+    saved?: string; return?: string; exception_ids?: string; raw_brand?: string;
+    raw_model?: string; registration_type?: string; grain?: string;
+  }>;
 }) {
   const { modelId } = await params;
   const query = await searchParams;
+  const saved = query.saved;
+  const fromExceptions = query.return === "exceptions";
+  const returnContext = fromExceptions ? {
+    exceptionIds: query.exception_ids || "", rawBrand: query.raw_brand || "",
+    rawModel: query.raw_model || "", registrationType: query.registration_type || "",
+    grain: query.grain || "",
+  } : undefined;
   const editor = await currentEditor();
   if (!editor) redirect("/admin/login");
   const workspace = await loadVehicleWorkspace(modelId);
   if (!workspace) notFound();
 
-  const { brand, model, generation, trims, specFactsByTrim, evidenceTargets, relatedBatches, releaseId, releaseYear } = workspace;
+  const { brand, model, generation, trims, specFactsByTrim, evidenceTargets, releaseId, releaseYear } = workspace;
   const submittedAt = new Date().toISOString();
   const today = submittedAt.slice(0, 10);
   const allFields = trimEditorFields(releaseYear);
@@ -42,21 +54,25 @@ export default async function VehicleWorkspacePage({
       <div>
         <small>VEHICLE MASTER · CANONICAL VEHICLE EDITOR</small>
         <h1>{brand.nameEn} {model.nameEn}{model.nameTh ? ` · ${model.nameTh}` : ""}</h1>
-        <p><code>{modelId}</code> · generation {generation?.code || "—"} · active release <code>{releaseId}</code> · editing as <b>{editor.name}</b></p>
+        <p><code>{modelId}</code> · generation {generation?.code || "—"} · editing as <b>{editor.name}</b></p>
       </div>
       <Link className="adminPrimaryLink" href="/admin/vehicles">← กลับรายการรถ</Link>
     </div>
 
-    {query.queued ? <div className="adminSaved">
-      บันทึก {KIND_LABEL[query.kind || ""] || "canonical"} เข้าคิวแล้ว — ข้อมูลจะขึ้นจริงหลัง PR ถูก merge และ release ใหม่ถูก publish (ดูสถานะที่ตาราง Input queue ด้านล่าง)
+    {saved ? <div className="adminSaved">
+      บันทึก {KIND_LABEL[saved] || "canonical"} แล้ว — ระบบกำลังเขียนและ publish ให้อัตโนมัติ ใช้เวลาสักครู่แล้วรีเฟรช
+    </div> : null}
+
+    {fromExceptions ? <div className="adminNotice">
+      <span>
+        มาจากรายการค้าง: <b>{query.raw_brand}</b> {query.raw_model} — เพิ่มรุ่นย่อยที่ตรงกับป้ายนี้ที่ส่วน
+        “+ เพิ่มรุ่นย่อยใหม่” ด้านล่าง แล้วบันทึก ระบบจะพากลับไปหน้า Exceptions พร้อมเลือกไว้ให้เอง
+      </span>
     </div> : null}
 
     <nav className="adminQuickGrid" aria-label="Vehicle workspace sections">
       <a href="#model-generation"><b>Canonical vehicle</b><span>Model / Generation ↓</span></a>
       <a href="#trims"><b>Trims &amp; specs</b><span>{trims.length} trims ↓</span></a>
-      <a href={`/admin/vehicle-input?model=${encodeURIComponent(modelId)}`}><b>Prices</b><span>Price Bench ↗</span></a>
-      <a href={`/admin/retail-lifecycle?model=${encodeURIComponent(modelId)}`}><b>Lifecycle</b><span>Retail lifecycle review ↗</span></a>
-      {model.tdrModelId ? <a href={`/admin/models/${model.tdrModelId}/edit`}><b>Editorial</b><span>+ Industry/production context ↗</span></a> : null}
       <a href="#evidence"><b>Evidence</b><span>Registered OEM sources ↓</span></a>
     </nav>
 
@@ -77,14 +93,14 @@ export default async function VehicleWorkspacePage({
       <label className="adminField"><span>Launched (ปัจจุบัน: {generation?.launched || "—"})</span><input name="launched" type="date" /></label>
       <label className="adminField"><span>Ended (ปัจจุบัน: {generation?.ended || "—"})</span><input name="ended" type="date" /></label>
       <EvidenceFields today={today} />
-      <div className="adminFormActions"><button className="adminPrimary">ตรวจก่อนบันทึก →</button></div>
+      <div className="adminFormActions"><button className="adminPrimary">บันทึก</button></div>
     </form>
 
     {/* ---------- Trims: one complete editor per trim ---------- */}
     <div id="trims" className="adminHeader"><div><small>CANONICAL</small><h2>รุ่นย่อย / Trims ({trims.length})</h2>
       <p>
         เปิดรุ่นย่อยแล้วแก้ได้ครบในฟอร์มเดียว — {allFields.length} ช่อง ตั้งแต่ระบบขับเคลื่อน แบตเตอรี่ ระยะทาง
-        มิติตัวถัง ยาง ไปจนถึง ADAS. หนึ่งช่องต่อหนึ่งเรื่อง กดบันทึกครั้งเดียว ตรวจ diff เดียว เข้าคิวเป็นชุดเดียว
+        มิติตัวถัง ยาง ไปจนถึง ADAS. หนึ่งช่องต่อหนึ่งเรื่อง กดบันทึกครั้งเดียว
       </p>
     </div></div>
     <div className="libraryTable"><table><thead><tr>
@@ -101,6 +117,9 @@ export default async function VehicleWorkspacePage({
 
     {trims.map((trim) => <details key={trim.canonicalId} id={`trim-${trim.canonicalId}`} className="adminNotice">
       <summary><b>แก้ {trim.name}</b> · {trim.powertrain} · <code>{trim.canonicalId}</code></summary>
+
+      <TrimPriceSection trim={trim} modelId={modelId} submittedAt={submittedAt} />
+
       <TrimEditorForm
         modelId={modelId} releaseId={releaseId} submittedAt={submittedAt}
         submissionId={randomUUID()} today={today}
@@ -119,15 +138,16 @@ export default async function VehicleWorkspacePage({
       <summary><b>+ เพิ่มรุ่นย่อยใหม่</b></summary>
       <p className="adminHint">
         กรอกชื่อ powertrain และสเปคให้ครบในฟอร์มเดียว แล้วกดบันทึกครั้งเดียว —
-        รุ่นย่อยและสเปคทั้งหมดถูกสร้างพร้อมกันใน batch เดียว
+        รุ่นย่อยและสเปคทั้งหมดถูกสร้างพร้อมกัน
       </p>
       <TrimEditorForm
         modelId={modelId} releaseId={releaseId} submittedAt={submittedAt}
         submissionId={randomUUID()} today={today}
         fields={allFields}
         current={{}} sourceRefs={{}} evidenceTargets={evidenceTargets}
+        returnContext={returnContext}
       />
-    </details> : <div className="adminNotice"><span>รุ่นนี้ไม่มี active generation — เพิ่ม/แก้รุ่นย่อยไม่ได้จนกว่าจะแก้ generation ผ่าน Advanced JSON</span></div>}
+    </details> : <div className="adminNotice"><span>รุ่นนี้ยังไม่มี generation ที่ใช้งานอยู่ — เพิ่มรุ่นย่อยไม่ได้จนกว่าจะตั้ง generation ให้รุ่นนี้ก่อน</span></div>}
 
     {/* ---------- Evidence ---------- */}
     {evidenceTargets.length ? <>
@@ -139,20 +159,60 @@ export default async function VehicleWorkspacePage({
       </a>)}</div>
     </> : null}
 
-    {/* ---------- Input queue ---------- */}
-    <div className="adminHeader"><div><small>INPUT QUEUE</small><h2>Batch ล่าสุดที่พูดถึงรุ่นนี้</h2>
-      <p>QUEUED = รอ worker ดึงไปทำ (ทุก ~10 นาที) · STAGED = เปิด PR แล้ว รอ merge · PUBLISHED = ขึ้น release จริงแล้ว</p>
-    </div></div>
-    <div className="libraryTable"><table><thead><tr>
-      <th>Batch</th><th>Source</th><th>Items</th><th>Status</th><th>Result</th>
-    </tr></thead><tbody>
-      {relatedBatches.length ? relatedBatches.map((row) => <tr key={row.batchKey}>
-        <td><b>{row.batchKey}</b><small>{new Date(row.createdAt).toLocaleString("th-TH")} · {row.actor}</small></td>
-        <td>{row.sourceKind}</td><td>{row.itemCount}</td><td>{row.status}</td>
-        <td>{row.pullRequestUrl ? <a href={row.pullRequestUrl} target="_blank" rel="noreferrer">PR ↗</a> : row.releaseId || row.error || "—"}</td>
-      </tr>) : <tr><td colSpan={5}>ยังไม่มี batch ที่อ้างถึงรุ่นนี้ใน 60 รายการล่าสุด</td></tr>}
-    </tbody></table></div>
   </div>;
+}
+
+/** What a showroom quotes, saved in one go.
+ *
+ *  Campaign bookkeeping -- the campaign id, its option, the effective dates
+ *  the ledger keys a promotion by -- is derived in the action from these
+ *  fields, so the owner fills in prices and dates and nothing else. */
+function TrimPriceSection({ trim, modelId, submittedAt }: {
+  trim: WorkspaceTrim; modelId: string; submittedAt: string;
+}) {
+  const list = trim.prices.find((row) => row.priceType === "LIST_PRICE");
+  const campaign = trim.campaign;
+  return <>
+    <form action={saveTrimPrice} className="adminForm">
+      <input type="hidden" name="trim_id" value={trim.canonicalId} />
+      <input type="hidden" name="model_id" value={modelId} />
+      <input type="hidden" name="submission_id" value={randomUUID()} />
+      <input type="hidden" name="submitted_at" value={submittedAt} />
+      <label className="adminField"><span>ราคาปกติ (ปัจจุบัน: {money(list?.amountThb)})</span>
+        <input name="list_price" type="number" min="1" step="1" placeholder="เช่น 1290000" /></label>
+      <label className="adminField"><span>ราคาโปร (ปัจจุบัน: {money(campaign?.amountThb)})</span>
+        <input name="campaign_price" type="number" min="1" step="1" /></label>
+      <label className="adminField adminFieldWide"><span>ของแถม / รายละเอียดแคมเปญ</span>
+        <input name="gifts" type="text" defaultValue={campaign?.gifts || ""}
+          placeholder="ประกันชั้น 1, ฟิล์ม, Wall charger…" /></label>
+      <label className="adminField"><span>เริ่ม</span><input name="starts" type="date" defaultValue={campaign?.starts || ""} /></label>
+      <label className="adminField"><span>สิ้นสุด</span><input name="ends" type="date" defaultValue={campaign?.ends || ""} /></label>
+      <div className="adminFormActions"><button className="adminPrimary">บันทึกราคา</button></div>
+    </form>
+    {campaign?.campaignId && !campaign.ends ? <form action={closeTrimCampaign} className="adminInlineForm">
+      <input type="hidden" name="trim_id" value={trim.canonicalId} />
+      <input type="hidden" name="model_id" value={modelId} />
+      <input type="hidden" name="campaign_id" value={campaign.campaignId} />
+      <input type="hidden" name="option_id" value={campaign.optionId || "default"} />
+      <input type="hidden" name="submission_id" value={randomUUID()} />
+      <input type="hidden" name="submitted_at" value={submittedAt} />
+      <span>แคมเปญนี้ยังไม่มีวันสิ้นสุด</span>
+      <button>ปิดแคมเปญวันนี้</button>
+    </form> : null}
+    {trim.prices.length ? <details>
+      <summary>ประวัติราคา ({trim.prices.length})</summary>
+      <div className="libraryTable"><table>
+        <thead><tr><th>ราคา</th><th>ประเภท</th><th>ช่วง</th><th>บันทึกเมื่อ</th><th>ที่มา</th></tr></thead>
+        <tbody>{trim.prices.map((row, index) => <tr key={`${row.priceType}-${row.observedAt}-${index}`}>
+          <td>{money(row.amountThb)}</td>
+          <td>{row.priceType}</td>
+          <td>{row.effectiveFrom || "—"}{row.effectiveTo ? ` → ${row.effectiveTo}` : ""}</td>
+          <td>{row.observedAt || "—"}</td>
+          <td>{row.source || "—"}</td>
+        </tr>)}</tbody>
+      </table></div>
+    </details> : null}
+  </>;
 }
 
 /** Optional source/reason, shown once per form. Never required. */

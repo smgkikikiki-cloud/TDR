@@ -67,7 +67,7 @@ function pct(value: unknown, digits = 1) {
 export default function MemberDashboardPage() {
   const router = useRouter();
   const [data, setData] = useState<DashboardData | null>(null);
-  const [status, setStatus] = useState<"loading" | "ready" | "forbidden" | "activation" | "quota" | "picker" | "error">("loading");
+  const [status, setStatus] = useState<"loading" | "ready" | "forbidden" | "quota" | "picker" | "error">("loading");
   const [message, setMessage] = useState("");
   const [moduleStatus, setModuleStatus] = useState<ModuleStatus | null>(null);
   const [picked, setPicked] = useState<SalesModule[]>([]);
@@ -154,12 +154,12 @@ export default function MemberDashboardPage() {
           router.replace("/member/login");
           return;
         }
-        // requireActivatedAccess() on the server returns 403 for an
-        // incomplete/unverified account -- this is the same centralized
-        // gate direct API calls hit too, not a UI-only check.
+        // A signed-in member is entitled to the dashboard, so a 403 here is
+        // the tier saying no to something specific rather than the account
+        // being held shut -- it reads as a normal refusal, not a sign-up wall.
         if (error?.status === 403) {
-          setStatus("activation");
-          setMessage(error instanceof Error ? error.message : "ต้องยืนยันตัวตนก่อนใช้ Sales Tools");
+          setStatus("error");
+          setMessage(error instanceof Error ? error.message : "สิทธิ์ของบัญชีนี้ไม่ครอบคลุมส่วนนี้");
           return;
         }
         setStatus("error");
@@ -230,7 +230,6 @@ export default function MemberDashboardPage() {
     </main>
   );
   if (status === "quota") return <main className={styles.shell}><section className={styles.stateCard}><div className={styles.eyebrow}>TDR REPORT</div><h1>ใช้โควตา Sales Tools ของวันนี้ครบแล้ว</h1><p>{message}</p><p className={styles.muted}>บัญชี Free ใช้ได้ {TIER_POLICIES.FREE.salesQueryDailyLimit} คำขอต่อวัน (เวลาไทย) อัปเกรดเป็น Pro เพื่อใช้งานไม่จำกัด</p><Link href="/pricing">ดูแพ็กเกจ</Link></section></main>;
-  if (status === "activation") return <main className={styles.shell}><section className={styles.stateCard}><div className={styles.eyebrow}>TDR REPORT</div><h1>ยืนยันตัวตนก่อนใช้ Sales Tools</h1><p>ต้องยืนยันอีเมล ยืนยันเบอร์มือถือ และกรอกโปรไฟล์ให้ครบก่อนใช้เครื่องมือสมาชิก (ไม่ต้องผูกบัตร)</p><Link href="/member/profile">ไปที่หน้าโปรไฟล์ →</Link></section></main>;
   if (status === "forbidden") return <main className={styles.shell}><section className={styles.stateCard}><div className={styles.eyebrow}>TDR REPORT</div><h1>บัญชีนี้ยังไม่มีสิทธิ์ข้อมูลจดทะเบียน</h1><p>{message}</p><button onClick={signOut}>ออกจากระบบ</button></section></main>;
   if (status === "error" || !data) return <main className={styles.shell}><section className={styles.stateCard}><h1>โหลดรายงานไม่สำเร็จ</h1><p>{message}</p><button onClick={() => location.reload()}>ลองใหม่</button></section></main>;
 

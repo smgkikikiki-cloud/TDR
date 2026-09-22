@@ -1,6 +1,11 @@
 name: Process canonical vehicle input
 
 on:
+  # A save dispatches this directly, so the write starts in seconds rather
+  # than whenever the next tick comes round. The schedule stays only as a
+  # sweeper for a dispatch that never arrived; nobody waits on it.
+  repository_dispatch:
+    types: [canonical-input]
   schedule:
     - cron: "*/10 * * * *"
   workflow_dispatch:
@@ -10,6 +15,8 @@ permissions:
   pull-requests: write
 
 concurrency:
+  # Shared with source-import, pricefeed and vehicle-release -- see
+  # pricefeed.yml's concurrency comment.
   group: canonical-vehicle-input
   cancel-in-progress: false
 
@@ -79,21 +86,100 @@ jobs:
             --revision "input-${GITHUB_RUN_ID}" --as-of "$(date -u +%F)" \
             --out /tmp/vehicle-release.json
           python -m tdr_bridge.publish /tmp/vehicle-release.json
-      - name: Open one reviewed input PR
+      - name: Commit the validated write
         if: steps.preflight.outputs.ready == 'true' && steps.changes.outputs.count != '0'
-        env:
-          GH_TOKEN: ${{ github.token }}
+        id: commit
         run: |
           set -euo pipefail
-          branch="canonical-input/${GITHUB_RUN_ID}"
+          # Straight to main. The owner of the data already decided; the
+          # checks above are the only gate, and they have passed. The commit
+          # is the audit trail, not a request for permission. Publishing is
+          # the next step in this job, not something another workflow is
+          # trusted to notice.
           git config user.name "TDR canonical input"
           git config user.email "noreply@github.com"
-          git checkout -b "$branch"
           git add vehreg/data
           git commit -m "Apply ${{ steps.changes.outputs.count }} canonical input batch(es)"
-          git push -u origin "$branch"
-          pr_url=$(gh pr create --title "Canonical vehicle input (${GITHUB_RUN_ID})" \
-            --body "Validated one-input Vehicle Master batch. Registration facts remain outside this PR." \
-            --base main --head "$branch")
+          git pull --rebase origin main
+          git push origin HEAD:main
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
           PYTHONPATH=. python tools/canonical_input_worker.py mark-staged \
-            --result-file /tmp/canonical-input.json --pull-request-url "$pr_url"
+            --result-file /tmp/canonical-input.json \
+            --pull-request-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/$(git rev-parse HEAD)"
+      # Publish the exact commit just pushed, in this job, and wait for it.
+      # A saved edit is not live because a file moved; it is live because a
+      # release carrying it is serving.
+      - name: Publish the pushed revision
+        if: steps.preflight.outputs.ready == 'true' && steps.changes.outputs.count != '0'
+        id: publish
+        run: |
+          set -euo pipefail
+          result=$(PYTHONPATH=. python -m tools.publish_canonical --revision "${{ steps.commit.outputs.sha }}")
+          echo "$result"
+          echo "release_id=$(echo "$result" | python -c 'import json,sys; print(json.load(sys.stdin)["release_id"])')" >> "$GITHUB_OUTPUT"
+      # Named batches only (from the same result file mark-staged used),
+      # and only once publish above has actually succeeded -- a batch
+      # whose publish fails is never marked PUBLISHED; it stays STAGED,
+      # exactly where the next successful publish will find and finish it.
+      - name: Mark the applied batches PUBLISHED
+        if: steps.preflight.outputs.ready == 'true' && steps.changes.outputs.count != '0'
+        run: |
+          PYTHONPATH=. python tools/canonical_input_worker.py mark-published \
+            --result-file /tmp/canonical-input.json \
+            --release-id "${{ steps.publish.outputs.release_id }}"
+      # A STAGED batch already has its write committed and pushed
+      # (mark-staged only runs after that); what did not finish is the
+      # publish immediately after. That can fail for reasons unrelated to
+      # this run having anything new of its own -- pull() above only ever
+      # looks at QUEUED/stale-PROCESSING, never STAGED, so without this a
+      # stuck batch waited forever for some unrelated future upload to
+      # happen to produce a fresh diff. Runs only when this tick had
+      # nothing new to apply: a run that just committed+published its own
+      # batches already covered any STAGED work from this same run.
+      - name: Look for a commit stuck STAGED behind a failed publish
+        if: steps.preflight.outputs.ready == 'true' && steps.changes.outputs.count == '0'
+        id: staged
+        run: |
+          PYTHONPATH=. python tools/canonical_input_worker.py staged-batches \
+            --result-file /tmp/canonical-staged.json --limit 50
+          revision=$(python -c "import json; print(json.load(open('/tmp/canonical-staged.json')).get('revision') or '')")
+          already_published=$(python -c "import json; print(json.load(open('/tmp/canonical-staged.json')).get('already_published_release_id') or '')")
+          echo "revision=$revision" >> "$GITHUB_OUTPUT"
+          echo "already_published_release_id=$already_published" >> "$GITHUB_OUTPUT"
+      # A later batch's own publish can already carry this stuck commit's
+      # canonical changes into the release that is serving right now --
+      # staged-batches checked real git ancestry (never ordinals) against
+      # the active release's canonical_revision to know this, not a guess.
+      # When true there is nothing left to publish: republishing the old
+      # commit here is exactly what migration_v44 correctly refuses (it is
+      # older than what is already active), which is the bug this branch
+      # exists to stop retrying forever.
+      - name: Retry publishing that exact commit -- no re-apply, no new diff
+        if: steps.preflight.outputs.ready == 'true' && steps.staged.outputs.revision != ''
+        id: republish
+        run: |
+          set -euo pipefail
+          # Only vehreg/data is restored to that commit's tree; every other
+          # file (this workflow's own tooling included) stays at whatever
+          # this checkout already has, so the recovery steps themselves are
+          # never reverted to an older, pre-recovery version of themselves.
+          git checkout "${{ steps.staged.outputs.revision }}" -- vehreg/data
+          result=$(PYTHONPATH=. python -m tools.publish_canonical --revision "${{ steps.staged.outputs.revision }}")
+          echo "$result"
+          echo "release_id=$(echo "$result" | python -c 'import json,sys; print(json.load(sys.stdin)["release_id"])')" >> "$GITHUB_OUTPUT"
+      # Only the commits that actually shared this exact sha (staged-batches
+      # wrote just those into the result file) are marked PUBLISHED -- never
+      # "every STAGED row", which would mark a batch PUBLISHED under a
+      # release built from a different commit's tree than the one that
+      # carries its write. A failed retry here leaves those rows STAGED,
+      # for the next tick to find and try again. release_id comes from
+      # whichever branch actually ran: a fresh republish, or the active
+      # release staged-batches already proved contains this commit.
+      - name: Mark the recovered batches PUBLISHED
+        if: >-
+          steps.preflight.outputs.ready == 'true' &&
+          (steps.staged.outputs.revision != '' || steps.staged.outputs.already_published_release_id != '')
+        run: |
+          PYTHONPATH=. python tools/canonical_input_worker.py mark-published \
+            --result-file /tmp/canonical-staged.json \
+            --release-id "${{ steps.republish.outputs.release_id || steps.staged.outputs.already_published_release_id }}"

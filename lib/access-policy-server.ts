@@ -1,6 +1,6 @@
 // Server-side wiring for the access-policy module: token resolution, tier
-// lookup, account-activation enforcement, and the atomic quota-consumption
-// RPC call. Split from lib/access-policy.ts (which stays `@/`-import-free
+// lookup, verified-identity checks for the operations that need them, and
+// the atomic quota-consumption RPC call. Split from lib/access-policy.ts (which stays `@/`-import-free
 // and unit-testable) because this file needs the Supabase admin client.
 import { adminDb } from "@/lib/supabase";
 import {
@@ -15,6 +15,7 @@ import {
   type UsageMetric,
 } from "@/lib/access-policy";
 import { requestFingerprint } from "@/lib/request-fingerprint";
+import { evaluateCurrentVerifiedIdentity } from "@/lib/checkout-identity";
 
 export class AccessPolicyError extends Error {
   constructor(public status: number, message: string) {
@@ -31,11 +32,11 @@ export interface AccessContext {
   policy: TierPolicy;
 }
 
-// Auth + tier only -- does NOT require account activation. Used by routes
-// a not-yet-activated account must still be able to reach (billing status,
-// checkout, the profile/activation endpoints themselves). Any route that
-// lets an account actually USE a member tool (Compare, Sales Tools,
-// Research, PDF export) must use requireActivatedAccess() below instead.
+// Auth + tier. This is what a member tool resolves: Compare, Sales Tools,
+// Research and PDF export all reach it through requireMemberAccess(), and
+// what comes back is decided by tier and quota. Verified identity is a
+// separate question, asked only where identity is the subject of the
+// operation -- see requireCurrentVerifiedIdentity() below.
 export async function resolveAccessContext(accessToken: string): Promise<AccessContext> {
   const db = adminDb();
   if (!db) throw new AccessPolicyError(503, "access policy database is not configured");
@@ -62,19 +63,21 @@ export async function resolveAccessContext(accessToken: string): Promise<AccessC
   };
 }
 
-// --- Account activation -----------------------------------------------
+// --- Verified identity ------------------------------------------------
 //
-// Free's business purpose is converting an anonymous visitor into a real,
-// identifiable user -- a typed phone string in user_metadata is not
-// verification and must never be treated as trusted identity. Activation
-// requires: confirmed email (Supabase Auth), a verified phone identity
-// (a real tdr_customer_phone_identities row -- OTP-confirmed by Supabase
-// Auth, the same trusted table lib/billing.ts already relies on), a
-// postcode, and either an organization name or explicit
-// individual/not-affiliated status. `tdr_customer_profiles
-// .activation_completed_at` is the single stored gate every tool route
-// checks; evaluateAndPersistActivation() is the only place that computes
-// and writes it.
+// Not a gate on the product. Signing in is what entitles a member to the
+// tools; this is the stronger claim that an account belongs to an
+// identifiable person, and only an operation whose subject is that person
+// asks for it. Checkout is the case in the codebase today: money moves,
+// so lib/billing.ts requires it before creating a Stripe session.
+//
+// It means all of: confirmed email (Supabase Auth), a verified phone
+// identity (a real tdr_customer_phone_identities row -- OTP-confirmed by
+// Supabase Auth, never a typed user_metadata string), a postcode, and
+// either an organization name or explicit individual/not-affiliated
+// status. `tdr_customer_profiles.activation_completed_at` is where the
+// result is stored, and evaluateAndPersistActivation() is the only place
+// that computes and writes it.
 
 export interface ActivationStatus {
   activated: boolean;
@@ -139,8 +142,8 @@ async function hasTdrConfirmedPhoneVerification(db: AccessContext["db"], userId:
 // is what preserves the migration_v34 legacy-paid grandfather
 // (activation_source='LEGACY_PAID') set directly by the migration rather
 // than computed here. Called by the profile save route and the
-// phone-verification-confirm route -- never by a tool route, which should
-// only ever READ the stored flag via requireActivatedAccess().
+// phone-verification-confirm route, which are where its parts change.
+// Nothing that serves a member tool calls it at all.
 export async function evaluateAndPersistActivation(ctx: AccessContext): Promise<ActivationStatus> {
   const { data: profile, error: profileError } = await ctx.db
     .from("tdr_customer_profiles")
@@ -173,21 +176,69 @@ export async function evaluateAndPersistActivation(ctx: AccessContext): Promise<
   };
 }
 
-// The gate every member-tool route must use. Blocks direct API calls just
-// as much as the UI: an incomplete/unverified account gets 403 here
-// regardless of which client hits the route.
-export async function requireActivatedAccess(accessToken: string): Promise<AccessContext> {
+/** What an ordinary member tool asks for: a real session, and the tier and
+ *  quota that come with it.
+ *
+ *  Signing in is the entitlement. A member who cannot receive an OTP still
+ *  paid for Pro, or still counts as the Free reader the tier was written
+ *  for, and holding the product shut until they complete a profile
+ *  withholds what they already have rather than protecting anything.
+ *  Phone, postcode and company are enrichment, collected at /member/profile
+ *  because they are useful, never because a dashboard depends on them.
+ *
+ *  requireCurrentVerifiedIdentity below still exists for the operations where
+ *  identity is the point -- paying is one -- and nothing else should reach
+ *  for it. */
+export async function requireMemberAccess(accessToken: string): Promise<AccessContext> {
+  return resolveAccessContext(accessToken);
+}
+
+// Verified identity, for the few operations that genuinely turn on who the
+// member is rather than what they are entitled to -- starting a brand-new
+// self-service subscription is the one in this codebase: money is about
+// to move to a NEW charge, so a confirmed email, an OTP-verified phone and
+// a complete billing profile are the operation's own requirements, checked
+// as of right now. Product routes use requireMemberAccess() instead -- see
+// the note there.
+//
+// Computed from the parts, every time, for every account -- including the
+// customer grandfathered by migration_v34 with
+// activation_source='LEGACY_PAID'. That grant means "this account's
+// EXISTING billing relationship survives the migration": requireMember()
+// (lib/billing.ts) already lets it reach billing status and the Billing
+// Portal with no identity check at all, so its existing subscription and
+// portal access are untouched by anything here. It has never meant "this
+// account's identity for a NEW charge is settled" -- a stored flag is a
+// record that the account once satisfied every criterion, not a standing
+// permission, and treating it as one here let an account whose phone
+// identity had since been revoked, or which had simply never given a
+// postcode, start a brand-new subscription anyway. There is exactly one
+// caller of this function (requireCheckoutEligibleMember, for new
+// Checkout sessions), and grandfathering it would defeat the reason that
+// caller exists.
+export async function requireCurrentVerifiedIdentity(accessToken: string): Promise<AccessContext> {
   const ctx = await resolveAccessContext(accessToken);
+  // Deliberately NOT selecting activation_completed_at/activation_source:
+  // the decision below (evaluateCurrentVerifiedIdentity) has no field to
+  // key a bypass on, by construction.
   const { data: profile, error } = await ctx.db
     .from("tdr_customer_profiles")
-    .select("activation_completed_at")
+    .select("postcode,is_individual,company_name")
     .eq("user_id", ctx.userId)
     .maybeSingle();
   if (error) throw new AccessPolicyError(503, "could not verify account activation");
-  if (!profile?.activation_completed_at) {
+
+  const { ok, missing } = evaluateCurrentVerifiedIdentity({
+    emailConfirmed: ctx.emailConfirmed,
+    phoneVerified: await hasTdrConfirmedPhoneVerification(ctx.db, ctx.userId),
+    postcode: profile?.postcode ?? null,
+    isIndividual: profile?.is_individual !== false,
+    companyName: profile?.company_name ?? null,
+  });
+  if (!ok) {
     throw new AccessPolicyError(
       403,
-      "account activation required: confirm your email, verify your mobile phone, and complete your profile at /member/profile",
+      `account verification required: ${missing.join(", ")} at /member/profile`,
     );
   }
   return ctx;

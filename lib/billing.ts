@@ -2,7 +2,7 @@ import { createHmac, timingSafeEqual } from "node:crypto";
 import { adminDb } from "@/lib/supabase";
 import { findPlan, planPriceId, type PlanDefinition } from "@/lib/plans";
 import { recordEvent } from "@/lib/telemetry";
-import { requireActivatedAccess } from "@/lib/access-policy-server";
+import { requireCurrentVerifiedIdentity } from "@/lib/access-policy-server";
 
 export const REGISTRATION_PLAN = "registration_monthly";
 export const REGISTRATION_PRODUCT = "registration_full";
@@ -119,19 +119,27 @@ export async function requireMember(accessToken: string): Promise<MemberContext>
   return { userId: data.user.id, customerId: customer.id, email: data.user.email ?? null, phone: trustedPhone?.phone_e164 ?? null };
 }
 
-// Stricter gate for starting a brand-new self-service subscription: the
-// account must be fully TDR-activated (lib/access-policy-server.ts --
-// confirmed email, TDR-confirmed phone verification, complete profile;
-// the same centralized check every member tool route uses) AND have a
-// trusted phone on file to hand to Stripe. An account activated only
-// through the legacy-paid compatibility path (see migration_v34,
-// activation_source='LEGACY_PAID') has no real verified phone identity
-// and so cannot start a brand-new checkout until it completes real
-// verification -- this never touches that account's EXISTING
-// subscription/Billing Portal access, only a fresh Checkout session.
+// Starting a brand-new self-service subscription is where identity is the
+// operation's own subject, so this is the one place that asks for all of
+// it: the account must be fully TDR-verified as of right now
+// (lib/access-policy-server.ts -- confirmed email, TDR-confirmed phone
+// verification, complete profile) AND have a trusted phone on file to hand
+// to Stripe. Member tools ask for none of this; they resolve a session and
+// serve by tier and quota.
+//
+// The identity is recomputed here rather than read off a stored flag: an
+// account that was verified last year but whose phone identity has since
+// been revoked is not a verified identity today, and this is the gate
+// that exists to know whose card is being charged for a NEW subscription.
+// The legacy-paid account grandfathered by migration_v34
+// (activation_source='LEGACY_PAID') does NOT bypass this -- that grant
+// only ever meant its EXISTING subscription and Billing Portal access
+// survive the migration (requireMember() above already gives it those
+// with no identity check), never that a fresh charge can be started
+// without a real, current, verified identity.
 export async function requireCheckoutEligibleMember(accessToken: string): Promise<MemberContext & { phone: string }> {
   try {
-    await requireActivatedAccess(accessToken);
+    await requireCurrentVerifiedIdentity(accessToken);
   } catch (error) {
     if (error instanceof Error && "status" in error) {
       throw new BillingError((error as { status: number }).status, error.message);

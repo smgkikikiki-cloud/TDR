@@ -1,0 +1,237 @@
+import fs from "node:fs";
+import { campaignIdFor } from "../lib/campaign-identity.ts";
+
+let failed = 0;
+function check(name: string, got: unknown, want: unknown = true) {
+  const ok = JSON.stringify(got) === JSON.stringify(want);
+  if (!ok) { failed++; console.log(`  FAIL ${name}\n       got  ${JSON.stringify(got)}\n       want ${JSON.stringify(want)}`); }
+  else console.log(`  ok   ${name}`);
+}
+const read = (path: string) => fs.readFileSync(path, "utf8");
+
+console.log("import routes by source — one file, the parser that understands it");
+const worker = read("automotive/vehicle_master/tools/import_worker.py");
+check("DLT is read by the registration importer", worker.includes("from vehreg.registration_import import"));
+check("DLT does not reach the ECO importer",
+  worker.includes('"DLT": _import_dlt') && !worker.includes('"DLT": _import_eco'));
+check("a source with no parser is refused rather than routed to the nearest one",
+  worker.includes("has no import profile yet"));
+const ecoCli = read("automotive/vehicle_master/tools/import_source.py");
+check("the ECO path refuses a non-ECO source outright",
+  ecoCli.includes("has no parser on the ECO path"));
+const uploadAction = read("app/admin/import-actions.ts");
+check("upload only accepts sources that have a parser",
+  uploadAction.includes('new Set(["ECO", "DLT"])'));
+
+console.log("\nimport results outlive the worker");
+// The run row's JSON array came first and was capped at 500, so a file with
+// 900 unplaceable rows lost 400 of them in silence. Every unresolved row now
+// has a row of its own, and it stays until somebody resolves it.
+check("every unresolved row gets its own durable record",
+  worker.includes("import_run_exceptions") && !worker.includes("MAX_STORED_EXCEPTIONS"));
+check("the table it is kept in exists",
+  read("supabase/migration_v41_registration_canonical_and_exceptions.sql")
+    .includes("create table if not exists public.import_run_exceptions"));
+const exceptionsPage = read("app/admin/(secure)/exceptions/page.tsx");
+check("/admin/exceptions reads the open ones back out of it",
+  exceptionsPage.includes("listOpenExceptions"));
+check("and can close one",
+  exceptionsPage.includes("resolveException"));
+check("a canonical run waits for its push before it claims to be done",
+  worker.includes("WRITTEN_PENDING_PUBLISH") && worker.includes("CANONICAL_SOURCES"));
+const importFlow = read(".github/workflows/source-import.yml");
+// lastIndexOf on both sides: a stuck-publish recovery step (added for
+// blocker 7A) legitimately finalizes an EARLIER commit's runs before
+// this run's own push happens; what still has to hold is that THIS
+// run's own finalize (the last one in the file) comes after THIS run's
+// own push (also the last one in the file).
+check("finalize runs after the push, not before",
+  importFlow.lastIndexOf("git push origin HEAD:main") < importFlow.lastIndexOf("import_worker.py finalize"));
+
+console.log("\nno human approval in a deterministic write path");
+check("uploaded imports go to main rather than a pull request",
+  !importFlow.includes("gh pr create"));
+const pricefeed = read(".github/workflows/pricefeed.yml");
+const canonicalInput = read(".github/workflows/canonical-input.yml");
+check("the price tracker publishes instead of opening a PR to merge",
+  !pricefeed.includes("gh pr create") && pricefeed.includes("git push origin HEAD:main"));
+// `market price-run` is an evidence report and rejects --write; the workflow
+// called it with --write anyway, so it failed on every tick and no harvested
+// price ever reached the ledger.
+check("the price tracker calls a writer that can write",
+  pricefeed.includes("tools.pricefeed_write")
+    && !/(?<!`)python -m vehreg market price-run/.test(pricefeed)
+    && !/\bpython\s.*price-run.*--write/.test(pricefeed));
+for (const flow of [importFlow, pricefeed, canonicalInput]) {
+  check("what is pushed is published in the same job",
+    !flow.includes("git push origin HEAD:main")
+      || (flow.includes("tools.publish_canonical") && flow.includes("--revision")));
+}
+check("a saved canonical edit is not held behind a merge",
+  !canonicalInput.includes("gh pr create"));
+
+console.log("\nprice: the owner's fields, the ledger's bookkeeping");
+const priceAction = read("app/admin/trim-price-actions.ts");
+check("no reason is asked for on a price save", !priceAction.includes('"reason", "เหตุผล'));
+// A campaign window says when the promotion runs. Using it as the list
+// price's effective date would backdate a price nobody said was in effect.
+check("the campaign window is not applied to the list price",
+  !/price_type: "LIST_PRICE",\s*\n\s*effective_from/.test(priceAction));
+check("a campaign can be closed without a review workflow",
+  priceAction.includes("closeTrimCampaign") && priceAction.includes("CLOSE_PRICE"));
+check("two models' identically named grades get different campaign ids",
+  campaignIdFor("toyota.camry.axvh70.trim.premium", "2026-09-01")
+    !== campaignIdFor("toyota.corolla.e210.trim.premium", "2026-09-01"));
+check("the same promotion re-saved keeps its id",
+  campaignIdFor("toyota.camry.axvh70.trim.premium", "2026-09-01"),
+  campaignIdFor("toyota.camry.axvh70.trim.premium", "2026-09-01"));
+check("a campaign id stays inside the pipeline's safe token charset",
+  /^[A-Za-z0-9][A-Za-z0-9_.:-]*$/.test(campaignIdFor("toyota.camry.axvh70.trim.premium", "2026-09-01")));
+
+console.log("\nprice read: one release, and gifts from the campaign that holds them");
+const editor = read("lib/canonical-editor.ts");
+check("price history is scoped to the model's own release",
+  editor.includes('.eq("release_id", model.release_id)'));
+check("gifts are read from the campaign quote, not from a price row",
+  editor.includes("firstCampaignOffer") && !editor.includes("payload as any)?.gifts"));
+check("the release carries gifts for it to read",
+  read("automotive/vehicle_master/vehreg/pricing.py").includes('"gifts": campaign.gifts if campaign else ""'));
+
+console.log("\nregistration identity: one bridge, not a second one");
+const exceptionActions = read("app/admin/exception-actions.ts");
+check("no legacy models row is forged behind the crosswalk's back",
+  !exceptionActions.includes('from("models")\n    .insert'));
+// A car created in the admin today has no legacy models row until a release
+// rebuilds the crosswalk. Requiring one made exactly those cars unbindable,
+// which is the opposite of what an exception list is for.
+check("a car with no legacy row yet can still be given a label",
+  exceptionActions.includes("canonical_model_id: target.canonicalModelId")
+    && exceptionActions.includes("legacyModelId: model.tdr_model_id ? String(model.tdr_model_id) : null"));
+// A brand with no legacy row is exactly the case migration_v45 exists
+// for -- it must bind through canonical_brand_id, not be refused.
+check("a brand with no legacy row can still be given a label",
+  exceptionActions.includes("canonicalBrandId: String(brand.canonical_id)")
+    && !exceptionActions.includes("ยังไม่มี registration identity"));
+check("the model alias write no longer assumes a plain unique column list",
+  exceptionActions.includes("coalesce(brand_id, canonical_brand_id)")
+  || exceptionActions.includes("existingAlias"));
+check("grain comes from the stored exception, not from the form",
+  exceptionActions.includes("recordedGrain"));
+check("a model-level label cannot be bound to a trim",
+  exceptionActions.includes("ต้นทางรายงานแค่ระดับรุ่น"));
+check("the source decides which marques file grades at all",
+  read("automotive/vehicle_master/tools/import_worker.py").includes("trim_detail_brands"));
+check("the exceptions page says the grain per row, not per source",
+  !exceptionsPage.includes("DLT รายงานระดับรุ่น ไม่ใช่รุ่นย่อย"));
+check("assigning a label writes the alias that makes next month automatic",
+  exceptionActions.includes("registration_model_aliases"));
+check("and fixes the months already loaded",
+  exceptionActions.includes("admin-assigned-alias"));
+
+console.log("\nadmin surface: six doors");
+const nav = read("components/admin/AdminNav.tsx");
+for (const route of ["/admin/vehicles", "/admin/import", "/admin/exceptions", "/admin/market", "/admin/research"]) {
+  check(`nav offers ${route}`, nav.includes(`href="${route}"`));
+}
+for (const route of ["/admin/prices", "/admin/eco-trims", "/admin/data-quality",
+                     "/admin/retail-lifecycle", "/admin/vehicle-input", "/admin/registrations",
+                     "/admin/plants/new", "/admin/companies/new", "/admin/events/new"]) {
+  check(`nav does not offer ${route}`, !nav.includes(`href="${route}"`));
+}
+const home = read("app/admin/(secure)/page.tsx");
+check("home does not lead back into the retired workflows",
+  ["/admin/prices/coverage", "/admin/eco-trims", "/admin/retail-lifecycle",
+   "/admin/data-quality", "/admin/registrations", "canonical_vehicle_releases"]
+    .every((route) => !home.includes(route)));
+const market = read("app/admin/(secure)/market/page.tsx");
+check("market is read-only, with no ingest or review tabs",
+  ["/admin/registrations", "/admin/prices", "/admin/data-quality"]
+    .every((route) => !market.includes(`href="${route}"`)));
+const workspace = read("app/admin/(secure)/vehicles/[modelId]/page.tsx");
+check("the vehicle page does not send the owner to the raw queue",
+  !workspace.includes("/admin/vehicle-input"));
+const vehiclesList = read("app/admin/(secure)/vehicles/page.tsx");
+check("the vehicles list page does not send the owner to the raw queue either",
+  !vehiclesList.includes("/admin/vehicle-input"));
+check("an exception's Create-new link lands on the Vehicles create form, not the legacy input workflow",
+  // /admin/vehicles/new (added this round for the FINAL FUNCTIONAL BLOCKER
+  // PASS) replaces the old bare "/admin/vehicles?return=exceptions" link,
+  // which pointed at the Vehicles index -- a page with no create form at
+  // all -- and carried none of the context 1D requires. The href is built
+  // with URLSearchParams rather than a literal string, so this checks for
+  // the pieces that construction has to touch, not one exact string.
+  exceptionsPage.includes("/admin/vehicles/new?")
+    && exceptionsPage.includes('return: "exceptions"')
+    && exceptionsPage.includes("exception_ids: gap.ids.join")
+    && exceptionsPage.includes("grain: gap.grain")
+    && !exceptionsPage.includes("/admin/vehicle-input"));
+
+console.log("\nuploads advertise a size that actually works");
+check("the server action body limit is configured", read("next.config.ts").includes("bodySizeLimit"));
+for (const path of ["app/admin/import-actions.ts", "app/admin/research-file-actions.ts"]) {
+  check(`${path} enforces the advertised limit`, read(path).includes("4 * 1024 * 1024"));
+}
+check("no page advertises a limit the deployment cannot accept",
+  !read("app/admin/(secure)/import/page.tsx").includes("40 MB")
+  && !read("app/admin/(secure)/research/page.tsx").includes("50 MB"));
+
+console.log("\nmember access: signing in is the entitlement");
+for (const path of ["app/api/tools/compare/route.ts", "app/api/tools/sales-modules/route.ts",
+                    "app/api/research/read/route.ts", "app/api/export/pdf/route.ts",
+                    "lib/registration-analytics.ts"]) {
+  check(`${path} does not gate the product on a profile`, !read(path).includes("requireCurrentVerifiedIdentity"));
+}
+check("paying still asks for verified identity", read("lib/billing.ts").includes("requireCurrentVerifiedIdentity("));
+// A stored activation is a record that the account once qualified, not a
+// standing permission: an account whose phone identity has since been
+// revoked is not a verified identity today.
+check("and works it out from the current state, not a stored flag",
+  !/requireCurrentVerifiedIdentity[\s\S]{0,1200}?if \(!profile\?\.activation_completed_at\) \{/.test(
+    read("lib/access-policy-server.ts")));
+
+console.log("\nprofile is edited a field at a time, not re-submitted whole");
+// What a save changes, case by case, is asserted by running it:
+// scripts/check-member-profile.ts. These two only keep the route wired to
+// that one decision instead of growing a second copy of it.
+const profileRoute = read("app/api/account/profile/route.ts");
+check("the route applies the shared plan rather than its own rules",
+  profileRoute.includes("planProfileUpdate(body, existing"));
+check("and does not re-read the body field by field on the side",
+  !profileRoute.includes("hasOwnProperty.call(body,"));
+const profilePlan = read("lib/profile-update.ts");
+// A member updating one field is not also saying they withdrew consent and
+// are no longer a company. Only keys the request actually carries are written.
+check("absence means untouched, in one place",
+  profilePlan.includes("hasOwnProperty.call(body, key)"));
+check("completion is computed, not stamped on any edit",
+  profilePlan.includes("const justCompleted = profileComplete && !existing?.profile_completed_at"));
+
+console.log("\ncopy matches the policy it describes");
+const profilePage = read("app/member/profile/page.tsx");
+check("the page does not claim the product needs a profile",
+  profilePage.includes("ใช้ Compare และ Sales Tools ได้ทันที"));
+// Checkout needs all three, not the phone alone -- saying otherwise sends
+// somebody to Stripe to be turned away.
+check("checkout is described as needing all three, not just a phone",
+  profilePage.includes("สามข้อด้านบนต้องครบทั้งหมด")
+  && !profilePage.includes("ยืนยันเบอร์มือถือจำเป็นเฉพาะ"));
+
+console.log("\ncomments describe the gate that actually exists");
+const policyServer = read("lib/access-policy-server.ts");
+check("no comment still claims every tool route checks activation",
+  !policyServer.includes("the single stored gate every tool route"));
+check("resolveAccessContext is not described as insufficient for tools",
+  !policyServer.includes("must use requireCurrentVerifiedIdentity() below instead"));
+check("billing does not call activation the check every tool route uses",
+  !read("lib/billing.ts").includes("the same centralized check every member tool route uses"));
+
+console.log("\nresearch: the admin library is private, the public surface untouched");
+check("public research still reads articles", fs.existsSync("app/research/[slug]/page.tsx"));
+check("the research unlock route is still there", fs.existsSync("app/api/research/read/route.ts"));
+check("the free monthly quota is still enforced",
+  read("lib/access-policy.ts").includes("researchFullMonthlyLimit"));
+check("admin research files are private and signed",
+  read("lib/research-files.ts").includes("createSignedUrl"));
+
+console.log(failed ? `\n${failed} check(s) failed` : "\nall import flow checks passed");
+process.exit(failed ? 1 : 0);

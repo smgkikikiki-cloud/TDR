@@ -63,5 +63,31 @@ export async function enqueueCanonicalInputBatch(payload: Record<string, unknown
     return { queued: false, duplicate: true, batchKey };
   }
   if (error) throw error;
+  await dispatchWorker();
   return { queued: true, duplicate: false, batchKey };
+}
+
+/** Start the write now instead of leaving it for the next scheduled sweep.
+ *
+ *  The queue is a job record, not an inbox somebody works through, so a save
+ *  should not sit in it waiting for a clock. A dispatch that fails changes
+ *  nothing except how soon the job runs -- the sweep still picks it up -- so
+ *  it never fails the save. */
+async function dispatchWorker() {
+  const token = process.env.GITHUB_DISPATCH_TOKEN;
+  const repo = process.env.GITHUB_REPOSITORY;
+  if (!token || !repo) return;
+  try {
+    await fetch(`https://api.github.com/repos/${repo}/dispatches`, {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${token}`,
+        accept: "application/vnd.github+json",
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ event_type: "canonical-input" }),
+    });
+  } catch (error) {
+    console.error("canonical input dispatch failed; the sweep will pick it up", error);
+  }
 }

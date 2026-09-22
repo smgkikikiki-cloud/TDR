@@ -14,7 +14,14 @@ permissions:
   contents: write
 
 concurrency:
-  group: canonical-vehicle-release
+  # Shared with source-import, canonical-input and pricefeed: this job
+  # activates a canonical vehicle release exactly like they do, and a
+  # separate concurrency group is what let an older commit's publish here
+  # race a newer commit's publish from one of them (or vice versa) and
+  # roll the active release backward. migration_v44's ordinal guard is the
+  # second line of defense, for an out-of-order queue a shared group alone
+  # cannot prevent.
+  group: canonical-vehicle-input
   cancel-in-progress: false
 
 jobs:
@@ -29,6 +36,9 @@ jobs:
         working-directory: automotive/vehicle_master
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Full clone: needed to compute the revision-ordinal below.
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -37,11 +47,13 @@ jobs:
       - run: python -m pip install -r requirements.txt
       - name: Build release once
         run: |
+          set -euo pipefail
           python -m tdr_bridge.release_enriched \
             --inventory integration_data/tdr_2026-09-09.json \
             --overrides integration_data/crosswalk_overrides.json \
             --out /tmp/vehicle-release.json \
-            --revision "${GITHUB_SHA}" --as-of "$(date -u +%F)"
+            --revision "${GITHUB_SHA}" --as-of "$(date -u +%F)" \
+            --revision-ordinal "$(git rev-list --count "${GITHUB_SHA}")"
           python -m tdr_bridge.publish /tmp/vehicle-release.json
       - name: Preserve validated canonical release
         uses: actions/upload-artifact@v4
@@ -79,8 +91,13 @@ jobs:
             echo "::error::Configured Supabase URL/key cannot access the TDR canonical input table: ${probe}"
             exit 1
           fi
+      # No mark-published call here: this job publishes whatever commit
+      # touched vehreg/** as a safety net, with no view of which specific
+      # canonical_input_batches rows (if any) that commit carried. Marking
+      # arbitrary STAGED batches PUBLISHED without that context is exactly
+      # the "sweep everything" bookkeeping mark-published (invoked from
+      # canonical-input.yml, which DOES have that context) was rewritten
+      # to stop doing. Publishing itself -- and migration_v44's staleness
+      # guard against activating it out of order -- still applies here.
       - name: Publish atomically to TDR Supabase
-        run: |
-          python -m tdr_bridge.publish /tmp/vehicle-release.json --publish
-          PYTHONPATH=. python tools/canonical_input_worker.py mark-published \
-            --data-dir vehreg/data --release-file /tmp/vehicle-release.json
+        run: python -m tdr_bridge.publish /tmp/vehicle-release.json --publish

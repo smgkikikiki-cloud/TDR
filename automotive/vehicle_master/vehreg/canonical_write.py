@@ -329,6 +329,31 @@ def _catalog_snapshot(catalog: Catalog, model_id: str) -> dict[str, Any]:
     }
 
 
+def _live_row_starting_with(ledger: PriceLedger, trim_id: str, record: dict[str, Any]):
+    """The live price for this exact scope, if it starts on the same day.
+
+    Scope means trim, price type and -- for a promotion -- the campaign and
+    option it belongs to, so a campaign price never collides with the list
+    price beside it.
+    """
+    start = record.get("effective_from") or record.get("observed_at")
+    if not start:
+        return None
+    try:
+        price_type = PriceType.parse(record.get("price_type") or "LIST_PRICE")
+        current = ledger.current_price_for_scope(
+            trim_id, price_type, as_of=date.fromisoformat(str(start)),
+            campaign_id=(str(record["campaign_id"]) if record.get("campaign_id") else None),
+            option_id=(str(record["option_id"]) if record.get("option_id") else None))
+    except (PricingError, ValueError):
+        # Already unresolvable, or a date this code cannot read. Either way
+        # the ordinary append path reports it rather than this one guessing.
+        return None
+    if current is None:
+        return None
+    return current if (current.effective_from or current.observed_at) == str(start) else None
+
+
 def _price_snapshot(data_dir: Path | str, year: int, trim_id: str) -> list[dict[str, Any]]:
     catalog = Catalog.load(data_dir, year)
     ledger = PriceLedger.load(data_dir, year=year, catalog=catalog)
@@ -679,6 +704,15 @@ class CanonicalWritePipeline:
             raise CanonicalWriteError(f"unknown MarketTrim {trim_id!r}")
         ledger = PriceLedger.load(self.data_dir, year=command.year, catalog=catalog)
         before = [to_jsonable(r) for r in ledger.records_for(trim_id, include_retracted=True)]
+
+        same_day = _live_row_starting_with(ledger, trim_id, record)
+        if same_day is not None:
+            if same_day.amount_thb == int(record["amount_thb"]):
+                # The same number saved again. Recording it twice would leave
+                # two live rows the resolver then refuses to choose between.
+                return "price", "market_trim", trim_id, before, before, ()
+            return self._replace_same_day_price(command, trim_id, record, same_day, before)
+
         ledger.add_payload({"prices": [record]}, source=f"<command {command.command_id}>")
         if PriceType.parse(record.get("price_type")) is PriceType.LIST_PRICE:
             start = record.get("effective_from") or record.get("observed_at")
@@ -692,6 +726,42 @@ class CanonicalWritePipeline:
         after_ledger = PriceLedger.load(self.data_dir, year=command.year, catalog=catalog)
         after = [to_jsonable(r) for r in after_ledger.records_for(trim_id, include_retracted=True)]
         return "price", "market_trim", trim_id, before, after, (str(target),)
+
+    def _replace_same_day_price(self, command: CanonicalWriteCommand, trim_id: str,
+                                record: dict[str, Any], live, before):
+        """A price changed again on the day it was set.
+
+        Two rows starting the same day are not two prices that were both
+        true -- they are one decision made twice, and the resolver refuses
+        to pick between them, which used to make the owner's second save of
+        the day fail outright. The first number is retracted, not given a
+        history it never had, and the new one takes its place.
+        """
+        start = str(record.get("effective_from") or record.get("observed_at"))
+        try:
+            result = correct_price(
+                self.data_dir, command.year,
+                trim_id=trim_id,
+                price_type=PriceType.parse(record.get("price_type") or "LIST_PRICE").value,
+                amount_thb=int(record["amount_thb"]),
+                reason=command.reason or f"replaces the price saved earlier on {start}",
+                reviewer=command.actor or "owner",
+                mode="retract",
+                effective_from=start,
+                campaign_id=(str(record.get("campaign_id")) if record.get("campaign_id") else None),
+                option_id=(str(record.get("option_id")) if record.get("option_id") else None),
+                source=str(record.get("source") or ""),
+                source_ref=str(record.get("source_ref") or ""),
+                source_document_id=str(record.get("source_document_id") or ""),
+                reference_price_thb=(int(record["reference_price_thb"])
+                                     if record.get("reference_price_thb") not in (None, "") else None),
+                as_of=date.fromisoformat(start),
+                write=True,
+            )
+        except (CatalogError, PricingError, KeyError, TypeError, ValueError) as exc:
+            raise CanonicalWriteError(f"same-day price replacement failed: {exc}") from exc
+        after = _price_snapshot(self.data_dir, command.year, trim_id)
+        return "price", "market_trim", trim_id, before, after, tuple(result.get("paths") or ())
 
     def _correct_price(self, command: CanonicalWriteCommand):
         payload = deepcopy(command.payload)
@@ -718,6 +788,7 @@ class CanonicalWritePipeline:
                 option_id=(str(payload.get("option_id")) if payload.get("option_id") else None),
                 source=str(payload.get("source") or ""),
                 source_ref=str(payload.get("source_ref") or ""),
+                source_document_id=str(payload.get("source_document_id") or ""),
                 reference_price_thb=(int(payload["reference_price_thb"]) if payload.get("reference_price_thb") not in (None, "") else None),
                 as_of=_as_of_date(payload.get("as_of")),
                 write=True,

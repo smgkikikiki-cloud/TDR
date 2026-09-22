@@ -6,7 +6,8 @@ announcements. This refuses the PR instead of merging it.
 
 Checks, in order:
 
-1. every changed file is under the canonical ``market/`` tree;
+1. every changed file is under the canonical ``market/`` tree or the
+   ``canonical_state/`` audit trail that records the same write;
 2. the ledger and campaigns still validate against the catalog;
 3. no more than ``--max-offers`` current list prices changed in one PR;
 4. every trim that already had a current list price still has one, and any
@@ -32,7 +33,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from vehreg.catalog import Catalog, DATA_DIR, DEFAULT_YEAR  # noqa: E402
 from vehreg.pricing import PriceLedger  # noqa: E402
 
-ALLOWED_PREFIX = "vehreg/data/{year}/market/"
+#: A price write touches the market tree and the audit trail of that same
+#: write -- the revision log, the outbox and the batch marker that makes a
+#: retry a replay. Refusing the second half would mean either an unrecorded
+#: write or a run that can never commit.
+ALLOWED_PREFIXES = ("vehreg/data/{year}/market/", "vehreg/data/{year}/canonical_state/")
 
 
 def _git(args: list[str], *, check: bool = True) -> subprocess.CompletedProcess[str]:
@@ -172,11 +177,12 @@ def check(
 ) -> list[str]:
     problems: list[str] = []
     prefix = _effective_repo_prefix(repo_prefix)
-    allowed = repo_path(prefix, ALLOWED_PREFIX.format(year=year))
+    allowed = tuple(repo_path(prefix, template.format(year=year))
+                    for template in ALLOWED_PREFIXES)
     for path in changed_files(base):
         if not path.startswith(allowed):
             problems.append(
-                f"{path}: outside {allowed}; a price PR changes data only"
+                f"{path}: outside {' or '.join(allowed)}; a price run changes data only"
             )
 
     catalog = Catalog.load(data_dir, year)

@@ -10,13 +10,14 @@
  *                                 its comparable-spec facts in a single form,
  *                                 a single diff, a single queued batch.
  *
- * Both build a canonical batch, store it as a PENDING_REVIEW proposal
- * (lib/edit-session-store.ts) and redirect to /review/[proposalId] with an
- * opaque id only. confirmEditProposal is the one path into the real queue:
- * load -> re-check the active release -> enqueue -> consume, relying on
- * enqueueCanonicalInputBatch's (batch_key, payload-hash) idempotency so a
+ * Both build a canonical batch and write it: the editor owns this data, so
+ * Save is the decision, not a request for one. The only thing standing
+ * between the form and the write is integrity -- the release the page was
+ * rendered from must still be the live one, so a save cannot silently
+ * overwrite an edit that landed while the form sat open -- and
+ * enqueueCanonicalInputBatch's (batch_key, payload-hash) idempotency, so a
  * retry after a transient failure resolves to the same batch instead of
- * losing the edit.
+ * losing the edit or writing it twice.
  *
  * Reason and evidence are optional everywhere. Nothing downstream requires
  * them (both CanonicalInputBatch.from_dict and CanonicalWriteCommand.from_dict
@@ -29,13 +30,12 @@ import { redirect } from "next/navigation";
 import { currentEditor, isAdmin, type AdminEditor } from "@/lib/admin-auth";
 import { field, requiredField, isoDate, safeSubmissionId, submissionTimestamp } from "@/lib/admin-form";
 import {
-  buildModelGenerationBatch, buildTrimEditBatch, diffPatch, diffTrimEdit,
+  buildModelGenerationBatch, buildTrimEditBatch,
   findDuplicateMarketTrim, isStaleRelease, applySourceRefEdits,
   type Evidence, type EvidenceKind,
   type SpecFactValueState, type TrimFieldSubmission, type SourceRefEdit,
 } from "@/lib/canonical-command-builder";
 import { loadVehicleWorkspace, liveModelReleaseId } from "@/lib/canonical-editor";
-import { createProposal, loadProposal, consumeProposal } from "@/lib/edit-session-store";
 import { enqueueCanonicalInputBatch } from "@/lib/canonical-input-queue";
 import { trimEditorFields } from "@/lib/spec-field-registry";
 import {
@@ -130,24 +130,8 @@ export async function prepareModelGenerationEdit(formData: FormData) {
     modelPatch,
     generationPatch,
   });
-  const diff = [
-    ...diffPatch(
-      { name_en: workspace.model.nameEn, name_th: workspace.model.nameTh, body_type: workspace.model.bodyType },
-      modelPatch,
-      { name_en: "Model name (EN)", name_th: "ชื่อรุ่น (TH)", body_type: "Body type" },
-    ),
-    ...diffPatch(
-      { segment: workspace.generation.segment, seats: (workspace.generation as any).seats, launched: workspace.generation.launched, ended: workspace.generation.ended },
-      generationPatch,
-      { segment: "Segment", seats: "Seats", launched: "Launched", ended: "Ended" },
-    ),
-  ];
-
-  const proposalId = await createProposal({
-    kind: "MODEL_GENERATION", modelId, actor: editor.name, pageReleaseId,
-    batchPayload: payload, diff, reason: payload.reason, evidence,
-  });
-  redirect(`/admin/vehicles/${encodeURIComponent(modelId)}/review/${encodeURIComponent(proposalId)}`);
+  await enqueueCanonicalInputBatch(payload as Record<string, unknown>);
+  redirect(`/admin/vehicles/${encodeURIComponent(modelId)}?saved=MODEL_GENERATION`);
 }
 
 function readSourceRefEdits(formData: FormData): { remove: SourceRefEdit[]; add: SourceRefEdit[] } {
@@ -336,51 +320,28 @@ export async function prepareTrimEdit(
     sourceRefs: newSourceRefs,
   });
 
-  const diff = diffTrimEdit({ current, submissions, fields: applicable });
-  if (sourceRefsTouched) {
-    diff.push({
-      field: "source_refs", label: "Source references",
-      current: JSON.stringify(existingRefs), proposed: JSON.stringify(newSourceRefs),
-      changed: JSON.stringify(existingRefs) !== JSON.stringify(newSourceRefs),
+  const { batchKey } = await enqueueCanonicalInputBatch(payload as Record<string, unknown>);
+
+  // A brand-new trim opened from an Exceptions row: hand the save back to
+  // Exceptions instead of this page, carrying exactly what it needs to
+  // find the new trim once the write publishes (see
+  // lib/canonical-editor.ts's findCreatedTrim) and preselect it against
+  // the row that sent us here. An edit of an existing trim never carries
+  // this context (TrimEditorForm only sets it on the blank "+ เพิ่มรุ่นย่อยใหม่"
+  // form), so existingTrimId already rules that case out on its own.
+  if (!existingTrimId && field(formData, "return") === "exceptions") {
+    const params = new URLSearchParams({
+      created: batchKey,
+      exception_ids: field(formData, "exception_ids"),
+      raw_brand: field(formData, "raw_brand"),
+      raw_model: field(formData, "raw_model"),
+      registration_type: field(formData, "registration_type"),
+      grain: field(formData, "grain") || "TRIM",
+      model_id: modelId,
+      trim_name: name,
+      powertrain,
     });
+    redirect(`/admin/exceptions?${params.toString()}`);
   }
-
-  const proposalId = await createProposal({
-    kind: "TRIM", modelId, trimId: existingTrimId, actor: editor.name, pageReleaseId,
-    batchPayload: payload, diff, reason: payload.reason, evidence,
-  });
-  redirect(`/admin/vehicles/${encodeURIComponent(modelId)}/review/${encodeURIComponent(proposalId)}`);
-}
-
-export async function confirmEditProposal(formData: FormData) {
-  if (!(await isAdmin())) redirect("/admin/login");
-  const editor = await requireEditor();
-  const proposalId = requiredField(formData, "proposal_id", "proposal");
-
-  const proposal = await loadProposal(proposalId, editor.name);
-  if (!proposal) {
-    throw new Error("รายการนี้หมดอายุ ถูกบันทึกไปแล้ว หรือไม่ใช่ของคุณ — กรุณากลับไปแก้ไขใหม่อีกครั้ง");
-  }
-  const liveReleaseId = await liveModelReleaseId(proposal.modelId);
-  if (!liveReleaseId) throw new Error("ไม่พบ canonical model นี้ใน active release แล้ว");
-  assertNotStale(proposal.pageReleaseId, liveReleaseId);
-
-  // enqueueCanonicalInputBatch is idempotent on (batch_key, payload hash), so a
-  // retry after a transient failure below -- or a concurrent duplicate confirm
-  // -- resolves to the same queued batch instead of a duplicate or a lost edit.
-  await enqueueCanonicalInputBatch(proposal.batchPayload as Record<string, unknown>);
-  // Consumption is bookkeeping after the durable write: a null result just
-  // means a racing duplicate confirm already consumed it, not a failure.
-  await consumeProposal(proposalId, editor.name);
-
-  redirect(`/admin/vehicles/${encodeURIComponent(proposal.modelId)}?queued=1&kind=${encodeURIComponent(proposal.kind)}`);
-}
-
-/** Read-only helper for the review page: loads a PENDING_REVIEW proposal owned
- * by the current admin, or null (never distinguishing "not yours" from
- * "expired" from "never existed"). */
-export async function loadOwnedProposal(proposalId: string) {
-  const editor = await currentEditor();
-  if (!editor) return null;
-  return loadProposal(proposalId, editor.name);
+  redirect(`/admin/vehicles/${encodeURIComponent(modelId)}?saved=TRIM`);
 }
