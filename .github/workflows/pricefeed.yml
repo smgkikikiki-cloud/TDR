@@ -73,7 +73,16 @@ jobs:
           PYTHONPATH=. python -m tools.pricefeed_write "$latest" \
             --observed-at "$(date -u +%F)" | tee /tmp/price-write.json
       - run: python tools/pricefeed_guard.py --base origin/main --repo-prefix automotive/vehicle_master/
-      - run: pytest -q
+      # Unit tests must not inherit the production Supabase credentials from
+      # the harvest job. Pricefeed writer tests intentionally use temporary
+      # local data; exposing SUPABASE_URL makes exception cases POST into the
+      # live import_runs table and turns deterministic tests into 409 conflicts.
+      - name: Test without production database access
+        env:
+          SUPABASE_URL: ""
+          SUPABASE_SECRET_KEY: ""
+          SUPABASE_SERVICE_ROLE_KEY: ""
+        run: pytest -q
       # A deterministic price the resolver already accepted has nothing left
       # for a person to decide, so it goes to main and publishes. What the
       # resolver could not settle -- an ambiguous identity, a genuine
