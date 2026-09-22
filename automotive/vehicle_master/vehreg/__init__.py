@@ -31,4 +31,12 @@ from .entities import (  # noqa: F401
 )
 from .catalog import DEFAULT_YEAR, Catalog, available_years, fork_year  # noqa: F401
 
+# CanonicalInputPipeline imports vehreg.canonical_write after the package has
+# initialised. Install the one narrow bundle mutation that supports an explicit
+# delete_trim marker before any pipeline instance is created; ordinary bundle
+# writes remain the original canonical writer implementation.
+from .canonical_trim_delete import install_trim_delete_extension as _install_trim_delete_extension
+_install_trim_delete_extension()
+del _install_trim_delete_extension
+
 __version__ = "0.1.0"
