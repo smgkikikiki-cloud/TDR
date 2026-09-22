@@ -1,6 +1,7 @@
 from vehreg.catalog import Catalog, DATA_DIR
 from vehreg.trim_reconciliation import (
     apply_canonical_trim_overlay,
+    load_canonical_trim_overlay,
     load_reconciliation_state,
     release_reconciliation_report,
     validate_reconciliation_state,
@@ -60,12 +61,22 @@ def test_2026_reconciliation_state_references_real_catalog():
 def test_2026_canonical_overlay_and_reconciliation_are_release_safe():
     catalog = Catalog.load(DATA_DIR, 2026)
     base = _base_release(catalog)
+    overlay = load_canonical_trim_overlay(DATA_DIR, 2026)
     out = apply_canonical_trim_overlay(base, data_dir=DATA_DIR, year=2026)
 
-    # The first reconciliation pass restores exact source-backed retail identity
-    # without touching analytical Variant/model files.
-    assert len(out["market_trims"]) - len(base["market_trims"]) == 83
-    assert out["counts"]["market_trims"] == len(base["market_trims"]) + 83
+    # A bulk source import may already have materialised some of these exact
+    # canonical MarketTrim ids in the base catalog. The overlay must therefore
+    # behave as a set union, merging evidence on collisions rather than adding
+    # a duplicate row or requiring every overlay row to increase the count.
+    base_ids = {row["canonical_id"] for row in base["market_trims"]}
+    overlay_ids = {
+        f"{row['generation_id']}.trim.{row['id']}"
+        for row in overlay["trims"]
+    }
+    out_ids = [row["canonical_id"] for row in out["market_trims"]]
+    assert len(out_ids) == len(set(out_ids))
+    assert set(out_ids) == base_ids | overlay_ids
+    assert out["counts"]["market_trims"] == len(base_ids | overlay_ids)
 
     report = release_reconciliation_report(out, data_dir=DATA_DIR, year=2026)
     assert report["tracked_models"] == 36
