@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - claude/eco-bulk-attach
   pull_request:
 
 permissions:
