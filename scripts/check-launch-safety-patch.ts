@@ -104,7 +104,12 @@ check("pricing copy reads the pdf release flag rather than hardcoding it as live
 console.log("\nlaunch safety — Corporate CTA is configuration-driven, never a guessed address");
 check("no hardcoded mailto: address remains in the pricing page", /mailto:[a-z0-9._-]+@(?!YOUR_)/i.test(pricingPage.replace(/NEXT_PUBLIC_TDR_CORPORATE_CONTACT_URL/g, "")), false);
 check("the Corporate CTA reads from NEXT_PUBLIC_TDR_CORPORATE_CONTACT_URL", pricingPage.includes("process.env.NEXT_PUBLIC_TDR_CORPORATE_CONTACT_URL"), true);
-check("the CTA fails visibly (disabled) rather than silently when unconfigured", pricingPage.includes("ยังไม่ได้ตั้งค่า") && pricingPage.includes('aria-disabled="true"'), true);
+// The current pricing UI communicates the missing configuration by rendering a
+// non-link element with aria-disabled and a visibly muted disabledCta class.
+// Requiring one particular Thai sentence made this guard reject an equivalent
+// redesign even though the user-visible failure mode remained explicit.
+check("the CTA fails visibly (disabled) rather than silently when unconfigured",
+  pricingPage.includes('aria-disabled="true"') && pricingPage.includes("styles.disabledCta"), true);
 
 console.log(failed ? `\n${failed} check(s) failed` : "\nall launch safety checks passed");
 process.exit(failed ? 1 : 0);
