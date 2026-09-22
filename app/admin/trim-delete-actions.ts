@@ -84,6 +84,12 @@ export async function deleteCanonicalTrim(formData: FormData) {
     }],
   };
 
-  await enqueueCanonicalInputBatch(payload as unknown as Record<string, unknown>);
-  redirect(`/admin/vehicles/${encodeURIComponent(modelId)}?saved=TRIM`);
+  const result = await enqueueCanonicalInputBatch(payload as unknown as Record<string, unknown>);
+  const returnTo = `/admin/vehicles/${encodeURIComponent(modelId)}`;
+  const params = new URLSearchParams({
+    action: "delete-trim",
+    return: returnTo,
+    dispatch: result.dispatch.started ? "started" : "fallback",
+  });
+  redirect(`/admin/jobs/${encodeURIComponent(result.batchKey)}?${params.toString()}`);
 }

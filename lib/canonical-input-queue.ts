@@ -11,6 +11,12 @@ function canonical(value: unknown): string {
   return JSON.stringify(value);
 }
 
+export type CanonicalWorkerDispatch = {
+  started: boolean;
+  reason?: "missing_token" | "missing_repository" | "github_rejected" | "network_error";
+  status?: number;
+};
+
 export async function enqueueCanonicalInputBatch(payload: Record<string, unknown>) {
   if (!(await isAdmin())) throw new Error("admin authentication required");
   if (payload.schema_version !== 1) throw new Error("รองรับเฉพาะ schema_version 1");
@@ -60,34 +66,59 @@ export async function enqueueCanonicalInputBatch(payload: Record<string, unknown
     if (existing?.payload_sha256 !== payloadSha256) {
       throw new Error("batch_id นี้เคยใช้กับข้อมูลคนละชุดแล้ว");
     }
-    return { queued: false, duplicate: true, batchKey };
+    // A retry of the same save is also a useful chance to wake a worker that
+    // the first request failed to dispatch. Idempotency belongs to the batch,
+    // not to the wake-up attempt.
+    const dispatch = await dispatchWorker();
+    return { queued: false, duplicate: true, batchKey, dispatch };
   }
   if (error) throw error;
-  await dispatchWorker();
-  return { queued: true, duplicate: false, batchKey };
+  const dispatch = await dispatchWorker();
+  return { queued: true, duplicate: false, batchKey, dispatch };
 }
 
-/** Start the write now instead of leaving it for the next scheduled sweep.
+/** Start the write now instead of leaving it for the scheduled sweeper.
  *
- *  The queue is a job record, not an inbox somebody works through, so a save
- *  should not sit in it waiting for a clock. A dispatch that fails changes
- *  nothing except how soon the job runs -- the sweep still picks it up -- so
- *  it never fails the save. */
-async function dispatchWorker() {
-  const token = process.env.GITHUB_DISPATCH_TOKEN;
-  const repo = process.env.GITHUB_REPOSITORY;
-  if (!token || !repo) return;
+ * Queue insertion is durable. A dispatch failure therefore does NOT fail the
+ * save, but it must be observable: callers can tell the editor that the batch
+ * is waiting for the fallback sweep instead of pretending a worker started.
+ */
+async function dispatchWorker(): Promise<CanonicalWorkerDispatch> {
+  const token = process.env.GITHUB_DISPATCH_TOKEN?.trim() || process.env.GITHUB_TOKEN?.trim();
+  const explicitRepo = process.env.GITHUB_REPOSITORY?.trim();
+  const vercelOwner = process.env.VERCEL_GIT_REPO_OWNER?.trim();
+  const vercelSlug = process.env.VERCEL_GIT_REPO_SLUG?.trim();
+  const repo = explicitRepo || (vercelOwner && vercelSlug ? `${vercelOwner}/${vercelSlug}` : "");
+
+  if (!token) {
+    console.warn("canonical input queued but immediate dispatch is unavailable: GITHUB_DISPATCH_TOKEN is not configured");
+    return { started: false, reason: "missing_token" };
+  }
+  if (!repo) {
+    console.warn("canonical input queued but immediate dispatch is unavailable: repository identity is not configured");
+    return { started: false, reason: "missing_repository" };
+  }
+
   try {
-    await fetch(`https://api.github.com/repos/${repo}/dispatches`, {
+    const response = await fetch(`https://api.github.com/repos/${repo}/dispatches`, {
       method: "POST",
       headers: {
         authorization: `Bearer ${token}`,
         accept: "application/vnd.github+json",
         "content-type": "application/json",
+        "x-github-api-version": "2022-11-28",
       },
       body: JSON.stringify({ event_type: "canonical-input" }),
+      cache: "no-store",
     });
+    if (!response.ok) {
+      const detail = (await response.text()).slice(0, 500);
+      console.error(`canonical input dispatch rejected by GitHub (${response.status}); fallback sweep will pick it up: ${detail}`);
+      return { started: false, reason: "github_rejected", status: response.status };
+    }
+    return { started: true };
   } catch (error) {
-    console.error("canonical input dispatch failed; the sweep will pick it up", error);
+    console.error("canonical input dispatch failed; fallback sweep will pick it up", error);
+    return { started: false, reason: "network_error" };
   }
 }
