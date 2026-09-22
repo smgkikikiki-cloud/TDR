@@ -97,7 +97,10 @@ def test_stale_and_aggregate_rows_are_not_research_debt():
 def test_non_market_source_row_stays_non_market_when_fully_accounted():
     report = _report()
     en2 = _row(report, "honda.en2")
-    assert en2["canonical_trim_count"] == 0
+    # Source dispositions are scoped to the owner-directory evidence being
+    # reconciled. An unrelated ECO-backed trim may legitimately exist for the
+    # same model without promoting this explicitly NON_MARKET owner row.
+    assert en2["canonical_source_trim_count"] == 0
     assert en2["disposed_source_trim_count"] == 1
     assert en2["unresolved_source_trim_count"] == 0
     assert en2["status"] == "NON_MARKET"
