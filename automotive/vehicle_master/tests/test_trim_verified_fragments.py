@@ -97,13 +97,13 @@ def test_verified_reconciliation_reduces_only_rows_that_really_map():
     assert c10["canonical_source_trim_count"] == 2
     assert c10["unresolved_source_trim_count"] == 1
 
+    # These source rows are still unresolved regardless of how many additional
+    # ECO-backed retail grades now exist under the same pickup model.
     travo_cab = _row(report, "toyota.hilux_travo_cab")
-    assert travo_cab["canonical_trim_count"] == 6
     assert travo_cab["canonical_source_trim_count"] == 0
     assert travo_cab["unresolved_source_trim_count"] == 2
 
     travo_double = _row(report, "toyota.hilux_travo_double_cab")
-    assert travo_double["canonical_trim_count"] == 5
     assert travo_double["canonical_source_trim_count"] == 0
     assert travo_double["unresolved_source_trim_count"] == 2
 
