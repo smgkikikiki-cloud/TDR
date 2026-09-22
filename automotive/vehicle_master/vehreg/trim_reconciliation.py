@@ -240,6 +240,154 @@ def _normalize_source_refs(raw: object, *, label: str) -> dict[str, list[str]]:
     return out
 
 
+def _is_missing_trim_value(value: object) -> bool:
+    if value is None:
+        return True
+    if isinstance(value, str):
+        return not value.strip() or value.strip().upper() == "UNKNOWN"
+    if isinstance(value, (list, tuple, set, dict)):
+        return len(value) == 0
+    return False
+
+
+def _merge_source_ref_maps(existing: object, incoming: Mapping[str, list[str]], *, label: str) -> dict[str, list[str]]:
+    if existing in (None, {}):
+        current: Mapping = {}
+    elif isinstance(existing, Mapping):
+        current = existing
+    else:
+        raise CatalogError(f"{label}: existing source_refs must be an object")
+    out: dict[str, list[str]] = {}
+    for key, values in current.items():
+        source = str(key).strip()
+        values = [values] if isinstance(values, str) else values
+        if not source or not isinstance(values, (list, tuple)):
+            raise CatalogError(f"{label}: existing source_refs invalid")
+        refs = [str(ref).strip() for ref in values if str(ref).strip()]
+        if refs:
+            out[source] = list(dict.fromkeys(refs))
+    for source, refs in incoming.items():
+        out[source] = list(dict.fromkeys([*out.get(source, []), *refs]))
+    return out
+
+
+def merge_market_trim_evidence(
+    existing: Mapping,
+    *,
+    canonical_id: str,
+    model_id: str,
+    generation_id: str,
+    name: str,
+    powertrain: str,
+    aliases: list[str],
+    source_refs: Mapping[str, list[str]],
+    specs: Mapping,
+    label: str,
+) -> dict:
+    """Merge a second source for the same MarketTrim without erasing facts.
+
+    Identity is fail-closed: model, generation and powertrain may only be filled
+    when absent, never changed. Different display names are aliases because the
+    canonical id already proves identity. Source references are unioned. Incoming
+    specs fill only missing/UNKNOWN values; two populated, different values are a
+    real evidence conflict and stop the release rather than choosing a winner.
+    """
+    merged = deepcopy(dict(existing))
+
+    expected_identity = {
+        "canonical_id": canonical_id,
+        "model_id": model_id,
+        "generation_id": generation_id,
+        "powertrain": powertrain,
+    }
+    for key, incoming in expected_identity.items():
+        current = merged.get(key)
+        if _is_missing_trim_value(current):
+            merged[key] = incoming
+        elif str(current) != str(incoming):
+            raise CatalogError(
+                f"{label}: conflicting {key}: {current!r} != {incoming!r}"
+            )
+
+    existing_name = str(merged.get("name") or "").strip()
+    if not existing_name:
+        merged["name"] = name
+        existing_name = name
+
+    merged["source_refs"] = _merge_source_ref_maps(
+        merged.get("source_refs"), source_refs, label=label
+    )
+
+    raw_payload = merged.get("payload")
+    if raw_payload in (None, {}):
+        payload: dict = {}
+    elif isinstance(raw_payload, Mapping):
+        payload = deepcopy(dict(raw_payload))
+    else:
+        raise CatalogError(f"{label}: existing payload must be an object")
+
+    raw_spec_payload = payload.get("specs")
+    if raw_spec_payload in (None, {}):
+        spec_payload: dict = {}
+    elif isinstance(raw_spec_payload, Mapping):
+        spec_payload = deepcopy(dict(raw_spec_payload))
+    else:
+        raise CatalogError(f"{label}: existing payload.specs must be an object")
+
+    for key, incoming in {
+        "id": canonical_id,
+        "generation_id": generation_id,
+        "powertrain": powertrain,
+    }.items():
+        current = spec_payload.get(key)
+        if _is_missing_trim_value(current):
+            spec_payload[key] = incoming
+        elif str(current) != str(incoming):
+            raise CatalogError(
+                f"{label}: conflicting specs.{key}: {current!r} != {incoming!r}"
+            )
+
+    spec_name = str(spec_payload.get("name") or "").strip()
+    if not spec_name:
+        spec_payload["name"] = existing_name or name
+        spec_name = str(spec_payload["name"])
+
+    current_aliases = spec_payload.get("aliases") or []
+    if not isinstance(current_aliases, list) or not all(isinstance(item, str) for item in current_aliases):
+        raise CatalogError(f"{label}: existing aliases must be strings")
+    merged_aliases = list(dict.fromkeys([item for item in current_aliases if item]))
+    for alias in aliases:
+        if alias and alias not in merged_aliases and alias != spec_name:
+            merged_aliases.append(alias)
+    for alternate_name in (name, existing_name):
+        if alternate_name and alternate_name != spec_name and alternate_name not in merged_aliases:
+            merged_aliases.append(alternate_name)
+    spec_payload["aliases"] = merged_aliases
+    spec_payload["source_refs"] = _merge_source_ref_maps(
+        spec_payload.get("source_refs"), source_refs, label=f"{label}:specs"
+    )
+    if "variant_id" not in spec_payload:
+        spec_payload["variant_id"] = merged.get("variant_id")
+
+    reserved = {"id", "generation_id", "name", "powertrain", "variant_id", "aliases", "source_refs"}
+    for key, incoming in specs.items():
+        if key in reserved:
+            raise CatalogError(f"{label}: specs may not override reserved field {key!r}")
+        if _is_missing_trim_value(incoming):
+            continue
+        current = spec_payload.get(key)
+        if _is_missing_trim_value(current):
+            spec_payload[key] = deepcopy(incoming)
+        elif current != incoming:
+            raise CatalogError(
+                f"{label}: conflicting spec {key}: {current!r} != {incoming!r}"
+            )
+
+    payload["specs"] = spec_payload
+    merged["payload"] = payload
+    return merged
+
+
 def apply_canonical_trim_overlay(
     release: Mapping,
     *,
@@ -248,10 +396,10 @@ def apply_canonical_trim_overlay(
 ) -> dict:
     """Merge dedicated retail canonical rows into a serving release.
 
-    Overlay rows may not replace an existing canonical trim. They intentionally
-    carry no analytical ``variant_id`` until that cross-grain relationship is
-    separately reviewed. Prices/spec facts likewise stay empty until their own
-    evidence stores contain them.
+    If the same canonical MarketTrim has already been materialised in the base
+    catalog (for example by an ECO bulk import), its evidence is merged instead
+    of creating a second row. Conflicting identity or populated specs still fail
+    closed. Prices and analytical links from the base row are preserved.
     """
     out = deepcopy(dict(release))
     overlay = load_canonical_trim_overlay(data_dir, year)
@@ -270,11 +418,17 @@ def apply_canonical_trim_overlay(
         str(row.get("canonical_id") or ""): row
         for row in out.get("brands", []) if isinstance(row, Mapping)
     }
-    existing_ids = {
-        str(row.get("canonical_id") or "")
-        for row in out.get("market_trims", []) if isinstance(row, Mapping)
-    }
-    additions: list[dict] = []
+    market_trims = list(out.get("market_trims", []))
+    existing_index: dict[str, int] = {}
+    for index, row in enumerate(market_trims):
+        if not isinstance(row, Mapping):
+            continue
+        canonical_id = str(row.get("canonical_id") or "")
+        if not canonical_id:
+            continue
+        if canonical_id in existing_index:
+            raise CatalogError(f"serving release already contains duplicate MarketTrim {canonical_id}")
+        existing_index[canonical_id] = index
 
     for raw in overlay["trims"]:
         if not isinstance(raw, Mapping):
@@ -306,11 +460,6 @@ def apply_canonical_trim_overlay(
             )
         source_refs = _normalize_source_refs(raw.get("source_refs"), label=local_id)
         canonical_id = f"{generation_id}.trim.{local_id}"
-        if canonical_id in existing_ids:
-            raise CatalogError(
-                f"canonical trim overlay {local_id}: {canonical_id} already exists in base catalog"
-            )
-        existing_ids.add(canonical_id)
 
         aliases = raw.get("aliases") or []
         if not isinstance(aliases, list) or not all(isinstance(alias, str) for alias in aliases):
@@ -318,6 +467,23 @@ def apply_canonical_trim_overlay(
         specs = raw.get("specs") or {}
         if not isinstance(specs, Mapping):
             raise CatalogError(f"canonical trim overlay {local_id}: specs must be an object")
+
+        existing_at = existing_index.get(canonical_id)
+        if existing_at is not None:
+            market_trims[existing_at] = merge_market_trim_evidence(
+                market_trims[existing_at],
+                canonical_id=canonical_id,
+                model_id=model_id,
+                generation_id=generation_id,
+                name=name,
+                powertrain=powertrain.value,
+                aliases=aliases,
+                source_refs=source_refs,
+                specs=specs,
+                label=f"canonical trim overlay {local_id}",
+            )
+            continue
+
         model = models[model_id]
         brand = brands.get(str(model.get("brand_id") or ""), {})
         spec_payload = {
@@ -330,7 +496,7 @@ def apply_canonical_trim_overlay(
             "source_refs": source_refs,
             **dict(specs),
         }
-        additions.append({
+        market_trims.append({
             "canonical_id": canonical_id,
             "model_id": model_id,
             "generation_id": generation_id,
@@ -355,9 +521,11 @@ def apply_canonical_trim_overlay(
             "price_history": [],
             "source_refs": source_refs,
         })
+        existing_index[canonical_id] = len(market_trims) - 1
 
-    merged = list(out.get("market_trims", [])) + additions
-    out["market_trims"] = sorted(merged, key=lambda row: str(row.get("canonical_id") or ""))
+    out["market_trims"] = sorted(
+        market_trims, key=lambda row: str(row.get("canonical_id") or "")
+    )
     counts = dict(out.get("counts") or {})
     counts["market_trims"] = len(out["market_trims"])
     out["counts"] = counts
@@ -508,6 +676,7 @@ __all__ = [
     "load_canonical_trim_overlay",
     "load_reconciliation_state",
     "make_candidate",
+    "merge_market_trim_evidence",
     "powertrain_hints",
     "reconciliation_path",
     "release_reconciliation_report",
