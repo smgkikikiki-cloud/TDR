@@ -78,6 +78,22 @@ jobs:
       - name: Validate canonical result
         if: steps.preflight.outputs.ready == 'true' && steps.changes.outputs.count != '0'
         run: |
+          set -euo pipefail
+          # Nothing is durable until the commit step. If any pre-commit
+          # validator fails, put only the batches this run actually applied
+          # back in QUEUED immediately instead of stranding them PROCESSING
+          # for stale-job recovery.
+          requeue_on_failure() {
+            rc=$?
+            if [ "$rc" -ne 0 ]; then
+              PYTHONPATH=. python tools/requeue_canonical_result.py \
+                --result-file /tmp/canonical-input.json \
+                --reason "pre-commit validation failed in GitHub run ${GITHUB_RUN_ID}; queued for retry" || true
+            fi
+            exit "$rc"
+          }
+          trap requeue_on_failure EXIT
+
           # Admin saves change canonical data, not application source. Keep a
           # focused regression gate here and leave the 1,300+ full suite to
           # ordinary code CI, then run the actual catalogue/release validators
@@ -88,7 +104,8 @@ jobs:
             tests/test_admin_editor_sibling_preservation.py \
             tests/test_canonical_price_maintenance.py \
             tests/test_canonical_queue_phase_c.py \
-            tests/test_canonical_staged_publish_recovery.py
+            tests/test_canonical_staged_publish_recovery.py \
+            tests/test_canonical_validation_requeue.py
           python -m vehreg market validate
           python -m tdr_bridge.release_enriched \
             --inventory integration_data/tdr_2026-09-09.json \
@@ -96,6 +113,7 @@ jobs:
             --revision "input-${GITHUB_RUN_ID}" --as-of "$(date -u +%F)" \
             --out /tmp/vehicle-release.json
           python -m tdr_bridge.publish /tmp/vehicle-release.json
+          trap - EXIT
       - name: Commit the validated write
         if: steps.preflight.outputs.ready == 'true' && steps.changes.outputs.count != '0'
         id: commit
