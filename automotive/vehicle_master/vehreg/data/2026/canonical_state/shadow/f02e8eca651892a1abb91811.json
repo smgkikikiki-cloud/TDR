@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f02e8eca651892a1abb91811",
+    "command_id": "admin-delete-trim-735168bb-17a5-4d09-aa1f-67856652058d:1",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_es.aes.trim.comfort_private_use_bev",
+    "actor": "siriwich",
+    "reason": "Delete erroneous MarketTrim aion.aion_es.aes.trim.comfort_private_use_bev",
+    "submitted_at": "2026-09-22T04:40:21.220Z",
+    "applied_at": "2026-09-22T05:21:45+00:00",
+    "before_hash": "7fc9d5ddb9f2d86f19c9f1fc40397853b4e791544a287b618c25fa22a0bee8cd",
+    "after_hash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+    "before": {
+      "id": "aion.aion_es.aes.trim.comfort_private_use_bev",
+      "generation_id": "aion.aion_es.aes",
+      "name": "Comfort / Private Use",
+      "powertrain": "BEV",
+      "variant_id": null,
+      "price_thb": null,
+      "drivetrain": "UNKNOWN",
+      "engine_code": "",
+      "engine_cc": null,
+      "battery_kwh": null,
+      "transmission": "",
+      "seats": null,
+      "length_mm": null,
+      "width_mm": null,
+      "height_mm": null,
+      "wheelbase_mm": null,
+      "tire_front": "",
+      "tire_rear": "",
+      "wheel_front": "",
+      "wheel_rear": "",
+      "aliases": [
+        "Aion ES Comfort / Private Use"
+      ],
+      "source_refs": {
+        "owner_directory": [
+          "owner_directory_2026_09_13:001"
+        ]
+      },
+      "notes": ""
+    },
+    "after": null,
+    "changed_files": [
+      "2026/models/aion.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f02e8eca651892a1abb91811:catalog",
+    "revision_id": "f02e8eca651892a1abb91811",
+    "topic": "catalog",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_es.aes.trim.comfort_private_use_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-22T05:21:45+00:00",
+    "payload": null
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "batch_id": "admin-delete-trim-735168bb-17a5-4d09-aa1f-67856652058d",
+  "batch_hash": "aaa26615dfa4e878b8bcf5f41a12b7652874ec0412d4999e5f84de0d30f44240",
+  "status": "APPLIED",
+  "year": 2026,
+  "source": {
+    "kind": "ADMIN",
+    "ref": null
+  },
+  "actor": "siriwich",
+  "reason": "Delete erroneous MarketTrim aion.aion_es.aes.trim.comfort_private_use_bev",
+  "submitted_at": "2026-09-22T04:40:21.220Z",
+  "applied_at": "2026-09-22T05:21:45+00:00",
+  "results": [
+    {
+      "command_id": "admin-delete-trim-735168bb-17a5-4d09-aa1f-67856652058d:1",
+      "revision_id": "f02e8eca651892a1abb91811",
+      "topic": "catalog",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.comfort_private_use_bev",
+      "idempotent_replay": false
+    }
+  ],
+  "changed_files": [
+    "2026/models/aion.json",
+    "2026/canonical_state/outbox.jsonl",
+    "2026/canonical_state/shadow/f02e8eca651892a1abb91811.json",
+    "2026/canonical_state/revisions.jsonl"
+  ]
+}
