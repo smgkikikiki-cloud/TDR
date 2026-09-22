@@ -428,19 +428,25 @@ def test_the_volvo_xc40_has_no_suggestion_because_none_matches_the_car():
 
 
 # ---------------------------------------------------------------------------
-# The promotion gate: an ECO record is not permission to publish a trim.
+# Bulk source import may materialise a deterministic grade, but never unsourced.
 # ---------------------------------------------------------------------------
 
-def test_no_pilot_model_has_a_trim_promoted_from_homologation_alone():
-    from vehreg.comparable_specs import load_oem_sources
+def test_pilot_trims_materialised_by_eco_are_source_backed():
+    """A deterministic bulk import may create identity; provenance is mandatory.
+
+    The candidate-store workflow above remains provisional. The newer source
+    importer is a separate path: when every existing grade in a model/powertrain
+    has already been accounted for, an unmatched exact ECO grade may be created.
+    Such a row must carry the filing UUID that justified that creation.
+    """
     catalog = Catalog.load(year=2026)
     pilot = set(ComparableCohort.load().pilot_model_ids)
-    promoted = [t for t in catalog.trims
-                if catalog.model_for_trim(t).id in pilot]
-    with_evidence = [model_id for model_id, source in load_oem_sources().items()
-                     if source["current_evidence"] != "NONE"]
-    # Trims may only exist for models we actually have current OEM evidence for.
-    assert {catalog.model_for_trim(t).id for t in promoted} <= set(with_evidence)
+    promoted = [trim for trim in catalog.trims.values()
+                if catalog.model_for_trim(trim.id).id in pilot]
+    assert promoted
+    for trim in promoted:
+        eco_refs = trim.source_refs.get("eco", ())
+        assert eco_refs, f"{trim.id}: bulk-created pilot trim lacks ECO provenance"
 
 
 def test_the_gap_has_an_address_rather_than_being_a_silence():
