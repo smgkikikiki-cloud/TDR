@@ -58,9 +58,16 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:318"
+                ],
+                "eco": [
+                  "40988a2a-0129-477a-a069-75b26b9de103"
                 ]
               },
-              "id": "standard_range_rwd_66_kwh_lfp_258_hp_bev"
+              "id": "standard_range_rwd_66_kwh_lfp_258_hp_bev",
+              "seats": 5,
+              "length_mm": 4758,
+              "width_mm": 1920,
+              "height_mm": 1650
             },
             {
               "name": "Long Range RWD (87.5 kWh NCM, 286 hp)",
@@ -68,9 +75,16 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:318"
+                ],
+                "eco": [
+                  "6ec43a69-a117-42e0-8ff6-f888228f04a5"
                 ]
               },
-              "id": "long_range_rwd_87_5_kwh_ncm_286_hp_bev"
+              "id": "long_range_rwd_87_5_kwh_ncm_286_hp_bev",
+              "seats": 5,
+              "length_mm": 4758,
+              "width_mm": 1920,
+              "height_mm": 1650
             },
             {
               "name": "Performance AWD (87.5 kWh Dual Motor, 487 hp)",
@@ -78,9 +92,42 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:318"
+                ],
+                "eco": [
+                  "a3cd3664-2618-48a5-99fa-011d6eb568f6"
                 ]
               },
-              "id": "performance_awd_87_5_kwh_dual_motor_487_hp_bev"
+              "id": "performance_awd_87_5_kwh_dual_487_hp_bev",
+              "seats": 5,
+              "length_mm": 4758,
+              "width_mm": 1920,
+              "height_mm": 1650
+            },
+            {
+              "name": "Standard Range",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4753,
+              "width_mm": 1920,
+              "height_mm": 1650,
+              "source_refs": {
+                "eco": [
+                  "ec196398-f75a-4998-b7e5-8b26e8934945"
+                ]
+              }
+            },
+            {
+              "name": "Long Range",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4753,
+              "width_mm": 1920,
+              "height_mm": 1650,
+              "source_refs": {
+                "eco": [
+                  "84398563-30a0-4901-8123-3cfc7785b4c5"
+                ]
+              }
             }
           ]
         }

@@ -78,9 +78,18 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:102"
+                ],
+                "eco": [
+                  "f08cfe64-b907-49cb-9b7d-6b946edebeda"
                 ]
               },
-              "id": "e_hev_sv_hev"
+              "id": "e_hev_sv_hev",
+              "seats": 5,
+              "length_mm": 4577,
+              "width_mm": 1748,
+              "height_mm": 1480,
+              "engine_cc": 1498,
+              "transmission": "AUTOMATIC"
             },
             {
               "name": "e:HEV RS",
@@ -88,9 +97,108 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:102"
+                ],
+                "eco": [
+                  "785226b4-7467-4fa5-b2e8-59e9a384b747"
                 ]
               },
-              "id": "e_hev_rs_hev"
+              "id": "e_hev_rs_hev",
+              "seats": 5,
+              "length_mm": 4594,
+              "width_mm": 1748,
+              "height_mm": 1480,
+              "engine_cc": 1498,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "name": "e:HEV V",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4577,
+              "width_mm": 1748,
+              "height_mm": 1480,
+              "engine_cc": 1498,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "afdda38a-6856-410f-b3d4-97a4ebcb8fbb"
+                ]
+              }
+            },
+            {
+              "name": "S",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4577,
+              "width_mm": 1748,
+              "height_mm": 1467,
+              "engine_cc": 988,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "4c3c6fd4-2f55-4a1b-ab43-91c3a568041a"
+                ]
+              }
+            },
+            {
+              "name": "e:HEV THE BLACK OUTSHINE",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4580,
+              "width_mm": 1748,
+              "height_mm": 1480,
+              "engine_cc": 1498,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "decb9637-b6dc-47e6-adbb-dcbf22bba946"
+                ]
+              }
+            },
+            {
+              "name": "V",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4580,
+              "width_mm": 1748,
+              "height_mm": 1467,
+              "engine_cc": 988,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "c1c8dc72-3af8-4e45-9ec1-97a8eef4faaf"
+                ]
+              }
+            },
+            {
+              "name": "SV",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4580,
+              "width_mm": 1748,
+              "height_mm": 1467,
+              "engine_cc": 988,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "4df6f224-416c-4cae-8861-785aad000903"
+                ]
+              }
+            },
+            {
+              "name": "RS",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4589,
+              "width_mm": 1748,
+              "height_mm": 1480,
+              "engine_cc": 988,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "dca25795-3477-433d-acba-ac2bfea771bf"
+                ]
+              }
             }
           ]
         }
@@ -160,9 +268,18 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:103"
+                ],
+                "eco": [
+                  "2c8a6a4f-cb5d-4eb2-b18c-75ce07e44be3"
                 ]
               },
-              "id": "e_hev_sv_hev"
+              "id": "e_hev_sv_hev",
+              "seats": 5,
+              "length_mm": 4362,
+              "width_mm": 1748,
+              "height_mm": 1501,
+              "engine_cc": 1498,
+              "transmission": "AUTOMATIC"
             },
             {
               "name": "e:HEV RS",
@@ -170,9 +287,93 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:103"
+                ],
+                "eco": [
+                  "4ced3c19-565b-48ec-bebc-a528cb27cf83"
                 ]
               },
-              "id": "e_hev_rs_hev"
+              "id": "e_hev_rs_hev",
+              "seats": 5,
+              "length_mm": 4372,
+              "width_mm": 1748,
+              "height_mm": 1501,
+              "engine_cc": 1498,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "name": "e:HEV V",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4362,
+              "width_mm": 1748,
+              "height_mm": 1501,
+              "engine_cc": 1498,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "504e7396-4f8b-4f0a-a4b8-187041907d1f"
+                ]
+              }
+            },
+            {
+              "name": "S+",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4350,
+              "width_mm": 1748,
+              "height_mm": 1488,
+              "engine_cc": 988,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "3b30c732-3765-4c11-b515-b94479bfe682"
+                ]
+              }
+            },
+            {
+              "name": "SV",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4350,
+              "width_mm": 1748,
+              "height_mm": 1488,
+              "engine_cc": 988,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "bc3bbb1f-f628-4f16-a3e6-894e4e9dc219"
+                ]
+              }
+            },
+            {
+              "name": "RS",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4369,
+              "width_mm": 1748,
+              "height_mm": 1501,
+              "engine_cc": 988,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "e28c2952-594b-4e4d-9cb7-bee6aac945fb"
+                ]
+              }
+            },
+            {
+              "name": "DRIVAL",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4369,
+              "width_mm": 1748,
+              "height_mm": 1501,
+              "engine_cc": 1498,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "865e0f2a-41ed-4010-a91b-e5a59fa11ff7"
+                ]
+              }
             }
           ]
         }
@@ -241,9 +442,18 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:104"
+                ],
+                "eco": [
+                  "a8076733-593d-45b4-87e6-fb7b4feb86a1"
                 ]
               },
-              "id": "e_hev_el_plus_hev"
+              "id": "e_hev_el_plus_hev",
+              "seats": 5,
+              "length_mm": 4681,
+              "width_mm": 1802,
+              "height_mm": 1415,
+              "engine_cc": 1993,
+              "transmission": "AUTOMATIC"
             },
             {
               "name": "e:HEV RS",
@@ -251,9 +461,63 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:104"
+                ],
+                "eco": [
+                  "3941ab4c-97d5-4207-b47c-0e9ab5ef7ab5"
                 ]
               },
-              "id": "e_hev_rs_hev"
+              "id": "e_hev_rs_hev",
+              "seats": 5,
+              "length_mm": 4681,
+              "width_mm": 1802,
+              "height_mm": 1415,
+              "engine_cc": 1993,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "name": "TYPE R RACING BLACK PACKAGE",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4595,
+              "width_mm": 1890,
+              "height_mm": 1405,
+              "engine_cc": 1995,
+              "transmission": "MANUAL",
+              "source_refs": {
+                "eco": [
+                  "d866c51b-50ae-472d-8a04-4276cfc67653"
+                ]
+              }
+            },
+            {
+              "name": "TYPE R",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4595,
+              "width_mm": 1890,
+              "height_mm": 1405,
+              "engine_cc": 1995,
+              "transmission": "MANUAL",
+              "source_refs": {
+                "eco": [
+                  "1f12a309-91b9-47aa-8a49-945d680c10e9"
+                ]
+              }
+            },
+            {
+              "name": "EL+",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4681,
+              "width_mm": 1802,
+              "height_mm": 1415,
+              "engine_cc": 1498,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "b0c7e69a-c05f-4036-bd3a-aedc440d3f12"
+                ]
+              }
             }
           ]
         }
@@ -303,9 +567,18 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:100"
+                ],
+                "eco": [
+                  "e4e5ba65-ffde-4b84-b6f4-7ba09c0a3e82"
                 ]
               },
-              "id": "e_hev_e_hev"
+              "id": "e_hev_e_hev",
+              "seats": 5,
+              "length_mm": 4962,
+              "width_mm": 1862,
+              "height_mm": 1449,
+              "engine_cc": 1993,
+              "transmission": "AUTOMATIC"
             },
             {
               "name": "e:HEV EL",
@@ -313,9 +586,18 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:100"
+                ],
+                "eco": [
+                  "b81d866e-481d-41b0-8036-f0735d9e8ca4"
                 ]
               },
-              "id": "e_hev_el_hev"
+              "id": "e_hev_el_hev",
+              "seats": 5,
+              "length_mm": 4962,
+              "width_mm": 1862,
+              "height_mm": 1449,
+              "engine_cc": 1993,
+              "transmission": "AUTOMATIC"
             },
             {
               "name": "e:HEV RS",
@@ -323,9 +605,18 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:100"
+                ],
+                "eco": [
+                  "b2114f7c-dc1c-45a3-b575-fb965bdbc167"
                 ]
               },
-              "id": "e_hev_rs_hev"
+              "id": "e_hev_rs_hev",
+              "seats": 5,
+              "length_mm": 4962,
+              "width_mm": 1862,
+              "height_mm": 1449,
+              "engine_cc": 1993,
+              "transmission": "AUTOMATIC"
             }
           ]
         }
@@ -395,9 +686,18 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:108"
+                ],
+                "eco": [
+                  "352b0c23-db9a-4669-8935-8a35e1dbd318"
                 ]
               },
-              "id": "e_hev_e_hev"
+              "id": "e_hev_e_hev",
+              "seats": 5,
+              "length_mm": 4347,
+              "width_mm": 1790,
+              "height_mm": 1590,
+              "engine_cc": 1498,
+              "transmission": "AUTOMATIC"
             },
             {
               "name": "e:HEV EL",
@@ -405,9 +705,18 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:108"
+                ],
+                "eco": [
+                  "8b8723dd-bfd9-42ef-9c59-f3b9977f490a"
                 ]
               },
-              "id": "e_hev_el_hev"
+              "id": "e_hev_el_hev",
+              "seats": 5,
+              "length_mm": 4347,
+              "width_mm": 1790,
+              "height_mm": 1590,
+              "engine_cc": 1498,
+              "transmission": "AUTOMATIC"
             },
             {
               "name": "e:HEV RS",
@@ -415,9 +724,33 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:108"
+                ],
+                "eco": [
+                  "ba81123e-c3d5-4e75-bd60-0e4f0657a347"
                 ]
               },
-              "id": "e_hev_rs_hev"
+              "id": "e_hev_rs_hev",
+              "seats": 5,
+              "length_mm": 4385,
+              "width_mm": 1790,
+              "height_mm": 1590,
+              "engine_cc": 1498,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "name": "e:HEV HuNT",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4347,
+              "width_mm": 1790,
+              "height_mm": 1590,
+              "engine_cc": 1498,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "557ac71a-bba3-4b02-b5c1-70dbd61e359b"
+                ]
+              }
             }
           ]
         }
@@ -479,6 +812,128 @@
               "price_note": "seed-unverified",
               "price_min_thb": 1599000,
               "price_max_thb": 1599000
+            }
+          ],
+          "trims": [
+            {
+              "name": "e:HEV RS",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4691,
+              "width_mm": 1866,
+              "height_mm": 1681,
+              "engine_cc": 1993,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "f2ae505a-7a63-4f15-be12-15f5e816a3b1"
+                ]
+              }
+            },
+            {
+              "name": "e:HEV RS 4WD",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4691,
+              "width_mm": 1866,
+              "height_mm": 1691,
+              "engine_cc": 1993,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "1fced373-f0a2-4d61-a703-34f8402dce28"
+                ]
+              }
+            },
+            {
+              "name": "e:HEV E",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4691,
+              "width_mm": 1866,
+              "height_mm": 1681,
+              "engine_cc": 1993,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "ab64bbe5-acd9-49da-8f9f-64135ebcff4d"
+                ]
+              }
+            },
+            {
+              "name": "e:HEV ES",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4691,
+              "width_mm": 1866,
+              "height_mm": 1681,
+              "engine_cc": 1993,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "b187f14b-fdce-438a-9ced-6b5494daf7cf"
+                ]
+              }
+            },
+            {
+              "name": "e:HEV HuNT",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4691,
+              "width_mm": 1866,
+              "height_mm": 1681,
+              "engine_cc": 1993,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "21f728b0-4666-46f7-acb7-49f689d5ec32"
+                ]
+              }
+            },
+            {
+              "name": "E",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4691,
+              "width_mm": 1866,
+              "height_mm": 1681,
+              "engine_cc": 1498,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "b25e92a1-9ea4-4597-95b3-f4911dad199d"
+                ]
+              }
+            },
+            {
+              "name": "ES 4WD",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4691,
+              "width_mm": 1866,
+              "height_mm": 1691,
+              "engine_cc": 1498,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "b1776a0e-3550-41ca-8a6b-36f50fcc0eae"
+                ]
+              }
+            },
+            {
+              "name": "EL 4WD",
+              "powertrain": "ICE",
+              "seats": 7,
+              "length_mm": 4691,
+              "width_mm": 1866,
+              "height_mm": 1691,
+              "engine_cc": 1498,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "bd032a33-f66e-4266-970e-667e3a5ec86d"
+                ]
+              }
             }
           ]
         }
@@ -726,9 +1181,63 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:111"
+                ],
+                "eco": [
+                  "d5539fae-1cd2-4c0c-b2d4-6c6e70e4e572"
                 ]
               },
-              "id": "spada_premium_line_e_hev_hev"
+              "id": "spada_premium_line_e_hev_hev",
+              "seats": 7,
+              "length_mm": 4830,
+              "width_mm": 1750,
+              "height_mm": 1845,
+              "engine_cc": 1993,
+              "transmission": "CVT"
+            },
+            {
+              "name": "SPADA",
+              "powertrain": "ICE",
+              "seats": 7,
+              "length_mm": 4830,
+              "width_mm": 1840,
+              "height_mm": 1840,
+              "engine_cc": 1496,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "226c0389-eb46-4f27-a6b1-0dcf541a1be1"
+                ]
+              }
+            },
+            {
+              "name": "AIR",
+              "powertrain": "ICE",
+              "seats": 7,
+              "length_mm": 4800,
+              "width_mm": 1750,
+              "height_mm": 1840,
+              "engine_cc": 1496,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "a8cb241e-e1cc-499c-a3af-22e7f28a7c3f"
+                ]
+              }
+            },
+            {
+              "name": "SPADA PREMIUM LINE",
+              "powertrain": "ICE",
+              "seats": 7,
+              "length_mm": 4830,
+              "width_mm": 1750,
+              "height_mm": 1845,
+              "engine_cc": 1496,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "1e8ffbd5-7815-44e2-b6b7-8d4f69ed35db"
+                ]
+              }
             }
           ]
         }
@@ -833,7 +1342,21 @@
               "price_max_thb": 1429000
             }
           ],
-          "trims": []
+          "trims": [
+            {
+              "name": "e:N2",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4788,
+              "width_mm": 1838,
+              "height_mm": 1570,
+              "source_refs": {
+                "eco": [
+                  "9f3c4628-6107-49b7-a84a-7779c11b28a1"
+                ]
+              }
+            }
+          ]
         }
       ],
       "incomplete": true

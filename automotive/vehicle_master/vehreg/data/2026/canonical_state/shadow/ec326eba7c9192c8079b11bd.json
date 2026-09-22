@@ -1,0 +1,2286 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ec326eba7c9192c8079b11bd",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:294",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "toyota.vellfire",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:04:06+00:00",
+    "before_hash": "d06494207c1752fb7f6abcec964c6eb65017906f23f7db9b919d84b1765c935f",
+    "after_hash": "1b9eb0ebf37590dcbc631f8315e410475504dded2c7ef7516ab5b31c26ed6ad2",
+    "before": {
+      "id": "vellfire",
+      "name_en": "Vellfire",
+      "name_th": "เวลไฟร์",
+      "nameplate": "",
+      "body_type": "MPV",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "NICHE",
+      "aliases": [
+        "vellfire"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "E",
+          "seats": 7,
+          "launched": "2023-09-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.5L HEV",
+              "powertrain": "HEV",
+              "drivetrain": "AWD",
+              "engine_cc": 2487,
+              "battery_kwh": 1.0,
+              "price_thb": 4299000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "JP",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "id": "250",
+              "name": "250",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "982ae032-d414-4f1d-8101-810c167c3327"
+                ],
+                "eco": [
+                  "d50e7a13-c863-4c02-aed8-1823fe54ae00"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4995,
+              "width_mm": 1850,
+              "height_mm": 1945,
+              "tire_front": "225/60R18",
+              "tire_rear": "225/60R18",
+              "engine_cc": 2493,
+              "transmission": "CVT"
+            },
+            {
+              "id": "2_5_hev",
+              "name": "2.5 HEV",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "150c9bf7-c210-42d6-998a-7ace2dc17464"
+                ],
+                "owner_directory": [
+                  "owner_directory_2026_09_13:294"
+                ],
+                "eco": [
+                  "150c9bf7-c210-42d6-998a-7ace2dc17464"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 5005,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "225/55R19",
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "2_5_hybrid_v_l_edition",
+              "name": "2.5 HYBRID V L Edition",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "8ee3b76b67074161a85b41a4d812d2e9"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4945,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "215/65R16",
+              "tire_rear": "215/65R16"
+            },
+            {
+              "id": "2_5_hybrid_x",
+              "name": "2.5 HYBRID X",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "423d65344824408dbdbc57d0813ac803"
+                ],
+                "eco": [
+                  "423d65344824408dbdbc57d0813ac803"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4935,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "215/65R16",
+              "tire_rear": "215/65R16",
+              "engine_cc": 2493,
+              "transmission": "CVT"
+            },
+            {
+              "id": "2_5_hybrid_zr_g",
+              "name": "2.5 HYBRID ZR-G",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "70accb2303014d2aa6c01ad424dfa68e"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4935,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "215/65R16",
+              "tire_rear": "215/65R16"
+            },
+            {
+              "id": "2_5_zg_edition",
+              "name": "2.5 ZG EDITION",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "09bbcad2f21a4ab8af4d32ae7f765922"
+                ],
+                "eco": [
+                  "09bbcad2f21a4ab8af4d32ae7f765922"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4945,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "235/50R18",
+              "tire_rear": "235/50R18",
+              "engine_cc": 2493,
+              "transmission": "CVT"
+            },
+            {
+              "id": "eclipse_edition_hev_premium",
+              "name": "Eclipse Edition - HEV Premium",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "0186e2ef-20e0-47f2-9447-41124a739491"
+                ],
+                "eco": [
+                  "0186e2ef-20e0-47f2-9447-41124a739491"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 5005,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "225/55R19",
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "golden_eye_iii",
+              "name": "GOLDEN EYE III",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "c0e0d44b-da0d-449e-8d48-8a1193a072ec"
+                ],
+                "eco": [
+                  "c0e0d44b-da0d-449e-8d48-8a1193a072ec"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4945,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "235/50R18",
+              "tire_rear": "235/50R18",
+              "engine_cc": 2493,
+              "transmission": "CVT"
+            },
+            {
+              "id": "hev_premium",
+              "name": "HEV Premium",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "c40e8a2d-4462-4382-9b66-e585b0f41ad4"
+                ],
+                "eco": [
+                  "c40e8a2d-4462-4382-9b66-e585b0f41ad4"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 5005,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "225/55R19",
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "hybrid",
+              "name": "HYBRID",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "fa43da23deec4647b43bca09443be63b"
+                ],
+                "eco": [
+                  "fa43da23deec4647b43bca09443be63b"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4935,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "225/60R17",
+              "tire_rear": "225/60R17",
+              "engine_cc": 2493,
+              "transmission": "CVT"
+            },
+            {
+              "id": "hybrid_executive_lounge",
+              "name": "HYBRID EXECUTIVE LOUNGE",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "147e56b3-c37c-49b1-810e-9900db369e16"
+                ],
+                "eco": [
+                  "147e56b3-c37c-49b1-810e-9900db369e16"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4995,
+              "width_mm": 1850,
+              "height_mm": 1945,
+              "tire_front": "225/60R18",
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "hybrid_executive_lounge_2wd",
+              "name": "HYBRID EXECUTIVE LOUNGE 2WD",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "source_refs": {
+                "ecosticker": [
+                  "18f77a3e-6883-424b-a9c2-fb383904ea69"
+                ],
+                "eco": [
+                  "b3ab9c82-da38-4168-94f8-2fea1147297e"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 5005,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "225/60R18",
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "hybrid_executive_lounge_e_four",
+              "name": "HYBRID EXECUTIVE LOUNGE E-FOUR",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "d4f0550e-1d97-4083-ac82-ac529688da4d"
+                ],
+                "eco": [
+                  "d4f0550e-1d97-4083-ac82-ac529688da4d"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 5005,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "225/60R18",
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "hybrid_x_e_four",
+              "name": "HYBRID X E-FOUR",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "73c3adf96487421e84de5570743762ae"
+                ],
+                "eco": [
+                  "73c3adf96487421e84de5570743762ae"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4935,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "215/65R16",
+              "tire_rear": "215/65R16",
+              "engine_cc": 2493,
+              "transmission": "CVT"
+            },
+            {
+              "id": "hybrid_z_premier",
+              "name": "HYBRID Z PREMIER",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "39236d3e-5b9e-4262-adb3-bab74353334b"
+                ],
+                "eco": [
+                  "39236d3e-5b9e-4262-adb3-bab74353334b"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4995,
+              "width_mm": 1850,
+              "height_mm": 1935,
+              "tire_front": "225/60R18",
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "hybrid_z_premier_2wd",
+              "name": "HYBRID Z PREMIER 2WD",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "source_refs": {
+                "ecosticker": [
+                  "76c76aa2-7c76-446c-8928-b66df1cb7a51"
+                ],
+                "eco": [
+                  "c1efa5b8-453d-4b08-92a3-b912cd39e692"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4995,
+              "width_mm": 1850,
+              "height_mm": 1945,
+              "tire_front": "225/60R18",
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "hybrid_z_premier_e_four",
+              "name": "HYBRID Z PREMIER E-FOUR",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "a495e190-d412-40a6-81ca-a5e0bd0588f8"
+                ],
+                "eco": [
+                  "dc871a66-de3c-494f-a52f-5357e83f094d"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4995,
+              "width_mm": 1850,
+              "height_mm": 1945,
+              "tire_front": "225/55R19",
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "hybrid_zrg_edition",
+              "name": "HYBRID ZRG EDITION",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "6016c4a4705c4337bc351966290e8c0e"
+                ],
+                "eco": [
+                  "6016c4a4705c4337bc351966290e8c0e"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4935,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "225/60R17",
+              "tire_rear": "225/60R17",
+              "engine_cc": 2493,
+              "transmission": "CVT"
+            },
+            {
+              "id": "vellfire",
+              "name": "VELLFIRE",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "7574e074b56342449fad17b8cb627d33"
+                ],
+                "eco": [
+                  "7574e074b56342449fad17b8cb627d33"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4945,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "235/50R18",
+              "tire_rear": "235/50R18",
+              "engine_cc": 2493,
+              "transmission": "CVT"
+            },
+            {
+              "id": "z_premier",
+              "name": "Z PREMIER",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "3bd27424-f0cc-49be-909d-001be1a67072"
+                ],
+                "eco": [
+                  "3bd27424-f0cc-49be-909d-001be1a67072"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4995,
+              "width_mm": 1850,
+              "height_mm": 1945,
+              "tire_front": "225/55R19",
+              "tire_rear": "225/55R19",
+              "engine_cc": 2393,
+              "transmission": "CVT"
+            },
+            {
+              "id": "z_premier_2wd",
+              "name": "Z PREMIER 2WD",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "source_refs": {
+                "ecosticker": [
+                  "79ca400a-e879-43a1-b939-e2d379b94c13"
+                ],
+                "eco": [
+                  "a45ed582-7068-447a-9caf-bc9259a95390"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4995,
+              "width_mm": 1850,
+              "height_mm": 1945,
+              "tire_front": "225/55R19",
+              "tire_rear": "225/55R19",
+              "engine_cc": 2393,
+              "transmission": "CVT"
+            },
+            {
+              "id": "z_premier_hybrid",
+              "name": "Z PREMIER HYBRID",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "fff3df8d-6a9f-4f1e-859c-f7b2c8fb34b9"
+                ],
+                "eco": [
+                  "fff3df8d-6a9f-4f1e-859c-f7b2c8fb34b9"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4995,
+              "width_mm": 1850,
+              "height_mm": 1935,
+              "tire_front": "225/55R19",
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "id": "zg",
+              "name": "ZG",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "262cc2548d424e98908b2ef927350f2c"
+                ],
+                "eco": [
+                  "262cc2548d424e98908b2ef927350f2c"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4945,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "235/50R18",
+              "tire_rear": "235/50R18",
+              "engine_cc": 2493,
+              "transmission": "CVT"
+            },
+            {
+              "name": "2.5 HEV Luxury (Executive Lounge Package)",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:294"
+                ]
+              },
+              "aliases": [
+                "Vellfire 2.5 HEV Luxury (Executive Lounge Package)"
+              ],
+              "id": "2_5_hev_luxury_executive_lounge_package_hev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "toyota",
+        "name_en": "Toyota",
+        "name_th": "โตโยต้า",
+        "brand_segment": "MASS",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "โตโยต้า",
+          "toyota motor thailand",
+          "TMT"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "toyota.vellfire",
+        "brand_id": "toyota",
+        "name_en": "Vellfire",
+        "name_th": "เวลไฟร์",
+        "nameplate": "Vellfire",
+        "body_type": "MPV",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "vellfire"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "toyota.vellfire.gen1",
+          "model_id": "toyota.vellfire",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 7,
+          "launched": "2023-09-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "toyota.vellfire.gen1.2_5l_hev",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "2.5L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "AWD",
+          "engine_cc": 2487,
+          "battery_kwh": 1.0,
+          "price_thb": 4299000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "JP",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "toyota.vellfire.gen1.trim.250",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "250",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1945,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "982ae032-d414-4f1d-8101-810c167c3327"
+            ],
+            "eco": [
+              "d50e7a13-c863-4c02-aed8-1823fe54ae00"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.2_5_hev",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "2.5 HEV",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 5005,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "150c9bf7-c210-42d6-998a-7ace2dc17464"
+            ],
+            "owner_directory": [
+              "owner_directory_2026_09_13:294"
+            ],
+            "eco": [
+              "150c9bf7-c210-42d6-998a-7ace2dc17464"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.2_5_hybrid_v_l_edition",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "2.5 HYBRID V L Edition",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "215/65R16",
+          "tire_rear": "215/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "8ee3b76b67074161a85b41a4d812d2e9"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.2_5_hybrid_x",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "2.5 HYBRID X",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4935,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "215/65R16",
+          "tire_rear": "215/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "423d65344824408dbdbc57d0813ac803"
+            ],
+            "eco": [
+              "423d65344824408dbdbc57d0813ac803"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.2_5_hybrid_zr_g",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "2.5 HYBRID ZR-G",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4935,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "215/65R16",
+          "tire_rear": "215/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "70accb2303014d2aa6c01ad424dfa68e"
+            ],
+            "eco": [
+              "70accb2303014d2aa6c01ad424dfa68e"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.2_5_zg_edition",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "2.5 ZG EDITION",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R18",
+          "tire_rear": "235/50R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "09bbcad2f21a4ab8af4d32ae7f765922"
+            ],
+            "eco": [
+              "09bbcad2f21a4ab8af4d32ae7f765922"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.eclipse_edition_hev_premium",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "Eclipse Edition - HEV Premium",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 5005,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "0186e2ef-20e0-47f2-9447-41124a739491"
+            ],
+            "eco": [
+              "0186e2ef-20e0-47f2-9447-41124a739491"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.golden_eye_iii",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "GOLDEN EYE III",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R18",
+          "tire_rear": "235/50R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "c0e0d44b-da0d-449e-8d48-8a1193a072ec"
+            ],
+            "eco": [
+              "c0e0d44b-da0d-449e-8d48-8a1193a072ec"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.hev_premium",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "HEV Premium",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 5005,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "c40e8a2d-4462-4382-9b66-e585b0f41ad4"
+            ],
+            "eco": [
+              "c40e8a2d-4462-4382-9b66-e585b0f41ad4"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.hybrid",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "HYBRID",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4935,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R17",
+          "tire_rear": "225/60R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "fa43da23deec4647b43bca09443be63b"
+            ],
+            "eco": [
+              "fa43da23deec4647b43bca09443be63b"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.hybrid_executive_lounge",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "HYBRID EXECUTIVE LOUNGE",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1945,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "147e56b3-c37c-49b1-810e-9900db369e16"
+            ],
+            "eco": [
+              "147e56b3-c37c-49b1-810e-9900db369e16"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.hybrid_executive_lounge_2wd",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "HYBRID EXECUTIVE LOUNGE 2WD",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 5005,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "18f77a3e-6883-424b-a9c2-fb383904ea69"
+            ],
+            "eco": [
+              "b3ab9c82-da38-4168-94f8-2fea1147297e"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.hybrid_executive_lounge_e_four",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "HYBRID EXECUTIVE LOUNGE E-FOUR",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 5005,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "d4f0550e-1d97-4083-ac82-ac529688da4d"
+            ],
+            "eco": [
+              "d4f0550e-1d97-4083-ac82-ac529688da4d"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.hybrid_x_e_four",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "HYBRID X E-FOUR",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4935,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "215/65R16",
+          "tire_rear": "215/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "73c3adf96487421e84de5570743762ae"
+            ],
+            "eco": [
+              "73c3adf96487421e84de5570743762ae"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.hybrid_z_premier",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "HYBRID Z PREMIER",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "39236d3e-5b9e-4262-adb3-bab74353334b"
+            ],
+            "eco": [
+              "39236d3e-5b9e-4262-adb3-bab74353334b"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.hybrid_z_premier_2wd",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "HYBRID Z PREMIER 2WD",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1945,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "76c76aa2-7c76-446c-8928-b66df1cb7a51"
+            ],
+            "eco": [
+              "c1efa5b8-453d-4b08-92a3-b912cd39e692"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.hybrid_z_premier_e_four",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "HYBRID Z PREMIER E-FOUR",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1945,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "a495e190-d412-40a6-81ca-a5e0bd0588f8"
+            ],
+            "eco": [
+              "dc871a66-de3c-494f-a52f-5357e83f094d"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.hybrid_zrg_edition",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "HYBRID ZRG EDITION",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4935,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R17",
+          "tire_rear": "225/60R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "6016c4a4705c4337bc351966290e8c0e"
+            ],
+            "eco": [
+              "6016c4a4705c4337bc351966290e8c0e"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.vellfire",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "VELLFIRE",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R18",
+          "tire_rear": "235/50R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "7574e074b56342449fad17b8cb627d33"
+            ],
+            "eco": [
+              "7574e074b56342449fad17b8cb627d33"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.z_premier",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "Z PREMIER",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2393,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1945,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "3bd27424-f0cc-49be-909d-001be1a67072"
+            ],
+            "eco": [
+              "3bd27424-f0cc-49be-909d-001be1a67072"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.z_premier_2wd",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "Z PREMIER 2WD",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": 2393,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1945,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "79ca400a-e879-43a1-b939-e2d379b94c13"
+            ],
+            "eco": [
+              "a45ed582-7068-447a-9caf-bc9259a95390"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.z_premier_hybrid",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "Z PREMIER HYBRID",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "fff3df8d-6a9f-4f1e-859c-f7b2c8fb34b9"
+            ],
+            "eco": [
+              "fff3df8d-6a9f-4f1e-859c-f7b2c8fb34b9"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.zg",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "ZG",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R18",
+          "tire_rear": "235/50R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "262cc2548d424e98908b2ef927350f2c"
+            ],
+            "eco": [
+              "262cc2548d424e98908b2ef927350f2c"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.2_5_hev_luxury_executive_lounge_package_hev",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "2.5 HEV Luxury (Executive Lounge Package)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Vellfire 2.5 HEV Luxury (Executive Lounge Package)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:294"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/toyota.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ec326eba7c9192c8079b11bd:catalog",
+    "revision_id": "ec326eba7c9192c8079b11bd",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "toyota.vellfire",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:04:06+00:00",
+    "payload": {
+      "brand": {
+        "id": "toyota",
+        "name_en": "Toyota",
+        "name_th": "โตโยต้า",
+        "brand_segment": "MASS",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "โตโยต้า",
+          "toyota motor thailand",
+          "TMT"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "toyota.vellfire",
+        "brand_id": "toyota",
+        "name_en": "Vellfire",
+        "name_th": "เวลไฟร์",
+        "nameplate": "Vellfire",
+        "body_type": "MPV",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "vellfire"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "toyota.vellfire.gen1",
+          "model_id": "toyota.vellfire",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 7,
+          "launched": "2023-09-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "toyota.vellfire.gen1.2_5l_hev",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "2.5L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "AWD",
+          "engine_cc": 2487,
+          "battery_kwh": 1.0,
+          "price_thb": 4299000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "JP",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "toyota.vellfire.gen1.trim.250",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "250",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1945,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "982ae032-d414-4f1d-8101-810c167c3327"
+            ],
+            "eco": [
+              "d50e7a13-c863-4c02-aed8-1823fe54ae00"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.2_5_hev",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "2.5 HEV",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 5005,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "150c9bf7-c210-42d6-998a-7ace2dc17464"
+            ],
+            "owner_directory": [
+              "owner_directory_2026_09_13:294"
+            ],
+            "eco": [
+              "150c9bf7-c210-42d6-998a-7ace2dc17464"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.2_5_hybrid_v_l_edition",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "2.5 HYBRID V L Edition",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "215/65R16",
+          "tire_rear": "215/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "8ee3b76b67074161a85b41a4d812d2e9"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.2_5_hybrid_x",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "2.5 HYBRID X",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4935,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "215/65R16",
+          "tire_rear": "215/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "423d65344824408dbdbc57d0813ac803"
+            ],
+            "eco": [
+              "423d65344824408dbdbc57d0813ac803"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.2_5_hybrid_zr_g",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "2.5 HYBRID ZR-G",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4935,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "215/65R16",
+          "tire_rear": "215/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "70accb2303014d2aa6c01ad424dfa68e"
+            ],
+            "eco": [
+              "70accb2303014d2aa6c01ad424dfa68e"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.2_5_zg_edition",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "2.5 ZG EDITION",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R18",
+          "tire_rear": "235/50R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "09bbcad2f21a4ab8af4d32ae7f765922"
+            ],
+            "eco": [
+              "09bbcad2f21a4ab8af4d32ae7f765922"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.eclipse_edition_hev_premium",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "Eclipse Edition - HEV Premium",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 5005,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "0186e2ef-20e0-47f2-9447-41124a739491"
+            ],
+            "eco": [
+              "0186e2ef-20e0-47f2-9447-41124a739491"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.golden_eye_iii",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "GOLDEN EYE III",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R18",
+          "tire_rear": "235/50R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "c0e0d44b-da0d-449e-8d48-8a1193a072ec"
+            ],
+            "eco": [
+              "c0e0d44b-da0d-449e-8d48-8a1193a072ec"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.hev_premium",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "HEV Premium",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 5005,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "c40e8a2d-4462-4382-9b66-e585b0f41ad4"
+            ],
+            "eco": [
+              "c40e8a2d-4462-4382-9b66-e585b0f41ad4"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.hybrid",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "HYBRID",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4935,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R17",
+          "tire_rear": "225/60R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "fa43da23deec4647b43bca09443be63b"
+            ],
+            "eco": [
+              "fa43da23deec4647b43bca09443be63b"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.hybrid_executive_lounge",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "HYBRID EXECUTIVE LOUNGE",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1945,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "147e56b3-c37c-49b1-810e-9900db369e16"
+            ],
+            "eco": [
+              "147e56b3-c37c-49b1-810e-9900db369e16"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.hybrid_executive_lounge_2wd",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "HYBRID EXECUTIVE LOUNGE 2WD",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 5005,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "18f77a3e-6883-424b-a9c2-fb383904ea69"
+            ],
+            "eco": [
+              "b3ab9c82-da38-4168-94f8-2fea1147297e"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.hybrid_executive_lounge_e_four",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "HYBRID EXECUTIVE LOUNGE E-FOUR",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 5005,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "d4f0550e-1d97-4083-ac82-ac529688da4d"
+            ],
+            "eco": [
+              "d4f0550e-1d97-4083-ac82-ac529688da4d"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.hybrid_x_e_four",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "HYBRID X E-FOUR",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4935,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "215/65R16",
+          "tire_rear": "215/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "73c3adf96487421e84de5570743762ae"
+            ],
+            "eco": [
+              "73c3adf96487421e84de5570743762ae"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.hybrid_z_premier",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "HYBRID Z PREMIER",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "39236d3e-5b9e-4262-adb3-bab74353334b"
+            ],
+            "eco": [
+              "39236d3e-5b9e-4262-adb3-bab74353334b"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.hybrid_z_premier_2wd",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "HYBRID Z PREMIER 2WD",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1945,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "76c76aa2-7c76-446c-8928-b66df1cb7a51"
+            ],
+            "eco": [
+              "c1efa5b8-453d-4b08-92a3-b912cd39e692"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.hybrid_z_premier_e_four",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "HYBRID Z PREMIER E-FOUR",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1945,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "a495e190-d412-40a6-81ca-a5e0bd0588f8"
+            ],
+            "eco": [
+              "dc871a66-de3c-494f-a52f-5357e83f094d"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.hybrid_zrg_edition",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "HYBRID ZRG EDITION",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4935,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R17",
+          "tire_rear": "225/60R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "6016c4a4705c4337bc351966290e8c0e"
+            ],
+            "eco": [
+              "6016c4a4705c4337bc351966290e8c0e"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.vellfire",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "VELLFIRE",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R18",
+          "tire_rear": "235/50R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "7574e074b56342449fad17b8cb627d33"
+            ],
+            "eco": [
+              "7574e074b56342449fad17b8cb627d33"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.z_premier",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "Z PREMIER",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2393,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1945,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "3bd27424-f0cc-49be-909d-001be1a67072"
+            ],
+            "eco": [
+              "3bd27424-f0cc-49be-909d-001be1a67072"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.z_premier_2wd",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "Z PREMIER 2WD",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": 2393,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1945,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "79ca400a-e879-43a1-b939-e2d379b94c13"
+            ],
+            "eco": [
+              "a45ed582-7068-447a-9caf-bc9259a95390"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.z_premier_hybrid",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "Z PREMIER HYBRID",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "fff3df8d-6a9f-4f1e-859c-f7b2c8fb34b9"
+            ],
+            "eco": [
+              "fff3df8d-6a9f-4f1e-859c-f7b2c8fb34b9"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.zg",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "ZG",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R18",
+          "tire_rear": "235/50R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "262cc2548d424e98908b2ef927350f2c"
+            ],
+            "eco": [
+              "262cc2548d424e98908b2ef927350f2c"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.vellfire.gen1.trim.2_5_hev_luxury_executive_lounge_package_hev",
+          "generation_id": "toyota.vellfire.gen1",
+          "name": "2.5 HEV Luxury (Executive Lounge Package)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Vellfire 2.5 HEV Luxury (Executive Lounge Package)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:294"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

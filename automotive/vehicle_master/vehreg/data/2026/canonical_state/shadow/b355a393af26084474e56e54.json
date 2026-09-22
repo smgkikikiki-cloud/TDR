@@ -1,0 +1,367 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b355a393af26084474e56e54",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:85",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "toyota.crown",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:44+00:00",
+    "before_hash": "9cd86068d9583c7ae9ac96178949e18ece2b5521a4ba503f404d6bace4a9f510",
+    "after_hash": "f88cb45db8a206fbac282e33815f476bcb9fe8e9d76471e2dbced20d486f4d0c",
+    "before": {
+      "id": "crown",
+      "name_en": "Crown",
+      "name_th": "คราวน์",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "GREY",
+      "aliases": [],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "grey import",
+              "powertrain": "UNKNOWN",
+              "drivetrain": "UNKNOWN",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "UNKNOWN",
+              "origin_country": "UNKNOWN",
+              "price_note": "grey import, spec not tracked",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Crossover HEV",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:278"
+                ]
+              },
+              "aliases": [
+                "Crown Crossover HEV"
+              ],
+              "id": "crossover_hev_hev"
+            },
+            {
+              "name": "Estate / Signia",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:278"
+                ]
+              },
+              "aliases": [
+                "Crown Estate / Signia"
+              ],
+              "id": "estate_signia_hev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "toyota",
+        "name_en": "Toyota",
+        "name_th": "โตโยต้า",
+        "brand_segment": "MASS",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "โตโยต้า",
+          "toyota motor thailand",
+          "TMT"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "toyota.crown",
+        "brand_id": "toyota",
+        "name_en": "Crown",
+        "name_th": "คราวน์",
+        "nameplate": "Crown",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "GREY",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "toyota.crown.gen1",
+          "model_id": "toyota.crown",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "toyota.crown.gen1.grey_import",
+          "generation_id": "toyota.crown.gen1",
+          "name": "grey import",
+          "powertrain": "UNKNOWN",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "UNKNOWN",
+          "origin_country": "UNKNOWN",
+          "price_note": "grey import, spec not tracked",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "toyota.crown.gen1.trim.crossover_hev_hev",
+          "generation_id": "toyota.crown.gen1",
+          "name": "Crossover HEV",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4930,
+          "width_mm": 1840,
+          "height_mm": 1540,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Crown Crossover HEV"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:278"
+            ],
+            "eco": [
+              "99e39afc-9701-49cf-888e-09ad6dcde82b"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.crown.gen1.trim.estate_signia_hev",
+          "generation_id": "toyota.crown.gen1",
+          "name": "Estate / Signia",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Crown Estate / Signia"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:278"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/toyota.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b355a393af26084474e56e54:catalog",
+    "revision_id": "b355a393af26084474e56e54",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "toyota.crown",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:44+00:00",
+    "payload": {
+      "brand": {
+        "id": "toyota",
+        "name_en": "Toyota",
+        "name_th": "โตโยต้า",
+        "brand_segment": "MASS",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "โตโยต้า",
+          "toyota motor thailand",
+          "TMT"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "toyota.crown",
+        "brand_id": "toyota",
+        "name_en": "Crown",
+        "name_th": "คราวน์",
+        "nameplate": "Crown",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "GREY",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "toyota.crown.gen1",
+          "model_id": "toyota.crown",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "toyota.crown.gen1.grey_import",
+          "generation_id": "toyota.crown.gen1",
+          "name": "grey import",
+          "powertrain": "UNKNOWN",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "UNKNOWN",
+          "origin_country": "UNKNOWN",
+          "price_note": "grey import, spec not tracked",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "toyota.crown.gen1.trim.crossover_hev_hev",
+          "generation_id": "toyota.crown.gen1",
+          "name": "Crossover HEV",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4930,
+          "width_mm": 1840,
+          "height_mm": 1540,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Crown Crossover HEV"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:278"
+            ],
+            "eco": [
+              "99e39afc-9701-49cf-888e-09ad6dcde82b"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.crown.gen1.trim.estate_signia_hev",
+          "generation_id": "toyota.crown.gen1",
+          "name": "Estate / Signia",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Crown Estate / Signia"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:278"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

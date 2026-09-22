@@ -1,0 +1,503 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "035853203057ad98d22401a0",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:96",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mazda.cx3",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:46+00:00",
+    "before_hash": "afe1579fcc7f968214ad825b8c1b9bc50da979ee8b232d8996a3d0ad7afd414c",
+    "after_hash": "a5b4e58cf9a1f538248fb65bb943d6bccf274b21e97984f46453fd509b74c34c",
+    "before": {
+      "id": "cx3",
+      "name_en": "CX-3",
+      "name_th": "ซีเอ็กซ์-3",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "cx 3",
+        "cx3"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "DK",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2020-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.0L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "engine_cc": 1998,
+              "battery_kwh": null,
+              "aliases": [
+                "2.0 Base Plus"
+              ],
+              "overrides": {},
+              "price_thb": 799000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 799000,
+              "price_max_thb": 799000
+            }
+          ],
+          "trims": [
+            {
+              "name": "2.0 Base",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:167"
+                ]
+              },
+              "id": "2_0_base_ice"
+            },
+            {
+              "name": "2.0 Base Plus",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:167"
+                ]
+              },
+              "id": "2_0_base_plus_ice"
+            },
+            {
+              "name": "2.0 Proactive",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:167"
+                ]
+              },
+              "id": "2_0_proactive_ice"
+            },
+            {
+              "name": "2.0 Comfort",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:167"
+                ]
+              },
+              "id": "2_0_comfort_ice"
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "mazda",
+        "name_en": "Mazda",
+        "name_th": "มาสด้า",
+        "brand_segment": "MASS",
+        "oem_group": "Mazda",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "มาสด้า"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mazda.cx3",
+        "brand_id": "mazda",
+        "name_en": "CX-3",
+        "name_th": "ซีเอ็กซ์-3",
+        "nameplate": "CX-3",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "cx 3",
+          "cx3"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mazda.cx3.dk",
+          "model_id": "mazda.cx3",
+          "code": "DK",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2020-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mazda.cx3.dk.2_0l_ice",
+          "generation_id": "mazda.cx3.dk",
+          "name": "2.0L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "price_thb": 799000,
+          "price_min_thb": 799000,
+          "price_max_thb": 799000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.0 Base Plus"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mazda.cx3.dk.trim.2_0_base_ice",
+          "generation_id": "mazda.cx3.dk",
+          "name": "2.0 Base",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:167"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mazda.cx3.dk.trim.2_0_base_plus_ice",
+          "generation_id": "mazda.cx3.dk",
+          "name": "2.0 Base Plus",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:167"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mazda.cx3.dk.trim.2_0_proactive_ice",
+          "generation_id": "mazda.cx3.dk",
+          "name": "2.0 Proactive",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:167"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mazda.cx3.dk.trim.2_0_comfort_ice",
+          "generation_id": "mazda.cx3.dk",
+          "name": "2.0 Comfort",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4275,
+          "width_mm": 1765,
+          "height_mm": 1550,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:167"
+            ],
+            "eco": [
+              "deb6fb41-c06b-4f9f-b19a-9371aa9f64b0"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mazda.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "035853203057ad98d22401a0:catalog",
+    "revision_id": "035853203057ad98d22401a0",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mazda.cx3",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:46+00:00",
+    "payload": {
+      "brand": {
+        "id": "mazda",
+        "name_en": "Mazda",
+        "name_th": "มาสด้า",
+        "brand_segment": "MASS",
+        "oem_group": "Mazda",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "มาสด้า"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mazda.cx3",
+        "brand_id": "mazda",
+        "name_en": "CX-3",
+        "name_th": "ซีเอ็กซ์-3",
+        "nameplate": "CX-3",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "cx 3",
+          "cx3"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mazda.cx3.dk",
+          "model_id": "mazda.cx3",
+          "code": "DK",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2020-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mazda.cx3.dk.2_0l_ice",
+          "generation_id": "mazda.cx3.dk",
+          "name": "2.0L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "price_thb": 799000,
+          "price_min_thb": 799000,
+          "price_max_thb": 799000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.0 Base Plus"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mazda.cx3.dk.trim.2_0_base_ice",
+          "generation_id": "mazda.cx3.dk",
+          "name": "2.0 Base",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:167"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mazda.cx3.dk.trim.2_0_base_plus_ice",
+          "generation_id": "mazda.cx3.dk",
+          "name": "2.0 Base Plus",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:167"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mazda.cx3.dk.trim.2_0_proactive_ice",
+          "generation_id": "mazda.cx3.dk",
+          "name": "2.0 Proactive",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:167"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mazda.cx3.dk.trim.2_0_comfort_ice",
+          "generation_id": "mazda.cx3.dk",
+          "name": "2.0 Comfort",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4275,
+          "width_mm": 1765,
+          "height_mm": 1550,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:167"
+            ],
+            "eco": [
+              "deb6fb41-c06b-4f9f-b19a-9371aa9f64b0"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

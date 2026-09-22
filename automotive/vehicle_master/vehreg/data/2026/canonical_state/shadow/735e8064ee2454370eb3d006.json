@@ -1,0 +1,282 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "735e8064ee2454370eb3d006",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:19",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "byd.sealion6",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:00+00:00",
+    "before_hash": "12dbd2f2a5eafe58a7c1311644ac9cf5a9553f346457ff87a1b07cbc02bfb155",
+    "after_hash": "9a0c7b5c16d6845c6dd08e51abd3e7b29aaf377ea838f31a13e8a661cecbb21f",
+    "before": {
+      "id": "sealion6",
+      "name_en": "Sealion 6 DM-i",
+      "name_th": "ซีไลอ้อน 6",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "sealion 6",
+        "seal u"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "SL6",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2024-07-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.5L PHEV",
+              "powertrain": "PHEV",
+              "drivetrain": "FWD",
+              "engine_cc": 1498,
+              "battery_kwh": 18.3,
+              "aliases": [
+                "Dynamic DM-i"
+              ],
+              "overrides": {},
+              "price_thb": 899000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 899000,
+              "price_max_thb": 899000
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "byd",
+        "name_en": "BYD",
+        "name_th": "บีวายดี",
+        "brand_segment": "MASS",
+        "oem_group": "BYD",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "บีวายดี",
+          "rever automotive"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "byd.sealion6",
+        "brand_id": "byd",
+        "name_en": "Sealion 6 DM-i",
+        "name_th": "ซีไลอ้อน 6",
+        "nameplate": "Sealion 6 DM-i",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "sealion 6",
+          "seal u"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "byd.sealion6.sl6",
+          "model_id": "byd.sealion6",
+          "code": "SL6",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2024-07-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "byd.sealion6.sl6.1_5l_phev",
+          "generation_id": "byd.sealion6.sl6",
+          "name": "1.5L PHEV",
+          "powertrain": "PHEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1498,
+          "battery_kwh": 18.3,
+          "price_thb": 899000,
+          "price_min_thb": 899000,
+          "price_max_thb": 899000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Dynamic DM-i"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "byd.sealion6.sl6.trim.byd_sealion6_premium_phev",
+          "generation_id": "byd.sealion6.sl6",
+          "name": "BYD SEALION6 PREMIUM",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4775,
+          "width_mm": 1890,
+          "height_mm": 1670,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "0382f93a-20e8-4b49-885a-1c3576b20e50"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/byd.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "735e8064ee2454370eb3d006:catalog",
+    "revision_id": "735e8064ee2454370eb3d006",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "byd.sealion6",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:00+00:00",
+    "payload": {
+      "brand": {
+        "id": "byd",
+        "name_en": "BYD",
+        "name_th": "บีวายดี",
+        "brand_segment": "MASS",
+        "oem_group": "BYD",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "บีวายดี",
+          "rever automotive"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "byd.sealion6",
+        "brand_id": "byd",
+        "name_en": "Sealion 6 DM-i",
+        "name_th": "ซีไลอ้อน 6",
+        "nameplate": "Sealion 6 DM-i",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "sealion 6",
+          "seal u"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "byd.sealion6.sl6",
+          "model_id": "byd.sealion6",
+          "code": "SL6",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2024-07-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "byd.sealion6.sl6.1_5l_phev",
+          "generation_id": "byd.sealion6.sl6",
+          "name": "1.5L PHEV",
+          "powertrain": "PHEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1498,
+          "battery_kwh": 18.3,
+          "price_thb": 899000,
+          "price_min_thb": 899000,
+          "price_max_thb": 899000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Dynamic DM-i"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "byd.sealion6.sl6.trim.byd_sealion6_premium_phev",
+          "generation_id": "byd.sealion6.sl6",
+          "name": "BYD SEALION6 PREMIUM",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4775,
+          "width_mm": 1890,
+          "height_mm": 1670,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "0382f93a-20e8-4b49-885a-1c3576b20e50"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

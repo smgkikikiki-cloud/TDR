@@ -1,0 +1,508 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a2c4c64120803597c4c4924b",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:18",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "gwm.tank500",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:00+00:00",
+    "before_hash": "c648b3c483db3ba13cddeb3267431e485eb9be19e41d69b89c519ddccde08dd7",
+    "after_hash": "d2d1b92c23c7b96d7a8c0c87ac9399923b9509646a402841a2798ac2369c06a1",
+    "before": {
+      "id": "tank500",
+      "name_en": "Tank 500",
+      "name_th": "แทงค์ 500",
+      "nameplate": "",
+      "body_type": "OFFROAD",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "tank 500"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "T500",
+          "segment": "E",
+          "seats": 7,
+          "launched": "2024-03-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.0L HEV 4WD",
+              "powertrain": "HEV",
+              "drivetrain": "4WD",
+              "engine_cc": 1998,
+              "battery_kwh": 1.8,
+              "aliases": [
+                "HEV Ultra 4WD",
+                "HYBRID",
+                "HEV"
+              ],
+              "overrides": {},
+              "price_thb": 2999000,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "seed-unverified",
+              "price_min_thb": 2999000,
+              "price_max_thb": 2999000
+            },
+            {
+              "name": "2.4L Diesel",
+              "powertrain": "ICE",
+              "drivetrain": "4WD",
+              "engine_cc": 2400,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "ยังไม่ได้ตรวจราคา",
+              "aliases": [
+                "Diesel",
+                "2.4 Diesel",
+                "4WD Diesel"
+              ]
+            }
+          ],
+          "trims": [
+            {
+              "name": "HEV PRO",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:097"
+                ]
+              },
+              "aliases": [
+                "Tank 500 HEV PRO"
+              ],
+              "id": "hev_pro_hev"
+            },
+            {
+              "name": "HEV ULTRA",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:097"
+                ]
+              },
+              "aliases": [
+                "Tank 500 HEV ULTRA"
+              ],
+              "id": "hev_ultra_hev"
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "gwm",
+        "name_en": "GWM",
+        "name_th": "จีดับเบิลยูเอ็ม",
+        "brand_segment": "MASS",
+        "oem_group": "Great Wall Motor",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "great wall",
+          "great wall motor",
+          "เกรทวอลล์",
+          "haval",
+          "ora",
+          "tank"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "gwm.tank500",
+        "brand_id": "gwm",
+        "name_en": "Tank 500",
+        "name_th": "แทงค์ 500",
+        "nameplate": "Tank 500",
+        "body_type": "OFFROAD",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "tank 500"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "gwm.tank500.t500",
+          "model_id": "gwm.tank500",
+          "code": "T500",
+          "segment": "E",
+          "seats": 7,
+          "launched": "2024-03-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "gwm.tank500.t500.2_0l_hev_4wd",
+          "generation_id": "gwm.tank500.t500",
+          "name": "2.0L HEV 4WD",
+          "powertrain": "HEV",
+          "drivetrain": "4WD",
+          "engine_cc": 1998,
+          "battery_kwh": 1.8,
+          "price_thb": 2999000,
+          "price_min_thb": 2999000,
+          "price_max_thb": 2999000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "HEV Ultra 4WD",
+            "HYBRID",
+            "HEV"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "gwm.tank500.t500.2_4l_diesel",
+          "generation_id": "gwm.tank500.t500",
+          "name": "2.4L Diesel",
+          "powertrain": "ICE",
+          "drivetrain": "4WD",
+          "engine_cc": 2400,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [
+            "Diesel",
+            "2.4 Diesel",
+            "4WD Diesel"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "gwm.tank500.t500.trim.hev_pro_hev",
+          "generation_id": "gwm.tank500.t500",
+          "name": "HEV PRO",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Tank 500 HEV PRO"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:097"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.tank500.t500.trim.hev_ultra_hev",
+          "generation_id": "gwm.tank500.t500",
+          "name": "HEV ULTRA",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Tank 500 HEV ULTRA"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:097"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.tank500.t500.trim.gwm_3_0t_ultra_4wd_ice",
+          "generation_id": "gwm.tank500.t500",
+          "name": "GWM 3.0T ULTRA 4WD",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2994,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 7,
+          "length_mm": 4886,
+          "width_mm": 1934,
+          "height_mm": 1905,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "633b3fb0-20ef-4d72-bade-48be2e251ef1"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/gwm.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a2c4c64120803597c4c4924b:catalog",
+    "revision_id": "a2c4c64120803597c4c4924b",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "gwm.tank500",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:00+00:00",
+    "payload": {
+      "brand": {
+        "id": "gwm",
+        "name_en": "GWM",
+        "name_th": "จีดับเบิลยูเอ็ม",
+        "brand_segment": "MASS",
+        "oem_group": "Great Wall Motor",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "great wall",
+          "great wall motor",
+          "เกรทวอลล์",
+          "haval",
+          "ora",
+          "tank"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "gwm.tank500",
+        "brand_id": "gwm",
+        "name_en": "Tank 500",
+        "name_th": "แทงค์ 500",
+        "nameplate": "Tank 500",
+        "body_type": "OFFROAD",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "tank 500"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "gwm.tank500.t500",
+          "model_id": "gwm.tank500",
+          "code": "T500",
+          "segment": "E",
+          "seats": 7,
+          "launched": "2024-03-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "gwm.tank500.t500.2_0l_hev_4wd",
+          "generation_id": "gwm.tank500.t500",
+          "name": "2.0L HEV 4WD",
+          "powertrain": "HEV",
+          "drivetrain": "4WD",
+          "engine_cc": 1998,
+          "battery_kwh": 1.8,
+          "price_thb": 2999000,
+          "price_min_thb": 2999000,
+          "price_max_thb": 2999000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "HEV Ultra 4WD",
+            "HYBRID",
+            "HEV"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "gwm.tank500.t500.2_4l_diesel",
+          "generation_id": "gwm.tank500.t500",
+          "name": "2.4L Diesel",
+          "powertrain": "ICE",
+          "drivetrain": "4WD",
+          "engine_cc": 2400,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [
+            "Diesel",
+            "2.4 Diesel",
+            "4WD Diesel"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "gwm.tank500.t500.trim.hev_pro_hev",
+          "generation_id": "gwm.tank500.t500",
+          "name": "HEV PRO",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Tank 500 HEV PRO"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:097"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.tank500.t500.trim.hev_ultra_hev",
+          "generation_id": "gwm.tank500.t500",
+          "name": "HEV ULTRA",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Tank 500 HEV ULTRA"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:097"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.tank500.t500.trim.gwm_3_0t_ultra_4wd_ice",
+          "generation_id": "gwm.tank500.t500",
+          "name": "GWM 3.0T ULTRA 4WD",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2994,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 7,
+          "length_mm": 4886,
+          "width_mm": 1934,
+          "height_mm": 1905,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "633b3fb0-20ef-4d72-bade-48be2e251ef1"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

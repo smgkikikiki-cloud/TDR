@@ -1,0 +1,585 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5526575480938f5c48baee18",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:200",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mazda.cx8",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:56+00:00",
+    "before_hash": "3d4f93f43b22ba7f19a6b17df7c75598982c253e69a791db4fd2fee7fa639a2b",
+    "after_hash": "cbf1b5d0c8bc5f873641a2328211135aba1cd711a3c4adddae769eaef608396f",
+    "before": {
+      "id": "cx8",
+      "name_en": "CX-8",
+      "name_th": "ซีเอ็กซ์-8",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "cx 8",
+        "cx8"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "KG",
+          "segment": "D",
+          "seats": 7,
+          "launched": "2019-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.5L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "engine_cc": 2488,
+              "battery_kwh": null,
+              "aliases": [
+                "2.5 SP"
+              ],
+              "overrides": {},
+              "price_thb": 1699000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1699000,
+              "price_max_thb": 1699000
+            }
+          ],
+          "trims": [
+            {
+              "name": "2.5 S (7-Seater)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:170"
+                ]
+              },
+              "id": "2_5_s_7_seater_ice"
+            },
+            {
+              "name": "2.5 SP (7-Seater)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:170"
+                ],
+                "eco": [
+                  "1c16da0c-8360-4a9b-9b70-3ba00b1781c2"
+                ]
+              },
+              "id": "2_5_sp_7_seater_ice",
+              "seats": 7,
+              "length_mm": 4900,
+              "width_mm": 1840,
+              "height_mm": 1730,
+              "engine_cc": 2488,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "name": "2.5 SP Exclusive (6-Seater Captain Seats)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:170"
+                ]
+              },
+              "id": "2_5_sp_exclusive_6_seater_captain_seats_ice"
+            },
+            {
+              "name": "2.2 XDL (7-Seater Diesel)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:170"
+                ]
+              },
+              "id": "2_2_xdl_7_seater_diesel_ice"
+            },
+            {
+              "name": "2.2 XDL Exclusive (6-Seater Captain Seats Diesel AWD)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:170"
+                ]
+              },
+              "id": "2_2_xdl_exclusive_6_seater_captain_seats_diesel_awd_ice"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "mazda",
+        "name_en": "Mazda",
+        "name_th": "มาสด้า",
+        "brand_segment": "MASS",
+        "oem_group": "Mazda",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "มาสด้า"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mazda.cx8",
+        "brand_id": "mazda",
+        "name_en": "CX-8",
+        "name_th": "ซีเอ็กซ์-8",
+        "nameplate": "CX-8",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "cx 8",
+          "cx8"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mazda.cx8.kg",
+          "model_id": "mazda.cx8",
+          "code": "KG",
+          "segment": "D",
+          "seats": 7,
+          "launched": "2019-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mazda.cx8.kg.2_5l_ice",
+          "generation_id": "mazda.cx8.kg",
+          "name": "2.5L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 2488,
+          "battery_kwh": null,
+          "price_thb": 1699000,
+          "price_min_thb": 1699000,
+          "price_max_thb": 1699000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.5 SP"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mazda.cx8.kg.trim.2_5_s_7_seater_ice",
+          "generation_id": "mazda.cx8.kg",
+          "name": "2.5 S (7-Seater)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:170"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mazda.cx8.kg.trim.2_5_sp_7_seater_ice",
+          "generation_id": "mazda.cx8.kg",
+          "name": "2.5 SP (7-Seater)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2488,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 7,
+          "length_mm": 4900,
+          "width_mm": 1840,
+          "height_mm": 1730,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:170"
+            ],
+            "eco": [
+              "1c16da0c-8360-4a9b-9b70-3ba00b1781c2"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mazda.cx8.kg.trim.2_5_sp_exclusive_6_seater_captain_seats_ice",
+          "generation_id": "mazda.cx8.kg",
+          "name": "2.5 SP Exclusive (6-Seater Captain Seats)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2488,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 6,
+          "length_mm": 4900,
+          "width_mm": 1840,
+          "height_mm": 1730,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:170"
+            ],
+            "eco": [
+              "7e73a545d541455197112b911d9978e4"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mazda.cx8.kg.trim.2_2_xdl_7_seater_diesel_ice",
+          "generation_id": "mazda.cx8.kg",
+          "name": "2.2 XDL (7-Seater Diesel)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:170"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mazda.cx8.kg.trim.2_2_xdl_exclusive_6_seater_captain_seats_diesel_awd_ice",
+          "generation_id": "mazda.cx8.kg",
+          "name": "2.2 XDL Exclusive (6-Seater Captain Seats Diesel AWD)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:170"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mazda.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5526575480938f5c48baee18:catalog",
+    "revision_id": "5526575480938f5c48baee18",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mazda.cx8",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:56+00:00",
+    "payload": {
+      "brand": {
+        "id": "mazda",
+        "name_en": "Mazda",
+        "name_th": "มาสด้า",
+        "brand_segment": "MASS",
+        "oem_group": "Mazda",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "มาสด้า"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mazda.cx8",
+        "brand_id": "mazda",
+        "name_en": "CX-8",
+        "name_th": "ซีเอ็กซ์-8",
+        "nameplate": "CX-8",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "cx 8",
+          "cx8"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mazda.cx8.kg",
+          "model_id": "mazda.cx8",
+          "code": "KG",
+          "segment": "D",
+          "seats": 7,
+          "launched": "2019-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mazda.cx8.kg.2_5l_ice",
+          "generation_id": "mazda.cx8.kg",
+          "name": "2.5L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 2488,
+          "battery_kwh": null,
+          "price_thb": 1699000,
+          "price_min_thb": 1699000,
+          "price_max_thb": 1699000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.5 SP"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mazda.cx8.kg.trim.2_5_s_7_seater_ice",
+          "generation_id": "mazda.cx8.kg",
+          "name": "2.5 S (7-Seater)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:170"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mazda.cx8.kg.trim.2_5_sp_7_seater_ice",
+          "generation_id": "mazda.cx8.kg",
+          "name": "2.5 SP (7-Seater)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2488,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 7,
+          "length_mm": 4900,
+          "width_mm": 1840,
+          "height_mm": 1730,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:170"
+            ],
+            "eco": [
+              "1c16da0c-8360-4a9b-9b70-3ba00b1781c2"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mazda.cx8.kg.trim.2_5_sp_exclusive_6_seater_captain_seats_ice",
+          "generation_id": "mazda.cx8.kg",
+          "name": "2.5 SP Exclusive (6-Seater Captain Seats)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2488,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 6,
+          "length_mm": 4900,
+          "width_mm": 1840,
+          "height_mm": 1730,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:170"
+            ],
+            "eco": [
+              "7e73a545d541455197112b911d9978e4"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mazda.cx8.kg.trim.2_2_xdl_7_seater_diesel_ice",
+          "generation_id": "mazda.cx8.kg",
+          "name": "2.2 XDL (7-Seater Diesel)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:170"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mazda.cx8.kg.trim.2_2_xdl_exclusive_6_seater_captain_seats_diesel_awd_ice",
+          "generation_id": "mazda.cx8.kg",
+          "name": "2.2 XDL Exclusive (6-Seater Captain Seats Diesel AWD)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:170"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,582 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b3e77fe0be2a1e874a4c5aa6",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:207",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "toyota.corolla_cross",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:57+00:00",
+    "before_hash": "947962f2e061b637b44d32d3f1e4b21f5be1d9b2c5705c1ba8ddb2c86b18598d",
+    "after_hash": "ac834765832a6d634971f93f8e2a962feab2aae4ed9eeef5f55ceebcd45a800e",
+    "before": {
+      "id": "corolla_cross",
+      "name_en": "Corolla Cross",
+      "name_th": "โคโรลล่า ครอส",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "corolla cross"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "XG10",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2020-07-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.8L HEV",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "engine_cc": 1798,
+              "battery_kwh": 1.3,
+              "aliases": [
+                "1.8 HEV Smart",
+                "1.8 HEV Premium",
+                "1.8 HEV GR Sport"
+              ],
+              "overrides": {},
+              "price_thb": 1029000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1029000,
+              "price_max_thb": 1239000
+            }
+          ],
+          "trims": [
+            {
+              "name": "HEV Premium",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4460,
+              "width_mm": 1825,
+              "height_mm": 1620,
+              "engine_cc": 1798,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "45fb3f35-5428-43f5-b085-9b1f8b63682c"
+                ]
+              }
+            },
+            {
+              "name": "HEV Premium Luxury",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4460,
+              "width_mm": 1825,
+              "height_mm": 1620,
+              "engine_cc": 1798,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "a9b11d5c-c4c1-493e-9e34-8656219a83bd"
+                ]
+              }
+            },
+            {
+              "name": "HEV GR Sport",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4460,
+              "width_mm": 1825,
+              "height_mm": 1620,
+              "engine_cc": 1798,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "b96a7399-dbda-454b-828c-bb81edbfd23b"
+                ]
+              }
+            },
+            {
+              "name": "HEV Smart",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4460,
+              "width_mm": 1825,
+              "height_mm": 1620,
+              "engine_cc": 1798,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "839dcd92-35c9-486e-824b-85c9a0a332ba"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "toyota",
+        "name_en": "Toyota",
+        "name_th": "โตโยต้า",
+        "brand_segment": "MASS",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "โตโยต้า",
+          "toyota motor thailand",
+          "TMT"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "toyota.corolla_cross",
+        "brand_id": "toyota",
+        "name_en": "Corolla Cross",
+        "name_th": "โคโรลล่า ครอส",
+        "nameplate": "Corolla Cross",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "corolla cross"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "toyota.corolla_cross.xg10",
+          "model_id": "toyota.corolla_cross",
+          "code": "XG10",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2020-07-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "toyota.corolla_cross.xg10.1_8l_hev",
+          "generation_id": "toyota.corolla_cross.xg10",
+          "name": "1.8L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1798,
+          "battery_kwh": 1.3,
+          "price_thb": 1029000,
+          "price_min_thb": 1029000,
+          "price_max_thb": 1239000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.8 HEV Smart",
+            "1.8 HEV Premium",
+            "1.8 HEV GR Sport"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "toyota.corolla_cross.xg10.trim.hev_premium_hev",
+          "generation_id": "toyota.corolla_cross.xg10",
+          "name": "HEV Premium",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1798,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4460,
+          "width_mm": 1825,
+          "height_mm": 1620,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "45fb3f35-5428-43f5-b085-9b1f8b63682c"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.corolla_cross.xg10.trim.hev_premium_luxury_hev",
+          "generation_id": "toyota.corolla_cross.xg10",
+          "name": "HEV Premium Luxury",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1798,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4460,
+          "width_mm": 1825,
+          "height_mm": 1620,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "a9b11d5c-c4c1-493e-9e34-8656219a83bd"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.corolla_cross.xg10.trim.hev_gr_sport_hev",
+          "generation_id": "toyota.corolla_cross.xg10",
+          "name": "HEV GR Sport",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1798,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4460,
+          "width_mm": 1825,
+          "height_mm": 1620,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "b96a7399-dbda-454b-828c-bb81edbfd23b"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.corolla_cross.xg10.trim.hev_smart_hev",
+          "generation_id": "toyota.corolla_cross.xg10",
+          "name": "HEV Smart",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1798,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4460,
+          "width_mm": 1825,
+          "height_mm": 1620,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "839dcd92-35c9-486e-824b-85c9a0a332ba"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.corolla_cross.xg10.trim.hev_premium_safety_60_years_cp_hev",
+          "generation_id": "toyota.corolla_cross.xg10",
+          "name": "HEV Premium Safety (60 Years CP)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1798,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4460,
+          "width_mm": 1825,
+          "height_mm": 1620,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "8ed0f4040deb48f59ab1dc1bde490e0c"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/toyota.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b3e77fe0be2a1e874a4c5aa6:catalog",
+    "revision_id": "b3e77fe0be2a1e874a4c5aa6",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "toyota.corolla_cross",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:57+00:00",
+    "payload": {
+      "brand": {
+        "id": "toyota",
+        "name_en": "Toyota",
+        "name_th": "โตโยต้า",
+        "brand_segment": "MASS",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "โตโยต้า",
+          "toyota motor thailand",
+          "TMT"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "toyota.corolla_cross",
+        "brand_id": "toyota",
+        "name_en": "Corolla Cross",
+        "name_th": "โคโรลล่า ครอส",
+        "nameplate": "Corolla Cross",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "corolla cross"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "toyota.corolla_cross.xg10",
+          "model_id": "toyota.corolla_cross",
+          "code": "XG10",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2020-07-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "toyota.corolla_cross.xg10.1_8l_hev",
+          "generation_id": "toyota.corolla_cross.xg10",
+          "name": "1.8L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1798,
+          "battery_kwh": 1.3,
+          "price_thb": 1029000,
+          "price_min_thb": 1029000,
+          "price_max_thb": 1239000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.8 HEV Smart",
+            "1.8 HEV Premium",
+            "1.8 HEV GR Sport"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "toyota.corolla_cross.xg10.trim.hev_premium_hev",
+          "generation_id": "toyota.corolla_cross.xg10",
+          "name": "HEV Premium",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1798,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4460,
+          "width_mm": 1825,
+          "height_mm": 1620,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "45fb3f35-5428-43f5-b085-9b1f8b63682c"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.corolla_cross.xg10.trim.hev_premium_luxury_hev",
+          "generation_id": "toyota.corolla_cross.xg10",
+          "name": "HEV Premium Luxury",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1798,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4460,
+          "width_mm": 1825,
+          "height_mm": 1620,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "a9b11d5c-c4c1-493e-9e34-8656219a83bd"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.corolla_cross.xg10.trim.hev_gr_sport_hev",
+          "generation_id": "toyota.corolla_cross.xg10",
+          "name": "HEV GR Sport",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1798,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4460,
+          "width_mm": 1825,
+          "height_mm": 1620,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "b96a7399-dbda-454b-828c-bb81edbfd23b"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.corolla_cross.xg10.trim.hev_smart_hev",
+          "generation_id": "toyota.corolla_cross.xg10",
+          "name": "HEV Smart",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1798,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4460,
+          "width_mm": 1825,
+          "height_mm": 1620,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "839dcd92-35c9-486e-824b-85c9a0a332ba"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.corolla_cross.xg10.trim.hev_premium_safety_60_years_cp_hev",
+          "generation_id": "toyota.corolla_cross.xg10",
+          "name": "HEV Premium Safety (60 Years CP)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1798,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4460,
+          "width_mm": 1825,
+          "height_mm": 1620,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "8ed0f4040deb48f59ab1dc1bde490e0c"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

@@ -73,6 +73,68 @@
               "price_min_thb": 1449000,
               "price_max_thb": 1449000
             }
+          ],
+          "trims": [
+            {
+              "name": "PHEV ULTRA",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4683,
+              "width_mm": 1886,
+              "height_mm": 1730,
+              "engine_cc": 1499,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "eb237ec5-49f8-47a8-8873-659108a3d06b"
+                ]
+              }
+            },
+            {
+              "name": "PHEV PRO",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4683,
+              "width_mm": 1886,
+              "height_mm": 1730,
+              "engine_cc": 1499,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "48160c65-2ff5-4fa9-8e04-793671367157"
+                ]
+              }
+            },
+            {
+              "name": "HEV PRO",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4683,
+              "width_mm": 1886,
+              "height_mm": 1730,
+              "engine_cc": 1499,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "9c4de1fd-5bf8-4901-91af-4f51d4d06ff9"
+                ]
+              }
+            },
+            {
+              "name": "HEV ULTRA",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4683,
+              "width_mm": 1886,
+              "height_mm": 1730,
+              "engine_cc": 1499,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "ffc0a649-ce6c-4224-9bd3-a20697d3492c"
+                ]
+              }
+            }
           ]
         }
       ]
@@ -231,6 +293,75 @@
                 ]
               },
               "id": "good_cat_gt_bev"
+            },
+            {
+              "name": "5 HEV ULTRA",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4471,
+              "width_mm": 1833,
+              "height_mm": 1641,
+              "engine_cc": 1499,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "923c2b71-30b4-4312-80de-a1c7445c4ed6"
+                ]
+              }
+            },
+            {
+              "name": "5 HEV PRO",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4471,
+              "width_mm": 1833,
+              "height_mm": 1641,
+              "engine_cc": 1499,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "aadf91a3-1b09-4ec6-b28a-36594cafde45"
+                ]
+              }
+            },
+            {
+              "name": "500 ULTRA",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4235,
+              "width_mm": 1825,
+              "height_mm": 1596,
+              "source_refs": {
+                "eco": [
+                  "92a99a08a23f4c799074de73fc3eaecf"
+                ]
+              }
+            },
+            {
+              "name": "400 PRO",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4235,
+              "width_mm": 1825,
+              "height_mm": 1596,
+              "source_refs": {
+                "eco": [
+                  "8d19c066044445b7ae26936ad979c143"
+                ]
+              }
+            },
+            {
+              "name": "400 TECH",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4235,
+              "width_mm": 1825,
+              "height_mm": 1596,
+              "source_refs": {
+                "eco": [
+                  "ac15a8652e2b46ca99de093774e37e4b"
+                ]
+              }
             }
           ]
         }
@@ -405,6 +536,51 @@
                 "Tank 300 HEV ULTRA"
               ],
               "id": "hev_ultra_hev"
+            },
+            {
+              "name": "GWM 2.4T ULTRA 4WD",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4760,
+              "width_mm": 1930,
+              "height_mm": 1903,
+              "engine_cc": 2370,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "268f1e63-e264-402b-a399-176f828fe0f3"
+                ]
+              }
+            },
+            {
+              "name": "GWM 2.4T PRO",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4760,
+              "width_mm": 1930,
+              "height_mm": 1903,
+              "engine_cc": 2370,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "0dff6603-007d-467b-b1f8-5505b5e9f2ec"
+                ]
+              }
+            },
+            {
+              "name": "GWM 2.4T ULTRA",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4760,
+              "width_mm": 1930,
+              "height_mm": 1903,
+              "engine_cc": 2370,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "a86dcdba-62eb-405a-8a0e-182dede353a4"
+                ]
+              }
             }
           ]
         }
@@ -496,6 +672,66 @@
                 "Tank 500 HEV ULTRA"
               ],
               "id": "hev_ultra_hev"
+            },
+            {
+              "name": "GWM 3.0T ULTRA 4WD",
+              "powertrain": "ICE",
+              "seats": 7,
+              "length_mm": 4886,
+              "width_mm": 1934,
+              "height_mm": 1905,
+              "engine_cc": 2994,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "633b3fb0-20ef-4d72-bade-48be2e251ef1"
+                ]
+              }
+            },
+            {
+              "name": "GWM 2.4T ULTRA 4WD",
+              "powertrain": "ICE",
+              "seats": 7,
+              "length_mm": 4886,
+              "width_mm": 1934,
+              "height_mm": 1905,
+              "engine_cc": 2370,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "c7b2faa5-21cc-428f-a082-fb991a4db8c6"
+                ]
+              }
+            },
+            {
+              "name": "GWM 2.4T ULTRA",
+              "powertrain": "ICE",
+              "seats": 7,
+              "length_mm": 4886,
+              "width_mm": 1934,
+              "height_mm": 1905,
+              "engine_cc": 2370,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "1d785fd7-253e-4f65-944a-ba7268b2ca6f"
+                ]
+              }
+            },
+            {
+              "name": "GWM 2.4T PRO",
+              "powertrain": "ICE",
+              "seats": 7,
+              "length_mm": 4886,
+              "width_mm": 1934,
+              "height_mm": 1905,
+              "engine_cc": 2370,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "80a55ee9-b7f3-46c1-a857-29ab6883bf7c"
+                ]
+              }
             }
           ]
         }
@@ -565,6 +801,96 @@
                 "Poer Sahar HEV 2.0T Ultra 4x4"
               ],
               "id": "hev_2_0t_ultra_4x4_hev"
+            },
+            {
+              "name": "GWM 2.4T PRO SINGLE CAB AUTO 4WD L",
+              "powertrain": "ICE",
+              "seats": 2,
+              "length_mm": 5445,
+              "width_mm": 1991,
+              "height_mm": 1924,
+              "engine_cc": 2370,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "71cce107-72a3-4d4a-8479-6303008497f4"
+                ]
+              }
+            },
+            {
+              "name": "GWM 2.4T ULTRA DOUBLE CAB AUTO 4WD",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 5445,
+              "width_mm": 1991,
+              "height_mm": 1924,
+              "engine_cc": 2370,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "657487bc-97c3-4fb9-8bbe-412510363eec"
+                ]
+              }
+            },
+            {
+              "name": "GWM 2.4T PRO SINGLE CAB AUTO 4WD S",
+              "powertrain": "ICE",
+              "seats": 2,
+              "length_mm": 4940,
+              "width_mm": 1991,
+              "height_mm": 1924,
+              "engine_cc": 2370,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "aa67d50e-9626-4923-bf9a-4adb8f87eb58"
+                ]
+              }
+            },
+            {
+              "name": "GWM 2.4T ULTRA DOUBLE CAB AUTO",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 5445,
+              "width_mm": 1991,
+              "height_mm": 1924,
+              "engine_cc": 2370,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "d31acead-d812-418c-8150-7b2b0c21759a"
+                ]
+              }
+            },
+            {
+              "name": "GWM 2.4T PRO DOUBLE CAB AUTO",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 5445,
+              "width_mm": 1991,
+              "height_mm": 1924,
+              "engine_cc": 2370,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "d2a83358-d984-49ed-8edd-94d5a7ef5faf"
+                ]
+              }
+            },
+            {
+              "name": "GWM 2.4T PRO SINGLE CAB AUTO 4WD",
+              "powertrain": "ICE",
+              "seats": 2,
+              "length_mm": 5071,
+              "width_mm": 1958,
+              "height_mm": 2002,
+              "engine_cc": 2370,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "bc4ec188-2238-40b3-af92-219aaaec19fe"
+                ]
+              }
             }
           ]
         }

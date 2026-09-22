@@ -1,0 +1,493 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c451fa18c375a5287b8363e1",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:211",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mitsubishi.xforce",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:18+00:00",
+    "before_hash": "308bb32696a6b090437f1d1aaf92c63307351753b368ebc027f96ad179754e33",
+    "after_hash": "6f39fe16e641c16028f21ba0a223f314c637c73e0d6c2745243b7e030e206293",
+    "before": {
+      "id": "xforce",
+      "name_en": "Xforce",
+      "name_th": "เอ็กซ์ฟอร์ซ",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [],
+      "notes": "",
+      "generations": [
+        {
+          "code": "XF",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2024-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.5L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "engine_cc": 1499,
+              "battery_kwh": null,
+              "aliases": [
+                "1.5 Ultimate"
+              ],
+              "overrides": {},
+              "price_thb": 949000,
+              "import_type": "CBU",
+              "origin_country": "ID",
+              "price_note": "seed-unverified",
+              "price_min_thb": 949000,
+              "price_max_thb": 949000
+            },
+            {
+              "name": "1.5L HEV",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "engine_cc": 1499,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "ID",
+              "price_note": "ยังไม่ได้ตรวจราคา",
+              "aliases": [
+                "XFORCE HEV"
+              ]
+            }
+          ],
+          "trims": [
+            {
+              "name": "HEV Ultimate",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:226"
+                ]
+              },
+              "id": "hev_ultimate_hev"
+            },
+            {
+              "name": "HEV ULTIMATE X (Black Roof)",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4390,
+              "width_mm": 1810,
+              "height_mm": 1650,
+              "engine_cc": 1590,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "d5f398cf-de06-4735-9298-b29dfa60af41"
+                ]
+              }
+            },
+            {
+              "name": "HEV IGNITE",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4390,
+              "width_mm": 1810,
+              "height_mm": 1650,
+              "engine_cc": 1590,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "640153f1-64af-4f65-acf8-eb04ac5aad3e"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "mitsubishi",
+        "name_en": "Mitsubishi",
+        "name_th": "มิตซูบิชิ",
+        "brand_segment": "MASS",
+        "oem_group": "Mitsubishi Motors",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "มิตซูบิชิ",
+          "mitsubishi motors"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mitsubishi.xforce",
+        "brand_id": "mitsubishi",
+        "name_en": "Xforce",
+        "name_th": "เอ็กซ์ฟอร์ซ",
+        "nameplate": "Xforce",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mitsubishi.xforce.xf",
+          "model_id": "mitsubishi.xforce",
+          "code": "XF",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2024-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mitsubishi.xforce.xf.1_5l_ice",
+          "generation_id": "mitsubishi.xforce.xf",
+          "name": "1.5L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1499,
+          "battery_kwh": null,
+          "price_thb": 949000,
+          "price_min_thb": 949000,
+          "price_max_thb": 949000,
+          "import_type": "CBU",
+          "origin_country": "ID",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.5 Ultimate"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "mitsubishi.xforce.xf.1_5l_hev",
+          "generation_id": "mitsubishi.xforce.xf",
+          "name": "1.5L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1499,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "ID",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [
+            "XFORCE HEV"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mitsubishi.xforce.xf.trim.hev_ultimate_hev",
+          "generation_id": "mitsubishi.xforce.xf",
+          "name": "HEV Ultimate",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1590,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4390,
+          "width_mm": 1810,
+          "height_mm": 1650,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:226"
+            ],
+            "eco": [
+              "e1c1a8f0-9b89-442f-8a34-6a80a4e40c4f"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mitsubishi.xforce.xf.trim.hev_ultimate_x_black_roof_hev",
+          "generation_id": "mitsubishi.xforce.xf",
+          "name": "HEV ULTIMATE X (Black Roof)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1590,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4390,
+          "width_mm": 1810,
+          "height_mm": 1650,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "d5f398cf-de06-4735-9298-b29dfa60af41"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mitsubishi.xforce.xf.trim.hev_ignite_hev",
+          "generation_id": "mitsubishi.xforce.xf",
+          "name": "HEV IGNITE",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1590,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4390,
+          "width_mm": 1810,
+          "height_mm": 1650,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "640153f1-64af-4f65-acf8-eb04ac5aad3e"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mitsubishi.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c451fa18c375a5287b8363e1:catalog",
+    "revision_id": "c451fa18c375a5287b8363e1",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mitsubishi.xforce",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:18+00:00",
+    "payload": {
+      "brand": {
+        "id": "mitsubishi",
+        "name_en": "Mitsubishi",
+        "name_th": "มิตซูบิชิ",
+        "brand_segment": "MASS",
+        "oem_group": "Mitsubishi Motors",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "มิตซูบิชิ",
+          "mitsubishi motors"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mitsubishi.xforce",
+        "brand_id": "mitsubishi",
+        "name_en": "Xforce",
+        "name_th": "เอ็กซ์ฟอร์ซ",
+        "nameplate": "Xforce",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mitsubishi.xforce.xf",
+          "model_id": "mitsubishi.xforce",
+          "code": "XF",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2024-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mitsubishi.xforce.xf.1_5l_ice",
+          "generation_id": "mitsubishi.xforce.xf",
+          "name": "1.5L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1499,
+          "battery_kwh": null,
+          "price_thb": 949000,
+          "price_min_thb": 949000,
+          "price_max_thb": 949000,
+          "import_type": "CBU",
+          "origin_country": "ID",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.5 Ultimate"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "mitsubishi.xforce.xf.1_5l_hev",
+          "generation_id": "mitsubishi.xforce.xf",
+          "name": "1.5L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1499,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "ID",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [
+            "XFORCE HEV"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mitsubishi.xforce.xf.trim.hev_ultimate_hev",
+          "generation_id": "mitsubishi.xforce.xf",
+          "name": "HEV Ultimate",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1590,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4390,
+          "width_mm": 1810,
+          "height_mm": 1650,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:226"
+            ],
+            "eco": [
+              "e1c1a8f0-9b89-442f-8a34-6a80a4e40c4f"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mitsubishi.xforce.xf.trim.hev_ultimate_x_black_roof_hev",
+          "generation_id": "mitsubishi.xforce.xf",
+          "name": "HEV ULTIMATE X (Black Roof)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1590,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4390,
+          "width_mm": 1810,
+          "height_mm": 1650,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "d5f398cf-de06-4735-9298-b29dfa60af41"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mitsubishi.xforce.xf.trim.hev_ignite_hev",
+          "generation_id": "mitsubishi.xforce.xf",
+          "name": "HEV IGNITE",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1590,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4390,
+          "width_mm": 1810,
+          "height_mm": 1650,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "640153f1-64af-4f65-acf8-eb04ac5aad3e"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

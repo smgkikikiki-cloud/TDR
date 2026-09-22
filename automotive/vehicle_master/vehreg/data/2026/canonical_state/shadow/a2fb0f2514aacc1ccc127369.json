@@ -1,0 +1,356 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a2fb0f2514aacc1ccc127369",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:358",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "byd.atto3",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:32+00:00",
+    "before_hash": "de78d3d86e4b597d17403272da170b7b93efa3501f1a931eeca2244413e6d415",
+    "after_hash": "6de2bccc4c682af27879aecde3aceb42a69c8b9b24ea29ad6e2a70bb21ae34a9",
+    "before": {
+      "id": "atto3",
+      "name_en": "Atto 3",
+      "name_th": "แอตโต้ 3",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "atto 3",
+        "yuan plus"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "ATTO3",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2022-10-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "60 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_cc": null,
+              "battery_kwh": 60.5,
+              "aliases": [
+                "Extended Range"
+              ],
+              "overrides": {},
+              "price_thb": 899000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 899000,
+              "price_max_thb": 899000
+            }
+          ],
+          "trims": [
+            {
+              "name": "BYD ATTO3 (410KM-PREMIUM)",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4455,
+              "width_mm": 1875,
+              "height_mm": 1615,
+              "source_refs": {
+                "eco": [
+                  "762c0806-4101-4155-9343-7c2dc815dd3b"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "byd",
+        "name_en": "BYD",
+        "name_th": "บีวายดี",
+        "brand_segment": "MASS",
+        "oem_group": "BYD",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "บีวายดี",
+          "rever automotive"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "byd.atto3",
+        "brand_id": "byd",
+        "name_en": "Atto 3",
+        "name_th": "แอตโต้ 3",
+        "nameplate": "Atto 3",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "atto 3",
+          "yuan plus"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "byd.atto3.atto3",
+          "model_id": "byd.atto3",
+          "code": "ATTO3",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2022-10-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "byd.atto3.atto3.60_kwh_bev",
+          "generation_id": "byd.atto3.atto3",
+          "name": "60 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 60.5,
+          "price_thb": 899000,
+          "price_min_thb": 899000,
+          "price_max_thb": 899000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Extended Range"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "byd.atto3.atto3.trim.byd_atto3_410km_premium_bev",
+          "generation_id": "byd.atto3.atto3",
+          "name": "BYD ATTO3 (410KM-PREMIUM)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4455,
+          "width_mm": 1875,
+          "height_mm": 1615,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "762c0806-4101-4155-9343-7c2dc815dd3b"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "byd.atto3.atto3.trim.byd_atto3_480km_ext_bev",
+          "generation_id": "byd.atto3.atto3",
+          "name": "BYD ATTO3 (480KM-EXT)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4455,
+          "width_mm": 1875,
+          "height_mm": 1615,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "e529321a-7be2-4dfe-9087-8fdf70958ca0"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/byd.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a2fb0f2514aacc1ccc127369:catalog",
+    "revision_id": "a2fb0f2514aacc1ccc127369",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "byd.atto3",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:32+00:00",
+    "payload": {
+      "brand": {
+        "id": "byd",
+        "name_en": "BYD",
+        "name_th": "บีวายดี",
+        "brand_segment": "MASS",
+        "oem_group": "BYD",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "บีวายดี",
+          "rever automotive"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "byd.atto3",
+        "brand_id": "byd",
+        "name_en": "Atto 3",
+        "name_th": "แอตโต้ 3",
+        "nameplate": "Atto 3",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "atto 3",
+          "yuan plus"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "byd.atto3.atto3",
+          "model_id": "byd.atto3",
+          "code": "ATTO3",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2022-10-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "byd.atto3.atto3.60_kwh_bev",
+          "generation_id": "byd.atto3.atto3",
+          "name": "60 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 60.5,
+          "price_thb": 899000,
+          "price_min_thb": 899000,
+          "price_max_thb": 899000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Extended Range"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "byd.atto3.atto3.trim.byd_atto3_410km_premium_bev",
+          "generation_id": "byd.atto3.atto3",
+          "name": "BYD ATTO3 (410KM-PREMIUM)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4455,
+          "width_mm": 1875,
+          "height_mm": 1615,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "762c0806-4101-4155-9343-7c2dc815dd3b"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "byd.atto3.atto3.trim.byd_atto3_480km_ext_bev",
+          "generation_id": "byd.atto3.atto3",
+          "name": "BYD ATTO3 (480KM-EXT)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4455,
+          "width_mm": 1875,
+          "height_mm": 1615,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "e529321a-7be2-4dfe-9087-8fdf70958ca0"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

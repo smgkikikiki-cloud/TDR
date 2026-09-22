@@ -1,0 +1,509 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "898b88ad96b84534d73780aa",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:34",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mg.mg_zs",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:40+00:00",
+    "before_hash": "81b29ac043be2609f681a29374eedf4a8219927d815d2f90edb7015c5c48dcf1",
+    "after_hash": "ca7bd41c92576e84df4c14d110b742f625962a6cb16e6471f904e5ac5dba086e",
+    "before": {
+      "id": "mg_zs",
+      "name_en": "MG ZS",
+      "name_th": "เอ็มจี แซดเอส",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "zs"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "ZSG",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2018-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.5L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "engine_cc": 1498,
+              "battery_kwh": null,
+              "aliases": [
+                "1.5 X"
+              ],
+              "overrides": {},
+              "price_thb": 689000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 689000,
+              "price_max_thb": 689000
+            }
+          ],
+          "trims": [
+            {
+              "name": "1.5 C+",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:210"
+                ]
+              },
+              "id": "1_5_c_plus_ice"
+            },
+            {
+              "name": "1.5 D+",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:210"
+                ]
+              },
+              "id": "1_5_d_plus_ice"
+            },
+            {
+              "name": "1.5 X+",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:210"
+                ]
+              },
+              "id": "1_5_x_plus_ice"
+            },
+            {
+              "name": "1.5 V",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4323,
+              "width_mm": 1809,
+              "height_mm": 1653,
+              "engine_cc": 1498,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "cba01899-3b82-4de1-966e-820912102b78"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "mg",
+        "name_en": "MG",
+        "name_th": "เอ็มจี",
+        "brand_segment": "MASS",
+        "oem_group": "SAIC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "เอ็มจี",
+          "mg sales thailand",
+          "morris garages"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mg.mg_zs",
+        "brand_id": "mg",
+        "name_en": "MG ZS",
+        "name_th": "เอ็มจี แซดเอส",
+        "nameplate": "MG ZS",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "zs"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mg.mg_zs.zsg",
+          "model_id": "mg.mg_zs",
+          "code": "ZSG",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2018-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mg.mg_zs.zsg.1_5l_ice",
+          "generation_id": "mg.mg_zs.zsg",
+          "name": "1.5L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "price_thb": 689000,
+          "price_min_thb": 689000,
+          "price_max_thb": 689000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.5 X"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mg.mg_zs.zsg.trim.1_5_c_plus_ice",
+          "generation_id": "mg.mg_zs.zsg",
+          "name": "1.5 C+",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:210"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_zs.zsg.trim.1_5_d_plus_ice",
+          "generation_id": "mg.mg_zs.zsg",
+          "name": "1.5 D+",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:210"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_zs.zsg.trim.1_5_x_plus_ice",
+          "generation_id": "mg.mg_zs.zsg",
+          "name": "1.5 X+",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4323,
+          "width_mm": 1809,
+          "height_mm": 1653,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:210"
+            ],
+            "eco": [
+              "9517cfcc-4116-4c40-912a-ef351ab82d32"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_zs.zsg.trim.1_5_v_ice",
+          "generation_id": "mg.mg_zs.zsg",
+          "name": "1.5 V",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4323,
+          "width_mm": 1809,
+          "height_mm": 1653,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "cba01899-3b82-4de1-966e-820912102b78"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mg.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "898b88ad96b84534d73780aa:catalog",
+    "revision_id": "898b88ad96b84534d73780aa",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mg.mg_zs",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:40+00:00",
+    "payload": {
+      "brand": {
+        "id": "mg",
+        "name_en": "MG",
+        "name_th": "เอ็มจี",
+        "brand_segment": "MASS",
+        "oem_group": "SAIC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "เอ็มจี",
+          "mg sales thailand",
+          "morris garages"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mg.mg_zs",
+        "brand_id": "mg",
+        "name_en": "MG ZS",
+        "name_th": "เอ็มจี แซดเอส",
+        "nameplate": "MG ZS",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "zs"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mg.mg_zs.zsg",
+          "model_id": "mg.mg_zs",
+          "code": "ZSG",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2018-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mg.mg_zs.zsg.1_5l_ice",
+          "generation_id": "mg.mg_zs.zsg",
+          "name": "1.5L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "price_thb": 689000,
+          "price_min_thb": 689000,
+          "price_max_thb": 689000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.5 X"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mg.mg_zs.zsg.trim.1_5_c_plus_ice",
+          "generation_id": "mg.mg_zs.zsg",
+          "name": "1.5 C+",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:210"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_zs.zsg.trim.1_5_d_plus_ice",
+          "generation_id": "mg.mg_zs.zsg",
+          "name": "1.5 D+",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:210"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_zs.zsg.trim.1_5_x_plus_ice",
+          "generation_id": "mg.mg_zs.zsg",
+          "name": "1.5 X+",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4323,
+          "width_mm": 1809,
+          "height_mm": 1653,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:210"
+            ],
+            "eco": [
+              "9517cfcc-4116-4c40-912a-ef351ab82d32"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_zs.zsg.trim.1_5_v_ice",
+          "generation_id": "mg.mg_zs.zsg",
+          "name": "1.5 V",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4323,
+          "width_mm": 1809,
+          "height_mm": 1653,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "cba01899-3b82-4de1-966e-820912102b78"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

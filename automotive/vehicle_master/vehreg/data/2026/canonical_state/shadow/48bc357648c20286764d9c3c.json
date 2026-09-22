@@ -1,0 +1,579 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "48bc357648c20286764d9c3c",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:24",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "lexus.lexus_es",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:01+00:00",
+    "before_hash": "fd3e7282dfd282f6284045c955fee3d63915e7e8e90e589986bd8f06a14272c8",
+    "after_hash": "fda8d940d4d740227a862d1da5f95d4e64dc2f62593e6609e273cf11bccfbf55",
+    "before": {
+      "id": "lexus_es",
+      "name_en": "ES",
+      "name_th": "อีเอส",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "es300h"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "XZ10",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2018-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.5L HEV",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "engine_cc": 2487,
+              "battery_kwh": 1.0,
+              "aliases": [
+                "ES300h Grand Luxury"
+              ],
+              "overrides": {},
+              "price_thb": 3690000,
+              "import_type": "CBU",
+              "origin_country": "JP",
+              "price_note": "seed-unverified",
+              "price_min_thb": 3690000,
+              "price_max_thb": 3690000
+            }
+          ],
+          "trims": [
+            {
+              "name": "300h Luxury",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:151"
+                ]
+              },
+              "aliases": [
+                "ES 300h Luxury"
+              ],
+              "id": "300h_luxury_hev"
+            },
+            {
+              "name": "300h Grand Luxury",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:151"
+                ]
+              },
+              "aliases": [
+                "ES 300h Grand Luxury"
+              ],
+              "id": "300h_grand_luxury_hev"
+            },
+            {
+              "name": "300h Premium",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:151"
+                ]
+              },
+              "aliases": [
+                "ES 300h Premium"
+              ],
+              "id": "300h_premium_hev"
+            },
+            {
+              "name": "300h F Sport",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:151"
+                ]
+              },
+              "aliases": [
+                "ES 300h F Sport"
+              ],
+              "id": "300h_f_sport_hev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "lexus",
+        "name_en": "Lexus",
+        "name_th": "เล็กซัส",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "เล็กซัส"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "lexus.lexus_es",
+        "brand_id": "lexus",
+        "name_en": "ES",
+        "name_th": "อีเอส",
+        "nameplate": "ES",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "es300h"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "lexus.lexus_es.xz10",
+          "model_id": "lexus.lexus_es",
+          "code": "XZ10",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2018-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "lexus.lexus_es.xz10.2_5l_hev",
+          "generation_id": "lexus.lexus_es.xz10",
+          "name": "2.5L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 2487,
+          "battery_kwh": 1.0,
+          "price_thb": 3690000,
+          "price_min_thb": 3690000,
+          "price_max_thb": 3690000,
+          "import_type": "CBU",
+          "origin_country": "JP",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "ES300h Grand Luxury"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "lexus.lexus_es.xz10.trim.300h_luxury_hev",
+          "generation_id": "lexus.lexus_es.xz10",
+          "name": "300h Luxury",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "ES 300h Luxury"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:151"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_es.xz10.trim.300h_grand_luxury_hev",
+          "generation_id": "lexus.lexus_es.xz10",
+          "name": "300h Grand Luxury",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "ES 300h Grand Luxury"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:151"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_es.xz10.trim.300h_premium_hev",
+          "generation_id": "lexus.lexus_es.xz10",
+          "name": "300h Premium",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "ES 300h Premium"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:151"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_es.xz10.trim.300h_f_sport_hev",
+          "generation_id": "lexus.lexus_es.xz10",
+          "name": "300h F Sport",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "ES 300h F Sport"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:151"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_es.xz10.trim.es350e_premium_bev",
+          "generation_id": "lexus.lexus_es.xz10",
+          "name": "ES350e Premium",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5140,
+          "width_mm": 1920,
+          "height_mm": 1560,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "48d11224-a721-430f-b6e5-fb0e6e3de11e"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/lexus.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "48bc357648c20286764d9c3c:catalog",
+    "revision_id": "48bc357648c20286764d9c3c",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "lexus.lexus_es",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:01+00:00",
+    "payload": {
+      "brand": {
+        "id": "lexus",
+        "name_en": "Lexus",
+        "name_th": "เล็กซัส",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "เล็กซัส"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "lexus.lexus_es",
+        "brand_id": "lexus",
+        "name_en": "ES",
+        "name_th": "อีเอส",
+        "nameplate": "ES",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "es300h"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "lexus.lexus_es.xz10",
+          "model_id": "lexus.lexus_es",
+          "code": "XZ10",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2018-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "lexus.lexus_es.xz10.2_5l_hev",
+          "generation_id": "lexus.lexus_es.xz10",
+          "name": "2.5L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 2487,
+          "battery_kwh": 1.0,
+          "price_thb": 3690000,
+          "price_min_thb": 3690000,
+          "price_max_thb": 3690000,
+          "import_type": "CBU",
+          "origin_country": "JP",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "ES300h Grand Luxury"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "lexus.lexus_es.xz10.trim.300h_luxury_hev",
+          "generation_id": "lexus.lexus_es.xz10",
+          "name": "300h Luxury",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "ES 300h Luxury"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:151"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_es.xz10.trim.300h_grand_luxury_hev",
+          "generation_id": "lexus.lexus_es.xz10",
+          "name": "300h Grand Luxury",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "ES 300h Grand Luxury"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:151"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_es.xz10.trim.300h_premium_hev",
+          "generation_id": "lexus.lexus_es.xz10",
+          "name": "300h Premium",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "ES 300h Premium"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:151"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_es.xz10.trim.300h_f_sport_hev",
+          "generation_id": "lexus.lexus_es.xz10",
+          "name": "300h F Sport",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "ES 300h F Sport"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:151"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_es.xz10.trim.es350e_premium_bev",
+          "generation_id": "lexus.lexus_es.xz10",
+          "name": "ES350e Premium",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5140,
+          "width_mm": 1920,
+          "height_mm": 1560,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "48d11224-a721-430f-b6e5-fb0e6e3de11e"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,654 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "04e81a03fb9e8b0a310a89b0",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:220",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "gwm.tank300",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:19+00:00",
+    "before_hash": "cb15e7a8da5edfb5879c6598a6c162b9b4873a516d13bde3d82e192d08655d79",
+    "after_hash": "b564c812b64c3488410450039a52aa1f137de4bb48a6d94f9e8e564cf429d3cf",
+    "before": {
+      "id": "tank300",
+      "name_en": "Tank 300",
+      "name_th": "แทงค์ 300",
+      "nameplate": "",
+      "body_type": "OFFROAD",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "tank 300"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "T300",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2023-03-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.0L HEV 4WD",
+              "powertrain": "HEV",
+              "drivetrain": "4WD",
+              "engine_cc": 1998,
+              "battery_kwh": 1.8,
+              "aliases": [
+                "HEV Ultra 4WD",
+                "HYBRID",
+                "HEV"
+              ],
+              "overrides": {},
+              "price_thb": 1749000,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1749000,
+              "price_max_thb": 1749000
+            },
+            {
+              "name": "2.4L Diesel",
+              "powertrain": "ICE",
+              "drivetrain": "4WD",
+              "engine_cc": 2400,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "ยังไม่ได้ตรวจราคา",
+              "aliases": [
+                "Diesel",
+                "2.4 Diesel",
+                "4WD Diesel"
+              ]
+            }
+          ],
+          "trims": [
+            {
+              "name": "HEV PRO",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:096"
+                ]
+              },
+              "aliases": [
+                "Tank 300 HEV PRO"
+              ],
+              "id": "hev_pro_hev"
+            },
+            {
+              "name": "HEV ULTRA",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:096"
+                ]
+              },
+              "aliases": [
+                "Tank 300 HEV ULTRA"
+              ],
+              "id": "hev_ultra_hev"
+            },
+            {
+              "name": "GWM 2.4T ULTRA 4WD",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4760,
+              "width_mm": 1930,
+              "height_mm": 1903,
+              "engine_cc": 2370,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "268f1e63-e264-402b-a399-176f828fe0f3"
+                ]
+              }
+            },
+            {
+              "name": "GWM 2.4T PRO",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4760,
+              "width_mm": 1930,
+              "height_mm": 1903,
+              "engine_cc": 2370,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "0dff6603-007d-467b-b1f8-5505b5e9f2ec"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "gwm",
+        "name_en": "GWM",
+        "name_th": "จีดับเบิลยูเอ็ม",
+        "brand_segment": "MASS",
+        "oem_group": "Great Wall Motor",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "great wall",
+          "great wall motor",
+          "เกรทวอลล์",
+          "haval",
+          "ora",
+          "tank"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "gwm.tank300",
+        "brand_id": "gwm",
+        "name_en": "Tank 300",
+        "name_th": "แทงค์ 300",
+        "nameplate": "Tank 300",
+        "body_type": "OFFROAD",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "tank 300"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "gwm.tank300.t300",
+          "model_id": "gwm.tank300",
+          "code": "T300",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2023-03-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "gwm.tank300.t300.2_0l_hev_4wd",
+          "generation_id": "gwm.tank300.t300",
+          "name": "2.0L HEV 4WD",
+          "powertrain": "HEV",
+          "drivetrain": "4WD",
+          "engine_cc": 1998,
+          "battery_kwh": 1.8,
+          "price_thb": 1749000,
+          "price_min_thb": 1749000,
+          "price_max_thb": 1749000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "HEV Ultra 4WD",
+            "HYBRID",
+            "HEV"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "gwm.tank300.t300.2_4l_diesel",
+          "generation_id": "gwm.tank300.t300",
+          "name": "2.4L Diesel",
+          "powertrain": "ICE",
+          "drivetrain": "4WD",
+          "engine_cc": 2400,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [
+            "Diesel",
+            "2.4 Diesel",
+            "4WD Diesel"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "gwm.tank300.t300.trim.hev_pro_hev",
+          "generation_id": "gwm.tank300.t300",
+          "name": "HEV PRO",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Tank 300 HEV PRO"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:096"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.tank300.t300.trim.hev_ultra_hev",
+          "generation_id": "gwm.tank300.t300",
+          "name": "HEV ULTRA",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Tank 300 HEV ULTRA"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:096"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.tank300.t300.trim.gwm_2_4t_ultra_4wd_ice",
+          "generation_id": "gwm.tank300.t300",
+          "name": "GWM 2.4T ULTRA 4WD",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2370,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4760,
+          "width_mm": 1930,
+          "height_mm": 1903,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "268f1e63-e264-402b-a399-176f828fe0f3"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.tank300.t300.trim.gwm_2_4t_pro_ice",
+          "generation_id": "gwm.tank300.t300",
+          "name": "GWM 2.4T PRO",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2370,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4760,
+          "width_mm": 1930,
+          "height_mm": 1903,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "0dff6603-007d-467b-b1f8-5505b5e9f2ec"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.tank300.t300.trim.gwm_2_4t_ultra_ice",
+          "generation_id": "gwm.tank300.t300",
+          "name": "GWM 2.4T ULTRA",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2370,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4760,
+          "width_mm": 1930,
+          "height_mm": 1903,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "a86dcdba-62eb-405a-8a0e-182dede353a4"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/gwm.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "04e81a03fb9e8b0a310a89b0:catalog",
+    "revision_id": "04e81a03fb9e8b0a310a89b0",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "gwm.tank300",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:19+00:00",
+    "payload": {
+      "brand": {
+        "id": "gwm",
+        "name_en": "GWM",
+        "name_th": "จีดับเบิลยูเอ็ม",
+        "brand_segment": "MASS",
+        "oem_group": "Great Wall Motor",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "great wall",
+          "great wall motor",
+          "เกรทวอลล์",
+          "haval",
+          "ora",
+          "tank"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "gwm.tank300",
+        "brand_id": "gwm",
+        "name_en": "Tank 300",
+        "name_th": "แทงค์ 300",
+        "nameplate": "Tank 300",
+        "body_type": "OFFROAD",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "tank 300"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "gwm.tank300.t300",
+          "model_id": "gwm.tank300",
+          "code": "T300",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2023-03-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "gwm.tank300.t300.2_0l_hev_4wd",
+          "generation_id": "gwm.tank300.t300",
+          "name": "2.0L HEV 4WD",
+          "powertrain": "HEV",
+          "drivetrain": "4WD",
+          "engine_cc": 1998,
+          "battery_kwh": 1.8,
+          "price_thb": 1749000,
+          "price_min_thb": 1749000,
+          "price_max_thb": 1749000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "HEV Ultra 4WD",
+            "HYBRID",
+            "HEV"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "gwm.tank300.t300.2_4l_diesel",
+          "generation_id": "gwm.tank300.t300",
+          "name": "2.4L Diesel",
+          "powertrain": "ICE",
+          "drivetrain": "4WD",
+          "engine_cc": 2400,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [
+            "Diesel",
+            "2.4 Diesel",
+            "4WD Diesel"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "gwm.tank300.t300.trim.hev_pro_hev",
+          "generation_id": "gwm.tank300.t300",
+          "name": "HEV PRO",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Tank 300 HEV PRO"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:096"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.tank300.t300.trim.hev_ultra_hev",
+          "generation_id": "gwm.tank300.t300",
+          "name": "HEV ULTRA",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Tank 300 HEV ULTRA"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:096"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.tank300.t300.trim.gwm_2_4t_ultra_4wd_ice",
+          "generation_id": "gwm.tank300.t300",
+          "name": "GWM 2.4T ULTRA 4WD",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2370,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4760,
+          "width_mm": 1930,
+          "height_mm": 1903,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "268f1e63-e264-402b-a399-176f828fe0f3"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.tank300.t300.trim.gwm_2_4t_pro_ice",
+          "generation_id": "gwm.tank300.t300",
+          "name": "GWM 2.4T PRO",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2370,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4760,
+          "width_mm": 1930,
+          "height_mm": 1903,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "0dff6603-007d-467b-b1f8-5505b5e9f2ec"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.tank300.t300.trim.gwm_2_4t_ultra_ice",
+          "generation_id": "gwm.tank300.t300",
+          "name": "GWM 2.4T ULTRA",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2370,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4760,
+          "width_mm": 1930,
+          "height_mm": 1903,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "a86dcdba-62eb-405a-8a0e-182dede353a4"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

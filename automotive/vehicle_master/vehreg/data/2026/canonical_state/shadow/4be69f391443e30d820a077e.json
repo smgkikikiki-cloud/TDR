@@ -1,0 +1,346 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "4be69f391443e30d820a077e",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:320",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "jaecoo.jaecoo_7",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:28+00:00",
+    "before_hash": "40c4cb74bd6256bac213844b66ec9747f4d52f5f3753106370a8ccbc7e39036d",
+    "after_hash": "ed86f0fc5f4a3efe321e33aa7fb314f8f0aa245df28a70ab1c767645c535f38c",
+    "before": {
+      "id": "jaecoo_7",
+      "name_en": "Jaecoo 7",
+      "name_th": "เจคู 7",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "7 shs",
+        "jaecoo 7",
+        "j7"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2024-09-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.5L PHEV",
+              "powertrain": "PHEV",
+              "drivetrain": "FWD",
+              "engine_cc": 1500,
+              "battery_kwh": 18.3,
+              "price_thb": 1099000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "DYNAMIC",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4500,
+              "width_mm": 1865,
+              "height_mm": 1670,
+              "engine_cc": 1499,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "4f4da8b7-f514-4d17-80cc-20f27b34f864"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "jaecoo",
+        "name_en": "Jaecoo",
+        "name_th": "เจคู",
+        "brand_segment": "MASS",
+        "oem_group": "Chery",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "jaecoo.jaecoo_7",
+        "brand_id": "jaecoo",
+        "name_en": "Jaecoo 7",
+        "name_th": "เจคู 7",
+        "nameplate": "Jaecoo 7",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "7 shs",
+          "jaecoo 7",
+          "j7"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "jaecoo.jaecoo_7.gen1",
+          "model_id": "jaecoo.jaecoo_7",
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2024-09-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "jaecoo.jaecoo_7.gen1.1_5l_phev",
+          "generation_id": "jaecoo.jaecoo_7.gen1",
+          "name": "1.5L PHEV",
+          "powertrain": "PHEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1500,
+          "battery_kwh": 18.3,
+          "price_thb": 1099000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "jaecoo.jaecoo_7.gen1.trim.dynamic_phev",
+          "generation_id": "jaecoo.jaecoo_7.gen1",
+          "name": "DYNAMIC",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1499,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4500,
+          "width_mm": 1865,
+          "height_mm": 1670,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "4f4da8b7-f514-4d17-80cc-20f27b34f864"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "jaecoo.jaecoo_7.gen1.trim.max_phev",
+          "generation_id": "jaecoo.jaecoo_7.gen1",
+          "name": "MAX",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1499,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4500,
+          "width_mm": 1865,
+          "height_mm": 1670,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "014eeba9-211d-41ee-ae0d-bd051fff2b2d"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/jaecoo.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "4be69f391443e30d820a077e:catalog",
+    "revision_id": "4be69f391443e30d820a077e",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "jaecoo.jaecoo_7",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:28+00:00",
+    "payload": {
+      "brand": {
+        "id": "jaecoo",
+        "name_en": "Jaecoo",
+        "name_th": "เจคู",
+        "brand_segment": "MASS",
+        "oem_group": "Chery",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "jaecoo.jaecoo_7",
+        "brand_id": "jaecoo",
+        "name_en": "Jaecoo 7",
+        "name_th": "เจคู 7",
+        "nameplate": "Jaecoo 7",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "7 shs",
+          "jaecoo 7",
+          "j7"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "jaecoo.jaecoo_7.gen1",
+          "model_id": "jaecoo.jaecoo_7",
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2024-09-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "jaecoo.jaecoo_7.gen1.1_5l_phev",
+          "generation_id": "jaecoo.jaecoo_7.gen1",
+          "name": "1.5L PHEV",
+          "powertrain": "PHEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1500,
+          "battery_kwh": 18.3,
+          "price_thb": 1099000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "jaecoo.jaecoo_7.gen1.trim.dynamic_phev",
+          "generation_id": "jaecoo.jaecoo_7.gen1",
+          "name": "DYNAMIC",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1499,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4500,
+          "width_mm": 1865,
+          "height_mm": 1670,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "4f4da8b7-f514-4d17-80cc-20f27b34f864"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "jaecoo.jaecoo_7.gen1.trim.max_phev",
+          "generation_id": "jaecoo.jaecoo_7.gen1",
+          "name": "MAX",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1499,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4500,
+          "width_mm": 1865,
+          "height_mm": 1670,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "014eeba9-211d-41ee-ae0d-bd051fff2b2d"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

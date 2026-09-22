@@ -1,0 +1,399 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "92b035df51366ae4f7d807b7",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:181",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mitsubishi.xpander_cross",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:54+00:00",
+    "before_hash": "3e33102f15ee5a0dcd8e1b5ac7cae98cd23a37096654ab2d17c2f305c5bb9efa",
+    "after_hash": "9fe0d1f76336f02571e9c967f680912e7bf0b1006fc04970960e4f41b04b76d5",
+    "before": {
+      "id": "xpander_cross",
+      "name_en": "Xpander Cross",
+      "name_th": "เอ็กซ์แพนเดอร์ ครอส",
+      "nameplate": "",
+      "body_type": "MPV",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [],
+      "notes": "",
+      "generations": [
+        {
+          "code": "A1C",
+          "segment": "B",
+          "seats": 7,
+          "launched": "2020-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.5L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "engine_cc": 1499,
+              "battery_kwh": null,
+              "aliases": [
+                "1.5 GT"
+              ],
+              "overrides": {},
+              "price_thb": 949000,
+              "import_type": "CBU",
+              "origin_country": "ID",
+              "price_note": "seed-unverified",
+              "price_min_thb": 949000,
+              "price_max_thb": 949000
+            },
+            {
+              "name": "1.6L HEV",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "engine_cc": 1599,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "ID",
+              "price_note": "ยังไม่ได้ตรวจราคา",
+              "aliases": [
+                "XPANDER CROSS HEV"
+              ]
+            }
+          ],
+          "trims": [
+            {
+              "name": "HEV Cross (e:MOTION Full Hybrid)",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:228"
+                ]
+              },
+              "id": "hev_cross_e_motion_full_hybrid_hev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "mitsubishi",
+        "name_en": "Mitsubishi",
+        "name_th": "มิตซูบิชิ",
+        "brand_segment": "MASS",
+        "oem_group": "Mitsubishi Motors",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "มิตซูบิชิ",
+          "mitsubishi motors"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mitsubishi.xpander_cross",
+        "brand_id": "mitsubishi",
+        "name_en": "Xpander Cross",
+        "name_th": "เอ็กซ์แพนเดอร์ ครอส",
+        "nameplate": "Xpander Cross",
+        "body_type": "MPV",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mitsubishi.xpander_cross.a1c",
+          "model_id": "mitsubishi.xpander_cross",
+          "code": "A1C",
+          "segment": "B",
+          "seats": 7,
+          "launched": "2020-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mitsubishi.xpander_cross.a1c.1_5l_ice",
+          "generation_id": "mitsubishi.xpander_cross.a1c",
+          "name": "1.5L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1499,
+          "battery_kwh": null,
+          "price_thb": 949000,
+          "price_min_thb": 949000,
+          "price_max_thb": 949000,
+          "import_type": "CBU",
+          "origin_country": "ID",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.5 GT"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "mitsubishi.xpander_cross.a1c.1_6l_hev",
+          "generation_id": "mitsubishi.xpander_cross.a1c",
+          "name": "1.6L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1599,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "ID",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [
+            "XPANDER CROSS HEV"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mitsubishi.xpander_cross.a1c.trim.hev_cross_e_motion_full_hybrid_hev",
+          "generation_id": "mitsubishi.xpander_cross.a1c",
+          "name": "HEV Cross (e:MOTION Full Hybrid)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:228"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mitsubishi.xpander_cross.a1c.trim.xpander_cross_ice",
+          "generation_id": "mitsubishi.xpander_cross.a1c",
+          "name": "Xpander CROSS",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1499,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4500,
+          "width_mm": 1800,
+          "height_mm": 1750,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "e07ee9a1ef26490694d6bb0320fbbc74"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mitsubishi.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "92b035df51366ae4f7d807b7:catalog",
+    "revision_id": "92b035df51366ae4f7d807b7",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mitsubishi.xpander_cross",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:54+00:00",
+    "payload": {
+      "brand": {
+        "id": "mitsubishi",
+        "name_en": "Mitsubishi",
+        "name_th": "มิตซูบิชิ",
+        "brand_segment": "MASS",
+        "oem_group": "Mitsubishi Motors",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "มิตซูบิชิ",
+          "mitsubishi motors"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mitsubishi.xpander_cross",
+        "brand_id": "mitsubishi",
+        "name_en": "Xpander Cross",
+        "name_th": "เอ็กซ์แพนเดอร์ ครอส",
+        "nameplate": "Xpander Cross",
+        "body_type": "MPV",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mitsubishi.xpander_cross.a1c",
+          "model_id": "mitsubishi.xpander_cross",
+          "code": "A1C",
+          "segment": "B",
+          "seats": 7,
+          "launched": "2020-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mitsubishi.xpander_cross.a1c.1_5l_ice",
+          "generation_id": "mitsubishi.xpander_cross.a1c",
+          "name": "1.5L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1499,
+          "battery_kwh": null,
+          "price_thb": 949000,
+          "price_min_thb": 949000,
+          "price_max_thb": 949000,
+          "import_type": "CBU",
+          "origin_country": "ID",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.5 GT"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "mitsubishi.xpander_cross.a1c.1_6l_hev",
+          "generation_id": "mitsubishi.xpander_cross.a1c",
+          "name": "1.6L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1599,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "ID",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [
+            "XPANDER CROSS HEV"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mitsubishi.xpander_cross.a1c.trim.hev_cross_e_motion_full_hybrid_hev",
+          "generation_id": "mitsubishi.xpander_cross.a1c",
+          "name": "HEV Cross (e:MOTION Full Hybrid)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:228"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mitsubishi.xpander_cross.a1c.trim.xpander_cross_ice",
+          "generation_id": "mitsubishi.xpander_cross.a1c",
+          "name": "Xpander CROSS",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1499,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4500,
+          "width_mm": 1800,
+          "height_mm": 1750,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "e07ee9a1ef26490694d6bb0320fbbc74"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

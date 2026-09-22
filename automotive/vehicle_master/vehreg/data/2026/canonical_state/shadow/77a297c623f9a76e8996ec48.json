@@ -1,0 +1,563 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "77a297c623f9a76e8996ec48",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:249",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "audi.etron",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:04:01+00:00",
+    "before_hash": "3e558f68eee709abc60e4f305c8f835fa3ac19020fdd21f16182f7ed093a336a",
+    "after_hash": "40cc14ad22153dc1e054913ad173d32a08e2db47d2ee828809f121bbd681fba6",
+    "before": {
+      "id": "etron",
+      "name_en": "Audi e-tron",
+      "name_th": "ออดี้ อี-ทรอน",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "e-tron",
+        "etron",
+        "e tron",
+        "e-tron 55",
+        "e-tron SB",
+        "e-tron 55 q"
+      ],
+      "incomplete": true,
+      "notes": "รถไฟฟ้าตระกูล e-tron แยกเป็นรุ่นของตัวเอง — DLT จดแยก และเดิมมันไปเกาะรุ่นเบนซินชื่อคล้ายกัน สเปกยังไม่ได้ตรวจ",
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "BEV",
+              "drivetrain": "AWD",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "ยังไม่ได้ตรวจราคา",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "e-tron 50 quattro",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:015"
+                ]
+              },
+              "id": "e_tron_50_quattro_bev"
+            },
+            {
+              "name": "e-tron 55 quattro",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:015"
+                ]
+              },
+              "id": "e_tron_55_quattro_bev"
+            },
+            {
+              "name": "e-tron Sportback 55 quattro S line",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:015"
+                ]
+              },
+              "id": "e_tron_sportback_55_quattro_s_line_bev"
+            },
+            {
+              "name": "quattro",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4901,
+              "width_mm": 1935,
+              "height_mm": 1692,
+              "source_refs": {
+                "eco": [
+                  "b73f15dba35c4beea606e04334a5b41c"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "audi",
+        "name_en": "Audi",
+        "name_th": "เอาดี้",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Volkswagen Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "เอาดี้"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "audi.etron",
+        "brand_id": "audi",
+        "name_en": "Audi e-tron",
+        "name_th": "ออดี้ อี-ทรอน",
+        "nameplate": "Audi e-tron",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "e-tron",
+          "etron",
+          "e tron",
+          "e-tron 55",
+          "e-tron SB",
+          "e-tron 55 q"
+        ],
+        "notes": "รถไฟฟ้าตระกูล e-tron แยกเป็นรุ่นของตัวเอง — DLT จดแยก และเดิมมันไปเกาะรุ่นเบนซินชื่อคล้ายกัน สเปกยังไม่ได้ตรวจ",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "audi.etron.gen1",
+          "model_id": "audi.etron",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "audi.etron.gen1.spec",
+          "generation_id": "audi.etron.gen1",
+          "name": "spec",
+          "powertrain": "BEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "audi.etron.gen1.trim.e_tron_50_quattro_bev",
+          "generation_id": "audi.etron.gen1",
+          "name": "e-tron 50 quattro",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:015"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.etron.gen1.trim.e_tron_55_quattro_bev",
+          "generation_id": "audi.etron.gen1",
+          "name": "e-tron 55 quattro",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:015"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.etron.gen1.trim.e_tron_sportback_55_quattro_s_line_bev",
+          "generation_id": "audi.etron.gen1",
+          "name": "e-tron Sportback 55 quattro S line",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:015"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.etron.gen1.trim.quattro_ice",
+          "generation_id": "audi.etron.gen1",
+          "name": "quattro",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4901,
+          "width_mm": 1935,
+          "height_mm": 1692,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "b73f15dba35c4beea606e04334a5b41c"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.etron.gen1.trim.sportback_55_quattro_s_line_ice",
+          "generation_id": "audi.etron.gen1",
+          "name": "Sportback 55 quattro S line",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4901,
+          "width_mm": 1935,
+          "height_mm": 1616,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "e73f518462df40d1aadcb799a64f8ab8"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/audi.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "77a297c623f9a76e8996ec48:catalog",
+    "revision_id": "77a297c623f9a76e8996ec48",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "audi.etron",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:04:01+00:00",
+    "payload": {
+      "brand": {
+        "id": "audi",
+        "name_en": "Audi",
+        "name_th": "เอาดี้",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Volkswagen Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "เอาดี้"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "audi.etron",
+        "brand_id": "audi",
+        "name_en": "Audi e-tron",
+        "name_th": "ออดี้ อี-ทรอน",
+        "nameplate": "Audi e-tron",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "e-tron",
+          "etron",
+          "e tron",
+          "e-tron 55",
+          "e-tron SB",
+          "e-tron 55 q"
+        ],
+        "notes": "รถไฟฟ้าตระกูล e-tron แยกเป็นรุ่นของตัวเอง — DLT จดแยก และเดิมมันไปเกาะรุ่นเบนซินชื่อคล้ายกัน สเปกยังไม่ได้ตรวจ",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "audi.etron.gen1",
+          "model_id": "audi.etron",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "audi.etron.gen1.spec",
+          "generation_id": "audi.etron.gen1",
+          "name": "spec",
+          "powertrain": "BEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "audi.etron.gen1.trim.e_tron_50_quattro_bev",
+          "generation_id": "audi.etron.gen1",
+          "name": "e-tron 50 quattro",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:015"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.etron.gen1.trim.e_tron_55_quattro_bev",
+          "generation_id": "audi.etron.gen1",
+          "name": "e-tron 55 quattro",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:015"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.etron.gen1.trim.e_tron_sportback_55_quattro_s_line_bev",
+          "generation_id": "audi.etron.gen1",
+          "name": "e-tron Sportback 55 quattro S line",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:015"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.etron.gen1.trim.quattro_ice",
+          "generation_id": "audi.etron.gen1",
+          "name": "quattro",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4901,
+          "width_mm": 1935,
+          "height_mm": 1692,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "b73f15dba35c4beea606e04334a5b41c"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.etron.gen1.trim.sportback_55_quattro_s_line_ice",
+          "generation_id": "audi.etron.gen1",
+          "name": "Sportback 55 quattro S line",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4901,
+          "width_mm": 1935,
+          "height_mm": 1616,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "e73f518462df40d1aadcb799a64f8ab8"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

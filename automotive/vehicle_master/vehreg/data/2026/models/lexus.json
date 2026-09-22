@@ -102,6 +102,19 @@
                 "ES 300h F Sport"
               ],
               "id": "300h_f_sport_hev"
+            },
+            {
+              "name": "ES350e Premium",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 5140,
+              "width_mm": 1920,
+              "height_mm": 1560,
+              "source_refs": {
+                "eco": [
+                  "48d11224-a721-430f-b6e5-fb0e6e3de11e"
+                ]
+              }
             }
           ]
         }
@@ -173,6 +186,81 @@
                 "NX 350h Grand Luxury (FWD)"
               ],
               "id": "350h_grand_luxury_fwd_hev"
+            },
+            {
+              "name": "NX450h+ Grand Luxury Plus AWD",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4660,
+              "width_mm": 1865,
+              "height_mm": 1660,
+              "engine_cc": 2487,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "1112abab-11a1-4d32-a7b0-2ea1a8da4053"
+                ]
+              }
+            },
+            {
+              "name": "NX450h+ Overtrail AWD",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4660,
+              "width_mm": 1865,
+              "height_mm": 1675,
+              "engine_cc": 2487,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "9efa45f1-6007-442d-8c59-736f229935d2"
+                ]
+              }
+            },
+            {
+              "name": "NX450h+ F-Sport AWD",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4660,
+              "width_mm": 1865,
+              "height_mm": 1670,
+              "engine_cc": 2487,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "1668c792-feee-4b86-a93d-2dccadaf8953"
+                ]
+              }
+            },
+            {
+              "name": "NX450h+ Premium AWD",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4660,
+              "width_mm": 1865,
+              "height_mm": 1670,
+              "engine_cc": 2487,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "7848031d-f1c5-4b62-a7a2-2306217e763d"
+                ]
+              }
+            },
+            {
+              "name": "NX450h+ Grand Luxury AWD",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4660,
+              "width_mm": 1865,
+              "height_mm": 1660,
+              "engine_cc": 2487,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "31caeaa7-f211-4bfd-829e-08656922cf6c"
+                ]
+              }
             }
           ]
         }
@@ -256,6 +344,111 @@
                 "RX 500h F Sport Performance AWD (371 hp)"
               ],
               "id": "500h_f_sport_performance_awd_371_hp_hev"
+            },
+            {
+              "name": "RX450h+ Luxury AWD",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4890,
+              "width_mm": 1920,
+              "height_mm": 1695,
+              "engine_cc": 2487,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "4da0bd73-d6cb-49c2-b32d-769ea35cb76b"
+                ]
+              }
+            },
+            {
+              "name": "RX450h+ Premium AWD",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4890,
+              "width_mm": 1920,
+              "height_mm": 1695,
+              "engine_cc": 2487,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "6a5f79c0-9391-42b6-aaee-9151ff314160"
+                ]
+              }
+            },
+            {
+              "name": "RX450h+ Grand Luxury Plus AWD",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4890,
+              "width_mm": 1920,
+              "height_mm": 1695,
+              "engine_cc": 2487,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "e253da8c-df5f-4e3e-b709-ae297f865932"
+                ]
+              }
+            },
+            {
+              "name": "RX350 F-Sport",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4890,
+              "width_mm": 1895,
+              "height_mm": 1690,
+              "engine_cc": 3456,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "fbd1406393ff41be80adb3511f8672c9"
+                ]
+              }
+            },
+            {
+              "name": "RX300 Premium",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4890,
+              "width_mm": 1895,
+              "height_mm": 1690,
+              "engine_cc": 1998,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "2105031041434de38ebf88734c078d57"
+                ]
+              }
+            },
+            {
+              "name": "RX300 Luxury",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4890,
+              "width_mm": 1895,
+              "height_mm": 1690,
+              "engine_cc": 1998,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "827725804658416dbb712eceb16a85b7"
+                ]
+              }
+            },
+            {
+              "name": "RX300 F-Sport",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4890,
+              "width_mm": 1895,
+              "height_mm": 1690,
+              "engine_cc": 1998,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "952522d6bd154ee78e0594ea92b4c7f7"
+                ]
+              }
             }
           ]
         }
@@ -387,12 +580,21 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:149"
+                ],
+                "eco": [
+                  "7872b6bc-2f8b-44e2-9bc8-6c567ef9276a"
                 ]
               },
               "aliases": [
                 "LBX Luxury"
               ],
-              "id": "luxury_hev"
+              "id": "luxury_hev",
+              "seats": 5,
+              "length_mm": 4190,
+              "width_mm": 1825,
+              "height_mm": 1550,
+              "engine_cc": 1490,
+              "transmission": "CVT"
             },
             {
               "name": "Premium",
@@ -400,12 +602,36 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:149"
+                ],
+                "eco": [
+                  "e998f59f-a57c-45e7-b5e6-a214d005601e"
                 ]
               },
               "aliases": [
                 "LBX Premium"
               ],
-              "id": "premium_hev"
+              "id": "premium_hev",
+              "seats": 5,
+              "length_mm": 4190,
+              "width_mm": 1825,
+              "height_mm": 1560,
+              "engine_cc": 1490,
+              "transmission": "CVT"
+            },
+            {
+              "name": "Bespoke",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4190,
+              "width_mm": 1825,
+              "height_mm": 1560,
+              "engine_cc": 1490,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "3214703d-3f34-4072-bc71-510132d1ec26"
+                ]
+              }
             }
           ]
         }
@@ -498,6 +724,19 @@
                 "UX 300e (BEV 72.8 kWh)"
               ],
               "id": "300e_bev_72_8_kwh_bev"
+            },
+            {
+              "name": "UX300e Premium",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4495,
+              "width_mm": 1840,
+              "height_mm": 1545,
+              "source_refs": {
+                "eco": [
+                  "d42ae9d775ac420698e3d518964732eb"
+                ]
+              }
             }
           ]
         }
@@ -895,6 +1134,36 @@
                 "LS 500h Executive Pleat"
               ],
               "id": "500h_executive_pleat_hev"
+            },
+            {
+              "name": "Executive",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 5225,
+              "width_mm": 1900,
+              "height_mm": 1450,
+              "engine_cc": 3445,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "f2a7d133-ab14-4a53-9862-25e97242495e"
+                ]
+              }
+            },
+            {
+              "name": "Luxury",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 5225,
+              "width_mm": 1900,
+              "height_mm": 1450,
+              "engine_cc": 3456,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "001bc433-70bb-47f2-825a-b5d0a4a2c5f9"
+                ]
+              }
             }
           ]
         }

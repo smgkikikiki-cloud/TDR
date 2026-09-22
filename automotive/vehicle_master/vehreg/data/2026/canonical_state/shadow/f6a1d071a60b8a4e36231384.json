@@ -1,0 +1,2246 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f6a1d071a60b8a4e36231384",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:240",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mitsubishi.triton_double_cab",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:21+00:00",
+    "before_hash": "f628f24cb1756666d5e4fe75e76e9f606aab53d9b79953d01f3af44f851c57ed",
+    "after_hash": "3b240972832e69283da32a5e24f591e28d17dae2a72e68349c1feb16c27b2037",
+    "before": {
+      "id": "triton_double_cab",
+      "name_en": "Triton Double Cab",
+      "name_th": "ไทรทัน 4 ประตู",
+      "nameplate": "",
+      "body_type": "PICKUP",
+      "cab_type": "DOUBLE_CAB",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "triton double cab",
+        "triton athlete",
+        "ไทรทัน 4 ประตู",
+        "Triton",
+        "ไทรทัน"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "MV",
+          "segment": "F",
+          "seats": 5,
+          "launched": "2023-07-26",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.4L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "RWD",
+              "engine_cc": 2442,
+              "battery_kwh": null,
+              "aliases": [
+                "2.4 Athlete"
+              ],
+              "overrides": {},
+              "price_thb": 999000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 999000,
+              "price_max_thb": 999000
+            },
+            {
+              "name": "2.4L ICE 4WD",
+              "powertrain": "ICE",
+              "drivetrain": "4WD",
+              "engine_cc": 2442,
+              "battery_kwh": null,
+              "aliases": [
+                "2.4 Ultimate 4WD"
+              ],
+              "overrides": {},
+              "price_thb": 1249000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1249000,
+              "price_max_thb": 1249000
+            }
+          ],
+          "trims": [
+            {
+              "id": "2_4_athlete_4wd_at",
+              "name": "2.4 ATHLETE 4WD AT",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "source_refs": {
+                "ecosticker": [
+                  "85080d33-33c9-4db8-bf10-730f2207c0fa"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5360,
+              "width_mm": 1930,
+              "height_mm": 1815,
+              "tire_front": "265/60R18",
+              "tire_rear": "265/60R18"
+            },
+            {
+              "id": "2_4_prime_4wd",
+              "name": "2.4 PRIME 4WD",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "source_refs": {
+                "ecosticker": [
+                  "e2911e64-6f7f-42a4-bd22-dcb69ce6ddc6"
+                ],
+                "eco": [
+                  "e2911e64-6f7f-42a4-bd22-dcb69ce6ddc6"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5320,
+              "width_mm": 1865,
+              "height_mm": 1795,
+              "tire_front": "265/65R17",
+              "tire_rear": "265/65R17",
+              "engine_cc": 2442,
+              "transmission": "MANUAL"
+            },
+            {
+              "id": "2_4_pro",
+              "name": "2.4 PRO",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "876feda9-dc91-4b58-81be-ff33e5f23183"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5320,
+              "width_mm": 1865,
+              "height_mm": 1705,
+              "tire_front": "215/70R15C",
+              "tire_rear": "215/70R15C"
+            },
+            {
+              "id": "2_4_ultra_4wd_at",
+              "name": "2.4 ULTRA 4WD AT",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "source_refs": {
+                "ecosticker": [
+                  "d425bf89-898f-4d99-8573-942baf97d66c"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5320,
+              "width_mm": 1865,
+              "height_mm": 1795,
+              "tire_front": "265/60R18",
+              "tire_rear": "265/60R18"
+            },
+            {
+              "id": "2wd_2_5_glx",
+              "name": "2WD 2.5 GLX",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "source_refs": {
+                "ecosticker": [
+                  "04c9dca90cef46d0a7cef0947e6e05a7"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5220,
+              "width_mm": 1815,
+              "height_mm": 1655,
+              "tire_front": "225/65R16",
+              "tire_rear": "225/65R16"
+            },
+            {
+              "id": "4wd_2_4_gls",
+              "name": "4WD 2.4 GLS",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "source_refs": {
+                "ecosticker": [
+                  "19ae5c1532a442f59fd329b183e6c821"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5300,
+              "width_mm": 1815,
+              "height_mm": 1795,
+              "tire_front": "265/60R18",
+              "tire_rear": "265/60R18"
+            },
+            {
+              "id": "4wd_2_4_gt_premium_at",
+              "name": "4WD 2.4 GT-Premium AT",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "source_refs": {
+                "ecosticker": [
+                  "a78b6daa71a1498c89a3e4cb20e18257"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5300,
+              "width_mm": 1815,
+              "height_mm": 1795,
+              "tire_front": "265/60R18",
+              "tire_rear": "265/60R18"
+            },
+            {
+              "id": "4wd_athlete_at",
+              "name": "4WD ATHLETE AT",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "source_refs": {
+                "ecosticker": [
+                  "b25b0cecde7e4870a45e96c214b19d65"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5300,
+              "width_mm": 1815,
+              "height_mm": 1795,
+              "tire_front": "265/60R18",
+              "tire_rear": "265/60R18"
+            },
+            {
+              "id": "athlete_2_4_4wd_at",
+              "name": "ATHLETE 2.4 4WD AT",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "source_refs": {
+                "ecosticker": [
+                  "cd3bfe6b-9d8a-4ef3-9fbc-6667ab32bb77"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5360,
+              "width_mm": 1930,
+              "height_mm": 1815,
+              "tire_front": "265/60R18",
+              "tire_rear": "265/60R18"
+            },
+            {
+              "id": "athlete_2_4_at",
+              "name": "ATHLETE 2.4 AT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "29463bd9-5df4-40ea-b900-b9fd5f8d373a"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5360,
+              "width_mm": 1930,
+              "height_mm": 1815,
+              "tire_front": "265/60R18",
+              "tire_rear": "265/60R18"
+            },
+            {
+              "id": "plus_2_4_gls",
+              "name": "Plus 2.4 GLS",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "b8ed69192e824446aa8ad241018e9c0e"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5300,
+              "width_mm": 1815,
+              "height_mm": 1780,
+              "tire_front": "245/65R17",
+              "tire_rear": "245/65R17"
+            },
+            {
+              "id": "plus_2_4_gls_at",
+              "name": "Plus 2.4 GLS AT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "2368a0f1bf3244ad9f704e8f23b1249a"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5300,
+              "width_mm": 1815,
+              "height_mm": 1795,
+              "tire_front": "265/60R18",
+              "tire_rear": "265/60R18"
+            },
+            {
+              "id": "plus_2_4_gt",
+              "name": "Plus 2.4 GT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "322622809faf45f5ac8a1e259846ebcc"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5300,
+              "width_mm": 1815,
+              "height_mm": 1795,
+              "tire_front": "265/60R18",
+              "tire_rear": "265/60R18"
+            },
+            {
+              "id": "plus_2_4_gt_at",
+              "name": "Plus 2.4 GT AT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "1cb27c70dac24ca6b57ea48e0aec41e4"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5300,
+              "width_mm": 1815,
+              "height_mm": 1795,
+              "tire_front": "265/60R18",
+              "tire_rear": "265/60R18"
+            },
+            {
+              "id": "plus_2_4_gt_premium_at",
+              "name": "Plus 2.4 GT-Premium AT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "8f993f3819d147dbbb2fe645fd737c31"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5300,
+              "width_mm": 1815,
+              "height_mm": 1795,
+              "tire_front": "265/60R18",
+              "tire_rear": "265/60R18"
+            },
+            {
+              "id": "plus_2_4_prime",
+              "name": "PLUS 2.4 PRIME",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "59f9808d-0560-448a-8e38-17f2b686424b"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5320,
+              "width_mm": 1865,
+              "height_mm": 1795,
+              "tire_front": "265/65R17",
+              "tire_rear": "265/65R17"
+            },
+            {
+              "id": "plus_2_4_prime_at",
+              "name": "PLUS 2.4 PRIME AT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "732d0081-7c7a-4102-9861-b53fd2931ea4"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5320,
+              "width_mm": 1865,
+              "height_mm": 1795,
+              "tire_front": "265/65R17",
+              "tire_rear": "265/65R17"
+            },
+            {
+              "id": "plus_2_4_pro",
+              "name": "PLUS 2.4 PRO",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "38f3ae47-5868-4c1f-8bbf-558d0ceec3db"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5320,
+              "width_mm": 1865,
+              "height_mm": 1795,
+              "tire_front": "265/70R16",
+              "tire_rear": "265/70R16"
+            },
+            {
+              "id": "plus_2_4_ultra",
+              "name": "PLUS 2.4 ULTRA",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "6668b3f5-0edb-457c-bd68-85bc6fcb44ce"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5320,
+              "width_mm": 1865,
+              "height_mm": 1795,
+              "tire_front": "265/60R18",
+              "tire_rear": "265/60R18"
+            },
+            {
+              "id": "plus_2_4_ultra_at",
+              "name": "PLUS 2.4 ULTRA AT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "58f9889c-86f8-42d7-9a69-93a6be5612b7"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5320,
+              "width_mm": 1865,
+              "height_mm": 1795,
+              "tire_front": "265/60R18",
+              "tire_rear": "265/60R18"
+            },
+            {
+              "id": "plus_athlete_gt_at",
+              "name": "Plus ATHLETE GT AT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "72888b3d4f7e42feb639058492360ff2"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5300,
+              "width_mm": 1815,
+              "height_mm": 1795,
+              "tire_front": "265/60R18",
+              "tire_rear": "265/60R18"
+            },
+            {
+              "name": "Double Cab Plus 2.4 Pro 6MT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:225"
+                ]
+              },
+              "id": "double_cab_plus_2_4_pro_6mt_ice"
+            },
+            {
+              "name": "Double Cab Plus 2.4 Prime 6MT/6AT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:225"
+                ]
+              },
+              "id": "double_cab_plus_2_4_prime_6mt_6at_ice"
+            },
+            {
+              "name": "Double Cab Plus 2.4 Ultra 6AT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:225"
+                ]
+              },
+              "id": "double_cab_plus_2_4_ultra_6at_ice"
+            },
+            {
+              "name": "Double Cab 2.4 4WD Ultra 6AT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:225"
+                ]
+              },
+              "id": "double_cab_2_4_4wd_ultra_6at_ice"
+            },
+            {
+              "name": "Double Cab Athlete 2.4 Bi-Turbo 4WD 6AT (204 hp)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:225"
+                ]
+              },
+              "id": "double_cab_athlete_2_4_bi_turbo_4wd_6at_204_hp_ice"
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "mitsubishi",
+        "name_en": "Mitsubishi",
+        "name_th": "มิตซูบิชิ",
+        "brand_segment": "MASS",
+        "oem_group": "Mitsubishi Motors",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "มิตซูบิชิ",
+          "mitsubishi motors"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mitsubishi.triton_double_cab",
+        "brand_id": "mitsubishi",
+        "name_en": "Triton Double Cab",
+        "name_th": "ไทรทัน 4 ประตู",
+        "nameplate": "Triton",
+        "body_type": "PICKUP",
+        "cab_type": "DOUBLE_CAB",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "triton double cab",
+          "triton athlete",
+          "ไทรทัน 4 ประตู",
+          "Triton",
+          "ไทรทัน"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mitsubishi.triton_double_cab.mv",
+          "model_id": "mitsubishi.triton_double_cab",
+          "code": "MV",
+          "segment": "F",
+          "seats": 5,
+          "launched": "2023-07-26",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mitsubishi.triton_double_cab.mv.2_4l_ice",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "2.4L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "RWD",
+          "engine_cc": 2442,
+          "battery_kwh": null,
+          "price_thb": 999000,
+          "price_min_thb": 999000,
+          "price_max_thb": 999000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.4 Athlete"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.2_4l_ice_4wd",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "2.4L ICE 4WD",
+          "powertrain": "ICE",
+          "drivetrain": "4WD",
+          "engine_cc": 2442,
+          "battery_kwh": null,
+          "price_thb": 1249000,
+          "price_min_thb": 1249000,
+          "price_max_thb": 1249000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.4 Ultimate 4WD"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.2_4_athlete_4wd_at",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "2.4 ATHLETE 4WD AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5360,
+          "width_mm": 1930,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "85080d33-33c9-4db8-bf10-730f2207c0fa"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.2_4_prime_4wd",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "2.4 PRIME 4WD",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": 2442,
+          "battery_kwh": null,
+          "transmission": "MANUAL",
+          "seats": 5,
+          "length_mm": 5320,
+          "width_mm": 1865,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/65R17",
+          "tire_rear": "265/65R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "e2911e64-6f7f-42a4-bd22-dcb69ce6ddc6"
+            ],
+            "eco": [
+              "e2911e64-6f7f-42a4-bd22-dcb69ce6ddc6"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.2_4_pro",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "2.4 PRO",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5320,
+          "width_mm": 1865,
+          "height_mm": 1705,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R15C",
+          "tire_rear": "215/70R15C",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "876feda9-dc91-4b58-81be-ff33e5f23183"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.2_4_ultra_4wd_at",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "2.4 ULTRA 4WD AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5320,
+          "width_mm": 1865,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "d425bf89-898f-4d99-8573-942baf97d66c"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.2wd_2_5_glx",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "2WD 2.5 GLX",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5220,
+          "width_mm": 1815,
+          "height_mm": 1655,
+          "wheelbase_mm": null,
+          "tire_front": "225/65R16",
+          "tire_rear": "225/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "04c9dca90cef46d0a7cef0947e6e05a7"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.4wd_2_4_gls",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "4WD 2.4 GLS",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5300,
+          "width_mm": 1815,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "19ae5c1532a442f59fd329b183e6c821"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.4wd_2_4_gt_premium_at",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "4WD 2.4 GT-Premium AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5300,
+          "width_mm": 1815,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "a78b6daa71a1498c89a3e4cb20e18257"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.4wd_athlete_at",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "4WD ATHLETE AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5300,
+          "width_mm": 1815,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "b25b0cecde7e4870a45e96c214b19d65"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.athlete_2_4_4wd_at",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "ATHLETE 2.4 4WD AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5360,
+          "width_mm": 1930,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "cd3bfe6b-9d8a-4ef3-9fbc-6667ab32bb77"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.athlete_2_4_at",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "ATHLETE 2.4 AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5360,
+          "width_mm": 1930,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "29463bd9-5df4-40ea-b900-b9fd5f8d373a"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_gls",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "Plus 2.4 GLS",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5300,
+          "width_mm": 1815,
+          "height_mm": 1780,
+          "wheelbase_mm": null,
+          "tire_front": "245/65R17",
+          "tire_rear": "245/65R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "b8ed69192e824446aa8ad241018e9c0e"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_gls_at",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "Plus 2.4 GLS AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5300,
+          "width_mm": 1815,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "2368a0f1bf3244ad9f704e8f23b1249a"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_gt",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "Plus 2.4 GT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5300,
+          "width_mm": 1815,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "322622809faf45f5ac8a1e259846ebcc"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_gt_at",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "Plus 2.4 GT AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5300,
+          "width_mm": 1815,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "1cb27c70dac24ca6b57ea48e0aec41e4"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_gt_premium_at",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "Plus 2.4 GT-Premium AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5300,
+          "width_mm": 1815,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "8f993f3819d147dbbb2fe645fd737c31"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_prime",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "PLUS 2.4 PRIME",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2442,
+          "battery_kwh": null,
+          "transmission": "MANUAL",
+          "seats": 5,
+          "length_mm": 5320,
+          "width_mm": 1865,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/65R17",
+          "tire_rear": "265/65R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "59f9808d-0560-448a-8e38-17f2b686424b"
+            ],
+            "eco": [
+              "59f9808d-0560-448a-8e38-17f2b686424b"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_prime_at",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "PLUS 2.4 PRIME AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5320,
+          "width_mm": 1865,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/65R17",
+          "tire_rear": "265/65R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "732d0081-7c7a-4102-9861-b53fd2931ea4"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_pro",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "PLUS 2.4 PRO",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5320,
+          "width_mm": 1865,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/70R16",
+          "tire_rear": "265/70R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "38f3ae47-5868-4c1f-8bbf-558d0ceec3db"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_ultra",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "PLUS 2.4 ULTRA",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5320,
+          "width_mm": 1865,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "6668b3f5-0edb-457c-bd68-85bc6fcb44ce"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_ultra_at",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "PLUS 2.4 ULTRA AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5320,
+          "width_mm": 1865,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "58f9889c-86f8-42d7-9a69-93a6be5612b7"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.plus_athlete_gt_at",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "Plus ATHLETE GT AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5300,
+          "width_mm": 1815,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "72888b3d4f7e42feb639058492360ff2"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.double_cab_plus_2_4_pro_6mt_ice",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "Double Cab Plus 2.4 Pro 6MT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:225"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.double_cab_plus_2_4_prime_6mt_6at_ice",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "Double Cab Plus 2.4 Prime 6MT/6AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:225"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.double_cab_plus_2_4_ultra_6at_ice",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "Double Cab Plus 2.4 Ultra 6AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:225"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.double_cab_2_4_4wd_ultra_6at_ice",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "Double Cab 2.4 4WD Ultra 6AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:225"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.double_cab_athlete_2_4_bi_turbo_4wd_6at_204_hp_ice",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "Double Cab Athlete 2.4 Bi-Turbo 4WD 6AT (204 hp)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:225"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mitsubishi.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f6a1d071a60b8a4e36231384:catalog",
+    "revision_id": "f6a1d071a60b8a4e36231384",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mitsubishi.triton_double_cab",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:21+00:00",
+    "payload": {
+      "brand": {
+        "id": "mitsubishi",
+        "name_en": "Mitsubishi",
+        "name_th": "มิตซูบิชิ",
+        "brand_segment": "MASS",
+        "oem_group": "Mitsubishi Motors",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "มิตซูบิชิ",
+          "mitsubishi motors"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mitsubishi.triton_double_cab",
+        "brand_id": "mitsubishi",
+        "name_en": "Triton Double Cab",
+        "name_th": "ไทรทัน 4 ประตู",
+        "nameplate": "Triton",
+        "body_type": "PICKUP",
+        "cab_type": "DOUBLE_CAB",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "triton double cab",
+          "triton athlete",
+          "ไทรทัน 4 ประตู",
+          "Triton",
+          "ไทรทัน"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mitsubishi.triton_double_cab.mv",
+          "model_id": "mitsubishi.triton_double_cab",
+          "code": "MV",
+          "segment": "F",
+          "seats": 5,
+          "launched": "2023-07-26",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mitsubishi.triton_double_cab.mv.2_4l_ice",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "2.4L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "RWD",
+          "engine_cc": 2442,
+          "battery_kwh": null,
+          "price_thb": 999000,
+          "price_min_thb": 999000,
+          "price_max_thb": 999000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.4 Athlete"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.2_4l_ice_4wd",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "2.4L ICE 4WD",
+          "powertrain": "ICE",
+          "drivetrain": "4WD",
+          "engine_cc": 2442,
+          "battery_kwh": null,
+          "price_thb": 1249000,
+          "price_min_thb": 1249000,
+          "price_max_thb": 1249000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.4 Ultimate 4WD"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.2_4_athlete_4wd_at",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "2.4 ATHLETE 4WD AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5360,
+          "width_mm": 1930,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "85080d33-33c9-4db8-bf10-730f2207c0fa"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.2_4_prime_4wd",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "2.4 PRIME 4WD",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": 2442,
+          "battery_kwh": null,
+          "transmission": "MANUAL",
+          "seats": 5,
+          "length_mm": 5320,
+          "width_mm": 1865,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/65R17",
+          "tire_rear": "265/65R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "e2911e64-6f7f-42a4-bd22-dcb69ce6ddc6"
+            ],
+            "eco": [
+              "e2911e64-6f7f-42a4-bd22-dcb69ce6ddc6"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.2_4_pro",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "2.4 PRO",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5320,
+          "width_mm": 1865,
+          "height_mm": 1705,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R15C",
+          "tire_rear": "215/70R15C",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "876feda9-dc91-4b58-81be-ff33e5f23183"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.2_4_ultra_4wd_at",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "2.4 ULTRA 4WD AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5320,
+          "width_mm": 1865,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "d425bf89-898f-4d99-8573-942baf97d66c"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.2wd_2_5_glx",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "2WD 2.5 GLX",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5220,
+          "width_mm": 1815,
+          "height_mm": 1655,
+          "wheelbase_mm": null,
+          "tire_front": "225/65R16",
+          "tire_rear": "225/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "04c9dca90cef46d0a7cef0947e6e05a7"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.4wd_2_4_gls",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "4WD 2.4 GLS",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5300,
+          "width_mm": 1815,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "19ae5c1532a442f59fd329b183e6c821"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.4wd_2_4_gt_premium_at",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "4WD 2.4 GT-Premium AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5300,
+          "width_mm": 1815,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "a78b6daa71a1498c89a3e4cb20e18257"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.4wd_athlete_at",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "4WD ATHLETE AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5300,
+          "width_mm": 1815,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "b25b0cecde7e4870a45e96c214b19d65"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.athlete_2_4_4wd_at",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "ATHLETE 2.4 4WD AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5360,
+          "width_mm": 1930,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "cd3bfe6b-9d8a-4ef3-9fbc-6667ab32bb77"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.athlete_2_4_at",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "ATHLETE 2.4 AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5360,
+          "width_mm": 1930,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "29463bd9-5df4-40ea-b900-b9fd5f8d373a"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_gls",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "Plus 2.4 GLS",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5300,
+          "width_mm": 1815,
+          "height_mm": 1780,
+          "wheelbase_mm": null,
+          "tire_front": "245/65R17",
+          "tire_rear": "245/65R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "b8ed69192e824446aa8ad241018e9c0e"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_gls_at",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "Plus 2.4 GLS AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5300,
+          "width_mm": 1815,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "2368a0f1bf3244ad9f704e8f23b1249a"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_gt",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "Plus 2.4 GT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5300,
+          "width_mm": 1815,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "322622809faf45f5ac8a1e259846ebcc"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_gt_at",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "Plus 2.4 GT AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5300,
+          "width_mm": 1815,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "1cb27c70dac24ca6b57ea48e0aec41e4"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_gt_premium_at",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "Plus 2.4 GT-Premium AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5300,
+          "width_mm": 1815,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "8f993f3819d147dbbb2fe645fd737c31"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_prime",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "PLUS 2.4 PRIME",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2442,
+          "battery_kwh": null,
+          "transmission": "MANUAL",
+          "seats": 5,
+          "length_mm": 5320,
+          "width_mm": 1865,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/65R17",
+          "tire_rear": "265/65R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "59f9808d-0560-448a-8e38-17f2b686424b"
+            ],
+            "eco": [
+              "59f9808d-0560-448a-8e38-17f2b686424b"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_prime_at",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "PLUS 2.4 PRIME AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5320,
+          "width_mm": 1865,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/65R17",
+          "tire_rear": "265/65R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "732d0081-7c7a-4102-9861-b53fd2931ea4"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_pro",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "PLUS 2.4 PRO",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5320,
+          "width_mm": 1865,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/70R16",
+          "tire_rear": "265/70R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "38f3ae47-5868-4c1f-8bbf-558d0ceec3db"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_ultra",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "PLUS 2.4 ULTRA",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5320,
+          "width_mm": 1865,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "6668b3f5-0edb-457c-bd68-85bc6fcb44ce"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_ultra_at",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "PLUS 2.4 ULTRA AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5320,
+          "width_mm": 1865,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "58f9889c-86f8-42d7-9a69-93a6be5612b7"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.plus_athlete_gt_at",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "Plus ATHLETE GT AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5300,
+          "width_mm": 1815,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "72888b3d4f7e42feb639058492360ff2"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.double_cab_plus_2_4_pro_6mt_ice",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "Double Cab Plus 2.4 Pro 6MT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:225"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.double_cab_plus_2_4_prime_6mt_6at_ice",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "Double Cab Plus 2.4 Prime 6MT/6AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:225"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.double_cab_plus_2_4_ultra_6at_ice",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "Double Cab Plus 2.4 Ultra 6AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:225"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.double_cab_2_4_4wd_ultra_6at_ice",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "Double Cab 2.4 4WD Ultra 6AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:225"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mitsubishi.triton_double_cab.mv.trim.double_cab_athlete_2_4_bi_turbo_4wd_6at_204_hp_ice",
+          "generation_id": "mitsubishi.triton_double_cab.mv",
+          "name": "Double Cab Athlete 2.4 Bi-Turbo 4WD 6AT (204 hp)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:225"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

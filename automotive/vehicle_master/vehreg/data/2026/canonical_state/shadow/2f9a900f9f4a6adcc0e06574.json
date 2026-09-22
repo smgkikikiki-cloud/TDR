@@ -1,0 +1,268 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2f9a900f9f4a6adcc0e06574",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:220",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "toyota.c_hr",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:58+00:00",
+    "before_hash": "448e6e7081ef27e70b3d60e906560564d1098f71eca1437a464338b5384c2070",
+    "after_hash": "a1eb222e5f0fa3bae0ebc6211359c5b49f2b7b73799d9025cfa6fd690eb055ad",
+    "before": {
+      "id": "c_hr",
+      "name_en": "C-HR",
+      "name_th": "ซี-เอชอาร์",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "GREY",
+      "aliases": [],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "grey import",
+              "powertrain": "UNKNOWN",
+              "drivetrain": "UNKNOWN",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "UNKNOWN",
+              "origin_country": "UNKNOWN",
+              "price_note": "grey import, spec not tracked",
+              "aliases": []
+            }
+          ],
+          "trims": []
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "toyota",
+        "name_en": "Toyota",
+        "name_th": "โตโยต้า",
+        "brand_segment": "MASS",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "โตโยต้า",
+          "toyota motor thailand",
+          "TMT"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "toyota.c_hr",
+        "brand_id": "toyota",
+        "name_en": "C-HR",
+        "name_th": "ซี-เอชอาร์",
+        "nameplate": "C-HR",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "GREY",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "toyota.c_hr.gen1",
+          "model_id": "toyota.c_hr",
+          "code": "gen1",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "toyota.c_hr.gen1.grey_import",
+          "generation_id": "toyota.c_hr.gen1",
+          "name": "grey import",
+          "powertrain": "UNKNOWN",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "UNKNOWN",
+          "origin_country": "UNKNOWN",
+          "price_note": "grey import, spec not tracked",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "toyota.c_hr.gen1.trim.hev_gr_sport_hev",
+          "generation_id": "toyota.c_hr.gen1",
+          "name": "HEV GR Sport",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1798,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4360,
+          "width_mm": 1795,
+          "height_mm": 1565,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "9a6e1c0c9263466c9c1cfe61eda22e9e"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/toyota.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2f9a900f9f4a6adcc0e06574:catalog",
+    "revision_id": "2f9a900f9f4a6adcc0e06574",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "toyota.c_hr",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:58+00:00",
+    "payload": {
+      "brand": {
+        "id": "toyota",
+        "name_en": "Toyota",
+        "name_th": "โตโยต้า",
+        "brand_segment": "MASS",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "โตโยต้า",
+          "toyota motor thailand",
+          "TMT"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "toyota.c_hr",
+        "brand_id": "toyota",
+        "name_en": "C-HR",
+        "name_th": "ซี-เอชอาร์",
+        "nameplate": "C-HR",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "GREY",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "toyota.c_hr.gen1",
+          "model_id": "toyota.c_hr",
+          "code": "gen1",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "toyota.c_hr.gen1.grey_import",
+          "generation_id": "toyota.c_hr.gen1",
+          "name": "grey import",
+          "powertrain": "UNKNOWN",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "UNKNOWN",
+          "origin_country": "UNKNOWN",
+          "price_note": "grey import, spec not tracked",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "toyota.c_hr.gen1.trim.hev_gr_sport_hev",
+          "generation_id": "toyota.c_hr.gen1",
+          "name": "HEV GR Sport",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1798,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4360,
+          "width_mm": 1795,
+          "height_mm": 1565,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "9a6e1c0c9263466c9c1cfe61eda22e9e"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

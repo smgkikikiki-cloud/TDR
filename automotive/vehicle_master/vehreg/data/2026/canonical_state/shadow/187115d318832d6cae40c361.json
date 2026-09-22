@@ -1,0 +1,363 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "187115d318832d6cae40c361",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:6",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "kia.ev9",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:37+00:00",
+    "before_hash": "cb470d2811efff671bc4a818cf330e0acc7acc675ecb685d89b65da1d1515112",
+    "after_hash": "eb9a093e4b6a058abeadfc7b728c0a8b6c3d61a54f99254c8782f6aee0b349fd",
+    "before": {
+      "id": "ev9",
+      "name_en": "EV9",
+      "name_th": "อีวี9",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "NICHE",
+      "aliases": [
+        "ev 9"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "MV",
+          "segment": "E",
+          "seats": 7,
+          "launched": "2024-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "100 kWh BEV AWD",
+              "powertrain": "BEV",
+              "drivetrain": "AWD",
+              "engine_cc": null,
+              "battery_kwh": 99.8,
+              "aliases": [
+                "GT-Line AWD"
+              ],
+              "overrides": {},
+              "price_thb": 3490000,
+              "import_type": "CBU",
+              "origin_country": "KR",
+              "price_note": "seed-unverified",
+              "price_min_thb": 3490000,
+              "price_max_thb": 3490000
+            }
+          ],
+          "trims": [
+            {
+              "name": "Earth Long Range (RWD, 7-Seater)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:137"
+                ]
+              },
+              "id": "earth_long_range_rwd_7_seater_bev"
+            },
+            {
+              "name": "GT-Line AWD (Dual Motor, 6-Seater Swivel / Relaxation)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:137"
+                ]
+              },
+              "id": "gt_line_awd_dual_motor_6_seater_swivel_relaxation_bev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "kia",
+        "name_en": "Kia",
+        "name_th": "เกีย",
+        "brand_segment": "MASS",
+        "oem_group": "Hyundai Motor Group",
+        "brand_origin": "KR",
+        "trim_detail": false,
+        "aliases": [
+          "เกีย"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "kia.ev9",
+        "brand_id": "kia",
+        "name_en": "EV9",
+        "name_th": "อีวี9",
+        "nameplate": "EV9",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "ev 9"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "kia.ev9.mv",
+          "model_id": "kia.ev9",
+          "code": "MV",
+          "segment": "E",
+          "seats": 7,
+          "launched": "2024-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "kia.ev9.mv.100_kwh_bev_awd",
+          "generation_id": "kia.ev9.mv",
+          "name": "100 kWh BEV AWD",
+          "powertrain": "BEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": 99.8,
+          "price_thb": 3490000,
+          "price_min_thb": 3490000,
+          "price_max_thb": 3490000,
+          "import_type": "CBU",
+          "origin_country": "KR",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "GT-Line AWD"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "kia.ev9.mv.trim.earth_long_range_rwd_7_seater_bev",
+          "generation_id": "kia.ev9.mv",
+          "name": "Earth Long Range (RWD, 7-Seater)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 6,
+          "length_mm": 5010,
+          "width_mm": 1980,
+          "height_mm": 1755,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:137"
+            ],
+            "eco": [
+              "3ce6ae0c-6264-42cd-9709-2261216eac9d"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "kia.ev9.mv.trim.gt_line_awd_dual_6_seater_swivel_relaxation_bev",
+          "generation_id": "kia.ev9.mv",
+          "name": "GT-Line AWD (Dual Motor, 6-Seater Swivel / Relaxation)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:137"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/kia.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "187115d318832d6cae40c361:catalog",
+    "revision_id": "187115d318832d6cae40c361",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "kia.ev9",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:37+00:00",
+    "payload": {
+      "brand": {
+        "id": "kia",
+        "name_en": "Kia",
+        "name_th": "เกีย",
+        "brand_segment": "MASS",
+        "oem_group": "Hyundai Motor Group",
+        "brand_origin": "KR",
+        "trim_detail": false,
+        "aliases": [
+          "เกีย"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "kia.ev9",
+        "brand_id": "kia",
+        "name_en": "EV9",
+        "name_th": "อีวี9",
+        "nameplate": "EV9",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "ev 9"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "kia.ev9.mv",
+          "model_id": "kia.ev9",
+          "code": "MV",
+          "segment": "E",
+          "seats": 7,
+          "launched": "2024-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "kia.ev9.mv.100_kwh_bev_awd",
+          "generation_id": "kia.ev9.mv",
+          "name": "100 kWh BEV AWD",
+          "powertrain": "BEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": 99.8,
+          "price_thb": 3490000,
+          "price_min_thb": 3490000,
+          "price_max_thb": 3490000,
+          "import_type": "CBU",
+          "origin_country": "KR",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "GT-Line AWD"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "kia.ev9.mv.trim.earth_long_range_rwd_7_seater_bev",
+          "generation_id": "kia.ev9.mv",
+          "name": "Earth Long Range (RWD, 7-Seater)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 6,
+          "length_mm": 5010,
+          "width_mm": 1980,
+          "height_mm": 1755,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:137"
+            ],
+            "eco": [
+              "3ce6ae0c-6264-42cd-9709-2261216eac9d"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "kia.ev9.mv.trim.gt_line_awd_dual_6_seater_swivel_relaxation_bev",
+          "generation_id": "kia.ev9.mv",
+          "name": "GT-Line AWD (Dual Motor, 6-Seater Swivel / Relaxation)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:137"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

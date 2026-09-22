@@ -1,0 +1,567 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "485bb2c01125ff4855fe7dca",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:97",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mercedes_benz.cla",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:08+00:00",
+    "before_hash": "c9c2bc412a56ae1b19eef44a5a2365e59cf765af6f903dcc98f6ebd6f410a75b",
+    "after_hash": "df674690b68e1cd0e7e0fa1744dfe01b6239f999ab46bef6049aa9f0cb27cae2",
+    "before": {
+      "id": "cla",
+      "name_en": "CLA",
+      "name_th": "",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "cla 250+",
+        "cla 250"
+      ],
+      "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
+      "generations": [
+        {
+          "code": "CLA",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": "2026-07-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "ยังไม่แยกรุ่นย่อย",
+              "powertrain": "BEV",
+              "drivetrain": "",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "aliases": [],
+              "overrides": {},
+              "price_thb": 2290000,
+              "import_type": "",
+              "origin_country": "",
+              "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+              "price_min_thb": 2290000,
+              "price_max_thb": 2290000
+            }
+          ],
+          "trims": [
+            {
+              "name": "200 Urban",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:179"
+                ]
+              },
+              "aliases": [
+                "CLA 200 Urban"
+              ],
+              "id": "200_urban_ice"
+            },
+            {
+              "name": "250 AMG Dynamic",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:179"
+                ]
+              },
+              "aliases": [
+                "CLA 250 AMG Dynamic"
+              ],
+              "id": "250_amg_dynamic_ice"
+            },
+            {
+              "name": "Mercedes-AMG CLA 35 4MATIC",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:179"
+                ]
+              },
+              "id": "mercedes_amg_cla_35_4matic_ice"
+            },
+            {
+              "name": "Mercedes-AMG CLA 45 S 4MATIC+",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:179"
+                ]
+              },
+              "id": "mercedes_amg_cla_45_s_4matic_plus_ice"
+            }
+          ]
+        }
+      ],
+      "incomplete": true
+    },
+    "after": {
+      "brand": {
+        "id": "mercedes_benz",
+        "name_en": "Mercedes-Benz",
+        "name_th": "เมอร์เซเดส-เบนซ์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Mercedes-Benz Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "benz",
+          "เบนซ์",
+          "mercedes"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mercedes_benz.cla",
+        "brand_id": "mercedes_benz",
+        "name_en": "CLA",
+        "name_th": "",
+        "nameplate": "CLA",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "cla 250+",
+          "cla 250"
+        ],
+        "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mercedes_benz.cla.cla",
+          "model_id": "mercedes_benz.cla",
+          "code": "CLA",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": "2026-07-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mercedes_benz.cla.cla.ยงไมแยกรนยอย",
+          "generation_id": "mercedes_benz.cla.cla",
+          "name": "ยังไม่แยกรุ่นย่อย",
+          "powertrain": "BEV",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": 2290000,
+          "price_min_thb": 2290000,
+          "price_max_thb": 2290000,
+          "import_type": "UNKNOWN",
+          "origin_country": "",
+          "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mercedes_benz.cla.cla.trim.200_urban_ice",
+          "generation_id": "mercedes_benz.cla.cla",
+          "name": "200 Urban",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "CLA 200 Urban"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:179"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.cla.cla.trim.250_amg_dynamic_ice",
+          "generation_id": "mercedes_benz.cla.cla",
+          "name": "250 AMG Dynamic",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "CLA 250 AMG Dynamic"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:179"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.cla.cla.trim.mercedes_amg_cla_35_4matic_ice",
+          "generation_id": "mercedes_benz.cla.cla",
+          "name": "Mercedes-AMG CLA 35 4MATIC",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:179"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.cla.cla.trim.mercedes_amg_cla_45_s_4matic_plus_ice",
+          "generation_id": "mercedes_benz.cla.cla",
+          "name": "Mercedes-AMG CLA 45 S 4MATIC+",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:179"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.cla.cla.trim.electric_bev",
+          "generation_id": "mercedes_benz.cla.cla",
+          "name": "electric",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4731,
+          "width_mm": 1855,
+          "height_mm": 1469,
+          "wheelbase_mm": null,
+          "tire_front": "225/45R18",
+          "tire_rear": "255/40R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "6ea5211a-43ed-4c25-845b-445197120fd6"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mercedes_benz.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "485bb2c01125ff4855fe7dca:catalog",
+    "revision_id": "485bb2c01125ff4855fe7dca",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mercedes_benz.cla",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:08+00:00",
+    "payload": {
+      "brand": {
+        "id": "mercedes_benz",
+        "name_en": "Mercedes-Benz",
+        "name_th": "เมอร์เซเดส-เบนซ์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Mercedes-Benz Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "benz",
+          "เบนซ์",
+          "mercedes"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mercedes_benz.cla",
+        "brand_id": "mercedes_benz",
+        "name_en": "CLA",
+        "name_th": "",
+        "nameplate": "CLA",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "cla 250+",
+          "cla 250"
+        ],
+        "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mercedes_benz.cla.cla",
+          "model_id": "mercedes_benz.cla",
+          "code": "CLA",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": "2026-07-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mercedes_benz.cla.cla.ยงไมแยกรนยอย",
+          "generation_id": "mercedes_benz.cla.cla",
+          "name": "ยังไม่แยกรุ่นย่อย",
+          "powertrain": "BEV",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": 2290000,
+          "price_min_thb": 2290000,
+          "price_max_thb": 2290000,
+          "import_type": "UNKNOWN",
+          "origin_country": "",
+          "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mercedes_benz.cla.cla.trim.200_urban_ice",
+          "generation_id": "mercedes_benz.cla.cla",
+          "name": "200 Urban",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "CLA 200 Urban"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:179"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.cla.cla.trim.250_amg_dynamic_ice",
+          "generation_id": "mercedes_benz.cla.cla",
+          "name": "250 AMG Dynamic",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "CLA 250 AMG Dynamic"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:179"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.cla.cla.trim.mercedes_amg_cla_35_4matic_ice",
+          "generation_id": "mercedes_benz.cla.cla",
+          "name": "Mercedes-AMG CLA 35 4MATIC",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:179"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.cla.cla.trim.mercedes_amg_cla_45_s_4matic_plus_ice",
+          "generation_id": "mercedes_benz.cla.cla",
+          "name": "Mercedes-AMG CLA 45 S 4MATIC+",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:179"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.cla.cla.trim.electric_bev",
+          "generation_id": "mercedes_benz.cla.cla",
+          "name": "electric",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4731,
+          "width_mm": 1855,
+          "height_mm": 1469,
+          "wheelbase_mm": null,
+          "tire_front": "225/45R18",
+          "tire_rear": "255/40R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "6ea5211a-43ed-4c25-845b-445197120fd6"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

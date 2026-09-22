@@ -1,0 +1,587 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "8ebde7efbdc4d96e92e95760",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:155",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "bmw.bmw_x1",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:13+00:00",
+    "before_hash": "6ef1d726f1155a41d81de20b5a3d94631ca400188a089ddc8bbf6a000642cab9",
+    "after_hash": "c2ec567710a1a68dcc0c0c0b30c04a01c8aafbb2a1280f75306add84f0505906",
+    "before": {
+      "id": "bmw_x1",
+      "name_en": "X1",
+      "name_th": "เอ็กซ์1",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "x 1",
+        "X1 sDrive18i",
+        "X1 xDrive20d"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "U11",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.5L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "engine_cc": 1499,
+              "battery_kwh": null,
+              "aliases": [
+                "sDrive18i xLine",
+                "sDrive20i",
+                "sDrive20d",
+                "sDrive18i",
+                "sDrive18d",
+                "X1 sDrive20i",
+                "X1 sDrive20d"
+              ],
+              "overrides": {},
+              "price_thb": 2399000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 2399000,
+              "price_max_thb": 2399000
+            },
+            {
+              "name": "1.5L PHEV",
+              "powertrain": "PHEV",
+              "drivetrain": "AWD",
+              "engine_cc": 1499,
+              "battery_kwh": 16.3,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "สเปกจากเอกสาร BMW ราคายังไม่ได้ตรวจ",
+              "aliases": [
+                "xDrive30e",
+                "sDrive30e",
+                "X1 xDrive30e"
+              ]
+            }
+          ],
+          "trims": [
+            {
+              "name": "sDrive18i",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:034"
+                ]
+              },
+              "id": "sdrive18i_ice"
+            },
+            {
+              "name": "sDrive20i xLine",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:034"
+                ]
+              },
+              "id": "sdrive20i_xline_ice"
+            },
+            {
+              "name": "sDrive20i M Sport",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:034"
+                ]
+              },
+              "id": "sdrive20i_m_sport_ice"
+            },
+            {
+              "name": "xDrive25e M Sport (PHEV)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:034"
+                ]
+              },
+              "id": "xdrive25e_m_sport_phev_phev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "bmw",
+        "name_en": "BMW",
+        "name_th": "บีเอ็มดับเบิลยู",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "BMW Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "บีเอ็มดับเบิลยู",
+          "bmw thailand"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "bmw.bmw_x1",
+        "brand_id": "bmw",
+        "name_en": "X1",
+        "name_th": "เอ็กซ์1",
+        "nameplate": "X1",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "x 1",
+          "X1 sDrive18i",
+          "X1 xDrive20d"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "bmw.bmw_x1.u11",
+          "model_id": "bmw.bmw_x1",
+          "code": "U11",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "bmw.bmw_x1.u11.1_5l_ice",
+          "generation_id": "bmw.bmw_x1.u11",
+          "name": "1.5L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1499,
+          "battery_kwh": null,
+          "price_thb": 2399000,
+          "price_min_thb": 2399000,
+          "price_max_thb": 2399000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "sDrive18i xLine",
+            "sDrive20i",
+            "sDrive20d",
+            "sDrive18i",
+            "sDrive18d",
+            "X1 sDrive20i",
+            "X1 sDrive20d"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "bmw.bmw_x1.u11.1_5l_phev",
+          "generation_id": "bmw.bmw_x1.u11",
+          "name": "1.5L PHEV",
+          "powertrain": "PHEV",
+          "drivetrain": "AWD",
+          "engine_cc": 1499,
+          "battery_kwh": 16.3,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "สเปกจากเอกสาร BMW ราคายังไม่ได้ตรวจ",
+          "aliases": [
+            "xDrive30e",
+            "sDrive30e",
+            "X1 xDrive30e"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "bmw.bmw_x1.u11.trim.sdrive18i_ice",
+          "generation_id": "bmw.bmw_x1.u11",
+          "name": "sDrive18i",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:034"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_x1.u11.trim.sdrive20i_xline_ice",
+          "generation_id": "bmw.bmw_x1.u11",
+          "name": "sDrive20i xLine",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:034"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_x1.u11.trim.sdrive20i_m_sport_ice",
+          "generation_id": "bmw.bmw_x1.u11",
+          "name": "sDrive20i M Sport",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4500,
+          "width_mm": 1845,
+          "height_mm": 1642,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:034"
+            ],
+            "eco": [
+              "1a853999-faa5-4093-92b7-5dca33a1868e"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_x1.u11.trim.xdrive25e_m_sport_phev_phev",
+          "generation_id": "bmw.bmw_x1.u11",
+          "name": "xDrive25e M Sport (PHEV)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:034"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/bmw.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "8ebde7efbdc4d96e92e95760:catalog",
+    "revision_id": "8ebde7efbdc4d96e92e95760",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "bmw.bmw_x1",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:13+00:00",
+    "payload": {
+      "brand": {
+        "id": "bmw",
+        "name_en": "BMW",
+        "name_th": "บีเอ็มดับเบิลยู",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "BMW Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "บีเอ็มดับเบิลยู",
+          "bmw thailand"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "bmw.bmw_x1",
+        "brand_id": "bmw",
+        "name_en": "X1",
+        "name_th": "เอ็กซ์1",
+        "nameplate": "X1",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "x 1",
+          "X1 sDrive18i",
+          "X1 xDrive20d"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "bmw.bmw_x1.u11",
+          "model_id": "bmw.bmw_x1",
+          "code": "U11",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "bmw.bmw_x1.u11.1_5l_ice",
+          "generation_id": "bmw.bmw_x1.u11",
+          "name": "1.5L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1499,
+          "battery_kwh": null,
+          "price_thb": 2399000,
+          "price_min_thb": 2399000,
+          "price_max_thb": 2399000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "sDrive18i xLine",
+            "sDrive20i",
+            "sDrive20d",
+            "sDrive18i",
+            "sDrive18d",
+            "X1 sDrive20i",
+            "X1 sDrive20d"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "bmw.bmw_x1.u11.1_5l_phev",
+          "generation_id": "bmw.bmw_x1.u11",
+          "name": "1.5L PHEV",
+          "powertrain": "PHEV",
+          "drivetrain": "AWD",
+          "engine_cc": 1499,
+          "battery_kwh": 16.3,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "สเปกจากเอกสาร BMW ราคายังไม่ได้ตรวจ",
+          "aliases": [
+            "xDrive30e",
+            "sDrive30e",
+            "X1 xDrive30e"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "bmw.bmw_x1.u11.trim.sdrive18i_ice",
+          "generation_id": "bmw.bmw_x1.u11",
+          "name": "sDrive18i",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:034"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_x1.u11.trim.sdrive20i_xline_ice",
+          "generation_id": "bmw.bmw_x1.u11",
+          "name": "sDrive20i xLine",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:034"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_x1.u11.trim.sdrive20i_m_sport_ice",
+          "generation_id": "bmw.bmw_x1.u11",
+          "name": "sDrive20i M Sport",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4500,
+          "width_mm": 1845,
+          "height_mm": 1642,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:034"
+            ],
+            "eco": [
+              "1a853999-faa5-4093-92b7-5dca33a1868e"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_x1.u11.trim.xdrive25e_m_sport_phev_phev",
+          "generation_id": "bmw.bmw_x1.u11",
+          "name": "xDrive25e M Sport (PHEV)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:034"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

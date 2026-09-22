@@ -134,9 +134,20 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:030"
+                ],
+                "eco": [
+                  "d70c7cdb-3201-4d0d-b090-e90a8ffbe50b"
                 ]
               },
-              "id": "m340i_xdrive_ice"
+              "id": "m340i_xdrive_ice",
+              "seats": 5,
+              "length_mm": 4714,
+              "width_mm": 1827,
+              "height_mm": 1440,
+              "engine_cc": 2998,
+              "tire_front": "225/40R19",
+              "tire_rear": "255/35R19",
+              "transmission": "AUTOMATIC"
             },
             {
               "name": "330e Touring M Sport",
@@ -345,9 +356,18 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:034"
+                ],
+                "eco": [
+                  "8700bdad-8cee-4996-9fb8-d7f4cd4e29d2"
                 ]
               },
-              "id": "sdrive20i_xline_ice"
+              "id": "sdrive20i_xline_ice",
+              "seats": 5,
+              "length_mm": 4500,
+              "width_mm": 1845,
+              "height_mm": 1642,
+              "engine_cc": 1998,
+              "transmission": "AUTOMATIC"
             },
             {
               "name": "sDrive20i M Sport",
@@ -355,9 +375,18 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:034"
+                ],
+                "eco": [
+                  "1a853999-faa5-4093-92b7-5dca33a1868e"
                 ]
               },
-              "id": "sdrive20i_m_sport_ice"
+              "id": "sdrive20i_m_sport_ice",
+              "seats": 5,
+              "length_mm": 4500,
+              "width_mm": 1845,
+              "height_mm": 1642,
+              "engine_cc": 1998,
+              "transmission": "AUTOMATIC"
             },
             {
               "name": "xDrive25e M Sport (PHEV)",
@@ -441,9 +470,20 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:035"
+                ],
+                "eco": [
+                  "646ca105-ff71-4847-a9e2-7902a2ecb0a1"
                 ]
               },
-              "id": "xdrive20d_m_sport_ice"
+              "id": "xdrive20d_m_sport_ice",
+              "seats": 5,
+              "length_mm": 4708,
+              "width_mm": 1891,
+              "height_mm": 1676,
+              "engine_cc": 1995,
+              "tire_front": "245/45R20",
+              "tire_rear": "275/40R20",
+              "transmission": "AUTOMATIC"
             },
             {
               "name": "xDrive30e M Sport (PHEV)",
@@ -451,9 +491,20 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:035"
+                ],
+                "eco": [
+                  "c9432326-b020-45bd-8408-ba6662d8c6e5"
                 ]
               },
-              "id": "xdrive30e_m_sport_phev_phev"
+              "id": "xdrive30e_m_sport_phev_phev",
+              "seats": 5,
+              "length_mm": 4708,
+              "width_mm": 1891,
+              "height_mm": 1676,
+              "engine_cc": 1998,
+              "tire_front": "245/45R20",
+              "tire_rear": "275/40R20",
+              "transmission": "AUTOMATIC"
             },
             {
               "name": "M40i",
@@ -464,6 +515,23 @@
                 ]
               },
               "id": "m40i_ice"
+            },
+            {
+              "name": "M50 xDrive",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4755,
+              "width_mm": 1920,
+              "height_mm": 1660,
+              "engine_cc": 2998,
+              "tire_front": "255/40R21",
+              "tire_rear": "285/35R21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "d6c9d516-aa36-4031-87e0-c52199d59b8a"
+                ]
+              }
             }
           ]
         }
@@ -589,12 +657,21 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:032"
+                ],
+                "eco": [
+                  "e18d1a26-a0f4-4a1a-9cc9-ab4d74b7beba"
                 ]
               },
               "aliases": [
                 "i4 eDrive35 M Sport"
               ],
-              "id": "edrive35_m_sport_bev"
+              "id": "edrive35_m_sport_bev",
+              "seats": 5,
+              "length_mm": 4783,
+              "width_mm": 1852,
+              "height_mm": 1448,
+              "tire_front": "245/45R18",
+              "tire_rear": "255/45R18"
             },
             {
               "name": "eDrive40 M Sport",
@@ -621,6 +698,21 @@
                 "i4 M50"
               ],
               "id": "m50_bev"
+            },
+            {
+              "name": "M Sport",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4783,
+              "width_mm": 1852,
+              "height_mm": 1448,
+              "tire_front": "245/40R19",
+              "tire_rear": "255/40R19",
+              "source_refs": {
+                "eco": [
+                  "8b6381a62b2e42098dfbcde44d5701d2"
+                ]
+              }
             }
           ]
         }
@@ -1085,6 +1177,23 @@
                 ]
               },
               "id": "xdrive30d_m_sport_ice"
+            },
+            {
+              "name": "M Sport",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4960,
+              "width_mm": 2004,
+              "height_mm": 1700,
+              "engine_cc": 2998,
+              "tire_front": "275/35R22",
+              "tire_rear": "315/30R22",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "1917b250-5310-4951-ad9c-414bba10fa39"
+                ]
+              }
             }
           ]
         }
@@ -1430,9 +1539,20 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:048"
+                ],
+                "eco": [
+                  "cbb0f380-1111-45ac-b38e-c10a1360431f"
                 ]
               },
-              "id": "m40i_ice"
+              "id": "m40i_ice",
+              "seats": 2,
+              "length_mm": 4324,
+              "width_mm": 1864,
+              "height_mm": 1304,
+              "engine_cc": 2998,
+              "tire_front": "255/35ZR19",
+              "tire_rear": "275/35ZR19",
+              "transmission": "AUTOMATIC"
             }
           ]
         }
@@ -1506,12 +1626,23 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:047"
+                ],
+                "eco": [
+                  "c5c43185-7560-49a5-bdde-104f8e128319"
                 ]
               },
               "aliases": [
                 "XM Label Red (4.4L V8 PHEV, 748 hp)"
               ],
-              "id": "label_red_4_4l_v8_phev_748_hp_phev"
+              "id": "label_red_4_4l_v8_phev_748_hp_phev",
+              "seats": 5,
+              "length_mm": 5110,
+              "width_mm": 2005,
+              "height_mm": 1755,
+              "engine_cc": 4395,
+              "tire_front": "275/40R22",
+              "tire_rear": "315/35R22",
+              "transmission": "AUTOMATIC"
             }
           ]
         }

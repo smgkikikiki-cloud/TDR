@@ -1,0 +1,272 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "8f0b22dca526bdb7b42064cd",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:281",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mitsubishi.outlander_phev",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:04:04+00:00",
+    "before_hash": "c49b7d4e25bc57bbffab3828dbcd8a32c8832fea91f702315ee9f0b0f0c383ca",
+    "after_hash": "97c1c11d8323221e562058a6fb60dd6e5990aafe218a7889478ddd1f61fb06ec",
+    "before": {
+      "id": "outlander_phev",
+      "name_en": "Outlander PHEV",
+      "name_th": "เอาท์แลนเดอร์",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "GREY",
+      "aliases": [
+        "outlander"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "D",
+          "seats": 7,
+          "launched": "2022-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.4L PHEV",
+              "powertrain": "PHEV",
+              "drivetrain": "AWD",
+              "engine_cc": 2359,
+              "battery_kwh": 20.0,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "UNKNOWN",
+              "origin_country": "UNKNOWN",
+              "price_note": "grey import",
+              "aliases": []
+            }
+          ],
+          "trims": []
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "mitsubishi",
+        "name_en": "Mitsubishi",
+        "name_th": "มิตซูบิชิ",
+        "brand_segment": "MASS",
+        "oem_group": "Mitsubishi Motors",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "มิตซูบิชิ",
+          "mitsubishi motors"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mitsubishi.outlander_phev",
+        "brand_id": "mitsubishi",
+        "name_en": "Outlander PHEV",
+        "name_th": "เอาท์แลนเดอร์",
+        "nameplate": "Outlander PHEV",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "GREY",
+        "aliases": [
+          "outlander"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mitsubishi.outlander_phev.gen1",
+          "model_id": "mitsubishi.outlander_phev",
+          "code": "gen1",
+          "segment": "D",
+          "seats": 7,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mitsubishi.outlander_phev.gen1.2_4l_phev",
+          "generation_id": "mitsubishi.outlander_phev.gen1",
+          "name": "2.4L PHEV",
+          "powertrain": "PHEV",
+          "drivetrain": "AWD",
+          "engine_cc": 2359,
+          "battery_kwh": 20.0,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "UNKNOWN",
+          "origin_country": "UNKNOWN",
+          "price_note": "grey import",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mitsubishi.outlander_phev.gen1.trim.2_4_phev_gt_premium_phev",
+          "generation_id": "mitsubishi.outlander_phev.gen1",
+          "name": "2.4 PHEV GT-Premium",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2360,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4695,
+          "width_mm": 1800,
+          "height_mm": 1710,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "ecb34cfc0085472e9a5ba2d65101463b"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mitsubishi.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "8f0b22dca526bdb7b42064cd:catalog",
+    "revision_id": "8f0b22dca526bdb7b42064cd",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mitsubishi.outlander_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:04:04+00:00",
+    "payload": {
+      "brand": {
+        "id": "mitsubishi",
+        "name_en": "Mitsubishi",
+        "name_th": "มิตซูบิชิ",
+        "brand_segment": "MASS",
+        "oem_group": "Mitsubishi Motors",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "มิตซูบิชิ",
+          "mitsubishi motors"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mitsubishi.outlander_phev",
+        "brand_id": "mitsubishi",
+        "name_en": "Outlander PHEV",
+        "name_th": "เอาท์แลนเดอร์",
+        "nameplate": "Outlander PHEV",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "GREY",
+        "aliases": [
+          "outlander"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mitsubishi.outlander_phev.gen1",
+          "model_id": "mitsubishi.outlander_phev",
+          "code": "gen1",
+          "segment": "D",
+          "seats": 7,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mitsubishi.outlander_phev.gen1.2_4l_phev",
+          "generation_id": "mitsubishi.outlander_phev.gen1",
+          "name": "2.4L PHEV",
+          "powertrain": "PHEV",
+          "drivetrain": "AWD",
+          "engine_cc": 2359,
+          "battery_kwh": 20.0,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "UNKNOWN",
+          "origin_country": "UNKNOWN",
+          "price_note": "grey import",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mitsubishi.outlander_phev.gen1.trim.2_4_phev_gt_premium_phev",
+          "generation_id": "mitsubishi.outlander_phev.gen1",
+          "name": "2.4 PHEV GT-Premium",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2360,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4695,
+          "width_mm": 1800,
+          "height_mm": 1710,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "ecb34cfc0085472e9a5ba2d65101463b"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

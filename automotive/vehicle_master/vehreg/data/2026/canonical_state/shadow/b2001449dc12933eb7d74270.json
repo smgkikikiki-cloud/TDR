@@ -1,0 +1,637 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b2001449dc12933eb7d74270",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:130",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "volvo.xc40",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:49+00:00",
+    "before_hash": "880e55a959e5f7d26adf5c48dc3f39c1a84b26510dd5e74008e235cf5cdd14c8",
+    "after_hash": "43828a77a549c0da270d487c15818e6d845429f85bec81df634b1d269bda68a3",
+    "before": {
+      "id": "xc40",
+      "name_en": "XC40",
+      "name_th": "เอ็กซ์ซี40",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "xc 40",
+        "xc40 recharge"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "XC40G",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2018-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "78 kWh BEV AWD",
+              "powertrain": "BEV",
+              "drivetrain": "AWD",
+              "engine_cc": null,
+              "battery_kwh": 78.0,
+              "aliases": [
+                "Recharge Pure Electric"
+              ],
+              "overrides": {},
+              "price_thb": 2590000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 2590000,
+              "price_max_thb": 2590000
+            }
+          ],
+          "trims": [
+            {
+              "name": "B4 Mild Hybrid Plus Dark (197 hp)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:311"
+                ]
+              },
+              "id": "b4_mild_hybrid_plus_dark_197_hp_ice"
+            },
+            {
+              "name": "B4 Mild Hybrid Ultimate Dark (197 hp)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:311"
+                ]
+              },
+              "id": "b4_mild_hybrid_ultimate_dark_197_hp_ice"
+            },
+            {
+              "name": "Pure Electric Single Motor",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4440,
+              "width_mm": 1863,
+              "height_mm": 1647,
+              "tire_front": "235/50R19",
+              "tire_rear": "255/45R19",
+              "source_refs": {
+                "eco": [
+                  "4d4d26d1-e1f9-432f-917b-86f6d5e3ada2"
+                ]
+              }
+            },
+            {
+              "name": "Pure Electric Twin Motor",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4440,
+              "width_mm": 1873,
+              "height_mm": 1647,
+              "tire_front": "235/50R19",
+              "tire_rear": "255/45R19",
+              "source_refs": {
+                "eco": [
+                  "c79b80f1-1e46-4b8d-920e-c31227194224"
+                ]
+              }
+            },
+            {
+              "name": "Ultimate T5 Plug-in Hybrid Bright",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4440,
+              "width_mm": 1863,
+              "height_mm": 1657,
+              "engine_cc": 1477,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "3971a1fc-9edf-4171-a2a2-233d5b9335e3"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "volvo",
+        "name_en": "Volvo",
+        "name_th": "วอลโว่",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Geely",
+        "brand_origin": "SE",
+        "trim_detail": false,
+        "aliases": [
+          "วอลโว่"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "volvo.xc40",
+        "brand_id": "volvo",
+        "name_en": "XC40",
+        "name_th": "เอ็กซ์ซี40",
+        "nameplate": "XC40",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "xc 40",
+          "xc40 recharge"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "volvo.xc40.xc40g",
+          "model_id": "volvo.xc40",
+          "code": "XC40G",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2018-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "volvo.xc40.xc40g.78_kwh_bev_awd",
+          "generation_id": "volvo.xc40.xc40g",
+          "name": "78 kWh BEV AWD",
+          "powertrain": "BEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": 78.0,
+          "price_thb": 2590000,
+          "price_min_thb": 2590000,
+          "price_max_thb": 2590000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Recharge Pure Electric"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "volvo.xc40.xc40g.trim.b4_mild_hybrid_plus_dark_197_hp_ice",
+          "generation_id": "volvo.xc40.xc40g",
+          "name": "B4 Mild Hybrid Plus Dark (197 hp)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:311"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "volvo.xc40.xc40g.trim.b4_mild_hybrid_ultimate_dark_197_hp_ice",
+          "generation_id": "volvo.xc40.xc40g",
+          "name": "B4 Mild Hybrid Ultimate Dark (197 hp)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:311"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "volvo.xc40.xc40g.trim.pure_electric_single_bev",
+          "generation_id": "volvo.xc40.xc40g",
+          "name": "Pure Electric Single Motor",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4440,
+          "width_mm": 1863,
+          "height_mm": 1647,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R19",
+          "tire_rear": "255/45R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "4d4d26d1-e1f9-432f-917b-86f6d5e3ada2"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "volvo.xc40.xc40g.trim.pure_electric_twin_bev",
+          "generation_id": "volvo.xc40.xc40g",
+          "name": "Pure Electric Twin Motor",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4440,
+          "width_mm": 1873,
+          "height_mm": 1647,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R19",
+          "tire_rear": "255/45R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "c79b80f1-1e46-4b8d-920e-c31227194224"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "volvo.xc40.xc40g.trim.ultimate_t5_plug_in_hybrid_bright_phev",
+          "generation_id": "volvo.xc40.xc40g",
+          "name": "Ultimate T5 Plug-in Hybrid Bright",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1477,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4440,
+          "width_mm": 1863,
+          "height_mm": 1657,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "3971a1fc-9edf-4171-a2a2-233d5b9335e3"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "volvo.xc40.xc40g.trim.plus_t5_plug_in_hybrid_dark_phev",
+          "generation_id": "volvo.xc40.xc40g",
+          "name": "Plus T5 Plug-in Hybrid Dark",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1477,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4440,
+          "width_mm": 1863,
+          "height_mm": 1657,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "f90f1502-e2b1-4fbe-8dff-944fa26abd9e"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/volvo.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b2001449dc12933eb7d74270:catalog",
+    "revision_id": "b2001449dc12933eb7d74270",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "volvo.xc40",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:49+00:00",
+    "payload": {
+      "brand": {
+        "id": "volvo",
+        "name_en": "Volvo",
+        "name_th": "วอลโว่",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Geely",
+        "brand_origin": "SE",
+        "trim_detail": false,
+        "aliases": [
+          "วอลโว่"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "volvo.xc40",
+        "brand_id": "volvo",
+        "name_en": "XC40",
+        "name_th": "เอ็กซ์ซี40",
+        "nameplate": "XC40",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "xc 40",
+          "xc40 recharge"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "volvo.xc40.xc40g",
+          "model_id": "volvo.xc40",
+          "code": "XC40G",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2018-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "volvo.xc40.xc40g.78_kwh_bev_awd",
+          "generation_id": "volvo.xc40.xc40g",
+          "name": "78 kWh BEV AWD",
+          "powertrain": "BEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": 78.0,
+          "price_thb": 2590000,
+          "price_min_thb": 2590000,
+          "price_max_thb": 2590000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Recharge Pure Electric"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "volvo.xc40.xc40g.trim.b4_mild_hybrid_plus_dark_197_hp_ice",
+          "generation_id": "volvo.xc40.xc40g",
+          "name": "B4 Mild Hybrid Plus Dark (197 hp)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:311"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "volvo.xc40.xc40g.trim.b4_mild_hybrid_ultimate_dark_197_hp_ice",
+          "generation_id": "volvo.xc40.xc40g",
+          "name": "B4 Mild Hybrid Ultimate Dark (197 hp)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:311"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "volvo.xc40.xc40g.trim.pure_electric_single_bev",
+          "generation_id": "volvo.xc40.xc40g",
+          "name": "Pure Electric Single Motor",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4440,
+          "width_mm": 1863,
+          "height_mm": 1647,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R19",
+          "tire_rear": "255/45R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "4d4d26d1-e1f9-432f-917b-86f6d5e3ada2"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "volvo.xc40.xc40g.trim.pure_electric_twin_bev",
+          "generation_id": "volvo.xc40.xc40g",
+          "name": "Pure Electric Twin Motor",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4440,
+          "width_mm": 1873,
+          "height_mm": 1647,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R19",
+          "tire_rear": "255/45R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "c79b80f1-1e46-4b8d-920e-c31227194224"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "volvo.xc40.xc40g.trim.ultimate_t5_plug_in_hybrid_bright_phev",
+          "generation_id": "volvo.xc40.xc40g",
+          "name": "Ultimate T5 Plug-in Hybrid Bright",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1477,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4440,
+          "width_mm": 1863,
+          "height_mm": 1657,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "3971a1fc-9edf-4171-a2a2-233d5b9335e3"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "volvo.xc40.xc40g.trim.plus_t5_plug_in_hybrid_dark_phev",
+          "generation_id": "volvo.xc40.xc40g",
+          "name": "Plus T5 Plug-in Hybrid Dark",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1477,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4440,
+          "width_mm": 1863,
+          "height_mm": 1657,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "f90f1502-e2b1-4fbe-8dff-944fa26abd9e"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

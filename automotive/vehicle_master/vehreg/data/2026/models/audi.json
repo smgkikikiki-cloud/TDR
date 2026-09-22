@@ -57,12 +57,21 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:013"
+                ],
+                "eco": [
+                  "6111171ad4c1465ab238e4390487d230"
                 ]
               },
               "aliases": [
                 "Q3 35 TFSI"
               ],
-              "id": "35_tfsi_ice"
+              "id": "35_tfsi_ice",
+              "seats": 5,
+              "length_mm": 4484,
+              "width_mm": 1849,
+              "height_mm": 1616,
+              "engine_cc": 1395,
+              "transmission": "AUTOMATIC"
             },
             {
               "name": "35 TFSI S line",
@@ -70,12 +79,21 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:013"
+                ],
+                "eco": [
+                  "5614de86-218c-4c2c-b3ec-e3791818ea6d"
                 ]
               },
               "aliases": [
                 "Q3 35 TFSI S line"
               ],
-              "id": "35_tfsi_s_line_ice"
+              "id": "35_tfsi_s_line_ice",
+              "seats": 5,
+              "length_mm": 4484,
+              "width_mm": 1849,
+              "height_mm": 1616,
+              "engine_cc": 1395,
+              "transmission": "AUTOMATIC"
             },
             {
               "name": "40 TFSI quattro S line Black Edition",
@@ -83,12 +101,21 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:013"
+                ],
+                "eco": [
+                  "d226b496-d4d3-4c9d-ace2-19cff508ef91"
                 ]
               },
               "aliases": [
                 "Q3 40 TFSI quattro S line Black Edition"
               ],
-              "id": "40_tfsi_quattro_s_line_black_edition_ice"
+              "id": "40_tfsi_quattro_s_line_black_edition_ice",
+              "seats": 5,
+              "length_mm": 4484,
+              "width_mm": 1849,
+              "height_mm": 1616,
+              "engine_cc": 1984,
+              "transmission": "AUTOMATIC"
             },
             {
               "name": "Sportback 35 TFSI S line",
@@ -96,12 +123,21 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:013"
+                ],
+                "eco": [
+                  "ff512c2c3f194bc285e860f92e697107"
                 ]
               },
               "aliases": [
                 "Q3 Sportback 35 TFSI S line"
               ],
-              "id": "sportback_35_tfsi_s_line_ice"
+              "id": "sportback_35_tfsi_s_line_ice",
+              "seats": 5,
+              "length_mm": 4500,
+              "width_mm": 1843,
+              "height_mm": 1567,
+              "engine_cc": 1395,
+              "transmission": "AUTOMATIC"
             },
             {
               "name": "Sportback 40 TFSI quattro S line Black Edition",
@@ -109,12 +145,81 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:013"
+                ],
+                "eco": [
+                  "642de555-48c6-4074-be2a-ed20b0aa0915"
                 ]
               },
               "aliases": [
                 "Q3 Sportback 40 TFSI quattro S line Black Edition"
               ],
-              "id": "sportback_40_tfsi_quattro_s_line_black_edition_ice"
+              "id": "sportback_40_tfsi_quattro_s_line_black_edition_ice",
+              "seats": 5,
+              "length_mm": 4500,
+              "width_mm": 1843,
+              "height_mm": 1567,
+              "engine_cc": 1984,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "name": "S line Tech Plus",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4531,
+              "width_mm": 1859,
+              "height_mm": 1601,
+              "engine_cc": 1498,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "b9a4dcd1-c2a1-4b3d-b867-fe889686be93"
+                ]
+              }
+            },
+            {
+              "name": "Sportback quattro S line Tech Pro",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4531,
+              "width_mm": 1859,
+              "height_mm": 1559,
+              "engine_cc": 1984,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "d966025c-123f-493a-91d1-48d7248596a4"
+                ]
+              }
+            },
+            {
+              "name": "RS Sportback quattro",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4507,
+              "width_mm": 1851,
+              "height_mm": 1557,
+              "engine_cc": 2480,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "f94a3e8f-f9a9-4117-8637-058ca299fe2d"
+                ]
+              }
+            },
+            {
+              "name": "RS Sportback edition 10 years",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4507,
+              "width_mm": 1851,
+              "height_mm": 1557,
+              "engine_cc": 2480,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "76d39365-5163-4e52-9011-1319bb1fe4c8"
+                ]
+              }
             }
           ]
         }
@@ -204,12 +309,21 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:014"
+                ],
+                "eco": [
+                  "0b9c7a8a-b9da-4f0d-ba3b-ff71fa5c7b13"
                 ]
               },
               "aliases": [
                 "Q5 Sportback 55 TFSI e quattro S line Black Edition"
               ],
-              "id": "sportback_55_tfsi_e_quattro_s_line_black_edition_phev"
+              "id": "sportback_55_tfsi_e_quattro_s_line_black_edition_phev",
+              "seats": 5,
+              "length_mm": 4689,
+              "width_mm": 2140,
+              "height_mm": 1658,
+              "engine_cc": 1984,
+              "transmission": "AUTOMATIC"
             }
           ]
         }
@@ -256,12 +370,21 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:006"
+                ],
+                "eco": [
+                  "70df451ca3c04bd58acf483aabc89912"
                 ]
               },
               "aliases": [
                 "A1 Sportback 35 TFSI S line"
               ],
-              "id": "sportback_35_tfsi_s_line_ice"
+              "id": "sportback_35_tfsi_s_line_ice",
+              "seats": 5,
+              "length_mm": 4029,
+              "width_mm": 1940,
+              "height_mm": 1409,
+              "engine_cc": 1498,
+              "transmission": "AUTOMATIC"
             },
             {
               "name": "Sportback 35 TFSI Edition One",
@@ -354,6 +477,21 @@
                 "A4 Avant 45 TFSI quattro S line Black Edition (Station Wagon)"
               ],
               "id": "avant_45_tfsi_quattro_s_line_black_edition_station_wagon_ice"
+            },
+            {
+              "name": "40 TFSI S line",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4762,
+              "width_mm": 1847,
+              "height_mm": 1428,
+              "engine_cc": 1984,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "e1b09021-4284-4211-8b78-625a9939c8ab"
+                ]
+              }
             }
           ]
         }
@@ -448,6 +586,66 @@
                 "A5 Sportback 45 TFSI quattro S line Black Edition"
               ],
               "id": "sportback_45_tfsi_quattro_s_line_black_edition_ice"
+            },
+            {
+              "name": "Sportback e-hybrid quattro Tech Pro",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4829,
+              "width_mm": 1860,
+              "height_mm": 1443,
+              "engine_cc": 1984,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "ec94d6d2-ceca-4c7d-b15d-23fddb5b2e9d"
+                ]
+              }
+            },
+            {
+              "name": "e-hybrid quattro Tech Plus",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4829,
+              "width_mm": 1860,
+              "height_mm": 1458,
+              "engine_cc": 1984,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "0d8d8e0d-06ee-449d-ba28-c16bee134420"
+                ]
+              }
+            },
+            {
+              "name": "e-hybrid quattro Tech Pro",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4829,
+              "width_mm": 1860,
+              "height_mm": 1458,
+              "engine_cc": 1984,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "bff1c0a2-b034-4b4b-82b2-0bb3cdafec85"
+                ]
+              }
+            },
+            {
+              "name": "Sportback e-hybrid quattro Tech Plus",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4829,
+              "width_mm": 1860,
+              "height_mm": 1443,
+              "engine_cc": 1984,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "8beae883-d002-431b-a85f-f4e9c19aee38"
+                ]
+              }
             }
           ]
         }
@@ -507,12 +705,36 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:011"
+                ],
+                "eco": [
+                  "44322647-1272-4fcd-b2c6-8949f5f5c1aa"
                 ]
               },
               "aliases": [
                 "A7 Sportback 55 TFSI e quattro S line Black Edition"
               ],
-              "id": "sportback_55_tfsi_e_quattro_s_line_black_edition_phev"
+              "id": "sportback_55_tfsi_e_quattro_s_line_black_edition_phev",
+              "seats": 5,
+              "length_mm": 4969,
+              "width_mm": 1908,
+              "height_mm": 1421,
+              "engine_cc": 1984,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "name": "Sportback 55 TFSI e quattro S line",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4969,
+              "width_mm": 1908,
+              "height_mm": 1421,
+              "engine_cc": 1984,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "0128920e-65e2-41cd-b7d3-74fcaaa5e9fb"
+                ]
+              }
             }
           ]
         }
@@ -639,12 +861,21 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:019"
+                ],
+                "eco": [
+                  "3a93dd56-e690-4555-a3db-97e1a06e2bfc"
                 ]
               },
               "aliases": [
                 "Q8 60 TFSI e quattro S line Black Edition"
               ],
-              "id": "60_tfsi_e_quattro_s_line_black_edition_phev"
+              "id": "60_tfsi_e_quattro_s_line_black_edition_phev",
+              "seats": 5,
+              "length_mm": 5063,
+              "width_mm": 1970,
+              "height_mm": 1741,
+              "engine_cc": 2995,
+              "transmission": "AUTOMATIC"
             }
           ]
         }
@@ -706,12 +937,21 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:022"
+                ],
+                "eco": [
+                  "45c338b501144c5b91d519e33be7f5e8"
                 ]
               },
               "aliases": [
                 "TT Roadster 45 TFSI quattro S line"
               ],
-              "id": "roadster_45_tfsi_quattro_s_line_ice"
+              "id": "roadster_45_tfsi_quattro_s_line_ice",
+              "seats": 2,
+              "length_mm": 4191,
+              "width_mm": 1832,
+              "height_mm": 1355,
+              "engine_cc": 1984,
+              "transmission": "AUTOMATIC"
             },
             {
               "name": "TTS Coupe quattro",
@@ -946,6 +1186,32 @@
                 ]
               },
               "id": "e_tron_sportback_55_quattro_s_line_bev"
+            },
+            {
+              "name": "quattro",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4901,
+              "width_mm": 1935,
+              "height_mm": 1692,
+              "source_refs": {
+                "eco": [
+                  "b73f15dba35c4beea606e04334a5b41c"
+                ]
+              }
+            },
+            {
+              "name": "Sportback 55 quattro S line",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4901,
+              "width_mm": 1935,
+              "height_mm": 1616,
+              "source_refs": {
+                "eco": [
+                  "e73f518462df40d1aadcb799a64f8ab8"
+                ]
+              }
             }
           ]
         }
@@ -1020,6 +1286,36 @@
                 ]
               },
               "id": "rs_e_tron_gt_bev"
+            },
+            {
+              "name": "RS",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4989,
+              "width_mm": 1964,
+              "height_mm": 1414,
+              "tire_front": "265/35R21",
+              "tire_rear": "305/30R21",
+              "source_refs": {
+                "eco": [
+                  "ff6fa8c416e946088227524bab37f457"
+                ]
+              }
+            },
+            {
+              "name": "e-tron GT quattro",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4989,
+              "width_mm": 1964,
+              "height_mm": 1413,
+              "tire_front": "245/45R20",
+              "tire_rear": "285/40R20",
+              "source_refs": {
+                "eco": [
+                  "cea23dc3fcbe4877a1753948b9edfbfb"
+                ]
+              }
             }
           ]
         }
@@ -1438,6 +1734,21 @@
                 ]
               },
               "id": "a6_avant_55_tfsi_e_quattro_s_line_black_edition_phev"
+            },
+            {
+              "name": "Avant 40 TFSI S line",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4939,
+              "width_mm": 1886,
+              "height_mm": 1467,
+              "engine_cc": 1984,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "20ae68103f5d4438ac17374270fe40c1"
+                ]
+              }
             }
           ]
         }

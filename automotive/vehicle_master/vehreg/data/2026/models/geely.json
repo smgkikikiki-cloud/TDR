@@ -47,6 +47,34 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "MAX",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4615,
+              "width_mm": 1901,
+              "height_mm": 1670,
+              "source_refs": {
+                "eco": [
+                  "37246a6e-1259-49dc-a13f-60892a00cf7e"
+                ]
+              }
+            },
+            {
+              "name": "PRO",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4615,
+              "width_mm": 1901,
+              "height_mm": 1670,
+              "source_refs": {
+                "eco": [
+                  "1d8a3c3a-2ce6-4dfd-8ba1-9d3454478c39"
+                ]
+              }
+            }
           ]
         }
       ],

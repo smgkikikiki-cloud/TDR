@@ -1,0 +1,483 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "999b4bcc34461a21edc96c7a",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:280",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "toyota.harrier",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:04:04+00:00",
+    "before_hash": "3f8a96aea08c1225faa2541ea61ccdab38c3680d057a0ca63c8c0d0231a1a4c9",
+    "after_hash": "b79515c7e33d6d95beb70c7e32e017c9bd7b9ec7a5afbb532d7fc9c7def82c65",
+    "before": {
+      "id": "harrier",
+      "name_en": "Harrier",
+      "name_th": "แฮริเออร์",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "GREY",
+      "aliases": [],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "grey import",
+              "powertrain": "UNKNOWN",
+              "drivetrain": "UNKNOWN",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "UNKNOWN",
+              "origin_country": "UNKNOWN",
+              "price_note": "grey import, spec not tracked",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "2.5 HEV E-Four (AWD)",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:282"
+                ]
+              },
+              "id": "2_5_hev_e_four_awd_hev"
+            },
+            {
+              "name": "HARRIER",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4740,
+              "width_mm": 1660,
+              "height_mm": 1855,
+              "engine_cc": 1986,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "a56bc17440b640b2b92a39b0450ebfe5"
+                ]
+              }
+            },
+            {
+              "name": "Z LEATHER PACKAGE",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4740,
+              "width_mm": 1855,
+              "height_mm": 1660,
+              "engine_cc": 1986,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "5b814b88758244bb9477bb8e01e54036"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "toyota",
+        "name_en": "Toyota",
+        "name_th": "โตโยต้า",
+        "brand_segment": "MASS",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "โตโยต้า",
+          "toyota motor thailand",
+          "TMT"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "toyota.harrier",
+        "brand_id": "toyota",
+        "name_en": "Harrier",
+        "name_th": "แฮริเออร์",
+        "nameplate": "Harrier",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "GREY",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "toyota.harrier.gen1",
+          "model_id": "toyota.harrier",
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "toyota.harrier.gen1.grey_import",
+          "generation_id": "toyota.harrier.gen1",
+          "name": "grey import",
+          "powertrain": "UNKNOWN",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "UNKNOWN",
+          "origin_country": "UNKNOWN",
+          "price_note": "grey import, spec not tracked",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "toyota.harrier.gen1.trim.2_5_hev_e_four_awd_hev",
+          "generation_id": "toyota.harrier.gen1",
+          "name": "2.5 HEV E-Four (AWD)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:282"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.harrier.gen1.trim.harrier_ice",
+          "generation_id": "toyota.harrier.gen1",
+          "name": "HARRIER",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1986,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4740,
+          "width_mm": 1660,
+          "height_mm": 1855,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "a56bc17440b640b2b92a39b0450ebfe5"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.harrier.gen1.trim.z_leather_package_ice",
+          "generation_id": "toyota.harrier.gen1",
+          "name": "Z LEATHER PACKAGE",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1986,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4740,
+          "width_mm": 1855,
+          "height_mm": 1660,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "5b814b88758244bb9477bb8e01e54036"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.harrier.gen1.trim.2_0_g_ice",
+          "generation_id": "toyota.harrier.gen1",
+          "name": "2.0 G",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1986,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4740,
+          "width_mm": 1855,
+          "height_mm": 1660,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "2d90ecb475134e6ab21e79a4f1e6b6fc"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/toyota.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "999b4bcc34461a21edc96c7a:catalog",
+    "revision_id": "999b4bcc34461a21edc96c7a",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "toyota.harrier",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:04:04+00:00",
+    "payload": {
+      "brand": {
+        "id": "toyota",
+        "name_en": "Toyota",
+        "name_th": "โตโยต้า",
+        "brand_segment": "MASS",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "โตโยต้า",
+          "toyota motor thailand",
+          "TMT"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "toyota.harrier",
+        "brand_id": "toyota",
+        "name_en": "Harrier",
+        "name_th": "แฮริเออร์",
+        "nameplate": "Harrier",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "GREY",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "toyota.harrier.gen1",
+          "model_id": "toyota.harrier",
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "toyota.harrier.gen1.grey_import",
+          "generation_id": "toyota.harrier.gen1",
+          "name": "grey import",
+          "powertrain": "UNKNOWN",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "UNKNOWN",
+          "origin_country": "UNKNOWN",
+          "price_note": "grey import, spec not tracked",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "toyota.harrier.gen1.trim.2_5_hev_e_four_awd_hev",
+          "generation_id": "toyota.harrier.gen1",
+          "name": "2.5 HEV E-Four (AWD)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:282"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.harrier.gen1.trim.harrier_ice",
+          "generation_id": "toyota.harrier.gen1",
+          "name": "HARRIER",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1986,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4740,
+          "width_mm": 1660,
+          "height_mm": 1855,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "a56bc17440b640b2b92a39b0450ebfe5"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.harrier.gen1.trim.z_leather_package_ice",
+          "generation_id": "toyota.harrier.gen1",
+          "name": "Z LEATHER PACKAGE",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1986,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4740,
+          "width_mm": 1855,
+          "height_mm": 1660,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "5b814b88758244bb9477bb8e01e54036"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.harrier.gen1.trim.2_0_g_ice",
+          "generation_id": "toyota.harrier.gen1",
+          "name": "2.0 G",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1986,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4740,
+          "width_mm": 1855,
+          "height_mm": 1660,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "2d90ecb475134e6ab21e79a4f1e6b6fc"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

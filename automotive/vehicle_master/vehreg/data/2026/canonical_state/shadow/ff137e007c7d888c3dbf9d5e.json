@@ -1,0 +1,563 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ff137e007c7d888c3dbf9d5e",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:78",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "toyota.voxy",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:44+00:00",
+    "before_hash": "3717d5fe477ed9db7e963a08c1b6e681c3186dd58853effa9a3a79576087b556",
+    "after_hash": "6307f364782c70e204cfb9554b230e0508278a1d9b18dfbe16c205aac82809a8",
+    "before": {
+      "id": "voxy",
+      "name_en": "Voxy",
+      "name_th": "วอกซี่",
+      "nameplate": "",
+      "body_type": "MPV",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "GREY",
+      "aliases": [],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "C",
+          "seats": 7,
+          "launched": "2023-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "grey import",
+              "powertrain": "UNKNOWN",
+              "drivetrain": "UNKNOWN",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "UNKNOWN",
+              "origin_country": "UNKNOWN",
+              "price_note": "grey import, spec not tracked",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Hybrid S-Z (Captain Ottoman Seats)",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:296"
+                ]
+              },
+              "aliases": [
+                "Voxy Hybrid S-Z (Captain Ottoman Seats)"
+              ],
+              "id": "hybrid_s_z_captain_ottoman_seats_hev"
+            },
+            {
+              "name": "HYBRID S-Z 2WD CAR",
+              "powertrain": "HEV",
+              "seats": 7,
+              "length_mm": 4695,
+              "width_mm": 1730,
+              "height_mm": 1895,
+              "engine_cc": 1797,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "a1167020-6827-48a7-aff6-15b3cb33626c"
+                ]
+              }
+            },
+            {
+              "name": "HYBRID SZ",
+              "powertrain": "HEV",
+              "seats": 7,
+              "length_mm": 4695,
+              "width_mm": 1730,
+              "height_mm": 1895,
+              "engine_cc": 1797,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "e128fb4b-94ea-4f6b-a466-264a69892007"
+                ]
+              }
+            },
+            {
+              "name": "SZ",
+              "powertrain": "ICE",
+              "seats": 7,
+              "length_mm": 4695,
+              "width_mm": 1730,
+              "height_mm": 1895,
+              "engine_cc": 1986,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "a0f8745e-c011-40a4-9575-dc6d93e2018d"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "toyota",
+        "name_en": "Toyota",
+        "name_th": "โตโยต้า",
+        "brand_segment": "MASS",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "โตโยต้า",
+          "toyota motor thailand",
+          "TMT"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "toyota.voxy",
+        "brand_id": "toyota",
+        "name_en": "Voxy",
+        "name_th": "วอกซี่",
+        "nameplate": "Voxy",
+        "body_type": "MPV",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "GREY",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "toyota.voxy.gen1",
+          "model_id": "toyota.voxy",
+          "code": "gen1",
+          "segment": "C",
+          "seats": 7,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "toyota.voxy.gen1.grey_import",
+          "generation_id": "toyota.voxy.gen1",
+          "name": "grey import",
+          "powertrain": "UNKNOWN",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "UNKNOWN",
+          "origin_country": "UNKNOWN",
+          "price_note": "grey import, spec not tracked",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "toyota.voxy.gen1.trim.hybrid_s_z_captain_ottoman_seats_hev",
+          "generation_id": "toyota.voxy.gen1",
+          "name": "Hybrid S-Z (Captain Ottoman Seats)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Voxy Hybrid S-Z (Captain Ottoman Seats)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:296"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.voxy.gen1.trim.hybrid_s_z_2wd_car_hev",
+          "generation_id": "toyota.voxy.gen1",
+          "name": "HYBRID S-Z 2WD CAR",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1797,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4695,
+          "width_mm": 1730,
+          "height_mm": 1895,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "a1167020-6827-48a7-aff6-15b3cb33626c"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.voxy.gen1.trim.hybrid_sz_hev",
+          "generation_id": "toyota.voxy.gen1",
+          "name": "HYBRID SZ",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1797,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4695,
+          "width_mm": 1730,
+          "height_mm": 1895,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "e128fb4b-94ea-4f6b-a466-264a69892007"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.voxy.gen1.trim.sz_ice",
+          "generation_id": "toyota.voxy.gen1",
+          "name": "SZ",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1986,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4695,
+          "width_mm": 1730,
+          "height_mm": 1895,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "a0f8745e-c011-40a4-9575-dc6d93e2018d"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.voxy.gen1.trim.s_z_2wd_ice",
+          "generation_id": "toyota.voxy.gen1",
+          "name": "S-Z 2WD",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1986,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4695,
+          "width_mm": 1730,
+          "height_mm": 1895,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "6054d576-c216-4437-a4de-719afcb2366b"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/toyota.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ff137e007c7d888c3dbf9d5e:catalog",
+    "revision_id": "ff137e007c7d888c3dbf9d5e",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "toyota.voxy",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:44+00:00",
+    "payload": {
+      "brand": {
+        "id": "toyota",
+        "name_en": "Toyota",
+        "name_th": "โตโยต้า",
+        "brand_segment": "MASS",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "โตโยต้า",
+          "toyota motor thailand",
+          "TMT"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "toyota.voxy",
+        "brand_id": "toyota",
+        "name_en": "Voxy",
+        "name_th": "วอกซี่",
+        "nameplate": "Voxy",
+        "body_type": "MPV",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "GREY",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "toyota.voxy.gen1",
+          "model_id": "toyota.voxy",
+          "code": "gen1",
+          "segment": "C",
+          "seats": 7,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "toyota.voxy.gen1.grey_import",
+          "generation_id": "toyota.voxy.gen1",
+          "name": "grey import",
+          "powertrain": "UNKNOWN",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "UNKNOWN",
+          "origin_country": "UNKNOWN",
+          "price_note": "grey import, spec not tracked",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "toyota.voxy.gen1.trim.hybrid_s_z_captain_ottoman_seats_hev",
+          "generation_id": "toyota.voxy.gen1",
+          "name": "Hybrid S-Z (Captain Ottoman Seats)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Voxy Hybrid S-Z (Captain Ottoman Seats)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:296"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.voxy.gen1.trim.hybrid_s_z_2wd_car_hev",
+          "generation_id": "toyota.voxy.gen1",
+          "name": "HYBRID S-Z 2WD CAR",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1797,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4695,
+          "width_mm": 1730,
+          "height_mm": 1895,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "a1167020-6827-48a7-aff6-15b3cb33626c"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.voxy.gen1.trim.hybrid_sz_hev",
+          "generation_id": "toyota.voxy.gen1",
+          "name": "HYBRID SZ",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1797,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4695,
+          "width_mm": 1730,
+          "height_mm": 1895,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "e128fb4b-94ea-4f6b-a466-264a69892007"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.voxy.gen1.trim.sz_ice",
+          "generation_id": "toyota.voxy.gen1",
+          "name": "SZ",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1986,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4695,
+          "width_mm": 1730,
+          "height_mm": 1895,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "a0f8745e-c011-40a4-9575-dc6d93e2018d"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.voxy.gen1.trim.s_z_2wd_ice",
+          "generation_id": "toyota.voxy.gen1",
+          "name": "S-Z 2WD",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1986,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4695,
+          "width_mm": 1730,
+          "height_mm": 1895,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "6054d576-c216-4437-a4de-719afcb2366b"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

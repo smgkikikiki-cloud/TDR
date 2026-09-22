@@ -1,0 +1,443 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f83d19356ab72a23fd205b97",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:300",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "avatr.avatr_11",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:26+00:00",
+    "before_hash": "64b4966b631d599463deaa5ed7f628395ed2de152a910785e14c31d9482183ff",
+    "after_hash": "a18a244e393627241a539d0af2986f19e0554874e2b989c9517fcf030e130603",
+    "before": {
+      "id": "avatr_11",
+      "name_en": "Avatr 11",
+      "name_th": "อาวาตาร์ 11",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "avatr 11",
+        "11"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2024-06-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "90 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "AWD",
+              "engine_cc": null,
+              "battery_kwh": 90.4,
+              "price_thb": 2599000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Standard Range (RWD)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:024"
+                ]
+              },
+              "aliases": [
+                "Avatr 11 Standard Range (RWD)"
+              ],
+              "id": "standard_range_rwd_bev"
+            },
+            {
+              "name": "Long Range (RWD)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:024"
+                ]
+              },
+              "aliases": [
+                "Avatr 11 Long Range (RWD)"
+              ],
+              "id": "long_range_rwd_bev"
+            },
+            {
+              "name": "Royal Edition AWD (Dual Motor)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:024"
+                ]
+              },
+              "aliases": [
+                "Avatr 11 Royal Edition AWD (Dual Motor)"
+              ],
+              "id": "royal_edition_awd_dual_motor_bev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "avatr",
+        "name_en": "Avatr",
+        "name_th": "อาวาตาร์",
+        "brand_segment": "PREMIUM_TECH",
+        "oem_group": "Changan",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "avatr.avatr_11",
+        "brand_id": "avatr",
+        "name_en": "Avatr 11",
+        "name_th": "อาวาตาร์ 11",
+        "nameplate": "Avatr 11",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "avatr 11",
+          "11"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "avatr.avatr_11.gen1",
+          "model_id": "avatr.avatr_11",
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2024-06-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "avatr.avatr_11.gen1.90_kwh_bev",
+          "generation_id": "avatr.avatr_11.gen1",
+          "name": "90 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": 90.4,
+          "price_thb": 2599000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "avatr.avatr_11.gen1.trim.standard_range_rwd_bev",
+          "generation_id": "avatr.avatr_11.gen1",
+          "name": "Standard Range (RWD)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Avatr 11 Standard Range (RWD)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:024"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "avatr.avatr_11.gen1.trim.long_range_rwd_bev",
+          "generation_id": "avatr.avatr_11.gen1",
+          "name": "Long Range (RWD)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4880,
+          "width_mm": 1970,
+          "height_mm": 1601,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Avatr 11 Long Range (RWD)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:024"
+            ],
+            "eco": [
+              "1dba1f1d-8e6c-4984-ae15-de9206d2eb17"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+          "generation_id": "avatr.avatr_11.gen1",
+          "name": "Royal Edition AWD (Dual Motor)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Avatr 11 Royal Edition AWD (Dual Motor)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:024"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/avatr.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f83d19356ab72a23fd205b97:catalog",
+    "revision_id": "f83d19356ab72a23fd205b97",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "avatr.avatr_11",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:26+00:00",
+    "payload": {
+      "brand": {
+        "id": "avatr",
+        "name_en": "Avatr",
+        "name_th": "อาวาตาร์",
+        "brand_segment": "PREMIUM_TECH",
+        "oem_group": "Changan",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "avatr.avatr_11",
+        "brand_id": "avatr",
+        "name_en": "Avatr 11",
+        "name_th": "อาวาตาร์ 11",
+        "nameplate": "Avatr 11",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "avatr 11",
+          "11"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "avatr.avatr_11.gen1",
+          "model_id": "avatr.avatr_11",
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2024-06-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "avatr.avatr_11.gen1.90_kwh_bev",
+          "generation_id": "avatr.avatr_11.gen1",
+          "name": "90 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": 90.4,
+          "price_thb": 2599000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "avatr.avatr_11.gen1.trim.standard_range_rwd_bev",
+          "generation_id": "avatr.avatr_11.gen1",
+          "name": "Standard Range (RWD)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Avatr 11 Standard Range (RWD)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:024"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "avatr.avatr_11.gen1.trim.long_range_rwd_bev",
+          "generation_id": "avatr.avatr_11.gen1",
+          "name": "Long Range (RWD)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4880,
+          "width_mm": 1970,
+          "height_mm": 1601,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Avatr 11 Long Range (RWD)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:024"
+            ],
+            "eco": [
+              "1dba1f1d-8e6c-4984-ae15-de9206d2eb17"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+          "generation_id": "avatr.avatr_11.gen1",
+          "name": "Royal Edition AWD (Dual Motor)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Avatr 11 Royal Edition AWD (Dual Motor)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:024"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

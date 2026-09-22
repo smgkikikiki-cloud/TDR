@@ -1,0 +1,4724 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "1d9ab43396c76bb4d368590e",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:127",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "toyota.alphard",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:49+00:00",
+    "before_hash": "8c43f23b42b3bcdf056935ecb2b299e0856339c0e12e3ffe0a8a6947a0363cad",
+    "after_hash": "aa57c4725212d336aa52cb987718e610592e1e68df0fec29e63de5896df57ffd",
+    "before": {
+      "id": "alphard",
+      "name_en": "Alphard",
+      "name_th": "อัลพาร์ด",
+      "nameplate": "",
+      "body_type": "MPV",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "NICHE",
+      "aliases": [],
+      "notes": "",
+      "generations": [
+        {
+          "code": "AH40",
+          "segment": "E",
+          "seats": 7,
+          "launched": "2023-09-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.5L HEV AWD",
+              "powertrain": "HEV",
+              "drivetrain": "AWD",
+              "engine_cc": 2487,
+              "battery_kwh": 1.0,
+              "aliases": [
+                "2.5 HEV Executive Lounge"
+              ],
+              "overrides": {},
+              "price_thb": 4599000,
+              "import_type": "CBU",
+              "origin_country": "JP",
+              "price_note": "seed-unverified",
+              "price_min_thb": 4599000,
+              "price_max_thb": 4599000
+            }
+          ],
+          "trims": [
+            {
+              "id": "2_5_g",
+              "name": "2.5 G",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "136d3939ed28488790a5f2d02ffd03c4"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4945,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "235/50R18",
+              "tire_rear": "235/50R18"
+            },
+            {
+              "id": "2_5_hev",
+              "name": "2.5 HEV",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "d68f8f3a-fb1a-424d-8cab-6b4f9fa8c128"
+                ],
+                "owner_directory": [
+                  "owner_directory_2026_09_13:270"
+                ],
+                "eco": [
+                  "d68f8f3a-fb1a-424d-8cab-6b4f9fa8c128"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 5010,
+              "width_mm": 1850,
+              "height_mm": 1945,
+              "tire_front": "225/65R17",
+              "tire_rear": "225/65R17",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "2_5_hev_luxury",
+              "name": "2.5 HEV Luxury",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "a73b7c7c-5fd0-4277-97e2-8eb7ee38a0ab"
+                ],
+                "eco": [
+                  "a73b7c7c-5fd0-4277-97e2-8eb7ee38a0ab"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 5010,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "225/55R19",
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "2_5_hybrid_executive_lounge",
+              "name": "2.5 HYBRID EXECUTIVE LOUNGE",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "a6597e6fc4284395869bf69809dc8d16"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4945,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "215/65R16",
+              "tire_rear": "215/65R16"
+            },
+            {
+              "id": "2_5_hybrid_g",
+              "name": "2.5 HYBRID G",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "9a8a486f-199f-435d-8cf4-3d9f4d3f6ec7"
+                ],
+                "eco": [
+                  "9a8a486f-199f-435d-8cf4-3d9f4d3f6ec7"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4995,
+              "width_mm": 1850,
+              "height_mm": 1935,
+              "tire_front": "225/60R18",
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "2_5_hybrid_g_f_package",
+              "name": "2.5 HYBRID G F Package",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "c69e287a45354033a601f6114d1b12b8"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4945,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "215/65R16",
+              "tire_rear": "215/65R16"
+            },
+            {
+              "id": "2_5_hybrid_s_type_gold_iii",
+              "name": "2.5 HYBRID S TYPE GOLD III",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "e1b04f76-6121-4bba-bdba-ceeca42034f7"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4950,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "225/60R17",
+              "tire_rear": "225/60R17"
+            },
+            {
+              "id": "2_5_hybrid_sr",
+              "name": "2.5 HYBRID SR",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "4ec90b2f2ba64c2f8f36f238a8bef36f"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4945,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "215/65R16",
+              "tire_rear": "215/65R16"
+            },
+            {
+              "id": "2_5_hybrid_sr_c_package",
+              "name": "2.5 HYBRID SR-C PACKAGE",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "7c1a8c473f144ffcab8fd3a81355948c"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4945,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "215/65R16",
+              "tire_rear": "215/65R16"
+            },
+            {
+              "id": "2_5_hybrid_x",
+              "name": "2.5 HYBRID X",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "c178ea29c9a04704be18dcbab7859d23"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4945,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "215/65R16",
+              "tire_rear": "215/65R16"
+            },
+            {
+              "id": "2_5_hybrid_z_2wd",
+              "name": "2.5 HYBRID Z 2WD",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "source_refs": {
+                "ecosticker": [
+                  "4e725fb0-4790-457a-8a25-948607e2c3c2"
+                ],
+                "eco": [
+                  "4e725fb0-4790-457a-8a25-948607e2c3c2"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4995,
+              "width_mm": 1850,
+              "height_mm": 1935,
+              "tire_front": "225/60R18",
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "2_5_hybrid_z_e_four",
+              "name": "2.5 HYBRID Z E-FOUR",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "ffdbce1b-ce41-4506-80a1-98f8692c350f"
+                ],
+                "eco": [
+                  "ffdbce1b-ce41-4506-80a1-98f8692c350f"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4995,
+              "width_mm": 1850,
+              "height_mm": 1935,
+              "tire_front": "225/55R19",
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "id": "2_5_s_type_gold",
+              "name": "2.5 S TYPE GOLD",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "f43bf376cabd4daeaddb71df6a192a1b"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4950,
+              "width_mm": 1850,
+              "height_mm": 1935,
+              "tire_front": "235/50R18",
+              "tire_rear": "235/50R18"
+            },
+            {
+              "id": "2_5_sc_package",
+              "name": "2.5 SC PACKAGE",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "fee7b66be05547c08b755a4d575cbab5"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4950,
+              "width_mm": 1850,
+              "height_mm": 1935,
+              "tire_front": "235/50R18",
+              "tire_rear": "235/50R18"
+            },
+            {
+              "id": "2_5_x_side_lift_up_seat",
+              "name": "2.5 X SIDE LIFT UP SEAT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "a82be6efe43d4e958b5df24505c727b4"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4950,
+              "width_mm": 1850,
+              "height_mm": 1935,
+              "tire_front": "235/50R18",
+              "tire_rear": "235/50R18"
+            },
+            {
+              "id": "2_5s_c_package_2wd",
+              "name": "2.5S C PACKAGE 2WD",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "source_refs": {
+                "ecosticker": [
+                  "a0450d7e-2e0d-4efe-aa21-002f870f1b29"
+                ],
+                "eco": [
+                  "a0450d7e-2e0d-4efe-aa21-002f870f1b29"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4995,
+              "width_mm": 1850,
+              "height_mm": 1935,
+              "tire_front": "235/50R18",
+              "tire_rear": "235/50R18",
+              "engine_cc": 2493,
+              "transmission": "CVT"
+            },
+            {
+              "id": "alphard",
+              "name": "ALPHARD",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "4d4ff70e3fbf41819506f767763a5cb9"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4950,
+              "width_mm": 1850,
+              "height_mm": 1935,
+              "tire_front": "235/50R18",
+              "tire_rear": "235/50R18"
+            },
+            {
+              "id": "eclipse_edition_hev_premium",
+              "name": "Eclipse Edition - HEV Premium",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "cd0f4f43-a5be-450c-9fb5-db6ebd7a48a5"
+                ],
+                "eco": [
+                  "cd0f4f43-a5be-450c-9fb5-db6ebd7a48a5"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 5010,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "225/55R19",
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "eclipse_edition_hev_premium_luxury",
+              "name": "Eclipse Edition - HEV Premium Luxury",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "74c56dc2-7eed-4fe7-9ce4-b5481ec19d11"
+                ],
+                "eco": [
+                  "74c56dc2-7eed-4fe7-9ce4-b5481ec19d11"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 5010,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "225/55R19",
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "eclipse_edition_hev_smart",
+              "name": "Eclipse Edition - HEV Smart",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "263551ea-a035-49fd-b675-dfea529a6e71"
+                ],
+                "eco": [
+                  "263551ea-a035-49fd-b675-dfea529a6e71"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 5010,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "225/55R19",
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "hev_premium",
+              "name": "HEV Premium",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "48c14603-c286-463a-9bed-e07ae20f52e1"
+                ],
+                "eco": [
+                  "48c14603-c286-463a-9bed-e07ae20f52e1"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 5010,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "225/55R19",
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "hev_premium_luxury",
+              "name": "HEV Premium Luxury",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "bc584ab9-f3c2-4741-b655-198d0dcf47e8"
+                ],
+                "eco": [
+                  "bc584ab9-f3c2-4741-b655-198d0dcf47e8"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 5010,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "225/55R19",
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "hev_smart",
+              "name": "HEV Smart",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "df03dc02-027a-4052-a9cb-9904dbda6734"
+                ],
+                "eco": [
+                  "df03dc02-027a-4052-a9cb-9904dbda6734"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 5010,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "225/55R19",
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "hybrid",
+              "name": "HYBRID",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "96e29081-5f9e-4f22-afc7-72f44612bc0e"
+                ],
+                "eco": [
+                  "96e29081-5f9e-4f22-afc7-72f44612bc0e"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 8,
+              "length_mm": 5010,
+              "width_mm": 1850,
+              "height_mm": 1945,
+              "tire_front": "225/60R18",
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "hybrid_2_5_z_2wd",
+              "name": "HYBRID 2.5 Z 2WD",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "source_refs": {
+                "ecosticker": [
+                  "94022927-c5df-480d-973d-eb320ca1a028"
+                ],
+                "eco": [
+                  "94022927-c5df-480d-973d-eb320ca1a028"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4995,
+              "width_mm": 1850,
+              "height_mm": 1935,
+              "tire_front": "225/55R19",
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "hybrid_executive_lounge",
+              "name": "HYBRID EXECUTIVE LOUNGE",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "931c0d96-1371-43eb-9f27-588cd62b5f87"
+                ],
+                "eco": [
+                  "931c0d96-1371-43eb-9f27-588cd62b5f87"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4995,
+              "width_mm": 1850,
+              "height_mm": 1935,
+              "tire_front": "225/60R18",
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "hybrid_executive_lounge_2wd",
+              "name": "HYBRID EXECUTIVE LOUNGE 2WD",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "source_refs": {
+                "ecosticker": [
+                  "55f99743-60b9-475d-9c64-e55b414a9d07"
+                ],
+                "eco": [
+                  "cd38fa40-bdea-4ca5-aa11-bd87bc91fb27"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4995,
+              "width_mm": 1850,
+              "height_mm": 1935,
+              "tire_front": "225/60R18",
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "hybrid_executive_lounge_e_four",
+              "name": "HYBRID EXECUTIVE LOUNGE E-FOUR",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "2d81381f-007e-4c48-a919-1aa693492829"
+                ],
+                "eco": [
+                  "a2663d92-fb41-4c60-ae43-04ab41e74523"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4995,
+              "width_mm": 1850,
+              "height_mm": 1935,
+              "tire_front": "225/55R19",
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "id": "hybrid_executive_lounge_s",
+              "name": "HYBRID EXECUTIVE LOUNGE S",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "394dbe44-381c-4f4b-b83d-96bf85987791"
+                ],
+                "eco": [
+                  "394dbe44-381c-4f4b-b83d-96bf85987791"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4945,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "225/60R17",
+              "tire_rear": "225/60R17",
+              "engine_cc": 2493,
+              "transmission": "CVT"
+            },
+            {
+              "id": "hybrid_g_2wd",
+              "name": "HYBRID G 2WD",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "source_refs": {
+                "ecosticker": [
+                  "09a59fc7-5f12-4d2d-bf8c-d70e82295a3e"
+                ],
+                "eco": [
+                  "60436a42-3e72-4752-81d7-b3d567bd5fd3"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 8,
+              "length_mm": 4995,
+              "width_mm": 1850,
+              "height_mm": 1935,
+              "tire_front": "225/60R18",
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "hybrid_g_e_four",
+              "name": "HYBRID G E-FOUR",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "b873ee20-aab7-4fa0-ab54-c19267619e0a"
+                ],
+                "eco": [
+                  "b873ee20-aab7-4fa0-ab54-c19267619e0a"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4995,
+              "width_mm": 1850,
+              "height_mm": 1935,
+              "tire_front": "225/55R19",
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "hybrid_g_f_package",
+              "name": "HYBRID G F PACKAGE",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "266aabc5-6534-4250-b51f-350c11bbf6d0"
+                ],
+                "eco": [
+                  "266aabc5-6534-4250-b51f-350c11bbf6d0"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4945,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "225/60R17",
+              "tire_rear": "225/60R17",
+              "engine_cc": 2493,
+              "transmission": "CVT"
+            },
+            {
+              "id": "hybrid_gf",
+              "name": "HYBRID GF",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "55dfb7d46ff0459eafef0f23880adccd"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4945,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "225/60R17",
+              "tire_rear": "225/60R17"
+            },
+            {
+              "id": "hybrid_s",
+              "name": "HYBRID S",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "43cf9aca936947b5b7a54352f0a678a9"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 1850,
+              "width_mm": 4945,
+              "height_mm": 1950,
+              "tire_front": "215/65R16",
+              "tire_rear": "215/65R16"
+            },
+            {
+              "id": "hybrid_s_e_four",
+              "name": "HYBRID S E-FOUR",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "024d6003894d444c845bfdffa45da507"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4950,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "225/60R17",
+              "tire_rear": "225/60R17"
+            },
+            {
+              "id": "hybrid_s_type_gold_ii",
+              "name": "HYBRID S TYPE GOLD II",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "20b0f8f65b314e15b0f2987508582efc"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4950,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "215/65R16",
+              "tire_rear": "215/65R16"
+            },
+            {
+              "id": "hybrid_s_type_gold_iii",
+              "name": "HYBRID S TYPE GOLD III",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "92dde66d-3b76-4a32-87a1-61ee29f33a1b"
+                ],
+                "eco": [
+                  "92dde66d-3b76-4a32-87a1-61ee29f33a1b"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4950,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "215/65R16",
+              "tire_rear": "215/65R16",
+              "engine_cc": 2493,
+              "transmission": "CVT"
+            },
+            {
+              "id": "hybrid_sr_c_package",
+              "name": "HYBRID SR \"C Package\"",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "9fdff73d-d97d-455b-aba4-a9c2940b9a77"
+                ],
+                "eco": [
+                  "9fdff73d-d97d-455b-aba4-a9c2940b9a77"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4945,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "225/60R17",
+              "tire_rear": "225/60R17",
+              "engine_cc": 2493,
+              "transmission": "CVT"
+            },
+            {
+              "id": "hybrid_x",
+              "name": "HYBRID X",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "f06a9e3e-c72c-4ec2-b8bc-14046e60a226"
+                ],
+                "eco": [
+                  "f06a9e3e-c72c-4ec2-b8bc-14046e60a226"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4945,
+              "width_mm": 1850,
+              "height_mm": 1950,
+              "tire_front": "215/65R16",
+              "tire_rear": "215/65R16",
+              "engine_cc": 2493,
+              "transmission": "CVT"
+            },
+            {
+              "id": "hybrid_x_2wd",
+              "name": "HYBRID X 2WD",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "source_refs": {
+                "ecosticker": [
+                  "25669220-1036-4ed7-a53b-1e0a14def610"
+                ],
+                "eco": [
+                  "efec7d83-0798-4e22-8e19-fd71da898a41"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 8,
+              "length_mm": 4995,
+              "width_mm": 1850,
+              "height_mm": 1935,
+              "tire_front": "225/60R18",
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "hybrid_x_e_four",
+              "name": "HYBRID X E-FOUR",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "bdc4b4de-60be-4c40-a9e9-36c2a079c3d5"
+                ],
+                "eco": [
+                  "ce259d9d-30d8-4597-b6cb-01e12e081d0c"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 8,
+              "length_mm": 4995,
+              "width_mm": 1850,
+              "height_mm": 1935,
+              "tire_front": "225/55R19",
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "hybrid_z",
+              "name": "HYBRID Z",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "d87514bb-f799-411c-8230-57b47a6d16df"
+                ],
+                "eco": [
+                  "d87514bb-f799-411c-8230-57b47a6d16df"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4995,
+              "width_mm": 1850,
+              "height_mm": 1935,
+              "tire_front": "225/60R18",
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "hybrid_z_2wd",
+              "name": "HYBRID Z 2WD",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "source_refs": {
+                "ecosticker": [
+                  "a07258c9-0cc4-4233-bbd5-917ede9d676e"
+                ],
+                "eco": [
+                  "5531dc83-3e23-4058-a886-441cebd4036f"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4995,
+              "width_mm": 1850,
+              "height_mm": 1945,
+              "tire_front": "225/60R18",
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "hybrid_z_e_four",
+              "name": "HYBRID Z E-FOUR",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "8c3dbf8d-2dd6-4a58-b27b-5ca523fc5e2e"
+                ],
+                "eco": [
+                  "3079b187-2b89-4918-8b7d-c3521c040a1b"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4995,
+              "width_mm": 1850,
+              "height_mm": 1935,
+              "tire_front": "225/55R19",
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
+            },
+            {
+              "id": "s_c_package",
+              "name": "S\"C Package\"",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "310a03e4-4f26-4918-a408-e0a23e14be8c"
+                ],
+                "eco": [
+                  "310a03e4-4f26-4918-a408-e0a23e14be8c"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4950,
+              "width_mm": 1850,
+              "height_mm": 1935,
+              "tire_front": "235/50R18",
+              "tire_rear": "235/50R18",
+              "engine_cc": 2493,
+              "transmission": "CVT"
+            },
+            {
+              "id": "s_type_gold",
+              "name": "S TYPE GOLD",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "4a47bd98-5d09-4a88-b423-24d99e973eba"
+                ],
+                "eco": [
+                  "4a47bd98-5d09-4a88-b423-24d99e973eba"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 1950,
+              "width_mm": 1850,
+              "height_mm": 1935,
+              "tire_front": "235/50R18",
+              "tire_rear": "235/50R18",
+              "engine_cc": 2493,
+              "transmission": "CVT"
+            },
+            {
+              "id": "s_type_gold_iii",
+              "name": "S TYPE GOLD III",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "ebb429e9-6acc-4b3d-9c79-cdecd17e00a8"
+                ],
+                "eco": [
+                  "ebb429e9-6acc-4b3d-9c79-cdecd17e00a8"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 1950,
+              "width_mm": 1850,
+              "height_mm": 1935,
+              "tire_front": "225/60R18",
+              "tire_rear": "225/60R18",
+              "engine_cc": 2493,
+              "transmission": "CVT"
+            },
+            {
+              "id": "sc_package",
+              "name": "SC PACKAGE",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "11981a46-02d8-44e1-a112-c0d1d4068685"
+                ],
+                "eco": [
+                  "11981a46-02d8-44e1-a112-c0d1d4068685"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4950,
+              "width_mm": 1850,
+              "height_mm": 1935,
+              "tire_front": "215/65R16",
+              "tire_rear": "215/65R16",
+              "engine_cc": 2493,
+              "transmission": "CVT"
+            },
+            {
+              "id": "z",
+              "name": "Z",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "b8751aac-7d0f-42ce-ac7f-f0c19fa75da8"
+                ],
+                "eco": [
+                  "b8751aac-7d0f-42ce-ac7f-f0c19fa75da8"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4995,
+              "width_mm": 1850,
+              "height_mm": 1935,
+              "tire_front": "225/60R18",
+              "tire_rear": "225/60R18",
+              "engine_cc": 2493,
+              "transmission": "CVT"
+            },
+            {
+              "id": "z_2wd",
+              "name": "Z 2WD",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "source_refs": {
+                "ecosticker": [
+                  "b4059829-1cf2-4415-b750-da9c8a273b2b"
+                ],
+                "eco": [
+                  "23e55906-e6b7-4fdd-9461-ea4d1fe43a4f"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4995,
+              "width_mm": 1850,
+              "height_mm": 1935,
+              "tire_front": "225/60R18",
+              "tire_rear": "225/60R18",
+              "engine_cc": 2493,
+              "transmission": "CVT"
+            },
+            {
+              "id": "z_4wd",
+              "name": "Z 4WD",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "source_refs": {
+                "ecosticker": [
+                  "d370cd7c-2e56-4c2a-80a5-e830cd0cb06c"
+                ],
+                "eco": [
+                  "d370cd7c-2e56-4c2a-80a5-e830cd0cb06c"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4995,
+              "width_mm": 1850,
+              "height_mm": 1935,
+              "tire_front": "225/60R18",
+              "tire_rear": "225/60R18",
+              "engine_cc": 2493,
+              "transmission": "CVT"
+            },
+            {
+              "id": "z_hybrid",
+              "name": "Z HYBRID",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "54d262c9-9956-42ef-8812-17e6dcfca0f5"
+                ],
+                "eco": [
+                  "54d262c9-9956-42ef-8812-17e6dcfca0f5"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 7,
+              "length_mm": 4995,
+              "width_mm": 1850,
+              "height_mm": 1935,
+              "tire_front": "225/60R18",
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "name": "2.5 HEV Luxury (E-Four AWD)",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:270"
+                ]
+              },
+              "id": "2_5_hev_luxury_e_four_awd_hev"
+            },
+            {
+              "name": "2.5 HEV Executive Lounge (Top VIP 4-Seater Luxury)",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:270"
+                ]
+              },
+              "id": "2_5_hev_executive_lounge_top_vip_4_seater_luxury_hev"
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "toyota",
+        "name_en": "Toyota",
+        "name_th": "โตโยต้า",
+        "brand_segment": "MASS",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "โตโยต้า",
+          "toyota motor thailand",
+          "TMT"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "toyota.alphard",
+        "brand_id": "toyota",
+        "name_en": "Alphard",
+        "name_th": "อัลพาร์ด",
+        "nameplate": "Alphard",
+        "body_type": "MPV",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "toyota.alphard.ah40",
+          "model_id": "toyota.alphard",
+          "code": "AH40",
+          "segment": "E",
+          "seats": 7,
+          "launched": "2023-09-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "toyota.alphard.ah40.2_5l_hev_awd",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5L HEV AWD",
+          "powertrain": "HEV",
+          "drivetrain": "AWD",
+          "engine_cc": 2487,
+          "battery_kwh": 1.0,
+          "price_thb": 4599000,
+          "price_min_thb": 4599000,
+          "price_max_thb": 4599000,
+          "import_type": "CBU",
+          "origin_country": "JP",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.5 HEV Executive Lounge"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_g",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 G",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R18",
+          "tire_rear": "235/50R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "136d3939ed28488790a5f2d02ffd03c4"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_hev",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 HEV",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 5010,
+          "width_mm": 1850,
+          "height_mm": 1945,
+          "wheelbase_mm": null,
+          "tire_front": "225/65R17",
+          "tire_rear": "225/65R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "d68f8f3a-fb1a-424d-8cab-6b4f9fa8c128"
+            ],
+            "owner_directory": [
+              "owner_directory_2026_09_13:270"
+            ],
+            "eco": [
+              "d68f8f3a-fb1a-424d-8cab-6b4f9fa8c128"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_hev_luxury",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 HEV Luxury",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 5010,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "a73b7c7c-5fd0-4277-97e2-8eb7ee38a0ab"
+            ],
+            "eco": [
+              "a73b7c7c-5fd0-4277-97e2-8eb7ee38a0ab"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_hybrid_executive_lounge",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 HYBRID EXECUTIVE LOUNGE",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "215/65R16",
+          "tire_rear": "215/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "a6597e6fc4284395869bf69809dc8d16"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_hybrid_g",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 HYBRID G",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "9a8a486f-199f-435d-8cf4-3d9f4d3f6ec7"
+            ],
+            "eco": [
+              "9a8a486f-199f-435d-8cf4-3d9f4d3f6ec7"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_hybrid_g_f_package",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 HYBRID G F Package",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "215/65R16",
+          "tire_rear": "215/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "c69e287a45354033a601f6114d1b12b8"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_hybrid_s_type_gold_iii",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 HYBRID S TYPE GOLD III",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4950,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R17",
+          "tire_rear": "225/60R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "e1b04f76-6121-4bba-bdba-ceeca42034f7"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_hybrid_sr",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 HYBRID SR",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "215/65R16",
+          "tire_rear": "215/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "4ec90b2f2ba64c2f8f36f238a8bef36f"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_hybrid_sr_c_package",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 HYBRID SR-C PACKAGE",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "215/65R16",
+          "tire_rear": "215/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "7c1a8c473f144ffcab8fd3a81355948c"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_hybrid_x",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 HYBRID X",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "215/65R16",
+          "tire_rear": "215/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "c178ea29c9a04704be18dcbab7859d23"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_hybrid_z_2wd",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 HYBRID Z 2WD",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "4e725fb0-4790-457a-8a25-948607e2c3c2"
+            ],
+            "eco": [
+              "4e725fb0-4790-457a-8a25-948607e2c3c2"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_hybrid_z_e_four",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 HYBRID Z E-FOUR",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "ffdbce1b-ce41-4506-80a1-98f8692c350f"
+            ],
+            "eco": [
+              "ffdbce1b-ce41-4506-80a1-98f8692c350f"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_s_type_gold",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 S TYPE GOLD",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4950,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R18",
+          "tire_rear": "235/50R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "f43bf376cabd4daeaddb71df6a192a1b"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_sc_package",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 SC PACKAGE",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4950,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R18",
+          "tire_rear": "235/50R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "fee7b66be05547c08b755a4d575cbab5"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_x_side_lift_up_seat",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 X SIDE LIFT UP SEAT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4950,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R18",
+          "tire_rear": "235/50R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "a82be6efe43d4e958b5df24505c727b4"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5s_c_package_2wd",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5S C PACKAGE 2WD",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R18",
+          "tire_rear": "235/50R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "a0450d7e-2e0d-4efe-aa21-002f870f1b29"
+            ],
+            "eco": [
+              "a0450d7e-2e0d-4efe-aa21-002f870f1b29"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.alphard",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "ALPHARD",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4950,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R18",
+          "tire_rear": "235/50R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "4d4ff70e3fbf41819506f767763a5cb9"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.eclipse_edition_hev_premium",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "Eclipse Edition - HEV Premium",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 5010,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "cd0f4f43-a5be-450c-9fb5-db6ebd7a48a5"
+            ],
+            "eco": [
+              "cd0f4f43-a5be-450c-9fb5-db6ebd7a48a5"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.eclipse_edition_hev_premium_luxury",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "Eclipse Edition - HEV Premium Luxury",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 5010,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "74c56dc2-7eed-4fe7-9ce4-b5481ec19d11"
+            ],
+            "eco": [
+              "74c56dc2-7eed-4fe7-9ce4-b5481ec19d11"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.eclipse_edition_hev_smart",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "Eclipse Edition - HEV Smart",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 5010,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "263551ea-a035-49fd-b675-dfea529a6e71"
+            ],
+            "eco": [
+              "263551ea-a035-49fd-b675-dfea529a6e71"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hev_premium",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HEV Premium",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 5010,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "48c14603-c286-463a-9bed-e07ae20f52e1"
+            ],
+            "eco": [
+              "48c14603-c286-463a-9bed-e07ae20f52e1"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hev_premium_luxury",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HEV Premium Luxury",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 5010,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "bc584ab9-f3c2-4741-b655-198d0dcf47e8"
+            ],
+            "eco": [
+              "bc584ab9-f3c2-4741-b655-198d0dcf47e8"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hev_smart",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HEV Smart",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 5010,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "df03dc02-027a-4052-a9cb-9904dbda6734"
+            ],
+            "eco": [
+              "df03dc02-027a-4052-a9cb-9904dbda6734"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 8,
+          "length_mm": 5010,
+          "width_mm": 1850,
+          "height_mm": 1945,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "96e29081-5f9e-4f22-afc7-72f44612bc0e"
+            ],
+            "eco": [
+              "96e29081-5f9e-4f22-afc7-72f44612bc0e"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_2_5_z_2wd",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID 2.5 Z 2WD",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "94022927-c5df-480d-973d-eb320ca1a028"
+            ],
+            "eco": [
+              "94022927-c5df-480d-973d-eb320ca1a028"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_executive_lounge",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID EXECUTIVE LOUNGE",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "931c0d96-1371-43eb-9f27-588cd62b5f87"
+            ],
+            "eco": [
+              "931c0d96-1371-43eb-9f27-588cd62b5f87"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_executive_lounge_2wd",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID EXECUTIVE LOUNGE 2WD",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "55f99743-60b9-475d-9c64-e55b414a9d07"
+            ],
+            "eco": [
+              "cd38fa40-bdea-4ca5-aa11-bd87bc91fb27"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_executive_lounge_e_four",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID EXECUTIVE LOUNGE E-FOUR",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "2d81381f-007e-4c48-a919-1aa693492829"
+            ],
+            "eco": [
+              "a2663d92-fb41-4c60-ae43-04ab41e74523"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_executive_lounge_s",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID EXECUTIVE LOUNGE S",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R17",
+          "tire_rear": "225/60R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "394dbe44-381c-4f4b-b83d-96bf85987791"
+            ],
+            "eco": [
+              "394dbe44-381c-4f4b-b83d-96bf85987791"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_g_2wd",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID G 2WD",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 8,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "09a59fc7-5f12-4d2d-bf8c-d70e82295a3e"
+            ],
+            "eco": [
+              "60436a42-3e72-4752-81d7-b3d567bd5fd3"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_g_e_four",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID G E-FOUR",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "b873ee20-aab7-4fa0-ab54-c19267619e0a"
+            ],
+            "eco": [
+              "b873ee20-aab7-4fa0-ab54-c19267619e0a"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_g_f_package",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID G F PACKAGE",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R17",
+          "tire_rear": "225/60R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "266aabc5-6534-4250-b51f-350c11bbf6d0"
+            ],
+            "eco": [
+              "266aabc5-6534-4250-b51f-350c11bbf6d0"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_gf",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID GF",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R17",
+          "tire_rear": "225/60R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "55dfb7d46ff0459eafef0f23880adccd"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_s",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID S",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 1850,
+          "width_mm": 4945,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "215/65R16",
+          "tire_rear": "215/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "43cf9aca936947b5b7a54352f0a678a9"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_s_e_four",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID S E-FOUR",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4950,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R17",
+          "tire_rear": "225/60R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "024d6003894d444c845bfdffa45da507"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_s_type_gold_ii",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID S TYPE GOLD II",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4950,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "215/65R16",
+          "tire_rear": "215/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "20b0f8f65b314e15b0f2987508582efc"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_s_type_gold_iii",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID S TYPE GOLD III",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4950,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "215/65R16",
+          "tire_rear": "215/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "92dde66d-3b76-4a32-87a1-61ee29f33a1b"
+            ],
+            "eco": [
+              "92dde66d-3b76-4a32-87a1-61ee29f33a1b"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_sr_c_package",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID SR \"C Package\"",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R17",
+          "tire_rear": "225/60R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "9fdff73d-d97d-455b-aba4-a9c2940b9a77"
+            ],
+            "eco": [
+              "fa377da2-21ec-4528-bf70-7b4ab23cda8d"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_x",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID X",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "215/65R16",
+          "tire_rear": "215/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "f06a9e3e-c72c-4ec2-b8bc-14046e60a226"
+            ],
+            "eco": [
+              "f06a9e3e-c72c-4ec2-b8bc-14046e60a226"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_x_2wd",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID X 2WD",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 8,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "25669220-1036-4ed7-a53b-1e0a14def610"
+            ],
+            "eco": [
+              "efec7d83-0798-4e22-8e19-fd71da898a41"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_x_e_four",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID X E-FOUR",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 8,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "bdc4b4de-60be-4c40-a9e9-36c2a079c3d5"
+            ],
+            "eco": [
+              "ce259d9d-30d8-4597-b6cb-01e12e081d0c"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_z",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID Z",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "d87514bb-f799-411c-8230-57b47a6d16df"
+            ],
+            "eco": [
+              "d87514bb-f799-411c-8230-57b47a6d16df"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_z_2wd",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID Z 2WD",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1945,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "a07258c9-0cc4-4233-bbd5-917ede9d676e"
+            ],
+            "eco": [
+              "5531dc83-3e23-4058-a886-441cebd4036f"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_z_e_four",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID Z E-FOUR",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "8c3dbf8d-2dd6-4a58-b27b-5ca523fc5e2e"
+            ],
+            "eco": [
+              "3079b187-2b89-4918-8b7d-c3521c040a1b"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.s_c_package",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "S\"C Package\"",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4950,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R18",
+          "tire_rear": "235/50R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "310a03e4-4f26-4918-a408-e0a23e14be8c"
+            ],
+            "eco": [
+              "310a03e4-4f26-4918-a408-e0a23e14be8c"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.s_type_gold",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "S TYPE GOLD",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 1950,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R18",
+          "tire_rear": "235/50R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "4a47bd98-5d09-4a88-b423-24d99e973eba"
+            ],
+            "eco": [
+              "4a47bd98-5d09-4a88-b423-24d99e973eba"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.s_type_gold_iii",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "S TYPE GOLD III",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 1950,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "ebb429e9-6acc-4b3d-9c79-cdecd17e00a8"
+            ],
+            "eco": [
+              "ebb429e9-6acc-4b3d-9c79-cdecd17e00a8"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.sc_package",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "SC PACKAGE",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4950,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "215/65R16",
+          "tire_rear": "215/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "11981a46-02d8-44e1-a112-c0d1d4068685"
+            ],
+            "eco": [
+              "11981a46-02d8-44e1-a112-c0d1d4068685"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.z",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "Z",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "b8751aac-7d0f-42ce-ac7f-f0c19fa75da8"
+            ],
+            "eco": [
+              "b8751aac-7d0f-42ce-ac7f-f0c19fa75da8"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.z_2wd",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "Z 2WD",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "b4059829-1cf2-4415-b750-da9c8a273b2b"
+            ],
+            "eco": [
+              "23e55906-e6b7-4fdd-9461-ea4d1fe43a4f"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.z_4wd",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "Z 4WD",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "d370cd7c-2e56-4c2a-80a5-e830cd0cb06c"
+            ],
+            "eco": [
+              "d370cd7c-2e56-4c2a-80a5-e830cd0cb06c"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.z_hybrid",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "Z HYBRID",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "54d262c9-9956-42ef-8812-17e6dcfca0f5"
+            ],
+            "eco": [
+              "54d262c9-9956-42ef-8812-17e6dcfca0f5"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_hev_luxury_e_four_awd_hev",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 HEV Luxury (E-Four AWD)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:270"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_hev_executive_lounge_top_vip_4_seater_luxury_hev",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 HEV Executive Lounge (Top VIP 4-Seater Luxury)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:270"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/toyota.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "1d9ab43396c76bb4d368590e:catalog",
+    "revision_id": "1d9ab43396c76bb4d368590e",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "toyota.alphard",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:49+00:00",
+    "payload": {
+      "brand": {
+        "id": "toyota",
+        "name_en": "Toyota",
+        "name_th": "โตโยต้า",
+        "brand_segment": "MASS",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "โตโยต้า",
+          "toyota motor thailand",
+          "TMT"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "toyota.alphard",
+        "brand_id": "toyota",
+        "name_en": "Alphard",
+        "name_th": "อัลพาร์ด",
+        "nameplate": "Alphard",
+        "body_type": "MPV",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "toyota.alphard.ah40",
+          "model_id": "toyota.alphard",
+          "code": "AH40",
+          "segment": "E",
+          "seats": 7,
+          "launched": "2023-09-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "toyota.alphard.ah40.2_5l_hev_awd",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5L HEV AWD",
+          "powertrain": "HEV",
+          "drivetrain": "AWD",
+          "engine_cc": 2487,
+          "battery_kwh": 1.0,
+          "price_thb": 4599000,
+          "price_min_thb": 4599000,
+          "price_max_thb": 4599000,
+          "import_type": "CBU",
+          "origin_country": "JP",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.5 HEV Executive Lounge"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_g",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 G",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R18",
+          "tire_rear": "235/50R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "136d3939ed28488790a5f2d02ffd03c4"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_hev",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 HEV",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 5010,
+          "width_mm": 1850,
+          "height_mm": 1945,
+          "wheelbase_mm": null,
+          "tire_front": "225/65R17",
+          "tire_rear": "225/65R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "d68f8f3a-fb1a-424d-8cab-6b4f9fa8c128"
+            ],
+            "owner_directory": [
+              "owner_directory_2026_09_13:270"
+            ],
+            "eco": [
+              "d68f8f3a-fb1a-424d-8cab-6b4f9fa8c128"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_hev_luxury",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 HEV Luxury",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 5010,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "a73b7c7c-5fd0-4277-97e2-8eb7ee38a0ab"
+            ],
+            "eco": [
+              "a73b7c7c-5fd0-4277-97e2-8eb7ee38a0ab"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_hybrid_executive_lounge",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 HYBRID EXECUTIVE LOUNGE",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "215/65R16",
+          "tire_rear": "215/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "a6597e6fc4284395869bf69809dc8d16"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_hybrid_g",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 HYBRID G",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "9a8a486f-199f-435d-8cf4-3d9f4d3f6ec7"
+            ],
+            "eco": [
+              "9a8a486f-199f-435d-8cf4-3d9f4d3f6ec7"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_hybrid_g_f_package",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 HYBRID G F Package",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "215/65R16",
+          "tire_rear": "215/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "c69e287a45354033a601f6114d1b12b8"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_hybrid_s_type_gold_iii",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 HYBRID S TYPE GOLD III",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4950,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R17",
+          "tire_rear": "225/60R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "e1b04f76-6121-4bba-bdba-ceeca42034f7"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_hybrid_sr",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 HYBRID SR",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "215/65R16",
+          "tire_rear": "215/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "4ec90b2f2ba64c2f8f36f238a8bef36f"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_hybrid_sr_c_package",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 HYBRID SR-C PACKAGE",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "215/65R16",
+          "tire_rear": "215/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "7c1a8c473f144ffcab8fd3a81355948c"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_hybrid_x",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 HYBRID X",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "215/65R16",
+          "tire_rear": "215/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "c178ea29c9a04704be18dcbab7859d23"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_hybrid_z_2wd",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 HYBRID Z 2WD",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "4e725fb0-4790-457a-8a25-948607e2c3c2"
+            ],
+            "eco": [
+              "4e725fb0-4790-457a-8a25-948607e2c3c2"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_hybrid_z_e_four",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 HYBRID Z E-FOUR",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "ffdbce1b-ce41-4506-80a1-98f8692c350f"
+            ],
+            "eco": [
+              "ffdbce1b-ce41-4506-80a1-98f8692c350f"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_s_type_gold",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 S TYPE GOLD",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4950,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R18",
+          "tire_rear": "235/50R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "f43bf376cabd4daeaddb71df6a192a1b"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_sc_package",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 SC PACKAGE",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4950,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R18",
+          "tire_rear": "235/50R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "fee7b66be05547c08b755a4d575cbab5"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_x_side_lift_up_seat",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 X SIDE LIFT UP SEAT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4950,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R18",
+          "tire_rear": "235/50R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "a82be6efe43d4e958b5df24505c727b4"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5s_c_package_2wd",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5S C PACKAGE 2WD",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R18",
+          "tire_rear": "235/50R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "a0450d7e-2e0d-4efe-aa21-002f870f1b29"
+            ],
+            "eco": [
+              "a0450d7e-2e0d-4efe-aa21-002f870f1b29"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.alphard",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "ALPHARD",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4950,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R18",
+          "tire_rear": "235/50R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "4d4ff70e3fbf41819506f767763a5cb9"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.eclipse_edition_hev_premium",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "Eclipse Edition - HEV Premium",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 5010,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "cd0f4f43-a5be-450c-9fb5-db6ebd7a48a5"
+            ],
+            "eco": [
+              "cd0f4f43-a5be-450c-9fb5-db6ebd7a48a5"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.eclipse_edition_hev_premium_luxury",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "Eclipse Edition - HEV Premium Luxury",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 5010,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "74c56dc2-7eed-4fe7-9ce4-b5481ec19d11"
+            ],
+            "eco": [
+              "74c56dc2-7eed-4fe7-9ce4-b5481ec19d11"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.eclipse_edition_hev_smart",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "Eclipse Edition - HEV Smart",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 5010,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "263551ea-a035-49fd-b675-dfea529a6e71"
+            ],
+            "eco": [
+              "263551ea-a035-49fd-b675-dfea529a6e71"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hev_premium",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HEV Premium",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 5010,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "48c14603-c286-463a-9bed-e07ae20f52e1"
+            ],
+            "eco": [
+              "48c14603-c286-463a-9bed-e07ae20f52e1"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hev_premium_luxury",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HEV Premium Luxury",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 5010,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "bc584ab9-f3c2-4741-b655-198d0dcf47e8"
+            ],
+            "eco": [
+              "bc584ab9-f3c2-4741-b655-198d0dcf47e8"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hev_smart",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HEV Smart",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 5010,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "df03dc02-027a-4052-a9cb-9904dbda6734"
+            ],
+            "eco": [
+              "df03dc02-027a-4052-a9cb-9904dbda6734"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 8,
+          "length_mm": 5010,
+          "width_mm": 1850,
+          "height_mm": 1945,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "96e29081-5f9e-4f22-afc7-72f44612bc0e"
+            ],
+            "eco": [
+              "96e29081-5f9e-4f22-afc7-72f44612bc0e"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_2_5_z_2wd",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID 2.5 Z 2WD",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "94022927-c5df-480d-973d-eb320ca1a028"
+            ],
+            "eco": [
+              "94022927-c5df-480d-973d-eb320ca1a028"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_executive_lounge",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID EXECUTIVE LOUNGE",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "931c0d96-1371-43eb-9f27-588cd62b5f87"
+            ],
+            "eco": [
+              "931c0d96-1371-43eb-9f27-588cd62b5f87"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_executive_lounge_2wd",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID EXECUTIVE LOUNGE 2WD",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "55f99743-60b9-475d-9c64-e55b414a9d07"
+            ],
+            "eco": [
+              "cd38fa40-bdea-4ca5-aa11-bd87bc91fb27"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_executive_lounge_e_four",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID EXECUTIVE LOUNGE E-FOUR",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "2d81381f-007e-4c48-a919-1aa693492829"
+            ],
+            "eco": [
+              "a2663d92-fb41-4c60-ae43-04ab41e74523"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_executive_lounge_s",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID EXECUTIVE LOUNGE S",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R17",
+          "tire_rear": "225/60R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "394dbe44-381c-4f4b-b83d-96bf85987791"
+            ],
+            "eco": [
+              "394dbe44-381c-4f4b-b83d-96bf85987791"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_g_2wd",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID G 2WD",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 8,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "09a59fc7-5f12-4d2d-bf8c-d70e82295a3e"
+            ],
+            "eco": [
+              "60436a42-3e72-4752-81d7-b3d567bd5fd3"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_g_e_four",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID G E-FOUR",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "b873ee20-aab7-4fa0-ab54-c19267619e0a"
+            ],
+            "eco": [
+              "b873ee20-aab7-4fa0-ab54-c19267619e0a"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_g_f_package",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID G F PACKAGE",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R17",
+          "tire_rear": "225/60R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "266aabc5-6534-4250-b51f-350c11bbf6d0"
+            ],
+            "eco": [
+              "266aabc5-6534-4250-b51f-350c11bbf6d0"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_gf",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID GF",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R17",
+          "tire_rear": "225/60R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "55dfb7d46ff0459eafef0f23880adccd"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_s",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID S",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 1850,
+          "width_mm": 4945,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "215/65R16",
+          "tire_rear": "215/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "43cf9aca936947b5b7a54352f0a678a9"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_s_e_four",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID S E-FOUR",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4950,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R17",
+          "tire_rear": "225/60R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "024d6003894d444c845bfdffa45da507"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_s_type_gold_ii",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID S TYPE GOLD II",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": 4950,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "215/65R16",
+          "tire_rear": "215/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "20b0f8f65b314e15b0f2987508582efc"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_s_type_gold_iii",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID S TYPE GOLD III",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4950,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "215/65R16",
+          "tire_rear": "215/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "92dde66d-3b76-4a32-87a1-61ee29f33a1b"
+            ],
+            "eco": [
+              "92dde66d-3b76-4a32-87a1-61ee29f33a1b"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_sr_c_package",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID SR \"C Package\"",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R17",
+          "tire_rear": "225/60R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "9fdff73d-d97d-455b-aba4-a9c2940b9a77"
+            ],
+            "eco": [
+              "fa377da2-21ec-4528-bf70-7b4ab23cda8d"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_x",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID X",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4945,
+          "width_mm": 1850,
+          "height_mm": 1950,
+          "wheelbase_mm": null,
+          "tire_front": "215/65R16",
+          "tire_rear": "215/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "f06a9e3e-c72c-4ec2-b8bc-14046e60a226"
+            ],
+            "eco": [
+              "f06a9e3e-c72c-4ec2-b8bc-14046e60a226"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_x_2wd",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID X 2WD",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 8,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "25669220-1036-4ed7-a53b-1e0a14def610"
+            ],
+            "eco": [
+              "efec7d83-0798-4e22-8e19-fd71da898a41"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_x_e_four",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID X E-FOUR",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 8,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "bdc4b4de-60be-4c40-a9e9-36c2a079c3d5"
+            ],
+            "eco": [
+              "ce259d9d-30d8-4597-b6cb-01e12e081d0c"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_z",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID Z",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "d87514bb-f799-411c-8230-57b47a6d16df"
+            ],
+            "eco": [
+              "d87514bb-f799-411c-8230-57b47a6d16df"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_z_2wd",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID Z 2WD",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1945,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "a07258c9-0cc4-4233-bbd5-917ede9d676e"
+            ],
+            "eco": [
+              "5531dc83-3e23-4058-a886-441cebd4036f"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.hybrid_z_e_four",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "HYBRID Z E-FOUR",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/55R19",
+          "tire_rear": "225/55R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "8c3dbf8d-2dd6-4a58-b27b-5ca523fc5e2e"
+            ],
+            "eco": [
+              "3079b187-2b89-4918-8b7d-c3521c040a1b"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.s_c_package",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "S\"C Package\"",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4950,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R18",
+          "tire_rear": "235/50R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "310a03e4-4f26-4918-a408-e0a23e14be8c"
+            ],
+            "eco": [
+              "310a03e4-4f26-4918-a408-e0a23e14be8c"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.s_type_gold",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "S TYPE GOLD",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 1950,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R18",
+          "tire_rear": "235/50R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "4a47bd98-5d09-4a88-b423-24d99e973eba"
+            ],
+            "eco": [
+              "4a47bd98-5d09-4a88-b423-24d99e973eba"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.s_type_gold_iii",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "S TYPE GOLD III",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 1950,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "ebb429e9-6acc-4b3d-9c79-cdecd17e00a8"
+            ],
+            "eco": [
+              "ebb429e9-6acc-4b3d-9c79-cdecd17e00a8"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.sc_package",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "SC PACKAGE",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4950,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "215/65R16",
+          "tire_rear": "215/65R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "11981a46-02d8-44e1-a112-c0d1d4068685"
+            ],
+            "eco": [
+              "11981a46-02d8-44e1-a112-c0d1d4068685"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.z",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "Z",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "b8751aac-7d0f-42ce-ac7f-f0c19fa75da8"
+            ],
+            "eco": [
+              "b8751aac-7d0f-42ce-ac7f-f0c19fa75da8"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.z_2wd",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "Z 2WD",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "b4059829-1cf2-4415-b750-da9c8a273b2b"
+            ],
+            "eco": [
+              "23e55906-e6b7-4fdd-9461-ea4d1fe43a4f"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.z_4wd",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "Z 4WD",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": 2493,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "d370cd7c-2e56-4c2a-80a5-e830cd0cb06c"
+            ],
+            "eco": [
+              "d370cd7c-2e56-4c2a-80a5-e830cd0cb06c"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.z_hybrid",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "Z HYBRID",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 7,
+          "length_mm": 4995,
+          "width_mm": 1850,
+          "height_mm": 1935,
+          "wheelbase_mm": null,
+          "tire_front": "225/60R18",
+          "tire_rear": "225/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "54d262c9-9956-42ef-8812-17e6dcfca0f5"
+            ],
+            "eco": [
+              "54d262c9-9956-42ef-8812-17e6dcfca0f5"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_hev_luxury_e_four_awd_hev",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 HEV Luxury (E-Four AWD)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:270"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.alphard.ah40.trim.2_5_hev_executive_lounge_top_vip_4_seater_luxury_hev",
+          "generation_id": "toyota.alphard.ah40",
+          "name": "2.5 HEV Executive Lounge (Top VIP 4-Seater Luxury)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:270"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

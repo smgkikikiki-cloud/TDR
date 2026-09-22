@@ -1,0 +1,638 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "0757feafe3f43a051b9288ac",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:114",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "gwm.ora_good_cat",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:09+00:00",
+    "before_hash": "3605f5accb49b6694bc02f5b3fb1c022ac8e153007ffb9102c299c0b1c959c2c",
+    "after_hash": "884f7f9092bcb872c8a5bcffa9531e23d115bf223e15bb23466fadd5574b9f80",
+    "before": {
+      "id": "ora_good_cat",
+      "name_en": "Ora Good Cat",
+      "name_th": "โอร่า กู๊ดแคท",
+      "nameplate": "",
+      "body_type": "HATCHBACK",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "good cat",
+        "ora"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "GC",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2021-02-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "63 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_cc": null,
+              "battery_kwh": 63.1,
+              "aliases": [
+                "500 Ultra"
+              ],
+              "overrides": {},
+              "price_thb": 899000,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "seed-unverified",
+              "price_min_thb": 899000,
+              "price_max_thb": 899000
+            }
+          ],
+          "trims": [
+            {
+              "name": "Good Cat 400 TECH",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:094"
+                ]
+              },
+              "id": "good_cat_400_tech_bev"
+            },
+            {
+              "name": "Good Cat 400 PRO",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:094"
+                ]
+              },
+              "id": "good_cat_400_pro_bev"
+            },
+            {
+              "name": "Good Cat 500 ULTRA",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:094"
+                ]
+              },
+              "id": "good_cat_500_ultra_bev"
+            },
+            {
+              "name": "Good Cat GT",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:094"
+                ]
+              },
+              "id": "good_cat_gt_bev"
+            },
+            {
+              "name": "5 HEV ULTRA",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4471,
+              "width_mm": 1833,
+              "height_mm": 1641,
+              "engine_cc": 1499,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "923c2b71-30b4-4312-80de-a1c7445c4ed6"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "gwm",
+        "name_en": "GWM",
+        "name_th": "จีดับเบิลยูเอ็ม",
+        "brand_segment": "MASS",
+        "oem_group": "Great Wall Motor",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "great wall",
+          "great wall motor",
+          "เกรทวอลล์",
+          "haval",
+          "ora",
+          "tank"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "gwm.ora_good_cat",
+        "brand_id": "gwm",
+        "name_en": "Ora Good Cat",
+        "name_th": "โอร่า กู๊ดแคท",
+        "nameplate": "Ora Good Cat",
+        "body_type": "HATCHBACK",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "good cat",
+          "ora"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "gwm.ora_good_cat.gc",
+          "model_id": "gwm.ora_good_cat",
+          "code": "GC",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2021-02-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "gwm.ora_good_cat.gc.63_kwh_bev",
+          "generation_id": "gwm.ora_good_cat.gc",
+          "name": "63 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 63.1,
+          "price_thb": 899000,
+          "price_min_thb": 899000,
+          "price_max_thb": 899000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "500 Ultra"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "gwm.ora_good_cat.gc.trim.good_cat_400_tech_bev",
+          "generation_id": "gwm.ora_good_cat.gc",
+          "name": "Good Cat 400 TECH",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:094"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.ora_good_cat.gc.trim.good_cat_400_pro_bev",
+          "generation_id": "gwm.ora_good_cat.gc",
+          "name": "Good Cat 400 PRO",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:094"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.ora_good_cat.gc.trim.good_cat_500_ultra_bev",
+          "generation_id": "gwm.ora_good_cat.gc",
+          "name": "Good Cat 500 ULTRA",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:094"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.ora_good_cat.gc.trim.good_cat_gt_bev",
+          "generation_id": "gwm.ora_good_cat.gc",
+          "name": "Good Cat GT",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:094"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.ora_good_cat.gc.trim.5_hev_ultra_hev",
+          "generation_id": "gwm.ora_good_cat.gc",
+          "name": "5 HEV ULTRA",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1499,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4471,
+          "width_mm": 1833,
+          "height_mm": 1641,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "923c2b71-30b4-4312-80de-a1c7445c4ed6"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.ora_good_cat.gc.trim.5_hev_pro_hev",
+          "generation_id": "gwm.ora_good_cat.gc",
+          "name": "5 HEV PRO",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1499,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4471,
+          "width_mm": 1833,
+          "height_mm": 1641,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "aadf91a3-1b09-4ec6-b28a-36594cafde45"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/gwm.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "0757feafe3f43a051b9288ac:catalog",
+    "revision_id": "0757feafe3f43a051b9288ac",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "gwm.ora_good_cat",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:09+00:00",
+    "payload": {
+      "brand": {
+        "id": "gwm",
+        "name_en": "GWM",
+        "name_th": "จีดับเบิลยูเอ็ม",
+        "brand_segment": "MASS",
+        "oem_group": "Great Wall Motor",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "great wall",
+          "great wall motor",
+          "เกรทวอลล์",
+          "haval",
+          "ora",
+          "tank"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "gwm.ora_good_cat",
+        "brand_id": "gwm",
+        "name_en": "Ora Good Cat",
+        "name_th": "โอร่า กู๊ดแคท",
+        "nameplate": "Ora Good Cat",
+        "body_type": "HATCHBACK",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "good cat",
+          "ora"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "gwm.ora_good_cat.gc",
+          "model_id": "gwm.ora_good_cat",
+          "code": "GC",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2021-02-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "gwm.ora_good_cat.gc.63_kwh_bev",
+          "generation_id": "gwm.ora_good_cat.gc",
+          "name": "63 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 63.1,
+          "price_thb": 899000,
+          "price_min_thb": 899000,
+          "price_max_thb": 899000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "500 Ultra"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "gwm.ora_good_cat.gc.trim.good_cat_400_tech_bev",
+          "generation_id": "gwm.ora_good_cat.gc",
+          "name": "Good Cat 400 TECH",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:094"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.ora_good_cat.gc.trim.good_cat_400_pro_bev",
+          "generation_id": "gwm.ora_good_cat.gc",
+          "name": "Good Cat 400 PRO",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:094"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.ora_good_cat.gc.trim.good_cat_500_ultra_bev",
+          "generation_id": "gwm.ora_good_cat.gc",
+          "name": "Good Cat 500 ULTRA",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:094"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.ora_good_cat.gc.trim.good_cat_gt_bev",
+          "generation_id": "gwm.ora_good_cat.gc",
+          "name": "Good Cat GT",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:094"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.ora_good_cat.gc.trim.5_hev_ultra_hev",
+          "generation_id": "gwm.ora_good_cat.gc",
+          "name": "5 HEV ULTRA",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1499,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4471,
+          "width_mm": 1833,
+          "height_mm": 1641,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "923c2b71-30b4-4312-80de-a1c7445c4ed6"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.ora_good_cat.gc.trim.5_hev_pro_hev",
+          "generation_id": "gwm.ora_good_cat.gc",
+          "name": "5 HEV PRO",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1499,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4471,
+          "width_mm": 1833,
+          "height_mm": 1641,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "aadf91a3-1b09-4ec6-b28a-36594cafde45"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

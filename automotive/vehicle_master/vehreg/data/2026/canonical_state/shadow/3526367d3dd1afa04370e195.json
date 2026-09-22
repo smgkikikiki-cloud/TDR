@@ -1,0 +1,284 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "3526367d3dd1afa04370e195",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:183",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "toyota.hilux_travo_double_cab",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:15+00:00",
+    "before_hash": "598800841961a67f0fb3a1bfdee1fb9a1b58dbda5f3a65de098a65ce19c691a6",
+    "after_hash": "26bf7872e60ecc2757cebdb48035ffdf07c518aed2fb946500f5a49746e123c0",
+    "before": {
+      "id": "hilux_travo_double_cab",
+      "name_en": "Hilux Travo Double Cab",
+      "name_th": "ไฮลักซ์ ทราโว่ 4 ประตู",
+      "nameplate": "Hilux",
+      "body_type": "PICKUP",
+      "cab_type": "DOUBLE_CAB",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "Hilux Travo",
+        "travo",
+        "travo double cab",
+        "travo 4 ประตู"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "F",
+          "seats": 5,
+          "launched": "2025-07-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.4L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "RWD",
+              "engine_cc": 2393,
+              "battery_kwh": null,
+              "price_thb": 799000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": []
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "toyota",
+        "name_en": "Toyota",
+        "name_th": "โตโยต้า",
+        "brand_segment": "MASS",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "โตโยต้า",
+          "toyota motor thailand",
+          "TMT"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "toyota.hilux_travo_double_cab",
+        "brand_id": "toyota",
+        "name_en": "Hilux Travo Double Cab",
+        "name_th": "ไฮลักซ์ ทราโว่ 4 ประตู",
+        "nameplate": "Hilux",
+        "body_type": "PICKUP",
+        "cab_type": "DOUBLE_CAB",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "Hilux Travo",
+          "travo",
+          "travo double cab",
+          "travo 4 ประตู"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "toyota.hilux_travo_double_cab.gen1",
+          "model_id": "toyota.hilux_travo_double_cab",
+          "code": "gen1",
+          "segment": "F",
+          "seats": 5,
+          "launched": "2025-07-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "toyota.hilux_travo_double_cab.gen1.2_4l_ice",
+          "generation_id": "toyota.hilux_travo_double_cab.gen1",
+          "name": "2.4L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "RWD",
+          "engine_cc": 2393,
+          "battery_kwh": null,
+          "price_thb": 799000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "toyota.hilux_travo_double_cab.gen1.trim.4trex_2_8_overland_plus_at_ice",
+          "generation_id": "toyota.hilux_travo_double_cab.gen1",
+          "name": "4Trex 2.8 Overland Plus AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2755,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5320,
+          "width_mm": 1885,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "66df8943-b470-4c67-98a1-a7171512a2e7"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/toyota.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "3526367d3dd1afa04370e195:catalog",
+    "revision_id": "3526367d3dd1afa04370e195",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "toyota.hilux_travo_double_cab",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:15+00:00",
+    "payload": {
+      "brand": {
+        "id": "toyota",
+        "name_en": "Toyota",
+        "name_th": "โตโยต้า",
+        "brand_segment": "MASS",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "โตโยต้า",
+          "toyota motor thailand",
+          "TMT"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "toyota.hilux_travo_double_cab",
+        "brand_id": "toyota",
+        "name_en": "Hilux Travo Double Cab",
+        "name_th": "ไฮลักซ์ ทราโว่ 4 ประตู",
+        "nameplate": "Hilux",
+        "body_type": "PICKUP",
+        "cab_type": "DOUBLE_CAB",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "Hilux Travo",
+          "travo",
+          "travo double cab",
+          "travo 4 ประตู"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "toyota.hilux_travo_double_cab.gen1",
+          "model_id": "toyota.hilux_travo_double_cab",
+          "code": "gen1",
+          "segment": "F",
+          "seats": 5,
+          "launched": "2025-07-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "toyota.hilux_travo_double_cab.gen1.2_4l_ice",
+          "generation_id": "toyota.hilux_travo_double_cab.gen1",
+          "name": "2.4L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "RWD",
+          "engine_cc": 2393,
+          "battery_kwh": null,
+          "price_thb": 799000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "toyota.hilux_travo_double_cab.gen1.trim.4trex_2_8_overland_plus_at_ice",
+          "generation_id": "toyota.hilux_travo_double_cab.gen1",
+          "name": "4Trex 2.8 Overland Plus AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2755,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5320,
+          "width_mm": 1885,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "66df8943-b470-4c67-98a1-a7171512a2e7"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,357 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "782a51bd05001eb6b97652d7",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:88",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "bmw.z4",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:45+00:00",
+    "before_hash": "cd48c18639782cdc32d08b9df6d688c4a9c3333acec3c627ed9e3edb5055c81a",
+    "after_hash": "6a575a370500d3c3ae9e2821142e1ca8fb3e8ae316d045e6577b2d2b042e7aa9",
+    "before": {
+      "id": "z4",
+      "name_en": "Z4",
+      "name_th": "แซด4",
+      "nameplate": "",
+      "body_type": "COUPE",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "NICHE",
+      "aliases": [
+        "Z4 sDrive30i"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "engine_cc": 1998,
+              "battery_kwh": null,
+              "price_thb": 4290000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "sDrive30i M Sport",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:048"
+                ]
+              },
+              "id": "sdrive30i_m_sport_ice"
+            },
+            {
+              "name": "M40i",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:048"
+                ]
+              },
+              "id": "m40i_ice"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "bmw",
+        "name_en": "BMW",
+        "name_th": "บีเอ็มดับเบิลยู",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "BMW Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "บีเอ็มดับเบิลยู",
+          "bmw thailand"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "bmw.z4",
+        "brand_id": "bmw",
+        "name_en": "Z4",
+        "name_th": "แซด4",
+        "nameplate": "Z4",
+        "body_type": "COUPE",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "Z4 sDrive30i"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "bmw.z4.gen1",
+          "model_id": "bmw.z4",
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "bmw.z4.gen1.spec",
+          "generation_id": "bmw.z4.gen1",
+          "name": "spec",
+          "powertrain": "ICE",
+          "drivetrain": "AWD",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "price_thb": 4290000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "bmw.z4.gen1.trim.sdrive30i_m_sport_ice",
+          "generation_id": "bmw.z4.gen1",
+          "name": "sDrive30i M Sport",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:048"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.z4.gen1.trim.m40i_ice",
+          "generation_id": "bmw.z4.gen1",
+          "name": "M40i",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 2,
+          "length_mm": 4324,
+          "width_mm": 1864,
+          "height_mm": 1304,
+          "wheelbase_mm": null,
+          "tire_front": "255/35ZR19",
+          "tire_rear": "275/35ZR19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:048"
+            ],
+            "eco": [
+              "cbb0f380-1111-45ac-b38e-c10a1360431f"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/bmw.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "782a51bd05001eb6b97652d7:catalog",
+    "revision_id": "782a51bd05001eb6b97652d7",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "bmw.z4",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:45+00:00",
+    "payload": {
+      "brand": {
+        "id": "bmw",
+        "name_en": "BMW",
+        "name_th": "บีเอ็มดับเบิลยู",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "BMW Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "บีเอ็มดับเบิลยู",
+          "bmw thailand"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "bmw.z4",
+        "brand_id": "bmw",
+        "name_en": "Z4",
+        "name_th": "แซด4",
+        "nameplate": "Z4",
+        "body_type": "COUPE",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "Z4 sDrive30i"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "bmw.z4.gen1",
+          "model_id": "bmw.z4",
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "bmw.z4.gen1.spec",
+          "generation_id": "bmw.z4.gen1",
+          "name": "spec",
+          "powertrain": "ICE",
+          "drivetrain": "AWD",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "price_thb": 4290000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "bmw.z4.gen1.trim.sdrive30i_m_sport_ice",
+          "generation_id": "bmw.z4.gen1",
+          "name": "sDrive30i M Sport",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:048"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.z4.gen1.trim.m40i_ice",
+          "generation_id": "bmw.z4.gen1",
+          "name": "M40i",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 2,
+          "length_mm": 4324,
+          "width_mm": 1864,
+          "height_mm": 1304,
+          "wheelbase_mm": null,
+          "tire_front": "255/35ZR19",
+          "tire_rear": "275/35ZR19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:048"
+            ],
+            "eco": [
+              "cbb0f380-1111-45ac-b38e-c10a1360431f"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

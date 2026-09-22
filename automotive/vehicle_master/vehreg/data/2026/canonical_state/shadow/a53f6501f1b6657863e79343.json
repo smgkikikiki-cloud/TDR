@@ -1,0 +1,437 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a53f6501f1b6657863e79343",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:115",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "gwm.poer_sahar",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:09+00:00",
+    "before_hash": "53a34f7438feb9d47c652fe4cdfb92e7330a9002e531aa15a4781ae2cb519cfd",
+    "after_hash": "81d5e8ce6fa0f8fbe4b9355527d623e5dc5b98fb02fa6059111fb8e0f284d425",
+    "before": {
+      "id": "poer_sahar",
+      "name_en": "Poer Sahar",
+      "name_th": "โพเออร์ ซาฮาร์",
+      "nameplate": "",
+      "body_type": "PICKUP",
+      "cab_type": "DOUBLE_CAB",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "poer sahar",
+        "sahar",
+        "poer"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "F",
+          "seats": 5,
+          "launched": "2025-09-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.0L HEV",
+              "powertrain": "HEV",
+              "drivetrain": "4WD",
+              "engine_cc": 1998,
+              "battery_kwh": 1.8,
+              "price_thb": 1399000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "HEV 2.0T Pro 4x2",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:095"
+                ]
+              },
+              "aliases": [
+                "Poer Sahar HEV 2.0T Pro 4x2"
+              ],
+              "id": "hev_2_0t_pro_4x2_hev"
+            },
+            {
+              "name": "HEV 2.0T Ultra 4x4",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:095"
+                ]
+              },
+              "aliases": [
+                "Poer Sahar HEV 2.0T Ultra 4x4"
+              ],
+              "id": "hev_2_0t_ultra_4x4_hev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "gwm",
+        "name_en": "GWM",
+        "name_th": "จีดับเบิลยูเอ็ม",
+        "brand_segment": "MASS",
+        "oem_group": "Great Wall Motor",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "great wall",
+          "great wall motor",
+          "เกรทวอลล์",
+          "haval",
+          "ora",
+          "tank"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "gwm.poer_sahar",
+        "brand_id": "gwm",
+        "name_en": "Poer Sahar",
+        "name_th": "โพเออร์ ซาฮาร์",
+        "nameplate": "Poer Sahar",
+        "body_type": "PICKUP",
+        "cab_type": "DOUBLE_CAB",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "poer sahar",
+          "sahar",
+          "poer"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "gwm.poer_sahar.gen1",
+          "model_id": "gwm.poer_sahar",
+          "code": "gen1",
+          "segment": "F",
+          "seats": 5,
+          "launched": "2025-09-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "gwm.poer_sahar.gen1.2_0l_hev",
+          "generation_id": "gwm.poer_sahar.gen1",
+          "name": "2.0L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "4WD",
+          "engine_cc": 1998,
+          "battery_kwh": 1.8,
+          "price_thb": 1399000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "gwm.poer_sahar.gen1.trim.hev_2_0t_pro_4x2_hev",
+          "generation_id": "gwm.poer_sahar.gen1",
+          "name": "HEV 2.0T Pro 4x2",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Poer Sahar HEV 2.0T Pro 4x2"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:095"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.poer_sahar.gen1.trim.hev_2_0t_ultra_4x4_hev",
+          "generation_id": "gwm.poer_sahar.gen1",
+          "name": "HEV 2.0T Ultra 4x4",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Poer Sahar HEV 2.0T Ultra 4x4"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:095"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.poer_sahar.gen1.trim.gwm_2_4t_pro_single_cab_4wd_l_ice",
+          "generation_id": "gwm.poer_sahar.gen1",
+          "name": "GWM 2.4T PRO SINGLE CAB AUTO 4WD L",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2370,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 2,
+          "length_mm": 5445,
+          "width_mm": 1991,
+          "height_mm": 1924,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "71cce107-72a3-4d4a-8479-6303008497f4"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/gwm.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a53f6501f1b6657863e79343:catalog",
+    "revision_id": "a53f6501f1b6657863e79343",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "gwm.poer_sahar",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:09+00:00",
+    "payload": {
+      "brand": {
+        "id": "gwm",
+        "name_en": "GWM",
+        "name_th": "จีดับเบิลยูเอ็ม",
+        "brand_segment": "MASS",
+        "oem_group": "Great Wall Motor",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "great wall",
+          "great wall motor",
+          "เกรทวอลล์",
+          "haval",
+          "ora",
+          "tank"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "gwm.poer_sahar",
+        "brand_id": "gwm",
+        "name_en": "Poer Sahar",
+        "name_th": "โพเออร์ ซาฮาร์",
+        "nameplate": "Poer Sahar",
+        "body_type": "PICKUP",
+        "cab_type": "DOUBLE_CAB",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "poer sahar",
+          "sahar",
+          "poer"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "gwm.poer_sahar.gen1",
+          "model_id": "gwm.poer_sahar",
+          "code": "gen1",
+          "segment": "F",
+          "seats": 5,
+          "launched": "2025-09-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "gwm.poer_sahar.gen1.2_0l_hev",
+          "generation_id": "gwm.poer_sahar.gen1",
+          "name": "2.0L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "4WD",
+          "engine_cc": 1998,
+          "battery_kwh": 1.8,
+          "price_thb": 1399000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "gwm.poer_sahar.gen1.trim.hev_2_0t_pro_4x2_hev",
+          "generation_id": "gwm.poer_sahar.gen1",
+          "name": "HEV 2.0T Pro 4x2",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Poer Sahar HEV 2.0T Pro 4x2"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:095"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.poer_sahar.gen1.trim.hev_2_0t_ultra_4x4_hev",
+          "generation_id": "gwm.poer_sahar.gen1",
+          "name": "HEV 2.0T Ultra 4x4",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Poer Sahar HEV 2.0T Ultra 4x4"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:095"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.poer_sahar.gen1.trim.gwm_2_4t_pro_single_cab_4wd_l_ice",
+          "generation_id": "gwm.poer_sahar.gen1",
+          "name": "GWM 2.4T PRO SINGLE CAB AUTO 4WD L",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2370,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 2,
+          "length_mm": 5445,
+          "width_mm": 1991,
+          "height_mm": 1924,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "71cce107-72a3-4d4a-8479-6303008497f4"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

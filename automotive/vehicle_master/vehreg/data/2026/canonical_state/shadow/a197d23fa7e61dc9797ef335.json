@@ -1,0 +1,268 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a197d23fa7e61dc9797ef335",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:141",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "jaecoo.jaecoo_6t_ev",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:12+00:00",
+    "before_hash": "d5bb47ad386972dd3910de006d5c7a3059c9e772deb5d1da532eeab30d0e75bb",
+    "after_hash": "d0329dc17dceac4deb740757e90241f4d1cca3222a0c401e66531613dd6be1ee",
+    "before": {
+      "id": "jaecoo_6t_ev",
+      "name_en": "Jaecoo 6T EV",
+      "name_th": "เจคู 6ที",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "6t ev",
+        "jaecoo 6t"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2025-11-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "69 kWh BEV AWD",
+              "powertrain": "BEV",
+              "drivetrain": "AWD",
+              "engine_cc": null,
+              "battery_kwh": 69.0,
+              "price_thb": 1099000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "jaecoo",
+        "name_en": "Jaecoo",
+        "name_th": "เจคู",
+        "brand_segment": "MASS",
+        "oem_group": "Chery",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "jaecoo.jaecoo_6t_ev",
+        "brand_id": "jaecoo",
+        "name_en": "Jaecoo 6T EV",
+        "name_th": "เจคู 6ที",
+        "nameplate": "Jaecoo 6T EV",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "6t ev",
+          "jaecoo 6t"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "jaecoo.jaecoo_6t_ev.gen1",
+          "model_id": "jaecoo.jaecoo_6t_ev",
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2025-11-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "jaecoo.jaecoo_6t_ev.gen1.69_kwh_bev_awd",
+          "generation_id": "jaecoo.jaecoo_6t_ev.gen1",
+          "name": "69 kWh BEV AWD",
+          "powertrain": "BEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": 69.0,
+          "price_thb": 1099000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "jaecoo.jaecoo_6t_ev.gen1.trim.long_range_4wd_bev",
+          "generation_id": "jaecoo.jaecoo_6t_ev.gen1",
+          "name": "Long Range 4WD",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4433,
+          "width_mm": 1916,
+          "height_mm": 1741,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "b034991c-2d64-465a-8992-0a1feaa949ef"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/jaecoo.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a197d23fa7e61dc9797ef335:catalog",
+    "revision_id": "a197d23fa7e61dc9797ef335",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "jaecoo.jaecoo_6t_ev",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:12+00:00",
+    "payload": {
+      "brand": {
+        "id": "jaecoo",
+        "name_en": "Jaecoo",
+        "name_th": "เจคู",
+        "brand_segment": "MASS",
+        "oem_group": "Chery",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "jaecoo.jaecoo_6t_ev",
+        "brand_id": "jaecoo",
+        "name_en": "Jaecoo 6T EV",
+        "name_th": "เจคู 6ที",
+        "nameplate": "Jaecoo 6T EV",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "6t ev",
+          "jaecoo 6t"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "jaecoo.jaecoo_6t_ev.gen1",
+          "model_id": "jaecoo.jaecoo_6t_ev",
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2025-11-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "jaecoo.jaecoo_6t_ev.gen1.69_kwh_bev_awd",
+          "generation_id": "jaecoo.jaecoo_6t_ev.gen1",
+          "name": "69 kWh BEV AWD",
+          "powertrain": "BEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": 69.0,
+          "price_thb": 1099000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "jaecoo.jaecoo_6t_ev.gen1.trim.long_range_4wd_bev",
+          "generation_id": "jaecoo.jaecoo_6t_ev.gen1",
+          "name": "Long Range 4WD",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4433,
+          "width_mm": 1916,
+          "height_mm": 1741,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "b034991c-2d64-465a-8992-0a1feaa949ef"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

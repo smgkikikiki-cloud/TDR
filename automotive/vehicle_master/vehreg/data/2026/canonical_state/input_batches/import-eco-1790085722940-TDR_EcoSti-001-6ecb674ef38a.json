@@ -1,0 +1,3654 @@
+{
+  "schema_version": 1,
+  "batch_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a",
+  "batch_hash": "657b3b4ca887441e8b15bcec6f9c90138f5c5ada0029b1c78322a4126e02bf65",
+  "status": "APPLIED",
+  "year": 2026,
+  "source": {
+    "kind": "ECO",
+    "ref": "TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx"
+  },
+  "actor": "bulk-import",
+  "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+  "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+  "applied_at": "2026-09-22T14:03:36+00:00",
+  "results": [
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:1",
+      "revision_id": "b61795c6c775e55b63981bcf",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:2",
+      "revision_id": "c7dbc945be4ad65fd45a4ae2",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.porsche_911",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:3",
+      "revision_id": "77627b10406b048cfbd5f78a",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:4",
+      "revision_id": "bcf2876984ae59b493ad2043",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.vellfire",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:5",
+      "revision_id": "309a120879d4886bcdcdaec8",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.vellfire",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:6",
+      "revision_id": "c599aa99e05e27c833d1f034",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.porsche_911",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:7",
+      "revision_id": "680cc6139f01880cd2082261",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.porsche_911",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:8",
+      "revision_id": "de9337c9783488c26a921736",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mini.mini_cooper",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:9",
+      "revision_id": "5be98ea32d4cdd83fc32ea50",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.cayenne",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:10",
+      "revision_id": "26878e84e4867909a14db9f4",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.cayenne",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:11",
+      "revision_id": "f1dca247ed2ef437b6bac94e",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "tesla.model3",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:12",
+      "revision_id": "e88a37548d6f43d56c6f475d",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.panamera",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:13",
+      "revision_id": "0d1ba98775a4350deffa8c01",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.porsche_911",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:14",
+      "revision_id": "7af719e011c10f7602b5218c",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.vellfire",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:15",
+      "revision_id": "777ce754dc7555b4849e7a1d",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.cayenne",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:16",
+      "revision_id": "178c6cec9df25ee37c3b2182",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:17",
+      "revision_id": "4af30d596b35ede5e17b9d12",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.crv",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:18",
+      "revision_id": "a2c4c64120803597c4c4924b",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "gwm.tank500",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:19",
+      "revision_id": "735e8064ee2454370eb3d006",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "byd.sealion6",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:20",
+      "revision_id": "aae4a046f7052984b92c4900",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:21",
+      "revision_id": "51f9aeb25597c07b141d57d0",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "ford.ranger_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:22",
+      "revision_id": "ad7f7267ec34cf73c2f73d93",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "ford.ranger_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:23",
+      "revision_id": "ea8f874691ba41cb472a7174",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.crv",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:24",
+      "revision_id": "48bc357648c20286764d9c3c",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "lexus.lexus_es",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:25",
+      "revision_id": "382e663766ba36ada7849fe3",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:26",
+      "revision_id": "53f45550ecc5f4684dc48cbc",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.porsche_911",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:27",
+      "revision_id": "91bd6a2790ad46c5d6571e78",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "bmw.bmw_3",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:28",
+      "revision_id": "ceedc60ea01a5c5295bb226c",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:29",
+      "revision_id": "ac3fe29d31702a351293435e",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.vellfire",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:30",
+      "revision_id": "c6ce07477ee5be312557b2ab",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.vellfire",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:31",
+      "revision_id": "fad48492c5bf62256249c4eb",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:32",
+      "revision_id": "f1be87c592d14ab61eea0c27",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:33",
+      "revision_id": "8f1e8105d29f99bfbf8e3de8",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:34",
+      "revision_id": "5ad6ce2e95bb083a30bb9120",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:35",
+      "revision_id": "a182d5bb7fb6931ace7d2f4a",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:36",
+      "revision_id": "616d221e8f5ffe4948218d6c",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:37",
+      "revision_id": "b6fb01419dc5b8374fccb827",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "kia.ev5",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:38",
+      "revision_id": "02a3d29d6cc6b8d68dd540f4",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:39",
+      "revision_id": "3c35d113fc38d5164998ebb5",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:40",
+      "revision_id": "cc051bb12daa5a9ca01c1e29",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.civic",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:41",
+      "revision_id": "9abef46301efebf757edf758",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.civic",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:42",
+      "revision_id": "40189772ff94bf3e21c24151",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.civic",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:43",
+      "revision_id": "ea98f37053414d4bf3137718",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "deepal.deepal_s05",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:44",
+      "revision_id": "bea569e52c9d5f88c98b2b50",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.taycan",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:45",
+      "revision_id": "9e9e61b3a72032c6682bde45",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mercedes_benz.mb_c_class",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:46",
+      "revision_id": "4b961141b82bda2e89fa2eaa",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mercedes_benz.mb_c_class",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:47",
+      "revision_id": "e413ff36f42ce680d6b66111",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:48",
+      "revision_id": "bba58bbec447378b05d8dbea",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.macan",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:49",
+      "revision_id": "69ab47bb7680ac9944f49e25",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.porsche_911",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:50",
+      "revision_id": "1803cd21fd5a709510d9bf4a",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "deepal.deepal_s05",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:51",
+      "revision_id": "6ae5c986c3decbdd10863113",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "deepal.deepal_s05",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:52",
+      "revision_id": "dba3ff656b0cca749280c0ef",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "hyundai.ioniq5",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:53",
+      "revision_id": "f5824ed2de10726f98b49b42",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.city_hatchback",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:54",
+      "revision_id": "ba64f71e32049cd7deb85c01",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.city_hatchback",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:55",
+      "revision_id": "ccdbfa9b7a992d4373520f95",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.city_hatchback",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:56",
+      "revision_id": "9aeb96e8b42a27c0d3dde468",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.city",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:57",
+      "revision_id": "4aef59621d1e4a6c7e5a408a",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.city",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:58",
+      "revision_id": "59d4c08d89c66c4dd3fb9ed3",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.city",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:59",
+      "revision_id": "fc8a73a3feea8ea0d0232363",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.city",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:60",
+      "revision_id": "f693cfe935459faf55ec7993",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.city_hatchback",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:61",
+      "revision_id": "d183cf7b50dd4d20b12d1d7b",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:62",
+      "revision_id": "f3a9093178671ac4d1d2eb22",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.voxy",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:63",
+      "revision_id": "3abfc55eb22e019c0a230a1b",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:64",
+      "revision_id": "86859eff6a83d7d19f5b4fba",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.civic",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:65",
+      "revision_id": "b52238772f70626e7c30560f",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mercedes_benz.gls",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:66",
+      "revision_id": "639e36caa5c5ab8fd0a5c3e3",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mercedes_benz.gle",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:67",
+      "revision_id": "763ca3e1bae278a2b8434873",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mercedes_benz.cle",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:68",
+      "revision_id": "c7fe20eb0242d23bce5762a9",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.yaris_cross",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:69",
+      "revision_id": "841df558ab026cd251f2edef",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.yaris_cross",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:70",
+      "revision_id": "22a1e2927dc69139dc13cea8",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.yaris_cross",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:71",
+      "revision_id": "ae4af713014aa8ae1dd1e90c",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.yaris_cross",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:72",
+      "revision_id": "486bccd3638ed300d78cec72",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mercedes_benz.g_class",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:73",
+      "revision_id": "16e588a53fc6efa04ff8e111",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:74",
+      "revision_id": "56edd9e72d06444113903add",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.vellfire",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:75",
+      "revision_id": "d26a08c18fa29ec9bd39c4cc",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "changan.nevo_q05",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:76",
+      "revision_id": "4b992bcf83402a3bfa591175",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "changan.nevo_q05",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:77",
+      "revision_id": "c769386cacdceeca947e830b",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mercedes_benz.cle",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:78",
+      "revision_id": "7e5cf6cafa537f3e751a3325",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mercedes_benz.cle",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:79",
+      "revision_id": "fa15e6d47528593615fd1b84",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mercedes_benz.gle",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:80",
+      "revision_id": "5b5c8c68f5392611325c3080",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mercedes_benz.mb_glc",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:81",
+      "revision_id": "4f91b93b323ce27859fd3437",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.accord",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:82",
+      "revision_id": "44aa2ff7c212228580eb9b1c",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "aion.aion_v",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:83",
+      "revision_id": "04a191575f1640a64dcb98e9",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.porsche_911",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:84",
+      "revision_id": "d0b9a61d17b5589f09bbbea6",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.accord",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:85",
+      "revision_id": "5919fefad729284f0cdee848",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.accord",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:86",
+      "revision_id": "a4f99464ede12ce99530dd03",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:87",
+      "revision_id": "7c8ac1fb77448538d7a36766",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "volvo.ex40",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:88",
+      "revision_id": "70e891682faa5084854bd35b",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mercedes_benz.g_class",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:89",
+      "revision_id": "2edb2fae3c16e59e8a064bba",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.crv",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:90",
+      "revision_id": "c46ff57c4fac591447a39079",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.crv",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:91",
+      "revision_id": "5acb3e395accda6a906ad6c0",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.crv",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:92",
+      "revision_id": "d5f4f0ece28fb4ba782e7a0f",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.hrv",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:93",
+      "revision_id": "df1a5232bf62cd9395bd3cc1",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.hrv",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:94",
+      "revision_id": "39b5fa5ec34c6d04d0d00fe6",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.hrv",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:95",
+      "revision_id": "ee770531f3c22e4055730869",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.hrv",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:96",
+      "revision_id": "9c4f96503f648df3715ec6ca",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:97",
+      "revision_id": "485bb2c01125ff4855fe7dca",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mercedes_benz.cla",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:98",
+      "revision_id": "f7ce26992c70d7701c214c35",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mercedes_benz.g_class",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:99",
+      "revision_id": "35cb6a0c63173b170c9a49b4",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "gwm.haval_h6",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:100",
+      "revision_id": "1a7f966722952de94c4323f2",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "gwm.haval_h6",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:101",
+      "revision_id": "aa6b734365b249c36ce808ec",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "gwm.haval_h6",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:102",
+      "revision_id": "fe73aebae35a881a00fbd315",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "gwm.tank300",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:103",
+      "revision_id": "d224ccdb06f9ed9040d01f4e",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mercedes_benz.s_class",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:104",
+      "revision_id": "9c361f769a040a81701f3a4c",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "xpeng.xpeng_g6",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:105",
+      "revision_id": "ff47b1e5d5acb43bf40b7d7a",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "xpeng.xpeng_g6",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:106",
+      "revision_id": "0570871eaa92bad532a69ca4",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "xpeng.xpeng_g6",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:107",
+      "revision_id": "6b8713eef1b67f6d4938f9ff",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:108",
+      "revision_id": "ce2a30ff1dffc1ce14ef04bb",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mg.mg_s5_ev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:109",
+      "revision_id": "ba8cb10eb62dcd4a6594eb98",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mg.mg_s5_ev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:110",
+      "revision_id": "4dba58ca088f8969f77163ea",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mg.mg_s5_ev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:111",
+      "revision_id": "022341e4373d2fca8135a611",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "deepal.deepal_hunter_k50",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:112",
+      "revision_id": "58f289a9909e73fe039f7c41",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "deepal.deepal_hunter_k50",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:113",
+      "revision_id": "6d4e4c3915c9144f057bb6d3",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "gwm.ora_good_cat",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:114",
+      "revision_id": "0757feafe3f43a051b9288ac",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "gwm.ora_good_cat",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:115",
+      "revision_id": "a53f6501f1b6657863e79343",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "gwm.poer_sahar",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:116",
+      "revision_id": "74523ea91c37df5a11f9028b",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "bmw.bmw_x3",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:117",
+      "revision_id": "97aedaf1210244e663db8415",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mercedes_benz.mb_c_class",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:118",
+      "revision_id": "03fe69a688c61fcb35770a17",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "ford.ranger_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:119",
+      "revision_id": "3ef7e4dd0f82e9644eac6171",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "ford.ranger_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:120",
+      "revision_id": "01a533c594799bd4311cfdfb",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "ford.ranger_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:121",
+      "revision_id": "df311fe60386c926de655b24",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "ford.ranger_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:122",
+      "revision_id": "d253ab2bb27e51cceb51bfcc",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "ford.ranger_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:123",
+      "revision_id": "1f253185b4333da34c13e3b3",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.vellfire",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:124",
+      "revision_id": "074350cd3d668d5d85f76420",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "deepal.deepal_s05",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:125",
+      "revision_id": "407ab5cbd1733dc6dfec3872",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "subaru.crosstrek",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:126",
+      "revision_id": "c3b865ecd7ac0489b4faa2ee",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "aion.hyptec_ht",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:127",
+      "revision_id": "1d3b54f4b0d33932a3f9e676",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "geely.geely_ex5",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:128",
+      "revision_id": "0938e62daed5e60ece286a79",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "isuzu.dmax_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:129",
+      "revision_id": "ce1e2709beb57bf314f00e5a",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "nissan.kicks",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:130",
+      "revision_id": "1e5528c244eda3c0b69cc93f",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "nissan.kicks",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:131",
+      "revision_id": "2c02a263629784620ea4a63b",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "nissan.kicks",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:132",
+      "revision_id": "9ce412e0ada5278af874543e",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "nissan.kicks",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:133",
+      "revision_id": "83d985fb29f6e6400b14722f",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "nissan.kicks",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:134",
+      "revision_id": "e1f65f96cacdd363c07ac657",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "hyundai.stargazer",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:135",
+      "revision_id": "932dc96044b3eb92894d10a7",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "hyundai.stargazer",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:136",
+      "revision_id": "f40a727d1c77c8a1219a129c",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.en2",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:137",
+      "revision_id": "b27f3a7b20e358170efcd0a6",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mazda.mazda6",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:138",
+      "revision_id": "521f93faf136f5d55bdbd77c",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mazda.mazda6",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:139",
+      "revision_id": "cf8c9a17addd586e8dade58b",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "lexus.lexus_nx",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:140",
+      "revision_id": "e290d9c7c2390b49e91cc1d4",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "lexus.lbx",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:141",
+      "revision_id": "a197d23fa7e61dc9797ef335",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "jaecoo.jaecoo_6t_ev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:142",
+      "revision_id": "9a8882af623e9055d36812c2",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "audi.a7",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:143",
+      "revision_id": "903d2fb74046cc7c30023c22",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "audi.a5",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:144",
+      "revision_id": "ccddf01b8ed104840dc8ce2a",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "audi.audi_q3",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:145",
+      "revision_id": "5fb3c6f3506782afece57ccb",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.bz4x",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:146",
+      "revision_id": "274669775a4cfdc6a1d508fe",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.bz4x",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:147",
+      "revision_id": "a0ec65a6ada9159ba6cc83fe",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.corolla_altis",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:148",
+      "revision_id": "4a46942c21bfcd24a8a15825",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:149",
+      "revision_id": "c9efc070f7caf6a04f99f44a",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:150",
+      "revision_id": "72494812ce2303a69bcdead1",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mercedes_benz.mb_c_class",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:151",
+      "revision_id": "17b006038a6f1caa537e2027",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.porsche_911",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:152",
+      "revision_id": "a21fcaa1f761482e38c0955f",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.vellfire",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:153",
+      "revision_id": "62ca74afc8bad03c1ef6dd60",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mini.mini_cooper",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:154",
+      "revision_id": "1031e0f178d65e11ddbc63dc",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mini.countryman",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:155",
+      "revision_id": "8ebde7efbdc4d96e92e95760",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "bmw.bmw_x1",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:156",
+      "revision_id": "5ff29cbb171d45e60a242b6b",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.voxy",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:157",
+      "revision_id": "f3f5636b33dd980b1dd61693",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.civic",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:158",
+      "revision_id": "5dad536b0bc409287f1b5a0c",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "audi.audi_q3",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:159",
+      "revision_id": "3b81df2bf06fce700f845cc7",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.corolla_altis",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:160",
+      "revision_id": "4d573e82b87501ce5ea16168",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "nissan.serena",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:161",
+      "revision_id": "3f5a65c7c57c6907bcfd8f95",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "deepal.deepal_s07",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:162",
+      "revision_id": "d0785a67085d7baacfce210b",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.hilux_champ",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:163",
+      "revision_id": "3bedc250eb03b7d507a0aa45",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "volvo.xc60",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:164",
+      "revision_id": "7ad48efe91ae631857d9dc52",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "volvo.ex40",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:165",
+      "revision_id": "aa65390d4cb3d755ab67c590",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:166",
+      "revision_id": "e368de432d60e6f89725e66f",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.taycan",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:167",
+      "revision_id": "9be27c614b87f7cf4544701d",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.cayenne",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:168",
+      "revision_id": "28cc2c12bd6129392f711517",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.vellfire",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:169",
+      "revision_id": "6ddce4c68da956fd33e946ed",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "tesla.model3",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:170",
+      "revision_id": "c676cb0ae86437371de0d32e",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "audi.a5",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:171",
+      "revision_id": "b07c8b1780f5f9430d25fd89",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "audi.a5",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:172",
+      "revision_id": "47f7afd41c99e75ef596e0c5",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "audi.a5",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:173",
+      "revision_id": "dca04962ddb1ffc0d8c1d465",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "audi.audi_q5",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:174",
+      "revision_id": "f8abb55a3ae9fe757d6cca51",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "hyundai.ioniq5",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:175",
+      "revision_id": "23f5d5bf99d3a32829828a13",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:176",
+      "revision_id": "09b56b68df6cee1580a80b05",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.hilux_revo_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:177",
+      "revision_id": "7853cab038b876cc6fd3dd0f",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.hilux_revo_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:178",
+      "revision_id": "d260e5e62890da90d49b7483",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.hilux_revo_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:179",
+      "revision_id": "eae99585946e52e9ca61dbdf",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.hilux_revo_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:180",
+      "revision_id": "d03534fa65db2c6310667fcb",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.hilux_revo_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:181",
+      "revision_id": "077df6ccd3b67f6401ea7d7f",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.hilux_revo_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:182",
+      "revision_id": "c7bca3926e784cc41f949225",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.hilux_revo_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:183",
+      "revision_id": "3526367d3dd1afa04370e195",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.hilux_travo_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:184",
+      "revision_id": "e337f2cc15586166ce38dfb4",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.hilux_travo_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:185",
+      "revision_id": "4cbb8b9403758092b37542d2",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.hilux_travo_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:186",
+      "revision_id": "515da7d740ff43e2e9764b53",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.hilux_travo_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:187",
+      "revision_id": "536b94f8c2ac7e43c0864233",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.hilux_travo_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:188",
+      "revision_id": "160d213ea7e19764603ffe29",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.hilux_travo_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:189",
+      "revision_id": "ffafc08183e12f75c9aa4ad9",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.hilux_travo_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:190",
+      "revision_id": "deaf5433ee3b5f2f77b9a15c",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.hilux_travo_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:191",
+      "revision_id": "4393096434b59d21a3dea790",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.hilux_travo_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:192",
+      "revision_id": "8ad9da8eb8dbb875941dde12",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "nissan.almera",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:193",
+      "revision_id": "42d00f92a0db3b6bf2d31c03",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "nissan.almera",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:194",
+      "revision_id": "c5e46b782649401e9d303902",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "nissan.almera",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:195",
+      "revision_id": "225526196cb92c005d65f14d",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "nissan.almera",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:196",
+      "revision_id": "791cc6cf265ce9c8478d99f2",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:197",
+      "revision_id": "68dca84fe8a8e07a21bb1901",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.vellfire",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:198",
+      "revision_id": "8971b449f2635d18f54287ae",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:199",
+      "revision_id": "e72a9426dc78387e8a5ff377",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:200",
+      "revision_id": "7f9d745471ebc4707dde0318",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:201",
+      "revision_id": "33206646b6105977c69a49b1",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.panamera",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:202",
+      "revision_id": "49b6069b5b78abc82cd1d617",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.porsche_911",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:203",
+      "revision_id": "db6bd0ec18ceff5df5774b2c",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "subaru.forester",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:204",
+      "revision_id": "926b1933beaaa2c7ab489d51",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "gwm.poer_sahar",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:205",
+      "revision_id": "85efaa44294e0c30ff426191",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "gwm.poer_sahar",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:206",
+      "revision_id": "efd29cd23420c60bda879ad5",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "gwm.poer_sahar",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:207",
+      "revision_id": "edd13fd084a8990680ccb2af",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "gwm.poer_sahar",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:208",
+      "revision_id": "32ab81f7756b4ea1dd7a8a96",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "gwm.poer_sahar",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:209",
+      "revision_id": "51903dac7f67df98fc5d8f4c",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mitsubishi.xforce",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:210",
+      "revision_id": "c2446931870b27490864f52d",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mitsubishi.xforce",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:211",
+      "revision_id": "c451fa18c375a5287b8363e1",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mitsubishi.xforce",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:212",
+      "revision_id": "8f4de1d378b2f2ce2b57e93a",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mitsubishi.xforce",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:213",
+      "revision_id": "3b0d9d879a8efd3a27ead2c2",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mitsubishi.xforce",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:214",
+      "revision_id": "da5e7cbe2faf35abed17d7c6",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "gwm.tank500",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:215",
+      "revision_id": "7c47b40b0dd1789af5a1dfd6",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.corolla_cross",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:216",
+      "revision_id": "56659d8bfa3e5c57b8e77789",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.corolla_cross",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:217",
+      "revision_id": "32a92037b444059d98b857b9",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.corolla_cross",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:218",
+      "revision_id": "10b0c9a7247c0c68bc728ccd",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.corolla_cross",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:219",
+      "revision_id": "ae2f980b0ae80bfc838af852",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "gwm.tank300",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:220",
+      "revision_id": "04e81a03fb9e8b0a310a89b0",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "gwm.tank300",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:221",
+      "revision_id": "16b91c3652a2f44107027ee9",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.yaris_ativ",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:222",
+      "revision_id": "8d6c8d156d5a40f473030ce4",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.yaris_ativ",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:223",
+      "revision_id": "34a92d971d439a275973618f",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "gwm.tank500",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:224",
+      "revision_id": "f0df0c8c4a7044e60c434d49",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "gwm.tank500",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:225",
+      "revision_id": "28954139d0b7ea5bb970da50",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "ford.ranger_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:226",
+      "revision_id": "9e3f0d80bd4cb97779b73901",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "ford.ranger_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:227",
+      "revision_id": "57ffb9cd0b07f2095a9a3b28",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "ford.ranger_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:228",
+      "revision_id": "5db6a60cc3509f53e5e24009",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "ford.ranger_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:229",
+      "revision_id": "c4ab066c79e7ca849ac67476",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "ford.ranger_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:230",
+      "revision_id": "4b576e0fea578319ba202bbe",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "ford.ranger_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:231",
+      "revision_id": "064797d3863ea5edabb6eea4",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "ford.ranger_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:232",
+      "revision_id": "cb729970378d3e313b328e77",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "avatr.avatr_07",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:233",
+      "revision_id": "005dd363eb4af288234598c9",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "avatr.avatr_07",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:234",
+      "revision_id": "1d544ab0937aca89c363fdf9",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.taycan",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:235",
+      "revision_id": "9d91d26acd49cf0f119ba9c8",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.taycan",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:236",
+      "revision_id": "28994c77c2e400c4532d7bf2",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.taycan",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:237",
+      "revision_id": "6ea51ad41a6637362d9efe37",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.taycan",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:238",
+      "revision_id": "120cffbf08b694cd979376a4",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.taycan",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:239",
+      "revision_id": "4b489e5c8c08345d6ad2bfbc",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mitsubishi.triton_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:240",
+      "revision_id": "f6a1d071a60b8a4e36231384",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mitsubishi.triton_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:241",
+      "revision_id": "64f97fa70601872d15d8d252",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mitsubishi.triton_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:242",
+      "revision_id": "ef5ea5965e7b02869bb05f0c",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mitsubishi.triton_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:243",
+      "revision_id": "c5d548159753704bccd096ef",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mitsubishi.triton_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:244",
+      "revision_id": "01b35cbc9f29681dde093e8d",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mitsubishi.triton_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:245",
+      "revision_id": "f4e4a2690b64acee8b8bc54c",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "isuzu.dmax_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:246",
+      "revision_id": "8bcf3c68d7a9850bf882b977",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "isuzu.dmax_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:247",
+      "revision_id": "67ad8bef517073eba8f41f22",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "isuzu.dmax_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:248",
+      "revision_id": "b4e547b5f84d5e460c4d6498",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "isuzu.dmax_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:249",
+      "revision_id": "c7ac37618391afe0ecd983d1",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "isuzu.dmax_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:250",
+      "revision_id": "844e2c20cd25e1efef13b631",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "isuzu.dmax_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:251",
+      "revision_id": "fdd0608d1725674715f99ed3",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "isuzu.dmax_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:252",
+      "revision_id": "a5316d84116173dc198e00ea",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "isuzu.dmax_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:253",
+      "revision_id": "6457472efb3fc7214a50fc2a",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "isuzu.dmax_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:254",
+      "revision_id": "68055298fe59998679ff5180",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "isuzu.dmax_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:255",
+      "revision_id": "69833b9b8440615f260ad326",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "isuzu.dmax_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:256",
+      "revision_id": "da3eb127a59f88faa0f0fd4f",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "isuzu.dmax_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:257",
+      "revision_id": "16653e3e6c9158fff899d1e6",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "isuzu.dmax_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:258",
+      "revision_id": "f514f86d903c118be054ff6d",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "isuzu.dmax_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:259",
+      "revision_id": "c2d70a3970b4e2f52424450a",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "isuzu.dmax_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:260",
+      "revision_id": "8541893bbacbb58a634ed2a7",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "nissan.x_trail",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:261",
+      "revision_id": "4a02a6f10efd3878ba922995",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mercedes_benz.gle",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:262",
+      "revision_id": "906d61e987a94a28fbdc7c5e",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.city_hatchback",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:263",
+      "revision_id": "5c300d3cffa8cb5cf55c29c5",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.city_hatchback",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:264",
+      "revision_id": "7759d3987b3ae600b761a377",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.city_hatchback",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:265",
+      "revision_id": "c7d3622df9b4945218b6174f",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.city_hatchback",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:266",
+      "revision_id": "43c1a7e28c46df13d51fecc2",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.city",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:267",
+      "revision_id": "1cfac8736b3fc9ce42ca1fe4",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.city",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:268",
+      "revision_id": "d2ec1f73cfefc13aed2305b7",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.city",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:269",
+      "revision_id": "00a543eed4585feff52be8c0",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.city",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:270",
+      "revision_id": "8d7164b7efdede8ce88d5b3e",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.step_wgn",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:271",
+      "revision_id": "1bbd9b4d92cc816e4c3065bf",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:272",
+      "revision_id": "05589fa743c9d03f746c288d",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.vellfire",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:273",
+      "revision_id": "bc82b40b5a905c816e869f92",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.vellfire",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:274",
+      "revision_id": "1456999596405e048c5f1715",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.porsche_911",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:275",
+      "revision_id": "3dc3e72de5c3d615cea96d4d",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:276",
+      "revision_id": "cc454819d1e722b13b291761",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.corolla_altis",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:277",
+      "revision_id": "1bf04453e9a364d42462db04",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.porsche_911",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:278",
+      "revision_id": "e59a939620c197d3e974e76d",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "geely.geely_ex5",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:279",
+      "revision_id": "ce27713132a27e554b504549",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "geely.geely_ex5",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:280",
+      "revision_id": "0acb6a13db52edff22783c5d",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "lexus.lexus_rx",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:281",
+      "revision_id": "52bb5d7766da8dc9a68b722a",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "lexus.lexus_rx",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:282",
+      "revision_id": "3c300c95b731571168e33780",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "lexus.lexus_rx",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:283",
+      "revision_id": "81a77ebc3ed3a24736bb37ef",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "land_rover.range_rover",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:284",
+      "revision_id": "4170ac8b418575ba1b76fb5e",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "bentley.bentayga",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:285",
+      "revision_id": "fb14b8d73c3a830fc70536de",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "bentley.bentayga",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:286",
+      "revision_id": "6bef0a61379e37b99620d551",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "bentley.bentayga",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:287",
+      "revision_id": "bc6da04896fd0a112ee63814",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mercedes_benz.cle",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:288",
+      "revision_id": "dec42fb7fbb5b2d7cb54d906",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "ford.everest",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:289",
+      "revision_id": "92fce8d521ff49482c1626ff",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "ford.everest",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:290",
+      "revision_id": "d191cb54010c616ad76f400b",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "ford.everest",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:291",
+      "revision_id": "f1b4f08443458691a980ccb8",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "ford.everest",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:292",
+      "revision_id": "09c73ce11ae10509e5199905",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "ford.everest",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:293",
+      "revision_id": "43a17e6adaba7847be7ac9c0",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.porsche_911",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:294",
+      "revision_id": "ae1911837d43bbb1f7f72901",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.vellfire",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:295",
+      "revision_id": "c34922934f57099390518b58",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mazda.cx30",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:296",
+      "revision_id": "91e1a75561147725ff85dd11",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mazda.cx30",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:297",
+      "revision_id": "91a4f317c856bc791c3b709d",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mazda.cx30",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:298",
+      "revision_id": "f433313ef292d07a8c78c65d",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "land_rover.range_rover_sport",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:299",
+      "revision_id": "c67ea9f3ebe13bf82c7fd17c",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "deepal.deepal_s05",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:300",
+      "revision_id": "f83d19356ab72a23fd205b97",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "avatr.avatr_11",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:301",
+      "revision_id": "77b50db52c3c7526673c731b",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:302",
+      "revision_id": "346f6a27721331b540f8a7bf",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:303",
+      "revision_id": "b56c065c9a937f30bd1225fb",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mitsubishi.triton_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:304",
+      "revision_id": "af916c817a2992f91e65f16d",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "aion.aion_v",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:305",
+      "revision_id": "248cbb869c0e91b6f60c1c78",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "ford.ranger_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:306",
+      "revision_id": "e389577cae45b64d3bda5c2f",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.vellfire",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:307",
+      "revision_id": "362964b8e5a682d0a4a051bd",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "lotus.emeya",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:308",
+      "revision_id": "9696b947e22ad4b3ad2ae191",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "land_rover.range_rover_sport",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:309",
+      "revision_id": "bc33efc1fdb90e47368852b6",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "leapmotor.leapmotor_c10",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:310",
+      "revision_id": "9b2bd36cfccda2e169e8e164",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "deepal.deepal_s05",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:311",
+      "revision_id": "3b8eb6c1407e60eb8ce014d9",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mg.mg_s5_ev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:312",
+      "revision_id": "0b57387ec8eb515800211309",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:313",
+      "revision_id": "22f73c33e586191b33ad0788",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "lotus.eletre",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:314",
+      "revision_id": "819d95e2a5fc8733e74aadad",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "hyundai.creta",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:315",
+      "revision_id": "5fd532f4cc3a5ae613043cf6",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.vellfire",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:316",
+      "revision_id": "856f254ad864cc900a862ffb",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "isuzu.dmax_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:317",
+      "revision_id": "48888f1055faf19707512070",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "lotus.eletre",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:318",
+      "revision_id": "c23726a53bcf51712ab81b9f",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mg.mg_s5_ev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:319",
+      "revision_id": "924d604de66c43058f88cec8",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "jaecoo.jaecoo_7",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:320",
+      "revision_id": "4be69f391443e30d820a077e",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "jaecoo.jaecoo_7",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:321",
+      "revision_id": "87393f6329990223f707c7a2",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mazda.mx_5",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:322",
+      "revision_id": "3a7ca61abe0963764a1eab40",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mazda.mazda2",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:323",
+      "revision_id": "e9dbe58ef83f35d559880023",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mazda.mazda2",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:324",
+      "revision_id": "8a596bfd6645fb9034f74804",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mazda.mazda2",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:325",
+      "revision_id": "e5caf890e0760ca3b2e91351",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mazda.mazda2",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:326",
+      "revision_id": "036ca47453807318c6bd7992",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mazda.mazda2",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:327",
+      "revision_id": "9f127bf7195caf15e397366d",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mazda.mazda2",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:328",
+      "revision_id": "4b978f1b021afc31ff7f9acc",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mazda.mazda2",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:329",
+      "revision_id": "d03c1a6c3d03e32220be3dfe",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mazda.mazda2",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:330",
+      "revision_id": "6259904ecf690f9a9a41e474",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "gwm.haval_h6",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:331",
+      "revision_id": "d4f9469396d97e447664a5ac",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "gwm.haval_h6",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:332",
+      "revision_id": "2885d646d0d9cb2463702730",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "gwm.haval_h6",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:333",
+      "revision_id": "716878e60874ec6f1c9a2a82",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mazda.cx5",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:334",
+      "revision_id": "9bf63d957763975c433d2d62",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mazda.cx5",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:335",
+      "revision_id": "4d203effc49713ec5cd2dda2",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "volvo.xc60",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:336",
+      "revision_id": "1042f4bc38ed0549ea6d5f10",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "volvo.ex40",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:337",
+      "revision_id": "655c578a0c5167da251295dd",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "volvo.ex40",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:338",
+      "revision_id": "c693561de13a6bdc3993a37d",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "volvo.ex30",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:339",
+      "revision_id": "017ec5b892e77d9e99817ef8",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "deepal.deepal_e07",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:340",
+      "revision_id": "af26fff05d89ed6741a3be3a",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "deepal.deepal_e07",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:341",
+      "revision_id": "31a2be4133f31d0eb7e01fa7",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "byd.atto3",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:342",
+      "revision_id": "4a762b56057f0a7bd74c363a",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "lotus.emeya",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:343",
+      "revision_id": "158fbc30677b675c8927edb4",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "ford.ranger_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:344",
+      "revision_id": "855d761be00a9cf84e4365dd",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "ford.ranger_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:345",
+      "revision_id": "9ca4ba30777b436bdafa61a9",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "ford.ranger_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:346",
+      "revision_id": "0cdedd0443af86335e8c1a71",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "ford.ranger_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:347",
+      "revision_id": "65c1d826cb47b7571cee93fa",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "byd.sealion6",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:348",
+      "revision_id": "1b2a0c8d4c02f373d6f95789",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.vellfire",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:349",
+      "revision_id": "e347807da814d0175241a872",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.macan",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:350",
+      "revision_id": "6b03ff501a3a582641f7abe8",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "deepal.deepal_s07",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:351",
+      "revision_id": "f0f3fd7407da2dc7d70f8e3e",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "avatr.avatr_11",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:352",
+      "revision_id": "530297acbd78c7cbe0d8b35b",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "aion.aion_y_plus",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:353",
+      "revision_id": "d2b7d6644dd09fe828686758",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "land_rover.range_rover",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:354",
+      "revision_id": "1591513f6023e6998167620b",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "land_rover.defender",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:355",
+      "revision_id": "ab48075cdb384a89d37e3d8d",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "land_rover.defender",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:356",
+      "revision_id": "205c22b3ee96cbfe579d4aed",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "land_rover.defender",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:357",
+      "revision_id": "83f5ae7308922e101ee87a3f",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "leapmotor.leapmotor_c10",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:358",
+      "revision_id": "a2fb0f2514aacc1ccc127369",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "byd.atto3",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:359",
+      "revision_id": "6f5a7eabaca08e47373eee55",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "lexus.lexus_nx",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:360",
+      "revision_id": "cf8bed277f02dd195c40fe03",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "lexus.lbx",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:361",
+      "revision_id": "1583e514c0256658b0a40357",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.hilux_revo_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:362",
+      "revision_id": "f3bc501a7d54097191387fdf",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "lexus.lexus_nx",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:363",
+      "revision_id": "60862f112e0d9da1ba8b5979",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "lexus.lexus_nx",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:364",
+      "revision_id": "a89574c456432299bfdeabb7",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "lexus.lexus_nx",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:365",
+      "revision_id": "bd1eb764b759c88db4ac2538",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "isuzu.dmax_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:366",
+      "revision_id": "d3af7e3b4058191866ae48d9",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "aion.hyptec_ht",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:367",
+      "revision_id": "684bb2f641e0185045238e8f",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:368",
+      "revision_id": "44ad75d94251cd6c6adc1f2c",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "aion.aion_y_plus",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:369",
+      "revision_id": "5bd034d46f671adc7f7170ab",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "kia.ev5",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:370",
+      "revision_id": "10f8fd3afd7d1e0f8566d7d6",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "bentley.flying_spur",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:371",
+      "revision_id": "b8d709ca777eb163c0d2dcb5",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "bentley.flying_spur",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:372",
+      "revision_id": "d82295546b347bab37392bc6",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.crv",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:373",
+      "revision_id": "292d1917a69c64cdbb3285aa",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.crv",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:374",
+      "revision_id": "1d0eb8df851de29983043cb2",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.crv",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:375",
+      "revision_id": "9b855cdd0cab91f858a4c648",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mitsubishi.triton_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:376",
+      "revision_id": "401f027ab20c9be3dd46d392",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mitsubishi.triton_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:377",
+      "revision_id": "5af7d429497da6d9d7c2ec3b",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mitsubishi.triton_double_cab",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:378",
+      "revision_id": "47783195711ed634d99da4d4",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "bentley.flying_spur",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:379",
+      "revision_id": "c07f7bd97c8ff59026f83b7a",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:380",
+      "revision_id": "8876bc6506b5b5d557da56c2",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:381",
+      "revision_id": "6e8b9aab50875139c9b6cc77",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mercedes_benz.gle",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:382",
+      "revision_id": "3bbfd8c4cf79058b045112bb",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mercedes_benz.mb_e_class",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:383",
+      "revision_id": "a01a5aaab02d3c61651b8384",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "hyundai.ioniq6",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:384",
+      "revision_id": "246b0eae5491e5382932bf9b",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:385",
+      "revision_id": "93e64f4b218c58c5c7be3baf",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "hyundai.ioniq5",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:386",
+      "revision_id": "f8d974e71c86688f38268533",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "hyundai.ioniq5",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:387",
+      "revision_id": "86e8602df3cff03f3e2e2ebd",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.civic",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:388",
+      "revision_id": "8a4f72b0bc1501817a3c6d89",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "xpeng.xpeng_g6",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:389",
+      "revision_id": "cb0e24a20d8a594b54a67a99",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "xpeng.xpeng_g6",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:390",
+      "revision_id": "6ba4d72c2fcfcd432a829496",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "hyundai.stargazer",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:391",
+      "revision_id": "e4a7bcd1bf130673d764a33f",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "bmw.bmw_x1",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:392",
+      "revision_id": "339667446ae1663713e1032c",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.porsche_911",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:393",
+      "revision_id": "a764db019bac363f32ecaaa4",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:394",
+      "revision_id": "4535cc8dd2780e8470cfba50",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:395",
+      "revision_id": "1bc346445fab638b2844b4e1",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "neta.neta_x",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:396",
+      "revision_id": "c2b9cf70766f69aa6f953a78",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:397",
+      "revision_id": "262ca2ccc436b8a4b44fbff5",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.step_wgn",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:398",
+      "revision_id": "c7102470e4d54636a6f3a237",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "honda.step_wgn",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:399",
+      "revision_id": "753e7e034d70afaf8829ae56",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mini.countryman",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:400",
+      "revision_id": "27ec559fcf8b42a1ff7714cc",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "nissan.almera",
+      "idempotent_replay": false
+    }
+  ],
+  "changed_files": [
+    "2026/models/land_rover.json",
+    "2026/models/mercedes_benz.json",
+    "2026/models/changan.json",
+    "2026/models/porsche.json",
+    "2026/models/volvo.json",
+    "2026/models/subaru.json",
+    "2026/models/lexus.json",
+    "2026/models/xpeng.json",
+    "2026/models/bentley.json",
+    "2026/models/ford.json",
+    "2026/models/tesla.json",
+    "2026/models/honda.json",
+    "2026/models/mazda.json",
+    "2026/models/bmw.json",
+    "2026/models/nissan.json",
+    "2026/models/deepal.json",
+    "2026/models/hyundai.json",
+    "2026/models/mg.json",
+    "2026/models/geely.json",
+    "2026/models/isuzu.json",
+    "2026/models/avatr.json",
+    "2026/models/aion.json",
+    "2026/models/mini.json",
+    "2026/models/byd.json",
+    "2026/models/jaecoo.json",
+    "2026/models/neta.json",
+    "2026/models/kia.json",
+    "2026/models/lotus.json",
+    "2026/models/audi.json",
+    "2026/models/leapmotor.json",
+    "2026/models/toyota.json",
+    "2026/models/gwm.json",
+    "2026/models/mitsubishi.json",
+    "2026/canonical_state/shadow/841df558ab026cd251f2edef.json",
+    "2026/canonical_state/shadow/906d61e987a94a28fbdc7c5e.json",
+    "2026/canonical_state/shadow/83d985fb29f6e6400b14722f.json",
+    "2026/canonical_state/shadow/5ff29cbb171d45e60a242b6b.json",
+    "2026/canonical_state/shadow/e5caf890e0760ca3b2e91351.json",
+    "2026/canonical_state/shadow/64f97fa70601872d15d8d252.json",
+    "2026/canonical_state/shadow/d0b9a61d17b5589f09bbbea6.json",
+    "2026/canonical_state/shadow/5ad6ce2e95bb083a30bb9120.json",
+    "2026/canonical_state/shadow/3c35d113fc38d5164998ebb5.json",
+    "2026/canonical_state/shadow/515da7d740ff43e2e9764b53.json",
+    "2026/canonical_state/shadow/7ad48efe91ae631857d9dc52.json",
+    "2026/canonical_state/shadow/924d604de66c43058f88cec8.json",
+    "2026/canonical_state/shadow/1042f4bc38ed0549ea6d5f10.json",
+    "2026/canonical_state/shadow/aa6b734365b249c36ce808ec.json",
+    "2026/canonical_state/shadow/edd13fd084a8990680ccb2af.json",
+    "2026/canonical_state/shadow/7e5cf6cafa537f3e751a3325.json",
+    "2026/canonical_state/shadow/8f1e8105d29f99bfbf8e3de8.json",
+    "2026/canonical_state/shadow/16653e3e6c9158fff899d1e6.json",
+    "2026/canonical_state/shadow/bc82b40b5a905c816e869f92.json",
+    "2026/canonical_state/shadow/8d6c8d156d5a40f473030ce4.json",
+    "2026/canonical_state/shadow/77627b10406b048cfbd5f78a.json",
+    "2026/canonical_state/shadow/6259904ecf690f9a9a41e474.json",
+    "2026/canonical_state/shadow/036ca47453807318c6bd7992.json",
+    "2026/canonical_state/shadow/1bc346445fab638b2844b4e1.json",
+    "2026/canonical_state/shadow/efd29cd23420c60bda879ad5.json",
+    "2026/canonical_state/shadow/6ddce4c68da956fd33e946ed.json",
+    "2026/canonical_state/shadow/3526367d3dd1afa04370e195.json",
+    "2026/canonical_state/shadow/3ef7e4dd0f82e9644eac6171.json",
+    "2026/canonical_state/shadow/85efaa44294e0c30ff426191.json",
+    "2026/canonical_state/shadow/ffafc08183e12f75c9aa4ad9.json",
+    "2026/canonical_state/shadow/8a596bfd6645fb9034f74804.json",
+    "2026/canonical_state/shadow/225526196cb92c005d65f14d.json",
+    "2026/canonical_state/shadow/0d1ba98775a4350deffa8c01.json",
+    "2026/canonical_state/shadow/52bb5d7766da8dc9a68b722a.json",
+    "2026/canonical_state/shadow/f1be87c592d14ab61eea0c27.json",
+    "2026/canonical_state/shadow/c599aa99e05e27c833d1f034.json",
+    "2026/canonical_state/shadow/e290d9c7c2390b49e91cc1d4.json",
+    "2026/canonical_state/shadow/49b6069b5b78abc82cd1d617.json",
+    "2026/canonical_state/shadow/c7fe20eb0242d23bce5762a9.json",
+    "2026/canonical_state/shadow/521f93faf136f5d55bdbd77c.json",
+    "2026/canonical_state/shadow/43a17e6adaba7847be7ac9c0.json",
+    "2026/canonical_state/shadow/70e891682faa5084854bd35b.json",
+    "2026/canonical_state/shadow/db6bd0ec18ceff5df5774b2c.json",
+    "2026/canonical_state/shadow/074350cd3d668d5d85f76420.json",
+    "2026/canonical_state/shadow/158fbc30677b675c8927edb4.json",
+    "2026/canonical_state/shadow/3abfc55eb22e019c0a230a1b.json",
+    "2026/canonical_state/shadow/e413ff36f42ce680d6b66111.json",
+    "2026/canonical_state/shadow/1a7f966722952de94c4323f2.json",
+    "2026/canonical_state/shadow/df1a5232bf62cd9395bd3cc1.json",
+    "2026/canonical_state/shadow/b27f3a7b20e358170efcd0a6.json",
+    "2026/canonical_state/shadow/9b2bd36cfccda2e169e8e164.json",
+    "2026/canonical_state/shadow/aae4a046f7052984b92c4900.json",
+    "2026/canonical_state/shadow/5af7d429497da6d9d7c2ec3b.json",
+    "2026/canonical_state/shadow/e368de432d60e6f89725e66f.json",
+    "2026/canonical_state/shadow/c34922934f57099390518b58.json",
+    "2026/canonical_state/shadow/1e5528c244eda3c0b69cc93f.json",
+    "2026/canonical_state/shadow/02a3d29d6cc6b8d68dd540f4.json",
+    "2026/canonical_state/shadow/684bb2f641e0185045238e8f.json",
+    "2026/canonical_state/shadow/9bf63d957763975c433d2d62.json",
+    "2026/canonical_state/outbox.jsonl",
+    "2026/canonical_state/shadow/39b5fa5ec34c6d04d0d00fe6.json",
+    "2026/canonical_state/shadow/4af30d596b35ede5e17b9d12.json",
+    "2026/canonical_state/shadow/4dba58ca088f8969f77163ea.json",
+    "2026/canonical_state/shadow/ce1e2709beb57bf314f00e5a.json",
+    "2026/canonical_state/shadow/f1dca247ed2ef437b6bac94e.json",
+    "2026/canonical_state/shadow/56edd9e72d06444113903add.json",
+    "2026/canonical_state/shadow/753e7e034d70afaf8829ae56.json",
+    "2026/canonical_state/shadow/9e3f0d80bd4cb97779b73901.json",
+    "2026/canonical_state/shadow/ff47b1e5d5acb43bf40b7d7a.json",
+    "2026/canonical_state/shadow/af916c817a2992f91e65f16d.json",
+    "2026/canonical_state/shadow/4d203effc49713ec5cd2dda2.json",
+    "2026/canonical_state/shadow/4b489e5c8c08345d6ad2bfbc.json",
+    "2026/canonical_state/shadow/9696b947e22ad4b3ad2ae191.json",
+    "2026/canonical_state/shadow/97aedaf1210244e663db8415.json",
+    "2026/canonical_state/shadow/65c1d826cb47b7571cee93fa.json",
+    "2026/canonical_state/shadow/ba8cb10eb62dcd4a6594eb98.json",
+    "2026/canonical_state/shadow/2edb2fae3c16e59e8a064bba.json",
+    "2026/canonical_state/shadow/4cbb8b9403758092b37542d2.json",
+    "2026/canonical_state/shadow/e1f65f96cacdd363c07ac657.json",
+    "2026/canonical_state/shadow/c4ab066c79e7ca849ac67476.json",
+    "2026/canonical_state/shadow/03fe69a688c61fcb35770a17.json",
+    "2026/canonical_state/shadow/44aa2ff7c212228580eb9b1c.json",
+    "2026/canonical_state/shadow/a197d23fa7e61dc9797ef335.json",
+    "2026/canonical_state/shadow/5dad536b0bc409287f1b5a0c.json",
+    "2026/canonical_state/shadow/cb729970378d3e313b328e77.json",
+    "2026/canonical_state/shadow/6d4e4c3915c9144f057bb6d3.json",
+    "2026/canonical_state/shadow/0acb6a13db52edff22783c5d.json",
+    "2026/canonical_state/shadow/68dca84fe8a8e07a21bb1901.json",
+    "2026/canonical_state/shadow/1b2a0c8d4c02f373d6f95789.json",
+    "2026/canonical_state/shadow/d253ab2bb27e51cceb51bfcc.json",
+    "2026/canonical_state/shadow/8ad9da8eb8dbb875941dde12.json",
+    "2026/canonical_state/shadow/16e588a53fc6efa04ff8e111.json",
+    "2026/canonical_state/shadow/c693561de13a6bdc3993a37d.json",
+    "2026/canonical_state/shadow/01b35cbc9f29681dde093e8d.json",
+    "2026/canonical_state/shadow/160d213ea7e19764603ffe29.json",
+    "2026/canonical_state/shadow/86859eff6a83d7d19f5b4fba.json",
+    "2026/canonical_state/shadow/26878e84e4867909a14db9f4.json",
+    "2026/canonical_state/shadow/7c47b40b0dd1789af5a1dfd6.json",
+    "2026/canonical_state/shadow/777ce754dc7555b4849e7a1d.json",
+    "2026/canonical_state/shadow/246b0eae5491e5382932bf9b.json",
+    "2026/canonical_state/shadow/e347807da814d0175241a872.json",
+    "2026/canonical_state/shadow/87393f6329990223f707c7a2.json",
+    "2026/canonical_state/revisions.jsonl",
+    "2026/canonical_state/shadow/69ab47bb7680ac9944f49e25.json",
+    "2026/canonical_state/shadow/a5316d84116173dc198e00ea.json",
+    "2026/canonical_state/shadow/530297acbd78c7cbe0d8b35b.json",
+    "2026/canonical_state/shadow/91bd6a2790ad46c5d6571e78.json",
+    "2026/canonical_state/shadow/28cc2c12bd6129392f711517.json",
+    "2026/canonical_state/shadow/f4e4a2690b64acee8b8bc54c.json",
+    "2026/canonical_state/shadow/d82295546b347bab37392bc6.json",
+    "2026/canonical_state/shadow/c7d3622df9b4945218b6174f.json",
+    "2026/canonical_state/shadow/0cdedd0443af86335e8c1a71.json",
+    "2026/canonical_state/shadow/42d00f92a0db3b6bf2d31c03.json",
+    "2026/canonical_state/shadow/9d91d26acd49cf0f119ba9c8.json",
+    "2026/canonical_state/shadow/205c22b3ee96cbfe579d4aed.json",
+    "2026/canonical_state/shadow/92fce8d521ff49482c1626ff.json",
+    "2026/canonical_state/shadow/9a8882af623e9055d36812c2.json",
+    "2026/canonical_state/shadow/6e8b9aab50875139c9b6cc77.json",
+    "2026/canonical_state/shadow/dec42fb7fbb5b2d7cb54d906.json",
+    "2026/canonical_state/shadow/67ad8bef517073eba8f41f22.json",
+    "2026/canonical_state/shadow/c2b9cf70766f69aa6f953a78.json",
+    "2026/canonical_state/shadow/b56c065c9a937f30bd1225fb.json",
+    "2026/canonical_state/shadow/3f5a65c7c57c6907bcfd8f95.json",
+    "2026/canonical_state/shadow/639e36caa5c5ab8fd0a5c3e3.json",
+    "2026/canonical_state/shadow/3c300c95b731571168e33780.json",
+    "2026/canonical_state/shadow/4f91b93b323ce27859fd3437.json",
+    "2026/canonical_state/shadow/0938e62daed5e60ece286a79.json",
+    "2026/canonical_state/shadow/f3a9093178671ac4d1d2eb22.json",
+    "2026/canonical_state/shadow/74523ea91c37df5a11f9028b.json",
+    "2026/canonical_state/shadow/4b992bcf83402a3bfa591175.json",
+    "2026/canonical_state/shadow/c67ea9f3ebe13bf82c7fd17c.json",
+    "2026/canonical_state/shadow/d224ccdb06f9ed9040d01f4e.json",
+    "2026/canonical_state/shadow/91e1a75561147725ff85dd11.json",
+    "2026/canonical_state/shadow/68055298fe59998679ff5180.json",
+    "2026/canonical_state/shadow/cc454819d1e722b13b291761.json",
+    "2026/canonical_state/shadow/72494812ce2303a69bcdead1.json",
+    "2026/canonical_state/shadow/5be98ea32d4cdd83fc32ea50.json",
+    "2026/canonical_state/shadow/ac3fe29d31702a351293435e.json",
+    "2026/canonical_state/shadow/844e2c20cd25e1efef13b631.json",
+    "2026/canonical_state/shadow/c5e46b782649401e9d303902.json",
+    "2026/canonical_state/shadow/ce2a30ff1dffc1ce14ef04bb.json",
+    "2026/canonical_state/shadow/1d3b54f4b0d33932a3f9e676.json",
+    "2026/canonical_state/shadow/6ba4d72c2fcfcd432a829496.json",
+    "2026/canonical_state/shadow/339667446ae1663713e1032c.json",
+    "2026/canonical_state/shadow/9ce412e0ada5278af874543e.json",
+    "2026/canonical_state/shadow/cf8bed277f02dd195c40fe03.json",
+    "2026/canonical_state/shadow/616d221e8f5ffe4948218d6c.json",
+    "2026/canonical_state/shadow/d4f9469396d97e447664a5ac.json",
+    "2026/canonical_state/shadow/1bf04453e9a364d42462db04.json",
+    "2026/canonical_state/shadow/c23726a53bcf51712ab81b9f.json",
+    "2026/canonical_state/shadow/ce27713132a27e554b504549.json",
+    "2026/canonical_state/shadow/9c4f96503f648df3715ec6ca.json",
+    "2026/canonical_state/shadow/926b1933beaaa2c7ab489d51.json",
+    "2026/canonical_state/shadow/a2c4c64120803597c4c4924b.json",
+    "2026/canonical_state/shadow/77b50db52c3c7526673c731b.json",
+    "2026/canonical_state/shadow/a764db019bac363f32ecaaa4.json",
+    "2026/canonical_state/shadow/e59a939620c197d3e974e76d.json",
+    "2026/canonical_state/shadow/5acb3e395accda6a906ad6c0.json",
+    "2026/canonical_state/shadow/ccdbfa9b7a992d4373520f95.json",
+    "2026/canonical_state/shadow/fc8a73a3feea8ea0d0232363.json",
+    "2026/canonical_state/shadow/c451fa18c375a5287b8363e1.json",
+    "2026/canonical_state/shadow/de9337c9783488c26a921736.json",
+    "2026/canonical_state/shadow/bba58bbec447378b05d8dbea.json",
+    "2026/canonical_state/shadow/f693cfe935459faf55ec7993.json",
+    "2026/canonical_state/shadow/0570871eaa92bad532a69ca4.json",
+    "2026/canonical_state/shadow/04a191575f1640a64dcb98e9.json",
+    "2026/canonical_state/shadow/ccddf01b8ed104840dc8ce2a.json",
+    "2026/canonical_state/shadow/ae1911837d43bbb1f7f72901.json",
+    "2026/canonical_state/shadow/1031e0f178d65e11ddbc63dc.json",
+    "2026/canonical_state/shadow/48888f1055faf19707512070.json",
+    "2026/canonical_state/shadow/c7bca3926e784cc41f949225.json",
+    "2026/canonical_state/shadow/32a92037b444059d98b857b9.json",
+    "2026/canonical_state/shadow/3b0d9d879a8efd3a27ead2c2.json",
+    "2026/canonical_state/shadow/af26fff05d89ed6741a3be3a.json",
+    "2026/canonical_state/shadow/9b855cdd0cab91f858a4c648.json",
+    "2026/canonical_state/shadow/855d761be00a9cf84e4365dd.json",
+    "2026/canonical_state/shadow/005dd363eb4af288234598c9.json",
+    "2026/canonical_state/shadow/a89574c456432299bfdeabb7.json",
+    "2026/canonical_state/shadow/b07c8b1780f5f9430d25fd89.json",
+    "2026/canonical_state/shadow/b8d709ca777eb163c0d2dcb5.json",
+    "2026/canonical_state/shadow/4170ac8b418575ba1b76fb5e.json",
+    "2026/canonical_state/shadow/c2446931870b27490864f52d.json",
+    "2026/canonical_state/shadow/9ca4ba30777b436bdafa61a9.json",
+    "2026/canonical_state/shadow/a4f99464ede12ce99530dd03.json",
+    "2026/canonical_state/shadow/c5d548159753704bccd096ef.json",
+    "2026/canonical_state/shadow/fa15e6d47528593615fd1b84.json",
+    "2026/canonical_state/shadow/bc6da04896fd0a112ee63814.json",
+    "2026/canonical_state/shadow/819d95e2a5fc8733e74aadad.json",
+    "2026/canonical_state/shadow/b6fb01419dc5b8374fccb827.json",
+    "2026/canonical_state/shadow/c7ac37618391afe0ecd983d1.json",
+    "2026/canonical_state/shadow/28994c77c2e400c4532d7bf2.json",
+    "2026/canonical_state/shadow/c6ce07477ee5be312557b2ab.json",
+    "2026/canonical_state/shadow/dca04962ddb1ffc0d8c1d465.json",
+    "2026/canonical_state/shadow/c7102470e4d54636a6f3a237.json",
+    "2026/canonical_state/shadow/485bb2c01125ff4855fe7dca.json",
+    "2026/canonical_state/shadow/8a4f72b0bc1501817a3c6d89.json",
+    "2026/canonical_state/shadow/17b006038a6f1caa537e2027.json",
+    "2026/canonical_state/shadow/7759d3987b3ae600b761a377.json",
+    "2026/canonical_state/shadow/1bbd9b4d92cc816e4c3065bf.json",
+    "2026/canonical_state/shadow/ba64f71e32049cd7deb85c01.json",
+    "2026/canonical_state/shadow/f3f5636b33dd980b1dd61693.json",
+    "2026/canonical_state/shadow/1f253185b4333da34c13e3b3.json",
+    "2026/canonical_state/shadow/262ca2ccc436b8a4b44fbff5.json",
+    "2026/canonical_state/shadow/e389577cae45b64d3bda5c2f.json",
+    "2026/canonical_state/shadow/4393096434b59d21a3dea790.json",
+    "2026/canonical_state/shadow/4d573e82b87501ce5ea16168.json",
+    "2026/canonical_state/shadow/eae99585946e52e9ca61dbdf.json",
+    "2026/canonical_state/shadow/62ca74afc8bad03c1ef6dd60.json",
+    "2026/canonical_state/shadow/4b576e0fea578319ba202bbe.json",
+    "2026/canonical_state/shadow/e4a7bcd1bf130673d764a33f.json",
+    "2026/canonical_state/shadow/c3b865ecd7ac0489b4faa2ee.json",
+    "2026/canonical_state/shadow/ab48075cdb384a89d37e3d8d.json",
+    "2026/canonical_state/shadow/44ad75d94251cd6c6adc1f2c.json",
+    "2026/canonical_state/shadow/536b94f8c2ac7e43c0864233.json",
+    "2026/canonical_state/shadow/01a533c594799bd4311cfdfb.json",
+    "2026/canonical_state/shadow/22a1e2927dc69139dc13cea8.json",
+    "2026/canonical_state/shadow/93e64f4b218c58c5c7be3baf.json",
+    "2026/canonical_state/shadow/a01a5aaab02d3c61651b8384.json",
+    "2026/canonical_state/shadow/c676cb0ae86437371de0d32e.json",
+    "2026/canonical_state/shadow/6ea51ad41a6637362d9efe37.json",
+    "2026/canonical_state/shadow/ef5ea5965e7b02869bb05f0c.json",
+    "2026/canonical_state/shadow/248cbb869c0e91b6f60c1c78.json",
+    "2026/canonical_state/shadow/f83d19356ab72a23fd205b97.json",
+    "2026/canonical_state/shadow/3b81df2bf06fce700f845cc7.json",
+    "2026/canonical_state/shadow/81a77ebc3ed3a24736bb37ef.json",
+    "2026/canonical_state/shadow/58f289a9909e73fe039f7c41.json",
+    "2026/canonical_state/shadow/b4e547b5f84d5e460c4d6498.json",
+    "2026/canonical_state/shadow/16b91c3652a2f44107027ee9.json",
+    "2026/canonical_state/shadow/53f45550ecc5f4684dc48cbc.json",
+    "2026/canonical_state/shadow/33206646b6105977c69a49b1.json",
+    "2026/canonical_state/shadow/0757feafe3f43a051b9288ac.json",
+    "2026/canonical_state/shadow/f0f3fd7407da2dc7d70f8e3e.json",
+    "2026/canonical_state/shadow/e88a37548d6f43d56c6f475d.json",
+    "2026/canonical_state/shadow/362964b8e5a682d0a4a051bd.json",
+    "2026/canonical_state/shadow/df311fe60386c926de655b24.json",
+    "2026/canonical_state/shadow/3bedc250eb03b7d507a0aa45.json",
+    "2026/canonical_state/shadow/b52238772f70626e7c30560f.json",
+    "2026/canonical_state/shadow/48bc357648c20286764d9c3c.json",
+    "2026/canonical_state/shadow/0b57387ec8eb515800211309.json",
+    "2026/canonical_state/shadow/d3af7e3b4058191866ae48d9.json",
+    "2026/canonical_state/shadow/064797d3863ea5edabb6eea4.json",
+    "2026/canonical_state/shadow/309a120879d4886bcdcdaec8.json",
+    "2026/canonical_state/shadow/69833b9b8440615f260ad326.json",
+    "2026/canonical_state/shadow/c2d70a3970b4e2f52424450a.json",
+    "2026/canonical_state/shadow/1583e514c0256658b0a40357.json",
+    "2026/canonical_state/shadow/fb14b8d73c3a830fc70536de.json",
+    "2026/canonical_state/shadow/1cfac8736b3fc9ce42ca1fe4.json",
+    "2026/canonical_state/shadow/cb0e24a20d8a594b54a67a99.json",
+    "2026/canonical_state/shadow/017ec5b892e77d9e99817ef8.json",
+    "2026/canonical_state/shadow/3a7ca61abe0963764a1eab40.json",
+    "2026/canonical_state/shadow/8876bc6506b5b5d557da56c2.json",
+    "2026/canonical_state/shadow/35cb6a0c63173b170c9a49b4.json",
+    "2026/canonical_state/shadow/cf8c9a17addd586e8dade58b.json",
+    "2026/canonical_state/shadow/655c578a0c5167da251295dd.json",
+    "2026/canonical_state/shadow/32ab81f7756b4ea1dd7a8a96.json",
+    "2026/canonical_state/shadow/43c1a7e28c46df13d51fecc2.json",
+    "2026/canonical_state/shadow/00a543eed4585feff52be8c0.json",
+    "2026/canonical_state/shadow/57ffb9cd0b07f2095a9a3b28.json",
+    "2026/canonical_state/shadow/2c02a263629784620ea4a63b.json",
+    "2026/canonical_state/shadow/27ec559fcf8b42a1ff7714cc.json",
+    "2026/canonical_state/shadow/a2fb0f2514aacc1ccc127369.json",
+    "2026/canonical_state/shadow/09b56b68df6cee1580a80b05.json",
+    "2026/canonical_state/shadow/903d2fb74046cc7c30023c22.json",
+    "2026/canonical_state/shadow/c769386cacdceeca947e830b.json",
+    "2026/canonical_state/shadow/bc33efc1fdb90e47368852b6.json",
+    "2026/canonical_state/shadow/23f5d5bf99d3a32829828a13.json",
+    "2026/canonical_state/shadow/f3bc501a7d54097191387fdf.json",
+    "2026/canonical_state/shadow/c9efc070f7caf6a04f99f44a.json",
+    "2026/canonical_state/shadow/f1b4f08443458691a980ccb8.json",
+    "2026/canonical_state/shadow/86e8602df3cff03f3e2e2ebd.json",
+    "2026/canonical_state/shadow/791cc6cf265ce9c8478d99f2.json",
+    "2026/canonical_state/shadow/dba3ff656b0cca749280c0ef.json",
+    "2026/canonical_state/shadow/a53f6501f1b6657863e79343.json",
+    "2026/canonical_state/shadow/ae2f980b0ae80bfc838af852.json",
+    "2026/canonical_state/shadow/6b8713eef1b67f6d4938f9ff.json",
+    "2026/canonical_state/shadow/5fb3c6f3506782afece57ccb.json",
+    "2026/canonical_state/shadow/8541893bbacbb58a634ed2a7.json",
+    "2026/canonical_state/shadow/6bef0a61379e37b99620d551.json",
+    "2026/canonical_state/shadow/7c8ac1fb77448538d7a36766.json",
+    "2026/canonical_state/shadow/d183cf7b50dd4d20b12d1d7b.json",
+    "2026/canonical_state/shadow/6b03ff501a3a582641f7abe8.json",
+    "2026/canonical_state/shadow/ae4af713014aa8ae1dd1e90c.json",
+    "2026/canonical_state/shadow/bcf2876984ae59b493ad2043.json",
+    "2026/canonical_state/shadow/f514f86d903c118be054ff6d.json",
+    "2026/canonical_state/shadow/4b978f1b021afc31ff7f9acc.json",
+    "2026/canonical_state/shadow/9e9e61b3a72032c6682bde45.json",
+    "2026/canonical_state/shadow/d03534fa65db2c6310667fcb.json",
+    "2026/canonical_state/shadow/ea98f37053414d4bf3137718.json",
+    "2026/canonical_state/shadow/401f027ab20c9be3dd46d392.json",
+    "2026/canonical_state/shadow/c7dbc945be4ad65fd45a4ae2.json",
+    "2026/canonical_state/shadow/3b8eb6c1407e60eb8ce014d9.json",
+    "2026/canonical_state/shadow/6ae5c986c3decbdd10863113.json",
+    "2026/canonical_state/shadow/f7ce26992c70d7701c214c35.json",
+    "2026/canonical_state/shadow/3dc3e72de5c3d615cea96d4d.json",
+    "2026/canonical_state/shadow/2885d646d0d9cb2463702730.json",
+    "2026/canonical_state/shadow/274669775a4cfdc6a1d508fe.json",
+    "2026/canonical_state/shadow/60862f112e0d9da1ba8b5979.json",
+    "2026/canonical_state/shadow/6457472efb3fc7214a50fc2a.json",
+    "2026/canonical_state/shadow/40189772ff94bf3e21c24151.json",
+    "2026/canonical_state/shadow/6f5a7eabaca08e47373eee55.json",
+    "2026/canonical_state/shadow/4a46942c21bfcd24a8a15825.json",
+    "2026/canonical_state/shadow/f5824ed2de10726f98b49b42.json",
+    "2026/canonical_state/shadow/077df6ccd3b67f6401ea7d7f.json",
+    "2026/canonical_state/shadow/292d1917a69c64cdbb3285aa.json",
+    "2026/canonical_state/shadow/f0df0c8c4a7044e60c434d49.json",
+    "2026/canonical_state/shadow/932dc96044b3eb92894d10a7.json",
+    "2026/canonical_state/shadow/4aef59621d1e4a6c7e5a408a.json",
+    "2026/canonical_state/shadow/bea569e52c9d5f88c98b2b50.json",
+    "2026/canonical_state/shadow/f6a1d071a60b8a4e36231384.json",
+    "2026/canonical_state/shadow/d191cb54010c616ad76f400b.json",
+    "2026/canonical_state/shadow/d0785a67085d7baacfce210b.json",
+    "2026/canonical_state/shadow/da5e7cbe2faf35abed17d7c6.json",
+    "2026/canonical_state/shadow/f8d974e71c86688f38268533.json",
+    "2026/canonical_state/shadow/7853cab038b876cc6fd3dd0f.json",
+    "2026/canonical_state/shadow/4a02a6f10efd3878ba922995.json",
+    "2026/canonical_state/shadow/47783195711ed634d99da4d4.json",
+    "2026/canonical_state/shadow/e72a9426dc78387e8a5ff377.json",
+    "2026/canonical_state/shadow/1456999596405e048c5f1715.json",
+    "2026/canonical_state/shadow/83f5ae7308922e101ee87a3f.json",
+    "2026/canonical_state/shadow/aa65390d4cb3d755ab67c590.json",
+    "2026/canonical_state/shadow/d2ec1f73cfefc13aed2305b7.json",
+    "2026/canonical_state/shadow/1d0eb8df851de29983043cb2.json",
+    "2026/canonical_state/shadow/5c300d3cffa8cb5cf55c29c5.json",
+    "2026/canonical_state/shadow/8f4de1d378b2f2ce2b57e93a.json",
+    "2026/canonical_state/shadow/4535cc8dd2780e8470cfba50.json",
+    "2026/canonical_state/shadow/b61795c6c775e55b63981bcf.json",
+    "2026/canonical_state/shadow/7af719e011c10f7602b5218c.json",
+    "2026/canonical_state/shadow/8bcf3c68d7a9850bf882b977.json",
+    "2026/canonical_state/shadow/59d4c08d89c66c4dd3fb9ed3.json",
+    "2026/canonical_state/shadow/120cffbf08b694cd979376a4.json",
+    "2026/canonical_state/shadow/5b5c8c68f5392611325c3080.json",
+    "2026/canonical_state/shadow/09c73ce11ae10509e5199905.json",
+    "2026/canonical_state/shadow/fdd0608d1725674715f99ed3.json",
+    "2026/canonical_state/shadow/8971b449f2635d18f54287ae.json",
+    "2026/canonical_state/shadow/763ca3e1bae278a2b8434873.json",
+    "2026/canonical_state/shadow/04e81a03fb9e8b0a310a89b0.json",
+    "2026/canonical_state/shadow/cc051bb12daa5a9ca01c1e29.json",
+    "2026/canonical_state/shadow/ea8f874691ba41cb472a7174.json",
+    "2026/canonical_state/shadow/9be27c614b87f7cf4544701d.json",
+    "2026/canonical_state/shadow/5db6a60cc3509f53e5e24009.json",
+    "2026/canonical_state/shadow/7f9d745471ebc4707dde0318.json",
+    "2026/canonical_state/shadow/ad7f7267ec34cf73c2f73d93.json",
+    "2026/canonical_state/shadow/d5f4f0ece28fb4ba782e7a0f.json",
+    "2026/canonical_state/shadow/9c361f769a040a81701f3a4c.json",
+    "2026/canonical_state/shadow/91a4f317c856bc791c3b709d.json",
+    "2026/canonical_state/shadow/680cc6139f01880cd2082261.json",
+    "2026/canonical_state/shadow/9f127bf7195caf15e397366d.json",
+    "2026/canonical_state/shadow/486bccd3638ed300d78cec72.json",
+    "2026/canonical_state/shadow/ceedc60ea01a5c5295bb226c.json",
+    "2026/canonical_state/shadow/c07f7bd97c8ff59026f83b7a.json",
+    "2026/canonical_state/shadow/4be69f391443e30d820a077e.json",
+    "2026/canonical_state/shadow/407ab5cbd1733dc6dfec3872.json",
+    "2026/canonical_state/shadow/d2b7d6644dd09fe828686758.json",
+    "2026/canonical_state/shadow/51f9aeb25597c07b141d57d0.json",
+    "2026/canonical_state/shadow/716878e60874ec6f1c9a2a82.json",
+    "2026/canonical_state/shadow/178c6cec9df25ee37c3b2182.json",
+    "2026/canonical_state/shadow/1591513f6023e6998167620b.json",
+    "2026/canonical_state/shadow/9abef46301efebf757edf758.json",
+    "2026/canonical_state/shadow/d260e5e62890da90d49b7483.json",
+    "2026/canonical_state/shadow/f433313ef292d07a8c78c65d.json",
+    "2026/canonical_state/shadow/1d544ab0937aca89c363fdf9.json",
+    "2026/canonical_state/shadow/28954139d0b7ea5bb970da50.json",
+    "2026/canonical_state/shadow/5fd532f4cc3a5ae613043cf6.json",
+    "2026/canonical_state/shadow/ee770531f3c22e4055730869.json",
+    "2026/canonical_state/shadow/a21fcaa1f761482e38c0955f.json",
+    "2026/canonical_state/shadow/34a92d971d439a275973618f.json",
+    "2026/canonical_state/shadow/856f254ad864cc900a862ffb.json",
+    "2026/canonical_state/shadow/bd1eb764b759c88db4ac2538.json",
+    "2026/canonical_state/shadow/fe73aebae35a881a00fbd315.json",
+    "2026/canonical_state/shadow/d26a08c18fa29ec9bd39c4cc.json",
+    "2026/canonical_state/shadow/e9dbe58ef83f35d559880023.json",
+    "2026/canonical_state/shadow/05589fa743c9d03f746c288d.json",
+    "2026/canonical_state/shadow/1803cd21fd5a709510d9bf4a.json",
+    "2026/canonical_state/shadow/e337f2cc15586166ce38dfb4.json",
+    "2026/canonical_state/shadow/56659d8bfa3e5c57b8e77789.json",
+    "2026/canonical_state/shadow/f8abb55a3ae9fe757d6cca51.json",
+    "2026/canonical_state/shadow/5919fefad729284f0cdee848.json",
+    "2026/canonical_state/shadow/31a2be4133f31d0eb7e01fa7.json",
+    "2026/canonical_state/shadow/8d7164b7efdede8ce88d5b3e.json",
+    "2026/canonical_state/shadow/5bd034d46f671adc7f7170ab.json",
+    "2026/canonical_state/shadow/4a762b56057f0a7bd74c363a.json",
+    "2026/canonical_state/shadow/382e663766ba36ada7849fe3.json",
+    "2026/canonical_state/shadow/a0ec65a6ada9159ba6cc83fe.json",
+    "2026/canonical_state/shadow/8ebde7efbdc4d96e92e95760.json",
+    "2026/canonical_state/shadow/22f73c33e586191b33ad0788.json",
+    "2026/canonical_state/shadow/fad48492c5bf62256249c4eb.json",
+    "2026/canonical_state/shadow/3bbfd8c4cf79058b045112bb.json",
+    "2026/canonical_state/shadow/51903dac7f67df98fc5d8f4c.json",
+    "2026/canonical_state/shadow/346f6a27721331b540f8a7bf.json",
+    "2026/canonical_state/shadow/4b961141b82bda2e89fa2eaa.json",
+    "2026/canonical_state/shadow/9aeb96e8b42a27c0d3dde468.json",
+    "2026/canonical_state/shadow/47f7afd41c99e75ef596e0c5.json",
+    "2026/canonical_state/shadow/deaf5433ee3b5f2f77b9a15c.json",
+    "2026/canonical_state/shadow/c46ff57c4fac591447a39079.json",
+    "2026/canonical_state/shadow/a182d5bb7fb6931ace7d2f4a.json",
+    "2026/canonical_state/shadow/735e8064ee2454370eb3d006.json",
+    "2026/canonical_state/shadow/022341e4373d2fca8135a611.json",
+    "2026/canonical_state/shadow/da3eb127a59f88faa0f0fd4f.json",
+    "2026/canonical_state/shadow/d03c1a6c3d03e32220be3dfe.json",
+    "2026/canonical_state/shadow/f40a727d1c77c8a1219a129c.json",
+    "2026/canonical_state/shadow/10b0c9a7247c0c68bc728ccd.json",
+    "2026/canonical_state/shadow/10f8fd3afd7d1e0f8566d7d6.json"
+  ]
+}

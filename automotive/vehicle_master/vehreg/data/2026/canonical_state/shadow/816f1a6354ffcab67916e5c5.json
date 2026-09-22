@@ -1,0 +1,355 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "816f1a6354ffcab67916e5c5",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:74",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "volvo.s60",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:43+00:00",
+    "before_hash": "3a4a6730929f16a95ceff781de0e3e5fe4c37ee4618dff30fd23539f07c7fc60",
+    "after_hash": "0a48bedcd5fb010ac418d13c15b789107825926654d83300a26a7d2a0d561979",
+    "before": {
+      "id": "s60",
+      "name_en": "S60",
+      "name_th": "เอส60",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "S60"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2024-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "PHEV",
+              "drivetrain": "AWD",
+              "engine_cc": 1969,
+              "battery_kwh": 18.8,
+              "price_thb": 2590000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Recharge T8 Plug-in Hybrid Plus Dark",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:308"
+                ]
+              },
+              "id": "recharge_t8_plug_in_hybrid_plus_dark_phev"
+            },
+            {
+              "name": "Recharge T8 Plug-in Hybrid Ultimate Dark",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:308"
+                ]
+              },
+              "id": "recharge_t8_plug_in_hybrid_ultimate_dark_phev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "volvo",
+        "name_en": "Volvo",
+        "name_th": "วอลโว่",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Geely",
+        "brand_origin": "SE",
+        "trim_detail": false,
+        "aliases": [
+          "วอลโว่"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "volvo.s60",
+        "brand_id": "volvo",
+        "name_en": "S60",
+        "name_th": "เอส60",
+        "nameplate": "S60",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "S60"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "volvo.s60.gen1",
+          "model_id": "volvo.s60",
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2024-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "volvo.s60.gen1.spec",
+          "generation_id": "volvo.s60.gen1",
+          "name": "spec",
+          "powertrain": "PHEV",
+          "drivetrain": "AWD",
+          "engine_cc": 1969,
+          "battery_kwh": 18.8,
+          "price_thb": 2590000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "volvo.s60.gen1.trim.recharge_t8_plug_in_hybrid_plus_dark_phev",
+          "generation_id": "volvo.s60.gen1",
+          "name": "Recharge T8 Plug-in Hybrid Plus Dark",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:308"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "volvo.s60.gen1.trim.recharge_t8_plug_in_hybrid_ultimate_dark_phev",
+          "generation_id": "volvo.s60.gen1",
+          "name": "Recharge T8 Plug-in Hybrid Ultimate Dark",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1969,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4778,
+          "width_mm": 1850,
+          "height_mm": 1430,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:308"
+            ],
+            "eco": [
+              "8d664282-9f25-4ecd-bcdc-ce2c386d3074"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/volvo.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "816f1a6354ffcab67916e5c5:catalog",
+    "revision_id": "816f1a6354ffcab67916e5c5",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "volvo.s60",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:43+00:00",
+    "payload": {
+      "brand": {
+        "id": "volvo",
+        "name_en": "Volvo",
+        "name_th": "วอลโว่",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Geely",
+        "brand_origin": "SE",
+        "trim_detail": false,
+        "aliases": [
+          "วอลโว่"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "volvo.s60",
+        "brand_id": "volvo",
+        "name_en": "S60",
+        "name_th": "เอส60",
+        "nameplate": "S60",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "S60"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "volvo.s60.gen1",
+          "model_id": "volvo.s60",
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2024-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "volvo.s60.gen1.spec",
+          "generation_id": "volvo.s60.gen1",
+          "name": "spec",
+          "powertrain": "PHEV",
+          "drivetrain": "AWD",
+          "engine_cc": 1969,
+          "battery_kwh": 18.8,
+          "price_thb": 2590000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "volvo.s60.gen1.trim.recharge_t8_plug_in_hybrid_plus_dark_phev",
+          "generation_id": "volvo.s60.gen1",
+          "name": "Recharge T8 Plug-in Hybrid Plus Dark",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:308"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "volvo.s60.gen1.trim.recharge_t8_plug_in_hybrid_ultimate_dark_phev",
+          "generation_id": "volvo.s60.gen1",
+          "name": "Recharge T8 Plug-in Hybrid Ultimate Dark",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1969,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4778,
+          "width_mm": 1850,
+          "height_mm": 1430,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:308"
+            ],
+            "eco": [
+              "8d664282-9f25-4ecd-bcdc-ce2c386d3074"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

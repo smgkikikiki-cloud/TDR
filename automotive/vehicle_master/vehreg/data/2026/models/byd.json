@@ -52,6 +52,34 @@
               "price_min_thb": 899000,
               "price_max_thb": 899000
             }
+          ],
+          "trims": [
+            {
+              "name": "BYD ATTO3 (410KM-PREMIUM)",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4455,
+              "width_mm": 1875,
+              "height_mm": 1615,
+              "source_refs": {
+                "eco": [
+                  "762c0806-4101-4155-9343-7c2dc815dd3b"
+                ]
+              }
+            },
+            {
+              "name": "BYD ATTO3 (480KM-EXT)",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4455,
+              "width_mm": 1875,
+              "height_mm": 1615,
+              "source_refs": {
+                "eco": [
+                  "e529321a-7be2-4dfe-9087-8fdf70958ca0"
+                ]
+              }
+            }
           ]
         }
       ],
@@ -277,6 +305,38 @@
               "price_note": "seed-unverified",
               "price_min_thb": 899000,
               "price_max_thb": 899000
+            }
+          ],
+          "trims": [
+            {
+              "name": "BYD SEALION6 PREMIUM",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4775,
+              "width_mm": 1890,
+              "height_mm": 1670,
+              "engine_cc": 1498,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "0382f93a-20e8-4b49-885a-1c3576b20e50"
+                ]
+              }
+            },
+            {
+              "name": "BYD DYNAMIC",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4775,
+              "width_mm": 1890,
+              "height_mm": 1670,
+              "engine_cc": 1498,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "ed09424c-c3fa-4a7f-a0ce-0cc2aa0a2284"
+                ]
+              }
             }
           ]
         }

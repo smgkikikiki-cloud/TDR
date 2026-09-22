@@ -1,0 +1,382 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f23f29bbba2b811323250eb8",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:210",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "ferrari.f8",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:57+00:00",
+    "before_hash": "574bf4c6be1ab448c55f224dbdd5e04fcf6c62ce8fbe60efd21cbb6e674530d1",
+    "after_hash": "ba5912c2e51b729a585ff695a923a975b2ce59e8f8d5123f835797b9cbf31d9a",
+    "before": {
+      "id": "f8",
+      "name_en": "F8",
+      "name_th": "F8",
+      "nameplate": "",
+      "body_type": "COUPE",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "NICHE",
+      "aliases": [
+        "F8"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "D",
+          "seats": 2,
+          "launched": "2022-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "engine_cc": 3990,
+              "battery_kwh": null,
+              "price_thb": 25000000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "UNKNOWN",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Tributo (Coupe)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:079"
+                ]
+              },
+              "aliases": [
+                "F8 Tributo (Coupe)"
+              ],
+              "id": "tributo_coupe_ice"
+            },
+            {
+              "name": "Spider",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:079"
+                ],
+                "eco": [
+                  "e29bfd363b074853a13cde8d1436bc18"
+                ]
+              },
+              "aliases": [
+                "F8 Spider"
+              ],
+              "id": "spider_ice",
+              "seats": 2,
+              "length_mm": 4612,
+              "width_mm": 2261,
+              "height_mm": 1206,
+              "engine_cc": 3902,
+              "tire_front": "245/35ZR20",
+              "tire_rear": "305/30ZR20",
+              "transmission": "AUTOMATIC"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "ferrari",
+        "name_en": "Ferrari",
+        "name_th": "เฟอร์รารี",
+        "brand_segment": "PERFORMANCE",
+        "oem_group": "Ferrari",
+        "brand_origin": "IT",
+        "trim_detail": false,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "ferrari.f8",
+        "brand_id": "ferrari",
+        "name_en": "F8",
+        "name_th": "F8",
+        "nameplate": "F8",
+        "body_type": "COUPE",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "F8"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "ferrari.f8.gen1",
+          "model_id": "ferrari.f8",
+          "code": "gen1",
+          "segment": "D",
+          "seats": 2,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "ferrari.f8.gen1.spec",
+          "generation_id": "ferrari.f8.gen1",
+          "name": "spec",
+          "powertrain": "ICE",
+          "drivetrain": "AWD",
+          "engine_cc": 3990,
+          "battery_kwh": null,
+          "price_thb": 25000000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "UNKNOWN",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "ferrari.f8.gen1.trim.tributo_coupe_ice",
+          "generation_id": "ferrari.f8.gen1",
+          "name": "Tributo (Coupe)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 3902,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 2,
+          "length_mm": 4611,
+          "width_mm": 2261,
+          "height_mm": 1206,
+          "wheelbase_mm": null,
+          "tire_front": "245/35ZR20",
+          "tire_rear": "305/30ZR20",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "F8 Tributo (Coupe)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:079"
+            ],
+            "eco": [
+              "69e8fdaca7fd463886c69c6b1160ece6"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "ferrari.f8.gen1.trim.spider_ice",
+          "generation_id": "ferrari.f8.gen1",
+          "name": "Spider",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 3902,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 2,
+          "length_mm": 4612,
+          "width_mm": 2261,
+          "height_mm": 1206,
+          "wheelbase_mm": null,
+          "tire_front": "245/35ZR20",
+          "tire_rear": "305/30ZR20",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "F8 Spider"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:079"
+            ],
+            "eco": [
+              "e29bfd363b074853a13cde8d1436bc18"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/ferrari.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f23f29bbba2b811323250eb8:catalog",
+    "revision_id": "f23f29bbba2b811323250eb8",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "ferrari.f8",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:57+00:00",
+    "payload": {
+      "brand": {
+        "id": "ferrari",
+        "name_en": "Ferrari",
+        "name_th": "เฟอร์รารี",
+        "brand_segment": "PERFORMANCE",
+        "oem_group": "Ferrari",
+        "brand_origin": "IT",
+        "trim_detail": false,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "ferrari.f8",
+        "brand_id": "ferrari",
+        "name_en": "F8",
+        "name_th": "F8",
+        "nameplate": "F8",
+        "body_type": "COUPE",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "F8"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "ferrari.f8.gen1",
+          "model_id": "ferrari.f8",
+          "code": "gen1",
+          "segment": "D",
+          "seats": 2,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "ferrari.f8.gen1.spec",
+          "generation_id": "ferrari.f8.gen1",
+          "name": "spec",
+          "powertrain": "ICE",
+          "drivetrain": "AWD",
+          "engine_cc": 3990,
+          "battery_kwh": null,
+          "price_thb": 25000000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "UNKNOWN",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "ferrari.f8.gen1.trim.tributo_coupe_ice",
+          "generation_id": "ferrari.f8.gen1",
+          "name": "Tributo (Coupe)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 3902,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 2,
+          "length_mm": 4611,
+          "width_mm": 2261,
+          "height_mm": 1206,
+          "wheelbase_mm": null,
+          "tire_front": "245/35ZR20",
+          "tire_rear": "305/30ZR20",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "F8 Tributo (Coupe)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:079"
+            ],
+            "eco": [
+              "69e8fdaca7fd463886c69c6b1160ece6"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "ferrari.f8.gen1.trim.spider_ice",
+          "generation_id": "ferrari.f8.gen1",
+          "name": "Spider",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 3902,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 2,
+          "length_mm": 4612,
+          "width_mm": 2261,
+          "height_mm": 1206,
+          "wheelbase_mm": null,
+          "tire_front": "245/35ZR20",
+          "tire_rear": "305/30ZR20",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "F8 Spider"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:079"
+            ],
+            "eco": [
+              "e29bfd363b074853a13cde8d1436bc18"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

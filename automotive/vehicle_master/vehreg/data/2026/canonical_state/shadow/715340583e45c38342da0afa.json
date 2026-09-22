@@ -1,0 +1,457 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "715340583e45c38342da0afa",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:10",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "lexus.lbx",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:37+00:00",
+    "before_hash": "877ff45ec8648572da899375a71dee9b84e1b01f2a0346d52e2edf8d40996897",
+    "after_hash": "b6dc5dd7a27db14fad0bb0d8dfc2904c51fd8da578e1428b75ef620b3a7016f5",
+    "before": {
+      "id": "lbx",
+      "name_en": "LBX",
+      "name_th": "แอลบีเอ็กซ์",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "LBX"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2024-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "engine_cc": 1490,
+              "battery_kwh": 1.0,
+              "price_thb": 2490000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "JP",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Luxury",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:149"
+                ]
+              },
+              "aliases": [
+                "LBX Luxury"
+              ],
+              "id": "luxury_hev"
+            },
+            {
+              "name": "Premium",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:149"
+                ],
+                "eco": [
+                  "e998f59f-a57c-45e7-b5e6-a214d005601e"
+                ]
+              },
+              "aliases": [
+                "LBX Premium"
+              ],
+              "id": "premium_hev",
+              "seats": 5,
+              "length_mm": 4190,
+              "width_mm": 1825,
+              "height_mm": 1560,
+              "engine_cc": 1490,
+              "transmission": "CVT"
+            },
+            {
+              "name": "Bespoke",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4190,
+              "width_mm": 1825,
+              "height_mm": 1560,
+              "engine_cc": 1490,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "3214703d-3f34-4072-bc71-510132d1ec26"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "lexus",
+        "name_en": "Lexus",
+        "name_th": "เล็กซัส",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "เล็กซัส"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "lexus.lbx",
+        "brand_id": "lexus",
+        "name_en": "LBX",
+        "name_th": "แอลบีเอ็กซ์",
+        "nameplate": "LBX",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "LBX"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "lexus.lbx.gen1",
+          "model_id": "lexus.lbx",
+          "code": "gen1",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2024-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "lexus.lbx.gen1.spec",
+          "generation_id": "lexus.lbx.gen1",
+          "name": "spec",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1490,
+          "battery_kwh": 1.0,
+          "price_thb": 2490000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "JP",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "lexus.lbx.gen1.trim.luxury_hev",
+          "generation_id": "lexus.lbx.gen1",
+          "name": "Luxury",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1490,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4190,
+          "width_mm": 1825,
+          "height_mm": 1550,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "LBX Luxury"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:149"
+            ],
+            "eco": [
+              "7872b6bc-2f8b-44e2-9bc8-6c567ef9276a"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lbx.gen1.trim.premium_hev",
+          "generation_id": "lexus.lbx.gen1",
+          "name": "Premium",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1490,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4190,
+          "width_mm": 1825,
+          "height_mm": 1560,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "LBX Premium"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:149"
+            ],
+            "eco": [
+              "e998f59f-a57c-45e7-b5e6-a214d005601e"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lbx.gen1.trim.bespoke_hev",
+          "generation_id": "lexus.lbx.gen1",
+          "name": "Bespoke",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1490,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4190,
+          "width_mm": 1825,
+          "height_mm": 1560,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "3214703d-3f34-4072-bc71-510132d1ec26"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/lexus.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "715340583e45c38342da0afa:catalog",
+    "revision_id": "715340583e45c38342da0afa",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "lexus.lbx",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:37+00:00",
+    "payload": {
+      "brand": {
+        "id": "lexus",
+        "name_en": "Lexus",
+        "name_th": "เล็กซัส",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "เล็กซัส"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "lexus.lbx",
+        "brand_id": "lexus",
+        "name_en": "LBX",
+        "name_th": "แอลบีเอ็กซ์",
+        "nameplate": "LBX",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "LBX"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "lexus.lbx.gen1",
+          "model_id": "lexus.lbx",
+          "code": "gen1",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2024-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "lexus.lbx.gen1.spec",
+          "generation_id": "lexus.lbx.gen1",
+          "name": "spec",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1490,
+          "battery_kwh": 1.0,
+          "price_thb": 2490000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "JP",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "lexus.lbx.gen1.trim.luxury_hev",
+          "generation_id": "lexus.lbx.gen1",
+          "name": "Luxury",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1490,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4190,
+          "width_mm": 1825,
+          "height_mm": 1550,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "LBX Luxury"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:149"
+            ],
+            "eco": [
+              "7872b6bc-2f8b-44e2-9bc8-6c567ef9276a"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lbx.gen1.trim.premium_hev",
+          "generation_id": "lexus.lbx.gen1",
+          "name": "Premium",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1490,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4190,
+          "width_mm": 1825,
+          "height_mm": 1560,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "LBX Premium"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:149"
+            ],
+            "eco": [
+              "e998f59f-a57c-45e7-b5e6-a214d005601e"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lbx.gen1.trim.bespoke_hev",
+          "generation_id": "lexus.lbx.gen1",
+          "name": "Bespoke",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1490,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4190,
+          "width_mm": 1825,
+          "height_mm": 1560,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "3214703d-3f34-4072-bc71-510132d1ec26"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

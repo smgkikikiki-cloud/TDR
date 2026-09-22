@@ -1,0 +1,515 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "29dc8b4163258c4f4739be05",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:64",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mercedes_benz.mb_glc",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:42+00:00",
+    "before_hash": "46ce8dd28c78bddfcda88591f69f69d8a6a5881f0841ba462b73dd2f2802fd95",
+    "after_hash": "df1c8fb6f6789bbc313f1724f2f34407f885266ab0d061540bc6151b901ab4f0",
+    "before": {
+      "id": "mb_glc",
+      "name_en": "GLC",
+      "name_th": "จีแอลซี",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "GLC 200",
+        "GLC 220 d",
+        "GLC 300 d",
+        "GLC 300 e"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "X254",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.0L PHEV AWD",
+              "powertrain": "PHEV",
+              "drivetrain": "AWD",
+              "engine_cc": 1999,
+              "battery_kwh": 24.8,
+              "aliases": [
+                "GLC300e AMG Dynamic"
+              ],
+              "overrides": {},
+              "price_thb": 4290000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 4290000,
+              "price_max_thb": 4290000
+            }
+          ],
+          "trims": [
+            {
+              "name": "350 e 4MATIC AMG Dynamic (PHEV)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:192"
+                ]
+              },
+              "aliases": [
+                "GLC 350 e 4MATIC AMG Dynamic (PHEV)"
+              ],
+              "id": "350_e_4matic_amg_dynamic_phev_phev"
+            },
+            {
+              "name": "300 e 4MATIC Coupe AMG Dynamic (PHEV)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:192"
+                ]
+              },
+              "aliases": [
+                "GLC 300 e 4MATIC Coupe AMG Dynamic (PHEV)"
+              ],
+              "id": "300_e_4matic_coupe_amg_dynamic_phev_phev"
+            },
+            {
+              "name": "4MATIC",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4716,
+              "width_mm": 1890,
+              "height_mm": 1640,
+              "engine_cc": 1993,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "8822825c-efd3-4b51-b61e-104dc658c60a"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "mercedes_benz",
+        "name_en": "Mercedes-Benz",
+        "name_th": "เมอร์เซเดส-เบนซ์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Mercedes-Benz Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "benz",
+          "เบนซ์",
+          "mercedes"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mercedes_benz.mb_glc",
+        "brand_id": "mercedes_benz",
+        "name_en": "GLC",
+        "name_th": "จีแอลซี",
+        "nameplate": "GLC",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "GLC 200",
+          "GLC 220 d",
+          "GLC 300 d",
+          "GLC 300 e"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mercedes_benz.mb_glc.x254",
+          "model_id": "mercedes_benz.mb_glc",
+          "code": "X254",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mercedes_benz.mb_glc.x254.2_0l_phev_awd",
+          "generation_id": "mercedes_benz.mb_glc.x254",
+          "name": "2.0L PHEV AWD",
+          "powertrain": "PHEV",
+          "drivetrain": "AWD",
+          "engine_cc": 1999,
+          "battery_kwh": 24.8,
+          "price_thb": 4290000,
+          "price_min_thb": 4290000,
+          "price_max_thb": 4290000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "GLC300e AMG Dynamic"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mercedes_benz.mb_glc.x254.trim.350_e_4matic_amg_dynamic_phev_phev",
+          "generation_id": "mercedes_benz.mb_glc.x254",
+          "name": "350 e 4MATIC AMG Dynamic (PHEV)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "GLC 350 e 4MATIC AMG Dynamic (PHEV)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:192"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.mb_glc.x254.trim.300_e_4matic_coupe_amg_dynamic_phev_phev",
+          "generation_id": "mercedes_benz.mb_glc.x254",
+          "name": "300 e 4MATIC Coupe AMG Dynamic (PHEV)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "GLC 300 e 4MATIC Coupe AMG Dynamic (PHEV)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:192"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.mb_glc.x254.trim.4matic_hev",
+          "generation_id": "mercedes_benz.mb_glc.x254",
+          "name": "4MATIC",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4716,
+          "width_mm": 1890,
+          "height_mm": 1640,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "8822825c-efd3-4b51-b61e-104dc658c60a"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.mb_glc.x254.trim.4matic_avantgarde_hev",
+          "generation_id": "mercedes_benz.mb_glc.x254",
+          "name": "4MATIC Avantgarde",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4716,
+          "width_mm": 1890,
+          "height_mm": 1640,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "7578e0eb-91eb-4afd-a739-184959a14c14"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mercedes_benz.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "29dc8b4163258c4f4739be05:catalog",
+    "revision_id": "29dc8b4163258c4f4739be05",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mercedes_benz.mb_glc",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:42+00:00",
+    "payload": {
+      "brand": {
+        "id": "mercedes_benz",
+        "name_en": "Mercedes-Benz",
+        "name_th": "เมอร์เซเดส-เบนซ์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Mercedes-Benz Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "benz",
+          "เบนซ์",
+          "mercedes"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mercedes_benz.mb_glc",
+        "brand_id": "mercedes_benz",
+        "name_en": "GLC",
+        "name_th": "จีแอลซี",
+        "nameplate": "GLC",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "GLC 200",
+          "GLC 220 d",
+          "GLC 300 d",
+          "GLC 300 e"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mercedes_benz.mb_glc.x254",
+          "model_id": "mercedes_benz.mb_glc",
+          "code": "X254",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mercedes_benz.mb_glc.x254.2_0l_phev_awd",
+          "generation_id": "mercedes_benz.mb_glc.x254",
+          "name": "2.0L PHEV AWD",
+          "powertrain": "PHEV",
+          "drivetrain": "AWD",
+          "engine_cc": 1999,
+          "battery_kwh": 24.8,
+          "price_thb": 4290000,
+          "price_min_thb": 4290000,
+          "price_max_thb": 4290000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "GLC300e AMG Dynamic"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mercedes_benz.mb_glc.x254.trim.350_e_4matic_amg_dynamic_phev_phev",
+          "generation_id": "mercedes_benz.mb_glc.x254",
+          "name": "350 e 4MATIC AMG Dynamic (PHEV)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "GLC 350 e 4MATIC AMG Dynamic (PHEV)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:192"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.mb_glc.x254.trim.300_e_4matic_coupe_amg_dynamic_phev_phev",
+          "generation_id": "mercedes_benz.mb_glc.x254",
+          "name": "300 e 4MATIC Coupe AMG Dynamic (PHEV)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "GLC 300 e 4MATIC Coupe AMG Dynamic (PHEV)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:192"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.mb_glc.x254.trim.4matic_hev",
+          "generation_id": "mercedes_benz.mb_glc.x254",
+          "name": "4MATIC",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4716,
+          "width_mm": 1890,
+          "height_mm": 1640,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "8822825c-efd3-4b51-b61e-104dc658c60a"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.mb_glc.x254.trim.4matic_avantgarde_hev",
+          "generation_id": "mercedes_benz.mb_glc.x254",
+          "name": "4MATIC Avantgarde",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4716,
+          "width_mm": 1890,
+          "height_mm": 1640,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "7578e0eb-91eb-4afd-a739-184959a14c14"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

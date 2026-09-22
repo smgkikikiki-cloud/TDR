@@ -1,0 +1,505 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6f5a7eabaca08e47373eee55",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:359",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "lexus.lexus_nx",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:32+00:00",
+    "before_hash": "2249d0b40bdc17a4342f1d9f8af2a7465a5ab5662819228d09847a903f360de7",
+    "after_hash": "5d560c1e614d70312f2d7610c7073ef19e724f7b257cc25b91b4404489af9af3",
+    "before": {
+      "id": "lexus_nx",
+      "name_en": "NX",
+      "name_th": "เอ็นเอ็กซ์",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "nx350h",
+        "nx450h"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "AZ20",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.5L HEV AWD",
+              "powertrain": "HEV",
+              "drivetrain": "AWD",
+              "engine_cc": 2487,
+              "battery_kwh": 1.0,
+              "aliases": [
+                "NX350h Premium"
+              ],
+              "overrides": {},
+              "price_thb": 3690000,
+              "import_type": "CBU",
+              "origin_country": "JP",
+              "price_note": "seed-unverified",
+              "price_min_thb": 3690000,
+              "price_max_thb": 3690000
+            }
+          ],
+          "trims": [
+            {
+              "name": "350h Luxury (FWD)",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:155"
+                ]
+              },
+              "aliases": [
+                "NX 350h Luxury (FWD)"
+              ],
+              "id": "350h_luxury_fwd_hev"
+            },
+            {
+              "name": "350h Grand Luxury (FWD)",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:155"
+                ]
+              },
+              "aliases": [
+                "NX 350h Grand Luxury (FWD)"
+              ],
+              "id": "350h_grand_luxury_fwd_hev"
+            },
+            {
+              "name": "NX450h+ Grand Luxury Plus AWD",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4660,
+              "width_mm": 1865,
+              "height_mm": 1660,
+              "engine_cc": 2487,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "1112abab-11a1-4d32-a7b0-2ea1a8da4053"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "lexus",
+        "name_en": "Lexus",
+        "name_th": "เล็กซัส",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "เล็กซัส"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "lexus.lexus_nx",
+        "brand_id": "lexus",
+        "name_en": "NX",
+        "name_th": "เอ็นเอ็กซ์",
+        "nameplate": "NX",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "nx350h",
+          "nx450h"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "lexus.lexus_nx.az20",
+          "model_id": "lexus.lexus_nx",
+          "code": "AZ20",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "lexus.lexus_nx.az20.2_5l_hev_awd",
+          "generation_id": "lexus.lexus_nx.az20",
+          "name": "2.5L HEV AWD",
+          "powertrain": "HEV",
+          "drivetrain": "AWD",
+          "engine_cc": 2487,
+          "battery_kwh": 1.0,
+          "price_thb": 3690000,
+          "price_min_thb": 3690000,
+          "price_max_thb": 3690000,
+          "import_type": "CBU",
+          "origin_country": "JP",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "NX350h Premium"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "lexus.lexus_nx.az20.trim.350h_luxury_fwd_hev",
+          "generation_id": "lexus.lexus_nx.az20",
+          "name": "350h Luxury (FWD)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "NX 350h Luxury (FWD)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:155"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_nx.az20.trim.350h_grand_luxury_fwd_hev",
+          "generation_id": "lexus.lexus_nx.az20",
+          "name": "350h Grand Luxury (FWD)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "NX 350h Grand Luxury (FWD)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:155"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_nx.az20.trim.nx450h_grand_luxury_plus_awd_phev",
+          "generation_id": "lexus.lexus_nx.az20",
+          "name": "NX450h+ Grand Luxury Plus AWD",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4660,
+          "width_mm": 1865,
+          "height_mm": 1660,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "1112abab-11a1-4d32-a7b0-2ea1a8da4053"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_nx.az20.trim.nx450h_overtrail_awd_phev",
+          "generation_id": "lexus.lexus_nx.az20",
+          "name": "NX450h+ Overtrail AWD",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4660,
+          "width_mm": 1865,
+          "height_mm": 1675,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "9efa45f1-6007-442d-8c59-736f229935d2"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/lexus.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6f5a7eabaca08e47373eee55:catalog",
+    "revision_id": "6f5a7eabaca08e47373eee55",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "lexus.lexus_nx",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:32+00:00",
+    "payload": {
+      "brand": {
+        "id": "lexus",
+        "name_en": "Lexus",
+        "name_th": "เล็กซัส",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "เล็กซัส"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "lexus.lexus_nx",
+        "brand_id": "lexus",
+        "name_en": "NX",
+        "name_th": "เอ็นเอ็กซ์",
+        "nameplate": "NX",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "nx350h",
+          "nx450h"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "lexus.lexus_nx.az20",
+          "model_id": "lexus.lexus_nx",
+          "code": "AZ20",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "lexus.lexus_nx.az20.2_5l_hev_awd",
+          "generation_id": "lexus.lexus_nx.az20",
+          "name": "2.5L HEV AWD",
+          "powertrain": "HEV",
+          "drivetrain": "AWD",
+          "engine_cc": 2487,
+          "battery_kwh": 1.0,
+          "price_thb": 3690000,
+          "price_min_thb": 3690000,
+          "price_max_thb": 3690000,
+          "import_type": "CBU",
+          "origin_country": "JP",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "NX350h Premium"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "lexus.lexus_nx.az20.trim.350h_luxury_fwd_hev",
+          "generation_id": "lexus.lexus_nx.az20",
+          "name": "350h Luxury (FWD)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "NX 350h Luxury (FWD)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:155"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_nx.az20.trim.350h_grand_luxury_fwd_hev",
+          "generation_id": "lexus.lexus_nx.az20",
+          "name": "350h Grand Luxury (FWD)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "NX 350h Grand Luxury (FWD)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:155"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_nx.az20.trim.nx450h_grand_luxury_plus_awd_phev",
+          "generation_id": "lexus.lexus_nx.az20",
+          "name": "NX450h+ Grand Luxury Plus AWD",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4660,
+          "width_mm": 1865,
+          "height_mm": 1660,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "1112abab-11a1-4d32-a7b0-2ea1a8da4053"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_nx.az20.trim.nx450h_overtrail_awd_phev",
+          "generation_id": "lexus.lexus_nx.az20",
+          "name": "NX450h+ Overtrail AWD",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4660,
+          "width_mm": 1865,
+          "height_mm": 1675,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "9efa45f1-6007-442d-8c59-736f229935d2"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

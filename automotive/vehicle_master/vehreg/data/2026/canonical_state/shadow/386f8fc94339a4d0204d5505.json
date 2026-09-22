@@ -1,0 +1,498 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "386f8fc94339a4d0204d5505",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:155",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "audi.a4",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:51+00:00",
+    "before_hash": "a6a288b2a467dcba93c9f365450944a7bffa8bfe174b4627d90fe355f9cb2bb8",
+    "after_hash": "eaaf2e938165e96ac251a87f522dfa42b806e92e9006b412054174a6733251b4",
+    "before": {
+      "id": "a4",
+      "name_en": "A4",
+      "name_th": "เอ4",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "NICHE",
+      "aliases": [
+        "A4 AV",
+        "A4"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "engine_cc": 1984,
+              "price_thb": 3290000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "40 TFSI S line (Sedan)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:007"
+                ]
+              },
+              "aliases": [
+                "A4 40 TFSI S line (Sedan)"
+              ],
+              "id": "40_tfsi_s_line_sedan_ice"
+            },
+            {
+              "name": "45 TFSI quattro S line Black Edition (Sedan)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:007"
+                ]
+              },
+              "aliases": [
+                "A4 45 TFSI quattro S line Black Edition (Sedan)"
+              ],
+              "id": "45_tfsi_quattro_s_line_black_edition_sedan_ice"
+            },
+            {
+              "name": "Avant 45 TFSI quattro S line Black Edition (Station Wagon)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:007"
+                ]
+              },
+              "aliases": [
+                "A4 Avant 45 TFSI quattro S line Black Edition (Station Wagon)"
+              ],
+              "id": "avant_45_tfsi_quattro_s_line_black_edition_station_wagon_ice"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "audi",
+        "name_en": "Audi",
+        "name_th": "เอาดี้",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Volkswagen Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "เอาดี้"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "audi.a4",
+        "brand_id": "audi",
+        "name_en": "A4",
+        "name_th": "เอ4",
+        "nameplate": "A4",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "A4 AV",
+          "A4"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "audi.a4.gen1",
+          "model_id": "audi.a4",
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "audi.a4.gen1.spec",
+          "generation_id": "audi.a4.gen1",
+          "name": "spec",
+          "powertrain": "ICE",
+          "drivetrain": "AWD",
+          "engine_cc": 1984,
+          "battery_kwh": null,
+          "price_thb": 3290000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "audi.a4.gen1.trim.40_tfsi_s_line_sedan_ice",
+          "generation_id": "audi.a4.gen1",
+          "name": "40 TFSI S line (Sedan)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "A4 40 TFSI S line (Sedan)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:007"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.a4.gen1.trim.45_tfsi_quattro_s_line_black_edition_sedan_ice",
+          "generation_id": "audi.a4.gen1",
+          "name": "45 TFSI quattro S line Black Edition (Sedan)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "A4 45 TFSI quattro S line Black Edition (Sedan)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:007"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.a4.gen1.trim.avant_45_tfsi_quattro_s_line_black_edition_station_wagon_ice",
+          "generation_id": "audi.a4.gen1",
+          "name": "Avant 45 TFSI quattro S line Black Edition (Station Wagon)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "A4 Avant 45 TFSI quattro S line Black Edition (Station Wagon)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:007"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.a4.gen1.trim.40_tfsi_s_line_hev",
+          "generation_id": "audi.a4.gen1",
+          "name": "40 TFSI S line",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1984,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4762,
+          "width_mm": 1847,
+          "height_mm": 1428,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "e1b09021-4284-4211-8b78-625a9939c8ab"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/audi.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "386f8fc94339a4d0204d5505:catalog",
+    "revision_id": "386f8fc94339a4d0204d5505",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "audi.a4",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:51+00:00",
+    "payload": {
+      "brand": {
+        "id": "audi",
+        "name_en": "Audi",
+        "name_th": "เอาดี้",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Volkswagen Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "เอาดี้"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "audi.a4",
+        "brand_id": "audi",
+        "name_en": "A4",
+        "name_th": "เอ4",
+        "nameplate": "A4",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "A4 AV",
+          "A4"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "audi.a4.gen1",
+          "model_id": "audi.a4",
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "audi.a4.gen1.spec",
+          "generation_id": "audi.a4.gen1",
+          "name": "spec",
+          "powertrain": "ICE",
+          "drivetrain": "AWD",
+          "engine_cc": 1984,
+          "battery_kwh": null,
+          "price_thb": 3290000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "audi.a4.gen1.trim.40_tfsi_s_line_sedan_ice",
+          "generation_id": "audi.a4.gen1",
+          "name": "40 TFSI S line (Sedan)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "A4 40 TFSI S line (Sedan)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:007"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.a4.gen1.trim.45_tfsi_quattro_s_line_black_edition_sedan_ice",
+          "generation_id": "audi.a4.gen1",
+          "name": "45 TFSI quattro S line Black Edition (Sedan)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "A4 45 TFSI quattro S line Black Edition (Sedan)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:007"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.a4.gen1.trim.avant_45_tfsi_quattro_s_line_black_edition_station_wagon_ice",
+          "generation_id": "audi.a4.gen1",
+          "name": "Avant 45 TFSI quattro S line Black Edition (Station Wagon)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "A4 Avant 45 TFSI quattro S line Black Edition (Station Wagon)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:007"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.a4.gen1.trim.40_tfsi_s_line_hev",
+          "generation_id": "audi.a4.gen1",
+          "name": "40 TFSI S line",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1984,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4762,
+          "width_mm": 1847,
+          "height_mm": 1428,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "e1b09021-4284-4211-8b78-625a9939c8ab"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

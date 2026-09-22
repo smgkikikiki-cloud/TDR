@@ -1,0 +1,707 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "0e3aab38104cfc402710d205",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:165",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "land_rover.range_rover",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:52+00:00",
+    "before_hash": "df795887bbdcf9c1b0ddbfd1c227ebd32232019949765dd16903ac199885b3ac",
+    "after_hash": "c8ffd976ad6770d1b41bf30a575ec79f7069af64edcb2b9c83b1fba8fa0c8293",
+    "before": {
+      "id": "range_rover",
+      "name_en": "Range Rover",
+      "name_th": "เรนจ์โรเวอร์",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "NICHE",
+      "aliases": [
+        "range rover",
+        "evoque"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "3.0L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "engine_cc": 2996,
+              "price_thb": 12900000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "GB",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Evoque 1.5 PHEV 5DR SWB Autobiography 309PS",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4381,
+              "width_mm": 2100,
+              "height_mm": 1649,
+              "engine_cc": 1498,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "eaab9b88-82a1-4d5b-b5e7-dfb499542586"
+                ]
+              }
+            },
+            {
+              "name": "3.0P PHEV 5DR SWB SV 550PS Auto",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 5058,
+              "width_mm": 2209,
+              "height_mm": 1870,
+              "engine_cc": 2996,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "00f515d9-5e2b-4266-9ec7-c0955e85b165"
+                ]
+              }
+            },
+            {
+              "name": "Evoque 1.5L PHEV 5DR SWB Autobiography 309PS",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4381,
+              "width_mm": 2100,
+              "height_mm": 1649,
+              "engine_cc": 1498,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "b9d68b42-3021-4661-8036-318d0e7b1c6a"
+                ]
+              }
+            },
+            {
+              "name": "3.0P PHEV 5DR LWB Autobiography 460PS Auto",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 5252,
+              "width_mm": 2209,
+              "height_mm": 1870,
+              "engine_cc": 2996,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "f3c490de-4eef-4fbe-bc5d-ce428b4338fd"
+                ]
+              }
+            },
+            {
+              "name": "3.0P PHEV 5DR LWB SV 460PS Auto",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 5258,
+              "width_mm": 2209,
+              "height_mm": 1870,
+              "engine_cc": 2996,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "cf7efbf1-82a1-4347-98e5-f1739232771d"
+                ]
+              }
+            },
+            {
+              "name": "3.0D 5DR LWB SV 350PS Auto",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 5252,
+              "width_mm": 2209,
+              "height_mm": 1870,
+              "engine_cc": 2997,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "1bd32344-8146-4d28-9736-c321a94954f2"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "land_rover",
+        "name_en": "Land Rover",
+        "name_th": "แลนด์โรเวอร์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "JLR",
+        "brand_origin": "GB",
+        "trim_detail": false,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "land_rover.range_rover",
+        "brand_id": "land_rover",
+        "name_en": "Range Rover",
+        "name_th": "เรนจ์โรเวอร์",
+        "nameplate": "Range Rover",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "range rover",
+          "evoque"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "land_rover.range_rover.gen1",
+          "model_id": "land_rover.range_rover",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "land_rover.range_rover.gen1.3_0l_ice",
+          "generation_id": "land_rover.range_rover.gen1",
+          "name": "3.0L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "AWD",
+          "engine_cc": 2996,
+          "battery_kwh": null,
+          "price_thb": 12900000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "GB",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "land_rover.range_rover.gen1.trim.evoque_1_5_phev_5dr_swb_autobiography_309ps_phev",
+          "generation_id": "land_rover.range_rover.gen1",
+          "name": "Evoque 1.5 PHEV 5DR SWB Autobiography 309PS",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4381,
+          "width_mm": 2100,
+          "height_mm": 1649,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "eaab9b88-82a1-4d5b-b5e7-dfb499542586"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "land_rover.range_rover.gen1.trim.3_0p_phev_5dr_swb_sv_550ps_phev",
+          "generation_id": "land_rover.range_rover.gen1",
+          "name": "3.0P PHEV 5DR SWB SV 550PS Auto",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2996,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5058,
+          "width_mm": 2209,
+          "height_mm": 1870,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "00f515d9-5e2b-4266-9ec7-c0955e85b165"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "land_rover.range_rover.gen1.trim.evoque_1_5l_phev_5dr_swb_autobiography_309ps_phev",
+          "generation_id": "land_rover.range_rover.gen1",
+          "name": "Evoque 1.5L PHEV 5DR SWB Autobiography 309PS",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4381,
+          "width_mm": 2100,
+          "height_mm": 1649,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "b9d68b42-3021-4661-8036-318d0e7b1c6a"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "land_rover.range_rover.gen1.trim.3_0p_phev_5dr_lwb_autobiography_460ps_phev",
+          "generation_id": "land_rover.range_rover.gen1",
+          "name": "3.0P PHEV 5DR LWB Autobiography 460PS Auto",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2996,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5252,
+          "width_mm": 2209,
+          "height_mm": 1870,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "f3c490de-4eef-4fbe-bc5d-ce428b4338fd"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "land_rover.range_rover.gen1.trim.3_0p_phev_5dr_lwb_sv_460ps_phev",
+          "generation_id": "land_rover.range_rover.gen1",
+          "name": "3.0P PHEV 5DR LWB SV 460PS Auto",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2996,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5258,
+          "width_mm": 2209,
+          "height_mm": 1870,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "cf7efbf1-82a1-4347-98e5-f1739232771d"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "land_rover.range_rover.gen1.trim.3_0d_5dr_lwb_sv_350ps_hev",
+          "generation_id": "land_rover.range_rover.gen1",
+          "name": "3.0D 5DR LWB SV 350PS Auto",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2997,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5252,
+          "width_mm": 2209,
+          "height_mm": 1870,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "1bd32344-8146-4d28-9736-c321a94954f2"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "land_rover.range_rover.gen1.trim.swb_3_0p_phev_autobiography_440ps_phev",
+          "generation_id": "land_rover.range_rover.gen1",
+          "name": "SWB 3.0P PHEV Autobiography 440PS",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2996,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5052,
+          "width_mm": 2209,
+          "height_mm": 1870,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "b59f76ee-a784-40cd-9cba-e816d798b4ae"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/land_rover.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "0e3aab38104cfc402710d205:catalog",
+    "revision_id": "0e3aab38104cfc402710d205",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "land_rover.range_rover",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:52+00:00",
+    "payload": {
+      "brand": {
+        "id": "land_rover",
+        "name_en": "Land Rover",
+        "name_th": "แลนด์โรเวอร์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "JLR",
+        "brand_origin": "GB",
+        "trim_detail": false,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "land_rover.range_rover",
+        "brand_id": "land_rover",
+        "name_en": "Range Rover",
+        "name_th": "เรนจ์โรเวอร์",
+        "nameplate": "Range Rover",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "range rover",
+          "evoque"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "land_rover.range_rover.gen1",
+          "model_id": "land_rover.range_rover",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "land_rover.range_rover.gen1.3_0l_ice",
+          "generation_id": "land_rover.range_rover.gen1",
+          "name": "3.0L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "AWD",
+          "engine_cc": 2996,
+          "battery_kwh": null,
+          "price_thb": 12900000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "GB",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "land_rover.range_rover.gen1.trim.evoque_1_5_phev_5dr_swb_autobiography_309ps_phev",
+          "generation_id": "land_rover.range_rover.gen1",
+          "name": "Evoque 1.5 PHEV 5DR SWB Autobiography 309PS",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4381,
+          "width_mm": 2100,
+          "height_mm": 1649,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "eaab9b88-82a1-4d5b-b5e7-dfb499542586"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "land_rover.range_rover.gen1.trim.3_0p_phev_5dr_swb_sv_550ps_phev",
+          "generation_id": "land_rover.range_rover.gen1",
+          "name": "3.0P PHEV 5DR SWB SV 550PS Auto",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2996,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5058,
+          "width_mm": 2209,
+          "height_mm": 1870,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "00f515d9-5e2b-4266-9ec7-c0955e85b165"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "land_rover.range_rover.gen1.trim.evoque_1_5l_phev_5dr_swb_autobiography_309ps_phev",
+          "generation_id": "land_rover.range_rover.gen1",
+          "name": "Evoque 1.5L PHEV 5DR SWB Autobiography 309PS",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4381,
+          "width_mm": 2100,
+          "height_mm": 1649,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "b9d68b42-3021-4661-8036-318d0e7b1c6a"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "land_rover.range_rover.gen1.trim.3_0p_phev_5dr_lwb_autobiography_460ps_phev",
+          "generation_id": "land_rover.range_rover.gen1",
+          "name": "3.0P PHEV 5DR LWB Autobiography 460PS Auto",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2996,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5252,
+          "width_mm": 2209,
+          "height_mm": 1870,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "f3c490de-4eef-4fbe-bc5d-ce428b4338fd"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "land_rover.range_rover.gen1.trim.3_0p_phev_5dr_lwb_sv_460ps_phev",
+          "generation_id": "land_rover.range_rover.gen1",
+          "name": "3.0P PHEV 5DR LWB SV 460PS Auto",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2996,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5258,
+          "width_mm": 2209,
+          "height_mm": 1870,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "cf7efbf1-82a1-4347-98e5-f1739232771d"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "land_rover.range_rover.gen1.trim.3_0d_5dr_lwb_sv_350ps_hev",
+          "generation_id": "land_rover.range_rover.gen1",
+          "name": "3.0D 5DR LWB SV 350PS Auto",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2997,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5252,
+          "width_mm": 2209,
+          "height_mm": 1870,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "1bd32344-8146-4d28-9736-c321a94954f2"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "land_rover.range_rover.gen1.trim.swb_3_0p_phev_autobiography_440ps_phev",
+          "generation_id": "land_rover.range_rover.gen1",
+          "name": "SWB 3.0P PHEV Autobiography 440PS",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2996,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5052,
+          "width_mm": 2209,
+          "height_mm": 1870,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "b59f76ee-a784-40cd-9cba-e816d798b4ae"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

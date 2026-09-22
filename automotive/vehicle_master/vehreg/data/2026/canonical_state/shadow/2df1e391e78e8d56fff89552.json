@@ -1,0 +1,563 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2df1e391e78e8d56fff89552",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:80",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "hyundai.ioniq5",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:44+00:00",
+    "before_hash": "02a042c33b53d7320f76172126827252e666121727bcb33f5e59437900c48f66",
+    "after_hash": "7ee78837e36fd1727e1e9582961f562fd61a8246fb3684284c085bd37fe50b57",
+    "before": {
+      "id": "ioniq5",
+      "name_en": "Ioniq 5",
+      "name_th": "ไอออนิค 5",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "ioniq 5"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "NE",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2022-03-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "73 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "RWD",
+              "engine_cc": null,
+              "battery_kwh": 72.6,
+              "aliases": [
+                "Exclusive"
+              ],
+              "overrides": {},
+              "price_thb": 1849000,
+              "import_type": "CBU",
+              "origin_country": "KR",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1849000,
+              "price_max_thb": 1849000
+            }
+          ],
+          "trims": [
+            {
+              "name": "IONIQ5 N Line",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4655,
+              "width_mm": 1890,
+              "height_mm": 1605,
+              "source_refs": {
+                "eco": [
+                  "bd148dda-ed62-46eb-86e0-4ffec5d07961"
+                ]
+              }
+            },
+            {
+              "name": "N",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4715,
+              "width_mm": 1940,
+              "height_mm": 1585,
+              "source_refs": {
+                "eco": [
+                  "5b3bd768-ab61-4284-a5ac-90b67722da3d"
+                ]
+              }
+            },
+            {
+              "name": "Exclusive",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4635,
+              "width_mm": 1890,
+              "height_mm": 1605,
+              "source_refs": {
+                "eco": [
+                  "c5f1705d-754f-4ea9-9513-29c9e01a13a3"
+                ]
+              }
+            },
+            {
+              "name": "Premium",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4635,
+              "width_mm": 1890,
+              "height_mm": 1605,
+              "source_refs": {
+                "eco": [
+                  "0c4f2dc2-0f61-4248-82f7-e1e8d85e6c93"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "hyundai",
+        "name_en": "Hyundai",
+        "name_th": "ฮุนได",
+        "brand_segment": "MASS",
+        "oem_group": "Hyundai Motor Group",
+        "brand_origin": "KR",
+        "trim_detail": false,
+        "aliases": [
+          "ฮุนได"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "hyundai.ioniq5",
+        "brand_id": "hyundai",
+        "name_en": "Ioniq 5",
+        "name_th": "ไอออนิค 5",
+        "nameplate": "Ioniq 5",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "ioniq 5"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "hyundai.ioniq5.ne",
+          "model_id": "hyundai.ioniq5",
+          "code": "NE",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2022-03-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "hyundai.ioniq5.ne.73_kwh_bev",
+          "generation_id": "hyundai.ioniq5.ne",
+          "name": "73 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 72.6,
+          "price_thb": 1849000,
+          "price_min_thb": 1849000,
+          "price_max_thb": 1849000,
+          "import_type": "CBU",
+          "origin_country": "KR",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Exclusive"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "hyundai.ioniq5.ne.trim.ioniq5_n_line_bev",
+          "generation_id": "hyundai.ioniq5.ne",
+          "name": "IONIQ5 N Line",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4655,
+          "width_mm": 1890,
+          "height_mm": 1605,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "bd148dda-ed62-46eb-86e0-4ffec5d07961"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "hyundai.ioniq5.ne.trim.n_bev",
+          "generation_id": "hyundai.ioniq5.ne",
+          "name": "N",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4715,
+          "width_mm": 1940,
+          "height_mm": 1585,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "5b3bd768-ab61-4284-a5ac-90b67722da3d"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "hyundai.ioniq5.ne.trim.exclusive_bev",
+          "generation_id": "hyundai.ioniq5.ne",
+          "name": "Exclusive",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4635,
+          "width_mm": 1890,
+          "height_mm": 1605,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "c5f1705d-754f-4ea9-9513-29c9e01a13a3"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "hyundai.ioniq5.ne.trim.premium_bev",
+          "generation_id": "hyundai.ioniq5.ne",
+          "name": "Premium",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4635,
+          "width_mm": 1890,
+          "height_mm": 1605,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "0c4f2dc2-0f61-4248-82f7-e1e8d85e6c93"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "hyundai.ioniq5.ne.trim.ioniq_5_bev",
+          "generation_id": "hyundai.ioniq5.ne",
+          "name": "Ioniq 5",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4635,
+          "width_mm": 1890,
+          "height_mm": 1605,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "745a69ba-fab8-42b2-b7e4-dd78ab685a10"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/hyundai.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2df1e391e78e8d56fff89552:catalog",
+    "revision_id": "2df1e391e78e8d56fff89552",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "hyundai.ioniq5",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:44+00:00",
+    "payload": {
+      "brand": {
+        "id": "hyundai",
+        "name_en": "Hyundai",
+        "name_th": "ฮุนได",
+        "brand_segment": "MASS",
+        "oem_group": "Hyundai Motor Group",
+        "brand_origin": "KR",
+        "trim_detail": false,
+        "aliases": [
+          "ฮุนได"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "hyundai.ioniq5",
+        "brand_id": "hyundai",
+        "name_en": "Ioniq 5",
+        "name_th": "ไอออนิค 5",
+        "nameplate": "Ioniq 5",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "ioniq 5"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "hyundai.ioniq5.ne",
+          "model_id": "hyundai.ioniq5",
+          "code": "NE",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2022-03-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "hyundai.ioniq5.ne.73_kwh_bev",
+          "generation_id": "hyundai.ioniq5.ne",
+          "name": "73 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 72.6,
+          "price_thb": 1849000,
+          "price_min_thb": 1849000,
+          "price_max_thb": 1849000,
+          "import_type": "CBU",
+          "origin_country": "KR",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Exclusive"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "hyundai.ioniq5.ne.trim.ioniq5_n_line_bev",
+          "generation_id": "hyundai.ioniq5.ne",
+          "name": "IONIQ5 N Line",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4655,
+          "width_mm": 1890,
+          "height_mm": 1605,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "bd148dda-ed62-46eb-86e0-4ffec5d07961"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "hyundai.ioniq5.ne.trim.n_bev",
+          "generation_id": "hyundai.ioniq5.ne",
+          "name": "N",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4715,
+          "width_mm": 1940,
+          "height_mm": 1585,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "5b3bd768-ab61-4284-a5ac-90b67722da3d"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "hyundai.ioniq5.ne.trim.exclusive_bev",
+          "generation_id": "hyundai.ioniq5.ne",
+          "name": "Exclusive",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4635,
+          "width_mm": 1890,
+          "height_mm": 1605,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "c5f1705d-754f-4ea9-9513-29c9e01a13a3"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "hyundai.ioniq5.ne.trim.premium_bev",
+          "generation_id": "hyundai.ioniq5.ne",
+          "name": "Premium",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4635,
+          "width_mm": 1890,
+          "height_mm": 1605,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "0c4f2dc2-0f61-4248-82f7-e1e8d85e6c93"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "hyundai.ioniq5.ne.trim.ioniq_5_bev",
+          "generation_id": "hyundai.ioniq5.ne",
+          "name": "Ioniq 5",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4635,
+          "width_mm": 1890,
+          "height_mm": 1605,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "745a69ba-fab8-42b2-b7e4-dd78ab685a10"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,689 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "16b91c3652a2f44107027ee9",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:221",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "toyota.yaris_ativ",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:19+00:00",
+    "before_hash": "b077f7fc0dada2d6831fe54b4d116516589270b15d7a2452aa6ee53547a36a2d",
+    "after_hash": "42763d06cf1921a8871ae858f29bd466303ee0354358ce702ea4c29eeed05ec5",
+    "before": {
+      "id": "yaris_ativ",
+      "name_en": "Yaris Ativ",
+      "name_th": "ยาริส เอทีฟ",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "ativ",
+        "yaris ativ",
+        "ยาริสเอทีฟ"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "MXPA10",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2022-08-09",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.2L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "engine_cc": 1197,
+              "battery_kwh": null,
+              "aliases": [
+                "1.2 Sport",
+                "1.2 Smart",
+                "1.2 Premium",
+                "1.2 Premium Luxury"
+              ],
+              "overrides": {},
+              "price_thb": 559000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 559000,
+              "price_max_thb": 709000
+            },
+            {
+              "name": "1.2L HEV",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "ยังไม่ได้ตรวจราคา",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "1.2 Sport CVT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:298"
+                ]
+              },
+              "id": "1_2_sport_cvt_ice"
+            },
+            {
+              "name": "1.2 Smart CVT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:298"
+                ]
+              },
+              "id": "1_2_smart_cvt_ice"
+            },
+            {
+              "name": "1.2 Premium CVT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:298"
+                ]
+              },
+              "id": "1_2_premium_cvt_ice"
+            },
+            {
+              "name": "1.2 Premium Luxury CVT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:298"
+                ]
+              },
+              "id": "1_2_premium_luxury_cvt_ice"
+            },
+            {
+              "name": "1.2 Nightshade Edition CVT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:298"
+                ]
+              },
+              "id": "1_2_nightshade_edition_cvt_ice"
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "toyota",
+        "name_en": "Toyota",
+        "name_th": "โตโยต้า",
+        "brand_segment": "MASS",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "โตโยต้า",
+          "toyota motor thailand",
+          "TMT"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "toyota.yaris_ativ",
+        "brand_id": "toyota",
+        "name_en": "Yaris Ativ",
+        "name_th": "ยาริส เอทีฟ",
+        "nameplate": "Yaris Ativ",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "ativ",
+          "yaris ativ",
+          "ยาริสเอทีฟ"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "toyota.yaris_ativ.mxpa10",
+          "model_id": "toyota.yaris_ativ",
+          "code": "MXPA10",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2022-08-09",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "toyota.yaris_ativ.mxpa10.1_2l_ice",
+          "generation_id": "toyota.yaris_ativ.mxpa10",
+          "name": "1.2L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1197,
+          "battery_kwh": null,
+          "price_thb": 559000,
+          "price_min_thb": 559000,
+          "price_max_thb": 709000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.2 Sport",
+            "1.2 Smart",
+            "1.2 Premium",
+            "1.2 Premium Luxury"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "toyota.yaris_ativ.mxpa10.1_2l_hev",
+          "generation_id": "toyota.yaris_ativ.mxpa10",
+          "name": "1.2L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "toyota.yaris_ativ.mxpa10.trim.1_2_sport_cvt_ice",
+          "generation_id": "toyota.yaris_ativ.mxpa10",
+          "name": "1.2 Sport CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:298"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.yaris_ativ.mxpa10.trim.1_2_smart_cvt_ice",
+          "generation_id": "toyota.yaris_ativ.mxpa10",
+          "name": "1.2 Smart CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:298"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.yaris_ativ.mxpa10.trim.1_2_premium_cvt_ice",
+          "generation_id": "toyota.yaris_ativ.mxpa10",
+          "name": "1.2 Premium CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:298"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.yaris_ativ.mxpa10.trim.1_2_premium_luxury_cvt_ice",
+          "generation_id": "toyota.yaris_ativ.mxpa10",
+          "name": "1.2 Premium Luxury CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:298"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.yaris_ativ.mxpa10.trim.1_2_nightshade_edition_cvt_ice",
+          "generation_id": "toyota.yaris_ativ.mxpa10",
+          "name": "1.2 Nightshade Edition CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:298"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.yaris_ativ.mxpa10.trim.hev_premium_hev",
+          "generation_id": "toyota.yaris_ativ.mxpa10",
+          "name": "HEV Premium",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1496,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4425,
+          "width_mm": 1740,
+          "height_mm": 1480,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "488b8ece-bfaf-4162-ab95-0afe24a38efa"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/toyota.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "16b91c3652a2f44107027ee9:catalog",
+    "revision_id": "16b91c3652a2f44107027ee9",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "toyota.yaris_ativ",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:19+00:00",
+    "payload": {
+      "brand": {
+        "id": "toyota",
+        "name_en": "Toyota",
+        "name_th": "โตโยต้า",
+        "brand_segment": "MASS",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "โตโยต้า",
+          "toyota motor thailand",
+          "TMT"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "toyota.yaris_ativ",
+        "brand_id": "toyota",
+        "name_en": "Yaris Ativ",
+        "name_th": "ยาริส เอทีฟ",
+        "nameplate": "Yaris Ativ",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "ativ",
+          "yaris ativ",
+          "ยาริสเอทีฟ"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "toyota.yaris_ativ.mxpa10",
+          "model_id": "toyota.yaris_ativ",
+          "code": "MXPA10",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2022-08-09",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "toyota.yaris_ativ.mxpa10.1_2l_ice",
+          "generation_id": "toyota.yaris_ativ.mxpa10",
+          "name": "1.2L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1197,
+          "battery_kwh": null,
+          "price_thb": 559000,
+          "price_min_thb": 559000,
+          "price_max_thb": 709000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.2 Sport",
+            "1.2 Smart",
+            "1.2 Premium",
+            "1.2 Premium Luxury"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "toyota.yaris_ativ.mxpa10.1_2l_hev",
+          "generation_id": "toyota.yaris_ativ.mxpa10",
+          "name": "1.2L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "toyota.yaris_ativ.mxpa10.trim.1_2_sport_cvt_ice",
+          "generation_id": "toyota.yaris_ativ.mxpa10",
+          "name": "1.2 Sport CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:298"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.yaris_ativ.mxpa10.trim.1_2_smart_cvt_ice",
+          "generation_id": "toyota.yaris_ativ.mxpa10",
+          "name": "1.2 Smart CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:298"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.yaris_ativ.mxpa10.trim.1_2_premium_cvt_ice",
+          "generation_id": "toyota.yaris_ativ.mxpa10",
+          "name": "1.2 Premium CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:298"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.yaris_ativ.mxpa10.trim.1_2_premium_luxury_cvt_ice",
+          "generation_id": "toyota.yaris_ativ.mxpa10",
+          "name": "1.2 Premium Luxury CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:298"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.yaris_ativ.mxpa10.trim.1_2_nightshade_edition_cvt_ice",
+          "generation_id": "toyota.yaris_ativ.mxpa10",
+          "name": "1.2 Nightshade Edition CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:298"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.yaris_ativ.mxpa10.trim.hev_premium_hev",
+          "generation_id": "toyota.yaris_ativ.mxpa10",
+          "name": "HEV Premium",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1496,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4425,
+          "width_mm": 1740,
+          "height_mm": 1480,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "488b8ece-bfaf-4162-ab95-0afe24a38efa"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

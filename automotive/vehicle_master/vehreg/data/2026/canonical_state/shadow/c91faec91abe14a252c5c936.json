@@ -1,0 +1,767 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c91faec91abe14a252c5c936",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:110",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "hyundai.creta",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:47+00:00",
+    "before_hash": "7ec2511b26a514f85eba84127bde8fc79381e890c554b85ec40ea89900b22d2a",
+    "after_hash": "2b147565e04f268c4fc2c35df5ae58b56ab546228a74f9d47773384214575d8f",
+    "before": {
+      "id": "creta",
+      "name_en": "Creta",
+      "name_th": "เครต้า",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [],
+      "notes": "",
+      "generations": [
+        {
+          "code": "SU2",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.5L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "engine_cc": 1497,
+              "battery_kwh": null,
+              "aliases": [
+                "1.5 SEL"
+              ],
+              "overrides": {},
+              "price_thb": 999000,
+              "import_type": "CBU",
+              "origin_country": "ID",
+              "price_note": "seed-unverified",
+              "price_min_thb": 999000,
+              "price_max_thb": 999000
+            }
+          ],
+          "trims": [
+            {
+              "name": "Trend",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:113"
+                ],
+                "eco": [
+                  "6444735a-5a02-4f73-ac03-035318eee13c"
+                ]
+              },
+              "id": "trend_ice",
+              "seats": 5,
+              "length_mm": 4315,
+              "width_mm": 1790,
+              "height_mm": 1630,
+              "engine_cc": 1497,
+              "transmission": "CVT"
+            },
+            {
+              "name": "Style",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:113"
+                ],
+                "eco": [
+                  "f6ab56a3-a56f-4be9-8d77-8db698a9a51b"
+                ]
+              },
+              "id": "style_ice",
+              "seats": 5,
+              "length_mm": 4315,
+              "width_mm": 1790,
+              "height_mm": 1630,
+              "engine_cc": 1497,
+              "transmission": "CVT"
+            },
+            {
+              "name": "Style Plus",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:113"
+                ],
+                "eco": [
+                  "e820ecaf-2db8-4fb4-8420-e675f3880624"
+                ]
+              },
+              "id": "style_plus_ice",
+              "seats": 5,
+              "length_mm": 4315,
+              "width_mm": 1790,
+              "height_mm": 1630,
+              "engine_cc": 1497,
+              "transmission": "CVT"
+            },
+            {
+              "name": "Smart",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:113"
+                ],
+                "eco": [
+                  "fe93a237-c627-4e29-b747-c8f6cd988472"
+                ]
+              },
+              "id": "smart_ice",
+              "seats": 5,
+              "length_mm": 4315,
+              "width_mm": 1790,
+              "height_mm": 1630,
+              "engine_cc": 1497,
+              "transmission": "CVT"
+            },
+            {
+              "name": "Black Edition",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:113"
+                ]
+              },
+              "id": "black_edition_ice"
+            },
+            {
+              "name": "N Line",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4330,
+              "width_mm": 1790,
+              "height_mm": 1635,
+              "engine_cc": 1497,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "9bf6bcea-bab3-42df-9334-a74e69fb3ab2"
+                ]
+              }
+            },
+            {
+              "name": "Alpha",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4315,
+              "width_mm": 1790,
+              "height_mm": 1630,
+              "engine_cc": 1497,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "2034cba2-4ab5-4607-93b3-ef968f55a9df"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "hyundai",
+        "name_en": "Hyundai",
+        "name_th": "ฮุนได",
+        "brand_segment": "MASS",
+        "oem_group": "Hyundai Motor Group",
+        "brand_origin": "KR",
+        "trim_detail": false,
+        "aliases": [
+          "ฮุนได"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "hyundai.creta",
+        "brand_id": "hyundai",
+        "name_en": "Creta",
+        "name_th": "เครต้า",
+        "nameplate": "Creta",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "hyundai.creta.su2",
+          "model_id": "hyundai.creta",
+          "code": "SU2",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "hyundai.creta.su2.1_5l_ice",
+          "generation_id": "hyundai.creta.su2",
+          "name": "1.5L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1497,
+          "battery_kwh": null,
+          "price_thb": 999000,
+          "price_min_thb": 999000,
+          "price_max_thb": 999000,
+          "import_type": "CBU",
+          "origin_country": "ID",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.5 SEL"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "hyundai.creta.su2.trim.trend_ice",
+          "generation_id": "hyundai.creta.su2",
+          "name": "Trend",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1497,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4315,
+          "width_mm": 1790,
+          "height_mm": 1630,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:113"
+            ],
+            "eco": [
+              "6444735a-5a02-4f73-ac03-035318eee13c"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "hyundai.creta.su2.trim.style_ice",
+          "generation_id": "hyundai.creta.su2",
+          "name": "Style",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1497,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4315,
+          "width_mm": 1790,
+          "height_mm": 1630,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:113"
+            ],
+            "eco": [
+              "f6ab56a3-a56f-4be9-8d77-8db698a9a51b"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "hyundai.creta.su2.trim.style_plus_ice",
+          "generation_id": "hyundai.creta.su2",
+          "name": "Style Plus",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1497,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4315,
+          "width_mm": 1790,
+          "height_mm": 1630,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:113"
+            ],
+            "eco": [
+              "e820ecaf-2db8-4fb4-8420-e675f3880624"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "hyundai.creta.su2.trim.smart_ice",
+          "generation_id": "hyundai.creta.su2",
+          "name": "Smart",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1497,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4315,
+          "width_mm": 1790,
+          "height_mm": 1630,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:113"
+            ],
+            "eco": [
+              "fe93a237-c627-4e29-b747-c8f6cd988472"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "hyundai.creta.su2.trim.black_edition_ice",
+          "generation_id": "hyundai.creta.su2",
+          "name": "Black Edition",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1497,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4315,
+          "width_mm": 1790,
+          "height_mm": 1630,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:113"
+            ],
+            "eco": [
+              "e0d7b7d8-98b2-4f1c-9892-d029058ded5d"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "hyundai.creta.su2.trim.n_line_ice",
+          "generation_id": "hyundai.creta.su2",
+          "name": "N Line",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1497,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4330,
+          "width_mm": 1790,
+          "height_mm": 1635,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "9bf6bcea-bab3-42df-9334-a74e69fb3ab2"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "hyundai.creta.su2.trim.alpha_ice",
+          "generation_id": "hyundai.creta.su2",
+          "name": "Alpha",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1497,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4315,
+          "width_mm": 1790,
+          "height_mm": 1630,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "2034cba2-4ab5-4607-93b3-ef968f55a9df"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/hyundai.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c91faec91abe14a252c5c936:catalog",
+    "revision_id": "c91faec91abe14a252c5c936",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "hyundai.creta",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:47+00:00",
+    "payload": {
+      "brand": {
+        "id": "hyundai",
+        "name_en": "Hyundai",
+        "name_th": "ฮุนได",
+        "brand_segment": "MASS",
+        "oem_group": "Hyundai Motor Group",
+        "brand_origin": "KR",
+        "trim_detail": false,
+        "aliases": [
+          "ฮุนได"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "hyundai.creta",
+        "brand_id": "hyundai",
+        "name_en": "Creta",
+        "name_th": "เครต้า",
+        "nameplate": "Creta",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "hyundai.creta.su2",
+          "model_id": "hyundai.creta",
+          "code": "SU2",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "hyundai.creta.su2.1_5l_ice",
+          "generation_id": "hyundai.creta.su2",
+          "name": "1.5L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1497,
+          "battery_kwh": null,
+          "price_thb": 999000,
+          "price_min_thb": 999000,
+          "price_max_thb": 999000,
+          "import_type": "CBU",
+          "origin_country": "ID",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.5 SEL"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "hyundai.creta.su2.trim.trend_ice",
+          "generation_id": "hyundai.creta.su2",
+          "name": "Trend",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1497,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4315,
+          "width_mm": 1790,
+          "height_mm": 1630,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:113"
+            ],
+            "eco": [
+              "6444735a-5a02-4f73-ac03-035318eee13c"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "hyundai.creta.su2.trim.style_ice",
+          "generation_id": "hyundai.creta.su2",
+          "name": "Style",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1497,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4315,
+          "width_mm": 1790,
+          "height_mm": 1630,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:113"
+            ],
+            "eco": [
+              "f6ab56a3-a56f-4be9-8d77-8db698a9a51b"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "hyundai.creta.su2.trim.style_plus_ice",
+          "generation_id": "hyundai.creta.su2",
+          "name": "Style Plus",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1497,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4315,
+          "width_mm": 1790,
+          "height_mm": 1630,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:113"
+            ],
+            "eco": [
+              "e820ecaf-2db8-4fb4-8420-e675f3880624"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "hyundai.creta.su2.trim.smart_ice",
+          "generation_id": "hyundai.creta.su2",
+          "name": "Smart",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1497,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4315,
+          "width_mm": 1790,
+          "height_mm": 1630,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:113"
+            ],
+            "eco": [
+              "fe93a237-c627-4e29-b747-c8f6cd988472"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "hyundai.creta.su2.trim.black_edition_ice",
+          "generation_id": "hyundai.creta.su2",
+          "name": "Black Edition",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1497,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4315,
+          "width_mm": 1790,
+          "height_mm": 1630,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:113"
+            ],
+            "eco": [
+              "e0d7b7d8-98b2-4f1c-9892-d029058ded5d"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "hyundai.creta.su2.trim.n_line_ice",
+          "generation_id": "hyundai.creta.su2",
+          "name": "N Line",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1497,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4330,
+          "width_mm": 1790,
+          "height_mm": 1635,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "9bf6bcea-bab3-42df-9334-a74e69fb3ab2"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "hyundai.creta.su2.trim.alpha_ice",
+          "generation_id": "hyundai.creta.su2",
+          "name": "Alpha",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1497,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4315,
+          "width_mm": 1790,
+          "height_mm": 1630,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "2034cba2-4ab5-4607-93b3-ef968f55a9df"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

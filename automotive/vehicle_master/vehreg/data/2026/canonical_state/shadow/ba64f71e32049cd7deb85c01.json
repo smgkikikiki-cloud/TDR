@@ -1,0 +1,440 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ba64f71e32049cd7deb85c01",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:54",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "honda.city_hatchback",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:04+00:00",
+    "before_hash": "5522429ba44a8147b4959c3643e6b66925d9418d921cdecbc12692bcd52054da",
+    "after_hash": "00f013d9cdf1f6d4a6eda985fc5551ca90aceaadc1870e067dddb92d72627fd2",
+    "before": {
+      "id": "city_hatchback",
+      "name_en": "City Hatchback",
+      "name_th": "ซิตี้ แฮทช์แบ็ก",
+      "nameplate": "",
+      "body_type": "HATCHBACK",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "city hatchback",
+        "city hb"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "GN7",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2021-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.0L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "engine_cc": 988,
+              "battery_kwh": null,
+              "aliases": [
+                "1.0 Turbo SV"
+              ],
+              "overrides": {},
+              "price_thb": 749000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 749000,
+              "price_max_thb": 749000
+            },
+            {
+              "name": "1.5L HEV",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "engine_cc": 1498,
+              "battery_kwh": 0.7,
+              "aliases": [
+                "e:HEV RS"
+              ],
+              "overrides": {},
+              "price_thb": 924000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 924000,
+              "price_max_thb": 924000
+            }
+          ],
+          "trims": [
+            {
+              "name": "e:HEV SV",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:103"
+                ]
+              },
+              "id": "e_hev_sv_hev"
+            },
+            {
+              "name": "e:HEV RS",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:103"
+                ],
+                "eco": [
+                  "4ced3c19-565b-48ec-bebc-a528cb27cf83"
+                ]
+              },
+              "id": "e_hev_rs_hev",
+              "seats": 5,
+              "length_mm": 4372,
+              "width_mm": 1748,
+              "height_mm": 1501,
+              "engine_cc": 1498,
+              "transmission": "AUTOMATIC"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "honda",
+        "name_en": "Honda",
+        "name_th": "ฮอนด้า",
+        "brand_segment": "MASS",
+        "oem_group": "Honda",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "ฮอนด้า",
+          "honda automobile"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "honda.city_hatchback",
+        "brand_id": "honda",
+        "name_en": "City Hatchback",
+        "name_th": "ซิตี้ แฮทช์แบ็ก",
+        "nameplate": "City",
+        "body_type": "HATCHBACK",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "city hatchback",
+          "city hb"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "honda.city_hatchback.gn7",
+          "model_id": "honda.city_hatchback",
+          "code": "GN7",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2021-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "honda.city_hatchback.gn7.1_0l_ice",
+          "generation_id": "honda.city_hatchback.gn7",
+          "name": "1.0L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 988,
+          "battery_kwh": null,
+          "price_thb": 749000,
+          "price_min_thb": 749000,
+          "price_max_thb": 749000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.0 Turbo SV"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "honda.city_hatchback.gn7.1_5l_hev",
+          "generation_id": "honda.city_hatchback.gn7",
+          "name": "1.5L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1498,
+          "battery_kwh": 0.7,
+          "price_thb": 924000,
+          "price_min_thb": 924000,
+          "price_max_thb": 924000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "e:HEV RS"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "honda.city_hatchback.gn7.trim.e_hev_sv_hev",
+          "generation_id": "honda.city_hatchback.gn7",
+          "name": "e:HEV SV",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4362,
+          "width_mm": 1748,
+          "height_mm": 1501,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:103"
+            ],
+            "eco": [
+              "2c8a6a4f-cb5d-4eb2-b18c-75ce07e44be3"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "honda.city_hatchback.gn7.trim.e_hev_rs_hev",
+          "generation_id": "honda.city_hatchback.gn7",
+          "name": "e:HEV RS",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4372,
+          "width_mm": 1748,
+          "height_mm": 1501,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:103"
+            ],
+            "eco": [
+              "4ced3c19-565b-48ec-bebc-a528cb27cf83"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/honda.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ba64f71e32049cd7deb85c01:catalog",
+    "revision_id": "ba64f71e32049cd7deb85c01",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "honda.city_hatchback",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:04+00:00",
+    "payload": {
+      "brand": {
+        "id": "honda",
+        "name_en": "Honda",
+        "name_th": "ฮอนด้า",
+        "brand_segment": "MASS",
+        "oem_group": "Honda",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "ฮอนด้า",
+          "honda automobile"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "honda.city_hatchback",
+        "brand_id": "honda",
+        "name_en": "City Hatchback",
+        "name_th": "ซิตี้ แฮทช์แบ็ก",
+        "nameplate": "City",
+        "body_type": "HATCHBACK",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "city hatchback",
+          "city hb"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "honda.city_hatchback.gn7",
+          "model_id": "honda.city_hatchback",
+          "code": "GN7",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2021-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "honda.city_hatchback.gn7.1_0l_ice",
+          "generation_id": "honda.city_hatchback.gn7",
+          "name": "1.0L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 988,
+          "battery_kwh": null,
+          "price_thb": 749000,
+          "price_min_thb": 749000,
+          "price_max_thb": 749000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.0 Turbo SV"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "honda.city_hatchback.gn7.1_5l_hev",
+          "generation_id": "honda.city_hatchback.gn7",
+          "name": "1.5L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1498,
+          "battery_kwh": 0.7,
+          "price_thb": 924000,
+          "price_min_thb": 924000,
+          "price_max_thb": 924000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "e:HEV RS"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "honda.city_hatchback.gn7.trim.e_hev_sv_hev",
+          "generation_id": "honda.city_hatchback.gn7",
+          "name": "e:HEV SV",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4362,
+          "width_mm": 1748,
+          "height_mm": 1501,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:103"
+            ],
+            "eco": [
+              "2c8a6a4f-cb5d-4eb2-b18c-75ce07e44be3"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "honda.city_hatchback.gn7.trim.e_hev_rs_hev",
+          "generation_id": "honda.city_hatchback.gn7",
+          "name": "e:HEV RS",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4372,
+          "width_mm": 1748,
+          "height_mm": 1501,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:103"
+            ],
+            "eco": [
+              "4ced3c19-565b-48ec-bebc-a528cb27cf83"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,277 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "8541893bbacbb58a634ed2a7",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:260",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "nissan.x_trail",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:23+00:00",
+    "before_hash": "0dea841d4c1e7b600402a53013217c498454e7e2869dbe924668666bdb54b311",
+    "after_hash": "8052e02e0382341a537fa8a7a64161a496d5e9d053c7e1877ebba620b39be7a1",
+    "before": {
+      "id": "x_trail",
+      "name_en": "X-Trail",
+      "name_th": "เอ็กซ์-เทรล",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "x-trail",
+        "xtrail",
+        "x trial",
+        "x-trial"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.5L REEV",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "engine_cc": 1497,
+              "price_thb": 1599000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "JP",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "nissan",
+        "name_en": "Nissan",
+        "name_th": "นิสสัน",
+        "brand_segment": "MASS",
+        "oem_group": "Nissan",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "นิสสัน"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "nissan.x_trail",
+        "brand_id": "nissan",
+        "name_en": "X-Trail",
+        "name_th": "เอ็กซ์-เทรล",
+        "nameplate": "X-Trail",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "x-trail",
+          "xtrail",
+          "x trial",
+          "x-trial"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "nissan.x_trail.gen1",
+          "model_id": "nissan.x_trail",
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "nissan.x_trail.gen1.1_5l_reev",
+          "generation_id": "nissan.x_trail.gen1",
+          "name": "1.5L REEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1497,
+          "battery_kwh": null,
+          "price_thb": 1599000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "JP",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "nissan.x_trail.gen1.trim.e_power_hev",
+          "generation_id": "nissan.x_trail.gen1",
+          "name": "e-POWER",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1497,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 7,
+          "length_mm": 4680,
+          "width_mm": 1840,
+          "height_mm": 1725,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "db5df121-d617-4f9f-88da-bcf33d13e0bd"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/nissan.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "8541893bbacbb58a634ed2a7:catalog",
+    "revision_id": "8541893bbacbb58a634ed2a7",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "nissan.x_trail",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:23+00:00",
+    "payload": {
+      "brand": {
+        "id": "nissan",
+        "name_en": "Nissan",
+        "name_th": "นิสสัน",
+        "brand_segment": "MASS",
+        "oem_group": "Nissan",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "นิสสัน"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "nissan.x_trail",
+        "brand_id": "nissan",
+        "name_en": "X-Trail",
+        "name_th": "เอ็กซ์-เทรล",
+        "nameplate": "X-Trail",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "x-trail",
+          "xtrail",
+          "x trial",
+          "x-trial"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "nissan.x_trail.gen1",
+          "model_id": "nissan.x_trail",
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "nissan.x_trail.gen1.1_5l_reev",
+          "generation_id": "nissan.x_trail.gen1",
+          "name": "1.5L REEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1497,
+          "battery_kwh": null,
+          "price_thb": 1599000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "JP",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "nissan.x_trail.gen1.trim.e_power_hev",
+          "generation_id": "nissan.x_trail.gen1",
+          "name": "e-POWER",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1497,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 7,
+          "length_mm": 4680,
+          "width_mm": 1840,
+          "height_mm": 1725,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "db5df121-d617-4f9f-88da-bcf33d13e0bd"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

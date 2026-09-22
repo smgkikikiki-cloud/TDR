@@ -70,9 +70,156 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:188"
+                ],
+                "eco": [
+                  "87646044-e80c-48c4-a4c8-5f71b1cf56a2"
                 ]
               },
-              "id": "c_350_e_amg_dynamic_phev_313_hp_phev"
+              "id": "c_350_e_amg_dynamic_phev_313_hp_phev",
+              "seats": 5,
+              "length_mm": 4793,
+              "width_mm": 1820,
+              "height_mm": 1446,
+              "engine_cc": 1999,
+              "tire_front": "225/45R18",
+              "tire_rear": "255/40R18",
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "name": "C 350 e plug-in hybrid",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4793,
+              "width_mm": 1820,
+              "height_mm": 1446,
+              "engine_cc": 1999,
+              "tire_front": "225/45R18",
+              "tire_rear": "255/40R18",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "effe1fc4-a29f-44aa-ab7b-ca03d7d23556"
+                ]
+              }
+            },
+            {
+              "name": "C 220 d",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4793,
+              "width_mm": 1820,
+              "height_mm": 1446,
+              "engine_cc": 1993,
+              "tire_front": "225/40R19",
+              "tire_rear": "255/35R19",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "7e17941e-aab9-4332-9a82-3c53cdf5ff75"
+                ]
+              }
+            },
+            {
+              "name": "C 220 d AMG Line",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4793,
+              "width_mm": 1820,
+              "height_mm": 1446,
+              "engine_cc": 1993,
+              "tire_front": "225/45R18",
+              "tire_rear": "245/40R18",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "8139d235-a74d-40da-aa97-14df9f282a81"
+                ]
+              }
+            },
+            {
+              "name": "C 220 d Avantgarde",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4751,
+              "width_mm": 1820,
+              "height_mm": 1437,
+              "engine_cc": 1993,
+              "tire_front": "225/45R18",
+              "tire_rear": "245/40R18",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "f9e017b9-93b3-4566-85f9-924993d124cd"
+                ]
+              }
+            },
+            {
+              "name": "Mercedes-Benz Coupe AMG Dynamic",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 4696,
+              "width_mm": 1810,
+              "height_mm": 1408,
+              "engine_cc": 1991,
+              "tire_front": "225/40R19",
+              "tire_rear": "255/35R19",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "f6d8b25e-677c-4d36-8c32-61d70def7ab9"
+                ]
+              }
+            },
+            {
+              "name": "C 43",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 4693,
+              "width_mm": 1810,
+              "height_mm": 1402,
+              "engine_cc": 2996,
+              "tire_front": "225/40R19",
+              "tire_rear": "255/35R19",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "d52ee22a26e64768a0952e2f4dac7088"
+                ]
+              }
+            },
+            {
+              "name": "C 220 d AMG Dynamic",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4793,
+              "width_mm": 1820,
+              "height_mm": 1446,
+              "engine_cc": 1993,
+              "tire_front": "225/40R19",
+              "tire_rear": "255/35R19",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "2fbd28d311c544149f26c380e12b9f39"
+                ]
+              }
+            },
+            {
+              "name": "AMG Sport",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4686,
+              "width_mm": 1810,
+              "height_mm": 1442,
+              "engine_cc": 1991,
+              "tire_front": "225/45R18",
+              "tire_rear": "245/40R18",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "9dc1b0e785a3480e84f866f0d2c479da"
+                ]
+              }
             }
           ]
         }
@@ -152,6 +299,140 @@
                 ]
               },
               "id": "mercedes_amg_e_53_hybrid_4matic_plus_phev"
+            },
+            {
+              "name": "E 220 d AMG Line",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4950,
+              "width_mm": 1880,
+              "height_mm": 1461,
+              "engine_cc": 1993,
+              "tire_front": "245/45R19",
+              "tire_rear": "275/40R19",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "b5fa291c-1f61-4d00-99fd-e47a74b38926"
+                ]
+              }
+            },
+            {
+              "name": "Coupe AMG Dynamic",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 4844,
+              "width_mm": 1860,
+              "height_mm": 1432,
+              "engine_cc": 1991,
+              "tire_front": "245/35R20",
+              "tire_rear": "275/30R20",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "2af14da1-e1a0-40d2-b497-b06ab75781d2"
+                ]
+              }
+            },
+            {
+              "name": "E 220 d AMG Sport",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4940,
+              "width_mm": 1601,
+              "height_mm": 1460,
+              "engine_cc": 1950,
+              "tire_front": "245/40R19",
+              "tire_rear": "275/35R19",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "089d1d42-f9d0-41a3-a117-462c78799f01"
+                ]
+              }
+            },
+            {
+              "name": "Cabriolet AMG Dynamic",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 4844,
+              "width_mm": 1860,
+              "height_mm": 1430,
+              "engine_cc": 1991,
+              "tire_front": "245/35R20",
+              "tire_rear": "275/30R20",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "a650290a48ce4647bc1fd2e972bc4e65"
+                ]
+              }
+            },
+            {
+              "name": "Mercedes-Benz Cabriolet AMG Dynamic",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 4846,
+              "width_mm": 1860,
+              "height_mm": 1429,
+              "engine_cc": 1991,
+              "tire_front": "245/40R19",
+              "tire_rear": "275/35R19",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "306621a2fd8e4e609263af7770dc94dd"
+                ]
+              }
+            },
+            {
+              "name": "Mercedes-Benz Coupe AMG Dynamic",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 4846,
+              "width_mm": 1860,
+              "height_mm": 1431,
+              "engine_cc": 1991,
+              "tire_front": "245/40R19",
+              "tire_rear": "275/35R19",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "0702d3d994a64b49a5f9aad84a7d55af"
+                ]
+              }
+            },
+            {
+              "name": "E 220 d Sport",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4923,
+              "width_mm": 1852,
+              "height_mm": 1468,
+              "engine_cc": 1950,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "a432f3b668a34f8e8420ffbe2908c064"
+                ]
+              }
+            },
+            {
+              "name": "Mercedes-Benz Avantgarde",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4923,
+              "width_mm": 1852,
+              "height_mm": 1475,
+              "engine_cc": 1991,
+              "tire_front": "245/45R18",
+              "tire_rear": "275/40R18",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "2fde0faa5b1e499ea29389c847d5b0b2"
+                ]
+              }
             }
           ]
         }
@@ -287,12 +568,23 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:192"
+                ],
+                "eco": [
+                  "f2f2db11-a3df-4d8f-8ab5-b674c0dbd3d8"
                 ]
               },
               "aliases": [
                 "GLC 350 e 4MATIC AMG Dynamic (PHEV)"
               ],
-              "id": "350_e_4matic_amg_dynamic_phev_phev"
+              "id": "350_e_4matic_amg_dynamic_phev_phev",
+              "seats": 5,
+              "length_mm": 4721,
+              "width_mm": 1918,
+              "height_mm": 1631,
+              "engine_cc": 1999,
+              "tire_front": "255/45R20",
+              "tire_rear": "285/40R20",
+              "transmission": "AUTOMATIC"
             },
             {
               "name": "300 e 4MATIC Coupe AMG Dynamic (PHEV)",
@@ -306,6 +598,117 @@
                 "GLC 300 e 4MATIC Coupe AMG Dynamic (PHEV)"
               ],
               "id": "300_e_4matic_coupe_amg_dynamic_phev_phev"
+            },
+            {
+              "name": "4MATIC",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4716,
+              "width_mm": 1890,
+              "height_mm": 1640,
+              "engine_cc": 1993,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "8822825c-efd3-4b51-b61e-104dc658c60a"
+                ]
+              }
+            },
+            {
+              "name": "4MATIC Avantgarde",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4716,
+              "width_mm": 1890,
+              "height_mm": 1640,
+              "engine_cc": 1993,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "7578e0eb-91eb-4afd-a739-184959a14c14"
+                ]
+              }
+            },
+            {
+              "name": "4MATIC Coupe AMG Dynamic",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4731,
+              "width_mm": 1890,
+              "height_mm": 1622,
+              "engine_cc": 1991,
+              "tire_front": "255/45R20",
+              "tire_rear": "285/40R20",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "e87af603-5f26-44a0-b5d3-50b2c496c2d1"
+                ]
+              }
+            },
+            {
+              "name": "Mercedes-Benz 4MATIC Coupe AMG Dynamic",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4731,
+              "width_mm": 1890,
+              "height_mm": 1600,
+              "engine_cc": 1950,
+              "tire_front": "235/55R19",
+              "tire_rear": "255/50R19",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "ee2e682d-4420-4456-a810-c540d4c57a81"
+                ]
+              }
+            },
+            {
+              "name": "Mercedes-AMG 43 4MATIC Coupe",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4749,
+              "width_mm": 1930,
+              "height_mm": 1585,
+              "engine_cc": 2996,
+              "tire_front": "255/40R21",
+              "tire_rear": "285/35R21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "c24748b24266458c808b52b4367aa3cf"
+                ]
+              }
+            },
+            {
+              "name": "Mercedes-Benz AMG Dynamic",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4658,
+              "width_mm": 1890,
+              "height_mm": 1644,
+              "engine_cc": 1950,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "8b33daf5fb12447f99e9ed96f6755d68"
+                ]
+              }
+            },
+            {
+              "name": "Mercedes-Benz",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4658,
+              "width_mm": 1890,
+              "height_mm": 1644,
+              "engine_cc": 1950,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "caf0bf740d084c44ab9594e52b4459ac"
+                ]
+              }
             }
           ]
         }
@@ -561,6 +964,40 @@
                 ]
               },
               "id": "mercedes_amg_cle_53_4matic_plus_coupe_ice"
+            },
+            {
+              "name": "4MATIC+ Coupé",
+              "powertrain": "HEV",
+              "seats": 4,
+              "length_mm": 4853,
+              "width_mm": 1936,
+              "height_mm": 1435,
+              "engine_cc": 2999,
+              "tire_front": "265/35R20",
+              "tire_rear": "295/30R20",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "1b9d7600-3a8d-42e0-bc69-2c2be804c18c"
+                ]
+              }
+            },
+            {
+              "name": "4MATIC Coupé AMG Dynamic",
+              "powertrain": "HEV",
+              "seats": 4,
+              "length_mm": 4850,
+              "width_mm": 1861,
+              "height_mm": 1422,
+              "engine_cc": 1999,
+              "tire_front": "245/40R19",
+              "tire_rear": "275/35R19",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "df04461c-492e-4332-b85a-be14ed5c2ed9"
+                ]
+              }
             }
           ]
         }
@@ -625,6 +1062,23 @@
                 ]
               },
               "id": "mercedes_amg_cls_53_4matic_plus_ice"
+            },
+            {
+              "name": "Mercedes-AMG 4MATIC+",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 5012,
+              "width_mm": 1896,
+              "height_mm": 1422,
+              "engine_cc": 2999,
+              "tire_front": "245/35R20",
+              "tire_rear": "275/30R20",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "ba77b804-6692-49b2-8dee-1cfa4ca40495"
+                ]
+              }
             }
           ]
         }
@@ -745,7 +1199,125 @@
               "aliases": []
             }
           ],
-          "trims": []
+          "trims": [
+            {
+              "name": "4MATIC+",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4937,
+              "width_mm": 2015,
+              "height_mm": 1782,
+              "engine_cc": 2999,
+              "tire_front": "275/45R21",
+              "tire_rear": "315/40R21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "3ca040ed-a37b-4010-a28e-8b39fb4bebd3"
+                ]
+              }
+            },
+            {
+              "name": "HYBRID 4MATIC+",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4934,
+              "width_mm": 2015,
+              "height_mm": 1782,
+              "engine_cc": 2999,
+              "tire_front": "285/40R22",
+              "tire_rear": "325/35R22",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "81bfff52-b287-4b7b-9880-9be951fcc35a"
+                ]
+              }
+            },
+            {
+              "name": "4MATIC Exclusive",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4924,
+              "width_mm": 2010,
+              "height_mm": 1795,
+              "engine_cc": 1950,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "11950b23-badf-475b-a02a-fd95f722d82b"
+                ]
+              }
+            },
+            {
+              "name": "4MATIC AMG Line",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4926,
+              "width_mm": 2015,
+              "height_mm": 1797,
+              "engine_cc": 1993,
+              "tire_front": "275/50R20",
+              "tire_rear": "275/50R20",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "5f12ef6e-c967-471f-b8ad-6e392dc8ae94"
+                ]
+              }
+            },
+            {
+              "name": "4MATIC AMG Dynamic",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4926,
+              "width_mm": 2015,
+              "height_mm": 1797,
+              "engine_cc": 1993,
+              "tire_front": "275/45R21",
+              "tire_rear": "315/40R21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "72cf2e65-ccdb-4b02-a5db-d66cbc07fd0c"
+                ]
+              }
+            },
+            {
+              "name": "Mercedes-Benz 4MATIC AMG Dynamic",
+              "powertrain": "ICE",
+              "seats": 7,
+              "length_mm": 4924,
+              "width_mm": 1947,
+              "height_mm": 1797,
+              "engine_cc": 1950,
+              "tire_front": "275/45R21",
+              "tire_rear": "315/40R21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "399cfa8e-8644-4fa8-af78-e2cfd7dff604"
+                ]
+              }
+            },
+            {
+              "name": "350 d 4MATIC Coupe AMG Dynamic",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4946,
+              "width_mm": 2014,
+              "height_mm": 1716,
+              "engine_cc": 2925,
+              "tire_front": "285/40R22",
+              "tire_rear": "325/35R22",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "e8b88a4b49b74fef88e7c7354c60170c"
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -808,6 +1380,40 @@
                 ]
               },
               "id": "mercedes_maybach_gls_600_4matic_ice"
+            },
+            {
+              "name": "4MATIC",
+              "powertrain": "HEV",
+              "seats": 7,
+              "length_mm": 5209,
+              "width_mm": 2030,
+              "height_mm": 1838,
+              "engine_cc": 2989,
+              "tire_front": "285/45R22",
+              "tire_rear": "325/40R22",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "10834306-505a-44b1-9db0-1071295a967c"
+                ]
+              }
+            },
+            {
+              "name": "4MATIC AMG Dynamic",
+              "powertrain": "HEV",
+              "seats": 7,
+              "length_mm": 5209,
+              "width_mm": 2030,
+              "height_mm": 1838,
+              "engine_cc": 2989,
+              "tire_front": "285/45R22",
+              "tire_rear": "325/40R22",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "44bb0289-f67f-4318-9f37-33276acb0b47"
+                ]
+              }
             }
           ]
         }
@@ -864,6 +1470,38 @@
                 ]
               },
               "id": "s_580_e_amg_dynamic_phev_510_hp_phev"
+            },
+            {
+              "name": "Exclusive",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 5289,
+              "width_mm": 2109,
+              "height_mm": 1503,
+              "engine_cc": 2989,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "60d7c344-6ee1-4081-a0a3-d9391da1d326"
+                ]
+              }
+            },
+            {
+              "name": "AMG Premium",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 5320,
+              "width_mm": 2130,
+              "height_mm": 1503,
+              "engine_cc": 2925,
+              "tire_front": "255/40R20",
+              "tire_rear": "285/35R20",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "09880627e56a410d8bd71678255e4f47"
+                ]
+              }
             }
           ]
         }
@@ -1229,6 +1867,51 @@
                 ]
               },
               "id": "g_580_with_eq_technology_electric_g_class_quad_motor_bev"
+            },
+            {
+              "name": "Mercedes-Benz",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4863,
+              "width_mm": 1984,
+              "height_mm": 1976,
+              "engine_cc": 2989,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "2790d589-f7a2-4c26-a21d-36961ada881a"
+                ]
+              }
+            },
+            {
+              "name": "G450D",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4825,
+              "width_mm": 2187,
+              "height_mm": 1973,
+              "engine_cc": 2989,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "467f99c0-4aef-45f2-aeab-eb41451f6cc7"
+                ]
+              }
+            },
+            {
+              "name": "G400D",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4606,
+              "width_mm": 1984,
+              "height_mm": 1969,
+              "engine_cc": 2925,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "390fae66-9d91-4272-8ea3-fabbb1c210ab"
+                ]
+              }
             }
           ]
         }
@@ -1318,6 +2001,21 @@
                 ]
               },
               "id": "mercedes_amg_cla_45_s_4matic_plus_ice"
+            },
+            {
+              "name": "electric",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4731,
+              "width_mm": 1855,
+              "height_mm": 1469,
+              "tire_front": "225/45R18",
+              "tire_rear": "255/40R18",
+              "source_refs": {
+                "eco": [
+                  "6ea5211a-43ed-4c25-845b-445197120fd6"
+                ]
+              }
             }
           ]
         }

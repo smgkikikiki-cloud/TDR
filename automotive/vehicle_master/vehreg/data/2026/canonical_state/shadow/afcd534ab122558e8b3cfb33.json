@@ -1,0 +1,347 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "afcd534ab122558e8b3cfb33",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:157",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "subaru.forester",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:52+00:00",
+    "before_hash": "db616328e093aa741ffd280bc9f12ea6ca157229ca3b2423932af433ed384c86",
+    "after_hash": "98f50682f9b240dab0055ecb487dc1a115c48e08c9d842f8625e50fa3201ee0a",
+    "before": {
+      "id": "forester",
+      "name_en": "Forester",
+      "name_th": "ฟอเรสเตอร์",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [],
+      "notes": "",
+      "generations": [
+        {
+          "code": "SK",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2019-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.0L ICE AWD",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "engine_cc": 1995,
+              "battery_kwh": null,
+              "aliases": [
+                "2.0 i-S EyeSight"
+              ],
+              "overrides": {},
+              "price_thb": 1590000,
+              "import_type": "CBU",
+              "origin_country": "JP",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1590000,
+              "price_max_thb": 1590000
+            }
+          ],
+          "trims": [
+            {
+              "name": "2.5i-S AWD CVT",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4655,
+              "width_mm": 1830,
+              "height_mm": 1730,
+              "engine_cc": 2498,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "b6d3da0a-2c80-42b7-b268-fa8420e87308"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "subaru",
+        "name_en": "Subaru",
+        "name_th": "ซูบารุ",
+        "brand_segment": "MASS",
+        "oem_group": "Subaru",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "ซูบารุ"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "subaru.forester",
+        "brand_id": "subaru",
+        "name_en": "Forester",
+        "name_th": "ฟอเรสเตอร์",
+        "nameplate": "Forester",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "subaru.forester.sk",
+          "model_id": "subaru.forester",
+          "code": "SK",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2019-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "subaru.forester.sk.2_0l_ice_awd",
+          "generation_id": "subaru.forester.sk",
+          "name": "2.0L ICE AWD",
+          "powertrain": "ICE",
+          "drivetrain": "AWD",
+          "engine_cc": 1995,
+          "battery_kwh": null,
+          "price_thb": 1590000,
+          "price_min_thb": 1590000,
+          "price_max_thb": 1590000,
+          "import_type": "CBU",
+          "origin_country": "JP",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.0 i-S EyeSight"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "subaru.forester.sk.trim.2_5i_s_awd_cvt_ice",
+          "generation_id": "subaru.forester.sk",
+          "name": "2.5i-S AWD CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2498,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4655,
+          "width_mm": 1830,
+          "height_mm": 1730,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "b6d3da0a-2c80-42b7-b268-fa8420e87308"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "subaru.forester.sk.trim.2_0i_s_es_ice",
+          "generation_id": "subaru.forester.sk",
+          "name": "2.0i-S ES",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1995,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4640,
+          "width_mm": 1815,
+          "height_mm": 1730,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "9337be4e-fe81-4ced-95e3-864beb1426e2"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/subaru.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "afcd534ab122558e8b3cfb33:catalog",
+    "revision_id": "afcd534ab122558e8b3cfb33",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "subaru.forester",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:52+00:00",
+    "payload": {
+      "brand": {
+        "id": "subaru",
+        "name_en": "Subaru",
+        "name_th": "ซูบารุ",
+        "brand_segment": "MASS",
+        "oem_group": "Subaru",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "ซูบารุ"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "subaru.forester",
+        "brand_id": "subaru",
+        "name_en": "Forester",
+        "name_th": "ฟอเรสเตอร์",
+        "nameplate": "Forester",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "subaru.forester.sk",
+          "model_id": "subaru.forester",
+          "code": "SK",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2019-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "subaru.forester.sk.2_0l_ice_awd",
+          "generation_id": "subaru.forester.sk",
+          "name": "2.0L ICE AWD",
+          "powertrain": "ICE",
+          "drivetrain": "AWD",
+          "engine_cc": 1995,
+          "battery_kwh": null,
+          "price_thb": 1590000,
+          "price_min_thb": 1590000,
+          "price_max_thb": 1590000,
+          "import_type": "CBU",
+          "origin_country": "JP",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.0 i-S EyeSight"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "subaru.forester.sk.trim.2_5i_s_awd_cvt_ice",
+          "generation_id": "subaru.forester.sk",
+          "name": "2.5i-S AWD CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2498,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4655,
+          "width_mm": 1830,
+          "height_mm": 1730,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "b6d3da0a-2c80-42b7-b268-fa8420e87308"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "subaru.forester.sk.trim.2_0i_s_es_ice",
+          "generation_id": "subaru.forester.sk",
+          "name": "2.0i-S ES",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1995,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4640,
+          "width_mm": 1815,
+          "height_mm": 1730,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "9337be4e-fe81-4ced-95e3-864beb1426e2"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

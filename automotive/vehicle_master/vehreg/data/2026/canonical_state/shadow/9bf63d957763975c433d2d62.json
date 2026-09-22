@@ -1,0 +1,518 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9bf63d957763975c433d2d62",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:334",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mazda.cx5",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:30+00:00",
+    "before_hash": "68e3472c55510bd1c053d11b16e5bfe31cba39ae209e81790c295b215a6758e9",
+    "after_hash": "ddf620cdf6887e749a4d704d77858001f0cbe6ce8af408bbe619751dd357db96",
+    "before": {
+      "id": "cx5",
+      "name_en": "CX-5",
+      "name_th": "ซีเอ็กซ์-5",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "cx 5",
+        "cx5"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "KF",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2017-11-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.0L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "engine_cc": 1998,
+              "battery_kwh": null,
+              "aliases": [
+                "2.0 SP"
+              ],
+              "overrides": {},
+              "price_thb": 1490000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1490000,
+              "price_max_thb": 1490000
+            }
+          ],
+          "trims": [
+            {
+              "name": "2.0 S",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:169"
+                ]
+              },
+              "id": "2_0_s_ice"
+            },
+            {
+              "name": "2.0 SP",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:169"
+                ],
+                "eco": [
+                  "861ed281-9524-4df0-9deb-1064f0ec73f9"
+                ]
+              },
+              "id": "2_0_sp_ice",
+              "seats": 5,
+              "length_mm": 4550,
+              "width_mm": 1840,
+              "height_mm": 1675,
+              "engine_cc": 1998,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "name": "2.2 XDL (Diesel Turbo)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:169"
+                ]
+              },
+              "id": "2_2_xdl_diesel_turbo_ice"
+            },
+            {
+              "name": "2.5 Turbo SP (231 hp AWD)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:169"
+                ]
+              },
+              "id": "2_5_turbo_sp_231_hp_awd_ice"
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "mazda",
+        "name_en": "Mazda",
+        "name_th": "มาสด้า",
+        "brand_segment": "MASS",
+        "oem_group": "Mazda",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "มาสด้า"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mazda.cx5",
+        "brand_id": "mazda",
+        "name_en": "CX-5",
+        "name_th": "ซีเอ็กซ์-5",
+        "nameplate": "CX-5",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "cx 5",
+          "cx5"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mazda.cx5.kf",
+          "model_id": "mazda.cx5",
+          "code": "KF",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2017-11-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mazda.cx5.kf.2_0l_ice",
+          "generation_id": "mazda.cx5.kf",
+          "name": "2.0L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "price_thb": 1490000,
+          "price_min_thb": 1490000,
+          "price_max_thb": 1490000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.0 SP"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mazda.cx5.kf.trim.2_0_s_ice",
+          "generation_id": "mazda.cx5.kf",
+          "name": "2.0 S",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4550,
+          "width_mm": 1840,
+          "height_mm": 1675,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:169"
+            ],
+            "eco": [
+              "6bfc7077-41c2-4406-a046-db8a029ddf22"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mazda.cx5.kf.trim.2_0_sp_ice",
+          "generation_id": "mazda.cx5.kf",
+          "name": "2.0 SP",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4550,
+          "width_mm": 1840,
+          "height_mm": 1675,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:169"
+            ],
+            "eco": [
+              "861ed281-9524-4df0-9deb-1064f0ec73f9"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mazda.cx5.kf.trim.2_2_xdl_diesel_turbo_ice",
+          "generation_id": "mazda.cx5.kf",
+          "name": "2.2 XDL (Diesel Turbo)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:169"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mazda.cx5.kf.trim.2_5_turbo_sp_231_hp_awd_ice",
+          "generation_id": "mazda.cx5.kf",
+          "name": "2.5 Turbo SP (231 hp AWD)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:169"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mazda.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9bf63d957763975c433d2d62:catalog",
+    "revision_id": "9bf63d957763975c433d2d62",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mazda.cx5",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:30+00:00",
+    "payload": {
+      "brand": {
+        "id": "mazda",
+        "name_en": "Mazda",
+        "name_th": "มาสด้า",
+        "brand_segment": "MASS",
+        "oem_group": "Mazda",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "มาสด้า"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mazda.cx5",
+        "brand_id": "mazda",
+        "name_en": "CX-5",
+        "name_th": "ซีเอ็กซ์-5",
+        "nameplate": "CX-5",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "cx 5",
+          "cx5"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mazda.cx5.kf",
+          "model_id": "mazda.cx5",
+          "code": "KF",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2017-11-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mazda.cx5.kf.2_0l_ice",
+          "generation_id": "mazda.cx5.kf",
+          "name": "2.0L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "price_thb": 1490000,
+          "price_min_thb": 1490000,
+          "price_max_thb": 1490000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.0 SP"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mazda.cx5.kf.trim.2_0_s_ice",
+          "generation_id": "mazda.cx5.kf",
+          "name": "2.0 S",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4550,
+          "width_mm": 1840,
+          "height_mm": 1675,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:169"
+            ],
+            "eco": [
+              "6bfc7077-41c2-4406-a046-db8a029ddf22"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mazda.cx5.kf.trim.2_0_sp_ice",
+          "generation_id": "mazda.cx5.kf",
+          "name": "2.0 SP",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4550,
+          "width_mm": 1840,
+          "height_mm": 1675,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:169"
+            ],
+            "eco": [
+              "861ed281-9524-4df0-9deb-1064f0ec73f9"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mazda.cx5.kf.trim.2_2_xdl_diesel_turbo_ice",
+          "generation_id": "mazda.cx5.kf",
+          "name": "2.2 XDL (Diesel Turbo)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:169"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mazda.cx5.kf.trim.2_5_turbo_sp_231_hp_awd_ice",
+          "generation_id": "mazda.cx5.kf",
+          "name": "2.5 Turbo SP (231 hp AWD)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:169"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

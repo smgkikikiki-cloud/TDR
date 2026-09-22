@@ -1,0 +1,2360 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "09b56b68df6cee1580a80b05",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:176",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "toyota.hilux_revo_double_cab",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:15+00:00",
+    "before_hash": "eca03123010e8a4de2622294b93687b16706dc0d9c6849ba7dbae031ff0732b9",
+    "after_hash": "a48a0701e8d3eef819529bf7b55e8d268baf9d4e27622a585e55bad9f323b40f",
+    "before": {
+      "id": "hilux_revo_double_cab",
+      "name_en": "Hilux Revo Double Cab",
+      "name_th": "ไฮลักซ์ รีโว่ 4 ประตู",
+      "nameplate": "Hilux",
+      "body_type": "PICKUP",
+      "cab_type": "DOUBLE_CAB",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "revo double cab",
+        "revo 4 ประตู",
+        "รีโว่ 4 ประตู",
+        "revo double cab 4x4",
+        "Hilux Revo",
+        "ไฮลักซ์ รีโว่"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "AN120",
+          "segment": "F",
+          "seats": 5,
+          "launched": "2020-06-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.4L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "RWD",
+              "engine_cc": 2393,
+              "battery_kwh": null,
+              "aliases": [
+                "2.4 Prerunner"
+              ],
+              "overrides": {},
+              "price_thb": 949000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 949000,
+              "price_max_thb": 949000
+            },
+            {
+              "name": "2.8L ICE 4WD",
+              "powertrain": "ICE",
+              "drivetrain": "4WD",
+              "engine_cc": 2755,
+              "battery_kwh": null,
+              "aliases": [
+                "2.8 GR Sport 4x4"
+              ],
+              "overrides": {},
+              "price_thb": 1359000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1359000,
+              "price_max_thb": 1359000
+            }
+          ],
+          "trims": [
+            {
+              "id": "2_4_mid_mt_4x4",
+              "name": "2.4 Mid MT 4x4",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "source_refs": {
+                "ecosticker": [
+                  "c1c46e58-019b-45c9-bb49-1de432b16079"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5325,
+              "width_mm": 1900,
+              "height_mm": 1815,
+              "tire_front": "265/60R 18",
+              "tire_rear": "265/60R 18"
+            },
+            {
+              "id": "2_8_high_at_4x4",
+              "name": "2.8 High AT 4x4",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "source_refs": {
+                "ecosticker": [
+                  "6ad6ec89-c8c3-4714-868b-cd4ffd4a5ea4"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5325,
+              "width_mm": 1900,
+              "height_mm": 1815,
+              "tire_front": "265/60R18",
+              "tire_rear": "265/60R18"
+            },
+            {
+              "id": "2_8_high_mt_4x4",
+              "name": "2.8 High MT 4x4",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "source_refs": {
+                "ecosticker": [
+                  "fffe1bae-3ae2-409c-9249-3eea75e7878a"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5325,
+              "width_mm": 1900,
+              "height_mm": 1815,
+              "tire_front": "265/60R18",
+              "tire_rear": "265/60R18"
+            },
+            {
+              "id": "2wd_2_8_gr_sport_at",
+              "name": "2WD 2.8 GR Sport AT",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "source_refs": {
+                "ecosticker": [
+                  "b2ff31c1-d5d5-49e3-8aa3-bbf594f05ede"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5285,
+              "width_mm": 1855,
+              "height_mm": 1730,
+              "tire_front": "215/55R 17",
+              "tire_rear": "215/55R 17"
+            },
+            {
+              "id": "gr_sport_2_8_at_4x2",
+              "name": "GR Sport 2.8 AT 4x2",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "source_refs": {
+                "ecosticker": [
+                  "c610d416-c53d-4383-8f99-bd33ad13eaae"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5285,
+              "width_mm": 1855,
+              "height_mm": 1730,
+              "tire_front": "215/55R 17",
+              "tire_rear": "215/55R 17"
+            },
+            {
+              "id": "gr_sport_2_8_at_4x4",
+              "name": "GR Sport 2.8 AT 4x4",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "source_refs": {
+                "ecosticker": [
+                  "e4684e41-5753-4321-81c5-024cc17f24c6"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5320,
+              "width_mm": 2020,
+              "height_mm": 1880,
+              "tire_front": "265/65R17",
+              "tire_rear": "265/65R17"
+            },
+            {
+              "id": "gr_sport_2_8_at_4x4_base",
+              "name": "GR Sport 2.8 AT 4x4 (Base)",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "source_refs": {
+                "ecosticker": [
+                  "c59b479e-28d0-4154-a78b-4406d9cdafd5"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5320,
+              "width_mm": 2020,
+              "height_mm": 1880,
+              "tire_front": "265/65R17",
+              "tire_rear": "265/65R17"
+            },
+            {
+              "id": "prerunner_2_4_entry_at",
+              "name": "Prerunner 2.4 Entry AT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "09e86fd8-1726-4eef-bdcc-ab43717bb8c6"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5325,
+              "width_mm": 1900,
+              "height_mm": 1815,
+              "tire_front": "265/65R 17",
+              "tire_rear": "265/65R 17"
+            },
+            {
+              "id": "prerunner_2_4_entry_mt",
+              "name": "Prerunner 2.4 Entry MT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "3c293fec-b4fd-4b23-99b7-53081f18315a"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5325,
+              "width_mm": 1900,
+              "height_mm": 1815,
+              "tire_front": "265/65R 17",
+              "tire_rear": "265/65R 17"
+            },
+            {
+              "id": "prerunner_2_4_high_at",
+              "name": "Prerunner 2.4 High AT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "bdba5e51-1306-4e1a-9683-882e69c2d427"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5325,
+              "width_mm": 1900,
+              "height_mm": 1815,
+              "tire_front": "265/60R 18",
+              "tire_rear": "265/60R 18"
+            },
+            {
+              "id": "prerunner_2_4_high_mt",
+              "name": "Prerunner 2.4 High MT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "9d9e546d-d547-4345-8697-90795e8aebdb"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5325,
+              "width_mm": 1900,
+              "height_mm": 1815,
+              "tire_front": "265/60R 18",
+              "tire_rear": "265/60R 18"
+            },
+            {
+              "id": "prerunner_2_4_mid_at",
+              "name": "Prerunner 2.4 Mid AT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "81348f13-ad06-4ed3-80b1-b0eb431da7b0"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5325,
+              "width_mm": 1900,
+              "height_mm": 1815,
+              "tire_front": "265/60R 18",
+              "tire_rear": "265/60R 18"
+            },
+            {
+              "id": "prerunner_2_4_mid_mt",
+              "name": "Prerunner 2.4 Mid MT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "f555749d-4b84-4034-bf27-7afbb0e12212"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5325,
+              "width_mm": 1900,
+              "height_mm": 1815,
+              "tire_front": "265/60R 18",
+              "tire_rear": "265/60R 18"
+            },
+            {
+              "id": "prerunner_rocco_2_4_at",
+              "name": "Prerunner Rocco 2.4 AT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "77171d9a-31cc-4fd5-980a-f207c0917923"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5325,
+              "width_mm": 1900,
+              "height_mm": 1815,
+              "tire_front": "265/60R 18",
+              "tire_rear": "265/60R 18"
+            },
+            {
+              "id": "rocco_2_8_at_4x4",
+              "name": "Rocco 2.8 AT 4x4",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "source_refs": {
+                "ecosticker": [
+                  "68b7091e-af8d-4349-a385-da60c8a71da5"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5325,
+              "width_mm": 1900,
+              "height_mm": 1815,
+              "tire_front": "265/60R18",
+              "tire_rear": "265/60R18"
+            },
+            {
+              "id": "z_edition_2_4_entry_at",
+              "name": "Z Edition 2.4 ENTRY AT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "539dd437-41cd-40f8-9943-556cc35e8323"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5285,
+              "width_mm": 1855,
+              "height_mm": 1700,
+              "tire_front": "215/55R17",
+              "tire_rear": "215/55R17"
+            },
+            {
+              "id": "z_edition_2_4_entry_mt",
+              "name": "Z Edition 2.4 Entry MT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "fee847ef-507d-439f-a403-48534d415120"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5285,
+              "width_mm": 1855,
+              "height_mm": 1700,
+              "tire_front": "215/55R17",
+              "tire_rear": "215/55R17"
+            },
+            {
+              "id": "z_edition_2_4_mid_at",
+              "name": "Z Edition 2.4 Mid AT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "37885724-2771-4064-89b8-c3980b6179e1"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5315,
+              "width_mm": 1855,
+              "height_mm": 1700,
+              "tire_front": "215/55R17",
+              "tire_rear": "215/55R17"
+            },
+            {
+              "id": "z_edition_2_4_mid_mt",
+              "name": "Z Edition 2.4 Mid MT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "755195a5-22c6-4454-a198-9a8a10ce32c3"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5315,
+              "width_mm": 1855,
+              "height_mm": 1700,
+              "tire_front": "215/55R17",
+              "tire_rear": "215/55R17"
+            },
+            {
+              "name": "Double Cab 2.4 Entry 4x2 6MT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:287"
+                ]
+              },
+              "id": "double_cab_2_4_entry_4x2_6mt_ice"
+            },
+            {
+              "name": "Double Cab 2.4 Mid 4x2 6MT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:287"
+                ]
+              },
+              "id": "double_cab_2_4_mid_4x2_6mt_ice"
+            },
+            {
+              "name": "Double Cab Prerunner 2x4 2.4 Entry 6MT/6AT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:287"
+                ]
+              },
+              "id": "double_cab_prerunner_2x4_2_4_entry_6mt_6at_ice"
+            },
+            {
+              "name": "Double Cab Prerunner 2x4 2.4 Mid 6MT/6AT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:287"
+                ]
+              },
+              "id": "double_cab_prerunner_2x4_2_4_mid_6mt_6at_ice"
+            },
+            {
+              "name": "Double Cab Prerunner 2x4 2.4 High 6MT/6AT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:287"
+                ]
+              },
+              "id": "double_cab_prerunner_2x4_2_4_high_6mt_6at_ice"
+            },
+            {
+              "name": "Double Cab 4x4 2.4 Mid 6MT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:287"
+                ]
+              },
+              "id": "double_cab_4x4_2_4_mid_6mt_ice"
+            },
+            {
+              "name": "Double Cab 4x4 2.8 High 6AT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:287"
+                ]
+              },
+              "id": "double_cab_4x4_2_8_high_6at_ice"
+            },
+            {
+              "name": "Double Cab GR Sport 4x2 Lo-Floor 2.8 6AT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:287"
+                ]
+              },
+              "id": "double_cab_gr_sport_4x2_lo_floor_2_8_6at_ice"
+            },
+            {
+              "name": "Double Cab GR Sport 4x4 Wide-Tread 2.8 6AT (224 hp)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:287"
+                ]
+              },
+              "id": "double_cab_gr_sport_4x4_wide_tread_2_8_6at_224_hp_ice"
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "toyota",
+        "name_en": "Toyota",
+        "name_th": "โตโยต้า",
+        "brand_segment": "MASS",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "โตโยต้า",
+          "toyota motor thailand",
+          "TMT"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "toyota.hilux_revo_double_cab",
+        "brand_id": "toyota",
+        "name_en": "Hilux Revo Double Cab",
+        "name_th": "ไฮลักซ์ รีโว่ 4 ประตู",
+        "nameplate": "Hilux",
+        "body_type": "PICKUP",
+        "cab_type": "DOUBLE_CAB",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "revo double cab",
+          "revo 4 ประตู",
+          "รีโว่ 4 ประตู",
+          "revo double cab 4x4",
+          "Hilux Revo",
+          "ไฮลักซ์ รีโว่"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "toyota.hilux_revo_double_cab.an120",
+          "model_id": "toyota.hilux_revo_double_cab",
+          "code": "AN120",
+          "segment": "F",
+          "seats": 5,
+          "launched": "2020-06-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.2_4l_ice",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "2.4L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "RWD",
+          "engine_cc": 2393,
+          "battery_kwh": null,
+          "price_thb": 949000,
+          "price_min_thb": 949000,
+          "price_max_thb": 949000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.4 Prerunner"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.2_8l_ice_4wd",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "2.8L ICE 4WD",
+          "powertrain": "ICE",
+          "drivetrain": "4WD",
+          "engine_cc": 2755,
+          "battery_kwh": null,
+          "price_thb": 1359000,
+          "price_min_thb": 1359000,
+          "price_max_thb": 1359000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.8 GR Sport 4x4"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.2_4_mid_mt_4x4",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "2.4 Mid MT 4x4",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5325,
+          "width_mm": 1900,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R 18",
+          "tire_rear": "265/60R 18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "c1c46e58-019b-45c9-bb49-1de432b16079"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.2_8_high_at_4x4",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "2.8 High AT 4x4",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5325,
+          "width_mm": 1900,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "6ad6ec89-c8c3-4714-868b-cd4ffd4a5ea4"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.2_8_high_mt_4x4",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "2.8 High MT 4x4",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5325,
+          "width_mm": 1900,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "fffe1bae-3ae2-409c-9249-3eea75e7878a"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.2wd_2_8_gr_sport_at",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "2WD 2.8 GR Sport AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5285,
+          "width_mm": 1855,
+          "height_mm": 1730,
+          "wheelbase_mm": null,
+          "tire_front": "215/55R 17",
+          "tire_rear": "215/55R 17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "b2ff31c1-d5d5-49e3-8aa3-bbf594f05ede"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.gr_sport_2_8_at_4x2",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "GR Sport 2.8 AT 4x2",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": 2755,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5285,
+          "width_mm": 1855,
+          "height_mm": 1730,
+          "wheelbase_mm": null,
+          "tire_front": "215/55R 17",
+          "tire_rear": "215/55R 17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "c610d416-c53d-4383-8f99-bd33ad13eaae"
+            ],
+            "eco": [
+              "c610d416-c53d-4383-8f99-bd33ad13eaae"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.gr_sport_2_8_at_4x4",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "GR Sport 2.8 AT 4x4",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5320,
+          "width_mm": 2020,
+          "height_mm": 1880,
+          "wheelbase_mm": null,
+          "tire_front": "265/65R17",
+          "tire_rear": "265/65R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "e4684e41-5753-4321-81c5-024cc17f24c6"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.gr_sport_2_8_at_4x4_base",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "GR Sport 2.8 AT 4x4 (Base)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5320,
+          "width_mm": 2020,
+          "height_mm": 1880,
+          "wheelbase_mm": null,
+          "tire_front": "265/65R17",
+          "tire_rear": "265/65R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "c59b479e-28d0-4154-a78b-4406d9cdafd5"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.prerunner_2_4_entry_at",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Prerunner 2.4 Entry AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5325,
+          "width_mm": 1900,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "265/65R 17",
+          "tire_rear": "265/65R 17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "09e86fd8-1726-4eef-bdcc-ab43717bb8c6"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.prerunner_2_4_entry_mt",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Prerunner 2.4 Entry MT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5325,
+          "width_mm": 1900,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "265/65R 17",
+          "tire_rear": "265/65R 17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "3c293fec-b4fd-4b23-99b7-53081f18315a"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.prerunner_2_4_high_at",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Prerunner 2.4 High AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5325,
+          "width_mm": 1900,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R 18",
+          "tire_rear": "265/60R 18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "bdba5e51-1306-4e1a-9683-882e69c2d427"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.prerunner_2_4_high_mt",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Prerunner 2.4 High MT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5325,
+          "width_mm": 1900,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R 18",
+          "tire_rear": "265/60R 18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "9d9e546d-d547-4345-8697-90795e8aebdb"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.prerunner_2_4_mid_at",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Prerunner 2.4 Mid AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5325,
+          "width_mm": 1900,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R 18",
+          "tire_rear": "265/60R 18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "81348f13-ad06-4ed3-80b1-b0eb431da7b0"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.prerunner_2_4_mid_mt",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Prerunner 2.4 Mid MT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5325,
+          "width_mm": 1900,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R 18",
+          "tire_rear": "265/60R 18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "f555749d-4b84-4034-bf27-7afbb0e12212"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.prerunner_rocco_2_4_at",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Prerunner Rocco 2.4 AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5325,
+          "width_mm": 1900,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R 18",
+          "tire_rear": "265/60R 18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "77171d9a-31cc-4fd5-980a-f207c0917923"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.rocco_2_8_at_4x4",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Rocco 2.8 AT 4x4",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5325,
+          "width_mm": 1900,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "68b7091e-af8d-4349-a385-da60c8a71da5"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.z_edition_2_4_entry_at",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Z Edition 2.4 ENTRY AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5285,
+          "width_mm": 1855,
+          "height_mm": 1700,
+          "wheelbase_mm": null,
+          "tire_front": "215/55R17",
+          "tire_rear": "215/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "539dd437-41cd-40f8-9943-556cc35e8323"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.z_edition_2_4_entry_mt",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Z Edition 2.4 Entry MT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5285,
+          "width_mm": 1855,
+          "height_mm": 1700,
+          "wheelbase_mm": null,
+          "tire_front": "215/55R17",
+          "tire_rear": "215/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "fee847ef-507d-439f-a403-48534d415120"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.z_edition_2_4_mid_at",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Z Edition 2.4 Mid AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5315,
+          "width_mm": 1855,
+          "height_mm": 1700,
+          "wheelbase_mm": null,
+          "tire_front": "215/55R17",
+          "tire_rear": "215/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "37885724-2771-4064-89b8-c3980b6179e1"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.z_edition_2_4_mid_mt",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Z Edition 2.4 Mid MT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5315,
+          "width_mm": 1855,
+          "height_mm": 1700,
+          "wheelbase_mm": null,
+          "tire_front": "215/55R17",
+          "tire_rear": "215/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "755195a5-22c6-4454-a198-9a8a10ce32c3"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.double_cab_2_4_entry_4x2_6mt_ice",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Double Cab 2.4 Entry 4x2 6MT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:287"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.double_cab_2_4_mid_4x2_6mt_ice",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Double Cab 2.4 Mid 4x2 6MT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:287"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.double_cab_prerunner_2x4_2_4_entry_6mt_6at_ice",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Double Cab Prerunner 2x4 2.4 Entry 6MT/6AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:287"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.double_cab_prerunner_2x4_2_4_mid_6mt_6at_ice",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Double Cab Prerunner 2x4 2.4 Mid 6MT/6AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:287"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.double_cab_prerunner_2x4_2_4_high_6mt_6at_ice",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Double Cab Prerunner 2x4 2.4 High 6MT/6AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:287"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.double_cab_4x4_2_4_mid_6mt_ice",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Double Cab 4x4 2.4 Mid 6MT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:287"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.double_cab_4x4_2_8_high_6at_ice",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Double Cab 4x4 2.8 High 6AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:287"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.double_cab_gr_sport_4x2_lo_floor_2_8_6at_ice",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Double Cab GR Sport 4x2 Lo-Floor 2.8 6AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:287"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.double_cab_gr_sport_4x4_wide_tread_2_8_6at_224_hp_ice",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Double Cab GR Sport 4x4 Wide-Tread 2.8 6AT (224 hp)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:287"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/toyota.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "09b56b68df6cee1580a80b05:catalog",
+    "revision_id": "09b56b68df6cee1580a80b05",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "toyota.hilux_revo_double_cab",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:15+00:00",
+    "payload": {
+      "brand": {
+        "id": "toyota",
+        "name_en": "Toyota",
+        "name_th": "โตโยต้า",
+        "brand_segment": "MASS",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "โตโยต้า",
+          "toyota motor thailand",
+          "TMT"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "toyota.hilux_revo_double_cab",
+        "brand_id": "toyota",
+        "name_en": "Hilux Revo Double Cab",
+        "name_th": "ไฮลักซ์ รีโว่ 4 ประตู",
+        "nameplate": "Hilux",
+        "body_type": "PICKUP",
+        "cab_type": "DOUBLE_CAB",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "revo double cab",
+          "revo 4 ประตู",
+          "รีโว่ 4 ประตู",
+          "revo double cab 4x4",
+          "Hilux Revo",
+          "ไฮลักซ์ รีโว่"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "toyota.hilux_revo_double_cab.an120",
+          "model_id": "toyota.hilux_revo_double_cab",
+          "code": "AN120",
+          "segment": "F",
+          "seats": 5,
+          "launched": "2020-06-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.2_4l_ice",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "2.4L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "RWD",
+          "engine_cc": 2393,
+          "battery_kwh": null,
+          "price_thb": 949000,
+          "price_min_thb": 949000,
+          "price_max_thb": 949000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.4 Prerunner"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.2_8l_ice_4wd",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "2.8L ICE 4WD",
+          "powertrain": "ICE",
+          "drivetrain": "4WD",
+          "engine_cc": 2755,
+          "battery_kwh": null,
+          "price_thb": 1359000,
+          "price_min_thb": 1359000,
+          "price_max_thb": 1359000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.8 GR Sport 4x4"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.2_4_mid_mt_4x4",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "2.4 Mid MT 4x4",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5325,
+          "width_mm": 1900,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R 18",
+          "tire_rear": "265/60R 18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "c1c46e58-019b-45c9-bb49-1de432b16079"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.2_8_high_at_4x4",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "2.8 High AT 4x4",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5325,
+          "width_mm": 1900,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "6ad6ec89-c8c3-4714-868b-cd4ffd4a5ea4"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.2_8_high_mt_4x4",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "2.8 High MT 4x4",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5325,
+          "width_mm": 1900,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "fffe1bae-3ae2-409c-9249-3eea75e7878a"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.2wd_2_8_gr_sport_at",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "2WD 2.8 GR Sport AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5285,
+          "width_mm": 1855,
+          "height_mm": 1730,
+          "wheelbase_mm": null,
+          "tire_front": "215/55R 17",
+          "tire_rear": "215/55R 17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "b2ff31c1-d5d5-49e3-8aa3-bbf594f05ede"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.gr_sport_2_8_at_4x2",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "GR Sport 2.8 AT 4x2",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": 2755,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5285,
+          "width_mm": 1855,
+          "height_mm": 1730,
+          "wheelbase_mm": null,
+          "tire_front": "215/55R 17",
+          "tire_rear": "215/55R 17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "c610d416-c53d-4383-8f99-bd33ad13eaae"
+            ],
+            "eco": [
+              "c610d416-c53d-4383-8f99-bd33ad13eaae"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.gr_sport_2_8_at_4x4",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "GR Sport 2.8 AT 4x4",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5320,
+          "width_mm": 2020,
+          "height_mm": 1880,
+          "wheelbase_mm": null,
+          "tire_front": "265/65R17",
+          "tire_rear": "265/65R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "e4684e41-5753-4321-81c5-024cc17f24c6"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.gr_sport_2_8_at_4x4_base",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "GR Sport 2.8 AT 4x4 (Base)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5320,
+          "width_mm": 2020,
+          "height_mm": 1880,
+          "wheelbase_mm": null,
+          "tire_front": "265/65R17",
+          "tire_rear": "265/65R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "c59b479e-28d0-4154-a78b-4406d9cdafd5"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.prerunner_2_4_entry_at",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Prerunner 2.4 Entry AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5325,
+          "width_mm": 1900,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "265/65R 17",
+          "tire_rear": "265/65R 17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "09e86fd8-1726-4eef-bdcc-ab43717bb8c6"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.prerunner_2_4_entry_mt",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Prerunner 2.4 Entry MT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5325,
+          "width_mm": 1900,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "265/65R 17",
+          "tire_rear": "265/65R 17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "3c293fec-b4fd-4b23-99b7-53081f18315a"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.prerunner_2_4_high_at",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Prerunner 2.4 High AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5325,
+          "width_mm": 1900,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R 18",
+          "tire_rear": "265/60R 18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "bdba5e51-1306-4e1a-9683-882e69c2d427"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.prerunner_2_4_high_mt",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Prerunner 2.4 High MT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5325,
+          "width_mm": 1900,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R 18",
+          "tire_rear": "265/60R 18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "9d9e546d-d547-4345-8697-90795e8aebdb"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.prerunner_2_4_mid_at",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Prerunner 2.4 Mid AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5325,
+          "width_mm": 1900,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R 18",
+          "tire_rear": "265/60R 18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "81348f13-ad06-4ed3-80b1-b0eb431da7b0"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.prerunner_2_4_mid_mt",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Prerunner 2.4 Mid MT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5325,
+          "width_mm": 1900,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R 18",
+          "tire_rear": "265/60R 18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "f555749d-4b84-4034-bf27-7afbb0e12212"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.prerunner_rocco_2_4_at",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Prerunner Rocco 2.4 AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5325,
+          "width_mm": 1900,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R 18",
+          "tire_rear": "265/60R 18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "77171d9a-31cc-4fd5-980a-f207c0917923"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.rocco_2_8_at_4x4",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Rocco 2.8 AT 4x4",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5325,
+          "width_mm": 1900,
+          "height_mm": 1815,
+          "wheelbase_mm": null,
+          "tire_front": "265/60R18",
+          "tire_rear": "265/60R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "68b7091e-af8d-4349-a385-da60c8a71da5"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.z_edition_2_4_entry_at",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Z Edition 2.4 ENTRY AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5285,
+          "width_mm": 1855,
+          "height_mm": 1700,
+          "wheelbase_mm": null,
+          "tire_front": "215/55R17",
+          "tire_rear": "215/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "539dd437-41cd-40f8-9943-556cc35e8323"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.z_edition_2_4_entry_mt",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Z Edition 2.4 Entry MT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5285,
+          "width_mm": 1855,
+          "height_mm": 1700,
+          "wheelbase_mm": null,
+          "tire_front": "215/55R17",
+          "tire_rear": "215/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "fee847ef-507d-439f-a403-48534d415120"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.z_edition_2_4_mid_at",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Z Edition 2.4 Mid AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5315,
+          "width_mm": 1855,
+          "height_mm": 1700,
+          "wheelbase_mm": null,
+          "tire_front": "215/55R17",
+          "tire_rear": "215/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "37885724-2771-4064-89b8-c3980b6179e1"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.z_edition_2_4_mid_mt",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Z Edition 2.4 Mid MT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5315,
+          "width_mm": 1855,
+          "height_mm": 1700,
+          "wheelbase_mm": null,
+          "tire_front": "215/55R17",
+          "tire_rear": "215/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "755195a5-22c6-4454-a198-9a8a10ce32c3"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.double_cab_2_4_entry_4x2_6mt_ice",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Double Cab 2.4 Entry 4x2 6MT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:287"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.double_cab_2_4_mid_4x2_6mt_ice",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Double Cab 2.4 Mid 4x2 6MT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:287"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.double_cab_prerunner_2x4_2_4_entry_6mt_6at_ice",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Double Cab Prerunner 2x4 2.4 Entry 6MT/6AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:287"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.double_cab_prerunner_2x4_2_4_mid_6mt_6at_ice",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Double Cab Prerunner 2x4 2.4 Mid 6MT/6AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:287"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.double_cab_prerunner_2x4_2_4_high_6mt_6at_ice",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Double Cab Prerunner 2x4 2.4 High 6MT/6AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:287"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.double_cab_4x4_2_4_mid_6mt_ice",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Double Cab 4x4 2.4 Mid 6MT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:287"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.double_cab_4x4_2_8_high_6at_ice",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Double Cab 4x4 2.8 High 6AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:287"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.double_cab_gr_sport_4x2_lo_floor_2_8_6at_ice",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Double Cab GR Sport 4x2 Lo-Floor 2.8 6AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:287"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.hilux_revo_double_cab.an120.trim.double_cab_gr_sport_4x4_wide_tread_2_8_6at_224_hp_ice",
+          "generation_id": "toyota.hilux_revo_double_cab.an120",
+          "name": "Double Cab GR Sport 4x4 Wide-Tread 2.8 6AT (224 hp)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:287"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

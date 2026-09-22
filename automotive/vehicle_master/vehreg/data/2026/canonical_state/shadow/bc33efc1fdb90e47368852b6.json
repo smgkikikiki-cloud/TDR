@@ -1,0 +1,266 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "bc33efc1fdb90e47368852b6",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:309",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "leapmotor.leapmotor_c10",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:27+00:00",
+    "before_hash": "3a1f4fffba561ea8d1440d6450f9db0673410d93be4a76fce3f2dbabc31ee545",
+    "after_hash": "7834e3bd218a5c76bf9f59ea4ce7ceea84ffea84ab4002b4dcdc34cd1e2d98b4",
+    "before": {
+      "id": "leapmotor_c10",
+      "name_en": "Leapmotor C10",
+      "name_th": "ลีปมอเตอร์ ซี10",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "c10"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2025-03-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "70 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "RWD",
+              "engine_cc": null,
+              "battery_kwh": 69.9,
+              "price_thb": 1199000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": []
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "leapmotor",
+        "name_en": "Leapmotor",
+        "name_th": "ลีปมอเตอร์",
+        "brand_segment": "MASS",
+        "oem_group": "Leapmotor",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "leapmotor.leapmotor_c10",
+        "brand_id": "leapmotor",
+        "name_en": "Leapmotor C10",
+        "name_th": "ลีปมอเตอร์ ซี10",
+        "nameplate": "Leapmotor C10",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "c10"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "leapmotor.leapmotor_c10.gen1",
+          "model_id": "leapmotor.leapmotor_c10",
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2025-03-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "leapmotor.leapmotor_c10.gen1.70_kwh_bev",
+          "generation_id": "leapmotor.leapmotor_c10.gen1",
+          "name": "70 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 69.9,
+          "price_thb": 1199000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "leapmotor.leapmotor_c10.gen1.trim.ev_style_bev",
+          "generation_id": "leapmotor.leapmotor_c10.gen1",
+          "name": "EV STYLE",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4739,
+          "width_mm": 1900,
+          "height_mm": 1680,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "e8acdff3-bce4-4a0e-b4a3-8377cd71787a"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/leapmotor.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "bc33efc1fdb90e47368852b6:catalog",
+    "revision_id": "bc33efc1fdb90e47368852b6",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "leapmotor.leapmotor_c10",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:27+00:00",
+    "payload": {
+      "brand": {
+        "id": "leapmotor",
+        "name_en": "Leapmotor",
+        "name_th": "ลีปมอเตอร์",
+        "brand_segment": "MASS",
+        "oem_group": "Leapmotor",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "leapmotor.leapmotor_c10",
+        "brand_id": "leapmotor",
+        "name_en": "Leapmotor C10",
+        "name_th": "ลีปมอเตอร์ ซี10",
+        "nameplate": "Leapmotor C10",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "c10"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "leapmotor.leapmotor_c10.gen1",
+          "model_id": "leapmotor.leapmotor_c10",
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2025-03-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "leapmotor.leapmotor_c10.gen1.70_kwh_bev",
+          "generation_id": "leapmotor.leapmotor_c10.gen1",
+          "name": "70 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 69.9,
+          "price_thb": 1199000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "leapmotor.leapmotor_c10.gen1.trim.ev_style_bev",
+          "generation_id": "leapmotor.leapmotor_c10.gen1",
+          "name": "EV STYLE",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4739,
+          "width_mm": 1900,
+          "height_mm": 1680,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "e8acdff3-bce4-4a0e-b4a3-8377cd71787a"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

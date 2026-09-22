@@ -1,0 +1,703 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d0785a67085d7baacfce210b",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:162",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "toyota.hilux_champ",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:14+00:00",
+    "before_hash": "befb1a4516883f89a5a2486443b500305205d949c2fdcba6e1c4d04dfd0c6658",
+    "after_hash": "d6c6e7fb229936ae928088adb95c8bf89ab5a40f2bbc2753a76bc7d35556f8b3",
+    "before": {
+      "id": "hilux_champ",
+      "name_en": "Hilux Champ",
+      "name_th": "ไฮลักซ์ แชมป์",
+      "nameplate": "Hilux",
+      "body_type": "PICKUP",
+      "cab_type": "SINGLE_SMART",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "champ",
+        "hilux champ",
+        "แชมป์"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "CHAMP",
+          "segment": "F",
+          "seats": 2,
+          "launched": "2023-11-22",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.0L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "RWD",
+              "engine_cc": 1998,
+              "battery_kwh": null,
+              "aliases": [
+                "2.0"
+              ],
+              "overrides": {},
+              "price_thb": 459000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 459000,
+              "price_max_thb": 459000
+            },
+            {
+              "name": "2.4L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "RWD",
+              "engine_cc": 2393,
+              "battery_kwh": null,
+              "aliases": [
+                "2.4"
+              ],
+              "overrides": {},
+              "price_thb": 577000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 577000,
+              "price_max_thb": 577000
+            }
+          ],
+          "trims": [
+            {
+              "name": "SWB 2.0 Petrol MT Without Bed",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:285"
+                ]
+              },
+              "id": "swb_2_0_petrol_mt_without_bed_ice"
+            },
+            {
+              "name": "SWB 2.7 Petrol AT C-Cab With Bed",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:285"
+                ]
+              },
+              "id": "swb_2_7_petrol_at_c_cab_with_bed_ice"
+            },
+            {
+              "name": "LWB 2.4 Diesel MT Without Bed",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:285"
+                ]
+              },
+              "id": "lwb_2_4_diesel_mt_without_bed_ice"
+            },
+            {
+              "name": "LWB 2.4 Diesel MT With Bed",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:285"
+                ]
+              },
+              "id": "lwb_2_4_diesel_mt_with_bed_ice"
+            },
+            {
+              "name": "LWB 2.4 Diesel AT With Bed",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:285"
+                ]
+              },
+              "id": "lwb_2_4_diesel_at_with_bed_ice"
+            },
+            {
+              "name": "SWB 2.4 Diesel AT Attractive Package",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:285"
+                ]
+              },
+              "id": "swb_2_4_diesel_at_attractive_package_ice"
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "toyota",
+        "name_en": "Toyota",
+        "name_th": "โตโยต้า",
+        "brand_segment": "MASS",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "โตโยต้า",
+          "toyota motor thailand",
+          "TMT"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "toyota.hilux_champ",
+        "brand_id": "toyota",
+        "name_en": "Hilux Champ",
+        "name_th": "ไฮลักซ์ แชมป์",
+        "nameplate": "Hilux",
+        "body_type": "PICKUP",
+        "cab_type": "SINGLE_SMART",
+        "registration_type": "RY3",
+        "market_scope": "CORE",
+        "aliases": [
+          "champ",
+          "hilux champ",
+          "แชมป์"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "toyota.hilux_champ.champ",
+          "model_id": "toyota.hilux_champ",
+          "code": "CHAMP",
+          "segment": "F",
+          "seats": 2,
+          "launched": "2023-11-22",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "toyota.hilux_champ.champ.2_0l_ice",
+          "generation_id": "toyota.hilux_champ.champ",
+          "name": "2.0L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "RWD",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "price_thb": 459000,
+          "price_min_thb": 459000,
+          "price_max_thb": 459000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.0"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "toyota.hilux_champ.champ.2_4l_ice",
+          "generation_id": "toyota.hilux_champ.champ",
+          "name": "2.4L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "RWD",
+          "engine_cc": 2393,
+          "battery_kwh": null,
+          "price_thb": 577000,
+          "price_min_thb": 577000,
+          "price_max_thb": 577000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.4"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "toyota.hilux_champ.champ.trim.swb_2_0_petrol_mt_without_bed_ice",
+          "generation_id": "toyota.hilux_champ.champ",
+          "name": "SWB 2.0 Petrol MT Without Bed",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:285"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.hilux_champ.champ.trim.swb_2_7_petrol_at_c_cab_with_bed_ice",
+          "generation_id": "toyota.hilux_champ.champ",
+          "name": "SWB 2.7 Petrol AT C-Cab With Bed",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:285"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.hilux_champ.champ.trim.lwb_2_4_diesel_mt_without_bed_ice",
+          "generation_id": "toyota.hilux_champ.champ",
+          "name": "LWB 2.4 Diesel MT Without Bed",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:285"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.hilux_champ.champ.trim.lwb_2_4_diesel_mt_with_bed_ice",
+          "generation_id": "toyota.hilux_champ.champ",
+          "name": "LWB 2.4 Diesel MT With Bed",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:285"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.hilux_champ.champ.trim.lwb_2_4_diesel_at_with_bed_ice",
+          "generation_id": "toyota.hilux_champ.champ",
+          "name": "LWB 2.4 Diesel AT With Bed",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:285"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.hilux_champ.champ.trim.swb_2_4_diesel_at_attractive_package_ice",
+          "generation_id": "toyota.hilux_champ.champ",
+          "name": "SWB 2.4 Diesel AT Attractive Package",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2393,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 2,
+          "length_mm": 4970,
+          "width_mm": 1785,
+          "height_mm": 1735,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:285"
+            ],
+            "eco": [
+              "5e497481-f963-442c-acf2-61ebe010a561"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/toyota.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d0785a67085d7baacfce210b:catalog",
+    "revision_id": "d0785a67085d7baacfce210b",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "toyota.hilux_champ",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:14+00:00",
+    "payload": {
+      "brand": {
+        "id": "toyota",
+        "name_en": "Toyota",
+        "name_th": "โตโยต้า",
+        "brand_segment": "MASS",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "โตโยต้า",
+          "toyota motor thailand",
+          "TMT"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "toyota.hilux_champ",
+        "brand_id": "toyota",
+        "name_en": "Hilux Champ",
+        "name_th": "ไฮลักซ์ แชมป์",
+        "nameplate": "Hilux",
+        "body_type": "PICKUP",
+        "cab_type": "SINGLE_SMART",
+        "registration_type": "RY3",
+        "market_scope": "CORE",
+        "aliases": [
+          "champ",
+          "hilux champ",
+          "แชมป์"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "toyota.hilux_champ.champ",
+          "model_id": "toyota.hilux_champ",
+          "code": "CHAMP",
+          "segment": "F",
+          "seats": 2,
+          "launched": "2023-11-22",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "toyota.hilux_champ.champ.2_0l_ice",
+          "generation_id": "toyota.hilux_champ.champ",
+          "name": "2.0L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "RWD",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "price_thb": 459000,
+          "price_min_thb": 459000,
+          "price_max_thb": 459000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.0"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "toyota.hilux_champ.champ.2_4l_ice",
+          "generation_id": "toyota.hilux_champ.champ",
+          "name": "2.4L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "RWD",
+          "engine_cc": 2393,
+          "battery_kwh": null,
+          "price_thb": 577000,
+          "price_min_thb": 577000,
+          "price_max_thb": 577000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.4"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "toyota.hilux_champ.champ.trim.swb_2_0_petrol_mt_without_bed_ice",
+          "generation_id": "toyota.hilux_champ.champ",
+          "name": "SWB 2.0 Petrol MT Without Bed",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:285"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.hilux_champ.champ.trim.swb_2_7_petrol_at_c_cab_with_bed_ice",
+          "generation_id": "toyota.hilux_champ.champ",
+          "name": "SWB 2.7 Petrol AT C-Cab With Bed",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:285"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.hilux_champ.champ.trim.lwb_2_4_diesel_mt_without_bed_ice",
+          "generation_id": "toyota.hilux_champ.champ",
+          "name": "LWB 2.4 Diesel MT Without Bed",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:285"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.hilux_champ.champ.trim.lwb_2_4_diesel_mt_with_bed_ice",
+          "generation_id": "toyota.hilux_champ.champ",
+          "name": "LWB 2.4 Diesel MT With Bed",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:285"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.hilux_champ.champ.trim.lwb_2_4_diesel_at_with_bed_ice",
+          "generation_id": "toyota.hilux_champ.champ",
+          "name": "LWB 2.4 Diesel AT With Bed",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:285"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.hilux_champ.champ.trim.swb_2_4_diesel_at_attractive_package_ice",
+          "generation_id": "toyota.hilux_champ.champ",
+          "name": "SWB 2.4 Diesel AT Attractive Package",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2393,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 2,
+          "length_mm": 4970,
+          "width_mm": 1785,
+          "height_mm": 1735,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:285"
+            ],
+            "eco": [
+              "5e497481-f963-442c-acf2-61ebe010a561"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,272 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d2c626746e604725f2be8a73",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:287",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "land_rover.range_rover_velar",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:04:05+00:00",
+    "before_hash": "6902b9de2c48dd263482b72df95a14e4c5407084ee39c751070395873ed25f67",
+    "after_hash": "6342552a56717c96a8fef184ec68419aae715130120904b72daa1e196fd59dc2",
+    "before": {
+      "id": "range_rover_velar",
+      "name_en": "Range Rover Velar",
+      "name_th": "",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "NICHE",
+      "aliases": [
+        "range rover velar",
+        "velar"
+      ],
+      "incomplete": true,
+      "notes": "Added because DLT Range Rover Velar labels were previously swallowed by the generic Range Rover alias. Specs deliberately left incomplete; generic fact-level powertrain is owner-reviewed MIXED.",
+      "generations": [
+        {
+          "code": "unresearched",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": null,
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec incomplete; powertrain handled at fact level",
+              "powertrain": "UNKNOWN",
+              "drivetrain": "UNKNOWN",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "UNKNOWN",
+              "origin_country": "UNKNOWN",
+              "price_note": "spec incomplete; owner-reviewed fact-level powertrain",
+              "aliases": [],
+              "incomplete": true
+            }
+          ],
+          "trims": []
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "land_rover",
+        "name_en": "Land Rover",
+        "name_th": "แลนด์โรเวอร์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "JLR",
+        "brand_origin": "GB",
+        "trim_detail": false,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "land_rover.range_rover_velar",
+        "brand_id": "land_rover",
+        "name_en": "Range Rover Velar",
+        "name_th": "",
+        "nameplate": "Range Rover Velar",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "range rover velar",
+          "velar"
+        ],
+        "notes": "Added because DLT Range Rover Velar labels were previously swallowed by the generic Range Rover alias. Specs deliberately left incomplete; generic fact-level powertrain is owner-reviewed MIXED.",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "land_rover.range_rover_velar.unresearched",
+          "model_id": "land_rover.range_rover_velar",
+          "code": "unresearched",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": null,
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "land_rover.range_rover_velar.unresearched.spec_incomplete_powertrain_handled_at_fact_level",
+          "generation_id": "land_rover.range_rover_velar.unresearched",
+          "name": "spec incomplete; powertrain handled at fact level",
+          "powertrain": "UNKNOWN",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "UNKNOWN",
+          "origin_country": "UNKNOWN",
+          "price_note": "spec incomplete; owner-reviewed fact-level powertrain",
+          "aliases": [],
+          "incomplete": true,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "land_rover.range_rover_velar.unresearched.trim.2_0_litre_ingenium_diesel_r_dynamic_ice",
+          "generation_id": "land_rover.range_rover_velar.unresearched",
+          "name": "2.0 Litre Ingenium Diesel R-Dynamic",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1999,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4797,
+          "width_mm": 2041,
+          "height_mm": 1685,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "2a48ca76776243a7935b5f81ee7c20bc"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/land_rover.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d2c626746e604725f2be8a73:catalog",
+    "revision_id": "d2c626746e604725f2be8a73",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "land_rover.range_rover_velar",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:04:05+00:00",
+    "payload": {
+      "brand": {
+        "id": "land_rover",
+        "name_en": "Land Rover",
+        "name_th": "แลนด์โรเวอร์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "JLR",
+        "brand_origin": "GB",
+        "trim_detail": false,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "land_rover.range_rover_velar",
+        "brand_id": "land_rover",
+        "name_en": "Range Rover Velar",
+        "name_th": "",
+        "nameplate": "Range Rover Velar",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "range rover velar",
+          "velar"
+        ],
+        "notes": "Added because DLT Range Rover Velar labels were previously swallowed by the generic Range Rover alias. Specs deliberately left incomplete; generic fact-level powertrain is owner-reviewed MIXED.",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "land_rover.range_rover_velar.unresearched",
+          "model_id": "land_rover.range_rover_velar",
+          "code": "unresearched",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": null,
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "land_rover.range_rover_velar.unresearched.spec_incomplete_powertrain_handled_at_fact_level",
+          "generation_id": "land_rover.range_rover_velar.unresearched",
+          "name": "spec incomplete; powertrain handled at fact level",
+          "powertrain": "UNKNOWN",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "UNKNOWN",
+          "origin_country": "UNKNOWN",
+          "price_note": "spec incomplete; owner-reviewed fact-level powertrain",
+          "aliases": [],
+          "incomplete": true,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "land_rover.range_rover_velar.unresearched.trim.2_0_litre_ingenium_diesel_r_dynamic_ice",
+          "generation_id": "land_rover.range_rover_velar.unresearched",
+          "name": "2.0 Litre Ingenium Diesel R-Dynamic",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1999,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4797,
+          "width_mm": 2041,
+          "height_mm": 1685,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "2a48ca76776243a7935b5f81ee7c20bc"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

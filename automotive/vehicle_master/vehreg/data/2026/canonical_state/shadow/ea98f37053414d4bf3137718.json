@@ -1,0 +1,315 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ea98f37053414d4bf3137718",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:43",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "deepal.deepal_s05",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:03+00:00",
+    "before_hash": "b2552159700a9cdfdcd6c04461e2542796f33ef03ffd63c9bed198269163c032",
+    "after_hash": "423f47f3d7d531a359f26eb542243a3accb054a4147aed5913ad330c2a1bdb83",
+    "before": {
+      "id": "deepal_s05",
+      "name_en": "Deepal S05",
+      "name_th": "ดีพัล เอส05",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "s05"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2025-06-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "51 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "RWD",
+              "engine_cc": null,
+              "battery_kwh": 51.5,
+              "price_thb": 799000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "aliases": []
+            },
+            {
+              "name": "1.5L REEV",
+              "powertrain": "REEV",
+              "drivetrain": "RWD",
+              "engine_cc": 1500,
+              "battery_kwh": 28.4,
+              "price_thb": 899000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "deepal",
+        "name_en": "Deepal",
+        "name_th": "ดีพัล",
+        "brand_segment": "MASS",
+        "oem_group": "Changan",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "deepal.deepal_s05",
+        "brand_id": "deepal",
+        "name_en": "Deepal S05",
+        "name_th": "ดีพัล เอส05",
+        "nameplate": "Deepal S05",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "s05"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "deepal.deepal_s05.gen1",
+          "model_id": "deepal.deepal_s05",
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2025-06-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "deepal.deepal_s05.gen1.51_kwh_bev",
+          "generation_id": "deepal.deepal_s05.gen1",
+          "name": "51 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 51.5,
+          "price_thb": 799000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "deepal.deepal_s05.gen1.1_5l_reev",
+          "generation_id": "deepal.deepal_s05.gen1",
+          "name": "1.5L REEV",
+          "powertrain": "REEV",
+          "drivetrain": "RWD",
+          "engine_cc": 1500,
+          "battery_kwh": 28.4,
+          "price_thb": 899000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "deepal.deepal_s05.gen1.trim.reev_max_reev",
+          "generation_id": "deepal.deepal_s05.gen1",
+          "name": "REEV MAX",
+          "powertrain": "REEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1497,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4620,
+          "width_mm": 1900,
+          "height_mm": 1600,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "8c7ac610-7ae7-45a4-980e-aea86d46784b"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/deepal.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ea98f37053414d4bf3137718:catalog",
+    "revision_id": "ea98f37053414d4bf3137718",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "deepal.deepal_s05",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:03+00:00",
+    "payload": {
+      "brand": {
+        "id": "deepal",
+        "name_en": "Deepal",
+        "name_th": "ดีพัล",
+        "brand_segment": "MASS",
+        "oem_group": "Changan",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "deepal.deepal_s05",
+        "brand_id": "deepal",
+        "name_en": "Deepal S05",
+        "name_th": "ดีพัล เอส05",
+        "nameplate": "Deepal S05",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "s05"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "deepal.deepal_s05.gen1",
+          "model_id": "deepal.deepal_s05",
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2025-06-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "deepal.deepal_s05.gen1.51_kwh_bev",
+          "generation_id": "deepal.deepal_s05.gen1",
+          "name": "51 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 51.5,
+          "price_thb": 799000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "deepal.deepal_s05.gen1.1_5l_reev",
+          "generation_id": "deepal.deepal_s05.gen1",
+          "name": "1.5L REEV",
+          "powertrain": "REEV",
+          "drivetrain": "RWD",
+          "engine_cc": 1500,
+          "battery_kwh": 28.4,
+          "price_thb": 899000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "deepal.deepal_s05.gen1.trim.reev_max_reev",
+          "generation_id": "deepal.deepal_s05.gen1",
+          "name": "REEV MAX",
+          "powertrain": "REEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1497,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4620,
+          "width_mm": 1900,
+          "height_mm": 1600,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "8c7ac610-7ae7-45a4-980e-aea86d46784b"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

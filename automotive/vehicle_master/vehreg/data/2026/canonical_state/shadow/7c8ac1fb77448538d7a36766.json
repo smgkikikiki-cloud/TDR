@@ -1,0 +1,269 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7c8ac1fb77448538d7a36766",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:87",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "volvo.ex40",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:07+00:00",
+    "before_hash": "4c036a0a9ef185f37d9992c42eee4a21c1fad7a3d23844aa7b220469ea8cdffc",
+    "after_hash": "c2cf6876e361f5fea15534c99341216c110d90e5a3d40d37cc19b7ba84b02f33",
+    "before": {
+      "id": "ex40",
+      "name_en": "EX40",
+      "name_th": "อีเอ็กซ์40",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "EX40"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2024-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "BEV",
+              "drivetrain": "RWD",
+              "engine_cc": null,
+              "battery_kwh": 78.0,
+              "price_thb": 2190000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "volvo",
+        "name_en": "Volvo",
+        "name_th": "วอลโว่",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Geely",
+        "brand_origin": "SE",
+        "trim_detail": false,
+        "aliases": [
+          "วอลโว่"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "volvo.ex40",
+        "brand_id": "volvo",
+        "name_en": "EX40",
+        "name_th": "อีเอ็กซ์40",
+        "nameplate": "EX40",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "EX40"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "volvo.ex40.gen1",
+          "model_id": "volvo.ex40",
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2024-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "volvo.ex40.gen1.spec",
+          "generation_id": "volvo.ex40.gen1",
+          "name": "spec",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 78.0,
+          "price_thb": 2190000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "volvo.ex40.gen1.trim.single_ultra_bev",
+          "generation_id": "volvo.ex40.gen1",
+          "name": "Single Motor Ultra",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4440,
+          "width_mm": 1863,
+          "height_mm": 1647,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R19",
+          "tire_rear": "255/45R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "039d37fd-d95d-458a-957e-b78cbf759bc4"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/volvo.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7c8ac1fb77448538d7a36766:catalog",
+    "revision_id": "7c8ac1fb77448538d7a36766",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "volvo.ex40",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:07+00:00",
+    "payload": {
+      "brand": {
+        "id": "volvo",
+        "name_en": "Volvo",
+        "name_th": "วอลโว่",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Geely",
+        "brand_origin": "SE",
+        "trim_detail": false,
+        "aliases": [
+          "วอลโว่"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "volvo.ex40",
+        "brand_id": "volvo",
+        "name_en": "EX40",
+        "name_th": "อีเอ็กซ์40",
+        "nameplate": "EX40",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "EX40"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "volvo.ex40.gen1",
+          "model_id": "volvo.ex40",
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2024-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "volvo.ex40.gen1.spec",
+          "generation_id": "volvo.ex40.gen1",
+          "name": "spec",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 78.0,
+          "price_thb": 2190000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "volvo.ex40.gen1.trim.single_ultra_bev",
+          "generation_id": "volvo.ex40.gen1",
+          "name": "Single Motor Ultra",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4440,
+          "width_mm": 1863,
+          "height_mm": 1647,
+          "wheelbase_mm": null,
+          "tire_front": "235/50R19",
+          "tire_rear": "255/45R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "039d37fd-d95d-458a-957e-b78cbf759bc4"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

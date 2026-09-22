@@ -1,0 +1,1808 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b008d6b1d454bc64ae3e146f",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:134",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "nissan.kicks",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:49+00:00",
+    "before_hash": "385f9923cc5397307a430be1682fcbcdb1844efc74219cc52e5b094273dfd4b7",
+    "after_hash": "6beba7c693662dd402e2b0f640449a57029691f9f75a74cdbd4e4a58e0c8e955",
+    "before": {
+      "id": "kicks",
+      "name_en": "Kicks e-Power",
+      "name_th": "คิกส์ อี-พาวเวอร์",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "kicks",
+        "คิกส์",
+        "KICKS e-POWER"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "P15",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2020-05-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.2L REEV",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "engine_cc": 1198,
+              "aliases": [
+                "e-Power VL"
+              ],
+              "overrides": {},
+              "price_thb": 1029000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1029000,
+              "price_max_thb": 1029000
+            }
+          ],
+          "trims": [
+            {
+              "id": "70th_anniversary",
+              "name": "70th ANNIVERSARY",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "35779aaf-5292-4aa4-905e-b922bb39d481"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4290,
+              "width_mm": 1760,
+              "height_mm": 1610,
+              "tire_front": "205/55R17",
+              "tire_rear": "205/55R17"
+            },
+            {
+              "id": "95kw_e",
+              "name": "95kW E",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "c86c72a776bc48e48a41a1dfccef6368"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4290,
+              "width_mm": 1760,
+              "height_mm": 1615,
+              "tire_front": "205/55R17",
+              "tire_rear": "205/55R17"
+            },
+            {
+              "id": "95kw_s",
+              "name": "95kW S",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "c06461e5c72945d48271f14bbf6ad07b"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4290,
+              "width_mm": 1760,
+              "height_mm": 1615,
+              "tire_front": "205/55R17",
+              "tire_rear": "205/55R17"
+            },
+            {
+              "id": "95kw_v",
+              "name": "95kW V",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "3d01f6b0b6a14be3b1b2c1c557fb1a04"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4290,
+              "width_mm": 1760,
+              "height_mm": 1615,
+              "tire_front": "205/55R17",
+              "tire_rear": "205/55R17"
+            },
+            {
+              "id": "95kw_vl",
+              "name": "95kW VL",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "6972b96319d943bfbacee09fd9e53376"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4290,
+              "width_mm": 1760,
+              "height_mm": 1615,
+              "tire_front": "205/55R17",
+              "tire_rear": "205/55R17"
+            },
+            {
+              "id": "95kw_vl_2_tone_int",
+              "name": "95kW VL (2-tone Int)",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "c0166fad51ed483da16075d5fca70bca"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4290,
+              "width_mm": 1760,
+              "height_mm": 1615,
+              "tire_front": "205/55R17",
+              "tire_rear": "205/55R17"
+            },
+            {
+              "id": "autech",
+              "name": "AUTECH",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "275aaca6-24b9-4959-912f-ec3b9ac79aa5"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4330,
+              "width_mm": 1760,
+              "height_mm": 1610,
+              "tire_front": "205/55R17",
+              "tire_rear": "205/55R17"
+            },
+            {
+              "id": "autech_wrl",
+              "name": "AUTECH WRL",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "a519d537-5085-43fa-b60f-78a6a96f90ac"
+                ],
+                "eco": [
+                  "a519d537-5085-43fa-b60f-78a6a96f90ac"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4330,
+              "width_mm": 1760,
+              "height_mm": 1610,
+              "tire_front": "205/55R17",
+              "tire_rear": "205/55R17",
+              "engine_cc": 1198,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "id": "e",
+              "name": "E",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "4228a01a-1cf9-42b7-b6ca-40bd709bb160"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4290,
+              "width_mm": 1760,
+              "height_mm": 1610,
+              "tire_front": "205/55R17",
+              "tire_rear": "205/55R17"
+            },
+            {
+              "id": "star_edition",
+              "name": "STAR EDITION",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "a6ecd7da-5c20-46d9-a866-dadf6b134977"
+                ],
+                "eco": [
+                  "a6ecd7da-5c20-46d9-a866-dadf6b134977"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4290,
+              "width_mm": 1760,
+              "height_mm": 1610,
+              "tire_front": "205/55R17",
+              "tire_rear": "205/55R17",
+              "engine_cc": 1198,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "id": "sv",
+              "name": "SV",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "fd2c6470-cfab-4f18-81a4-9eb265a089da"
+                ],
+                "eco": [
+                  "fd2c6470-cfab-4f18-81a4-9eb265a089da"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4300,
+              "width_mm": 1760,
+              "height_mm": 1610,
+              "tire_front": "205/55R17",
+              "tire_rear": "205/55R17",
+              "engine_cc": 1198,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "id": "sv_moonstone",
+              "name": "SV (Moonstone)",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "9846d2b3-4b79-46fe-a2a0-85b8e5509512"
+                ],
+                "eco": [
+                  "9846d2b3-4b79-46fe-a2a0-85b8e5509512"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4300,
+              "width_mm": 1760,
+              "height_mm": 1610,
+              "tire_front": "205/55R17",
+              "tire_rear": "205/55R17",
+              "engine_cc": 1198,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "id": "v",
+              "name": "V",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "bee958ee-6405-47e8-a9be-8484cca2f09a"
+                ],
+                "eco": [
+                  "bee958ee-6405-47e8-a9be-8484cca2f09a"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4300,
+              "width_mm": 1760,
+              "height_mm": 1610,
+              "tire_front": "205/55R17",
+              "tire_rear": "205/55R17",
+              "engine_cc": 1198,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "id": "vl",
+              "name": "VL",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "2f5798e4-01af-4fae-9a64-c9d58fd638e2"
+                ],
+                "eco": [
+                  "2f5798e4-01af-4fae-9a64-c9d58fd638e2"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4300,
+              "width_mm": 1760,
+              "height_mm": 1610,
+              "tire_front": "205/55R17",
+              "tire_rear": "205/55R17",
+              "engine_cc": 1198,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "id": "vl_nissanconnect_services",
+              "name": "VL (NissanConnect Services)",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "b5e2c8b7-41a0-4152-9e5d-3bd24262d9c6"
+                ],
+                "eco": [
+                  "b5e2c8b7-41a0-4152-9e5d-3bd24262d9c6"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4300,
+              "width_mm": 1760,
+              "height_mm": 1610,
+              "tire_front": "205/55R17",
+              "tire_rear": "205/55R17",
+              "engine_cc": 1198,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "id": "vl_wrl",
+              "name": "VL WRL",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "beb1d805-4533-4ce1-ba87-a911e36e7436"
+                ],
+                "eco": [
+                  "beb1d805-4533-4ce1-ba87-a911e36e7436"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4290,
+              "width_mm": 1760,
+              "height_mm": 1610,
+              "tire_front": "205/55R17",
+              "tire_rear": "205/55R17",
+              "engine_cc": 1198,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "name": "e-Power E",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:234"
+                ]
+              },
+              "id": "e_power_e_hev"
+            },
+            {
+              "name": "e-Power V",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:234"
+                ]
+              },
+              "id": "e_power_v_hev"
+            },
+            {
+              "name": "e-Power VL",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:234"
+                ]
+              },
+              "id": "e_power_vl_hev"
+            },
+            {
+              "name": "e-Power AUTECH",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:234"
+                ]
+              },
+              "id": "e_power_autech_hev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "nissan",
+        "name_en": "Nissan",
+        "name_th": "นิสสัน",
+        "brand_segment": "MASS",
+        "oem_group": "Nissan",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "นิสสัน"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "nissan.kicks",
+        "brand_id": "nissan",
+        "name_en": "Kicks e-Power",
+        "name_th": "คิกส์ อี-พาวเวอร์",
+        "nameplate": "Kicks e-Power",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "kicks",
+          "คิกส์",
+          "KICKS e-POWER"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "nissan.kicks.p15",
+          "model_id": "nissan.kicks",
+          "code": "P15",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2020-05-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "nissan.kicks.p15.1_2l_reev",
+          "generation_id": "nissan.kicks.p15",
+          "name": "1.2L REEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1198,
+          "battery_kwh": null,
+          "price_thb": 1029000,
+          "price_min_thb": 1029000,
+          "price_max_thb": 1029000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "e-Power VL"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "nissan.kicks.p15.trim.70th_anniversary",
+          "generation_id": "nissan.kicks.p15",
+          "name": "70th ANNIVERSARY",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4290,
+          "width_mm": 1760,
+          "height_mm": 1610,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "35779aaf-5292-4aa4-905e-b922bb39d481"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.95kw_e",
+          "generation_id": "nissan.kicks.p15",
+          "name": "95kW E",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4290,
+          "width_mm": 1760,
+          "height_mm": 1615,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "c86c72a776bc48e48a41a1dfccef6368"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.95kw_s",
+          "generation_id": "nissan.kicks.p15",
+          "name": "95kW S",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4290,
+          "width_mm": 1760,
+          "height_mm": 1615,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "c06461e5c72945d48271f14bbf6ad07b"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.95kw_v",
+          "generation_id": "nissan.kicks.p15",
+          "name": "95kW V",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4290,
+          "width_mm": 1760,
+          "height_mm": 1615,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "3d01f6b0b6a14be3b1b2c1c557fb1a04"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.95kw_vl",
+          "generation_id": "nissan.kicks.p15",
+          "name": "95kW VL",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4290,
+          "width_mm": 1760,
+          "height_mm": 1615,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "6972b96319d943bfbacee09fd9e53376"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.95kw_vl_2_tone_int",
+          "generation_id": "nissan.kicks.p15",
+          "name": "95kW VL (2-tone Int)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4290,
+          "width_mm": 1760,
+          "height_mm": 1615,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "c0166fad51ed483da16075d5fca70bca"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.autech",
+          "generation_id": "nissan.kicks.p15",
+          "name": "AUTECH",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1198,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4330,
+          "width_mm": 1760,
+          "height_mm": 1610,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "275aaca6-24b9-4959-912f-ec3b9ac79aa5"
+            ],
+            "eco": [
+              "275aaca6-24b9-4959-912f-ec3b9ac79aa5"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.autech_wrl",
+          "generation_id": "nissan.kicks.p15",
+          "name": "AUTECH WRL",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1198,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4330,
+          "width_mm": 1760,
+          "height_mm": 1610,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "a519d537-5085-43fa-b60f-78a6a96f90ac"
+            ],
+            "eco": [
+              "a519d537-5085-43fa-b60f-78a6a96f90ac"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.e",
+          "generation_id": "nissan.kicks.p15",
+          "name": "E",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4290,
+          "width_mm": 1760,
+          "height_mm": 1610,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "4228a01a-1cf9-42b7-b6ca-40bd709bb160"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.star_edition",
+          "generation_id": "nissan.kicks.p15",
+          "name": "STAR EDITION",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1198,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4290,
+          "width_mm": 1760,
+          "height_mm": 1610,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "a6ecd7da-5c20-46d9-a866-dadf6b134977"
+            ],
+            "eco": [
+              "a6ecd7da-5c20-46d9-a866-dadf6b134977"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.sv",
+          "generation_id": "nissan.kicks.p15",
+          "name": "SV",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1198,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4300,
+          "width_mm": 1760,
+          "height_mm": 1610,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "fd2c6470-cfab-4f18-81a4-9eb265a089da"
+            ],
+            "eco": [
+              "fd2c6470-cfab-4f18-81a4-9eb265a089da"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.sv_moonstone",
+          "generation_id": "nissan.kicks.p15",
+          "name": "SV (Moonstone)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1198,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4300,
+          "width_mm": 1760,
+          "height_mm": 1610,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "9846d2b3-4b79-46fe-a2a0-85b8e5509512"
+            ],
+            "eco": [
+              "9846d2b3-4b79-46fe-a2a0-85b8e5509512"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.v",
+          "generation_id": "nissan.kicks.p15",
+          "name": "V",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1198,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4300,
+          "width_mm": 1760,
+          "height_mm": 1610,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "bee958ee-6405-47e8-a9be-8484cca2f09a"
+            ],
+            "eco": [
+              "bee958ee-6405-47e8-a9be-8484cca2f09a"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.vl",
+          "generation_id": "nissan.kicks.p15",
+          "name": "VL",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1198,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4300,
+          "width_mm": 1760,
+          "height_mm": 1610,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "2f5798e4-01af-4fae-9a64-c9d58fd638e2"
+            ],
+            "eco": [
+              "2f5798e4-01af-4fae-9a64-c9d58fd638e2"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.vl_nissanconnect_services",
+          "generation_id": "nissan.kicks.p15",
+          "name": "VL (NissanConnect Services)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1198,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4300,
+          "width_mm": 1760,
+          "height_mm": 1610,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "b5e2c8b7-41a0-4152-9e5d-3bd24262d9c6"
+            ],
+            "eco": [
+              "b5e2c8b7-41a0-4152-9e5d-3bd24262d9c6"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.vl_wrl",
+          "generation_id": "nissan.kicks.p15",
+          "name": "VL WRL",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1198,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4290,
+          "width_mm": 1760,
+          "height_mm": 1610,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "beb1d805-4533-4ce1-ba87-a911e36e7436"
+            ],
+            "eco": [
+              "beb1d805-4533-4ce1-ba87-a911e36e7436"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.e_power_e_hev",
+          "generation_id": "nissan.kicks.p15",
+          "name": "e-Power E",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:234"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "nissan.kicks.p15.trim.e_power_v_hev",
+          "generation_id": "nissan.kicks.p15",
+          "name": "e-Power V",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:234"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "nissan.kicks.p15.trim.e_power_vl_hev",
+          "generation_id": "nissan.kicks.p15",
+          "name": "e-Power VL",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:234"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "nissan.kicks.p15.trim.e_power_autech_hev",
+          "generation_id": "nissan.kicks.p15",
+          "name": "e-Power AUTECH",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:234"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/nissan.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b008d6b1d454bc64ae3e146f:catalog",
+    "revision_id": "b008d6b1d454bc64ae3e146f",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "nissan.kicks",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:49+00:00",
+    "payload": {
+      "brand": {
+        "id": "nissan",
+        "name_en": "Nissan",
+        "name_th": "นิสสัน",
+        "brand_segment": "MASS",
+        "oem_group": "Nissan",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "นิสสัน"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "nissan.kicks",
+        "brand_id": "nissan",
+        "name_en": "Kicks e-Power",
+        "name_th": "คิกส์ อี-พาวเวอร์",
+        "nameplate": "Kicks e-Power",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "kicks",
+          "คิกส์",
+          "KICKS e-POWER"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "nissan.kicks.p15",
+          "model_id": "nissan.kicks",
+          "code": "P15",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2020-05-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "nissan.kicks.p15.1_2l_reev",
+          "generation_id": "nissan.kicks.p15",
+          "name": "1.2L REEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1198,
+          "battery_kwh": null,
+          "price_thb": 1029000,
+          "price_min_thb": 1029000,
+          "price_max_thb": 1029000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "e-Power VL"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "nissan.kicks.p15.trim.70th_anniversary",
+          "generation_id": "nissan.kicks.p15",
+          "name": "70th ANNIVERSARY",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4290,
+          "width_mm": 1760,
+          "height_mm": 1610,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "35779aaf-5292-4aa4-905e-b922bb39d481"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.95kw_e",
+          "generation_id": "nissan.kicks.p15",
+          "name": "95kW E",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4290,
+          "width_mm": 1760,
+          "height_mm": 1615,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "c86c72a776bc48e48a41a1dfccef6368"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.95kw_s",
+          "generation_id": "nissan.kicks.p15",
+          "name": "95kW S",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4290,
+          "width_mm": 1760,
+          "height_mm": 1615,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "c06461e5c72945d48271f14bbf6ad07b"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.95kw_v",
+          "generation_id": "nissan.kicks.p15",
+          "name": "95kW V",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4290,
+          "width_mm": 1760,
+          "height_mm": 1615,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "3d01f6b0b6a14be3b1b2c1c557fb1a04"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.95kw_vl",
+          "generation_id": "nissan.kicks.p15",
+          "name": "95kW VL",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4290,
+          "width_mm": 1760,
+          "height_mm": 1615,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "6972b96319d943bfbacee09fd9e53376"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.95kw_vl_2_tone_int",
+          "generation_id": "nissan.kicks.p15",
+          "name": "95kW VL (2-tone Int)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4290,
+          "width_mm": 1760,
+          "height_mm": 1615,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "c0166fad51ed483da16075d5fca70bca"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.autech",
+          "generation_id": "nissan.kicks.p15",
+          "name": "AUTECH",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1198,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4330,
+          "width_mm": 1760,
+          "height_mm": 1610,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "275aaca6-24b9-4959-912f-ec3b9ac79aa5"
+            ],
+            "eco": [
+              "275aaca6-24b9-4959-912f-ec3b9ac79aa5"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.autech_wrl",
+          "generation_id": "nissan.kicks.p15",
+          "name": "AUTECH WRL",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1198,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4330,
+          "width_mm": 1760,
+          "height_mm": 1610,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "a519d537-5085-43fa-b60f-78a6a96f90ac"
+            ],
+            "eco": [
+              "a519d537-5085-43fa-b60f-78a6a96f90ac"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.e",
+          "generation_id": "nissan.kicks.p15",
+          "name": "E",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4290,
+          "width_mm": 1760,
+          "height_mm": 1610,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "4228a01a-1cf9-42b7-b6ca-40bd709bb160"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.star_edition",
+          "generation_id": "nissan.kicks.p15",
+          "name": "STAR EDITION",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1198,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4290,
+          "width_mm": 1760,
+          "height_mm": 1610,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "a6ecd7da-5c20-46d9-a866-dadf6b134977"
+            ],
+            "eco": [
+              "a6ecd7da-5c20-46d9-a866-dadf6b134977"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.sv",
+          "generation_id": "nissan.kicks.p15",
+          "name": "SV",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1198,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4300,
+          "width_mm": 1760,
+          "height_mm": 1610,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "fd2c6470-cfab-4f18-81a4-9eb265a089da"
+            ],
+            "eco": [
+              "fd2c6470-cfab-4f18-81a4-9eb265a089da"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.sv_moonstone",
+          "generation_id": "nissan.kicks.p15",
+          "name": "SV (Moonstone)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1198,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4300,
+          "width_mm": 1760,
+          "height_mm": 1610,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "9846d2b3-4b79-46fe-a2a0-85b8e5509512"
+            ],
+            "eco": [
+              "9846d2b3-4b79-46fe-a2a0-85b8e5509512"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.v",
+          "generation_id": "nissan.kicks.p15",
+          "name": "V",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1198,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4300,
+          "width_mm": 1760,
+          "height_mm": 1610,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "bee958ee-6405-47e8-a9be-8484cca2f09a"
+            ],
+            "eco": [
+              "bee958ee-6405-47e8-a9be-8484cca2f09a"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.vl",
+          "generation_id": "nissan.kicks.p15",
+          "name": "VL",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1198,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4300,
+          "width_mm": 1760,
+          "height_mm": 1610,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "2f5798e4-01af-4fae-9a64-c9d58fd638e2"
+            ],
+            "eco": [
+              "2f5798e4-01af-4fae-9a64-c9d58fd638e2"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.vl_nissanconnect_services",
+          "generation_id": "nissan.kicks.p15",
+          "name": "VL (NissanConnect Services)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1198,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4300,
+          "width_mm": 1760,
+          "height_mm": 1610,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "b5e2c8b7-41a0-4152-9e5d-3bd24262d9c6"
+            ],
+            "eco": [
+              "b5e2c8b7-41a0-4152-9e5d-3bd24262d9c6"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.vl_wrl",
+          "generation_id": "nissan.kicks.p15",
+          "name": "VL WRL",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1198,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4290,
+          "width_mm": 1760,
+          "height_mm": 1610,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R17",
+          "tire_rear": "205/55R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "beb1d805-4533-4ce1-ba87-a911e36e7436"
+            ],
+            "eco": [
+              "beb1d805-4533-4ce1-ba87-a911e36e7436"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.kicks.p15.trim.e_power_e_hev",
+          "generation_id": "nissan.kicks.p15",
+          "name": "e-Power E",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:234"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "nissan.kicks.p15.trim.e_power_v_hev",
+          "generation_id": "nissan.kicks.p15",
+          "name": "e-Power V",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:234"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "nissan.kicks.p15.trim.e_power_vl_hev",
+          "generation_id": "nissan.kicks.p15",
+          "name": "e-Power VL",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:234"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "nissan.kicks.p15.trim.e_power_autech_hev",
+          "generation_id": "nissan.kicks.p15",
+          "name": "e-Power AUTECH",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:234"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,619 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d26a08c18fa29ec9bd39c4cc",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:75",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "changan.nevo_q05",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:06+00:00",
+    "before_hash": "5a6c6fd96cb221344b9d0d22730f901b92979d99f7e5628969a8a9f82afdd4f6",
+    "after_hash": "d52a81aef36a3495e894dacf3e55eb6e863a2fec3f7129a0d418359cf3eba889",
+    "before": {
+      "id": "nevo_q05",
+      "name_en": "Changan Nevo Q05",
+      "name_th": "",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "nevo q05",
+        "nevo"
+      ],
+      "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
+      "generations": [
+        {
+          "code": "NEVO_Q05",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": "2026-07-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "ยังไม่แยกรุ่นย่อย",
+              "powertrain": "UNKNOWN",
+              "drivetrain": "",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "aliases": [],
+              "overrides": {},
+              "price_thb": 669900,
+              "import_type": "",
+              "origin_country": "",
+              "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+              "price_min_thb": 669900,
+              "price_max_thb": 669900
+            }
+          ],
+          "trims": [
+            {
+              "name": "60 Lite",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:062"
+                ]
+              },
+              "id": "60_lite_phev"
+            },
+            {
+              "name": "60 Pro",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:062"
+                ]
+              },
+              "id": "60_pro_phev"
+            },
+            {
+              "name": "125 Air",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:062"
+                ]
+              },
+              "id": "125_air_phev"
+            },
+            {
+              "name": "125 Pro",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:062"
+                ]
+              },
+              "id": "125_pro_phev"
+            },
+            {
+              "name": "125 Max",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:062"
+                ]
+              },
+              "id": "125_max_phev"
+            }
+          ]
+        }
+      ],
+      "incomplete": true
+    },
+    "after": {
+      "brand": {
+        "id": "changan",
+        "name_en": "Changan",
+        "name_th": "ฉางอาน",
+        "brand_segment": "MASS",
+        "oem_group": "Changan",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "ฉางอาน",
+          "ดีพัล"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "changan.nevo_q05",
+        "brand_id": "changan",
+        "name_en": "Changan Nevo Q05",
+        "name_th": "",
+        "nameplate": "Changan Nevo Q05",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "nevo q05",
+          "nevo"
+        ],
+        "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "changan.nevo_q05.nevo_q05",
+          "model_id": "changan.nevo_q05",
+          "code": "NEVO_Q05",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": "2026-07-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "changan.nevo_q05.nevo_q05.ยงไมแยกรนยอย",
+          "generation_id": "changan.nevo_q05.nevo_q05",
+          "name": "ยังไม่แยกรุ่นย่อย",
+          "powertrain": "UNKNOWN",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": 669900,
+          "price_min_thb": 669900,
+          "price_max_thb": 669900,
+          "import_type": "UNKNOWN",
+          "origin_country": "",
+          "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "changan.nevo_q05.nevo_q05.trim.60_lite_phev",
+          "generation_id": "changan.nevo_q05.nevo_q05",
+          "name": "60 Lite",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:062"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "changan.nevo_q05.nevo_q05.trim.60_pro_phev",
+          "generation_id": "changan.nevo_q05.nevo_q05",
+          "name": "60 Pro",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:062"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "changan.nevo_q05.nevo_q05.trim.125_air_phev",
+          "generation_id": "changan.nevo_q05.nevo_q05",
+          "name": "125 Air",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:062"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "changan.nevo_q05.nevo_q05.trim.125_pro_phev",
+          "generation_id": "changan.nevo_q05.nevo_q05",
+          "name": "125 Pro",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:062"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "changan.nevo_q05.nevo_q05.trim.125_max_phev",
+          "generation_id": "changan.nevo_q05.nevo_q05",
+          "name": "125 Max",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:062"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "changan.nevo_q05.nevo_q05.trim.ultra_bev",
+          "generation_id": "changan.nevo_q05.nevo_q05",
+          "name": "ULTRA",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4435,
+          "width_mm": 1855,
+          "height_mm": 1600,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "d9bcd1e3-1016-49a3-96c0-399fab33ab12"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/changan.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d26a08c18fa29ec9bd39c4cc:catalog",
+    "revision_id": "d26a08c18fa29ec9bd39c4cc",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "changan.nevo_q05",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:06+00:00",
+    "payload": {
+      "brand": {
+        "id": "changan",
+        "name_en": "Changan",
+        "name_th": "ฉางอาน",
+        "brand_segment": "MASS",
+        "oem_group": "Changan",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "ฉางอาน",
+          "ดีพัล"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "changan.nevo_q05",
+        "brand_id": "changan",
+        "name_en": "Changan Nevo Q05",
+        "name_th": "",
+        "nameplate": "Changan Nevo Q05",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "nevo q05",
+          "nevo"
+        ],
+        "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "changan.nevo_q05.nevo_q05",
+          "model_id": "changan.nevo_q05",
+          "code": "NEVO_Q05",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": "2026-07-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "changan.nevo_q05.nevo_q05.ยงไมแยกรนยอย",
+          "generation_id": "changan.nevo_q05.nevo_q05",
+          "name": "ยังไม่แยกรุ่นย่อย",
+          "powertrain": "UNKNOWN",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": 669900,
+          "price_min_thb": 669900,
+          "price_max_thb": 669900,
+          "import_type": "UNKNOWN",
+          "origin_country": "",
+          "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "changan.nevo_q05.nevo_q05.trim.60_lite_phev",
+          "generation_id": "changan.nevo_q05.nevo_q05",
+          "name": "60 Lite",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:062"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "changan.nevo_q05.nevo_q05.trim.60_pro_phev",
+          "generation_id": "changan.nevo_q05.nevo_q05",
+          "name": "60 Pro",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:062"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "changan.nevo_q05.nevo_q05.trim.125_air_phev",
+          "generation_id": "changan.nevo_q05.nevo_q05",
+          "name": "125 Air",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:062"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "changan.nevo_q05.nevo_q05.trim.125_pro_phev",
+          "generation_id": "changan.nevo_q05.nevo_q05",
+          "name": "125 Pro",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:062"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "changan.nevo_q05.nevo_q05.trim.125_max_phev",
+          "generation_id": "changan.nevo_q05.nevo_q05",
+          "name": "125 Max",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:062"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "changan.nevo_q05.nevo_q05.trim.ultra_bev",
+          "generation_id": "changan.nevo_q05.nevo_q05",
+          "name": "ULTRA",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4435,
+          "width_mm": 1855,
+          "height_mm": 1600,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "d9bcd1e3-1016-49a3-96c0-399fab33ab12"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,556 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "54ab739a6bb78d0298e051de",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:242",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "audi.etron_gt",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:04:00+00:00",
+    "before_hash": "8c1842a693a758bd42c3b89a8cbaadd4e102029cf7c07c25d425a1226305b426",
+    "after_hash": "e77a8000f5f8c639a61fe9b3721f2dee8a0a21684b798d4ca53d00f3f4ff47ed",
+    "before": {
+      "id": "etron_gt",
+      "name_en": "Audi e-tron GT",
+      "name_th": "ออดี้ อี-ทรอน จีที",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "e-tron GT",
+        "etron GT",
+        "e-tron GT quattro"
+      ],
+      "incomplete": true,
+      "notes": "รถไฟฟ้าตระกูล e-tron แยกเป็นรุ่นของตัวเอง — DLT จดแยก และเดิมมันไปเกาะรุ่นเบนซินชื่อคล้ายกัน สเปกยังไม่ได้ตรวจ",
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "BEV",
+              "drivetrain": "AWD",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "ยังไม่ได้ตรวจราคา",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "e-tron GT quattro",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:016"
+                ]
+              },
+              "id": "e_tron_gt_quattro_bev"
+            },
+            {
+              "name": "e-tron GT quattro Performance",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:016"
+                ]
+              },
+              "id": "e_tron_gt_quattro_performance_bev"
+            },
+            {
+              "name": "RS e-tron GT",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:016"
+                ]
+              },
+              "id": "rs_e_tron_gt_bev"
+            },
+            {
+              "name": "RS",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4989,
+              "width_mm": 1964,
+              "height_mm": 1414,
+              "tire_front": "265/35R21",
+              "tire_rear": "305/30R21",
+              "source_refs": {
+                "eco": [
+                  "ff6fa8c416e946088227524bab37f457"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "audi",
+        "name_en": "Audi",
+        "name_th": "เอาดี้",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Volkswagen Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "เอาดี้"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "audi.etron_gt",
+        "brand_id": "audi",
+        "name_en": "Audi e-tron GT",
+        "name_th": "ออดี้ อี-ทรอน จีที",
+        "nameplate": "Audi e-tron GT",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "e-tron GT",
+          "etron GT",
+          "e-tron GT quattro"
+        ],
+        "notes": "รถไฟฟ้าตระกูล e-tron แยกเป็นรุ่นของตัวเอง — DLT จดแยก และเดิมมันไปเกาะรุ่นเบนซินชื่อคล้ายกัน สเปกยังไม่ได้ตรวจ",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "audi.etron_gt.gen1",
+          "model_id": "audi.etron_gt",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "audi.etron_gt.gen1.spec",
+          "generation_id": "audi.etron_gt.gen1",
+          "name": "spec",
+          "powertrain": "BEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "audi.etron_gt.gen1.trim.e_tron_gt_quattro_bev",
+          "generation_id": "audi.etron_gt.gen1",
+          "name": "e-tron GT quattro",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:016"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.etron_gt.gen1.trim.e_tron_gt_quattro_performance_bev",
+          "generation_id": "audi.etron_gt.gen1",
+          "name": "e-tron GT quattro Performance",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:016"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.etron_gt.gen1.trim.rs_e_tron_gt_bev",
+          "generation_id": "audi.etron_gt.gen1",
+          "name": "RS e-tron GT",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:016"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.etron_gt.gen1.trim.rs_ice",
+          "generation_id": "audi.etron_gt.gen1",
+          "name": "RS",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4989,
+          "width_mm": 1964,
+          "height_mm": 1414,
+          "wheelbase_mm": null,
+          "tire_front": "265/35R21",
+          "tire_rear": "305/30R21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "ff6fa8c416e946088227524bab37f457"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.etron_gt.gen1.trim.e_tron_gt_quattro_ice",
+          "generation_id": "audi.etron_gt.gen1",
+          "name": "e-tron GT quattro",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4989,
+          "width_mm": 1964,
+          "height_mm": 1413,
+          "wheelbase_mm": null,
+          "tire_front": "245/45R20",
+          "tire_rear": "285/40R20",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "cea23dc3fcbe4877a1753948b9edfbfb"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/audi.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "54ab739a6bb78d0298e051de:catalog",
+    "revision_id": "54ab739a6bb78d0298e051de",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "audi.etron_gt",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:04:00+00:00",
+    "payload": {
+      "brand": {
+        "id": "audi",
+        "name_en": "Audi",
+        "name_th": "เอาดี้",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Volkswagen Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "เอาดี้"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "audi.etron_gt",
+        "brand_id": "audi",
+        "name_en": "Audi e-tron GT",
+        "name_th": "ออดี้ อี-ทรอน จีที",
+        "nameplate": "Audi e-tron GT",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "e-tron GT",
+          "etron GT",
+          "e-tron GT quattro"
+        ],
+        "notes": "รถไฟฟ้าตระกูล e-tron แยกเป็นรุ่นของตัวเอง — DLT จดแยก และเดิมมันไปเกาะรุ่นเบนซินชื่อคล้ายกัน สเปกยังไม่ได้ตรวจ",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "audi.etron_gt.gen1",
+          "model_id": "audi.etron_gt",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "audi.etron_gt.gen1.spec",
+          "generation_id": "audi.etron_gt.gen1",
+          "name": "spec",
+          "powertrain": "BEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "audi.etron_gt.gen1.trim.e_tron_gt_quattro_bev",
+          "generation_id": "audi.etron_gt.gen1",
+          "name": "e-tron GT quattro",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:016"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.etron_gt.gen1.trim.e_tron_gt_quattro_performance_bev",
+          "generation_id": "audi.etron_gt.gen1",
+          "name": "e-tron GT quattro Performance",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:016"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.etron_gt.gen1.trim.rs_e_tron_gt_bev",
+          "generation_id": "audi.etron_gt.gen1",
+          "name": "RS e-tron GT",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:016"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.etron_gt.gen1.trim.rs_ice",
+          "generation_id": "audi.etron_gt.gen1",
+          "name": "RS",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4989,
+          "width_mm": 1964,
+          "height_mm": 1414,
+          "wheelbase_mm": null,
+          "tire_front": "265/35R21",
+          "tire_rear": "305/30R21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "ff6fa8c416e946088227524bab37f457"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.etron_gt.gen1.trim.e_tron_gt_quattro_ice",
+          "generation_id": "audi.etron_gt.gen1",
+          "name": "e-tron GT quattro",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4989,
+          "width_mm": 1964,
+          "height_mm": 1413,
+          "wheelbase_mm": null,
+          "tire_front": "245/45R20",
+          "tire_rear": "285/40R20",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "cea23dc3fcbe4877a1753948b9edfbfb"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

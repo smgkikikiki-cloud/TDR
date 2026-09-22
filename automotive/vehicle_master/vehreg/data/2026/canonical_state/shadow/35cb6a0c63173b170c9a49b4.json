@@ -1,0 +1,347 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "35cb6a0c63173b170c9a49b4",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:99",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "gwm.haval_h6",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:08+00:00",
+    "before_hash": "cd9fa75707995f0d762d3b89ad61f23a5b4e849e6699954d40c38e932d17aeae",
+    "after_hash": "78ac95e9bb1991bf9ef82809d465ea82f9e8e1d5ebbfd4026c6030c8ccaed87b",
+    "before": {
+      "id": "haval_h6",
+      "name_en": "Haval H6",
+      "name_th": "ฮาวาล เอช6",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "h6",
+        "haval h6"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "H6HEV",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2021-06-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.5L HEV",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "engine_cc": 1497,
+              "battery_kwh": 1.8,
+              "aliases": [
+                "HEV Ultra"
+              ],
+              "overrides": {},
+              "price_thb": 1199000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1199000,
+              "price_max_thb": 1199000
+            },
+            {
+              "name": "1.5L PHEV",
+              "powertrain": "PHEV",
+              "drivetrain": "FWD",
+              "engine_cc": 1497,
+              "battery_kwh": 34.0,
+              "aliases": [
+                "PHEV Ultra"
+              ],
+              "overrides": {},
+              "price_thb": 1449000,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1449000,
+              "price_max_thb": 1449000
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "gwm",
+        "name_en": "GWM",
+        "name_th": "จีดับเบิลยูเอ็ม",
+        "brand_segment": "MASS",
+        "oem_group": "Great Wall Motor",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "great wall",
+          "great wall motor",
+          "เกรทวอลล์",
+          "haval",
+          "ora",
+          "tank"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "gwm.haval_h6",
+        "brand_id": "gwm",
+        "name_en": "Haval H6",
+        "name_th": "ฮาวาล เอช6",
+        "nameplate": "Haval H6",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "h6",
+          "haval h6"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "gwm.haval_h6.h6hev",
+          "model_id": "gwm.haval_h6",
+          "code": "H6HEV",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2021-06-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "gwm.haval_h6.h6hev.1_5l_hev",
+          "generation_id": "gwm.haval_h6.h6hev",
+          "name": "1.5L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1497,
+          "battery_kwh": 1.8,
+          "price_thb": 1199000,
+          "price_min_thb": 1199000,
+          "price_max_thb": 1199000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "HEV Ultra"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "gwm.haval_h6.h6hev.1_5l_phev",
+          "generation_id": "gwm.haval_h6.h6hev",
+          "name": "1.5L PHEV",
+          "powertrain": "PHEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1497,
+          "battery_kwh": 34.0,
+          "price_thb": 1449000,
+          "price_min_thb": 1449000,
+          "price_max_thb": 1449000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "PHEV Ultra"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "gwm.haval_h6.h6hev.trim.phev_ultra_phev",
+          "generation_id": "gwm.haval_h6.h6hev",
+          "name": "PHEV ULTRA",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1499,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4703,
+          "width_mm": 1886,
+          "height_mm": 1730,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "d2200be8-c078-4d83-990b-007c8db511af"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/gwm.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "35cb6a0c63173b170c9a49b4:catalog",
+    "revision_id": "35cb6a0c63173b170c9a49b4",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "gwm.haval_h6",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:08+00:00",
+    "payload": {
+      "brand": {
+        "id": "gwm",
+        "name_en": "GWM",
+        "name_th": "จีดับเบิลยูเอ็ม",
+        "brand_segment": "MASS",
+        "oem_group": "Great Wall Motor",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "great wall",
+          "great wall motor",
+          "เกรทวอลล์",
+          "haval",
+          "ora",
+          "tank"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "gwm.haval_h6",
+        "brand_id": "gwm",
+        "name_en": "Haval H6",
+        "name_th": "ฮาวาล เอช6",
+        "nameplate": "Haval H6",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "h6",
+          "haval h6"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "gwm.haval_h6.h6hev",
+          "model_id": "gwm.haval_h6",
+          "code": "H6HEV",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2021-06-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "gwm.haval_h6.h6hev.1_5l_hev",
+          "generation_id": "gwm.haval_h6.h6hev",
+          "name": "1.5L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1497,
+          "battery_kwh": 1.8,
+          "price_thb": 1199000,
+          "price_min_thb": 1199000,
+          "price_max_thb": 1199000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "HEV Ultra"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "gwm.haval_h6.h6hev.1_5l_phev",
+          "generation_id": "gwm.haval_h6.h6hev",
+          "name": "1.5L PHEV",
+          "powertrain": "PHEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1497,
+          "battery_kwh": 34.0,
+          "price_thb": 1449000,
+          "price_min_thb": 1449000,
+          "price_max_thb": 1449000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "PHEV Ultra"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "gwm.haval_h6.h6hev.trim.phev_ultra_phev",
+          "generation_id": "gwm.haval_h6.h6hev",
+          "name": "PHEV ULTRA",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1499,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4703,
+          "width_mm": 1886,
+          "height_mm": 1730,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "d2200be8-c078-4d83-990b-007c8db511af"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

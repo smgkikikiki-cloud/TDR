@@ -1,0 +1,434 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "276a0e6db3583fa99fec18d7",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:271",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mercedes_benz.s_class",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:04:03+00:00",
+    "before_hash": "487d3d7dc7121dfc1d1d3c600a4489387cf7867be981baa8b630b1ae43d31892",
+    "after_hash": "369ba55d5a10b3e66b87f7ca701d0a37151ee70dd482bacc31715018051e478a",
+    "before": {
+      "id": "s_class",
+      "name_en": "S-Class",
+      "name_th": "เอส-คลาส",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "S 350 d",
+        "S 450",
+        "S 500",
+        "S 580 e",
+        "Maybach S 580 e",
+        "S 560 e",
+        "S 560"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "PHEV",
+              "drivetrain": "RWD",
+              "engine_cc": 2999,
+              "battery_kwh": 28.6,
+              "price_thb": 8990000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "S 580 e AMG Dynamic (PHEV, 510 hp)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:193"
+                ]
+              },
+              "id": "s_580_e_amg_dynamic_phev_510_hp_phev"
+            },
+            {
+              "name": "Exclusive",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 5289,
+              "width_mm": 2109,
+              "height_mm": 1503,
+              "engine_cc": 2989,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "60d7c344-6ee1-4081-a0a3-d9391da1d326"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "mercedes_benz",
+        "name_en": "Mercedes-Benz",
+        "name_th": "เมอร์เซเดส-เบนซ์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Mercedes-Benz Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "benz",
+          "เบนซ์",
+          "mercedes"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mercedes_benz.s_class",
+        "brand_id": "mercedes_benz",
+        "name_en": "S-Class",
+        "name_th": "เอส-คลาส",
+        "nameplate": "S-Class",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "S 350 d",
+          "S 450",
+          "S 500",
+          "S 580 e",
+          "Maybach S 580 e",
+          "S 560 e",
+          "S 560"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mercedes_benz.s_class.gen1",
+          "model_id": "mercedes_benz.s_class",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mercedes_benz.s_class.gen1.spec",
+          "generation_id": "mercedes_benz.s_class.gen1",
+          "name": "spec",
+          "powertrain": "PHEV",
+          "drivetrain": "RWD",
+          "engine_cc": 2999,
+          "battery_kwh": 28.6,
+          "price_thb": 8990000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mercedes_benz.s_class.gen1.trim.s_580_e_amg_dynamic_phev_510_hp_phev",
+          "generation_id": "mercedes_benz.s_class.gen1",
+          "name": "S 580 e AMG Dynamic (PHEV, 510 hp)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:193"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.s_class.gen1.trim.exclusive_hev",
+          "generation_id": "mercedes_benz.s_class.gen1",
+          "name": "Exclusive",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2989,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5289,
+          "width_mm": 2109,
+          "height_mm": 1503,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "60d7c344-6ee1-4081-a0a3-d9391da1d326"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.s_class.gen1.trim.amg_premium_ice",
+          "generation_id": "mercedes_benz.s_class.gen1",
+          "name": "AMG Premium",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2925,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5320,
+          "width_mm": 2130,
+          "height_mm": 1503,
+          "wheelbase_mm": null,
+          "tire_front": "255/40R20",
+          "tire_rear": "285/35R20",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "09880627e56a410d8bd71678255e4f47"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mercedes_benz.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "276a0e6db3583fa99fec18d7:catalog",
+    "revision_id": "276a0e6db3583fa99fec18d7",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mercedes_benz.s_class",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:04:03+00:00",
+    "payload": {
+      "brand": {
+        "id": "mercedes_benz",
+        "name_en": "Mercedes-Benz",
+        "name_th": "เมอร์เซเดส-เบนซ์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Mercedes-Benz Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "benz",
+          "เบนซ์",
+          "mercedes"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mercedes_benz.s_class",
+        "brand_id": "mercedes_benz",
+        "name_en": "S-Class",
+        "name_th": "เอส-คลาส",
+        "nameplate": "S-Class",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "S 350 d",
+          "S 450",
+          "S 500",
+          "S 580 e",
+          "Maybach S 580 e",
+          "S 560 e",
+          "S 560"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mercedes_benz.s_class.gen1",
+          "model_id": "mercedes_benz.s_class",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mercedes_benz.s_class.gen1.spec",
+          "generation_id": "mercedes_benz.s_class.gen1",
+          "name": "spec",
+          "powertrain": "PHEV",
+          "drivetrain": "RWD",
+          "engine_cc": 2999,
+          "battery_kwh": 28.6,
+          "price_thb": 8990000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mercedes_benz.s_class.gen1.trim.s_580_e_amg_dynamic_phev_510_hp_phev",
+          "generation_id": "mercedes_benz.s_class.gen1",
+          "name": "S 580 e AMG Dynamic (PHEV, 510 hp)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:193"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.s_class.gen1.trim.exclusive_hev",
+          "generation_id": "mercedes_benz.s_class.gen1",
+          "name": "Exclusive",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2989,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5289,
+          "width_mm": 2109,
+          "height_mm": 1503,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "60d7c344-6ee1-4081-a0a3-d9391da1d326"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.s_class.gen1.trim.amg_premium_ice",
+          "generation_id": "mercedes_benz.s_class.gen1",
+          "name": "AMG Premium",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2925,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5320,
+          "width_mm": 2130,
+          "height_mm": 1503,
+          "wheelbase_mm": null,
+          "tire_front": "255/40R20",
+          "tire_rear": "285/35R20",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "09880627e56a410d8bd71678255e4f47"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

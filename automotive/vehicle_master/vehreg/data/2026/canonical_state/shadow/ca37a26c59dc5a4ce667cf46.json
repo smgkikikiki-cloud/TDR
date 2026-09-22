@@ -1,0 +1,509 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ca37a26c59dc5a4ce667cf46",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:8",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "lexus.lexus_ls",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:37+00:00",
+    "before_hash": "09f5fc224427a1617176b9e4a23b65847ba3b595e782fe8f7d629a91ece4753e",
+    "after_hash": "45fa2e44055cb48692fe6694c25213198f4c88630cf2727b110b322259465d41",
+    "before": {
+      "id": "lexus_ls",
+      "name_en": "LS",
+      "name_th": "",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "LS500h",
+        "LS500H",
+        "LS500",
+        "LS350"
+      ],
+      "incomplete": true,
+      "powertrain_checked": true,
+      "notes": "Owner-reviewed HEV. Added because DLT LS500h was fuzzy-matching LM and other LS labels were stranded at brand grain; spec incomplete.",
+      "generations": [
+        {
+          "code": "unresearched",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": null,
+          "ended": null,
+          "variants": [
+            {
+              "name": "HEV (owner-reviewed; spec incomplete)",
+              "powertrain": "HEV",
+              "drivetrain": "UNKNOWN",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "UNKNOWN",
+              "origin_country": "UNKNOWN",
+              "price_note": "spec incomplete; powertrain owner-reviewed",
+              "aliases": [],
+              "incomplete": true
+            }
+          ],
+          "trims": [
+            {
+              "name": "500h Luxury",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:154"
+                ]
+              },
+              "aliases": [
+                "LS 500h Luxury"
+              ],
+              "id": "500h_luxury_hev"
+            },
+            {
+              "name": "500h Executive",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:154"
+                ]
+              },
+              "aliases": [
+                "LS 500h Executive"
+              ],
+              "id": "500h_executive_hev"
+            },
+            {
+              "name": "500h Executive Pleat",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:154"
+                ]
+              },
+              "aliases": [
+                "LS 500h Executive Pleat"
+              ],
+              "id": "500h_executive_pleat_hev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "lexus",
+        "name_en": "Lexus",
+        "name_th": "เล็กซัส",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "เล็กซัส"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "lexus.lexus_ls",
+        "brand_id": "lexus",
+        "name_en": "LS",
+        "name_th": "",
+        "nameplate": "LS",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "LS500h",
+          "LS500H",
+          "LS500",
+          "LS350"
+        ],
+        "notes": "Owner-reviewed HEV. Added because DLT LS500h was fuzzy-matching LM and other LS labels were stranded at brand grain; spec incomplete.",
+        "incomplete": true,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "lexus.lexus_ls.unresearched",
+          "model_id": "lexus.lexus_ls",
+          "code": "unresearched",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": null,
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "lexus.lexus_ls.unresearched.hev_owner_reviewed_spec_incomplete",
+          "generation_id": "lexus.lexus_ls.unresearched",
+          "name": "HEV (owner-reviewed; spec incomplete)",
+          "powertrain": "HEV",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "UNKNOWN",
+          "origin_country": "UNKNOWN",
+          "price_note": "spec incomplete; powertrain owner-reviewed",
+          "aliases": [],
+          "incomplete": true,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "lexus.lexus_ls.unresearched.trim.500h_luxury_hev",
+          "generation_id": "lexus.lexus_ls.unresearched",
+          "name": "500h Luxury",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "LS 500h Luxury"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:154"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_ls.unresearched.trim.500h_executive_hev",
+          "generation_id": "lexus.lexus_ls.unresearched",
+          "name": "500h Executive",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "LS 500h Executive"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:154"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_ls.unresearched.trim.500h_executive_pleat_hev",
+          "generation_id": "lexus.lexus_ls.unresearched",
+          "name": "500h Executive Pleat",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "LS 500h Executive Pleat"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:154"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_ls.unresearched.trim.executive_ice",
+          "generation_id": "lexus.lexus_ls.unresearched",
+          "name": "Executive",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 3445,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5225,
+          "width_mm": 1900,
+          "height_mm": 1450,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "f2a7d133-ab14-4a53-9862-25e97242495e"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/lexus.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ca37a26c59dc5a4ce667cf46:catalog",
+    "revision_id": "ca37a26c59dc5a4ce667cf46",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "lexus.lexus_ls",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:37+00:00",
+    "payload": {
+      "brand": {
+        "id": "lexus",
+        "name_en": "Lexus",
+        "name_th": "เล็กซัส",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "เล็กซัส"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "lexus.lexus_ls",
+        "brand_id": "lexus",
+        "name_en": "LS",
+        "name_th": "",
+        "nameplate": "LS",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "LS500h",
+          "LS500H",
+          "LS500",
+          "LS350"
+        ],
+        "notes": "Owner-reviewed HEV. Added because DLT LS500h was fuzzy-matching LM and other LS labels were stranded at brand grain; spec incomplete.",
+        "incomplete": true,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "lexus.lexus_ls.unresearched",
+          "model_id": "lexus.lexus_ls",
+          "code": "unresearched",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": null,
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "lexus.lexus_ls.unresearched.hev_owner_reviewed_spec_incomplete",
+          "generation_id": "lexus.lexus_ls.unresearched",
+          "name": "HEV (owner-reviewed; spec incomplete)",
+          "powertrain": "HEV",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "UNKNOWN",
+          "origin_country": "UNKNOWN",
+          "price_note": "spec incomplete; powertrain owner-reviewed",
+          "aliases": [],
+          "incomplete": true,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "lexus.lexus_ls.unresearched.trim.500h_luxury_hev",
+          "generation_id": "lexus.lexus_ls.unresearched",
+          "name": "500h Luxury",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "LS 500h Luxury"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:154"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_ls.unresearched.trim.500h_executive_hev",
+          "generation_id": "lexus.lexus_ls.unresearched",
+          "name": "500h Executive",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "LS 500h Executive"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:154"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_ls.unresearched.trim.500h_executive_pleat_hev",
+          "generation_id": "lexus.lexus_ls.unresearched",
+          "name": "500h Executive Pleat",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "LS 500h Executive Pleat"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:154"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_ls.unresearched.trim.executive_ice",
+          "generation_id": "lexus.lexus_ls.unresearched",
+          "name": "Executive",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 3445,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5225,
+          "width_mm": 1900,
+          "height_mm": 1450,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "f2a7d133-ab14-4a53-9862-25e97242495e"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

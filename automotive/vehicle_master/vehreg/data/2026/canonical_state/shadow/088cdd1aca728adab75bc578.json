@@ -1,0 +1,584 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "088cdd1aca728adab75bc578",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:39",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "bmw.bmw_x3",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:40+00:00",
+    "before_hash": "e61d176906a21cbe74fd18aace7b4d4f6ea584c1ff5a2352f516c69eee9d726e",
+    "after_hash": "c66523ab0e83a3f0e246d305569ad6e916077d198924438c534c2896cb405149",
+    "before": {
+      "id": "bmw_x3",
+      "name_en": "X3",
+      "name_th": "เอ็กซ์3",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "x 3",
+        "X3 xDrive20",
+        "X3 20 xDrive"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "G45",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2024-11-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.0L ICE AWD",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "engine_cc": 1998,
+              "aliases": [
+                "20 xDrive M Sport",
+                "xDrive20d",
+                "20d xDrive",
+                "M50 xDrive",
+                "X3 xDrive20d"
+              ],
+              "overrides": {},
+              "price_thb": 3999000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 3999000,
+              "price_max_thb": 3999000
+            },
+            {
+              "name": "2.0L PHEV",
+              "powertrain": "PHEV",
+              "drivetrain": "AWD",
+              "engine_cc": 1998,
+              "battery_kwh": 19.7,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "สเปกจากเอกสาร BMW ราคายังไม่ได้ตรวจ",
+              "aliases": [
+                "xDrive30e",
+                "X3 xDrive30e"
+              ]
+            }
+          ],
+          "trims": [
+            {
+              "name": "xDrive20d M Sport",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:035"
+                ]
+              },
+              "id": "xdrive20d_m_sport_ice"
+            },
+            {
+              "name": "xDrive30e M Sport (PHEV)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:035"
+                ]
+              },
+              "id": "xdrive30e_m_sport_phev_phev"
+            },
+            {
+              "name": "M40i",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:035"
+                ]
+              },
+              "id": "m40i_ice"
+            },
+            {
+              "name": "M50 xDrive",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4755,
+              "width_mm": 1920,
+              "height_mm": 1660,
+              "engine_cc": 2998,
+              "tire_front": "255/40R21",
+              "tire_rear": "285/35R21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "d6c9d516-aa36-4031-87e0-c52199d59b8a"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "bmw",
+        "name_en": "BMW",
+        "name_th": "บีเอ็มดับเบิลยู",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "BMW Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "บีเอ็มดับเบิลยู",
+          "bmw thailand"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "bmw.bmw_x3",
+        "brand_id": "bmw",
+        "name_en": "X3",
+        "name_th": "เอ็กซ์3",
+        "nameplate": "X3",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "x 3",
+          "X3 xDrive20",
+          "X3 20 xDrive"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "bmw.bmw_x3.g45",
+          "model_id": "bmw.bmw_x3",
+          "code": "G45",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2024-11-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "bmw.bmw_x3.g45.2_0l_ice_awd",
+          "generation_id": "bmw.bmw_x3.g45",
+          "name": "2.0L ICE AWD",
+          "powertrain": "ICE",
+          "drivetrain": "AWD",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "price_thb": 3999000,
+          "price_min_thb": 3999000,
+          "price_max_thb": 3999000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "20 xDrive M Sport",
+            "xDrive20d",
+            "20d xDrive",
+            "M50 xDrive",
+            "X3 xDrive20d"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "bmw.bmw_x3.g45.2_0l_phev",
+          "generation_id": "bmw.bmw_x3.g45",
+          "name": "2.0L PHEV",
+          "powertrain": "PHEV",
+          "drivetrain": "AWD",
+          "engine_cc": 1998,
+          "battery_kwh": 19.7,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "สเปกจากเอกสาร BMW ราคายังไม่ได้ตรวจ",
+          "aliases": [
+            "xDrive30e",
+            "X3 xDrive30e"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "bmw.bmw_x3.g45.trim.xdrive20d_m_sport_ice",
+          "generation_id": "bmw.bmw_x3.g45",
+          "name": "xDrive20d M Sport",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1995,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4708,
+          "width_mm": 1891,
+          "height_mm": 1676,
+          "wheelbase_mm": null,
+          "tire_front": "245/45R20",
+          "tire_rear": "275/40R20",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:035"
+            ],
+            "eco": [
+              "646ca105-ff71-4847-a9e2-7902a2ecb0a1"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_x3.g45.trim.xdrive30e_m_sport_phev_phev",
+          "generation_id": "bmw.bmw_x3.g45",
+          "name": "xDrive30e M Sport (PHEV)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:035"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_x3.g45.trim.m40i_ice",
+          "generation_id": "bmw.bmw_x3.g45",
+          "name": "M40i",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:035"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_x3.g45.trim.m50_xdrive_hev",
+          "generation_id": "bmw.bmw_x3.g45",
+          "name": "M50 xDrive",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4755,
+          "width_mm": 1920,
+          "height_mm": 1660,
+          "wheelbase_mm": null,
+          "tire_front": "255/40R21",
+          "tire_rear": "285/35R21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "d6c9d516-aa36-4031-87e0-c52199d59b8a"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/bmw.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "088cdd1aca728adab75bc578:catalog",
+    "revision_id": "088cdd1aca728adab75bc578",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "bmw.bmw_x3",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:40+00:00",
+    "payload": {
+      "brand": {
+        "id": "bmw",
+        "name_en": "BMW",
+        "name_th": "บีเอ็มดับเบิลยู",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "BMW Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "บีเอ็มดับเบิลยู",
+          "bmw thailand"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "bmw.bmw_x3",
+        "brand_id": "bmw",
+        "name_en": "X3",
+        "name_th": "เอ็กซ์3",
+        "nameplate": "X3",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "x 3",
+          "X3 xDrive20",
+          "X3 20 xDrive"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "bmw.bmw_x3.g45",
+          "model_id": "bmw.bmw_x3",
+          "code": "G45",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2024-11-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "bmw.bmw_x3.g45.2_0l_ice_awd",
+          "generation_id": "bmw.bmw_x3.g45",
+          "name": "2.0L ICE AWD",
+          "powertrain": "ICE",
+          "drivetrain": "AWD",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "price_thb": 3999000,
+          "price_min_thb": 3999000,
+          "price_max_thb": 3999000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "20 xDrive M Sport",
+            "xDrive20d",
+            "20d xDrive",
+            "M50 xDrive",
+            "X3 xDrive20d"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "bmw.bmw_x3.g45.2_0l_phev",
+          "generation_id": "bmw.bmw_x3.g45",
+          "name": "2.0L PHEV",
+          "powertrain": "PHEV",
+          "drivetrain": "AWD",
+          "engine_cc": 1998,
+          "battery_kwh": 19.7,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "สเปกจากเอกสาร BMW ราคายังไม่ได้ตรวจ",
+          "aliases": [
+            "xDrive30e",
+            "X3 xDrive30e"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "bmw.bmw_x3.g45.trim.xdrive20d_m_sport_ice",
+          "generation_id": "bmw.bmw_x3.g45",
+          "name": "xDrive20d M Sport",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1995,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4708,
+          "width_mm": 1891,
+          "height_mm": 1676,
+          "wheelbase_mm": null,
+          "tire_front": "245/45R20",
+          "tire_rear": "275/40R20",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:035"
+            ],
+            "eco": [
+              "646ca105-ff71-4847-a9e2-7902a2ecb0a1"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_x3.g45.trim.xdrive30e_m_sport_phev_phev",
+          "generation_id": "bmw.bmw_x3.g45",
+          "name": "xDrive30e M Sport (PHEV)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:035"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_x3.g45.trim.m40i_ice",
+          "generation_id": "bmw.bmw_x3.g45",
+          "name": "M40i",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:035"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_x3.g45.trim.m50_xdrive_hev",
+          "generation_id": "bmw.bmw_x3.g45",
+          "name": "M50 xDrive",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4755,
+          "width_mm": 1920,
+          "height_mm": 1660,
+          "wheelbase_mm": null,
+          "tire_front": "255/40R21",
+          "tire_rear": "285/35R21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "d6c9d516-aa36-4031-87e0-c52199d59b8a"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

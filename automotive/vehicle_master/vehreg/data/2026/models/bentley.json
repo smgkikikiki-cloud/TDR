@@ -52,12 +52,51 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:025"
+                ],
+                "eco": [
+                  "f79c33b5-1c59-430d-a67a-b29004f760bc"
                 ]
               },
               "aliases": [
                 "Bentayga Hybrid / Azure Hybrid"
               ],
-              "id": "hybrid_azure_hybrid_phev"
+              "id": "hybrid_azure_hybrid_phev",
+              "seats": 5,
+              "length_mm": 5125,
+              "width_mm": 2010,
+              "height_mm": 1770,
+              "engine_cc": 2995,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "name": "HYBRID",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 5125,
+              "width_mm": 2010,
+              "height_mm": 1770,
+              "engine_cc": 2995,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "a0bc6751-402d-4ffd-afae-7bce12314210"
+                ]
+              }
+            },
+            {
+              "name": "ATELIER HYBRID",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 5125,
+              "width_mm": 2010,
+              "height_mm": 1770,
+              "engine_cc": 2995,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "b3efe398-45f2-4b79-8eb7-b8dca7841f03"
+                ]
+              }
             }
           ]
         }
@@ -98,7 +137,59 @@
               "aliases": []
             }
           ],
-          "trims": []
+          "trims": [
+            {
+              "name": "HYBRID",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 5316,
+              "width_mm": 1978,
+              "height_mm": 1483,
+              "engine_cc": 2894,
+              "tire_front": "265/40ZR21",
+              "tire_rear": "305/35ZR21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "3d21a9a4-5daa-486a-b054-76f7fa815405"
+                ]
+              }
+            },
+            {
+              "name": "AZURE HYBRID",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 5316,
+              "width_mm": 1988,
+              "height_mm": 1483,
+              "engine_cc": 2894,
+              "tire_front": "275/35ZR22",
+              "tire_rear": "315/30ZR22",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "13ada63b-e29e-47b4-b46f-b46d41cf9585"
+                ]
+              }
+            },
+            {
+              "name": "A HYBRID",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 5316,
+              "width_mm": 1978,
+              "height_mm": 1483,
+              "engine_cc": 2894,
+              "tire_front": "265/40ZR21",
+              "tire_rear": "305/35ZR21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "04d1deef-591c-403c-a2de-1c2f4e9e4bba"
+                ]
+              }
+            }
+          ]
         }
       ]
     }

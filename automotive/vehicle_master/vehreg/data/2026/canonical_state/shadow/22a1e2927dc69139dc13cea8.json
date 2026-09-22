@@ -1,0 +1,521 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "22a1e2927dc69139dc13cea8",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:70",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "toyota.yaris_cross",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:06+00:00",
+    "before_hash": "ff1caef6862ae17d5c54d466e973f937ea404c02b78533eeadc0a22f5e1f14fd",
+    "after_hash": "6ade96bbcf41e231dc6fc562c2d6518cdf914d685c28aac8d1e1f0ec1f3569e3",
+    "before": {
+      "id": "yaris_cross",
+      "name_en": "Yaris Cross",
+      "name_th": "ยาริส ครอส",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [],
+      "notes": "",
+      "generations": [
+        {
+          "code": "AC200",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2023-09-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.5L HEV",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "engine_cc": 1490,
+              "battery_kwh": 0.8,
+              "aliases": [
+                "1.5 HEV Smart",
+                "1.5 HEV Premium Luxury"
+              ],
+              "overrides": {},
+              "price_thb": 799000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 799000,
+              "price_max_thb": 899000
+            }
+          ],
+          "trims": [
+            {
+              "name": "HEV Smart",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:299"
+                ],
+                "eco": [
+                  "1fa501c7-144e-404b-819f-5df07e057164"
+                ]
+              },
+              "id": "hev_smart_hev",
+              "seats": 5,
+              "length_mm": 4310,
+              "width_mm": 1770,
+              "height_mm": 1615,
+              "engine_cc": 1496,
+              "transmission": "CVT"
+            },
+            {
+              "name": "HEV Premium",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:299"
+                ]
+              },
+              "id": "hev_premium_hev"
+            },
+            {
+              "name": "HEV Premium Luxury",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:299"
+                ]
+              },
+              "id": "hev_premium_luxury_hev"
+            },
+            {
+              "name": "Nightshade",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4310,
+              "width_mm": 1770,
+              "height_mm": 1615,
+              "engine_cc": 1496,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "4ba74ee9-7f85-4611-bfd2-352ee6c92a9c"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "toyota",
+        "name_en": "Toyota",
+        "name_th": "โตโยต้า",
+        "brand_segment": "MASS",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "โตโยต้า",
+          "toyota motor thailand",
+          "TMT"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "toyota.yaris_cross",
+        "brand_id": "toyota",
+        "name_en": "Yaris Cross",
+        "name_th": "ยาริส ครอส",
+        "nameplate": "Yaris Cross",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "toyota.yaris_cross.ac200",
+          "model_id": "toyota.yaris_cross",
+          "code": "AC200",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2023-09-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "toyota.yaris_cross.ac200.1_5l_hev",
+          "generation_id": "toyota.yaris_cross.ac200",
+          "name": "1.5L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1490,
+          "battery_kwh": 0.8,
+          "price_thb": 799000,
+          "price_min_thb": 799000,
+          "price_max_thb": 899000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.5 HEV Smart",
+            "1.5 HEV Premium Luxury"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "toyota.yaris_cross.ac200.trim.hev_smart_hev",
+          "generation_id": "toyota.yaris_cross.ac200",
+          "name": "HEV Smart",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1496,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4310,
+          "width_mm": 1770,
+          "height_mm": 1615,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:299"
+            ],
+            "eco": [
+              "1fa501c7-144e-404b-819f-5df07e057164"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.yaris_cross.ac200.trim.hev_premium_hev",
+          "generation_id": "toyota.yaris_cross.ac200",
+          "name": "HEV Premium",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:299"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.yaris_cross.ac200.trim.hev_premium_luxury_hev",
+          "generation_id": "toyota.yaris_cross.ac200",
+          "name": "HEV Premium Luxury",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1496,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4310,
+          "width_mm": 1770,
+          "height_mm": 1615,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:299"
+            ],
+            "eco": [
+              "79564fad-1875-4f85-a020-6a46da47f43d"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.yaris_cross.ac200.trim.nightshade_hev",
+          "generation_id": "toyota.yaris_cross.ac200",
+          "name": "Nightshade",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1496,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4310,
+          "width_mm": 1770,
+          "height_mm": 1615,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "4ba74ee9-7f85-4611-bfd2-352ee6c92a9c"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/toyota.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "22a1e2927dc69139dc13cea8:catalog",
+    "revision_id": "22a1e2927dc69139dc13cea8",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "toyota.yaris_cross",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:06+00:00",
+    "payload": {
+      "brand": {
+        "id": "toyota",
+        "name_en": "Toyota",
+        "name_th": "โตโยต้า",
+        "brand_segment": "MASS",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "โตโยต้า",
+          "toyota motor thailand",
+          "TMT"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "toyota.yaris_cross",
+        "brand_id": "toyota",
+        "name_en": "Yaris Cross",
+        "name_th": "ยาริส ครอส",
+        "nameplate": "Yaris Cross",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "toyota.yaris_cross.ac200",
+          "model_id": "toyota.yaris_cross",
+          "code": "AC200",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2023-09-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "toyota.yaris_cross.ac200.1_5l_hev",
+          "generation_id": "toyota.yaris_cross.ac200",
+          "name": "1.5L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1490,
+          "battery_kwh": 0.8,
+          "price_thb": 799000,
+          "price_min_thb": 799000,
+          "price_max_thb": 899000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.5 HEV Smart",
+            "1.5 HEV Premium Luxury"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "toyota.yaris_cross.ac200.trim.hev_smart_hev",
+          "generation_id": "toyota.yaris_cross.ac200",
+          "name": "HEV Smart",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1496,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4310,
+          "width_mm": 1770,
+          "height_mm": 1615,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:299"
+            ],
+            "eco": [
+              "1fa501c7-144e-404b-819f-5df07e057164"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.yaris_cross.ac200.trim.hev_premium_hev",
+          "generation_id": "toyota.yaris_cross.ac200",
+          "name": "HEV Premium",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:299"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.yaris_cross.ac200.trim.hev_premium_luxury_hev",
+          "generation_id": "toyota.yaris_cross.ac200",
+          "name": "HEV Premium Luxury",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1496,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4310,
+          "width_mm": 1770,
+          "height_mm": 1615,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:299"
+            ],
+            "eco": [
+              "79564fad-1875-4f85-a020-6a46da47f43d"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.yaris_cross.ac200.trim.nightshade_hev",
+          "generation_id": "toyota.yaris_cross.ac200",
+          "name": "Nightshade",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1496,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4310,
+          "width_mm": 1770,
+          "height_mm": 1615,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "4ba74ee9-7f85-4611-bfd2-352ee6c92a9c"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

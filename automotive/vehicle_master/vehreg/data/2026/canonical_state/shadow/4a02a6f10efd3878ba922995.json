@@ -1,0 +1,378 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "4a02a6f10efd3878ba922995",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:261",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mercedes_benz.gle",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:23+00:00",
+    "before_hash": "5ca106b4136d288cd38f093949e56ddf3cd381ff59e05caee7ac5292d541bea3",
+    "after_hash": "d67e9adf51f8f92518d56cfc06da23d958ae330f8804847b4f7e4adf09dd288b",
+    "before": {
+      "id": "gle",
+      "name_en": "GLE",
+      "name_th": "จีแอลอี",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "GLE 300 d",
+        "GLE 350 de",
+        "GLE 450",
+        "AMG GLE 53",
+        "MERCEDES-AMG GLE 53"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "ICE",
+              "drivetrain": "RWD",
+              "engine_cc": 1993,
+              "price_thb": 5290000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "4MATIC",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4926,
+              "width_mm": 2015,
+              "height_mm": 1797,
+              "engine_cc": 1993,
+              "tire_front": "275/45R21",
+              "tire_rear": "315/40R21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "3d1ef02f-48e3-4462-aed1-b28dee1b6ed1"
+                ]
+              }
+            },
+            {
+              "name": "HYBRID 4MATIC+",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4934,
+              "width_mm": 2015,
+              "height_mm": 1782,
+              "engine_cc": 2999,
+              "tire_front": "285/40R22",
+              "tire_rear": "325/35R22",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "55661114-1e49-4157-a6c8-092b8c26b65b"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "mercedes_benz",
+        "name_en": "Mercedes-Benz",
+        "name_th": "เมอร์เซเดส-เบนซ์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Mercedes-Benz Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "benz",
+          "เบนซ์",
+          "mercedes"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mercedes_benz.gle",
+        "brand_id": "mercedes_benz",
+        "name_en": "GLE",
+        "name_th": "จีแอลอี",
+        "nameplate": "GLE",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "GLE 300 d",
+          "GLE 350 de",
+          "GLE 450",
+          "AMG GLE 53",
+          "MERCEDES-AMG GLE 53"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mercedes_benz.gle.gen1",
+          "model_id": "mercedes_benz.gle",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mercedes_benz.gle.gen1.spec",
+          "generation_id": "mercedes_benz.gle.gen1",
+          "name": "spec",
+          "powertrain": "ICE",
+          "drivetrain": "RWD",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "price_thb": 5290000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mercedes_benz.gle.gen1.trim.4matic_hev",
+          "generation_id": "mercedes_benz.gle.gen1",
+          "name": "4MATIC",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4926,
+          "width_mm": 2015,
+          "height_mm": 1797,
+          "wheelbase_mm": null,
+          "tire_front": "275/45R21",
+          "tire_rear": "315/40R21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "3d1ef02f-48e3-4462-aed1-b28dee1b6ed1"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.gle.gen1.trim.hybrid_4matic_phev",
+          "generation_id": "mercedes_benz.gle.gen1",
+          "name": "HYBRID 4MATIC+",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2999,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4934,
+          "width_mm": 2015,
+          "height_mm": 1782,
+          "wheelbase_mm": null,
+          "tire_front": "285/40R22",
+          "tire_rear": "325/35R22",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "81bfff52-b287-4b7b-9880-9be951fcc35a"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mercedes_benz.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "4a02a6f10efd3878ba922995:catalog",
+    "revision_id": "4a02a6f10efd3878ba922995",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mercedes_benz.gle",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:23+00:00",
+    "payload": {
+      "brand": {
+        "id": "mercedes_benz",
+        "name_en": "Mercedes-Benz",
+        "name_th": "เมอร์เซเดส-เบนซ์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Mercedes-Benz Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "benz",
+          "เบนซ์",
+          "mercedes"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mercedes_benz.gle",
+        "brand_id": "mercedes_benz",
+        "name_en": "GLE",
+        "name_th": "จีแอลอี",
+        "nameplate": "GLE",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "GLE 300 d",
+          "GLE 350 de",
+          "GLE 450",
+          "AMG GLE 53",
+          "MERCEDES-AMG GLE 53"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mercedes_benz.gle.gen1",
+          "model_id": "mercedes_benz.gle",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mercedes_benz.gle.gen1.spec",
+          "generation_id": "mercedes_benz.gle.gen1",
+          "name": "spec",
+          "powertrain": "ICE",
+          "drivetrain": "RWD",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "price_thb": 5290000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mercedes_benz.gle.gen1.trim.4matic_hev",
+          "generation_id": "mercedes_benz.gle.gen1",
+          "name": "4MATIC",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4926,
+          "width_mm": 2015,
+          "height_mm": 1797,
+          "wheelbase_mm": null,
+          "tire_front": "275/45R21",
+          "tire_rear": "315/40R21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "3d1ef02f-48e3-4462-aed1-b28dee1b6ed1"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.gle.gen1.trim.hybrid_4matic_phev",
+          "generation_id": "mercedes_benz.gle.gen1",
+          "name": "HYBRID 4MATIC+",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2999,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4934,
+          "width_mm": 2015,
+          "height_mm": 1782,
+          "wheelbase_mm": null,
+          "tire_front": "285/40R22",
+          "tire_rear": "325/35R22",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "81bfff52-b287-4b7b-9880-9be951fcc35a"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

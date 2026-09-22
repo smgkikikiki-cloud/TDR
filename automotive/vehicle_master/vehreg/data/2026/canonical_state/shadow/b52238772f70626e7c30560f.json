@@ -1,0 +1,423 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b52238772f70626e7c30560f",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:65",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mercedes_benz.gls",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:05+00:00",
+    "before_hash": "56ee06613be159348bff006dfc011a7b6ff1c50e84b228659e3b6a55c3da66c0",
+    "after_hash": "043ef03eee0d0f77eca4c911d7c8241095f42f232d370d7606f266cf0f7068eb",
+    "before": {
+      "id": "gls",
+      "name_en": "GLS",
+      "name_th": "จีแอลเอส",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "NICHE",
+      "aliases": [
+        "GLS 350 d",
+        "GLS 450 d",
+        "GLS 450"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "ICE",
+              "drivetrain": "RWD",
+              "engine_cc": 2925,
+              "price_thb": 8290000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "450 d 4MATIC AMG Dynamic",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:187"
+                ]
+              },
+              "aliases": [
+                "GLS 450 d 4MATIC AMG Dynamic"
+              ],
+              "id": "450_d_4matic_amg_dynamic_ice"
+            },
+            {
+              "name": "Mercedes-Maybach GLS 600 4MATIC",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:187"
+                ]
+              },
+              "id": "mercedes_maybach_gls_600_4matic_ice"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "mercedes_benz",
+        "name_en": "Mercedes-Benz",
+        "name_th": "เมอร์เซเดส-เบนซ์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Mercedes-Benz Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "benz",
+          "เบนซ์",
+          "mercedes"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mercedes_benz.gls",
+        "brand_id": "mercedes_benz",
+        "name_en": "GLS",
+        "name_th": "จีแอลเอส",
+        "nameplate": "GLS",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "GLS 350 d",
+          "GLS 450 d",
+          "GLS 450"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mercedes_benz.gls.gen1",
+          "model_id": "mercedes_benz.gls",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mercedes_benz.gls.gen1.spec",
+          "generation_id": "mercedes_benz.gls.gen1",
+          "name": "spec",
+          "powertrain": "ICE",
+          "drivetrain": "RWD",
+          "engine_cc": 2925,
+          "battery_kwh": null,
+          "price_thb": 8290000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mercedes_benz.gls.gen1.trim.450_d_4matic_amg_dynamic_ice",
+          "generation_id": "mercedes_benz.gls.gen1",
+          "name": "450 d 4MATIC AMG Dynamic",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "GLS 450 d 4MATIC AMG Dynamic"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:187"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.gls.gen1.trim.mercedes_maybach_gls_600_4matic_ice",
+          "generation_id": "mercedes_benz.gls.gen1",
+          "name": "Mercedes-Maybach GLS 600 4MATIC",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:187"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.gls.gen1.trim.4matic_hev",
+          "generation_id": "mercedes_benz.gls.gen1",
+          "name": "4MATIC",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2989,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 7,
+          "length_mm": 5209,
+          "width_mm": 2030,
+          "height_mm": 1838,
+          "wheelbase_mm": null,
+          "tire_front": "285/45R22",
+          "tire_rear": "325/40R22",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "10834306-505a-44b1-9db0-1071295a967c"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mercedes_benz.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b52238772f70626e7c30560f:catalog",
+    "revision_id": "b52238772f70626e7c30560f",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mercedes_benz.gls",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:05+00:00",
+    "payload": {
+      "brand": {
+        "id": "mercedes_benz",
+        "name_en": "Mercedes-Benz",
+        "name_th": "เมอร์เซเดส-เบนซ์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Mercedes-Benz Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "benz",
+          "เบนซ์",
+          "mercedes"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mercedes_benz.gls",
+        "brand_id": "mercedes_benz",
+        "name_en": "GLS",
+        "name_th": "จีแอลเอส",
+        "nameplate": "GLS",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "GLS 350 d",
+          "GLS 450 d",
+          "GLS 450"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mercedes_benz.gls.gen1",
+          "model_id": "mercedes_benz.gls",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mercedes_benz.gls.gen1.spec",
+          "generation_id": "mercedes_benz.gls.gen1",
+          "name": "spec",
+          "powertrain": "ICE",
+          "drivetrain": "RWD",
+          "engine_cc": 2925,
+          "battery_kwh": null,
+          "price_thb": 8290000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mercedes_benz.gls.gen1.trim.450_d_4matic_amg_dynamic_ice",
+          "generation_id": "mercedes_benz.gls.gen1",
+          "name": "450 d 4MATIC AMG Dynamic",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "GLS 450 d 4MATIC AMG Dynamic"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:187"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.gls.gen1.trim.mercedes_maybach_gls_600_4matic_ice",
+          "generation_id": "mercedes_benz.gls.gen1",
+          "name": "Mercedes-Maybach GLS 600 4MATIC",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:187"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.gls.gen1.trim.4matic_hev",
+          "generation_id": "mercedes_benz.gls.gen1",
+          "name": "4MATIC",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2989,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 7,
+          "length_mm": 5209,
+          "width_mm": 2030,
+          "height_mm": 1838,
+          "wheelbase_mm": null,
+          "tire_front": "285/45R22",
+          "tire_rear": "325/40R22",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "10834306-505a-44b1-9db0-1071295a967c"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

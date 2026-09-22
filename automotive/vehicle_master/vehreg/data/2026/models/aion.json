@@ -60,12 +60,19 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:004"
+                ],
+                "eco": [
+                  "9d818c38-a8c6-4bfb-b915-8c1de68264d1"
                 ]
               },
               "aliases": [
                 "Aion Y Plus 410 Premium"
               ],
-              "id": "410_premium_bev"
+              "id": "410_premium_bev",
+              "seats": 5,
+              "length_mm": 4535,
+              "width_mm": 1870,
+              "height_mm": 1650
             },
             {
               "name": "490 Elite",
@@ -86,12 +93,19 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:004"
+                ],
+                "eco": [
+                  "2558d4e8-a7d2-4f99-b513-baf08070c26f"
                 ]
               },
               "aliases": [
                 "Aion Y Plus 490 Premium"
               ],
-              "id": "490_premium_bev"
+              "id": "490_premium_bev",
+              "seats": 5,
+              "length_mm": 4535,
+              "width_mm": 1870,
+              "height_mm": 1650
             }
           ]
         }
@@ -193,6 +207,34 @@
               "price_note": "seed-unverified",
               "price_min_thb": 1199000,
               "price_max_thb": 1199000
+            }
+          ],
+          "trims": [
+            {
+              "name": "500 PREMIUM",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4605,
+              "width_mm": 1854,
+              "height_mm": 1686,
+              "source_refs": {
+                "eco": [
+                  "ba597ad2-802d-4b27-942b-33c1a69035a1"
+                ]
+              }
+            },
+            {
+              "name": "602 LUXURY",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4605,
+              "width_mm": 1876,
+              "height_mm": 1686,
+              "source_refs": {
+                "eco": [
+                  "d01c8507-33fe-4ab7-9759-8183639b4bf5"
+                ]
+              }
             }
           ]
         }
@@ -324,12 +366,19 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:005"
+                ],
+                "eco": [
+                  "513e48ad-0ef5-4323-8541-c753596b9451"
                 ]
               },
               "aliases": [
                 "Hyptec HT 620 Premium (Standard Doors)"
               ],
-              "id": "620_premium_standard_doors_bev"
+              "id": "620_premium_standard_doors_bev",
+              "seats": 5,
+              "length_mm": 4935,
+              "width_mm": 1920,
+              "height_mm": 1700
             },
             {
               "name": "620 Luxury (Gull-Wing Doors)",
@@ -337,12 +386,19 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:005"
+                ],
+                "eco": [
+                  "da65f191-df51-44bb-95f6-829ea0ebe3a1"
                 ]
               },
               "aliases": [
                 "Hyptec HT 620 Luxury (Gull-Wing Doors)"
               ],
-              "id": "620_luxury_gull_wing_doors_bev"
+              "id": "620_luxury_gull_wing_doors_bev",
+              "seats": 5,
+              "length_mm": 4935,
+              "width_mm": 1920,
+              "height_mm": 1700
             },
             {
               "name": "670 Ultra (Gull-Wing Doors, 800V Architecture)",

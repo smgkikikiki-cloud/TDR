@@ -1,0 +1,2186 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a5316d84116173dc198e00ea",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:252",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "isuzu.dmax_cab",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:22+00:00",
+    "before_hash": "451d7a01627ae512fdf9a64e97e5cddb2e9b3343516de7d4f93c2cc18542fee2",
+    "after_hash": "1dbf08f7f6d367b090ccaa4a19c8c2b7e842604f0e72e743c6863d8474884828",
+    "before": {
+      "id": "dmax_cab",
+      "name_en": "D-Max Cab",
+      "name_th": "ดีแมคซ์ ตอนเดียว/แค็บ",
+      "nameplate": "",
+      "body_type": "PICKUP",
+      "cab_type": "SINGLE_SMART",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "dmax cab",
+        "spark",
+        "cab4",
+        "d max spark",
+        "ดีแมคซ์ ตอนเดียว",
+        "ดีแมคซ์ แค็บ",
+        "D-Max",
+        "ดีแมคซ์"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "RG",
+          "segment": "F",
+          "seats": 4,
+          "launched": "2019-10-11",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.9L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "RWD",
+              "engine_cc": 1898,
+              "battery_kwh": null,
+              "aliases": [
+                "1.9 S",
+                "1.9 Hi-Lander"
+              ],
+              "overrides": {},
+              "price_thb": 569000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 569000,
+              "price_max_thb": 829000
+            }
+          ],
+          "trims": [
+            {
+              "id": "4_1_9_ddi_s_at_mhev",
+              "name": "4 1.9 Ddi S AT MHEV",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "573119a1-e7dd-4a18-adad-bf294b2aa623"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5230,
+              "width_mm": 1810,
+              "height_mm": 1690,
+              "tire_front": "215/70R15",
+              "tire_rear": "215/70R15"
+            },
+            {
+              "id": "4_2_2_ddi_l",
+              "name": "4 2.2 Ddi L",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "ba8b19e9-5ede-4b56-85c2-58a14c5964e9"
+                ],
+                "eco": [
+                  "ba8b19e9-5ede-4b56-85c2-58a14c5964e9"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5300,
+              "width_mm": 1810,
+              "height_mm": 1700,
+              "tire_front": "215/70R16",
+              "tire_rear": "215/70R16",
+              "engine_cc": 2164,
+              "transmission": "MANUAL"
+            },
+            {
+              "id": "4_2_2_ddi_l_at",
+              "name": "4 2.2 Ddi L AT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "2278a04b-dab4-4290-81ff-6b08d3fb3750"
+                ],
+                "eco": [
+                  "2278a04b-dab4-4290-81ff-6b08d3fb3750"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5300,
+              "width_mm": 1810,
+              "height_mm": 1700,
+              "tire_front": "215/70R16",
+              "tire_rear": "215/70R16",
+              "engine_cc": 2164,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "id": "4_2_2_ddi_s",
+              "name": "4 2.2 Ddi S",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "efb9d2dc-b4b6-4b70-bef4-ca5e8f646e27"
+                ],
+                "eco": [
+                  "efb9d2dc-b4b6-4b70-bef4-ca5e8f646e27"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5230,
+              "width_mm": 1810,
+              "height_mm": 1690,
+              "tire_front": "215/70R15",
+              "tire_rear": "215/70R15",
+              "engine_cc": 2164,
+              "transmission": "MANUAL"
+            },
+            {
+              "id": "4_2_2_ddi_s_at",
+              "name": "4 2.2 Ddi S AT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "8fde42dd-7a27-4608-8b54-26fd5fa26f61"
+                ],
+                "eco": [
+                  "8fde42dd-7a27-4608-8b54-26fd5fa26f61"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5230,
+              "width_mm": 1810,
+              "height_mm": 1690,
+              "tire_front": "215/70R15",
+              "tire_rear": "215/70R15",
+              "engine_cc": 2164,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "id": "4_2_2_ddi_sr",
+              "name": "4 2.2 Ddi SR",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "609bb005-12b7-4bbc-a5eb-08129b65ceb4"
+                ],
+                "eco": [
+                  "609bb005-12b7-4bbc-a5eb-08129b65ceb4"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5230,
+              "width_mm": 1810,
+              "height_mm": 1690,
+              "tire_front": "215/70R15",
+              "tire_rear": "215/70R15",
+              "engine_cc": 2164,
+              "transmission": "MANUAL"
+            },
+            {
+              "id": "4_2_2_ddi_z",
+              "name": "4 2.2 Ddi Z",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "dd969b51-08a0-435b-a7d4-2dc98bb6c1aa"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5300,
+              "width_mm": 1810,
+              "height_mm": 1700,
+              "tire_front": "215/70R16",
+              "tire_rear": "215/70R16"
+            },
+            {
+              "id": "4_2_2_ddi_z_at",
+              "name": "4 2.2 Ddi Z AT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "68b45593-b64f-47ee-a9a7-3dac1eb4cfe8"
+                ],
+                "eco": [
+                  "68b45593-b64f-47ee-a9a7-3dac1eb4cfe8"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 5300,
+              "width_mm": 1810,
+              "height_mm": 1700,
+              "tire_front": "215/70R16",
+              "tire_rear": "215/70R16",
+              "engine_cc": 2164,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "id": "d_max_spark_2_2_ddi_b",
+              "name": "D-MAX Spark 2.2 Ddi B",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "555b44e3-dd93-4410-9ca8-15b55fa8313f"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 2,
+              "length_mm": 5245,
+              "width_mm": 1810,
+              "height_mm": 1690,
+              "tire_front": "215/70R15",
+              "tire_rear": "215/70R15"
+            },
+            {
+              "id": "d_max_spark_2_2_ddi_b_cab_chassis",
+              "name": "D-MAX Spark 2.2 Ddi B Cab-Chassis",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "8ca76c72-10f7-48d3-8505-8f1f9fa03185"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 2,
+              "length_mm": 5035,
+              "width_mm": 1810,
+              "height_mm": 1695,
+              "tire_front": "215/70R15",
+              "tire_rear": "215/70R15"
+            },
+            {
+              "id": "d_max_spark_2_2_ddi_b_cab_chassis_refrigerator",
+              "name": "D-MAX Spark 2.2 Ddi B Cab-Chassis (Refrigerator)",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "d136e05c-af27-40a0-a9f0-1ab37abcaa7a"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 2,
+              "length_mm": 5035,
+              "width_mm": 1810,
+              "height_mm": 1695,
+              "tire_front": "215/70R15",
+              "tire_rear": "215/70R15"
+            },
+            {
+              "id": "d_max_spark_2_2_ddi_b_cab_chassis_refrigerator_at",
+              "name": "D-MAX Spark 2.2 Ddi B Cab-Chassis (Refrigerator) AT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "23681bfa-f98c-4c96-9b3c-31a8f340fd6e"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 2,
+              "length_mm": 5035,
+              "width_mm": 1810,
+              "height_mm": 1695,
+              "tire_front": "215/70R15",
+              "tire_rear": "215/70R15"
+            },
+            {
+              "id": "d_max_spark_2_2_ddi_b_flat_deck_swb",
+              "name": "D-MAX Spark 2.2 Ddi B Flat Deck (SWB)",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "b41799d3-219c-48e4-be9f-a61797e1efd4"
+                ],
+                "eco": [
+                  "b41799d3-219c-48e4-be9f-a61797e1efd4"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 2,
+              "length_mm": 4930,
+              "width_mm": 1810,
+              "height_mm": 1705,
+              "tire_front": "215/70R15",
+              "tire_rear": "215/70R15",
+              "engine_cc": 2164,
+              "transmission": "MANUAL"
+            },
+            {
+              "id": "d_max_spark_2_2_ddi_s",
+              "name": "D-MAX Spark 2.2 Ddi S",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "cbfe5389-0c6a-4676-a5ae-c13e64e7a284"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 2,
+              "length_mm": 5245,
+              "width_mm": 1810,
+              "height_mm": 1690,
+              "tire_front": "215/70R15",
+              "tire_rear": "215/70R15"
+            },
+            {
+              "id": "d_max_spark_2_2_ddi_s_at",
+              "name": "D-MAX Spark 2.2 Ddi S AT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "9246b577-6c7d-491c-b1f2-4b5a30be10d5"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 2,
+              "length_mm": 5245,
+              "width_mm": 1810,
+              "height_mm": 1690,
+              "tire_front": "215/70R15",
+              "tire_rear": "215/70R15"
+            },
+            {
+              "id": "d_max_spark_3_0_ddi_s",
+              "name": "D-MAX Spark 3.0 Ddi S",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "e05a7ae4-8c29-4935-bb22-6a29ac97fedc"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 2,
+              "length_mm": 5245,
+              "width_mm": 1810,
+              "height_mm": 1690,
+              "tire_front": "215/70R15",
+              "tire_rear": "215/70R15"
+            },
+            {
+              "id": "d_max_spark_3_0_ddi_s_4x4",
+              "name": "D-MAX Spark 3.0 Ddi S 4x4",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "source_refs": {
+                "ecosticker": [
+                  "cdd00b4b-280f-42a7-8097-55a57996953b"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 2,
+              "length_mm": 5245,
+              "width_mm": 1810,
+              "height_mm": 1770,
+              "tire_front": "205R16",
+              "tire_rear": "205R16"
+            },
+            {
+              "id": "d_max_spark_3_0_ddi_s_4x4_at",
+              "name": "D-MAX Spark 3.0 Ddi S 4x4 AT",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "source_refs": {
+                "ecosticker": [
+                  "fbaefffe-f7cd-4017-b1eb-60ac30118e18"
+                ],
+                "eco": [
+                  "fbaefffe-f7cd-4017-b1eb-60ac30118e18"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 2,
+              "length_mm": 5245,
+              "width_mm": 1810,
+              "height_mm": 1770,
+              "tire_front": "205R16",
+              "tire_rear": "205R16",
+              "engine_cc": 2999,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "name": "Spacecab 1.9 Ddi S 6MT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:122"
+                ]
+              },
+              "id": "spacecab_1_9_ddi_s_6mt_ice"
+            },
+            {
+              "name": "Spacecab 1.9 Ddi L DA 6MT/6AT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:122"
+                ]
+              },
+              "id": "spacecab_1_9_ddi_l_da_6mt_6at_ice"
+            },
+            {
+              "name": "Spacecab 1.9 Ddi Z 6MT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:122"
+                ]
+              },
+              "id": "spacecab_1_9_ddi_z_6mt_ice"
+            },
+            {
+              "name": "Hi-Lander 2-Door 1.9 Ddi L DA 6MT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:122"
+                ]
+              },
+              "id": "hi_lander_2_door_1_9_ddi_l_da_6mt_ice"
+            },
+            {
+              "name": "Hi-Lander 2-Door 1.9 Ddi Z 6MT/6AT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:122"
+                ]
+              },
+              "id": "hi_lander_2_door_1_9_ddi_z_6mt_6at_ice"
+            },
+            {
+              "name": "Hi-Lander 2-Door 1.9 Ddi ZP 6AT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:122"
+                ]
+              },
+              "id": "hi_lander_2_door_1_9_ddi_zp_6at_ice"
+            },
+            {
+              "name": "Hi-Lander 2-Door 3.0 Ddi ZP 6AT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:122"
+                ]
+              },
+              "id": "hi_lander_2_door_3_0_ddi_zp_6at_ice"
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "isuzu",
+        "name_en": "Isuzu",
+        "name_th": "อีซูซุ",
+        "brand_segment": "MASS",
+        "oem_group": "Isuzu",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "อีซูซุ",
+          "tri petch isuzu"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "isuzu.dmax_cab",
+        "brand_id": "isuzu",
+        "name_en": "D-Max Cab",
+        "name_th": "ดีแมคซ์ ตอนเดียว/แค็บ",
+        "nameplate": "D-Max",
+        "body_type": "PICKUP",
+        "cab_type": "SINGLE_SMART",
+        "registration_type": "RY3",
+        "market_scope": "CORE",
+        "aliases": [
+          "dmax cab",
+          "spark",
+          "cab4",
+          "d max spark",
+          "ดีแมคซ์ ตอนเดียว",
+          "ดีแมคซ์ แค็บ",
+          "D-Max",
+          "ดีแมคซ์"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "isuzu.dmax_cab.rg",
+          "model_id": "isuzu.dmax_cab",
+          "code": "RG",
+          "segment": "F",
+          "seats": 4,
+          "launched": "2019-10-11",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "isuzu.dmax_cab.rg.1_9l_ice",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "1.9L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "RWD",
+          "engine_cc": 1898,
+          "battery_kwh": null,
+          "price_thb": 569000,
+          "price_min_thb": 569000,
+          "price_max_thb": 829000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.9 S",
+            "1.9 Hi-Lander"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "isuzu.dmax_cab.rg.trim.4_1_9_ddi_s_at_mhev",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "4 1.9 Ddi S AT MHEV",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5230,
+          "width_mm": 1810,
+          "height_mm": 1690,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R15",
+          "tire_rear": "215/70R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "573119a1-e7dd-4a18-adad-bf294b2aa623"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.4_2_2_ddi_l",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "4 2.2 Ddi L",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2164,
+          "battery_kwh": null,
+          "transmission": "MANUAL",
+          "seats": 5,
+          "length_mm": 5300,
+          "width_mm": 1810,
+          "height_mm": 1700,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R16",
+          "tire_rear": "215/70R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "ba8b19e9-5ede-4b56-85c2-58a14c5964e9"
+            ],
+            "eco": [
+              "ba8b19e9-5ede-4b56-85c2-58a14c5964e9"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.4_2_2_ddi_l_at",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "4 2.2 Ddi L AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2164,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5300,
+          "width_mm": 1810,
+          "height_mm": 1700,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R16",
+          "tire_rear": "215/70R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "2278a04b-dab4-4290-81ff-6b08d3fb3750"
+            ],
+            "eco": [
+              "2278a04b-dab4-4290-81ff-6b08d3fb3750"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.4_2_2_ddi_s",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "4 2.2 Ddi S",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2164,
+          "battery_kwh": null,
+          "transmission": "MANUAL",
+          "seats": 5,
+          "length_mm": 5230,
+          "width_mm": 1810,
+          "height_mm": 1690,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R15",
+          "tire_rear": "215/70R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "efb9d2dc-b4b6-4b70-bef4-ca5e8f646e27"
+            ],
+            "eco": [
+              "efb9d2dc-b4b6-4b70-bef4-ca5e8f646e27"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.4_2_2_ddi_s_at",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "4 2.2 Ddi S AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2164,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5230,
+          "width_mm": 1810,
+          "height_mm": 1690,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R15",
+          "tire_rear": "215/70R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "8fde42dd-7a27-4608-8b54-26fd5fa26f61"
+            ],
+            "eco": [
+              "8fde42dd-7a27-4608-8b54-26fd5fa26f61"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.4_2_2_ddi_sr",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "4 2.2 Ddi SR",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2164,
+          "battery_kwh": null,
+          "transmission": "MANUAL",
+          "seats": 5,
+          "length_mm": 5230,
+          "width_mm": 1810,
+          "height_mm": 1690,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R15",
+          "tire_rear": "215/70R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "609bb005-12b7-4bbc-a5eb-08129b65ceb4"
+            ],
+            "eco": [
+              "609bb005-12b7-4bbc-a5eb-08129b65ceb4"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.4_2_2_ddi_z",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "4 2.2 Ddi Z",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5300,
+          "width_mm": 1810,
+          "height_mm": 1700,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R16",
+          "tire_rear": "215/70R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "dd969b51-08a0-435b-a7d4-2dc98bb6c1aa"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.4_2_2_ddi_z_at",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "4 2.2 Ddi Z AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2164,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5300,
+          "width_mm": 1810,
+          "height_mm": 1700,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R16",
+          "tire_rear": "215/70R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "68b45593-b64f-47ee-a9a7-3dac1eb4cfe8"
+            ],
+            "eco": [
+              "68b45593-b64f-47ee-a9a7-3dac1eb4cfe8"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.d_max_spark_2_2_ddi_b",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "D-MAX Spark 2.2 Ddi B",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 2,
+          "length_mm": 5245,
+          "width_mm": 1810,
+          "height_mm": 1690,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R15",
+          "tire_rear": "215/70R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "555b44e3-dd93-4410-9ca8-15b55fa8313f"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.d_max_spark_2_2_ddi_b_cab_chassis",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "D-MAX Spark 2.2 Ddi B Cab-Chassis",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 2,
+          "length_mm": 5035,
+          "width_mm": 1810,
+          "height_mm": 1695,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R15",
+          "tire_rear": "215/70R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "8ca76c72-10f7-48d3-8505-8f1f9fa03185"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.d_max_spark_2_2_ddi_b_cab_chassis_refrigerator",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "D-MAX Spark 2.2 Ddi B Cab-Chassis (Refrigerator)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 2,
+          "length_mm": 5035,
+          "width_mm": 1810,
+          "height_mm": 1695,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R15",
+          "tire_rear": "215/70R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "d136e05c-af27-40a0-a9f0-1ab37abcaa7a"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.d_max_spark_2_2_ddi_b_cab_chassis_refrigerator_at",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "D-MAX Spark 2.2 Ddi B Cab-Chassis (Refrigerator) AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 2,
+          "length_mm": 5035,
+          "width_mm": 1810,
+          "height_mm": 1695,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R15",
+          "tire_rear": "215/70R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "23681bfa-f98c-4c96-9b3c-31a8f340fd6e"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.d_max_spark_2_2_ddi_b_flat_deck_swb",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "D-MAX Spark 2.2 Ddi B Flat Deck (SWB)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2164,
+          "battery_kwh": null,
+          "transmission": "MANUAL",
+          "seats": 2,
+          "length_mm": 4930,
+          "width_mm": 1810,
+          "height_mm": 1705,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R15",
+          "tire_rear": "215/70R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "b41799d3-219c-48e4-be9f-a61797e1efd4"
+            ],
+            "eco": [
+              "b41799d3-219c-48e4-be9f-a61797e1efd4"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.d_max_spark_2_2_ddi_s",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "D-MAX Spark 2.2 Ddi S",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 2,
+          "length_mm": 5245,
+          "width_mm": 1810,
+          "height_mm": 1690,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R15",
+          "tire_rear": "215/70R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "cbfe5389-0c6a-4676-a5ae-c13e64e7a284"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.d_max_spark_2_2_ddi_s_at",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "D-MAX Spark 2.2 Ddi S AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 2,
+          "length_mm": 5245,
+          "width_mm": 1810,
+          "height_mm": 1690,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R15",
+          "tire_rear": "215/70R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "9246b577-6c7d-491c-b1f2-4b5a30be10d5"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.d_max_spark_3_0_ddi_s",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "D-MAX Spark 3.0 Ddi S",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 2,
+          "length_mm": 5245,
+          "width_mm": 1810,
+          "height_mm": 1690,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R15",
+          "tire_rear": "215/70R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "e05a7ae4-8c29-4935-bb22-6a29ac97fedc"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.d_max_spark_3_0_ddi_s_4x4",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "D-MAX Spark 3.0 Ddi S 4x4",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": 2999,
+          "battery_kwh": null,
+          "transmission": "MANUAL",
+          "seats": 2,
+          "length_mm": 5245,
+          "width_mm": 1810,
+          "height_mm": 1770,
+          "wheelbase_mm": null,
+          "tire_front": "205R16",
+          "tire_rear": "205R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "cdd00b4b-280f-42a7-8097-55a57996953b"
+            ],
+            "eco": [
+              "cdd00b4b-280f-42a7-8097-55a57996953b"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.d_max_spark_3_0_ddi_s_4x4_at",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "D-MAX Spark 3.0 Ddi S 4x4 AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": 2999,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 2,
+          "length_mm": 5245,
+          "width_mm": 1810,
+          "height_mm": 1770,
+          "wheelbase_mm": null,
+          "tire_front": "205R16",
+          "tire_rear": "205R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "fbaefffe-f7cd-4017-b1eb-60ac30118e18"
+            ],
+            "eco": [
+              "fbaefffe-f7cd-4017-b1eb-60ac30118e18"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.spacecab_1_9_ddi_s_6mt_ice",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "Spacecab 1.9 Ddi S 6MT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:122"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.spacecab_1_9_ddi_l_da_6mt_6at_ice",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "Spacecab 1.9 Ddi L DA 6MT/6AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:122"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.spacecab_1_9_ddi_z_6mt_ice",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "Spacecab 1.9 Ddi Z 6MT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:122"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.hi_lander_2_door_1_9_ddi_l_da_6mt_ice",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "Hi-Lander 2-Door 1.9 Ddi L DA 6MT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:122"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.hi_lander_2_door_1_9_ddi_z_6mt_6at_ice",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "Hi-Lander 2-Door 1.9 Ddi Z 6MT/6AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:122"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.hi_lander_2_door_1_9_ddi_zp_6at_ice",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "Hi-Lander 2-Door 1.9 Ddi ZP 6AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:122"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.hi_lander_2_door_3_0_ddi_zp_6at_ice",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "Hi-Lander 2-Door 3.0 Ddi ZP 6AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:122"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/isuzu.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a5316d84116173dc198e00ea:catalog",
+    "revision_id": "a5316d84116173dc198e00ea",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "isuzu.dmax_cab",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:22+00:00",
+    "payload": {
+      "brand": {
+        "id": "isuzu",
+        "name_en": "Isuzu",
+        "name_th": "อีซูซุ",
+        "brand_segment": "MASS",
+        "oem_group": "Isuzu",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "อีซูซุ",
+          "tri petch isuzu"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "isuzu.dmax_cab",
+        "brand_id": "isuzu",
+        "name_en": "D-Max Cab",
+        "name_th": "ดีแมคซ์ ตอนเดียว/แค็บ",
+        "nameplate": "D-Max",
+        "body_type": "PICKUP",
+        "cab_type": "SINGLE_SMART",
+        "registration_type": "RY3",
+        "market_scope": "CORE",
+        "aliases": [
+          "dmax cab",
+          "spark",
+          "cab4",
+          "d max spark",
+          "ดีแมคซ์ ตอนเดียว",
+          "ดีแมคซ์ แค็บ",
+          "D-Max",
+          "ดีแมคซ์"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "isuzu.dmax_cab.rg",
+          "model_id": "isuzu.dmax_cab",
+          "code": "RG",
+          "segment": "F",
+          "seats": 4,
+          "launched": "2019-10-11",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "isuzu.dmax_cab.rg.1_9l_ice",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "1.9L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "RWD",
+          "engine_cc": 1898,
+          "battery_kwh": null,
+          "price_thb": 569000,
+          "price_min_thb": 569000,
+          "price_max_thb": 829000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.9 S",
+            "1.9 Hi-Lander"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "isuzu.dmax_cab.rg.trim.4_1_9_ddi_s_at_mhev",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "4 1.9 Ddi S AT MHEV",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5230,
+          "width_mm": 1810,
+          "height_mm": 1690,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R15",
+          "tire_rear": "215/70R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "573119a1-e7dd-4a18-adad-bf294b2aa623"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.4_2_2_ddi_l",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "4 2.2 Ddi L",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2164,
+          "battery_kwh": null,
+          "transmission": "MANUAL",
+          "seats": 5,
+          "length_mm": 5300,
+          "width_mm": 1810,
+          "height_mm": 1700,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R16",
+          "tire_rear": "215/70R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "ba8b19e9-5ede-4b56-85c2-58a14c5964e9"
+            ],
+            "eco": [
+              "ba8b19e9-5ede-4b56-85c2-58a14c5964e9"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.4_2_2_ddi_l_at",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "4 2.2 Ddi L AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2164,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5300,
+          "width_mm": 1810,
+          "height_mm": 1700,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R16",
+          "tire_rear": "215/70R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "2278a04b-dab4-4290-81ff-6b08d3fb3750"
+            ],
+            "eco": [
+              "2278a04b-dab4-4290-81ff-6b08d3fb3750"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.4_2_2_ddi_s",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "4 2.2 Ddi S",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2164,
+          "battery_kwh": null,
+          "transmission": "MANUAL",
+          "seats": 5,
+          "length_mm": 5230,
+          "width_mm": 1810,
+          "height_mm": 1690,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R15",
+          "tire_rear": "215/70R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "efb9d2dc-b4b6-4b70-bef4-ca5e8f646e27"
+            ],
+            "eco": [
+              "efb9d2dc-b4b6-4b70-bef4-ca5e8f646e27"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.4_2_2_ddi_s_at",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "4 2.2 Ddi S AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2164,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5230,
+          "width_mm": 1810,
+          "height_mm": 1690,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R15",
+          "tire_rear": "215/70R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "8fde42dd-7a27-4608-8b54-26fd5fa26f61"
+            ],
+            "eco": [
+              "8fde42dd-7a27-4608-8b54-26fd5fa26f61"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.4_2_2_ddi_sr",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "4 2.2 Ddi SR",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2164,
+          "battery_kwh": null,
+          "transmission": "MANUAL",
+          "seats": 5,
+          "length_mm": 5230,
+          "width_mm": 1810,
+          "height_mm": 1690,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R15",
+          "tire_rear": "215/70R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "609bb005-12b7-4bbc-a5eb-08129b65ceb4"
+            ],
+            "eco": [
+              "609bb005-12b7-4bbc-a5eb-08129b65ceb4"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.4_2_2_ddi_z",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "4 2.2 Ddi Z",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5300,
+          "width_mm": 1810,
+          "height_mm": 1700,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R16",
+          "tire_rear": "215/70R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "dd969b51-08a0-435b-a7d4-2dc98bb6c1aa"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.4_2_2_ddi_z_at",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "4 2.2 Ddi Z AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2164,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5300,
+          "width_mm": 1810,
+          "height_mm": 1700,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R16",
+          "tire_rear": "215/70R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "68b45593-b64f-47ee-a9a7-3dac1eb4cfe8"
+            ],
+            "eco": [
+              "68b45593-b64f-47ee-a9a7-3dac1eb4cfe8"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.d_max_spark_2_2_ddi_b",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "D-MAX Spark 2.2 Ddi B",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 2,
+          "length_mm": 5245,
+          "width_mm": 1810,
+          "height_mm": 1690,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R15",
+          "tire_rear": "215/70R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "555b44e3-dd93-4410-9ca8-15b55fa8313f"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.d_max_spark_2_2_ddi_b_cab_chassis",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "D-MAX Spark 2.2 Ddi B Cab-Chassis",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 2,
+          "length_mm": 5035,
+          "width_mm": 1810,
+          "height_mm": 1695,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R15",
+          "tire_rear": "215/70R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "8ca76c72-10f7-48d3-8505-8f1f9fa03185"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.d_max_spark_2_2_ddi_b_cab_chassis_refrigerator",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "D-MAX Spark 2.2 Ddi B Cab-Chassis (Refrigerator)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 2,
+          "length_mm": 5035,
+          "width_mm": 1810,
+          "height_mm": 1695,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R15",
+          "tire_rear": "215/70R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "d136e05c-af27-40a0-a9f0-1ab37abcaa7a"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.d_max_spark_2_2_ddi_b_cab_chassis_refrigerator_at",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "D-MAX Spark 2.2 Ddi B Cab-Chassis (Refrigerator) AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 2,
+          "length_mm": 5035,
+          "width_mm": 1810,
+          "height_mm": 1695,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R15",
+          "tire_rear": "215/70R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "23681bfa-f98c-4c96-9b3c-31a8f340fd6e"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.d_max_spark_2_2_ddi_b_flat_deck_swb",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "D-MAX Spark 2.2 Ddi B Flat Deck (SWB)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2164,
+          "battery_kwh": null,
+          "transmission": "MANUAL",
+          "seats": 2,
+          "length_mm": 4930,
+          "width_mm": 1810,
+          "height_mm": 1705,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R15",
+          "tire_rear": "215/70R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "b41799d3-219c-48e4-be9f-a61797e1efd4"
+            ],
+            "eco": [
+              "b41799d3-219c-48e4-be9f-a61797e1efd4"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.d_max_spark_2_2_ddi_s",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "D-MAX Spark 2.2 Ddi S",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 2,
+          "length_mm": 5245,
+          "width_mm": 1810,
+          "height_mm": 1690,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R15",
+          "tire_rear": "215/70R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "cbfe5389-0c6a-4676-a5ae-c13e64e7a284"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.d_max_spark_2_2_ddi_s_at",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "D-MAX Spark 2.2 Ddi S AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 2,
+          "length_mm": 5245,
+          "width_mm": 1810,
+          "height_mm": 1690,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R15",
+          "tire_rear": "215/70R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "9246b577-6c7d-491c-b1f2-4b5a30be10d5"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.d_max_spark_3_0_ddi_s",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "D-MAX Spark 3.0 Ddi S",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 2,
+          "length_mm": 5245,
+          "width_mm": 1810,
+          "height_mm": 1690,
+          "wheelbase_mm": null,
+          "tire_front": "215/70R15",
+          "tire_rear": "215/70R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "e05a7ae4-8c29-4935-bb22-6a29ac97fedc"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.d_max_spark_3_0_ddi_s_4x4",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "D-MAX Spark 3.0 Ddi S 4x4",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": 2999,
+          "battery_kwh": null,
+          "transmission": "MANUAL",
+          "seats": 2,
+          "length_mm": 5245,
+          "width_mm": 1810,
+          "height_mm": 1770,
+          "wheelbase_mm": null,
+          "tire_front": "205R16",
+          "tire_rear": "205R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "cdd00b4b-280f-42a7-8097-55a57996953b"
+            ],
+            "eco": [
+              "cdd00b4b-280f-42a7-8097-55a57996953b"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.d_max_spark_3_0_ddi_s_4x4_at",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "D-MAX Spark 3.0 Ddi S 4x4 AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": 2999,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 2,
+          "length_mm": 5245,
+          "width_mm": 1810,
+          "height_mm": 1770,
+          "wheelbase_mm": null,
+          "tire_front": "205R16",
+          "tire_rear": "205R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "fbaefffe-f7cd-4017-b1eb-60ac30118e18"
+            ],
+            "eco": [
+              "fbaefffe-f7cd-4017-b1eb-60ac30118e18"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.spacecab_1_9_ddi_s_6mt_ice",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "Spacecab 1.9 Ddi S 6MT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:122"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.spacecab_1_9_ddi_l_da_6mt_6at_ice",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "Spacecab 1.9 Ddi L DA 6MT/6AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:122"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.spacecab_1_9_ddi_z_6mt_ice",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "Spacecab 1.9 Ddi Z 6MT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:122"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.hi_lander_2_door_1_9_ddi_l_da_6mt_ice",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "Hi-Lander 2-Door 1.9 Ddi L DA 6MT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:122"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.hi_lander_2_door_1_9_ddi_z_6mt_6at_ice",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "Hi-Lander 2-Door 1.9 Ddi Z 6MT/6AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:122"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.hi_lander_2_door_1_9_ddi_zp_6at_ice",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "Hi-Lander 2-Door 1.9 Ddi ZP 6AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:122"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "isuzu.dmax_cab.rg.trim.hi_lander_2_door_3_0_ddi_zp_6at_ice",
+          "generation_id": "isuzu.dmax_cab.rg",
+          "name": "Hi-Lander 2-Door 3.0 Ddi ZP 6AT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:122"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

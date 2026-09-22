@@ -1,0 +1,285 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "639e36caa5c5ab8fd0a5c3e3",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:66",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mercedes_benz.gle",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:05+00:00",
+    "before_hash": "4cbcf2eef6b0f9a45c87d655661f1c8270c3b4dfdd3acdb0d16881e8850a1a0a",
+    "after_hash": "b8683fc7e1ea300f390d6d5ea44761d97a7fa8a6f07b592fbc9f83375fac3b85",
+    "before": {
+      "id": "gle",
+      "name_en": "GLE",
+      "name_th": "จีแอลอี",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "GLE 300 d",
+        "GLE 350 de",
+        "GLE 450",
+        "AMG GLE 53",
+        "MERCEDES-AMG GLE 53"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "ICE",
+              "drivetrain": "RWD",
+              "engine_cc": 1993,
+              "price_thb": 5290000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": []
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "mercedes_benz",
+        "name_en": "Mercedes-Benz",
+        "name_th": "เมอร์เซเดส-เบนซ์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Mercedes-Benz Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "benz",
+          "เบนซ์",
+          "mercedes"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mercedes_benz.gle",
+        "brand_id": "mercedes_benz",
+        "name_en": "GLE",
+        "name_th": "จีแอลอี",
+        "nameplate": "GLE",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "GLE 300 d",
+          "GLE 350 de",
+          "GLE 450",
+          "AMG GLE 53",
+          "MERCEDES-AMG GLE 53"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mercedes_benz.gle.gen1",
+          "model_id": "mercedes_benz.gle",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mercedes_benz.gle.gen1.spec",
+          "generation_id": "mercedes_benz.gle.gen1",
+          "name": "spec",
+          "powertrain": "ICE",
+          "drivetrain": "RWD",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "price_thb": 5290000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mercedes_benz.gle.gen1.trim.4matic_hev",
+          "generation_id": "mercedes_benz.gle.gen1",
+          "name": "4MATIC",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4926,
+          "width_mm": 2015,
+          "height_mm": 1797,
+          "wheelbase_mm": null,
+          "tire_front": "275/45R21",
+          "tire_rear": "315/40R21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "3d1ef02f-48e3-4462-aed1-b28dee1b6ed1"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mercedes_benz.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "639e36caa5c5ab8fd0a5c3e3:catalog",
+    "revision_id": "639e36caa5c5ab8fd0a5c3e3",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mercedes_benz.gle",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:05+00:00",
+    "payload": {
+      "brand": {
+        "id": "mercedes_benz",
+        "name_en": "Mercedes-Benz",
+        "name_th": "เมอร์เซเดส-เบนซ์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Mercedes-Benz Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "benz",
+          "เบนซ์",
+          "mercedes"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mercedes_benz.gle",
+        "brand_id": "mercedes_benz",
+        "name_en": "GLE",
+        "name_th": "จีแอลอี",
+        "nameplate": "GLE",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "GLE 300 d",
+          "GLE 350 de",
+          "GLE 450",
+          "AMG GLE 53",
+          "MERCEDES-AMG GLE 53"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mercedes_benz.gle.gen1",
+          "model_id": "mercedes_benz.gle",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mercedes_benz.gle.gen1.spec",
+          "generation_id": "mercedes_benz.gle.gen1",
+          "name": "spec",
+          "powertrain": "ICE",
+          "drivetrain": "RWD",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "price_thb": 5290000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mercedes_benz.gle.gen1.trim.4matic_hev",
+          "generation_id": "mercedes_benz.gle.gen1",
+          "name": "4MATIC",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4926,
+          "width_mm": 2015,
+          "height_mm": 1797,
+          "wheelbase_mm": null,
+          "tire_front": "275/45R21",
+          "tire_rear": "315/40R21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "3d1ef02f-48e3-4462-aed1-b28dee1b6ed1"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

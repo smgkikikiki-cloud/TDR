@@ -58,6 +58,90 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "REEV MAX",
+              "powertrain": "REEV",
+              "seats": 5,
+              "length_mm": 4620,
+              "width_mm": 1900,
+              "height_mm": 1600,
+              "engine_cc": 1497,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "8c7ac610-7ae7-45a4-980e-aea86d46784b"
+                ]
+              }
+            },
+            {
+              "name": "PLUS",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4620,
+              "width_mm": 1900,
+              "height_mm": 1600,
+              "source_refs": {
+                "eco": [
+                  "d7af13d3-7893-4d99-9550-2e80cf66105e"
+                ]
+              }
+            },
+            {
+              "name": "MAX",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4620,
+              "width_mm": 1900,
+              "height_mm": 1600,
+              "source_refs": {
+                "eco": [
+                  "685670fd-8efe-42da-89a5-9feabdc6eb42"
+                ]
+              }
+            },
+            {
+              "name": "MAX LONG RANGE",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4620,
+              "width_mm": 1900,
+              "height_mm": 1600,
+              "source_refs": {
+                "eco": [
+                  "013a5796-a70b-4c75-8e5e-d2387df74c0d"
+                ]
+              }
+            },
+            {
+              "name": "REEV PLUS",
+              "powertrain": "REEV",
+              "seats": 5,
+              "length_mm": 4620,
+              "width_mm": 1900,
+              "height_mm": 1600,
+              "engine_cc": 1497,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "a05ae9fe-e9ac-4609-b752-6066a1151085"
+                ]
+              }
+            },
+            {
+              "name": "LITE",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4620,
+              "width_mm": 1900,
+              "height_mm": 1600,
+              "source_refs": {
+                "eco": [
+                  "52035a1f-860a-4307-ba05-67cb4460a78f"
+                ]
+              }
+            }
           ]
         }
       ]
@@ -95,6 +179,47 @@
               "origin_country": "TH",
               "price_note": "seed-unverified",
               "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "NEW",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4750,
+              "width_mm": 1930,
+              "height_mm": 1625,
+              "source_refs": {
+                "eco": [
+                  "544599a5-89eb-4c0e-8e4c-1d27c49efa4d"
+                ]
+              }
+            },
+            {
+              "name": "L",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4750,
+              "width_mm": 1930,
+              "height_mm": 1625,
+              "source_refs": {
+                "eco": [
+                  "afcb91d9-e74c-47d7-a1a6-a2e9db6c333f"
+                ]
+              }
+            },
+            {
+              "name": "S07",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4750,
+              "width_mm": 1930,
+              "height_mm": 1625,
+              "source_refs": {
+                "eco": [
+                  "aaf8d8bd-5e11-4c2d-8a66-1368dc6c21d9"
+                ]
+              }
             }
           ]
         }
@@ -195,7 +320,34 @@
               "aliases": []
             }
           ],
-          "trims": []
+          "trims": [
+            {
+              "name": "PLUS",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 5045,
+              "width_mm": 1996,
+              "height_mm": 1680,
+              "source_refs": {
+                "eco": [
+                  "6818c168-0500-433e-aa17-2bcd45a27b8f"
+                ]
+              }
+            },
+            {
+              "name": "PERFORMANCE AWD",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 5045,
+              "width_mm": 1996,
+              "height_mm": 1680,
+              "source_refs": {
+                "eco": [
+                  "134aa3a6-38e1-46ee-a184-8b76b9e168da"
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -235,7 +387,38 @@
               "aliases": []
             }
           ],
-          "trims": []
+          "trims": [
+            {
+              "name": "REEV PLUS AWD",
+              "powertrain": "REEV",
+              "seats": 5,
+              "length_mm": 5380,
+              "width_mm": 1980,
+              "height_mm": 1875,
+              "engine_cc": 1998,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "52290d65-e787-46a5-96e2-5fb7dc64624b"
+                ]
+              }
+            },
+            {
+              "name": "REEV MAX AWD",
+              "powertrain": "REEV",
+              "seats": 5,
+              "length_mm": 5380,
+              "width_mm": 1980,
+              "height_mm": 1920,
+              "engine_cc": 1998,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "10cc2ee9-e1f5-4121-a21b-a4ba770cfcf1"
+                ]
+              }
+            }
+          ]
         }
       ]
     }

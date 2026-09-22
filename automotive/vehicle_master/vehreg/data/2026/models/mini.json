@@ -70,12 +70,139 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:219"
+                ],
+                "eco": [
+                  "67fc23e6-5496-4ad0-adbe-4b6499e71545"
                 ]
               },
               "aliases": [
                 "Cooper SE (BEV 3-Door, 218 hp)"
               ],
-              "id": "se_bev_3_door_218_hp_bev"
+              "id": "se_bev_3_door_218_hp_bev",
+              "seats": 4,
+              "length_mm": 3850,
+              "width_mm": 1727,
+              "height_mm": 1432
+            },
+            {
+              "name": "S Convertible",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 3879,
+              "width_mm": 1744,
+              "height_mm": 1431,
+              "engine_cc": 1998,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "22fd2856-7859-47c8-993f-9088b758c164"
+                ]
+              }
+            },
+            {
+              "name": "S Hatch 3 door",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 3876,
+              "width_mm": 1727,
+              "height_mm": 1414,
+              "engine_cc": 1998,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "cba31694-184a-4942-b4cc-7ec279a65a0d"
+                ]
+              }
+            },
+            {
+              "name": "Clubman",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4266,
+              "width_mm": 1800,
+              "height_mm": 1441,
+              "engine_cc": 1499,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "96e97e89-bbd8-4d43-ba9f-5524f367c96c"
+                ]
+              }
+            },
+            {
+              "name": "S Clubman",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4266,
+              "width_mm": 1800,
+              "height_mm": 1441,
+              "engine_cc": 1998,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "c95b358c-3eb3-40fa-8eee-e9934b98da9a"
+                ]
+              }
+            },
+            {
+              "name": "Hatch 3 door",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 3863,
+              "width_mm": 1727,
+              "height_mm": 1414,
+              "engine_cc": 1499,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "44556f9d-ace0-41af-a578-86d298247837"
+                ]
+              }
+            },
+            {
+              "name": "John Works Hatch",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 3872,
+              "width_mm": 1727,
+              "height_mm": 1414,
+              "engine_cc": 1998,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "270382d6-67eb-4116-91ea-d275c4e67e44"
+                ]
+              }
+            },
+            {
+              "name": "John Works Convertible",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 3872,
+              "width_mm": 1727,
+              "height_mm": 1415,
+              "engine_cc": 1998,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "53b10b97-f7b0-477f-8e41-10ce9f75007f"
+                ]
+              }
+            },
+            {
+              "name": "John Works Clubman ALL4",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4266,
+              "width_mm": 1800,
+              "height_mm": 1441,
+              "engine_cc": 1998,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "3a13283ee86a4e5f9d11ac7c1a1981e8"
+                ]
+              }
             }
           ]
         }
@@ -136,6 +263,51 @@
                 "Countryman SE ALL4 (BEV 313 hp)"
               ],
               "id": "se_all4_bev_313_hp_bev"
+            },
+            {
+              "name": "ALL4",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4444,
+              "width_mm": 1843,
+              "height_mm": 1661,
+              "engine_cc": 1998,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "15f61346-32d1-425c-ad36-423874390352"
+                ]
+              }
+            },
+            {
+              "name": "JCW Countryman",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4447,
+              "width_mm": 1843,
+              "height_mm": 1645,
+              "engine_cc": 1998,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "1728ef02-bdec-4e2b-8169-667bbdd4ad28"
+                ]
+              }
+            },
+            {
+              "name": "Cooper S Countryman",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4299,
+              "width_mm": 1822,
+              "height_mm": 1557,
+              "engine_cc": 1998,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "c6dbae13-1ba1-45f9-bf50-afc422a90304"
+                ]
+              }
             }
           ]
         }

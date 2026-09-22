@@ -1,0 +1,457 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5919fefad729284f0cdee848",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:85",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "honda.accord",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:07+00:00",
+    "before_hash": "f87b808fed45ba79ae9c6c1a75a896bb220d8de7a1eef4799272c4e6ad8b19f5",
+    "after_hash": "31c7ef0ea87a5d8ccaa02b6225e9206d318e9c9c52f19ba57c47ab823799fcda",
+    "before": {
+      "id": "accord",
+      "name_en": "Accord",
+      "name_th": "แอคคอร์ด",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [],
+      "notes": "",
+      "generations": [
+        {
+          "code": "CY",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2023-04-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.0L HEV",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "engine_cc": 1993,
+              "battery_kwh": 1.1,
+              "aliases": [
+                "e:HEV EL"
+              ],
+              "overrides": {},
+              "price_thb": 1749000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1749000,
+              "price_max_thb": 1749000
+            }
+          ],
+          "trims": [
+            {
+              "name": "e:HEV E",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:100"
+                ]
+              },
+              "id": "e_hev_e_hev"
+            },
+            {
+              "name": "e:HEV EL",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:100"
+                ],
+                "eco": [
+                  "b81d866e-481d-41b0-8036-f0735d9e8ca4"
+                ]
+              },
+              "id": "e_hev_el_hev",
+              "seats": 5,
+              "length_mm": 4962,
+              "width_mm": 1862,
+              "height_mm": 1449,
+              "engine_cc": 1993,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "name": "e:HEV RS",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:100"
+                ],
+                "eco": [
+                  "b2114f7c-dc1c-45a3-b575-fb965bdbc167"
+                ]
+              },
+              "id": "e_hev_rs_hev",
+              "seats": 5,
+              "length_mm": 4962,
+              "width_mm": 1862,
+              "height_mm": 1449,
+              "engine_cc": 1993,
+              "transmission": "AUTOMATIC"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "honda",
+        "name_en": "Honda",
+        "name_th": "ฮอนด้า",
+        "brand_segment": "MASS",
+        "oem_group": "Honda",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "ฮอนด้า",
+          "honda automobile"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "honda.accord",
+        "brand_id": "honda",
+        "name_en": "Accord",
+        "name_th": "แอคคอร์ด",
+        "nameplate": "Accord",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "honda.accord.cy",
+          "model_id": "honda.accord",
+          "code": "CY",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2023-04-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "honda.accord.cy.2_0l_hev",
+          "generation_id": "honda.accord.cy",
+          "name": "2.0L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1993,
+          "battery_kwh": 1.1,
+          "price_thb": 1749000,
+          "price_min_thb": 1749000,
+          "price_max_thb": 1749000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "e:HEV EL"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "honda.accord.cy.trim.e_hev_e_hev",
+          "generation_id": "honda.accord.cy",
+          "name": "e:HEV E",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4962,
+          "width_mm": 1862,
+          "height_mm": 1449,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:100"
+            ],
+            "eco": [
+              "e4e5ba65-ffde-4b84-b6f4-7ba09c0a3e82"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "honda.accord.cy.trim.e_hev_el_hev",
+          "generation_id": "honda.accord.cy",
+          "name": "e:HEV EL",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4962,
+          "width_mm": 1862,
+          "height_mm": 1449,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:100"
+            ],
+            "eco": [
+              "b81d866e-481d-41b0-8036-f0735d9e8ca4"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "honda.accord.cy.trim.e_hev_rs_hev",
+          "generation_id": "honda.accord.cy",
+          "name": "e:HEV RS",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4962,
+          "width_mm": 1862,
+          "height_mm": 1449,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:100"
+            ],
+            "eco": [
+              "b2114f7c-dc1c-45a3-b575-fb965bdbc167"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/honda.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5919fefad729284f0cdee848:catalog",
+    "revision_id": "5919fefad729284f0cdee848",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "honda.accord",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:07+00:00",
+    "payload": {
+      "brand": {
+        "id": "honda",
+        "name_en": "Honda",
+        "name_th": "ฮอนด้า",
+        "brand_segment": "MASS",
+        "oem_group": "Honda",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "ฮอนด้า",
+          "honda automobile"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "honda.accord",
+        "brand_id": "honda",
+        "name_en": "Accord",
+        "name_th": "แอคคอร์ด",
+        "nameplate": "Accord",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "honda.accord.cy",
+          "model_id": "honda.accord",
+          "code": "CY",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2023-04-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "honda.accord.cy.2_0l_hev",
+          "generation_id": "honda.accord.cy",
+          "name": "2.0L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1993,
+          "battery_kwh": 1.1,
+          "price_thb": 1749000,
+          "price_min_thb": 1749000,
+          "price_max_thb": 1749000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "e:HEV EL"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "honda.accord.cy.trim.e_hev_e_hev",
+          "generation_id": "honda.accord.cy",
+          "name": "e:HEV E",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4962,
+          "width_mm": 1862,
+          "height_mm": 1449,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:100"
+            ],
+            "eco": [
+              "e4e5ba65-ffde-4b84-b6f4-7ba09c0a3e82"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "honda.accord.cy.trim.e_hev_el_hev",
+          "generation_id": "honda.accord.cy",
+          "name": "e:HEV EL",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4962,
+          "width_mm": 1862,
+          "height_mm": 1449,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:100"
+            ],
+            "eco": [
+              "b81d866e-481d-41b0-8036-f0735d9e8ca4"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "honda.accord.cy.trim.e_hev_rs_hev",
+          "generation_id": "honda.accord.cy",
+          "name": "e:HEV RS",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4962,
+          "width_mm": 1862,
+          "height_mm": 1449,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:100"
+            ],
+            "eco": [
+              "b2114f7c-dc1c-45a3-b575-fb965bdbc167"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

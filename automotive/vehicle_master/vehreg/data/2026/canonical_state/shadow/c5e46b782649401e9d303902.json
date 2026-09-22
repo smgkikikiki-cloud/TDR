@@ -1,0 +1,1654 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c5e46b782649401e9d303902",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:194",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "nissan.almera",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:16+00:00",
+    "before_hash": "f2f9a5933e01d29d4139f20f5a24b396bf1b00c6a74d1de7e5bc3e1c320e346a",
+    "after_hash": "cacfd4baa439a846640fde9d33bbda68f8b95c051ce7a93e35740277164b79ec",
+    "before": {
+      "id": "almera",
+      "name_en": "Almera",
+      "name_th": "อัลเมร่า",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "อัลเมร่า"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "N18",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2019-11-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.0L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "engine_cc": 999,
+              "battery_kwh": null,
+              "aliases": [
+                "1.0 Turbo VL"
+              ],
+              "overrides": {},
+              "price_thb": 679000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 679000,
+              "price_max_thb": 679000
+            }
+          ],
+          "trims": [
+            {
+              "id": "1_0t_e_cvt",
+              "name": "1.0T E CVT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "a357c6f0-a48c-4fa0-9ed9-279c3a5576cd"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4495,
+              "width_mm": 1740,
+              "height_mm": 1460,
+              "tire_front": "195/65R15",
+              "tire_rear": "195/65R15"
+            },
+            {
+              "id": "1_0t_e_cvt_fleet",
+              "name": "1.0T E CVT (Fleet)",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "8f1eb844-9896-4da4-b621-c64981d8babe"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4495,
+              "width_mm": 1740,
+              "height_mm": 1460,
+              "tire_front": "195/65R15",
+              "tire_rear": "195/65R15"
+            },
+            {
+              "id": "1_0t_el_cvt",
+              "name": "1.0T EL CVT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "20692f72-35bb-4c52-80ec-17e29858bdcf"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4495,
+              "width_mm": 1740,
+              "height_mm": 1460,
+              "tire_front": "195/65R15",
+              "tire_rear": "195/65R15"
+            },
+            {
+              "id": "1_0t_s_cvt",
+              "name": "1.0T S CVT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "cb15faeb28d74cfc95f93b6485390de2"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4495,
+              "width_mm": 1740,
+              "height_mm": 1460,
+              "tire_front": "195/65R15",
+              "tire_rear": "195/65R15"
+            },
+            {
+              "id": "1_0t_sportech_x_cvt",
+              "name": "1.0T SPORTECH-X CVT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "2c0944ae-5a9a-46b0-8314-599cf46f07d7"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4530,
+              "width_mm": 1740,
+              "height_mm": 1460,
+              "tire_front": "205/55R16",
+              "tire_rear": "205/55R16"
+            },
+            {
+              "id": "1_0t_v_cvt",
+              "name": "1.0T V CVT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "f5771ee3-507f-467f-9180-4e34d7654413"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4495,
+              "width_mm": 1740,
+              "height_mm": 1460,
+              "tire_front": "195/65R15",
+              "tire_rear": "195/65R15"
+            },
+            {
+              "id": "1_0t_v_sportech_cvt",
+              "name": "1.0T V SPORTECH CVT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "a168665a7c0645649424875f6d0cb866"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4530,
+              "width_mm": 1740,
+              "height_mm": 1460,
+              "tire_front": "195/65R15",
+              "tire_rear": "195/65R15"
+            },
+            {
+              "id": "1_0t_vl_cvt",
+              "name": "1.0T VL CVT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "6c2955f3-e042-4f44-b014-b3a5a8a48593"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4495,
+              "width_mm": 1740,
+              "height_mm": 1460,
+              "tire_front": "195/65R15",
+              "tire_rear": "195/65R15"
+            },
+            {
+              "id": "1_0t_vl_sportech_cvt",
+              "name": "1.0T VL SPORTECH CVT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "4f6a0f62-f39f-4432-b316-b5000be676bb"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4530,
+              "width_mm": 1740,
+              "height_mm": 1460,
+              "tire_front": "195/65R15",
+              "tire_rear": "195/65R15"
+            },
+            {
+              "id": "26my_1_0t_e_cvt",
+              "name": "26MY 1.0T E CVT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "1025c916-f14d-4357-b5d1-459894f784d0"
+                ],
+                "eco": [
+                  "1025c916-f14d-4357-b5d1-459894f784d0"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4495,
+              "width_mm": 1740,
+              "height_mm": 1460,
+              "tire_front": "195/65R15",
+              "tire_rear": "195/65R15",
+              "engine_cc": 999,
+              "transmission": "CVT"
+            },
+            {
+              "id": "26my_1_0t_el_cvt",
+              "name": "26MY 1.0T EL CVT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "5d138f42-0bbd-4a1b-8066-49a993e6e8c8"
+                ],
+                "eco": [
+                  "5d138f42-0bbd-4a1b-8066-49a993e6e8c8"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4495,
+              "width_mm": 1740,
+              "height_mm": 1460,
+              "tire_front": "195/65R15",
+              "tire_rear": "195/65R15",
+              "engine_cc": 999,
+              "transmission": "CVT"
+            },
+            {
+              "id": "26my_1_0t_v_cvt",
+              "name": "26MY 1.0T V CVT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "7611563c-5297-4f2e-9a89-248bdde65ce7"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4495,
+              "width_mm": 1740,
+              "height_mm": 1460,
+              "tire_front": "195/65R15",
+              "tire_rear": "195/65R15"
+            },
+            {
+              "id": "26my_1_0t_vl_cvt",
+              "name": "26MY 1.0T VL CVT",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "7d6212e6-f589-41f9-ab7e-1cb35896ae12"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4495,
+              "width_mm": 1740,
+              "height_mm": 1460,
+              "tire_front": "195/65R15",
+              "tire_rear": "195/65R15"
+            },
+            {
+              "id": "70th_anniversary",
+              "name": "70th ANNIVERSARY",
+              "powertrain": "ICE",
+              "drivetrain": "UNKNOWN",
+              "source_refs": {
+                "ecosticker": [
+                  "fa54cd84-5071-4279-b5cd-5396f152d4d2"
+                ]
+              },
+              "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
+              "seats": 5,
+              "length_mm": 4530,
+              "width_mm": 1740,
+              "height_mm": 1460,
+              "tire_front": "195/65R15",
+              "tire_rear": "195/65R15"
+            },
+            {
+              "name": "1.0 Turbo E",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:232"
+                ]
+              },
+              "id": "1_0_turbo_e_ice"
+            },
+            {
+              "name": "1.0 Turbo EL",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:232"
+                ]
+              },
+              "id": "1_0_turbo_el_ice"
+            },
+            {
+              "name": "1.0 Turbo V",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:232"
+                ]
+              },
+              "id": "1_0_turbo_v_ice"
+            },
+            {
+              "name": "1.0 Turbo VL",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:232"
+                ]
+              },
+              "id": "1_0_turbo_vl_ice"
+            },
+            {
+              "name": "Sportech Edition",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:232"
+                ]
+              },
+              "id": "sportech_edition_ice"
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "nissan",
+        "name_en": "Nissan",
+        "name_th": "นิสสัน",
+        "brand_segment": "MASS",
+        "oem_group": "Nissan",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "นิสสัน"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "nissan.almera",
+        "brand_id": "nissan",
+        "name_en": "Almera",
+        "name_th": "อัลเมร่า",
+        "nameplate": "Almera",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "อัลเมร่า"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "nissan.almera.n18",
+          "model_id": "nissan.almera",
+          "code": "N18",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2019-11-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "nissan.almera.n18.1_0l_ice",
+          "generation_id": "nissan.almera.n18",
+          "name": "1.0L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 999,
+          "battery_kwh": null,
+          "price_thb": 679000,
+          "price_min_thb": 679000,
+          "price_max_thb": 679000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.0 Turbo VL"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "nissan.almera.n18.trim.1_0t_e_cvt",
+          "generation_id": "nissan.almera.n18",
+          "name": "1.0T E CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4495,
+          "width_mm": 1740,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "195/65R15",
+          "tire_rear": "195/65R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "a357c6f0-a48c-4fa0-9ed9-279c3a5576cd"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.almera.n18.trim.1_0t_e_cvt_fleet",
+          "generation_id": "nissan.almera.n18",
+          "name": "1.0T E CVT (Fleet)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4495,
+          "width_mm": 1740,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "195/65R15",
+          "tire_rear": "195/65R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "8f1eb844-9896-4da4-b621-c64981d8babe"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.almera.n18.trim.1_0t_el_cvt",
+          "generation_id": "nissan.almera.n18",
+          "name": "1.0T EL CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4495,
+          "width_mm": 1740,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "195/65R15",
+          "tire_rear": "195/65R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "20692f72-35bb-4c52-80ec-17e29858bdcf"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.almera.n18.trim.1_0t_s_cvt",
+          "generation_id": "nissan.almera.n18",
+          "name": "1.0T S CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4495,
+          "width_mm": 1740,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "195/65R15",
+          "tire_rear": "195/65R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "cb15faeb28d74cfc95f93b6485390de2"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.almera.n18.trim.1_0t_sportech_x_cvt",
+          "generation_id": "nissan.almera.n18",
+          "name": "1.0T SPORTECH-X CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4530,
+          "width_mm": 1740,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R16",
+          "tire_rear": "205/55R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "2c0944ae-5a9a-46b0-8314-599cf46f07d7"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.almera.n18.trim.1_0t_v_cvt",
+          "generation_id": "nissan.almera.n18",
+          "name": "1.0T V CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4495,
+          "width_mm": 1740,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "195/65R15",
+          "tire_rear": "195/65R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "f5771ee3-507f-467f-9180-4e34d7654413"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.almera.n18.trim.1_0t_v_sportech_cvt",
+          "generation_id": "nissan.almera.n18",
+          "name": "1.0T V SPORTECH CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4530,
+          "width_mm": 1740,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "195/65R15",
+          "tire_rear": "195/65R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "a168665a7c0645649424875f6d0cb866"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.almera.n18.trim.1_0t_vl_cvt",
+          "generation_id": "nissan.almera.n18",
+          "name": "1.0T VL CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4495,
+          "width_mm": 1740,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "195/65R15",
+          "tire_rear": "195/65R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "6c2955f3-e042-4f44-b014-b3a5a8a48593"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.almera.n18.trim.1_0t_vl_sportech_cvt",
+          "generation_id": "nissan.almera.n18",
+          "name": "1.0T VL SPORTECH CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4530,
+          "width_mm": 1740,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "195/65R15",
+          "tire_rear": "195/65R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "4f6a0f62-f39f-4432-b316-b5000be676bb"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.almera.n18.trim.26my_1_0t_e_cvt",
+          "generation_id": "nissan.almera.n18",
+          "name": "26MY 1.0T E CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 999,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4495,
+          "width_mm": 1740,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "195/65R15",
+          "tire_rear": "195/65R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "1025c916-f14d-4357-b5d1-459894f784d0"
+            ],
+            "eco": [
+              "1025c916-f14d-4357-b5d1-459894f784d0"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.almera.n18.trim.26my_1_0t_el_cvt",
+          "generation_id": "nissan.almera.n18",
+          "name": "26MY 1.0T EL CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 999,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4495,
+          "width_mm": 1740,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "195/65R15",
+          "tire_rear": "195/65R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "5d138f42-0bbd-4a1b-8066-49a993e6e8c8"
+            ],
+            "eco": [
+              "5d138f42-0bbd-4a1b-8066-49a993e6e8c8"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.almera.n18.trim.26my_1_0t_v_cvt",
+          "generation_id": "nissan.almera.n18",
+          "name": "26MY 1.0T V CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4495,
+          "width_mm": 1740,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "195/65R15",
+          "tire_rear": "195/65R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "7611563c-5297-4f2e-9a89-248bdde65ce7"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.almera.n18.trim.26my_1_0t_vl_cvt",
+          "generation_id": "nissan.almera.n18",
+          "name": "26MY 1.0T VL CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 999,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4495,
+          "width_mm": 1740,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "195/65R15",
+          "tire_rear": "195/65R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "7d6212e6-f589-41f9-ab7e-1cb35896ae12"
+            ],
+            "eco": [
+              "7d6212e6-f589-41f9-ab7e-1cb35896ae12"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.almera.n18.trim.70th_anniversary",
+          "generation_id": "nissan.almera.n18",
+          "name": "70th ANNIVERSARY",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4530,
+          "width_mm": 1740,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "195/65R15",
+          "tire_rear": "195/65R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "fa54cd84-5071-4279-b5cd-5396f152d4d2"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.almera.n18.trim.1_0_turbo_e_ice",
+          "generation_id": "nissan.almera.n18",
+          "name": "1.0 Turbo E",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:232"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "nissan.almera.n18.trim.1_0_turbo_el_ice",
+          "generation_id": "nissan.almera.n18",
+          "name": "1.0 Turbo EL",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:232"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "nissan.almera.n18.trim.1_0_turbo_v_ice",
+          "generation_id": "nissan.almera.n18",
+          "name": "1.0 Turbo V",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:232"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "nissan.almera.n18.trim.1_0_turbo_vl_ice",
+          "generation_id": "nissan.almera.n18",
+          "name": "1.0 Turbo VL",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:232"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "nissan.almera.n18.trim.sportech_edition_ice",
+          "generation_id": "nissan.almera.n18",
+          "name": "Sportech Edition",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:232"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/nissan.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c5e46b782649401e9d303902:catalog",
+    "revision_id": "c5e46b782649401e9d303902",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "nissan.almera",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:16+00:00",
+    "payload": {
+      "brand": {
+        "id": "nissan",
+        "name_en": "Nissan",
+        "name_th": "นิสสัน",
+        "brand_segment": "MASS",
+        "oem_group": "Nissan",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "นิสสัน"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "nissan.almera",
+        "brand_id": "nissan",
+        "name_en": "Almera",
+        "name_th": "อัลเมร่า",
+        "nameplate": "Almera",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "อัลเมร่า"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "nissan.almera.n18",
+          "model_id": "nissan.almera",
+          "code": "N18",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2019-11-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "nissan.almera.n18.1_0l_ice",
+          "generation_id": "nissan.almera.n18",
+          "name": "1.0L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 999,
+          "battery_kwh": null,
+          "price_thb": 679000,
+          "price_min_thb": 679000,
+          "price_max_thb": 679000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.0 Turbo VL"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "nissan.almera.n18.trim.1_0t_e_cvt",
+          "generation_id": "nissan.almera.n18",
+          "name": "1.0T E CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4495,
+          "width_mm": 1740,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "195/65R15",
+          "tire_rear": "195/65R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "a357c6f0-a48c-4fa0-9ed9-279c3a5576cd"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.almera.n18.trim.1_0t_e_cvt_fleet",
+          "generation_id": "nissan.almera.n18",
+          "name": "1.0T E CVT (Fleet)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4495,
+          "width_mm": 1740,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "195/65R15",
+          "tire_rear": "195/65R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "8f1eb844-9896-4da4-b621-c64981d8babe"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.almera.n18.trim.1_0t_el_cvt",
+          "generation_id": "nissan.almera.n18",
+          "name": "1.0T EL CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4495,
+          "width_mm": 1740,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "195/65R15",
+          "tire_rear": "195/65R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "20692f72-35bb-4c52-80ec-17e29858bdcf"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.almera.n18.trim.1_0t_s_cvt",
+          "generation_id": "nissan.almera.n18",
+          "name": "1.0T S CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4495,
+          "width_mm": 1740,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "195/65R15",
+          "tire_rear": "195/65R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "cb15faeb28d74cfc95f93b6485390de2"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.almera.n18.trim.1_0t_sportech_x_cvt",
+          "generation_id": "nissan.almera.n18",
+          "name": "1.0T SPORTECH-X CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4530,
+          "width_mm": 1740,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "205/55R16",
+          "tire_rear": "205/55R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "2c0944ae-5a9a-46b0-8314-599cf46f07d7"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.almera.n18.trim.1_0t_v_cvt",
+          "generation_id": "nissan.almera.n18",
+          "name": "1.0T V CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4495,
+          "width_mm": 1740,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "195/65R15",
+          "tire_rear": "195/65R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "f5771ee3-507f-467f-9180-4e34d7654413"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.almera.n18.trim.1_0t_v_sportech_cvt",
+          "generation_id": "nissan.almera.n18",
+          "name": "1.0T V SPORTECH CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4530,
+          "width_mm": 1740,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "195/65R15",
+          "tire_rear": "195/65R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "a168665a7c0645649424875f6d0cb866"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.almera.n18.trim.1_0t_vl_cvt",
+          "generation_id": "nissan.almera.n18",
+          "name": "1.0T VL CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4495,
+          "width_mm": 1740,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "195/65R15",
+          "tire_rear": "195/65R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "6c2955f3-e042-4f44-b014-b3a5a8a48593"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.almera.n18.trim.1_0t_vl_sportech_cvt",
+          "generation_id": "nissan.almera.n18",
+          "name": "1.0T VL SPORTECH CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4530,
+          "width_mm": 1740,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "195/65R15",
+          "tire_rear": "195/65R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "4f6a0f62-f39f-4432-b316-b5000be676bb"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.almera.n18.trim.26my_1_0t_e_cvt",
+          "generation_id": "nissan.almera.n18",
+          "name": "26MY 1.0T E CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 999,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4495,
+          "width_mm": 1740,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "195/65R15",
+          "tire_rear": "195/65R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "1025c916-f14d-4357-b5d1-459894f784d0"
+            ],
+            "eco": [
+              "1025c916-f14d-4357-b5d1-459894f784d0"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.almera.n18.trim.26my_1_0t_el_cvt",
+          "generation_id": "nissan.almera.n18",
+          "name": "26MY 1.0T EL CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 999,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4495,
+          "width_mm": 1740,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "195/65R15",
+          "tire_rear": "195/65R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "5d138f42-0bbd-4a1b-8066-49a993e6e8c8"
+            ],
+            "eco": [
+              "5d138f42-0bbd-4a1b-8066-49a993e6e8c8"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.almera.n18.trim.26my_1_0t_v_cvt",
+          "generation_id": "nissan.almera.n18",
+          "name": "26MY 1.0T V CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4495,
+          "width_mm": 1740,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "195/65R15",
+          "tire_rear": "195/65R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "7611563c-5297-4f2e-9a89-248bdde65ce7"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.almera.n18.trim.26my_1_0t_vl_cvt",
+          "generation_id": "nissan.almera.n18",
+          "name": "26MY 1.0T VL CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 999,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4495,
+          "width_mm": 1740,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "195/65R15",
+          "tire_rear": "195/65R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "7d6212e6-f589-41f9-ab7e-1cb35896ae12"
+            ],
+            "eco": [
+              "7d6212e6-f589-41f9-ab7e-1cb35896ae12"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.almera.n18.trim.70th_anniversary",
+          "generation_id": "nissan.almera.n18",
+          "name": "70th ANNIVERSARY",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4530,
+          "width_mm": 1740,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "195/65R15",
+          "tire_rear": "195/65R15",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "ecosticker": [
+              "fa54cd84-5071-4279-b5cd-5396f152d4d2"
+            ]
+          },
+          "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record."
+        },
+        {
+          "id": "nissan.almera.n18.trim.1_0_turbo_e_ice",
+          "generation_id": "nissan.almera.n18",
+          "name": "1.0 Turbo E",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:232"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "nissan.almera.n18.trim.1_0_turbo_el_ice",
+          "generation_id": "nissan.almera.n18",
+          "name": "1.0 Turbo EL",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:232"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "nissan.almera.n18.trim.1_0_turbo_v_ice",
+          "generation_id": "nissan.almera.n18",
+          "name": "1.0 Turbo V",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:232"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "nissan.almera.n18.trim.1_0_turbo_vl_ice",
+          "generation_id": "nissan.almera.n18",
+          "name": "1.0 Turbo VL",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:232"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "nissan.almera.n18.trim.sportech_edition_ice",
+          "generation_id": "nissan.almera.n18",
+          "name": "Sportech Edition",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:232"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

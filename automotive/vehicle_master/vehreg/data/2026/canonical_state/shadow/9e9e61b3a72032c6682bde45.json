@@ -1,0 +1,384 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9e9e61b3a72032c6682bde45",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:45",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mercedes_benz.mb_c_class",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:03+00:00",
+    "before_hash": "00df91bb0691950bfb006a6b4cd805b83d9c98576e601f6c54d36fe97c1f0ec4",
+    "after_hash": "9526c5c655557c52bf67238261611e3cb67d878377e555c78d48ab39d7c6dacb",
+    "before": {
+      "id": "mb_c_class",
+      "name_en": "C-Class",
+      "name_th": "ซี-คลาส",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "c class",
+        "c220d",
+        "c350e",
+        "C 200",
+        "C 220 d",
+        "C 250",
+        "C250",
+        "C 300",
+        "C 300 e",
+        "C 350 e",
+        "AMG C43",
+        "AMG C43 4MATIC Coupe"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "W206",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.0L PHEV",
+              "powertrain": "PHEV",
+              "drivetrain": "RWD",
+              "engine_cc": 1999,
+              "battery_kwh": 25.4,
+              "aliases": [
+                "C350e AMG Dynamic"
+              ],
+              "overrides": {},
+              "price_thb": 3399000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 3399000,
+              "price_max_thb": 3399000
+            }
+          ],
+          "trims": [
+            {
+              "name": "C 350 e AMG Dynamic (PHEV, 313 hp)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:188"
+                ]
+              },
+              "id": "c_350_e_amg_dynamic_phev_313_hp_phev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "mercedes_benz",
+        "name_en": "Mercedes-Benz",
+        "name_th": "เมอร์เซเดส-เบนซ์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Mercedes-Benz Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "benz",
+          "เบนซ์",
+          "mercedes"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mercedes_benz.mb_c_class",
+        "brand_id": "mercedes_benz",
+        "name_en": "C-Class",
+        "name_th": "ซี-คลาส",
+        "nameplate": "C-Class",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "c class",
+          "c220d",
+          "c350e",
+          "C 200",
+          "C 220 d",
+          "C 250",
+          "C250",
+          "C 300",
+          "C 300 e",
+          "C 350 e",
+          "AMG C43",
+          "AMG C43 4MATIC Coupe"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mercedes_benz.mb_c_class.w206",
+          "model_id": "mercedes_benz.mb_c_class",
+          "code": "W206",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mercedes_benz.mb_c_class.w206.2_0l_phev",
+          "generation_id": "mercedes_benz.mb_c_class.w206",
+          "name": "2.0L PHEV",
+          "powertrain": "PHEV",
+          "drivetrain": "RWD",
+          "engine_cc": 1999,
+          "battery_kwh": 25.4,
+          "price_thb": 3399000,
+          "price_min_thb": 3399000,
+          "price_max_thb": 3399000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "C350e AMG Dynamic"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mercedes_benz.mb_c_class.w206.trim.c_350_e_amg_dynamic_phev_313_hp_phev",
+          "generation_id": "mercedes_benz.mb_c_class.w206",
+          "name": "C 350 e AMG Dynamic (PHEV, 313 hp)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:188"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.mb_c_class.w206.trim.c_350_e_plug_in_hybrid_phev",
+          "generation_id": "mercedes_benz.mb_c_class.w206",
+          "name": "C 350 e plug-in hybrid",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1999,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4793,
+          "width_mm": 1820,
+          "height_mm": 1446,
+          "wheelbase_mm": null,
+          "tire_front": "225/45R18",
+          "tire_rear": "255/40R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "effe1fc4-a29f-44aa-ab7b-ca03d7d23556"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mercedes_benz.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9e9e61b3a72032c6682bde45:catalog",
+    "revision_id": "9e9e61b3a72032c6682bde45",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mercedes_benz.mb_c_class",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:03+00:00",
+    "payload": {
+      "brand": {
+        "id": "mercedes_benz",
+        "name_en": "Mercedes-Benz",
+        "name_th": "เมอร์เซเดส-เบนซ์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Mercedes-Benz Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "benz",
+          "เบนซ์",
+          "mercedes"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mercedes_benz.mb_c_class",
+        "brand_id": "mercedes_benz",
+        "name_en": "C-Class",
+        "name_th": "ซี-คลาส",
+        "nameplate": "C-Class",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "c class",
+          "c220d",
+          "c350e",
+          "C 200",
+          "C 220 d",
+          "C 250",
+          "C250",
+          "C 300",
+          "C 300 e",
+          "C 350 e",
+          "AMG C43",
+          "AMG C43 4MATIC Coupe"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mercedes_benz.mb_c_class.w206",
+          "model_id": "mercedes_benz.mb_c_class",
+          "code": "W206",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mercedes_benz.mb_c_class.w206.2_0l_phev",
+          "generation_id": "mercedes_benz.mb_c_class.w206",
+          "name": "2.0L PHEV",
+          "powertrain": "PHEV",
+          "drivetrain": "RWD",
+          "engine_cc": 1999,
+          "battery_kwh": 25.4,
+          "price_thb": 3399000,
+          "price_min_thb": 3399000,
+          "price_max_thb": 3399000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "C350e AMG Dynamic"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mercedes_benz.mb_c_class.w206.trim.c_350_e_amg_dynamic_phev_313_hp_phev",
+          "generation_id": "mercedes_benz.mb_c_class.w206",
+          "name": "C 350 e AMG Dynamic (PHEV, 313 hp)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:188"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.mb_c_class.w206.trim.c_350_e_plug_in_hybrid_phev",
+          "generation_id": "mercedes_benz.mb_c_class.w206",
+          "name": "C 350 e plug-in hybrid",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1999,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4793,
+          "width_mm": 1820,
+          "height_mm": 1446,
+          "wheelbase_mm": null,
+          "tire_front": "225/45R18",
+          "tire_rear": "255/40R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "effe1fc4-a29f-44aa-ab7b-ca03d7d23556"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

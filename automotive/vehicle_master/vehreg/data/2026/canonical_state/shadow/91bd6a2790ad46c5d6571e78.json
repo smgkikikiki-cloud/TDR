@@ -1,0 +1,753 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "91bd6a2790ad46c5d6571e78",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:27",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "bmw.bmw_3",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:01+00:00",
+    "before_hash": "e896e6cbc15cd9b89bac7bf0f94c3968dbce039c564e7e45ca1c314f67e60666",
+    "after_hash": "10791c5fa418e346d5e1d0a22792b06f15566855acd6a1742f94472648117a09",
+    "before": {
+      "id": "bmw_3",
+      "name_en": "3 Series",
+      "name_th": "ซีรีส์ 3",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "320d",
+        "330e",
+        "series 3",
+        "320i",
+        "318i",
+        "320Li",
+        "330Li",
+        "M340i",
+        "M340i xDrive",
+        "318d",
+        "328i",
+        "330i"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "G20",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2019-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.0L PHEV",
+              "powertrain": "PHEV",
+              "drivetrain": "RWD",
+              "engine_cc": 1998,
+              "battery_kwh": 12.0,
+              "aliases": [
+                "330e M Sport"
+              ],
+              "overrides": {},
+              "price_thb": 2799000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 2799000,
+              "price_max_thb": 2799000
+            },
+            {
+              "name": "2.0L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "RWD",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "ยังไม่ได้ตรวจราคา",
+              "aliases": [
+                "320d",
+                "320i",
+                "318i",
+                "318d",
+                "328i",
+                "330i",
+                "320Li",
+                "330Li",
+                "M340i",
+                "M340i xDrive"
+              ]
+            }
+          ],
+          "trims": [
+            {
+              "name": "320d M Sport",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:030"
+                ]
+              },
+              "id": "320d_m_sport_ice"
+            },
+            {
+              "name": "330e M Sport (PHEV)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:030"
+                ]
+              },
+              "id": "330e_m_sport_phev_phev"
+            },
+            {
+              "name": "330i M Sport",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:030"
+                ]
+              },
+              "id": "330i_m_sport_ice"
+            },
+            {
+              "name": "330Li M Sport (Long Wheelbase)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:030"
+                ]
+              },
+              "id": "330li_m_sport_long_wheelbase_ice"
+            },
+            {
+              "name": "M340i xDrive",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:030"
+                ]
+              },
+              "id": "m340i_xdrive_ice"
+            },
+            {
+              "name": "330e Touring M Sport",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:030"
+                ]
+              },
+              "id": "330e_touring_m_sport_phev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "bmw",
+        "name_en": "BMW",
+        "name_th": "บีเอ็มดับเบิลยู",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "BMW Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "บีเอ็มดับเบิลยู",
+          "bmw thailand"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "bmw.bmw_3",
+        "brand_id": "bmw",
+        "name_en": "3 Series",
+        "name_th": "ซีรีส์ 3",
+        "nameplate": "3 Series",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "320d",
+          "330e",
+          "series 3",
+          "320i",
+          "318i",
+          "320Li",
+          "330Li",
+          "M340i",
+          "M340i xDrive",
+          "318d",
+          "328i",
+          "330i"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "bmw.bmw_3.g20",
+          "model_id": "bmw.bmw_3",
+          "code": "G20",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2019-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "bmw.bmw_3.g20.2_0l_phev",
+          "generation_id": "bmw.bmw_3.g20",
+          "name": "2.0L PHEV",
+          "powertrain": "PHEV",
+          "drivetrain": "RWD",
+          "engine_cc": 1998,
+          "battery_kwh": 12.0,
+          "price_thb": 2799000,
+          "price_min_thb": 2799000,
+          "price_max_thb": 2799000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "330e M Sport"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "bmw.bmw_3.g20.2_0l_ice",
+          "generation_id": "bmw.bmw_3.g20",
+          "name": "2.0L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [
+            "320d",
+            "320i",
+            "318i",
+            "318d",
+            "328i",
+            "330i",
+            "320Li",
+            "330Li",
+            "M340i",
+            "M340i xDrive"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "bmw.bmw_3.g20.trim.320d_m_sport_ice",
+          "generation_id": "bmw.bmw_3.g20",
+          "name": "320d M Sport",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:030"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_3.g20.trim.330e_m_sport_phev_phev",
+          "generation_id": "bmw.bmw_3.g20",
+          "name": "330e M Sport (PHEV)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:030"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_3.g20.trim.330i_m_sport_ice",
+          "generation_id": "bmw.bmw_3.g20",
+          "name": "330i M Sport",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:030"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_3.g20.trim.330li_m_sport_long_wheelbase_ice",
+          "generation_id": "bmw.bmw_3.g20",
+          "name": "330Li M Sport (Long Wheelbase)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:030"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_3.g20.trim.m340i_xdrive_ice",
+          "generation_id": "bmw.bmw_3.g20",
+          "name": "M340i xDrive",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4714,
+          "width_mm": 1827,
+          "height_mm": 1440,
+          "wheelbase_mm": null,
+          "tire_front": "225/40R19",
+          "tire_rear": "255/35R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:030"
+            ],
+            "eco": [
+              "d70c7cdb-3201-4d0d-b090-e90a8ffbe50b"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_3.g20.trim.330e_touring_m_sport_phev",
+          "generation_id": "bmw.bmw_3.g20",
+          "name": "330e Touring M Sport",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:030"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/bmw.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "91bd6a2790ad46c5d6571e78:catalog",
+    "revision_id": "91bd6a2790ad46c5d6571e78",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "bmw.bmw_3",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:01+00:00",
+    "payload": {
+      "brand": {
+        "id": "bmw",
+        "name_en": "BMW",
+        "name_th": "บีเอ็มดับเบิลยู",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "BMW Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "บีเอ็มดับเบิลยู",
+          "bmw thailand"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "bmw.bmw_3",
+        "brand_id": "bmw",
+        "name_en": "3 Series",
+        "name_th": "ซีรีส์ 3",
+        "nameplate": "3 Series",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "320d",
+          "330e",
+          "series 3",
+          "320i",
+          "318i",
+          "320Li",
+          "330Li",
+          "M340i",
+          "M340i xDrive",
+          "318d",
+          "328i",
+          "330i"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "bmw.bmw_3.g20",
+          "model_id": "bmw.bmw_3",
+          "code": "G20",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2019-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "bmw.bmw_3.g20.2_0l_phev",
+          "generation_id": "bmw.bmw_3.g20",
+          "name": "2.0L PHEV",
+          "powertrain": "PHEV",
+          "drivetrain": "RWD",
+          "engine_cc": 1998,
+          "battery_kwh": 12.0,
+          "price_thb": 2799000,
+          "price_min_thb": 2799000,
+          "price_max_thb": 2799000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "330e M Sport"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "bmw.bmw_3.g20.2_0l_ice",
+          "generation_id": "bmw.bmw_3.g20",
+          "name": "2.0L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [
+            "320d",
+            "320i",
+            "318i",
+            "318d",
+            "328i",
+            "330i",
+            "320Li",
+            "330Li",
+            "M340i",
+            "M340i xDrive"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "bmw.bmw_3.g20.trim.320d_m_sport_ice",
+          "generation_id": "bmw.bmw_3.g20",
+          "name": "320d M Sport",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:030"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_3.g20.trim.330e_m_sport_phev_phev",
+          "generation_id": "bmw.bmw_3.g20",
+          "name": "330e M Sport (PHEV)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:030"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_3.g20.trim.330i_m_sport_ice",
+          "generation_id": "bmw.bmw_3.g20",
+          "name": "330i M Sport",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:030"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_3.g20.trim.330li_m_sport_long_wheelbase_ice",
+          "generation_id": "bmw.bmw_3.g20",
+          "name": "330Li M Sport (Long Wheelbase)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:030"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_3.g20.trim.m340i_xdrive_ice",
+          "generation_id": "bmw.bmw_3.g20",
+          "name": "M340i xDrive",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4714,
+          "width_mm": 1827,
+          "height_mm": 1440,
+          "wheelbase_mm": null,
+          "tire_front": "225/40R19",
+          "tire_rear": "255/35R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:030"
+            ],
+            "eco": [
+              "d70c7cdb-3201-4d0d-b090-e90a8ffbe50b"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_3.g20.trim.330e_touring_m_sport_phev",
+          "generation_id": "bmw.bmw_3.g20",
+          "name": "330e Touring M Sport",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:030"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

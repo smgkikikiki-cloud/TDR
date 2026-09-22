@@ -1,0 +1,650 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "3c300c95b731571168e33780",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:282",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "lexus.lexus_rx",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:25+00:00",
+    "before_hash": "3106baa49d107a53457c36d88add3ee78ca96b72efc0ec8169e583699673261e",
+    "after_hash": "fc82f3310cfdefaf0e5cfae7f0251d992aeb19e7f3c07942d6c9079bfd217d33",
+    "before": {
+      "id": "lexus_rx",
+      "name_en": "RX",
+      "name_th": "อาร์เอ็กซ์",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "rx350h"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "AL30",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.5L HEV AWD",
+              "powertrain": "HEV",
+              "drivetrain": "AWD",
+              "engine_cc": 2487,
+              "battery_kwh": 1.0,
+              "aliases": [
+                "RX350h Premium"
+              ],
+              "overrides": {},
+              "price_thb": 4790000,
+              "import_type": "CBU",
+              "origin_country": "JP",
+              "price_note": "seed-unverified",
+              "price_min_thb": 4790000,
+              "price_max_thb": 4790000
+            }
+          ],
+          "trims": [
+            {
+              "name": "350h Luxury",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:156"
+                ]
+              },
+              "aliases": [
+                "RX 350h Luxury"
+              ],
+              "id": "350h_luxury_hev"
+            },
+            {
+              "name": "350h Premium",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:156"
+                ]
+              },
+              "aliases": [
+                "RX 350h Premium"
+              ],
+              "id": "350h_premium_hev"
+            },
+            {
+              "name": "500h F Sport Performance AWD (371 hp)",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:156"
+                ]
+              },
+              "aliases": [
+                "RX 500h F Sport Performance AWD (371 hp)"
+              ],
+              "id": "500h_f_sport_performance_awd_371_hp_hev"
+            },
+            {
+              "name": "RX450h+ Luxury AWD",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4890,
+              "width_mm": 1920,
+              "height_mm": 1695,
+              "engine_cc": 2487,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "4da0bd73-d6cb-49c2-b32d-769ea35cb76b"
+                ]
+              }
+            },
+            {
+              "name": "RX450h+ Premium AWD",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4890,
+              "width_mm": 1920,
+              "height_mm": 1695,
+              "engine_cc": 2487,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "6a5f79c0-9391-42b6-aaee-9151ff314160"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "lexus",
+        "name_en": "Lexus",
+        "name_th": "เล็กซัส",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "เล็กซัส"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "lexus.lexus_rx",
+        "brand_id": "lexus",
+        "name_en": "RX",
+        "name_th": "อาร์เอ็กซ์",
+        "nameplate": "RX",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "rx350h"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "lexus.lexus_rx.al30",
+          "model_id": "lexus.lexus_rx",
+          "code": "AL30",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "lexus.lexus_rx.al30.2_5l_hev_awd",
+          "generation_id": "lexus.lexus_rx.al30",
+          "name": "2.5L HEV AWD",
+          "powertrain": "HEV",
+          "drivetrain": "AWD",
+          "engine_cc": 2487,
+          "battery_kwh": 1.0,
+          "price_thb": 4790000,
+          "price_min_thb": 4790000,
+          "price_max_thb": 4790000,
+          "import_type": "CBU",
+          "origin_country": "JP",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "RX350h Premium"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "lexus.lexus_rx.al30.trim.350h_luxury_hev",
+          "generation_id": "lexus.lexus_rx.al30",
+          "name": "350h Luxury",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "RX 350h Luxury"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:156"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_rx.al30.trim.350h_premium_hev",
+          "generation_id": "lexus.lexus_rx.al30",
+          "name": "350h Premium",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "RX 350h Premium"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:156"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_rx.al30.trim.500h_f_sport_performance_awd_371_hp_hev",
+          "generation_id": "lexus.lexus_rx.al30",
+          "name": "500h F Sport Performance AWD (371 hp)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "RX 500h F Sport Performance AWD (371 hp)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:156"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_rx.al30.trim.rx450h_luxury_awd_phev",
+          "generation_id": "lexus.lexus_rx.al30",
+          "name": "RX450h+ Luxury AWD",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4890,
+          "width_mm": 1920,
+          "height_mm": 1695,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "4da0bd73-d6cb-49c2-b32d-769ea35cb76b"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_rx.al30.trim.rx450h_premium_awd_phev",
+          "generation_id": "lexus.lexus_rx.al30",
+          "name": "RX450h+ Premium AWD",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4890,
+          "width_mm": 1920,
+          "height_mm": 1695,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "6a5f79c0-9391-42b6-aaee-9151ff314160"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_rx.al30.trim.rx450h_grand_luxury_plus_awd_phev",
+          "generation_id": "lexus.lexus_rx.al30",
+          "name": "RX450h+ Grand Luxury Plus AWD",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4890,
+          "width_mm": 1920,
+          "height_mm": 1695,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "e253da8c-df5f-4e3e-b709-ae297f865932"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/lexus.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "3c300c95b731571168e33780:catalog",
+    "revision_id": "3c300c95b731571168e33780",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "lexus.lexus_rx",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:25+00:00",
+    "payload": {
+      "brand": {
+        "id": "lexus",
+        "name_en": "Lexus",
+        "name_th": "เล็กซัส",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "เล็กซัส"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "lexus.lexus_rx",
+        "brand_id": "lexus",
+        "name_en": "RX",
+        "name_th": "อาร์เอ็กซ์",
+        "nameplate": "RX",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "rx350h"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "lexus.lexus_rx.al30",
+          "model_id": "lexus.lexus_rx",
+          "code": "AL30",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "lexus.lexus_rx.al30.2_5l_hev_awd",
+          "generation_id": "lexus.lexus_rx.al30",
+          "name": "2.5L HEV AWD",
+          "powertrain": "HEV",
+          "drivetrain": "AWD",
+          "engine_cc": 2487,
+          "battery_kwh": 1.0,
+          "price_thb": 4790000,
+          "price_min_thb": 4790000,
+          "price_max_thb": 4790000,
+          "import_type": "CBU",
+          "origin_country": "JP",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "RX350h Premium"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "lexus.lexus_rx.al30.trim.350h_luxury_hev",
+          "generation_id": "lexus.lexus_rx.al30",
+          "name": "350h Luxury",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "RX 350h Luxury"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:156"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_rx.al30.trim.350h_premium_hev",
+          "generation_id": "lexus.lexus_rx.al30",
+          "name": "350h Premium",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "RX 350h Premium"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:156"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_rx.al30.trim.500h_f_sport_performance_awd_371_hp_hev",
+          "generation_id": "lexus.lexus_rx.al30",
+          "name": "500h F Sport Performance AWD (371 hp)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "RX 500h F Sport Performance AWD (371 hp)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:156"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_rx.al30.trim.rx450h_luxury_awd_phev",
+          "generation_id": "lexus.lexus_rx.al30",
+          "name": "RX450h+ Luxury AWD",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4890,
+          "width_mm": 1920,
+          "height_mm": 1695,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "4da0bd73-d6cb-49c2-b32d-769ea35cb76b"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_rx.al30.trim.rx450h_premium_awd_phev",
+          "generation_id": "lexus.lexus_rx.al30",
+          "name": "RX450h+ Premium AWD",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4890,
+          "width_mm": 1920,
+          "height_mm": 1695,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "6a5f79c0-9391-42b6-aaee-9151ff314160"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "lexus.lexus_rx.al30.trim.rx450h_grand_luxury_plus_awd_phev",
+          "generation_id": "lexus.lexus_rx.al30",
+          "name": "RX450h+ Grand Luxury Plus AWD",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2487,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4890,
+          "width_mm": 1920,
+          "height_mm": 1695,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "e253da8c-df5f-4e3e-b709-ae297f865932"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

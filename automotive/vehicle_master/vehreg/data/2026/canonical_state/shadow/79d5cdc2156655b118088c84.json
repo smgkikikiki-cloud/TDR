@@ -1,0 +1,406 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "79d5cdc2156655b118088c84",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:140",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mitsubishi.xpander",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:50+00:00",
+    "before_hash": "2ad68421ec81b460124dfb41014bf1d277b17165ed53ed701ea7c9e3ce815b33",
+    "after_hash": "28e3c2f73cfb86503d07f7c36bf0cc75e5623b6113bdce9895c543d44937dc7a",
+    "before": {
+      "id": "xpander",
+      "name_en": "Xpander",
+      "name_th": "เอ็กซ์แพนเดอร์",
+      "nameplate": "",
+      "body_type": "MPV",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "เอ็กซ์แพนเดอร์"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "A1",
+          "segment": "B",
+          "seats": 7,
+          "launched": "2018-08-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.5L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "engine_cc": 1499,
+              "battery_kwh": null,
+              "aliases": [
+                "1.5 GT"
+              ],
+              "overrides": {},
+              "price_thb": 899000,
+              "import_type": "CBU",
+              "origin_country": "ID",
+              "price_note": "seed-unverified",
+              "price_min_thb": 899000,
+              "price_max_thb": 899000
+            },
+            {
+              "name": "1.6L HEV",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "engine_cc": 1600,
+              "battery_kwh": 0.8,
+              "aliases": [
+                "1.6 HEV GT"
+              ],
+              "overrides": {},
+              "price_thb": 1099000,
+              "import_type": "CBU",
+              "origin_country": "ID",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1099000,
+              "price_max_thb": 1099000
+            }
+          ],
+          "trims": [
+            {
+              "name": "HEV GT (e:MOTION Full Hybrid)",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:227"
+                ]
+              },
+              "id": "hev_gt_e_motion_full_hybrid_hev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "mitsubishi",
+        "name_en": "Mitsubishi",
+        "name_th": "มิตซูบิชิ",
+        "brand_segment": "MASS",
+        "oem_group": "Mitsubishi Motors",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "มิตซูบิชิ",
+          "mitsubishi motors"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mitsubishi.xpander",
+        "brand_id": "mitsubishi",
+        "name_en": "Xpander",
+        "name_th": "เอ็กซ์แพนเดอร์",
+        "nameplate": "Xpander",
+        "body_type": "MPV",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "เอ็กซ์แพนเดอร์"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mitsubishi.xpander.a1",
+          "model_id": "mitsubishi.xpander",
+          "code": "A1",
+          "segment": "B",
+          "seats": 7,
+          "launched": "2018-08-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mitsubishi.xpander.a1.1_5l_ice",
+          "generation_id": "mitsubishi.xpander.a1",
+          "name": "1.5L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1499,
+          "battery_kwh": null,
+          "price_thb": 899000,
+          "price_min_thb": 899000,
+          "price_max_thb": 899000,
+          "import_type": "CBU",
+          "origin_country": "ID",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.5 GT"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "mitsubishi.xpander.a1.1_6l_hev",
+          "generation_id": "mitsubishi.xpander.a1",
+          "name": "1.6L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1600,
+          "battery_kwh": 0.8,
+          "price_thb": 1099000,
+          "price_min_thb": 1099000,
+          "price_max_thb": 1099000,
+          "import_type": "CBU",
+          "origin_country": "ID",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.6 HEV GT"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mitsubishi.xpander.a1.trim.hev_gt_e_motion_full_hybrid_hev",
+          "generation_id": "mitsubishi.xpander.a1",
+          "name": "HEV GT (e:MOTION Full Hybrid)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:227"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mitsubishi.xpander.a1.trim.gt_ice",
+          "generation_id": "mitsubishi.xpander.a1",
+          "name": "GT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1499,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4595,
+          "width_mm": 1750,
+          "height_mm": 1750,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "55cdb6fd-569c-4d6c-866f-8ecdd31a41ee"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mitsubishi.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "79d5cdc2156655b118088c84:catalog",
+    "revision_id": "79d5cdc2156655b118088c84",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mitsubishi.xpander",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:50+00:00",
+    "payload": {
+      "brand": {
+        "id": "mitsubishi",
+        "name_en": "Mitsubishi",
+        "name_th": "มิตซูบิชิ",
+        "brand_segment": "MASS",
+        "oem_group": "Mitsubishi Motors",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "มิตซูบิชิ",
+          "mitsubishi motors"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mitsubishi.xpander",
+        "brand_id": "mitsubishi",
+        "name_en": "Xpander",
+        "name_th": "เอ็กซ์แพนเดอร์",
+        "nameplate": "Xpander",
+        "body_type": "MPV",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "เอ็กซ์แพนเดอร์"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mitsubishi.xpander.a1",
+          "model_id": "mitsubishi.xpander",
+          "code": "A1",
+          "segment": "B",
+          "seats": 7,
+          "launched": "2018-08-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mitsubishi.xpander.a1.1_5l_ice",
+          "generation_id": "mitsubishi.xpander.a1",
+          "name": "1.5L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1499,
+          "battery_kwh": null,
+          "price_thb": 899000,
+          "price_min_thb": 899000,
+          "price_max_thb": 899000,
+          "import_type": "CBU",
+          "origin_country": "ID",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.5 GT"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "mitsubishi.xpander.a1.1_6l_hev",
+          "generation_id": "mitsubishi.xpander.a1",
+          "name": "1.6L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1600,
+          "battery_kwh": 0.8,
+          "price_thb": 1099000,
+          "price_min_thb": 1099000,
+          "price_max_thb": 1099000,
+          "import_type": "CBU",
+          "origin_country": "ID",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.6 HEV GT"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mitsubishi.xpander.a1.trim.hev_gt_e_motion_full_hybrid_hev",
+          "generation_id": "mitsubishi.xpander.a1",
+          "name": "HEV GT (e:MOTION Full Hybrid)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:227"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mitsubishi.xpander.a1.trim.gt_ice",
+          "generation_id": "mitsubishi.xpander.a1",
+          "name": "GT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1499,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4595,
+          "width_mm": 1750,
+          "height_mm": 1750,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "55cdb6fd-569c-4d6c-866f-8ecdd31a41ee"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

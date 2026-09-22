@@ -1,0 +1,727 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5dad536b0bc409287f1b5a0c",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:158",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "audi.audi_q3",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:13+00:00",
+    "before_hash": "c38ed35b245be1a32636ca228b0d7b2d9e90bf05fd6200e7be9aacb6d14075d3",
+    "after_hash": "5b2cbc79d9931fa216685edf202f5055b4e53c506104a705e8a48cfd76a959ff",
+    "before": {
+      "id": "audi_q3",
+      "name_en": "Q3",
+      "name_th": "คิว3",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "q 3"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "F3",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2019-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.5L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "engine_cc": 1498,
+              "battery_kwh": null,
+              "aliases": [
+                "35 TFSI S line"
+              ],
+              "overrides": {},
+              "price_thb": 2799000,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "seed-unverified",
+              "price_min_thb": 2799000,
+              "price_max_thb": 2799000
+            }
+          ],
+          "trims": [
+            {
+              "name": "35 TFSI",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:013"
+                ]
+              },
+              "aliases": [
+                "Q3 35 TFSI"
+              ],
+              "id": "35_tfsi_ice"
+            },
+            {
+              "name": "35 TFSI S line",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:013"
+                ]
+              },
+              "aliases": [
+                "Q3 35 TFSI S line"
+              ],
+              "id": "35_tfsi_s_line_ice"
+            },
+            {
+              "name": "40 TFSI quattro S line Black Edition",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:013"
+                ]
+              },
+              "aliases": [
+                "Q3 40 TFSI quattro S line Black Edition"
+              ],
+              "id": "40_tfsi_quattro_s_line_black_edition_ice"
+            },
+            {
+              "name": "Sportback 35 TFSI S line",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:013"
+                ]
+              },
+              "aliases": [
+                "Q3 Sportback 35 TFSI S line"
+              ],
+              "id": "sportback_35_tfsi_s_line_ice"
+            },
+            {
+              "name": "Sportback 40 TFSI quattro S line Black Edition",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:013"
+                ]
+              },
+              "aliases": [
+                "Q3 Sportback 40 TFSI quattro S line Black Edition"
+              ],
+              "id": "sportback_40_tfsi_quattro_s_line_black_edition_ice"
+            },
+            {
+              "name": "S line Tech Plus",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4531,
+              "width_mm": 1859,
+              "height_mm": 1601,
+              "engine_cc": 1498,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "b9a4dcd1-c2a1-4b3d-b867-fe889686be93"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "audi",
+        "name_en": "Audi",
+        "name_th": "เอาดี้",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Volkswagen Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "เอาดี้"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "audi.audi_q3",
+        "brand_id": "audi",
+        "name_en": "Q3",
+        "name_th": "คิว3",
+        "nameplate": "Q3",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "q 3"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "audi.audi_q3.f3",
+          "model_id": "audi.audi_q3",
+          "code": "F3",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2019-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "audi.audi_q3.f3.1_5l_ice",
+          "generation_id": "audi.audi_q3.f3",
+          "name": "1.5L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "price_thb": 2799000,
+          "price_min_thb": 2799000,
+          "price_max_thb": 2799000,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "35 TFSI S line"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "audi.audi_q3.f3.trim.35_tfsi_ice",
+          "generation_id": "audi.audi_q3.f3",
+          "name": "35 TFSI",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Q3 35 TFSI"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:013"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.audi_q3.f3.trim.35_tfsi_s_line_ice",
+          "generation_id": "audi.audi_q3.f3",
+          "name": "35 TFSI S line",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Q3 35 TFSI S line"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:013"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.audi_q3.f3.trim.40_tfsi_quattro_s_line_black_edition_ice",
+          "generation_id": "audi.audi_q3.f3",
+          "name": "40 TFSI quattro S line Black Edition",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Q3 40 TFSI quattro S line Black Edition"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:013"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.audi_q3.f3.trim.sportback_35_tfsi_s_line_ice",
+          "generation_id": "audi.audi_q3.f3",
+          "name": "Sportback 35 TFSI S line",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Q3 Sportback 35 TFSI S line"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:013"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.audi_q3.f3.trim.sportback_40_tfsi_quattro_s_line_black_edition_ice",
+          "generation_id": "audi.audi_q3.f3",
+          "name": "Sportback 40 TFSI quattro S line Black Edition",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Q3 Sportback 40 TFSI quattro S line Black Edition"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:013"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.audi_q3.f3.trim.s_line_tech_plus_ice",
+          "generation_id": "audi.audi_q3.f3",
+          "name": "S line Tech Plus",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4531,
+          "width_mm": 1859,
+          "height_mm": 1601,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "b9a4dcd1-c2a1-4b3d-b867-fe889686be93"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.audi_q3.f3.trim.sportback_quattro_s_line_tech_pro_ice",
+          "generation_id": "audi.audi_q3.f3",
+          "name": "Sportback quattro S line Tech Pro",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1984,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4531,
+          "width_mm": 1859,
+          "height_mm": 1559,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "d966025c-123f-493a-91d1-48d7248596a4"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/audi.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5dad536b0bc409287f1b5a0c:catalog",
+    "revision_id": "5dad536b0bc409287f1b5a0c",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "audi.audi_q3",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:13+00:00",
+    "payload": {
+      "brand": {
+        "id": "audi",
+        "name_en": "Audi",
+        "name_th": "เอาดี้",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Volkswagen Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "เอาดี้"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "audi.audi_q3",
+        "brand_id": "audi",
+        "name_en": "Q3",
+        "name_th": "คิว3",
+        "nameplate": "Q3",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "q 3"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "audi.audi_q3.f3",
+          "model_id": "audi.audi_q3",
+          "code": "F3",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2019-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "audi.audi_q3.f3.1_5l_ice",
+          "generation_id": "audi.audi_q3.f3",
+          "name": "1.5L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "price_thb": 2799000,
+          "price_min_thb": 2799000,
+          "price_max_thb": 2799000,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "35 TFSI S line"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "audi.audi_q3.f3.trim.35_tfsi_ice",
+          "generation_id": "audi.audi_q3.f3",
+          "name": "35 TFSI",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Q3 35 TFSI"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:013"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.audi_q3.f3.trim.35_tfsi_s_line_ice",
+          "generation_id": "audi.audi_q3.f3",
+          "name": "35 TFSI S line",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Q3 35 TFSI S line"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:013"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.audi_q3.f3.trim.40_tfsi_quattro_s_line_black_edition_ice",
+          "generation_id": "audi.audi_q3.f3",
+          "name": "40 TFSI quattro S line Black Edition",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Q3 40 TFSI quattro S line Black Edition"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:013"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.audi_q3.f3.trim.sportback_35_tfsi_s_line_ice",
+          "generation_id": "audi.audi_q3.f3",
+          "name": "Sportback 35 TFSI S line",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Q3 Sportback 35 TFSI S line"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:013"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.audi_q3.f3.trim.sportback_40_tfsi_quattro_s_line_black_edition_ice",
+          "generation_id": "audi.audi_q3.f3",
+          "name": "Sportback 40 TFSI quattro S line Black Edition",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Q3 Sportback 40 TFSI quattro S line Black Edition"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:013"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.audi_q3.f3.trim.s_line_tech_plus_ice",
+          "generation_id": "audi.audi_q3.f3",
+          "name": "S line Tech Plus",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4531,
+          "width_mm": 1859,
+          "height_mm": 1601,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "b9a4dcd1-c2a1-4b3d-b867-fe889686be93"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.audi_q3.f3.trim.sportback_quattro_s_line_tech_pro_ice",
+          "generation_id": "audi.audi_q3.f3",
+          "name": "Sportback quattro S line Tech Pro",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1984,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4531,
+          "width_mm": 1859,
+          "height_mm": 1559,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "d966025c-123f-493a-91d1-48d7248596a4"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

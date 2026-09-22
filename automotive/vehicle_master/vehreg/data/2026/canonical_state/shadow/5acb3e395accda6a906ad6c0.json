@@ -1,0 +1,633 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5acb3e395accda6a906ad6c0",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:91",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "honda.crv",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:07+00:00",
+    "before_hash": "84f7e91e931bae098821b7affa1ef0708481e88b6fe9c7b5294225c22cbdd5bb",
+    "after_hash": "533f1658d94f30d99798285a294b70536bf04a4b781811cc239ee5915b016bc6",
+    "before": {
+      "id": "crv",
+      "name_en": "CR-V",
+      "name_th": "ซีอาร์-วี",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "crv",
+        "cr v"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "RS",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2023-11-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.0L HEV AWD",
+              "powertrain": "HEV",
+              "drivetrain": "AWD",
+              "engine_cc": 1993,
+              "battery_kwh": 1.1,
+              "aliases": [
+                "2.0 e:HEV ES 4WD"
+              ],
+              "overrides": {},
+              "price_thb": 1729000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1729000,
+              "price_max_thb": 1729000
+            },
+            {
+              "name": "2.0L HEV",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "engine_cc": 1993,
+              "battery_kwh": 1.1,
+              "aliases": [
+                "2.0 e:HEV RS"
+              ],
+              "overrides": {},
+              "price_thb": 1599000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1599000,
+              "price_max_thb": 1599000
+            }
+          ],
+          "trims": [
+            {
+              "name": "e:HEV RS",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4691,
+              "width_mm": 1866,
+              "height_mm": 1681,
+              "engine_cc": 1993,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "f2ae505a-7a63-4f15-be12-15f5e816a3b1"
+                ]
+              }
+            },
+            {
+              "name": "e:HEV RS 4WD",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4691,
+              "width_mm": 1866,
+              "height_mm": 1691,
+              "engine_cc": 1993,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "1fced373-f0a2-4d61-a703-34f8402dce28"
+                ]
+              }
+            },
+            {
+              "name": "e:HEV E",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4691,
+              "width_mm": 1866,
+              "height_mm": 1681,
+              "engine_cc": 1993,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "ab64bbe5-acd9-49da-8f9f-64135ebcff4d"
+                ]
+              }
+            },
+            {
+              "name": "e:HEV ES",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4691,
+              "width_mm": 1866,
+              "height_mm": 1681,
+              "engine_cc": 1993,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "b187f14b-fdce-438a-9ced-6b5494daf7cf"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "honda",
+        "name_en": "Honda",
+        "name_th": "ฮอนด้า",
+        "brand_segment": "MASS",
+        "oem_group": "Honda",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "ฮอนด้า",
+          "honda automobile"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "honda.crv",
+        "brand_id": "honda",
+        "name_en": "CR-V",
+        "name_th": "ซีอาร์-วี",
+        "nameplate": "CR-V",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "crv",
+          "cr v"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "honda.crv.rs",
+          "model_id": "honda.crv",
+          "code": "RS",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2023-11-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "honda.crv.rs.2_0l_hev_awd",
+          "generation_id": "honda.crv.rs",
+          "name": "2.0L HEV AWD",
+          "powertrain": "HEV",
+          "drivetrain": "AWD",
+          "engine_cc": 1993,
+          "battery_kwh": 1.1,
+          "price_thb": 1729000,
+          "price_min_thb": 1729000,
+          "price_max_thb": 1729000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.0 e:HEV ES 4WD"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "honda.crv.rs.2_0l_hev",
+          "generation_id": "honda.crv.rs",
+          "name": "2.0L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1993,
+          "battery_kwh": 1.1,
+          "price_thb": 1599000,
+          "price_min_thb": 1599000,
+          "price_max_thb": 1599000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.0 e:HEV RS"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "honda.crv.rs.trim.e_hev_rs_hev",
+          "generation_id": "honda.crv.rs",
+          "name": "e:HEV RS",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4691,
+          "width_mm": 1866,
+          "height_mm": 1681,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "f2ae505a-7a63-4f15-be12-15f5e816a3b1"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "honda.crv.rs.trim.e_hev_rs_4wd_hev",
+          "generation_id": "honda.crv.rs",
+          "name": "e:HEV RS 4WD",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4691,
+          "width_mm": 1866,
+          "height_mm": 1691,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "1fced373-f0a2-4d61-a703-34f8402dce28"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "honda.crv.rs.trim.e_hev_e_hev",
+          "generation_id": "honda.crv.rs",
+          "name": "e:HEV E",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4691,
+          "width_mm": 1866,
+          "height_mm": 1681,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "ab64bbe5-acd9-49da-8f9f-64135ebcff4d"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "honda.crv.rs.trim.e_hev_es_hev",
+          "generation_id": "honda.crv.rs",
+          "name": "e:HEV ES",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4691,
+          "width_mm": 1866,
+          "height_mm": 1681,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "b187f14b-fdce-438a-9ced-6b5494daf7cf"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "honda.crv.rs.trim.e_hev_hunt_hev",
+          "generation_id": "honda.crv.rs",
+          "name": "e:HEV HuNT",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4691,
+          "width_mm": 1866,
+          "height_mm": 1681,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "21f728b0-4666-46f7-acb7-49f689d5ec32"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/honda.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5acb3e395accda6a906ad6c0:catalog",
+    "revision_id": "5acb3e395accda6a906ad6c0",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "honda.crv",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:07+00:00",
+    "payload": {
+      "brand": {
+        "id": "honda",
+        "name_en": "Honda",
+        "name_th": "ฮอนด้า",
+        "brand_segment": "MASS",
+        "oem_group": "Honda",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "ฮอนด้า",
+          "honda automobile"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "honda.crv",
+        "brand_id": "honda",
+        "name_en": "CR-V",
+        "name_th": "ซีอาร์-วี",
+        "nameplate": "CR-V",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "crv",
+          "cr v"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "honda.crv.rs",
+          "model_id": "honda.crv",
+          "code": "RS",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2023-11-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "honda.crv.rs.2_0l_hev_awd",
+          "generation_id": "honda.crv.rs",
+          "name": "2.0L HEV AWD",
+          "powertrain": "HEV",
+          "drivetrain": "AWD",
+          "engine_cc": 1993,
+          "battery_kwh": 1.1,
+          "price_thb": 1729000,
+          "price_min_thb": 1729000,
+          "price_max_thb": 1729000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.0 e:HEV ES 4WD"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "honda.crv.rs.2_0l_hev",
+          "generation_id": "honda.crv.rs",
+          "name": "2.0L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1993,
+          "battery_kwh": 1.1,
+          "price_thb": 1599000,
+          "price_min_thb": 1599000,
+          "price_max_thb": 1599000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.0 e:HEV RS"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "honda.crv.rs.trim.e_hev_rs_hev",
+          "generation_id": "honda.crv.rs",
+          "name": "e:HEV RS",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4691,
+          "width_mm": 1866,
+          "height_mm": 1681,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "f2ae505a-7a63-4f15-be12-15f5e816a3b1"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "honda.crv.rs.trim.e_hev_rs_4wd_hev",
+          "generation_id": "honda.crv.rs",
+          "name": "e:HEV RS 4WD",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4691,
+          "width_mm": 1866,
+          "height_mm": 1691,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "1fced373-f0a2-4d61-a703-34f8402dce28"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "honda.crv.rs.trim.e_hev_e_hev",
+          "generation_id": "honda.crv.rs",
+          "name": "e:HEV E",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4691,
+          "width_mm": 1866,
+          "height_mm": 1681,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "ab64bbe5-acd9-49da-8f9f-64135ebcff4d"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "honda.crv.rs.trim.e_hev_es_hev",
+          "generation_id": "honda.crv.rs",
+          "name": "e:HEV ES",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4691,
+          "width_mm": 1866,
+          "height_mm": 1681,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "b187f14b-fdce-438a-9ced-6b5494daf7cf"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "honda.crv.rs.trim.e_hev_hunt_hev",
+          "generation_id": "honda.crv.rs",
+          "name": "e:HEV HuNT",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4691,
+          "width_mm": 1866,
+          "height_mm": 1681,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "21f728b0-4666-46f7-acb7-49f689d5ec32"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

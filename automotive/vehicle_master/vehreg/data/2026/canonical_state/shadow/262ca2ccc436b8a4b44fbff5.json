@@ -1,0 +1,369 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "262ca2ccc436b8a4b44fbff5",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:397",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "honda.step_wgn",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:36+00:00",
+    "before_hash": "b3ab1abc868bd23fbe173751a8bf68374c7c560dc1a3a441689faec455b5ec84",
+    "after_hash": "1e2c88fbbe775ea70fbde67e70b723245160db673224fab06114c8b3ffa9dae6",
+    "before": {
+      "id": "step_wgn",
+      "name_en": "Step WGN",
+      "name_th": "สเต็ปแวกอน",
+      "nameplate": "",
+      "body_type": "MPV",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "GREY",
+      "aliases": [
+        "step wgn",
+        "stepwgn"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "C",
+          "seats": 7,
+          "launched": "2022-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.0L HEV",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "engine_cc": 1993,
+              "battery_kwh": 1.1,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "UNKNOWN",
+              "origin_country": "UNKNOWN",
+              "price_note": "grey import",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Spada 1.5 Turbo / e:HEV",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:111"
+                ]
+              },
+              "id": "spada_1_5_turbo_e_hev_hev"
+            },
+            {
+              "name": "Spada Premium Line e:HEV",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:111"
+                ],
+                "eco": [
+                  "982626bc-7135-4a4e-b2dc-333d3760ddaf"
+                ]
+              },
+              "id": "spada_premium_line_e_hev_hev",
+              "seats": 7,
+              "length_mm": 4830,
+              "width_mm": 1750,
+              "height_mm": 1845,
+              "engine_cc": 1993,
+              "transmission": "CVT"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "honda",
+        "name_en": "Honda",
+        "name_th": "ฮอนด้า",
+        "brand_segment": "MASS",
+        "oem_group": "Honda",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "ฮอนด้า",
+          "honda automobile"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "honda.step_wgn",
+        "brand_id": "honda",
+        "name_en": "Step WGN",
+        "name_th": "สเต็ปแวกอน",
+        "nameplate": "Step WGN",
+        "body_type": "MPV",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "GREY",
+        "aliases": [
+          "step wgn",
+          "stepwgn"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "honda.step_wgn.gen1",
+          "model_id": "honda.step_wgn",
+          "code": "gen1",
+          "segment": "C",
+          "seats": 7,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "honda.step_wgn.gen1.2_0l_hev",
+          "generation_id": "honda.step_wgn.gen1",
+          "name": "2.0L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1993,
+          "battery_kwh": 1.1,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "UNKNOWN",
+          "origin_country": "UNKNOWN",
+          "price_note": "grey import",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "honda.step_wgn.gen1.trim.spada_1_5_turbo_e_hev_hev",
+          "generation_id": "honda.step_wgn.gen1",
+          "name": "Spada 1.5 Turbo / e:HEV",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:111"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "honda.step_wgn.gen1.trim.spada_premium_line_e_hev_hev",
+          "generation_id": "honda.step_wgn.gen1",
+          "name": "Spada Premium Line e:HEV",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4830,
+          "width_mm": 1750,
+          "height_mm": 1845,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:111"
+            ],
+            "eco": [
+              "d5539fae-1cd2-4c0c-b2d4-6c6e70e4e572"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/honda.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "262ca2ccc436b8a4b44fbff5:catalog",
+    "revision_id": "262ca2ccc436b8a4b44fbff5",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "honda.step_wgn",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:36+00:00",
+    "payload": {
+      "brand": {
+        "id": "honda",
+        "name_en": "Honda",
+        "name_th": "ฮอนด้า",
+        "brand_segment": "MASS",
+        "oem_group": "Honda",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "ฮอนด้า",
+          "honda automobile"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "honda.step_wgn",
+        "brand_id": "honda",
+        "name_en": "Step WGN",
+        "name_th": "สเต็ปแวกอน",
+        "nameplate": "Step WGN",
+        "body_type": "MPV",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "GREY",
+        "aliases": [
+          "step wgn",
+          "stepwgn"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "honda.step_wgn.gen1",
+          "model_id": "honda.step_wgn",
+          "code": "gen1",
+          "segment": "C",
+          "seats": 7,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "honda.step_wgn.gen1.2_0l_hev",
+          "generation_id": "honda.step_wgn.gen1",
+          "name": "2.0L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1993,
+          "battery_kwh": 1.1,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "UNKNOWN",
+          "origin_country": "UNKNOWN",
+          "price_note": "grey import",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "honda.step_wgn.gen1.trim.spada_1_5_turbo_e_hev_hev",
+          "generation_id": "honda.step_wgn.gen1",
+          "name": "Spada 1.5 Turbo / e:HEV",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:111"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "honda.step_wgn.gen1.trim.spada_premium_line_e_hev_hev",
+          "generation_id": "honda.step_wgn.gen1",
+          "name": "Spada Premium Line e:HEV",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 7,
+          "length_mm": 4830,
+          "width_mm": 1750,
+          "height_mm": 1845,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:111"
+            ],
+            "eco": [
+              "d5539fae-1cd2-4c0c-b2d4-6c6e70e4e572"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

@@ -71,6 +71,81 @@
                 ]
               },
               "id": "b4_mild_hybrid_ultimate_dark_197_hp_ice"
+            },
+            {
+              "name": "Pure Electric Single Motor",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4440,
+              "width_mm": 1863,
+              "height_mm": 1647,
+              "tire_front": "235/50R19",
+              "tire_rear": "255/45R19",
+              "source_refs": {
+                "eco": [
+                  "4d4d26d1-e1f9-432f-917b-86f6d5e3ada2"
+                ]
+              }
+            },
+            {
+              "name": "Pure Electric Twin Motor",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4440,
+              "width_mm": 1873,
+              "height_mm": 1647,
+              "tire_front": "235/50R19",
+              "tire_rear": "255/45R19",
+              "source_refs": {
+                "eco": [
+                  "c79b80f1-1e46-4b8d-920e-c31227194224"
+                ]
+              }
+            },
+            {
+              "name": "Ultimate T5 Plug-in Hybrid Bright",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4440,
+              "width_mm": 1863,
+              "height_mm": 1657,
+              "engine_cc": 1477,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "3971a1fc-9edf-4171-a2a2-233d5b9335e3"
+                ]
+              }
+            },
+            {
+              "name": "Plus T5 Plug-in Hybrid Dark",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4440,
+              "width_mm": 1863,
+              "height_mm": 1657,
+              "engine_cc": 1477,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "f90f1502-e2b1-4fbe-8dff-944fa26abd9e"
+                ]
+              }
+            },
+            {
+              "name": "Pure Electric",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4440,
+              "width_mm": 1863,
+              "height_mm": 1651,
+              "tire_front": "235/50R19",
+              "tire_rear": "255/45R19",
+              "source_refs": {
+                "eco": [
+                  "77c4c744-aab5-47e7-a042-b15370d670e3"
+                ]
+              }
             }
           ]
         }
@@ -122,9 +197,18 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:312"
+                ],
+                "eco": [
+                  "d9220fdb-60da-4454-959a-20e4803c5986"
                 ]
               },
-              "id": "recharge_t8_plug_in_hybrid_plus_dark_phev"
+              "id": "recharge_t8_plug_in_hybrid_plus_dark_phev",
+              "seats": 5,
+              "length_mm": 4708,
+              "width_mm": 1902,
+              "height_mm": 1656,
+              "engine_cc": 1969,
+              "transmission": "AUTOMATIC"
             },
             {
               "name": "Recharge T8 Plug-in Hybrid Ultimate Dark",
@@ -132,9 +216,63 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:312"
+                ],
+                "eco": [
+                  "69afef9f-c26a-4e04-92f2-457d337378f2"
                 ]
               },
-              "id": "recharge_t8_plug_in_hybrid_ultimate_dark_phev"
+              "id": "recharge_t8_plug_in_hybrid_ultimate_dark_phev",
+              "seats": 5,
+              "length_mm": 4708,
+              "width_mm": 1902,
+              "height_mm": 1656,
+              "engine_cc": 1969,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "name": "Ultra T8 Plug-in Hybrid Bright",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4708,
+              "width_mm": 1902,
+              "height_mm": 1651,
+              "engine_cc": 1969,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "7822724b-5ac9-487a-bb1d-42aa11a56c2c"
+                ]
+              }
+            },
+            {
+              "name": "Plus T8 Plug-in Hybrid Dark",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4708,
+              "width_mm": 1902,
+              "height_mm": 1656,
+              "engine_cc": 1969,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "9a7d5e4d-90c0-42a2-bc5a-19bad288ed1d"
+                ]
+              }
+            },
+            {
+              "name": "Recharge Ultimate T8 Plug-in Hybrid Bright",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4708,
+              "width_mm": 1902,
+              "height_mm": 1656,
+              "engine_cc": 1969,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "964603d2-28a8-4a07-b5f8-85e5ab5dc0ce"
+                ]
+              }
             }
           ]
         }
@@ -186,9 +324,18 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:313"
+                ],
+                "eco": [
+                  "3a2043aa-b8d5-41cf-ac8e-e0e5b8daeaf6"
                 ]
               },
-              "id": "recharge_t8_plug_in_hybrid_plus_dark_phev"
+              "id": "recharge_t8_plug_in_hybrid_plus_dark_phev",
+              "seats": 7,
+              "length_mm": 4953,
+              "width_mm": 1923,
+              "height_mm": 1772,
+              "engine_cc": 1969,
+              "transmission": "AUTOMATIC"
             },
             {
               "name": "Recharge T8 Plug-in Hybrid Ultimate Dark",
@@ -270,9 +417,16 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:305"
+                ],
+                "eco": [
+                  "d45e1336-e4c8-42d3-937c-05982d55a21a"
                 ]
               },
-              "id": "ultra_twin_motor_performance_69_kwh_awd_428_hp_bev"
+              "id": "ultra_twin_performance_69_kwh_awd_428_hp_bev",
+              "seats": 5,
+              "length_mm": 4233,
+              "width_mm": 1837,
+              "height_mm": 1549
             }
           ]
         }
@@ -311,6 +465,68 @@
               "origin_country": "TH",
               "price_note": "seed-unverified",
               "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Single Motor Ultra",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4440,
+              "width_mm": 1863,
+              "height_mm": 1647,
+              "tire_front": "235/50R19",
+              "tire_rear": "255/45R19",
+              "source_refs": {
+                "eco": [
+                  "039d37fd-d95d-458a-957e-b78cbf759bc4"
+                ]
+              }
+            },
+            {
+              "name": "Ultra - Single Motor",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4440,
+              "width_mm": 1863,
+              "height_mm": 1674,
+              "tire_front": "235/50R19",
+              "tire_rear": "255/45R19",
+              "source_refs": {
+                "eco": [
+                  "d125adc9-ffdd-4b79-8100-a18d26987867"
+                ]
+              }
+            },
+            {
+              "name": "Ultra - Twin Motor Black Edition",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4440,
+              "width_mm": 1863,
+              "height_mm": 1591,
+              "tire_front": "235/45R20",
+              "tire_rear": "255/40R20",
+              "source_refs": {
+                "eco": [
+                  "a686a62e-34ae-4492-8d25-672d3901c008"
+                ]
+              }
+            },
+            {
+              "name": "Ultra - Twin Motor",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4440,
+              "width_mm": 1863,
+              "height_mm": 1651,
+              "tire_front": "235/50R19",
+              "tire_rear": "255/45R19",
+              "source_refs": {
+                "eco": [
+                  "7ad88bde-6b0c-4819-b8ab-f41983fb62e2"
+                ]
+              }
             }
           ]
         }
@@ -507,9 +723,18 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:308"
+                ],
+                "eco": [
+                  "8d664282-9f25-4ecd-bcdc-ce2c386d3074"
                 ]
               },
-              "id": "recharge_t8_plug_in_hybrid_ultimate_dark_phev"
+              "id": "recharge_t8_plug_in_hybrid_ultimate_dark_phev",
+              "seats": 5,
+              "length_mm": 4778,
+              "width_mm": 1850,
+              "height_mm": 1430,
+              "engine_cc": 1969,
+              "transmission": "AUTOMATIC"
             }
           ]
         }
@@ -617,9 +842,18 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:310"
+                ],
+                "eco": [
+                  "1c2c2bbd-fb47-495a-b31f-6779a6358430"
                 ]
               },
-              "id": "recharge_t8_plug_in_hybrid_plus_dark_phev"
+              "id": "recharge_t8_plug_in_hybrid_plus_dark_phev",
+              "seats": 5,
+              "length_mm": 4778,
+              "width_mm": 1850,
+              "height_mm": 1430,
+              "engine_cc": 1969,
+              "transmission": "AUTOMATIC"
             },
             {
               "name": "Recharge T8 Plug-in Hybrid Ultimate Dark",

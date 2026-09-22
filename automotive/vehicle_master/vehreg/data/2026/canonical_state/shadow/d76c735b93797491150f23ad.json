@@ -1,0 +1,669 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d76c735b93797491150f23ad",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:225",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mg.mg5",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:59+00:00",
+    "before_hash": "0c95533a4e94a99c427331453f16a77919676c7d800959c256fcc2d82f74654c",
+    "after_hash": "1e0f44318108ebcebaa245460e0b406ecd02d4714c629543567286db7e3d4790",
+    "before": {
+      "id": "mg5",
+      "name_en": "MG5",
+      "name_th": "เอ็มจี5",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "mg 5"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "MG5G",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2021-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.5L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "engine_cc": 1498,
+              "battery_kwh": null,
+              "aliases": [
+                "1.5 X"
+              ],
+              "overrides": {},
+              "price_thb": 679000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 679000,
+              "price_max_thb": 679000
+            }
+          ],
+          "trims": [
+            {
+              "name": "1.5 C",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:214"
+                ],
+                "eco": [
+                  "292b12ee18434cf8a2210c2882f1cec5"
+                ]
+              },
+              "id": "1_5_c_ice",
+              "seats": 5,
+              "length_mm": 4675,
+              "width_mm": 1842,
+              "height_mm": 1473,
+              "engine_cc": 1498,
+              "transmission": "CVT"
+            },
+            {
+              "name": "1.5 D",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:214"
+                ]
+              },
+              "id": "1_5_d_ice"
+            },
+            {
+              "name": "1.5 D+",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:214"
+                ]
+              },
+              "id": "1_5_d_plus_ice"
+            },
+            {
+              "name": "1.5 X",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:214"
+                ]
+              },
+              "id": "1_5_x_ice"
+            },
+            {
+              "name": "Pro D+",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:214"
+                ]
+              },
+              "aliases": [
+                "MG5 Pro D+"
+              ],
+              "id": "pro_d_plus_ice"
+            },
+            {
+              "name": "Pro X",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:214"
+                ]
+              },
+              "aliases": [
+                "MG5 Pro X"
+              ],
+              "id": "pro_x_ice"
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "mg",
+        "name_en": "MG",
+        "name_th": "เอ็มจี",
+        "brand_segment": "MASS",
+        "oem_group": "SAIC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "เอ็มจี",
+          "mg sales thailand",
+          "morris garages"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mg.mg5",
+        "brand_id": "mg",
+        "name_en": "MG5",
+        "name_th": "เอ็มจี5",
+        "nameplate": "MG5",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "mg 5"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mg.mg5.mg5g",
+          "model_id": "mg.mg5",
+          "code": "MG5G",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2021-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mg.mg5.mg5g.1_5l_ice",
+          "generation_id": "mg.mg5.mg5g",
+          "name": "1.5L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "price_thb": 679000,
+          "price_min_thb": 679000,
+          "price_max_thb": 679000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.5 X"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mg.mg5.mg5g.trim.1_5_c_ice",
+          "generation_id": "mg.mg5.mg5g",
+          "name": "1.5 C",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4675,
+          "width_mm": 1842,
+          "height_mm": 1473,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:214"
+            ],
+            "eco": [
+              "292b12ee18434cf8a2210c2882f1cec5"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg5.mg5g.trim.1_5_d_ice",
+          "generation_id": "mg.mg5.mg5g",
+          "name": "1.5 D",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:214"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg5.mg5g.trim.1_5_d_plus_ice",
+          "generation_id": "mg.mg5.mg5g",
+          "name": "1.5 D+",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:214"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg5.mg5g.trim.1_5_x_ice",
+          "generation_id": "mg.mg5.mg5g",
+          "name": "1.5 X",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4675,
+          "width_mm": 1842,
+          "height_mm": 1480,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:214"
+            ],
+            "eco": [
+              "c013c26d710642cc97725d1895545a52"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg5.mg5g.trim.pro_d_plus_ice",
+          "generation_id": "mg.mg5.mg5g",
+          "name": "Pro D+",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "MG5 Pro D+"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:214"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg5.mg5g.trim.pro_x_ice",
+          "generation_id": "mg.mg5.mg5g",
+          "name": "Pro X",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "MG5 Pro X"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:214"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mg.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d76c735b93797491150f23ad:catalog",
+    "revision_id": "d76c735b93797491150f23ad",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mg.mg5",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:59+00:00",
+    "payload": {
+      "brand": {
+        "id": "mg",
+        "name_en": "MG",
+        "name_th": "เอ็มจี",
+        "brand_segment": "MASS",
+        "oem_group": "SAIC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "เอ็มจี",
+          "mg sales thailand",
+          "morris garages"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mg.mg5",
+        "brand_id": "mg",
+        "name_en": "MG5",
+        "name_th": "เอ็มจี5",
+        "nameplate": "MG5",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "mg 5"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mg.mg5.mg5g",
+          "model_id": "mg.mg5",
+          "code": "MG5G",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2021-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mg.mg5.mg5g.1_5l_ice",
+          "generation_id": "mg.mg5.mg5g",
+          "name": "1.5L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "price_thb": 679000,
+          "price_min_thb": 679000,
+          "price_max_thb": 679000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.5 X"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mg.mg5.mg5g.trim.1_5_c_ice",
+          "generation_id": "mg.mg5.mg5g",
+          "name": "1.5 C",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4675,
+          "width_mm": 1842,
+          "height_mm": 1473,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:214"
+            ],
+            "eco": [
+              "292b12ee18434cf8a2210c2882f1cec5"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg5.mg5g.trim.1_5_d_ice",
+          "generation_id": "mg.mg5.mg5g",
+          "name": "1.5 D",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:214"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg5.mg5g.trim.1_5_d_plus_ice",
+          "generation_id": "mg.mg5.mg5g",
+          "name": "1.5 D+",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:214"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg5.mg5g.trim.1_5_x_ice",
+          "generation_id": "mg.mg5.mg5g",
+          "name": "1.5 X",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4675,
+          "width_mm": 1842,
+          "height_mm": 1480,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:214"
+            ],
+            "eco": [
+              "c013c26d710642cc97725d1895545a52"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg5.mg5g.trim.pro_d_plus_ice",
+          "generation_id": "mg.mg5.mg5g",
+          "name": "Pro D+",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "MG5 Pro D+"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:214"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg5.mg5g.trim.pro_x_ice",
+          "generation_id": "mg.mg5.mg5g",
+          "name": "Pro X",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "MG5 Pro X"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:214"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,280 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "44aa2ff7c212228580eb9b1c",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:82",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "aion.aion_v",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:07+00:00",
+    "before_hash": "03bb5f1f2d899a4c2bc41ffd8d9c6db8d2ab66a0c660b7a954fbddde829fcc78",
+    "after_hash": "d4c2ed349e3575442cc0f6ab68b26fd7316911abd23845bcef4cc3c840061da5",
+    "before": {
+      "id": "aion_v",
+      "name_en": "Aion V",
+      "name_th": "ไอออน วี",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "aion v"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "AV",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2025-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "75 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_cc": null,
+              "battery_kwh": 75.3,
+              "aliases": [
+                "Luxury"
+              ],
+              "overrides": {},
+              "price_thb": 1199000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1199000,
+              "price_max_thb": 1199000
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "aion",
+        "name_en": "Aion",
+        "name_th": "ไอออน",
+        "brand_segment": "MASS",
+        "oem_group": "GAC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "gac aion",
+          "ไอออน"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "aion.aion_v",
+        "brand_id": "aion",
+        "name_en": "Aion V",
+        "name_th": "ไอออน วี",
+        "nameplate": "Aion V",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "aion v"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "aion.aion_v.av",
+          "model_id": "aion.aion_v",
+          "code": "AV",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2025-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "aion.aion_v.av.75_kwh_bev",
+          "generation_id": "aion.aion_v.av",
+          "name": "75 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 75.3,
+          "price_thb": 1199000,
+          "price_min_thb": 1199000,
+          "price_max_thb": 1199000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Luxury"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "aion.aion_v.av.trim.500_premium_bev",
+          "generation_id": "aion.aion_v.av",
+          "name": "500 PREMIUM",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4605,
+          "width_mm": 1854,
+          "height_mm": 1686,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "ba597ad2-802d-4b27-942b-33c1a69035a1"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/aion.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "44aa2ff7c212228580eb9b1c:catalog",
+    "revision_id": "44aa2ff7c212228580eb9b1c",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "aion.aion_v",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:07+00:00",
+    "payload": {
+      "brand": {
+        "id": "aion",
+        "name_en": "Aion",
+        "name_th": "ไอออน",
+        "brand_segment": "MASS",
+        "oem_group": "GAC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "gac aion",
+          "ไอออน"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "aion.aion_v",
+        "brand_id": "aion",
+        "name_en": "Aion V",
+        "name_th": "ไอออน วี",
+        "nameplate": "Aion V",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "aion v"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "aion.aion_v.av",
+          "model_id": "aion.aion_v",
+          "code": "AV",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2025-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "aion.aion_v.av.75_kwh_bev",
+          "generation_id": "aion.aion_v.av",
+          "name": "75 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 75.3,
+          "price_thb": 1199000,
+          "price_min_thb": 1199000,
+          "price_max_thb": 1199000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Luxury"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "aion.aion_v.av.trim.500_premium_bev",
+          "generation_id": "aion.aion_v.av",
+          "name": "500 PREMIUM",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4605,
+          "width_mm": 1854,
+          "height_mm": 1686,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "ba597ad2-802d-4b27-942b-33c1a69035a1"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

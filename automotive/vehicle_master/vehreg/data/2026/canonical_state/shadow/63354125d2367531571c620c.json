@@ -1,0 +1,727 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "63354125d2367531571c620c",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:317",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mg.mg3",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:04:08+00:00",
+    "before_hash": "91659c8bccfd869fe1121c23a9be78552f3000c61511c418db617f23326cc3e0",
+    "after_hash": "af92791ed845afe3534af3f15e49ca71f822ba598bbff3a9192d9f2432a4782f",
+    "before": {
+      "id": "mg3",
+      "name_en": "MG3",
+      "name_th": "เอ็มจี3",
+      "nameplate": "",
+      "body_type": "HATCHBACK",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "mg 3"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "MG3H",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2024-07-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.5L HEV",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "engine_cc": 1498,
+              "battery_kwh": 1.8,
+              "aliases": [
+                "1.5 HEV+"
+              ],
+              "overrides": {},
+              "price_thb": 789000,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "seed-unverified",
+              "price_min_thb": 789000,
+              "price_max_thb": 789000
+            }
+          ],
+          "trims": [
+            {
+              "name": "Hybrid+ Standard",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:212"
+                ]
+              },
+              "aliases": [
+                "MG3 Hybrid+ Standard"
+              ],
+              "id": "hybrid_plus_standard_hev"
+            },
+            {
+              "name": "Hybrid+ Comfort",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:212"
+                ]
+              },
+              "aliases": [
+                "MG3 Hybrid+ Comfort"
+              ],
+              "id": "hybrid_plus_comfort_hev"
+            },
+            {
+              "name": "Hybrid+ Luxury",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:212"
+                ]
+              },
+              "aliases": [
+                "MG3 Hybrid+ Luxury"
+              ],
+              "id": "hybrid_plus_luxury_hev"
+            },
+            {
+              "name": "NEW HATCHBACK 1.5 C",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4055,
+              "width_mm": 1729,
+              "height_mm": 1516,
+              "engine_cc": 1498,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "d14286f6d6d94afb8fc9c98d4750a4fb"
+                ]
+              }
+            },
+            {
+              "name": "NEW HATCHBACK 1.5 D",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4055,
+              "width_mm": 1729,
+              "height_mm": 1516,
+              "engine_cc": 1498,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "7c497bee76e247b690316ad8fedd04ea"
+                ]
+              }
+            },
+            {
+              "name": "NEW HATCHBACK 1.5 X SUNROOF",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4055,
+              "width_mm": 1729,
+              "height_mm": 1516,
+              "engine_cc": 1498,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "92237fc28030427db66c1d1fe54b6941"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "mg",
+        "name_en": "MG",
+        "name_th": "เอ็มจี",
+        "brand_segment": "MASS",
+        "oem_group": "SAIC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "เอ็มจี",
+          "mg sales thailand",
+          "morris garages"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mg.mg3",
+        "brand_id": "mg",
+        "name_en": "MG3",
+        "name_th": "เอ็มจี3",
+        "nameplate": "MG3",
+        "body_type": "HATCHBACK",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "mg 3"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mg.mg3.mg3h",
+          "model_id": "mg.mg3",
+          "code": "MG3H",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2024-07-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mg.mg3.mg3h.1_5l_hev",
+          "generation_id": "mg.mg3.mg3h",
+          "name": "1.5L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1498,
+          "battery_kwh": 1.8,
+          "price_thb": 789000,
+          "price_min_thb": 789000,
+          "price_max_thb": 789000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.5 HEV+"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mg.mg3.mg3h.trim.hybrid_plus_standard_hev",
+          "generation_id": "mg.mg3.mg3h",
+          "name": "Hybrid+ Standard",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "MG3 Hybrid+ Standard"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:212"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg3.mg3h.trim.hybrid_plus_comfort_hev",
+          "generation_id": "mg.mg3.mg3h",
+          "name": "Hybrid+ Comfort",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "MG3 Hybrid+ Comfort"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:212"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg3.mg3h.trim.hybrid_plus_luxury_hev",
+          "generation_id": "mg.mg3.mg3h",
+          "name": "Hybrid+ Luxury",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "MG3 Hybrid+ Luxury"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:212"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg3.mg3h.trim.new_hatchback_1_5_c_ice",
+          "generation_id": "mg.mg3.mg3h",
+          "name": "NEW HATCHBACK 1.5 C",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4055,
+          "width_mm": 1729,
+          "height_mm": 1516,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "d14286f6d6d94afb8fc9c98d4750a4fb"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg3.mg3h.trim.new_hatchback_1_5_d_ice",
+          "generation_id": "mg.mg3.mg3h",
+          "name": "NEW HATCHBACK 1.5 D",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4055,
+          "width_mm": 1729,
+          "height_mm": 1516,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "7c497bee76e247b690316ad8fedd04ea"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg3.mg3h.trim.new_hatchback_1_5_x_sunroof_ice",
+          "generation_id": "mg.mg3.mg3h",
+          "name": "NEW HATCHBACK 1.5 X SUNROOF",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4055,
+          "width_mm": 1729,
+          "height_mm": 1516,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "92237fc28030427db66c1d1fe54b6941"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg3.mg3h.trim.new_hatchback_1_5_v_sunroof_ice",
+          "generation_id": "mg.mg3.mg3h",
+          "name": "NEW HATCHBACK 1.5 V SUNROOF",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4055,
+          "width_mm": 1729,
+          "height_mm": 1516,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "b111be5d136b4ceab20fca4200039f42"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mg.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "63354125d2367531571c620c:catalog",
+    "revision_id": "63354125d2367531571c620c",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mg.mg3",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:04:08+00:00",
+    "payload": {
+      "brand": {
+        "id": "mg",
+        "name_en": "MG",
+        "name_th": "เอ็มจี",
+        "brand_segment": "MASS",
+        "oem_group": "SAIC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "เอ็มจี",
+          "mg sales thailand",
+          "morris garages"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mg.mg3",
+        "brand_id": "mg",
+        "name_en": "MG3",
+        "name_th": "เอ็มจี3",
+        "nameplate": "MG3",
+        "body_type": "HATCHBACK",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "mg 3"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mg.mg3.mg3h",
+          "model_id": "mg.mg3",
+          "code": "MG3H",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2024-07-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mg.mg3.mg3h.1_5l_hev",
+          "generation_id": "mg.mg3.mg3h",
+          "name": "1.5L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1498,
+          "battery_kwh": 1.8,
+          "price_thb": 789000,
+          "price_min_thb": 789000,
+          "price_max_thb": 789000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.5 HEV+"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mg.mg3.mg3h.trim.hybrid_plus_standard_hev",
+          "generation_id": "mg.mg3.mg3h",
+          "name": "Hybrid+ Standard",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "MG3 Hybrid+ Standard"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:212"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg3.mg3h.trim.hybrid_plus_comfort_hev",
+          "generation_id": "mg.mg3.mg3h",
+          "name": "Hybrid+ Comfort",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "MG3 Hybrid+ Comfort"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:212"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg3.mg3h.trim.hybrid_plus_luxury_hev",
+          "generation_id": "mg.mg3.mg3h",
+          "name": "Hybrid+ Luxury",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "MG3 Hybrid+ Luxury"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:212"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg3.mg3h.trim.new_hatchback_1_5_c_ice",
+          "generation_id": "mg.mg3.mg3h",
+          "name": "NEW HATCHBACK 1.5 C",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4055,
+          "width_mm": 1729,
+          "height_mm": 1516,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "d14286f6d6d94afb8fc9c98d4750a4fb"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg3.mg3h.trim.new_hatchback_1_5_d_ice",
+          "generation_id": "mg.mg3.mg3h",
+          "name": "NEW HATCHBACK 1.5 D",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4055,
+          "width_mm": 1729,
+          "height_mm": 1516,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "7c497bee76e247b690316ad8fedd04ea"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg3.mg3h.trim.new_hatchback_1_5_x_sunroof_ice",
+          "generation_id": "mg.mg3.mg3h",
+          "name": "NEW HATCHBACK 1.5 X SUNROOF",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4055,
+          "width_mm": 1729,
+          "height_mm": 1516,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "92237fc28030427db66c1d1fe54b6941"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg3.mg3h.trim.new_hatchback_1_5_v_sunroof_ice",
+          "generation_id": "mg.mg3.mg3h",
+          "name": "NEW HATCHBACK 1.5 V SUNROOF",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4055,
+          "width_mm": 1729,
+          "height_mm": 1516,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "b111be5d136b4ceab20fca4200039f42"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

@@ -316,6 +316,21 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "Long Range 4WD",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4433,
+              "width_mm": 1916,
+              "height_mm": 1741,
+              "source_refs": {
+                "eco": [
+                  "b034991c-2d64-465a-8992-0a1feaa949ef"
+                ]
+              }
+            }
           ]
         }
       ]
@@ -355,6 +370,38 @@
               "origin_country": "TH",
               "price_note": "seed-unverified",
               "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "DYNAMIC",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4500,
+              "width_mm": 1865,
+              "height_mm": 1670,
+              "engine_cc": 1499,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "4f4da8b7-f514-4d17-80cc-20f27b34f864"
+                ]
+              }
+            },
+            {
+              "name": "MAX",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4500,
+              "width_mm": 1865,
+              "height_mm": 1670,
+              "engine_cc": 1499,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "014eeba9-211d-41ee-ae0d-bd051fff2b2d"
+                ]
+              }
             }
           ]
         }

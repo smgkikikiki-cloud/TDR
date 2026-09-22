@@ -1,0 +1,363 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a01a5aaab02d3c61651b8384",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:383",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "hyundai.ioniq6",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:34+00:00",
+    "before_hash": "523d0ea4ac1c469d513631890f7d9ebf68ccd3460afb76419104db3127949751",
+    "after_hash": "027136938aed22933d54c2bb69443083f4fc120d18c24739f3487127b8e581cc",
+    "before": {
+      "id": "ioniq6",
+      "name_en": "Ioniq 6",
+      "name_th": "ไอออนิค 6",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "ioniq 6"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "CE",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2023-06-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "77 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "RWD",
+              "engine_cc": null,
+              "battery_kwh": 77.4,
+              "aliases": [
+                "Exclusive"
+              ],
+              "overrides": {},
+              "price_thb": 2299000,
+              "import_type": "CBU",
+              "origin_country": "KR",
+              "price_note": "seed-unverified",
+              "price_min_thb": 2299000,
+              "price_max_thb": 2299000
+            }
+          ],
+          "trims": [
+            {
+              "name": "Exclusive (77.4 kWh RWD, 229 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:117"
+                ]
+              },
+              "id": "exclusive_77_4_kwh_rwd_229_hp_bev"
+            },
+            {
+              "name": "Prestige (77.4 kWh AWD, 325 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:117"
+                ]
+              },
+              "id": "prestige_77_4_kwh_awd_325_hp_bev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "hyundai",
+        "name_en": "Hyundai",
+        "name_th": "ฮุนได",
+        "brand_segment": "MASS",
+        "oem_group": "Hyundai Motor Group",
+        "brand_origin": "KR",
+        "trim_detail": false,
+        "aliases": [
+          "ฮุนได"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "hyundai.ioniq6",
+        "brand_id": "hyundai",
+        "name_en": "Ioniq 6",
+        "name_th": "ไอออนิค 6",
+        "nameplate": "Ioniq 6",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "ioniq 6"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "hyundai.ioniq6.ce",
+          "model_id": "hyundai.ioniq6",
+          "code": "CE",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2023-06-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "hyundai.ioniq6.ce.77_kwh_bev",
+          "generation_id": "hyundai.ioniq6.ce",
+          "name": "77 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 77.4,
+          "price_thb": 2299000,
+          "price_min_thb": 2299000,
+          "price_max_thb": 2299000,
+          "import_type": "CBU",
+          "origin_country": "KR",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Exclusive"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "hyundai.ioniq6.ce.trim.exclusive_77_4_kwh_rwd_229_hp_bev",
+          "generation_id": "hyundai.ioniq6.ce",
+          "name": "Exclusive (77.4 kWh RWD, 229 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4855,
+          "width_mm": 1880,
+          "height_mm": 1495,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:117"
+            ],
+            "eco": [
+              "443dfd43-1ae0-4c05-a011-5aa6fce50219"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "hyundai.ioniq6.ce.trim.prestige_77_4_kwh_awd_325_hp_bev",
+          "generation_id": "hyundai.ioniq6.ce",
+          "name": "Prestige (77.4 kWh AWD, 325 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:117"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/hyundai.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a01a5aaab02d3c61651b8384:catalog",
+    "revision_id": "a01a5aaab02d3c61651b8384",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "hyundai.ioniq6",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:34+00:00",
+    "payload": {
+      "brand": {
+        "id": "hyundai",
+        "name_en": "Hyundai",
+        "name_th": "ฮุนได",
+        "brand_segment": "MASS",
+        "oem_group": "Hyundai Motor Group",
+        "brand_origin": "KR",
+        "trim_detail": false,
+        "aliases": [
+          "ฮุนได"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "hyundai.ioniq6",
+        "brand_id": "hyundai",
+        "name_en": "Ioniq 6",
+        "name_th": "ไอออนิค 6",
+        "nameplate": "Ioniq 6",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "ioniq 6"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "hyundai.ioniq6.ce",
+          "model_id": "hyundai.ioniq6",
+          "code": "CE",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2023-06-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "hyundai.ioniq6.ce.77_kwh_bev",
+          "generation_id": "hyundai.ioniq6.ce",
+          "name": "77 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 77.4,
+          "price_thb": 2299000,
+          "price_min_thb": 2299000,
+          "price_max_thb": 2299000,
+          "import_type": "CBU",
+          "origin_country": "KR",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Exclusive"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "hyundai.ioniq6.ce.trim.exclusive_77_4_kwh_rwd_229_hp_bev",
+          "generation_id": "hyundai.ioniq6.ce",
+          "name": "Exclusive (77.4 kWh RWD, 229 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4855,
+          "width_mm": 1880,
+          "height_mm": 1495,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:117"
+            ],
+            "eco": [
+              "443dfd43-1ae0-4c05-a011-5aa6fce50219"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "hyundai.ioniq6.ce.trim.prestige_77_4_kwh_awd_325_hp_bev",
+          "generation_id": "hyundai.ioniq6.ce",
+          "name": "Prestige (77.4 kWh AWD, 325 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:117"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

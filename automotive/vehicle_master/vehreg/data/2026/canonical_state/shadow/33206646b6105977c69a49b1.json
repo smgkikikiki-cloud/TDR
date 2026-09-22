@@ -1,0 +1,461 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "33206646b6105977c69a49b1",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:201",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "porsche.panamera",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:17+00:00",
+    "before_hash": "84f0987a8a247295531de960ef4e613e77b01808458a9aa966c527269db7a5c8",
+    "after_hash": "08acb5560a9868607022aec85d152a76fd4184c486efcc77cb157d3e49b04c9f",
+    "before": {
+      "id": "panamera",
+      "name_en": "Panamera",
+      "name_th": "พานาเมร่า",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "NICHE",
+      "aliases": [
+        "panamera"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "E",
+          "seats": 4,
+          "launched": "2024-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.9L PHEV",
+              "powertrain": "PHEV",
+              "drivetrain": "AWD",
+              "engine_cc": 2894,
+              "battery_kwh": 25.9,
+              "price_thb": 9900000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "4 E-Hybrid (PHEV, 470 hp)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:247"
+                ],
+                "eco": [
+                  "999e4651-c18c-4639-b6b1-6a9bfc14cb35"
+                ]
+              },
+              "aliases": [
+                "Panamera 4 E-Hybrid (PHEV, 470 hp)"
+              ],
+              "id": "4_e_hybrid_phev_470_hp_phev",
+              "seats": 4,
+              "length_mm": 5052,
+              "width_mm": 1937,
+              "height_mm": 1419,
+              "engine_cc": 2894,
+              "tire_front": "275/35ZR21",
+              "tire_rear": "325/30ZR21",
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "name": "4S E-Hybrid (PHEV, 544 hp)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:247"
+                ]
+              },
+              "aliases": [
+                "Panamera 4S E-Hybrid (PHEV, 544 hp)"
+              ],
+              "id": "4s_e_hybrid_phev_544_hp_phev"
+            },
+            {
+              "name": "Turbo E-Hybrid (PHEV, 680 hp)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:247"
+                ]
+              },
+              "aliases": [
+                "Panamera Turbo E-Hybrid (PHEV, 680 hp)"
+              ],
+              "id": "turbo_e_hybrid_phev_680_hp_phev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "porsche",
+        "name_en": "Porsche",
+        "name_th": "ปอร์เช่",
+        "brand_segment": "PERFORMANCE",
+        "oem_group": "Volkswagen Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "ปอร์เช่"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "porsche.panamera",
+        "brand_id": "porsche",
+        "name_en": "Panamera",
+        "name_th": "พานาเมร่า",
+        "nameplate": "Panamera",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "panamera"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "porsche.panamera.gen1",
+          "model_id": "porsche.panamera",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 4,
+          "launched": "2024-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "porsche.panamera.gen1.2_9l_phev",
+          "generation_id": "porsche.panamera.gen1",
+          "name": "2.9L PHEV",
+          "powertrain": "PHEV",
+          "drivetrain": "AWD",
+          "engine_cc": 2894,
+          "battery_kwh": 25.9,
+          "price_thb": 9900000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "porsche.panamera.gen1.trim.4_e_hybrid_phev_470_hp_phev",
+          "generation_id": "porsche.panamera.gen1",
+          "name": "4 E-Hybrid (PHEV, 470 hp)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2894,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 4,
+          "length_mm": 5052,
+          "width_mm": 1937,
+          "height_mm": 1419,
+          "wheelbase_mm": null,
+          "tire_front": "275/35ZR21",
+          "tire_rear": "325/30ZR21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Panamera 4 E-Hybrid (PHEV, 470 hp)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:247"
+            ],
+            "eco": [
+              "999e4651-c18c-4639-b6b1-6a9bfc14cb35"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.panamera.gen1.trim.4s_e_hybrid_phev_544_hp_phev",
+          "generation_id": "porsche.panamera.gen1",
+          "name": "4S E-Hybrid (PHEV, 544 hp)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2894,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5052,
+          "width_mm": 1937,
+          "height_mm": 1423,
+          "wheelbase_mm": null,
+          "tire_front": "275/35ZR21",
+          "tire_rear": "325/30ZR21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Panamera 4S E-Hybrid (PHEV, 544 hp)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:247"
+            ],
+            "eco": [
+              "4780aff8-b326-402a-ae0f-e5ade3b4c828"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.panamera.gen1.trim.turbo_e_hybrid_phev_680_hp_phev",
+          "generation_id": "porsche.panamera.gen1",
+          "name": "Turbo E-Hybrid (PHEV, 680 hp)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Panamera Turbo E-Hybrid (PHEV, 680 hp)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:247"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/porsche.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "33206646b6105977c69a49b1:catalog",
+    "revision_id": "33206646b6105977c69a49b1",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "porsche.panamera",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:17+00:00",
+    "payload": {
+      "brand": {
+        "id": "porsche",
+        "name_en": "Porsche",
+        "name_th": "ปอร์เช่",
+        "brand_segment": "PERFORMANCE",
+        "oem_group": "Volkswagen Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "ปอร์เช่"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "porsche.panamera",
+        "brand_id": "porsche",
+        "name_en": "Panamera",
+        "name_th": "พานาเมร่า",
+        "nameplate": "Panamera",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "panamera"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "porsche.panamera.gen1",
+          "model_id": "porsche.panamera",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 4,
+          "launched": "2024-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "porsche.panamera.gen1.2_9l_phev",
+          "generation_id": "porsche.panamera.gen1",
+          "name": "2.9L PHEV",
+          "powertrain": "PHEV",
+          "drivetrain": "AWD",
+          "engine_cc": 2894,
+          "battery_kwh": 25.9,
+          "price_thb": 9900000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "porsche.panamera.gen1.trim.4_e_hybrid_phev_470_hp_phev",
+          "generation_id": "porsche.panamera.gen1",
+          "name": "4 E-Hybrid (PHEV, 470 hp)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2894,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 4,
+          "length_mm": 5052,
+          "width_mm": 1937,
+          "height_mm": 1419,
+          "wheelbase_mm": null,
+          "tire_front": "275/35ZR21",
+          "tire_rear": "325/30ZR21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Panamera 4 E-Hybrid (PHEV, 470 hp)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:247"
+            ],
+            "eco": [
+              "999e4651-c18c-4639-b6b1-6a9bfc14cb35"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.panamera.gen1.trim.4s_e_hybrid_phev_544_hp_phev",
+          "generation_id": "porsche.panamera.gen1",
+          "name": "4S E-Hybrid (PHEV, 544 hp)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2894,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5052,
+          "width_mm": 1937,
+          "height_mm": 1423,
+          "wheelbase_mm": null,
+          "tire_front": "275/35ZR21",
+          "tire_rear": "325/30ZR21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Panamera 4S E-Hybrid (PHEV, 544 hp)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:247"
+            ],
+            "eco": [
+              "4780aff8-b326-402a-ae0f-e5ade3b4c828"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.panamera.gen1.trim.turbo_e_hybrid_phev_680_hp_phev",
+          "generation_id": "porsche.panamera.gen1",
+          "name": "Turbo E-Hybrid (PHEV, 680 hp)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Panamera Turbo E-Hybrid (PHEV, 680 hp)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:247"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

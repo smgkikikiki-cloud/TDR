@@ -1,0 +1,269 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "cb729970378d3e313b328e77",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:232",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "avatr.avatr_07",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:20+00:00",
+    "before_hash": "0d5023fc55ee32100b0a533ae9c9a97373de251744037706f93aa3f2a477df31",
+    "after_hash": "6db9985a3e65772ef07a3f475986939822601a1d4ab4ce3bc6b2489ec33d8c00",
+    "before": {
+      "id": "avatr_07",
+      "name_en": "Avatr 07",
+      "name_th": "",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "avatr 07"
+      ],
+      "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
+      "generations": [
+        {
+          "code": "AVATR_07",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": "2026-04-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "ยังไม่แยกรุ่นย่อย",
+              "powertrain": "UNKNOWN",
+              "drivetrain": "",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "aliases": [],
+              "overrides": {},
+              "price_thb": 1759000,
+              "import_type": "",
+              "origin_country": "",
+              "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+              "price_min_thb": 1759000,
+              "price_max_thb": 1759000
+            }
+          ],
+          "trims": []
+        }
+      ],
+      "incomplete": true
+    },
+    "after": {
+      "brand": {
+        "id": "avatr",
+        "name_en": "Avatr",
+        "name_th": "อาวาตาร์",
+        "brand_segment": "PREMIUM_TECH",
+        "oem_group": "Changan",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "avatr.avatr_07",
+        "brand_id": "avatr",
+        "name_en": "Avatr 07",
+        "name_th": "",
+        "nameplate": "Avatr 07",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "avatr 07"
+        ],
+        "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "avatr.avatr_07.avatr_07",
+          "model_id": "avatr.avatr_07",
+          "code": "AVATR_07",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": "2026-04-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "avatr.avatr_07.avatr_07.ยงไมแยกรนยอย",
+          "generation_id": "avatr.avatr_07.avatr_07",
+          "name": "ยังไม่แยกรุ่นย่อย",
+          "powertrain": "UNKNOWN",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": 1759000,
+          "price_min_thb": 1759000,
+          "price_max_thb": 1759000,
+          "import_type": "UNKNOWN",
+          "origin_country": "",
+          "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "avatr.avatr_07.avatr_07.trim.ultra_awd_bev",
+          "generation_id": "avatr.avatr_07.avatr_07",
+          "name": "Ultra AWD",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4825,
+          "width_mm": 1980,
+          "height_mm": 1620,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "63d314f5-a476-4170-bd84-71fdd0ed626e"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/avatr.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "cb729970378d3e313b328e77:catalog",
+    "revision_id": "cb729970378d3e313b328e77",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "avatr.avatr_07",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:20+00:00",
+    "payload": {
+      "brand": {
+        "id": "avatr",
+        "name_en": "Avatr",
+        "name_th": "อาวาตาร์",
+        "brand_segment": "PREMIUM_TECH",
+        "oem_group": "Changan",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "avatr.avatr_07",
+        "brand_id": "avatr",
+        "name_en": "Avatr 07",
+        "name_th": "",
+        "nameplate": "Avatr 07",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "avatr 07"
+        ],
+        "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "avatr.avatr_07.avatr_07",
+          "model_id": "avatr.avatr_07",
+          "code": "AVATR_07",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": "2026-04-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "avatr.avatr_07.avatr_07.ยงไมแยกรนยอย",
+          "generation_id": "avatr.avatr_07.avatr_07",
+          "name": "ยังไม่แยกรุ่นย่อย",
+          "powertrain": "UNKNOWN",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": 1759000,
+          "price_min_thb": 1759000,
+          "price_max_thb": 1759000,
+          "import_type": "UNKNOWN",
+          "origin_country": "",
+          "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "avatr.avatr_07.avatr_07.trim.ultra_awd_bev",
+          "generation_id": "avatr.avatr_07.avatr_07",
+          "name": "Ultra AWD",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4825,
+          "width_mm": 1980,
+          "height_mm": 1620,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "63d314f5-a476-4170-bd84-71fdd0ed626e"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

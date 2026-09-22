@@ -1,0 +1,437 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9abef46301efebf757edf758",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:41",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "honda.civic",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:02+00:00",
+    "before_hash": "f18c6a01c5f3d14fadbefb52b1b2f14087e0cbf882b3be272138826718ed9b80",
+    "after_hash": "5440b50f17de098d6a607073f42c495dce6268f6bcb8cd9e6f8040854f206f69",
+    "before": {
+      "id": "civic",
+      "name_en": "Civic",
+      "name_th": "ซีวิค",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "ซีวิค"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "FE",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2021-08-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.5L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "engine_cc": 1498,
+              "battery_kwh": null,
+              "aliases": [
+                "1.5 Turbo EL+"
+              ],
+              "overrides": {},
+              "price_thb": 1099000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1099000,
+              "price_max_thb": 1099000
+            },
+            {
+              "name": "2.0L HEV",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "engine_cc": 1993,
+              "battery_kwh": 1.1,
+              "aliases": [
+                "e:HEV RS"
+              ],
+              "overrides": {},
+              "price_thb": 1299000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1299000,
+              "price_max_thb": 1299000
+            }
+          ],
+          "trims": [
+            {
+              "name": "e:HEV EL+",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:104"
+                ]
+              },
+              "id": "e_hev_el_plus_hev"
+            },
+            {
+              "name": "e:HEV RS",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:104"
+                ],
+                "eco": [
+                  "3941ab4c-97d5-4207-b47c-0e9ab5ef7ab5"
+                ]
+              },
+              "id": "e_hev_rs_hev",
+              "seats": 5,
+              "length_mm": 4681,
+              "width_mm": 1802,
+              "height_mm": 1415,
+              "engine_cc": 1993,
+              "transmission": "AUTOMATIC"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "honda",
+        "name_en": "Honda",
+        "name_th": "ฮอนด้า",
+        "brand_segment": "MASS",
+        "oem_group": "Honda",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "ฮอนด้า",
+          "honda automobile"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "honda.civic",
+        "brand_id": "honda",
+        "name_en": "Civic",
+        "name_th": "ซีวิค",
+        "nameplate": "Civic",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "ซีวิค"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "honda.civic.fe",
+          "model_id": "honda.civic",
+          "code": "FE",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2021-08-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "honda.civic.fe.1_5l_ice",
+          "generation_id": "honda.civic.fe",
+          "name": "1.5L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "price_thb": 1099000,
+          "price_min_thb": 1099000,
+          "price_max_thb": 1099000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.5 Turbo EL+"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "honda.civic.fe.2_0l_hev",
+          "generation_id": "honda.civic.fe",
+          "name": "2.0L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1993,
+          "battery_kwh": 1.1,
+          "price_thb": 1299000,
+          "price_min_thb": 1299000,
+          "price_max_thb": 1299000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "e:HEV RS"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "honda.civic.fe.trim.e_hev_el_plus_hev",
+          "generation_id": "honda.civic.fe",
+          "name": "e:HEV EL+",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4681,
+          "width_mm": 1802,
+          "height_mm": 1415,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:104"
+            ],
+            "eco": [
+              "b43bea18-17d1-41d2-ab46-27f54637dc7b"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "honda.civic.fe.trim.e_hev_rs_hev",
+          "generation_id": "honda.civic.fe",
+          "name": "e:HEV RS",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4681,
+          "width_mm": 1802,
+          "height_mm": 1415,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:104"
+            ],
+            "eco": [
+              "3941ab4c-97d5-4207-b47c-0e9ab5ef7ab5"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/honda.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9abef46301efebf757edf758:catalog",
+    "revision_id": "9abef46301efebf757edf758",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "honda.civic",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:02+00:00",
+    "payload": {
+      "brand": {
+        "id": "honda",
+        "name_en": "Honda",
+        "name_th": "ฮอนด้า",
+        "brand_segment": "MASS",
+        "oem_group": "Honda",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "ฮอนด้า",
+          "honda automobile"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "honda.civic",
+        "brand_id": "honda",
+        "name_en": "Civic",
+        "name_th": "ซีวิค",
+        "nameplate": "Civic",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "ซีวิค"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "honda.civic.fe",
+          "model_id": "honda.civic",
+          "code": "FE",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2021-08-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "honda.civic.fe.1_5l_ice",
+          "generation_id": "honda.civic.fe",
+          "name": "1.5L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "price_thb": 1099000,
+          "price_min_thb": 1099000,
+          "price_max_thb": 1099000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.5 Turbo EL+"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "honda.civic.fe.2_0l_hev",
+          "generation_id": "honda.civic.fe",
+          "name": "2.0L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1993,
+          "battery_kwh": 1.1,
+          "price_thb": 1299000,
+          "price_min_thb": 1299000,
+          "price_max_thb": 1299000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "e:HEV RS"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "honda.civic.fe.trim.e_hev_el_plus_hev",
+          "generation_id": "honda.civic.fe",
+          "name": "e:HEV EL+",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4681,
+          "width_mm": 1802,
+          "height_mm": 1415,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:104"
+            ],
+            "eco": [
+              "b43bea18-17d1-41d2-ab46-27f54637dc7b"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "honda.civic.fe.trim.e_hev_rs_hev",
+          "generation_id": "honda.civic.fe",
+          "name": "e:HEV RS",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4681,
+          "width_mm": 1802,
+          "height_mm": 1415,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:104"
+            ],
+            "eco": [
+              "3941ab4c-97d5-4207-b47c-0e9ab5ef7ab5"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

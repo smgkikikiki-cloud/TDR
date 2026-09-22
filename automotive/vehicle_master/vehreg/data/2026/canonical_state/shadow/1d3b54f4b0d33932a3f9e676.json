@@ -1,0 +1,275 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "1d3b54f4b0d33932a3f9e676",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:127",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "geely.geely_ex5",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:10+00:00",
+    "before_hash": "4ac84c577cff6afe8c31eb003fb2b73490605a0f69af4cb2304a5e9e6f2105df",
+    "after_hash": "576d8dfb3d7c790d58b534dbe7d391672933b0596ac9a49246acfe254b2a042c",
+    "before": {
+      "id": "geely_ex5",
+      "name_en": "Geely EX5",
+      "name_th": "จีลี่ อีเอ็กซ์5",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "e5",
+        "ex5",
+        "galaxy e5",
+        "geely galaxy e5"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2025-08-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "60 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_cc": null,
+              "battery_kwh": 60.2,
+              "price_thb": 949000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ]
+        }
+      ],
+      "notes": "Sold in China as the Geely Galaxy E5; DLT writes both names. One nameplate, so the Chinese name is an alias."
+    },
+    "after": {
+      "brand": {
+        "id": "geely",
+        "name_en": "Geely",
+        "name_th": "จีลี่",
+        "brand_segment": "MASS",
+        "oem_group": "Geely",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "geely.geely_ex5",
+        "brand_id": "geely",
+        "name_en": "Geely EX5",
+        "name_th": "จีลี่ อีเอ็กซ์5",
+        "nameplate": "Geely EX5",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "e5",
+          "ex5",
+          "galaxy e5",
+          "geely galaxy e5"
+        ],
+        "notes": "Sold in China as the Geely Galaxy E5; DLT writes both names. One nameplate, so the Chinese name is an alias.",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "geely.geely_ex5.gen1",
+          "model_id": "geely.geely_ex5",
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2025-08-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "geely.geely_ex5.gen1.60_kwh_bev",
+          "generation_id": "geely.geely_ex5.gen1",
+          "name": "60 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 60.2,
+          "price_thb": 949000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "geely.geely_ex5.gen1.trim.max_bev",
+          "generation_id": "geely.geely_ex5.gen1",
+          "name": "MAX+",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4615,
+          "width_mm": 1901,
+          "height_mm": 1670,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "e9901aa9-5f90-406e-a56d-3d19da56b895"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/geely.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "1d3b54f4b0d33932a3f9e676:catalog",
+    "revision_id": "1d3b54f4b0d33932a3f9e676",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "geely.geely_ex5",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:10+00:00",
+    "payload": {
+      "brand": {
+        "id": "geely",
+        "name_en": "Geely",
+        "name_th": "จีลี่",
+        "brand_segment": "MASS",
+        "oem_group": "Geely",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "geely.geely_ex5",
+        "brand_id": "geely",
+        "name_en": "Geely EX5",
+        "name_th": "จีลี่ อีเอ็กซ์5",
+        "nameplate": "Geely EX5",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "e5",
+          "ex5",
+          "galaxy e5",
+          "geely galaxy e5"
+        ],
+        "notes": "Sold in China as the Geely Galaxy E5; DLT writes both names. One nameplate, so the Chinese name is an alias.",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "geely.geely_ex5.gen1",
+          "model_id": "geely.geely_ex5",
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2025-08-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "geely.geely_ex5.gen1.60_kwh_bev",
+          "generation_id": "geely.geely_ex5.gen1",
+          "name": "60 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 60.2,
+          "price_thb": 949000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "geely.geely_ex5.gen1.trim.max_bev",
+          "generation_id": "geely.geely_ex5.gen1",
+          "name": "MAX+",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4615,
+          "width_mm": 1901,
+          "height_mm": 1670,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "e9901aa9-5f90-406e-a56d-3d19da56b895"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

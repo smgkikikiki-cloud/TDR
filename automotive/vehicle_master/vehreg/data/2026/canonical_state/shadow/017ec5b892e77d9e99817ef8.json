@@ -1,0 +1,266 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "017ec5b892e77d9e99817ef8",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:339",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "deepal.deepal_e07",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:30+00:00",
+    "before_hash": "47ec0c35caf2873e7cc693657e1a1aec32fde6dbaacdd86680a429df733a027e",
+    "after_hash": "e7f50c0a3ca6eefa387718f74972418db91140fad6e642989de6608637240a7a",
+    "before": {
+      "id": "deepal_e07",
+      "name_en": "Deepal E07",
+      "name_th": "ดีพัล อี07",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "e07"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2025-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "89 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "AWD",
+              "engine_cc": null,
+              "battery_kwh": 88.9,
+              "price_thb": 1999000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": []
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "deepal",
+        "name_en": "Deepal",
+        "name_th": "ดีพัล",
+        "brand_segment": "MASS",
+        "oem_group": "Changan",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "deepal.deepal_e07",
+        "brand_id": "deepal",
+        "name_en": "Deepal E07",
+        "name_th": "ดีพัล อี07",
+        "nameplate": "Deepal E07",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "e07"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "deepal.deepal_e07.gen1",
+          "model_id": "deepal.deepal_e07",
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2025-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "deepal.deepal_e07.gen1.89_kwh_bev",
+          "generation_id": "deepal.deepal_e07.gen1",
+          "name": "89 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": 88.9,
+          "price_thb": 1999000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "deepal.deepal_e07.gen1.trim.plus_bev",
+          "generation_id": "deepal.deepal_e07.gen1",
+          "name": "PLUS",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5045,
+          "width_mm": 1996,
+          "height_mm": 1680,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "6818c168-0500-433e-aa17-2bcd45a27b8f"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/deepal.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "017ec5b892e77d9e99817ef8:catalog",
+    "revision_id": "017ec5b892e77d9e99817ef8",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "deepal.deepal_e07",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:30+00:00",
+    "payload": {
+      "brand": {
+        "id": "deepal",
+        "name_en": "Deepal",
+        "name_th": "ดีพัล",
+        "brand_segment": "MASS",
+        "oem_group": "Changan",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "deepal.deepal_e07",
+        "brand_id": "deepal",
+        "name_en": "Deepal E07",
+        "name_th": "ดีพัล อี07",
+        "nameplate": "Deepal E07",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "e07"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "deepal.deepal_e07.gen1",
+          "model_id": "deepal.deepal_e07",
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2025-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "deepal.deepal_e07.gen1.89_kwh_bev",
+          "generation_id": "deepal.deepal_e07.gen1",
+          "name": "89 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": 88.9,
+          "price_thb": 1999000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "deepal.deepal_e07.gen1.trim.plus_bev",
+          "generation_id": "deepal.deepal_e07.gen1",
+          "name": "PLUS",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5045,
+          "width_mm": 1996,
+          "height_mm": 1680,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "6818c168-0500-433e-aa17-2bcd45a27b8f"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

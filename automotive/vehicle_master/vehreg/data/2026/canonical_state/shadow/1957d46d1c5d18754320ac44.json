@@ -1,0 +1,547 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "1957d46d1c5d18754320ac44",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:301",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "audi.a6",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:04:07+00:00",
+    "before_hash": "144fd6a5067ab69c7d30cd421c1e225ea7205573e233c93132543a66211f04e2",
+    "after_hash": "b6cbe2d6f828c624dfb13a209fd62987a211b2a752e60ee7fa7aab0b67c1c9f6",
+    "before": {
+      "id": "a6",
+      "name_en": "Audi A6",
+      "name_th": "ออดี้ เอ6",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "A6",
+        "A6 AV",
+        "A6 40 TFSI",
+        "A6 45 TFSI"
+      ],
+      "incomplete": true,
+      "notes": "Evidence-reviewed 2026-09-08 against the grade labels in the registration data; not an owner ruling. Powertrain is settled per label, not per nameplate: Audi's plug-in hybrids carry a trailing e (60 TFSI e), and every other TFSI/TDI grade is combustion. See powertrain_rules.py.",
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2021-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "engine_cc": 1984,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "ยังไม่ได้ตรวจราคา",
+              "aliases": []
+            },
+            {
+              "name": "PHEV",
+              "powertrain": "PHEV",
+              "drivetrain": "AWD",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "ยังไม่ได้ตรวจราคา",
+              "aliases": [
+                "55 TFSI e",
+                "A6 55 TFSI e"
+              ],
+              "incomplete": true
+            }
+          ],
+          "trims": [
+            {
+              "name": "A6 40 TFSI S line (Sedan)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:009"
+                ]
+              },
+              "id": "a6_40_tfsi_s_line_sedan_ice"
+            },
+            {
+              "name": "A6 Avant 45 TFSI quattro S line Black Edition",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:009"
+                ]
+              },
+              "id": "a6_avant_45_tfsi_quattro_s_line_black_edition_ice"
+            },
+            {
+              "name": "A6 Avant 55 TFSI e quattro S line Black Edition",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:009"
+                ]
+              },
+              "id": "a6_avant_55_tfsi_e_quattro_s_line_black_edition_phev"
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "audi",
+        "name_en": "Audi",
+        "name_th": "เอาดี้",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Volkswagen Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "เอาดี้"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "audi.a6",
+        "brand_id": "audi",
+        "name_en": "Audi A6",
+        "name_th": "ออดี้ เอ6",
+        "nameplate": "Audi A6",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "A6",
+          "A6 AV",
+          "A6 40 TFSI",
+          "A6 45 TFSI"
+        ],
+        "notes": "Evidence-reviewed 2026-09-08 against the grade labels in the registration data; not an owner ruling. Powertrain is settled per label, not per nameplate: Audi's plug-in hybrids carry a trailing e (60 TFSI e), and every other TFSI/TDI grade is combustion. See powertrain_rules.py.",
+        "incomplete": true,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "audi.a6.gen1",
+          "model_id": "audi.a6",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2021-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "audi.a6.gen1.spec",
+          "generation_id": "audi.a6.gen1",
+          "name": "spec",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1984,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "audi.a6.gen1.phev",
+          "generation_id": "audi.a6.gen1",
+          "name": "PHEV",
+          "powertrain": "PHEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [
+            "55 TFSI e",
+            "A6 55 TFSI e"
+          ],
+          "incomplete": true,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "audi.a6.gen1.trim.a6_40_tfsi_s_line_sedan_ice",
+          "generation_id": "audi.a6.gen1",
+          "name": "A6 40 TFSI S line (Sedan)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:009"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.a6.gen1.trim.a6_avant_45_tfsi_quattro_s_line_black_edition_ice",
+          "generation_id": "audi.a6.gen1",
+          "name": "A6 Avant 45 TFSI quattro S line Black Edition",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:009"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.a6.gen1.trim.a6_avant_55_tfsi_e_quattro_s_line_black_edition_phev",
+          "generation_id": "audi.a6.gen1",
+          "name": "A6 Avant 55 TFSI e quattro S line Black Edition",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:009"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.a6.gen1.trim.avant_40_tfsi_s_line_hev",
+          "generation_id": "audi.a6.gen1",
+          "name": "Avant 40 TFSI S line",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1984,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4939,
+          "width_mm": 1886,
+          "height_mm": 1467,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "20ae68103f5d4438ac17374270fe40c1"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/audi.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "1957d46d1c5d18754320ac44:catalog",
+    "revision_id": "1957d46d1c5d18754320ac44",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "audi.a6",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:04:07+00:00",
+    "payload": {
+      "brand": {
+        "id": "audi",
+        "name_en": "Audi",
+        "name_th": "เอาดี้",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Volkswagen Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "เอาดี้"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "audi.a6",
+        "brand_id": "audi",
+        "name_en": "Audi A6",
+        "name_th": "ออดี้ เอ6",
+        "nameplate": "Audi A6",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "A6",
+          "A6 AV",
+          "A6 40 TFSI",
+          "A6 45 TFSI"
+        ],
+        "notes": "Evidence-reviewed 2026-09-08 against the grade labels in the registration data; not an owner ruling. Powertrain is settled per label, not per nameplate: Audi's plug-in hybrids carry a trailing e (60 TFSI e), and every other TFSI/TDI grade is combustion. See powertrain_rules.py.",
+        "incomplete": true,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "audi.a6.gen1",
+          "model_id": "audi.a6",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2021-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "audi.a6.gen1.spec",
+          "generation_id": "audi.a6.gen1",
+          "name": "spec",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1984,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "audi.a6.gen1.phev",
+          "generation_id": "audi.a6.gen1",
+          "name": "PHEV",
+          "powertrain": "PHEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [
+            "55 TFSI e",
+            "A6 55 TFSI e"
+          ],
+          "incomplete": true,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "audi.a6.gen1.trim.a6_40_tfsi_s_line_sedan_ice",
+          "generation_id": "audi.a6.gen1",
+          "name": "A6 40 TFSI S line (Sedan)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:009"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.a6.gen1.trim.a6_avant_45_tfsi_quattro_s_line_black_edition_ice",
+          "generation_id": "audi.a6.gen1",
+          "name": "A6 Avant 45 TFSI quattro S line Black Edition",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:009"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.a6.gen1.trim.a6_avant_55_tfsi_e_quattro_s_line_black_edition_phev",
+          "generation_id": "audi.a6.gen1",
+          "name": "A6 Avant 55 TFSI e quattro S line Black Edition",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:009"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.a6.gen1.trim.avant_40_tfsi_s_line_hev",
+          "generation_id": "audi.a6.gen1",
+          "name": "Avant 40 TFSI S line",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1984,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4939,
+          "width_mm": 1886,
+          "height_mm": 1467,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "20ae68103f5d4438ac17374270fe40c1"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

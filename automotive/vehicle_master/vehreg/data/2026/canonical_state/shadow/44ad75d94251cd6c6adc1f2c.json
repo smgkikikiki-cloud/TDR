@@ -1,0 +1,471 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "44ad75d94251cd6c6adc1f2c",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:368",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "aion.aion_y_plus",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:33+00:00",
+    "before_hash": "499c7c8055bfd2ee3e7c0adac6a45cb43d6c3bd6483b749e6771fb05295604d4",
+    "after_hash": "ba5f4748dfd4b4b58ec287ee69cf94977887c78e608ba992d0edb7124232bdab",
+    "before": {
+      "id": "aion_y_plus",
+      "name_en": "Aion Y Plus",
+      "name_th": "ไอออน วาย พลัส",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "aion y",
+        "y plus"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "AYP",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2023-07-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "63 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_cc": null,
+              "battery_kwh": 63.2,
+              "aliases": [
+                "Premium 490"
+              ],
+              "overrides": {},
+              "price_thb": 949000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 949000,
+              "price_max_thb": 949000
+            }
+          ],
+          "trims": [
+            {
+              "name": "410 Premium",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:004"
+                ]
+              },
+              "aliases": [
+                "Aion Y Plus 410 Premium"
+              ],
+              "id": "410_premium_bev"
+            },
+            {
+              "name": "490 Elite",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:004"
+                ]
+              },
+              "aliases": [
+                "Aion Y Plus 490 Elite"
+              ],
+              "id": "490_elite_bev"
+            },
+            {
+              "name": "490 Premium",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:004"
+                ],
+                "eco": [
+                  "2558d4e8-a7d2-4f99-b513-baf08070c26f"
+                ]
+              },
+              "aliases": [
+                "Aion Y Plus 490 Premium"
+              ],
+              "id": "490_premium_bev",
+              "seats": 5,
+              "length_mm": 4535,
+              "width_mm": 1870,
+              "height_mm": 1650
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "aion",
+        "name_en": "Aion",
+        "name_th": "ไอออน",
+        "brand_segment": "MASS",
+        "oem_group": "GAC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "gac aion",
+          "ไอออน"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "aion.aion_y_plus",
+        "brand_id": "aion",
+        "name_en": "Aion Y Plus",
+        "name_th": "ไอออน วาย พลัส",
+        "nameplate": "Aion Y Plus",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "aion y",
+          "y plus"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "aion.aion_y_plus.ayp",
+          "model_id": "aion.aion_y_plus",
+          "code": "AYP",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2023-07-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "aion.aion_y_plus.ayp.63_kwh_bev",
+          "generation_id": "aion.aion_y_plus.ayp",
+          "name": "63 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 63.2,
+          "price_thb": 949000,
+          "price_min_thb": 949000,
+          "price_max_thb": 949000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Premium 490"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "aion.aion_y_plus.ayp.trim.410_premium_bev",
+          "generation_id": "aion.aion_y_plus.ayp",
+          "name": "410 Premium",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4535,
+          "width_mm": 1870,
+          "height_mm": 1650,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Aion Y Plus 410 Premium"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:004"
+            ],
+            "eco": [
+              "9d818c38-a8c6-4bfb-b915-8c1de68264d1"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "aion.aion_y_plus.ayp.trim.490_elite_bev",
+          "generation_id": "aion.aion_y_plus.ayp",
+          "name": "490 Elite",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Aion Y Plus 490 Elite"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:004"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "aion.aion_y_plus.ayp.trim.490_premium_bev",
+          "generation_id": "aion.aion_y_plus.ayp",
+          "name": "490 Premium",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4535,
+          "width_mm": 1870,
+          "height_mm": 1650,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Aion Y Plus 490 Premium"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:004"
+            ],
+            "eco": [
+              "2558d4e8-a7d2-4f99-b513-baf08070c26f"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/aion.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "44ad75d94251cd6c6adc1f2c:catalog",
+    "revision_id": "44ad75d94251cd6c6adc1f2c",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "aion.aion_y_plus",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:33+00:00",
+    "payload": {
+      "brand": {
+        "id": "aion",
+        "name_en": "Aion",
+        "name_th": "ไอออน",
+        "brand_segment": "MASS",
+        "oem_group": "GAC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "gac aion",
+          "ไอออน"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "aion.aion_y_plus",
+        "brand_id": "aion",
+        "name_en": "Aion Y Plus",
+        "name_th": "ไอออน วาย พลัส",
+        "nameplate": "Aion Y Plus",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "aion y",
+          "y plus"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "aion.aion_y_plus.ayp",
+          "model_id": "aion.aion_y_plus",
+          "code": "AYP",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2023-07-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "aion.aion_y_plus.ayp.63_kwh_bev",
+          "generation_id": "aion.aion_y_plus.ayp",
+          "name": "63 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 63.2,
+          "price_thb": 949000,
+          "price_min_thb": 949000,
+          "price_max_thb": 949000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Premium 490"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "aion.aion_y_plus.ayp.trim.410_premium_bev",
+          "generation_id": "aion.aion_y_plus.ayp",
+          "name": "410 Premium",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4535,
+          "width_mm": 1870,
+          "height_mm": 1650,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Aion Y Plus 410 Premium"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:004"
+            ],
+            "eco": [
+              "9d818c38-a8c6-4bfb-b915-8c1de68264d1"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "aion.aion_y_plus.ayp.trim.490_elite_bev",
+          "generation_id": "aion.aion_y_plus.ayp",
+          "name": "490 Elite",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Aion Y Plus 490 Elite"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:004"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "aion.aion_y_plus.ayp.trim.490_premium_bev",
+          "generation_id": "aion.aion_y_plus.ayp",
+          "name": "490 Premium",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4535,
+          "width_mm": 1870,
+          "height_mm": 1650,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Aion Y Plus 490 Premium"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:004"
+            ],
+            "eco": [
+              "2558d4e8-a7d2-4f99-b513-baf08070c26f"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

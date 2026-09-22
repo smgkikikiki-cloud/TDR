@@ -1,0 +1,281 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5fb3c6f3506782afece57ccb",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:145",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "toyota.bz4x",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:12+00:00",
+    "before_hash": "d9de4c10a4d697e11eb3456b8f7e30d0549aa8b6889f1d8b456949c2ede5bfad",
+    "after_hash": "079c35cff07ace7105bc2d50b796acde9bb252360d36efa25f86824d773cddc0",
+    "before": {
+      "id": "bz4x",
+      "name_en": "bZ4X",
+      "name_th": "บีแซดโฟร์เอ็กซ์",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "bz4x"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "EA10",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2022-10-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "71 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_cc": null,
+              "battery_kwh": 71.4,
+              "aliases": [
+                "Premium"
+              ],
+              "overrides": {},
+              "price_thb": 1836000,
+              "import_type": "CBU",
+              "origin_country": "JP",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1836000,
+              "price_max_thb": 1836000
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "toyota",
+        "name_en": "Toyota",
+        "name_th": "โตโยต้า",
+        "brand_segment": "MASS",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "โตโยต้า",
+          "toyota motor thailand",
+          "TMT"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "toyota.bz4x",
+        "brand_id": "toyota",
+        "name_en": "bZ4X",
+        "name_th": "บีแซดโฟร์เอ็กซ์",
+        "nameplate": "bZ4X",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "bz4x"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "toyota.bz4x.ea10",
+          "model_id": "toyota.bz4x",
+          "code": "EA10",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2022-10-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "toyota.bz4x.ea10.71_kwh_bev",
+          "generation_id": "toyota.bz4x.ea10",
+          "name": "71 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 71.4,
+          "price_thb": 1836000,
+          "price_min_thb": 1836000,
+          "price_max_thb": 1836000,
+          "import_type": "CBU",
+          "origin_country": "JP",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Premium"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "toyota.bz4x.ea10.trim.awd_bev",
+          "generation_id": "toyota.bz4x.ea10",
+          "name": "AWD",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4690,
+          "width_mm": 1860,
+          "height_mm": 1650,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "70b68fdf-29af-4d35-88ea-ec859bc60f8c"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/toyota.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5fb3c6f3506782afece57ccb:catalog",
+    "revision_id": "5fb3c6f3506782afece57ccb",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "toyota.bz4x",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:12+00:00",
+    "payload": {
+      "brand": {
+        "id": "toyota",
+        "name_en": "Toyota",
+        "name_th": "โตโยต้า",
+        "brand_segment": "MASS",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "โตโยต้า",
+          "toyota motor thailand",
+          "TMT"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "toyota.bz4x",
+        "brand_id": "toyota",
+        "name_en": "bZ4X",
+        "name_th": "บีแซดโฟร์เอ็กซ์",
+        "nameplate": "bZ4X",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "bz4x"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "toyota.bz4x.ea10",
+          "model_id": "toyota.bz4x",
+          "code": "EA10",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2022-10-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "toyota.bz4x.ea10.71_kwh_bev",
+          "generation_id": "toyota.bz4x.ea10",
+          "name": "71 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 71.4,
+          "price_thb": 1836000,
+          "price_min_thb": 1836000,
+          "price_max_thb": 1836000,
+          "import_type": "CBU",
+          "origin_country": "JP",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Premium"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "toyota.bz4x.ea10.trim.awd_bev",
+          "generation_id": "toyota.bz4x.ea10",
+          "name": "AWD",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4690,
+          "width_mm": 1860,
+          "height_mm": 1650,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "70b68fdf-29af-4d35-88ea-ec859bc60f8c"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

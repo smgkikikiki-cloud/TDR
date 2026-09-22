@@ -1,0 +1,407 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ff7305aed5e28680203abe08",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:36",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "kia.sorento",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:40+00:00",
+    "before_hash": "a991cc640cd0d36ccdbe1ff74aa18b3b631b0b1225812108f781fb23985a3481",
+    "after_hash": "f42c7620d63aa0b1ebf8ccbdd67b778030a22c26c638d9907b5cefcd571e0f96",
+    "before": {
+      "id": "sorento",
+      "name_en": "Sorento",
+      "name_th": "โซเรนโต",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "sorento"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "D",
+          "seats": 7,
+          "launched": "2024-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.6L HEV",
+              "powertrain": "HEV",
+              "drivetrain": "AWD",
+              "engine_cc": 1598,
+              "battery_kwh": 1.5,
+              "price_thb": 2399000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "KR",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Smartstream 1.6 Turbo PHEV (Captain Seats)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:139"
+                ]
+              },
+              "id": "smartstream_1_6_turbo_phev_captain_seats_phev"
+            },
+            {
+              "name": "Smartstream 2.2 CRDi Diesel 8DCT AWD",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:139"
+                ]
+              },
+              "id": "smartstream_2_2_crdi_diesel_8dct_awd_ice"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "kia",
+        "name_en": "Kia",
+        "name_th": "เกีย",
+        "brand_segment": "MASS",
+        "oem_group": "Hyundai Motor Group",
+        "brand_origin": "KR",
+        "trim_detail": false,
+        "aliases": [
+          "เกีย"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "kia.sorento",
+        "brand_id": "kia",
+        "name_en": "Sorento",
+        "name_th": "โซเรนโต",
+        "nameplate": "Sorento",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "sorento"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "kia.sorento.gen1",
+          "model_id": "kia.sorento",
+          "code": "gen1",
+          "segment": "D",
+          "seats": 7,
+          "launched": "2024-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "kia.sorento.gen1.1_6l_hev",
+          "generation_id": "kia.sorento.gen1",
+          "name": "1.6L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "AWD",
+          "engine_cc": 1598,
+          "battery_kwh": 1.5,
+          "price_thb": 2399000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "KR",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "kia.sorento.gen1.trim.smartstream_1_6_turbo_phev_captain_seats_phev",
+          "generation_id": "kia.sorento.gen1",
+          "name": "Smartstream 1.6 Turbo PHEV (Captain Seats)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:139"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "kia.sorento.gen1.trim.smartstream_2_2_crdi_diesel_8dct_awd_ice",
+          "generation_id": "kia.sorento.gen1",
+          "name": "Smartstream 2.2 CRDi Diesel 8DCT AWD",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:139"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "kia.sorento.gen1.trim.premium_hev_hev",
+          "generation_id": "kia.sorento.gen1",
+          "name": "Premium HEV",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1598,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 7,
+          "length_mm": 4810,
+          "width_mm": 1900,
+          "height_mm": 1700,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "9dd0283e-3bfa-444f-8a0d-80a4c1c967af"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/kia.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ff7305aed5e28680203abe08:catalog",
+    "revision_id": "ff7305aed5e28680203abe08",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "kia.sorento",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:40+00:00",
+    "payload": {
+      "brand": {
+        "id": "kia",
+        "name_en": "Kia",
+        "name_th": "เกีย",
+        "brand_segment": "MASS",
+        "oem_group": "Hyundai Motor Group",
+        "brand_origin": "KR",
+        "trim_detail": false,
+        "aliases": [
+          "เกีย"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "kia.sorento",
+        "brand_id": "kia",
+        "name_en": "Sorento",
+        "name_th": "โซเรนโต",
+        "nameplate": "Sorento",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "sorento"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "kia.sorento.gen1",
+          "model_id": "kia.sorento",
+          "code": "gen1",
+          "segment": "D",
+          "seats": 7,
+          "launched": "2024-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "kia.sorento.gen1.1_6l_hev",
+          "generation_id": "kia.sorento.gen1",
+          "name": "1.6L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "AWD",
+          "engine_cc": 1598,
+          "battery_kwh": 1.5,
+          "price_thb": 2399000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "KR",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "kia.sorento.gen1.trim.smartstream_1_6_turbo_phev_captain_seats_phev",
+          "generation_id": "kia.sorento.gen1",
+          "name": "Smartstream 1.6 Turbo PHEV (Captain Seats)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:139"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "kia.sorento.gen1.trim.smartstream_2_2_crdi_diesel_8dct_awd_ice",
+          "generation_id": "kia.sorento.gen1",
+          "name": "Smartstream 2.2 CRDi Diesel 8DCT AWD",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:139"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "kia.sorento.gen1.trim.premium_hev_hev",
+          "generation_id": "kia.sorento.gen1",
+          "name": "Premium HEV",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1598,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 7,
+          "length_mm": 4810,
+          "width_mm": 1900,
+          "height_mm": 1700,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "9dd0283e-3bfa-444f-8a0d-80a4c1c967af"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

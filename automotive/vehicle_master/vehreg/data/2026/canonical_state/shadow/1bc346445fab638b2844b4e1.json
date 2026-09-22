@@ -1,0 +1,434 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "1bc346445fab638b2844b4e1",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:395",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "neta.neta_x",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:35+00:00",
+    "before_hash": "b0d662b49c83a530fa46cfe877ed6bfca6adcaf594eeee69fe66b7b9021631c1",
+    "after_hash": "68ebcec07b73c6c8cf67241c29f99285be0a4b55002ed58bef8262bdf9ee603f",
+    "before": {
+      "id": "neta_x",
+      "name_en": "Neta X",
+      "name_th": "เนต้า เอ็กซ์",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "neta x"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "NX",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2024-06-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "52 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_cc": null,
+              "battery_kwh": 52.5,
+              "aliases": [
+                "Smart"
+              ],
+              "overrides": {},
+              "price_thb": 799000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 799000,
+              "price_max_thb": 799000
+            }
+          ],
+          "trims": [
+            {
+              "name": "Comfort 400 (51.8 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:230"
+                ]
+              },
+              "id": "comfort_400_51_8_kwh_bev"
+            },
+            {
+              "name": "Smart 480 (62 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:230"
+                ]
+              },
+              "id": "smart_480_62_kwh_bev"
+            },
+            {
+              "name": "Smart 500 (62 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:230"
+                ]
+              },
+              "id": "smart_500_62_kwh_bev"
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "neta",
+        "name_en": "Neta",
+        "name_th": "เนต้า",
+        "brand_segment": "BUDGET",
+        "oem_group": "Hozon",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "เนต้า",
+          "hozon"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "neta.neta_x",
+        "brand_id": "neta",
+        "name_en": "Neta X",
+        "name_th": "เนต้า เอ็กซ์",
+        "nameplate": "Neta X",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "neta x"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "neta.neta_x.nx",
+          "model_id": "neta.neta_x",
+          "code": "NX",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2024-06-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "neta.neta_x.nx.52_kwh_bev",
+          "generation_id": "neta.neta_x.nx",
+          "name": "52 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 52.5,
+          "price_thb": 799000,
+          "price_min_thb": 799000,
+          "price_max_thb": 799000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Smart"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "neta.neta_x.nx.trim.comfort_400_51_8_kwh_bev",
+          "generation_id": "neta.neta_x.nx",
+          "name": "Comfort 400 (51.8 kWh)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:230"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "neta.neta_x.nx.trim.smart_480_62_kwh_bev",
+          "generation_id": "neta.neta_x.nx",
+          "name": "Smart 480 (62 kWh)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4619,
+          "width_mm": 1860,
+          "height_mm": 1628,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:230"
+            ],
+            "eco": [
+              "3a5e26f1-49b1-4ef0-9f59-a2b92b1cbcec"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "neta.neta_x.nx.trim.smart_500_62_kwh_bev",
+          "generation_id": "neta.neta_x.nx",
+          "name": "Smart 500 (62 kWh)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:230"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/neta.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "1bc346445fab638b2844b4e1:catalog",
+    "revision_id": "1bc346445fab638b2844b4e1",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "neta.neta_x",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:35+00:00",
+    "payload": {
+      "brand": {
+        "id": "neta",
+        "name_en": "Neta",
+        "name_th": "เนต้า",
+        "brand_segment": "BUDGET",
+        "oem_group": "Hozon",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "เนต้า",
+          "hozon"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "neta.neta_x",
+        "brand_id": "neta",
+        "name_en": "Neta X",
+        "name_th": "เนต้า เอ็กซ์",
+        "nameplate": "Neta X",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "neta x"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "neta.neta_x.nx",
+          "model_id": "neta.neta_x",
+          "code": "NX",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2024-06-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "neta.neta_x.nx.52_kwh_bev",
+          "generation_id": "neta.neta_x.nx",
+          "name": "52 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 52.5,
+          "price_thb": 799000,
+          "price_min_thb": 799000,
+          "price_max_thb": 799000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Smart"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "neta.neta_x.nx.trim.comfort_400_51_8_kwh_bev",
+          "generation_id": "neta.neta_x.nx",
+          "name": "Comfort 400 (51.8 kWh)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:230"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "neta.neta_x.nx.trim.smart_480_62_kwh_bev",
+          "generation_id": "neta.neta_x.nx",
+          "name": "Smart 480 (62 kWh)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4619,
+          "width_mm": 1860,
+          "height_mm": 1628,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:230"
+            ],
+            "eco": [
+              "3a5e26f1-49b1-4ef0-9f59-a2b92b1cbcec"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "neta.neta_x.nx.trim.smart_500_62_kwh_bev",
+          "generation_id": "neta.neta_x.nx",
+          "name": "Smart 500 (62 kWh)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:230"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

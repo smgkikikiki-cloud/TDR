@@ -1,0 +1,368 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "48157295c4c901e05c33f905",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:278",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "audi.a1",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:04:04+00:00",
+    "before_hash": "6e78980735d785ac0451f7d2131b3d257dedcda0334238afba85d79bff204ee5",
+    "after_hash": "c32ae464bf19fd32efdf6ad3537fef085f9654669fad73f97e2d50134666adab",
+    "before": {
+      "id": "a1",
+      "name_en": "A1",
+      "name_th": "เอ1",
+      "nameplate": "",
+      "body_type": "HATCHBACK",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "NICHE",
+      "aliases": [
+        "A1 SB"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "engine_cc": 1498,
+              "price_thb": 2290000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Sportback 35 TFSI S line",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:006"
+                ]
+              },
+              "aliases": [
+                "A1 Sportback 35 TFSI S line"
+              ],
+              "id": "sportback_35_tfsi_s_line_ice"
+            },
+            {
+              "name": "Sportback 35 TFSI Edition One",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:006"
+                ]
+              },
+              "aliases": [
+                "A1 Sportback 35 TFSI Edition One"
+              ],
+              "id": "sportback_35_tfsi_edition_one_ice"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "audi",
+        "name_en": "Audi",
+        "name_th": "เอาดี้",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Volkswagen Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "เอาดี้"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "audi.a1",
+        "brand_id": "audi",
+        "name_en": "A1",
+        "name_th": "เอ1",
+        "nameplate": "A1",
+        "body_type": "HATCHBACK",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "A1 SB"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "audi.a1.gen1",
+          "model_id": "audi.a1",
+          "code": "gen1",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "audi.a1.gen1.spec",
+          "generation_id": "audi.a1.gen1",
+          "name": "spec",
+          "powertrain": "ICE",
+          "drivetrain": "AWD",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "price_thb": 2290000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "audi.a1.gen1.trim.sportback_35_tfsi_s_line_ice",
+          "generation_id": "audi.a1.gen1",
+          "name": "Sportback 35 TFSI S line",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4029,
+          "width_mm": 1940,
+          "height_mm": 1409,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "A1 Sportback 35 TFSI S line"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:006"
+            ],
+            "eco": [
+              "70df451ca3c04bd58acf483aabc89912"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.a1.gen1.trim.sportback_35_tfsi_edition_one_ice",
+          "generation_id": "audi.a1.gen1",
+          "name": "Sportback 35 TFSI Edition One",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "A1 Sportback 35 TFSI Edition One"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:006"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/audi.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "48157295c4c901e05c33f905:catalog",
+    "revision_id": "48157295c4c901e05c33f905",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "audi.a1",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:04:04+00:00",
+    "payload": {
+      "brand": {
+        "id": "audi",
+        "name_en": "Audi",
+        "name_th": "เอาดี้",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Volkswagen Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "เอาดี้"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "audi.a1",
+        "brand_id": "audi",
+        "name_en": "A1",
+        "name_th": "เอ1",
+        "nameplate": "A1",
+        "body_type": "HATCHBACK",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "A1 SB"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "audi.a1.gen1",
+          "model_id": "audi.a1",
+          "code": "gen1",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "audi.a1.gen1.spec",
+          "generation_id": "audi.a1.gen1",
+          "name": "spec",
+          "powertrain": "ICE",
+          "drivetrain": "AWD",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "price_thb": 2290000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "audi.a1.gen1.trim.sportback_35_tfsi_s_line_ice",
+          "generation_id": "audi.a1.gen1",
+          "name": "Sportback 35 TFSI S line",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4029,
+          "width_mm": 1940,
+          "height_mm": 1409,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "A1 Sportback 35 TFSI S line"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:006"
+            ],
+            "eco": [
+              "70df451ca3c04bd58acf483aabc89912"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.a1.gen1.trim.sportback_35_tfsi_edition_one_ice",
+          "generation_id": "audi.a1.gen1",
+          "name": "Sportback 35 TFSI Edition One",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "A1 Sportback 35 TFSI Edition One"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:006"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

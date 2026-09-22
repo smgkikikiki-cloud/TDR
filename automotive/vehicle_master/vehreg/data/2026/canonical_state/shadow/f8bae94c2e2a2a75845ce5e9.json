@@ -1,0 +1,356 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f8bae94c2e2a2a75845ce5e9",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:32",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mg.mg_vs_hev",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:39+00:00",
+    "before_hash": "0bcf2fd0e97c50143aa7b41d619544fe12845630e27cc82a132a56a29a396718",
+    "after_hash": "0bc196cd9f267d52d6f0b4ea1cb7c85b925546d390e73643d655703e01d82f34",
+    "before": {
+      "id": "mg_vs_hev",
+      "name_en": "MG VS HEV",
+      "name_th": "เอ็มจี วีเอส เอชอีวี",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "vs hev"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "VSH",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2023-08-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.5L HEV",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "engine_cc": 1498,
+              "battery_kwh": 1.8,
+              "aliases": [
+                "HEV D"
+              ],
+              "overrides": {},
+              "price_thb": 899000,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "seed-unverified",
+              "price_min_thb": 899000,
+              "price_max_thb": 899000
+            }
+          ],
+          "trims": [
+            {
+              "name": "X",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4370,
+              "width_mm": 1809,
+              "height_mm": 1653,
+              "engine_cc": 1498,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "84615030-e802-47b5-aa89-aa5f4fe54ea8"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "mg",
+        "name_en": "MG",
+        "name_th": "เอ็มจี",
+        "brand_segment": "MASS",
+        "oem_group": "SAIC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "เอ็มจี",
+          "mg sales thailand",
+          "morris garages"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mg.mg_vs_hev",
+        "brand_id": "mg",
+        "name_en": "MG VS HEV",
+        "name_th": "เอ็มจี วีเอส เอชอีวี",
+        "nameplate": "MG VS HEV",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "vs hev"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mg.mg_vs_hev.vsh",
+          "model_id": "mg.mg_vs_hev",
+          "code": "VSH",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2023-08-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mg.mg_vs_hev.vsh.1_5l_hev",
+          "generation_id": "mg.mg_vs_hev.vsh",
+          "name": "1.5L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1498,
+          "battery_kwh": 1.8,
+          "price_thb": 899000,
+          "price_min_thb": 899000,
+          "price_max_thb": 899000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "HEV D"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mg.mg_vs_hev.vsh.trim.x_hev",
+          "generation_id": "mg.mg_vs_hev.vsh",
+          "name": "X",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4370,
+          "width_mm": 1809,
+          "height_mm": 1653,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "84615030-e802-47b5-aa89-aa5f4fe54ea8"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_vs_hev.vsh.trim.d_hev",
+          "generation_id": "mg.mg_vs_hev.vsh",
+          "name": "D",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4370,
+          "width_mm": 1809,
+          "height_mm": 1653,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "a84f9353-d49e-4ab5-ab5d-064219d9a00e"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mg.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f8bae94c2e2a2a75845ce5e9:catalog",
+    "revision_id": "f8bae94c2e2a2a75845ce5e9",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mg.mg_vs_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:39+00:00",
+    "payload": {
+      "brand": {
+        "id": "mg",
+        "name_en": "MG",
+        "name_th": "เอ็มจี",
+        "brand_segment": "MASS",
+        "oem_group": "SAIC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "เอ็มจี",
+          "mg sales thailand",
+          "morris garages"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mg.mg_vs_hev",
+        "brand_id": "mg",
+        "name_en": "MG VS HEV",
+        "name_th": "เอ็มจี วีเอส เอชอีวี",
+        "nameplate": "MG VS HEV",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "vs hev"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mg.mg_vs_hev.vsh",
+          "model_id": "mg.mg_vs_hev",
+          "code": "VSH",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2023-08-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mg.mg_vs_hev.vsh.1_5l_hev",
+          "generation_id": "mg.mg_vs_hev.vsh",
+          "name": "1.5L HEV",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1498,
+          "battery_kwh": 1.8,
+          "price_thb": 899000,
+          "price_min_thb": 899000,
+          "price_max_thb": 899000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "HEV D"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mg.mg_vs_hev.vsh.trim.x_hev",
+          "generation_id": "mg.mg_vs_hev.vsh",
+          "name": "X",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4370,
+          "width_mm": 1809,
+          "height_mm": 1653,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "84615030-e802-47b5-aa89-aa5f4fe54ea8"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_vs_hev.vsh.trim.d_hev",
+          "generation_id": "mg.mg_vs_hev.vsh",
+          "name": "D",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4370,
+          "width_mm": 1809,
+          "height_mm": 1653,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "a84f9353-d49e-4ab5-ab5d-064219d9a00e"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

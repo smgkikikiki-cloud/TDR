@@ -1,0 +1,575 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "eb97241ca5cec0227ec22524",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:244",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mazda.cx30",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:04:01+00:00",
+    "before_hash": "5be0cfac9645dda711679fa6bad4a3d9b612ca65239ff104be2298922e27effe",
+    "after_hash": "1cb9f4850c468c7d43c109f8d390c3c9d845b8626cae2a171ad1cbdc87d8018e",
+    "before": {
+      "id": "cx30",
+      "name_en": "CX-30",
+      "name_th": "ซีเอ็กซ์-30",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "cx 30",
+        "cx30"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "DM",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2019-10-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.0L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "engine_cc": 1998,
+              "battery_kwh": null,
+              "aliases": [
+                "2.0 SP"
+              ],
+              "overrides": {},
+              "price_thb": 1199000,
+              "import_type": "CBU",
+              "origin_country": "JP",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1199000,
+              "price_max_thb": 1199000
+            }
+          ],
+          "trims": [
+            {
+              "name": "2.0 ULTRA",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4395,
+              "width_mm": 1795,
+              "height_mm": 1540,
+              "engine_cc": 1998,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "25e97632-8fe0-497d-ae63-42b0d8665da7"
+                ]
+              }
+            },
+            {
+              "name": "2.0 SIGNATURE",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4395,
+              "width_mm": 1795,
+              "height_mm": 1540,
+              "engine_cc": 1998,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "d2939e10-9334-4b2c-b36a-fdac7e78d9b4"
+                ]
+              }
+            },
+            {
+              "name": "2.0 PRIME",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4395,
+              "width_mm": 1795,
+              "height_mm": 1540,
+              "engine_cc": 1998,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "bf65b59a-75d2-41d0-93b8-bbb8fb0d5081"
+                ]
+              }
+            },
+            {
+              "name": "Carbon Edition",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4395,
+              "width_mm": 1795,
+              "height_mm": 1540,
+              "engine_cc": 1998,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "b38635c45b2045a4b3d277b3267b8e18"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "mazda",
+        "name_en": "Mazda",
+        "name_th": "มาสด้า",
+        "brand_segment": "MASS",
+        "oem_group": "Mazda",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "มาสด้า"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mazda.cx30",
+        "brand_id": "mazda",
+        "name_en": "CX-30",
+        "name_th": "ซีเอ็กซ์-30",
+        "nameplate": "CX-30",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "cx 30",
+          "cx30"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mazda.cx30.dm",
+          "model_id": "mazda.cx30",
+          "code": "DM",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2019-10-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mazda.cx30.dm.2_0l_ice",
+          "generation_id": "mazda.cx30.dm",
+          "name": "2.0L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "price_thb": 1199000,
+          "price_min_thb": 1199000,
+          "price_max_thb": 1199000,
+          "import_type": "CBU",
+          "origin_country": "JP",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.0 SP"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mazda.cx30.dm.trim.2_0_ultra_ice",
+          "generation_id": "mazda.cx30.dm",
+          "name": "2.0 ULTRA",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4395,
+          "width_mm": 1795,
+          "height_mm": 1540,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "25e97632-8fe0-497d-ae63-42b0d8665da7"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mazda.cx30.dm.trim.2_0_signature_ice",
+          "generation_id": "mazda.cx30.dm",
+          "name": "2.0 SIGNATURE",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4395,
+          "width_mm": 1795,
+          "height_mm": 1540,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "d2939e10-9334-4b2c-b36a-fdac7e78d9b4"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mazda.cx30.dm.trim.2_0_prime_ice",
+          "generation_id": "mazda.cx30.dm",
+          "name": "2.0 PRIME",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4395,
+          "width_mm": 1795,
+          "height_mm": 1540,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "bf65b59a-75d2-41d0-93b8-bbb8fb0d5081"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mazda.cx30.dm.trim.carbon_edition_ice",
+          "generation_id": "mazda.cx30.dm",
+          "name": "Carbon Edition",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4395,
+          "width_mm": 1795,
+          "height_mm": 1540,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "b38635c45b2045a4b3d277b3267b8e18"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mazda.cx30.dm.trim.2_0_c_ice",
+          "generation_id": "mazda.cx30.dm",
+          "name": "2.0 C",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4395,
+          "width_mm": 1795,
+          "height_mm": 1540,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "47e6a37a80234ec2a38ed89c33c7fc5b"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mazda.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "eb97241ca5cec0227ec22524:catalog",
+    "revision_id": "eb97241ca5cec0227ec22524",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mazda.cx30",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:04:01+00:00",
+    "payload": {
+      "brand": {
+        "id": "mazda",
+        "name_en": "Mazda",
+        "name_th": "มาสด้า",
+        "brand_segment": "MASS",
+        "oem_group": "Mazda",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "มาสด้า"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mazda.cx30",
+        "brand_id": "mazda",
+        "name_en": "CX-30",
+        "name_th": "ซีเอ็กซ์-30",
+        "nameplate": "CX-30",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "cx 30",
+          "cx30"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mazda.cx30.dm",
+          "model_id": "mazda.cx30",
+          "code": "DM",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2019-10-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mazda.cx30.dm.2_0l_ice",
+          "generation_id": "mazda.cx30.dm",
+          "name": "2.0L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "price_thb": 1199000,
+          "price_min_thb": 1199000,
+          "price_max_thb": 1199000,
+          "import_type": "CBU",
+          "origin_country": "JP",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.0 SP"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mazda.cx30.dm.trim.2_0_ultra_ice",
+          "generation_id": "mazda.cx30.dm",
+          "name": "2.0 ULTRA",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4395,
+          "width_mm": 1795,
+          "height_mm": 1540,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "25e97632-8fe0-497d-ae63-42b0d8665da7"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mazda.cx30.dm.trim.2_0_signature_ice",
+          "generation_id": "mazda.cx30.dm",
+          "name": "2.0 SIGNATURE",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4395,
+          "width_mm": 1795,
+          "height_mm": 1540,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "d2939e10-9334-4b2c-b36a-fdac7e78d9b4"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mazda.cx30.dm.trim.2_0_prime_ice",
+          "generation_id": "mazda.cx30.dm",
+          "name": "2.0 PRIME",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4395,
+          "width_mm": 1795,
+          "height_mm": 1540,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "bf65b59a-75d2-41d0-93b8-bbb8fb0d5081"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mazda.cx30.dm.trim.carbon_edition_ice",
+          "generation_id": "mazda.cx30.dm",
+          "name": "Carbon Edition",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4395,
+          "width_mm": 1795,
+          "height_mm": 1540,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "b38635c45b2045a4b3d277b3267b8e18"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mazda.cx30.dm.trim.2_0_c_ice",
+          "generation_id": "mazda.cx30.dm",
+          "name": "2.0 C",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4395,
+          "width_mm": 1795,
+          "height_mm": 1540,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "47e6a37a80234ec2a38ed89c33c7fc5b"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

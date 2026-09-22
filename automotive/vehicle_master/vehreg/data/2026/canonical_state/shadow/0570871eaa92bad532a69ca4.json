@@ -1,0 +1,457 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "0570871eaa92bad532a69ca4",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:106",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "xpeng.xpeng_g6",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:09+00:00",
+    "before_hash": "3418d252bd9438ec168a3726563b01feddaca4035a97bc1026dfdbd4e3f5bc8f",
+    "after_hash": "560b9461d363080bd05e93ebdb50de0165a3c3071c2e344a737ac4aff0cbf7e1",
+    "before": {
+      "id": "xpeng_g6",
+      "name_en": "XPeng G6",
+      "name_th": "เอ็กซ์เผิง จี6",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "g6"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "G6",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2024-07-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "88 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "RWD",
+              "engine_cc": null,
+              "battery_kwh": 87.5,
+              "aliases": [
+                "Long Range"
+              ],
+              "overrides": {},
+              "price_thb": 1359000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1359000,
+              "price_max_thb": 1359000
+            }
+          ],
+          "trims": [
+            {
+              "name": "Standard Range RWD (66 kWh LFP, 258 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:318"
+                ],
+                "eco": [
+                  "40988a2a-0129-477a-a069-75b26b9de103"
+                ]
+              },
+              "id": "standard_range_rwd_66_kwh_lfp_258_hp_bev",
+              "seats": 5,
+              "length_mm": 4758,
+              "width_mm": 1920,
+              "height_mm": 1650
+            },
+            {
+              "name": "Long Range RWD (87.5 kWh NCM, 286 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:318"
+                ],
+                "eco": [
+                  "6ec43a69-a117-42e0-8ff6-f888228f04a5"
+                ]
+              },
+              "id": "long_range_rwd_87_5_kwh_ncm_286_hp_bev",
+              "seats": 5,
+              "length_mm": 4758,
+              "width_mm": 1920,
+              "height_mm": 1650
+            },
+            {
+              "name": "Performance AWD (87.5 kWh Dual Motor, 487 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:318"
+                ]
+              },
+              "id": "performance_awd_87_5_kwh_dual_motor_487_hp_bev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "xpeng",
+        "name_en": "XPeng",
+        "name_th": "เอ็กซ์เผิง",
+        "brand_segment": "PREMIUM_TECH",
+        "oem_group": "XPeng",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "xpeng"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "xpeng.xpeng_g6",
+        "brand_id": "xpeng",
+        "name_en": "XPeng G6",
+        "name_th": "เอ็กซ์เผิง จี6",
+        "nameplate": "XPeng G6",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "g6"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "xpeng.xpeng_g6.g6",
+          "model_id": "xpeng.xpeng_g6",
+          "code": "G6",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2024-07-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "xpeng.xpeng_g6.g6.88_kwh_bev",
+          "generation_id": "xpeng.xpeng_g6.g6",
+          "name": "88 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 87.5,
+          "price_thb": 1359000,
+          "price_min_thb": 1359000,
+          "price_max_thb": 1359000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Long Range"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "xpeng.xpeng_g6.g6.trim.standard_range_rwd_66_kwh_lfp_258_hp_bev",
+          "generation_id": "xpeng.xpeng_g6.g6",
+          "name": "Standard Range RWD (66 kWh LFP, 258 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4758,
+          "width_mm": 1920,
+          "height_mm": 1650,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:318"
+            ],
+            "eco": [
+              "40988a2a-0129-477a-a069-75b26b9de103"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "xpeng.xpeng_g6.g6.trim.long_range_rwd_87_5_kwh_ncm_286_hp_bev",
+          "generation_id": "xpeng.xpeng_g6.g6",
+          "name": "Long Range RWD (87.5 kWh NCM, 286 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4758,
+          "width_mm": 1920,
+          "height_mm": 1650,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:318"
+            ],
+            "eco": [
+              "6ec43a69-a117-42e0-8ff6-f888228f04a5"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "xpeng.xpeng_g6.g6.trim.performance_awd_87_5_kwh_dual_487_hp_bev",
+          "generation_id": "xpeng.xpeng_g6.g6",
+          "name": "Performance AWD (87.5 kWh Dual Motor, 487 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4758,
+          "width_mm": 1920,
+          "height_mm": 1650,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:318"
+            ],
+            "eco": [
+              "a3cd3664-2618-48a5-99fa-011d6eb568f6"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/xpeng.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "0570871eaa92bad532a69ca4:catalog",
+    "revision_id": "0570871eaa92bad532a69ca4",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "xpeng.xpeng_g6",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:09+00:00",
+    "payload": {
+      "brand": {
+        "id": "xpeng",
+        "name_en": "XPeng",
+        "name_th": "เอ็กซ์เผิง",
+        "brand_segment": "PREMIUM_TECH",
+        "oem_group": "XPeng",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "xpeng"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "xpeng.xpeng_g6",
+        "brand_id": "xpeng",
+        "name_en": "XPeng G6",
+        "name_th": "เอ็กซ์เผิง จี6",
+        "nameplate": "XPeng G6",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "g6"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "xpeng.xpeng_g6.g6",
+          "model_id": "xpeng.xpeng_g6",
+          "code": "G6",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2024-07-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "xpeng.xpeng_g6.g6.88_kwh_bev",
+          "generation_id": "xpeng.xpeng_g6.g6",
+          "name": "88 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 87.5,
+          "price_thb": 1359000,
+          "price_min_thb": 1359000,
+          "price_max_thb": 1359000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Long Range"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "xpeng.xpeng_g6.g6.trim.standard_range_rwd_66_kwh_lfp_258_hp_bev",
+          "generation_id": "xpeng.xpeng_g6.g6",
+          "name": "Standard Range RWD (66 kWh LFP, 258 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4758,
+          "width_mm": 1920,
+          "height_mm": 1650,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:318"
+            ],
+            "eco": [
+              "40988a2a-0129-477a-a069-75b26b9de103"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "xpeng.xpeng_g6.g6.trim.long_range_rwd_87_5_kwh_ncm_286_hp_bev",
+          "generation_id": "xpeng.xpeng_g6.g6",
+          "name": "Long Range RWD (87.5 kWh NCM, 286 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4758,
+          "width_mm": 1920,
+          "height_mm": 1650,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:318"
+            ],
+            "eco": [
+              "6ec43a69-a117-42e0-8ff6-f888228f04a5"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "xpeng.xpeng_g6.g6.trim.performance_awd_87_5_kwh_dual_487_hp_bev",
+          "generation_id": "xpeng.xpeng_g6.g6",
+          "name": "Performance AWD (87.5 kWh Dual Motor, 487 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4758,
+          "width_mm": 1920,
+          "height_mm": 1650,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:318"
+            ],
+            "eco": [
+              "a3cd3664-2618-48a5-99fa-011d6eb568f6"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

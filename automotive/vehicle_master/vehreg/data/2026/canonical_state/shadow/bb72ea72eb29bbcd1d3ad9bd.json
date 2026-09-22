@@ -1,0 +1,701 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "bb72ea72eb29bbcd1d3ad9bd",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:148",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mercedes_benz.mb_c_class",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:51+00:00",
+    "before_hash": "88b86a89ff1f14fcd42ec5cc27c4acb8c67bc3adae51d2e45c78459ac1e5834e",
+    "after_hash": "c6a6bf5faa4d73d243bb87e51812d2bfc84a4a5e5b8649d7e46083e93940cdce",
+    "before": {
+      "id": "mb_c_class",
+      "name_en": "C-Class",
+      "name_th": "ซี-คลาส",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "c class",
+        "c220d",
+        "c350e",
+        "C 200",
+        "C 220 d",
+        "C 250",
+        "C250",
+        "C 300",
+        "C 300 e",
+        "C 350 e",
+        "AMG C43",
+        "AMG C43 4MATIC Coupe"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "W206",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.0L PHEV",
+              "powertrain": "PHEV",
+              "drivetrain": "RWD",
+              "engine_cc": 1999,
+              "battery_kwh": 25.4,
+              "aliases": [
+                "C350e AMG Dynamic"
+              ],
+              "overrides": {},
+              "price_thb": 3399000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 3399000,
+              "price_max_thb": 3399000
+            }
+          ],
+          "trims": [
+            {
+              "name": "C 350 e AMG Dynamic (PHEV, 313 hp)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:188"
+                ],
+                "eco": [
+                  "87646044-e80c-48c4-a4c8-5f71b1cf56a2"
+                ]
+              },
+              "id": "c_350_e_amg_dynamic_phev_313_hp_phev",
+              "seats": 5,
+              "length_mm": 4793,
+              "width_mm": 1820,
+              "height_mm": 1446,
+              "engine_cc": 1999,
+              "tire_front": "225/45R18",
+              "tire_rear": "255/40R18",
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "name": "C 350 e plug-in hybrid",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4793,
+              "width_mm": 1820,
+              "height_mm": 1446,
+              "engine_cc": 1999,
+              "tire_front": "225/45R18",
+              "tire_rear": "255/40R18",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "effe1fc4-a29f-44aa-ab7b-ca03d7d23556"
+                ]
+              }
+            },
+            {
+              "name": "C 220 d",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4793,
+              "width_mm": 1820,
+              "height_mm": 1446,
+              "engine_cc": 1993,
+              "tire_front": "225/40R19",
+              "tire_rear": "255/35R19",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "7e17941e-aab9-4332-9a82-3c53cdf5ff75"
+                ]
+              }
+            },
+            {
+              "name": "C 220 d AMG Line",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4793,
+              "width_mm": 1820,
+              "height_mm": 1446,
+              "engine_cc": 1993,
+              "tire_front": "225/45R18",
+              "tire_rear": "245/40R18",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "8139d235-a74d-40da-aa97-14df9f282a81"
+                ]
+              }
+            },
+            {
+              "name": "C 220 d Avantgarde",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4751,
+              "width_mm": 1820,
+              "height_mm": 1437,
+              "engine_cc": 1993,
+              "tire_front": "225/45R18",
+              "tire_rear": "245/40R18",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "f9e017b9-93b3-4566-85f9-924993d124cd"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "mercedes_benz",
+        "name_en": "Mercedes-Benz",
+        "name_th": "เมอร์เซเดส-เบนซ์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Mercedes-Benz Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "benz",
+          "เบนซ์",
+          "mercedes"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mercedes_benz.mb_c_class",
+        "brand_id": "mercedes_benz",
+        "name_en": "C-Class",
+        "name_th": "ซี-คลาส",
+        "nameplate": "C-Class",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "c class",
+          "c220d",
+          "c350e",
+          "C 200",
+          "C 220 d",
+          "C 250",
+          "C250",
+          "C 300",
+          "C 300 e",
+          "C 350 e",
+          "AMG C43",
+          "AMG C43 4MATIC Coupe"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mercedes_benz.mb_c_class.w206",
+          "model_id": "mercedes_benz.mb_c_class",
+          "code": "W206",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mercedes_benz.mb_c_class.w206.2_0l_phev",
+          "generation_id": "mercedes_benz.mb_c_class.w206",
+          "name": "2.0L PHEV",
+          "powertrain": "PHEV",
+          "drivetrain": "RWD",
+          "engine_cc": 1999,
+          "battery_kwh": 25.4,
+          "price_thb": 3399000,
+          "price_min_thb": 3399000,
+          "price_max_thb": 3399000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "C350e AMG Dynamic"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mercedes_benz.mb_c_class.w206.trim.c_350_e_amg_dynamic_phev_313_hp_phev",
+          "generation_id": "mercedes_benz.mb_c_class.w206",
+          "name": "C 350 e AMG Dynamic (PHEV, 313 hp)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1999,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4793,
+          "width_mm": 1820,
+          "height_mm": 1446,
+          "wheelbase_mm": null,
+          "tire_front": "225/45R18",
+          "tire_rear": "255/40R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:188"
+            ],
+            "eco": [
+              "87646044-e80c-48c4-a4c8-5f71b1cf56a2"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.mb_c_class.w206.trim.c_350_e_plug_in_hybrid_phev",
+          "generation_id": "mercedes_benz.mb_c_class.w206",
+          "name": "C 350 e plug-in hybrid",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1999,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4793,
+          "width_mm": 1820,
+          "height_mm": 1446,
+          "wheelbase_mm": null,
+          "tire_front": "225/45R18",
+          "tire_rear": "255/40R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "effe1fc4-a29f-44aa-ab7b-ca03d7d23556"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.mb_c_class.w206.trim.c_220_d_ice",
+          "generation_id": "mercedes_benz.mb_c_class.w206",
+          "name": "C 220 d",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4793,
+          "width_mm": 1820,
+          "height_mm": 1446,
+          "wheelbase_mm": null,
+          "tire_front": "225/40R19",
+          "tire_rear": "255/35R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "7e17941e-aab9-4332-9a82-3c53cdf5ff75"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.mb_c_class.w206.trim.c_220_d_amg_line_hev",
+          "generation_id": "mercedes_benz.mb_c_class.w206",
+          "name": "C 220 d AMG Line",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4793,
+          "width_mm": 1820,
+          "height_mm": 1446,
+          "wheelbase_mm": null,
+          "tire_front": "225/45R18",
+          "tire_rear": "245/40R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "8139d235-a74d-40da-aa97-14df9f282a81"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.mb_c_class.w206.trim.c_220_d_avantgarde_hev",
+          "generation_id": "mercedes_benz.mb_c_class.w206",
+          "name": "C 220 d Avantgarde",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4751,
+          "width_mm": 1820,
+          "height_mm": 1437,
+          "wheelbase_mm": null,
+          "tire_front": "225/45R18",
+          "tire_rear": "245/40R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "f9e017b9-93b3-4566-85f9-924993d124cd"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.mb_c_class.w206.trim.mercedes_benz_coupe_amg_dynamic_ice",
+          "generation_id": "mercedes_benz.mb_c_class.w206",
+          "name": "Mercedes-Benz Coupe AMG Dynamic",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1991,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 4,
+          "length_mm": 4696,
+          "width_mm": 1810,
+          "height_mm": 1408,
+          "wheelbase_mm": null,
+          "tire_front": "225/40R19",
+          "tire_rear": "255/35R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "f6d8b25e-677c-4d36-8c32-61d70def7ab9"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mercedes_benz.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "bb72ea72eb29bbcd1d3ad9bd:catalog",
+    "revision_id": "bb72ea72eb29bbcd1d3ad9bd",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mercedes_benz.mb_c_class",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:51+00:00",
+    "payload": {
+      "brand": {
+        "id": "mercedes_benz",
+        "name_en": "Mercedes-Benz",
+        "name_th": "เมอร์เซเดส-เบนซ์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Mercedes-Benz Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "benz",
+          "เบนซ์",
+          "mercedes"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mercedes_benz.mb_c_class",
+        "brand_id": "mercedes_benz",
+        "name_en": "C-Class",
+        "name_th": "ซี-คลาส",
+        "nameplate": "C-Class",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "c class",
+          "c220d",
+          "c350e",
+          "C 200",
+          "C 220 d",
+          "C 250",
+          "C250",
+          "C 300",
+          "C 300 e",
+          "C 350 e",
+          "AMG C43",
+          "AMG C43 4MATIC Coupe"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mercedes_benz.mb_c_class.w206",
+          "model_id": "mercedes_benz.mb_c_class",
+          "code": "W206",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mercedes_benz.mb_c_class.w206.2_0l_phev",
+          "generation_id": "mercedes_benz.mb_c_class.w206",
+          "name": "2.0L PHEV",
+          "powertrain": "PHEV",
+          "drivetrain": "RWD",
+          "engine_cc": 1999,
+          "battery_kwh": 25.4,
+          "price_thb": 3399000,
+          "price_min_thb": 3399000,
+          "price_max_thb": 3399000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "C350e AMG Dynamic"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mercedes_benz.mb_c_class.w206.trim.c_350_e_amg_dynamic_phev_313_hp_phev",
+          "generation_id": "mercedes_benz.mb_c_class.w206",
+          "name": "C 350 e AMG Dynamic (PHEV, 313 hp)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1999,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4793,
+          "width_mm": 1820,
+          "height_mm": 1446,
+          "wheelbase_mm": null,
+          "tire_front": "225/45R18",
+          "tire_rear": "255/40R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:188"
+            ],
+            "eco": [
+              "87646044-e80c-48c4-a4c8-5f71b1cf56a2"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.mb_c_class.w206.trim.c_350_e_plug_in_hybrid_phev",
+          "generation_id": "mercedes_benz.mb_c_class.w206",
+          "name": "C 350 e plug-in hybrid",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1999,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4793,
+          "width_mm": 1820,
+          "height_mm": 1446,
+          "wheelbase_mm": null,
+          "tire_front": "225/45R18",
+          "tire_rear": "255/40R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "effe1fc4-a29f-44aa-ab7b-ca03d7d23556"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.mb_c_class.w206.trim.c_220_d_ice",
+          "generation_id": "mercedes_benz.mb_c_class.w206",
+          "name": "C 220 d",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4793,
+          "width_mm": 1820,
+          "height_mm": 1446,
+          "wheelbase_mm": null,
+          "tire_front": "225/40R19",
+          "tire_rear": "255/35R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "7e17941e-aab9-4332-9a82-3c53cdf5ff75"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.mb_c_class.w206.trim.c_220_d_amg_line_hev",
+          "generation_id": "mercedes_benz.mb_c_class.w206",
+          "name": "C 220 d AMG Line",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4793,
+          "width_mm": 1820,
+          "height_mm": 1446,
+          "wheelbase_mm": null,
+          "tire_front": "225/45R18",
+          "tire_rear": "245/40R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "8139d235-a74d-40da-aa97-14df9f282a81"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.mb_c_class.w206.trim.c_220_d_avantgarde_hev",
+          "generation_id": "mercedes_benz.mb_c_class.w206",
+          "name": "C 220 d Avantgarde",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4751,
+          "width_mm": 1820,
+          "height_mm": 1437,
+          "wheelbase_mm": null,
+          "tire_front": "225/45R18",
+          "tire_rear": "245/40R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "f9e017b9-93b3-4566-85f9-924993d124cd"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.mb_c_class.w206.trim.mercedes_benz_coupe_amg_dynamic_ice",
+          "generation_id": "mercedes_benz.mb_c_class.w206",
+          "name": "Mercedes-Benz Coupe AMG Dynamic",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1991,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 4,
+          "length_mm": 4696,
+          "width_mm": 1810,
+          "height_mm": 1408,
+          "wheelbase_mm": null,
+          "tire_front": "225/40R19",
+          "tire_rear": "255/35R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "f6d8b25e-677c-4d36-8c32-61d70def7ab9"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

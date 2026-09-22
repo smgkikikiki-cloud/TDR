@@ -47,6 +47,53 @@
               "price_min_thb": 1590000,
               "price_max_thb": 1590000
             }
+          ],
+          "trims": [
+            {
+              "name": "2.5i-S AWD CVT",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4655,
+              "width_mm": 1830,
+              "height_mm": 1730,
+              "engine_cc": 2498,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "b6d3da0a-2c80-42b7-b268-fa8420e87308"
+                ]
+              }
+            },
+            {
+              "name": "2.0i-S ES",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4640,
+              "width_mm": 1815,
+              "height_mm": 1730,
+              "engine_cc": 1995,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "9337be4e-fe81-4ced-95e3-864beb1426e2"
+                ]
+              }
+            },
+            {
+              "name": "2.0i-L ES",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4640,
+              "width_mm": 1815,
+              "height_mm": 1730,
+              "engine_cc": 1995,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "22d882e7-6178-4849-a8fb-34e40c33dd4e"
+                ]
+              }
+            }
           ]
         }
       ],
@@ -100,6 +147,51 @@
                 ]
               },
               "id": "2_0_e_boxer_eyesight_hybrid_awd_hev"
+            },
+            {
+              "name": "2.0i-S ES AWD CVT",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4480,
+              "width_mm": 1800,
+              "height_mm": 1600,
+              "engine_cc": 1995,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "b1da8d6f-7366-4a4d-be12-f47d2f98262f"
+                ]
+              }
+            },
+            {
+              "name": "2.0i-P ES",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4485,
+              "width_mm": 1800,
+              "height_mm": 1615,
+              "engine_cc": 1995,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "9d1fdc40ccf54776b0fb1e8a9ee0c35b"
+                ]
+              }
+            },
+            {
+              "name": "2.0i-P",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4465,
+              "width_mm": 1800,
+              "height_mm": 1615,
+              "engine_cc": 1995,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "81f7acd1fad441eaaf1d9082c4150171"
+                ]
+              }
             }
           ]
         }

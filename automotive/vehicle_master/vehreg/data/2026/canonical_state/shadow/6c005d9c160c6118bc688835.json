@@ -1,0 +1,423 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6c005d9c160c6118bc688835",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:218",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mg.mg_zs_ev",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:58+00:00",
+    "before_hash": "fd07c2f2bd777e1ca9e71fa079618a561d46a4ea24c52295bafada51b9b5ef64",
+    "after_hash": "4d8e83e2004ea1e8b7fd8f1e89e07ea02c3b807d1d4aedf8a6af3eda30669148",
+    "before": {
+      "id": "mg_zs_ev",
+      "name_en": "MG ZS EV",
+      "name_th": "เอ็มจี แซดเอส อีวี",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "zs ev",
+        "new zs ev"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "ZSEV",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2019-06-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "51 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_cc": null,
+              "battery_kwh": 51.1,
+              "aliases": [
+                "Long Range"
+              ],
+              "overrides": {},
+              "price_thb": 949000,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "seed-unverified",
+              "price_min_thb": 949000,
+              "price_max_thb": 949000
+            }
+          ],
+          "trims": [
+            {
+              "name": "ZS EV D",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:211"
+                ]
+              },
+              "id": "zs_ev_d_bev"
+            },
+            {
+              "name": "ZS EV X",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:211"
+                ]
+              },
+              "id": "zs_ev_x_bev"
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "mg",
+        "name_en": "MG",
+        "name_th": "เอ็มจี",
+        "brand_segment": "MASS",
+        "oem_group": "SAIC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "เอ็มจี",
+          "mg sales thailand",
+          "morris garages"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mg.mg_zs_ev",
+        "brand_id": "mg",
+        "name_en": "MG ZS EV",
+        "name_th": "เอ็มจี แซดเอส อีวี",
+        "nameplate": "MG ZS EV",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "zs ev",
+          "new zs ev"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mg.mg_zs_ev.zsev",
+          "model_id": "mg.mg_zs_ev",
+          "code": "ZSEV",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2019-06-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mg.mg_zs_ev.zsev.51_kwh_bev",
+          "generation_id": "mg.mg_zs_ev.zsev",
+          "name": "51 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 51.1,
+          "price_thb": 949000,
+          "price_min_thb": 949000,
+          "price_max_thb": 949000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Long Range"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mg.mg_zs_ev.zsev.trim.zs_ev_d_bev",
+          "generation_id": "mg.mg_zs_ev.zsev",
+          "name": "ZS EV D",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:211"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_zs_ev.zsev.trim.zs_ev_x_bev",
+          "generation_id": "mg.mg_zs_ev.zsev",
+          "name": "ZS EV X",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:211"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_zs_ev.zsev.trim.x_ice",
+          "generation_id": "mg.mg_zs_ev.zsev",
+          "name": "X",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4323,
+          "width_mm": 1809,
+          "height_mm": 1649,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "1420bd13e3f34a3ca6bbfef98ed40f5d"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mg.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6c005d9c160c6118bc688835:catalog",
+    "revision_id": "6c005d9c160c6118bc688835",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mg.mg_zs_ev",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:58+00:00",
+    "payload": {
+      "brand": {
+        "id": "mg",
+        "name_en": "MG",
+        "name_th": "เอ็มจี",
+        "brand_segment": "MASS",
+        "oem_group": "SAIC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "เอ็มจี",
+          "mg sales thailand",
+          "morris garages"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mg.mg_zs_ev",
+        "brand_id": "mg",
+        "name_en": "MG ZS EV",
+        "name_th": "เอ็มจี แซดเอส อีวี",
+        "nameplate": "MG ZS EV",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "zs ev",
+          "new zs ev"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mg.mg_zs_ev.zsev",
+          "model_id": "mg.mg_zs_ev",
+          "code": "ZSEV",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2019-06-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mg.mg_zs_ev.zsev.51_kwh_bev",
+          "generation_id": "mg.mg_zs_ev.zsev",
+          "name": "51 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 51.1,
+          "price_thb": 949000,
+          "price_min_thb": 949000,
+          "price_max_thb": 949000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Long Range"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mg.mg_zs_ev.zsev.trim.zs_ev_d_bev",
+          "generation_id": "mg.mg_zs_ev.zsev",
+          "name": "ZS EV D",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:211"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_zs_ev.zsev.trim.zs_ev_x_bev",
+          "generation_id": "mg.mg_zs_ev.zsev",
+          "name": "ZS EV X",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:211"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_zs_ev.zsev.trim.x_ice",
+          "generation_id": "mg.mg_zs_ev.zsev",
+          "name": "X",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4323,
+          "width_mm": 1809,
+          "height_mm": 1649,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "1420bd13e3f34a3ca6bbfef98ed40f5d"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

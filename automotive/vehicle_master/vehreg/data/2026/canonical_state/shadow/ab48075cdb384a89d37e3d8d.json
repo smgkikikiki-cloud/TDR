@@ -1,0 +1,564 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ab48075cdb384a89d37e3d8d",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:355",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "land_rover.defender",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:32+00:00",
+    "before_hash": "3e94da2e8dfda497b00f4e972a0b7fa2b90b4687c71e2bd760181403571afdc4",
+    "after_hash": "9d4648c16fd604953287be723bcb98fc4a06468286c95ac0115daf089c33d00d",
+    "before": {
+      "id": "defender",
+      "name_en": "Defender",
+      "name_th": "ดีเฟนเดอร์",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "NICHE",
+      "aliases": [
+        "defender"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2020-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "3.0L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "engine_cc": 2996,
+              "price_thb": 6900000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "GB",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "90 (3-Door: S, SE, X-Dynamic HSE, V8)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:143"
+                ]
+              },
+              "aliases": [
+                "Defender 90 (3-Door: S, SE, X-Dynamic HSE, V8)"
+              ],
+              "id": "90_3_door_s_se_x_dynamic_hse_v8_ice"
+            },
+            {
+              "name": "110 (5-Door: S, SE, HSE, X-Dynamic, X, V8)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:143"
+                ]
+              },
+              "aliases": [
+                "Defender 110 (5-Door: S, SE, HSE, X-Dynamic, X, V8)"
+              ],
+              "id": "110_5_door_s_se_hse_x_dynamic_x_v8_ice"
+            },
+            {
+              "name": "130 (8-Seater: First Edition, Outbound)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:143"
+                ]
+              },
+              "aliases": [
+                "Defender 130 (8-Seater: First Edition, Outbound)"
+              ],
+              "id": "130_8_seater_first_edition_outbound_ice"
+            },
+            {
+              "name": "2.0 PHEV AWD 5DR SWB X-Dynamic SE 404PS Auto",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4775,
+              "width_mm": 2105,
+              "height_mm": 1970,
+              "engine_cc": 1997,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "161e8afe-1ea2-4f01-9b1e-6a76b27c34f1"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "land_rover",
+        "name_en": "Land Rover",
+        "name_th": "แลนด์โรเวอร์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "JLR",
+        "brand_origin": "GB",
+        "trim_detail": false,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "land_rover.defender",
+        "brand_id": "land_rover",
+        "name_en": "Defender",
+        "name_th": "ดีเฟนเดอร์",
+        "nameplate": "Defender",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "defender"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "land_rover.defender.gen1",
+          "model_id": "land_rover.defender",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2020-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "land_rover.defender.gen1.3_0l_ice",
+          "generation_id": "land_rover.defender.gen1",
+          "name": "3.0L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "AWD",
+          "engine_cc": 2996,
+          "battery_kwh": null,
+          "price_thb": 6900000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "GB",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "land_rover.defender.gen1.trim.90_3_door_s_se_x_dynamic_hse_v8_ice",
+          "generation_id": "land_rover.defender.gen1",
+          "name": "90 (3-Door: S, SE, X-Dynamic HSE, V8)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Defender 90 (3-Door: S, SE, X-Dynamic HSE, V8)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:143"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "land_rover.defender.gen1.trim.110_5_door_s_se_hse_x_dynamic_x_v8_ice",
+          "generation_id": "land_rover.defender.gen1",
+          "name": "110 (5-Door: S, SE, HSE, X-Dynamic, X, V8)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Defender 110 (5-Door: S, SE, HSE, X-Dynamic, X, V8)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:143"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "land_rover.defender.gen1.trim.130_8_seater_first_edition_outbound_ice",
+          "generation_id": "land_rover.defender.gen1",
+          "name": "130 (8-Seater: First Edition, Outbound)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Defender 130 (8-Seater: First Edition, Outbound)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:143"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "land_rover.defender.gen1.trim.2_0_phev_awd_5dr_swb_x_dynamic_se_404ps_phev",
+          "generation_id": "land_rover.defender.gen1",
+          "name": "2.0 PHEV AWD 5DR SWB X-Dynamic SE 404PS Auto",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1997,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4775,
+          "width_mm": 2105,
+          "height_mm": 1970,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "161e8afe-1ea2-4f01-9b1e-6a76b27c34f1"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "land_rover.defender.gen1.trim.2_0p_phev_5dr_swb_x_dynamic_hse_404ps_phev",
+          "generation_id": "land_rover.defender.gen1",
+          "name": "2.0P PHEV 5DR SWB X-Dynamic HSE 404PS Auto",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1997,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4775,
+          "width_mm": 2105,
+          "height_mm": 1970,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "104b8a2d-a62e-487d-a1a3-b74d45e3fa08"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/land_rover.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ab48075cdb384a89d37e3d8d:catalog",
+    "revision_id": "ab48075cdb384a89d37e3d8d",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "land_rover.defender",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:32+00:00",
+    "payload": {
+      "brand": {
+        "id": "land_rover",
+        "name_en": "Land Rover",
+        "name_th": "แลนด์โรเวอร์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "JLR",
+        "brand_origin": "GB",
+        "trim_detail": false,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "land_rover.defender",
+        "brand_id": "land_rover",
+        "name_en": "Defender",
+        "name_th": "ดีเฟนเดอร์",
+        "nameplate": "Defender",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "defender"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "land_rover.defender.gen1",
+          "model_id": "land_rover.defender",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2020-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "land_rover.defender.gen1.3_0l_ice",
+          "generation_id": "land_rover.defender.gen1",
+          "name": "3.0L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "AWD",
+          "engine_cc": 2996,
+          "battery_kwh": null,
+          "price_thb": 6900000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "GB",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "land_rover.defender.gen1.trim.90_3_door_s_se_x_dynamic_hse_v8_ice",
+          "generation_id": "land_rover.defender.gen1",
+          "name": "90 (3-Door: S, SE, X-Dynamic HSE, V8)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Defender 90 (3-Door: S, SE, X-Dynamic HSE, V8)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:143"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "land_rover.defender.gen1.trim.110_5_door_s_se_hse_x_dynamic_x_v8_ice",
+          "generation_id": "land_rover.defender.gen1",
+          "name": "110 (5-Door: S, SE, HSE, X-Dynamic, X, V8)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Defender 110 (5-Door: S, SE, HSE, X-Dynamic, X, V8)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:143"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "land_rover.defender.gen1.trim.130_8_seater_first_edition_outbound_ice",
+          "generation_id": "land_rover.defender.gen1",
+          "name": "130 (8-Seater: First Edition, Outbound)",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Defender 130 (8-Seater: First Edition, Outbound)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:143"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "land_rover.defender.gen1.trim.2_0_phev_awd_5dr_swb_x_dynamic_se_404ps_phev",
+          "generation_id": "land_rover.defender.gen1",
+          "name": "2.0 PHEV AWD 5DR SWB X-Dynamic SE 404PS Auto",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1997,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4775,
+          "width_mm": 2105,
+          "height_mm": 1970,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "161e8afe-1ea2-4f01-9b1e-6a76b27c34f1"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "land_rover.defender.gen1.trim.2_0p_phev_5dr_swb_x_dynamic_hse_404ps_phev",
+          "generation_id": "land_rover.defender.gen1",
+          "name": "2.0P PHEV 5DR SWB X-Dynamic HSE 404PS Auto",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1997,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4775,
+          "width_mm": 2105,
+          "height_mm": 1970,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "104b8a2d-a62e-487d-a1a3-b74d45e3fa08"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

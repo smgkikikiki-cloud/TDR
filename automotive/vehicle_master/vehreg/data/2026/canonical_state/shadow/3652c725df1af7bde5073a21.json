@@ -1,0 +1,734 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "3652c725df1af7bde5073a21",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:82",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mini.mini_cooper",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:44+00:00",
+    "before_hash": "6df842141f822d7fa6c9a54e1ec898e8a55dfe2f21894c218e2cafd9fd87dd56",
+    "after_hash": "1e480587bec114d101965b3def1063940b92aa5398baaf4ba1d1357cc5729ee7",
+    "before": {
+      "id": "mini_cooper",
+      "name_en": "Cooper",
+      "name_th": "คูเปอร์",
+      "nameplate": "",
+      "body_type": "HATCHBACK",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "mini cooper"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "J01",
+          "segment": "B",
+          "seats": 4,
+          "launched": "2024-06-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "54 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_cc": null,
+              "battery_kwh": 54.2,
+              "aliases": [
+                "Cooper SE"
+              ],
+              "overrides": {},
+              "price_thb": 2299000,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "seed-unverified",
+              "price_min_thb": 2299000,
+              "price_max_thb": 2299000
+            }
+          ],
+          "trims": [
+            {
+              "name": "E (BEV 3-Door)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:219"
+                ]
+              },
+              "aliases": [
+                "Cooper E (BEV 3-Door)"
+              ],
+              "id": "e_bev_3_door_bev"
+            },
+            {
+              "name": "SE (BEV 3-Door, 218 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:219"
+                ],
+                "eco": [
+                  "356292e0-9b87-4c2b-bfe8-85cb9d9b81d0"
+                ]
+              },
+              "aliases": [
+                "Cooper SE (BEV 3-Door, 218 hp)"
+              ],
+              "id": "se_bev_3_door_218_hp_bev",
+              "seats": 4,
+              "length_mm": 3858,
+              "width_mm": 1756,
+              "height_mm": 1460
+            },
+            {
+              "name": "S Convertible",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 3879,
+              "width_mm": 1744,
+              "height_mm": 1431,
+              "engine_cc": 1998,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "22fd2856-7859-47c8-993f-9088b758c164"
+                ]
+              }
+            },
+            {
+              "name": "S Hatch 3 door",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 3876,
+              "width_mm": 1727,
+              "height_mm": 1414,
+              "engine_cc": 1998,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "cba31694-184a-4942-b4cc-7ec279a65a0d"
+                ]
+              }
+            },
+            {
+              "name": "Clubman",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4266,
+              "width_mm": 1800,
+              "height_mm": 1441,
+              "engine_cc": 1499,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "96e97e89-bbd8-4d43-ba9f-5524f367c96c"
+                ]
+              }
+            },
+            {
+              "name": "S Clubman",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4266,
+              "width_mm": 1800,
+              "height_mm": 1441,
+              "engine_cc": 1998,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "c95b358c-3eb3-40fa-8eee-e9934b98da9a"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "mini",
+        "name_en": "MINI",
+        "name_th": "มินิ",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "BMW Group",
+        "brand_origin": "GB",
+        "trim_detail": false,
+        "aliases": [
+          "มินิ"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mini.mini_cooper",
+        "brand_id": "mini",
+        "name_en": "Cooper",
+        "name_th": "คูเปอร์",
+        "nameplate": "Cooper",
+        "body_type": "HATCHBACK",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "mini cooper"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mini.mini_cooper.j01",
+          "model_id": "mini.mini_cooper",
+          "code": "J01",
+          "segment": "B",
+          "seats": 4,
+          "launched": "2024-06-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mini.mini_cooper.j01.54_kwh_bev",
+          "generation_id": "mini.mini_cooper.j01",
+          "name": "54 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 54.2,
+          "price_thb": 2299000,
+          "price_min_thb": 2299000,
+          "price_max_thb": 2299000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Cooper SE"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mini.mini_cooper.j01.trim.e_bev_3_door_bev",
+          "generation_id": "mini.mini_cooper.j01",
+          "name": "E (BEV 3-Door)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Cooper E (BEV 3-Door)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:219"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mini.mini_cooper.j01.trim.se_bev_3_door_218_hp_bev",
+          "generation_id": "mini.mini_cooper.j01",
+          "name": "SE (BEV 3-Door, 218 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 4,
+          "length_mm": 3858,
+          "width_mm": 1756,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Cooper SE (BEV 3-Door, 218 hp)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:219"
+            ],
+            "eco": [
+              "356292e0-9b87-4c2b-bfe8-85cb9d9b81d0"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mini.mini_cooper.j01.trim.s_convertible_ice",
+          "generation_id": "mini.mini_cooper.j01",
+          "name": "S Convertible",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 4,
+          "length_mm": 3879,
+          "width_mm": 1744,
+          "height_mm": 1431,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "22fd2856-7859-47c8-993f-9088b758c164"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mini.mini_cooper.j01.trim.s_hatch_3_door_ice",
+          "generation_id": "mini.mini_cooper.j01",
+          "name": "S Hatch 3 door",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 4,
+          "length_mm": 3876,
+          "width_mm": 1727,
+          "height_mm": 1414,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "cba31694-184a-4942-b4cc-7ec279a65a0d"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mini.mini_cooper.j01.trim.clubman_ice",
+          "generation_id": "mini.mini_cooper.j01",
+          "name": "Clubman",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1499,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4266,
+          "width_mm": 1800,
+          "height_mm": 1441,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "96e97e89-bbd8-4d43-ba9f-5524f367c96c"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mini.mini_cooper.j01.trim.s_clubman_ice",
+          "generation_id": "mini.mini_cooper.j01",
+          "name": "S Clubman",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4266,
+          "width_mm": 1800,
+          "height_mm": 1441,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "c95b358c-3eb3-40fa-8eee-e9934b98da9a"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mini.mini_cooper.j01.trim.hatch_3_door_ice",
+          "generation_id": "mini.mini_cooper.j01",
+          "name": "Hatch 3 door",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1499,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 4,
+          "length_mm": 3863,
+          "width_mm": 1727,
+          "height_mm": 1414,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "44556f9d-ace0-41af-a578-86d298247837"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mini.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "3652c725df1af7bde5073a21:catalog",
+    "revision_id": "3652c725df1af7bde5073a21",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mini.mini_cooper",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:44+00:00",
+    "payload": {
+      "brand": {
+        "id": "mini",
+        "name_en": "MINI",
+        "name_th": "มินิ",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "BMW Group",
+        "brand_origin": "GB",
+        "trim_detail": false,
+        "aliases": [
+          "มินิ"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mini.mini_cooper",
+        "brand_id": "mini",
+        "name_en": "Cooper",
+        "name_th": "คูเปอร์",
+        "nameplate": "Cooper",
+        "body_type": "HATCHBACK",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "mini cooper"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mini.mini_cooper.j01",
+          "model_id": "mini.mini_cooper",
+          "code": "J01",
+          "segment": "B",
+          "seats": 4,
+          "launched": "2024-06-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mini.mini_cooper.j01.54_kwh_bev",
+          "generation_id": "mini.mini_cooper.j01",
+          "name": "54 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 54.2,
+          "price_thb": 2299000,
+          "price_min_thb": 2299000,
+          "price_max_thb": 2299000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Cooper SE"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mini.mini_cooper.j01.trim.e_bev_3_door_bev",
+          "generation_id": "mini.mini_cooper.j01",
+          "name": "E (BEV 3-Door)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Cooper E (BEV 3-Door)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:219"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mini.mini_cooper.j01.trim.se_bev_3_door_218_hp_bev",
+          "generation_id": "mini.mini_cooper.j01",
+          "name": "SE (BEV 3-Door, 218 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 4,
+          "length_mm": 3858,
+          "width_mm": 1756,
+          "height_mm": 1460,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Cooper SE (BEV 3-Door, 218 hp)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:219"
+            ],
+            "eco": [
+              "356292e0-9b87-4c2b-bfe8-85cb9d9b81d0"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mini.mini_cooper.j01.trim.s_convertible_ice",
+          "generation_id": "mini.mini_cooper.j01",
+          "name": "S Convertible",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 4,
+          "length_mm": 3879,
+          "width_mm": 1744,
+          "height_mm": 1431,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "22fd2856-7859-47c8-993f-9088b758c164"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mini.mini_cooper.j01.trim.s_hatch_3_door_ice",
+          "generation_id": "mini.mini_cooper.j01",
+          "name": "S Hatch 3 door",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 4,
+          "length_mm": 3876,
+          "width_mm": 1727,
+          "height_mm": 1414,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "cba31694-184a-4942-b4cc-7ec279a65a0d"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mini.mini_cooper.j01.trim.clubman_ice",
+          "generation_id": "mini.mini_cooper.j01",
+          "name": "Clubman",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1499,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4266,
+          "width_mm": 1800,
+          "height_mm": 1441,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "96e97e89-bbd8-4d43-ba9f-5524f367c96c"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mini.mini_cooper.j01.trim.s_clubman_ice",
+          "generation_id": "mini.mini_cooper.j01",
+          "name": "S Clubman",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4266,
+          "width_mm": 1800,
+          "height_mm": 1441,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "c95b358c-3eb3-40fa-8eee-e9934b98da9a"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mini.mini_cooper.j01.trim.hatch_3_door_ice",
+          "generation_id": "mini.mini_cooper.j01",
+          "name": "Hatch 3 door",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1499,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 4,
+          "length_mm": 3863,
+          "width_mm": 1727,
+          "height_mm": 1414,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "44556f9d-ace0-41af-a578-86d298247837"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

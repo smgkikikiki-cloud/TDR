@@ -1,0 +1,720 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "8941c2537296b06f3810ef35",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:319",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mg.mg_hs",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:04:09+00:00",
+    "before_hash": "6362a38edd859085da59547b0f62ca98a0b1f061e7000ac4e8d910f12bbcfe82",
+    "after_hash": "8fa4e1be6b3978296389474792195c3fe0c700c011c334bbb45a468c013dff43",
+    "before": {
+      "id": "mg_hs",
+      "name_en": "MG HS",
+      "name_th": "เอ็มจี เอชเอส",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "hs"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "HSG",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2019-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.5L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "engine_cc": 1490,
+              "battery_kwh": null,
+              "aliases": [
+                "1.5 Turbo X"
+              ],
+              "overrides": {},
+              "price_thb": 999000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 999000,
+              "price_max_thb": 999000
+            },
+            {
+              "name": "1.5L PHEV",
+              "powertrain": "PHEV",
+              "drivetrain": "FWD",
+              "engine_cc": 1490,
+              "battery_kwh": 16.6,
+              "aliases": [
+                "PHEV X"
+              ],
+              "overrides": {},
+              "price_thb": 1359000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1359000,
+              "price_max_thb": 1359000
+            }
+          ],
+          "trims": [
+            {
+              "name": "TURBO X",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4610,
+              "width_mm": 1876,
+              "height_mm": 1664,
+              "engine_cc": 1490,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "cd6e61e28ec54ba6a06cdc2463569f09"
+                ]
+              }
+            },
+            {
+              "name": "TURBO C",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4610,
+              "width_mm": 1876,
+              "height_mm": 1664,
+              "engine_cc": 1490,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "83c43e264ed44392a135639f248b11c7"
+                ]
+              }
+            },
+            {
+              "name": "TURBO D",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4610,
+              "width_mm": 1876,
+              "height_mm": 1664,
+              "engine_cc": 1490,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "1cf426f1fab548a5b4f06bf4bf1e160b"
+                ]
+              }
+            },
+            {
+              "name": "PHEV D",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4610,
+              "width_mm": 1876,
+              "height_mm": 1664,
+              "engine_cc": 1490,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "ecc8a9d783124e82923102d7b5ede3eb"
+                ]
+              }
+            },
+            {
+              "name": "PHEV X",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4610,
+              "width_mm": 1876,
+              "height_mm": 1664,
+              "engine_cc": 1490,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "3fed66dee74648a59780137eeeadecef"
+                ]
+              }
+            },
+            {
+              "name": "PHEV",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4575,
+              "width_mm": 1876,
+              "height_mm": 1664,
+              "engine_cc": 1490,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "7e31e72f1fa24b87b612958fd3f22016"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "mg",
+        "name_en": "MG",
+        "name_th": "เอ็มจี",
+        "brand_segment": "MASS",
+        "oem_group": "SAIC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "เอ็มจี",
+          "mg sales thailand",
+          "morris garages"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mg.mg_hs",
+        "brand_id": "mg",
+        "name_en": "MG HS",
+        "name_th": "เอ็มจี เอชเอส",
+        "nameplate": "MG HS",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "hs"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mg.mg_hs.hsg",
+          "model_id": "mg.mg_hs",
+          "code": "HSG",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2019-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mg.mg_hs.hsg.1_5l_ice",
+          "generation_id": "mg.mg_hs.hsg",
+          "name": "1.5L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1490,
+          "battery_kwh": null,
+          "price_thb": 999000,
+          "price_min_thb": 999000,
+          "price_max_thb": 999000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.5 Turbo X"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "mg.mg_hs.hsg.1_5l_phev",
+          "generation_id": "mg.mg_hs.hsg",
+          "name": "1.5L PHEV",
+          "powertrain": "PHEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1490,
+          "battery_kwh": 16.6,
+          "price_thb": 1359000,
+          "price_min_thb": 1359000,
+          "price_max_thb": 1359000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "PHEV X"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mg.mg_hs.hsg.trim.turbo_x_ice",
+          "generation_id": "mg.mg_hs.hsg",
+          "name": "TURBO X",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1490,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4610,
+          "width_mm": 1876,
+          "height_mm": 1664,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "cd6e61e28ec54ba6a06cdc2463569f09"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_hs.hsg.trim.turbo_c_ice",
+          "generation_id": "mg.mg_hs.hsg",
+          "name": "TURBO C",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1490,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4574,
+          "width_mm": 1876,
+          "height_mm": 1664,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "305b0ddb29ab4baa902fc7527fdebbb5"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_hs.hsg.trim.turbo_d_ice",
+          "generation_id": "mg.mg_hs.hsg",
+          "name": "TURBO D",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1490,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4610,
+          "width_mm": 1876,
+          "height_mm": 1664,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "1cf426f1fab548a5b4f06bf4bf1e160b"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_hs.hsg.trim.phev_d_phev",
+          "generation_id": "mg.mg_hs.hsg",
+          "name": "PHEV D",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1490,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4610,
+          "width_mm": 1876,
+          "height_mm": 1664,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "ecc8a9d783124e82923102d7b5ede3eb"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_hs.hsg.trim.phev_x_phev",
+          "generation_id": "mg.mg_hs.hsg",
+          "name": "PHEV X",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1490,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4610,
+          "width_mm": 1876,
+          "height_mm": 1664,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "3fed66dee74648a59780137eeeadecef"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_hs.hsg.trim.phev_phev",
+          "generation_id": "mg.mg_hs.hsg",
+          "name": "PHEV",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1490,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4575,
+          "width_mm": 1876,
+          "height_mm": 1664,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "7e31e72f1fa24b87b612958fd3f22016"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mg.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "8941c2537296b06f3810ef35:catalog",
+    "revision_id": "8941c2537296b06f3810ef35",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mg.mg_hs",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:04:09+00:00",
+    "payload": {
+      "brand": {
+        "id": "mg",
+        "name_en": "MG",
+        "name_th": "เอ็มจี",
+        "brand_segment": "MASS",
+        "oem_group": "SAIC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "เอ็มจี",
+          "mg sales thailand",
+          "morris garages"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mg.mg_hs",
+        "brand_id": "mg",
+        "name_en": "MG HS",
+        "name_th": "เอ็มจี เอชเอส",
+        "nameplate": "MG HS",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "hs"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mg.mg_hs.hsg",
+          "model_id": "mg.mg_hs",
+          "code": "HSG",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2019-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mg.mg_hs.hsg.1_5l_ice",
+          "generation_id": "mg.mg_hs.hsg",
+          "name": "1.5L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1490,
+          "battery_kwh": null,
+          "price_thb": 999000,
+          "price_min_thb": 999000,
+          "price_max_thb": 999000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.5 Turbo X"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "mg.mg_hs.hsg.1_5l_phev",
+          "generation_id": "mg.mg_hs.hsg",
+          "name": "1.5L PHEV",
+          "powertrain": "PHEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1490,
+          "battery_kwh": 16.6,
+          "price_thb": 1359000,
+          "price_min_thb": 1359000,
+          "price_max_thb": 1359000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "PHEV X"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mg.mg_hs.hsg.trim.turbo_x_ice",
+          "generation_id": "mg.mg_hs.hsg",
+          "name": "TURBO X",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1490,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4610,
+          "width_mm": 1876,
+          "height_mm": 1664,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "cd6e61e28ec54ba6a06cdc2463569f09"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_hs.hsg.trim.turbo_c_ice",
+          "generation_id": "mg.mg_hs.hsg",
+          "name": "TURBO C",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1490,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4574,
+          "width_mm": 1876,
+          "height_mm": 1664,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "305b0ddb29ab4baa902fc7527fdebbb5"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_hs.hsg.trim.turbo_d_ice",
+          "generation_id": "mg.mg_hs.hsg",
+          "name": "TURBO D",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1490,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4610,
+          "width_mm": 1876,
+          "height_mm": 1664,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "1cf426f1fab548a5b4f06bf4bf1e160b"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_hs.hsg.trim.phev_d_phev",
+          "generation_id": "mg.mg_hs.hsg",
+          "name": "PHEV D",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1490,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4610,
+          "width_mm": 1876,
+          "height_mm": 1664,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "ecc8a9d783124e82923102d7b5ede3eb"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_hs.hsg.trim.phev_x_phev",
+          "generation_id": "mg.mg_hs.hsg",
+          "name": "PHEV X",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1490,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4610,
+          "width_mm": 1876,
+          "height_mm": 1664,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "3fed66dee74648a59780137eeeadecef"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_hs.hsg.trim.phev_phev",
+          "generation_id": "mg.mg_hs.hsg",
+          "name": "PHEV",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1490,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4575,
+          "width_mm": 1876,
+          "height_mm": 1664,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "7e31e72f1fa24b87b612958fd3f22016"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

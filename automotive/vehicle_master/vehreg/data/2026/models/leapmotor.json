@@ -105,7 +105,34 @@
               "aliases": []
             }
           ],
-          "trims": []
+          "trims": [
+            {
+              "name": "EV STYLE",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4739,
+              "width_mm": 1900,
+              "height_mm": 1680,
+              "source_refs": {
+                "eco": [
+                  "e8acdff3-bce4-4a0e-b4a3-8377cd71787a"
+                ]
+              }
+            },
+            {
+              "name": "EV",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4739,
+              "width_mm": 1900,
+              "height_mm": 1680,
+              "source_refs": {
+                "eco": [
+                  "26a828cb-5bf0-4c3f-b8b3-1d94d2548478"
+                ]
+              }
+            }
+          ]
         }
       ]
     }

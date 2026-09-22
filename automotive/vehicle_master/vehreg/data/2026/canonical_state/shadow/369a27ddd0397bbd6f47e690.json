@@ -1,0 +1,509 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "369a27ddd0397bbd6f47e690",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:59",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mini.countryman",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:42+00:00",
+    "before_hash": "2f5d6a4a014acf8858ad2d2dee242c0842f23fb4d13ebabaa3d0a2f18baae7e7",
+    "after_hash": "2e72a4bd0dcba779635133a5f4afc8880d36ca18bc82faae22c94a5e86dcd1fa",
+    "before": {
+      "id": "countryman",
+      "name_en": "Countryman",
+      "name_th": "คันทรีแมน",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "cooper s countryman",
+        "countryman s",
+        "jcw countryman",
+        "cooper sd all4 countryman"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "U25",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2024-06-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "66 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_cc": null,
+              "battery_kwh": 66.5,
+              "aliases": [
+                "Countryman E"
+              ],
+              "overrides": {},
+              "price_thb": 2799000,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "seed-unverified",
+              "price_min_thb": 2799000,
+              "price_max_thb": 2799000
+            }
+          ],
+          "trims": [
+            {
+              "name": "SE ALL4 (BEV 313 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:217"
+                ]
+              },
+              "aliases": [
+                "Countryman SE ALL4 (BEV 313 hp)"
+              ],
+              "id": "se_all4_bev_313_hp_bev"
+            },
+            {
+              "name": "ALL4",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4444,
+              "width_mm": 1843,
+              "height_mm": 1661,
+              "engine_cc": 1998,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "15f61346-32d1-425c-ad36-423874390352"
+                ]
+              }
+            },
+            {
+              "name": "JCW Countryman",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4447,
+              "width_mm": 1843,
+              "height_mm": 1645,
+              "engine_cc": 1998,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "1728ef02-bdec-4e2b-8169-667bbdd4ad28"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "mini",
+        "name_en": "MINI",
+        "name_th": "มินิ",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "BMW Group",
+        "brand_origin": "GB",
+        "trim_detail": false,
+        "aliases": [
+          "มินิ"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mini.countryman",
+        "brand_id": "mini",
+        "name_en": "Countryman",
+        "name_th": "คันทรีแมน",
+        "nameplate": "Countryman",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "cooper s countryman",
+          "countryman s",
+          "jcw countryman",
+          "cooper sd all4 countryman"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mini.countryman.u25",
+          "model_id": "mini.countryman",
+          "code": "U25",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2024-06-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mini.countryman.u25.66_kwh_bev",
+          "generation_id": "mini.countryman.u25",
+          "name": "66 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 66.5,
+          "price_thb": 2799000,
+          "price_min_thb": 2799000,
+          "price_max_thb": 2799000,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Countryman E"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mini.countryman.u25.trim.se_all4_bev_313_hp_bev",
+          "generation_id": "mini.countryman.u25",
+          "name": "SE ALL4 (BEV 313 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Countryman SE ALL4 (BEV 313 hp)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:217"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mini.countryman.u25.trim.all4_ice",
+          "generation_id": "mini.countryman.u25",
+          "name": "ALL4",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4444,
+          "width_mm": 1843,
+          "height_mm": 1661,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "15f61346-32d1-425c-ad36-423874390352"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mini.countryman.u25.trim.jcw_countryman_ice",
+          "generation_id": "mini.countryman.u25",
+          "name": "JCW Countryman",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4447,
+          "width_mm": 1843,
+          "height_mm": 1645,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "1728ef02-bdec-4e2b-8169-667bbdd4ad28"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mini.countryman.u25.trim.cooper_s_countryman_ice",
+          "generation_id": "mini.countryman.u25",
+          "name": "Cooper S Countryman",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4299,
+          "width_mm": 1822,
+          "height_mm": 1557,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "c6dbae13-1ba1-45f9-bf50-afc422a90304"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mini.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "369a27ddd0397bbd6f47e690:catalog",
+    "revision_id": "369a27ddd0397bbd6f47e690",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mini.countryman",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:42+00:00",
+    "payload": {
+      "brand": {
+        "id": "mini",
+        "name_en": "MINI",
+        "name_th": "มินิ",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "BMW Group",
+        "brand_origin": "GB",
+        "trim_detail": false,
+        "aliases": [
+          "มินิ"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mini.countryman",
+        "brand_id": "mini",
+        "name_en": "Countryman",
+        "name_th": "คันทรีแมน",
+        "nameplate": "Countryman",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "cooper s countryman",
+          "countryman s",
+          "jcw countryman",
+          "cooper sd all4 countryman"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mini.countryman.u25",
+          "model_id": "mini.countryman",
+          "code": "U25",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2024-06-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mini.countryman.u25.66_kwh_bev",
+          "generation_id": "mini.countryman.u25",
+          "name": "66 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 66.5,
+          "price_thb": 2799000,
+          "price_min_thb": 2799000,
+          "price_max_thb": 2799000,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Countryman E"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mini.countryman.u25.trim.se_all4_bev_313_hp_bev",
+          "generation_id": "mini.countryman.u25",
+          "name": "SE ALL4 (BEV 313 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Countryman SE ALL4 (BEV 313 hp)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:217"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mini.countryman.u25.trim.all4_ice",
+          "generation_id": "mini.countryman.u25",
+          "name": "ALL4",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4444,
+          "width_mm": 1843,
+          "height_mm": 1661,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "15f61346-32d1-425c-ad36-423874390352"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mini.countryman.u25.trim.jcw_countryman_ice",
+          "generation_id": "mini.countryman.u25",
+          "name": "JCW Countryman",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4447,
+          "width_mm": 1843,
+          "height_mm": 1645,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "1728ef02-bdec-4e2b-8169-667bbdd4ad28"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mini.countryman.u25.trim.cooper_s_countryman_ice",
+          "generation_id": "mini.countryman.u25",
+          "name": "Cooper S Countryman",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1998,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4299,
+          "width_mm": 1822,
+          "height_mm": 1557,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "c6dbae13-1ba1-45f9-bf50-afc422a90304"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

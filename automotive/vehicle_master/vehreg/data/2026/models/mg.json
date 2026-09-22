@@ -92,6 +92,66 @@
                 "MG3 Hybrid+ Luxury"
               ],
               "id": "hybrid_plus_luxury_hev"
+            },
+            {
+              "name": "NEW HATCHBACK 1.5 C",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4055,
+              "width_mm": 1729,
+              "height_mm": 1516,
+              "engine_cc": 1498,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "d14286f6d6d94afb8fc9c98d4750a4fb"
+                ]
+              }
+            },
+            {
+              "name": "NEW HATCHBACK 1.5 D",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4055,
+              "width_mm": 1729,
+              "height_mm": 1516,
+              "engine_cc": 1498,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "7c497bee76e247b690316ad8fedd04ea"
+                ]
+              }
+            },
+            {
+              "name": "NEW HATCHBACK 1.5 X SUNROOF",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4055,
+              "width_mm": 1729,
+              "height_mm": 1516,
+              "engine_cc": 1498,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "92237fc28030427db66c1d1fe54b6941"
+                ]
+              }
+            },
+            {
+              "name": "NEW HATCHBACK 1.5 V SUNROOF",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4055,
+              "width_mm": 1729,
+              "height_mm": 1516,
+              "engine_cc": 1498,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "b111be5d136b4ceab20fca4200039f42"
+                ]
+              }
             }
           ]
         }
@@ -191,9 +251,16 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:213"
+                ],
+                "eco": [
+                  "149a5a0b-1932-4636-ba17-155979f340d2"
                 ]
               },
-              "id": "xpower_64_kwh_awd_dual_motor_435_hp_bev"
+              "id": "xpower_64_kwh_awd_dual_435_hp_bev",
+              "seats": 5,
+              "length_mm": 4287,
+              "width_mm": 1836,
+              "height_mm": 1516
             }
           ]
         }
@@ -246,9 +313,18 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:214"
+                ],
+                "eco": [
+                  "292b12ee18434cf8a2210c2882f1cec5"
                 ]
               },
-              "id": "1_5_c_ice"
+              "id": "1_5_c_ice",
+              "seats": 5,
+              "length_mm": 4675,
+              "width_mm": 1842,
+              "height_mm": 1473,
+              "engine_cc": 1498,
+              "transmission": "CVT"
             },
             {
               "name": "1.5 D",
@@ -276,9 +352,18 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:214"
+                ],
+                "eco": [
+                  "c013c26d710642cc97725d1895545a52"
                 ]
               },
-              "id": "1_5_x_ice"
+              "id": "1_5_x_ice",
+              "seats": 5,
+              "length_mm": 4675,
+              "width_mm": 1842,
+              "height_mm": 1480,
+              "engine_cc": 1498,
+              "transmission": "CVT"
             },
             {
               "name": "Pro D+",
@@ -357,9 +442,18 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:210"
+                ],
+                "eco": [
+                  "352f0fadc438491684812fb72c019084"
                 ]
               },
-              "id": "1_5_c_plus_ice"
+              "id": "1_5_c_plus_ice",
+              "seats": 5,
+              "length_mm": 4314,
+              "width_mm": 1809,
+              "height_mm": 1624,
+              "engine_cc": 1498,
+              "transmission": "AUTOMATIC"
             },
             {
               "name": "1.5 D+",
@@ -367,9 +461,18 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:210"
+                ],
+                "eco": [
+                  "0069de9ca11643859ccb243bbe609a83"
                 ]
               },
-              "id": "1_5_d_plus_ice"
+              "id": "1_5_d_plus_ice",
+              "seats": 5,
+              "length_mm": 4323,
+              "width_mm": 1809,
+              "height_mm": 1653,
+              "engine_cc": 1498,
+              "transmission": "CVT"
             },
             {
               "name": "1.5 X+",
@@ -377,9 +480,63 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:210"
+                ],
+                "eco": [
+                  "21275247e2354fcda9135069ef85185d"
                 ]
               },
-              "id": "1_5_x_plus_ice"
+              "id": "1_5_x_plus_ice",
+              "seats": 5,
+              "length_mm": 4323,
+              "width_mm": 1809,
+              "height_mm": 1653,
+              "engine_cc": 1498,
+              "transmission": "CVT"
+            },
+            {
+              "name": "1.5 V",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4323,
+              "width_mm": 1809,
+              "height_mm": 1653,
+              "engine_cc": 1498,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "cba01899-3b82-4de1-966e-820912102b78"
+                ]
+              }
+            },
+            {
+              "name": "100th Anniversary Special Edition",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4323,
+              "width_mm": 1809,
+              "height_mm": 1653,
+              "engine_cc": 1498,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "0f10915e-7f3f-4b6e-b611-645a575036e2"
+                ]
+              }
+            },
+            {
+              "name": "1.5 Limited Edition",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4323,
+              "width_mm": 1809,
+              "height_mm": 1653,
+              "engine_cc": 1498,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "a96b5895a81c44a99d65cfcac1e9c7c8"
+                ]
+              }
             }
           ]
         }
@@ -446,6 +603,32 @@
                 ]
               },
               "id": "zs_ev_x_bev"
+            },
+            {
+              "name": "X",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4323,
+              "width_mm": 1809,
+              "height_mm": 1649,
+              "source_refs": {
+                "eco": [
+                  "1420bd13e3f34a3ca6bbfef98ed40f5d"
+                ]
+              }
+            },
+            {
+              "name": "D",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4323,
+              "width_mm": 1809,
+              "height_mm": 1649,
+              "source_refs": {
+                "eco": [
+                  "5d4300a94f474d728d6745e8cd2d43c9"
+                ]
+              }
             }
           ]
         }
@@ -507,6 +690,98 @@
               "price_min_thb": 1359000,
               "price_max_thb": 1359000
             }
+          ],
+          "trims": [
+            {
+              "name": "TURBO X",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4574,
+              "width_mm": 1876,
+              "height_mm": 1664,
+              "engine_cc": 1490,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "174c6f84f1e14f51bed9bd40573f2861"
+                ]
+              }
+            },
+            {
+              "name": "TURBO C",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4574,
+              "width_mm": 1876,
+              "height_mm": 1664,
+              "engine_cc": 1490,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "305b0ddb29ab4baa902fc7527fdebbb5"
+                ]
+              }
+            },
+            {
+              "name": "TURBO D",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4574,
+              "width_mm": 1876,
+              "height_mm": 1664,
+              "engine_cc": 1490,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "61e3341939e9423a91651bde5327ec2f"
+                ]
+              }
+            },
+            {
+              "name": "PHEV D",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4610,
+              "width_mm": 1876,
+              "height_mm": 1664,
+              "engine_cc": 1490,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "ecc8a9d783124e82923102d7b5ede3eb"
+                ]
+              }
+            },
+            {
+              "name": "PHEV X",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4610,
+              "width_mm": 1876,
+              "height_mm": 1664,
+              "engine_cc": 1490,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "3fed66dee74648a59780137eeeadecef"
+                ]
+              }
+            },
+            {
+              "name": "PHEV",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4575,
+              "width_mm": 1876,
+              "height_mm": 1664,
+              "engine_cc": 1490,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "7e31e72f1fa24b87b612958fd3f22016"
+                ]
+              }
+            }
           ]
         }
       ]
@@ -550,7 +825,53 @@
               "price_max_thb": 899000
             }
           ],
-          "trims": []
+          "trims": [
+            {
+              "name": "X",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4370,
+              "width_mm": 1809,
+              "height_mm": 1653,
+              "engine_cc": 1498,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "84615030-e802-47b5-aa89-aa5f4fe54ea8"
+                ]
+              }
+            },
+            {
+              "name": "D",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4370,
+              "width_mm": 1809,
+              "height_mm": 1653,
+              "engine_cc": 1498,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "a84f9353-d49e-4ab5-ab5d-064219d9a00e"
+                ]
+              }
+            },
+            {
+              "name": "100th Anniversary Special Edition",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4370,
+              "width_mm": 1809,
+              "height_mm": 1653,
+              "engine_cc": 1498,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "ef59c79e-8302-4844-a3e6-aacd2d6cbaa3"
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -868,6 +1189,47 @@
               "price_note": "seed-unverified",
               "aliases": []
             }
+          ],
+          "trims": [
+            {
+              "name": "V",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4476,
+              "width_mm": 1849,
+              "height_mm": 1621,
+              "source_refs": {
+                "eco": [
+                  "2e5ff0c2-24d7-447d-94bf-4c1ebd31c8ab"
+                ]
+              }
+            },
+            {
+              "name": "X",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4476,
+              "width_mm": 1849,
+              "height_mm": 1621,
+              "source_refs": {
+                "eco": [
+                  "375ae711-d3a4-482b-941b-9c6bef61c68c"
+                ]
+              }
+            },
+            {
+              "name": "D+",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4476,
+              "width_mm": 1849,
+              "height_mm": 1621,
+              "source_refs": {
+                "eco": [
+                  "25620477-2ecb-4265-bf04-f8925c3c17d1"
+                ]
+              }
+            }
           ]
         }
       ]
@@ -987,6 +1349,19 @@
                 ]
               },
               "id": "ep_plus_bev"
+            },
+            {
+              "name": "EP",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4544,
+              "width_mm": 1818,
+              "height_mm": 1543,
+              "source_refs": {
+                "eco": [
+                  "2784aa1866d44e679c710cd1ff33e545"
+                ]
+              }
             }
           ]
         }

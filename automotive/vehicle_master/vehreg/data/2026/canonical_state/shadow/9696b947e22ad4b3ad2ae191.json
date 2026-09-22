@@ -1,0 +1,343 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9696b947e22ad4b3ad2ae191",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:308",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "land_rover.range_rover_sport",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:27+00:00",
+    "before_hash": "b4a7eeeb11bb433963d71c6673cce78a247a7729da20c14861091d95ac860f62",
+    "after_hash": "3880fb62195f23a1fda47e13b5f45b1280e0735f6051d427a8450daeb2834b41",
+    "before": {
+      "id": "range_rover_sport",
+      "name_en": "Range Rover Sport",
+      "name_th": "",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "NICHE",
+      "aliases": [
+        "range rover sport"
+      ],
+      "incomplete": true,
+      "notes": "Added because DLT Range Rover Sport labels were previously swallowed by the generic Range Rover alias. Specs deliberately left incomplete; generic fact-level powertrain is owner-reviewed MIXED.",
+      "generations": [
+        {
+          "code": "unresearched",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": null,
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec incomplete; powertrain handled at fact level",
+              "powertrain": "UNKNOWN",
+              "drivetrain": "UNKNOWN",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "UNKNOWN",
+              "origin_country": "UNKNOWN",
+              "price_note": "spec incomplete; owner-reviewed fact-level powertrain",
+              "aliases": [],
+              "incomplete": true
+            }
+          ],
+          "trims": [
+            {
+              "name": "3.0P PHEV 5DR SWB Dynamic SE 460PS",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4879,
+              "width_mm": 2220,
+              "height_mm": 1819,
+              "engine_cc": 2996,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "ccf36a08-0272-441e-94d2-969431ad6023"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "land_rover",
+        "name_en": "Land Rover",
+        "name_th": "แลนด์โรเวอร์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "JLR",
+        "brand_origin": "GB",
+        "trim_detail": false,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "land_rover.range_rover_sport",
+        "brand_id": "land_rover",
+        "name_en": "Range Rover Sport",
+        "name_th": "",
+        "nameplate": "Range Rover Sport",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "range rover sport"
+        ],
+        "notes": "Added because DLT Range Rover Sport labels were previously swallowed by the generic Range Rover alias. Specs deliberately left incomplete; generic fact-level powertrain is owner-reviewed MIXED.",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "land_rover.range_rover_sport.unresearched",
+          "model_id": "land_rover.range_rover_sport",
+          "code": "unresearched",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": null,
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "land_rover.range_rover_sport.unresearched.spec_incomplete_powertrain_handled_at_fact_level",
+          "generation_id": "land_rover.range_rover_sport.unresearched",
+          "name": "spec incomplete; powertrain handled at fact level",
+          "powertrain": "UNKNOWN",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "UNKNOWN",
+          "origin_country": "UNKNOWN",
+          "price_note": "spec incomplete; owner-reviewed fact-level powertrain",
+          "aliases": [],
+          "incomplete": true,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "land_rover.range_rover_sport.unresearched.trim.3_0p_phev_5dr_swb_dynamic_se_460ps_phev",
+          "generation_id": "land_rover.range_rover_sport.unresearched",
+          "name": "3.0P PHEV 5DR SWB Dynamic SE 460PS",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2996,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4879,
+          "width_mm": 2220,
+          "height_mm": 1819,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "ccf36a08-0272-441e-94d2-969431ad6023"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "land_rover.range_rover_sport.unresearched.trim.3_0p_phev_5dr_swb_se_460ps_phev",
+          "generation_id": "land_rover.range_rover_sport.unresearched",
+          "name": "3.0P PHEV 5DR SWB SE 460PS Auto",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2996,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4879,
+          "width_mm": 2220,
+          "height_mm": 1819,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "3bbe6417-4498-4cd8-b66b-7e3585d15779"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/land_rover.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9696b947e22ad4b3ad2ae191:catalog",
+    "revision_id": "9696b947e22ad4b3ad2ae191",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "land_rover.range_rover_sport",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:27+00:00",
+    "payload": {
+      "brand": {
+        "id": "land_rover",
+        "name_en": "Land Rover",
+        "name_th": "แลนด์โรเวอร์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "JLR",
+        "brand_origin": "GB",
+        "trim_detail": false,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "land_rover.range_rover_sport",
+        "brand_id": "land_rover",
+        "name_en": "Range Rover Sport",
+        "name_th": "",
+        "nameplate": "Range Rover Sport",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "range rover sport"
+        ],
+        "notes": "Added because DLT Range Rover Sport labels were previously swallowed by the generic Range Rover alias. Specs deliberately left incomplete; generic fact-level powertrain is owner-reviewed MIXED.",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "land_rover.range_rover_sport.unresearched",
+          "model_id": "land_rover.range_rover_sport",
+          "code": "unresearched",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": null,
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "land_rover.range_rover_sport.unresearched.spec_incomplete_powertrain_handled_at_fact_level",
+          "generation_id": "land_rover.range_rover_sport.unresearched",
+          "name": "spec incomplete; powertrain handled at fact level",
+          "powertrain": "UNKNOWN",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "UNKNOWN",
+          "origin_country": "UNKNOWN",
+          "price_note": "spec incomplete; owner-reviewed fact-level powertrain",
+          "aliases": [],
+          "incomplete": true,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "land_rover.range_rover_sport.unresearched.trim.3_0p_phev_5dr_swb_dynamic_se_460ps_phev",
+          "generation_id": "land_rover.range_rover_sport.unresearched",
+          "name": "3.0P PHEV 5DR SWB Dynamic SE 460PS",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2996,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4879,
+          "width_mm": 2220,
+          "height_mm": 1819,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "ccf36a08-0272-441e-94d2-969431ad6023"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "land_rover.range_rover_sport.unresearched.trim.3_0p_phev_5dr_swb_se_460ps_phev",
+          "generation_id": "land_rover.range_rover_sport.unresearched",
+          "name": "3.0P PHEV 5DR SWB SE 460PS Auto",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2996,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4879,
+          "width_mm": 2220,
+          "height_mm": 1819,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "3bbe6417-4498-4cd8-b66b-7e3585d15779"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

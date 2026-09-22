@@ -74,6 +74,57 @@
                 "Macan Turbo Electric (BEV 639 hp)"
               ],
               "id": "turbo_electric_bev_639_hp_bev"
+            },
+            {
+              "name": "GTS",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4726,
+              "width_mm": 1927,
+              "height_mm": 1596,
+              "engine_cc": 2894,
+              "tire_front": "265/40R21",
+              "tire_rear": "295/35R21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "a456ef09-acc8-4bba-9697-33950048daf8"
+                ]
+              }
+            },
+            {
+              "name": "S",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4726,
+              "width_mm": 1927,
+              "height_mm": 1621,
+              "engine_cc": 2894,
+              "tire_front": "265/45R20",
+              "tire_rear": "295/40R20",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "c3d59e5e-802c-4162-98e5-94d95bd43212"
+                ]
+              }
+            },
+            {
+              "name": "T",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4726,
+              "width_mm": 1922,
+              "height_mm": 1621,
+              "engine_cc": 1984,
+              "tire_front": "265/45R20",
+              "tire_rear": "295/40R20",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "ee770a24-d260-4d5f-9877-9af5bf85a301"
+                ]
+              }
             }
           ]
         }
@@ -123,12 +174,23 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:245"
+                ],
+                "eco": [
+                  "3f30ccd4-bf4d-4660-a4d4-180b49fa1a51"
                 ]
               },
               "aliases": [
                 "Cayenne E-Hybrid (PHEV, 470 hp)"
               ],
-              "id": "e_hybrid_phev_470_hp_phev"
+              "id": "e_hybrid_phev_470_hp_phev",
+              "seats": 5,
+              "length_mm": 4930,
+              "width_mm": 1983,
+              "height_mm": 1696,
+              "engine_cc": 2995,
+              "tire_front": "285/40ZR22",
+              "tire_rear": "315/35ZR22",
+              "transmission": "AUTOMATIC"
             },
             {
               "name": "Turbo E-Hybrid (PHEV, 739 hp)",
@@ -155,6 +217,68 @@
                 "Cayenne Coupe (Coupe Body Style in Base, E-Hybrid, S, GTS, Turbo)"
               ],
               "id": "coupe_coupe_body_style_in_base_e_hybrid_s_gts_turbo_phev"
+            },
+            {
+              "name": "S Coupe Electric",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4991,
+              "width_mm": 1980,
+              "height_mm": 1650,
+              "tire_front": "275/45R21",
+              "tire_rear": "315/40R21",
+              "source_refs": {
+                "eco": [
+                  "86ebf6cd-9d1b-4905-abfe-7916b8ef391c"
+                ]
+              }
+            },
+            {
+              "name": "S Electric",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4991,
+              "width_mm": 1980,
+              "height_mm": 1674,
+              "tire_front": "285/40R22",
+              "tire_rear": "325/35R22",
+              "source_refs": {
+                "eco": [
+                  "819cd062-4578-4f0d-8a80-fc40253d69a1"
+                ]
+              }
+            },
+            {
+              "name": "Electric",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4985,
+              "width_mm": 1980,
+              "height_mm": 1674,
+              "tire_front": "285/40R22",
+              "tire_rear": "325/35R22",
+              "source_refs": {
+                "eco": [
+                  "0eca67ad-aea5-4d60-bf86-817b708d0cb5"
+                ]
+              }
+            },
+            {
+              "name": "S",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4918,
+              "width_mm": 1983,
+              "height_mm": 1696,
+              "engine_cc": 2894,
+              "tire_front": "255/55R19",
+              "tire_rear": "275/50R19",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "297b1bea37ca483d9a23993d41f7aee2"
+                ]
+              }
             }
           ]
         }
@@ -212,6 +336,378 @@
                 "911 Carrera GTS (T-Hybrid 541 hp)"
               ],
               "id": "carrera_gts_t_hybrid_541_hp_hev"
+            },
+            {
+              "name": "CARRERA COUPE",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 4519,
+              "width_mm": 1852,
+              "height_mm": 1298,
+              "engine_cc": 2981,
+              "tire_front": "245/35ZR20",
+              "tire_rear": "305/30ZR21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "f166808b-e824-4717-aa10-ff97012d3324"
+                ]
+              }
+            },
+            {
+              "name": "Carrera",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 4542,
+              "width_mm": 1852,
+              "height_mm": 1302,
+              "engine_cc": 2981,
+              "tire_front": "245/35ZR20",
+              "tire_rear": "305/30ZR21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "97a7f90e-f780-412c-9bfc-756b53172653"
+                ]
+              }
+            },
+            {
+              "name": "Targa 4S",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 4542,
+              "width_mm": 1852,
+              "height_mm": 1302,
+              "engine_cc": 2981,
+              "tire_front": "245/35ZR20",
+              "tire_rear": "315/30ZR21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "e4ec0782-9e03-40c9-b9ce-4f0d350da545"
+                ]
+              }
+            },
+            {
+              "name": "Carrera S",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 4542,
+              "width_mm": 1852,
+              "height_mm": 1303,
+              "engine_cc": 2981,
+              "tire_front": "245/35ZR20",
+              "tire_rear": "305/30ZR21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "13f6cd6e-6ec0-48f0-9fe0-1bb0008f8019"
+                ]
+              }
+            },
+            {
+              "name": "Carrera Cabriolet",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 4542,
+              "width_mm": 1852,
+              "height_mm": 1301,
+              "engine_cc": 2981,
+              "tire_front": "245/35ZR20",
+              "tire_rear": "305/30ZR21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "942e0e48-2ae9-4a55-b3f3-3946e7ef3cf7"
+                ]
+              }
+            },
+            {
+              "name": "Carrera S Cabriolet",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 4542,
+              "width_mm": 1852,
+              "height_mm": 1302,
+              "engine_cc": 2981,
+              "tire_front": "245/35ZR20",
+              "tire_rear": "305/30ZR21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "c0159a19-b448-4a1f-b3eb-3147b87dfdb3"
+                ]
+              }
+            },
+            {
+              "name": "CARRERA S COUPE",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 4542,
+              "width_mm": 1852,
+              "height_mm": 1301,
+              "engine_cc": 2981,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "7c9148ec-74c1-45f9-b488-65802cf0371b"
+                ]
+              }
+            },
+            {
+              "name": "Carrera 4S",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 4542,
+              "width_mm": 1852,
+              "height_mm": 1303,
+              "engine_cc": 2981,
+              "tire_front": "245/35ZR20",
+              "tire_rear": "305/30ZR21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "328fede8-bc4d-4b74-a27d-a5e5dc5d0a0c"
+                ]
+              }
+            },
+            {
+              "name": "Carrera T",
+              "powertrain": "ICE",
+              "seats": 2,
+              "length_mm": 4542,
+              "width_mm": 1852,
+              "height_mm": 1293,
+              "engine_cc": 2981,
+              "tire_front": "245/35ZR20",
+              "tire_rear": "305/30ZR21",
+              "transmission": "MANUAL",
+              "source_refs": {
+                "eco": [
+                  "e239e8e8-693c-4b53-8ae7-384b4abbfd40"
+                ]
+              }
+            },
+            {
+              "name": "Carrera T Cabriolet",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 4542,
+              "width_mm": 1852,
+              "height_mm": 1292,
+              "engine_cc": 2981,
+              "tire_front": "245/35ZR20",
+              "tire_rear": "305/30ZR21",
+              "transmission": "MANUAL",
+              "source_refs": {
+                "eco": [
+                  "96942a62-6a45-4a41-8e19-4315fdcb6aee"
+                ]
+              }
+            },
+            {
+              "name": "Carrera GTS",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 4533,
+              "width_mm": 1852,
+              "height_mm": 1301,
+              "engine_cc": 2981,
+              "tire_front": "245/35ZR20",
+              "tire_rear": "305/30ZR21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "97f12879-bf5f-4a2f-b43f-610fa1dc8a3c"
+                ]
+              }
+            },
+            {
+              "name": "CARRERA S PDK",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 4435,
+              "width_mm": 1808,
+              "height_mm": 1310,
+              "engine_cc": 2981,
+              "tire_front": "245/35ZR20",
+              "tire_rear": "305/30ZR21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "10a3691b-8d32-4de7-82d3-3426276d7034"
+                ]
+              }
+            },
+            {
+              "name": "Dakar",
+              "powertrain": "ICE",
+              "seats": 2,
+              "length_mm": 4530,
+              "width_mm": 1864,
+              "height_mm": 1338,
+              "engine_cc": 2981,
+              "tire_front": "245/45ZR19",
+              "tire_rear": "295/40ZR20",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "367da002-397f-4765-95a7-e5550ca3537d"
+                ]
+              }
+            },
+            {
+              "name": "Targa 4",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 4519,
+              "width_mm": 1852,
+              "height_mm": 1297,
+              "engine_cc": 2981,
+              "tire_front": "245/35ZR20",
+              "tire_rear": "305/30ZR21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "0dcf8af0-19e2-4906-abfb-e76e2cfa04d6"
+                ]
+              }
+            },
+            {
+              "name": "Targa 4 GTS",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 4533,
+              "width_mm": 1852,
+              "height_mm": 1299,
+              "engine_cc": 2981,
+              "tire_front": "245/35ZR20",
+              "tire_rear": "305/30ZR21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "ac9261a7-cf5c-4c49-8436-396dd19d3e08"
+                ]
+              }
+            },
+            {
+              "name": "Carrera GTS Cabriolet",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 4533,
+              "width_mm": 1852,
+              "height_mm": 1300,
+              "engine_cc": 2981,
+              "tire_front": "245/35ZR20",
+              "tire_rear": "305/30ZR21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "ca65607e-18f6-4624-aa33-07b1d0a529a5"
+                ]
+              }
+            },
+            {
+              "name": "Carrera 4S Cabriolet",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 4519,
+              "width_mm": 1852,
+              "height_mm": 1299,
+              "engine_cc": 2981,
+              "tire_front": "245/35ZR20",
+              "tire_rear": "305/30ZR21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "5965a93b-59e9-4e2e-a97a-c07375d60b59"
+                ]
+              }
+            },
+            {
+              "name": "TARGA 4 GTS EDITION 50 YEARS PORSCHE DESIGN",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 4533,
+              "width_mm": 1852,
+              "height_mm": 1299,
+              "engine_cc": 2981,
+              "tire_front": "245/35ZR20",
+              "tire_rear": "305/30ZR21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "520a4ee6-8cbc-4f8b-8d0e-e6a3802de7c2"
+                ]
+              }
+            },
+            {
+              "name": "Carrera 4 GTS",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 4533,
+              "width_mm": 1852,
+              "height_mm": 1301,
+              "engine_cc": 2981,
+              "tire_front": "245/35ZR20",
+              "tire_rear": "305/30ZR21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "5eeaa88d-f905-49cb-8c6e-7504a1707f76"
+                ]
+              }
+            },
+            {
+              "name": "CARRERA 4 GTS CABRIOLET",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 4499,
+              "width_mm": 1852,
+              "height_mm": 1284,
+              "engine_cc": 2981,
+              "tire_front": "245/35R20",
+              "tire_rear": "305/30R21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "5d9abf75-bdfd-4ef1-a2c2-07ef1ffb7809"
+                ]
+              }
+            },
+            {
+              "name": "Carrera 4",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 4519,
+              "width_mm": 1852,
+              "height_mm": 1298,
+              "engine_cc": 2981,
+              "tire_front": "245/35ZR20",
+              "tire_rear": "305/30ZR21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "2eac7e62-fcb1-4849-9a1e-737ec8c9e28a"
+                ]
+              }
+            },
+            {
+              "name": "Targa 4S Heritage Design Edition",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 4519,
+              "width_mm": 1852,
+              "height_mm": 1299,
+              "engine_cc": 2981,
+              "tire_front": "245/35ZR20",
+              "tire_rear": "305/30ZR21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "fae7e7715ed740e08263ed62fdd4588e"
+                ]
+              }
             }
           ]
         }
@@ -259,12 +755,23 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:247"
+                ],
+                "eco": [
+                  "999e4651-c18c-4639-b6b1-6a9bfc14cb35"
                 ]
               },
               "aliases": [
                 "Panamera 4 E-Hybrid (PHEV, 470 hp)"
               ],
-              "id": "4_e_hybrid_phev_470_hp_phev"
+              "id": "4_e_hybrid_phev_470_hp_phev",
+              "seats": 4,
+              "length_mm": 5052,
+              "width_mm": 1937,
+              "height_mm": 1419,
+              "engine_cc": 2894,
+              "tire_front": "275/35ZR21",
+              "tire_rear": "325/30ZR21",
+              "transmission": "AUTOMATIC"
             },
             {
               "name": "4S E-Hybrid (PHEV, 544 hp)",
@@ -272,12 +779,23 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:247"
+                ],
+                "eco": [
+                  "4780aff8-b326-402a-ae0f-e5ade3b4c828"
                 ]
               },
               "aliases": [
                 "Panamera 4S E-Hybrid (PHEV, 544 hp)"
               ],
-              "id": "4s_e_hybrid_phev_544_hp_phev"
+              "id": "4s_e_hybrid_phev_544_hp_phev",
+              "seats": 5,
+              "length_mm": 5052,
+              "width_mm": 1937,
+              "height_mm": 1423,
+              "engine_cc": 2894,
+              "tire_front": "275/35ZR21",
+              "tire_rear": "325/30ZR21",
+              "transmission": "AUTOMATIC"
             },
             {
               "name": "Turbo E-Hybrid (PHEV, 680 hp)",
@@ -291,6 +809,23 @@
                 "Panamera Turbo E-Hybrid (PHEV, 680 hp)"
               ],
               "id": "turbo_e_hybrid_phev_680_hp_phev"
+            },
+            {
+              "name": "Panamera",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 5052,
+              "width_mm": 1937,
+              "height_mm": 1423,
+              "engine_cc": 2894,
+              "tire_front": "275/35ZR21",
+              "tire_rear": "325/30ZR21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "bb33dcd9-9a52-45a5-87ca-af7ab8c8322f"
+                ]
+              }
             }
           ]
         }
@@ -351,12 +886,21 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:249"
+                ],
+                "eco": [
+                  "1a72a7c4-9fdd-475c-b73d-208b40dd9fee"
                 ]
               },
               "aliases": [
                 "Taycan 4S (AWD, 544 hp)"
               ],
-              "id": "4s_awd_544_hp_bev"
+              "id": "4s_awd_544_hp_bev",
+              "seats": 5,
+              "length_mm": 4963,
+              "width_mm": 1966,
+              "height_mm": 1379,
+              "tire_front": "245/45R20",
+              "tire_rear": "285/40R20"
             },
             {
               "name": "GTS (AWD, 598 hp)",
@@ -364,12 +908,21 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:249"
+                ],
+                "eco": [
+                  "9deda427-55b0-4693-a5d8-58f8f8b56367"
                 ]
               },
               "aliases": [
                 "Taycan GTS (AWD, 598 hp)"
               ],
-              "id": "gts_awd_598_hp_bev"
+              "id": "gts_awd_598_hp_bev",
+              "seats": 4,
+              "length_mm": 4963,
+              "width_mm": 1966,
+              "height_mm": 1381,
+              "tire_front": "265/35ZR21",
+              "tire_rear": "305/30ZR21"
             },
             {
               "name": "Turbo (AWD, 884 hp)",
@@ -377,12 +930,21 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:249"
+                ],
+                "eco": [
+                  "baa34a4d-4691-4f95-8636-a4c9dd7389ae"
                 ]
               },
               "aliases": [
                 "Taycan Turbo (AWD, 884 hp)"
               ],
-              "id": "turbo_awd_884_hp_bev"
+              "id": "turbo_awd_884_hp_bev",
+              "seats": 4,
+              "length_mm": 4962,
+              "width_mm": 1966,
+              "height_mm": 1381,
+              "tire_front": "245/45R20",
+              "tire_rear": "285/40R20"
             },
             {
               "name": "Turbo S (AWD, 952 hp)",
@@ -390,12 +952,21 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:249"
+                ],
+                "eco": [
+                  "307cbe75-772d-405a-a207-4ebc8d02b064"
                 ]
               },
               "aliases": [
                 "Taycan Turbo S (AWD, 952 hp)"
               ],
-              "id": "turbo_s_awd_952_hp_bev"
+              "id": "turbo_s_awd_952_hp_bev",
+              "seats": 4,
+              "length_mm": 4962,
+              "width_mm": 1966,
+              "height_mm": 1378,
+              "tire_front": "245/40R21",
+              "tire_rear": "285/35R21"
             },
             {
               "name": "Turbo GT (AWD, 1,034 hp)",
@@ -403,12 +974,21 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:249"
+                ],
+                "eco": [
+                  "7837766f-816d-4282-94fc-6c8bf456cefb"
                 ]
               },
               "aliases": [
                 "Taycan Turbo GT (AWD, 1,034 hp)"
               ],
-              "id": "turbo_gt_awd_1_034_hp_bev"
+              "id": "turbo_gt_awd_1_034_hp_bev",
+              "seats": 4,
+              "length_mm": 4968,
+              "width_mm": 1998,
+              "height_mm": 1378,
+              "tire_front": "265/35ZR21",
+              "tire_rear": "305/30ZR21"
             },
             {
               "name": "4 Cross Turismo (Gravel/All-Terrain Wagon)",
@@ -416,12 +996,21 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:249"
+                ],
+                "eco": [
+                  "d859f6b2-4166-412f-b12f-7419c1446c15"
                 ]
               },
               "aliases": [
                 "Taycan 4 Cross Turismo (Gravel/All-Terrain Wagon)"
               ],
-              "id": "4_cross_turismo_gravel_all_terrain_wagon_bev"
+              "id": "4_cross_turismo_gravel_all_terrain_wagon_bev",
+              "seats": 4,
+              "length_mm": 4974,
+              "width_mm": 1967,
+              "height_mm": 1409,
+              "tire_front": "245/45R20",
+              "tire_rear": "285/40R20"
             },
             {
               "name": "4S Cross Turismo",
@@ -429,12 +1018,21 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:249"
+                ],
+                "eco": [
+                  "4f9558bb-f488-40cc-a610-bb811fe8528e"
                 ]
               },
               "aliases": [
                 "Taycan 4S Cross Turismo"
               ],
-              "id": "4s_cross_turismo_bev"
+              "id": "4s_cross_turismo_bev",
+              "seats": 4,
+              "length_mm": 4974,
+              "width_mm": 1967,
+              "height_mm": 1409,
+              "tire_front": "245/45R20",
+              "tire_rear": "285/40R20"
             },
             {
               "name": "Turbo Cross Turismo",
@@ -442,12 +1040,21 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:249"
+                ],
+                "eco": [
+                  "42483076-18ce-4fe1-8b88-0d7edad6edbf"
                 ]
               },
               "aliases": [
                 "Taycan Turbo Cross Turismo"
               ],
-              "id": "turbo_cross_turismo_bev"
+              "id": "turbo_cross_turismo_bev",
+              "seats": 4,
+              "length_mm": 4974,
+              "width_mm": 1967,
+              "height_mm": 1412,
+              "tire_front": "245/45R20",
+              "tire_rear": "285/40R20"
             }
           ]
         }

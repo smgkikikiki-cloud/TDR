@@ -1,0 +1,576 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "1706806eda6192d116e2d341",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:73",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "volvo.xc60",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:43+00:00",
+    "before_hash": "1355384fe095d7db6eea123e61653f8c7d7c117f962187e2c905c839b0908dc1",
+    "after_hash": "7d1915ac01218a121f2c062cd278cab8161dba7c86cef177a5a6a83bc9e11f18",
+    "before": {
+      "id": "xc60",
+      "name_en": "XC60",
+      "name_th": "เอ็กซ์ซี60",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "xc 60"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "XC60G",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2018-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.0L PHEV AWD",
+              "powertrain": "PHEV",
+              "drivetrain": "AWD",
+              "engine_cc": 1969,
+              "battery_kwh": 18.8,
+              "aliases": [
+                "T8 Recharge Ultimate"
+              ],
+              "overrides": {},
+              "price_thb": 3390000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 3390000,
+              "price_max_thb": 3390000
+            }
+          ],
+          "trims": [
+            {
+              "name": "Recharge T8 Plug-in Hybrid Plus Dark",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:312"
+                ],
+                "eco": [
+                  "d9220fdb-60da-4454-959a-20e4803c5986"
+                ]
+              },
+              "id": "recharge_t8_plug_in_hybrid_plus_dark_phev",
+              "seats": 5,
+              "length_mm": 4708,
+              "width_mm": 1902,
+              "height_mm": 1656,
+              "engine_cc": 1969,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "name": "Recharge T8 Plug-in Hybrid Ultimate Dark",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:312"
+                ]
+              },
+              "id": "recharge_t8_plug_in_hybrid_ultimate_dark_phev"
+            },
+            {
+              "name": "Ultra T8 Plug-in Hybrid Bright",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4708,
+              "width_mm": 1902,
+              "height_mm": 1651,
+              "engine_cc": 1969,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "7822724b-5ac9-487a-bb1d-42aa11a56c2c"
+                ]
+              }
+            },
+            {
+              "name": "Plus T8 Plug-in Hybrid Dark",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4708,
+              "width_mm": 1902,
+              "height_mm": 1656,
+              "engine_cc": 1969,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "9a7d5e4d-90c0-42a2-bc5a-19bad288ed1d"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "volvo",
+        "name_en": "Volvo",
+        "name_th": "วอลโว่",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Geely",
+        "brand_origin": "SE",
+        "trim_detail": false,
+        "aliases": [
+          "วอลโว่"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "volvo.xc60",
+        "brand_id": "volvo",
+        "name_en": "XC60",
+        "name_th": "เอ็กซ์ซี60",
+        "nameplate": "XC60",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "xc 60"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "volvo.xc60.xc60g",
+          "model_id": "volvo.xc60",
+          "code": "XC60G",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2018-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "volvo.xc60.xc60g.2_0l_phev_awd",
+          "generation_id": "volvo.xc60.xc60g",
+          "name": "2.0L PHEV AWD",
+          "powertrain": "PHEV",
+          "drivetrain": "AWD",
+          "engine_cc": 1969,
+          "battery_kwh": 18.8,
+          "price_thb": 3390000,
+          "price_min_thb": 3390000,
+          "price_max_thb": 3390000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "T8 Recharge Ultimate"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "volvo.xc60.xc60g.trim.recharge_t8_plug_in_hybrid_plus_dark_phev",
+          "generation_id": "volvo.xc60.xc60g",
+          "name": "Recharge T8 Plug-in Hybrid Plus Dark",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1969,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4708,
+          "width_mm": 1902,
+          "height_mm": 1656,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:312"
+            ],
+            "eco": [
+              "d9220fdb-60da-4454-959a-20e4803c5986"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "volvo.xc60.xc60g.trim.recharge_t8_plug_in_hybrid_ultimate_dark_phev",
+          "generation_id": "volvo.xc60.xc60g",
+          "name": "Recharge T8 Plug-in Hybrid Ultimate Dark",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:312"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "volvo.xc60.xc60g.trim.ultra_t8_plug_in_hybrid_bright_phev",
+          "generation_id": "volvo.xc60.xc60g",
+          "name": "Ultra T8 Plug-in Hybrid Bright",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1969,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4708,
+          "width_mm": 1902,
+          "height_mm": 1651,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "7822724b-5ac9-487a-bb1d-42aa11a56c2c"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "volvo.xc60.xc60g.trim.plus_t8_plug_in_hybrid_dark_phev",
+          "generation_id": "volvo.xc60.xc60g",
+          "name": "Plus T8 Plug-in Hybrid Dark",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1969,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4708,
+          "width_mm": 1902,
+          "height_mm": 1656,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "9a7d5e4d-90c0-42a2-bc5a-19bad288ed1d"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "volvo.xc60.xc60g.trim.recharge_ultimate_t8_plug_in_hybrid_bright_phev",
+          "generation_id": "volvo.xc60.xc60g",
+          "name": "Recharge Ultimate T8 Plug-in Hybrid Bright",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1969,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4708,
+          "width_mm": 1902,
+          "height_mm": 1656,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "964603d2-28a8-4a07-b5f8-85e5ab5dc0ce"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/volvo.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "1706806eda6192d116e2d341:catalog",
+    "revision_id": "1706806eda6192d116e2d341",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "volvo.xc60",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:43+00:00",
+    "payload": {
+      "brand": {
+        "id": "volvo",
+        "name_en": "Volvo",
+        "name_th": "วอลโว่",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Geely",
+        "brand_origin": "SE",
+        "trim_detail": false,
+        "aliases": [
+          "วอลโว่"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "volvo.xc60",
+        "brand_id": "volvo",
+        "name_en": "XC60",
+        "name_th": "เอ็กซ์ซี60",
+        "nameplate": "XC60",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "xc 60"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "volvo.xc60.xc60g",
+          "model_id": "volvo.xc60",
+          "code": "XC60G",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2018-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "volvo.xc60.xc60g.2_0l_phev_awd",
+          "generation_id": "volvo.xc60.xc60g",
+          "name": "2.0L PHEV AWD",
+          "powertrain": "PHEV",
+          "drivetrain": "AWD",
+          "engine_cc": 1969,
+          "battery_kwh": 18.8,
+          "price_thb": 3390000,
+          "price_min_thb": 3390000,
+          "price_max_thb": 3390000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "T8 Recharge Ultimate"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "volvo.xc60.xc60g.trim.recharge_t8_plug_in_hybrid_plus_dark_phev",
+          "generation_id": "volvo.xc60.xc60g",
+          "name": "Recharge T8 Plug-in Hybrid Plus Dark",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1969,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4708,
+          "width_mm": 1902,
+          "height_mm": 1656,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:312"
+            ],
+            "eco": [
+              "d9220fdb-60da-4454-959a-20e4803c5986"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "volvo.xc60.xc60g.trim.recharge_t8_plug_in_hybrid_ultimate_dark_phev",
+          "generation_id": "volvo.xc60.xc60g",
+          "name": "Recharge T8 Plug-in Hybrid Ultimate Dark",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:312"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "volvo.xc60.xc60g.trim.ultra_t8_plug_in_hybrid_bright_phev",
+          "generation_id": "volvo.xc60.xc60g",
+          "name": "Ultra T8 Plug-in Hybrid Bright",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1969,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4708,
+          "width_mm": 1902,
+          "height_mm": 1651,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "7822724b-5ac9-487a-bb1d-42aa11a56c2c"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "volvo.xc60.xc60g.trim.plus_t8_plug_in_hybrid_dark_phev",
+          "generation_id": "volvo.xc60.xc60g",
+          "name": "Plus T8 Plug-in Hybrid Dark",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1969,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4708,
+          "width_mm": 1902,
+          "height_mm": 1656,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "9a7d5e4d-90c0-42a2-bc5a-19bad288ed1d"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "volvo.xc60.xc60g.trim.recharge_ultimate_t8_plug_in_hybrid_bright_phev",
+          "generation_id": "volvo.xc60.xc60g",
+          "name": "Recharge Ultimate T8 Plug-in Hybrid Bright",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1969,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4708,
+          "width_mm": 1902,
+          "height_mm": 1656,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "964603d2-28a8-4a07-b5f8-85e5ab5dc0ce"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

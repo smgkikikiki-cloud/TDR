@@ -121,6 +121,36 @@
                 ]
               },
               "id": "1_2_nightshade_edition_cvt_ice"
+            },
+            {
+              "name": "HEV Premium",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4425,
+              "width_mm": 1740,
+              "height_mm": 1480,
+              "engine_cc": 1496,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "488b8ece-bfaf-4162-ab95-0afe24a38efa"
+                ]
+              }
+            },
+            {
+              "name": "HEV GR Sport",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4440,
+              "width_mm": 1740,
+              "height_mm": 1480,
+              "engine_cc": 1496,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "513c9d7d-5bd9-4af7-8a74-fdba0a6533b5"
+                ]
+              }
             }
           ]
         }
@@ -307,6 +337,96 @@
                 ]
               },
               "id": "hev_gr_sport_cvt_hev"
+            },
+            {
+              "name": "GR",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4408,
+              "width_mm": 1851,
+              "height_mm": 1479,
+              "engine_cc": 1618,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "04c66218-207e-4e5a-97ed-999520d2fd2e"
+                ]
+              }
+            },
+            {
+              "name": "1.8G",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4630,
+              "width_mm": 1780,
+              "height_mm": 1435,
+              "engine_cc": 1798,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "01e6ce81-c0ce-43b4-bce5-4f27bc938a30"
+                ]
+              }
+            },
+            {
+              "name": "GR RZ 8AT",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4410,
+              "width_mm": 1850,
+              "height_mm": 1480,
+              "engine_cc": 1618,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "38a35041-1b33-423f-bef9-fe31d73f1c47"
+                ]
+              }
+            },
+            {
+              "name": "GR RZ",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4410,
+              "width_mm": 1850,
+              "height_mm": 1480,
+              "engine_cc": 1618,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "7afdec69-ffbf-4838-a33f-bddbb727f770"
+                ]
+              }
+            },
+            {
+              "name": "1.6G",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4630,
+              "width_mm": 1780,
+              "height_mm": 1435,
+              "engine_cc": 1598,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "f89daa4aa1284659aab6b42d2c53c887"
+                ]
+              }
+            },
+            {
+              "name": "Limo",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4630,
+              "width_mm": 1780,
+              "height_mm": 1435,
+              "engine_cc": 1598,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "49fa227a8bfa4e4a86e35995e0f087b7"
+                ]
+              }
             }
           ]
         }
@@ -485,6 +605,83 @@
               "price_min_thb": 1029000,
               "price_max_thb": 1239000
             }
+          ],
+          "trims": [
+            {
+              "name": "HEV Premium",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4460,
+              "width_mm": 1825,
+              "height_mm": 1620,
+              "engine_cc": 1798,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "45fb3f35-5428-43f5-b085-9b1f8b63682c"
+                ]
+              }
+            },
+            {
+              "name": "HEV Premium Luxury",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4460,
+              "width_mm": 1825,
+              "height_mm": 1620,
+              "engine_cc": 1798,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "a9b11d5c-c4c1-493e-9e34-8656219a83bd"
+                ]
+              }
+            },
+            {
+              "name": "HEV GR Sport",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4460,
+              "width_mm": 1825,
+              "height_mm": 1620,
+              "engine_cc": 1798,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "b96a7399-dbda-454b-828c-bb81edbfd23b"
+                ]
+              }
+            },
+            {
+              "name": "HEV Smart",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4460,
+              "width_mm": 1825,
+              "height_mm": 1620,
+              "engine_cc": 1798,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "839dcd92-35c9-486e-824b-85c9a0a332ba"
+                ]
+              }
+            },
+            {
+              "name": "HEV Premium Safety (60 Years CP)",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4460,
+              "width_mm": 1825,
+              "height_mm": 1620,
+              "engine_cc": 1798,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "8ed0f4040deb48f59ab1dc1bde490e0c"
+                ]
+              }
+            }
           ]
         }
       ],
@@ -535,9 +732,18 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:299"
+                ],
+                "eco": [
+                  "1fa501c7-144e-404b-819f-5df07e057164"
                 ]
               },
-              "id": "hev_smart_hev"
+              "id": "hev_smart_hev",
+              "seats": 5,
+              "length_mm": 4310,
+              "width_mm": 1770,
+              "height_mm": 1615,
+              "engine_cc": 1496,
+              "transmission": "CVT"
             },
             {
               "name": "HEV Premium",
@@ -545,9 +751,18 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:299"
+                ],
+                "eco": [
+                  "35ab1896-9062-4b87-a810-61d0bab74dfb"
                 ]
               },
-              "id": "hev_premium_hev"
+              "id": "hev_premium_hev",
+              "seats": 5,
+              "length_mm": 4310,
+              "width_mm": 1770,
+              "height_mm": 1615,
+              "engine_cc": 1496,
+              "transmission": "CVT"
             },
             {
               "name": "HEV Premium Luxury",
@@ -555,9 +770,33 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:299"
+                ],
+                "eco": [
+                  "79564fad-1875-4f85-a020-6a46da47f43d"
                 ]
               },
-              "id": "hev_premium_luxury_hev"
+              "id": "hev_premium_luxury_hev",
+              "seats": 5,
+              "length_mm": 4310,
+              "width_mm": 1770,
+              "height_mm": 1615,
+              "engine_cc": 1496,
+              "transmission": "CVT"
+            },
+            {
+              "name": "Nightshade",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4310,
+              "width_mm": 1770,
+              "height_mm": 1615,
+              "engine_cc": 1496,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "4ba74ee9-7f85-4611-bfd2-352ee6c92a9c"
+                ]
+              }
             }
           ]
         }
@@ -906,6 +1145,9 @@
               "source_refs": {
                 "ecosticker": [
                   "c1c46e58-019b-45c9-bb49-1de432b16079"
+                ],
+                "eco": [
+                  "c1c46e58-019b-45c9-bb49-1de432b16079"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -914,7 +1156,9 @@
               "width_mm": 1900,
               "height_mm": 1815,
               "tire_front": "265/60R 18",
-              "tire_rear": "265/60R 18"
+              "tire_rear": "265/60R 18",
+              "engine_cc": 2393,
+              "transmission": "MANUAL"
             },
             {
               "id": "2_8_high_at_4x4",
@@ -924,6 +1168,9 @@
               "source_refs": {
                 "ecosticker": [
                   "6ad6ec89-c8c3-4714-868b-cd4ffd4a5ea4"
+                ],
+                "eco": [
+                  "6ad6ec89-c8c3-4714-868b-cd4ffd4a5ea4"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -932,7 +1179,9 @@
               "width_mm": 1900,
               "height_mm": 1815,
               "tire_front": "265/60R18",
-              "tire_rear": "265/60R18"
+              "tire_rear": "265/60R18",
+              "engine_cc": 2755,
+              "transmission": "AUTOMATIC"
             },
             {
               "id": "2_8_high_mt_4x4",
@@ -942,6 +1191,9 @@
               "source_refs": {
                 "ecosticker": [
                   "fffe1bae-3ae2-409c-9249-3eea75e7878a"
+                ],
+                "eco": [
+                  "fffe1bae-3ae2-409c-9249-3eea75e7878a"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -950,7 +1202,9 @@
               "width_mm": 1900,
               "height_mm": 1815,
               "tire_front": "265/60R18",
-              "tire_rear": "265/60R18"
+              "tire_rear": "265/60R18",
+              "engine_cc": 2755,
+              "transmission": "MANUAL"
             },
             {
               "id": "2wd_2_8_gr_sport_at",
@@ -960,6 +1214,9 @@
               "source_refs": {
                 "ecosticker": [
                   "b2ff31c1-d5d5-49e3-8aa3-bbf594f05ede"
+                ],
+                "eco": [
+                  "b2ff31c1-d5d5-49e3-8aa3-bbf594f05ede"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -968,7 +1225,9 @@
               "width_mm": 1855,
               "height_mm": 1730,
               "tire_front": "215/55R 17",
-              "tire_rear": "215/55R 17"
+              "tire_rear": "215/55R 17",
+              "engine_cc": 2755,
+              "transmission": "AUTOMATIC"
             },
             {
               "id": "gr_sport_2_8_at_4x2",
@@ -978,6 +1237,9 @@
               "source_refs": {
                 "ecosticker": [
                   "c610d416-c53d-4383-8f99-bd33ad13eaae"
+                ],
+                "eco": [
+                  "c610d416-c53d-4383-8f99-bd33ad13eaae"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -986,7 +1248,9 @@
               "width_mm": 1855,
               "height_mm": 1730,
               "tire_front": "215/55R 17",
-              "tire_rear": "215/55R 17"
+              "tire_rear": "215/55R 17",
+              "engine_cc": 2755,
+              "transmission": "AUTOMATIC"
             },
             {
               "id": "gr_sport_2_8_at_4x4",
@@ -996,6 +1260,9 @@
               "source_refs": {
                 "ecosticker": [
                   "e4684e41-5753-4321-81c5-024cc17f24c6"
+                ],
+                "eco": [
+                  "e4684e41-5753-4321-81c5-024cc17f24c6"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1004,7 +1271,9 @@
               "width_mm": 2020,
               "height_mm": 1880,
               "tire_front": "265/65R17",
-              "tire_rear": "265/65R17"
+              "tire_rear": "265/65R17",
+              "engine_cc": 2755,
+              "transmission": "AUTOMATIC"
             },
             {
               "id": "gr_sport_2_8_at_4x4_base",
@@ -1014,6 +1283,9 @@
               "source_refs": {
                 "ecosticker": [
                   "c59b479e-28d0-4154-a78b-4406d9cdafd5"
+                ],
+                "eco": [
+                  "c59b479e-28d0-4154-a78b-4406d9cdafd5"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1022,7 +1294,9 @@
               "width_mm": 2020,
               "height_mm": 1880,
               "tire_front": "265/65R17",
-              "tire_rear": "265/65R17"
+              "tire_rear": "265/65R17",
+              "engine_cc": 2755,
+              "transmission": "AUTOMATIC"
             },
             {
               "id": "prerunner_2_4_entry_at",
@@ -1032,6 +1306,9 @@
               "source_refs": {
                 "ecosticker": [
                   "09e86fd8-1726-4eef-bdcc-ab43717bb8c6"
+                ],
+                "eco": [
+                  "09e86fd8-1726-4eef-bdcc-ab43717bb8c6"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1040,7 +1317,9 @@
               "width_mm": 1900,
               "height_mm": 1815,
               "tire_front": "265/65R 17",
-              "tire_rear": "265/65R 17"
+              "tire_rear": "265/65R 17",
+              "engine_cc": 2393,
+              "transmission": "AUTOMATIC"
             },
             {
               "id": "prerunner_2_4_entry_mt",
@@ -1050,6 +1329,9 @@
               "source_refs": {
                 "ecosticker": [
                   "3c293fec-b4fd-4b23-99b7-53081f18315a"
+                ],
+                "eco": [
+                  "3c293fec-b4fd-4b23-99b7-53081f18315a"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1058,7 +1340,9 @@
               "width_mm": 1900,
               "height_mm": 1815,
               "tire_front": "265/65R 17",
-              "tire_rear": "265/65R 17"
+              "tire_rear": "265/65R 17",
+              "engine_cc": 2393,
+              "transmission": "MANUAL"
             },
             {
               "id": "prerunner_2_4_high_at",
@@ -1068,6 +1352,9 @@
               "source_refs": {
                 "ecosticker": [
                   "bdba5e51-1306-4e1a-9683-882e69c2d427"
+                ],
+                "eco": [
+                  "bdba5e51-1306-4e1a-9683-882e69c2d427"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1076,7 +1363,9 @@
               "width_mm": 1900,
               "height_mm": 1815,
               "tire_front": "265/60R 18",
-              "tire_rear": "265/60R 18"
+              "tire_rear": "265/60R 18",
+              "engine_cc": 2393,
+              "transmission": "AUTOMATIC"
             },
             {
               "id": "prerunner_2_4_high_mt",
@@ -1086,6 +1375,9 @@
               "source_refs": {
                 "ecosticker": [
                   "9d9e546d-d547-4345-8697-90795e8aebdb"
+                ],
+                "eco": [
+                  "9d9e546d-d547-4345-8697-90795e8aebdb"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1094,7 +1386,9 @@
               "width_mm": 1900,
               "height_mm": 1815,
               "tire_front": "265/60R 18",
-              "tire_rear": "265/60R 18"
+              "tire_rear": "265/60R 18",
+              "engine_cc": 2393,
+              "transmission": "MANUAL"
             },
             {
               "id": "prerunner_2_4_mid_at",
@@ -1104,6 +1398,9 @@
               "source_refs": {
                 "ecosticker": [
                   "81348f13-ad06-4ed3-80b1-b0eb431da7b0"
+                ],
+                "eco": [
+                  "81348f13-ad06-4ed3-80b1-b0eb431da7b0"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1112,7 +1409,9 @@
               "width_mm": 1900,
               "height_mm": 1815,
               "tire_front": "265/60R 18",
-              "tire_rear": "265/60R 18"
+              "tire_rear": "265/60R 18",
+              "engine_cc": 2393,
+              "transmission": "AUTOMATIC"
             },
             {
               "id": "prerunner_2_4_mid_mt",
@@ -1122,6 +1421,9 @@
               "source_refs": {
                 "ecosticker": [
                   "f555749d-4b84-4034-bf27-7afbb0e12212"
+                ],
+                "eco": [
+                  "f555749d-4b84-4034-bf27-7afbb0e12212"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1130,7 +1432,9 @@
               "width_mm": 1900,
               "height_mm": 1815,
               "tire_front": "265/60R 18",
-              "tire_rear": "265/60R 18"
+              "tire_rear": "265/60R 18",
+              "engine_cc": 2393,
+              "transmission": "MANUAL"
             },
             {
               "id": "prerunner_rocco_2_4_at",
@@ -1140,6 +1444,9 @@
               "source_refs": {
                 "ecosticker": [
                   "77171d9a-31cc-4fd5-980a-f207c0917923"
+                ],
+                "eco": [
+                  "77171d9a-31cc-4fd5-980a-f207c0917923"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1148,7 +1455,9 @@
               "width_mm": 1900,
               "height_mm": 1815,
               "tire_front": "265/60R 18",
-              "tire_rear": "265/60R 18"
+              "tire_rear": "265/60R 18",
+              "engine_cc": 2393,
+              "transmission": "AUTOMATIC"
             },
             {
               "id": "rocco_2_8_at_4x4",
@@ -1158,6 +1467,9 @@
               "source_refs": {
                 "ecosticker": [
                   "68b7091e-af8d-4349-a385-da60c8a71da5"
+                ],
+                "eco": [
+                  "68b7091e-af8d-4349-a385-da60c8a71da5"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1166,7 +1478,9 @@
               "width_mm": 1900,
               "height_mm": 1815,
               "tire_front": "265/60R18",
-              "tire_rear": "265/60R18"
+              "tire_rear": "265/60R18",
+              "engine_cc": 2755,
+              "transmission": "AUTOMATIC"
             },
             {
               "id": "z_edition_2_4_entry_at",
@@ -1176,6 +1490,9 @@
               "source_refs": {
                 "ecosticker": [
                   "539dd437-41cd-40f8-9943-556cc35e8323"
+                ],
+                "eco": [
+                  "539dd437-41cd-40f8-9943-556cc35e8323"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1184,7 +1501,9 @@
               "width_mm": 1855,
               "height_mm": 1700,
               "tire_front": "215/55R17",
-              "tire_rear": "215/55R17"
+              "tire_rear": "215/55R17",
+              "engine_cc": 2393,
+              "transmission": "AUTOMATIC"
             },
             {
               "id": "z_edition_2_4_entry_mt",
@@ -1194,6 +1513,9 @@
               "source_refs": {
                 "ecosticker": [
                   "fee847ef-507d-439f-a403-48534d415120"
+                ],
+                "eco": [
+                  "fee847ef-507d-439f-a403-48534d415120"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1202,7 +1524,9 @@
               "width_mm": 1855,
               "height_mm": 1700,
               "tire_front": "215/55R17",
-              "tire_rear": "215/55R17"
+              "tire_rear": "215/55R17",
+              "engine_cc": 2393,
+              "transmission": "MANUAL"
             },
             {
               "id": "z_edition_2_4_mid_at",
@@ -1212,6 +1536,9 @@
               "source_refs": {
                 "ecosticker": [
                   "37885724-2771-4064-89b8-c3980b6179e1"
+                ],
+                "eco": [
+                  "37885724-2771-4064-89b8-c3980b6179e1"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1220,7 +1547,9 @@
               "width_mm": 1855,
               "height_mm": 1700,
               "tire_front": "215/55R17",
-              "tire_rear": "215/55R17"
+              "tire_rear": "215/55R17",
+              "engine_cc": 2393,
+              "transmission": "AUTOMATIC"
             },
             {
               "id": "z_edition_2_4_mid_mt",
@@ -1230,6 +1559,9 @@
               "source_refs": {
                 "ecosticker": [
                   "755195a5-22c6-4454-a198-9a8a10ce32c3"
+                ],
+                "eco": [
+                  "755195a5-22c6-4454-a198-9a8a10ce32c3"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1238,7 +1570,9 @@
               "width_mm": 1855,
               "height_mm": 1700,
               "tire_front": "215/55R17",
-              "tire_rear": "215/55R17"
+              "tire_rear": "215/55R17",
+              "engine_cc": 2393,
+              "transmission": "MANUAL"
             },
             {
               "name": "Double Cab 2.4 Entry 4x2 6MT",
@@ -1450,9 +1784,18 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:285"
+                ],
+                "eco": [
+                  "5e497481-f963-442c-acf2-61ebe010a561"
                 ]
               },
-              "id": "swb_2_4_diesel_at_attractive_package_ice"
+              "id": "swb_2_4_diesel_at_attractive_package_ice",
+              "seats": 2,
+              "length_mm": 4970,
+              "width_mm": 1785,
+              "height_mm": 1735,
+              "engine_cc": 2393,
+              "transmission": "AUTOMATIC"
             }
           ]
         }
@@ -1633,6 +1976,9 @@
               "source_refs": {
                 "ecosticker": [
                   "136d3939ed28488790a5f2d02ffd03c4"
+                ],
+                "eco": [
+                  "136d3939ed28488790a5f2d02ffd03c4"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1641,7 +1987,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "235/50R18",
-              "tire_rear": "235/50R18"
+              "tire_rear": "235/50R18",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "2_5_hev",
@@ -1654,6 +2002,9 @@
                 ],
                 "owner_directory": [
                   "owner_directory_2026_09_13:270"
+                ],
+                "eco": [
+                  "d68f8f3a-fb1a-424d-8cab-6b4f9fa8c128"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1662,7 +2013,9 @@
               "width_mm": 1850,
               "height_mm": 1945,
               "tire_front": "225/65R17",
-              "tire_rear": "225/65R17"
+              "tire_rear": "225/65R17",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "2_5_hev_luxury",
@@ -1672,6 +2025,9 @@
               "source_refs": {
                 "ecosticker": [
                   "a73b7c7c-5fd0-4277-97e2-8eb7ee38a0ab"
+                ],
+                "eco": [
+                  "a73b7c7c-5fd0-4277-97e2-8eb7ee38a0ab"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1680,7 +2036,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "225/55R19",
-              "tire_rear": "225/55R19"
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "2_5_hybrid_executive_lounge",
@@ -1690,6 +2048,9 @@
               "source_refs": {
                 "ecosticker": [
                   "a6597e6fc4284395869bf69809dc8d16"
+                ],
+                "eco": [
+                  "a6597e6fc4284395869bf69809dc8d16"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1698,7 +2059,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "215/65R16",
-              "tire_rear": "215/65R16"
+              "tire_rear": "215/65R16",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "2_5_hybrid_g",
@@ -1708,6 +2071,9 @@
               "source_refs": {
                 "ecosticker": [
                   "9a8a486f-199f-435d-8cf4-3d9f4d3f6ec7"
+                ],
+                "eco": [
+                  "9a8a486f-199f-435d-8cf4-3d9f4d3f6ec7"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1716,7 +2082,9 @@
               "width_mm": 1850,
               "height_mm": 1935,
               "tire_front": "225/60R18",
-              "tire_rear": "225/60R18"
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "2_5_hybrid_g_f_package",
@@ -1726,6 +2094,9 @@
               "source_refs": {
                 "ecosticker": [
                   "c69e287a45354033a601f6114d1b12b8"
+                ],
+                "eco": [
+                  "c69e287a45354033a601f6114d1b12b8"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1734,7 +2105,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "215/65R16",
-              "tire_rear": "215/65R16"
+              "tire_rear": "215/65R16",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "2_5_hybrid_s_type_gold_iii",
@@ -1744,6 +2117,9 @@
               "source_refs": {
                 "ecosticker": [
                   "e1b04f76-6121-4bba-bdba-ceeca42034f7"
+                ],
+                "eco": [
+                  "e1b04f76-6121-4bba-bdba-ceeca42034f7"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1752,7 +2128,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "225/60R17",
-              "tire_rear": "225/60R17"
+              "tire_rear": "225/60R17",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "2_5_hybrid_sr",
@@ -1762,6 +2140,9 @@
               "source_refs": {
                 "ecosticker": [
                   "4ec90b2f2ba64c2f8f36f238a8bef36f"
+                ],
+                "eco": [
+                  "4ec90b2f2ba64c2f8f36f238a8bef36f"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1770,7 +2151,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "215/65R16",
-              "tire_rear": "215/65R16"
+              "tire_rear": "215/65R16",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "2_5_hybrid_sr_c_package",
@@ -1780,6 +2163,9 @@
               "source_refs": {
                 "ecosticker": [
                   "7c1a8c473f144ffcab8fd3a81355948c"
+                ],
+                "eco": [
+                  "b70b78a89feb4ad3bab52da832199870"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1788,7 +2174,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "215/65R16",
-              "tire_rear": "215/65R16"
+              "tire_rear": "215/65R16",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "2_5_hybrid_x",
@@ -1798,6 +2186,9 @@
               "source_refs": {
                 "ecosticker": [
                   "c178ea29c9a04704be18dcbab7859d23"
+                ],
+                "eco": [
+                  "c178ea29c9a04704be18dcbab7859d23"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1806,7 +2197,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "215/65R16",
-              "tire_rear": "215/65R16"
+              "tire_rear": "215/65R16",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "2_5_hybrid_z_2wd",
@@ -1816,6 +2209,9 @@
               "source_refs": {
                 "ecosticker": [
                   "4e725fb0-4790-457a-8a25-948607e2c3c2"
+                ],
+                "eco": [
+                  "4e725fb0-4790-457a-8a25-948607e2c3c2"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1824,7 +2220,9 @@
               "width_mm": 1850,
               "height_mm": 1935,
               "tire_front": "225/60R18",
-              "tire_rear": "225/60R18"
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "2_5_hybrid_z_e_four",
@@ -1834,6 +2232,9 @@
               "source_refs": {
                 "ecosticker": [
                   "ffdbce1b-ce41-4506-80a1-98f8692c350f"
+                ],
+                "eco": [
+                  "ffdbce1b-ce41-4506-80a1-98f8692c350f"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1842,7 +2243,9 @@
               "width_mm": 1850,
               "height_mm": 1935,
               "tire_front": "225/55R19",
-              "tire_rear": "225/55R19"
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "AUTOMATIC"
             },
             {
               "id": "2_5_s_type_gold",
@@ -1852,6 +2255,9 @@
               "source_refs": {
                 "ecosticker": [
                   "f43bf376cabd4daeaddb71df6a192a1b"
+                ],
+                "eco": [
+                  "f43bf376cabd4daeaddb71df6a192a1b"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1860,7 +2266,9 @@
               "width_mm": 1850,
               "height_mm": 1935,
               "tire_front": "235/50R18",
-              "tire_rear": "235/50R18"
+              "tire_rear": "235/50R18",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "2_5_sc_package",
@@ -1870,6 +2278,9 @@
               "source_refs": {
                 "ecosticker": [
                   "fee7b66be05547c08b755a4d575cbab5"
+                ],
+                "eco": [
+                  "fee7b66be05547c08b755a4d575cbab5"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1878,7 +2289,9 @@
               "width_mm": 1850,
               "height_mm": 1935,
               "tire_front": "235/50R18",
-              "tire_rear": "235/50R18"
+              "tire_rear": "235/50R18",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "2_5_x_side_lift_up_seat",
@@ -1888,6 +2301,9 @@
               "source_refs": {
                 "ecosticker": [
                   "a82be6efe43d4e958b5df24505c727b4"
+                ],
+                "eco": [
+                  "a82be6efe43d4e958b5df24505c727b4"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1896,7 +2312,9 @@
               "width_mm": 1850,
               "height_mm": 1935,
               "tire_front": "235/50R18",
-              "tire_rear": "235/50R18"
+              "tire_rear": "235/50R18",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "2_5s_c_package_2wd",
@@ -1906,6 +2324,9 @@
               "source_refs": {
                 "ecosticker": [
                   "a0450d7e-2e0d-4efe-aa21-002f870f1b29"
+                ],
+                "eco": [
+                  "a0450d7e-2e0d-4efe-aa21-002f870f1b29"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1914,7 +2335,9 @@
               "width_mm": 1850,
               "height_mm": 1935,
               "tire_front": "235/50R18",
-              "tire_rear": "235/50R18"
+              "tire_rear": "235/50R18",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "alphard",
@@ -1924,6 +2347,9 @@
               "source_refs": {
                 "ecosticker": [
                   "4d4ff70e3fbf41819506f767763a5cb9"
+                ],
+                "eco": [
+                  "4d4ff70e3fbf41819506f767763a5cb9"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1932,7 +2358,9 @@
               "width_mm": 1850,
               "height_mm": 1935,
               "tire_front": "235/50R18",
-              "tire_rear": "235/50R18"
+              "tire_rear": "235/50R18",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "eclipse_edition_hev_premium",
@@ -1942,6 +2370,9 @@
               "source_refs": {
                 "ecosticker": [
                   "cd0f4f43-a5be-450c-9fb5-db6ebd7a48a5"
+                ],
+                "eco": [
+                  "cd0f4f43-a5be-450c-9fb5-db6ebd7a48a5"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1950,7 +2381,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "225/55R19",
-              "tire_rear": "225/55R19"
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "eclipse_edition_hev_premium_luxury",
@@ -1960,6 +2393,9 @@
               "source_refs": {
                 "ecosticker": [
                   "74c56dc2-7eed-4fe7-9ce4-b5481ec19d11"
+                ],
+                "eco": [
+                  "74c56dc2-7eed-4fe7-9ce4-b5481ec19d11"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1968,7 +2404,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "225/55R19",
-              "tire_rear": "225/55R19"
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "eclipse_edition_hev_smart",
@@ -1978,6 +2416,9 @@
               "source_refs": {
                 "ecosticker": [
                   "263551ea-a035-49fd-b675-dfea529a6e71"
+                ],
+                "eco": [
+                  "263551ea-a035-49fd-b675-dfea529a6e71"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -1986,7 +2427,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "225/55R19",
-              "tire_rear": "225/55R19"
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "hev_premium",
@@ -1996,6 +2439,9 @@
               "source_refs": {
                 "ecosticker": [
                   "48c14603-c286-463a-9bed-e07ae20f52e1"
+                ],
+                "eco": [
+                  "48c14603-c286-463a-9bed-e07ae20f52e1"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -2004,7 +2450,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "225/55R19",
-              "tire_rear": "225/55R19"
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "hev_premium_luxury",
@@ -2014,6 +2462,9 @@
               "source_refs": {
                 "ecosticker": [
                   "bc584ab9-f3c2-4741-b655-198d0dcf47e8"
+                ],
+                "eco": [
+                  "bc584ab9-f3c2-4741-b655-198d0dcf47e8"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -2022,7 +2473,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "225/55R19",
-              "tire_rear": "225/55R19"
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "hev_smart",
@@ -2032,6 +2485,9 @@
               "source_refs": {
                 "ecosticker": [
                   "df03dc02-027a-4052-a9cb-9904dbda6734"
+                ],
+                "eco": [
+                  "df03dc02-027a-4052-a9cb-9904dbda6734"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -2040,7 +2496,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "225/55R19",
-              "tire_rear": "225/55R19"
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "hybrid",
@@ -2050,6 +2508,9 @@
               "source_refs": {
                 "ecosticker": [
                   "96e29081-5f9e-4f22-afc7-72f44612bc0e"
+                ],
+                "eco": [
+                  "96e29081-5f9e-4f22-afc7-72f44612bc0e"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -2058,7 +2519,9 @@
               "width_mm": 1850,
               "height_mm": 1945,
               "tire_front": "225/60R18",
-              "tire_rear": "225/60R18"
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "hybrid_2_5_z_2wd",
@@ -2068,6 +2531,9 @@
               "source_refs": {
                 "ecosticker": [
                   "94022927-c5df-480d-973d-eb320ca1a028"
+                ],
+                "eco": [
+                  "94022927-c5df-480d-973d-eb320ca1a028"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -2076,7 +2542,9 @@
               "width_mm": 1850,
               "height_mm": 1935,
               "tire_front": "225/55R19",
-              "tire_rear": "225/55R19"
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "hybrid_executive_lounge",
@@ -2086,6 +2554,9 @@
               "source_refs": {
                 "ecosticker": [
                   "931c0d96-1371-43eb-9f27-588cd62b5f87"
+                ],
+                "eco": [
+                  "931c0d96-1371-43eb-9f27-588cd62b5f87"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -2094,7 +2565,9 @@
               "width_mm": 1850,
               "height_mm": 1935,
               "tire_front": "225/60R18",
-              "tire_rear": "225/60R18"
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "hybrid_executive_lounge_2wd",
@@ -2104,6 +2577,9 @@
               "source_refs": {
                 "ecosticker": [
                   "55f99743-60b9-475d-9c64-e55b414a9d07"
+                ],
+                "eco": [
+                  "cd38fa40-bdea-4ca5-aa11-bd87bc91fb27"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -2112,7 +2588,9 @@
               "width_mm": 1850,
               "height_mm": 1935,
               "tire_front": "225/60R18",
-              "tire_rear": "225/60R18"
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "hybrid_executive_lounge_e_four",
@@ -2122,6 +2600,9 @@
               "source_refs": {
                 "ecosticker": [
                   "2d81381f-007e-4c48-a919-1aa693492829"
+                ],
+                "eco": [
+                  "a2663d92-fb41-4c60-ae43-04ab41e74523"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -2130,7 +2611,9 @@
               "width_mm": 1850,
               "height_mm": 1935,
               "tire_front": "225/55R19",
-              "tire_rear": "225/55R19"
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "AUTOMATIC"
             },
             {
               "id": "hybrid_executive_lounge_s",
@@ -2140,6 +2623,9 @@
               "source_refs": {
                 "ecosticker": [
                   "394dbe44-381c-4f4b-b83d-96bf85987791"
+                ],
+                "eco": [
+                  "394dbe44-381c-4f4b-b83d-96bf85987791"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -2148,7 +2634,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "225/60R17",
-              "tire_rear": "225/60R17"
+              "tire_rear": "225/60R17",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "hybrid_g_2wd",
@@ -2158,15 +2646,20 @@
               "source_refs": {
                 "ecosticker": [
                   "09a59fc7-5f12-4d2d-bf8c-d70e82295a3e"
+                ],
+                "eco": [
+                  "60436a42-3e72-4752-81d7-b3d567bd5fd3"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
-              "seats": 7,
+              "seats": 8,
               "length_mm": 4995,
               "width_mm": 1850,
               "height_mm": 1935,
               "tire_front": "225/60R18",
-              "tire_rear": "225/60R18"
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "hybrid_g_e_four",
@@ -2176,6 +2669,9 @@
               "source_refs": {
                 "ecosticker": [
                   "b873ee20-aab7-4fa0-ab54-c19267619e0a"
+                ],
+                "eco": [
+                  "b873ee20-aab7-4fa0-ab54-c19267619e0a"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -2184,7 +2680,9 @@
               "width_mm": 1850,
               "height_mm": 1935,
               "tire_front": "225/55R19",
-              "tire_rear": "225/55R19"
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "hybrid_g_f_package",
@@ -2194,6 +2692,9 @@
               "source_refs": {
                 "ecosticker": [
                   "266aabc5-6534-4250-b51f-350c11bbf6d0"
+                ],
+                "eco": [
+                  "266aabc5-6534-4250-b51f-350c11bbf6d0"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -2202,7 +2703,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "225/60R17",
-              "tire_rear": "225/60R17"
+              "tire_rear": "225/60R17",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "hybrid_gf",
@@ -2212,6 +2715,9 @@
               "source_refs": {
                 "ecosticker": [
                   "55dfb7d46ff0459eafef0f23880adccd"
+                ],
+                "eco": [
+                  "55dfb7d46ff0459eafef0f23880adccd"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -2220,7 +2726,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "225/60R17",
-              "tire_rear": "225/60R17"
+              "tire_rear": "225/60R17",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "hybrid_s",
@@ -2230,15 +2738,20 @@
               "source_refs": {
                 "ecosticker": [
                   "43cf9aca936947b5b7a54352f0a678a9"
+                ],
+                "eco": [
+                  "43cf9aca936947b5b7a54352f0a678a9"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
               "seats": 7,
-              "length_mm": 1850,
-              "width_mm": 4945,
+              "length_mm": 4945,
+              "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "215/65R16",
-              "tire_rear": "215/65R16"
+              "tire_rear": "215/65R16",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "hybrid_s_e_four",
@@ -2248,6 +2761,9 @@
               "source_refs": {
                 "ecosticker": [
                   "024d6003894d444c845bfdffa45da507"
+                ],
+                "eco": [
+                  "024d6003894d444c845bfdffa45da507"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -2256,7 +2772,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "225/60R17",
-              "tire_rear": "225/60R17"
+              "tire_rear": "225/60R17",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "hybrid_s_type_gold_ii",
@@ -2266,6 +2784,9 @@
               "source_refs": {
                 "ecosticker": [
                   "20b0f8f65b314e15b0f2987508582efc"
+                ],
+                "eco": [
+                  "20b0f8f65b314e15b0f2987508582efc"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -2274,7 +2795,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "215/65R16",
-              "tire_rear": "215/65R16"
+              "tire_rear": "215/65R16",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "hybrid_s_type_gold_iii",
@@ -2284,6 +2807,9 @@
               "source_refs": {
                 "ecosticker": [
                   "92dde66d-3b76-4a32-87a1-61ee29f33a1b"
+                ],
+                "eco": [
+                  "92dde66d-3b76-4a32-87a1-61ee29f33a1b"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -2292,7 +2818,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "215/65R16",
-              "tire_rear": "215/65R16"
+              "tire_rear": "215/65R16",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "hybrid_sr_c_package",
@@ -2302,6 +2830,9 @@
               "source_refs": {
                 "ecosticker": [
                   "9fdff73d-d97d-455b-aba4-a9c2940b9a77"
+                ],
+                "eco": [
+                  "f1ca70494dcf47c48f2da270d7ad7107"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -2310,7 +2841,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "225/60R17",
-              "tire_rear": "225/60R17"
+              "tire_rear": "225/60R17",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "hybrid_x",
@@ -2320,6 +2853,9 @@
               "source_refs": {
                 "ecosticker": [
                   "f06a9e3e-c72c-4ec2-b8bc-14046e60a226"
+                ],
+                "eco": [
+                  "f06a9e3e-c72c-4ec2-b8bc-14046e60a226"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -2328,7 +2864,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "215/65R16",
-              "tire_rear": "215/65R16"
+              "tire_rear": "215/65R16",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "hybrid_x_2wd",
@@ -2338,15 +2876,20 @@
               "source_refs": {
                 "ecosticker": [
                   "25669220-1036-4ed7-a53b-1e0a14def610"
+                ],
+                "eco": [
+                  "efec7d83-0798-4e22-8e19-fd71da898a41"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
-              "seats": 7,
+              "seats": 8,
               "length_mm": 4995,
               "width_mm": 1850,
               "height_mm": 1935,
               "tire_front": "225/60R18",
-              "tire_rear": "225/60R18"
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "hybrid_x_e_four",
@@ -2356,6 +2899,9 @@
               "source_refs": {
                 "ecosticker": [
                   "bdc4b4de-60be-4c40-a9e9-36c2a079c3d5"
+                ],
+                "eco": [
+                  "ce259d9d-30d8-4597-b6cb-01e12e081d0c"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -2364,7 +2910,9 @@
               "width_mm": 1850,
               "height_mm": 1935,
               "tire_front": "225/55R19",
-              "tire_rear": "225/55R19"
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "hybrid_z",
@@ -2374,6 +2922,9 @@
               "source_refs": {
                 "ecosticker": [
                   "d87514bb-f799-411c-8230-57b47a6d16df"
+                ],
+                "eco": [
+                  "d87514bb-f799-411c-8230-57b47a6d16df"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -2382,7 +2933,9 @@
               "width_mm": 1850,
               "height_mm": 1935,
               "tire_front": "225/60R18",
-              "tire_rear": "225/60R18"
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "hybrid_z_2wd",
@@ -2392,15 +2945,20 @@
               "source_refs": {
                 "ecosticker": [
                   "a07258c9-0cc4-4233-bbd5-917ede9d676e"
+                ],
+                "eco": [
+                  "5531dc83-3e23-4058-a886-441cebd4036f"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
               "seats": 7,
               "length_mm": 4995,
               "width_mm": 1850,
-              "height_mm": 1935,
+              "height_mm": 1945,
               "tire_front": "225/60R18",
-              "tire_rear": "225/60R18"
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "hybrid_z_e_four",
@@ -2410,6 +2968,9 @@
               "source_refs": {
                 "ecosticker": [
                   "8c3dbf8d-2dd6-4a58-b27b-5ca523fc5e2e"
+                ],
+                "eco": [
+                  "3079b187-2b89-4918-8b7d-c3521c040a1b"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -2418,7 +2979,9 @@
               "width_mm": 1850,
               "height_mm": 1935,
               "tire_front": "225/55R19",
-              "tire_rear": "225/55R19"
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "s_c_package",
@@ -2428,15 +2991,20 @@
               "source_refs": {
                 "ecosticker": [
                   "310a03e4-4f26-4918-a408-e0a23e14be8c"
+                ],
+                "eco": [
+                  "edd038dc72064e89a9b92929a00dce62"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
               "seats": 7,
-              "length_mm": 4950,
+              "length_mm": 4945,
               "width_mm": 1850,
-              "height_mm": 1935,
+              "height_mm": 1950,
               "tire_front": "235/50R18",
-              "tire_rear": "235/50R18"
+              "tire_rear": "235/50R18",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "s_type_gold",
@@ -2446,6 +3014,9 @@
               "source_refs": {
                 "ecosticker": [
                   "4a47bd98-5d09-4a88-b423-24d99e973eba"
+                ],
+                "eco": [
+                  "4a47bd98-5d09-4a88-b423-24d99e973eba"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -2454,7 +3025,9 @@
               "width_mm": 1850,
               "height_mm": 1935,
               "tire_front": "235/50R18",
-              "tire_rear": "235/50R18"
+              "tire_rear": "235/50R18",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "s_type_gold_iii",
@@ -2464,6 +3037,9 @@
               "source_refs": {
                 "ecosticker": [
                   "ebb429e9-6acc-4b3d-9c79-cdecd17e00a8"
+                ],
+                "eco": [
+                  "ebb429e9-6acc-4b3d-9c79-cdecd17e00a8"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -2472,7 +3048,9 @@
               "width_mm": 1850,
               "height_mm": 1935,
               "tire_front": "225/60R18",
-              "tire_rear": "225/60R18"
+              "tire_rear": "225/60R18",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "sc_package",
@@ -2482,6 +3060,9 @@
               "source_refs": {
                 "ecosticker": [
                   "11981a46-02d8-44e1-a112-c0d1d4068685"
+                ],
+                "eco": [
+                  "11981a46-02d8-44e1-a112-c0d1d4068685"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -2490,7 +3071,9 @@
               "width_mm": 1850,
               "height_mm": 1935,
               "tire_front": "215/65R16",
-              "tire_rear": "215/65R16"
+              "tire_rear": "215/65R16",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "z",
@@ -2500,6 +3083,9 @@
               "source_refs": {
                 "ecosticker": [
                   "b8751aac-7d0f-42ce-ac7f-f0c19fa75da8"
+                ],
+                "eco": [
+                  "b8751aac-7d0f-42ce-ac7f-f0c19fa75da8"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -2508,7 +3094,9 @@
               "width_mm": 1850,
               "height_mm": 1935,
               "tire_front": "225/60R18",
-              "tire_rear": "225/60R18"
+              "tire_rear": "225/60R18",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "z_2wd",
@@ -2518,6 +3106,9 @@
               "source_refs": {
                 "ecosticker": [
                   "b4059829-1cf2-4415-b750-da9c8a273b2b"
+                ],
+                "eco": [
+                  "23e55906-e6b7-4fdd-9461-ea4d1fe43a4f"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -2526,7 +3117,9 @@
               "width_mm": 1850,
               "height_mm": 1935,
               "tire_front": "225/60R18",
-              "tire_rear": "225/60R18"
+              "tire_rear": "225/60R18",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "z_4wd",
@@ -2536,6 +3129,9 @@
               "source_refs": {
                 "ecosticker": [
                   "d370cd7c-2e56-4c2a-80a5-e830cd0cb06c"
+                ],
+                "eco": [
+                  "d370cd7c-2e56-4c2a-80a5-e830cd0cb06c"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -2544,7 +3140,9 @@
               "width_mm": 1850,
               "height_mm": 1935,
               "tire_front": "225/60R18",
-              "tire_rear": "225/60R18"
+              "tire_rear": "225/60R18",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "z_hybrid",
@@ -2554,6 +3152,9 @@
               "source_refs": {
                 "ecosticker": [
                   "54d262c9-9956-42ef-8812-17e6dcfca0f5"
+                ],
+                "eco": [
+                  "54d262c9-9956-42ef-8812-17e6dcfca0f5"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -2562,7 +3163,9 @@
               "width_mm": 1850,
               "height_mm": 1935,
               "tire_front": "225/60R18",
-              "tire_rear": "225/60R18"
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "AUTOMATIC"
             },
             {
               "name": "2.5 HEV Luxury (E-Four AWD)",
@@ -2626,6 +3229,47 @@
               "price_note": "seed-unverified",
               "price_min_thb": 1836000,
               "price_max_thb": 1836000
+            }
+          ],
+          "trims": [
+            {
+              "name": "AWD",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4690,
+              "width_mm": 1860,
+              "height_mm": 1650,
+              "source_refs": {
+                "eco": [
+                  "70b68fdf-29af-4d35-88ea-ec859bc60f8c"
+                ]
+              }
+            },
+            {
+              "name": "FWD",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4690,
+              "width_mm": 1860,
+              "height_mm": 1650,
+              "source_refs": {
+                "eco": [
+                  "46410b90-c335-44e2-957a-a95e0f353456"
+                ]
+              }
+            },
+            {
+              "name": "bZ4X",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4690,
+              "width_mm": 1860,
+              "height_mm": 1650,
+              "source_refs": {
+                "eco": [
+                  "b0219a8647df48f3af6703951212e304"
+                ]
+              }
             }
           ]
         }
@@ -2784,7 +3428,143 @@
               "aliases": []
             }
           ],
-          "trims": []
+          "trims": [
+            {
+              "name": "4Trex 2.8 Overland Plus AT",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 5320,
+              "width_mm": 1885,
+              "height_mm": 1815,
+              "engine_cc": 2755,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "66df8943-b470-4c67-98a1-a7171512a2e7"
+                ]
+              }
+            },
+            {
+              "name": "4Trex 2.8 Overland AT",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 5320,
+              "width_mm": 1885,
+              "height_mm": 1815,
+              "engine_cc": 2755,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "742d6987-1495-4d41-a347-582b1b3bb425"
+                ]
+              }
+            },
+            {
+              "name": "Prerunner 2.8 Overland Plus AT",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 5320,
+              "width_mm": 1885,
+              "height_mm": 1815,
+              "engine_cc": 2755,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "cde43281-fc0e-47df-a3cb-b38df4befe83"
+                ]
+              }
+            },
+            {
+              "name": "Prerunner 2.8 Overland AT",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 5320,
+              "width_mm": 1885,
+              "height_mm": 1815,
+              "engine_cc": 2755,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "bdb0d84c-5a26-4bca-89fb-424436e066df"
+                ]
+              }
+            },
+            {
+              "name": "4Trex 2.8 Premium MT",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 5320,
+              "width_mm": 1885,
+              "height_mm": 1815,
+              "engine_cc": 2755,
+              "transmission": "MANUAL",
+              "source_refs": {
+                "eco": [
+                  "ea6334aa-703e-4838-9e75-c2f454f4fbbb"
+                ]
+              }
+            },
+            {
+              "name": "Prerunner 2.8 Premium AT",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 5320,
+              "width_mm": 1885,
+              "height_mm": 1815,
+              "engine_cc": 2755,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "3e3d9ebc-0d89-42ff-a928-5014ced68126"
+                ]
+              }
+            },
+            {
+              "name": "Prerunner 2.8 Premium MT",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 5320,
+              "width_mm": 1885,
+              "height_mm": 1815,
+              "engine_cc": 2755,
+              "transmission": "MANUAL",
+              "source_refs": {
+                "eco": [
+                  "ed53397c-ced8-4e03-afbe-207664767aa3"
+                ]
+              }
+            },
+            {
+              "name": "Prerunner 2.8 Smart AT",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 5320,
+              "width_mm": 1855,
+              "height_mm": 1815,
+              "engine_cc": 2755,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "232f8b2f-f175-4a8f-8a1f-ab853aac13dc"
+                ]
+              }
+            },
+            {
+              "name": "Prerunner 2.8 Smart MT",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 5320,
+              "width_mm": 1855,
+              "height_mm": 1815,
+              "engine_cc": 2755,
+              "transmission": "MANUAL",
+              "source_refs": {
+                "eco": [
+                  "5fa7de28-cede-4948-8e22-447262ebabb5"
+                ]
+              }
+            }
+          ]
         }
       ],
       "powertrain_checked": true
@@ -3044,6 +3824,9 @@
               "source_refs": {
                 "ecosticker": [
                   "982ae032-d414-4f1d-8101-810c167c3327"
+                ],
+                "eco": [
+                  "d50e7a13-c863-4c02-aed8-1823fe54ae00"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -3052,7 +3835,9 @@
               "width_mm": 1850,
               "height_mm": 1945,
               "tire_front": "225/60R18",
-              "tire_rear": "225/60R18"
+              "tire_rear": "225/60R18",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "2_5_hev",
@@ -3065,6 +3850,9 @@
                 ],
                 "owner_directory": [
                   "owner_directory_2026_09_13:294"
+                ],
+                "eco": [
+                  "150c9bf7-c210-42d6-998a-7ace2dc17464"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -3073,7 +3861,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "225/55R19",
-              "tire_rear": "225/55R19"
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "2_5_hybrid_v_l_edition",
@@ -3083,6 +3873,9 @@
               "source_refs": {
                 "ecosticker": [
                   "8ee3b76b67074161a85b41a4d812d2e9"
+                ],
+                "eco": [
+                  "8ee3b76b67074161a85b41a4d812d2e9"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -3091,7 +3884,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "215/65R16",
-              "tire_rear": "215/65R16"
+              "tire_rear": "215/65R16",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "2_5_hybrid_x",
@@ -3101,6 +3896,9 @@
               "source_refs": {
                 "ecosticker": [
                   "423d65344824408dbdbc57d0813ac803"
+                ],
+                "eco": [
+                  "423d65344824408dbdbc57d0813ac803"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -3109,7 +3907,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "215/65R16",
-              "tire_rear": "215/65R16"
+              "tire_rear": "215/65R16",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "2_5_hybrid_zr_g",
@@ -3119,6 +3919,9 @@
               "source_refs": {
                 "ecosticker": [
                   "70accb2303014d2aa6c01ad424dfa68e"
+                ],
+                "eco": [
+                  "70accb2303014d2aa6c01ad424dfa68e"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -3127,7 +3930,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "215/65R16",
-              "tire_rear": "215/65R16"
+              "tire_rear": "215/65R16",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "2_5_zg_edition",
@@ -3137,6 +3942,9 @@
               "source_refs": {
                 "ecosticker": [
                   "09bbcad2f21a4ab8af4d32ae7f765922"
+                ],
+                "eco": [
+                  "09bbcad2f21a4ab8af4d32ae7f765922"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -3145,7 +3953,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "235/50R18",
-              "tire_rear": "235/50R18"
+              "tire_rear": "235/50R18",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "eclipse_edition_hev_premium",
@@ -3155,6 +3965,9 @@
               "source_refs": {
                 "ecosticker": [
                   "0186e2ef-20e0-47f2-9447-41124a739491"
+                ],
+                "eco": [
+                  "0186e2ef-20e0-47f2-9447-41124a739491"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -3163,7 +3976,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "225/55R19",
-              "tire_rear": "225/55R19"
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "golden_eye_iii",
@@ -3173,6 +3988,9 @@
               "source_refs": {
                 "ecosticker": [
                   "c0e0d44b-da0d-449e-8d48-8a1193a072ec"
+                ],
+                "eco": [
+                  "c0e0d44b-da0d-449e-8d48-8a1193a072ec"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -3181,7 +3999,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "235/50R18",
-              "tire_rear": "235/50R18"
+              "tire_rear": "235/50R18",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "hev_premium",
@@ -3191,6 +4011,9 @@
               "source_refs": {
                 "ecosticker": [
                   "c40e8a2d-4462-4382-9b66-e585b0f41ad4"
+                ],
+                "eco": [
+                  "c40e8a2d-4462-4382-9b66-e585b0f41ad4"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -3199,7 +4022,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "225/55R19",
-              "tire_rear": "225/55R19"
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "hybrid",
@@ -3209,6 +4034,9 @@
               "source_refs": {
                 "ecosticker": [
                   "fa43da23deec4647b43bca09443be63b"
+                ],
+                "eco": [
+                  "fa43da23deec4647b43bca09443be63b"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -3217,7 +4045,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "225/60R17",
-              "tire_rear": "225/60R17"
+              "tire_rear": "225/60R17",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "hybrid_executive_lounge",
@@ -3227,6 +4057,9 @@
               "source_refs": {
                 "ecosticker": [
                   "147e56b3-c37c-49b1-810e-9900db369e16"
+                ],
+                "eco": [
+                  "147e56b3-c37c-49b1-810e-9900db369e16"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -3235,7 +4068,9 @@
               "width_mm": 1850,
               "height_mm": 1945,
               "tire_front": "225/60R18",
-              "tire_rear": "225/60R18"
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "hybrid_executive_lounge_2wd",
@@ -3245,15 +4080,20 @@
               "source_refs": {
                 "ecosticker": [
                   "18f77a3e-6883-424b-a9c2-fb383904ea69"
+                ],
+                "eco": [
+                  "b3ab9c82-da38-4168-94f8-2fea1147297e"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
               "seats": 7,
-              "length_mm": 4995,
+              "length_mm": 5005,
               "width_mm": 1850,
-              "height_mm": 1945,
+              "height_mm": 1950,
               "tire_front": "225/60R18",
-              "tire_rear": "225/60R18"
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "hybrid_executive_lounge_e_four",
@@ -3263,6 +4103,9 @@
               "source_refs": {
                 "ecosticker": [
                   "d4f0550e-1d97-4083-ac82-ac529688da4d"
+                ],
+                "eco": [
+                  "d4f0550e-1d97-4083-ac82-ac529688da4d"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -3271,7 +4114,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "225/60R18",
-              "tire_rear": "225/60R18"
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "hybrid_x_e_four",
@@ -3281,6 +4126,9 @@
               "source_refs": {
                 "ecosticker": [
                   "73c3adf96487421e84de5570743762ae"
+                ],
+                "eco": [
+                  "73c3adf96487421e84de5570743762ae"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -3289,7 +4137,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "215/65R16",
-              "tire_rear": "215/65R16"
+              "tire_rear": "215/65R16",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "hybrid_z_premier",
@@ -3299,6 +4149,9 @@
               "source_refs": {
                 "ecosticker": [
                   "39236d3e-5b9e-4262-adb3-bab74353334b"
+                ],
+                "eco": [
+                  "39236d3e-5b9e-4262-adb3-bab74353334b"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -3307,7 +4160,9 @@
               "width_mm": 1850,
               "height_mm": 1935,
               "tire_front": "225/60R18",
-              "tire_rear": "225/60R18"
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "hybrid_z_premier_2wd",
@@ -3317,6 +4172,9 @@
               "source_refs": {
                 "ecosticker": [
                   "76c76aa2-7c76-446c-8928-b66df1cb7a51"
+                ],
+                "eco": [
+                  "c1efa5b8-453d-4b08-92a3-b912cd39e692"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -3325,7 +4183,9 @@
               "width_mm": 1850,
               "height_mm": 1945,
               "tire_front": "225/60R18",
-              "tire_rear": "225/60R18"
+              "tire_rear": "225/60R18",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "hybrid_z_premier_e_four",
@@ -3335,6 +4195,9 @@
               "source_refs": {
                 "ecosticker": [
                   "a495e190-d412-40a6-81ca-a5e0bd0588f8"
+                ],
+                "eco": [
+                  "dc871a66-de3c-494f-a52f-5357e83f094d"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -3343,7 +4206,9 @@
               "width_mm": 1850,
               "height_mm": 1945,
               "tire_front": "225/55R19",
-              "tire_rear": "225/55R19"
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "id": "hybrid_zrg_edition",
@@ -3353,6 +4218,9 @@
               "source_refs": {
                 "ecosticker": [
                   "6016c4a4705c4337bc351966290e8c0e"
+                ],
+                "eco": [
+                  "6016c4a4705c4337bc351966290e8c0e"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -3361,7 +4229,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "225/60R17",
-              "tire_rear": "225/60R17"
+              "tire_rear": "225/60R17",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "vellfire",
@@ -3371,6 +4241,9 @@
               "source_refs": {
                 "ecosticker": [
                   "7574e074b56342449fad17b8cb627d33"
+                ],
+                "eco": [
+                  "7574e074b56342449fad17b8cb627d33"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -3379,7 +4252,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "235/50R18",
-              "tire_rear": "235/50R18"
+              "tire_rear": "235/50R18",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "id": "z_premier",
@@ -3389,6 +4264,9 @@
               "source_refs": {
                 "ecosticker": [
                   "3bd27424-f0cc-49be-909d-001be1a67072"
+                ],
+                "eco": [
+                  "3bd27424-f0cc-49be-909d-001be1a67072"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -3397,7 +4275,9 @@
               "width_mm": 1850,
               "height_mm": 1945,
               "tire_front": "225/55R19",
-              "tire_rear": "225/55R19"
+              "tire_rear": "225/55R19",
+              "engine_cc": 2393,
+              "transmission": "CVT"
             },
             {
               "id": "z_premier_2wd",
@@ -3407,6 +4287,9 @@
               "source_refs": {
                 "ecosticker": [
                   "79ca400a-e879-43a1-b939-e2d379b94c13"
+                ],
+                "eco": [
+                  "a45ed582-7068-447a-9caf-bc9259a95390"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -3415,7 +4298,9 @@
               "width_mm": 1850,
               "height_mm": 1945,
               "tire_front": "225/55R19",
-              "tire_rear": "225/55R19"
+              "tire_rear": "225/55R19",
+              "engine_cc": 2393,
+              "transmission": "CVT"
             },
             {
               "id": "z_premier_hybrid",
@@ -3425,6 +4310,9 @@
               "source_refs": {
                 "ecosticker": [
                   "fff3df8d-6a9f-4f1e-859c-f7b2c8fb34b9"
+                ],
+                "eco": [
+                  "fff3df8d-6a9f-4f1e-859c-f7b2c8fb34b9"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -3433,7 +4321,9 @@
               "width_mm": 1850,
               "height_mm": 1935,
               "tire_front": "225/55R19",
-              "tire_rear": "225/55R19"
+              "tire_rear": "225/55R19",
+              "engine_cc": 2487,
+              "transmission": "AUTOMATIC"
             },
             {
               "id": "zg",
@@ -3443,6 +4333,9 @@
               "source_refs": {
                 "ecosticker": [
                   "262cc2548d424e98908b2ef927350f2c"
+                ],
+                "eco": [
+                  "262cc2548d424e98908b2ef927350f2c"
                 ]
               },
               "notes": "Proposed from the 2026-09-08 ECO Sticker snapshot. Specification is the manufacturer's homologation record.",
@@ -3451,7 +4344,9 @@
               "width_mm": 1850,
               "height_mm": 1950,
               "tire_front": "235/50R18",
-              "tire_rear": "235/50R18"
+              "tire_rear": "235/50R18",
+              "engine_cc": 2493,
+              "transmission": "CVT"
             },
             {
               "name": "2.5 HEV Luxury (Executive Lounge Package)",
@@ -3510,12 +4405,21 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:278"
+                ],
+                "eco": [
+                  "99e39afc-9701-49cf-888e-09ad6dcde82b"
                 ]
               },
               "aliases": [
                 "Crown Crossover HEV"
               ],
-              "id": "crossover_hev_hev"
+              "id": "crossover_hev_hev",
+              "seats": 5,
+              "length_mm": 4930,
+              "width_mm": 1840,
+              "height_mm": 1540,
+              "engine_cc": 2487,
+              "transmission": "CVT"
             },
             {
               "name": "Estate / Signia",
@@ -3577,6 +4481,51 @@
                 ]
               },
               "id": "2_5_hev_e_four_awd_hev"
+            },
+            {
+              "name": "HARRIER",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4740,
+              "width_mm": 1660,
+              "height_mm": 1855,
+              "engine_cc": 1986,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "a56bc17440b640b2b92a39b0450ebfe5"
+                ]
+              }
+            },
+            {
+              "name": "Z LEATHER PACKAGE",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4740,
+              "width_mm": 1855,
+              "height_mm": 1660,
+              "engine_cc": 1986,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "5b814b88758244bb9477bb8e01e54036"
+                ]
+              }
+            },
+            {
+              "name": "2.0 G",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4740,
+              "width_mm": 1855,
+              "height_mm": 1660,
+              "engine_cc": 1986,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "2d90ecb475134e6ab21e79a4f1e6b6fc"
+                ]
+              }
             }
           ]
         }
@@ -3622,12 +4571,143 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:296"
+                ],
+                "eco": [
+                  "cea90741-49e5-49e7-9c28-a875fea7bffb"
                 ]
               },
               "aliases": [
                 "Voxy Hybrid S-Z (Captain Ottoman Seats)"
               ],
-              "id": "hybrid_s_z_captain_ottoman_seats_hev"
+              "id": "hybrid_s_z_captain_ottoman_seats_hev",
+              "seats": 7,
+              "length_mm": 2805,
+              "width_mm": 1470,
+              "height_mm": 1405,
+              "engine_cc": 1797,
+              "transmission": "CVT"
+            },
+            {
+              "name": "HYBRID S-Z 2WD CAR",
+              "powertrain": "HEV",
+              "seats": 7,
+              "length_mm": 4695,
+              "width_mm": 1730,
+              "height_mm": 1895,
+              "engine_cc": 1797,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "a1167020-6827-48a7-aff6-15b3cb33626c"
+                ]
+              }
+            },
+            {
+              "name": "HYBRID SZ",
+              "powertrain": "HEV",
+              "seats": 7,
+              "length_mm": 4695,
+              "width_mm": 1730,
+              "height_mm": 1895,
+              "engine_cc": 1797,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "e128fb4b-94ea-4f6b-a466-264a69892007"
+                ]
+              }
+            },
+            {
+              "name": "SZ",
+              "powertrain": "ICE",
+              "seats": 7,
+              "length_mm": 4695,
+              "width_mm": 1730,
+              "height_mm": 1895,
+              "engine_cc": 1986,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "a0f8745e-c011-40a4-9575-dc6d93e2018d"
+                ]
+              }
+            },
+            {
+              "name": "S-Z 2WD",
+              "powertrain": "ICE",
+              "seats": 7,
+              "length_mm": 4695,
+              "width_mm": 1730,
+              "height_mm": 1895,
+              "engine_cc": 1986,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "6054d576-c216-4437-a4de-719afcb2366b"
+                ]
+              }
+            },
+            {
+              "name": "S-Z",
+              "powertrain": "ICE",
+              "seats": 7,
+              "length_mm": 4695,
+              "width_mm": 1730,
+              "height_mm": 1895,
+              "engine_cc": 1986,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "7faca25e98ed4f8dbf642620e5128277"
+                ]
+              }
+            },
+            {
+              "name": "VOXY",
+              "powertrain": "ICE",
+              "seats": 7,
+              "length_mm": 4710,
+              "width_mm": 1735,
+              "height_mm": 1835,
+              "engine_cc": 1986,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "380c26baec974256a0c6c53361234455"
+                ]
+              }
+            },
+            {
+              "name": "ZS",
+              "powertrain": "ICE",
+              "seats": 7,
+              "length_mm": 4710,
+              "width_mm": 1735,
+              "height_mm": 1835,
+              "engine_cc": 1986,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "b0ae2e8028944283bed9acbeba5525c3"
+                ]
+              }
+            },
+            {
+              "name": "2.0 ZS",
+              "powertrain": "ICE",
+              "seats": 7,
+              "length_mm": 4710,
+              "width_mm": 1735,
+              "height_mm": 1825,
+              "engine_cc": 1986,
+              "tire_front": "205/60R16",
+              "tire_rear": "205/60R16",
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "f184838fd1db4accb6c0fb447b3d338e"
+                ]
+              }
             }
           ]
         }
@@ -3679,6 +4759,36 @@
                 "Noah Hybrid S-G / S-Z"
               ],
               "id": "hybrid_s_g_s_z_hev"
+            },
+            {
+              "name": "X",
+              "powertrain": "ICE",
+              "seats": 7,
+              "length_mm": 4695,
+              "width_mm": 1730,
+              "height_mm": 1895,
+              "engine_cc": 1986,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "723bcab5-c106-494c-850b-03cce065599e"
+                ]
+              }
+            },
+            {
+              "name": "S-Z",
+              "powertrain": "ICE",
+              "seats": 7,
+              "length_mm": 4695,
+              "width_mm": 1730,
+              "height_mm": 1895,
+              "engine_cc": 1986,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "65e359742b35488682c536bb44b43533"
+                ]
+              }
             }
           ]
         }
@@ -3717,7 +4827,53 @@
               "aliases": []
             }
           ],
-          "trims": []
+          "trims": [
+            {
+              "name": "HEV GR Sport",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4360,
+              "width_mm": 1795,
+              "height_mm": 1565,
+              "engine_cc": 1798,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "9a6e1c0c9263466c9c1cfe61eda22e9e"
+                ]
+              }
+            },
+            {
+              "name": "HEV Premium Safety",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4360,
+              "width_mm": 1795,
+              "height_mm": 1565,
+              "engine_cc": 1798,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "9793ea4cc52b489297987f28be6f3cf7"
+                ]
+              }
+            },
+            {
+              "name": "BY KARL LAGERFELD",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4360,
+              "width_mm": 1795,
+              "height_mm": 1565,
+              "engine_cc": 1798,
+              "transmission": "CVT",
+              "source_refs": {
+                "eco": [
+                  "3e55da0abba3447eaaf030db5325409c"
+                ]
+              }
+            }
+          ]
         }
       ]
     },

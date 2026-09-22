@@ -1,0 +1,463 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d3af7e3b4058191866ae48d9",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:366",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "aion.hyptec_ht",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:33+00:00",
+    "before_hash": "0f36dba67d3b3e52545bb82228fd47054dad46cb373a71822ff450b49421dc60",
+    "after_hash": "04b35fc7b9ad6d3bf969614e6e395adb6bc065e4a63de5ce366a5fdd788eb51d",
+    "before": {
+      "id": "hyptec_ht",
+      "name_en": "Hyptec HT",
+      "name_th": "ไฮเทค เอชที",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "hyptec ht",
+        "hyptec"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2025-06-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "77 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "RWD",
+              "engine_cc": null,
+              "battery_kwh": 76.8,
+              "price_thb": 1299000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "620 Premium (Standard Doors)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:005"
+                ],
+                "eco": [
+                  "513e48ad-0ef5-4323-8541-c753596b9451"
+                ]
+              },
+              "aliases": [
+                "Hyptec HT 620 Premium (Standard Doors)"
+              ],
+              "id": "620_premium_standard_doors_bev",
+              "seats": 5,
+              "length_mm": 4935,
+              "width_mm": 1920,
+              "height_mm": 1700
+            },
+            {
+              "name": "620 Luxury (Gull-Wing Doors)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:005"
+                ]
+              },
+              "aliases": [
+                "Hyptec HT 620 Luxury (Gull-Wing Doors)"
+              ],
+              "id": "620_luxury_gull_wing_doors_bev"
+            },
+            {
+              "name": "670 Ultra (Gull-Wing Doors, 800V Architecture)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:005"
+                ]
+              },
+              "aliases": [
+                "Hyptec HT 670 Ultra (Gull-Wing Doors, 800V Architecture)"
+              ],
+              "id": "670_ultra_gull_wing_doors_800v_architecture_bev"
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "aion",
+        "name_en": "Aion",
+        "name_th": "ไอออน",
+        "brand_segment": "MASS",
+        "oem_group": "GAC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "gac aion",
+          "ไอออน"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "aion.hyptec_ht",
+        "brand_id": "aion",
+        "name_en": "Hyptec HT",
+        "name_th": "ไฮเทค เอชที",
+        "nameplate": "Hyptec HT",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "hyptec ht",
+          "hyptec"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "aion.hyptec_ht.gen1",
+          "model_id": "aion.hyptec_ht",
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2025-06-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "aion.hyptec_ht.gen1.77_kwh_bev",
+          "generation_id": "aion.hyptec_ht.gen1",
+          "name": "77 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 76.8,
+          "price_thb": 1299000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+          "generation_id": "aion.hyptec_ht.gen1",
+          "name": "620 Premium (Standard Doors)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4935,
+          "width_mm": 1920,
+          "height_mm": 1700,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Hyptec HT 620 Premium (Standard Doors)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:005"
+            ],
+            "eco": [
+              "513e48ad-0ef5-4323-8541-c753596b9451"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "aion.hyptec_ht.gen1.trim.620_luxury_gull_wing_doors_bev",
+          "generation_id": "aion.hyptec_ht.gen1",
+          "name": "620 Luxury (Gull-Wing Doors)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4935,
+          "width_mm": 1920,
+          "height_mm": 1700,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Hyptec HT 620 Luxury (Gull-Wing Doors)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:005"
+            ],
+            "eco": [
+              "da65f191-df51-44bb-95f6-829ea0ebe3a1"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "aion.hyptec_ht.gen1.trim.670_ultra_gull_wing_doors_800v_architecture_bev",
+          "generation_id": "aion.hyptec_ht.gen1",
+          "name": "670 Ultra (Gull-Wing Doors, 800V Architecture)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Hyptec HT 670 Ultra (Gull-Wing Doors, 800V Architecture)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:005"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/aion.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d3af7e3b4058191866ae48d9:catalog",
+    "revision_id": "d3af7e3b4058191866ae48d9",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "aion.hyptec_ht",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:33+00:00",
+    "payload": {
+      "brand": {
+        "id": "aion",
+        "name_en": "Aion",
+        "name_th": "ไอออน",
+        "brand_segment": "MASS",
+        "oem_group": "GAC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "gac aion",
+          "ไอออน"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "aion.hyptec_ht",
+        "brand_id": "aion",
+        "name_en": "Hyptec HT",
+        "name_th": "ไฮเทค เอชที",
+        "nameplate": "Hyptec HT",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "hyptec ht",
+          "hyptec"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "aion.hyptec_ht.gen1",
+          "model_id": "aion.hyptec_ht",
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2025-06-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "aion.hyptec_ht.gen1.77_kwh_bev",
+          "generation_id": "aion.hyptec_ht.gen1",
+          "name": "77 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 76.8,
+          "price_thb": 1299000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+          "generation_id": "aion.hyptec_ht.gen1",
+          "name": "620 Premium (Standard Doors)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4935,
+          "width_mm": 1920,
+          "height_mm": 1700,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Hyptec HT 620 Premium (Standard Doors)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:005"
+            ],
+            "eco": [
+              "513e48ad-0ef5-4323-8541-c753596b9451"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "aion.hyptec_ht.gen1.trim.620_luxury_gull_wing_doors_bev",
+          "generation_id": "aion.hyptec_ht.gen1",
+          "name": "620 Luxury (Gull-Wing Doors)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4935,
+          "width_mm": 1920,
+          "height_mm": 1700,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Hyptec HT 620 Luxury (Gull-Wing Doors)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:005"
+            ],
+            "eco": [
+              "da65f191-df51-44bb-95f6-829ea0ebe3a1"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "aion.hyptec_ht.gen1.trim.670_ultra_gull_wing_doors_800v_architecture_bev",
+          "generation_id": "aion.hyptec_ht.gen1",
+          "name": "670 Ultra (Gull-Wing Doors, 800V Architecture)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Hyptec HT 670 Ultra (Gull-Wing Doors, 800V Architecture)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:005"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

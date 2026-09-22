@@ -1,0 +1,693 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "dec42fb7fbb5b2d7cb54d906",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:288",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "ford.everest",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:25+00:00",
+    "before_hash": "3892418d30ffdfcc48e0cd67df26fa2f6fa1854c833d85a879c73f55364ba9d5",
+    "after_hash": "5fee50aa90b47d7a350055b2788134bb2416b213dcd5e64946e5b6394bb0b323",
+    "before": {
+      "id": "everest",
+      "name_en": "Everest",
+      "name_th": "เอเวอเรสต์",
+      "nameplate": "",
+      "body_type": "PPV",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "เอเวอเรสต์"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "U704",
+          "segment": "D",
+          "seats": 7,
+          "launched": "2022-06-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.0L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "RWD",
+              "engine_cc": 1996,
+              "battery_kwh": null,
+              "aliases": [
+                "2.0 Titanium+ 4x2"
+              ],
+              "overrides": {},
+              "price_thb": 1699000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1699000,
+              "price_max_thb": 1699000
+            },
+            {
+              "name": "2.0L ICE 4WD",
+              "powertrain": "ICE",
+              "drivetrain": "4WD",
+              "engine_cc": 1996,
+              "battery_kwh": null,
+              "aliases": [
+                "2.0 Platinum 4x4"
+              ],
+              "overrides": {},
+              "price_thb": 2199000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 2199000,
+              "price_max_thb": 2199000
+            }
+          ],
+          "trims": [
+            {
+              "name": "Trend 2.0L Turbo 6AT 4x2",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:083"
+                ]
+              },
+              "id": "trend_2_0l_turbo_6at_4x2_ice"
+            },
+            {
+              "name": "Sport 2.0L Turbo 6AT 4x2",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:083"
+                ]
+              },
+              "id": "sport_2_0l_turbo_6at_4x2_ice"
+            },
+            {
+              "name": "Titanium+ 2.0L Bi-Turbo 10AT 4x2",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:083"
+                ]
+              },
+              "id": "titanium_plus_2_0l_bi_turbo_10at_4x2_ice"
+            },
+            {
+              "name": "Titanium+ 2.0L Bi-Turbo 10AT 4x4",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:083"
+                ]
+              },
+              "id": "titanium_plus_2_0l_bi_turbo_10at_4x4_ice"
+            },
+            {
+              "name": "Wildtrak 2.0L Bi-Turbo 10AT 4x4",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:083"
+                ]
+              },
+              "id": "wildtrak_2_0l_bi_turbo_10at_4x4_ice"
+            },
+            {
+              "name": "Platinum 3.0L V6 Bi-Turbo Diesel 10AT 4x4",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:083"
+                ]
+              },
+              "id": "platinum_3_0l_v6_bi_turbo_diesel_10at_4x4_ice"
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "ford",
+        "name_en": "Ford",
+        "name_th": "ฟอร์ด",
+        "brand_segment": "MASS",
+        "oem_group": "Ford",
+        "brand_origin": "US",
+        "trim_detail": false,
+        "aliases": [
+          "ฟอร์ด"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "ford.everest",
+        "brand_id": "ford",
+        "name_en": "Everest",
+        "name_th": "เอเวอเรสต์",
+        "nameplate": "Everest",
+        "body_type": "PPV",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "เอเวอเรสต์"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "ford.everest.u704",
+          "model_id": "ford.everest",
+          "code": "U704",
+          "segment": "D",
+          "seats": 7,
+          "launched": "2022-06-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "ford.everest.u704.2_0l_ice",
+          "generation_id": "ford.everest.u704",
+          "name": "2.0L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "RWD",
+          "engine_cc": 1996,
+          "battery_kwh": null,
+          "price_thb": 1699000,
+          "price_min_thb": 1699000,
+          "price_max_thb": 1699000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.0 Titanium+ 4x2"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "ford.everest.u704.2_0l_ice_4wd",
+          "generation_id": "ford.everest.u704",
+          "name": "2.0L ICE 4WD",
+          "powertrain": "ICE",
+          "drivetrain": "4WD",
+          "engine_cc": 1996,
+          "battery_kwh": null,
+          "price_thb": 2199000,
+          "price_min_thb": 2199000,
+          "price_max_thb": 2199000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.0 Platinum 4x4"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "ford.everest.u704.trim.trend_2_0l_turbo_6at_4x2_ice",
+          "generation_id": "ford.everest.u704",
+          "name": "Trend 2.0L Turbo 6AT 4x2",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1996,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 7,
+          "length_mm": 4914,
+          "width_mm": 1923,
+          "height_mm": 1844,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:083"
+            ],
+            "eco": [
+              "0d484197-9253-4702-96d3-fe00036f7631"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "ford.everest.u704.trim.sport_2_0l_turbo_6at_4x2_ice",
+          "generation_id": "ford.everest.u704",
+          "name": "Sport 2.0L Turbo 6AT 4x2",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:083"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "ford.everest.u704.trim.titanium_plus_2_0l_bi_turbo_10at_4x2_ice",
+          "generation_id": "ford.everest.u704",
+          "name": "Titanium+ 2.0L Bi-Turbo 10AT 4x2",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:083"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "ford.everest.u704.trim.titanium_plus_2_0l_bi_turbo_10at_4x4_ice",
+          "generation_id": "ford.everest.u704",
+          "name": "Titanium+ 2.0L Bi-Turbo 10AT 4x4",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:083"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "ford.everest.u704.trim.wildtrak_2_0l_bi_turbo_10at_4x4_ice",
+          "generation_id": "ford.everest.u704",
+          "name": "Wildtrak 2.0L Bi-Turbo 10AT 4x4",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:083"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "ford.everest.u704.trim.platinum_3_0l_v6_bi_turbo_diesel_10at_4x4_ice",
+          "generation_id": "ford.everest.u704",
+          "name": "Platinum 3.0L V6 Bi-Turbo Diesel 10AT 4x4",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:083"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/ford.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "dec42fb7fbb5b2d7cb54d906:catalog",
+    "revision_id": "dec42fb7fbb5b2d7cb54d906",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "ford.everest",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:25+00:00",
+    "payload": {
+      "brand": {
+        "id": "ford",
+        "name_en": "Ford",
+        "name_th": "ฟอร์ด",
+        "brand_segment": "MASS",
+        "oem_group": "Ford",
+        "brand_origin": "US",
+        "trim_detail": false,
+        "aliases": [
+          "ฟอร์ด"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "ford.everest",
+        "brand_id": "ford",
+        "name_en": "Everest",
+        "name_th": "เอเวอเรสต์",
+        "nameplate": "Everest",
+        "body_type": "PPV",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "เอเวอเรสต์"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "ford.everest.u704",
+          "model_id": "ford.everest",
+          "code": "U704",
+          "segment": "D",
+          "seats": 7,
+          "launched": "2022-06-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "ford.everest.u704.2_0l_ice",
+          "generation_id": "ford.everest.u704",
+          "name": "2.0L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "RWD",
+          "engine_cc": 1996,
+          "battery_kwh": null,
+          "price_thb": 1699000,
+          "price_min_thb": 1699000,
+          "price_max_thb": 1699000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.0 Titanium+ 4x2"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "ford.everest.u704.2_0l_ice_4wd",
+          "generation_id": "ford.everest.u704",
+          "name": "2.0L ICE 4WD",
+          "powertrain": "ICE",
+          "drivetrain": "4WD",
+          "engine_cc": 1996,
+          "battery_kwh": null,
+          "price_thb": 2199000,
+          "price_min_thb": 2199000,
+          "price_max_thb": 2199000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "2.0 Platinum 4x4"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "ford.everest.u704.trim.trend_2_0l_turbo_6at_4x2_ice",
+          "generation_id": "ford.everest.u704",
+          "name": "Trend 2.0L Turbo 6AT 4x2",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1996,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 7,
+          "length_mm": 4914,
+          "width_mm": 1923,
+          "height_mm": 1844,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:083"
+            ],
+            "eco": [
+              "0d484197-9253-4702-96d3-fe00036f7631"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "ford.everest.u704.trim.sport_2_0l_turbo_6at_4x2_ice",
+          "generation_id": "ford.everest.u704",
+          "name": "Sport 2.0L Turbo 6AT 4x2",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:083"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "ford.everest.u704.trim.titanium_plus_2_0l_bi_turbo_10at_4x2_ice",
+          "generation_id": "ford.everest.u704",
+          "name": "Titanium+ 2.0L Bi-Turbo 10AT 4x2",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:083"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "ford.everest.u704.trim.titanium_plus_2_0l_bi_turbo_10at_4x4_ice",
+          "generation_id": "ford.everest.u704",
+          "name": "Titanium+ 2.0L Bi-Turbo 10AT 4x4",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:083"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "ford.everest.u704.trim.wildtrak_2_0l_bi_turbo_10at_4x4_ice",
+          "generation_id": "ford.everest.u704",
+          "name": "Wildtrak 2.0L Bi-Turbo 10AT 4x4",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:083"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "ford.everest.u704.trim.platinum_3_0l_v6_bi_turbo_diesel_10at_4x4_ice",
+          "generation_id": "ford.everest.u704",
+          "name": "Platinum 3.0L V6 Bi-Turbo Diesel 10AT 4x4",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:083"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

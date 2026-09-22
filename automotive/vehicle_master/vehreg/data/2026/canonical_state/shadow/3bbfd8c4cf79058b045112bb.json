@@ -1,0 +1,504 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "3bbfd8c4cf79058b045112bb",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:382",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mercedes_benz.mb_e_class",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:34+00:00",
+    "before_hash": "5d842b391fddab21d5569e2e19c80d9d467f06099e09dddbc649a244ff9f6231",
+    "after_hash": "eb65a44e4c5db0840eb01fd54ca33568e39c01a7c5c0eadd6dd9c12ebbba5f81",
+    "before": {
+      "id": "mb_e_class",
+      "name_en": "E-Class",
+      "name_th": "อี-คลาส",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "e class",
+        "e220d",
+        "E 200",
+        "E 220 d",
+        "E 300 e",
+        "E 350 e",
+        "E 300"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "W214",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2024-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.0L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "RWD",
+              "engine_cc": 1993,
+              "aliases": [
+                "E220d AMG Dynamic"
+              ],
+              "overrides": {},
+              "price_thb": 4290000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 4290000,
+              "price_max_thb": 4290000
+            }
+          ],
+          "trims": [
+            {
+              "name": "E 300 e AMG Dynamic (W214 PHEV)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:189"
+                ]
+              },
+              "id": "e_300_e_amg_dynamic_w214_phev_phev"
+            },
+            {
+              "name": "E 350 e Exclusive / AMG Line (W213 PHEV)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:189"
+                ]
+              },
+              "id": "e_350_e_exclusive_amg_line_w213_phev_phev"
+            },
+            {
+              "name": "Mercedes-AMG E 53 Hybrid 4MATIC+",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:189"
+                ]
+              },
+              "id": "mercedes_amg_e_53_hybrid_4matic_plus_phev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "mercedes_benz",
+        "name_en": "Mercedes-Benz",
+        "name_th": "เมอร์เซเดส-เบนซ์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Mercedes-Benz Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "benz",
+          "เบนซ์",
+          "mercedes"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mercedes_benz.mb_e_class",
+        "brand_id": "mercedes_benz",
+        "name_en": "E-Class",
+        "name_th": "อี-คลาส",
+        "nameplate": "E-Class",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "e class",
+          "e220d",
+          "E 200",
+          "E 220 d",
+          "E 300 e",
+          "E 350 e",
+          "E 300"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mercedes_benz.mb_e_class.w214",
+          "model_id": "mercedes_benz.mb_e_class",
+          "code": "W214",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2024-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mercedes_benz.mb_e_class.w214.2_0l_ice",
+          "generation_id": "mercedes_benz.mb_e_class.w214",
+          "name": "2.0L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "RWD",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "price_thb": 4290000,
+          "price_min_thb": 4290000,
+          "price_max_thb": 4290000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "E220d AMG Dynamic"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mercedes_benz.mb_e_class.w214.trim.e_300_e_amg_dynamic_w214_phev_phev",
+          "generation_id": "mercedes_benz.mb_e_class.w214",
+          "name": "E 300 e AMG Dynamic (W214 PHEV)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:189"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.mb_e_class.w214.trim.e_350_e_exclusive_amg_line_w213_phev_phev",
+          "generation_id": "mercedes_benz.mb_e_class.w214",
+          "name": "E 350 e Exclusive / AMG Line (W213 PHEV)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:189"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.mb_e_class.w214.trim.mercedes_amg_e_53_hybrid_4matic_plus_phev",
+          "generation_id": "mercedes_benz.mb_e_class.w214",
+          "name": "Mercedes-AMG E 53 Hybrid 4MATIC+",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:189"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.mb_e_class.w214.trim.e_220_d_amg_line_hev",
+          "generation_id": "mercedes_benz.mb_e_class.w214",
+          "name": "E 220 d AMG Line",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4950,
+          "width_mm": 1880,
+          "height_mm": 1461,
+          "wheelbase_mm": null,
+          "tire_front": "245/45R19",
+          "tire_rear": "275/40R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "b5fa291c-1f61-4d00-99fd-e47a74b38926"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mercedes_benz.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "3bbfd8c4cf79058b045112bb:catalog",
+    "revision_id": "3bbfd8c4cf79058b045112bb",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mercedes_benz.mb_e_class",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:34+00:00",
+    "payload": {
+      "brand": {
+        "id": "mercedes_benz",
+        "name_en": "Mercedes-Benz",
+        "name_th": "เมอร์เซเดส-เบนซ์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Mercedes-Benz Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "benz",
+          "เบนซ์",
+          "mercedes"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mercedes_benz.mb_e_class",
+        "brand_id": "mercedes_benz",
+        "name_en": "E-Class",
+        "name_th": "อี-คลาส",
+        "nameplate": "E-Class",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "e class",
+          "e220d",
+          "E 200",
+          "E 220 d",
+          "E 300 e",
+          "E 350 e",
+          "E 300"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mercedes_benz.mb_e_class.w214",
+          "model_id": "mercedes_benz.mb_e_class",
+          "code": "W214",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2024-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mercedes_benz.mb_e_class.w214.2_0l_ice",
+          "generation_id": "mercedes_benz.mb_e_class.w214",
+          "name": "2.0L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "RWD",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "price_thb": 4290000,
+          "price_min_thb": 4290000,
+          "price_max_thb": 4290000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "E220d AMG Dynamic"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mercedes_benz.mb_e_class.w214.trim.e_300_e_amg_dynamic_w214_phev_phev",
+          "generation_id": "mercedes_benz.mb_e_class.w214",
+          "name": "E 300 e AMG Dynamic (W214 PHEV)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:189"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.mb_e_class.w214.trim.e_350_e_exclusive_amg_line_w213_phev_phev",
+          "generation_id": "mercedes_benz.mb_e_class.w214",
+          "name": "E 350 e Exclusive / AMG Line (W213 PHEV)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:189"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.mb_e_class.w214.trim.mercedes_amg_e_53_hybrid_4matic_plus_phev",
+          "generation_id": "mercedes_benz.mb_e_class.w214",
+          "name": "Mercedes-AMG E 53 Hybrid 4MATIC+",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:189"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.mb_e_class.w214.trim.e_220_d_amg_line_hev",
+          "generation_id": "mercedes_benz.mb_e_class.w214",
+          "name": "E 220 d AMG Line",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4950,
+          "width_mm": 1880,
+          "height_mm": 1461,
+          "wheelbase_mm": null,
+          "tire_front": "245/45R19",
+          "tire_rear": "275/40R19",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "b5fa291c-1f61-4d00-99fd-e47a74b38926"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,494 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d5f4f0ece28fb4ba782e7a0f",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:92",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "honda.hrv",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:07+00:00",
+    "before_hash": "5a3fd290bf3f82fd758f2be5e7108fb348b226bbf86627441ce28ebf4853dfd9",
+    "after_hash": "6924c7bdf05a28363cd338a00c740c1d95f57acdfd272c08f5a3835c5069b2dc",
+    "before": {
+      "id": "hrv",
+      "name_en": "HR-V",
+      "name_th": "เอชอาร์-วี",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "hrv",
+        "hr v"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "RV",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.5L HEV (VOLUME)",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "engine_cc": 1498,
+              "battery_kwh": 0.7,
+              "aliases": [
+                "e:HEV E"
+              ],
+              "overrides": {},
+              "price_thb": 999000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 999000,
+              "price_max_thb": 999000
+            },
+            {
+              "name": "1.5L HEV (UPPER)",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "engine_cc": 1498,
+              "battery_kwh": 0.7,
+              "aliases": [
+                "e:HEV RS"
+              ],
+              "overrides": {},
+              "price_thb": 1149000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1149000,
+              "price_max_thb": 1149000
+            }
+          ],
+          "trims": [
+            {
+              "name": "e:HEV E",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:108"
+                ]
+              },
+              "id": "e_hev_e_hev"
+            },
+            {
+              "name": "e:HEV EL",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:108"
+                ]
+              },
+              "id": "e_hev_el_hev"
+            },
+            {
+              "name": "e:HEV RS",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:108"
+                ]
+              },
+              "id": "e_hev_rs_hev"
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "honda",
+        "name_en": "Honda",
+        "name_th": "ฮอนด้า",
+        "brand_segment": "MASS",
+        "oem_group": "Honda",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "ฮอนด้า",
+          "honda automobile"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "honda.hrv",
+        "brand_id": "honda",
+        "name_en": "HR-V",
+        "name_th": "เอชอาร์-วี",
+        "nameplate": "HR-V",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "hrv",
+          "hr v"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "honda.hrv.rv",
+          "model_id": "honda.hrv",
+          "code": "RV",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "honda.hrv.rv.1_5l_hev_volume",
+          "generation_id": "honda.hrv.rv",
+          "name": "1.5L HEV (VOLUME)",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1498,
+          "battery_kwh": 0.7,
+          "price_thb": 999000,
+          "price_min_thb": 999000,
+          "price_max_thb": 999000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "e:HEV E"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "honda.hrv.rv.1_5l_hev_upper",
+          "generation_id": "honda.hrv.rv",
+          "name": "1.5L HEV (UPPER)",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1498,
+          "battery_kwh": 0.7,
+          "price_thb": 1149000,
+          "price_min_thb": 1149000,
+          "price_max_thb": 1149000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "e:HEV RS"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "honda.hrv.rv.trim.e_hev_e_hev",
+          "generation_id": "honda.hrv.rv",
+          "name": "e:HEV E",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4347,
+          "width_mm": 1790,
+          "height_mm": 1590,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:108"
+            ],
+            "eco": [
+              "352b0c23-db9a-4669-8935-8a35e1dbd318"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "honda.hrv.rv.trim.e_hev_el_hev",
+          "generation_id": "honda.hrv.rv",
+          "name": "e:HEV EL",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:108"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "honda.hrv.rv.trim.e_hev_rs_hev",
+          "generation_id": "honda.hrv.rv",
+          "name": "e:HEV RS",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:108"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/honda.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d5f4f0ece28fb4ba782e7a0f:catalog",
+    "revision_id": "d5f4f0ece28fb4ba782e7a0f",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "honda.hrv",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:07+00:00",
+    "payload": {
+      "brand": {
+        "id": "honda",
+        "name_en": "Honda",
+        "name_th": "ฮอนด้า",
+        "brand_segment": "MASS",
+        "oem_group": "Honda",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "ฮอนด้า",
+          "honda automobile"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "honda.hrv",
+        "brand_id": "honda",
+        "name_en": "HR-V",
+        "name_th": "เอชอาร์-วี",
+        "nameplate": "HR-V",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "hrv",
+          "hr v"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "honda.hrv.rv",
+          "model_id": "honda.hrv",
+          "code": "RV",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "honda.hrv.rv.1_5l_hev_volume",
+          "generation_id": "honda.hrv.rv",
+          "name": "1.5L HEV (VOLUME)",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1498,
+          "battery_kwh": 0.7,
+          "price_thb": 999000,
+          "price_min_thb": 999000,
+          "price_max_thb": 999000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "e:HEV E"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "honda.hrv.rv.1_5l_hev_upper",
+          "generation_id": "honda.hrv.rv",
+          "name": "1.5L HEV (UPPER)",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1498,
+          "battery_kwh": 0.7,
+          "price_thb": 1149000,
+          "price_min_thb": 1149000,
+          "price_max_thb": 1149000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "e:HEV RS"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "honda.hrv.rv.trim.e_hev_e_hev",
+          "generation_id": "honda.hrv.rv",
+          "name": "e:HEV E",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1498,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4347,
+          "width_mm": 1790,
+          "height_mm": 1590,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:108"
+            ],
+            "eco": [
+              "352b0c23-db9a-4669-8935-8a35e1dbd318"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "honda.hrv.rv.trim.e_hev_el_hev",
+          "generation_id": "honda.hrv.rv",
+          "name": "e:HEV EL",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:108"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "honda.hrv.rv.trim.e_hev_rs_hev",
+          "generation_id": "honda.hrv.rv",
+          "name": "e:HEV RS",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:108"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

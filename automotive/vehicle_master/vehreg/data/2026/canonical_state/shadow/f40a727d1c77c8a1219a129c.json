@@ -1,0 +1,281 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f40a727d1c77c8a1219a129c",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:136",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "honda.en2",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:11+00:00",
+    "before_hash": "baca6ad147097c0181a54dcd1817eaa962ee85fe7213e6ebec8a22ab5eecc402",
+    "after_hash": "55459eef7ed134ae8ac769cdea1f643243a243cc9cb3e9042c882956ed8a0d80",
+    "before": {
+      "id": "en2",
+      "name_en": "e:N2",
+      "name_th": "",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "e:n2",
+        "en2",
+        "e n2"
+      ],
+      "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
+      "generations": [
+        {
+          "code": "EN2",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": "2026-03-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "ยังไม่แยกรุ่นย่อย",
+              "powertrain": "UNKNOWN",
+              "drivetrain": "",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "aliases": [],
+              "overrides": {},
+              "price_thb": 1429000,
+              "import_type": "",
+              "origin_country": "",
+              "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+              "price_min_thb": 1429000,
+              "price_max_thb": 1429000
+            }
+          ],
+          "trims": []
+        }
+      ],
+      "incomplete": true
+    },
+    "after": {
+      "brand": {
+        "id": "honda",
+        "name_en": "Honda",
+        "name_th": "ฮอนด้า",
+        "brand_segment": "MASS",
+        "oem_group": "Honda",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "ฮอนด้า",
+          "honda automobile"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "honda.en2",
+        "brand_id": "honda",
+        "name_en": "e:N2",
+        "name_th": "",
+        "nameplate": "e:N2",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "e:n2",
+          "en2",
+          "e n2"
+        ],
+        "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "honda.en2.en2",
+          "model_id": "honda.en2",
+          "code": "EN2",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": "2026-03-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "honda.en2.en2.ยงไมแยกรนยอย",
+          "generation_id": "honda.en2.en2",
+          "name": "ยังไม่แยกรุ่นย่อย",
+          "powertrain": "UNKNOWN",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": 1429000,
+          "price_min_thb": 1429000,
+          "price_max_thb": 1429000,
+          "import_type": "UNKNOWN",
+          "origin_country": "",
+          "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "honda.en2.en2.trim.e_n2_bev",
+          "generation_id": "honda.en2.en2",
+          "name": "e:N2",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4788,
+          "width_mm": 1838,
+          "height_mm": 1570,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "9f3c4628-6107-49b7-a84a-7779c11b28a1"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/honda.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f40a727d1c77c8a1219a129c:catalog",
+    "revision_id": "f40a727d1c77c8a1219a129c",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "honda.en2",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:11+00:00",
+    "payload": {
+      "brand": {
+        "id": "honda",
+        "name_en": "Honda",
+        "name_th": "ฮอนด้า",
+        "brand_segment": "MASS",
+        "oem_group": "Honda",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "ฮอนด้า",
+          "honda automobile"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "honda.en2",
+        "brand_id": "honda",
+        "name_en": "e:N2",
+        "name_th": "",
+        "nameplate": "e:N2",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "e:n2",
+          "en2",
+          "e n2"
+        ],
+        "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "honda.en2.en2",
+          "model_id": "honda.en2",
+          "code": "EN2",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": "2026-03-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "honda.en2.en2.ยงไมแยกรนยอย",
+          "generation_id": "honda.en2.en2",
+          "name": "ยังไม่แยกรุ่นย่อย",
+          "powertrain": "UNKNOWN",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": 1429000,
+          "price_min_thb": 1429000,
+          "price_max_thb": 1429000,
+          "import_type": "UNKNOWN",
+          "origin_country": "",
+          "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "honda.en2.en2.trim.e_n2_bev",
+          "generation_id": "honda.en2.en2",
+          "name": "e:N2",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4788,
+          "width_mm": 1838,
+          "height_mm": 1570,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "9f3c4628-6107-49b7-a84a-7779c11b28a1"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

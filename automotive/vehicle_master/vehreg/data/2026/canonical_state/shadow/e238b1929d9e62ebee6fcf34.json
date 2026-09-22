@@ -1,0 +1,523 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e238b1929d9e62ebee6fcf34",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:228",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "suzuki.ciaz",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:59+00:00",
+    "before_hash": "833fc13d61406e26d79fb3a8ef5520d2f3258f162d52e033d0546d31edc78787",
+    "after_hash": "d5f64e103ed4378de9666f56d40c4acde4cad6f7416ec6b5758b9cfc6322d79b",
+    "before": {
+      "id": "ciaz",
+      "name_en": "Ciaz",
+      "name_th": "เซียส",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [],
+      "notes": "",
+      "generations": [
+        {
+          "code": "YL1",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2016-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.2L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "engine_cc": 1197,
+              "battery_kwh": null,
+              "aliases": [
+                "1.2 GLX"
+              ],
+              "overrides": {},
+              "price_thb": 675000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 675000,
+              "price_max_thb": 675000
+            }
+          ],
+          "trims": [
+            {
+              "name": "GL 5MT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:260"
+                ]
+              },
+              "id": "gl_5mt_ice"
+            },
+            {
+              "name": "GL CVT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:260"
+                ]
+              },
+              "id": "gl_cvt_ice"
+            },
+            {
+              "name": "GLX CVT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:260"
+                ],
+                "eco": [
+                  "279bacc809764ac880b8195ecb6900f5"
+                ]
+              },
+              "id": "glx_cvt_ice",
+              "seats": 5,
+              "length_mm": 4490,
+              "width_mm": 1730,
+              "height_mm": 1475,
+              "engine_cc": 1242,
+              "transmission": "CVT"
+            },
+            {
+              "name": "RS CVT",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:260"
+                ],
+                "eco": [
+                  "5173abd0bb284839a9c8cf2b4f3346df"
+                ]
+              },
+              "id": "rs_cvt_ice",
+              "seats": 5,
+              "length_mm": 4495,
+              "width_mm": 1730,
+              "height_mm": 1475,
+              "engine_cc": 1242,
+              "transmission": "CVT"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "suzuki",
+        "name_en": "Suzuki",
+        "name_th": "ซูซูกิ",
+        "brand_segment": "BUDGET",
+        "oem_group": "Suzuki",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "ซูซูกิ"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "suzuki.ciaz",
+        "brand_id": "suzuki",
+        "name_en": "Ciaz",
+        "name_th": "เซียส",
+        "nameplate": "Ciaz",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "suzuki.ciaz.yl1",
+          "model_id": "suzuki.ciaz",
+          "code": "YL1",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2016-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "suzuki.ciaz.yl1.1_2l_ice",
+          "generation_id": "suzuki.ciaz.yl1",
+          "name": "1.2L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1197,
+          "battery_kwh": null,
+          "price_thb": 675000,
+          "price_min_thb": 675000,
+          "price_max_thb": 675000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.2 GLX"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "suzuki.ciaz.yl1.trim.gl_5mt_ice",
+          "generation_id": "suzuki.ciaz.yl1",
+          "name": "GL 5MT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:260"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "suzuki.ciaz.yl1.trim.gl_cvt_ice",
+          "generation_id": "suzuki.ciaz.yl1",
+          "name": "GL CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1242,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4490,
+          "width_mm": 1730,
+          "height_mm": 1475,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:260"
+            ],
+            "eco": [
+              "cef792777f20436086a081dff0145f91"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "suzuki.ciaz.yl1.trim.glx_cvt_ice",
+          "generation_id": "suzuki.ciaz.yl1",
+          "name": "GLX CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1242,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4490,
+          "width_mm": 1730,
+          "height_mm": 1475,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:260"
+            ],
+            "eco": [
+              "279bacc809764ac880b8195ecb6900f5"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "suzuki.ciaz.yl1.trim.rs_cvt_ice",
+          "generation_id": "suzuki.ciaz.yl1",
+          "name": "RS CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1242,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4495,
+          "width_mm": 1730,
+          "height_mm": 1475,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:260"
+            ],
+            "eco": [
+              "5173abd0bb284839a9c8cf2b4f3346df"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/suzuki.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e238b1929d9e62ebee6fcf34:catalog",
+    "revision_id": "e238b1929d9e62ebee6fcf34",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "suzuki.ciaz",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:59+00:00",
+    "payload": {
+      "brand": {
+        "id": "suzuki",
+        "name_en": "Suzuki",
+        "name_th": "ซูซูกิ",
+        "brand_segment": "BUDGET",
+        "oem_group": "Suzuki",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "ซูซูกิ"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "suzuki.ciaz",
+        "brand_id": "suzuki",
+        "name_en": "Ciaz",
+        "name_th": "เซียส",
+        "nameplate": "Ciaz",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "suzuki.ciaz.yl1",
+          "model_id": "suzuki.ciaz",
+          "code": "YL1",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2016-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "suzuki.ciaz.yl1.1_2l_ice",
+          "generation_id": "suzuki.ciaz.yl1",
+          "name": "1.2L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1197,
+          "battery_kwh": null,
+          "price_thb": 675000,
+          "price_min_thb": 675000,
+          "price_max_thb": 675000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.2 GLX"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "suzuki.ciaz.yl1.trim.gl_5mt_ice",
+          "generation_id": "suzuki.ciaz.yl1",
+          "name": "GL 5MT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:260"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "suzuki.ciaz.yl1.trim.gl_cvt_ice",
+          "generation_id": "suzuki.ciaz.yl1",
+          "name": "GL CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1242,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4490,
+          "width_mm": 1730,
+          "height_mm": 1475,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:260"
+            ],
+            "eco": [
+              "cef792777f20436086a081dff0145f91"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "suzuki.ciaz.yl1.trim.glx_cvt_ice",
+          "generation_id": "suzuki.ciaz.yl1",
+          "name": "GLX CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1242,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4490,
+          "width_mm": 1730,
+          "height_mm": 1475,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:260"
+            ],
+            "eco": [
+              "279bacc809764ac880b8195ecb6900f5"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "suzuki.ciaz.yl1.trim.rs_cvt_ice",
+          "generation_id": "suzuki.ciaz.yl1",
+          "name": "RS CVT",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1242,
+          "battery_kwh": null,
+          "transmission": "CVT",
+          "seats": 5,
+          "length_mm": 4495,
+          "width_mm": 1730,
+          "height_mm": 1475,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:260"
+            ],
+            "eco": [
+              "5173abd0bb284839a9c8cf2b4f3346df"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

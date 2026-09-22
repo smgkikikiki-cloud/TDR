@@ -1,0 +1,266 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "10f8fd3afd7d1e0f8566d7d6",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:370",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "bentley.flying_spur",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:33+00:00",
+    "before_hash": "d45eebbd2774ac85ba37c46a8c94d302c69d9365945ce97e6c6fe6b7fa1acfd2",
+    "after_hash": "cab89859fc289acba09c9985dbbc17058d7153325fcdfa2d4729d9433d58569a",
+    "before": {
+      "id": "flying_spur",
+      "name_en": "Flying Spur",
+      "name_th": "Flying Spur",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "NICHE",
+      "aliases": [
+        "Flying Spur"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "PHEV",
+              "drivetrain": "AWD",
+              "engine_cc": 3996,
+              "battery_kwh": 18.0,
+              "price_thb": 25000000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "UNKNOWN",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": []
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "bentley",
+        "name_en": "Bentley",
+        "name_th": "เบนท์ลีย์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Volkswagen Group",
+        "brand_origin": "GB",
+        "trim_detail": false,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "bentley.flying_spur",
+        "brand_id": "bentley",
+        "name_en": "Flying Spur",
+        "name_th": "Flying Spur",
+        "nameplate": "Flying Spur",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "Flying Spur"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "bentley.flying_spur.gen1",
+          "model_id": "bentley.flying_spur",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "bentley.flying_spur.gen1.spec",
+          "generation_id": "bentley.flying_spur.gen1",
+          "name": "spec",
+          "powertrain": "PHEV",
+          "drivetrain": "AWD",
+          "engine_cc": 3996,
+          "battery_kwh": 18.0,
+          "price_thb": 25000000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "UNKNOWN",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "bentley.flying_spur.gen1.trim.hybrid_phev",
+          "generation_id": "bentley.flying_spur.gen1",
+          "name": "HYBRID",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2894,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5316,
+          "width_mm": 1978,
+          "height_mm": 1483,
+          "wheelbase_mm": null,
+          "tire_front": "265/40ZR21",
+          "tire_rear": "305/35ZR21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "3d21a9a4-5daa-486a-b054-76f7fa815405"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/bentley.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "10f8fd3afd7d1e0f8566d7d6:catalog",
+    "revision_id": "10f8fd3afd7d1e0f8566d7d6",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "bentley.flying_spur",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:33+00:00",
+    "payload": {
+      "brand": {
+        "id": "bentley",
+        "name_en": "Bentley",
+        "name_th": "เบนท์ลีย์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Volkswagen Group",
+        "brand_origin": "GB",
+        "trim_detail": false,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "bentley.flying_spur",
+        "brand_id": "bentley",
+        "name_en": "Flying Spur",
+        "name_th": "Flying Spur",
+        "nameplate": "Flying Spur",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "Flying Spur"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "bentley.flying_spur.gen1",
+          "model_id": "bentley.flying_spur",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "bentley.flying_spur.gen1.spec",
+          "generation_id": "bentley.flying_spur.gen1",
+          "name": "spec",
+          "powertrain": "PHEV",
+          "drivetrain": "AWD",
+          "engine_cc": 3996,
+          "battery_kwh": 18.0,
+          "price_thb": 25000000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "UNKNOWN",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "bentley.flying_spur.gen1.trim.hybrid_phev",
+          "generation_id": "bentley.flying_spur.gen1",
+          "name": "HYBRID",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2894,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5316,
+          "width_mm": 1978,
+          "height_mm": 1483,
+          "wheelbase_mm": null,
+          "tire_front": "265/40ZR21",
+          "tire_rear": "305/35ZR21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "3d21a9a4-5daa-486a-b054-76f7fa815405"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

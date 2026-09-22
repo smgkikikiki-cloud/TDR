@@ -75,12 +75,19 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:268"
+                ],
+                "eco": [
+                  "9c121f88-94c7-44ce-84c3-4294efa6591f"
                 ]
               },
               "aliases": [
                 "Model 3 Rear-Wheel Drive (RWD, 60 kWh LFP)"
               ],
-              "id": "rear_wheel_drive_rwd_60_kwh_lfp_bev"
+              "id": "rear_wheel_drive_rwd_60_kwh_lfp_bev",
+              "seats": 5,
+              "length_mm": 4720,
+              "width_mm": 1850,
+              "height_mm": 1441
             },
             {
               "name": "Long Range All-Wheel Drive (AWD, 78.1 kWh)",
@@ -101,12 +108,21 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:268"
+                ],
+                "eco": [
+                  "d18e0bd7-43e7-4dc5-bc5c-4879b9400665"
                 ]
               },
               "aliases": [
                 "Model 3 Performance All-Wheel Drive (AWD, 460 hp)"
               ],
-              "id": "performance_all_wheel_drive_awd_460_hp_bev"
+              "id": "performance_all_wheel_drive_awd_460_hp_bev",
+              "seats": 5,
+              "length_mm": 4724,
+              "width_mm": 1850,
+              "height_mm": 1431,
+              "tire_front": "235/35R20",
+              "tire_rear": "275/30R20"
             }
           ]
         }

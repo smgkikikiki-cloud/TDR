@@ -192,9 +192,16 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:137"
+                ],
+                "eco": [
+                  "3ce6ae0c-6264-42cd-9709-2261216eac9d"
                 ]
               },
-              "id": "earth_long_range_rwd_7_seater_bev"
+              "id": "earth_long_range_rwd_7_seater_bev",
+              "seats": 6,
+              "length_mm": 5010,
+              "width_mm": 1980,
+              "height_mm": 1755
             },
             {
               "name": "GT-Line AWD (Dual Motor, 6-Seater Swivel / Relaxation)",
@@ -202,9 +209,16 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:137"
+                ],
+                "eco": [
+                  "fd8bdbe1-26f4-4d4a-a1e1-eaa1d8297d69"
                 ]
               },
-              "id": "gt_line_awd_dual_motor_6_seater_swivel_relaxation_bev"
+              "id": "gt_line_awd_dual_6_seater_swivel_relaxation_bev",
+              "seats": 6,
+              "length_mm": 5015,
+              "width_mm": 1980,
+              "height_mm": 1780
             }
           ]
         }
@@ -252,9 +266,16 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:135"
+                ],
+                "eco": [
+                  "437ea7c9-9ddc-4ece-bce3-5ccd07cd071a"
                 ]
               },
-              "id": "light_64_2_kwh_bev"
+              "id": "light_64_2_kwh_bev",
+              "seats": 5,
+              "length_mm": 4615,
+              "width_mm": 1875,
+              "height_mm": 1715
             },
             {
               "name": "Air (64.2 kWh)",
@@ -262,9 +283,16 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:135"
+                ],
+                "eco": [
+                  "cbd19043-a88a-4fa8-80e8-474d482361f3"
                 ]
               },
-              "id": "air_64_2_kwh_bev"
+              "id": "air_64_2_kwh_bev",
+              "seats": 5,
+              "length_mm": 4615,
+              "width_mm": 1875,
+              "height_mm": 1715
             },
             {
               "name": "Earth Long Range (88.1 kWh FWD)",
@@ -272,9 +300,16 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:135"
+                ],
+                "eco": [
+                  "3634b9ca-fbe8-4342-9b06-5f6af4ced43e"
                 ]
               },
-              "id": "earth_long_range_88_1_kwh_fwd_bev"
+              "id": "earth_long_range_88_1_kwh_fwd_bev",
+              "seats": 5,
+              "length_mm": 4615,
+              "width_mm": 1875,
+              "height_mm": 1715
             },
             {
               "name": "Earth Exclusive AWD (88.1 kWh Dual Motor)",
@@ -282,9 +317,29 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:135"
+                ],
+                "eco": [
+                  "75f4f9b1-1902-4b9e-876e-7bea996625ba"
                 ]
               },
-              "id": "earth_exclusive_awd_88_1_kwh_dual_motor_bev"
+              "id": "earth_exclusive_awd_88_1_kwh_dual_bev",
+              "seats": 5,
+              "length_mm": 4615,
+              "width_mm": 1875,
+              "height_mm": 1715
+            },
+            {
+              "name": "GT-Line AWD",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4615,
+              "width_mm": 1875,
+              "height_mm": 1715,
+              "source_refs": {
+                "eco": [
+                  "a5344e50-3b2d-4be3-bae2-2f1771c98ef9"
+                ]
+              }
             }
           ]
         }
@@ -345,6 +400,21 @@
                 ]
               },
               "id": "smartstream_2_2_crdi_diesel_8dct_awd_ice"
+            },
+            {
+              "name": "Premium HEV",
+              "powertrain": "HEV",
+              "seats": 7,
+              "length_mm": 4810,
+              "width_mm": 1900,
+              "height_mm": 1700,
+              "engine_cc": 1598,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "9dd0283e-3bfa-444f-8a0d-80a4c1c967af"
+                ]
+              }
             }
           ]
         }

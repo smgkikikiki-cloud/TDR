@@ -1,0 +1,290 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "4170ac8b418575ba1b76fb5e",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:284",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "bentley.bentayga",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:25+00:00",
+    "before_hash": "af3291399cd80da6c2f3535dd8da44de1dfa53e8206cb500745f54aebe78b941",
+    "after_hash": "674a56a0d90000ebc46c632032809d9a49dd141ed3c12c68c405992cc2a3f5b5",
+    "before": {
+      "id": "bentayga",
+      "name_en": "Bentayga",
+      "name_th": "Bentayga",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "NICHE",
+      "aliases": [
+        "Bentayga"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "PHEV",
+              "drivetrain": "AWD",
+              "engine_cc": 3996,
+              "battery_kwh": 18.0,
+              "price_thb": 25000000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "UNKNOWN",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Hybrid / Azure Hybrid",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:025"
+                ]
+              },
+              "aliases": [
+                "Bentayga Hybrid / Azure Hybrid"
+              ],
+              "id": "hybrid_azure_hybrid_phev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "bentley",
+        "name_en": "Bentley",
+        "name_th": "เบนท์ลีย์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Volkswagen Group",
+        "brand_origin": "GB",
+        "trim_detail": false,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "bentley.bentayga",
+        "brand_id": "bentley",
+        "name_en": "Bentayga",
+        "name_th": "Bentayga",
+        "nameplate": "Bentayga",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "Bentayga"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "bentley.bentayga.gen1",
+          "model_id": "bentley.bentayga",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "bentley.bentayga.gen1.spec",
+          "generation_id": "bentley.bentayga.gen1",
+          "name": "spec",
+          "powertrain": "PHEV",
+          "drivetrain": "AWD",
+          "engine_cc": 3996,
+          "battery_kwh": 18.0,
+          "price_thb": 25000000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "UNKNOWN",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "bentley.bentayga.gen1.trim.hybrid_azure_hybrid_phev",
+          "generation_id": "bentley.bentayga.gen1",
+          "name": "Hybrid / Azure Hybrid",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2995,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5125,
+          "width_mm": 2010,
+          "height_mm": 1770,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Bentayga Hybrid / Azure Hybrid"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:025"
+            ],
+            "eco": [
+              "f79c33b5-1c59-430d-a67a-b29004f760bc"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/bentley.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "4170ac8b418575ba1b76fb5e:catalog",
+    "revision_id": "4170ac8b418575ba1b76fb5e",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "bentley.bentayga",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:25+00:00",
+    "payload": {
+      "brand": {
+        "id": "bentley",
+        "name_en": "Bentley",
+        "name_th": "เบนท์ลีย์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Volkswagen Group",
+        "brand_origin": "GB",
+        "trim_detail": false,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "bentley.bentayga",
+        "brand_id": "bentley",
+        "name_en": "Bentayga",
+        "name_th": "Bentayga",
+        "nameplate": "Bentayga",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "Bentayga"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "bentley.bentayga.gen1",
+          "model_id": "bentley.bentayga",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "bentley.bentayga.gen1.spec",
+          "generation_id": "bentley.bentayga.gen1",
+          "name": "spec",
+          "powertrain": "PHEV",
+          "drivetrain": "AWD",
+          "engine_cc": 3996,
+          "battery_kwh": 18.0,
+          "price_thb": 25000000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "UNKNOWN",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "bentley.bentayga.gen1.trim.hybrid_azure_hybrid_phev",
+          "generation_id": "bentley.bentayga.gen1",
+          "name": "Hybrid / Azure Hybrid",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2995,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 5125,
+          "width_mm": 2010,
+          "height_mm": 1770,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Bentayga Hybrid / Azure Hybrid"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:025"
+            ],
+            "eco": [
+              "f79c33b5-1c59-430d-a67a-b29004f760bc"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

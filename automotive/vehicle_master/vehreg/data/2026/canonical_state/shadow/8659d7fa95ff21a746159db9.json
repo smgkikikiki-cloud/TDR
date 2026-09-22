@@ -1,0 +1,460 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "8659d7fa95ff21a746159db9",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-002-4d2a8462d6cd:139",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "bmw.bmw_i4",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:50+00:00",
+    "before_hash": "e5bfb8976eaf15e52bc650fda1b321e6bdcacc37aaf73d13139f41203be1b5cc",
+    "after_hash": "810031c42d961483d3cbab10f4b7b9118d6651533abc6ced4a814f0a61a83a6a",
+    "before": {
+      "id": "bmw_i4",
+      "name_en": "i4",
+      "name_th": "ไอ4",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "i 4",
+        "i4 eDrive40",
+        "i4 M50"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "G26",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2022-03-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "84 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "RWD",
+              "engine_cc": null,
+              "battery_kwh": 83.9,
+              "aliases": [
+                "eDrive40 M Sport"
+              ],
+              "overrides": {},
+              "price_thb": 3999000,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "seed-unverified",
+              "price_min_thb": 3999000,
+              "price_max_thb": 3999000
+            }
+          ],
+          "trims": [
+            {
+              "name": "eDrive35 M Sport",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:032"
+                ]
+              },
+              "aliases": [
+                "i4 eDrive35 M Sport"
+              ],
+              "id": "edrive35_m_sport_bev"
+            },
+            {
+              "name": "eDrive40 M Sport",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:032"
+                ]
+              },
+              "aliases": [
+                "i4 eDrive40 M Sport"
+              ],
+              "id": "edrive40_m_sport_bev"
+            },
+            {
+              "name": "M50",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:032"
+                ]
+              },
+              "aliases": [
+                "i4 M50"
+              ],
+              "id": "m50_bev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "bmw",
+        "name_en": "BMW",
+        "name_th": "บีเอ็มดับเบิลยู",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "BMW Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "บีเอ็มดับเบิลยู",
+          "bmw thailand"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "bmw.bmw_i4",
+        "brand_id": "bmw",
+        "name_en": "i4",
+        "name_th": "ไอ4",
+        "nameplate": "i4",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "i 4",
+          "i4 eDrive40",
+          "i4 M50"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "bmw.bmw_i4.g26",
+          "model_id": "bmw.bmw_i4",
+          "code": "G26",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2022-03-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "bmw.bmw_i4.g26.84_kwh_bev",
+          "generation_id": "bmw.bmw_i4.g26",
+          "name": "84 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 83.9,
+          "price_thb": 3999000,
+          "price_min_thb": 3999000,
+          "price_max_thb": 3999000,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "eDrive40 M Sport"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+          "generation_id": "bmw.bmw_i4.g26",
+          "name": "eDrive35 M Sport",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4783,
+          "width_mm": 1852,
+          "height_mm": 1448,
+          "wheelbase_mm": null,
+          "tire_front": "245/45R18",
+          "tire_rear": "255/45R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "i4 eDrive35 M Sport"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:032"
+            ],
+            "eco": [
+              "e18d1a26-a0f4-4a1a-9cc9-ab4d74b7beba"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+          "generation_id": "bmw.bmw_i4.g26",
+          "name": "eDrive40 M Sport",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "i4 eDrive40 M Sport"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:032"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_i4.g26.trim.m50_bev",
+          "generation_id": "bmw.bmw_i4.g26",
+          "name": "M50",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "i4 M50"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:032"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/bmw.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "8659d7fa95ff21a746159db9:catalog",
+    "revision_id": "8659d7fa95ff21a746159db9",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "bmw.bmw_i4",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:50+00:00",
+    "payload": {
+      "brand": {
+        "id": "bmw",
+        "name_en": "BMW",
+        "name_th": "บีเอ็มดับเบิลยู",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "BMW Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "บีเอ็มดับเบิลยู",
+          "bmw thailand"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "bmw.bmw_i4",
+        "brand_id": "bmw",
+        "name_en": "i4",
+        "name_th": "ไอ4",
+        "nameplate": "i4",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "i 4",
+          "i4 eDrive40",
+          "i4 M50"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "bmw.bmw_i4.g26",
+          "model_id": "bmw.bmw_i4",
+          "code": "G26",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2022-03-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "bmw.bmw_i4.g26.84_kwh_bev",
+          "generation_id": "bmw.bmw_i4.g26",
+          "name": "84 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 83.9,
+          "price_thb": 3999000,
+          "price_min_thb": 3999000,
+          "price_max_thb": 3999000,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "eDrive40 M Sport"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+          "generation_id": "bmw.bmw_i4.g26",
+          "name": "eDrive35 M Sport",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4783,
+          "width_mm": 1852,
+          "height_mm": 1448,
+          "wheelbase_mm": null,
+          "tire_front": "245/45R18",
+          "tire_rear": "255/45R18",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "i4 eDrive35 M Sport"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:032"
+            ],
+            "eco": [
+              "e18d1a26-a0f4-4a1a-9cc9-ab4d74b7beba"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+          "generation_id": "bmw.bmw_i4.g26",
+          "name": "eDrive40 M Sport",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "i4 eDrive40 M Sport"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:032"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_i4.g26.trim.m50_bev",
+          "generation_id": "bmw.bmw_i4.g26",
+          "name": "M50",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "i4 M50"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:032"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,644 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "777ce754dc7555b4849e7a1d",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:15",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "porsche.cayenne",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:00+00:00",
+    "before_hash": "ff77a188e96aedfbc5f1948cca479a6c9cc456f3e392d2b96940dcb2fad19db6",
+    "after_hash": "20e7694e43fd1412f6262b04043973f33757bedd736587b9e3e7dd9e58d68686",
+    "before": {
+      "id": "cayenne",
+      "name_en": "Cayenne",
+      "name_th": "คาเยน",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "NICHE",
+      "aliases": [],
+      "notes": "",
+      "generations": [
+        {
+          "code": "E3",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2018-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "3.0L PHEV AWD",
+              "powertrain": "PHEV",
+              "drivetrain": "AWD",
+              "engine_cc": 2995,
+              "battery_kwh": 25.9,
+              "aliases": [
+                "Cayenne E-Hybrid"
+              ],
+              "overrides": {},
+              "price_thb": 9500000,
+              "import_type": "CBU",
+              "origin_country": "SK",
+              "price_note": "seed-unverified",
+              "price_min_thb": 9500000,
+              "price_max_thb": 9500000
+            }
+          ],
+          "trims": [
+            {
+              "name": "E-Hybrid (PHEV, 470 hp)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:245"
+                ]
+              },
+              "aliases": [
+                "Cayenne E-Hybrid (PHEV, 470 hp)"
+              ],
+              "id": "e_hybrid_phev_470_hp_phev"
+            },
+            {
+              "name": "Turbo E-Hybrid (PHEV, 739 hp)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:245"
+                ]
+              },
+              "aliases": [
+                "Cayenne Turbo E-Hybrid (PHEV, 739 hp)"
+              ],
+              "id": "turbo_e_hybrid_phev_739_hp_phev"
+            },
+            {
+              "name": "Coupe (Coupe Body Style in Base, E-Hybrid, S, GTS, Turbo)",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:245"
+                ]
+              },
+              "aliases": [
+                "Cayenne Coupe (Coupe Body Style in Base, E-Hybrid, S, GTS, Turbo)"
+              ],
+              "id": "coupe_coupe_body_style_in_base_e_hybrid_s_gts_turbo_phev"
+            },
+            {
+              "name": "S Coupe Electric",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4991,
+              "width_mm": 1980,
+              "height_mm": 1650,
+              "tire_front": "275/45R21",
+              "tire_rear": "315/40R21",
+              "source_refs": {
+                "eco": [
+                  "86ebf6cd-9d1b-4905-abfe-7916b8ef391c"
+                ]
+              }
+            },
+            {
+              "name": "S Electric",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4991,
+              "width_mm": 1980,
+              "height_mm": 1674,
+              "tire_front": "285/40R22",
+              "tire_rear": "325/35R22",
+              "source_refs": {
+                "eco": [
+                  "819cd062-4578-4f0d-8a80-fc40253d69a1"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "porsche",
+        "name_en": "Porsche",
+        "name_th": "ปอร์เช่",
+        "brand_segment": "PERFORMANCE",
+        "oem_group": "Volkswagen Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "ปอร์เช่"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "porsche.cayenne",
+        "brand_id": "porsche",
+        "name_en": "Cayenne",
+        "name_th": "คาเยน",
+        "nameplate": "Cayenne",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "porsche.cayenne.e3",
+          "model_id": "porsche.cayenne",
+          "code": "E3",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2018-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "porsche.cayenne.e3.3_0l_phev_awd",
+          "generation_id": "porsche.cayenne.e3",
+          "name": "3.0L PHEV AWD",
+          "powertrain": "PHEV",
+          "drivetrain": "AWD",
+          "engine_cc": 2995,
+          "battery_kwh": 25.9,
+          "price_thb": 9500000,
+          "price_min_thb": 9500000,
+          "price_max_thb": 9500000,
+          "import_type": "CBU",
+          "origin_country": "SK",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Cayenne E-Hybrid"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "porsche.cayenne.e3.trim.e_hybrid_phev_470_hp_phev",
+          "generation_id": "porsche.cayenne.e3",
+          "name": "E-Hybrid (PHEV, 470 hp)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Cayenne E-Hybrid (PHEV, 470 hp)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:245"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.cayenne.e3.trim.turbo_e_hybrid_phev_739_hp_phev",
+          "generation_id": "porsche.cayenne.e3",
+          "name": "Turbo E-Hybrid (PHEV, 739 hp)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Cayenne Turbo E-Hybrid (PHEV, 739 hp)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:245"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.cayenne.e3.trim.coupe_coupe_body_style_in_base_e_hybrid_s_gts_turbo_phev",
+          "generation_id": "porsche.cayenne.e3",
+          "name": "Coupe (Coupe Body Style in Base, E-Hybrid, S, GTS, Turbo)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Cayenne Coupe (Coupe Body Style in Base, E-Hybrid, S, GTS, Turbo)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:245"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.cayenne.e3.trim.s_coupe_electric_bev",
+          "generation_id": "porsche.cayenne.e3",
+          "name": "S Coupe Electric",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4991,
+          "width_mm": 1980,
+          "height_mm": 1650,
+          "wheelbase_mm": null,
+          "tire_front": "275/45R21",
+          "tire_rear": "315/40R21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "86ebf6cd-9d1b-4905-abfe-7916b8ef391c"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.cayenne.e3.trim.s_electric_bev",
+          "generation_id": "porsche.cayenne.e3",
+          "name": "S Electric",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4991,
+          "width_mm": 1980,
+          "height_mm": 1674,
+          "wheelbase_mm": null,
+          "tire_front": "285/40R22",
+          "tire_rear": "325/35R22",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "819cd062-4578-4f0d-8a80-fc40253d69a1"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.cayenne.e3.trim.electric_bev",
+          "generation_id": "porsche.cayenne.e3",
+          "name": "Electric",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4985,
+          "width_mm": 1980,
+          "height_mm": 1674,
+          "wheelbase_mm": null,
+          "tire_front": "285/40R22",
+          "tire_rear": "325/35R22",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "0eca67ad-aea5-4d60-bf86-817b708d0cb5"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/porsche.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "777ce754dc7555b4849e7a1d:catalog",
+    "revision_id": "777ce754dc7555b4849e7a1d",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "porsche.cayenne",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:00+00:00",
+    "payload": {
+      "brand": {
+        "id": "porsche",
+        "name_en": "Porsche",
+        "name_th": "ปอร์เช่",
+        "brand_segment": "PERFORMANCE",
+        "oem_group": "Volkswagen Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "ปอร์เช่"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "porsche.cayenne",
+        "brand_id": "porsche",
+        "name_en": "Cayenne",
+        "name_th": "คาเยน",
+        "nameplate": "Cayenne",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "porsche.cayenne.e3",
+          "model_id": "porsche.cayenne",
+          "code": "E3",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2018-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "porsche.cayenne.e3.3_0l_phev_awd",
+          "generation_id": "porsche.cayenne.e3",
+          "name": "3.0L PHEV AWD",
+          "powertrain": "PHEV",
+          "drivetrain": "AWD",
+          "engine_cc": 2995,
+          "battery_kwh": 25.9,
+          "price_thb": 9500000,
+          "price_min_thb": 9500000,
+          "price_max_thb": 9500000,
+          "import_type": "CBU",
+          "origin_country": "SK",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Cayenne E-Hybrid"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "porsche.cayenne.e3.trim.e_hybrid_phev_470_hp_phev",
+          "generation_id": "porsche.cayenne.e3",
+          "name": "E-Hybrid (PHEV, 470 hp)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Cayenne E-Hybrid (PHEV, 470 hp)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:245"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.cayenne.e3.trim.turbo_e_hybrid_phev_739_hp_phev",
+          "generation_id": "porsche.cayenne.e3",
+          "name": "Turbo E-Hybrid (PHEV, 739 hp)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Cayenne Turbo E-Hybrid (PHEV, 739 hp)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:245"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.cayenne.e3.trim.coupe_coupe_body_style_in_base_e_hybrid_s_gts_turbo_phev",
+          "generation_id": "porsche.cayenne.e3",
+          "name": "Coupe (Coupe Body Style in Base, E-Hybrid, S, GTS, Turbo)",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Cayenne Coupe (Coupe Body Style in Base, E-Hybrid, S, GTS, Turbo)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:245"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.cayenne.e3.trim.s_coupe_electric_bev",
+          "generation_id": "porsche.cayenne.e3",
+          "name": "S Coupe Electric",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4991,
+          "width_mm": 1980,
+          "height_mm": 1650,
+          "wheelbase_mm": null,
+          "tire_front": "275/45R21",
+          "tire_rear": "315/40R21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "86ebf6cd-9d1b-4905-abfe-7916b8ef391c"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.cayenne.e3.trim.s_electric_bev",
+          "generation_id": "porsche.cayenne.e3",
+          "name": "S Electric",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4991,
+          "width_mm": 1980,
+          "height_mm": 1674,
+          "wheelbase_mm": null,
+          "tire_front": "285/40R22",
+          "tire_rear": "325/35R22",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "819cd062-4578-4f0d-8a80-fc40253d69a1"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.cayenne.e3.trim.electric_bev",
+          "generation_id": "porsche.cayenne.e3",
+          "name": "Electric",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4985,
+          "width_mm": 1980,
+          "height_mm": 1674,
+          "wheelbase_mm": null,
+          "tire_front": "285/40R22",
+          "tire_rear": "325/35R22",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "0eca67ad-aea5-4d60-bf86-817b708d0cb5"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

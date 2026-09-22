@@ -1,0 +1,537 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a0ec65a6ada9159ba6cc83fe",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:147",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "toyota.corolla_altis",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:12+00:00",
+    "before_hash": "0143cace1d18b12818cef94e1e0c68b0c04fb32f2bc9767fb7f5109cc47081a1",
+    "after_hash": "2b4d3c9d761f479924b8e3ac4f1fe9a4a8604585f93db9f5898897329ff743a9",
+    "before": {
+      "id": "corolla_altis",
+      "name_en": "Corolla Altis",
+      "name_th": "โคโรลล่า อัลติส",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "altis",
+        "corolla"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "E210",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2019-08-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.8L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "engine_cc": 1798,
+              "battery_kwh": null,
+              "aliases": [
+                "1.8 Sport"
+              ],
+              "overrides": {},
+              "price_thb": 899000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 899000,
+              "price_max_thb": 899000
+            },
+            {
+              "name": "1.8L HEV (VOLUME)",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "engine_cc": 1798,
+              "battery_kwh": 1.3,
+              "aliases": [
+                "1.8 HEV Smart"
+              ],
+              "overrides": {},
+              "price_thb": 979000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 979000,
+              "price_max_thb": 979000
+            },
+            {
+              "name": "1.8L HEV (UPPER)",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "engine_cc": 1798,
+              "battery_kwh": 1.3,
+              "aliases": [
+                "1.8 HEV GR Sport"
+              ],
+              "overrides": {},
+              "price_thb": 1094000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1094000,
+              "price_max_thb": 1094000
+            }
+          ],
+          "trims": [
+            {
+              "name": "HEV Premium CVT",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:276"
+                ]
+              },
+              "id": "hev_premium_cvt_hev"
+            },
+            {
+              "name": "HEV GR Sport CVT",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:276"
+                ]
+              },
+              "id": "hev_gr_sport_cvt_hev"
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "toyota",
+        "name_en": "Toyota",
+        "name_th": "โตโยต้า",
+        "brand_segment": "MASS",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "โตโยต้า",
+          "toyota motor thailand",
+          "TMT"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "toyota.corolla_altis",
+        "brand_id": "toyota",
+        "name_en": "Corolla Altis",
+        "name_th": "โคโรลล่า อัลติส",
+        "nameplate": "Corolla Altis",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "altis",
+          "corolla"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "toyota.corolla_altis.e210",
+          "model_id": "toyota.corolla_altis",
+          "code": "E210",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2019-08-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "toyota.corolla_altis.e210.1_8l_ice",
+          "generation_id": "toyota.corolla_altis.e210",
+          "name": "1.8L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1798,
+          "battery_kwh": null,
+          "price_thb": 899000,
+          "price_min_thb": 899000,
+          "price_max_thb": 899000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.8 Sport"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "toyota.corolla_altis.e210.1_8l_hev_volume",
+          "generation_id": "toyota.corolla_altis.e210",
+          "name": "1.8L HEV (VOLUME)",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1798,
+          "battery_kwh": 1.3,
+          "price_thb": 979000,
+          "price_min_thb": 979000,
+          "price_max_thb": 979000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.8 HEV Smart"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "toyota.corolla_altis.e210.1_8l_hev_upper",
+          "generation_id": "toyota.corolla_altis.e210",
+          "name": "1.8L HEV (UPPER)",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1798,
+          "battery_kwh": 1.3,
+          "price_thb": 1094000,
+          "price_min_thb": 1094000,
+          "price_max_thb": 1094000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.8 HEV GR Sport"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "toyota.corolla_altis.e210.trim.hev_premium_cvt_hev",
+          "generation_id": "toyota.corolla_altis.e210",
+          "name": "HEV Premium CVT",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:276"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.corolla_altis.e210.trim.hev_gr_sport_cvt_hev",
+          "generation_id": "toyota.corolla_altis.e210",
+          "name": "HEV GR Sport CVT",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:276"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.corolla_altis.e210.trim.gr_ice",
+          "generation_id": "toyota.corolla_altis.e210",
+          "name": "GR",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1618,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4408,
+          "width_mm": 1851,
+          "height_mm": 1479,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "04c66218-207e-4e5a-97ed-999520d2fd2e"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/toyota.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a0ec65a6ada9159ba6cc83fe:catalog",
+    "revision_id": "a0ec65a6ada9159ba6cc83fe",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "toyota.corolla_altis",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:12+00:00",
+    "payload": {
+      "brand": {
+        "id": "toyota",
+        "name_en": "Toyota",
+        "name_th": "โตโยต้า",
+        "brand_segment": "MASS",
+        "oem_group": "Toyota Group",
+        "brand_origin": "JP",
+        "trim_detail": false,
+        "aliases": [
+          "โตโยต้า",
+          "toyota motor thailand",
+          "TMT"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "toyota.corolla_altis",
+        "brand_id": "toyota",
+        "name_en": "Corolla Altis",
+        "name_th": "โคโรลล่า อัลติส",
+        "nameplate": "Corolla Altis",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "altis",
+          "corolla"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "toyota.corolla_altis.e210",
+          "model_id": "toyota.corolla_altis",
+          "code": "E210",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2019-08-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "toyota.corolla_altis.e210.1_8l_ice",
+          "generation_id": "toyota.corolla_altis.e210",
+          "name": "1.8L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "FWD",
+          "engine_cc": 1798,
+          "battery_kwh": null,
+          "price_thb": 899000,
+          "price_min_thb": 899000,
+          "price_max_thb": 899000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.8 Sport"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "toyota.corolla_altis.e210.1_8l_hev_volume",
+          "generation_id": "toyota.corolla_altis.e210",
+          "name": "1.8L HEV (VOLUME)",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1798,
+          "battery_kwh": 1.3,
+          "price_thb": 979000,
+          "price_min_thb": 979000,
+          "price_max_thb": 979000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.8 HEV Smart"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "toyota.corolla_altis.e210.1_8l_hev_upper",
+          "generation_id": "toyota.corolla_altis.e210",
+          "name": "1.8L HEV (UPPER)",
+          "powertrain": "HEV",
+          "drivetrain": "FWD",
+          "engine_cc": 1798,
+          "battery_kwh": 1.3,
+          "price_thb": 1094000,
+          "price_min_thb": 1094000,
+          "price_max_thb": 1094000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "1.8 HEV GR Sport"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "toyota.corolla_altis.e210.trim.hev_premium_cvt_hev",
+          "generation_id": "toyota.corolla_altis.e210",
+          "name": "HEV Premium CVT",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:276"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.corolla_altis.e210.trim.hev_gr_sport_cvt_hev",
+          "generation_id": "toyota.corolla_altis.e210",
+          "name": "HEV GR Sport CVT",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:276"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "toyota.corolla_altis.e210.trim.gr_ice",
+          "generation_id": "toyota.corolla_altis.e210",
+          "name": "GR",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1618,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4408,
+          "width_mm": 1851,
+          "height_mm": 1479,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "04c66218-207e-4e5a-97ed-999520d2fd2e"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

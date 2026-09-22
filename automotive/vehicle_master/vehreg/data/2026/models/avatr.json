@@ -53,12 +53,19 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:024"
+                ],
+                "eco": [
+                  "6eefed2d-33ab-4320-aad7-3ff2e2660e99"
                 ]
               },
               "aliases": [
                 "Avatr 11 Standard Range (RWD)"
               ],
-              "id": "standard_range_rwd_bev"
+              "id": "standard_range_rwd_bev",
+              "seats": 5,
+              "length_mm": 4880,
+              "width_mm": 1970,
+              "height_mm": 1601
             },
             {
               "name": "Long Range (RWD)",
@@ -66,12 +73,19 @@
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:024"
+                ],
+                "eco": [
+                  "1dba1f1d-8e6c-4984-ae15-de9206d2eb17"
                 ]
               },
               "aliases": [
                 "Avatr 11 Long Range (RWD)"
               ],
-              "id": "long_range_rwd_bev"
+              "id": "long_range_rwd_bev",
+              "seats": 5,
+              "length_mm": 4880,
+              "width_mm": 1970,
+              "height_mm": 1601
             },
             {
               "name": "Royal Edition AWD (Dual Motor)",
@@ -127,7 +141,34 @@
               "price_max_thb": 1759000
             }
           ],
-          "trims": []
+          "trims": [
+            {
+              "name": "Ultra AWD",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4825,
+              "width_mm": 1980,
+              "height_mm": 1620,
+              "source_refs": {
+                "eco": [
+                  "63d314f5-a476-4170-bd84-71fdd0ed626e"
+                ]
+              }
+            },
+            {
+              "name": "Max",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4825,
+              "width_mm": 1980,
+              "height_mm": 1620,
+              "source_refs": {
+                "eco": [
+                  "0918ff1d-77f6-4f26-986b-cd0283f6a72d"
+                ]
+              }
+            }
+          ]
         }
       ],
       "incomplete": true

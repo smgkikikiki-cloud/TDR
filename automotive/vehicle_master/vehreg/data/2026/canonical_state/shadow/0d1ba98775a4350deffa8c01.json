@@ -1,0 +1,579 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "0d1ba98775a4350deffa8c01",
+    "command_id": "import-eco-1790085722940-TDR_EcoSti-001-6ecb674ef38a:13",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "porsche.porsche_911",
+    "actor": "bulk-import",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1).xlsx",
+    "submitted_at": "2026-09-22T14:02:05.252602+00:00",
+    "applied_at": "2026-09-22T14:03:00+00:00",
+    "before_hash": "772630a9bae498e6ba52e4a285b109932c7e9efad5919547f2d981ecc37264b6",
+    "after_hash": "8e88a15b6feda5bf52509f18a083ddaac2ca6e270f9939211839d8cc281a3ca1",
+    "before": {
+      "id": "porsche_911",
+      "name_en": "911",
+      "name_th": "911",
+      "nameplate": "",
+      "body_type": "COUPE",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "NICHE",
+      "aliases": [
+        "nine eleven"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "992",
+          "segment": "D",
+          "seats": 4,
+          "launched": "2019-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "3.0L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "RWD",
+              "engine_cc": 2981,
+              "battery_kwh": null,
+              "aliases": [
+                "Carrera"
+              ],
+              "overrides": {},
+              "price_thb": 12500000,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "seed-unverified",
+              "price_min_thb": 12500000,
+              "price_max_thb": 12500000
+            }
+          ],
+          "trims": [
+            {
+              "name": "Carrera GTS (T-Hybrid 541 hp)",
+              "powertrain": "HEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:248"
+                ]
+              },
+              "aliases": [
+                "911 Carrera GTS (T-Hybrid 541 hp)"
+              ],
+              "id": "carrera_gts_t_hybrid_541_hp_hev"
+            },
+            {
+              "name": "CARRERA COUPE",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 4519,
+              "width_mm": 1852,
+              "height_mm": 1298,
+              "engine_cc": 2981,
+              "tire_front": "245/35ZR20",
+              "tire_rear": "305/30ZR21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "f166808b-e824-4717-aa10-ff97012d3324"
+                ]
+              }
+            },
+            {
+              "name": "Carrera",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 4542,
+              "width_mm": 1852,
+              "height_mm": 1302,
+              "engine_cc": 2981,
+              "tire_front": "245/35ZR20",
+              "tire_rear": "305/30ZR21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "97a7f90e-f780-412c-9bfc-756b53172653"
+                ]
+              }
+            },
+            {
+              "name": "Targa 4S",
+              "powertrain": "ICE",
+              "seats": 4,
+              "length_mm": 4542,
+              "width_mm": 1852,
+              "height_mm": 1302,
+              "engine_cc": 2981,
+              "tire_front": "245/35ZR20",
+              "tire_rear": "315/30ZR21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "e4ec0782-9e03-40c9-b9ce-4f0d350da545"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "porsche",
+        "name_en": "Porsche",
+        "name_th": "ปอร์เช่",
+        "brand_segment": "PERFORMANCE",
+        "oem_group": "Volkswagen Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "ปอร์เช่"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "porsche.porsche_911",
+        "brand_id": "porsche",
+        "name_en": "911",
+        "name_th": "911",
+        "nameplate": "911",
+        "body_type": "COUPE",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "nine eleven"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "porsche.porsche_911.992",
+          "model_id": "porsche.porsche_911",
+          "code": "992",
+          "segment": "D",
+          "seats": 4,
+          "launched": "2019-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "porsche.porsche_911.992.3_0l_ice",
+          "generation_id": "porsche.porsche_911.992",
+          "name": "3.0L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "RWD",
+          "engine_cc": 2981,
+          "battery_kwh": null,
+          "price_thb": 12500000,
+          "price_min_thb": 12500000,
+          "price_max_thb": 12500000,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Carrera"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "porsche.porsche_911.992.trim.carrera_gts_t_hybrid_541_hp_hev",
+          "generation_id": "porsche.porsche_911.992",
+          "name": "Carrera GTS (T-Hybrid 541 hp)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "911 Carrera GTS (T-Hybrid 541 hp)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:248"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.porsche_911.992.trim.carrera_coupe_ice",
+          "generation_id": "porsche.porsche_911.992",
+          "name": "CARRERA COUPE",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2981,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 4,
+          "length_mm": 4519,
+          "width_mm": 1852,
+          "height_mm": 1298,
+          "wheelbase_mm": null,
+          "tire_front": "245/35ZR20",
+          "tire_rear": "305/30ZR21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "f166808b-e824-4717-aa10-ff97012d3324"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.porsche_911.992.trim.carrera_ice",
+          "generation_id": "porsche.porsche_911.992",
+          "name": "Carrera",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2981,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 4,
+          "length_mm": 4542,
+          "width_mm": 1852,
+          "height_mm": 1302,
+          "wheelbase_mm": null,
+          "tire_front": "245/35ZR20",
+          "tire_rear": "305/30ZR21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "97a7f90e-f780-412c-9bfc-756b53172653"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.porsche_911.992.trim.targa_4s_ice",
+          "generation_id": "porsche.porsche_911.992",
+          "name": "Targa 4S",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2981,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 4,
+          "length_mm": 4542,
+          "width_mm": 1852,
+          "height_mm": 1302,
+          "wheelbase_mm": null,
+          "tire_front": "245/35ZR20",
+          "tire_rear": "315/30ZR21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "e4ec0782-9e03-40c9-b9ce-4f0d350da545"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.porsche_911.992.trim.carrera_s_ice",
+          "generation_id": "porsche.porsche_911.992",
+          "name": "Carrera S",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2981,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 4,
+          "length_mm": 4542,
+          "width_mm": 1852,
+          "height_mm": 1303,
+          "wheelbase_mm": null,
+          "tire_front": "245/35ZR20",
+          "tire_rear": "305/30ZR21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "13f6cd6e-6ec0-48f0-9fe0-1bb0008f8019"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/porsche.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "0d1ba98775a4350deffa8c01:catalog",
+    "revision_id": "0d1ba98775a4350deffa8c01",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "porsche.porsche_911",
+    "state": "PENDING",
+    "created_at": "2026-09-22T14:03:00+00:00",
+    "payload": {
+      "brand": {
+        "id": "porsche",
+        "name_en": "Porsche",
+        "name_th": "ปอร์เช่",
+        "brand_segment": "PERFORMANCE",
+        "oem_group": "Volkswagen Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "ปอร์เช่"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "porsche.porsche_911",
+        "brand_id": "porsche",
+        "name_en": "911",
+        "name_th": "911",
+        "nameplate": "911",
+        "body_type": "COUPE",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "nine eleven"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "porsche.porsche_911.992",
+          "model_id": "porsche.porsche_911",
+          "code": "992",
+          "segment": "D",
+          "seats": 4,
+          "launched": "2019-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "porsche.porsche_911.992.3_0l_ice",
+          "generation_id": "porsche.porsche_911.992",
+          "name": "3.0L ICE",
+          "powertrain": "ICE",
+          "drivetrain": "RWD",
+          "engine_cc": 2981,
+          "battery_kwh": null,
+          "price_thb": 12500000,
+          "price_min_thb": 12500000,
+          "price_max_thb": 12500000,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Carrera"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "porsche.porsche_911.992.trim.carrera_gts_t_hybrid_541_hp_hev",
+          "generation_id": "porsche.porsche_911.992",
+          "name": "Carrera GTS (T-Hybrid 541 hp)",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "911 Carrera GTS (T-Hybrid 541 hp)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:248"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.porsche_911.992.trim.carrera_coupe_ice",
+          "generation_id": "porsche.porsche_911.992",
+          "name": "CARRERA COUPE",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2981,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 4,
+          "length_mm": 4519,
+          "width_mm": 1852,
+          "height_mm": 1298,
+          "wheelbase_mm": null,
+          "tire_front": "245/35ZR20",
+          "tire_rear": "305/30ZR21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "f166808b-e824-4717-aa10-ff97012d3324"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.porsche_911.992.trim.carrera_ice",
+          "generation_id": "porsche.porsche_911.992",
+          "name": "Carrera",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2981,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 4,
+          "length_mm": 4542,
+          "width_mm": 1852,
+          "height_mm": 1302,
+          "wheelbase_mm": null,
+          "tire_front": "245/35ZR20",
+          "tire_rear": "305/30ZR21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "97a7f90e-f780-412c-9bfc-756b53172653"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.porsche_911.992.trim.targa_4s_ice",
+          "generation_id": "porsche.porsche_911.992",
+          "name": "Targa 4S",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2981,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 4,
+          "length_mm": 4542,
+          "width_mm": 1852,
+          "height_mm": 1302,
+          "wheelbase_mm": null,
+          "tire_front": "245/35ZR20",
+          "tire_rear": "315/30ZR21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "e4ec0782-9e03-40c9-b9ce-4f0d350da545"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.porsche_911.992.trim.carrera_s_ice",
+          "generation_id": "porsche.porsche_911.992",
+          "name": "Carrera S",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2981,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 4,
+          "length_mm": 4542,
+          "width_mm": 1852,
+          "height_mm": 1303,
+          "wheelbase_mm": null,
+          "tire_front": "245/35ZR20",
+          "tire_rear": "305/30ZR21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "13f6cd6e-6ec0-48f0-9fe0-1bb0008f8019"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}
