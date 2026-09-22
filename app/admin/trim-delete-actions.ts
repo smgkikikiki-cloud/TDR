@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { currentEditor, isAdmin } from "@/lib/admin-auth";
-import { field, requiredField, safeSubmissionId, submissionTimestamp } from "@/lib/admin-form";
+import { requiredField, safeSubmissionId, submissionTimestamp } from "@/lib/admin-form";
 import { loadVehicleWorkspace } from "@/lib/canonical-editor";
 import { enqueueCanonicalInputBatch } from "@/lib/canonical-input-queue";
 import { adminDb } from "@/lib/supabase";
