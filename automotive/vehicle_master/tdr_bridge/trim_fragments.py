@@ -19,6 +19,7 @@ from vehreg.trim_reconciliation import (
     TrimResolutionStatus,
     UNRESOLVED_EXEMPTIONS,
     load_reconciliation_state,
+    merge_market_trim_evidence,
 )
 
 _SCHEMA_VERSION = 1
@@ -69,7 +70,7 @@ def apply_verified_trim_fragments(
     data_dir: Path | str = DATA_DIR,
     year: int = DEFAULT_YEAR,
 ) -> dict:
-    """Append exact, evidence-backed MarketTrim identities from small batches."""
+    """Append or merge exact, evidence-backed MarketTrim identities."""
     out = deepcopy(dict(release))
     paths = _canonical_fragment_paths(data_dir, year)
     if not paths:
@@ -87,11 +88,17 @@ def apply_verified_trim_fragments(
         str(row.get("canonical_id") or ""): row
         for row in out.get("brands", []) if isinstance(row, Mapping)
     }
-    existing_ids = {
-        str(row.get("canonical_id") or "")
-        for row in out.get("market_trims", []) if isinstance(row, Mapping)
-    }
-    additions: list[dict] = []
+    market_trims = list(out.get("market_trims", []))
+    existing_index: dict[str, int] = {}
+    for index, row in enumerate(market_trims):
+        if not isinstance(row, Mapping):
+            continue
+        canonical_id = str(row.get("canonical_id") or "")
+        if not canonical_id:
+            continue
+        if canonical_id in existing_index:
+            raise CatalogError(f"serving release already contains duplicate MarketTrim {canonical_id}")
+        existing_index[canonical_id] = index
 
     for path in paths:
         for raw in _load(path, "trims"):
@@ -121,9 +128,6 @@ def apply_verified_trim_fragments(
                 raise CatalogError(f"{path}: {local_id}: variant_id must stay empty")
             refs = _source_refs(raw.get("source_refs"), f"{path}:{local_id}")
             canonical_id = f"{generation_id}.trim.{local_id}"
-            if canonical_id in existing_ids:
-                raise CatalogError(f"{path}: duplicate canonical trim {canonical_id}")
-            existing_ids.add(canonical_id)
 
             aliases = raw.get("aliases") or []
             specs = raw.get("specs") or {}
@@ -131,6 +135,23 @@ def apply_verified_trim_fragments(
                 raise CatalogError(f"{path}: {local_id}: aliases must be strings")
             if not isinstance(specs, Mapping):
                 raise CatalogError(f"{path}: {local_id}: specs must be an object")
+
+            existing_at = existing_index.get(canonical_id)
+            if existing_at is not None:
+                market_trims[existing_at] = merge_market_trim_evidence(
+                    market_trims[existing_at],
+                    canonical_id=canonical_id,
+                    model_id=model_id,
+                    generation_id=generation_id,
+                    name=name,
+                    powertrain=powertrain.value,
+                    aliases=aliases,
+                    source_refs=refs,
+                    specs=specs,
+                    label=f"{path}:{local_id}",
+                )
+                continue
+
             brand = brands.get(str(model.get("brand_id") or ""), {})
             spec_payload = {
                 "id": canonical_id,
@@ -142,7 +163,7 @@ def apply_verified_trim_fragments(
                 "source_refs": refs,
                 **dict(specs),
             }
-            additions.append({
+            market_trims.append({
                 "canonical_id": canonical_id,
                 "model_id": model_id,
                 "generation_id": generation_id,
@@ -167,9 +188,10 @@ def apply_verified_trim_fragments(
                 "price_history": [],
                 "source_refs": refs,
             })
+            existing_index[canonical_id] = len(market_trims) - 1
 
     out["market_trims"] = sorted(
-        list(out.get("market_trims", [])) + additions,
+        market_trims,
         key=lambda row: str(row.get("canonical_id") or ""),
     )
     counts = dict(out.get("counts") or {})
