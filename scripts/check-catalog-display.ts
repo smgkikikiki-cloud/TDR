@@ -59,9 +59,10 @@ check("the sales scale is per body type, so a pickup is not measured against a c
   byRelevance(models.filter((m) => m.body_type === "Crossover"), sales, now).map((m) => m.id), ["suv"]);
 
 console.log("\nbrand logos — the field the pages render must actually be read");
-// Four pages render `logo_url ? <img> : <initials>`. For years the second
-// branch was the only reachable one, because the loader hardcoded null. These
-// hold the wiring in place from both ends.
+// Four pages render a logo with an initials fallback. The homepage first runs
+// logo_url through resolveBrandLogo(), while the catalogue pages use logo_url
+// directly. The assertion cares about the user-visible fallback, not which
+// variable name the JSX happens to use.
 const fs = await import("node:fs");
 const canonical = fs.readFileSync("lib/canonical-data.ts", "utf8");
 const brandsLoader = canonical.slice(canonical.indexOf("export async function getCanonicalBrands"));
@@ -72,10 +73,14 @@ check("the logo is linked through tdr_brand_id, not a mutable slug",
 check("a missing editorial table leaves the catalogue standing",
   brandsLoader.includes("if (!editorialError)"), true);
 for (const page of ["app/brands/page.tsx", "app/brands/[slug]/page.tsx",
-                    "app/models/page.tsx", "app/page.tsx"]) {
+                    "app/models/page.tsx"]) {
   check(`${page} still falls back to initials`,
     /logo_url \? <img[^>]*\/> : <span>\{initials\(/.test(fs.readFileSync(page, "utf8")), true);
 }
+const homePage = fs.readFileSync("app/page.tsx", "utf8");
+check("app/page.tsx still falls back to initials",
+  homePage.includes("resolveBrandLogo(brand.slug, brand.logo_url)")
+    && /logo \? <img[^>]*\/> : <span>\{initials\(brand\)\}<\/span>/.test(homePage), true);
 const backfill = fs.readFileSync("supabase/migration_v37_brand_logos.sql", "utf8");
 check("the backfill never overwrites a curated logo",
   backfill.split("\n").filter((line: string) => line.startsWith("update public.brands"))
