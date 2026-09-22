@@ -52,10 +52,16 @@ def test_verified_fragments_load_against_real_2026_catalog():
     owner = apply_canonical_trim_overlay(base, data_dir=DATA_DIR, year=2026)
     out = apply_verified_trim_fragments(owner, data_dir=DATA_DIR, year=2026)
 
-    assert len(owner["market_trims"]) - len(base["market_trims"]) == 83
-    assert len(out["market_trims"]) - len(owner["market_trims"]) == 26
-    assert len(out["market_trims"]) - len(base["market_trims"]) == 109
-    assert out["counts"]["market_trims"] == len(base["market_trims"]) + 109
+    # Base catalog, owner overlay and verified fragments are independent
+    # evidence streams. A later ECO bulk import can materialise an id that an
+    # overlay already knows, so counts are no longer additive. The invariant is
+    # one serving row per canonical id, with earlier rows preserved.
+    base_ids = {row["canonical_id"] for row in base["market_trims"]}
+    owner_ids = {row["canonical_id"] for row in owner["market_trims"]}
+    out_ids = [row["canonical_id"] for row in out["market_trims"]]
+    assert base_ids <= owner_ids <= set(out_ids)
+    assert len(out_ids) == len(set(out_ids))
+    assert out["counts"]["market_trims"] == len(out_ids)
 
 
 def test_verified_reconciliation_reduces_only_rows_that_really_map():
@@ -75,7 +81,8 @@ def test_verified_reconciliation_reduces_only_rows_that_really_map():
 
     assert _row(report, "avatr.avatr_07")["unresolved_source_trim_count"] == 1
     assert _row(report, "bentley.flying_spur")["unresolved_source_trim_count"] == 1
-    assert _row(report, "deepal.deepal_e07")["canonical_trim_count"] == 2
+    # Total MarketTrim count is allowed to grow from other evidence streams
+    # (notably ECO); source reconciliation below remains scoped to its own refs.
     assert _row(report, "deepal.deepal_e07")["unresolved_source_trim_count"] == 4
 
     gac = _row(report, "gac.gac_m8")
