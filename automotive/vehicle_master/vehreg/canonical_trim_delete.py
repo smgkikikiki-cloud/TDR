@@ -2,19 +2,18 @@
 
 The public command remains ``UPSERT_MODEL_BUNDLE`` so deletion travels through
 exactly the same CanonicalInputPipeline, revision log, outbox, Git commit and
-release publication path as every other admin vehicle edit.  A delete intent is
+release publication path as every other admin vehicle edit. A delete intent is
 an explicit ``payload.delete_trim = {canonical_id: ...}`` marker.
 
 Why an extension instead of a second writer: the existing bundle writer owns
 the catalogue JSON layout and the input pipeline already supplies atomic staged
-writes.  This module only replaces the bundle mutation for that one explicit
+writes. This module only replaces the bundle mutation for that one explicit
 marker; ordinary UPSERT_MODEL_BUNDLE commands still execute the original method
 unchanged.
 """
 
 from __future__ import annotations
 
-from copy import deepcopy
 from functools import wraps
 import json
 from pathlib import Path
@@ -52,19 +51,23 @@ def _delete_trim_bundle(self: cw.CanonicalWritePipeline,
     if not model_id:
         raise cw.CanonicalWriteError("trim deletion requires the parent model canonical_id")
 
-    # Resolve against the catalogue before mutating anything.  This proves the
+    # Resolve against the catalogue before mutating anything. This proves the
     # submitted trim really belongs to the submitted model and gives us the
     # canonical generation id rather than trusting form data for identity.
     catalog = self._catalog(command.year)
     trim = catalog.trims.get(trim_id)
     if trim is None:
         raise cw.CanonicalWriteError(f"unknown MarketTrim {trim_id!r}")
-    if trim.model_id != model_id:
+    generation_entity = catalog.generations.get(trim.generation_id)
+    if generation_entity is None:
+        raise cw.CanonicalWriteError(
+            f"MarketTrim {trim_id!r} points to unknown generation {trim.generation_id!r}")
+    if generation_entity.model_id != model_id:
         raise cw.CanonicalWriteError("MarketTrim does not belong to the submitted model")
 
-    # A trim with facts attached is not a disposable identity.  Refuse the
+    # A trim with facts attached is not a disposable identity. Refuse the
     # delete instead of leaving price/spec files pointing at an id the next
-    # release no longer contains.  Registration references live in Supabase
+    # release no longer contains. Registration references live in Supabase
     # and are checked by the admin server action before this command is queued.
     prices = cw.PriceLedger.load(self.data_dir, year=command.year, catalog=catalog)
     if prices.records_for(trim_id, include_retracted=True):
@@ -115,7 +118,7 @@ def _delete_trim_bundle(self: cw.CanonicalWritePipeline,
     before = cw.to_jsonable(trim)
     del raw_trims[delete_index]
 
-    # Validate the whole catalogue before the real tree changes.  If deleting
+    # Validate the whole catalogue before the real tree changes. If deleting
     # the row would violate any catalogue invariant, nothing is written.
     validated = cw._validate_payloads(payloads, command.year)
     if trim_id in validated.trims:
