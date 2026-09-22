@@ -22,7 +22,7 @@ jobs:
           cache-dependency-path: automotive/vehicle_master/requirements.txt
       - name: Install Vehicle Master dependencies
         working-directory: automotive/vehicle_master
-        run: python -m pip install -r requirements.txt pytest
+        run: python -m pip install -r requirements.txt pytest pyyaml
       - name: Fetch base tree for automated price PR
         if: github.event_name == 'pull_request' && (startsWith(github.head_ref, 'pricebot/') || startsWith(github.head_ref, 'pricefeed/'))
         shell: bash
