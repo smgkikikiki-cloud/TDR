@@ -50,9 +50,17 @@ check("no Individual plan remains in the catalog", plans.includes('"individual_'
 console.log("\npricing restructure — the public pricing page reflects the real structure");
 const pricingPage = fs.readFileSync("app/pricing/page.tsx", "utf8");
 check("no Individual card remains", pricingPage.includes("Individual"), false);
-check("the Pro card reads its prices from PLAN_CATALOG, not typed-in numbers", pricingPage.includes("PLAN_CATALOG") && pricingPage.includes("PRO_PLANS.map"), true);
+check(
+  "the Pro card reads its prices from PLAN_CATALOG, not typed-in numbers",
+  pricingPage.includes("PLAN_CATALOG") && pricingPage.includes("PLAN_CATALOG.map") && pricingPage.includes("proFrom"),
+  true,
+);
 check("Free's bullets read the real quota numbers, not stale copies", pricingPage.includes("FREE_POLICY.compareDailyLimit") && pricingPage.includes("FREE_POLICY.salesQueryDailyLimit"), true);
-check('the Enterprise block is labeled "TDR Enterprise package", not "Team" or generic "Corporate"', pricingPage.includes("TDR Enterprise package"), true);
+check(
+  'the Enterprise block is explicitly labeled "TDR ENTERPRISE", not "Team" or a generic Corporate tier',
+  pricingPage.includes("TDR ENTERPRISE"),
+  true,
+);
 check("the Enterprise CTA is still the config-driven contact button (never a guessed address)", pricingPage.includes("NEXT_PUBLIC_TDR_CORPORATE_CONTACT_URL") && pricingPage.includes('aria-disabled="true"'), true);
 
 console.log("\npricing restructure — billing UI offers all three intervals, not just monthly");
