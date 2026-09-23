@@ -41,7 +41,10 @@ import re
 import unicodedata
 from typing import Any, Iterable, Optional
 
-from .comparable_specs import SpecRegistry, ValueType
+from .comparable_specs import (
+    SpecFact, SpecRegistry, ValueState, ValueType, spec_conflict_key,
+    spec_conflict_value,
+)
 from .normalize import trim_identity
 
 #: One canonical_input_batches row accepts at most 500 commands; a few
@@ -481,12 +484,21 @@ def _fact_unchanged(prior: dict[str, Any], candidate: dict[str, Any]) -> bool:
     """
     return (
         str(prior.get("trim_id") or "") == str(candidate.get("trim_id") or "")
-        and str(prior.get("value_state") or "KNOWN") == "KNOWN"
+        and str(prior.get("field_key") or candidate.get("field_key") or "")
+        == str(candidate.get("field_key") or "")
+        and str(prior.get("value_state") or "KNOWN")
+        == str(candidate.get("value_state") or "KNOWN")
         and prior.get("value") == candidate.get("value")
         and str(prior.get("unit") or "") == str(candidate.get("unit") or "")
         and {str(k): str(v) for k, v in (prior.get("qualifiers") or {}).items()}
         == {str(k): str(v) for k, v in (candidate.get("qualifiers") or {}).items()}
         and str(prior.get("observed_at") or "") == str(candidate.get("observed_at") or "")
+        and str(prior.get("source") or candidate.get("source") or "")
+        == str(candidate.get("source") or "")
+        and str(prior.get("source_ref") or candidate.get("source_ref") or "")
+        == str(candidate.get("source_ref") or "")
+        and str(prior.get("verification_status") or "VERIFIED")
+        == str(candidate.get("verification_status") or "VERIFIED")
     )
 
 
@@ -562,6 +574,100 @@ def spec_commands_from_outcomes(
                 continue
             commands.append({"operation": "APPEND_SPEC", "canonical_id": trim_id, "payload": candidate})
     return commands
+
+
+def _spec_fact_from_payload(payload: dict[str, Any]) -> SpecFact:
+    """Convert a command/existing-fact payload to SpecLedger's own object."""
+    return SpecFact(
+        fact_id=str(payload.get("fact_id") or ""),
+        trim_id=str(payload.get("trim_id") or ""),
+        field_key=str(payload.get("field_key") or ""),
+        value_state=ValueState(str(payload.get("value_state") or "KNOWN")),
+        value=payload.get("value"),
+        unit=str(payload.get("unit") or ""),
+        qualifiers={str(k): str(v) for k, v in (payload.get("qualifiers") or {}).items()},
+        effective_from=str(payload.get("effective_from") or "") or None,
+        effective_to=str(payload.get("effective_to") or "") or None,
+        observed_at=str(payload.get("observed_at") or "") or None,
+        source=str(payload.get("source") or ""),
+        source_ref=str(payload.get("source_ref") or ""),
+    )
+
+
+def preflight_spec_commands(
+    commands: list[dict], *, registry: SpecRegistry,
+    existing_facts: dict[str, dict[str, Any]],
+) -> tuple[list[dict], list[dict]]:
+    """Withhold incoming facts that would make SpecLedger conflict.
+
+    Conflict identity and value identity come directly from comparable_specs,
+    the same helpers SpecLedger.validate() uses. Existing facts being revised
+    by the same fact_id are omitted from old-state comparison because
+    APPEND_SPEC replaces that file in place.
+    """
+    candidates: list[tuple[int, SpecFact]] = []
+    replacing_ids: set[str] = set()
+    for index, command in enumerate(commands):
+        if command.get("operation") != "APPEND_SPEC":
+            continue
+        fact = _spec_fact_from_payload(command.get("payload") or {})
+        if fact.field_key not in registry.fields:
+            continue
+        candidates.append((index, fact))
+        replacing_ids.add(fact.fact_id)
+
+    groups: dict[tuple, list[tuple[str, int | None, SpecFact]]] = {}
+    for fact_id, prior in existing_facts.items():
+        if fact_id in replacing_ids or not prior.get("field_key"):
+            continue
+        fact = _spec_fact_from_payload({"fact_id": fact_id, **prior})
+        definition = registry.fields.get(fact.field_key)
+        if definition is not None:
+            groups.setdefault(spec_conflict_key(fact, definition), []).append(
+                ("existing", None, fact))
+
+    for index, fact in candidates:
+        definition = registry.fields[fact.field_key]
+        groups.setdefault(spec_conflict_key(fact, definition), []).append(
+            ("candidate", index, fact))
+
+    blocked: set[int] = set()
+    conflicts: list[dict] = []
+    for key, entries in groups.items():
+        if len({spec_conflict_value(fact) for _, _, fact in entries}) <= 1:
+            continue
+        incoming = [(index, fact) for origin, index, fact in entries
+                    if origin == "candidate" and index is not None]
+        if not incoming:
+            continue
+        blocked.update(index for index, _ in incoming)
+        source_ids = []
+        for _, fact in incoming:
+            parts = fact.fact_id.split(":", 2)
+            source_ids.append(parts[1] if len(parts) == 3 else fact.fact_id)
+        distinct_values = []
+        seen = set()
+        for _, _, fact in entries:
+            signature = spec_conflict_value(fact)
+            if signature not in seen:
+                seen.add(signature)
+                distinct_values.append(fact.value)
+        conflicts.append({
+            "trim_id": key[0],
+            "field_key": key[1],
+            "qualifiers": dict(key[2]),
+            "observed_at": key[3],
+            "fact_ids": sorted(fact.fact_id for _, fact in incoming),
+            "source_ids": sorted(set(source_ids)),
+            "values": distinct_values,
+            "reason": (f"{key[0]} has conflicting {key[1]} values for the same "
+                       f"comparison context and date {key[3]}; incoming facts withheld"),
+        })
+
+    safe = [command for index, command in enumerate(commands) if index not in blocked]
+    conflicts.sort(key=lambda row: (
+        row["trim_id"], row["field_key"], str(row["observed_at"]), row["fact_ids"]))
+    return safe, conflicts
 
 
 def price_commands_from_outcomes(

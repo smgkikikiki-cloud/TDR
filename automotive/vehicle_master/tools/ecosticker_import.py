@@ -118,7 +118,7 @@ def applied_report(plan: SourceImportPlan, *, source: str, observed_at: str) -> 
 
 
 def repaired_report(plan: SourceImportPlan, *, source: str) -> dict[str, Any]:
-    """Every dated price this run withheld because two records disagreed.
+    """Every spec/price this run withheld because source records disagreed.
 
     ``ecosticker_export.normalize_row``'s own value repairs (a bad unit, an
     out-of-range figure) are reported by ``dropped_report`` instead, counted
@@ -131,6 +131,12 @@ def repaired_report(plan: SourceImportPlan, *, source: str) -> dict[str, Any]:
         by_source_id.setdefault(entry["source_id"], {
             "source_id": entry["source_id"], "trim_id": entry["trim_id"], "repairs": {},
         })["repairs"]["price"] = entry["reason"]
+    for entry in plan.spec_conflicts:
+        for source_id in entry["source_ids"]:
+            row = by_source_id.setdefault(source_id, {
+                "source_id": source_id, "trim_id": entry["trim_id"], "repairs": {},
+            })
+            row["repairs"].setdefault("spec", []).append(entry["reason"])
     rows = sorted(by_source_id.values(), key=lambda row: row["source_id"])
     return {
         "schema_version": 1,
@@ -207,7 +213,8 @@ def main(argv=None) -> int:
     unresolved = len(plan.unplaced) + len(plan.exception_outcomes)
     print(f"rows {len(plan.raw_rows)}  matched {matched}  "
           f"new trims {created}  unresolved {unresolved}")
-    print(f"spec facts {len(plan.spec_commands)} in {len(batches)} batches")
+    print(f"spec facts {len(plan.spec_commands)} in {len(batches)} batches "
+          f"({len(plan.spec_conflicts)} conflicts withheld)")
     print(f"price observations {len(plan.price_commands)} "
           f"({len(plan.price_suppressed)} withheld)")
     if plan.price_suppressed:

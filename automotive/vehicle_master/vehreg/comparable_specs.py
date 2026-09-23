@@ -114,6 +114,15 @@ def transmission_family(raw: object) -> Optional[str]:
     return _family(raw, TRANSMISSION_FAMILIES)
 
 
+_PLANT_SIGNAL = re.compile(r"(?i)\bplant\b|โรงงาน")
+
+
+def is_identified_manufacturing_plant(raw: object) -> bool:
+    """Whether ECO's factory text identifies a physical manufacturing site."""
+    text = str(raw or "").strip()
+    return bool(text and _PLANT_SIGNAL.search(text))
+
+
 def comparable_spec_root(data_dir: Path | str, year: int) -> Path:
     return Path(data_dir) / str(year) / "product" / "comparable_specs"
 
@@ -320,6 +329,17 @@ class SpecFact:
                      for key in definition.comparison_qualifiers)
 
 
+def spec_conflict_key(fact: SpecFact, definition: SpecFieldDefinition) -> tuple:
+    """Canonical identity for a same-start comparable-spec conflict."""
+    return (fact.trim_id, fact.field_key, fact.qualifier_key(definition), fact.start)
+
+
+def spec_conflict_value(fact: SpecFact) -> tuple[str, str]:
+    """Canonical value identity for a comparable-spec conflict."""
+    return (fact.value_state.value,
+            json.dumps(fact.value, sort_keys=True, ensure_ascii=False))
+
+
 class SpecLedger:
     def __init__(self, registry: SpecRegistry, year: int = DEFAULT_YEAR,
                  *, catalog: Optional["Catalog"] = None) -> None:
@@ -427,11 +447,10 @@ class SpecLedger:
         for fact in self.facts:
             definition = self.registry.fields.get(fact.field_key)
             if definition:
-                key = (fact.trim_id, fact.field_key, fact.qualifier_key(definition), fact.start)
+                key = spec_conflict_key(fact, definition)
                 groups.setdefault(key, []).append(fact)
         for key, facts in groups.items():
-            values = {(f.value_state.value, json.dumps(f.value, sort_keys=True,
-                                                       ensure_ascii=False)) for f in facts}
+            values = {spec_conflict_value(f) for f in facts}
             if len(values) > 1:
                 problems.append(f"conflicting comparable spec facts at {key}")
         return problems
@@ -452,8 +471,7 @@ class SpecLedger:
             latest_start = max(f.start or "0001-01-01" for f in facts)
             latest = [f for f in facts if (f.start or "0001-01-01") == latest_start]
             active = [f for f in latest if f.active_on(when)]
-            values = {(f.value_state.value, json.dumps(f.value, sort_keys=True,
-                                                       ensure_ascii=False)) for f in active}
+            values = {spec_conflict_value(f) for f in active}
             if len(values) > 1:
                 raise ComparableSpecError(
                     f"{trim_id}: conflicting {latest[0].field_key} at {latest_start}")
@@ -670,7 +688,9 @@ class ECOCandidateSpecStore:
                 ("battery.nominal_voltage_v", _positive_number(detail.get("nominal_voltage")), "V"),
                 ("powertrain.motor_type", detail.get("motor"), ""),
                 ("emissions.co2_g_km", _nonnegative_number(detail.get("emissions_CO2")), "g/km"),
-                ("manufacturing.factory", row.get("factory"), ""),
+                ("manufacturing.factory",
+                 row.get("factory") if is_identified_manufacturing_plant(
+                     row.get("factory")) else None, ""),
             ]
             for key, value, unit in simple:
                 if value not in (None, "", "-") and key in registry.fields:

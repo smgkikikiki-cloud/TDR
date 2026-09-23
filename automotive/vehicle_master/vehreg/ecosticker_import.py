@@ -114,6 +114,11 @@ def _match_trim(catalog: Catalog, model_id: str, label: str,
 
 def plan_row(raw: dict, catalog: Catalog, registry: SpecRegistry) -> RowPlan:
     vehicle = normalize_row(raw)
+    if not vehicle.source_id:
+        return RowPlan(
+            source_id="", brand_raw=vehicle.brand_raw, model_raw=vehicle.model_raw,
+            status=UNRESOLVED, vehicle=vehicle, reason="missing ECO source id",
+        )
     specs, dropped = applicable_specs(vehicle, registry)
     plan = RowPlan(
         source_id=vehicle.source_id, brand_raw=vehicle.brand_raw,

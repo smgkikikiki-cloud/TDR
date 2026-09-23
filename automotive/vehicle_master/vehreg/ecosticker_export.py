@@ -24,7 +24,8 @@ import re
 from typing import Any, Optional
 
 from .comparable_specs import (
-    ValueState, ValueType, battery_chemistry_family, transmission_family,
+    ValueState, ValueType, battery_chemistry_family,
+    is_identified_manufacturing_plant, transmission_family,
 )
 from .ecosticker_ingest import infer_powertrain
 
@@ -476,7 +477,7 @@ _NUMERIC_SPECS: tuple[tuple[str, str, str], ...] = (
 #: ``factory`` is deliberately absent -- ``manufacturing.factory`` means an
 #: identified physical plant, and most of what the export states there is
 #: the manufacturer's or importer's legal entity name instead (see
-#: ``_is_identified_plant``). Handled below, alongside the raw text it
+#: ``is_identified_manufacturing_plant``). Handled below, alongside the raw text it
 #: still keeps for a person to read either way.
 _TEXT_SPECS: tuple[tuple[str, str], ...] = (
     ("battery_brand", "battery.supplier"),
@@ -491,19 +492,6 @@ _TEXT_SPECS: tuple[tuple[str, str], ...] = (
 #: there is not this field -- and neither OTHER nor an unstated family says
 #: clearly enough what the number means to write it as one.
 _GEAR_COUNT_FAMILIES = frozenset({"AUTOMATIC", "MANUAL"})
-
-#: A plant is a place, not a company. Most of what ``factory`` actually
-#: states is the manufacturer's or Thai importer's registered legal entity
-#: ("บริษัท ... จำกัด" / "... CO., LTD.") -- real, but not what
-#: ``manufacturing.factory`` (labelled "Manufacturing plant" in the
-#: registry) claims to be. Only a value that names an actual site is
-#: written there; a word actually meaning "plant" is the one signal the
-#: export gives for that, in either language.
-_PLANT_SIGNAL = re.compile(r"(?i)\bplant\b|โรงงาน")
-
-
-def _is_identified_plant(raw: str) -> bool:
-    return bool(_PLANT_SIGNAL.search(raw))
 
 #: The ECO Sticker does not say which drive cycle its range and consumption
 #: figures come from. Recording them as NEDC or WLTP would be a guess, and a
@@ -574,13 +562,13 @@ def normalize_row(row: dict) -> NormalizedVehicle:
         if gears is not None and gears > 0:
             specs["powertrain.gear_count"] = gears
 
-    # "factory" is filed as a legal entity almost as often as a place -- see
-    # _is_identified_plant. The raw text is always kept for a person to
-    # read; only an identified plant becomes the comparable-spec fact.
+    # "factory" is filed as a legal entity almost as often as a place.
+    # The raw text is always kept for a person to read; only an identified
+    # physical plant becomes the comparable-spec fact.
     factory_raw = _text(row.get("factory"))
     if factory_raw:
         vehicle.notes["factory"] = factory_raw
-        if _is_identified_plant(factory_raw):
+        if is_identified_manufacturing_plant(factory_raw):
             specs["manufacturing.factory"] = factory_raw
 
     # The export's ``battery_capacity`` is the pack's charge in ampere-hours,

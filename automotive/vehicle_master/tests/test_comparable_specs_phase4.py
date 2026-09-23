@@ -116,7 +116,7 @@ def test_eco_candidates_cover_the_cohort_but_publish_nothing():
         "models_with_candidates": 31,
         "candidate_trims": 118,
         "representative_candidates": 20,
-        "candidate_spec_values": 1842,
+        "candidate_spec_values": 1740,
         # Nothing is promoted, and the reason is recorded rather than implied.
         "published_market_trims": 0,
         "pilot_models_with_current_oem_evidence": 0,

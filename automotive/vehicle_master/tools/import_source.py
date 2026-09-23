@@ -40,8 +40,8 @@ from vehreg.ecosticker_import import UNRESOLVED, plan_row
 from vehreg.source_import import (
     CREATED, EXCEPTION, FIELD_TO_COLUMN, PATCHED, ExistingTrim, RowOutcome,
     SourceRow, batches_from_commands, commands_from_outcomes,
-    price_commands_from_outcomes, resolve_rows, spec_commands_from_outcomes,
-    summarize,
+    preflight_spec_commands, price_commands_from_outcomes, resolve_rows,
+    spec_commands_from_outcomes, summarize,
 )
 from vehreg.input_pipeline import CanonicalInputPipeline
 
@@ -161,6 +161,7 @@ class SourceImportPlan:
     model_commands: list[dict]
     stranded: list[RowOutcome]
     spec_commands: list[dict]
+    spec_conflicts: list[dict]
     price_commands: list[dict]
     price_suppressed: list[dict]
 
@@ -179,10 +180,17 @@ def plan_source_import(
 ) -> SourceImportPlan:
     """Resolve an export's rows and compile every command they produce.
 
-    ``submitted_at`` is the run's own date, used only for a row whose source
-    states no observation date of its own -- see ``spec_commands_from_
-    outcomes``'s docstring. A row with one is never overridden by it.
+    ``submitted_at`` is the run timestamp. Its calendar date is used only for
+    a row whose source states no observation date of its own -- see
+    ``spec_commands_from_outcomes``. A row with one is never overridden by it.
+    The timestamp is validated before any rows are resolved or commands built.
     """
+    submitted_text = str(submitted_at or "").strip()
+    try:
+        datetime.fromisoformat(submitted_text.replace("Z", "+00:00"))
+    except (TypeError, ValueError) as exc:
+        raise ValueError("submitted_at must be a valid ISO-8601 date or timestamp") from exc
+
     raw_rows = read_rows(export)
     rows, unplaced, dropped_counts = source_rows(raw_rows, catalog, registry, source_kind)
     trims = existing_trims(catalog)
@@ -202,21 +210,27 @@ def plan_source_import(
     ledger = SpecLedger.load(data_dir, year, registry=registry, catalog=catalog)
     existing_facts = {
         fact.fact_id: {
-            "trim_id": fact.trim_id, "value_state": fact.value_state.value,
-            "value": fact.value, "unit": fact.unit,
-            "qualifiers": fact.qualifiers, "observed_at": fact.observed_at,
+            "trim_id": fact.trim_id, "field_key": fact.field_key,
+            "value_state": fact.value_state.value, "value": fact.value,
+            "unit": fact.unit, "qualifiers": fact.qualifiers,
+            "effective_from": fact.effective_from, "effective_to": fact.effective_to,
+            "observed_at": fact.observed_at,
+            "verification_status": fact.verification_status.value,
+            "source": fact.source, "source_ref": fact.source_ref,
         } for fact in ledger.facts
     }
-    spec_commands = spec_commands_from_outcomes(
+    candidate_spec_commands = spec_commands_from_outcomes(
         outcomes, registry=registry, existing_facts=existing_facts, submitted_at=submitted_at)
+    spec_commands, spec_conflicts = preflight_spec_commands(
+        candidate_spec_commands, registry=registry, existing_facts=existing_facts)
     price_commands, price_suppressed = price_commands_from_outcomes(
         outcomes, price_type=ECO_PRICE_TYPE, submitted_at=submitted_at)
 
     return SourceImportPlan(
         raw_rows=raw_rows, rows=rows, unplaced=unplaced, dropped_counts=dropped_counts,
         outcomes=outcomes, model_commands=model_commands, stranded=stranded,
-        spec_commands=spec_commands, price_commands=price_commands,
-        price_suppressed=price_suppressed,
+        spec_commands=spec_commands, spec_conflicts=spec_conflicts,
+        price_commands=price_commands, price_suppressed=price_suppressed,
     )
 
 
@@ -264,6 +278,7 @@ def main(argv=None) -> int:
         "exceptions": len(exceptions),
         "conflicts": len(conflicts),
         "facts": len(plan.spec_commands),
+        "spec_conflicts": len(plan.spec_conflicts),
         "dropped": dict(sorted(plan.dropped_counts.items(), key=lambda item: -item[1])),
         "prices": len(plan.price_commands),
         "prices_suppressed": len(plan.price_suppressed),
@@ -315,6 +330,7 @@ def main(argv=None) -> int:
         json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (report_dir / f"{stem}_exceptions.json").write_text(
         json.dumps({"exceptions": exceptions, "conflicts": conflicts,
+                   "spec_conflicts": plan.spec_conflicts,
                    "price_suppressed": plan.price_suppressed},
                    ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(report, ensure_ascii=False))
