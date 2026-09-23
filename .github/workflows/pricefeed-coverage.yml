@@ -1,0 +1,99 @@
+name: Price feed coverage
+
+# The same Price Feed pipeline as pricefeed.yml's harvest job -- the same
+# resolver (vehreg.pricefeed.run), the same writer (tools.pricefeed_write,
+# CanonicalInputPipeline, PriceLedger), the same release-publish gate --
+# just a different way to produce the harvest-batch JSON that pipeline
+# reads: instead of polling outlets for what is new, this asks the catalog
+# itself what is missing a LIST_PRICE, stale, or unresolved, and fetches
+# only the grouped OEM source targets that can answer that (tools.
+# pricefeed_coverage, tools.pricefetch_targets). A separate workflow file
+# on purpose, sharing this job's concurrency group with the harvest job
+# rather than a second cron/mode inside the same file, so this cannot
+# regress the already-fixed 20-minute harvest schedule by a YAML mistake
+# in an unrelated job.
+
+on:
+  schedule:
+    # Once a day, off-peak: coverage work is bounded (--limit-models) and
+    # does not need the harvest job's 20-minute cadence -- it is asking
+    # "what does the catalog still lack", not "what changed in the last
+    # few hours".
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+    inputs:
+      limit_models:
+        description: "max gap models to fetch this run"
+        required: false
+      stale_after_days:
+        description: "a served LIST_PRICE older than this is worth a re-check"
+        required: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  # Shared with harvest (pricefeed.yml), source-import, canonical-input and
+  # vehicle-release: this job can activate a canonical vehicle release
+  # exactly like they can, and a separate concurrency group is what let an
+  # older commit's publish race a newer one and roll the active release
+  # backward -- see migration_v44's own comment on this same group.
+  group: canonical-vehicle-input
+  cancel-in-progress: false
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    defaults:
+      run:
+        working-directory: automotive/vehicle_master
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: automotive/vehicle_master/requirements.txt
+      - run: python -m pip install -r requirements.txt pytest
+      - name: Fetch catalog-gap evidence and write resolved prices
+        run: |
+          set -euo pipefail
+          PYTHONPATH=. python -m tools.pricefeed_coverage \
+            --limit-models "${{ inputs.limit_models || '10' }}" \
+            --stale-after-days "${{ inputs.stale_after_days || '180' }}" \
+            --out vehreg/data/2026/market/pricefeed/coverage-$(date -u +%Y-%m-%dT%H%M).json \
+            --apply --observed-at "$(date -u +%F)" | tee /tmp/coverage-write.json
+      - run: python tools/pricefeed_guard.py --base origin/main --repo-prefix automotive/vehicle_master/
+      # Same isolation reason as pricefeed.yml's harvest job: an exception
+      # case in these tests must not POST into the live import_runs table.
+      - name: Test without production database access
+        env:
+          SUPABASE_URL: ""
+          SUPABASE_SECRET_KEY: ""
+          SUPABASE_SERVICE_ROLE_KEY: ""
+        run: pytest -q
+      - name: Commit the resolved prices
+        id: commit
+        run: |
+          set -euo pipefail
+          if [ -z "$(git status --porcelain vehreg/data)" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          git config user.name "TDR price watcher"
+          git config user.email "noreply@github.com"
+          git add vehreg/data
+          git commit -m "Price feed coverage: $(python -c "import json; d=json.load(open('/tmp/coverage-write.json')); w=d.get('write') or {}; p=w.get('planned', {}); print(f\"{d.get('targets_fetched', 0)} target(s) fetched, {p.get('WRITTEN', 0)} written, {p.get('UNCHANGED', 0)} unchanged, {(w.get('exceptions_stored') or {}).get('count', 0)} unresolved\")")"
+          git pull --rebase origin main
+          git push origin HEAD:main
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      - name: Publish the pushed revision
+        if: steps.commit.outputs.changed == 'true'
+        run: PYTHONPATH=. python -m tools.publish_canonical --revision "${{ steps.commit.outputs.sha }}"

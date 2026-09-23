@@ -395,6 +395,8 @@ def main(argv: list[str] | None = None) -> int:
         raise HarvestError("no sources.json; nothing to poll")
     wanted = [s for s in registry.values()
               if (not args.source or s.id in args.source) and s.adapter == "wordpress"]
+    if not wanted:
+        raise HarvestError("no wordpress sources matched --source; nothing to poll")
     batch = harvest(wanted, since=args.since, catalog=catalog,
                     limit_per_source=args.limit, delay=args.delay,
                     want_content=not args.measure_only,
@@ -409,6 +411,14 @@ def main(argv: list[str] | None = None) -> int:
                       "failed_sources": batch["failed_sources"],
                       "out": str(args.out) if args.out else None},
                      ensure_ascii=False, indent=2))
+    # One flaky outlet must not fail the tick -- harvest() already keeps
+    # going past it -- but every candidate source being unreachable is not
+    # "no news today", it is the network or every outlet being down, and
+    # silently exiting 0 here is how that goes unnoticed for weeks.
+    if len(batch["failed_sources"]) == len(wanted):
+        print(f"all {len(wanted)} source(s) were unreachable this run: "
+             f"{sorted(batch['failed_sources'])}", file=sys.stderr)
+        return 1
     return 0
 
 
