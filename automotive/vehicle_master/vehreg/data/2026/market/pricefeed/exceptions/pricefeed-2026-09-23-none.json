@@ -1,5 +1,24 @@
 {
   "batch_ref": "pricefeed-2026-09-23-none",
-  "generated_at": "2026-09-23T11:14:51+00:00",
-  "exceptions": []
+  "generated_at": "2026-09-23T11:31:44+00:00",
+  "exceptions": [
+    {
+      "kind": "PRICE_IDENTITY",
+      "reason": "no_trim_match",
+      "source_identity": {
+        "trim_id": null,
+        "trim_candidates": [],
+        "amount_thb": 4950000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "campaign_id": null,
+        "urls": [
+          "https://www.headlightmag.com/official-price-mercedes-amg-cle-53-coupe-2026/"
+        ],
+        "claim_ids": [
+          "27677e6d7e3b0d54"
+        ]
+      }
+    }
+  ]
 }
