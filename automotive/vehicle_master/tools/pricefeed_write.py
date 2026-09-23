@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import argparse
 from datetime import date, datetime, timezone
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -102,6 +103,51 @@ def _split_unresolvable(offers: list[dict], unresolvable: dict[tuple, str]):
     return writable, blocked
 
 
+def _harvest_input_id(observed_at: str, documents: list, claims: list) -> str:
+    """``import_runs``' identity: the harvested evidence itself -- what was
+    read, never what the resolver did with it.
+
+    This is deliberately NOT a hash of the resolved exceptions (an earlier
+    version of this fix was: two genuinely different harvests that happen
+    to leave behind the same unresolved claims would then collapse into
+    one import_runs row, silently losing the audit trail of the second
+    harvest ever having run) and NOT ``batch_id_for``'s hash of the
+    WRITTEN commands either (that stays scoped to what it already is --
+    CanonicalInputPipeline's own replay key for the canonical write itself,
+    a different and correctly output-based question). One rule, for every
+    run regardless of what it resolved to: a replay of the identical
+    harvest input (the same documents and claims tools.pricefeed_harvest
+    or tools.pricefeed_coverage produced) is the same logical run and
+    lands on the same storage_path; genuinely different harvested
+    evidence -- even if it happens to produce identical leftover
+    exceptions, or no written commands either time -- is a different run.
+    """
+    body = json.dumps(
+        {"documents": [pricefeed.to_dict(d) for d in documents],
+         "claims": [pricefeed.to_dict(c) for c in claims]},
+        sort_keys=True, ensure_ascii=False,
+    )
+    digest = hashlib.sha256(body.encode()).hexdigest()[:16]
+    return f"pricefeed-{observed_at}-{digest}"
+
+
+def _row_hash(item: dict) -> str:
+    """Content identity of one exception, independent of ``run_id``.
+
+    Two different harvests naming genuinely different unresolved work must
+    never collide (different content, different hash); a replay of the
+    exact same harvest must always collide with itself (identical content,
+    identical hash) so ``on_conflict=run_id,exception_hash`` can skip it
+    instead of inserting a duplicate -- see migration_v49.
+    """
+    body = json.dumps(
+        {"kind": item.get("kind"), "reason": item.get("reason"),
+         "source_identity": item.get("source_identity") or {}},
+        sort_keys=True, ensure_ascii=False,
+    )
+    return hashlib.sha256(body.encode()).hexdigest()
+
+
 def _store_exceptions(rows: list[dict], *, data_dir: Path, year: int,
                       batch_ref: str) -> dict:
     """Durable on disk always; in the owner's exception list when we can.
@@ -125,9 +171,27 @@ def _store_exceptions(rows: list[dict], *, data_dir: Path, year: int,
 
 
 def _post_exceptions(rows: list[dict], *, batch_ref: str) -> str:
+    """Idempotent by construction, at the database layer, not by hoping
+    ``batch_ref`` is never reused.
+
+    ``import_runs.storage_path`` is derived from ``batch_ref``, which the
+    caller has already made content-derived (see ``run()`` below) rather
+    than date-only, so two different harvests never collide -- but a
+    genuine replay of the identical harvest DOES name the same
+    storage_path on purpose, and that must succeed idempotently rather
+    than 409. ``resolution=merge-duplicates`` upserts the run row (the id
+    is needed back either way) and is harmless on replay: identical
+    content produces identical values.
+
+    Each exception row also carries a content hash (``_row_hash``), and
+    ``resolution=ignore-duplicates`` means a replay's insert attempt for
+    an already-recorded (run_id, exception_hash) is silently skipped --
+    never re-inserted, and never able to resurrect a row a human already
+    moved to RESOLVED by touching it again.
+    """
     from tools.import_worker import _rest
 
-    run = _rest("POST", "import_runs", {
+    run = _rest("POST", "import_runs?on_conflict=storage_path", {
         "storage_path": f"pricefeed/{batch_ref}",
         "original_name": f"{batch_ref}.json",
         "source_kind": SOURCE_KIND,
@@ -136,19 +200,20 @@ def _post_exceptions(rows: list[dict], *, batch_ref: str) -> str:
         "exceptions": len(rows),
         "started_at": datetime.now(timezone.utc).isoformat(),
         "finished_at": datetime.now(timezone.utc).isoformat(),
-    }, prefer="return=representation")
+    }, prefer="resolution=merge-duplicates,return=representation")
     run_id = (run or [{}])[0].get("id")
     if not run_id:
-        raise RuntimeError("import_runs insert returned no id")
+        raise RuntimeError("import_runs upsert returned no id")
     for start in range(0, len(rows), 500):
-        _rest("POST", "import_run_exceptions", [{
+        _rest("POST", "import_run_exceptions?on_conflict=run_id,exception_hash", [{
             "run_id": run_id,
             "source_kind": SOURCE_KIND,
             "kind": str(item.get("kind") or "PRICE_IDENTITY"),
             "reason": str(item.get("reason") or "")[:2000],
             "source_identity": item.get("source_identity") or {},
             "status": "OPEN",
-        } for item in rows[start:start + 500]], prefer="return=minimal")
+            "exception_hash": _row_hash(item),
+        } for item in rows[start:start + 500]], prefer="resolution=ignore-duplicates,return=minimal")
     return run_id
 
 
@@ -170,6 +235,7 @@ def run(path: Path, *, data_dir: Path, year: int,
     command is evidence-only and was never wired to a writer.
     """
     documents, claims = pricefeed.load_batch(path)
+    input_id = _harvest_input_id(observed_at, documents, claims)
     catalog = Catalog.load(data_dir, year)
     ledger = PriceLedger.load(data_dir, year=year, catalog=catalog)
     result = pricefeed.run(documents, claims,
@@ -184,9 +250,8 @@ def run(path: Path, *, data_dir: Path, year: int,
     batch = batch_from_outcomes(outcomes, year=year, submitted_at=f"{observed_at}T00:00:00+00:00")
 
     exceptions = exception_rows(outcomes, [*result.review, *blocked])
-    batch_ref = batch["batch_id"] if batch else f"pricefeed-{observed_at}-none"
     stored = _store_exceptions(exceptions, data_dir=data_dir, year=year,
-                               batch_ref=batch_ref)
+                               batch_ref=input_id)
 
     summary = {
         **result.summary(),
