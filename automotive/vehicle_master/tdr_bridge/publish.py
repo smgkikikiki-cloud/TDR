@@ -26,6 +26,13 @@ def _clean_env_value(value: str | None, *names: str) -> str:
     return _strip_wrapper_quotes(cleaned)
 
 
+#: Comfortably above publish_vehicle_release(jsonb)'s own 45s function-level
+#: statement_timeout (migration_v47) -- the RPC always errors out on its own
+#: budget first, so this only needs to outlast that, not guess at how long
+#: the request itself might otherwise hang for.
+REQUEST_TIMEOUT_SECONDS = 55
+
+
 def publish(release: dict, *, url: str, service_key: str) -> dict:
     endpoint = url.rstrip("/") + "/rest/v1/rpc/publish_vehicle_release"
     headers = {
@@ -45,7 +52,7 @@ def publish(release: dict, *, url: str, service_key: str) -> dict:
         method="POST",
     )
     try:
-        with urlopen(request, timeout=120) as response:
+        with urlopen(request, timeout=REQUEST_TIMEOUT_SECONDS) as response:
             body = response.read().decode()
     except HTTPError as exc:
         body = exc.read().decode(errors="replace")
