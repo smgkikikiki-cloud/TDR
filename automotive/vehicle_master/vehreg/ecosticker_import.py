@@ -1,41 +1,43 @@
-"""Plans a bulk ECO Sticker import against the catalogue, then compiles it.
+"""Resolves a bulk ECO Sticker export row's brand/model/generation identity
+against the catalogue.
 
 The export names a vehicle the way its manufacturer filed it -- "ALPHARD
 HYBRID G 2WD CAR" is brand, model and grade run together in one cell -- and
-the catalogue stores those three as separate things. This module decides, for
-every row, which of three situations it is in:
+the catalogue stores those three as separate things. ``plan_row`` decides,
+for every row, which of three situations it is in:
 
   MATCHED     the row is an existing MarketTrim, so its specs attach to it
   NEW_TRIM    the model exists but this grade does not, so create it
   UNRESOLVED  the brand, model or generation cannot be resolved
 
-and then compiles the first two into canonical input batches. The third is
-reported for a person to look at rather than being guessed at, because a
-wrongly attached specification is harder to notice, and harder to undo, than a
-missing one.
-
 Brand and model matching is not reimplemented here: ``ecosticker_ingest``
 already does it, and has been run against real harvests for longer than this
 module has existed.
+
+Compiling a resolved row into canonical input commands (UPSERT_MODEL_BUNDLE,
+APPEND_SPEC, APPEND_PRICE) is not this module's job -- ``vehreg.source_import``
+does that, from a ``SourceRow``/``RowOutcome`` this module's own ``plan_row``
+feeds, shared with every other source rather than reimplemented per source.
+This module used to compile ECO's rows too (``commands_for``/
+``batches_from_plan``, plus ``plan_import``'s own spec-dedup and price
+grouping); that duplicated ``vehreg.source_import``'s writer-facing half
+under a second, ECO-only set of rules, so it was retired once
+``vehreg.source_import.spec_commands_from_outcomes``/
+``price_commands_from_outcomes`` could do the same job for every source that
+resolves through this file's identity step.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass, field
 import re
-from typing import Any, Iterable, Optional
+from typing import Any, Optional
 
 from .catalog import Catalog
 from .comparable_specs import SpecRegistry
 from .ecosticker_export import NormalizedVehicle, applicable_specs, normalize_row
 from .ecosticker_ingest import _brand_candidates, _model_candidates
 from .normalize import fold, trim_identity
-
-#: How many commands one batch carries. The input pipeline stages a whole
-#: batch in a temp tree and applies it atomically, so a batch is also the unit
-#: of "all of this landed or none of it did"; a few hundred keeps a failure
-#: readable and a diff reviewable.
-DEFAULT_BATCH_SIZE = 200
 
 MATCHED = "MATCHED"
 NEW_TRIM = "NEW_TRIM"
@@ -88,33 +90,6 @@ class RowPlan:
     specs: dict[str, Any] = field(default_factory=dict)
     dropped: list[str] = field(default_factory=list)
     reason: str = ""
-    #: Another row already writes this trim's specs, so this one contributes
-    #: its price observation and nothing else.
-    price_only: bool = False
-    #: Why this row's price is not written, if it is not.
-    price_suppressed: str = ""
-
-
-@dataclass
-class ImportPlan:
-    rows: list[RowPlan] = field(default_factory=list)
-
-    def of(self, status: str) -> list[RowPlan]:
-        return [row for row in self.rows if row.status == status]
-
-    def summary(self) -> dict[str, int]:
-        counts = {MATCHED: 0, NEW_TRIM: 0, UNRESOLVED: 0}
-        for row in self.rows:
-            counts[row.status] = counts.get(row.status, 0) + 1
-        counts["spec_facts"] = sum(len(row.specs) for row in self.rows
-                                   if row.status != UNRESOLVED and not row.price_only)
-        counts["price_observations"] = sum(
-            1 for row in self.rows
-            if row.status != UNRESOLVED and row.vehicle.price_thb and not row.price_suppressed)
-        counts["price_only_rows"] = sum(1 for row in self.rows if row.price_only)
-        counts["prices_suppressed"] = sum(1 for row in self.rows if row.price_suppressed)
-        counts["rows"] = len(self.rows)
-        return counts
 
 
 def _match_trim(catalog: Catalog, model_id: str, label: str,
@@ -189,240 +164,6 @@ def plan_row(raw: dict, catalog: Catalog, registry: SpecRegistry) -> RowPlan:
     return plan
 
 
-def plan_import(rows: Iterable[dict], catalog: Catalog,
-                registry: SpecRegistry) -> ImportPlan:
-    plan = ImportPlan()
-    for raw in rows:
-        plan.rows.append(plan_row(raw, catalog, registry))
-
-    # Specs are deduplicated; price observations are not.
-    #
-    # The export files the same grade more than once -- a re-approval keeps
-    # the old record, and a facelift is a new one. Those rows state the same
-    # specification, so only the first writes it: a second write would be a
-    # replay at best and a same-day conflict at worst.
-    #
-    # Their prices are a different matter. Each record is the manufacturer's
-    # filed price on its own approval date, so a trim with four ECO records
-    # has four dated price observations, which is exactly the history the
-    # ledger exists to hold. Discarding the row wholesale, as this used to,
-    # threw 172 of them away.
-    seen: dict[str, RowPlan] = {}
-    for row in plan.rows:
-        if row.status == UNRESOLVED or not row.trim_id:
-            continue
-        first = seen.get(row.trim_id)
-        if first is None:
-            seen[row.trim_id] = row
-            continue
-        row.price_only = True
-        row.reason = (f"สเปกซ้ำกับ source_id {first.source_id} ซึ่งชี้ไปที่ trim "
-                      f"เดียวกัน ({row.trim_id}) จึงเก็บเฉพาะราคาเป็น observation")
-
-    _resolve_price_observations(plan)
-    return plan
-
-
-def _resolve_price_observations(plan: ImportPlan) -> None:
-    """Decide which of a trim's price observations can actually be written.
-
-    A ledger keys a price by (trim, type, start), so two records for one trim
-    on one date have to agree. Two things can break that:
-
-    * the same record filed twice -- identical date and amount, which is one
-      observation written once rather than two;
-    * two different amounts on one date, which means the trim identity is too
-      coarse for what the source is describing (three prices for one Alphard
-      Eclipse grade on one day are three configurations the catalogue does not
-      distinguish yet). Neither amount can be attributed, so neither is
-      written and both are reported -- the answer is a finer trim, not a
-      guess about which price is the real one.
-    """
-    by_key: dict[tuple[str, str], list[RowPlan]] = {}
-    for row in plan.rows:
-        if row.status == UNRESOLVED or not row.trim_id or not row.vehicle.price_thb:
-            continue
-        by_key.setdefault((row.trim_id, row.vehicle.approved_at), []).append(row)
-
-    for (trim_id, observed), rows in by_key.items():
-        amounts = {int(row.vehicle.price_thb) for row in rows}
-        if len(amounts) > 1:
-            listed = ", ".join(f"{amount:,}" for amount in sorted(amounts))
-            for row in rows:
-                row.price_suppressed = (
-                    f"{trim_id} มีราคา ECO ต่างกัน {len(amounts)} ค่า ({listed}) "
-                    f"ในวันเดียวกัน ({observed}) แปลว่า trim identity ยังหยาบเกินไป "
-                    "จึงไม่บันทึกราคาใดเลยจนกว่าจะแยก trim ได้")
-            continue
-        # Same record filed twice: one observation, written once.
-        for row in rows[1:]:
-            row.price_suppressed = (f"ราคาเดียวกัน ({int(row.vehicle.price_thb):,}) "
-                                    f"และวันเดียวกัน ({observed}) กับ source_id "
-                                    f"{rows[0].source_id} จึงนับเป็น observation เดียว")
-
-
-def _trim_row(plan: RowPlan) -> dict[str, Any]:
-    """The MarketTrim patch for one planned row.
-
-    Only the columns MarketTrim owns, and only where the export actually said
-    something. Battery is deliberately absent: MarketTrim's ``battery_kwh`` is
-    the capacity a catalogue quotes, and what the export yields is the
-    nameplate pack derived from charge and voltage. They are different
-    quantities, so the derived one stays a comparable-spec fact
-    (``battery.gross_capacity_kwh``) and is never written into a column that
-    means something else. `id` is sent for a trim that exists so the writer updates it
-    rather than deriving a new identity from a name that may have been
-    re-spelled upstream.
-    """
-    specs = plan.specs
-    row: dict[str, Any] = {"name": plan.trim_name, "powertrain": plan.vehicle.powertrain}
-    if plan.status == MATCHED and plan.trim_id:
-        row["canonical_id"] = plan.trim_id
-    for key, column in (("vehicle.seats", "seats"),
-                        ("vehicle.length_mm", "length_mm"),
-                        ("vehicle.width_mm", "width_mm"),
-                        ("vehicle.height_mm", "height_mm"),
-                        ("engine.displacement_cc", "engine_cc"),
-                        ("powertrain.transmission", "transmission"),
-                        ("fitment.tyre_front", "tire_front"),
-                        ("fitment.tyre_rear", "tire_rear")):
-        if key in specs:
-            row[column] = specs[key]
-    return row
-
-
-def _price_command(plan: RowPlan, *, observed_at: str) -> Optional[dict[str, Any]]:
-    """The recommended retail price the manufacturer filed, as an observation.
-
-    ``observed_at`` carries the record's approval date and ``effective_from``
-    is deliberately absent. Those two fields make different claims: observed
-    says only that this is what the source stated on that day, while effective
-    asserts that the price took force then and held. An ECO record establishes
-    the first and says nothing about the second -- it is a homologation filing,
-    not a price list -- so inventing a validity window from it would be the
-    same overreach as calling the figure a current MSRP.
-
-    The type is ECO_STICKER_PRICE for the same reason.
-    PriceLedger.current_list_price() resolves the LIST_PRICE stream only, so
-    nothing written here can surface as the price a reader is shown.
-    """
-    if plan.price_suppressed or not plan.vehicle.price_thb or plan.vehicle.price_thb <= 0:
-        return None
-    return {
-        "operation": "APPEND_PRICE",
-        "canonical_id": plan.trim_id,
-        "payload": {
-            "trim_id": plan.trim_id,
-            "amount_thb": int(plan.vehicle.price_thb),
-            "price_type": "ECO_STICKER_PRICE",
-            "observed_at": plan.vehicle.approved_at or observed_at,
-            "source": "ecosticker",
-            "source_ref": plan.vehicle.source_url,
-            "notes": ("ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ "
-                      "เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน"),
-        },
-    }
-
-
-def commands_for(plan: RowPlan, registry: SpecRegistry, *,
-                 observed_at: str) -> list[dict[str, Any]]:
-    """One UPSERT_MODEL_BUNDLE, the row's ECO price, and one APPEND_SPEC per value.
-
-    The registry is needed for the unit: a numeric fact must carry exactly the
-    field's canonical unit or the writer rejects the whole batch.
-
-    Facts are dated by the row's own ECO approval date, not by the day the
-    import runs. The ledger keys a fact by its start, so an import-day stamp
-    would file next month's re-import of an unchanged record as a fresh
-    specification dated that day -- a change the source never made. Where the
-    export states no approval date, ``observed_at`` is the fallback.
-    """
-    if plan.status == UNRESOLVED or not plan.model_id:
-        return []
-    price_command = _price_command(plan, observed_at=observed_at)
-    if plan.price_only:
-        # Another row writes this trim. This one is here for its price.
-        return [price_command] if price_command else []
-    # The writer requires all three objects to be present even when only the
-    # trim list is being changed: brand and model are sent empty-but-identified
-    # so their own fields are left exactly as they are (dict.update() with
-    # nothing in it patches nothing).
-    commands: list[dict[str, Any]] = [{
-        "operation": "UPSERT_MODEL_BUNDLE",
-        "canonical_id": plan.model_id,
-        "payload": {
-            "brand": {"id": plan.brand_id, "name_en": plan.brand_name_en},
-            "model": {},
-            "generation": {"code": plan.generation_id.rsplit(".", 1)[-1]},
-            "variants": [],
-            "trims": [_trim_row(plan)],
-        },
-    }]
-    source_ref = plan.vehicle.source_url
-    observed = plan.vehicle.approved_at or observed_at
-    if price_command:
-        commands.append(price_command)
-
-    for key, value in sorted(plan.specs.items()):
-        fact: dict[str, Any] = {
-            "trim_id": plan.trim_id,
-            "field_key": key,
-            "value_state": "KNOWN",
-            "value": value,
-            "observed_at": observed,
-            "verification_status": "VERIFIED",
-            "source": "ecosticker",
-            "source_ref": source_ref,
-            "unit": registry.fields[key].canonical_unit,
-        }
-        qualifiers = plan.vehicle.qualifiers.get(key)
-        if qualifiers:
-            fact["qualifiers"] = qualifiers
-        commands.append({"operation": "APPEND_SPEC",
-                         "canonical_id": plan.trim_id, "payload": fact})
-    return commands
-
-
-def batches_from_plan(plan: ImportPlan, registry: SpecRegistry, *, year: int,
-                      actor: str, observed_at: str, batch_prefix: str,
-                      batch_size: int = DEFAULT_BATCH_SIZE) -> list[dict[str, Any]]:
-    """Canonical input batches, chunked so one failure stays readable.
-
-    A row's commands are never split across two batches: the spec facts have
-    to land in the same atomic apply as the trim that carries them.
-    """
-    batches: list[dict[str, Any]] = []
-    current: list[dict[str, Any]] = []
-
-    def flush() -> None:
-        if not current:
-            return
-        index = len(batches) + 1
-        batches.append({
-            "schema_version": 1,
-            "batch_id": f"{batch_prefix}-{index:03d}",
-            "year": year,
-            "actor": actor,
-            "submitted_at": f"{observed_at}T00:00:00+00:00",
-            "source": {"kind": "ADMIN", "ref": "ecosticker-export"},
-            "reason": f"ECO Sticker bulk import {observed_at} ({index})",
-            "commands": list(current),
-        })
-        current.clear()
-
-    for row in plan.rows:
-        commands = commands_for(row, registry, observed_at=observed_at)
-        if not commands:
-            continue
-        if current and len(current) + len(commands) > batch_size:
-            flush()
-        current.extend(commands)
-    flush()
-    return batches
-
-
 __all__ = [
-    "DEFAULT_BATCH_SIZE", "MATCHED", "NEW_TRIM", "UNRESOLVED",
-    "ImportPlan", "RowPlan", "batches_from_plan", "commands_for",
-    "plan_import", "plan_row", "trim_label",
+    "MATCHED", "NEW_TRIM", "UNRESOLVED", "RowPlan", "plan_row", "trim_label",
 ]

@@ -1,11 +1,16 @@
 """Patch MarketTrim rows from a source export: resolve identity, then write columns.
 
-The MarketTrim row is the spec source of truth. It is what the release
-publishes and what compare reads; ``SpecLedger`` publishes zero facts, so a
-source that lands there lands nowhere. Ingestion therefore writes trim
-columns, and this module decides which ones.
+The MarketTrim row is the spec source of truth for the small set of fields it
+holds. It is what the release publishes and what compare reads; ``SpecLedger``
+publishes zero facts on its own, so a value that reaches neither a column nor
+a spec fact lands nowhere. Ingestion therefore writes both: the trim columns
+this module has always written (``column_patch``, ``FIELD_TO_COLUMN``), and,
+since the identity this module resolves is exactly what a comparable-spec
+fact needs to be attached to anything, comparable-spec facts and price
+observations for the row's other values (``spec_commands_from_outcomes``,
+``price_commands_from_outcomes``) too.
 
-What a source may do to a field it carries:
+What a source may do to a MarketTrim column it carries:
 
   blank in the source        the key is omitted, so the stored value stands
   value held is None         filled
@@ -13,6 +18,11 @@ What a source may do to a field it carries:
   both values, differ        the source wins only where it is authoritative
                              for that field; otherwise it reports a conflict
                              and writes nothing
+
+A comparable-spec fact is a different kind of value and is not held to that
+column-authority rule -- the registry is the single record of a field over
+time, so a later, differently-dated observation is a new fact, not a
+contested overwrite of the old one. See ``spec_commands_from_outcomes``.
 
 Identity is resolved deterministically or not at all. A source id already
 recorded on a trim resolves to that trim (a re-approval is the same car). An
@@ -29,7 +39,10 @@ import hashlib
 import json
 import re
 import unicodedata
-from typing import Any, Iterable
+from typing import Any, Iterable, Optional
+
+from .comparable_specs import SpecRegistry, ValueType
+from .normalize import trim_identity
 
 #: One canonical_input_batches row accepts at most 500 commands; a few
 #: hundred also keeps a single commit reviewable after the fact.
@@ -126,7 +139,22 @@ def normalized_label(value: object) -> str:
 
 @dataclass(frozen=True)
 class SourceRow:
-    """One normalized record from a source export, ready to resolve."""
+    """One normalized record from a source export, ready to resolve.
+
+    ``values`` and ``specs`` are deliberately two different dicts, not one
+    read two ways: ``values`` is whatever the source stated, unfiltered, and
+    is what ``column_patch`` reads its ``FIELD_TO_COLUMN`` subset from --
+    MarketTrim's own columns are not a comparable-spec registry concept, and
+    must not stop being written just because a field the registry does not
+    (yet) define shares that dict. ``specs`` is the registry-accepted subset
+    (a caller normally passes ``applicable_specs()``'s own result) that
+    ``spec_commands_from_outcomes`` turns into APPEND_SPEC facts. A field
+    can be, and often is, in one and not the other.
+
+    The remaining fields are needed only for the facts/price path and are
+    optional so a caller that only ever wrote columns -- and every existing
+    test that builds a ``SourceRow`` by hand -- is unaffected.
+    """
 
     source_id: str
     source_kind: str
@@ -135,6 +163,19 @@ class SourceRow:
     powertrain: str
     trim_name: str
     values: dict[str, Any]
+    #: The registry-accepted subset of this row's values, for APPEND_SPEC.
+    #: Never read by column_patch.
+    specs: dict[str, Any] = field(default_factory=dict)
+    #: registry key -> {qualifier key: value}, e.g. measurement_basis.
+    qualifiers: dict[str, dict[str, str]] = field(default_factory=dict)
+    #: ISO date the source observed these values (a fact's ``start``). Every
+    #: fact this row produces is dated by this, never by the day the import
+    #: happens to run -- see spec_commands_from_outcomes.
+    observed_at: str = ""
+    #: Where a person can read the record this row came from.
+    source_ref: str = ""
+    #: The manufacturer's filed retail price, if the source states one.
+    price_thb: Optional[int] = None
 
 
 @dataclass(frozen=True)
@@ -347,6 +388,205 @@ def commands_from_outcomes(
             },
         })
     return commands, stranded
+
+
+def resolved_trim_id(outcome: RowOutcome) -> str:
+    """The canonical trim id this outcome's row will end up attached to,
+    known ahead of the write for CREATED rows too.
+
+    trim_identity() is not a reimplementation of the writer's own rule -- it
+    is the exact function vehreg/canonical_write.py calls to derive a new
+    trim's id when a command leaves it unset, imported here rather than
+    guessed at a second time. Computing it directly (instead of the
+    trim_ref-by-reference indirection APPEND_SPEC also supports) is what
+    lets a CREATED row's price observation resolve too: APPEND_PRICE has no
+    trim_ref fallback at all, so a row whose trim does not exist yet could
+    otherwise never get one.
+    """
+    if outcome.trim_id:
+        return outcome.trim_id
+    row = outcome.row
+    return trim_identity(row.generation_id, None, row.trim_name, row.powertrain)
+
+
+#: The ``source`` string a fact or price observation carries, keyed by
+#: SourceRow.source_kind. "ecosticker" (not "eco") because that is the
+#: spelling already established elsewhere for ECO Sticker provenance --
+#: vehreg/comparable_specs.py's review-cohort builder and the retired
+#: vehreg/ecosticker_import.py::commands_for both write it, and existing
+#: SpecFact/PriceObservation data on disk already uses it. A source kind
+#: with no entry here falls back to its own lowercased name rather than
+#: raising, since this module's column-writing half already works for any
+#: source kind a caller names.
+_SOURCE_LABELS: dict[str, str] = {"ECO": "ecosticker"}
+
+
+def _source_label(source_kind: str) -> str:
+    return _SOURCE_LABELS.get(source_kind.upper(), source_kind.lower())
+
+
+def _fact_unit(definition, value: Any) -> str:
+    return definition.canonical_unit if definition.value_type is ValueType.NUMBER else ""
+
+
+def _fact_unchanged(prior: dict[str, Any], candidate: dict[str, Any]) -> bool:
+    """Same value, unit, qualifiers and observed_at as what is already on
+    disk under this exact fact_id.
+
+    APPEND_SPEC's own writer always rewrites its target file and always
+    counts it as a changed file (vehreg/canonical_write.py's _append_spec
+    has no before-equals-after short-circuit, unlike APPEND_PRICE's
+    same-day-same-amount check) -- so without this comparison, re-running
+    an unchanged import would emit a command for every fact on every row,
+    every time, and the batch would never register as
+    canonical_changed=False. This is what keeps a re-import of the exact
+    same file from doing that -- the same guarantee tools/import_source.py
+    already gives the MarketTrim-column half of a row.
+    """
+    return (
+        str(prior.get("value_state") or "KNOWN") == "KNOWN"
+        and prior.get("value") == candidate.get("value")
+        and str(prior.get("unit") or "") == str(candidate.get("unit") or "")
+        and {str(k): str(v) for k, v in (prior.get("qualifiers") or {}).items()}
+        == {str(k): str(v) for k, v in (candidate.get("qualifiers") or {}).items()}
+        and str(prior.get("observed_at") or "") == str(candidate.get("observed_at") or "")
+    )
+
+
+def spec_commands_from_outcomes(
+    outcomes: Iterable[RowOutcome],
+    *,
+    registry: SpecRegistry,
+    existing_facts: dict[str, dict[str, Any]],
+    submitted_at: str = "",
+) -> list[dict]:
+    """One APPEND_SPEC per value a resolved row states, for every field the
+    registry accepts -- not just PATCHED/CREATED rows.
+
+    A row UNCHANGED at the MarketTrim-column level (column_patch found none
+    of FIELD_TO_COLUMN's 8 columns different) says nothing about whether its
+    comparable-spec facts are new: those two things were never written
+    together before this function existed, so a trim whose columns have
+    long been correct can still be recording a field like CO2 or battery
+    chemistry for the first time. Only EXCEPTION rows -- no trim identity to
+    attach a fact to -- are skipped.
+
+    ``submitted_at`` is the fallback for a row whose source states no
+    observation date of its own (``row.observed_at`` empty) -- the run's own
+    date, exactly as the retired ``ecosticker_import.commands_for``'s own
+    ``observed_at`` parameter did. A row with a stated date is never
+    overridden by it.
+
+    fact_id is deterministic and source-specific
+    (``eco:<source_id>:<field_key>``, the row's own source_kind lowercased,
+    never the established "ecosticker" spelling ``source`` below uses --
+    fact_id is an internal key, not read as provenance), never the writer's
+    `admin:<trim_id>:<field_key>` fallback: that fallback names a fact by
+    what it is ABOUT rather than by which record STATED it, so a later,
+    differently-dated ECO record for the same trim+field would silently
+    overwrite the earlier one's fact file in place instead of becoming a
+    new dated fact the ledger's own conflict/versioning rules can reason
+    about. Re-importing the same source record, by contrast, is the same
+    fact_id every time -- the correct case for revision-in-place.
+    """
+    commands: list[dict] = []
+    for outcome in outcomes:
+        if outcome.status == EXCEPTION:
+            continue
+        row = outcome.row
+        observed_at = row.observed_at or submitted_at
+        if not row.specs or not observed_at or not row.source_ref:
+            continue
+        trim_id = resolved_trim_id(outcome)
+        for field_key, value in sorted(row.specs.items()):
+            if value is None:
+                continue
+            definition = registry.fields.get(field_key)
+            if definition is None:
+                continue  # not a registry key; applicable_specs() already dropped/reported it upstream
+            fact_id = f"{row.source_kind.lower()}:{row.source_id}:{field_key}"
+            candidate = {
+                "fact_id": fact_id,
+                "trim_id": trim_id,
+                "field_key": field_key,
+                "value_state": "KNOWN",
+                "value": value,
+                "unit": _fact_unit(definition, value),
+                "qualifiers": {str(k): str(v) for k, v in (row.qualifiers.get(field_key) or {}).items()},
+                "observed_at": observed_at,
+                "verification_status": "VERIFIED",
+                "source": _source_label(row.source_kind),
+                "source_ref": row.source_ref,
+            }
+            prior = existing_facts.get(fact_id)
+            if prior is not None and _fact_unchanged(prior, candidate):
+                continue
+            commands.append({"operation": "APPEND_SPEC", "canonical_id": trim_id, "payload": candidate})
+    return commands
+
+
+def price_commands_from_outcomes(
+    outcomes: Iterable[RowOutcome], *, price_type: str, submitted_at: str = "",
+) -> tuple[list[dict], list[dict]]:
+    """One APPEND_PRICE per dated price a resolved row's source states,
+    deduplicated and conflict-checked the way ecosticker_import.py's
+    _resolve_price_observations always has: the same trim can carry several
+    dated observations (a filing re-approved each year is real history, not
+    a duplicate), but two DIFFERENT amounts for the same trim on the same
+    date mean the trim identity is too coarse to price, and neither is
+    written -- the fix is a finer trim, never a guess at which figure is real.
+
+    ``submitted_at`` is the same run-date fallback ``spec_commands_from_
+    outcomes`` takes, for a row whose source states no date of its own.
+
+    Returns (commands, suppressed) -- suppressed rows are reported, not
+    silently dropped, the same as an unresolved identity or a dropped spec
+    value.
+    """
+    by_key: dict[tuple[str, str], list[RowOutcome]] = {}
+    for outcome in outcomes:
+        if outcome.status == EXCEPTION or not outcome.row.price_thb or outcome.row.price_thb <= 0:
+            continue
+        observed_at = outcome.row.observed_at or submitted_at
+        if not observed_at:
+            continue
+        key = (resolved_trim_id(outcome), observed_at)
+        by_key.setdefault(key, []).append(outcome)
+
+    commands: list[dict] = []
+    suppressed: list[dict] = []
+    for (trim_id, observed_at), group in by_key.items():
+        amounts = {int(o.row.price_thb) for o in group}
+        if len(amounts) > 1:
+            listed = ", ".join(f"{amount:,}" for amount in sorted(amounts))
+            for outcome in group:
+                suppressed.append({
+                    "source_id": outcome.row.source_id, "trim_id": trim_id,
+                    "reason": (f"{trim_id} มีราคาต่างกัน {len(amounts)} ค่า ({listed}) "
+                              f"ในวันเดียวกัน ({observed_at}) จึงไม่บันทึกราคาใดเลย"),
+                })
+            continue
+        representative = group[0]
+        commands.append({
+            "operation": "APPEND_PRICE",
+            "canonical_id": trim_id,
+            "payload": {
+                "trim_id": trim_id,
+                "amount_thb": int(representative.row.price_thb),
+                "price_type": price_type,
+                "observed_at": observed_at,
+                "source": _source_label(representative.row.source_kind),
+                "source_ref": representative.row.source_ref,
+            },
+        })
+        for duplicate in group[1:]:
+            suppressed.append({
+                "source_id": duplicate.row.source_id, "trim_id": trim_id,
+                "reason": (f"ราคาเดียวกัน ({int(duplicate.row.price_thb):,}) และวันเดียวกัน "
+                          f"({observed_at}) กับ source_id {representative.row.source_id} "
+                          "จึงนับเป็น observation เดียว"),
+            })
+    return commands, suppressed
 
 
 def batches_from_commands(

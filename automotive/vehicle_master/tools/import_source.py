@@ -1,4 +1,5 @@
-"""Import an ECO Sticker export into MarketTrim columns: resolve, patch, write.
+"""Import an ECO Sticker export into MarketTrim columns, comparable-spec
+facts and price observations: resolve, patch, write.
 
     python -m tools.import_source export.xlsx --source ECO [--apply]
 
@@ -13,27 +14,43 @@ registration files go to ``vehreg.registration_import`` instead, and a
 source with no parser of its own is reported unsupported rather than fed to
 whichever parser happens to be nearest. ``tools/import_worker.py`` is what
 routes an uploaded file to the right one.
+
+This is also the one place a bulk ECO export becomes canonical commands --
+``tools/ecosticker_import.py``'s monthly full-catalogue run uses the exact
+same ``source_rows``/``resolve_rows``/``commands_from_outcomes``/
+``spec_commands_from_outcomes``/``price_commands_from_outcomes`` pipeline
+this module calls, so an ad-hoc admin upload and a monthly run resolve a
+row's identity and its comparable-spec facts the same way. There used to be
+a second, older implementation (``vehreg/ecosticker_import.py``'s own
+``plan_row``/``commands_for``) that only this module's identity half ever
+adopted; that duplication is retired.
 """
 
 from __future__ import annotations
 
 import argparse
+from dataclasses import dataclass
 from datetime import datetime, timezone
 import json
 from pathlib import Path
 
 from vehreg.catalog import Catalog, DATA_DIR
-from vehreg.comparable_specs import SpecRegistry
-from vehreg.ecosticker_export import normalize_row
+from vehreg.comparable_specs import SpecLedger, SpecRegistry
 from vehreg.ecosticker_import import UNRESOLVED, plan_row
-from vehreg.input_pipeline import CanonicalInputPipeline
 from vehreg.source_import import (
     CREATED, EXCEPTION, FIELD_TO_COLUMN, PATCHED, ExistingTrim, RowOutcome,
-    SourceRow, batches_from_commands, commands_from_outcomes, resolve_rows,
+    SourceRow, batches_from_commands, commands_from_outcomes,
+    price_commands_from_outcomes, resolve_rows, spec_commands_from_outcomes,
     summarize,
 )
+from vehreg.input_pipeline import CanonicalInputPipeline
 
 DEFAULT_YEAR = 2026
+#: The type an ECO Sticker's filed retail price is recorded as -- a
+#: homologation filing, not a price list. PriceLedger.current_list_price()
+#: only ever resolves the LIST_PRICE stream, so nothing written under this
+#: type can surface as the price a reader is shown.
+ECO_PRICE_TYPE = "ECO_STICKER_PRICE"
 
 
 def read_rows(path: Path) -> list[dict]:
@@ -69,12 +86,27 @@ def existing_trims(catalog: Catalog) -> list[ExistingTrim]:
 
 
 def source_rows(raw_rows, catalog: Catalog, registry: SpecRegistry,
-                source_kind: str) -> tuple[list[SourceRow], list[dict]]:
-    """Normalize and place each export row; unplaceable rows become exceptions."""
+                source_kind: str) -> tuple[list[SourceRow], list[dict], dict[str, int]]:
+    """Normalize and place each export row; unplaceable rows become exceptions.
+
+    ``plan_row`` already folds the raw row (``normalize_row``) and filters it
+    against the registry (``applicable_specs``) to resolve brand/model/
+    generation identity -- calling either again here would be a second,
+    possibly-drifting copy of that folding, not a second opinion of it, so
+    ``plan.specs``/``plan.dropped``/``plan.vehicle`` are read directly rather
+    than re-derived. Only ``plan.trim_id``/``plan.status``'s MATCHED/NEW_TRIM
+    classification is not trusted here: which trim a row belongs to is
+    resolve_rows()'s job below, since it also protects against creating a
+    second copy of a grade some other row in this run left unclaimed --
+    a check plan_row's own trim step does not make.
+    """
     rows: list[SourceRow] = []
     exceptions: list[dict] = []
+    dropped_counts: dict[str, int] = {}
     for raw in raw_rows:
         plan = plan_row(raw, catalog, registry)
+        for key in plan.dropped:
+            dropped_counts[key] = dropped_counts.get(key, 0) + 1
         if plan.status == UNRESOLVED or not plan.model_id:
             exceptions.append({
                 "source_id": plan.source_id, "brand": plan.brand_raw,
@@ -86,9 +118,19 @@ def source_rows(raw_rows, catalog: Catalog, registry: SpecRegistry,
             model_id=plan.model_id, generation_id=plan.generation_id or "",
             powertrain=plan.vehicle.powertrain or "",
             trim_name=plan.trim_name or "",
-            values=dict(normalize_row(raw).specs),
+            # Unfiltered: MarketTrim's own columns are not a comparable-spec
+            # registry concept, and column_patch must not lose a value just
+            # because the registry does not (yet) define that key.
+            values=dict(plan.vehicle.specs),
+            # Registry-accepted only -- what applicable_specs() already
+            # computed inside plan_row(), read here rather than re-derived.
+            specs=dict(plan.specs),
+            qualifiers=dict(plan.vehicle.qualifiers),
+            observed_at=plan.vehicle.approved_at,
+            source_ref=plan.vehicle.source_url,
+            price_thb=plan.vehicle.price_thb,
         ))
-    return rows, exceptions
+    return rows, exceptions, dropped_counts
 
 
 def exception_record(outcome: RowOutcome) -> dict:
@@ -99,6 +141,82 @@ def exception_record(outcome: RowOutcome) -> dict:
         "powertrain": outcome.row.powertrain,
         "reason": outcome.reason,
     }
+
+
+@dataclass
+class SourceImportPlan:
+    """Everything a caller needs to report on or apply one export run.
+
+    Built once by ``plan_source_import`` and read by both this module's own
+    ``main`` and ``tools/ecosticker_import.py``'s monthly wrapper, so the
+    two only ever differ in report shape and CLI flags -- never in how a
+    row resolves or what commands it produces.
+    """
+
+    raw_rows: list[dict]
+    rows: list[SourceRow]
+    unplaced: list[dict]
+    dropped_counts: dict[str, int]
+    outcomes: list[RowOutcome]
+    model_commands: list[dict]
+    stranded: list[RowOutcome]
+    spec_commands: list[dict]
+    price_commands: list[dict]
+    price_suppressed: list[dict]
+
+    @property
+    def commands(self) -> list[dict]:
+        return self.model_commands + self.spec_commands + self.price_commands
+
+    @property
+    def exception_outcomes(self) -> list[RowOutcome]:
+        return [o for o in self.outcomes if o.status == EXCEPTION] + self.stranded
+
+
+def plan_source_import(
+    export: Path, *, catalog: Catalog, registry: SpecRegistry, source_kind: str,
+    data_dir: Path, year: int, submitted_at: str,
+) -> SourceImportPlan:
+    """Resolve an export's rows and compile every command they produce.
+
+    ``submitted_at`` is the run's own date, used only for a row whose source
+    states no observation date of its own -- see ``spec_commands_from_
+    outcomes``'s docstring. A row with one is never overridden by it.
+    """
+    raw_rows = read_rows(export)
+    rows, unplaced, dropped_counts = source_rows(raw_rows, catalog, registry, source_kind)
+    trims = existing_trims(catalog)
+    generation_codes = {g.id: g.code for model_id in catalog.models
+                        for g in catalog.generations_of(model_id) if g.code}
+    outcomes = resolve_rows(rows, trims, known_generations=generation_codes)
+    model_commands, stranded = commands_from_outcomes(
+        outcomes, generation_codes=generation_codes,
+        existing_by_trim={t.canonical_id: t for t in trims})
+
+    # Comparable-spec facts and price observations come after every
+    # UPSERT_MODEL_BUNDLE: a CREATED row's trim does not exist in the
+    # catalogue this pipeline reads until its own bundle command has run
+    # (vehreg/canonical_write.py's CanonicalWritePipeline invalidates its
+    # catalogue cache only when a bundle command writes), and APPEND_PRICE
+    # has no by-reference fallback for a trim that is not there yet at all.
+    ledger = SpecLedger.load(data_dir, year, registry=registry, catalog=catalog)
+    existing_facts = {
+        fact.fact_id: {
+            "value_state": fact.value_state.value, "value": fact.value, "unit": fact.unit,
+            "qualifiers": fact.qualifiers, "observed_at": fact.observed_at,
+        } for fact in ledger.facts
+    }
+    spec_commands = spec_commands_from_outcomes(
+        outcomes, registry=registry, existing_facts=existing_facts, submitted_at=submitted_at)
+    price_commands, price_suppressed = price_commands_from_outcomes(
+        outcomes, price_type=ECO_PRICE_TYPE, submitted_at=submitted_at)
+
+    return SourceImportPlan(
+        raw_rows=raw_rows, rows=rows, unplaced=unplaced, dropped_counts=dropped_counts,
+        outcomes=outcomes, model_commands=model_commands, stranded=stranded,
+        spec_commands=spec_commands, price_commands=price_commands,
+        price_suppressed=price_suppressed,
+    )
 
 
 def main(argv=None) -> int:
@@ -126,32 +244,28 @@ def main(argv=None) -> int:
 
     catalog = Catalog.load(args.data_dir, args.year)
     registry = SpecRegistry.load(args.data_dir, args.year)
-    raw_rows = read_rows(args.export)
+    plan = plan_source_import(
+        args.export, catalog=catalog, registry=registry, source_kind=args.source,
+        data_dir=args.data_dir, year=args.year, submitted_at=args.submitted_at)
 
-    rows, unplaced = source_rows(raw_rows, catalog, registry, args.source)
-    trims = existing_trims(catalog)
-    generation_codes = {g.id: g.code for model_id in catalog.models
-                        for g in catalog.generations_of(model_id) if g.code}
-    outcomes = resolve_rows(rows, trims, known_generations=generation_codes)
-    commands, stranded = commands_from_outcomes(
-        outcomes, generation_codes=generation_codes,
-        existing_by_trim={t.canonical_id: t for t in trims})
-
-    exceptions = unplaced + [exception_record(o) for o in outcomes
-                             if o.status == EXCEPTION] + [
-        exception_record(o) for o in stranded]
+    exceptions = plan.unplaced + [exception_record(o) for o in plan.exception_outcomes]
     conflicts = [{"source_id": o.row.source_id, "trim_id": o.trim_id,
-                  "conflicts": o.conflicts} for o in outcomes if o.conflicts]
+                  "conflicts": o.conflicts} for o in plan.outcomes if o.conflicts]
 
-    counts = summarize(outcomes)
+    counts = summarize(plan.outcomes)
+    commands = plan.commands
     report = {
-        "rows_read": len(raw_rows),
-        "rows_placed": len(rows),
+        "rows_read": len(plan.raw_rows),
+        "rows_placed": len(plan.rows),
         "patched": counts.get(PATCHED, 0),
         "created": counts.get(CREATED, 0),
         "unchanged": counts.get("UNCHANGED", 0),
         "exceptions": len(exceptions),
         "conflicts": len(conflicts),
+        "facts": len(plan.spec_commands),
+        "dropped": dict(sorted(plan.dropped_counts.items(), key=lambda item: -item[1])),
+        "prices": len(plan.price_commands),
+        "prices_suppressed": len(plan.price_suppressed),
         "commands": len(commands),
         "applied": False,
         # Whether the canonical Vehicle Master tree actually has a change
@@ -199,7 +313,8 @@ def main(argv=None) -> int:
     (report_dir / f"{stem}_report.json").write_text(
         json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (report_dir / f"{stem}_exceptions.json").write_text(
-        json.dumps({"exceptions": exceptions, "conflicts": conflicts},
+        json.dumps({"exceptions": exceptions, "conflicts": conflicts,
+                   "price_suppressed": plan.price_suppressed},
                    ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(report, ensure_ascii=False))
     return 0

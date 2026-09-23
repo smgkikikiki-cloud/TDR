@@ -12,7 +12,16 @@ run first -- ``--apply`` is what actually writes. Applying goes through
 validation, the revision audit and the catalogue's own invariants all hold; a
 batch that would produce an invalid catalogue fails instead of landing.
 
-Three reports come out, because the interesting number is never the one that
+This is a thin wrapper, not a second importer: resolving a row's identity,
+deciding what it changes, and turning that into UPSERT_MODEL_BUNDLE/
+APPEND_SPEC/APPEND_PRICE commands is entirely ``tools.import_source.
+plan_source_import`` -- the exact function an ad-hoc admin upload calls too.
+What is specific to this command is the CLI surface (``--observed-at``
+rather than ``--submitted-at``) and the four reports below, both kept
+because a monthly full-catalogue run reads differently to a person than a
+single admin upload does.
+
+Four reports come out, because the interesting number is never the one that
 worked:
 
   applied     one line per row that became catalogue content
@@ -32,40 +41,28 @@ from collections import Counter
 import json
 from pathlib import Path
 import sys
-from typing import Any, Iterable
+from typing import Any
 
 from vehreg.catalog import Catalog, DATA_DIR, DEFAULT_YEAR
 from vehreg.comparable_specs import SpecRegistry
-from vehreg.ecosticker_import import (
-    MATCHED, NEW_TRIM, UNRESOLVED, ImportPlan, batches_from_plan, plan_import,
-)
 from vehreg.input_pipeline import CanonicalInputPipeline
+from vehreg.source_import import (
+    CREATED, EXCEPTION, PATCHED, batches_from_commands, resolved_trim_id,
+)
+from tools.import_source import SourceImportPlan, plan_source_import
+
+_STATUS_LABEL = {PATCHED: "MATCHED", CREATED: "NEW_TRIM"}
 
 
-def read_rows(path: Path) -> list[dict[str, Any]]:
-    """The export's rows as plain dicts, from .xlsx or .csv alike.
-
-    pandas is imported here rather than at module import: the catalogue's own
-    code does not depend on it, and a missing spreadsheet library should fail
-    this command rather than everything that imports this package.
-    """
-    import pandas
-
-    if path.suffix.lower() in (".csv", ".tsv"):
-        frame = pandas.read_csv(path, sep="\t" if path.suffix.lower() == ".tsv" else ",")
-    else:
-        frame = pandas.read_excel(path)
-    return frame.to_dict(orient="records")
-
-
-def unresolved_report(plan: ImportPlan, *, source: str, observed_at: str) -> dict[str, Any]:
+def unresolved_report(plan: SourceImportPlan, *, source: str, observed_at: str) -> dict[str, Any]:
     rows = [{
-        "source_id": row.source_id,
-        "brand": row.brand_raw,
-        "model": row.model_raw,
-        "eco_url": row.vehicle.source_url,
-        "reason": row.reason,
-    } for row in plan.of(UNRESOLVED)]
+        "source_id": entry["source_id"], "brand": entry["brand"],
+        "model": entry["model"], "reason": entry["reason"],
+    } for entry in plan.unplaced]
+    rows += [{
+        "source_id": o.row.source_id, "brand": o.row.model_id.split(".", 1)[0],
+        "model": o.row.model_id, "reason": o.reason,
+    } for o in plan.exception_outcomes]
     return {
         "schema_version": 1,
         "generated_from": source,
@@ -77,19 +74,39 @@ def unresolved_report(plan: ImportPlan, *, source: str, observed_at: str) -> dic
     }
 
 
-def applied_report(plan: ImportPlan, *, source: str, observed_at: str) -> dict[str, Any]:
-    rows = [{
-        "source_id": row.source_id,
-        "status": row.status,
-        "model_id": row.model_id,
-        "trim_id": row.trim_id,
-        "trim_name": row.trim_name,
-        "powertrain": row.vehicle.powertrain,
-        "approved_at": row.vehicle.approved_at,
-        "facts": 0 if row.price_only else len(row.specs),
-        "price_only": row.price_only,
-        "price_thb": (None if row.price_suppressed else row.vehicle.price_thb),
-    } for row in plan.rows if row.status != UNRESOLVED]
+def applied_report(plan: SourceImportPlan, *, source: str, observed_at: str) -> dict[str, Any]:
+    facts_by_source_id: Counter[str] = Counter()
+    for command in plan.spec_commands:
+        source_id = command["payload"]["fact_id"].split(":", 2)[1]
+        facts_by_source_id[source_id] += 1
+    # ecosticker_export.NormalizedVehicle.source_url is a deterministic
+    # function of source_id, so this is keyed by the same identity a
+    # SourceRow carries even though the command payload itself has no
+    # source_id field of its own to key on directly.
+    price_by_source_ref = {
+        command["payload"]["source_ref"]: command["payload"]["amount_thb"]
+        for command in plan.price_commands
+    }
+    suppressed_source_ids = {entry["source_id"] for entry in plan.price_suppressed}
+
+    rows = []
+    for outcome in plan.outcomes:
+        if outcome.status == EXCEPTION:
+            continue
+        row = outcome.row
+        price_thb = (None if row.source_id in suppressed_source_ids
+                    else price_by_source_ref.get(row.source_ref))
+        rows.append({
+            "source_id": row.source_id,
+            "status": _STATUS_LABEL.get(outcome.status, outcome.status),
+            "model_id": row.model_id,
+            "trim_id": resolved_trim_id(outcome),
+            "trim_name": row.trim_name,
+            "powertrain": row.powertrain,
+            "approved_at": row.observed_at,
+            "facts": facts_by_source_id.get(row.source_id, 0),
+            "price_thb": price_thb,
+        })
     return {
         "schema_version": 1,
         "generated_from": source,
@@ -100,41 +117,31 @@ def applied_report(plan: ImportPlan, *, source: str, observed_at: str) -> dict[s
     }
 
 
-def repaired_report(plan: ImportPlan, *, source: str) -> dict[str, Any]:
-    """Every source value this run corrected or refused to publish.
+def repaired_report(plan: SourceImportPlan, *, source: str) -> dict[str, Any]:
+    """Every dated price this run withheld because two records disagreed.
 
-    A silent correction is indistinguishable from a silent error, so each one
-    says what the source stated and what was done about it.
+    ``ecosticker_export.normalize_row``'s own value repairs (a bad unit, an
+    out-of-range figure) are reported by ``dropped_report`` instead, counted
+    by field rather than by row -- ``applicable_specs`` folds a repair and a
+    registry-refused value into the same ``dropped`` list, and splitting
+    them back out per row is not information this module has.
     """
-    rows = []
-    for row in plan.rows:
-        repairs = dict(row.vehicle.repairs)
-        if row.price_suppressed:
-            repairs["price"] = row.price_suppressed
-        if not repairs:
-            continue
-        rows.append({
-            "source_id": row.source_id,
-            "brand": row.brand_raw,
-            "model": row.model_raw,
-            "trim_id": row.trim_id,
-            "eco_url": row.vehicle.source_url,
-            "repairs": repairs,
-        })
+    by_source_id: dict[str, dict[str, Any]] = {}
+    for entry in plan.price_suppressed:
+        by_source_id.setdefault(entry["source_id"], {
+            "source_id": entry["source_id"], "trim_id": entry["trim_id"], "repairs": {},
+        })["repairs"]["price"] = entry["reason"]
+    rows = sorted(by_source_id.values(), key=lambda row: row["source_id"])
     return {
         "schema_version": 1,
         "generated_from": source,
         "count": len(rows),
-        "rows": sorted(rows, key=lambda row: (row["brand"], row["model"])),
+        "rows": rows,
     }
 
 
-def dropped_report(plan: ImportPlan) -> dict[str, int]:
-    counts: Counter[str] = Counter()
-    for row in plan.rows:
-        if row.status != UNRESOLVED:
-            counts.update(row.dropped)
-    return dict(counts.most_common())
+def dropped_report(plan: SourceImportPlan) -> dict[str, int]:
+    return dict(Counter(plan.dropped_counts).most_common())
 
 
 def _write(path: Path, payload: Any) -> None:
@@ -143,7 +150,7 @@ def _write(path: Path, payload: Any) -> None:
                     encoding="utf-8")
 
 
-def apply_batches(batches: Iterable[dict[str, Any]], data_dir: Path) -> list[str]:
+def apply_batches(batches: list[dict[str, Any]], data_dir: Path) -> list[str]:
     """Applies every batch, returning the ids of any that did not land."""
     pipeline = CanonicalInputPipeline(data_dir)
     failed = []
@@ -165,20 +172,20 @@ def main(argv=None) -> int:
     parser.add_argument("--year", type=int, default=DEFAULT_YEAR)
     parser.add_argument("--actor", default="ecosticker-import")
     parser.add_argument("--report-dir", type=Path,
-                        help="where the three reports go (default: alongside the "
+                        help="where the four reports go (default: alongside the "
                              "year's market data)")
     parser.add_argument("--apply", action="store_true",
                         help="write to the catalogue; without it nothing is changed")
     args = parser.parse_args(argv)
 
-    rows = read_rows(args.export)
     catalog = Catalog.load(args.data_dir, args.year)
     registry = SpecRegistry.load(args.data_dir, args.year)
     if not registry.fields:
         parser.error(f"no comparable-spec registry under {args.data_dir}/{args.year}")
 
-    plan = plan_import(rows, catalog, registry)
-    summary = plan.summary()
+    plan = plan_source_import(
+        args.export, catalog=catalog, registry=registry, source_kind="ECO",
+        data_dir=args.data_dir, year=args.year, submitted_at=args.observed_at)
 
     report_dir = args.report_dir or (args.data_dir / str(args.year) / "market" / "trims")
     stem = f"ecosticker_import_{args.observed_at}"
@@ -190,24 +197,29 @@ def main(argv=None) -> int:
     _write(report_dir / f"{stem}_repaired.json",
            repaired_report(plan, source=args.export.name))
 
-    batches = batches_from_plan(
-        plan, registry, year=args.year, actor=args.actor,
-        observed_at=args.observed_at, batch_prefix=stem.replace("_", "-"))
+    batches = batches_from_commands(
+        plan.commands, year=args.year, source_kind="ECO",
+        source_ref=args.export.name, batch_prefix=stem.replace("_", "-"),
+        submitted_at=f"{args.observed_at}T00:00:00+00:00", actor=args.actor)
 
-    print(f"rows {summary['rows']}  matched {summary[MATCHED]}  "
-          f"new trims {summary[NEW_TRIM]}  unresolved {summary[UNRESOLVED]}")
-    print(f"spec facts {summary['spec_facts']} in {len(batches)} batches")
-    print(f"price observations {summary['price_observations']} "
-          f"({summary['price_only_rows']} rows contribute a price only, "
-          f"{summary['prices_suppressed']} withheld)")
-    repaired = sum(1 for row in plan.rows
-                   if row.vehicle.repairs or row.price_suppressed)
-    if repaired:
-        print(f"source values corrected or withheld on {repaired} rows")
+    matched = sum(1 for o in plan.outcomes if o.status == PATCHED)
+    created = sum(1 for o in plan.outcomes if o.status == CREATED)
+    unresolved = len(plan.unplaced) + len(plan.exception_outcomes)
+    print(f"rows {len(plan.raw_rows)}  matched {matched}  "
+          f"new trims {created}  unresolved {unresolved}")
+    print(f"spec facts {len(plan.spec_commands)} in {len(batches)} batches")
+    print(f"price observations {len(plan.price_commands)} "
+          f"({len(plan.price_suppressed)} withheld)")
+    if plan.price_suppressed:
+        print(f"prices withheld on {len(plan.price_suppressed)} rows")
     print(f"reports -> {report_dir}/{stem}_*.json")
 
     if not args.apply:
         print("planned only; re-run with --apply to write")
+        return 0
+
+    if not batches:
+        print("nothing to apply")
         return 0
 
     failed = apply_batches(batches, args.data_dir)
