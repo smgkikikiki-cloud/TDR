@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from tdr_bridge import publish
 from tools import canonical_input_worker as worker
 
@@ -29,3 +31,18 @@ def test_env_prefers_modern_secret_key(monkeypatch):
     monkeypatch.setenv("SUPABASE_SECRET_KEY", "SUPABASE_SECRET_KEY=sb_secret_live")
     monkeypatch.setenv("SUPABASE_SERVICE_ROLE_KEY", "SUPABASE_SERVICE_ROLE_KEY=legacy")
     assert worker._env() == ("https://example.supabase.co", "sb_secret_live")
+
+
+def test_publish_request_timeout_exceeds_the_rpcs_own_statement_timeout():
+    # publish_vehicle_release(jsonb) carries its own 45s statement_timeout
+    # (migration_v47) -- the RPC always errors out on that budget first, so
+    # the client only has to outlast it, not guess at some other bound.
+    assert publish.REQUEST_TIMEOUT_SECONDS > 45
+
+
+def test_publish_actually_uses_the_configured_request_timeout():
+    release = {"release_id": "vehicle-2026-test"}
+    with patch("tdr_bridge.publish.urlopen") as mock_urlopen:
+        mock_urlopen.return_value.__enter__.return_value.read.return_value = b"{}"
+        publish.publish(release, url="https://example.supabase.co", service_key="k")
+    assert mock_urlopen.call_args.kwargs["timeout"] == publish.REQUEST_TIMEOUT_SECONDS
