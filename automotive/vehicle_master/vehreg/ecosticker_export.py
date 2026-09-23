@@ -455,12 +455,14 @@ class NormalizedVehicle:
 
 
 #: Straight number columns: export column -> (registry key, converter).
+#: ``gear_speed`` is deliberately absent -- it only means a forward gear
+#: count for a transmission family where that concept applies, decided
+#: below alongside ``powertrain.transmission`` rather than folded here.
 _NUMERIC_SPECS: tuple[tuple[str, str, str], ...] = (
     ("car_seats", "vehicle.seats", "int"),
     ("total_weight", "vehicle.declared_total_weight_kg", "int"),
     ("model_year", "vehicle.model_year", "int"),
     ("capacity_cylinder", "engine.displacement_cc", "int"),
-    ("gear_speed", "powertrain.gear_count", "int"),
 
     ("nominal_voltage", "battery.nominal_voltage_v", "float"),
     ("driving_range", "ev.rated_range_km", "float"),
@@ -471,14 +473,37 @@ _NUMERIC_SPECS: tuple[tuple[str, str, str], ...] = (
     ("rate_energy_ex_urban", "efficiency.fuel_consumption_extra_urban_l_100km", "float"),
 )
 
+#: ``factory`` is deliberately absent -- ``manufacturing.factory`` means an
+#: identified physical plant, and most of what the export states there is
+#: the manufacturer's or importer's legal entity name instead (see
+#: ``_is_identified_plant``). Handled below, alongside the raw text it
+#: still keeps for a person to read either way.
 _TEXT_SPECS: tuple[tuple[str, str], ...] = (
     ("battery_brand", "battery.supplier"),
-    ("factory", "manufacturing.factory"),
     ("wheel_size", "fitment.tyre_size"),
     ("front_wheel", "fitment.tyre_front"),
     ("back_wheel", "fitment.tyre_rear"),
     ("on_board_charger", "charging.onboard_charger_spec"),
 )
+
+#: Transmission families whose ``gear_speed`` figure is a count of actual
+#: forward gears. A CVT has no discrete gears -- whatever the export states
+#: there is not this field -- and neither OTHER nor an unstated family says
+#: clearly enough what the number means to write it as one.
+_GEAR_COUNT_FAMILIES = frozenset({"AUTOMATIC", "MANUAL"})
+
+#: A plant is a place, not a company. Most of what ``factory`` actually
+#: states is the manufacturer's or Thai importer's registered legal entity
+#: ("บริษัท ... จำกัด" / "... CO., LTD.") -- real, but not what
+#: ``manufacturing.factory`` (labelled "Manufacturing plant" in the
+#: registry) claims to be. Only a value that names an actual site is
+#: written there; a word actually meaning "plant" is the one signal the
+#: export gives for that, in either language.
+_PLANT_SIGNAL = re.compile(r"(?i)\bplant\b|โรงงาน")
+
+
+def _is_identified_plant(raw: str) -> bool:
+    return bool(_PLANT_SIGNAL.search(raw))
 
 #: The ECO Sticker does not say which drive cycle its range and consumption
 #: figures come from. Recording them as NEDC or WLTP would be a guess, and a
@@ -523,13 +548,14 @@ def normalize_row(row: dict) -> NormalizedVehicle:
 
     if vehicle.powertrain:
         specs["identity.powertrain"] = vehicle.powertrain
+    # _text() first: a spreadsheet blank arrives as float("nan"), which is
+    # truthy, so handing it straight to the folders turns "no value" into
+    # the literal family "OTHER" on every row that never stated one.
+    transmission = transmission_family(_text(row.get("gear_name")))
     for key, value in (
         ("engine.fuel_type", fuel_type(row.get("fuel_name"))),
         ("engine.combustion_type", combustion_type(row.get("engine_name"))),
-        # _text() first: a spreadsheet blank arrives as float("nan"), which is
-        # truthy, so handing it straight to the folders turns "no value" into
-        # the literal family "OTHER" on every row that never stated one.
-        ("powertrain.transmission", transmission_family(_text(row.get("gear_name")))),
+        ("powertrain.transmission", transmission),
         ("powertrain.motor_type", motor_type(row.get("motor"))),
         ("powertrain.motor_count", motor_count(row.get("motor"))),
         ("battery.chemistry", battery_chemistry_family(_text(row.get("battery_type")))),
@@ -539,6 +565,23 @@ def normalize_row(row: dict) -> NormalizedVehicle:
     ):
         if value is not None:
             specs[key] = value
+
+    # A CVT's "gear_speed" is not a forward gear count, and OTHER/unstated
+    # families do not say clearly enough what it is either -- see
+    # _GEAR_COUNT_FAMILIES.
+    if transmission in _GEAR_COUNT_FAMILIES:
+        gears = _integer(row.get("gear_speed"))
+        if gears is not None and gears > 0:
+            specs["powertrain.gear_count"] = gears
+
+    # "factory" is filed as a legal entity almost as often as a place -- see
+    # _is_identified_plant. The raw text is always kept for a person to
+    # read; only an identified plant becomes the comparable-spec fact.
+    factory_raw = _text(row.get("factory"))
+    if factory_raw:
+        vehicle.notes["factory"] = factory_raw
+        if _is_identified_plant(factory_raw):
+            specs["manufacturing.factory"] = factory_raw
 
     # The export's ``battery_capacity`` is the pack's charge in ampere-hours,
     # not its energy in kilowatt-hours, and reading it as kWh put a 169 kWh

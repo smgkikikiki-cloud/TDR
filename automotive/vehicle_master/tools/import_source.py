@@ -202,7 +202,8 @@ def plan_source_import(
     ledger = SpecLedger.load(data_dir, year, registry=registry, catalog=catalog)
     existing_facts = {
         fact.fact_id: {
-            "value_state": fact.value_state.value, "value": fact.value, "unit": fact.unit,
+            "trim_id": fact.trim_id, "value_state": fact.value_state.value,
+            "value": fact.value, "unit": fact.unit,
             "qualifiers": fact.qualifiers, "observed_at": fact.observed_at,
         } for fact in ledger.facts
     }

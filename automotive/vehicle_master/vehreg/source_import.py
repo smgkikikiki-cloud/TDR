@@ -425,13 +425,35 @@ def _source_label(source_kind: str) -> str:
     return _SOURCE_LABELS.get(source_kind.upper(), source_kind.lower())
 
 
+_ISO_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}")
+
+
+def _date_only(value: str) -> str:
+    """The calendar-date prefix of ``value``, or "" if it has none.
+
+    A batch's own ``submitted_at`` and a fact/price's ``observed_at`` are
+    different things -- the first is a full timezone-aware timestamp
+    (``batches_from_commands``'s own contract), the second the ISO calendar
+    date ``SpecLedger``/``PriceLedger`` require (``comparable_specs._iso_date``
+    rejects anything else). A caller's run timestamp is a natural fallback
+    for a row with no stated date of its own, but only its date part is one;
+    handing a full timestamp through as ``observed_at`` made
+    ``CanonicalInputPipeline.apply()`` reject the whole batch. Extracting the
+    date here, once, at the one place a fallback value becomes an
+    ``observed_at``, is what keeps every caller from having to get this
+    right individually.
+    """
+    match = _ISO_DATE.match(value)
+    return match.group(0) if match else ""
+
+
 def _fact_unit(definition, value: Any) -> str:
     return definition.canonical_unit if definition.value_type is ValueType.NUMBER else ""
 
 
 def _fact_unchanged(prior: dict[str, Any], candidate: dict[str, Any]) -> bool:
-    """Same value, unit, qualifiers and observed_at as what is already on
-    disk under this exact fact_id.
+    """Same trim, value, unit, qualifiers and observed_at as what is already
+    on disk under this exact fact_id.
 
     APPEND_SPEC's own writer always rewrites its target file and always
     counts it as a changed file (vehreg/canonical_write.py's _append_spec
@@ -442,9 +464,24 @@ def _fact_unchanged(prior: dict[str, Any], candidate: dict[str, Any]) -> bool:
     canonical_changed=False. This is what keeps a re-import of the exact
     same file from doing that -- the same guarantee tools/import_source.py
     already gives the MarketTrim-column half of a row.
+
+    trim_id is compared too, deliberately, even though fact_id alone
+    already picks out one file: fact_id is source-scoped
+    (eco:<source_id>:<field_key>), not trim-scoped, so it does not change
+    when a later run's identity resolution attaches that same source
+    record to a different trim -- a corrected grade match, a merged
+    duplicate, a trim renamed out from under a stale source_ref. If every
+    other field the source states still matches what is on disk, treating
+    that as "unchanged" would leave the fact filed under the trim the
+    correction just said was wrong, forever, since no command would ever be
+    emitted to move it. The canonical writer already knows how to revise a
+    fact's trim_id in place (_append_spec keys its target file by fact_id,
+    not by trim_id); the importer's only job is to not suppress the command
+    that lets it.
     """
     return (
-        str(prior.get("value_state") or "KNOWN") == "KNOWN"
+        str(prior.get("trim_id") or "") == str(candidate.get("trim_id") or "")
+        and str(prior.get("value_state") or "KNOWN") == "KNOWN"
         and prior.get("value") == candidate.get("value")
         and str(prior.get("unit") or "") == str(candidate.get("unit") or "")
         and {str(k): str(v) for k, v in (prior.get("qualifiers") or {}).items()}
@@ -475,7 +512,9 @@ def spec_commands_from_outcomes(
     observation date of its own (``row.observed_at`` empty) -- the run's own
     date, exactly as the retired ``ecosticker_import.commands_for``'s own
     ``observed_at`` parameter did. A row with a stated date is never
-    overridden by it.
+    overridden by it. Only its calendar-date part is ever used as a fact's
+    ``observed_at`` (see ``_date_only``), so a caller may pass its own full
+    ``submitted_at`` timestamp here without checking the format first.
 
     fact_id is deterministic and source-specific
     (``eco:<source_id>:<field_key>``, the row's own source_kind lowercased,
@@ -494,7 +533,7 @@ def spec_commands_from_outcomes(
         if outcome.status == EXCEPTION:
             continue
         row = outcome.row
-        observed_at = row.observed_at or submitted_at
+        observed_at = row.observed_at or _date_only(submitted_at)
         if not row.specs or not observed_at or not row.source_ref:
             continue
         trim_id = resolved_trim_id(outcome)
@@ -537,7 +576,9 @@ def price_commands_from_outcomes(
     written -- the fix is a finer trim, never a guess at which figure is real.
 
     ``submitted_at`` is the same run-date fallback ``spec_commands_from_
-    outcomes`` takes, for a row whose source states no date of its own.
+    outcomes`` takes, for a row whose source states no date of its own --
+    and, the same way, only its calendar-date part is ever used (see
+    ``_date_only``).
 
     Returns (commands, suppressed) -- suppressed rows are reported, not
     silently dropped, the same as an unresolved identity or a dropped spec
@@ -547,7 +588,7 @@ def price_commands_from_outcomes(
     for outcome in outcomes:
         if outcome.status == EXCEPTION or not outcome.row.price_thb or outcome.row.price_thb <= 0:
             continue
-        observed_at = outcome.row.observed_at or submitted_at
+        observed_at = outcome.row.observed_at or _date_only(submitted_at)
         if not observed_at:
             continue
         key = (resolved_trim_id(outcome), observed_at)

@@ -328,7 +328,79 @@ def test_a_full_row_produces_a_useful_number_of_comparable_facts(registry):
     assert accepted["powertrain.transmission"] == "CVT"
     assert accepted["engine.fuel_type"] == "GASOLINE"
     assert accepted["safety.aeb"] is True
-    assert accepted["manufacturing.factory"] == "TRENDY INFORMATION CO., LTD."
+    # "TRENDY INFORMATION CO., LTD." is a legal entity, not an identified
+    # plant -- manufacturing.factory is not fabricated from it, though the
+    # raw text is kept for a person to read.
+    assert "manufacturing.factory" not in accepted
+    assert vehicle.notes["factory"] == "TRENDY INFORMATION CO., LTD."
+    # gear_speed=7 on a CVT is not a forward gear count.
+    assert "powertrain.gear_count" not in accepted
+
+
+# ---------------------------------------------------------------------------
+# gear_speed only means a forward gear count where that concept applies
+# ---------------------------------------------------------------------------
+
+def test_gear_count_is_written_for_automatic_and_manual():
+    vehicle = normalize_row(row(gear_name="เกียร์อัตโนมัติ", gear_speed="6"))
+    assert vehicle.specs["powertrain.transmission"] == "AUTOMATIC"
+    assert vehicle.specs["powertrain.gear_count"] == 6
+
+    vehicle = normalize_row(row(gear_name="เกียร์ธรรมดา", gear_speed="5"))
+    assert vehicle.specs["powertrain.transmission"] == "MANUAL"
+    assert vehicle.specs["powertrain.gear_count"] == 5
+
+
+def test_gear_count_is_omitted_for_cvt_and_unclear_families():
+    vehicle = normalize_row(row(gear_name="เกียร์อัตโนมัติ ประเภท CVT", gear_speed="7"))
+    assert vehicle.specs["powertrain.transmission"] == "CVT"
+    assert "powertrain.gear_count" not in vehicle.specs
+
+    # A family the export states but this catalogue does not recognise.
+    vehicle = normalize_row(row(gear_name="เกียร์ DCT", gear_speed="7"))
+    assert vehicle.specs["powertrain.transmission"] == "OTHER"
+    assert "powertrain.gear_count" not in vehicle.specs
+
+    # No transmission stated at all.
+    vehicle = normalize_row(row(gear_name="-", gear_speed="7"))
+    assert "powertrain.transmission" not in vehicle.specs
+    assert "powertrain.gear_count" not in vehicle.specs
+
+
+# ---------------------------------------------------------------------------
+# manufacturing.factory means an identified plant, not a legal entity
+# ---------------------------------------------------------------------------
+
+def test_a_legal_entity_is_not_written_as_the_manufacturing_plant():
+    for company in (
+        "บริษัท โตโยต้า มอเตอร์ ประเทศไทย จำกัด",
+        "Zhejiang Geely Automobile Co., Ltd.",
+        "AUDI AG",
+        "JAGUAR LAND ROVER LIMITED",
+        "TRENDY INFORMATION CO., LTD.",  # not even a manufacturer
+    ):
+        vehicle = normalize_row(row(factory=company))
+        assert "manufacturing.factory" not in vehicle.specs, company
+        # The raw text is still kept for a person to read.
+        assert vehicle.notes["factory"] == company
+
+
+def test_an_identified_plant_is_written_as_the_manufacturing_plant():
+    for plant in (
+        "BMW AG PLANT DINGOLFING",
+        "BMW (UK) MANUFACTURING LTD. PLANT OXFORD",
+        "JAGUAR LAND ROVER LIMITED (LODE LANE SOLIHULL ASSEMBLY PLANT)",
+        "โรงงานสมุทรปราการ",
+    ):
+        vehicle = normalize_row(row(factory=plant))
+        assert vehicle.specs["manufacturing.factory"] == plant
+        assert vehicle.notes["factory"] == plant
+
+
+def test_no_stated_factory_writes_neither_spec_nor_note():
+    vehicle = normalize_row(row(factory="-"))
+    assert "manufacturing.factory" not in vehicle.specs
+    assert "factory" not in vehicle.notes
 
 
 # ---------------------------------------------------------------------------

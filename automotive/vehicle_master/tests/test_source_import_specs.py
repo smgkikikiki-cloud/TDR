@@ -24,9 +24,9 @@ from vehreg.comparable_specs import SpecLedger, SpecRegistry
 from vehreg.ecosticker_import import plan_row
 from vehreg.input_pipeline import CanonicalInputPipeline
 from vehreg.source_import import (
-    ExistingTrim, SourceRow, batches_from_commands, commands_from_outcomes,
-    price_commands_from_outcomes, resolve_rows, resolved_trim_id,
-    spec_commands_from_outcomes,
+    PATCHED, ExistingTrim, RowOutcome, SourceRow, batches_from_commands,
+    commands_from_outcomes, price_commands_from_outcomes, resolve_rows,
+    resolved_trim_id, spec_commands_from_outcomes,
 )
 
 YEAR = 2026
@@ -309,7 +309,8 @@ def test_7a_reimporting_the_same_record_produces_no_new_spec_commands(tree, cata
     catalog_after = Catalog.load(tree, YEAR)
     ledger = SpecLedger.load(tree, YEAR, registry=registry, catalog=catalog_after)
     existing_facts = {
-        f.fact_id: {"value_state": f.value_state.value, "value": f.value, "unit": f.unit,
+        f.fact_id: {"trim_id": f.trim_id, "value_state": f.value_state.value,
+                    "value": f.value, "unit": f.unit,
                     "qualifiers": f.qualifiers, "observed_at": f.observed_at}
         for f in ledger.facts
     }
@@ -336,7 +337,8 @@ def test_7b_a_later_differently_dated_record_is_a_new_fact_not_an_overwrite(tree
     catalog_after = Catalog.load(tree, YEAR)
     ledger = SpecLedger.load(tree, YEAR, registry=registry, catalog=catalog_after)
     existing_facts = {
-        f.fact_id: {"value_state": f.value_state.value, "value": f.value, "unit": f.unit,
+        f.fact_id: {"trim_id": f.trim_id, "value_state": f.value_state.value,
+                    "value": f.value, "unit": f.unit,
                     "qualifiers": f.qualifiers, "observed_at": f.observed_at}
         for f in ledger.facts
     }
@@ -358,6 +360,60 @@ def test_7b_a_later_differently_dated_record_is_a_new_fact_not_an_overwrite(tree
     # Both observations survive as two distinct, correctly dated facts.
     assert [f.value for f in co2_facts] == [120.0, 118.0]
     assert [f.observed_at for f in co2_facts] == ["2026-01-10", "2026-07-15"]
+
+
+def test_7c_a_fact_reattached_to_a_different_trim_is_revised_not_suppressed(
+        tree, catalog, registry):
+    """Identity resolution can correct which trim a source record belongs
+    to on a later run -- a grade match fixed, a duplicate trim merged. The
+    same source record then states the exact same value, unit, qualifiers
+    and date as the fact already on disk, but for a different trim_id.
+
+    fact_id alone already names one file (it is source-scoped, not
+    trim-scoped), so that is not what is at risk here: what is at risk is
+    the *idempotency check* wrongly treating this as an unchanged replay
+    and never emitting the APPEND_SPEC command that would let the writer
+    revise the fact onto its corrected trim -- leaving it filed under the
+    trim the correction just said was wrong, forever.
+    """
+    # A second real trim to "correct" onto -- APPEND_SPEC's own writer
+    # refuses a trim_id the catalogue does not have, so the corrected
+    # target has to be a real one, not an invented id. Same powertrain as
+    # the original, so moving the premium row's facts onto it does not
+    # also trip the separate (and correct) applicability check.
+    premium_row = eco_row("Runner Premium")
+    sport_row = eco_row("Runner Sport", id="cccccccc-1111-1111-1111-111111111111")
+    first = build([premium_row, sport_row], catalog, registry)
+    apply(tree, first["commands"], prefix="eco-7c-1")
+
+    premium_outcome = next(o for o in first["outcomes"] if o.row.source_id == premium_row["id"].lower())
+    sport_outcome = next(o for o in first["outcomes"] if o.row.source_id == sport_row["id"].lower())
+    original_trim_id = resolved_trim_id(premium_outcome)
+    corrected_trim_id = resolved_trim_id(sport_outcome)
+    assert original_trim_id != corrected_trim_id
+
+    catalog_after = Catalog.load(tree, YEAR)
+    ledger = SpecLedger.load(tree, YEAR, registry=registry, catalog=catalog_after)
+    existing_facts = {
+        f.fact_id: {"trim_id": f.trim_id, "value_state": f.value_state.value,
+                    "value": f.value, "unit": f.unit,
+                    "qualifiers": f.qualifiers, "observed_at": f.observed_at}
+        for f in ledger.facts if f.trim_id == original_trim_id
+    }
+    assert existing_facts, "sanity: the first import actually wrote the premium row's facts"
+
+    corrected_outcome = RowOutcome(row=premium_outcome.row, status=PATCHED,
+                                   trim_id=corrected_trim_id)
+    revised = spec_commands_from_outcomes(
+        [corrected_outcome], registry=registry, existing_facts=existing_facts)
+    assert revised, "a fact reattached to a different trim must not be suppressed as unchanged"
+    assert {c["payload"]["fact_id"] for c in revised} == set(existing_facts)
+    assert all(c["payload"]["trim_id"] == corrected_trim_id for c in revised)
+
+    apply(tree, revised, prefix="eco-7c-2")
+    final_ledger = SpecLedger.load(tree, YEAR, registry=registry, catalog=Catalog.load(tree, YEAR))
+    by_trim = {f.trim_id for f in final_ledger.facts if f.fact_id in existing_facts}
+    assert by_trim == {corrected_trim_id}, "the old trim must no longer own the revised fact"
 
 
 # ---------------------------------------------------------------------------
