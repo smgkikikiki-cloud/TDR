@@ -52,22 +52,33 @@ CHUNK_SIZE = 500
 RELEASE_SECTIONS = ("brands", "models", "generations",
                     "market_trims", "price_ledger", "spec_facts")
 
-#: trim_reconciliation is build-time diagnostics (release_enriched.py
-#: raises before returning if it contains blockers) -- nothing reads it
-#: back from canonical_vehicle_releases.payload. Audited against every
-#: production reader of that column (lib/canonical-editor.ts,
+#: The manifest's identity/activation fields, kept in exact lockstep with
+#: migration_v48's _release_semantic_manifest() SQL-side allowlist. An
+#: explicit list, deliberately not "the release minus the bulk arrays and
+#: trim_reconciliation" -- that phrasing means every *new* release field
+#: (another large diagnostic report, some future piece of metadata) gets
+#: sent to begin_vehicle_release and stored in its payload column by
+#: default, unless someone remembers to add it to an exclusion list.  An
+#: allowlist fails safe instead: a new field is simply not sent until it
+#: is deliberately added here (and to the SQL side, so the two stay in
+#: lockstep). Audited against every production reader of
+#: canonical_vehicle_releases.payload (lib/canonical-editor.ts,
 #: app/admin/retail-lifecycle-actions.ts, app/admin/price-coverage-actions.ts,
 #: app/admin/input-actions.ts, lib/historical-model-state.ts): all of them
 #: read only payload.year (falling back to payload.as_of) and
-#: payload.historical_model_state.
-_MANIFEST_DROP_KEYS = frozenset(RELEASE_SECTIONS) | {"trim_reconciliation"}
+#: payload.historical_model_state -- both included below.
+MANIFEST_FIELDS = (
+    "schema_version", "release_id", "canonical_revision", "source_hash",
+    "year", "as_of", "counts", "historical_model_state", "revision_ordinal",
+)
 
 
 def _manifest(release: dict) -> dict:
-    """The release's own scalar/metadata fields for begin_vehicle_release --
+    """The release's identity/activation fields for begin_vehicle_release --
     never the six bulk section arrays that made a single-transaction
-    publish too slow to finish in the first place."""
-    return {key: value for key, value in release.items() if key not in _MANIFEST_DROP_KEYS}
+    publish too slow to finish in the first place, and never anything
+    outside MANIFEST_FIELDS."""
+    return {key: release[key] for key in MANIFEST_FIELDS if key in release}
 
 
 def _chunk_hash(rows: list) -> str:

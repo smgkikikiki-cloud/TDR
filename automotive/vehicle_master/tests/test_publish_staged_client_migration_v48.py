@@ -67,6 +67,21 @@ def test_manifest_drops_bulk_arrays_and_trim_reconciliation_but_keeps_metadata()
     assert manifest["counts"] == release["counts"]
 
 
+def test_manifest_is_an_explicit_allowlist_not_bulk_keys_dropped_from_everything_else():
+    # A new release field -- some future diagnostic report, extra
+    # metadata nobody thought to exclude -- must not be sent just because
+    # it isn't one of the six bulk arrays or trim_reconciliation. Only
+    # MANIFEST_FIELDS, kept in lockstep with migration_v48's own
+    # _release_semantic_manifest() SQL allowlist, is ever included.
+    release = _release()
+    release["created_at"] = "2026-09-23T00:00:00Z"
+    release["some_future_diagnostic_report"] = {"huge": list(range(10_000))}
+    manifest = publish._manifest(release)
+    assert set(manifest) <= set(publish.MANIFEST_FIELDS)
+    assert "created_at" not in manifest
+    assert "some_future_diagnostic_report" not in manifest
+
+
 def test_chunks_splits_rows_by_size_and_yields_nothing_for_an_empty_section():
     rows = [{"i": i} for i in range(7)]
     chunks = list(publish._chunks(rows, 3))
