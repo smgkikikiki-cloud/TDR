@@ -226,3 +226,51 @@ def test_direct_unit_conflict_against_existing_ledger(tree, catalog):
     assert commands == []
     assert stats["price_conflicts"] == 1
     assert len(conflicts) == 1
+
+
+def test_a_pilot_models_eco_price_is_excluded_not_published(tree, catalog):
+    """A pilot model's current market price is promoted from its own
+    manufacturer's listing, never from an ECO filing alone -- an ECO price
+    landing on one would contest a more authoritative source, not merely
+    duplicate it, so it is excluded outright rather than merely withheld
+    as a conflict."""
+    from vehreg.ecosticker_export import normalize_row
+    from vehreg.source_import import PATCHED, RowOutcome, SourceRow
+
+    vehicle = normalize_row(eco_row("Runner Premium", id="dddddddd-0000-0000-0000-000000000001",
+                                    recomend_retail_price_new="1000000"))
+    row = SourceRow(source_id=vehicle.source_id, source_kind="ECO",
+                    model_id="acme.runner", generation_id="acme.runner.gen1",
+                    powertrain="ICE", trim_name="Premium", values={})
+    outcome = RowOutcome(row=row, status=PATCHED, trim_id="acme.runner.gen1.trim.premium")
+    empty_ledger = PriceLedger(YEAR, catalog=catalog)
+
+    commands, stats, conflicts = compile_price_commands(
+        [outcome], {vehicle.source_id: vehicle}, empty_ledger,
+        pilot_model_ids=frozenset({"acme.runner"}))
+    assert commands == []
+    assert conflicts == []
+    assert stats["price_pilot_model_skipped"] == 1
+    assert stats["price_commands"] == 0
+
+    # A different model_id in the pilot set does not exclude this one.
+    commands, stats, conflicts = compile_price_commands(
+        [outcome], {vehicle.source_id: vehicle}, empty_ledger,
+        pilot_model_ids=frozenset({"some.other.model"}))
+    assert len(commands) == 1
+    assert stats["price_pilot_model_skipped"] == 0
+
+
+def test_main_excludes_pilot_model_prices_end_to_end(tree, catalog, tmp_path):
+    """The same exclusion, driven through main() against a real cohort file,
+    for a model main() itself resolves the pilot list from -- not just the
+    unit-level compile_price_commands call."""
+    _write(tree / str(YEAR) / "product" / "comparable_specs" / "cohorts" / "c_crossover.json", {
+        "id": "c_crossover", "segment": "B", "body_type": "SEDAN",
+        "model_ids": ["acme.runner"],
+        "representative_source_ids": {"acme.runner": "some-source-id"},
+    })
+    report, exceptions = _run(tree, [eco_row("Runner Premium", recomend_retail_price_new="899000")],
+                              tmp_path=tmp_path, prefix="pilot_e2e")
+    assert report["price_commands"] == 0
+    assert report["price_pilot_model_skipped"] == 1

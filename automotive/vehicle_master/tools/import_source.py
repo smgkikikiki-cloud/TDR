@@ -31,7 +31,7 @@ from typing import Iterable
 
 from vehreg.catalog import Catalog, DATA_DIR
 from vehreg.comparable_specs import (
-    SpecLedger, SpecRegistry, spec_conflict_key, spec_value_identity,
+    ComparableCohort, SpecLedger, SpecRegistry, spec_conflict_key, spec_value_identity,
 )
 from vehreg.ecosticker_export import NormalizedVehicle, applicable_specs
 from vehreg.ecosticker_import import UNRESOLVED, plan_row
@@ -320,6 +320,8 @@ def compile_price_commands(
     outcomes: Iterable[RowOutcome],
     vehicles: dict[str, NormalizedVehicle],
     price_ledger: PriceLedger,
+    *,
+    pilot_model_ids: frozenset[str] = frozenset(),
 ) -> tuple[list[dict], dict[str, int], list[dict]]:
     """Compile resolved ECO rows' filed prices into APPEND_PRICE commands.
 
@@ -327,6 +329,15 @@ def compile_price_commands(
     homologation filing, not a price list, and PriceLedger.current_list_price()
     only ever resolves the LIST_PRICE stream, so nothing written here can
     surface as the price a reader is shown.
+
+    ``pilot_model_ids`` (ComparableCohort.pilot_model_ids) is excluded
+    outright, not merely deprioritised: a pilot model's current market price
+    is promoted from its manufacturer's own listing (load_oem_sources()),
+    never from an ECO filing alone -- homologation proves a configuration
+    exists, not that it is what the showroom sells today. Checked against
+    the row's own model_id rather than a catalogue lookup on the resolved
+    trim_id, so a trim this same run is about to create is excluded exactly
+    as reliably as one that already exists.
 
     Two ECO records disagreeing on one trim's price for one date mean the
     trim identity is too coarse to price, not that one of them is wrong --
@@ -344,6 +355,7 @@ def compile_price_commands(
     groups: dict[tuple[str, str], list[dict]] = {}
     stats = {
         "price_rows_missing_observed_at": 0,
+        "price_pilot_model_skipped": 0,
         "price_equal_duplicates_collapsed": 0,
         "price_unchanged": 0,
         "price_commands": 0,
@@ -354,6 +366,9 @@ def compile_price_commands(
             continue
         vehicle = vehicles.get(outcome.row.source_id)
         if vehicle is None or not vehicle.price_thb or vehicle.price_thb <= 0:
+            continue
+        if outcome.row.model_id in pilot_model_ids:
+            stats["price_pilot_model_skipped"] += 1
             continue
         if not vehicle.approved_at:
             stats["price_rows_missing_observed_at"] += 1
@@ -448,6 +463,14 @@ def main(argv=None) -> int:
     registry = SpecRegistry.load(args.data_dir, args.year)
     ledger = SpecLedger.load(args.data_dir, args.year, registry=registry, catalog=catalog)
     price_ledger = PriceLedger.load(args.data_dir, year=args.year, catalog=catalog)
+    # A pilot model's price is promoted from its own manufacturer listing,
+    # never from an ECO filing -- see compile_price_commands. No cohort file
+    # at all (a data dir with comparable specs not yet set up, e.g. a test
+    # fixture) excludes nothing, the same as an empty pilot list would.
+    try:
+        pilot_model_ids = frozenset(ComparableCohort.load(args.data_dir, args.year).pilot_model_ids)
+    except (OSError, ValueError):
+        pilot_model_ids = frozenset()
     raw_rows = read_rows(args.export)
 
     vehicles: dict[str, NormalizedVehicle] = {}
@@ -463,7 +486,7 @@ def main(argv=None) -> int:
     spec_commands, spec_stats, spec_conflicts = spec_commands_from_outcomes(
         outcomes, vehicles=vehicles, registry=registry, existing_facts=ledger.facts)
     price_commands, price_stats, price_conflicts = compile_price_commands(
-        outcomes, vehicles, price_ledger)
+        outcomes, vehicles, price_ledger, pilot_model_ids=pilot_model_ids)
     # Every trim create/patch must precede every fact or price. A fact/price
     # for a newly created trim may therefore fall into a later batch and
     # still resolve.
