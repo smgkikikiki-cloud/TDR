@@ -128,6 +128,31 @@ def test_publish_staged_stops_before_any_chunk_when_already_finalized():
     assert result["already_finalized"] is True
 
 
+def test_publish_staged_raises_when_the_release_is_already_superseded():
+    # already_finalized=True covers two very different situations:
+    # ACTIVE (this exact release_id really is what is serving right now --
+    # a legitimate retry success) and SUPERSEDED (it was once active and
+    # is not anymore -- some other release is serving). Treating both as
+    # success would let an exact-publish request for release_id X report
+    # success while a different release entirely is what production
+    # actually serves.
+    release = _release(sections={"brands": [{"canonical_id": "a"}]})
+    calls: list[str] = []
+
+    def fake_urlopen(request, timeout=None):
+        name = _rpc_name(request)
+        calls.append(name)
+        assert name == "begin_vehicle_release"
+        return _ok_response({"release_id": release["release_id"], "status": "SUPERSEDED",
+                             "already_finalized": True})
+
+    with patch("tdr_bridge.publish.urlopen", side_effect=fake_urlopen):
+        with pytest.raises(RuntimeError, match="SUPERSEDED"):
+            publish.publish_staged(release, url="https://example.supabase.co", service_key="k")
+
+    assert calls == ["begin_vehicle_release"]
+
+
 def test_publish_staged_retries_a_transient_network_failure_and_succeeds(monkeypatch):
     monkeypatch.setattr(publish.time, "sleep", lambda seconds: None)
     release = _release(sections={"brands": [{"canonical_id": "a"}]})

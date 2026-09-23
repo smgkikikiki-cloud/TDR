@@ -154,7 +154,21 @@ def publish_staged(release: dict, *, url: str, service_key: str,
 
     if begun.get("already_finalized"):
         timings["total"] = time.monotonic() - t_start
-        return {"release_id": release_id, "status": begun["status"],
+        status = begun["status"]
+        if status != "ACTIVE":
+            # SUPERSEDED means this exact release_id was once served and no
+            # longer is -- some other release is active now. An exact
+            # publish request for it succeeding would be a false positive:
+            # the caller asked to publish THIS release, not to confirm it
+            # was once live. (A later commit whose canonical changes already
+            # reached production through a newer release is a different
+            # question, answered by canonical_input_worker's own ancestry
+            # -aware recovery, not by this function claiming success here.)
+            raise RuntimeError(
+                f"release {release_id} is already finalized as {status}, not ACTIVE -- "
+                "this publish did not make it the active release"
+            )
+        return {"release_id": release_id, "status": status,
                "already_finalized": True, "timings": timings}
 
     largest_chunk_seconds = 0.0

@@ -99,16 +99,30 @@ def publish(release_file: Path):
 
 
 def verify_serving(release_id: str) -> dict:
-    """Confirm Supabase is serving the release we just published.
+    """Confirm Supabase is serving the release we just published -- not
+    just that a row for it exists.
 
     Publishing without reading back is how a writer ends up reporting a
-    success that never reached anybody.
+    success that never reached anybody. A release row existing is not
+    enough either: a release_id that was once ACTIVE and has since been
+    SUPERSEDED by something newer still has a row (and, if nothing raced
+    it, still a non-empty projection from whatever the active release
+    happens to be) -- an exact-publish check that only asked those two
+    questions would call that a success. It is not: this call is asking
+    whether *this* release_id is the one currently serving.
     """
     rows = _get(f"canonical_vehicle_releases?select=release_id,status,activated_at"
                 f"&release_id=eq.{release_id}") or []
     if not rows:
         raise SystemExit(f"published {release_id} but Supabase has no such release")
     row = rows[0]
+    state = _get("canonical_vehicle_state?select=active_release_id&scope=eq.vehicle_catalog") or []
+    active_release_id = state[0].get("active_release_id") if state else None
+    if row.get("status") != "ACTIVE" or active_release_id != release_id:
+        raise SystemExit(
+            f"published {release_id} but it is not the active release "
+            f"(status={row.get('status')!r}, active_release_id={active_release_id!r})"
+        )
     trims = _get("current_market_trims?select=canonical_id&limit=1") or []
     if not trims:
         raise SystemExit(f"release {release_id} is present but the serving projection is empty")

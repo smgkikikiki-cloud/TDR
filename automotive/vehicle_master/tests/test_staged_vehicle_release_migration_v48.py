@@ -18,9 +18,13 @@ from __future__ import annotations
 
 import hashlib
 import json
+import shlex
+import subprocess
+import time
 
 import pytest
 
+from tests import pg_cluster as _pgc
 from tests.pg_cluster import apply_production_schema, pg  # noqa: F401
 
 
@@ -69,6 +73,20 @@ def _stage(db, release_id: str, section: str, chunk_index: int, rows: list[dict]
 
 def _activate(db, release_id: str) -> tuple[bool, str]:
     return db.try_sql(f"select public.activate_vehicle_release('{release_id}')")
+
+
+def _popen_psql(db) -> subprocess.Popen:
+    """A psql subprocess left open on its own real connection, for tests
+    that need two genuinely concurrent sessions -- Cluster.sql()/.rows()
+    each spawn-and-wait-for-exit in one call, which cannot hold a
+    transaction (and the locks it took) open while another session runs."""
+    command = [str(_pgc.PG_BIN / "psql"), "-h", str(db.socket), "-U", _pgc.PG_USER,
+              "-d", "postgres", "-q", "-v", "ON_ERROR_STOP=1"]
+    if _pgc.AS_POSTGRES:
+        command = ["su", _pgc.PG_USER, "-s", "/bin/sh", "-c",
+                   " ".join(shlex.quote(part) for part in command)]
+    return subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE, text=True)
 
 
 def _brand(canonical_id="toyota") -> dict:
@@ -159,7 +177,71 @@ def test_begin_rejects_a_counts_mismatch_against_an_already_staging_release(db):
     ok, err = _begin(db, _manifest(RID, counts={"brands": 2, "models": 0, "generations": 0,
                                                 "market_trims": 0, "price_ledger": 0, "spec_facts": 0}))
     assert not ok
-    assert "different counts" in err
+    assert "incompatible manifest" in err
+
+
+def test_begin_never_overwrites_the_stored_revision_ordinal_on_resume(db):
+    # A partially staged release begun from a full clone carries an
+    # ordinal. If a later resume attempt (a retry from a shallow clone,
+    # say) omitted it, silently accepting that and overwriting the stored
+    # ordinal with NULL would quietly disable v44's staleness guard for
+    # the rest of this release's life. It must error instead, and the
+    # originally stored ordinal must survive the rejected call untouched.
+    ok, err = _begin(db, _manifest(RID, ordinal=30,
+                                    counts={"brands": 0, "models": 0, "generations": 0,
+                                            "market_trims": 0, "price_ledger": 0, "spec_facts": 0}))
+    assert ok, err
+
+    resumed_without_ordinal = _manifest(RID, counts={"brands": 0, "models": 0, "generations": 0,
+                                                      "market_trims": 0, "price_ledger": 0,
+                                                      "spec_facts": 0})
+    assert "revision_ordinal" not in resumed_without_ordinal
+    ok, err = _begin(db, resumed_without_ordinal)
+    assert not ok
+    assert "incompatible manifest" in err
+
+    assert db.rows(
+        f"select revision_ordinal from public.canonical_vehicle_releases "
+        f"where release_id = '{RID}'") == [["30"]]
+
+
+def test_begin_rejects_a_semantic_mismatch_against_an_already_active_release(db):
+    ok, err = _begin(db, _manifest(RID, counts={"brands": 0, "models": 0, "generations": 0,
+                                                 "market_trims": 0, "price_ledger": 0, "spec_facts": 0}))
+    assert ok, err
+    ok, err = _activate(db, RID)
+    assert ok, err
+
+    # Same release_id, but a genuinely different semantic manifest (a
+    # different as_of here) -- content-hash release_ids mean this can only
+    # be a caller bug, and it must error rather than being waved through
+    # as "already finalized, who cares which manifest it was staged with".
+    ok, err = _begin(db, _manifest(RID, as_of="2026-10-01",
+                                    counts={"brands": 0, "models": 0, "generations": 0,
+                                            "market_trims": 0, "price_ledger": 0, "spec_facts": 0}))
+    assert not ok
+    assert "incompatible manifest" in err
+
+
+def test_begin_reports_superseded_not_active_for_a_finalized_release_that_is_no_longer_serving(db):
+    manifest_a = _manifest(RID, counts={"brands": 0, "models": 0, "generations": 0,
+                                        "market_trims": 0, "price_ledger": 0, "spec_facts": 0})
+    ok, err = _begin(db, manifest_a)
+    assert ok, err
+    assert _activate(db, RID)[0]
+
+    other = "vehicle-2026-eeeeeeeeeeeeeeee"
+    ok, err = _begin(db, _manifest(other, counts={"brands": 0, "models": 0, "generations": 0,
+                                                   "market_trims": 0, "price_ledger": 0, "spec_facts": 0}))
+    assert ok, err
+    assert _activate(db, other)[0]
+
+    # RID is now SUPERSEDED -- begin_vehicle_release must say so, distinctly
+    # from ACTIVE, so a caller cannot mistake "this release_id was once
+    # finalized" for "this release_id is what is currently serving".
+    result = db.rows(f"select public.begin_vehicle_release('{_q(manifest_a)}'::jsonb)")
+    payload = json.loads(result[0][0])
+    assert payload == {"release_id": RID, "status": "SUPERSEDED", "already_finalized": True}
 
 
 def test_begin_resume_reports_already_staged_chunks(db):
@@ -323,6 +405,59 @@ def test_activate_still_refuses_a_stale_revision_ordinal(db):
         "where scope = 'vehicle_catalog'") == [["vehicle-2026-cccccccccccccccc"]]
 
 
+def test_activate_serializes_concurrent_activations_so_an_older_ordinal_cannot_win_a_race(db):
+    # The race this guards against: active ordinal 10; A (ordinal 30) and B
+    # (ordinal 20) each read active=10 and pass their own staleness check;
+    # A activates; without serialization B -- having already read stale
+    # state -- can still activate afterwards and supersede A, rolling the
+    # active pointer backward even though both individually "passed". Two
+    # real, concurrently-open Postgres sessions (not two sequential calls)
+    # are required to prove the advisory lock actually blocks the second
+    # activation until the first has committed, rather than merely
+    # asserting the ordinal check's logic in isolation.
+    empty = {"brands": 0, "models": 0, "generations": 0,
+             "market_trims": 0, "price_ledger": 0, "spec_facts": 0}
+    baseline = "vehicle-2026-1010101010101010"
+    assert _begin(db, _manifest(baseline, ordinal=10, counts=empty))[0]
+    assert _activate(db, baseline)[0]
+
+    release_a = "vehicle-2026-3030303030303030"
+    release_b = "vehicle-2026-2020202020202020"
+    assert _begin(db, _manifest(release_a, ordinal=30, counts=empty))[0]
+    assert _begin(db, _manifest(release_b, ordinal=20, counts=empty))[0]
+
+    session_a = _popen_psql(db)
+    session_a.stdin.write(f"""
+        begin;
+        select public.activate_vehicle_release('{release_a}');
+        select pg_sleep(2);
+        commit;
+    """)
+    session_a.stdin.close()
+    session_a.stdin = None  # already closed -- communicate() must not touch it again
+
+    time.sleep(0.5)  # let A acquire the advisory lock and enter its sleep first
+
+    session_b = _popen_psql(db)
+    session_b.stdin.write(f"select public.activate_vehicle_release('{release_b}');")
+    session_b.stdin.close()
+    session_b.stdin = None
+
+    _, err_a = session_a.communicate(timeout=30)
+    _, err_b = session_b.communicate(timeout=30)
+
+    assert session_a.returncode == 0, err_a
+    assert session_b.returncode != 0, "B should have been refused once A (ordinal 30) activated"
+    assert "stale revision" in err_b
+
+    assert db.rows(
+        "select active_release_id from public.canonical_vehicle_state "
+        "where scope = 'vehicle_catalog'") == [[release_a]]
+    assert db.rows(
+        "select status from public.canonical_vehicle_releases "
+        f"where release_id = '{release_b}'") == [["STAGING"]]
+
+
 # ---------------------------------------------------------------------
 # RLS: the actual "biggest issue" this migration closes
 # ---------------------------------------------------------------------
@@ -387,3 +522,144 @@ def test_the_legacy_single_call_publish_path_still_works_unchanged(db):
     assert db.rows(
         "select active_release_id from public.canonical_vehicle_state "
         "where scope = 'vehicle_catalog'") == [["vehicle-2026-9999999999999999"]]
+
+
+# ---------------------------------------------------------------------
+# The actual ECO-sized workload: ~20,800 spec facts, ~819 price rows,
+# staged through the production chunk size, against real Postgres.
+# ---------------------------------------------------------------------
+
+def _build_eco_sized_catalog() -> dict[str, list[dict]]:
+    n_brands, n_models, n_trims, n_prices, n_specs = 20, 300, 820, 819, 20_800
+
+    brands = [{"canonical_id": f"brand{i}", "slug": f"brand{i}", "name_en": f"Brand {i}",
+              "payload": {}} for i in range(n_brands)]
+
+    trims_per_model = [n_trims // n_models] * n_models
+    for i in range(n_trims - sum(trims_per_model)):
+        trims_per_model[i] += 1
+
+    models, generations, trims = [], [], []
+    for m in range(n_models):
+        brand_id = f"brand{m % n_brands}"
+        model_id = f"{brand_id}.model{m}"
+        models.append({"canonical_id": model_id, "brand_id": brand_id, "slug": f"model{m}",
+                       "name_en": f"Model {m}", "status": "CURRENT", "payload": {}})
+        gen_id = f"{model_id}.gen1"
+        generations.append({"canonical_id": gen_id, "model_id": model_id, "code": "G1", "payload": {}})
+        for t in range(trims_per_model[m]):
+            trim_id = f"{gen_id}.trim{t}"
+            trims.append({"canonical_id": trim_id, "model_id": model_id, "generation_id": gen_id,
+                          "name": f"Trim {t}", "powertrain": "ICE", "status": "CURRENT", "payload": {}})
+    assert len(trims) == n_trims
+
+    prices = [
+        {"record_id": f"{trim['canonical_id']}.price", "trim_id": trim["canonical_id"],
+         "amount_thb": 1_000_000 + i, "price_type": "LIST_PRICE",
+         "observed_at": "2026-09-01", "payload": {}}
+        for i, trim in enumerate(trims[:n_prices])
+    ]
+    assert len(prices) == n_prices
+
+    field_keys = [f"field.{i}" for i in range(40)]
+    base_per_trim, remainder = divmod(n_specs, len(trims))
+    specs = []
+    for i, trim in enumerate(trims):
+        count = base_per_trim + (1 if i < remainder else 0)
+        for k in range(count):
+            specs.append({"fact_id": f"{trim['canonical_id']}.fact{k}", "trim_id": trim["canonical_id"],
+                          "field_key": field_keys[k % len(field_keys)],
+                          "verification_status": "VERIFIED", "payload": {}})
+    assert len(specs) == n_specs
+
+    return {"brands": brands, "models": models, "generations": generations,
+           "market_trims": trims, "price_ledger": prices, "spec_facts": specs}
+
+
+def test_staged_publish_round_trips_an_eco_sized_release(db):
+    """Approximately the real September 2026 ECO Sticker release's actual
+    scale -- ~20,800 spec facts, ~819 price rows -- staged through the
+    real production chunk size (tdr_bridge.publish.CHUNK_SIZE) and the
+    real v48 functions, not a convenient small catalog picked for test
+    speed. This is the workload publish_vehicle_release's single
+    transaction measured ~34.5s for and still could not finish within its
+    45s statement_timeout; staging it is the actual point of this
+    migration, so it has to be proven at this scale, not just at the
+    toy scale the other tests in this file use for everything else."""
+    from tdr_bridge.publish import CHUNK_SIZE, RELEASE_SECTIONS
+
+    empty = {"brands": 0, "models": 0, "generations": 0,
+             "market_trims": 0, "price_ledger": 0, "spec_facts": 0}
+    baseline = "vehicle-2026-b000000000000000"
+    assert _begin(db, _manifest(baseline, counts=empty))[0]
+    assert _activate(db, baseline)[0]
+
+    catalog = _build_eco_sized_catalog()
+    counts = {section: len(catalog[section]) for section in RELEASE_SECTIONS}
+    rid = "vehicle-2026-ec0000000000000e"
+
+    t0 = time.monotonic()
+    ok, err = _begin(db, _manifest(rid, counts=counts))
+    assert ok, err
+    begin_seconds = time.monotonic() - t0
+
+    stage_timings: dict[str, float] = {}
+    t_stage_start = time.monotonic()
+    for section in RELEASE_SECTIONS:
+        rows = catalog[section]
+        statements = []
+        for index in range(0, len(rows), CHUNK_SIZE):
+            chunk = rows[index:index + CHUNK_SIZE]
+            chunk_hash = hashlib.sha256(_q(chunk).encode()).hexdigest()
+            statements.append(
+                f"select public.stage_vehicle_release_chunk("
+                f"'{rid}', '{section}', {index // CHUNK_SIZE}, '{chunk_hash}', "
+                f"'{_q(chunk)}'::jsonb);"
+            )
+        t_section = time.monotonic()
+        db.sql("\n".join(statements))
+        stage_timings[section] = time.monotonic() - t_section
+
+        # Staging this (large, multi-chunk, multi-second) release must not
+        # move the pointer -- the old active release is still what is
+        # serving after every section, not just before the first one.
+        assert db.rows(
+            "select active_release_id from public.canonical_vehicle_state "
+            "where scope = 'vehicle_catalog'") == [[baseline]]
+    total_stage_seconds = time.monotonic() - t_stage_start
+
+    t_activate = time.monotonic()
+    ok, err = _activate(db, rid)
+    assert ok, err
+    activate_seconds = time.monotonic() - t_activate
+
+    print(
+        f"\n[eco-sized staged publish] begin={begin_seconds:.2f}s "
+        f"stage_total={total_stage_seconds:.2f}s {stage_timings} "
+        f"activate={activate_seconds:.2f}s"
+    )
+
+    # The pointer changed only now, at activation.
+    assert db.rows(
+        "select active_release_id from public.canonical_vehicle_state "
+        "where scope = 'vehicle_catalog'") == [[rid]]
+    assert db.rows(
+        f"select status from public.canonical_vehicle_releases "
+        f"where release_id = '{baseline}'") == [["SUPERSEDED"]]
+
+    # Real counts, from the real projection tables -- not the chunk
+    # ledger's own bookkeeping, which activation already trusted to decide
+    # this could proceed at all.
+    for section, table in (
+        ("brands", "canonical_brand_projection"),
+        ("models", "canonical_model_projection"),
+        ("generations", "canonical_generation_projection"),
+        ("market_trims", "canonical_market_trim_projection"),
+        ("price_ledger", "canonical_price_projection"),
+        ("spec_facts", "canonical_spec_projection"),
+    ):
+        assert db.scalar(
+            f"select count(*) from public.{table} where release_id = '{rid}'"
+        ) == str(counts[section])
+    assert counts["price_ledger"] == 819
+    assert counts["spec_facts"] == 20_800

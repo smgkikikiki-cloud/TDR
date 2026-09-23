@@ -20,9 +20,12 @@
 --      release's own scalar/metadata fields -- schema_version, release_id,
 --      canonical_revision, source_hash, as_of, year, counts,
 --      historical_model_state, revision_ordinal -- never the six bulk
---      arrays). Safe to call again for the same release_id: a no-op replay
---      if it is already ACTIVE/SUPERSEDED, a resumable re-open if it is
---      still STAGING with the same manifest.
+--      arrays). Safe to call again for the same release_id, but its
+--      identity/activation fields are immutable once the row exists: a
+--      call whose semantic manifest matches exactly is a no-op replay
+--      (ACTIVE/SUPERSEDED) or a resumable re-open (still STAGING); a call
+--      whose semantic manifest differs -- revision_ordinal included -- is
+--      always an error, never a silent overwrite.
 --
 --   2. stage_vehicle_release_chunk(release_id, section, chunk_index,
 --      chunk_hash, rows)
@@ -41,15 +44,21 @@
 --      totals, not left to be discovered as a raw FK violation.
 --
 --   3. activate_vehicle_release(release_id)
---      Validates -- by summing the chunk ledger, not by trusting anything
---      the caller says at this step -- that every section's staged row
---      count matches the count the manifest promised at begin, refuses a
---      stale revision_ordinal exactly as publish_vehicle_release does
---      (same guard, same semantics), and then does the identical atomic
---      tail every release activation has always done: supersede the old
---      ACTIVE release, activate this one, flip canonical_vehicle_state.
---      This is the only step that changes what the public serving views
---      show.
+--      Serializes with every other vehicle_catalog activation via a
+--      transaction-scoped advisory lock, acquired before anything else is
+--      read -- without it, two concurrent activations for two different
+--      releases each lock only their own release row and can both read
+--      the same currently-active release/ordinal before either commits,
+--      so the older of the two could still win the race after the newer
+--      one has already activated. Once serialized, validates -- by
+--      summing the chunk ledger, not by trusting anything the caller says
+--      at this step -- that every section's staged row count matches the
+--      count the manifest promised at begin, refuses a stale
+--      revision_ordinal exactly as publish_vehicle_release does (same
+--      guard, same semantics), and then does the identical atomic tail
+--      every release activation has always done: supersede the old ACTIVE
+--      release, activate this one, flip canonical_vehicle_state. This is
+--      the only step that changes what the public serving views show.
 --
 -- publish_vehicle_release(jsonb) itself is untouched by this migration --
 -- not redefined, not wrapped, not wired to call the new functions
@@ -90,6 +99,32 @@ comment on table public.canonical_release_chunks is
 alter table public.canonical_release_chunks enable row level security;
 grant all on public.canonical_release_chunks to service_role;
 
+-- The subset of a manifest whose values are the release's actual identity
+-- and activation semantics -- everything begin_vehicle_release must never
+-- silently overwrite once a release_id exists. Deliberately NOT "whatever
+-- the caller's _manifest() happened to drop the bulk arrays from": the
+-- release also carries ephemeral fields (created_at, stamped fresh every
+-- time release_enriched.py rebuilds an otherwise-identical release) that
+-- legitimately differ across two calls describing the same semantic
+-- release, and comparing those would reject a legitimate resume.
+create or replace function public._release_semantic_manifest(m jsonb)
+returns jsonb
+language sql
+immutable
+as $$
+  select jsonb_strip_nulls(jsonb_build_object(
+    'schema_version', m->'schema_version',
+    'release_id', m->'release_id',
+    'canonical_revision', m->'canonical_revision',
+    'source_hash', m->'source_hash',
+    'year', m->'year',
+    'as_of', m->'as_of',
+    'counts', m->'counts',
+    'historical_model_state', m->'historical_model_state',
+    'revision_ordinal', m->'revision_ordinal'
+  ));
+$$;
+
 create or replace function public.begin_vehicle_release(manifest jsonb)
 returns jsonb
 language plpgsql
@@ -98,10 +133,9 @@ set search_path = public, pg_temp
 as $$
 declare
   rid text := manifest->>'release_id';
-  expected_counts jsonb := manifest->'counts';
-  incoming_ordinal bigint := nullif(manifest->>'revision_ordinal', '')::bigint;
+  incoming_semantic jsonb;
   existing_status text;
-  existing_counts jsonb;
+  existing_payload jsonb;
   staged jsonb;
 begin
   if rid is null or rid !~ '^vehicle-[0-9]{4}-[a-f0-9]{16}$' then
@@ -114,47 +148,48 @@ begin
      or manifest->>'as_of' is null then
     raise exception 'source_hash, canonical_revision and as_of are required';
   end if;
-  if expected_counts is null or jsonb_typeof(expected_counts) <> 'object'
-     or not (expected_counts ?& array['brands','models','generations',
-                                       'market_trims','price_ledger','spec_facts'])
+  if manifest->'counts' is null or jsonb_typeof(manifest->'counts') <> 'object'
+     or not ((manifest->'counts') ?& array['brands','models','generations',
+                                            'market_trims','price_ledger','spec_facts'])
   then
     raise exception 'manifest counts must name all six release sections';
   end if;
 
-  select status, counts into existing_status, existing_counts
+  incoming_semantic := public._release_semantic_manifest(manifest);
+
+  select status, payload into existing_status, existing_payload
     from public.canonical_vehicle_releases where release_id = rid
     for update;
 
   if found then
+    -- Identity/activation semantics are immutable once a release_id
+    -- exists, in every status: a second begin_vehicle_release call
+    -- naming the same release_id must describe the exact same release,
+    -- whether it is still being staged or already finalized. A mismatch
+    -- here can only mean the caller itself disagrees with an earlier
+    -- call -- content-hash release_ids mean a genuinely different
+    -- release always gets a different id -- so this always errors
+    -- rather than silently overwriting anything, revision_ordinal
+    -- (the staleness guard's own input) included.
+    if incoming_semantic <> public._release_semantic_manifest(existing_payload) then
+      raise exception
+        'begin_vehicle_release: % already exists (status %) with an incompatible manifest',
+        rid, existing_status;
+    end if;
     if existing_status in ('ACTIVE', 'SUPERSEDED') then
       return jsonb_build_object('release_id', rid, 'status', existing_status,
                                 'already_finalized', true);
     end if;
-    -- STAGING: this is a resume of an in-progress or previously interrupted
-    -- staged publish, not a fresh one. The manifest must describe exactly
-    -- the release already opened -- a genuinely different release gets a
-    -- different content-derived release_id, so a mismatch here means the
-    -- caller itself disagrees with an earlier begin call, not that the
-    -- release changed underneath it.
-    if existing_counts <> expected_counts then
-      raise exception
-        'begin_vehicle_release: % is already staging with different counts (existing %, incoming %)',
-        rid, existing_counts, expected_counts;
-    end if;
-    update public.canonical_vehicle_releases
-      set canonical_revision = manifest->>'canonical_revision',
-          source_hash = manifest->>'source_hash',
-          as_of = (manifest->>'as_of')::date,
-          payload = manifest,
-          revision_ordinal = incoming_ordinal
-      where release_id = rid;
+    -- STAGING and the manifest matches exactly: a pure resume. Nothing
+    -- about the release row is updated -- there is nothing to update.
   else
     insert into public.canonical_vehicle_releases
       (release_id, schema_version, canonical_revision, source_hash, as_of,
        counts, payload, status, revision_ordinal)
     values
       (rid, 1, manifest->>'canonical_revision', manifest->>'source_hash',
-       (manifest->>'as_of')::date, expected_counts, manifest, 'STAGING', incoming_ordinal);
+       (manifest->>'as_of')::date, manifest->'counts', manifest, 'STAGING',
+       nullif(manifest->>'revision_ordinal', '')::bigint);
   end if;
 
   select jsonb_object_agg(section, done) into staged
@@ -166,10 +201,13 @@ begin
     ) s;
 
   return jsonb_build_object('release_id', rid, 'status', 'STAGING',
-                            'counts', expected_counts,
+                            'counts', manifest->'counts',
                             'staged', coalesce(staged, '{}'::jsonb));
 end;
 $$;
+
+revoke all on function public._release_semantic_manifest(jsonb) from public, anon, authenticated;
+grant execute on function public._release_semantic_manifest(jsonb) to service_role;
 
 revoke all on function public.begin_vehicle_release(jsonb) from public, anon, authenticated;
 grant execute on function public.begin_vehicle_release(jsonb) to service_role;
@@ -340,6 +378,21 @@ declare
   sec_done bigint;
   incomplete text[] := array[]::text[];
 begin
+  -- Transaction-wide serialization point for every vehicle_catalog
+  -- activation, acquired before anything else is read. The `for update`
+  -- below only locks the ONE release row this call names -- two
+  -- concurrent activations for two DIFFERENT releases each lock their own
+  -- row and can both read the same currently-active release/ordinal
+  -- before either commits, so the older of the two can still win the race
+  -- after the newer one has already activated (the exact scenario v44's
+  -- staleness guard exists to prevent). An advisory lock is
+  -- session/transaction scoped, not tied to any row, so acquiring it
+  -- before the staleness read blocks every other activation for this
+  -- scope regardless of which release_id it names, and it is released
+  -- automatically at commit or rollback -- no unlock call, no risk of
+  -- leaking it past this transaction.
+  perform pg_advisory_xact_lock(hashtext('canonical_vehicle_release_activation:vehicle_catalog')::bigint);
+
   select status, counts, revision_ordinal into rel_status, expected_counts, incoming_ordinal
     from public.canonical_vehicle_releases where release_id = p_release_id
     for update;
