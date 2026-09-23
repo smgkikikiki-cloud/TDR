@@ -328,7 +328,8 @@ def test_a_full_row_produces_a_useful_number_of_comparable_facts(registry):
     assert accepted["powertrain.transmission"] == "CVT"
     assert accepted["engine.fuel_type"] == "GASOLINE"
     assert accepted["safety.aeb"] is True
-    assert accepted["manufacturing.factory"] == "TRENDY INFORMATION CO., LTD."
+    assert "manufacturing.factory" not in accepted
+    assert vehicle.notes["factory"] == "TRENDY INFORMATION CO., LTD."
 
 
 # ---------------------------------------------------------------------------

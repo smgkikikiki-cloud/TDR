@@ -30,7 +30,9 @@ from pathlib import Path
 from typing import Iterable
 
 from vehreg.catalog import Catalog, DATA_DIR
-from vehreg.comparable_specs import SpecLedger, SpecRegistry
+from vehreg.comparable_specs import (
+    SpecLedger, SpecRegistry, spec_conflict_key, spec_value_identity,
+)
 from vehreg.ecosticker_export import NormalizedVehicle, applicable_specs
 from vehreg.ecosticker_import import UNRESOLVED, plan_row
 from vehreg.input_pipeline import CanonicalInputPipeline
@@ -234,34 +236,62 @@ def spec_commands_from_outcomes(
             if trim_ref is None:
                 command["canonical_id"] = target_id
 
-            qualifier_key = json.dumps(
-                payload.get("qualifiers", {}), ensure_ascii=False, sort_keys=True,
-                separators=(",", ":"))
-            group_key = (target_id, key, qualifier_key, vehicle.approved_at)
+            group_key = spec_conflict_key(
+                definition, trim_id=target_id, field_key=key,
+                qualifiers=payload.get("qualifiers", {}), start=vehicle.approved_at)
             candidate = {
                 "command": command,
+                "fact_id": payload["fact_id"],
                 "group_key": group_key,
                 "target_id": target_id,
                 "field_key": key,
                 "source_id": vehicle.source_id,
                 "value": value,
-                "value_token": json.dumps(value, ensure_ascii=False, sort_keys=True),
+                "value_token": spec_value_identity("KNOWN", value),
                 "qualifiers": payload.get("qualifiers", {}),
                 "observed_at": vehicle.approved_at,
             }
             candidates.append(candidate)
             groups.setdefault(group_key, []).append(candidate)
 
+    # Compare against the ledger state too. A fact being revised under the
+    # same fact_id replaces its old file, so its old version is deliberately
+    # omitted from this comparison; every other stored fact participates.
+    incoming_fact_ids = {item["fact_id"] for item in candidates}
+    for fact in existing_facts:
+        if fact.fact_id in incoming_fact_ids:
+            continue
+        definition = registry.fields.get(fact.field_key)
+        if definition is None:
+            continue
+        group_key = spec_conflict_key(
+            definition, trim_id=fact.trim_id, field_key=fact.field_key,
+            qualifiers=fact.qualifiers, start=fact.start)
+        groups.setdefault(group_key, []).append({
+            "command": None,
+            "fact_id": fact.fact_id,
+            "group_key": group_key,
+            "target_id": fact.trim_id,
+            "field_key": fact.field_key,
+            "source_id": f"existing:{fact.fact_id}",
+            "value": fact.value,
+            "value_token": spec_value_identity(fact.value_state, fact.value),
+            "qualifiers": dict(fact.qualifiers),
+            "observed_at": fact.start,
+        })
+
     conflicting = {
         key for key, items in groups.items()
-        if len({item["value_token"] for item in items}) > 1
+        if any(item["command"] is not None for item in items)
+        and len({item["value_token"] for item in items}) > 1
     }
     conflicts: list[dict] = []
-    for key in sorted(conflicting):
-        items = groups[key]
-        first = items[0]
+    for key in sorted(conflicting, key=repr):
+        all_items = groups[key]
+        incoming = [item for item in all_items if item["command"] is not None]
+        first = incoming[0]
         conflicts.append({
-            "source_id": ",".join(sorted({item["source_id"] for item in items})),
+            "source_id": ",".join(sorted({item["source_id"] for item in incoming})),
             "trim_id": first["target_id"],
             "conflicts": [{
                 "field_key": first["field_key"],
@@ -270,7 +300,7 @@ def spec_commands_from_outcomes(
                 "reason": "ECO records disagree for the same trim/spec/date/context",
                 "values": [
                     {"source_id": item["source_id"], "value": item["value"]}
-                    for item in items
+                    for item in all_items
                 ],
             }],
         })
