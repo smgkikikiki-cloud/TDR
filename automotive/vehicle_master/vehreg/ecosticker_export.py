@@ -24,7 +24,8 @@ import re
 from typing import Any, Optional
 
 from .comparable_specs import (
-    ValueState, ValueType, battery_chemistry_family, transmission_family,
+    ValueState, ValueType, battery_chemistry_family,
+    is_identified_manufacturing_plant, transmission_family,
 )
 from .ecosticker_ingest import infer_powertrain
 
@@ -460,7 +461,6 @@ _NUMERIC_SPECS: tuple[tuple[str, str, str], ...] = (
     ("total_weight", "vehicle.declared_total_weight_kg", "int"),
     ("model_year", "vehicle.model_year", "int"),
     ("capacity_cylinder", "engine.displacement_cc", "int"),
-    ("gear_speed", "powertrain.gear_count", "int"),
 
     ("nominal_voltage", "battery.nominal_voltage_v", "float"),
     ("driving_range", "ev.rated_range_km", "float"),
@@ -473,12 +473,13 @@ _NUMERIC_SPECS: tuple[tuple[str, str, str], ...] = (
 
 _TEXT_SPECS: tuple[tuple[str, str], ...] = (
     ("battery_brand", "battery.supplier"),
-    ("factory", "manufacturing.factory"),
     ("wheel_size", "fitment.tyre_size"),
     ("front_wheel", "fitment.tyre_front"),
     ("back_wheel", "fitment.tyre_rear"),
     ("on_board_charger", "charging.onboard_charger_spec"),
 )
+
+_GEAR_COUNT_FAMILIES = frozenset({"AUTOMATIC", "MANUAL"})
 
 #: The ECO Sticker does not say which drive cycle its range and consumption
 #: figures come from. Recording them as NEDC or WLTP would be a guess, and a
@@ -521,6 +522,17 @@ def normalize_row(row: dict) -> NormalizedVehicle:
         if value:
             specs[key] = value
 
+    transmission = transmission_family(_text(row.get("gear_name")))
+    gear_count = _integer(row.get("gear_speed"))
+    if transmission in _GEAR_COUNT_FAMILIES and gear_count and gear_count > 0:
+        specs["powertrain.gear_count"] = gear_count
+
+    factory_raw = _text(row.get("factory"))
+    if factory_raw:
+        vehicle.notes["factory"] = factory_raw
+        if is_identified_manufacturing_plant(factory_raw):
+            specs["manufacturing.factory"] = factory_raw
+
     if vehicle.powertrain:
         specs["identity.powertrain"] = vehicle.powertrain
     for key, value in (
@@ -529,7 +541,7 @@ def normalize_row(row: dict) -> NormalizedVehicle:
         # _text() first: a spreadsheet blank arrives as float("nan"), which is
         # truthy, so handing it straight to the folders turns "no value" into
         # the literal family "OTHER" on every row that never stated one.
-        ("powertrain.transmission", transmission_family(_text(row.get("gear_name")))),
+        ("powertrain.transmission", transmission),
         ("powertrain.motor_type", motor_type(row.get("motor"))),
         ("powertrain.motor_count", motor_count(row.get("motor"))),
         ("battery.chemistry", battery_chemistry_family(_text(row.get("battery_type")))),

@@ -114,6 +114,32 @@ def transmission_family(raw: object) -> Optional[str]:
     return _family(raw, TRANSMISSION_FAMILIES)
 
 
+_PLANT_SIGNAL = re.compile(r"(?i)\bplant\b|โรงงาน")
+
+
+def is_identified_manufacturing_plant(raw: object) -> bool:
+    """Whether ECO's factory text identifies a physical manufacturing site."""
+    text = str(raw or "").strip()
+    return bool(text and _PLANT_SIGNAL.search(text))
+
+
+def spec_conflict_key(definition: "SpecFieldDefinition", *, trim_id: str,
+                      field_key: str, qualifiers: dict[str, str] | None,
+                      start: str | None) -> tuple:
+    """Canonical identity used by SpecLedger for same-start conflicts."""
+    qualifier_key = tuple(
+        (key, str((qualifiers or {}).get(key, "")))
+        for key in definition.comparison_qualifiers
+    )
+    return (str(trim_id), str(field_key), qualifier_key, start)
+
+
+def spec_value_identity(value_state: object, value: Any) -> tuple[str, str]:
+    """Canonical value identity used when deciding whether a key conflicts."""
+    state = getattr(value_state, "value", value_state)
+    return (str(state), json.dumps(value, sort_keys=True, ensure_ascii=False))
+
+
 def comparable_spec_root(data_dir: Path | str, year: int) -> Path:
     return Path(data_dir) / str(year) / "product" / "comparable_specs"
 
@@ -427,11 +453,12 @@ class SpecLedger:
         for fact in self.facts:
             definition = self.registry.fields.get(fact.field_key)
             if definition:
-                key = (fact.trim_id, fact.field_key, fact.qualifier_key(definition), fact.start)
+                key = spec_conflict_key(
+                    definition, trim_id=fact.trim_id, field_key=fact.field_key,
+                    qualifiers=fact.qualifiers, start=fact.start)
                 groups.setdefault(key, []).append(fact)
         for key, facts in groups.items():
-            values = {(f.value_state.value, json.dumps(f.value, sort_keys=True,
-                                                       ensure_ascii=False)) for f in facts}
+            values = {spec_value_identity(f.value_state, f.value) for f in facts}
             if len(values) > 1:
                 problems.append(f"conflicting comparable spec facts at {key}")
         return problems
@@ -670,7 +697,9 @@ class ECOCandidateSpecStore:
                 ("battery.nominal_voltage_v", _positive_number(detail.get("nominal_voltage")), "V"),
                 ("powertrain.motor_type", detail.get("motor"), ""),
                 ("emissions.co2_g_km", _nonnegative_number(detail.get("emissions_CO2")), "g/km"),
-                ("manufacturing.factory", row.get("factory"), ""),
+                ("manufacturing.factory",
+                 row.get("factory") if is_identified_manufacturing_plant(
+                     row.get("factory")) else None, ""),
             ]
             for key, value, unit in simple:
                 if value not in (None, "", "-") and key in registry.fields:
