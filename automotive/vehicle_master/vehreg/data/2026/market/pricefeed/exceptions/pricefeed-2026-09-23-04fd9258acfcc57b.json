@@ -1,0 +1,79 @@
+{
+  "batch_ref": "pricefeed-2026-09-23-04fd9258acfcc57b",
+  "generated_at": "2026-09-23T22:48:01+00:00",
+  "exceptions": [
+    {
+      "kind": "PRICE_IDENTITY",
+      "reason": "no_trim_match, price_type_unclear",
+      "source_identity": {
+        "trim_id": null,
+        "trim_candidates": [],
+        "amount_thb": 990000,
+        "price_type": "UNKNOWN",
+        "effective_from": null,
+        "campaign_id": null,
+        "urls": [
+          "https://www.headlightmag.com/2026-09-24-picture-specs-honda-super-one-edit/"
+        ],
+        "claim_ids": [
+          "8ca12e9b437b5670",
+          "af1ace6211d8cea5"
+        ]
+      }
+    },
+    {
+      "kind": "PRICE_IDENTITY",
+      "reason": "no_trim_match",
+      "source_identity": {
+        "trim_id": null,
+        "trim_candidates": [],
+        "amount_thb": 990000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "campaign_id": null,
+        "urls": [
+          "https://www.headlightmag.com/2026-09-24-picture-specs-honda-super-one-edit/"
+        ],
+        "claim_ids": [
+          "3dfd37272fe4d2a6"
+        ]
+      }
+    },
+    {
+      "kind": "PRICE_IDENTITY",
+      "reason": "no_trim_match",
+      "source_identity": {
+        "trim_id": null,
+        "trim_candidates": [],
+        "amount_thb": 3970000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "campaign_id": null,
+        "urls": [
+          "https://www.headlightmag.com/2024-09-24-official-price-mercedes-benz-eqe-300/"
+        ],
+        "claim_ids": [
+          "87b388c2861ea8e4"
+        ]
+      }
+    },
+    {
+      "kind": "PRICE_IDENTITY",
+      "reason": "no_trim_match",
+      "source_identity": {
+        "trim_id": null,
+        "trim_candidates": [],
+        "amount_thb": 5950000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "campaign_id": null,
+        "urls": [
+          "https://www.headlightmag.com/2024-09-24-official-price-mercedes-benz-eqe-300/"
+        ],
+        "claim_ids": [
+          "4cf3d404e3de038c"
+        ]
+      }
+    }
+  ]
+}
