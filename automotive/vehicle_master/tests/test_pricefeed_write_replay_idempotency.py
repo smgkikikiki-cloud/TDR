@@ -4,17 +4,28 @@ exception-only run derived its storage_path from the calendar date alone
 (``pricefeed-{observed_at}-none``) -- two different exception-only
 harvests on the same day collided.
 
-This is the client half of the fix: tools.pricefeed_write.run()/
-_post_exceptions() must (1) derive a content hash for an exception-only
-batch_ref, so two different harvests never collide and a replay of the
-identical harvest always does, and (2) call import_runs/
-import_run_exceptions the way migration_v49's schema expects --
-``on_conflict=storage_path`` with ``resolution=merge-duplicates`` for the
-run (its id is needed back either way), ``on_conflict=run_id,
-exception_hash`` with ``resolution=ignore-duplicates`` for each exception
-row. test_import_run_exceptions_idempotency_migration_v49.py proves that
-SQL shape actually behaves as promised against a real Postgres; this
-proves the client issues exactly that shape.
+The fix: ``import_runs`` identity is the harvested INPUT (the documents
+and claims a harvest batch actually carried), computed once in
+tools.pricefeed_write.run() (``_harvest_input_id``) and used unconditionally
+-- not the resolved commands (``batch_id_for``, which stays scoped to
+CanonicalInputPipeline's own, correctly output-based, replay key) and not
+the resolved exceptions either. Hashing the *output* instead of the input
+was an earlier, wrong version of this fix: two genuinely different
+harvests that happen to leave behind the same unresolved exception would
+then collapse into one import_runs row, silently losing the audit trail
+of the second harvest ever having run. test_two_different_harvests_that_
+resolve_to_the_same_exception_still_get_different_run_identities below is
+exactly that regression, pinned.
+
+``_post_exceptions()`` then calls import_runs/import_run_exceptions the
+way migration_v49's schema expects -- ``on_conflict=storage_path`` with
+``resolution=merge-duplicates`` for the run (its id is needed back either
+way), ``on_conflict=run_id,exception_hash`` with
+``resolution=ignore-duplicates`` for each exception row (a separate,
+per-row content hash -- unaffected by this correction, still exactly what
+migration_v49 added). test_import_run_exceptions_idempotency_migration_v49.py
+proves that SQL shape actually behaves as promised against a real
+Postgres; this proves the client issues exactly that shape.
 
 No real HTTP or Postgres here -- tools.import_worker._rest is replaced
 outright, so these stay fast and only exercise pricefeed_write's own
@@ -147,6 +158,46 @@ def test_replaying_the_identical_exception_only_harvest_gets_the_same_batch_ref(
     ref_1 = [c for c in calls_1 if c[1].startswith("import_runs")][0][2]["storage_path"]
     ref_2 = [c for c in calls_2 if c[1].startswith("import_runs")][0][2]["storage_path"]
     assert ref_1 == ref_2
+
+
+def test_harvest_input_id_differs_even_when_the_resolved_exception_would_not():
+    """The regression an earlier version of this fix would have had:
+    hashing the *resolved exception* instead of the *harvested input*
+    would make two genuinely different harvests collapse into one
+    import_runs row whenever they happen to leave behind the same
+    unresolved work -- silently losing the audit trail of the second
+    harvest having run at all.
+
+    The claim below (what drives exception_rows()'s PRICE_IDENTITY reason
+    and source_identity -- trim_id, amount, price_type, urls, claim_ids)
+    is byte-identical between the two calls; only the document's own
+    fetched_at differs, as it genuinely would between two separate polls
+    of an unmodified article. A design that hashed the resolved exception
+    would not be able to tell these two runs apart; hashing the harvested
+    input, as tools.pricefeed_write._harvest_input_id does, can.
+    """
+    from vehreg.pricefeed import PriceClaim, SourceDocument
+    from vehreg.pricing import PriceType
+
+    claim = PriceClaim(
+        claim_id="claim-1", document_id="sha256:" + "a" * 64, source_id="jaecoo-official",
+        brand_raw="Jaecoo", model_raw="Jaecoo 5", trim_raw="", amount_thb=899_000,
+        price_type=PriceType.LIST_PRICE, effective_from="2026-09-23")
+    doc_first_poll = SourceDocument(
+        document_id="sha256:" + "a" * 64, source_id="jaecoo-official",
+        url="https://jaecoo.example/j5", content_hash="sha256:" + "a" * 64,
+        fetched_at="2026-09-23T01:00:00+00:00")
+    doc_second_poll = SourceDocument(
+        document_id="sha256:" + "a" * 64, source_id="jaecoo-official",
+        url="https://jaecoo.example/j5", content_hash="sha256:" + "a" * 64,
+        fetched_at="2026-09-23T05:00:00+00:00")
+
+    first = pricefeed_write._harvest_input_id("2026-09-23", [doc_first_poll], [claim])
+    second = pricefeed_write._harvest_input_id("2026-09-23", [doc_second_poll], [claim])
+    replay = pricefeed_write._harvest_input_id("2026-09-23", [doc_first_poll], [claim])
+
+    assert first != second
+    assert first == replay
 
 
 def test_post_exceptions_upserts_the_run_and_ignores_duplicate_exception_rows(

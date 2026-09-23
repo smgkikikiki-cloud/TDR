@@ -103,25 +103,31 @@ def _split_unresolvable(offers: list[dict], unresolvable: dict[tuple, str]):
     return writable, blocked
 
 
-def _exception_batch_ref(observed_at: str, exceptions: list[dict]) -> str:
-    """A content-derived id for a run with no WRITTEN commands.
+def _harvest_input_id(observed_at: str, documents: list, claims: list) -> str:
+    """``import_runs``' identity: the harvested evidence itself -- what was
+    read, never what the resolver did with it.
 
-    ``batch_from_outcomes`` already hashes its commands into ``batch_id``
-    for a run that wrote something (``vehreg.pricefeed_writer.batch_id_for``);
-    an exception-only run has no commands to hash, so it used to fall back
-    to the calendar date alone (``pricefeed-{observed_at}-none``). Two
-    unrelated exception-only harvests on the same day then named the exact
-    same ``import_runs.storage_path`` and the second one's insert 409'd --
-    a real production failure, not a flake. Hashing the exceptions
-    themselves instead keeps the same property ``batch_id_for`` already
-    has: two different harvests (different unresolved work) get different
-    ids, and a replay of the identical harvest (identical exceptions)
-    gets the identical id, which is exactly what makes the upsert in
-    ``_post_exceptions`` a genuine no-op instead of a fresh row.
+    This is deliberately NOT a hash of the resolved exceptions (an earlier
+    version of this fix was: two genuinely different harvests that happen
+    to leave behind the same unresolved claims would then collapse into
+    one import_runs row, silently losing the audit trail of the second
+    harvest ever having run) and NOT ``batch_id_for``'s hash of the
+    WRITTEN commands either (that stays scoped to what it already is --
+    CanonicalInputPipeline's own replay key for the canonical write itself,
+    a different and correctly output-based question). One rule, for every
+    run regardless of what it resolved to: a replay of the identical
+    harvest input (the same documents and claims tools.pricefeed_harvest
+    or tools.pricefeed_coverage produced) is the same logical run and
+    lands on the same storage_path; genuinely different harvested
+    evidence -- even if it happens to produce identical leftover
+    exceptions, or no written commands either time -- is a different run.
     """
-    digest = hashlib.sha256(
-        json.dumps(exceptions, sort_keys=True, ensure_ascii=False).encode()
-    ).hexdigest()[:16]
+    body = json.dumps(
+        {"documents": [pricefeed.to_dict(d) for d in documents],
+         "claims": [pricefeed.to_dict(c) for c in claims]},
+        sort_keys=True, ensure_ascii=False,
+    )
+    digest = hashlib.sha256(body.encode()).hexdigest()[:16]
     return f"pricefeed-{observed_at}-{digest}"
 
 
@@ -229,6 +235,7 @@ def run(path: Path, *, data_dir: Path, year: int,
     command is evidence-only and was never wired to a writer.
     """
     documents, claims = pricefeed.load_batch(path)
+    input_id = _harvest_input_id(observed_at, documents, claims)
     catalog = Catalog.load(data_dir, year)
     ledger = PriceLedger.load(data_dir, year=year, catalog=catalog)
     result = pricefeed.run(documents, claims,
@@ -243,9 +250,8 @@ def run(path: Path, *, data_dir: Path, year: int,
     batch = batch_from_outcomes(outcomes, year=year, submitted_at=f"{observed_at}T00:00:00+00:00")
 
     exceptions = exception_rows(outcomes, [*result.review, *blocked])
-    batch_ref = batch["batch_id"] if batch else _exception_batch_ref(observed_at, exceptions)
     stored = _store_exceptions(exceptions, data_dir=data_dir, year=year,
-                               batch_ref=batch_ref)
+                               batch_ref=input_id)
 
     summary = {
         **result.summary(),
