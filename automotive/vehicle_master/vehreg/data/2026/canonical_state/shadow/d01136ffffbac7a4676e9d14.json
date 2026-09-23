@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d01136ffffbac7a4676e9d14",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-006-b527dba9e80a:175",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.yaris_cross.ac200.trim.hev_premium_luxury_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:59+00:00",
+    "before_hash": "2033c813b00dba086c7ed479934445f522d3dd786352e4f89d9322672ef16ad1",
+    "after_hash": "2ddfb94d07bcd95b853a0cff59ca9c719efe6a63c099390ca24ee97b5057263e",
+    "before": [
+      true,
+      4.1,
+      3.8,
+      3.1
+    ],
+    "after": [
+      true,
+      4.1,
+      3.8,
+      3.1,
+      86.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_79564fad-1875-4f85-a020-6a46da47f43d_emissions.co2_g_km_5706058fb8b4.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d01136ffffbac7a4676e9d14:spec",
+    "revision_id": "d01136ffffbac7a4676e9d14",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.yaris_cross.ac200.trim.hev_premium_luxury_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:59+00:00",
+    "payload": [
+      true,
+      4.1,
+      3.8,
+      3.1,
+      86.0
+    ]
+  }
+}

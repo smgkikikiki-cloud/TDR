@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "1942704b7e6b4a587dd06e2c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-043-5c8c2001b8cb:1",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.defender.gen1.trim.2_0p_phev_awd_5dr_swb_x_404ps_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:44+00:00",
+    "before_hash": "c60e9ff23a4b2d6736056018c8f588d2ed14085e9637ea8cc9645ad4cf1a7325",
+    "after_hash": "4c7f03d286b471d0501b482778d48f672f5189bf274fd1471e026b669adf90f1",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      18.32,
+      370.0,
+      "Samsung SDI"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      18.32,
+      370.0,
+      "Samsung SDI",
+      "EXTERNAL_DC"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_140cc7cb-d05a-46c6-a18d-4d87f004d8b4_charging.port_type_22dd7bbbfd14.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "1942704b7e6b4a587dd06e2c:spec",
+    "revision_id": "1942704b7e6b4a587dd06e2c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.defender.gen1.trim.2_0p_phev_awd_5dr_swb_x_404ps_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:44+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      18.32,
+      370.0,
+      "Samsung SDI",
+      "EXTERNAL_DC"
+    ]
+  }
+}

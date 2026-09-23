@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "35dd7157a03cd19505472b5b",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-031-eac7506457fb:49",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.civic.fe.trim.el_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:08+00:00",
+    "before_hash": "935ab065a5f8b68f170090a385934af0ae64584818b6211018c81717b42f302f",
+    "after_hash": "95944662ade1f126ff716656ae05fc11e5f6054e660a7054557cd94e3cda12d7",
+    "before": [
+      true,
+      true,
+      true,
+      4.7,
+      5.8,
+      7.8,
+      139.0,
+      0.012,
+      "TIS",
+      "GASOLINE"
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      4.7,
+      5.8,
+      7.8,
+      139.0,
+      0.012,
+      "TIS",
+      "GASOLINE",
+      1498
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b0c7e69a-c05f-4036-bd3a-aedc440d3f12_engine.displacement_cc_f3b2f0e1335c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "35dd7157a03cd19505472b5b:spec",
+    "revision_id": "35dd7157a03cd19505472b5b",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.civic.fe.trim.el_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:08+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      4.7,
+      5.8,
+      7.8,
+      139.0,
+      0.012,
+      "TIS",
+      "GASOLINE",
+      1498
+    ]
+  }
+}

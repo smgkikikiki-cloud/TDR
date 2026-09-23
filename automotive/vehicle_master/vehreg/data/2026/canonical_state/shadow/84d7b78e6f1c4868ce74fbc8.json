@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "84d7b78e6f1c4868ce74fbc8",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-015-2f508ee80764:344",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_travo_double_cab.gen1.trim.4trex_2_8_premium_mt_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:37+00:00",
+    "before_hash": "0763820eecc503fba518cf1303c0dd2da189f339f88b2413904011f411cff8c9",
+    "after_hash": "a47a62391dfb4dd2dd5e0a75c5fa8bcfc565a1dbf03a62b47b8d4ce06368f40b",
+    "before": [
+      true,
+      6.5,
+      7.0,
+      7.9,
+      185.0,
+      0.158,
+      0.00089,
+      "TIS",
+      "DIESEL",
+      2755,
+      "B20",
+      "265/65R 17",
+      "ICE",
+      6.0
+    ],
+    "after": [
+      true,
+      6.5,
+      7.0,
+      7.9,
+      185.0,
+      0.158,
+      0.00089,
+      "TIS",
+      "DIESEL",
+      2755,
+      "B20",
+      "265/65R 17",
+      "ICE",
+      6.0,
+      6
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ea6334aa-703e-4838-9e75-c2f454f4fbbb_powertrain.gear_count_cf6745d3f7ca.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "84d7b78e6f1c4868ce74fbc8:spec",
+    "revision_id": "84d7b78e6f1c4868ce74fbc8",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_travo_double_cab.gen1.trim.4trex_2_8_premium_mt_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:37+00:00",
+    "payload": [
+      true,
+      6.5,
+      7.0,
+      7.9,
+      185.0,
+      0.158,
+      0.00089,
+      "TIS",
+      "DIESEL",
+      2755,
+      "B20",
+      "265/65R 17",
+      "ICE",
+      6.0,
+      6
+    ]
+  }
+}

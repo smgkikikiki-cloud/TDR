@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "fa5c4648284968e6375d8bd3",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-011-3c709241399c:391",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mazda6.gen1.trim.mazda6e_exclusive_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:19+00:00",
+    "before_hash": "58b479c6637a8eb6768caf16772e4b8536114e8530f05bd74ecfa582d212e197",
+    "after_hash": "a5d2bd220f46fc7a3b39e97f50a1f7128a620b8e0ef6597b478a7f895d8c5454",
+    "before": [
+      "LI_ION_UNSPECIFIED"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      77.9
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_10b5aa8b-13f3-4894-bf3a-cf04481ca058_battery.gross_capacity_kwh_4bb4ecdddfc7.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "fa5c4648284968e6375d8bd3:spec",
+    "revision_id": "fa5c4648284968e6375d8bd3",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mazda6.gen1.trim.mazda6e_exclusive_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:19+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      77.9
+    ]
+  }
+}

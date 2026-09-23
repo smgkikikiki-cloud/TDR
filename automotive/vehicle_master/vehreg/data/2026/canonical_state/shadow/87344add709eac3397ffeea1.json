@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "87344add709eac3397ffeea1",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-048-9a296c6c8041:334",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg5.mg5g.trim.1_5_x_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:35+00:00",
+    "before_hash": "5939c6344642c55825a1a5d024d0049356b46f02cbf9da484cde62416dcceb1b",
+    "after_hash": "8048a26e74d08d767a6af72cb7a1f4b0912049a639b22906cb80aa9ef7d8887c",
+    "before": [
+      true,
+      true,
+      4.4,
+      5.6,
+      7.7
+    ],
+    "after": [
+      true,
+      true,
+      4.4,
+      5.6,
+      7.7,
+      132.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_c013c26d710642cc97725d1895545a52_emissions.co2_g_km_9c556283d506.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "87344add709eac3397ffeea1:spec",
+    "revision_id": "87344add709eac3397ffeea1",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg5.mg5g.trim.1_5_x_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:35+00:00",
+    "payload": [
+      true,
+      true,
+      4.4,
+      5.6,
+      7.7,
+      132.0
+    ]
+  }
+}

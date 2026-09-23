@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e9c161050b7b56d107326bd0",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-012-0c3fd0adac89:42",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lexus_nx.az20.trim.nx450h_grand_luxury_plus_awd_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:23+00:00",
+    "before_hash": "06212bee1d598a24a1eda15fb00850d2292e9828836ba2781a93ca8aba809c4d",
+    "after_hash": "2f65418a7ff07a9b1555fc32c1f57804b68be63b3a953af382bd42abc486945f",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      18.12,
+      355.2,
+      "TOYOTA MOTOR CORPORATION"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      18.12,
+      355.2,
+      "TOYOTA MOTOR CORPORATION",
+      "ONBOARD_AC"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_1112abab-11a1-4d32-a7b0-2ea1a8da4053_charging.port_type_636ae4517524.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e9c161050b7b56d107326bd0:spec",
+    "revision_id": "e9c161050b7b56d107326bd0",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lexus_nx.az20.trim.nx450h_grand_luxury_plus_awd_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:23+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      18.12,
+      355.2,
+      "TOYOTA MOTOR CORPORATION",
+      "ONBOARD_AC"
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "4efabe60c73622099470920f",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-052-52eba3c13659:119",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q3.f3.trim.sportback_35_tfsi_s_line_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:24+00:00",
+    "before_hash": "11ec548e888f470fae6306733ddbcdcf2c51615780e00bbf8532c2ae0f40e5ad",
+    "after_hash": "a6d84710390c43a656151dbc197310a0cc7455d82e1c762ce0df6d58719876bb",
+    "before": [
+      6.1
+    ],
+    "after": [
+      6.1,
+      7.3
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ff512c2c3f194bc285e860f92e697107_efficiency.fuel_consumption_l_100km_4766ea82b438.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "4efabe60c73622099470920f:spec",
+    "revision_id": "4efabe60c73622099470920f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q3.f3.trim.sportback_35_tfsi_s_line_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:24+00:00",
+    "payload": [
+      6.1,
+      7.3
+    ]
+  }
+}

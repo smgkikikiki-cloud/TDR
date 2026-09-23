@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "655a9ec756bf0ba69bb09dac",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-004-87075c4d97a5:277",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.macan.95b.trim.gts_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:53+00:00",
+    "before_hash": "87b55618d045aeef89f29924df1474032684d91548d02a9383f62d07ce80d4b0",
+    "after_hash": "54f400fdd1613a4d51bb6aa1dfcdfe725dc82351326150af26d9380445c14276",
+    "before": [
+      true,
+      8.9,
+      10.3,
+      12.9,
+      235.0,
+      0.018,
+      "TIS"
+    ],
+    "after": [
+      true,
+      8.9,
+      10.3,
+      12.9,
+      235.0,
+      0.018,
+      "TIS",
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_a456ef09-acc8-4bba-9697-33950048daf8_engine.combustion_type_708db2830b39.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "655a9ec756bf0ba69bb09dac:spec",
+    "revision_id": "655a9ec756bf0ba69bb09dac",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.macan.95b.trim.gts_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:53+00:00",
+    "payload": [
+      true,
+      8.9,
+      10.3,
+      12.9,
+      235.0,
+      0.018,
+      "TIS",
+      "GASOLINE"
+    ]
+  }
+}

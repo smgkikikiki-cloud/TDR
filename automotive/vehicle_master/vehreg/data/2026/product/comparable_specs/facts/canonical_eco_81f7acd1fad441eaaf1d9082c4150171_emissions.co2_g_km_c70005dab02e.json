@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:81f7acd1fad441eaaf1d9082c4150171:emissions.co2_g_km",
+      "field_key": "emissions.co2_g_km",
+      "value_state": "KNOWN",
+      "value": 162.0,
+      "unit": "g/km",
+      "observed_at": "2020-03-17",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/81f7acd1fad441eaaf1d9082c4150171",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/81f7acd1fad441eaaf1d9082c4150171",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "subaru.crosstrek.gu.trim.2_0i_p_ice"
+    }
+  ]
+}

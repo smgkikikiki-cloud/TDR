@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "653e8ffe48015821e3b447c4",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-032-04b0adc6e162:73",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.almera.n18.trim.1_0t_el_cvt",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:17+00:00",
+    "before_hash": "496428035f129afe53b21f8d653caebae7c186b624d4bd69ad5e1ba52bbe4067",
+    "after_hash": "e0e62f8b945fb2e0586e847e946d4b954d732c46755b0670bb141c4224ab2e21",
+    "before": [
+      true,
+      true
+    ],
+    "after": [
+      true,
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_20692f72-35bb-4c52-80ec-17e29858bdcf_comfort.power_windows_5dd16ec056ea.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "653e8ffe48015821e3b447c4:spec",
+    "revision_id": "653e8ffe48015821e3b447c4",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.almera.n18.trim.1_0t_el_cvt",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:17+00:00",
+    "payload": [
+      true,
+      true,
+      true
+    ]
+  }
+}

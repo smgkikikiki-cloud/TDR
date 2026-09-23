@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "325a2429fff583006fdf99a8",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-023-8723a19230b0:122",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.everest.u704.trim.titanium_plus_2_0l_bi_turbo_10at_4x2_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:16+00:00",
+    "before_hash": "aa26e149c8300c18db23e34f9499cf33d842dcdfc3850fd495866abad4accd40",
+    "after_hash": "b76414324685c23f242c4365aa90d5d14095ad057779fbf1b47171ed9a02f56f",
+    "before": [
+      true,
+      true,
+      true,
+      6.2,
+      6.9,
+      8.0,
+      182.0,
+      0.105,
+      0.00035
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      6.2,
+      6.9,
+      8.0,
+      182.0,
+      0.105,
+      0.00035,
+      "TIS"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d2e4c842-e228-4daf-966a-e939d5136216_emissions.standard_c103ab0dc648.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "325a2429fff583006fdf99a8:spec",
+    "revision_id": "325a2429fff583006fdf99a8",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.everest.u704.trim.titanium_plus_2_0l_bi_turbo_10at_4x2_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:16+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      6.2,
+      6.9,
+      8.0,
+      182.0,
+      0.105,
+      0.00035,
+      "TIS"
+    ]
+  }
+}

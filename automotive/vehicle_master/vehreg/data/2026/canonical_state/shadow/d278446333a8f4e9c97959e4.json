@@ -1,0 +1,440 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d278446333a8f4e9c97959e4",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-001-2163ac0376be:23",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "volvo.ex30",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:44+00:00",
+    "before_hash": "4f9da7caff7b7eb6349b74692b5b5c0ae0ab948c95af59982876c295ced33c67",
+    "after_hash": "9a17241b90eea58aa2cbab9599916fddab708db8fa7cc4c872bc81d9250d8e25",
+    "before": {
+      "id": "ex30",
+      "name_en": "EX30",
+      "name_th": "อีเอ็กซ์30",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "ex 30"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "EX30G",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2024-05-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "69 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "RWD",
+              "engine_cc": null,
+              "battery_kwh": 69.0,
+              "aliases": [
+                "Ultra Single Motor"
+              ],
+              "overrides": {},
+              "price_thb": 1590000,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1590000,
+              "price_max_thb": 1590000
+            }
+          ],
+          "trims": [
+            {
+              "name": "Core Single Motor (51 kWh LFP)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:305"
+                ]
+              },
+              "id": "core_single_motor_51_kwh_lfp_bev"
+            },
+            {
+              "name": "Plus Single Motor Extended Range (69 kWh NMC)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:305"
+                ]
+              },
+              "id": "plus_single_motor_extended_range_69_kwh_nmc_bev"
+            },
+            {
+              "name": "Ultra Twin Motor Performance (69 kWh AWD, 428 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:305"
+                ],
+                "eco": [
+                  "d45e1336-e4c8-42d3-937c-05982d55a21a"
+                ]
+              },
+              "id": "ultra_twin_performance_69_kwh_awd_428_hp_bev",
+              "seats": 5,
+              "length_mm": 4233,
+              "width_mm": 1837,
+              "height_mm": 1549
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "volvo",
+        "name_en": "Volvo",
+        "name_th": "วอลโว่",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Geely",
+        "brand_origin": "SE",
+        "trim_detail": false,
+        "aliases": [
+          "วอลโว่"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "volvo.ex30",
+        "brand_id": "volvo",
+        "name_en": "EX30",
+        "name_th": "อีเอ็กซ์30",
+        "nameplate": "EX30",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "ex 30"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "volvo.ex30.ex30g",
+          "model_id": "volvo.ex30",
+          "code": "EX30G",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2024-05-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "volvo.ex30.ex30g.69_kwh_bev",
+          "generation_id": "volvo.ex30.ex30g",
+          "name": "69 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 69.0,
+          "price_thb": 1590000,
+          "price_min_thb": 1590000,
+          "price_max_thb": 1590000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Ultra Single Motor"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "volvo.ex30.ex30g.trim.core_single_51_kwh_lfp_bev",
+          "generation_id": "volvo.ex30.ex30g",
+          "name": "Core Single Motor (51 kWh LFP)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:305"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "volvo.ex30.ex30g.trim.plus_single_extended_range_69_kwh_nmc_bev",
+          "generation_id": "volvo.ex30.ex30g",
+          "name": "Plus Single Motor Extended Range (69 kWh NMC)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:305"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "volvo.ex30.ex30g.trim.ultra_twin_performance_69_kwh_awd_428_hp_bev",
+          "generation_id": "volvo.ex30.ex30g",
+          "name": "Ultra Twin Motor Performance (69 kWh AWD, 428 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4233,
+          "width_mm": 1837,
+          "height_mm": 1549,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:305"
+            ],
+            "eco": [
+              "9fb52b18-cbef-4569-8b46-71901110b8ab",
+              "d45e1336-e4c8-42d3-937c-05982d55a21a"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/volvo.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d278446333a8f4e9c97959e4:catalog",
+    "revision_id": "d278446333a8f4e9c97959e4",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "volvo.ex30",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:44+00:00",
+    "payload": {
+      "brand": {
+        "id": "volvo",
+        "name_en": "Volvo",
+        "name_th": "วอลโว่",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Geely",
+        "brand_origin": "SE",
+        "trim_detail": false,
+        "aliases": [
+          "วอลโว่"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "volvo.ex30",
+        "brand_id": "volvo",
+        "name_en": "EX30",
+        "name_th": "อีเอ็กซ์30",
+        "nameplate": "EX30",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "ex 30"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "volvo.ex30.ex30g",
+          "model_id": "volvo.ex30",
+          "code": "EX30G",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2024-05-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "volvo.ex30.ex30g.69_kwh_bev",
+          "generation_id": "volvo.ex30.ex30g",
+          "name": "69 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 69.0,
+          "price_thb": 1590000,
+          "price_min_thb": 1590000,
+          "price_max_thb": 1590000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Ultra Single Motor"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "volvo.ex30.ex30g.trim.core_single_51_kwh_lfp_bev",
+          "generation_id": "volvo.ex30.ex30g",
+          "name": "Core Single Motor (51 kWh LFP)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:305"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "volvo.ex30.ex30g.trim.plus_single_extended_range_69_kwh_nmc_bev",
+          "generation_id": "volvo.ex30.ex30g",
+          "name": "Plus Single Motor Extended Range (69 kWh NMC)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:305"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "volvo.ex30.ex30g.trim.ultra_twin_performance_69_kwh_awd_428_hp_bev",
+          "generation_id": "volvo.ex30.ex30g",
+          "name": "Ultra Twin Motor Performance (69 kWh AWD, 428 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4233,
+          "width_mm": 1837,
+          "height_mm": 1549,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:305"
+            ],
+            "eco": [
+              "9fb52b18-cbef-4569-8b46-71901110b8ab",
+              "d45e1336-e4c8-42d3-937c-05982d55a21a"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

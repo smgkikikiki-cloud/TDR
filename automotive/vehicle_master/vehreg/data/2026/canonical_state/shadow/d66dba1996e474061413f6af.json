@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d66dba1996e474061413f6af",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-047-23268458b262:230",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.ora_good_cat.gc.trim.400_tech_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:25+00:00",
+    "before_hash": "e63e2725e3fc34928f626a6d3cc85c27fab638d89eda9b5ea0258936c517db33",
+    "after_hash": "e2243298c538922ab7b165ae8811f0569052d583075094113c582a1a35664345",
+    "before": [
+      true,
+      true,
+      "GASOLINE",
+      "205/55R17",
+      "ICE",
+      2.0,
+      true,
+      2
+    ],
+    "after": [
+      true,
+      true,
+      "GASOLINE",
+      "205/55R17",
+      "ICE",
+      2.0,
+      true,
+      2,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ac15a8652e2b46ca99de093774e37e4b_safety.esc_4f723425774b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d66dba1996e474061413f6af:spec",
+    "revision_id": "d66dba1996e474061413f6af",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.ora_good_cat.gc.trim.400_tech_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:25+00:00",
+    "payload": [
+      true,
+      true,
+      "GASOLINE",
+      "205/55R17",
+      "ICE",
+      2.0,
+      true,
+      2,
+      true
+    ]
+  }
+}

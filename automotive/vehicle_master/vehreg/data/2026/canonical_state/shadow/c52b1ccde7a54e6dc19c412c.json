@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c52b1ccde7a54e6dc19c412c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-008-bc3b92e93b52:380",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.g_class.gen1.trim.g400d_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:07+00:00",
+    "before_hash": "3b52d9ec6bcbaa567df0fc9fe90f59d7ce6bb566a07729587fdc435396c0b219",
+    "after_hash": "1779267c5057a311447c818ecef910aeb7eee8adbace4a48e8b95a4275a80a25",
+    "before": [
+      true,
+      true,
+      7.6,
+      8.4,
+      9.7,
+      219.0,
+      0.02672,
+      0.00143,
+      "TIS",
+      "DIESEL",
+      2925,
+      "DIESEL"
+    ],
+    "after": [
+      true,
+      true,
+      7.6,
+      8.4,
+      9.7,
+      219.0,
+      0.02672,
+      0.00143,
+      "TIS",
+      "DIESEL",
+      2925,
+      "DIESEL",
+      "270/50R20"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_390fae66-9d91-4272-8ea3-fabbb1c210ab_fitment.tyre_size_ed8d33d4deb5.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c52b1ccde7a54e6dc19c412c:spec",
+    "revision_id": "c52b1ccde7a54e6dc19c412c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.g_class.gen1.trim.g400d_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:07+00:00",
+    "payload": [
+      true,
+      true,
+      7.6,
+      8.4,
+      9.7,
+      219.0,
+      0.02672,
+      0.00143,
+      "TIS",
+      "DIESEL",
+      2925,
+      "DIESEL",
+      "270/50R20"
+    ]
+  }
+}

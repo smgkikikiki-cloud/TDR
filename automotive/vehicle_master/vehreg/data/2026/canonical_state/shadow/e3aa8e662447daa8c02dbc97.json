@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e3aa8e662447daa8c02dbc97",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-013-01b2d6d40e8e:236",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q3.f3.trim.sportback_quattro_s_line_tech_pro_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:28+00:00",
+    "before_hash": "8c5d0bf51eb1c82db5e20f0a49cb5a3482dd342154a59d94dc2de74466b6a644",
+    "after_hash": "f92f77bbf8ce3226e2e29f78abbf6e5bf32d2c2f9efa0b6d2e6bca07a7425b2e",
+    "before": [
+      6.2,
+      7.3,
+      9.2,
+      168.0,
+      0.0208
+    ],
+    "after": [
+      6.2,
+      7.3,
+      9.2,
+      168.0,
+      0.0208,
+      0.00015
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d966025c-123f-493a-91d1-48d7248596a4_emissions.pm_g_km_e5b122a7bbd0.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e3aa8e662447daa8c02dbc97:spec",
+    "revision_id": "e3aa8e662447daa8c02dbc97",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q3.f3.trim.sportback_quattro_s_line_tech_pro_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:28+00:00",
+    "payload": [
+      6.2,
+      7.3,
+      9.2,
+      168.0,
+      0.0208,
+      0.00015
+    ]
+  }
+}

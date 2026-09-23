@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5c36e7b179cb7917eb9b6a2c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-006-b527dba9e80a:87",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.cle.gen1.trim.4matic_coup_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:59+00:00",
+    "before_hash": "b564a6c7989ba7bb9979320f8788b15bd2d4fc572d000f14896aa5755e43abb6",
+    "after_hash": "7b6db82fdb9e4d067607386ae954bbbafa52d2aee6b9fbfd93036fdc7b6135ce",
+    "before": [
+      "EURO6",
+      "HEV",
+      "GASOLINE",
+      "HEV",
+      9,
+      "AUTOMATIC",
+      true
+    ],
+    "after": [
+      "EURO6",
+      "HEV",
+      "GASOLINE",
+      "HEV",
+      9,
+      "AUTOMATIC",
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_54d263e0-394f-46c4-9e39-a981885682a6_safety.adaptive_cruise_7b57b13e1923.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5c36e7b179cb7917eb9b6a2c:spec",
+    "revision_id": "5c36e7b179cb7917eb9b6a2c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.cle.gen1.trim.4matic_coup_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:59+00:00",
+    "payload": [
+      "EURO6",
+      "HEV",
+      "GASOLINE",
+      "HEV",
+      9,
+      "AUTOMATIC",
+      true,
+      true
+    ]
+  }
+}

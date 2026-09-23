@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "96f8dcb1ba46ba3a1acfabb0",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-043-5c8c2001b8cb:36",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_c_class.w206.trim.c_220_d_avantgarde_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:44+00:00",
+    "before_hash": "33b1e77d1ef7a5c519e3c592e6884035b9adb3e0f93eb30ee37a1cf1bbc51ca7",
+    "after_hash": "049ef4324c215798c6e0cdb0741ae0a894c08074112d9c0396d52ca5ca290563",
+    "before": [
+      3.8,
+      4.6,
+      6.0,
+      122.0
+    ],
+    "after": [
+      3.8,
+      4.6,
+      6.0,
+      122.0,
+      0.013
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_f9e017b9-93b3-4566-85f9-924993d124cd_emissions.nox_g_km_187ba389da34.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "96f8dcb1ba46ba3a1acfabb0:spec",
+    "revision_id": "96f8dcb1ba46ba3a1acfabb0",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_c_class.w206.trim.c_220_d_avantgarde_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:44+00:00",
+    "payload": [
+      3.8,
+      4.6,
+      6.0,
+      122.0,
+      0.013
+    ]
+  }
+}

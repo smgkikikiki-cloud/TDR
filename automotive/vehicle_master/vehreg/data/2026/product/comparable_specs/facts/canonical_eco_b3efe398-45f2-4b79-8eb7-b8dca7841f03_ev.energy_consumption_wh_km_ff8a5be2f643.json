@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:b3efe398-45f2-4b79-8eb7-b8dca7841f03:ev.energy_consumption_wh_km",
+      "field_key": "ev.energy_consumption_wh_km",
+      "value_state": "KNOWN",
+      "value": 274.0,
+      "unit": "Wh/km",
+      "observed_at": "2025-08-19",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/b3efe398-45f2-4b79-8eb7-b8dca7841f03",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/b3efe398-45f2-4b79-8eb7-b8dca7841f03",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "bentley.bentayga.gen1.trim.atelier_hybrid_phev"
+    }
+  ]
+}

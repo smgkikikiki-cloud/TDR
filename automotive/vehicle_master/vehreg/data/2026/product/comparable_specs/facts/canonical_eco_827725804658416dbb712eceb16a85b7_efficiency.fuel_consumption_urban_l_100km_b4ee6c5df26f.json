@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:827725804658416dbb712eceb16a85b7:efficiency.fuel_consumption_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 10.1,
+      "unit": "L/100km",
+      "observed_at": "2021-07-12",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/827725804658416dbb712eceb16a85b7",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/827725804658416dbb712eceb16a85b7",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "lexus.lexus_rx.al30.trim.rx300_luxury_ice"
+    }
+  ]
+}

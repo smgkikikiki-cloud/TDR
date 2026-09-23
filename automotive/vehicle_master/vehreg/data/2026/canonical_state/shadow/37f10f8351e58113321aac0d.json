@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "37f10f8351e58113321aac0d",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-048-9a296c6c8041:139",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_ep.gen1.trim.ep_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:35+00:00",
+    "before_hash": "0878a85629c5ef774334370a1cd888b45332c93cc79ba2ad1d850854e4859f88",
+    "after_hash": "19c62bb423062cde0661afc4df2023c2d0d9aabeac6753a8a2bb028be5e72597",
+    "before": [
+      true,
+      "GASOLINE",
+      "205/60R16",
+      "ICE",
+      2.0,
+      true,
+      2,
+      true,
+      [
+        "R13H",
+        "R100"
+      ],
+      true,
+      1574,
+      1543,
+      4544,
+      2022,
+      5
+    ],
+    "after": [
+      true,
+      "GASOLINE",
+      "205/60R16",
+      "ICE",
+      2.0,
+      true,
+      2,
+      true,
+      [
+        "R13H",
+        "R100"
+      ],
+      true,
+      1574,
+      1543,
+      4544,
+      2022,
+      5,
+      1818
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_2784aa1866d44e679c710cd1ff33e545_vehicle.width_mm_4c7d74bfd612.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "37f10f8351e58113321aac0d:spec",
+    "revision_id": "37f10f8351e58113321aac0d",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_ep.gen1.trim.ep_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:35+00:00",
+    "payload": [
+      true,
+      "GASOLINE",
+      "205/60R16",
+      "ICE",
+      2.0,
+      true,
+      2,
+      true,
+      [
+        "R13H",
+        "R100"
+      ],
+      true,
+      1574,
+      1543,
+      4544,
+      2022,
+      5,
+      1818
+    ]
+  }
+}

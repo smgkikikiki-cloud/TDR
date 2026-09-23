@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "291a2eaa0c633d41e23e83db",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-014-8db054eb58a3:267",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a5.gen1.trim.e_hybrid_quattro_tech_pro_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:32+00:00",
+    "before_hash": "c323fb2fdc38c0174fa8c6ce05aa3d810ec1c8d5ab38bba3d8852100f952298f",
+    "after_hash": "cc0e82d64b142d9cbdf8c346e15a9af6876c218edaa95030f9bfe49e7b9e43a8",
+    "before": [
+      "NCA",
+      25.9,
+      370.0
+    ],
+    "after": [
+      "NCA",
+      25.9,
+      370.0,
+      "Samsung SDI"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_bff1c0a2-b034-4b4b-82b2-0bb3cdafec85_battery.supplier_c26c2143bc9e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "291a2eaa0c633d41e23e83db:spec",
+    "revision_id": "291a2eaa0c633d41e23e83db",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a5.gen1.trim.e_hybrid_quattro_tech_pro_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:32+00:00",
+    "payload": [
+      "NCA",
+      25.9,
+      370.0,
+      "Samsung SDI"
+    ]
+  }
+}

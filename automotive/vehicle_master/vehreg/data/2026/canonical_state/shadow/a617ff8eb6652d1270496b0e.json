@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a617ff8eb6652d1270496b0e",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-036-ba2d051d30aa:71",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "kia.ev9.mv.trim.gt_line_awd_dual_6_seater_swivel_relaxation_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:48+00:00",
+    "before_hash": "3ea7cfb88bc6c26b7229f7a929f7d8d778bad30cf4143eebe4cd053c0e68e470",
+    "after_hash": "ce577b28976568249dc9fa3233b0c9b50cb2fb1c74761bfd7a731878d1423d0c",
+    "before": [
+      "NMC",
+      99.36,
+      552.0,
+      "HYUNDAI MOBIS",
+      "230V/12A",
+      "ONBOARD_AC",
+      true,
+      true,
+      true,
+      170.0,
+      647.0,
+      "285/45R21",
+      "BEV"
+    ],
+    "after": [
+      "NMC",
+      99.36,
+      552.0,
+      "HYUNDAI MOBIS",
+      "230V/12A",
+      "ONBOARD_AC",
+      true,
+      true,
+      true,
+      170.0,
+      647.0,
+      "285/45R21",
+      "BEV",
+      8.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_fd8bdbe1-26f4-4d4a-a1e1-eaa1d8297d69_manufacturing.excise_tax_rate_7a1dd561a265.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a617ff8eb6652d1270496b0e:spec",
+    "revision_id": "a617ff8eb6652d1270496b0e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "kia.ev9.mv.trim.gt_line_awd_dual_6_seater_swivel_relaxation_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:48+00:00",
+    "payload": [
+      "NMC",
+      99.36,
+      552.0,
+      "HYUNDAI MOBIS",
+      "230V/12A",
+      "ONBOARD_AC",
+      true,
+      true,
+      true,
+      170.0,
+      647.0,
+      "285/45R21",
+      "BEV",
+      8.0
+    ]
+  }
+}

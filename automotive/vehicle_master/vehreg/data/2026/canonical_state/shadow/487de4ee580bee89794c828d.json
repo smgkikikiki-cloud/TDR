@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "487de4ee580bee89794c828d",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-008-bc3b92e93b52:377",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.g_class.gen1.trim.g400d_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:07+00:00",
+    "before_hash": "4bf2e4bc7756747f43899da67da7eb3713b91c6400d19bb8faa50d88141290e1",
+    "after_hash": "797ab6ff35b6ac160f54119b1e1a8f444ebed3b0262179ff7fb7f026ee0586e1",
+    "before": [
+      true,
+      true,
+      7.6,
+      8.4,
+      9.7,
+      219.0,
+      0.02672,
+      0.00143,
+      "TIS"
+    ],
+    "after": [
+      true,
+      true,
+      7.6,
+      8.4,
+      9.7,
+      219.0,
+      0.02672,
+      0.00143,
+      "TIS",
+      "DIESEL"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_390fae66-9d91-4272-8ea3-fabbb1c210ab_engine.combustion_type_3dcfb1a71e95.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "487de4ee580bee89794c828d:spec",
+    "revision_id": "487de4ee580bee89794c828d",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.g_class.gen1.trim.g400d_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:07+00:00",
+    "payload": [
+      true,
+      true,
+      7.6,
+      8.4,
+      9.7,
+      219.0,
+      0.02672,
+      0.00143,
+      "TIS",
+      "DIESEL"
+    ]
+  }
+}

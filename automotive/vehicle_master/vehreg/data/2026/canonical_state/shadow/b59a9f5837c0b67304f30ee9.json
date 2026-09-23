@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b59a9f5837c0b67304f30ee9",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-013-01b2d6d40e8e:280",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_altis.e210.trim.1_8g_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:28+00:00",
+    "before_hash": "3c10d1057e9a2e48bbba48a94f7e1f7156a0c04f5c42933a77f4f29f09489fb5",
+    "after_hash": "295131e54a8025e8aae903389a7c7e9d5a07a4e721372201351fe774525f5930",
+    "before": [
+      5.3,
+      6.6,
+      8.8,
+      149.0,
+      0.01426,
+      "TIS",
+      "GASOLINE",
+      1798,
+      "GASOLINE",
+      "205/55R16",
+      "ICE",
+      25.0,
+      "CVT",
+      1,
+      true,
+      [
+        "R13H"
+      ]
+    ],
+    "after": [
+      5.3,
+      6.6,
+      8.8,
+      149.0,
+      0.01426,
+      "TIS",
+      "GASOLINE",
+      1798,
+      "GASOLINE",
+      "205/55R16",
+      "ICE",
+      25.0,
+      "CVT",
+      1,
+      true,
+      [
+        "R13H"
+      ],
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_01e6ce81-c0ce-43b4-bce5-4f27bc938a30_technology.smartphone_mirroring_620a1efe62b4.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b59a9f5837c0b67304f30ee9:spec",
+    "revision_id": "b59a9f5837c0b67304f30ee9",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_altis.e210.trim.1_8g_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:28+00:00",
+    "payload": [
+      5.3,
+      6.6,
+      8.8,
+      149.0,
+      0.01426,
+      "TIS",
+      "GASOLINE",
+      1798,
+      "GASOLINE",
+      "205/55R16",
+      "ICE",
+      25.0,
+      "CVT",
+      1,
+      true,
+      [
+        "R13H"
+      ],
+      true
+    ]
+  }
+}

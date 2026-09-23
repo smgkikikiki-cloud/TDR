@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9e00a21b5fee401000a41b2b",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-027-e2d326b095bb:298",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.ranger_double_cab.p703.trim.stormtrak_2_0l_bi_turbo_4x4_10at",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:39+00:00",
+    "before_hash": "51686a38ab4e4230e6afa1e46709c507df7ccda508eb9733ca11b0de3e1c8aaf",
+    "after_hash": "2b8e3febcdb51bc0436c3750df09c408393650d9a4204a3e7ac9a79d4372ecd3",
+    "before": [
+      true,
+      6.8,
+      7.1,
+      7.5,
+      186.0,
+      0.16,
+      0.00039,
+      "TIS",
+      "DIESEL",
+      1996,
+      "B20",
+      "255/55R20"
+    ],
+    "after": [
+      true,
+      6.8,
+      7.1,
+      7.5,
+      186.0,
+      0.16,
+      0.00039,
+      "TIS",
+      "DIESEL",
+      1996,
+      "B20",
+      "255/55R20",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_20f5bfac-6b6b-4037-a20e-7933162be9de_identity.powertrain_db5c8fa78c80.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9e00a21b5fee401000a41b2b:spec",
+    "revision_id": "9e00a21b5fee401000a41b2b",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.ranger_double_cab.p703.trim.stormtrak_2_0l_bi_turbo_4x4_10at",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:39+00:00",
+    "payload": [
+      true,
+      6.8,
+      7.1,
+      7.5,
+      186.0,
+      0.16,
+      0.00039,
+      "TIS",
+      "DIESEL",
+      1996,
+      "B20",
+      "255/55R20",
+      "ICE"
+    ]
+  }
+}

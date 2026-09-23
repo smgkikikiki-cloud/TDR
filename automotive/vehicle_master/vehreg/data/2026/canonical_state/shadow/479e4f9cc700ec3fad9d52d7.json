@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "479e4f9cc700ec3fad9d52d7",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-006-b527dba9e80a:346",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "changan.nevo_q05.nevo_q05.trim.ultra_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:00+00:00",
+    "before_hash": "1c69c0f77ffa57aa1b7acc77e8c99b580bc3a05b30aa22142c8e8ef6125833f3",
+    "after_hash": "2e69f59010433bb0c21268c12541029d322449f02aa1630d5786d8fc7202a135",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      51.8,
+      350.0,
+      "CHONGQING CHANGAN AUTOMOBILE CO., LTD.",
+      "230 (AC)/ 350 (DC)",
+      "BOTH",
+      true,
+      129.0,
+      462.0,
+      "225/55R18",
+      "BEV",
+      2.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      51.8,
+      350.0,
+      "CHONGQING CHANGAN AUTOMOBILE CO., LTD.",
+      "230 (AC)/ 350 (DC)",
+      "BOTH",
+      true,
+      129.0,
+      462.0,
+      "225/55R18",
+      "BEV",
+      2.0,
+      "PMSM"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d9bcd1e3-1016-49a3-96c0-399fab33ab12_powertrain.motor_type_369e4df859d3.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "479e4f9cc700ec3fad9d52d7:spec",
+    "revision_id": "479e4f9cc700ec3fad9d52d7",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "changan.nevo_q05.nevo_q05.trim.ultra_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:00+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      51.8,
+      350.0,
+      "CHONGQING CHANGAN AUTOMOBILE CO., LTD.",
+      "230 (AC)/ 350 (DC)",
+      "BOTH",
+      true,
+      129.0,
+      462.0,
+      "225/55R18",
+      "BEV",
+      2.0,
+      "PMSM"
+    ]
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b65b6a124a1bae74eac37207",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-044-4ee92a315b21:27",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "subaru.forester.sk.trim.2_0i_l_es_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:52+00:00",
+    "before_hash": "2a5142fb3b49c5d7d49a4594159d4e9ad3ee5f188766b442f19bec05fb0bc8c4",
+    "after_hash": "f0c93d310cfc9c6e587bce0f102891406fc719d92f6a6f0a04cb76137bdd33c1",
+    "before": [
+      6.3,
+      7.6,
+      9.8,
+      181.0,
+      0.002
+    ],
+    "after": [
+      6.3,
+      7.6,
+      9.8,
+      181.0,
+      0.002,
+      "TIS"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_22d882e7-6178-4849-a8fb-34e40c33dd4e_emissions.standard_adebee2f4b12.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b65b6a124a1bae74eac37207:spec",
+    "revision_id": "b65b6a124a1bae74eac37207",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "subaru.forester.sk.trim.2_0i_l_es_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:52+00:00",
+    "payload": [
+      6.3,
+      7.6,
+      9.8,
+      181.0,
+      0.002,
+      "TIS"
+    ]
+  }
+}

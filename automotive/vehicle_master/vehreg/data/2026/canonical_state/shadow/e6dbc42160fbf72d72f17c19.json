@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e6dbc42160fbf72d72f17c19",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-048-9a296c6c8041:155",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_zs_ev.zsev.trim.x_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:35+00:00",
+    "before_hash": "20c673a5c56658c1e8fa6ea0454dadd6b0b496cd78ca34370ea59077b606560d",
+    "after_hash": "6609b69c442f7b1bd4ca9aa31a434460a90e0f8afa739ace3f830e5ac5980138",
+    "before": [
+      true,
+      "GASOLINE",
+      "215/55R17",
+      "ICE",
+      2.0,
+      true,
+      true,
+      true,
+      5,
+      true,
+      true,
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R100"
+      ]
+    ],
+    "after": [
+      true,
+      "GASOLINE",
+      "215/55R17",
+      "ICE",
+      2.0,
+      true,
+      true,
+      true,
+      5,
+      true,
+      true,
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R100"
+      ],
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_1420bd13e3f34a3ca6bbfef98ed40f5d_technology.connected_services_5db98634ba45.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e6dbc42160fbf72d72f17c19:spec",
+    "revision_id": "e6dbc42160fbf72d72f17c19",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_zs_ev.zsev.trim.x_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:35+00:00",
+    "payload": [
+      true,
+      "GASOLINE",
+      "215/55R17",
+      "ICE",
+      2.0,
+      true,
+      true,
+      true,
+      5,
+      true,
+      true,
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R100"
+      ],
+      true
+    ]
+  }
+}

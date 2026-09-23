@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2f755be2d2e82e855e276a6c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-054-d20b71816f05:126",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.voxy.gen1.trim.zs_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:52+00:00",
+    "before_hash": "7ba671966e99e18a9865d4aaa51bce21e7f059b4734ac0af279ab98c66b2d123",
+    "after_hash": "ca3fe2c36f875ae2b9fc9039a4782c7c4fb730ae926f26a3177727bbe43a1922",
+    "before": [
+      true,
+      true,
+      6.6,
+      7.5
+    ],
+    "after": [
+      true,
+      true,
+      6.6,
+      7.5,
+      9.2
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b0ae2e8028944283bed9acbeba5525c3_efficiency.fuel_consumption_urban_l_100km_b04baf3c1ddf.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2f755be2d2e82e855e276a6c:spec",
+    "revision_id": "2f755be2d2e82e855e276a6c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.voxy.gen1.trim.zs_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:52+00:00",
+    "payload": [
+      true,
+      true,
+      6.6,
+      7.5,
+      9.2
+    ]
+  }
+}

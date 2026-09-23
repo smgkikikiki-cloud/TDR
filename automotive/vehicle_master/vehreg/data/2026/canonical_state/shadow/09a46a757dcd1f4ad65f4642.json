@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "09a46a757dcd1f4ad65f4642",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-049-18d26b73936f:209",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_hs.hsg.trim.turbo_c_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:45+00:00",
+    "before_hash": "2f469f18724fab146df558c080a4c44f1dc6fc0a0308024d814fa40962b6cc49",
+    "after_hash": "aa3c78258144edb28f8fac02939addd33671004d90b0d83e635698eadb6a2eb6",
+    "before": [
+      true,
+      true,
+      5.6,
+      6.2,
+      7.4,
+      145.0,
+      0.026,
+      "TIS",
+      "GASOLINE",
+      1490,
+      "E85",
+      "215/60R17",
+      "ICE"
+    ],
+    "after": [
+      true,
+      true,
+      5.6,
+      6.2,
+      7.4,
+      145.0,
+      0.026,
+      "TIS",
+      "GASOLINE",
+      1490,
+      "E85",
+      "215/60R17",
+      "ICE",
+      20.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_83c43e264ed44392a135639f248b11c7_manufacturing.excise_tax_rate_ba3aba5deca0.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "09a46a757dcd1f4ad65f4642:spec",
+    "revision_id": "09a46a757dcd1f4ad65f4642",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_hs.hsg.trim.turbo_c_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:45+00:00",
+    "payload": [
+      true,
+      true,
+      5.6,
+      6.2,
+      7.4,
+      145.0,
+      0.026,
+      "TIS",
+      "GASOLINE",
+      1490,
+      "E85",
+      "215/60R17",
+      "ICE",
+      20.0
+    ]
+  }
+}

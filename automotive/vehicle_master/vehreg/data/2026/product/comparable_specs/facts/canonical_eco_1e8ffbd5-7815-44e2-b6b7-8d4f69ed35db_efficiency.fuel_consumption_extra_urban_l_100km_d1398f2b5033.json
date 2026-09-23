@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:1e8ffbd5-7815-44e2-b6b7-8d4f69ed35db:efficiency.fuel_consumption_extra_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_extra_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 6.8,
+      "unit": "L/100km",
+      "observed_at": "2023-01-18",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/1e8ffbd5-7815-44e2-b6b7-8d4f69ed35db",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/1e8ffbd5-7815-44e2-b6b7-8d4f69ed35db",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "honda.step_wgn.gen1.trim.spada_premium_line_ice"
+    }
+  ]
+}

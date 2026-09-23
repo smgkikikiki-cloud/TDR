@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "08ce86e14217fdf3f9c2fc52",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-017-02b372e72add:328",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_cross.xg10.trim.hev_premium_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:47+00:00",
+    "before_hash": "c4d0b772718c1442f4aa5b76c75118e24fbf393663ceeaa7b46f9a4c19fc2ab2",
+    "after_hash": "79503aa8ffbdc6a27ec0b24ab75a34f9c1cffbc5fdf22d235c15b17bd5b871b9",
+    "before": [
+      4.4,
+      4.2,
+      4.0,
+      95.0,
+      0.005,
+      "TIS",
+      "HEV",
+      1798,
+      "GASOLINE",
+      "225/50R18",
+      "HEV"
+    ],
+    "after": [
+      4.4,
+      4.2,
+      4.0,
+      95.0,
+      0.005,
+      "TIS",
+      "HEV",
+      1798,
+      "GASOLINE",
+      "225/50R18",
+      "HEV",
+      6.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_45fb3f35-5428-43f5-b085-9b1f8b63682c_manufacturing.excise_tax_rate_55f99e0bff7f.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "08ce86e14217fdf3f9c2fc52:spec",
+    "revision_id": "08ce86e14217fdf3f9c2fc52",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_cross.xg10.trim.hev_premium_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:47+00:00",
+    "payload": [
+      4.4,
+      4.2,
+      4.0,
+      95.0,
+      0.005,
+      "TIS",
+      "HEV",
+      1798,
+      "GASOLINE",
+      "225/50R18",
+      "HEV",
+      6.0
+    ]
+  }
+}

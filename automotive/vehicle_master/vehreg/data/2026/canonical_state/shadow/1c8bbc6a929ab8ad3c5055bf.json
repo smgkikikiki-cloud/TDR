@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "1c8bbc6a929ab8ad3c5055bf",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-049-18d26b73936f:358",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.creta.su2.trim.se_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:45+00:00",
+    "before_hash": "7bae504c936c801817a5eea8f21a531cc281cdf8a5b267876cc69791f44ddd1d",
+    "after_hash": "fca180d5a6d2ffdaae69c2b85f15d012bed62701453f8359bc57a9441847ea59",
+    "before": [
+      true,
+      true,
+      5.3,
+      6.0,
+      7.2,
+      142.0,
+      0.052,
+      "TIS",
+      "GASOLINE",
+      1497,
+      "GASOLINE",
+      "215/60R17"
+    ],
+    "after": [
+      true,
+      true,
+      5.3,
+      6.0,
+      7.2,
+      142.0,
+      0.052,
+      "TIS",
+      "GASOLINE",
+      1497,
+      "GASOLINE",
+      "215/60R17",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_349b8220f90849dd9a9ea2eda91368ef_identity.powertrain_bfcdbdf6eebc.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "1c8bbc6a929ab8ad3c5055bf:spec",
+    "revision_id": "1c8bbc6a929ab8ad3c5055bf",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.creta.su2.trim.se_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:45+00:00",
+    "payload": [
+      true,
+      true,
+      5.3,
+      6.0,
+      7.2,
+      142.0,
+      0.052,
+      "TIS",
+      "GASOLINE",
+      1497,
+      "GASOLINE",
+      "215/60R17",
+      "ICE"
+    ]
+  }
+}

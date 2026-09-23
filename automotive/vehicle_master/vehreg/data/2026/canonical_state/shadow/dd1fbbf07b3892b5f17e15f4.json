@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "dd1fbbf07b3892b5f17e15f4",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-027-e2d326b095bb:106",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_e07.gen1.trim.plus_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:39+00:00",
+    "before_hash": "f1d894dd9da486bfbbb47779df040fadb3c8688f73172505a939a4cde7950e02",
+    "after_hash": "d6ac9b765d493ae3b6cfaa0d97c833d48ee6f0ccdd08460b9892c46c3908b70d",
+    "before": [
+      "NMC",
+      89.96,
+      612.0,
+      "CHONGQING CHANGAN AUTOMOBILE CO., LTD.",
+      "220V(AC)/ 612V(DC)",
+      "BOTH",
+      true,
+      153.0,
+      640.0,
+      "265/45R21",
+      "BEV",
+      2.0
+    ],
+    "after": [
+      "NMC",
+      89.96,
+      612.0,
+      "CHONGQING CHANGAN AUTOMOBILE CO., LTD.",
+      "220V(AC)/ 612V(DC)",
+      "BOTH",
+      true,
+      153.0,
+      640.0,
+      "265/45R21",
+      "BEV",
+      2.0,
+      "PMSM"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_6818c168-0500-433e-aa17-2bcd45a27b8f_powertrain.motor_type_0848b6f1f50b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "dd1fbbf07b3892b5f17e15f4:spec",
+    "revision_id": "dd1fbbf07b3892b5f17e15f4",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_e07.gen1.trim.plus_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:39+00:00",
+    "payload": [
+      "NMC",
+      89.96,
+      612.0,
+      "CHONGQING CHANGAN AUTOMOBILE CO., LTD.",
+      "220V(AC)/ 612V(DC)",
+      "BOTH",
+      true,
+      153.0,
+      640.0,
+      "265/45R21",
+      "BEV",
+      2.0,
+      "PMSM"
+    ]
+  }
+}

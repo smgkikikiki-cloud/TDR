@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "53ae2dc78446dfa452ba17ea",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-055-949893759636:225",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_e_class.w214.trim.mercedes_benz_coupe_amg_dynamic_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:22:04+00:00",
+    "before_hash": "4beda409997aafa1f87c4865945c37d93a93ff577b21e266d797cd8a0b6ac469",
+    "after_hash": "1dc79dd04b5e0666ec84c297711f4c8a52abad22491ba0e5dc127ee5e5d8a576",
+    "before": [
+      5.8,
+      7.3,
+      9.7,
+      164.0,
+      0.018,
+      "TIS",
+      "GASOLINE",
+      1991,
+      "GASOLINE",
+      "245/40R19",
+      "275/35R19",
+      "ICE"
+    ],
+    "after": [
+      5.8,
+      7.3,
+      9.7,
+      164.0,
+      0.018,
+      "TIS",
+      "GASOLINE",
+      1991,
+      "GASOLINE",
+      "245/40R19",
+      "275/35R19",
+      "ICE",
+      30.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_0702d3d994a64b49a5f9aad84a7d55af_manufacturing.excise_tax_rate_6892a428462f.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "53ae2dc78446dfa452ba17ea:spec",
+    "revision_id": "53ae2dc78446dfa452ba17ea",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_e_class.w214.trim.mercedes_benz_coupe_amg_dynamic_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:22:04+00:00",
+    "payload": [
+      5.8,
+      7.3,
+      9.7,
+      164.0,
+      0.018,
+      "TIS",
+      "GASOLINE",
+      1991,
+      "GASOLINE",
+      "245/40R19",
+      "275/35R19",
+      "ICE",
+      30.0
+    ]
+  }
+}

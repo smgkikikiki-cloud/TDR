@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "51bd0bc4e863f4738638c33c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-025-74b815fdedac:369",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mx_5.gen1.trim.2_0_rf_6mt_retractable_fastback_manual_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:26+00:00",
+    "before_hash": "3b4e68845f76ac510aa16eafd6cd314bffaa558c3d0a0c6ca22cd37eaf5a3056",
+    "after_hash": "99a535a28f72413c9131a2fff602cc7dec9e9f85cf1e923a66abe68b4738eb52",
+    "before": [
+      true,
+      true,
+      5.6,
+      6.7,
+      8.5,
+      158.0,
+      0.01,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "GASOLINE"
+    ],
+    "after": [
+      true,
+      true,
+      5.6,
+      6.7,
+      8.5,
+      158.0,
+      0.01,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "GASOLINE",
+      "205/45R17"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_06736368-5df1-4961-87d4-c2ec227744e4_fitment.tyre_size_4b83a217a9c5.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "51bd0bc4e863f4738638c33c:spec",
+    "revision_id": "51bd0bc4e863f4738638c33c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mx_5.gen1.trim.2_0_rf_6mt_retractable_fastback_manual_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:26+00:00",
+    "payload": [
+      true,
+      true,
+      5.6,
+      6.7,
+      8.5,
+      158.0,
+      0.01,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "GASOLINE",
+      "205/45R17"
+    ]
+  }
+}

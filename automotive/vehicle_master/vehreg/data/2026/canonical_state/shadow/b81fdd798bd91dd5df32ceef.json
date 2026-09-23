@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b81fdd798bd91dd5df32ceef",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-038-caad162ad775:57",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_s07.gen1.trim.s07_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:04+00:00",
+    "before_hash": "02b2731d4dd4a4004f7d4e054a9e8b58f1da22eb21358ed70e41506414d8161c",
+    "after_hash": "eb14b74cf3770780d9aca0c31fba5a6b7d288041ffd708ad9abe882f998fe07d",
+    "before": [
+      "NMC",
+      66.75,
+      395.0,
+      "Chongqing Chang’an Automobile Co., Ltd.",
+      "230",
+      "ONBOARD_AC",
+      true,
+      158.0,
+      485.0,
+      "255/45R20",
+      "BEV"
+    ],
+    "after": [
+      "NMC",
+      66.75,
+      395.0,
+      "Chongqing Chang’an Automobile Co., Ltd.",
+      "230",
+      "ONBOARD_AC",
+      true,
+      158.0,
+      485.0,
+      "255/45R20",
+      "BEV",
+      2.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_aaf8d8bd-5e11-4c2d-8a66-1368dc6c21d9_manufacturing.excise_tax_rate_14dc6e30b535.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b81fdd798bd91dd5df32ceef:spec",
+    "revision_id": "b81fdd798bd91dd5df32ceef",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_s07.gen1.trim.s07_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:04+00:00",
+    "payload": [
+      "NMC",
+      66.75,
+      395.0,
+      "Chongqing Chang’an Automobile Co., Ltd.",
+      "230",
+      "ONBOARD_AC",
+      true,
+      158.0,
+      485.0,
+      "255/45R20",
+      "BEV",
+      2.0
+    ]
+  }
+}

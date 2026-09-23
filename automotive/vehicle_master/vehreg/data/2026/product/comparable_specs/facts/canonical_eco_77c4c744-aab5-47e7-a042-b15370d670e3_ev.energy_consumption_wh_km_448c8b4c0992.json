@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:77c4c744-aab5-47e7-a042-b15370d670e3:ev.energy_consumption_wh_km",
+      "field_key": "ev.energy_consumption_wh_km",
+      "value_state": "KNOWN",
+      "value": 221.0,
+      "unit": "Wh/km",
+      "observed_at": "2022-10-31",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/77c4c744-aab5-47e7-a042-b15370d670e3",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/77c4c744-aab5-47e7-a042-b15370d670e3",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "volvo.xc40.xc40g.trim.pure_electric_bev"
+    }
+  ]
+}

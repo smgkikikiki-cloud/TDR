@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "78c8f7ac6cd0abe2bc8b41e4",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-014-8db054eb58a3:143",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.cayenne.e3.trim.e_hybrid_phev_470_hp_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:32+00:00",
+    "before_hash": "d8127fea21a42329f7e57ea95f9908a9a7ad22c04c1a8d8c4cde4f9d6b9d85bb",
+    "after_hash": "0afb3a1a81c795964446806659233b942b4cd5476dbacd7336efc60150aeacbe",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      25.9,
+      370.0,
+      "Samsung",
+      "ONBOARD_AC",
+      true,
+      1.9,
+      44.0,
+      0.011
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      25.9,
+      370.0,
+      "Samsung",
+      "ONBOARD_AC",
+      true,
+      1.9,
+      44.0,
+      0.011,
+      "TIS"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_3f30ccd4-bf4d-4660-a4d4-180b49fa1a51_emissions.standard_6d0406455523.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "78c8f7ac6cd0abe2bc8b41e4:spec",
+    "revision_id": "78c8f7ac6cd0abe2bc8b41e4",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.cayenne.e3.trim.e_hybrid_phev_470_hp_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:32+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      25.9,
+      370.0,
+      "Samsung",
+      "ONBOARD_AC",
+      true,
+      1.9,
+      44.0,
+      0.011,
+      "TIS"
+    ]
+  }
+}

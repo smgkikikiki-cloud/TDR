@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:11950b23-badf-475b-a02a-fd95f722d82b:ev.energy_consumption_wh_km",
+      "field_key": "ev.energy_consumption_wh_km",
+      "value_state": "KNOWN",
+      "value": 269.0,
+      "unit": "Wh/km",
+      "observed_at": "2024-07-08",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/11950b23-badf-475b-a02a-fd95f722d82b",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/11950b23-badf-475b-a02a-fd95f722d82b",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mercedes_benz.gle.gen1.trim.4matic_exclusive_phev"
+    }
+  ]
+}

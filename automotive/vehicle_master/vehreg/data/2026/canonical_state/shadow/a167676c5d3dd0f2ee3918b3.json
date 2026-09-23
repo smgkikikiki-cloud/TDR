@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a167676c5d3dd0f2ee3918b3",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-020-1a96ac574560:199",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "isuzu.dmax_cab.rg.trim.d_max_spark_3_0_ddi_s",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:00+00:00",
+    "before_hash": "96c20946c03d0e100bd894a0e98151610f3cc3fad8ae1b0fc4767e9c0587cb3b",
+    "after_hash": "27e3bd57d8714e3f7b93d2e0de69484ed425267ab512e8b382e71bb64c69833b",
+    "before": [
+      true,
+      5.9,
+      7.4,
+      9.8,
+      190.0,
+      0.237,
+      4e-05,
+      "TIS",
+      "DIESEL",
+      2999,
+      "B20",
+      "215/70R15",
+      "ICE",
+      3.0
+    ],
+    "after": [
+      true,
+      5.9,
+      7.4,
+      9.8,
+      190.0,
+      0.237,
+      4e-05,
+      "TIS",
+      "DIESEL",
+      2999,
+      "B20",
+      "215/70R15",
+      "ICE",
+      3.0,
+      6
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e05a7ae4-8c29-4935-bb22-6a29ac97fedc_powertrain.gear_count_140003fc13da.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a167676c5d3dd0f2ee3918b3:spec",
+    "revision_id": "a167676c5d3dd0f2ee3918b3",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "isuzu.dmax_cab.rg.trim.d_max_spark_3_0_ddi_s",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:00+00:00",
+    "payload": [
+      true,
+      5.9,
+      7.4,
+      9.8,
+      190.0,
+      0.237,
+      4e-05,
+      "TIS",
+      "DIESEL",
+      2999,
+      "B20",
+      "215/70R15",
+      "ICE",
+      3.0,
+      6
+    ]
+  }
+}

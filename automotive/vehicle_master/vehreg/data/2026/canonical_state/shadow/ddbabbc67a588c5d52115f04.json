@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ddbabbc67a588c5d52115f04",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-037-986e7ff7e687:49",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.panamera.gen1.trim.panamera_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:56+00:00",
+    "before_hash": "603cc42c29e393dfc829bcb1e9d4f98a0ce6b0ffbb8ad0e08eff3a5fb4ccaad0",
+    "after_hash": "0490cbb155e63523a1bcfa9570cb7eb4ce365a0b580258049c8a3255f3eaaf1a",
+    "before": [
+      true,
+      8.0
+    ],
+    "after": [
+      true,
+      8.0,
+      10.2
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_bb33dcd9-9a52-45a5-87ca-af7ab8c8322f_efficiency.fuel_consumption_l_100km_15f977ca74c9.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ddbabbc67a588c5d52115f04:spec",
+    "revision_id": "ddbabbc67a588c5d52115f04",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.panamera.gen1.trim.panamera_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:56+00:00",
+    "payload": [
+      true,
+      8.0,
+      10.2
+    ]
+  }
+}

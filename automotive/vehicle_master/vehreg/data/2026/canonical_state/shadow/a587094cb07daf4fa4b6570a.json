@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a587094cb07daf4fa4b6570a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-047-23268458b262:302",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ferrari.f8.gen1.trim.spider_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:25+00:00",
+    "before_hash": "7bd9b9c1877a718f6bacb04d6c3848409e8a6e9f3be2bb48d59025f82a3f3b0e",
+    "after_hash": "3082054ac9e8b8014859d9086f467ab2c8de35321d868ce6536b1a10af70e110",
+    "before": [
+      true,
+      true,
+      9.4,
+      12.3,
+      17.3,
+      279.0,
+      0.04,
+      "TIS"
+    ],
+    "after": [
+      true,
+      true,
+      9.4,
+      12.3,
+      17.3,
+      279.0,
+      0.04,
+      "TIS",
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e29bfd363b074853a13cde8d1436bc18_engine.combustion_type_2f9cb830aa11.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a587094cb07daf4fa4b6570a:spec",
+    "revision_id": "a587094cb07daf4fa4b6570a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ferrari.f8.gen1.trim.spider_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:25+00:00",
+    "payload": [
+      true,
+      true,
+      9.4,
+      12.3,
+      17.3,
+      279.0,
+      0.04,
+      "TIS",
+      "GASOLINE"
+    ]
+  }
+}

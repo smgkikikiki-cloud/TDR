@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b32e87924a75da26227fe0f2",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-022-20a8a8e94ae5:125",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "geely.geely_ex5.gen1.trim.pro_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:11+00:00",
+    "before_hash": "9b443566a0c148f99c718799a4c5f9625fb1b077d4e66f22e111cf70aec105fe",
+    "after_hash": "3afc41ce8986cd6a4f511523b8bd29bfc35a7e262f3181d59ddccd6a95456ad3",
+    "before": [
+      "LFP",
+      60.16,
+      376.0,
+      "SVOLT Energy Technology Co.,Ltd",
+      "AC: INPUT 220 V, DC: INPUT 376 V",
+      "BOTH",
+      true,
+      139.0
+    ],
+    "after": [
+      "LFP",
+      60.16,
+      376.0,
+      "SVOLT Energy Technology Co.,Ltd",
+      "AC: INPUT 220 V, DC: INPUT 376 V",
+      "BOTH",
+      true,
+      139.0,
+      495.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_1d8a3c3a-2ce6-4dfd-8ba1-9d3454478c39_ev.rated_range_km_e605c5778248.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b32e87924a75da26227fe0f2:spec",
+    "revision_id": "b32e87924a75da26227fe0f2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "geely.geely_ex5.gen1.trim.pro_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:11+00:00",
+    "payload": [
+      "LFP",
+      60.16,
+      376.0,
+      "SVOLT Energy Technology Co.,Ltd",
+      "AC: INPUT 220 V, DC: INPUT 376 V",
+      "BOTH",
+      true,
+      139.0,
+      495.0
+    ]
+  }
+}

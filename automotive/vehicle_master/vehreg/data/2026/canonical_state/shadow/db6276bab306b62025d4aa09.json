@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "db6276bab306b62025d4aa09",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-040-43e09f18d7ea:90",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.creta.su2.trim.trend_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:21+00:00",
+    "before_hash": "a2c103c10012b7b88183f799a93a1d6c766a0ae3b3e542d3e7d97078cbc582e8",
+    "after_hash": "11b9da40e6d9030eee54d445607bdeb3f5c8fef5f430f32291ef8a75db3b13f7",
+    "before": [
+      true,
+      true,
+      5.3,
+      6.0,
+      7.2,
+      142.0,
+      0.052,
+      "TIS",
+      "GASOLINE",
+      1497,
+      "GASOLINE",
+      "215/60R17",
+      "ICE",
+      25.0,
+      "CVT",
+      true,
+      5,
+      true,
+      true,
+      true,
+      [
+        "R13H"
+      ]
+    ],
+    "after": [
+      true,
+      true,
+      5.3,
+      6.0,
+      7.2,
+      142.0,
+      0.052,
+      "TIS",
+      "GASOLINE",
+      1497,
+      "GASOLINE",
+      "215/60R17",
+      "ICE",
+      25.0,
+      "CVT",
+      true,
+      5,
+      true,
+      true,
+      true,
+      [
+        "R13H"
+      ],
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_6444735a-5a02-4f73-ac03-035318eee13c_technology.smartphone_mirroring_c2c156a8cb1b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "db6276bab306b62025d4aa09:spec",
+    "revision_id": "db6276bab306b62025d4aa09",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.creta.su2.trim.trend_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:21+00:00",
+    "payload": [
+      true,
+      true,
+      5.3,
+      6.0,
+      7.2,
+      142.0,
+      0.052,
+      "TIS",
+      "GASOLINE",
+      1497,
+      "GASOLINE",
+      "215/60R17",
+      "ICE",
+      25.0,
+      "CVT",
+      true,
+      5,
+      true,
+      true,
+      true,
+      [
+        "R13H"
+      ],
+      true
+    ]
+  }
+}

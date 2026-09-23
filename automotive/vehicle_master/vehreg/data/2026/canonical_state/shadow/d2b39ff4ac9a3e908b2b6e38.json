@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d2b39ff4ac9a3e908b2b6e38",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-044-4ee92a315b21:117",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.bz4x.ea10.trim.bz4x_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:52+00:00",
+    "before_hash": "2932cf8c1cc28827656cc5f0093ae15d35573d42478f6f53af399210a1033494",
+    "after_hash": "b6cbea3db2ca3f2e4aee899143d77c593a1dde66df671d71fa512fe93fb2eba0",
+    "before": [
+      true,
+      true,
+      "GASOLINE",
+      "235/50R20",
+      "ICE",
+      2.0,
+      "Toyota Motor Corporation (Motomachi plant)",
+      true,
+      4,
+      true,
+      true,
+      true,
+      [
+        "R100"
+      ]
+    ],
+    "after": [
+      true,
+      true,
+      "GASOLINE",
+      "235/50R20",
+      "ICE",
+      2.0,
+      "Toyota Motor Corporation (Motomachi plant)",
+      true,
+      4,
+      true,
+      true,
+      true,
+      [
+        "R100"
+      ],
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b0219a8647df48f3af6703951212e304_technology.smartphone_mirroring_1ffc3d8c3a14.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d2b39ff4ac9a3e908b2b6e38:spec",
+    "revision_id": "d2b39ff4ac9a3e908b2b6e38",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.bz4x.ea10.trim.bz4x_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:52+00:00",
+    "payload": [
+      true,
+      true,
+      "GASOLINE",
+      "235/50R20",
+      "ICE",
+      2.0,
+      "Toyota Motor Corporation (Motomachi plant)",
+      true,
+      4,
+      true,
+      true,
+      true,
+      [
+        "R100"
+      ],
+      true
+    ]
+  }
+}

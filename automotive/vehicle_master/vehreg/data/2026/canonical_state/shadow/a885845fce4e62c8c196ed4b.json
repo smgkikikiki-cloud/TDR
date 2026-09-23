@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a885845fce4e62c8c196ed4b",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-047-23268458b262:229",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.ora_good_cat.gc.trim.400_tech_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:25+00:00",
+    "before_hash": "4fd5c62b04914ead31d949b52a626b26d27e02bbf5f93f1dd9c4ed79afa2c0ef",
+    "after_hash": "e63e2725e3fc34928f626a6d3cc85c27fab638d89eda9b5ea0258936c517db33",
+    "before": [
+      true,
+      true,
+      "GASOLINE",
+      "205/55R17",
+      "ICE",
+      2.0,
+      true
+    ],
+    "after": [
+      true,
+      true,
+      "GASOLINE",
+      "205/55R17",
+      "ICE",
+      2.0,
+      true,
+      2
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ac15a8652e2b46ca99de093774e37e4b_safety.airbag_count_6addfb564771.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a885845fce4e62c8c196ed4b:spec",
+    "revision_id": "a885845fce4e62c8c196ed4b",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.ora_good_cat.gc.trim.400_tech_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:25+00:00",
+    "payload": [
+      true,
+      true,
+      "GASOLINE",
+      "205/55R17",
+      "ICE",
+      2.0,
+      true,
+      2
+    ]
+  }
+}

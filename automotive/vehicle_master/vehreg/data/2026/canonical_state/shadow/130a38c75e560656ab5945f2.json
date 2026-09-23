@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "130a38c75e560656ab5945f2",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-012-0c3fd0adac89:377",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.2_5_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:24+00:00",
+    "before_hash": "e9833c2894e44c4aee3035be7d8de52e2109f444c7cf3eba9d1b6d636a53c3f4",
+    "after_hash": "17903bb31ad9a1053480c47b71d75174a3851c1d646dd15896ef798b158390c8",
+    "before": [
+      5.4,
+      5.6,
+      6.0,
+      128.0,
+      0.004,
+      "EURO6",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/65R17",
+      "HEV",
+      15.0
+    ],
+    "after": [
+      5.4,
+      5.6,
+      6.0,
+      128.0,
+      0.004,
+      "EURO6",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/65R17",
+      "HEV",
+      15.0,
+      "TOYOTA AUTO BODY CO., LTD. (INABE PLANT)"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d68f8f3a-fb1a-424d-8cab-6b4f9fa8c128_manufacturing.factory_599f286c22c6.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "130a38c75e560656ab5945f2:spec",
+    "revision_id": "130a38c75e560656ab5945f2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.2_5_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:24+00:00",
+    "payload": [
+      5.4,
+      5.6,
+      6.0,
+      128.0,
+      0.004,
+      "EURO6",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/65R17",
+      "HEV",
+      15.0,
+      "TOYOTA AUTO BODY CO., LTD. (INABE PLANT)"
+    ]
+  }
+}

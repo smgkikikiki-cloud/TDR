@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ed97d3b74f17a563ab938e67",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:51",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.hev_premium",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:23:12+00:00",
+    "before_hash": "8064d74b15cbe458b59e1c1c18d30e10f701f22c0a5ff0952064ad18258a8fa6",
+    "after_hash": "bccaea33ad2d3452fa0fea9c7a8ebe02c69ea48c649e59c1988a750976671e4f",
+    "before": [
+      {
+        "trim_id": "toyota.alphard.ah40.trim.hev_premium",
+        "amount_thb": 4290000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-08",
+        "source": "autolifethailand",
+        "source_ref": "https://autolifethailand.tv/official-price-toyota-alphard-40-series-my2026-thailand/",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "toyota.alphard.ah40.trim.hev_premium",
+        "amount_thb": 4290000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-06-23",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/48c14603-c286-463a-9bed-e07ae20f52e1",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "toyota.alphard.ah40.trim.hev_premium",
+        "amount_thb": 4290000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-08",
+        "source": "autolifethailand",
+        "source_ref": "https://autolifethailand.tv/official-price-toyota-alphard-40-series-my2026-thailand/",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:51.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ed97d3b74f17a563ab938e67:price",
+    "revision_id": "ed97d3b74f17a563ab938e67",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.hev_premium",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:23:12+00:00",
+    "payload": [
+      {
+        "trim_id": "toyota.alphard.ah40.trim.hev_premium",
+        "amount_thb": 4290000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-06-23",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/48c14603-c286-463a-9bed-e07ae20f52e1",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "toyota.alphard.ah40.trim.hev_premium",
+        "amount_thb": 4290000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-08",
+        "source": "autolifethailand",
+        "source_ref": "https://autolifethailand.tv/official-price-toyota-alphard-40-series-my2026-thailand/",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

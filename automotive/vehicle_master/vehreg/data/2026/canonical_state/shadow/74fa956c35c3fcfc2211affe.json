@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "74fa956c35c3fcfc2211affe",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-038-caad162ad775:285",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.voxy.gen1.trim.hybrid_s_z_captain_ottoman_seats_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:04+00:00",
+    "before_hash": "1541f4cc0ecf5ecd65bb72411d871bbdccf653270e520404846e1f0364d14122",
+    "after_hash": "6b345008343595d19e0dceef2a99e11a18f18025dd3f86ef45e161fbaf46bb85",
+    "before": [
+      true,
+      true,
+      5.4,
+      4.8
+    ],
+    "after": [
+      true,
+      true,
+      5.4,
+      4.8,
+      3.7
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_cea90741-49e5-49e7-9c28-a875fea7bffb_efficiency.fuel_consumption_urban_l_100km_04b3bd3a4e2c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "74fa956c35c3fcfc2211affe:spec",
+    "revision_id": "74fa956c35c3fcfc2211affe",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.voxy.gen1.trim.hybrid_s_z_captain_ottoman_seats_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:04+00:00",
+    "payload": [
+      true,
+      true,
+      5.4,
+      4.8,
+      3.7
+    ]
+  }
+}

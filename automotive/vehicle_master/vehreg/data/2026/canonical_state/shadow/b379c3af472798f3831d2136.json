@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b379c3af472798f3831d2136",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-031-eac7506457fb:298",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "neta.neta_x.nx.trim.smart_480_62_kwh_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:09+00:00",
+    "before_hash": "c6cf6e9ec35ee8c1c0727f52d9ae9ee3bffa5f45401c300cb61e3284805be75e",
+    "after_hash": "0fd9a4e23977d61ac6775e29e9ae943019999cf67a55165bccadef4093f4eced",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      61.78,
+      379.0,
+      "Anhui MORelectric Battery Co.,Ltd.",
+      "ONBOARD_AC"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      61.78,
+      379.0,
+      "Anhui MORelectric Battery Co.,Ltd.",
+      "ONBOARD_AC",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_3a5e26f1-49b1-4ef0-9f59-a2b92b1cbcec_comfort.panoramic_roof_5d8f6c1c5d27.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b379c3af472798f3831d2136:spec",
+    "revision_id": "b379c3af472798f3831d2136",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "neta.neta_x.nx.trim.smart_480_62_kwh_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:09+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      61.78,
+      379.0,
+      "Anhui MORelectric Battery Co.,Ltd.",
+      "ONBOARD_AC",
+      true
+    ]
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "23c34001689d14bbca3599d4",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-036-ba2d051d30aa:349",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_glc.x254.trim.4matic_avantgarde_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:48+00:00",
+    "before_hash": "45a511657b7c64f1c9d5ca406f85fdf1e2c491a737cd069c8345b10241754784",
+    "after_hash": "7a6aff1a9aa5fb3e65aa62d5dac81851139bb95eac0c2ef790c089117dd95741",
+    "before": [
+      true,
+      4.3,
+      5.0,
+      6.2,
+      133.0,
+      0.015,
+      2e-05,
+      "EURO6",
+      "HEV",
+      1993
+    ],
+    "after": [
+      true,
+      4.3,
+      5.0,
+      6.2,
+      133.0,
+      0.015,
+      2e-05,
+      "EURO6",
+      "HEV",
+      1993,
+      "DIESEL"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_7578e0eb-91eb-4afd-a739-184959a14c14_engine.fuel_type_3ef83da996ce.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "23c34001689d14bbca3599d4:spec",
+    "revision_id": "23c34001689d14bbca3599d4",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_glc.x254.trim.4matic_avantgarde_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:48+00:00",
+    "payload": [
+      true,
+      4.3,
+      5.0,
+      6.2,
+      133.0,
+      0.015,
+      2e-05,
+      "EURO6",
+      "HEV",
+      1993,
+      "DIESEL"
+    ]
+  }
+}

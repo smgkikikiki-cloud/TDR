@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "146ee64902e104cabe01caf2",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-043-5c8c2001b8cb:234",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.cx8.kg.trim.2_5_sp_7_seater_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:44+00:00",
+    "before_hash": "90d2f9c2f30ffae503bbd4c932c8fed9411f206593241fea78e9bad78d422a1e",
+    "after_hash": "9dc2a40af8fa07e18d925f399104c0f8f5ddbaec1b8f21b248ddd09df924d8d7",
+    "before": [
+      true,
+      true,
+      6.6,
+      7.6,
+      9.5,
+      178.0,
+      0.005,
+      "TIS"
+    ],
+    "after": [
+      true,
+      true,
+      6.6,
+      7.6,
+      9.5,
+      178.0,
+      0.005,
+      "TIS",
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_1c16da0c-8360-4a9b-9b70-3ba00b1781c2_engine.combustion_type_f8c3f71c9d1d.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "146ee64902e104cabe01caf2:spec",
+    "revision_id": "146ee64902e104cabe01caf2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.cx8.kg.trim.2_5_sp_7_seater_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:44+00:00",
+    "payload": [
+      true,
+      true,
+      6.6,
+      7.6,
+      9.5,
+      178.0,
+      0.005,
+      "TIS",
+      "GASOLINE"
+    ]
+  }
+}

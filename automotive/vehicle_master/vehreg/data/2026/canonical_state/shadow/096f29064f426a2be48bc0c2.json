@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "096f29064f426a2be48bc0c2",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-043-5c8c2001b8cb:350",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a4.gen1.trim.40_tfsi_s_line_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:45+00:00",
+    "before_hash": "da564f50c26e2c2a814dc626e994babf6ec25d9f1476ec7dd0463b649eec33f4",
+    "after_hash": "36b3e08c1ae0090302f5a64ee905f3de3ec5bd9cead29b59e2a751f2cf1f4220",
+    "before": [
+      5.3,
+      6.3,
+      7.9,
+      143.0,
+      0.004
+    ],
+    "after": [
+      5.3,
+      6.3,
+      7.9,
+      143.0,
+      0.004,
+      0.00024
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e1b09021-4284-4211-8b78-625a9939c8ab_emissions.pm_g_km_6e587e41ecb0.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "096f29064f426a2be48bc0c2:spec",
+    "revision_id": "096f29064f426a2be48bc0c2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a4.gen1.trim.40_tfsi_s_line_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:45+00:00",
+    "payload": [
+      5.3,
+      6.3,
+      7.9,
+      143.0,
+      0.004,
+      0.00024
+    ]
+  }
+}

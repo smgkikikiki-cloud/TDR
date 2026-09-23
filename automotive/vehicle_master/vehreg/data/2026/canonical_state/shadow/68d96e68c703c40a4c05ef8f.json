@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "68d96e68c703c40a4c05ef8f",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-041-97e292394981:392",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.xc40.xc40g.trim.plus_t5_plug_in_hybrid_dark_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:29+00:00",
+    "before_hash": "bafb4e6510d0c5036a4ca6c6b6abdc17ae1572c780ba6b48be16a4de080c785f",
+    "after_hash": "93ed6f9e35bc259af8d16445a6a6807b13ef3fca3174c66058bdb95921377bdd",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      11.08,
+      326.0,
+      "LG",
+      "ONBOARD_AC",
+      true,
+      2.3,
+      52.0,
+      0.008,
+      0.00033
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      11.08,
+      326.0,
+      "LG",
+      "ONBOARD_AC",
+      true,
+      2.3,
+      52.0,
+      0.008,
+      0.00033,
+      "TIS"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_f90f1502-e2b1-4fbe-8dff-944fa26abd9e_emissions.standard_1b1d9e537cb8.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "68d96e68c703c40a4c05ef8f:spec",
+    "revision_id": "68d96e68c703c40a4c05ef8f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.xc40.xc40g.trim.plus_t5_plug_in_hybrid_dark_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:29+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      11.08,
+      326.0,
+      "LG",
+      "ONBOARD_AC",
+      true,
+      2.3,
+      52.0,
+      0.008,
+      0.00033,
+      "TIS"
+    ]
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "dcb121b393bacc6818a934db",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-041-97e292394981:55",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.carrera_4_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:29+00:00",
+    "before_hash": "c16a2a95a28273396b406f5c4183099ab96fdb0dc7ecbdafecc2889326782012",
+    "after_hash": "2661c93fb183464a55d8cbaa61799070189b500f781ec12ee6925a61bc5bc425",
+    "before": [
+      true,
+      7.3,
+      9.6,
+      13.6,
+      220.0,
+      0.01,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35ZR20",
+      "305/30ZR21",
+      "ICE"
+    ],
+    "after": [
+      true,
+      7.3,
+      9.6,
+      13.6,
+      220.0,
+      0.01,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35ZR20",
+      "305/30ZR21",
+      "ICE",
+      35.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_2eac7e62-fcb1-4849-9a1e-737ec8c9e28a_manufacturing.excise_tax_rate_f5daaeb299d8.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "dcb121b393bacc6818a934db:spec",
+    "revision_id": "dcb121b393bacc6818a934db",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.carrera_4_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:29+00:00",
+    "payload": [
+      true,
+      7.3,
+      9.6,
+      13.6,
+      220.0,
+      0.01,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35ZR20",
+      "305/30ZR21",
+      "ICE",
+      35.0
+    ]
+  }
+}

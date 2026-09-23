@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ce8d46cffd87911ace7800dc",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-013-01b2d6d40e8e:233",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q3.f3.trim.sportback_quattro_s_line_tech_pro_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:28+00:00",
+    "before_hash": "8c45e0ca231ab5d9408829a51e8983b7200208d660adf21df7e6aff3e482a013",
+    "after_hash": "2d7b89d3f39c119eb28bd6d5a93d7b49571e8f2a2e347bc89c4aa6941971fecd",
+    "before": [
+      6.2,
+      7.3
+    ],
+    "after": [
+      6.2,
+      7.3,
+      9.2
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d966025c-123f-493a-91d1-48d7248596a4_efficiency.fuel_consumption_urban_l_100km_c9c352eb1213.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ce8d46cffd87911ace7800dc:spec",
+    "revision_id": "ce8d46cffd87911ace7800dc",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q3.f3.trim.sportback_quattro_s_line_tech_pro_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:28+00:00",
+    "payload": [
+      6.2,
+      7.3,
+      9.2
+    ]
+  }
+}

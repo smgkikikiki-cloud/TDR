@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "aa40fce44ec20e4554fb46f4",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-029-c1bed9cb95f3:58",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lexus_nx.az20.trim.nx450h_premium_awd_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:55+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "58b479c6637a8eb6768caf16772e4b8536114e8530f05bd74ecfa582d212e197",
+    "before": [],
+    "after": [
+      "LI_ION_UNSPECIFIED"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_7848031d-f1c5-4b62-a7a2-2306217e763d_battery.chemistry_5f861c786cea.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "aa40fce44ec20e4554fb46f4:spec",
+    "revision_id": "aa40fce44ec20e4554fb46f4",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lexus_nx.az20.trim.nx450h_premium_awd_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:55+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED"
+    ]
+  }
+}

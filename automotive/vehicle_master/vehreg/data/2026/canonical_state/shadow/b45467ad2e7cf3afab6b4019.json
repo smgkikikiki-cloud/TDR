@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b45467ad2e7cf3afab6b4019",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-054-d20b71816f05:331",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_zs.zsg.trim.1_5_c_plus_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:52+00:00",
+    "before_hash": "bea4f1edd5d3a0c006ef255450497e59a7f4a34725a3f17104d702d5dde8aeb5",
+    "after_hash": "bf0bdd04cd2a61b6e5feae1be44222dafdf0292a1d1db5abb9a3be90d94ce583",
+    "before": [
+      true,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85"
+    ],
+    "after": [
+      true,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d67b0f1a94bc4009a2f581e09d8d5ea6_identity.powertrain_f2026db01780.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b45467ad2e7cf3afab6b4019:spec",
+    "revision_id": "b45467ad2e7cf3afab6b4019",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_zs.zsg.trim.1_5_c_plus_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:52+00:00",
+    "payload": [
+      true,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "ICE"
+    ]
+  }
+}

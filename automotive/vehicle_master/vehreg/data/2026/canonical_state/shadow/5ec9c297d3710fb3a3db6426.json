@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5ec9c297d3710fb3a3db6426",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-049-18d26b73936f:152",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_zs.zsg.trim.1_5_edition_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:45+00:00",
+    "before_hash": "33b33d3c4a1f2436618f501a621017d1fba99f5938f3c74d6fc31cbf2a98cad6",
+    "after_hash": "005d236bf091f1ebac76921eb5b5921fed56582512f322e4afe43e2617fa4017",
+    "before": [
+      true,
+      6.9,
+      8.5,
+      11.2,
+      139.0,
+      0.009,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85"
+    ],
+    "after": [
+      true,
+      6.9,
+      8.5,
+      11.2,
+      139.0,
+      0.009,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "215/55R17"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_a96b5895a81c44a99d65cfcac1e9c7c8_fitment.tyre_size_f03b92b59a45.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5ec9c297d3710fb3a3db6426:spec",
+    "revision_id": "5ec9c297d3710fb3a3db6426",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_zs.zsg.trim.1_5_edition_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:45+00:00",
+    "payload": [
+      true,
+      6.9,
+      8.5,
+      11.2,
+      139.0,
+      0.009,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "215/55R17"
+    ]
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5f58890dfc7884ac90231a7e",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-044-4ee92a315b21:56",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.almera.n18.trim.70th_anniversary",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:52+00:00",
+    "before_hash": "a82340ef5af39670360693b60efa50d774f70a0c37f20cda5e2e760dd34be005",
+    "after_hash": "3af3895b38f918d73e623afd6ce1b4b746ed24dcfbf5d2cdd75580543332a800",
+    "before": [
+      4.0,
+      4.3,
+      5.0,
+      100.0,
+      0.025,
+      "TIS",
+      "GASOLINE",
+      999,
+      "E20",
+      "195/65R15"
+    ],
+    "after": [
+      4.0,
+      4.3,
+      5.0,
+      100.0,
+      0.025,
+      "TIS",
+      "GASOLINE",
+      999,
+      "E20",
+      "195/65R15",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_fa54cd84-5071-4279-b5cd-5396f152d4d2_identity.powertrain_e11679a752cd.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5f58890dfc7884ac90231a7e:spec",
+    "revision_id": "5f58890dfc7884ac90231a7e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.almera.n18.trim.70th_anniversary",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:52+00:00",
+    "payload": [
+      4.0,
+      4.3,
+      5.0,
+      100.0,
+      0.025,
+      "TIS",
+      "GASOLINE",
+      999,
+      "E20",
+      "195/65R15",
+      "ICE"
+    ]
+  }
+}

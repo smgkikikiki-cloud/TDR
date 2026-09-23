@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:ba77b804-6692-49b2-8dee-1cfa4ca40495:efficiency.fuel_consumption_l_100km",
+      "field_key": "efficiency.fuel_consumption_l_100km",
+      "value_state": "KNOWN",
+      "value": 8.9,
+      "unit": "L/100km",
+      "observed_at": "2023-03-17",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/ba77b804-6692-49b2-8dee-1cfa4ca40495",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/ba77b804-6692-49b2-8dee-1cfa4ca40495",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mercedes_benz.cls.gen1.trim.mercedes_amg_4matic_hev"
+    }
+  ]
+}

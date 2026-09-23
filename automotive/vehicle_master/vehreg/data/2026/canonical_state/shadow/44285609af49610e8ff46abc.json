@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "44285609af49610e8ff46abc",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-039-bb0c6084f37a:64",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q3.f3.trim.rs_sportback_edition_10_years_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:13+00:00",
+    "before_hash": "26a5e88ed56849935a8e8c605eb2ca4df4cd0024db14b70b4cd1738d1a413897",
+    "after_hash": "6ef5a51a922672d3a768dc2b829874b16a840117d8b7893a3fba186038da84b0",
+    "before": [
+      7.8,
+      9.4,
+      12.0,
+      214.0,
+      0.027,
+      0.00031,
+      "EURO6",
+      "GASOLINE",
+      2480,
+      "GASOLINE",
+      "255/35R21",
+      "ICE",
+      35.0
+    ],
+    "after": [
+      7.8,
+      9.4,
+      12.0,
+      214.0,
+      0.027,
+      0.00031,
+      "EURO6",
+      "GASOLINE",
+      2480,
+      "GASOLINE",
+      "255/35R21",
+      "ICE",
+      35.0,
+      "AUTOMATIC"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_76d39365-5163-4e52-9011-1319bb1fe4c8_powertrain.transmission_19d1a1d52271.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "44285609af49610e8ff46abc:spec",
+    "revision_id": "44285609af49610e8ff46abc",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q3.f3.trim.rs_sportback_edition_10_years_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:13+00:00",
+    "payload": [
+      7.8,
+      9.4,
+      12.0,
+      214.0,
+      0.027,
+      0.00031,
+      "EURO6",
+      "GASOLINE",
+      2480,
+      "GASOLINE",
+      "255/35R21",
+      "ICE",
+      35.0,
+      "AUTOMATIC"
+    ]
+  }
+}

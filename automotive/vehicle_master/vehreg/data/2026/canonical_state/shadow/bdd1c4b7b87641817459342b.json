@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "bdd1c4b7b87641817459342b",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-011-3c709241399c:309",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.stargazer.ks.trim.trend_6_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:19+00:00",
+    "before_hash": "5fb2724c7a32720f00d3d892da3f431132abbcade7f07f452924045c3e5101de",
+    "after_hash": "1e233da8cd74aa5fb4f652ed46d2922cdcd4c0dd476dbdd3e8078752dbee0338",
+    "before": [
+      true,
+      true,
+      5.8,
+      6.5,
+      7.7,
+      150.0,
+      0.0064,
+      "TIS",
+      "GASOLINE",
+      1497,
+      "GASOLINE",
+      "205/55R16",
+      "ICE",
+      25.0
+    ],
+    "after": [
+      true,
+      true,
+      5.8,
+      6.5,
+      7.7,
+      150.0,
+      0.0064,
+      "TIS",
+      "GASOLINE",
+      1497,
+      "GASOLINE",
+      "205/55R16",
+      "ICE",
+      25.0,
+      "CVT"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_7a7082d8-e3d3-412d-a62c-e3a91c446c1f_powertrain.transmission_df1eacdd7b38.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "bdd1c4b7b87641817459342b:spec",
+    "revision_id": "bdd1c4b7b87641817459342b",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.stargazer.ks.trim.trend_6_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:19+00:00",
+    "payload": [
+      true,
+      true,
+      5.8,
+      6.5,
+      7.7,
+      150.0,
+      0.0064,
+      "TIS",
+      "GASOLINE",
+      1497,
+      "GASOLINE",
+      "205/55R16",
+      "ICE",
+      25.0,
+      "CVT"
+    ]
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "0b2c8252f884130c68f91672",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-051-bcc716924fd5:33",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lexus_rx.al30.trim.rx300_luxury_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:10+00:00",
+    "before_hash": "b9ccc14df4d43b2828325dfaeeade102075f84d09edd706b0fb2ea849863323b",
+    "after_hash": "2982a9dbea661e224e1e11777fb2e2b390df334d8f00d14480d948c12b560bbc",
+    "before": [
+      7.0,
+      8.1,
+      10.1,
+      189.0,
+      0.033,
+      "TIS"
+    ],
+    "after": [
+      7.0,
+      8.1,
+      10.1,
+      189.0,
+      0.033,
+      "TIS",
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_827725804658416dbb712eceb16a85b7_engine.combustion_type_344eaba5ca8e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "0b2c8252f884130c68f91672:spec",
+    "revision_id": "0b2c8252f884130c68f91672",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lexus_rx.al30.trim.rx300_luxury_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:10+00:00",
+    "payload": [
+      7.0,
+      8.1,
+      10.1,
+      189.0,
+      0.033,
+      "TIS",
+      "GASOLINE"
+    ]
+  }
+}

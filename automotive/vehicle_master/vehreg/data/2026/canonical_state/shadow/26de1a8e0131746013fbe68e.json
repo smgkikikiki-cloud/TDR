@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "26de1a8e0131746013fbe68e",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-016-3b184c133993:318",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.hybrid_2_5_z_2wd",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:43+00:00",
+    "before_hash": "9690a75fd2ffc960b4827f3dfeb799cecf95c56dd697fee9304c806cfae781e5",
+    "after_hash": "2296601cfc63aa027d6c6c0b2dcca8fe7d8e9ff5cd65fa3667fd4a00f48653ad",
+    "before": [
+      true,
+      true,
+      5.6,
+      5.9,
+      6.4,
+      138.0,
+      0.00493,
+      "TIS",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/55R19",
+      "HEV",
+      15.0
+    ],
+    "after": [
+      true,
+      true,
+      5.6,
+      5.9,
+      6.4,
+      138.0,
+      0.00493,
+      "TIS",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/55R19",
+      "HEV",
+      15.0,
+      "CVT"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_94022927-c5df-480d-973d-eb320ca1a028_powertrain.transmission_8cd05f7b2198.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "26de1a8e0131746013fbe68e:spec",
+    "revision_id": "26de1a8e0131746013fbe68e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.hybrid_2_5_z_2wd",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:43+00:00",
+    "payload": [
+      true,
+      true,
+      5.6,
+      5.9,
+      6.4,
+      138.0,
+      0.00493,
+      "TIS",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/55R19",
+      "HEV",
+      15.0,
+      "CVT"
+    ]
+  }
+}

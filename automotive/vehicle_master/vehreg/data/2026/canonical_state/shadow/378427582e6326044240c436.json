@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "378427582e6326044240c436",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-038-caad162ad775:196",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.mini_cooper.j01.trim.john_works_hatch_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:04+00:00",
+    "before_hash": "7cbfcc2c8c9d0788b2226422049d844b69ccaa2f7e9c968985fd11367544c04e",
+    "after_hash": "4cbff628125921f776d91b1b6dc6cdd7c5d8ac45eab5fc278e13bc4c2770bb84",
+    "before": [
+      true,
+      true,
+      true,
+      5.3,
+      6.2,
+      7.7,
+      141.0,
+      0.021,
+      "TIS",
+      "GASOLINE",
+      1998
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      5.3,
+      6.2,
+      7.7,
+      141.0,
+      0.021,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_270382d6-67eb-4116-91ea-d275c4e67e44_engine.fuel_type_79875898de57.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "378427582e6326044240c436:spec",
+    "revision_id": "378427582e6326044240c436",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.mini_cooper.j01.trim.john_works_hatch_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:04+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      5.3,
+      6.2,
+      7.7,
+      141.0,
+      0.021,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "GASOLINE"
+    ]
+  }
+}

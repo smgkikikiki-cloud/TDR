@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ddfc2999bac7ca4347f98e1f",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-009-54711011662e:225",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "xpeng.xpeng_g6.g6.trim.performance_awd_87_5_kwh_dual_487_hp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:11+00:00",
+    "before_hash": "fc085bbc2f267ec5eb338908cfc12ca32a35d4f15f2e8f61257e20ba85722672",
+    "after_hash": "de4291c49037d915b17f0c993b6ebb6097badfd4b043c1c75051a494ee9dd2fe",
+    "before": [
+      "LFP",
+      80.81,
+      581.4,
+      "CALB Group Co., Ltd.",
+      "BOTH",
+      true
+    ],
+    "after": [
+      "LFP",
+      80.81,
+      581.4,
+      "CALB Group Co., Ltd.",
+      "BOTH",
+      true,
+      163.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_a3cd3664-2618-48a5-99fa-011d6eb568f6_ev.energy_consumption_wh_km_c8449c58f946.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ddfc2999bac7ca4347f98e1f:spec",
+    "revision_id": "ddfc2999bac7ca4347f98e1f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "xpeng.xpeng_g6.g6.trim.performance_awd_87_5_kwh_dual_487_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:11+00:00",
+    "payload": [
+      "LFP",
+      80.81,
+      581.4,
+      "CALB Group Co., Ltd.",
+      "BOTH",
+      true,
+      163.0
+    ]
+  }
+}

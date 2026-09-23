@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "fe339dee8b66c2312833f8e0",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-013-01b2d6d40e8e:156",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_x1.u11.trim.sdrive20i_m_sport_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:27+00:00",
+    "before_hash": "8b25014ee5809dc3f664ccb4ab96ec358d2bfd83a45d727fb1347e53d8fd66f5",
+    "after_hash": "512d4bf3ef0275c42a2da5a5d30473b02ad86105f75e9227629ebff876f211f2",
+    "before": [
+      true,
+      true,
+      true,
+      5.3,
+      6.4,
+      8.1,
+      148.0,
+      0.007,
+      "TIS",
+      "GASOLINE"
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      5.3,
+      6.4,
+      8.1,
+      148.0,
+      0.007,
+      "TIS",
+      "GASOLINE",
+      1998
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_1a853999-faa5-4093-92b7-5dca33a1868e_engine.displacement_cc_8e4a35120579.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "fe339dee8b66c2312833f8e0:spec",
+    "revision_id": "fe339dee8b66c2312833f8e0",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_x1.u11.trim.sdrive20i_m_sport_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:27+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      5.3,
+      6.4,
+      8.1,
+      148.0,
+      0.007,
+      "TIS",
+      "GASOLINE",
+      1998
+    ]
+  }
+}

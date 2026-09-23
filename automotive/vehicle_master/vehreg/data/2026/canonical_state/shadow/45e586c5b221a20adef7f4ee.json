@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "45e586c5b221a20adef7f4ee",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-047-23268458b262:131",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.vellfire.gen1.trim.zg",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:25+00:00",
+    "before_hash": "5207057baa548452b8e8c6e801405ef0e3be8122ec3851441eab0ddf08146ff8",
+    "after_hash": "30a3413dd487859b2e1e614755fb7569fc456d5aeccd8a8e19114f921693de19",
+    "before": [
+      true,
+      true,
+      6.8,
+      8.2,
+      10.6,
+      194.0,
+      0.006,
+      "TIS",
+      "GASOLINE",
+      2493,
+      "GASOLINE"
+    ],
+    "after": [
+      true,
+      true,
+      6.8,
+      8.2,
+      10.6,
+      194.0,
+      0.006,
+      "TIS",
+      "GASOLINE",
+      2493,
+      "GASOLINE",
+      "235/50R18"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_262cc2548d424e98908b2ef927350f2c_fitment.tyre_size_c6d583a5279b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "45e586c5b221a20adef7f4ee:spec",
+    "revision_id": "45e586c5b221a20adef7f4ee",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.vellfire.gen1.trim.zg",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:25+00:00",
+    "payload": [
+      true,
+      true,
+      6.8,
+      8.2,
+      10.6,
+      194.0,
+      0.006,
+      "TIS",
+      "GASOLINE",
+      2493,
+      "GASOLINE",
+      "235/50R18"
+    ]
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c2a4f2d4d347e5c10aaec76a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-042-509b690f0202:175",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.stargazer.ks.trim.trend_7_seater_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:35+00:00",
+    "before_hash": "397b0ff70b4fd460a8c76c4ff86ba3a9980b1d38d74b5706a45abd93233f22ba",
+    "after_hash": "6d1b7be2ebdfc39fee4ae8936bb7dce905e0ff82db3caea806093a5c654d6fa3",
+    "before": [
+      true,
+      true,
+      5.4,
+      6.2,
+      7.4,
+      143.0,
+      0.065,
+      "TIS"
+    ],
+    "after": [
+      true,
+      true,
+      5.4,
+      6.2,
+      7.4,
+      143.0,
+      0.065,
+      "TIS",
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_16071ddb-7706-4194-bd43-de698dbeee3a_engine.combustion_type_d010720ca8f0.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c2a4f2d4d347e5c10aaec76a:spec",
+    "revision_id": "c2a4f2d4d347e5c10aaec76a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.stargazer.ks.trim.trend_7_seater_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:35+00:00",
+    "payload": [
+      true,
+      true,
+      5.4,
+      6.2,
+      7.4,
+      143.0,
+      0.065,
+      "TIS",
+      "GASOLINE"
+    ]
+  }
+}

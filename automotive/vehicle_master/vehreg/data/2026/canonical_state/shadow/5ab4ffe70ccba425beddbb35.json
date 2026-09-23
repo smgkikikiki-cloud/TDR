@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5ab4ffe70ccba425beddbb35",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-010-6f2b18f1a4fd:18",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_hunter_k50.gen1.trim.reev_max_awd_reev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:14+00:00",
+    "before_hash": "ef02f9f24614d3c70c413ebb0aa6c97df2d42f9968db3832535723cf54a33c15",
+    "after_hash": "b0a92982d83e4633a3932b5e1dab2486091067651550cc878dddd8dc4cc64a6e",
+    "before": [
+      "LFP",
+      31.18,
+      358.4,
+      "Hefei Gotion High-tech Power Energy Co., Ltd.",
+      "ONBOARD_AC"
+    ],
+    "after": [
+      "LFP",
+      31.18,
+      358.4,
+      "Hefei Gotion High-tech Power Energy Co., Ltd.",
+      "ONBOARD_AC",
+      1.3
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_10cc2ee9-e1f5-4121-a21b-a4ba770cfcf1_efficiency.fuel_consumption_l_100km_da244075ec9a.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5ab4ffe70ccba425beddbb35:spec",
+    "revision_id": "5ab4ffe70ccba425beddbb35",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_hunter_k50.gen1.trim.reev_max_awd_reev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:14+00:00",
+    "payload": [
+      "LFP",
+      31.18,
+      358.4,
+      "Hefei Gotion High-tech Power Energy Co., Ltd.",
+      "ONBOARD_AC",
+      1.3
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:3a2043aa-b8d5-41cf-ac8e-e0e5b8daeaf6:ev.energy_consumption_wh_km",
+      "field_key": "ev.energy_consumption_wh_km",
+      "value_state": "KNOWN",
+      "value": 199.0,
+      "unit": "Wh/km",
+      "observed_at": "2023-08-29",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/3a2043aa-b8d5-41cf-ac8e-e0e5b8daeaf6",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/3a2043aa-b8d5-41cf-ac8e-e0e5b8daeaf6",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "volvo.xc90.xc90g.trim.recharge_t8_plug_in_hybrid_plus_dark_phev"
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e2c7c02a5e09ef50d2de24ae",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-037-986e7ff7e687:359",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.v60.gen1.trim.recharge_t8_plug_in_hybrid_plus_dark_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:57+00:00",
+    "before_hash": "5cb9d3e1cf4c77d8930ae7bef269d3d2652354f6793832f6d167aac60cd664b7",
+    "after_hash": "f6c0f3a1f55067aaab1ddeed1c5ab8fe10b20312be8fa6a6175c03d0008572d5",
+    "before": [
+      "NMC",
+      18.82,
+      369.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd.",
+      "ONBOARD_AC",
+      true,
+      true,
+      1.4,
+      33.0,
+      0.004,
+      9e-05
+    ],
+    "after": [
+      "NMC",
+      18.82,
+      369.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd.",
+      "ONBOARD_AC",
+      true,
+      true,
+      1.4,
+      33.0,
+      0.004,
+      9e-05,
+      "TIS"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_1c2c2bbd-fb47-495a-b31f-6779a6358430_emissions.standard_68a2b6e6212a.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e2c7c02a5e09ef50d2de24ae:spec",
+    "revision_id": "e2c7c02a5e09ef50d2de24ae",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.v60.gen1.trim.recharge_t8_plug_in_hybrid_plus_dark_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:57+00:00",
+    "payload": [
+      "NMC",
+      18.82,
+      369.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd.",
+      "ONBOARD_AC",
+      true,
+      true,
+      1.4,
+      33.0,
+      0.004,
+      9e-05,
+      "TIS"
+    ]
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "056165ae8c6800eb1c8e01b6",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-008-bc3b92e93b52:345",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.cla.cla.trim.electric_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:07+00:00",
+    "before_hash": "0a9718518ecc27b3e048cc3e2cbdafb31b61ba2c1ab0e26ab345197670f03cc3",
+    "after_hash": "a5fc41cc4cbffa5db35c8e20ae947844d2c4451dc322a3dce17196724d09f532",
+    "before": [
+      "NMC",
+      85.4,
+      700.0,
+      "Accumotive GmbH & Co. KG",
+      "400V",
+      "BOTH",
+      true,
+      119.0,
+      820.0,
+      "225/45R18",
+      "255/40R18",
+      "BEV"
+    ],
+    "after": [
+      "NMC",
+      85.4,
+      700.0,
+      "Accumotive GmbH & Co. KG",
+      "400V",
+      "BOTH",
+      true,
+      119.0,
+      820.0,
+      "225/45R18",
+      "255/40R18",
+      "BEV",
+      2.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_6ea5211a-43ed-4c25-845b-445197120fd6_manufacturing.excise_tax_rate_24abbed7d309.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "056165ae8c6800eb1c8e01b6:spec",
+    "revision_id": "056165ae8c6800eb1c8e01b6",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.cla.cla.trim.electric_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:07+00:00",
+    "payload": [
+      "NMC",
+      85.4,
+      700.0,
+      "Accumotive GmbH & Co. KG",
+      "400V",
+      "BOTH",
+      true,
+      119.0,
+      820.0,
+      "225/45R18",
+      "255/40R18",
+      "BEV",
+      2.0
+    ]
+  }
+}

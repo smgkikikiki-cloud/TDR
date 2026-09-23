@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "aad3ae34839c50fbe9a82d03",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-050-6df028e5a85f:5",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.etron_gt.gen1.trim.e_tron_gt_quattro_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:57+00:00",
+    "before_hash": "bcf40616e542e68f4125eaa69877462ac734f6c8b653eaacaaf6c8d4a8e421e2",
+    "after_hash": "8498ececd83c6cb7141105a556d78e9f50b0305ff8ac731cfe227bb9ade058a5",
+    "before": [
+      "GASOLINE"
+    ],
+    "after": [
+      "GASOLINE",
+      "245/45R20"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_cea23dc3fcbe4877a1753948b9edfbfb_fitment.tyre_front_78efa3f1a4b9.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "aad3ae34839c50fbe9a82d03:spec",
+    "revision_id": "aad3ae34839c50fbe9a82d03",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.etron_gt.gen1.trim.e_tron_gt_quattro_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:57+00:00",
+    "payload": [
+      "GASOLINE",
+      "245/45R20"
+    ]
+  }
+}

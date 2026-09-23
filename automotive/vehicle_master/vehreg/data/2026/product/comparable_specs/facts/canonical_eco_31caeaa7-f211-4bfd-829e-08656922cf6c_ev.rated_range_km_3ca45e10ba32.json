@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:31caeaa7-f211-4bfd-829e-08656922cf6c:ev.rated_range_km",
+      "field_key": "ev.rated_range_km",
+      "value_state": "KNOWN",
+      "value": 87.0,
+      "unit": "km",
+      "observed_at": "2024-03-18",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/31caeaa7-f211-4bfd-829e-08656922cf6c",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/31caeaa7-f211-4bfd-829e-08656922cf6c",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "lexus.lexus_nx.az20.trim.nx450h_grand_luxury_awd_phev"
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "1d5fd4d1a281e5b7f884bcf1",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-015-2f508ee80764:390",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_travo_double_cab.gen1.trim.prerunner_2_8_premium_mt_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:37+00:00",
+    "before_hash": "71a3322b97eefe2b5cd5ff67cce3865fdc682757235210409299b399fe354f46",
+    "after_hash": "fb2a223dd7c71d8fdc94fab0023871479e7e046c4ead508c30a5f7cc8b3ba5c3",
+    "before": [
+      true,
+      6.3,
+      6.8,
+      7.6,
+      178.0,
+      0.152,
+      0.0006,
+      "TIS"
+    ],
+    "after": [
+      true,
+      6.3,
+      6.8,
+      7.6,
+      178.0,
+      0.152,
+      0.0006,
+      "TIS",
+      "DIESEL"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ed53397c-ced8-4e03-afbe-207664767aa3_engine.combustion_type_55bff0d8ed1f.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "1d5fd4d1a281e5b7f884bcf1:spec",
+    "revision_id": "1d5fd4d1a281e5b7f884bcf1",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_travo_double_cab.gen1.trim.prerunner_2_8_premium_mt_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:37+00:00",
+    "payload": [
+      true,
+      6.3,
+      6.8,
+      7.6,
+      178.0,
+      0.152,
+      0.0006,
+      "TIS",
+      "DIESEL"
+    ]
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b9fb24513f02120e22aca699",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-001-2163ac0376be:339",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "tesla.model3.m3h.trim.rear_wheel_drive_rwd_60_kwh_lfp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:45+00:00",
+    "before_hash": "a79f80902d6e1bc42bc29aa78dd69cf3120d2580ee039a0e0b3eeef69dd6274b",
+    "after_hash": "bfb83a8c4ad3650fcf3acaaa053e5fca8d2ae49037bbf303e751f790851c6514",
+    "before": [
+      "LFP",
+      62.1,
+      345.0,
+      "Tesla",
+      "240",
+      "ONBOARD_AC",
+      122.0,
+      572.0,
+      "235/45R18",
+      "BEV",
+      10.0,
+      "PMSM",
+      7,
+      [
+        "R13H",
+        "R94",
+        "R95",
+        "R100"
+      ],
+      1847,
+      1441
+    ],
+    "after": [
+      "LFP",
+      62.1,
+      345.0,
+      "Tesla",
+      "240",
+      "ONBOARD_AC",
+      122.0,
+      572.0,
+      "235/45R18",
+      "BEV",
+      10.0,
+      "PMSM",
+      7,
+      [
+        "R13H",
+        "R94",
+        "R95",
+        "R100"
+      ],
+      1847,
+      1441,
+      4720
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_9c121f88-94c7-44ce-84c3-4294efa6591f_vehicle.length_mm_a936d21c2a16.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b9fb24513f02120e22aca699:spec",
+    "revision_id": "b9fb24513f02120e22aca699",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "tesla.model3.m3h.trim.rear_wheel_drive_rwd_60_kwh_lfp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:45+00:00",
+    "payload": [
+      "LFP",
+      62.1,
+      345.0,
+      "Tesla",
+      "240",
+      "ONBOARD_AC",
+      122.0,
+      572.0,
+      "235/45R18",
+      "BEV",
+      10.0,
+      "PMSM",
+      7,
+      [
+        "R13H",
+        "R94",
+        "R95",
+        "R100"
+      ],
+      1847,
+      1441,
+      4720
+    ]
+  }
+}

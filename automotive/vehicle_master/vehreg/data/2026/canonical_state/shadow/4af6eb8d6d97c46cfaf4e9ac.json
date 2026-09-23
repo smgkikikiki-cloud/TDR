@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "4af6eb8d6d97c46cfaf4e9ac",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-022-20a8a8e94ae5:357",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bentley.bentayga.gen1.trim.hybrid_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:12+00:00",
+    "before_hash": "27789b85ed77ce94901defe632345b94765c373305d70efdd1060b05f3658fec",
+    "after_hash": "d040ac347f5dee8f0ef7286f084c201901b67e9b8857462aaa3ca2cf3c3af9f0",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      17.97,
+      374.4,
+      "Samsung SDI",
+      "ONBOARD_AC",
+      true,
+      true,
+      3.1,
+      71.0,
+      0.006
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      17.97,
+      374.4,
+      "Samsung SDI",
+      "ONBOARD_AC",
+      true,
+      true,
+      3.1,
+      71.0,
+      0.006,
+      "TIS"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_a0bc6751-402d-4ffd-afae-7bce12314210_emissions.standard_298d1b5cb745.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "4af6eb8d6d97c46cfaf4e9ac:spec",
+    "revision_id": "4af6eb8d6d97c46cfaf4e9ac",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bentley.bentayga.gen1.trim.hybrid_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:12+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      17.97,
+      374.4,
+      "Samsung SDI",
+      "ONBOARD_AC",
+      true,
+      true,
+      3.1,
+      71.0,
+      0.006,
+      "TIS"
+    ]
+  }
+}

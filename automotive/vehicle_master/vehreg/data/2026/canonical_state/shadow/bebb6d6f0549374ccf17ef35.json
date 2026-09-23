@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "bebb6d6f0549374ccf17ef35",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-012-0c3fd0adac89:126",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "jaecoo.jaecoo_6t_ev.gen1.trim.long_range_4wd_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:23+00:00",
+    "before_hash": "8b3345365a6a7571431732bfa9f7a6e02ba5cbdc70efdf2e57edc8c33bea02fd",
+    "after_hash": "e27839f91b89f23d0e37bf9abf120f12ae9c709856515c9bf55672e6edb3eb1b",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      69.7,
+      363.0,
+      "Wuhu Qida Power Battery Systems Co., Ltd.",
+      "220",
+      "ONBOARD_AC",
+      true,
+      189.0,
+      436.0,
+      "245/55R19",
+      "BEV",
+      10.0,
+      "PMSM",
+      true,
+      4,
+      true,
+      true,
+      true,
+      [
+        "R100"
+      ],
+      true
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      69.7,
+      363.0,
+      "Wuhu Qida Power Battery Systems Co., Ltd.",
+      "220",
+      "ONBOARD_AC",
+      true,
+      189.0,
+      436.0,
+      "245/55R19",
+      "BEV",
+      10.0,
+      "PMSM",
+      true,
+      4,
+      true,
+      true,
+      true,
+      [
+        "R100"
+      ],
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b034991c-2d64-465a-8992-0a1feaa949ef_technology.smartphone_mirroring_51a226087da6.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "bebb6d6f0549374ccf17ef35:spec",
+    "revision_id": "bebb6d6f0549374ccf17ef35",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "jaecoo.jaecoo_6t_ev.gen1.trim.long_range_4wd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:23+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      69.7,
+      363.0,
+      "Wuhu Qida Power Battery Systems Co., Ltd.",
+      "220",
+      "ONBOARD_AC",
+      true,
+      189.0,
+      436.0,
+      "245/55R19",
+      "BEV",
+      10.0,
+      "PMSM",
+      true,
+      4,
+      true,
+      true,
+      true,
+      [
+        "R100"
+      ],
+      true,
+      true
+    ]
+  }
+}

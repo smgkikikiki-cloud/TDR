@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7670f61c1cf6b439f1e0f2e2",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-054-d20b71816f05:302",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_e_class.w214.trim.mercedes_benz_cabriolet_amg_dynamic_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:52+00:00",
+    "before_hash": "2a12099f9b88266fcb4b80021ba5e495786740b987ae94fd51ff6e37b9436ce2",
+    "after_hash": "2080f84d0d42278bc754d73e87d7717ec1855496d7b5ed8c9f65e8c1b83ae2db",
+    "before": [
+      6.0,
+      7.5,
+      9.8,
+      169.0,
+      0.018,
+      "TIS",
+      "GASOLINE"
+    ],
+    "after": [
+      6.0,
+      7.5,
+      9.8,
+      169.0,
+      0.018,
+      "TIS",
+      "GASOLINE",
+      1991
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_306621a2fd8e4e609263af7770dc94dd_engine.displacement_cc_e8e8a6081e1a.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7670f61c1cf6b439f1e0f2e2:spec",
+    "revision_id": "7670f61c1cf6b439f1e0f2e2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_e_class.w214.trim.mercedes_benz_cabriolet_amg_dynamic_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:52+00:00",
+    "payload": [
+      6.0,
+      7.5,
+      9.8,
+      169.0,
+      0.018,
+      "TIS",
+      "GASOLINE",
+      1991
+    ]
+  }
+}

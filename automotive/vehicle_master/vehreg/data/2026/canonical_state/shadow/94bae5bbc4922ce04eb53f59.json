@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "94bae5bbc4922ce04eb53f59",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-004-87075c4d97a5:174",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_c_class.w206.trim.c_350_e_plug_in_hybrid_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:53+00:00",
+    "before_hash": "76f4cd03aadcabf24532e6ba7cb7cb3d624e0b353735b60c1aa93adf30aaf520",
+    "after_hash": "73692797c3b784c0f549ad67152863995eefc90134013b8d0e5297054c6660de",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      19.91,
+      345.0,
+      "Accumotive GmbH & Co. KG or Mercedes-Benz Manufacturing Poland sp. zo. o.",
+      "EXTERNAL_DC",
+      1.4,
+      32.0,
+      0.0024
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      19.91,
+      345.0,
+      "Accumotive GmbH & Co. KG or Mercedes-Benz Manufacturing Poland sp. zo. o.",
+      "EXTERNAL_DC",
+      1.4,
+      32.0,
+      0.0024,
+      "TIS"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_effe1fc4-a29f-44aa-ab7b-ca03d7d23556_emissions.standard_0ea47d793659.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "94bae5bbc4922ce04eb53f59:spec",
+    "revision_id": "94bae5bbc4922ce04eb53f59",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_c_class.w206.trim.c_350_e_plug_in_hybrid_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:53+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      19.91,
+      345.0,
+      "Accumotive GmbH & Co. KG or Mercedes-Benz Manufacturing Poland sp. zo. o.",
+      "EXTERNAL_DC",
+      1.4,
+      32.0,
+      0.0024,
+      "TIS"
+    ]
+  }
+}

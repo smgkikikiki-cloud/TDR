@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "789129b6da10c4faa4d89bc6",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-028-314da6945e4d:285",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "leapmotor.leapmotor_c10.gen1.trim.ev_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:46+00:00",
+    "before_hash": "6230dc283de60fa7595dccb70f8d095f414b2c5b15b1d8751e4d67b8662919de",
+    "after_hash": "861f5744c3c0d0ff7c3e1158b0a3021a7a78468f531a2ae68c0da1150738d21b",
+    "before": [
+      "LFP",
+      69.89,
+      332.8,
+      "LEAPMOTOR"
+    ],
+    "after": [
+      "LFP",
+      69.89,
+      332.8,
+      "LEAPMOTOR",
+      "ONBOARD_AC"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_26a828cb-5bf0-4c3f-b8b3-1d94d2548478_charging.port_type_79bf60563cf0.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "789129b6da10c4faa4d89bc6:spec",
+    "revision_id": "789129b6da10c4faa4d89bc6",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "leapmotor.leapmotor_c10.gen1.trim.ev_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:46+00:00",
+    "payload": [
+      "LFP",
+      69.89,
+      332.8,
+      "LEAPMOTOR",
+      "ONBOARD_AC"
+    ]
+  }
+}

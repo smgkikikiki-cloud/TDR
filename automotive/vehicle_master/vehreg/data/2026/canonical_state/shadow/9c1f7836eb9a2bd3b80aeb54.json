@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9c1f7836eb9a2bd3b80aeb54",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-042-509b690f0202:319",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.xpander.a1.trim.gls_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:35+00:00",
+    "before_hash": "2a84e4287844c0dbac40b85f420e5e65f5825d2052a3fdd4f4398d296d532f94",
+    "after_hash": "336ce801e3dc9de75d0aa165a7e19f02f6ee9abf1a34e7ab59dce9c2021f7f9a",
+    "before": [
+      true,
+      5.5,
+      6.1,
+      7.0,
+      144.0,
+      0.022,
+      "TIS",
+      "GASOLINE",
+      1499,
+      "E20"
+    ],
+    "after": [
+      true,
+      5.5,
+      6.1,
+      7.0,
+      144.0,
+      0.022,
+      "TIS",
+      "GASOLINE",
+      1499,
+      "E20",
+      "195/65R16"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_cd008175-9376-4e36-b833-9ab086880baa_fitment.tyre_size_76a41ea76bfe.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9c1f7836eb9a2bd3b80aeb54:spec",
+    "revision_id": "9c1f7836eb9a2bd3b80aeb54",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.xpander.a1.trim.gls_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:35+00:00",
+    "payload": [
+      true,
+      5.5,
+      6.1,
+      7.0,
+      144.0,
+      0.022,
+      "TIS",
+      "GASOLINE",
+      1499,
+      "E20",
+      "195/65R16"
+    ]
+  }
+}

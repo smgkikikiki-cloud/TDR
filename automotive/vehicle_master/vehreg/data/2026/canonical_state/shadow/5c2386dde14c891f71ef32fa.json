@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5c2386dde14c891f71ef32fa",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-032-04b0adc6e162:191",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_altis.e210.trim.gr_rz_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:17+00:00",
+    "before_hash": "7e4b17c965186d9543cb93b0830f38d369f831b4cde17795faddcff83c3d6475",
+    "after_hash": "eb8b9cc178737db93ec32d1c63d410336f10f8d8a9530163c455fa3c3ff75f85",
+    "before": [
+      true,
+      true,
+      7.2,
+      8.0,
+      9.4,
+      192.0
+    ],
+    "after": [
+      true,
+      true,
+      7.2,
+      8.0,
+      9.4,
+      192.0,
+      0.019
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_7afdec69-ffbf-4838-a33f-bddbb727f770_emissions.nox_g_km_74000bd0e72c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5c2386dde14c891f71ef32fa:spec",
+    "revision_id": "5c2386dde14c891f71ef32fa",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_altis.e210.trim.gr_rz_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:17+00:00",
+    "payload": [
+      true,
+      true,
+      7.2,
+      8.0,
+      9.4,
+      192.0,
+      0.019
+    ]
+  }
+}

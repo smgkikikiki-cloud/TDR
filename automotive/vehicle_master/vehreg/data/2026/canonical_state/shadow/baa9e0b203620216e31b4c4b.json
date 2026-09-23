@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "baa9e0b203620216e31b4c4b",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-034-5299aee8f0ab:372",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_x3.g45.trim.xdrive20d_m_sport_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:32+00:00",
+    "before_hash": "496428035f129afe53b21f8d653caebae7c186b624d4bd69ad5e1ba52bbe4067",
+    "after_hash": "e0e62f8b945fb2e0586e847e946d4b954d732c46755b0670bb141c4224ab2e21",
+    "before": [
+      true,
+      true
+    ],
+    "after": [
+      true,
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_646ca105-ff71-4847-a9e2-7902a2ecb0a1_comfort.power_windows_ca097b6f8ada.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "baa9e0b203620216e31b4c4b:spec",
+    "revision_id": "baa9e0b203620216e31b4c4b",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_x3.g45.trim.xdrive20d_m_sport_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:32+00:00",
+    "payload": [
+      true,
+      true,
+      true
+    ]
+  }
+}

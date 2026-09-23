@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "0961ccb15ce4cb0e2d810630",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-046-2c82d6c5b603:297",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.etron_gt.gen1.trim.rs_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:14+00:00",
+    "before_hash": "0a2936901959eb7e6956eefd2b1a41df4803dae8ea1953c7076ff3ef409b42e9",
+    "after_hash": "b678c3a37943fd2432daf771f6bd1da6df0f24531028e3400d6e9961daa7d145",
+    "before": [
+      "GASOLINE",
+      "265/35R21",
+      "305/30R21",
+      "ICE",
+      8.0,
+      true,
+      3,
+      true,
+      true,
+      [
+        "R13H",
+        "R100"
+      ],
+      2281,
+      1414,
+      4989
+    ],
+    "after": [
+      "GASOLINE",
+      "265/35R21",
+      "305/30R21",
+      "ICE",
+      8.0,
+      true,
+      3,
+      true,
+      true,
+      [
+        "R13H",
+        "R100"
+      ],
+      2281,
+      1414,
+      4989,
+      2022
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ff6fa8c416e946088227524bab37f457_vehicle.model_year_80501dffa29b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "0961ccb15ce4cb0e2d810630:spec",
+    "revision_id": "0961ccb15ce4cb0e2d810630",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.etron_gt.gen1.trim.rs_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:14+00:00",
+    "payload": [
+      "GASOLINE",
+      "265/35R21",
+      "305/30R21",
+      "ICE",
+      8.0,
+      true,
+      3,
+      true,
+      true,
+      [
+        "R13H",
+        "R100"
+      ],
+      2281,
+      1414,
+      4989,
+      2022
+    ]
+  }
+}

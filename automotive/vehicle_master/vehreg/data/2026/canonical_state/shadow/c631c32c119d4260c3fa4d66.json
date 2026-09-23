@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c631c32c119d4260c3fa4d66",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-048-9a296c6c8041:221",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.c_hr.gen1.trim.hev_premium_safety_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:35+00:00",
+    "before_hash": "daec37322a61642d6f698a151a476ba5538e052f7aa7ac9b37963a7a50762f06",
+    "after_hash": "1c992fa9aae3fd94a85e248e0f7213ff16fcef4d02ed847b7d482be744371738",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      4.2,
+      4.1,
+      4.1,
+      95.0,
+      0.002
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      4.2,
+      4.1,
+      4.1,
+      95.0,
+      0.002,
+      "TIS"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_9793ea4cc52b489297987f28be6f3cf7_emissions.standard_7895ce1f6c02.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c631c32c119d4260c3fa4d66:spec",
+    "revision_id": "c631c32c119d4260c3fa4d66",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.c_hr.gen1.trim.hev_premium_safety_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:35+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      4.2,
+      4.1,
+      4.1,
+      95.0,
+      0.002,
+      "TIS"
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:69e8fdaca7fd463886c69c6b1160ece6:efficiency.fuel_consumption_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 16.9,
+      "unit": "L/100km",
+      "observed_at": "2022-06-16",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/69e8fdaca7fd463886c69c6b1160ece6",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/69e8fdaca7fd463886c69c6b1160ece6",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "ferrari.f8.gen1.trim.tributo_coupe_ice"
+    }
+  ]
+}

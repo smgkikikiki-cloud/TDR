@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "01f49a94eb2a1dae00ef59d4",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-006-b527dba9e80a:255",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.g_class.gen1.trim.mercedes_benz_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:59+00:00",
+    "before_hash": "e4c2d7b17beaef0455647d345542a445ae42d6ad8347d1c2ca0ce0b1c53c3395",
+    "after_hash": "902d30b907a2a0d9cef25ab4ec8fc6f7ae2121d245057cfad67c658107736d0a",
+    "before": [
+      7.0,
+      8.0,
+      9.9,
+      212.0,
+      0.013,
+      0.00012,
+      "EURO6",
+      "HEV",
+      2989,
+      "DIESEL",
+      "275/50R20",
+      "HEV",
+      34.0,
+      9
+    ],
+    "after": [
+      7.0,
+      8.0,
+      9.9,
+      212.0,
+      0.013,
+      0.00012,
+      "EURO6",
+      "HEV",
+      2989,
+      "DIESEL",
+      "275/50R20",
+      "HEV",
+      34.0,
+      9,
+      "AUTOMATIC"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_2790d589-f7a2-4c26-a21d-36961ada881a_powertrain.transmission_0d1260c50a32.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "01f49a94eb2a1dae00ef59d4:spec",
+    "revision_id": "01f49a94eb2a1dae00ef59d4",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.g_class.gen1.trim.mercedes_benz_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:59+00:00",
+    "payload": [
+      7.0,
+      8.0,
+      9.9,
+      212.0,
+      0.013,
+      0.00012,
+      "EURO6",
+      "HEV",
+      2989,
+      "DIESEL",
+      "275/50R20",
+      "HEV",
+      34.0,
+      9,
+      "AUTOMATIC"
+    ]
+  }
+}

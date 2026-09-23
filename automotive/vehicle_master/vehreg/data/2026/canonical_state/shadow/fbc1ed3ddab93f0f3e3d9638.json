@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "fbc1ed3ddab93f0f3e3d9638",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-045-66f56137868e:400",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.mini_cooper.j01.trim.john_works_clubman_all4_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:03+00:00",
+    "before_hash": "6cc8723fdecdaf96fc7e93e8cd177c1d2e7fbd0db94c4c422d22e7f17158d8a0",
+    "after_hash": "eba71e23a7f217740b45212b5a76f2be13a1dd28105544e014692289030d7a68",
+    "before": [
+      true,
+      true,
+      true,
+      6.5,
+      7.7,
+      9.7,
+      175.0,
+      0.011,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "GASOLINE",
+      "235/35R19"
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      6.5,
+      7.7,
+      9.7,
+      175.0,
+      0.011,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "GASOLINE",
+      "235/35R19",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_3a13283ee86a4e5f9d11ac7c1a1981e8_identity.powertrain_b56fd57749cf.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "fbc1ed3ddab93f0f3e3d9638:spec",
+    "revision_id": "fbc1ed3ddab93f0f3e3d9638",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.mini_cooper.j01.trim.john_works_clubman_all4_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:03+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      6.5,
+      7.7,
+      9.7,
+      175.0,
+      0.011,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "GASOLINE",
+      "235/35R19",
+      "ICE"
+    ]
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "83530f3331d5ad8c79f9d969",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:61",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.hybrid_executive_lounge_s",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:23:14+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "9670af6902fb64c6d022f30e43fa3277068c1a96f6466174a6b93f4211a8fc57",
+    "before": [],
+    "after": [
+      {
+        "trim_id": "toyota.alphard.ah40.trim.hybrid_executive_lounge_s",
+        "amount_thb": 2755000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2024-10-02",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/394dbe44-381c-4f4b-b83d-96bf85987791",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:61.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "83530f3331d5ad8c79f9d969:price",
+    "revision_id": "83530f3331d5ad8c79f9d969",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.hybrid_executive_lounge_s",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:23:14+00:00",
+    "payload": [
+      {
+        "trim_id": "toyota.alphard.ah40.trim.hybrid_executive_lounge_s",
+        "amount_thb": 2755000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2024-10-02",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/394dbe44-381c-4f4b-b83d-96bf85987791",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

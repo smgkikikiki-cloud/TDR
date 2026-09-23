@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "8056677af87124ab1e40146f",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-038-caad162ad775:124",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.xm.gen1.trim.label_red_4_4l_v8_phev_748_hp_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:04+00:00",
+    "before_hash": "fc1d61ef69c4e360498aeed21ceaf286a8faada6ee7e686671848e98ddffe1b9",
+    "after_hash": "9acf216ee7a5f1ef3c0d1056a4099e246b87808a52553327d1dcafd40bfc17f6",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      29.46,
+      316.8,
+      "Electrical Energy Storage System SP54",
+      "ONBOARD_AC",
+      true,
+      true,
+      true,
+      2.4
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      29.46,
+      316.8,
+      "Electrical Energy Storage System SP54",
+      "ONBOARD_AC",
+      true,
+      true,
+      true,
+      2.4,
+      54.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_c5c43185-7560-49a5-bdde-104f8e128319_emissions.co2_g_km_b5a9a6c30f57.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "8056677af87124ab1e40146f:spec",
+    "revision_id": "8056677af87124ab1e40146f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.xm.gen1.trim.label_red_4_4l_v8_phev_748_hp_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:04+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      29.46,
+      316.8,
+      "Electrical Energy Storage System SP54",
+      "ONBOARD_AC",
+      true,
+      true,
+      true,
+      2.4,
+      54.0
+    ]
+  }
+}

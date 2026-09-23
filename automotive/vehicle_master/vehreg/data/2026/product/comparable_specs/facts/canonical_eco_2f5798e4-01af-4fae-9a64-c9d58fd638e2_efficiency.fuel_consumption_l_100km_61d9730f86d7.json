@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:2f5798e4-01af-4fae-9a64-c9d58fd638e2:efficiency.fuel_consumption_l_100km",
+      "field_key": "efficiency.fuel_consumption_l_100km",
+      "value_state": "KNOWN",
+      "value": 4.4,
+      "unit": "L/100km",
+      "observed_at": "2026-03-09",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/2f5798e4-01af-4fae-9a64-c9d58fd638e2",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/2f5798e4-01af-4fae-9a64-c9d58fd638e2",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "nissan.kicks.p15.trim.vl"
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "aadf77e7ba2819771c2ef49e",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-031-eac7506457fb:87",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "xpeng.xpeng_g6.g6.trim.standard_range_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:09+00:00",
+    "before_hash": "5e53f33cd50c6a1d969053aae68f7b18974981b72d13420eeaa16e11c0181fcb",
+    "after_hash": "35e7885f6be19f8621051d3f13cd50525d6eee9c47de7025a971202c34b6f5e3",
+    "before": [
+      "LFP",
+      66.05,
+      512.0,
+      "XPENG",
+      "180-456 V",
+      "EXTERNAL_DC",
+      true,
+      162.0,
+      505.0,
+      "255/45R20",
+      "BEV",
+      8.0,
+      "PMSM"
+    ],
+    "after": [
+      "LFP",
+      66.05,
+      512.0,
+      "XPENG",
+      "180-456 V",
+      "EXTERNAL_DC",
+      true,
+      162.0,
+      505.0,
+      "255/45R20",
+      "BEV",
+      8.0,
+      "PMSM",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ec196398-f75a-4998-b7e5-8b26e8934945_safety.abs_1f53d10b18a9.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "aadf77e7ba2819771c2ef49e:spec",
+    "revision_id": "aadf77e7ba2819771c2ef49e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "xpeng.xpeng_g6.g6.trim.standard_range_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:09+00:00",
+    "payload": [
+      "LFP",
+      66.05,
+      512.0,
+      "XPENG",
+      "180-456 V",
+      "EXTERNAL_DC",
+      true,
+      162.0,
+      505.0,
+      "255/45R20",
+      "BEV",
+      8.0,
+      "PMSM",
+      true
+    ]
+  }
+}

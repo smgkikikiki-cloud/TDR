@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b9e8fae0c8d18ca49f69c8c0",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-013-01b2d6d40e8e:378",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.xc60.xc60g.trim.ultra_t8_plug_in_hybrid_bright_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:28+00:00",
+    "before_hash": "097c4f88415de95dbeb5594493b18a39b26ca1901514f8dc95fe1c17c69ee780",
+    "after_hash": "da38de8ded8d49b4a4add0d4283f9b1f22959c2ef6a925007be404017ddeaab4",
+    "before": [
+      "NMC",
+      19.4,
+      373.0
+    ],
+    "after": [
+      "NMC",
+      19.4,
+      373.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd."
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_7822724b-5ac9-487a-bb1d-42aa11a56c2c_battery.supplier_11188d1cf381.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b9e8fae0c8d18ca49f69c8c0:spec",
+    "revision_id": "b9e8fae0c8d18ca49f69c8c0",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.xc60.xc60g.trim.ultra_t8_plug_in_hybrid_bright_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:28+00:00",
+    "payload": [
+      "NMC",
+      19.4,
+      373.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd."
+    ]
+  }
+}

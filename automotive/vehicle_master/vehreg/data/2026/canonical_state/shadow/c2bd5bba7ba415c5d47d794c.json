@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c2bd5bba7ba415c5d47d794c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-018-bf8b3c7bf841:11",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_cross.xg10.trim.hev_smart_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:52+00:00",
+    "before_hash": "04ec49fc87b412fdfcef9750d8476b20b8183f78b4bd5f337c40d7c3fed2d84c",
+    "after_hash": "1100a40eb0a3538514d0ae10a8041c6d3a1f0cd59885520259e9e5c6d95e5b58",
+    "before": [
+      4.4,
+      4.2,
+      4.0,
+      95.0
+    ],
+    "after": [
+      4.4,
+      4.2,
+      4.0,
+      95.0,
+      0.005
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_839dcd92-35c9-486e-824b-85c9a0a332ba_emissions.nox_g_km_6de5c5f3e4bb.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c2bd5bba7ba415c5d47d794c:spec",
+    "revision_id": "c2bd5bba7ba415c5d47d794c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_cross.xg10.trim.hev_smart_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:52+00:00",
+    "payload": [
+      4.4,
+      4.2,
+      4.0,
+      95.0,
+      0.005
+    ]
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "988bbce970b79573727e5005",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-044-4ee92a315b21:296",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover.gen1.trim.lwb_3_0d_350ps_sv_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:53+00:00",
+    "before_hash": "3d39c84935c37b5e8970250232c509461d3832e6fe40100a02eab04387bbba68",
+    "after_hash": "58619a2f68b02f5f3004b12100d70050d7c91ad403d3383886d7480b9575ad71",
+    "before": [
+      true,
+      true,
+      6.3,
+      7.2,
+      8.9,
+      190.0,
+      0.039
+    ],
+    "after": [
+      true,
+      true,
+      6.3,
+      7.2,
+      8.9,
+      190.0,
+      0.039,
+      0.00089
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_71927bae-9345-4dd5-9edf-2818d168d594_emissions.pm_g_km_8a45c17c27fc.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "988bbce970b79573727e5005:spec",
+    "revision_id": "988bbce970b79573727e5005",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover.gen1.trim.lwb_3_0d_350ps_sv_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:53+00:00",
+    "payload": [
+      true,
+      true,
+      6.3,
+      7.2,
+      8.9,
+      190.0,
+      0.039,
+      0.00089
+    ]
+  }
+}

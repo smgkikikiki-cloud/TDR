@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f9b6d2febbfd7d2f3a6dbf24",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-042-509b690f0202:326",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.xpander.a1.trim.gls_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:35+00:00",
+    "before_hash": "f21b4cd937cddd4c7614da8b78c3bd7b42b3c5005e0c03a50faa427485a8ef21",
+    "after_hash": "7237ef22dfe08645de7884c313ddbc39414fb61eb35fa766a254b828bedb576f",
+    "before": [
+      true,
+      5.5,
+      6.1,
+      7.0,
+      144.0,
+      0.022,
+      "TIS",
+      "GASOLINE",
+      1499,
+      "E20",
+      "195/65R16",
+      "ICE",
+      25.0,
+      "CVT",
+      true,
+      3,
+      true
+    ],
+    "after": [
+      true,
+      5.5,
+      6.1,
+      7.0,
+      144.0,
+      0.022,
+      "TIS",
+      "GASOLINE",
+      1499,
+      "E20",
+      "195/65R16",
+      "ICE",
+      25.0,
+      "CVT",
+      true,
+      3,
+      true,
+      [
+        "R13H"
+      ]
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_cd008175-9376-4e36-b833-9ab086880baa_safety.un_regulations_b06c6789b4ff.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f9b6d2febbfd7d2f3a6dbf24:spec",
+    "revision_id": "f9b6d2febbfd7d2f3a6dbf24",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.xpander.a1.trim.gls_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:35+00:00",
+    "payload": [
+      true,
+      5.5,
+      6.1,
+      7.0,
+      144.0,
+      0.022,
+      "TIS",
+      "GASOLINE",
+      1499,
+      "E20",
+      "195/65R16",
+      "ICE",
+      25.0,
+      "CVT",
+      true,
+      3,
+      true,
+      [
+        "R13H"
+      ]
+    ]
+  }
+}

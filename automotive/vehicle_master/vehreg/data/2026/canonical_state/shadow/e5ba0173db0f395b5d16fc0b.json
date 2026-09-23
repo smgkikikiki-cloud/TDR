@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e5ba0173db0f395b5d16fc0b",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-036-ba2d051d30aa:215",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_x3.g45.trim.xdrive30e_m_sport_phev_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:48+00:00",
+    "before_hash": "871eca1c7714d4232078ef4067326ec55691bd0479dbf1f9cf8446907912fb1d",
+    "after_hash": "7c972f34a43d9e209c5db4e9802c29a254d2c14715c7d2b189fa4659047c7108",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      12.04
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      12.04,
+      354.2
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_c9432326-b020-45bd-8408-ba6662d8c6e5_battery.nominal_voltage_v_d71ac44bfca5.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e5ba0173db0f395b5d16fc0b:spec",
+    "revision_id": "e5ba0173db0f395b5d16fc0b",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_x3.g45.trim.xdrive30e_m_sport_phev_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:48+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      12.04,
+      354.2
+    ]
+  }
+}

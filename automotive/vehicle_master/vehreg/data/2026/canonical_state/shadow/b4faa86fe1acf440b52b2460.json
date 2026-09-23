@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b4faa86fe1acf440b52b2460",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-031-eac7506457fb:150",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.stargazer.ks.trim.style_6_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:09+00:00",
+    "before_hash": "095909cca5f98f836c09ceec08a9a009c81edb96bf8924fd70332e8d13859742",
+    "after_hash": "ca72acaa48233241d1c0d6d0b45f4e1b840c52844ac4514e373fd8aa6bffa6f0",
+    "before": [
+      true,
+      true,
+      5.4,
+      6.2,
+      7.4,
+      143.0,
+      0.068,
+      "TIS",
+      "GASOLINE",
+      1497
+    ],
+    "after": [
+      true,
+      true,
+      5.4,
+      6.2,
+      7.4,
+      143.0,
+      0.068,
+      "TIS",
+      "GASOLINE",
+      1497,
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b4eb76ba-6dda-4503-8caf-443cb42b3dd2_engine.fuel_type_8435212d365a.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b4faa86fe1acf440b52b2460:spec",
+    "revision_id": "b4faa86fe1acf440b52b2460",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.stargazer.ks.trim.style_6_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:09+00:00",
+    "payload": [
+      true,
+      true,
+      5.4,
+      6.2,
+      7.4,
+      143.0,
+      0.068,
+      "TIS",
+      "GASOLINE",
+      1497,
+      "GASOLINE"
+    ]
+  }
+}

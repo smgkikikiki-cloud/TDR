@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a7f175815ab0a505af685496",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-044-4ee92a315b21:302",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover.gen1.trim.lwb_3_0d_350ps_sv_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:53+00:00",
+    "before_hash": "1ae19159ce2ea0bf3480071d5e60871825f08544806fc6f2bbb2c6779af357a3",
+    "after_hash": "6ef7be2ad50f6cec37122d8cde34c07faa27d6704a3078767547114d85233f0f",
+    "before": [
+      true,
+      true,
+      6.3,
+      7.2,
+      8.9,
+      190.0,
+      0.039,
+      0.00089,
+      "TIS",
+      "HEV",
+      2997,
+      "DIESEL",
+      "285/40R23"
+    ],
+    "after": [
+      true,
+      true,
+      6.3,
+      7.2,
+      8.9,
+      190.0,
+      0.039,
+      0.00089,
+      "TIS",
+      "HEV",
+      2997,
+      "DIESEL",
+      "285/40R23",
+      "HEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_71927bae-9345-4dd5-9edf-2818d168d594_identity.powertrain_81e4ffa09a2d.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a7f175815ab0a505af685496:spec",
+    "revision_id": "a7f175815ab0a505af685496",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover.gen1.trim.lwb_3_0d_350ps_sv_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:53+00:00",
+    "payload": [
+      true,
+      true,
+      6.3,
+      7.2,
+      8.9,
+      190.0,
+      0.039,
+      0.00089,
+      "TIS",
+      "HEV",
+      2997,
+      "DIESEL",
+      "285/40R23",
+      "HEV"
+    ]
+  }
+}

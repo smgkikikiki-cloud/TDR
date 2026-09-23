@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c56ba457eca481c547d9cd78",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-056-d87ca8b8ef3b:350",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.almera.n18.trim.1_0t_e_cvt_fleet",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:22:43+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "859603737dcd7c6200abe290359c8aeec545461b1459c34b7cb95623a0352d86",
+    "before": [],
+    "after": [
+      {
+        "trim_id": "nissan.almera.n18.trim.1_0t_e_cvt_fleet",
+        "amount_thb": 549000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2024-06-04",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/8f1eb844-9896-4da4-b621-c64981d8babe",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-056-d87ca8b8ef3b:350.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c56ba457eca481c547d9cd78:price",
+    "revision_id": "c56ba457eca481c547d9cd78",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.almera.n18.trim.1_0t_e_cvt_fleet",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:22:43+00:00",
+    "payload": [
+      {
+        "trim_id": "nissan.almera.n18.trim.1_0t_e_cvt_fleet",
+        "amount_thb": 549000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2024-06-04",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/8f1eb844-9896-4da4-b621-c64981d8babe",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

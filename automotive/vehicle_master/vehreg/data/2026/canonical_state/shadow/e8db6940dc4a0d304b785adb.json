@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e8db6940dc4a0d304b785adb",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-014-8db054eb58a3:20",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.ex40.gen1.trim.ultra_single_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:32+00:00",
+    "before_hash": "c4a0bb2925547b459fbbaf2a4a527228aacd6f41f6d3de0625500bc71e6b540d",
+    "after_hash": "b54da91be62ee92892f6c9c9f47b50eeffeec31780d83ed3fb923ff85108f4e4",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      69.49
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      69.49,
+      344.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d125adc9-ffdd-4b79-8100-a18d26987867_battery.nominal_voltage_v_5a4d88e28ba9.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e8db6940dc4a0d304b785adb:spec",
+    "revision_id": "e8db6940dc4a0d304b785adb",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.ex40.gen1.trim.ultra_single_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:32+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      69.49,
+      344.0
+    ]
+  }
+}

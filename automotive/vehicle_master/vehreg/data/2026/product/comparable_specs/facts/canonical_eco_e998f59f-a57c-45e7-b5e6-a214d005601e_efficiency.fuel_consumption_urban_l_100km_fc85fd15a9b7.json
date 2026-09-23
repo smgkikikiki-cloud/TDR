@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:e998f59f-a57c-45e7-b5e6-a214d005601e:efficiency.fuel_consumption_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 3.6,
+      "unit": "L/100km",
+      "observed_at": "2025-12-22",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/e998f59f-a57c-45e7-b5e6-a214d005601e",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/e998f59f-a57c-45e7-b5e6-a214d005601e",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "lexus.lbx.gen1.trim.premium_hev"
+    }
+  ]
+}

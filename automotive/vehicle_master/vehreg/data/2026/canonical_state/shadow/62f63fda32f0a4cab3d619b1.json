@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "62f63fda32f0a4cab3d619b1",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-056-d87ca8b8ef3b:159",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover.gen1.trim.evoque_1_5l_phev_5dr_swb_autobiography_309ps_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:22:25+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "88f1f208552d650ad9e3d0e7bbac38f2d8379a9e8d95e300d8a1394b882b523c",
+    "before": [],
+    "after": [
+      {
+        "trim_id": "land_rover.range_rover.gen1.trim.evoque_1_5l_phev_5dr_swb_autobiography_309ps_phev",
+        "amount_thb": 4999000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2024-01-26",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/b9d68b42-3021-4661-8036-318d0e7b1c6a",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-056-d87ca8b8ef3b:159.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "62f63fda32f0a4cab3d619b1:price",
+    "revision_id": "62f63fda32f0a4cab3d619b1",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover.gen1.trim.evoque_1_5l_phev_5dr_swb_autobiography_309ps_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:22:25+00:00",
+    "payload": [
+      {
+        "trim_id": "land_rover.range_rover.gen1.trim.evoque_1_5l_phev_5dr_swb_autobiography_309ps_phev",
+        "amount_thb": 4999000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2024-01-26",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/b9d68b42-3021-4661-8036-318d0e7b1c6a",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

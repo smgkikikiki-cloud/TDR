@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f33093d3a92a1414079b35cc",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-027-e2d326b095bb:57",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.ex30.ex30g.trim.ultra_twin_performance_69_kwh_awd_428_hp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:39+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "d3a738c2b5463c008e1c3542e847995c76e8777fdb513e25ec9ff6cfe7b8262a",
+    "before": [],
+    "after": [
+      "OTHER"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_9fb52b18-cbef-4569-8b46-71901110b8ab_battery.chemistry_bf4e431cebf2.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f33093d3a92a1414079b35cc:spec",
+    "revision_id": "f33093d3a92a1414079b35cc",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.ex30.ex30g.trim.ultra_twin_performance_69_kwh_awd_428_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:39+00:00",
+    "payload": [
+      "OTHER"
+    ]
+  }
+}

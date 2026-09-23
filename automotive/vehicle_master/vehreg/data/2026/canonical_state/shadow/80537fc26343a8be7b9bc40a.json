@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "80537fc26343a8be7b9bc40a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-035-5b8b3aecfae7:131",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.stargazer.ks.trim.x6_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:40+00:00",
+    "before_hash": "b8e83f3bf323cf67427396b35cbebc956577d351475041d4302c9351e6db7441",
+    "after_hash": "ee1ba7647bfaf095c70e6d10913ba0da3fd228e04387162f3f8842d5addb8064",
+    "before": [
+      true,
+      true,
+      5.3,
+      6.1,
+      7.6,
+      146.0,
+      0.068,
+      "TIS",
+      "GASOLINE",
+      1497,
+      "GASOLINE"
+    ],
+    "after": [
+      true,
+      true,
+      5.3,
+      6.1,
+      7.6,
+      146.0,
+      0.068,
+      "TIS",
+      "GASOLINE",
+      1497,
+      "GASOLINE",
+      "205/50R17"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_61a9a246-175b-4cf7-86e3-621defa89a34_fitment.tyre_size_bb2f395ab4c5.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "80537fc26343a8be7b9bc40a:spec",
+    "revision_id": "80537fc26343a8be7b9bc40a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.stargazer.ks.trim.x6_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:40+00:00",
+    "payload": [
+      true,
+      true,
+      5.3,
+      6.1,
+      7.6,
+      146.0,
+      0.068,
+      "TIS",
+      "GASOLINE",
+      1497,
+      "GASOLINE",
+      "205/50R17"
+    ]
+  }
+}

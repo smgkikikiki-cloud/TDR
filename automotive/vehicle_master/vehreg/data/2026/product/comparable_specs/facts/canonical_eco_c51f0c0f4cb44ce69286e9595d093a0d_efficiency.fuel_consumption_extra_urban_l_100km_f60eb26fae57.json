@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:c51f0c0f4cb44ce69286e9595d093a0d:efficiency.fuel_consumption_extra_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_extra_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 3.8,
+      "unit": "L/100km",
+      "observed_at": "2021-07-23",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/c51f0c0f4cb44ce69286e9595d093a0d",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/c51f0c0f4cb44ce69286e9595d093a0d",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mazda.mazda2.dj.trim.mazda_2_1_3_s_sports_leather"
+    }
+  ]
+}

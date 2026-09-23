@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:307cbe75-772d-405a-a207-4ebc8d02b064:ev.energy_consumption_wh_km",
+      "field_key": "ev.energy_consumption_wh_km",
+      "value_state": "KNOWN",
+      "value": 178.0,
+      "unit": "Wh/km",
+      "observed_at": "2025-12-16",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/307cbe75-772d-405a-a207-4ebc8d02b064",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/307cbe75-772d-405a-a207-4ebc8d02b064",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "porsche.taycan.gen1.trim.turbo_s_awd_952_hp_bev"
+    }
+  ]
+}

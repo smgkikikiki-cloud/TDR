@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "cac0f274b77c64769dc4eb77",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-054-d20b71816f05:56",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.c_hr.gen1.trim.by_karl_lagerfeld_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:52+00:00",
+    "before_hash": "f71d2da467a458f29e38d0dab93cc37e5eb085b40f2b41bc5a40533b64cc18d6",
+    "after_hash": "0a0b0d7dcd7fe5349ad6349698c8b5cb916d1c90454b9ca41e53aab8ceef0e93",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      4.2,
+      4.1,
+      4.1,
+      95.0,
+      0.012,
+      "TIS",
+      "HEV",
+      1798,
+      "E20",
+      "215/60R17"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      4.2,
+      4.1,
+      4.1,
+      95.0,
+      0.012,
+      "TIS",
+      "HEV",
+      1798,
+      "E20",
+      "215/60R17",
+      "HEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_3e55da0abba3447eaaf030db5325409c_identity.powertrain_b79db9248350.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "cac0f274b77c64769dc4eb77:spec",
+    "revision_id": "cac0f274b77c64769dc4eb77",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.c_hr.gen1.trim.by_karl_lagerfeld_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:52+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      4.2,
+      4.1,
+      4.1,
+      95.0,
+      0.012,
+      "TIS",
+      "HEV",
+      1798,
+      "E20",
+      "215/60R17",
+      "HEV"
+    ]
+  }
+}

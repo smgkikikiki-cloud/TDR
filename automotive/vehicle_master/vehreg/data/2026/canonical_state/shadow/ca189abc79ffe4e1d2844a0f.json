@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ca189abc79ffe4e1d2844a0f",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-050-6df028e5a85f:155",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "subaru.crosstrek.gu.trim.2_0i_p_es_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:57+00:00",
+    "before_hash": "6e8aa0df4cd74d400d3bfa0cefd4fda6a590a4e8a0fef5c29c3347ee0659fccb",
+    "after_hash": "d2c4b2e8b0334f7407f805f50921ea3e38d87de4ce337f38409fc66b04245e55",
+    "before": [
+      true,
+      true,
+      5.7,
+      7.3,
+      9.9,
+      172.0,
+      0.004
+    ],
+    "after": [
+      true,
+      true,
+      5.7,
+      7.3,
+      9.9,
+      172.0,
+      0.004,
+      "TIS"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_9d1fdc40ccf54776b0fb1e8a9ee0c35b_emissions.standard_d792bbd7b967.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ca189abc79ffe4e1d2844a0f:spec",
+    "revision_id": "ca189abc79ffe4e1d2844a0f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "subaru.crosstrek.gu.trim.2_0i_p_es_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:57+00:00",
+    "payload": [
+      true,
+      true,
+      5.7,
+      7.3,
+      9.9,
+      172.0,
+      0.004,
+      "TIS"
+    ]
+  }
+}

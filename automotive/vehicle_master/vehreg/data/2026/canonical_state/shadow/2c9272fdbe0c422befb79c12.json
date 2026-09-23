@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2c9272fdbe0c422befb79c12",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-023-8723a19230b0:227",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "jaecoo.jaecoo_5_ev.j5.trim.long_range_dynamic_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:16+00:00",
+    "before_hash": "53e489aea2db100de6678f9a099d614c2187fab0cdd6265a18f802b68e47b5c3",
+    "after_hash": "7cd46e1c77595b82551f14feb7a20ba8a9b00d65c97834b1542f79692fe489cb",
+    "before": [
+      "LFP",
+      58.71,
+      360.2,
+      "CATL",
+      "220",
+      "ONBOARD_AC",
+      true,
+      139.0,
+      461.0,
+      "235/55R18",
+      "BEV",
+      2.0,
+      "PMSM",
+      true
+    ],
+    "after": [
+      "LFP",
+      58.71,
+      360.2,
+      "CATL",
+      "220",
+      "ONBOARD_AC",
+      true,
+      139.0,
+      461.0,
+      "235/55R18",
+      "BEV",
+      2.0,
+      "PMSM",
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d744d9f3-d393-4ac3-b441-17a022098fed_safety.adaptive_cruise_ee4ec052a568.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2c9272fdbe0c422befb79c12:spec",
+    "revision_id": "2c9272fdbe0c422befb79c12",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "jaecoo.jaecoo_5_ev.j5.trim.long_range_dynamic_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:16+00:00",
+    "payload": [
+      "LFP",
+      58.71,
+      360.2,
+      "CATL",
+      "220",
+      "ONBOARD_AC",
+      true,
+      139.0,
+      461.0,
+      "235/55R18",
+      "BEV",
+      2.0,
+      "PMSM",
+      true,
+      true
+    ]
+  }
+}

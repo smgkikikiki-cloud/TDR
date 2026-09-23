@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5263599f652626cee0051e54",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-034-5299aee8f0ab:352",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.carrera_gts_cabriolet_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:32+00:00",
+    "before_hash": "54cb81707ea286f22abd836f8abec55a2d81f06e5fd57b1235293fc2e0474d87",
+    "after_hash": "4ee00c43c0ea2e7daed4b45c8af78e35261a9e6e751306d4fe108e672ed7a7f3",
+    "before": [
+      true,
+      7.7,
+      10.3,
+      14.8,
+      234.0,
+      0.026,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35ZR20"
+    ],
+    "after": [
+      true,
+      7.7,
+      10.3,
+      14.8,
+      234.0,
+      0.026,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35ZR20",
+      "305/30ZR21"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ca65607e-18f6-4624-aa33-07b1d0a529a5_fitment.tyre_rear_d4caf5c387e1.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5263599f652626cee0051e54:spec",
+    "revision_id": "5263599f652626cee0051e54",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.carrera_gts_cabriolet_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:32+00:00",
+    "payload": [
+      true,
+      7.7,
+      10.3,
+      14.8,
+      234.0,
+      0.026,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35ZR20",
+      "305/30ZR21"
+    ]
+  }
+}

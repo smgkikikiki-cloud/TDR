@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5f05ebdf7dba145a4de23e6f",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-022-20a8a8e94ae5:101",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.carrera_gts_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:11+00:00",
+    "before_hash": "4ee00c43c0ea2e7daed4b45c8af78e35261a9e6e751306d4fe108e672ed7a7f3",
+    "after_hash": "3d89b21b96d8243811a9190fe95c3e338f18c0017f0f27b07c19a981d7bd2ea0",
+    "before": [
+      true,
+      7.7,
+      10.3,
+      14.8,
+      234.0,
+      0.026,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35ZR20",
+      "305/30ZR21"
+    ],
+    "after": [
+      true,
+      7.7,
+      10.3,
+      14.8,
+      234.0,
+      0.026,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35ZR20",
+      "305/30ZR21",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_97f12879-bf5f-4a2f-b43f-610fa1dc8a3c_identity.powertrain_ad855fe9d760.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5f05ebdf7dba145a4de23e6f:spec",
+    "revision_id": "5f05ebdf7dba145a4de23e6f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.carrera_gts_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:11+00:00",
+    "payload": [
+      true,
+      7.7,
+      10.3,
+      14.8,
+      234.0,
+      0.026,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35ZR20",
+      "305/30ZR21",
+      "ICE"
+    ]
+  }
+}

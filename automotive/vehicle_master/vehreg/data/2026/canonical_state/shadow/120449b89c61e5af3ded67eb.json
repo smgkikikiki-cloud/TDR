@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "120449b89c61e5af3ded67eb",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-014-8db054eb58a3:381",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq5.ne.trim.n_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:33+00:00",
+    "before_hash": "83287dcbdc2a8b54e2adde5f4f3d9243cb1999d1cf46dd390f0738849012a90d",
+    "after_hash": "e37dc80354e4f2a7daebbcfb6fc6097286aec79225445b655568d8e0a8a4d2f9",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      84.34,
+      697.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      212.0,
+      448.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      84.34,
+      697.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      212.0,
+      448.0,
+      "275/35ZR21"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_5b3bd768-ab61-4284-a5ac-90b67722da3d_fitment.tyre_size_dd3a38693d61.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "120449b89c61e5af3ded67eb:spec",
+    "revision_id": "120449b89c61e5af3ded67eb",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq5.ne.trim.n_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:33+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      84.34,
+      697.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      212.0,
+      448.0,
+      "275/35ZR21"
+    ]
+  }
+}

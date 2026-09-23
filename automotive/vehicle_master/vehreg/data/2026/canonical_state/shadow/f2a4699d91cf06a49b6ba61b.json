@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f2a4699d91cf06a49b6ba61b",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-010-6f2b18f1a4fd:307",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.ranger_double_cab.p703.trim.wildtrak_2_0l_turbo_hr_10at",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:15+00:00",
+    "before_hash": "3fefed311ff3ae91e15041234b50ccbad0b5a73125cfb6998debd88eec855826",
+    "after_hash": "74307ebf2a997218ce0f0c306ec52d0b12fd6023b85e0cc5516f49008e6d85f0",
+    "before": [
+      true,
+      true,
+      6.7,
+      7.0,
+      7.6,
+      184.0,
+      0.2258
+    ],
+    "after": [
+      true,
+      true,
+      6.7,
+      7.0,
+      7.6,
+      184.0,
+      0.2258,
+      0.00032
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_31b05a86-eeda-44de-a369-2d4fb8ec158d_emissions.pm_g_km_ea6a6289e88e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f2a4699d91cf06a49b6ba61b:spec",
+    "revision_id": "f2a4699d91cf06a49b6ba61b",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.ranger_double_cab.p703.trim.wildtrak_2_0l_turbo_hr_10at",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:15+00:00",
+    "payload": [
+      true,
+      true,
+      6.7,
+      7.0,
+      7.6,
+      184.0,
+      0.2258,
+      0.00032
+    ]
+  }
+}

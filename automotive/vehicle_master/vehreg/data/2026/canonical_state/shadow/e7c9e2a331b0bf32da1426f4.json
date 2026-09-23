@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e7c9e2a331b0bf32da1426f4",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-032-04b0adc6e162:278",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lexus_ls.unresearched.trim.executive_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:17+00:00",
+    "before_hash": "e0a77b1fe7ecc925bf67e665bf64582a8eb1f8333898e1d758dea0e34a8c906d",
+    "after_hash": "a584325245b471e899b30192a6add7181f3346210c6eeec52648b77b328f285c",
+    "before": [
+      7.5,
+      9.9,
+      14.1
+    ],
+    "after": [
+      7.5,
+      9.9,
+      14.1,
+      230.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_f2a7d133-ab14-4a53-9862-25e97242495e_emissions.co2_g_km_31edfbfca5cb.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e7c9e2a331b0bf32da1426f4:spec",
+    "revision_id": "e7c9e2a331b0bf32da1426f4",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lexus_ls.unresearched.trim.executive_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:17+00:00",
+    "payload": [
+      7.5,
+      9.9,
+      14.1,
+      230.0
+    ]
+  }
+}

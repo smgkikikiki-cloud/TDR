@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7ddb32fd1f3f29ef44f35878",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-009-54711011662e:327",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_s5_ev.gen1.trim.x_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:11+00:00",
+    "before_hash": "bf6ad4b93fb405993f4bb81ae39a1b8ecc6f2f1804c18a7819ae73064eef23de",
+    "after_hash": "4a33726f39e3168edd47ea4150759e508ba1ef3df10a908fc3767420a57c135b",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      50.08,
+      321.0,
+      "SAIC MOTOR-CP",
+      "EXTERNAL_DC",
+      true,
+      153.0,
+      416.0,
+      "215/55R18",
+      "BEV",
+      2.0,
+      "PMSM",
+      true
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      50.08,
+      321.0,
+      "SAIC MOTOR-CP",
+      "EXTERNAL_DC",
+      true,
+      153.0,
+      416.0,
+      "215/55R18",
+      "BEV",
+      2.0,
+      "PMSM",
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ee5085a9-67ca-40f6-9944-550da794d94c_safety.adaptive_cruise_b9572217731d.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7ddb32fd1f3f29ef44f35878:spec",
+    "revision_id": "7ddb32fd1f3f29ef44f35878",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_s5_ev.gen1.trim.x_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:11+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      50.08,
+      321.0,
+      "SAIC MOTOR-CP",
+      "EXTERNAL_DC",
+      true,
+      153.0,
+      416.0,
+      "215/55R18",
+      "BEV",
+      2.0,
+      "PMSM",
+      true,
+      true
+    ]
+  }
+}

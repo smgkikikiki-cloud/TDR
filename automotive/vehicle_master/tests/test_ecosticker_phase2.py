@@ -292,7 +292,10 @@ def test_committed_1640_record_snapshot_and_reference_review_are_self_consistent
     assert status["accepted_existing_trims"] == 0
     assert status["agent_proposed_existing_trims"] == 3
     # Staging all 1,640 public prices does not append them to the retail ledger.
-    assert ProductMaster.load().prices.coverage()["eco_sticker_price_records"] == 3
+    # 3 pre-existing + 640 from the September 2026 ECO Sticker bulk import
+    # (tools.import_source, a different, later-published path than the
+    # staged review this test otherwise covers).
+    assert ProductMaster.load().prices.coverage()["eco_sticker_price_records"] == 643
     assert len(list(Catalog.load(year=2026).iter_resolved())) == 367
 
 

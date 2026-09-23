@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "586b074085a5d8a277ca7b54",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-014-8db054eb58a3:342",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q5.fy.trim.sportback_55_tfsi_e_quattro_s_line_black_edition_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:33+00:00",
+    "before_hash": "bf21256e342ef9655b1b5b74abfce221716208a63223a4a2240eef48f2d7e902",
+    "after_hash": "806046686b1b514a64059c2a1fd89e7ac7d76e5332e1a2b2d87744460933b912",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      17.95
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      17.95,
+      374.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_0b9c7a8a-b9da-4f0d-ba3b-ff71fa5c7b13_battery.nominal_voltage_v_2b90c8cac5c1.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "586b074085a5d8a277ca7b54:spec",
+    "revision_id": "586b074085a5d8a277ca7b54",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q5.fy.trim.sportback_55_tfsi_e_quattro_s_line_black_edition_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:33+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      17.95,
+      374.0
+    ]
+  }
+}

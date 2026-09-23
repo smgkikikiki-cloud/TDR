@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ff5b3f436634c87a191d0310",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-007-412f5563cca4:150",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "jaecoo.jaecoo_5_ev.j5.trim.max_plus_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:03+00:00",
+    "before_hash": "97696498313b6b46c8c1265c723f22aa046f3845d4f2a9666cd97297ec4274f2",
+    "after_hash": "d89956b699509a10956fe69de34e3380aed9302f65fb8f108128c8812ffcab5e",
+    "before": [
+      "LFP",
+      50.49,
+      365.9,
+      "Hefei Gotion High-tech Power Energy Co., Ltd.",
+      "220"
+    ],
+    "after": [
+      "LFP",
+      50.49,
+      365.9,
+      "Hefei Gotion High-tech Power Energy Co., Ltd.",
+      "220",
+      "ONBOARD_AC"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_98c1d7de-79db-4581-b332-69abe657a532_charging.port_type_c1645eb00bee.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ff5b3f436634c87a191d0310:spec",
+    "revision_id": "ff5b3f436634c87a191d0310",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "jaecoo.jaecoo_5_ev.j5.trim.max_plus_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:03+00:00",
+    "payload": [
+      "LFP",
+      50.49,
+      365.9,
+      "Hefei Gotion High-tech Power Energy Co., Ltd.",
+      "220",
+      "ONBOARD_AC"
+    ]
+  }
+}

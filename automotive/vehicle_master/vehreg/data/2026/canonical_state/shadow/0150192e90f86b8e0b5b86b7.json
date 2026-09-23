@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "0150192e90f86b8e0b5b86b7",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-004-87075c4d97a5:282",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.macan.95b.trim.gts_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:53+00:00",
+    "before_hash": "067c38eac8a745fe302486b630e2df6e822e823f4cfdb5765686f69cc7dd4b4d",
+    "after_hash": "a9747cddbd7ff37c6ffc93443c310e17e4f6b98241c4f951dc8a97dfa2c20917",
+    "before": [
+      true,
+      8.9,
+      10.3,
+      12.9,
+      235.0,
+      0.018,
+      "TIS",
+      "GASOLINE",
+      2894,
+      "GASOLINE",
+      "265/40R21",
+      "295/35R21"
+    ],
+    "after": [
+      true,
+      8.9,
+      10.3,
+      12.9,
+      235.0,
+      0.018,
+      "TIS",
+      "GASOLINE",
+      2894,
+      "GASOLINE",
+      "265/40R21",
+      "295/35R21",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_a456ef09-acc8-4bba-9697-33950048daf8_identity.powertrain_2918128a2321.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "0150192e90f86b8e0b5b86b7:spec",
+    "revision_id": "0150192e90f86b8e0b5b86b7",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.macan.95b.trim.gts_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:53+00:00",
+    "payload": [
+      true,
+      8.9,
+      10.3,
+      12.9,
+      235.0,
+      0.018,
+      "TIS",
+      "GASOLINE",
+      2894,
+      "GASOLINE",
+      "265/40R21",
+      "295/35R21",
+      "ICE"
+    ]
+  }
+}

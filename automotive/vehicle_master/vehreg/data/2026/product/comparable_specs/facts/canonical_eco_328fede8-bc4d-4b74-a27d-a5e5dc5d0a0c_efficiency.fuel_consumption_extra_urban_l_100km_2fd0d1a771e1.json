@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:328fede8-bc4d-4b74-a27d-a5e5dc5d0a0c:efficiency.fuel_consumption_extra_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_extra_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 7.8,
+      "unit": "L/100km",
+      "observed_at": "2026-03-12",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/328fede8-bc4d-4b74-a27d-a5e5dc5d0a0c",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/328fede8-bc4d-4b74-a27d-a5e5dc5d0a0c",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "porsche.porsche_911.992.trim.carrera_4s_ice"
+    }
+  ]
+}

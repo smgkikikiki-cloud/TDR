@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "aa82302b64f749b9da57e7ed",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-026-fc1e159da290:386",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.ex40.gen1.trim.ultra_twin_black_edition_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:33+00:00",
+    "before_hash": "353e3d114c88fa942af320a81bff5300f47e67e4f3b6f60fcf8e7e30e0e68e05",
+    "after_hash": "9ce50b595c567b0df258075290d6b3d304d1dbe35b20df777a305b7ccb2101a1",
+    "before": [
+      "NMC",
+      81.61,
+      404.0,
+      "VOLVO",
+      "220",
+      "ONBOARD_AC",
+      true
+    ],
+    "after": [
+      "NMC",
+      81.61,
+      404.0,
+      "VOLVO",
+      "220",
+      "ONBOARD_AC",
+      true,
+      152.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_a686a62e-34ae-4492-8d25-672d3901c008_ev.energy_consumption_wh_km_930c82c3480a.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "aa82302b64f749b9da57e7ed:spec",
+    "revision_id": "aa82302b64f749b9da57e7ed",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.ex40.gen1.trim.ultra_twin_black_edition_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:33+00:00",
+    "payload": [
+      "NMC",
+      81.61,
+      404.0,
+      "VOLVO",
+      "220",
+      "ONBOARD_AC",
+      true,
+      152.0
+    ]
+  }
+}

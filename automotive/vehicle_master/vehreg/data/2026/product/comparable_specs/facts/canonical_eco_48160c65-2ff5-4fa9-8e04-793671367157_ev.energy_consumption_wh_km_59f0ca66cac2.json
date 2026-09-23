@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:48160c65-2ff5-4fa9-8e04-793671367157:ev.energy_consumption_wh_km",
+      "field_key": "ev.energy_consumption_wh_km",
+      "value_state": "KNOWN",
+      "value": 200.0,
+      "unit": "Wh/km",
+      "observed_at": "2025-03-07",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/48160c65-2ff5-4fa9-8e04-793671367157",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/48160c65-2ff5-4fa9-8e04-793671367157",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "gwm.haval_h6.h6hev.trim.phev_pro_phev"
+    }
+  ]
+}

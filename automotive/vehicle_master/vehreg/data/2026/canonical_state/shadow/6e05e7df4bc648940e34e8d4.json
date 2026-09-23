@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6e05e7df4bc648940e34e8d4",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-024-8292d953d777:361",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover_sport.unresearched.trim.3_0p_phev_5dr_swb_se_460ps_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:20+00:00",
+    "before_hash": "dd32f1fa900bf145e142ade48cecc81ddefbac288c03df0e08fb37a4739326a5",
+    "after_hash": "395302f141cd843ebef59cabb6ae326255bc5c6f763d5445ec5ab4a7d4e888af",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      34.56,
+      360.0,
+      "Jaguar Land Rover",
+      "EXTERNAL_DC",
+      true,
+      true,
+      0.005,
+      0.00024,
+      "TIS",
+      "PHEV"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      34.56,
+      360.0,
+      "Jaguar Land Rover",
+      "EXTERNAL_DC",
+      true,
+      true,
+      0.005,
+      0.00024,
+      "TIS",
+      "PHEV",
+      2996
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_3bbe6417-4498-4cd8-b66b-7e3585d15779_engine.displacement_cc_338d6563ae3e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6e05e7df4bc648940e34e8d4:spec",
+    "revision_id": "6e05e7df4bc648940e34e8d4",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover_sport.unresearched.trim.3_0p_phev_5dr_swb_se_460ps_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:20+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      34.56,
+      360.0,
+      "Jaguar Land Rover",
+      "EXTERNAL_DC",
+      true,
+      true,
+      0.005,
+      0.00024,
+      "TIS",
+      "PHEV",
+      2996
+    ]
+  }
+}

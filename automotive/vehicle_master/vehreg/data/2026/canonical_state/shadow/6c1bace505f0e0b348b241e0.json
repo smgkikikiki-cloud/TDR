@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6c1bace505f0e0b348b241e0",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-025-74b815fdedac:201",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "isuzu.dmax_cab.rg.trim.4_1_9_ddi_s_at_mhev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:25+00:00",
+    "before_hash": "4a7bd4a95dd4fa4e9efb799f3584d30c68f719c771243a823a703d095ce09d75",
+    "after_hash": "3dab955a0109afa87f9485e5e5a77f438b0f0adf68bcb338076b8c4926f97f51",
+    "before": [
+      true,
+      6.0
+    ],
+    "after": [
+      true,
+      6.0,
+      6.4
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_573119a1-e7dd-4a18-adad-bf294b2aa623_efficiency.fuel_consumption_l_100km_6ebb6df11747.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6c1bace505f0e0b348b241e0:spec",
+    "revision_id": "6c1bace505f0e0b348b241e0",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "isuzu.dmax_cab.rg.trim.4_1_9_ddi_s_at_mhev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:25+00:00",
+    "payload": [
+      true,
+      6.0,
+      6.4
+    ]
+  }
+}

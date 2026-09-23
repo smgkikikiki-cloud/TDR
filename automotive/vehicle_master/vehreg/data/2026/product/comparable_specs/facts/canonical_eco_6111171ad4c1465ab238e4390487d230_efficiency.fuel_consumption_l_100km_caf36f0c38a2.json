@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:6111171ad4c1465ab238e4390487d230:efficiency.fuel_consumption_l_100km",
+      "field_key": "efficiency.fuel_consumption_l_100km",
+      "value_state": "KNOWN",
+      "value": 7.3,
+      "unit": "L/100km",
+      "observed_at": "2020-09-28",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/6111171ad4c1465ab238e4390487d230",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/6111171ad4c1465ab238e4390487d230",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "audi.audi_q3.f3.trim.35_tfsi_ice"
+    }
+  ]
+}

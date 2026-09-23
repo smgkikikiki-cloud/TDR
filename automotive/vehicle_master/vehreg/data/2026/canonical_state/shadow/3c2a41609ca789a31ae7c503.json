@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "3c2a41609ca789a31ae7c503",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-014-8db054eb58a3:352",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q5.fy.trim.sportback_55_tfsi_e_quattro_s_line_black_edition_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:33+00:00",
+    "before_hash": "7a6aba5df810cbaa79c8f6b3d3cea1c28ae41db302e6ac03583d52adfc2b7d2c",
+    "after_hash": "e4b7c8087ad520fefa6e681e382a55404b7e0f259c712bae4ebe3a84c35d7799",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      17.95,
+      374.0,
+      "Samsung",
+      "ONBOARD_AC",
+      1.9,
+      44.0,
+      0.012,
+      0.0028,
+      "TIS",
+      "PHEV",
+      1984
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      17.95,
+      374.0,
+      "Samsung",
+      "ONBOARD_AC",
+      1.9,
+      44.0,
+      0.012,
+      0.0028,
+      "TIS",
+      "PHEV",
+      1984,
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_0b9c7a8a-b9da-4f0d-ba3b-ff71fa5c7b13_engine.fuel_type_b9dd33676107.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "3c2a41609ca789a31ae7c503:spec",
+    "revision_id": "3c2a41609ca789a31ae7c503",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q5.fy.trim.sportback_55_tfsi_e_quattro_s_line_black_edition_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:33+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      17.95,
+      374.0,
+      "Samsung",
+      "ONBOARD_AC",
+      1.9,
+      44.0,
+      0.012,
+      0.0028,
+      "TIS",
+      "PHEV",
+      1984,
+      "GASOLINE"
+    ]
+  }
+}

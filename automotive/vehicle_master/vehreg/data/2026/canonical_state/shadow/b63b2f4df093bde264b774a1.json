@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b63b2f4df093bde264b774a1",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-015-2f508ee80764:90",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_revo_double_cab.an120.trim.2wd_2_8_gr_sport_at",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:37+00:00",
+    "before_hash": "4a7bd4a95dd4fa4e9efb799f3584d30c68f719c771243a823a703d095ce09d75",
+    "after_hash": "3796676bce751a0f0199e11f4d3e75899d760538abd2ae827585f89c98193ece",
+    "before": [
+      true,
+      6.0
+    ],
+    "after": [
+      true,
+      6.0,
+      6.9
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b2ff31c1-d5d5-49e3-8aa3-bbf594f05ede_efficiency.fuel_consumption_l_100km_6e1d883c5b46.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b63b2f4df093bde264b774a1:spec",
+    "revision_id": "b63b2f4df093bde264b774a1",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_revo_double_cab.an120.trim.2wd_2_8_gr_sport_at",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:37+00:00",
+    "payload": [
+      true,
+      6.0,
+      6.9
+    ]
+  }
+}

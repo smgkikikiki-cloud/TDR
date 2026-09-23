@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "11e2999f34c677d18e1d4681",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-010-6f2b18f1a4fd:140",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_x3.g45.trim.m50_xdrive_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:14+00:00",
+    "before_hash": "360983db91762801a2b4219c52cd0ce11323f634d41abfa1b08571f4cfd4c0d0",
+    "after_hash": "a1796140468da34cc18e048ae69de667f5a4e80434128fedfe1032d5bd0bd62c",
+    "before": [
+      true,
+      true,
+      true,
+      7.1,
+      8.1,
+      9.8,
+      184.0,
+      0.018,
+      "EURO6",
+      "HEV"
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      7.1,
+      8.1,
+      9.8,
+      184.0,
+      0.018,
+      "EURO6",
+      "HEV",
+      2998
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d6c9d516-aa36-4031-87e0-c52199d59b8a_engine.displacement_cc_e94b149757d9.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "11e2999f34c677d18e1d4681:spec",
+    "revision_id": "11e2999f34c677d18e1d4681",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_x3.g45.trim.m50_xdrive_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:14+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      7.1,
+      8.1,
+      9.8,
+      184.0,
+      0.018,
+      "EURO6",
+      "HEV",
+      2998
+    ]
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a060374a40c4374d0960cda1",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-013-01b2d6d40e8e:185",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.voxy.gen1.trim.hybrid_sz_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:28+00:00",
+    "before_hash": "2ccab230f7e546ba7db80961bd8cba46c904a4bbd08697ce175eda3f9eaf5d60",
+    "after_hash": "a34d9892bde42f33fa7129b999644da48b550979e4a5a28a5362fd019fc49c7d",
+    "before": [
+      true,
+      true,
+      5.3,
+      4.4,
+      2.8,
+      101.0,
+      0.00646
+    ],
+    "after": [
+      true,
+      true,
+      5.3,
+      4.4,
+      2.8,
+      101.0,
+      0.00646,
+      0.00061
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e128fb4b-94ea-4f6b-a466-264a69892007_emissions.pm_g_km_9a0c77f48aee.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a060374a40c4374d0960cda1:spec",
+    "revision_id": "a060374a40c4374d0960cda1",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.voxy.gen1.trim.hybrid_sz_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:28+00:00",
+    "payload": [
+      true,
+      true,
+      5.3,
+      4.4,
+      2.8,
+      101.0,
+      0.00646,
+      0.00061
+    ]
+  }
+}

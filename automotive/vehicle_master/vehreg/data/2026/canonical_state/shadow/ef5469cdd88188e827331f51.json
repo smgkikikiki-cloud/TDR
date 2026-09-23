@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ef5469cdd88188e827331f51",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-051-bcc716924fd5:229",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.harrier.gen1.trim.harrier_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:11+00:00",
+    "before_hash": "04df1a946e40f91a9b171f59cf8d79d57cfb44ee5ecee00e1c903b9cbe940394",
+    "after_hash": "5bf2f4558b320c7cac8e697979b11ad93ed5a5d3a8948d67bea9fdfce6286762",
+    "before": [
+      true,
+      true,
+      5.8,
+      7.06,
+      9.2,
+      165.0
+    ],
+    "after": [
+      true,
+      true,
+      5.8,
+      7.06,
+      9.2,
+      165.0,
+      0.005
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_a56bc17440b640b2b92a39b0450ebfe5_emissions.nox_g_km_ddea5d49e44a.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ef5469cdd88188e827331f51:spec",
+    "revision_id": "ef5469cdd88188e827331f51",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.harrier.gen1.trim.harrier_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:11+00:00",
+    "payload": [
+      true,
+      true,
+      5.8,
+      7.06,
+      9.2,
+      165.0,
+      0.005
+    ]
+  }
+}

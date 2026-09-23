@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:bf65b59a-75d2-41d0-93b8-bbb8fb0d5081:efficiency.fuel_consumption_extra_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_extra_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 5.5,
+      "unit": "L/100km",
+      "observed_at": "2025-01-03",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/bf65b59a-75d2-41d0-93b8-bbb8fb0d5081",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/bf65b59a-75d2-41d0-93b8-bbb8fb0d5081",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mazda.cx30.dm.trim.2_0_prime_ice"
+    }
+  ]
+}

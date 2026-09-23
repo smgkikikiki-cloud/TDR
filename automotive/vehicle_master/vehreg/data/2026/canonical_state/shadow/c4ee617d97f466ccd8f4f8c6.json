@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c4ee617d97f466ccd8f4f8c6",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-009-54711011662e:10",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.haval_h6.h6hev.trim.phev_ultra_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:10+00:00",
+    "before_hash": "fb038fdb9d6e8cba470158b8d1b3eee637d6be2a6c1c290b5e5520c833699cf1",
+    "after_hash": "fb2d5c42a8805efac95764aac6168c61b7bd203ccf360c83b5e2dbbafbdb61c5",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      27.54,
+      313.0,
+      "SVOLT",
+      "ONBOARD_AC",
+      true,
+      0.8,
+      18.0,
+      0.003
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      27.54,
+      313.0,
+      "SVOLT",
+      "ONBOARD_AC",
+      true,
+      0.8,
+      18.0,
+      0.003,
+      "TIS"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d2200be8-c078-4d83-990b-007c8db511af_emissions.standard_94cec1fcec99.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c4ee617d97f466ccd8f4f8c6:spec",
+    "revision_id": "c4ee617d97f466ccd8f4f8c6",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.haval_h6.h6hev.trim.phev_ultra_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:10+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      27.54,
+      313.0,
+      "SVOLT",
+      "ONBOARD_AC",
+      true,
+      0.8,
+      18.0,
+      0.003,
+      "TIS"
+    ]
+  }
+}

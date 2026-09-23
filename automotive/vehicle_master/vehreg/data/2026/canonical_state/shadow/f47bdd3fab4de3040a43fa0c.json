@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f47bdd3fab4de3040a43fa0c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-041-97e292394981:136",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.macan.95b.trim.t_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:29+00:00",
+    "before_hash": "241b13048676942035925427e51e62acd33f067a85eec51d13bbe2c7694eae16",
+    "after_hash": "7e1df4c03481589753afb11c287863ad9b65ed5ca32f0062e0a14abf460d1e16",
+    "before": [
+      true,
+      7.5
+    ],
+    "after": [
+      true,
+      7.5,
+      8.7
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ee770a24-d260-4d5f-9877-9af5bf85a301_efficiency.fuel_consumption_l_100km_95b1b67ea38a.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f47bdd3fab4de3040a43fa0c:spec",
+    "revision_id": "f47bdd3fab4de3040a43fa0c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.macan.95b.trim.t_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:29+00:00",
+    "payload": [
+      true,
+      7.5,
+      8.7
+    ]
+  }
+}

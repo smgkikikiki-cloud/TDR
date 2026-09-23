@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f9e86597d621e39e0c2af097",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-023-8723a19230b0:372",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.cx30.dm.trim.2_0_signature_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:16+00:00",
+    "before_hash": "c1eb2d7c578a8e26cf7db8348a1e1a10e15e871cad35cfa431453c138e7e7334",
+    "after_hash": "e6f457360fc50d22ecfebd88648f36c6a58821d29e563b8e626c19c54ba0b6fd",
+    "before": [
+      true,
+      5.5,
+      6.5,
+      8.3,
+      150.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "E85"
+    ],
+    "after": [
+      true,
+      5.5,
+      6.5,
+      8.3,
+      150.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "E85",
+      "215/55R18"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d2939e10-9334-4b2c-b36a-fdac7e78d9b4_fitment.tyre_size_17cf273738bc.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f9e86597d621e39e0c2af097:spec",
+    "revision_id": "f9e86597d621e39e0c2af097",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.cx30.dm.trim.2_0_signature_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:16+00:00",
+    "payload": [
+      true,
+      5.5,
+      6.5,
+      8.3,
+      150.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "E85",
+      "215/55R18"
+    ]
+  }
+}

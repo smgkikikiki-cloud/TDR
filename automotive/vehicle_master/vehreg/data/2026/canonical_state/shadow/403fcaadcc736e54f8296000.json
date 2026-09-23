@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "403fcaadcc736e54f8296000",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-055-949893759636:77",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg3.mg3h.trim.new_hatchback_1_5_x_sunroof_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:22:04+00:00",
+    "before_hash": "33063efdc748c1bffb4ca0b699f12c48a436573b1755792e913c2eaa23ef218f",
+    "after_hash": "d2ab3db90059b058828a153d08d034640f782a968132be19b1dc32a9104b782b",
+    "before": [
+      6.9,
+      8.7,
+      11.9,
+      142.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "195/55R16",
+      "ICE",
+      20.0,
+      4,
+      "AUTOMATIC",
+      true,
+      1,
+      true
+    ],
+    "after": [
+      6.9,
+      8.7,
+      11.9,
+      142.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "195/55R16",
+      "ICE",
+      20.0,
+      4,
+      "AUTOMATIC",
+      true,
+      1,
+      true,
+      [
+        "R13H"
+      ]
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_92237fc28030427db66c1d1fe54b6941_safety.un_regulations_eebf0c1ce848.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "403fcaadcc736e54f8296000:spec",
+    "revision_id": "403fcaadcc736e54f8296000",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg3.mg3h.trim.new_hatchback_1_5_x_sunroof_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:22:04+00:00",
+    "payload": [
+      6.9,
+      8.7,
+      11.9,
+      142.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "195/55R16",
+      "ICE",
+      20.0,
+      4,
+      "AUTOMATIC",
+      true,
+      1,
+      true,
+      [
+        "R13H"
+      ]
+    ]
+  }
+}

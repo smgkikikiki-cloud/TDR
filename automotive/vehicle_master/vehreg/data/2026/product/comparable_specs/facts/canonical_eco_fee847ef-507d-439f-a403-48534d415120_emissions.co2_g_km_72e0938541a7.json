@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:fee847ef-507d-439f-a403-48534d415120:emissions.co2_g_km",
+      "field_key": "emissions.co2_g_km",
+      "value_state": "KNOWN",
+      "value": 178.0,
+      "unit": "g/km",
+      "observed_at": "2025-12-10",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/fee847ef-507d-439f-a403-48534d415120",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/fee847ef-507d-439f-a403-48534d415120",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "toyota.hilux_revo_double_cab.an120.trim.z_edition_2_4_entry_mt"
+    }
+  ]
+}

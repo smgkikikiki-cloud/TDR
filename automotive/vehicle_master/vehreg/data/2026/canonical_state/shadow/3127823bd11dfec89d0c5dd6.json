@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "3127823bd11dfec89d0c5dd6",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-040-43e09f18d7ea:139",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.creta.su2.trim.smart_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:21+00:00",
+    "before_hash": "43083e0f5411275c6a4e5550ce3496070a3c6d2f377edb54a9e09479395da4fd",
+    "after_hash": "5f68d1a2a27ccb533c2eaeee09615b54e514165b11688718ad82ef365bacd083",
+    "before": [
+      true,
+      true,
+      5.3,
+      6.0,
+      7.2,
+      142.0,
+      0.052,
+      "TIS",
+      "GASOLINE",
+      1497,
+      "GASOLINE",
+      "215/60R17",
+      "ICE",
+      25.0
+    ],
+    "after": [
+      true,
+      true,
+      5.3,
+      6.0,
+      7.2,
+      142.0,
+      0.052,
+      "TIS",
+      "GASOLINE",
+      1497,
+      "GASOLINE",
+      "215/60R17",
+      "ICE",
+      25.0,
+      "CVT"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_fe93a237-c627-4e29-b747-c8f6cd988472_powertrain.transmission_47947c701881.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "3127823bd11dfec89d0c5dd6:spec",
+    "revision_id": "3127823bd11dfec89d0c5dd6",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.creta.su2.trim.smart_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:21+00:00",
+    "payload": [
+      true,
+      true,
+      5.3,
+      6.0,
+      7.2,
+      142.0,
+      0.052,
+      "TIS",
+      "GASOLINE",
+      1497,
+      "GASOLINE",
+      "215/60R17",
+      "ICE",
+      25.0,
+      "CVT"
+    ]
+  }
+}

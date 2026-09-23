@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:e529321a-7be2-4dfe-9087-8fdf70958ca0:battery.nominal_voltage_v",
+      "field_key": "battery.nominal_voltage_v",
+      "value_state": "KNOWN",
+      "value": 403.2,
+      "unit": "V",
+      "observed_at": "2024-11-19",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/e529321a-7be2-4dfe-9087-8fdf70958ca0",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/e529321a-7be2-4dfe-9087-8fdf70958ca0",
+      "trim_id": "byd.atto3.atto3.trim.byd_atto3_480km_ext_bev"
+    }
+  ]
+}

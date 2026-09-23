@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "01ac40346d0e9c612826d1ca",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-048-9a296c6c8041:71",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_c_class.w206.trim.c_220_d_amg_dynamic_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:35+00:00",
+    "before_hash": "a8127ddd09e3aa4cbe3282876c8d249624c04e4eea0d302b921875702f50268b",
+    "after_hash": "d8e081b13e3382b43e71fba2bbd0486eaadd697ad3d4393be3cd4f85ce607e3c",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      3.8,
+      4.6,
+      6.0,
+      122.0,
+      0.013,
+      0.00015,
+      "TIS",
+      "HEV",
+      1993,
+      "DIESEL",
+      "225/40R19"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      3.8,
+      4.6,
+      6.0,
+      122.0,
+      0.013,
+      0.00015,
+      "TIS",
+      "HEV",
+      1993,
+      "DIESEL",
+      "225/40R19",
+      "255/35R19"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_2fbd28d311c544149f26c380e12b9f39_fitment.tyre_rear_3fa6546a4dd5.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "01ac40346d0e9c612826d1ca:spec",
+    "revision_id": "01ac40346d0e9c612826d1ca",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_c_class.w206.trim.c_220_d_amg_dynamic_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:35+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      3.8,
+      4.6,
+      6.0,
+      122.0,
+      0.013,
+      0.00015,
+      "TIS",
+      "HEV",
+      1993,
+      "DIESEL",
+      "225/40R19",
+      "255/35R19"
+    ]
+  }
+}

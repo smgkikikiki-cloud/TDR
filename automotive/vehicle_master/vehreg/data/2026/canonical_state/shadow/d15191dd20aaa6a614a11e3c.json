@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d15191dd20aaa6a614a11e3c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-032-04b0adc6e162:193",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_altis.e210.trim.gr_rz_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:17+00:00",
+    "before_hash": "97555f42e3cd0d741f53eb90e076ba4c8e1484f4b43c0270c42af4b3b2881c95",
+    "after_hash": "dca74b2043706d695a03fcbe2c16d5a56d1827289581724939739e19a6a2be40",
+    "before": [
+      true,
+      true,
+      7.2,
+      8.0,
+      9.4,
+      192.0,
+      0.019,
+      "TIS"
+    ],
+    "after": [
+      true,
+      true,
+      7.2,
+      8.0,
+      9.4,
+      192.0,
+      0.019,
+      "TIS",
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_7afdec69-ffbf-4838-a33f-bddbb727f770_engine.combustion_type_f5de333e04d4.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d15191dd20aaa6a614a11e3c:spec",
+    "revision_id": "d15191dd20aaa6a614a11e3c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_altis.e210.trim.gr_rz_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:17+00:00",
+    "payload": [
+      true,
+      true,
+      7.2,
+      8.0,
+      9.4,
+      192.0,
+      0.019,
+      "TIS",
+      "GASOLINE"
+    ]
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "414817a0cde6aca6d94ccc60",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-049-18d26b73936f:385",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.hybrid_gf",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:45+00:00",
+    "before_hash": "3ec4a9d15da7528c1c4ef79ca398c98cf7c112b4d74160368e2d75636f7f23eb",
+    "after_hash": "611c2bb5f6f6eca351404ad3a69c3b63f52cdbce4590f84d2dee8701267d500c",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      true,
+      7.1,
+      6.1,
+      4.4,
+      143.0,
+      0.003,
+      "TIS",
+      "HEV",
+      2493
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      true,
+      7.1,
+      6.1,
+      4.4,
+      143.0,
+      0.003,
+      "TIS",
+      "HEV",
+      2493,
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_55dfb7d46ff0459eafef0f23880adccd_engine.fuel_type_dbfed93ea638.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "414817a0cde6aca6d94ccc60:spec",
+    "revision_id": "414817a0cde6aca6d94ccc60",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.hybrid_gf",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:45+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      true,
+      7.1,
+      6.1,
+      4.4,
+      143.0,
+      0.003,
+      "TIS",
+      "HEV",
+      2493,
+      "GASOLINE"
+    ]
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a6abe9afb11d8a79260d4d6c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-017-02b372e72add:8",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "subaru.forester.sk.trim.2_5i_s_awd_cvt_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:47+00:00",
+    "before_hash": "918ebf0782a925ab8c497562c492b5d775ff37706184f0178a992faf583a2a7d",
+    "after_hash": "54778500a73a8849e12357a83a5c29a764e5458956555eb541787981d8e28563",
+    "before": [
+      0.01,
+      "EURO6",
+      "GASOLINE",
+      2498,
+      "GASOLINE",
+      "225/55R18",
+      "ICE",
+      29.0,
+      "SUBARU CORPORATION (GUNMA YAJIMA PLANT)",
+      "CVT",
+      true,
+      true,
+      12
+    ],
+    "after": [
+      0.01,
+      "EURO6",
+      "GASOLINE",
+      2498,
+      "GASOLINE",
+      "225/55R18",
+      "ICE",
+      29.0,
+      "SUBARU CORPORATION (GUNMA YAJIMA PLANT)",
+      "CVT",
+      true,
+      true,
+      12,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b6d3da0a-2c80-42b7-b268-fa8420e87308_safety.curtain_airbag_77cdfc66f262.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a6abe9afb11d8a79260d4d6c:spec",
+    "revision_id": "a6abe9afb11d8a79260d4d6c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "subaru.forester.sk.trim.2_5i_s_awd_cvt_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:47+00:00",
+    "payload": [
+      0.01,
+      "EURO6",
+      "GASOLINE",
+      2498,
+      "GASOLINE",
+      "225/55R18",
+      "ICE",
+      29.0,
+      "SUBARU CORPORATION (GUNMA YAJIMA PLANT)",
+      "CVT",
+      true,
+      true,
+      12,
+      true
+    ]
+  }
+}

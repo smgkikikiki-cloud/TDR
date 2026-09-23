@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "865c4ca01a4d5d77af6c7392",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-047-23268458b262:98",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.cx8.kg.trim.2_5_s_7_seater_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:25+00:00",
+    "before_hash": "a454520f56a6309e16b171fa57dff9aaf59a361773d074f16a98c425ecd90691",
+    "after_hash": "90d2f9c2f30ffae503bbd4c932c8fed9411f206593241fea78e9bad78d422a1e",
+    "before": [
+      true,
+      true,
+      6.6,
+      7.6,
+      9.5,
+      178.0,
+      0.005
+    ],
+    "after": [
+      true,
+      true,
+      6.6,
+      7.6,
+      9.5,
+      178.0,
+      0.005,
+      "TIS"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_4779616f0ebf427fbdafeab281a56394_emissions.standard_e6292cccad2a.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "865c4ca01a4d5d77af6c7392:spec",
+    "revision_id": "865c4ca01a4d5d77af6c7392",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.cx8.kg.trim.2_5_s_7_seater_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:25+00:00",
+    "payload": [
+      true,
+      true,
+      6.6,
+      7.6,
+      9.5,
+      178.0,
+      0.005,
+      "TIS"
+    ]
+  }
+}

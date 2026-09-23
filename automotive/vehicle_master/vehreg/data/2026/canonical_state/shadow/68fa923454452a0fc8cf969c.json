@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "68fa923454452a0fc8cf969c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-048-9a296c6c8041:222",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.c_hr.gen1.trim.hev_premium_safety_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:35+00:00",
+    "before_hash": "1c992fa9aae3fd94a85e248e0f7213ff16fcef4d02ed847b7d482be744371738",
+    "after_hash": "4005ce77dd4ee5232bf2f99ee724262e242903810316c5f7303d69e4b74f3886",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      4.2,
+      4.1,
+      4.1,
+      95.0,
+      0.002,
+      "TIS"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      4.2,
+      4.1,
+      4.1,
+      95.0,
+      0.002,
+      "TIS",
+      "HEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_9793ea4cc52b489297987f28be6f3cf7_engine.combustion_type_f2b4a2ff9f7e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "68fa923454452a0fc8cf969c:spec",
+    "revision_id": "68fa923454452a0fc8cf969c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.c_hr.gen1.trim.hev_premium_safety_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:35+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      4.2,
+      4.1,
+      4.1,
+      95.0,
+      0.002,
+      "TIS",
+      "HEV"
+    ]
+  }
+}

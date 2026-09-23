@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b895c0d9cb595549e362f805",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-049-18d26b73936f:287",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_hs.hsg.trim.phev_x_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:45+00:00",
+    "before_hash": "72e8540a5303dc2a22d94652147112ca23dac48b69540b61aca3326c632e0f9c",
+    "after_hash": "6a235d01073bf916fcb8f3c561f9a1716f930368eb30611b9bfca58984971cf6",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      16.63,
+      326.0,
+      "MG"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      16.63,
+      326.0,
+      "MG",
+      "ONBOARD_AC"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_3fed66dee74648a59780137eeeadecef_charging.port_type_9ad371f8dab5.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b895c0d9cb595549e362f805:spec",
+    "revision_id": "b895c0d9cb595549e362f805",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_hs.hsg.trim.phev_x_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:45+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      16.63,
+      326.0,
+      "MG",
+      "ONBOARD_AC"
+    ]
+  }
+}

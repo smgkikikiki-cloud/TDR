@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b4fa4f14e43a6dd3e10639be",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-014-8db054eb58a3:111",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.taycan.gen1.trim.4s_awd_544_hp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:32+00:00",
+    "before_hash": "be51e9a72a04ee6f01f739ceeca6c1fed5c138e225044c5d2ff210d4010f8fbf",
+    "after_hash": "3bdce73defc5bbe42939603dad6ce821c40cdf016c305a778e82067d9a10fff4",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      104.69,
+      727.0,
+      "Draxlmaier"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      104.69,
+      727.0,
+      "Draxlmaier",
+      "230V / 400V, AC main voltage"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_1a72a7c4-9fdd-475c-b73d-208b40dd9fee_charging.onboard_charger_spec_b29f56ef6791.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b4fa4f14e43a6dd3e10639be:spec",
+    "revision_id": "b4fa4f14e43a6dd3e10639be",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.taycan.gen1.trim.4s_awd_544_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:32+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      104.69,
+      727.0,
+      "Draxlmaier",
+      "230V / 400V, AC main voltage"
+    ]
+  }
+}

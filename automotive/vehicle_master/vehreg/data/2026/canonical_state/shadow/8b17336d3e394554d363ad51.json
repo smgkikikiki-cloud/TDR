@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "8b17336d3e394554d363ad51",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-030-80293fca2870:212",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.z_4wd",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:02+00:00",
+    "before_hash": "0ca54422282a6d56a26babd3bd4bce9b31eb36873bda01841b664eb7bebd7fe3",
+    "after_hash": "83782fcbecb8e30bfb5a6b594846b0e9059e44d5a85a4ef627cbefb4d705152b",
+    "before": [
+      true,
+      true,
+      8.3,
+      9.1,
+      10.4,
+      217.0,
+      0.011,
+      "TIS",
+      "GASOLINE",
+      2493,
+      "GASOLINE"
+    ],
+    "after": [
+      true,
+      true,
+      8.3,
+      9.1,
+      10.4,
+      217.0,
+      0.011,
+      "TIS",
+      "GASOLINE",
+      2493,
+      "GASOLINE",
+      "225/60R18"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d370cd7c-2e56-4c2a-80a5-e830cd0cb06c_fitment.tyre_size_47946121d1bd.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "8b17336d3e394554d363ad51:spec",
+    "revision_id": "8b17336d3e394554d363ad51",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.z_4wd",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:02+00:00",
+    "payload": [
+      true,
+      true,
+      8.3,
+      9.1,
+      10.4,
+      217.0,
+      0.011,
+      "TIS",
+      "GASOLINE",
+      2493,
+      "GASOLINE",
+      "225/60R18"
+    ]
+  }
+}

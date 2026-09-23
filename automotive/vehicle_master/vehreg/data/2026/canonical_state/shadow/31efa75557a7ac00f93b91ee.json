@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "31efa75557a7ac00f93b91ee",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-011-3c709241399c:369",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.en2.en2.trim.e_n2_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:19+00:00",
+    "before_hash": "04b067356fae1d1fe354dc38d0e14d9062bd701296eb9f23d9a93cd3d10aba07",
+    "after_hash": "183b40efea2a129ac982cca91144bfd4b9052100c7ab3cd6ec465496ffdc4775",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      68.89,
+      353.3,
+      "CATL",
+      "AC 220 V (single phase) / 380 V (three-phase)",
+      "BOTH",
+      true,
+      true,
+      135.0,
+      530.0,
+      "225/50R18",
+      "BEV",
+      10.0,
+      "PMSM"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      68.89,
+      353.3,
+      "CATL",
+      "AC 220 V (single phase) / 380 V (three-phase)",
+      "BOTH",
+      true,
+      true,
+      135.0,
+      530.0,
+      "225/50R18",
+      "BEV",
+      10.0,
+      "PMSM",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_9f3c4628-6107-49b7-a84a-7779c11b28a1_safety.abs_22657a1e9936.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "31efa75557a7ac00f93b91ee:spec",
+    "revision_id": "31efa75557a7ac00f93b91ee",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.en2.en2.trim.e_n2_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:19+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      68.89,
+      353.3,
+      "CATL",
+      "AC 220 V (single phase) / 380 V (three-phase)",
+      "BOTH",
+      true,
+      true,
+      135.0,
+      530.0,
+      "225/50R18",
+      "BEV",
+      10.0,
+      "PMSM",
+      true
+    ]
+  }
+}

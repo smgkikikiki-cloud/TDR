@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "0df0f6c621495ce450c4a8ae",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-020-1a96ac574560:361",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.x_trail.gen1.trim.e_power_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:00+00:00",
+    "before_hash": "642abfa84214c7439ea4a86a8504745241298ebf98ea41a08e6c62bdf9941ba0",
+    "after_hash": "8669d58d2a2cca0d01bf7b22a5579279b7d22c695eadb500c353a1fdc29cf323",
+    "before": [
+      true,
+      true,
+      5.9,
+      5.7,
+      5.3,
+      130.0,
+      0.009,
+      8e-05,
+      "TIS",
+      "HEV",
+      1497,
+      "GASOLINE",
+      "235/55R19"
+    ],
+    "after": [
+      true,
+      true,
+      5.9,
+      5.7,
+      5.3,
+      130.0,
+      0.009,
+      8e-05,
+      "TIS",
+      "HEV",
+      1497,
+      "GASOLINE",
+      "235/55R19",
+      "HEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_db5df121-d617-4f9f-88da-bcf33d13e0bd_identity.powertrain_cea5c576226a.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "0df0f6c621495ce450c4a8ae:spec",
+    "revision_id": "0df0f6c621495ce450c4a8ae",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.x_trail.gen1.trim.e_power_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:00+00:00",
+    "payload": [
+      true,
+      true,
+      5.9,
+      5.7,
+      5.3,
+      130.0,
+      0.009,
+      8e-05,
+      "TIS",
+      "HEV",
+      1497,
+      "GASOLINE",
+      "235/55R19",
+      "HEV"
+    ]
+  }
+}

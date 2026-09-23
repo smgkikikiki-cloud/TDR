@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "af31fc6225da464def07b100",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-051-bcc716924fd5:347",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.kicks.p15.trim.95kw_v",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:11+00:00",
+    "before_hash": "ef88c99df826a92bb933154b335b31c1760ad962f521023ba35f0bed07dce2c3",
+    "after_hash": "c9dd01b322f2fdf31bca19adb72312e4d85ad8a7e770caddb8260f5b062693cb",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      4.5,
+      4.2,
+      3.7,
+      100.0,
+      0.027,
+      "TIS",
+      "HEV",
+      1198,
+      "E20",
+      "205/55R17"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      4.5,
+      4.2,
+      3.7,
+      100.0,
+      0.027,
+      "TIS",
+      "HEV",
+      1198,
+      "E20",
+      "205/55R17",
+      "HEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_3d01f6b0b6a14be3b1b2c1c557fb1a04_identity.powertrain_38289ee971d2.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "af31fc6225da464def07b100:spec",
+    "revision_id": "af31fc6225da464def07b100",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.kicks.p15.trim.95kw_v",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:11+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      4.5,
+      4.2,
+      3.7,
+      100.0,
+      0.027,
+      "TIS",
+      "HEV",
+      1198,
+      "E20",
+      "205/55R17",
+      "HEV"
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:8aad9291-fc79-429b-8a92-6fdfdb784c72:ev.energy_consumption_wh_km",
+      "field_key": "ev.energy_consumption_wh_km",
+      "value_state": "KNOWN",
+      "value": 245.0,
+      "unit": "Wh/km",
+      "observed_at": "2022-11-04",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/8aad9291-fc79-429b-8a92-6fdfdb784c72",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/8aad9291-fc79-429b-8a92-6fdfdb784c72",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "land_rover.defender.gen1.trim.swb_2_0p_phev_5dr_75th_404ps_phev"
+    }
+  ]
+}

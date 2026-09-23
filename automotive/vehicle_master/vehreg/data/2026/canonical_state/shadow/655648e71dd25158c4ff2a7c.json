@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "655648e71dd25158c4ff2a7c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-039-bb0c6084f37a:38",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.carrera_4_gts_cabriolet_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:13+00:00",
+    "before_hash": "f1c71c3f028290e888dee2b789310c9ffeafa613ca3fc183da63abf9f384a7ac",
+    "after_hash": "b7d673b56a066b2d96b73d1a9b06bd36cf126a9bcc28aba6da96d64810a42fcb",
+    "before": [
+      true,
+      8.8,
+      10.9,
+      14.6,
+      260.0,
+      0.012,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35R20",
+      "305/30R21",
+      "ICE",
+      35.0
+    ],
+    "after": [
+      true,
+      8.8,
+      10.9,
+      14.6,
+      260.0,
+      0.012,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35R20",
+      "305/30R21",
+      "ICE",
+      35.0,
+      "AUTOMATIC"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_5d9abf75-bdfd-4ef1-a2c2-07ef1ffb7809_powertrain.transmission_956f975bbdb0.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "655648e71dd25158c4ff2a7c:spec",
+    "revision_id": "655648e71dd25158c4ff2a7c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.carrera_4_gts_cabriolet_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:13+00:00",
+    "payload": [
+      true,
+      8.8,
+      10.9,
+      14.6,
+      260.0,
+      0.012,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35R20",
+      "305/30R21",
+      "ICE",
+      35.0,
+      "AUTOMATIC"
+    ]
+  }
+}

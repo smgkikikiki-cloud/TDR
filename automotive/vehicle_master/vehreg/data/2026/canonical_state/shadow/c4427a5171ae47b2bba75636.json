@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c4427a5171ae47b2bba75636",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-025-74b815fdedac:330",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "jaecoo.jaecoo_7.gen1.trim.max_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:26+00:00",
+    "before_hash": "ee8ad8e36c52802525299ca9eceaf97d49ff9d2cdece6974c1e95cd60aeda495",
+    "after_hash": "2a9216c54101ccf9c049c3478b160c55b4a7f3e38962d9a0ec5155522421800e",
+    "before": [
+      "LFP",
+      18.32,
+      339.2,
+      "Taizhou Ferdi Battery Co., LTD",
+      "ONBOARD_AC",
+      true,
+      1.0,
+      31.0,
+      0.004,
+      0.0002,
+      "EURO6",
+      "PHEV",
+      1499,
+      "GASOLINE"
+    ],
+    "after": [
+      "LFP",
+      18.32,
+      339.2,
+      "Taizhou Ferdi Battery Co., LTD",
+      "ONBOARD_AC",
+      true,
+      1.0,
+      31.0,
+      0.004,
+      0.0002,
+      "EURO6",
+      "PHEV",
+      1499,
+      "GASOLINE",
+      159.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_014eeba9-211d-41ee-ae0d-bd051fff2b2d_ev.energy_consumption_wh_km_af661e013efa.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c4427a5171ae47b2bba75636:spec",
+    "revision_id": "c4427a5171ae47b2bba75636",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "jaecoo.jaecoo_7.gen1.trim.max_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:26+00:00",
+    "payload": [
+      "LFP",
+      18.32,
+      339.2,
+      "Taizhou Ferdi Battery Co., LTD",
+      "ONBOARD_AC",
+      true,
+      1.0,
+      31.0,
+      0.004,
+      0.0002,
+      "EURO6",
+      "PHEV",
+      1499,
+      "GASOLINE",
+      159.0
+    ]
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "15e63ee22c21aa070a0c177a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-002-6827d3f0606e:161",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.sealion6.sl6.trim.byd_sealion6_premium_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:47+00:00",
+    "before_hash": "5711b80300b9cafbf224a4147e4c85c7a4bc441f4834bcfce0622196ee867266",
+    "after_hash": "6f76b7b49d595e9516806c9efaee4b5d1c0210fb6c6ae206e1890d090ff7d218",
+    "before": [
+      "LFP",
+      26.46,
+      339.2,
+      "FinDreams Battery Zhengzhou Co.,Ltd.",
+      "ONBOARD_AC",
+      true
+    ],
+    "after": [
+      "LFP",
+      26.46,
+      339.2,
+      "FinDreams Battery Zhengzhou Co.,Ltd.",
+      "ONBOARD_AC",
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_0382f93a-20e8-4b49-885a-1c3576b20e50_comfort.ventilated_front_seats_77032f59bff1.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "15e63ee22c21aa070a0c177a:spec",
+    "revision_id": "15e63ee22c21aa070a0c177a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.sealion6.sl6.trim.byd_sealion6_premium_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:47+00:00",
+    "payload": [
+      "LFP",
+      26.46,
+      339.2,
+      "FinDreams Battery Zhengzhou Co.,Ltd.",
+      "ONBOARD_AC",
+      true,
+      true
+    ]
+  }
+}

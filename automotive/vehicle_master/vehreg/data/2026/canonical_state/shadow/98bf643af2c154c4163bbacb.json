@@ -1,0 +1,439 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "98bf643af2c154c4163bbacb",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-001-2163ac0376be:16",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mg.mg_s5_ev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:43+00:00",
+    "before_hash": "84d59434a636492b8790f4a937e4619e606ff745389fab59c3b8da4aef1cf651",
+    "after_hash": "98312ecdd9a6f0802e9852baf0082336f0d4a439712adf13be6a494bbef5c3a8",
+    "before": {
+      "id": "mg_s5_ev",
+      "name_en": "MG S5 EV",
+      "name_th": "เอ็มจี เอส5",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "s5 ev",
+        "s5"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2025-06-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "62 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "RWD",
+              "engine_cc": null,
+              "battery_kwh": 62.0,
+              "price_thb": 899000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "V",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4476,
+              "width_mm": 1849,
+              "height_mm": 1621,
+              "source_refs": {
+                "eco": [
+                  "2e5ff0c2-24d7-447d-94bf-4c1ebd31c8ab",
+                  "cdddcf9f-3d6b-4800-bcfc-05d273f281f0"
+                ]
+              },
+              "id": "v_bev"
+            },
+            {
+              "name": "X",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4476,
+              "width_mm": 1849,
+              "height_mm": 1621,
+              "source_refs": {
+                "eco": [
+                  "375ae711-d3a4-482b-941b-9c6bef61c68c"
+                ]
+              }
+            },
+            {
+              "name": "D+",
+              "powertrain": "BEV",
+              "seats": 5,
+              "length_mm": 4476,
+              "width_mm": 1849,
+              "height_mm": 1621,
+              "source_refs": {
+                "eco": [
+                  "25620477-2ecb-4265-bf04-f8925c3c17d1"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "mg",
+        "name_en": "MG",
+        "name_th": "เอ็มจี",
+        "brand_segment": "MASS",
+        "oem_group": "SAIC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "เอ็มจี",
+          "mg sales thailand",
+          "morris garages"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mg.mg_s5_ev",
+        "brand_id": "mg",
+        "name_en": "MG S5 EV",
+        "name_th": "เอ็มจี เอส5",
+        "nameplate": "MG S5 EV",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "s5 ev",
+          "s5"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mg.mg_s5_ev.gen1",
+          "model_id": "mg.mg_s5_ev",
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2025-06-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mg.mg_s5_ev.gen1.62_kwh_bev",
+          "generation_id": "mg.mg_s5_ev.gen1",
+          "name": "62 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 62.0,
+          "price_thb": 899000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mg.mg_s5_ev.gen1.trim.v_bev",
+          "generation_id": "mg.mg_s5_ev.gen1",
+          "name": "V",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4476,
+          "width_mm": 1849,
+          "height_mm": 1621,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "2e5ff0c2-24d7-447d-94bf-4c1ebd31c8ab",
+              "cdddcf9f-3d6b-4800-bcfc-05d273f281f0"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_s5_ev.gen1.trim.x_bev",
+          "generation_id": "mg.mg_s5_ev.gen1",
+          "name": "X",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4476,
+          "width_mm": 1849,
+          "height_mm": 1621,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "375ae711-d3a4-482b-941b-9c6bef61c68c",
+              "ee5085a9-67ca-40f6-9944-550da794d94c"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_s5_ev.gen1.trim.d_bev",
+          "generation_id": "mg.mg_s5_ev.gen1",
+          "name": "D+",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4476,
+          "width_mm": 1849,
+          "height_mm": 1621,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "25620477-2ecb-4265-bf04-f8925c3c17d1"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mg.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "98bf643af2c154c4163bbacb:catalog",
+    "revision_id": "98bf643af2c154c4163bbacb",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mg.mg_s5_ev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:43+00:00",
+    "payload": {
+      "brand": {
+        "id": "mg",
+        "name_en": "MG",
+        "name_th": "เอ็มจี",
+        "brand_segment": "MASS",
+        "oem_group": "SAIC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "เอ็มจี",
+          "mg sales thailand",
+          "morris garages"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mg.mg_s5_ev",
+        "brand_id": "mg",
+        "name_en": "MG S5 EV",
+        "name_th": "เอ็มจี เอส5",
+        "nameplate": "MG S5 EV",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "s5 ev",
+          "s5"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mg.mg_s5_ev.gen1",
+          "model_id": "mg.mg_s5_ev",
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2025-06-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mg.mg_s5_ev.gen1.62_kwh_bev",
+          "generation_id": "mg.mg_s5_ev.gen1",
+          "name": "62 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 62.0,
+          "price_thb": 899000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mg.mg_s5_ev.gen1.trim.v_bev",
+          "generation_id": "mg.mg_s5_ev.gen1",
+          "name": "V",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4476,
+          "width_mm": 1849,
+          "height_mm": 1621,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "2e5ff0c2-24d7-447d-94bf-4c1ebd31c8ab",
+              "cdddcf9f-3d6b-4800-bcfc-05d273f281f0"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_s5_ev.gen1.trim.x_bev",
+          "generation_id": "mg.mg_s5_ev.gen1",
+          "name": "X",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4476,
+          "width_mm": 1849,
+          "height_mm": 1621,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "375ae711-d3a4-482b-941b-9c6bef61c68c",
+              "ee5085a9-67ca-40f6-9944-550da794d94c"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_s5_ev.gen1.trim.d_bev",
+          "generation_id": "mg.mg_s5_ev.gen1",
+          "name": "D+",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4476,
+          "width_mm": 1849,
+          "height_mm": 1621,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "25620477-2ecb-4265-bf04-f8925c3c17d1"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

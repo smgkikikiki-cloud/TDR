@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:2c0944ae-5a9a-46b0-8314-599cf46f07d7:efficiency.fuel_consumption_extra_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_extra_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 4.5,
+      "unit": "L/100km",
+      "observed_at": "2022-10-24",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/2c0944ae-5a9a-46b0-8314-599cf46f07d7",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/2c0944ae-5a9a-46b0-8314-599cf46f07d7",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "nissan.almera.n18.trim.1_0t_sportech_x_cvt"
+    }
+  ]
+}

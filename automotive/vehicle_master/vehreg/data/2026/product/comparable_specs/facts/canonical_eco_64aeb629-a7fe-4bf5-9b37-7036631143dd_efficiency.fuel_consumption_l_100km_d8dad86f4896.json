@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:64aeb629-a7fe-4bf5-9b37-7036631143dd:efficiency.fuel_consumption_l_100km",
+      "field_key": "efficiency.fuel_consumption_l_100km",
+      "value_state": "KNOWN",
+      "value": 8.1,
+      "unit": "L/100km",
+      "observed_at": "2023-07-11",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/64aeb629-a7fe-4bf5-9b37-7036631143dd",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/64aeb629-a7fe-4bf5-9b37-7036631143dd",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "maserati.grecale.gen1.trim.gt_300_hp_mhev_ice"
+    }
+  ]
+}

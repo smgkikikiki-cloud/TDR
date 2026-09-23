@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e70283af4325d14882ce3b0e",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-003-71403c2b6ecf:316",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "kia.ev5.gen1.trim.earth_long_range_88_1_kwh_fwd_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:50+00:00",
+    "before_hash": "c71e81cefdc98b652a89a1e0a283fb5476b1ee4245b04c5eeb9cb1470952ecab",
+    "after_hash": "86d776f95b70602f3cb5d58ea9c26d483e9e282054d4c766e0efcb11e7eeb594",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      87.87,
+      399.4,
+      "YANCHENG FINDREAMS BATTERY",
+      "ONBOARD_AC",
+      true,
+      true,
+      true,
+      151.0,
+      665.0,
+      "235/55R19"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      87.87,
+      399.4,
+      "YANCHENG FINDREAMS BATTERY",
+      "ONBOARD_AC",
+      true,
+      true,
+      true,
+      151.0,
+      665.0,
+      "235/55R19",
+      "BEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_3634b9ca-fbe8-4342-9b06-5f6af4ced43e_identity.powertrain_85b553eb84e7.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e70283af4325d14882ce3b0e:spec",
+    "revision_id": "e70283af4325d14882ce3b0e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "kia.ev5.gen1.trim.earth_long_range_88_1_kwh_fwd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:50+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      87.87,
+      399.4,
+      "YANCHENG FINDREAMS BATTERY",
+      "ONBOARD_AC",
+      true,
+      true,
+      true,
+      151.0,
+      665.0,
+      "235/55R19",
+      "BEV"
+    ]
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "0e2f1e960c2d873cae0d6e04",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-042-509b690f0202:20",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.cls.gen1.trim.mercedes_amg_4matic_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:34+00:00",
+    "before_hash": "d4837c97b8a87b3f86c950dbdac53b1a3240b8cb85c85b7f8622c3429b324963",
+    "after_hash": "00961c8e0b6ce1b4430db4e67280f294e744682dea039a268e4e9e8c65e6dec5",
+    "before": [
+      true,
+      7.3
+    ],
+    "after": [
+      true,
+      7.3,
+      8.9
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ba77b804-6692-49b2-8dee-1cfa4ca40495_efficiency.fuel_consumption_l_100km_b80fac83edf3.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "0e2f1e960c2d873cae0d6e04:spec",
+    "revision_id": "0e2f1e960c2d873cae0d6e04",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.cls.gen1.trim.mercedes_amg_4matic_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:34+00:00",
+    "payload": [
+      true,
+      7.3,
+      8.9
+    ]
+  }
+}

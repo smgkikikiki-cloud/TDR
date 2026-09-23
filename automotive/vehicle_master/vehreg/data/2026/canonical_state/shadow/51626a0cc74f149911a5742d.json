@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "51626a0cc74f149911a5742d",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-006-b527dba9e80a:378",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "changan.nevo_q05.nevo_q05.trim.max_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:00+00:00",
+    "before_hash": "fd7717f6986daa0acee9fb6534713077333ca4bf42940724bd9a74760d0659ec",
+    "after_hash": "8d73a875f330753f3010ad92bc4fd94e458212c0b0af2f5f0f637f18aa3af4de",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      51.8,
+      350.0,
+      "CHONGQING CHANGAN AUTOMOBILE CO., LTD.",
+      "230 (AC)/ 350 (DC)",
+      "BOTH",
+      true,
+      129.0,
+      462.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      51.8,
+      350.0,
+      "CHONGQING CHANGAN AUTOMOBILE CO., LTD.",
+      "230 (AC)/ 350 (DC)",
+      "BOTH",
+      true,
+      129.0,
+      462.0,
+      "225/60R17"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_bc30b5ee-504c-427e-9b8c-e69f0fc03a67_fitment.tyre_size_987b50d0de2e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "51626a0cc74f149911a5742d:spec",
+    "revision_id": "51626a0cc74f149911a5742d",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "changan.nevo_q05.nevo_q05.trim.max_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:00+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      51.8,
+      350.0,
+      "CHONGQING CHANGAN AUTOMOBILE CO., LTD.",
+      "230 (AC)/ 350 (DC)",
+      "BOTH",
+      true,
+      129.0,
+      462.0,
+      "225/60R17"
+    ]
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "1ef49b13c6d5ab000c03c3b7",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-016-3b184c133993:228",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.vellfire.gen1.trim.z_premier_hybrid",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:42+00:00",
+    "before_hash": "45104c83cf5693508b2de5c4685e36bc7531a4672710468a2a2c033fb401d140",
+    "after_hash": "d619d11a14d4b0a560dd9dd78b48a83f43bb454a593e3a2f3ac73fc4524f6ff9",
+    "before": [
+      true,
+      true,
+      5.5,
+      5.7,
+      6.0,
+      133.0,
+      0.00323,
+      "TIS",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/55R19",
+      "HEV"
+    ],
+    "after": [
+      true,
+      true,
+      5.5,
+      5.7,
+      6.0,
+      133.0,
+      0.00323,
+      "TIS",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/55R19",
+      "HEV",
+      15.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_fff3df8d-6a9f-4f1e-859c-f7b2c8fb34b9_manufacturing.excise_tax_rate_ffc7ffde4566.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "1ef49b13c6d5ab000c03c3b7:spec",
+    "revision_id": "1ef49b13c6d5ab000c03c3b7",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.vellfire.gen1.trim.z_premier_hybrid",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:42+00:00",
+    "payload": [
+      true,
+      true,
+      5.5,
+      5.7,
+      6.0,
+      133.0,
+      0.00323,
+      "TIS",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/55R19",
+      "HEV",
+      15.0
+    ]
+  }
+}

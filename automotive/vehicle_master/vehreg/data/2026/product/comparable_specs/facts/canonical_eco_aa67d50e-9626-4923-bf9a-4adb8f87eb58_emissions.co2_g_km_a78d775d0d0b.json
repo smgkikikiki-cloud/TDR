@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:aa67d50e-9626-4923-bf9a-4adb8f87eb58:emissions.co2_g_km",
+      "field_key": "emissions.co2_g_km",
+      "value_state": "KNOWN",
+      "value": 197.0,
+      "unit": "g/km",
+      "observed_at": "2025-12-16",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/aa67d50e-9626-4923-bf9a-4adb8f87eb58",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/aa67d50e-9626-4923-bf9a-4adb8f87eb58",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "gwm.poer_sahar.gen1.trim.gwm_2_4t_pro_single_cab_4wd_s_ice"
+    }
+  ]
+}

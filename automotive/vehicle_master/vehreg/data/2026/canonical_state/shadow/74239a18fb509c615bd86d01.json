@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "74239a18fb509c615bd86d01",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-047-23268458b262:71",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.cx8.kg.trim.2_5_sp_exclusive_6_seater_captain_seats_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:25+00:00",
+    "before_hash": "d45fff1e48193cd3d4a2887154a36e2e6b6a57116c2d1dd50a8dda0a7a4364f6",
+    "after_hash": "b7573dc705a8ac99cd7c241da39b039c306311f5d20ab010b3d4b9e2a0803ce9",
+    "before": [
+      true,
+      true,
+      6.6,
+      7.6,
+      9.5,
+      178.0,
+      0.005,
+      "TIS",
+      "GASOLINE",
+      2488,
+      "E20",
+      "225/55R19"
+    ],
+    "after": [
+      true,
+      true,
+      6.6,
+      7.6,
+      9.5,
+      178.0,
+      0.005,
+      "TIS",
+      "GASOLINE",
+      2488,
+      "E20",
+      "225/55R19",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_7e73a545d541455197112b911d9978e4_identity.powertrain_39c20d950107.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "74239a18fb509c615bd86d01:spec",
+    "revision_id": "74239a18fb509c615bd86d01",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.cx8.kg.trim.2_5_sp_exclusive_6_seater_captain_seats_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:25+00:00",
+    "payload": [
+      true,
+      true,
+      6.6,
+      7.6,
+      9.5,
+      178.0,
+      0.005,
+      "TIS",
+      "GASOLINE",
+      2488,
+      "E20",
+      "225/55R19",
+      "ICE"
+    ]
+  }
+}

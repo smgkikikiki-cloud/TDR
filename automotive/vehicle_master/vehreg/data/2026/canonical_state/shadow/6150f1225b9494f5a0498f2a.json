@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6150f1225b9494f5a0498f2a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-011-3c709241399c:88",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "geely.geely_ex5.gen1.trim.max_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:18+00:00",
+    "before_hash": "14a1052b97e4eb6fe986e9358a62b9eb228521ede984806cad00cb64b2ba3ce2",
+    "after_hash": "e1a15dacdadd620ec511d1f73d1edc514786800524b64b0ab672ecfeb81f37da",
+    "before": [
+      "LFP",
+      68.32,
+      427.0,
+      "Guiyang ShineGee Energy Technology Co., Ltd."
+    ],
+    "after": [
+      "LFP",
+      68.32,
+      427.0,
+      "Guiyang ShineGee Energy Technology Co., Ltd.",
+      "AC: INPUT 220 V, DC: INPUT 427 V"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e9901aa9-5f90-406e-a56d-3d19da56b895_charging.onboard_charger_spec_842c9d406091.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6150f1225b9494f5a0498f2a:spec",
+    "revision_id": "6150f1225b9494f5a0498f2a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "geely.geely_ex5.gen1.trim.max_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:18+00:00",
+    "payload": [
+      "LFP",
+      68.32,
+      427.0,
+      "Guiyang ShineGee Energy Technology Co., Ltd.",
+      "AC: INPUT 220 V, DC: INPUT 427 V"
+    ]
+  }
+}

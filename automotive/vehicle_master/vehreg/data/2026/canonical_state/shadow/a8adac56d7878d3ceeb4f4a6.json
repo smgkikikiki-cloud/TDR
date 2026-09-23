@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a8adac56d7878d3ceeb4f4a6",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-001-2163ac0376be:274",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.cayenne.e3.trim.s_coupe_electric_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:45+00:00",
+    "before_hash": "d065b91fb2912be1e37db6fe3938b492798b1b57f320307814ffbb8e5f04c9a7",
+    "after_hash": "46e2ec9fc41e2c35474c7abb1fb804ae2bcfb0ccbc986a6c97f14a50c09ba39c",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      107.8,
+      700.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      107.8,
+      700.0,
+      "Webasto Convertibles Slovakia, s.r.o."
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_86ebf6cd-9d1b-4905-abfe-7916b8ef391c_battery.supplier_ab5863fff181.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a8adac56d7878d3ceeb4f4a6:spec",
+    "revision_id": "a8adac56d7878d3ceeb4f4a6",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.cayenne.e3.trim.s_coupe_electric_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:45+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      107.8,
+      700.0,
+      "Webasto Convertibles Slovakia, s.r.o."
+    ]
+  }
+}

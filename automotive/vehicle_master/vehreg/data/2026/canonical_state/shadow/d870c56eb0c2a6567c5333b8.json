@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d870c56eb0c2a6567c5333b8",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-034-5299aee8f0ab:278",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "kia.sorento.gen1.trim.premium_hev_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:32+00:00",
+    "before_hash": "47a4300b1dcc6dce6ad3aea837377b42193fde45102c233e0dc2cbace98b6601",
+    "after_hash": "f7a9eb8e7a10e602b4673dd595c3b2ca5c24792bf24f61d2c26f4d8399ca3e57",
+    "before": [
+      true,
+      true,
+      true,
+      5.5,
+      5.3,
+      4.8,
+      126.0,
+      0.01,
+      "TIS"
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      5.5,
+      5.3,
+      4.8,
+      126.0,
+      0.01,
+      "TIS",
+      "HEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_9dd0283e-3bfa-444f-8a0d-80a4c1c967af_engine.combustion_type_29f821c2faf7.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d870c56eb0c2a6567c5333b8:spec",
+    "revision_id": "d870c56eb0c2a6567c5333b8",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "kia.sorento.gen1.trim.premium_hev_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:32+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      5.5,
+      5.3,
+      4.8,
+      126.0,
+      0.01,
+      "TIS",
+      "HEV"
+    ]
+  }
+}

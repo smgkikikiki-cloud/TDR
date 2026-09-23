@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "fd6514173e2f5cc0a31262d7",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-011-3c709241399c:214",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.kicks.p15.trim.vl_nissanconnect_services",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:19+00:00",
+    "before_hash": "afc20dd7df8ff0bd7ceb48a36c1666c9b39989ecf84dbd62a24349672e3b144c",
+    "after_hash": "1037b62ab6f6aa4e115ed2b038616255e0c0bb5075f3934e68ec6da0171e79cc",
+    "before": [
+      true,
+      true,
+      4.6,
+      4.4,
+      4.0,
+      100.0,
+      0.00755,
+      "TIS",
+      "HEV",
+      1198,
+      "GASOLINE"
+    ],
+    "after": [
+      true,
+      true,
+      4.6,
+      4.4,
+      4.0,
+      100.0,
+      0.00755,
+      "TIS",
+      "HEV",
+      1198,
+      "GASOLINE",
+      "205/55R17"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b5e2c8b7-41a0-4152-9e5d-3bd24262d9c6_fitment.tyre_size_dec5f1fa751a.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "fd6514173e2f5cc0a31262d7:spec",
+    "revision_id": "fd6514173e2f5cc0a31262d7",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.kicks.p15.trim.vl_nissanconnect_services",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:19+00:00",
+    "payload": [
+      true,
+      true,
+      4.6,
+      4.4,
+      4.0,
+      100.0,
+      0.00755,
+      "TIS",
+      "HEV",
+      1198,
+      "GASOLINE",
+      "205/55R17"
+    ]
+  }
+}

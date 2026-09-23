@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b235a852b46f3e1d33756ce6",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-032-04b0adc6e162:285",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lexus_ls.unresearched.trim.executive_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:17+00:00",
+    "before_hash": "5219a7104b7cf7cc4daf910439797badbcae3a24d41d3488dee202738b07e9e7",
+    "after_hash": "946278f48f85606cb3744fab7cb90af1ea4c7a8016e14b33729a5496c3ab121c",
+    "before": [
+      7.5,
+      9.9,
+      14.1,
+      230.0,
+      0.017,
+      "TIS",
+      "GASOLINE",
+      3445,
+      "GASOLINE",
+      "245/45R20"
+    ],
+    "after": [
+      7.5,
+      9.9,
+      14.1,
+      230.0,
+      0.017,
+      "TIS",
+      "GASOLINE",
+      3445,
+      "GASOLINE",
+      "245/45R20",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_f2a7d133-ab14-4a53-9862-25e97242495e_identity.powertrain_7cd4fbfba6dc.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b235a852b46f3e1d33756ce6:spec",
+    "revision_id": "b235a852b46f3e1d33756ce6",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lexus_ls.unresearched.trim.executive_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:17+00:00",
+    "payload": [
+      7.5,
+      9.9,
+      14.1,
+      230.0,
+      0.017,
+      "TIS",
+      "GASOLINE",
+      3445,
+      "GASOLINE",
+      "245/45R20",
+      "ICE"
+    ]
+  }
+}

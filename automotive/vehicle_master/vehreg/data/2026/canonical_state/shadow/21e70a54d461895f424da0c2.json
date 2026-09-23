@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "21e70a54d461895f424da0c2",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-003-71403c2b6ecf:196",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.eclipse_edition_hev_premium_luxury",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:50+00:00",
+    "before_hash": "1464cd9f95182fff896d2f2aba38a563db2083c5671f73c300cb10ef9ca3fbff",
+    "after_hash": "61b19a1a3b439d22f1373f1e1f64b5950c85ffe20b9c98b443a9ee63148bd55d",
+    "before": [
+      5.4,
+      5.6,
+      6.0,
+      128.0,
+      0.0044,
+      "TIS",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/55R19",
+      "HEV"
+    ],
+    "after": [
+      5.4,
+      5.6,
+      6.0,
+      128.0,
+      0.0044,
+      "TIS",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/55R19",
+      "HEV",
+      15.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_74c56dc2-7eed-4fe7-9ce4-b5481ec19d11_manufacturing.excise_tax_rate_79307763b8dd.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "21e70a54d461895f424da0c2:spec",
+    "revision_id": "21e70a54d461895f424da0c2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.eclipse_edition_hev_premium_luxury",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:50+00:00",
+    "payload": [
+      5.4,
+      5.6,
+      6.0,
+      128.0,
+      0.0044,
+      "TIS",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/55R19",
+      "HEV",
+      15.0
+    ]
+  }
+}

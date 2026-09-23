@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "12402c073c9d12edda620003",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-028-314da6945e4d:292",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "leapmotor.leapmotor_c10.gen1.trim.ev_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:46+00:00",
+    "before_hash": "2edacf5416d029441ccfcd515dc9f3e0bd601014bca125e568f496a456e6e93e",
+    "after_hash": "2ddfa143e89bc09d2cfbe3ca01bcc576af01059efae580df406261e6b245c9a4",
+    "before": [
+      "LFP",
+      69.89,
+      332.8,
+      "LEAPMOTOR",
+      "ONBOARD_AC",
+      167.0,
+      477.0,
+      "245/45R20",
+      "BEV",
+      8.0,
+      "PMSM"
+    ],
+    "after": [
+      "LFP",
+      69.89,
+      332.8,
+      "LEAPMOTOR",
+      "ONBOARD_AC",
+      167.0,
+      477.0,
+      "245/45R20",
+      "BEV",
+      8.0,
+      "PMSM",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_26a828cb-5bf0-4c3f-b8b3-1d94d2548478_safety.adaptive_cruise_efa6112b1210.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "12402c073c9d12edda620003:spec",
+    "revision_id": "12402c073c9d12edda620003",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "leapmotor.leapmotor_c10.gen1.trim.ev_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:46+00:00",
+    "payload": [
+      "LFP",
+      69.89,
+      332.8,
+      "LEAPMOTOR",
+      "ONBOARD_AC",
+      167.0,
+      477.0,
+      "245/45R20",
+      "BEV",
+      8.0,
+      "PMSM",
+      true
+    ]
+  }
+}

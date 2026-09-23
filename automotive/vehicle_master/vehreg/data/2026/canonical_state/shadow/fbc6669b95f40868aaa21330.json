@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "fbc6669b95f40868aaa21330",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-009-54711011662e:187",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "xpeng.xpeng_g6.g6.trim.long_range_rwd_87_5_kwh_ncm_286_hp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:11+00:00",
+    "before_hash": "2092e7600c0a18205b7962a1bcb3b703077911ab448c605d3f40d9304d39a9cf",
+    "after_hash": "08fd349972d157422c7690271fb644a1baab390a752b8f6fb66d847972a964c5",
+    "before": [
+      "LFP"
+    ],
+    "after": [
+      "LFP",
+      80.81
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_6ec43a69-a117-42e0-8ff6-f888228f04a5_battery.gross_capacity_kwh_3d07ef28104e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "fbc6669b95f40868aaa21330:spec",
+    "revision_id": "fbc6669b95f40868aaa21330",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "xpeng.xpeng_g6.g6.trim.long_range_rwd_87_5_kwh_ncm_286_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:11+00:00",
+    "payload": [
+      "LFP",
+      80.81
+    ]
+  }
+}

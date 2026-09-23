@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "28ad0bf79276041096444ffa",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-045-66f56137868e:225",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.almera.n18.trim.1_0t_vl_sportech_cvt",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:02+00:00",
+    "before_hash": "632a21b8b3202263acb73735cedf90f5c1deadc060390ec5d3bd652d6324bb74",
+    "after_hash": "5cde9caf1c1430aa2958b7123af01bb0fe0eeaa739c438df14ba4c540db7c101",
+    "before": [
+      true,
+      4.0,
+      4.3,
+      5.0,
+      100.0,
+      0.025,
+      "TIS"
+    ],
+    "after": [
+      true,
+      4.0,
+      4.3,
+      5.0,
+      100.0,
+      0.025,
+      "TIS",
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_4f6a0f62-f39f-4432-b316-b5000be676bb_engine.combustion_type_f7a639991773.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "28ad0bf79276041096444ffa:spec",
+    "revision_id": "28ad0bf79276041096444ffa",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.almera.n18.trim.1_0t_vl_sportech_cvt",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:02+00:00",
+    "payload": [
+      true,
+      4.0,
+      4.3,
+      5.0,
+      100.0,
+      0.025,
+      "TIS",
+      "GASOLINE"
+    ]
+  }
+}

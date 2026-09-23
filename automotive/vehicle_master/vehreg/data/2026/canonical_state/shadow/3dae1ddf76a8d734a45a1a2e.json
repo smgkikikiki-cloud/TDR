@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "3dae1ddf76a8d734a45a1a2e",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-014-8db054eb58a3:64",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "suzuki.fronx.frx.trim.gl_1_5l_4at",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:32+00:00",
+    "before_hash": "ddf2b3f0effe90592f85c3078468fcd4a3a8708b4cfa19471cadfdf933a73a4b",
+    "after_hash": "63dcc8bf3ab0bbc10112dc50daa886fed6f64bb9c637eda6894999784d0286ee",
+    "before": [
+      5.1,
+      5.8,
+      7.2,
+      132.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1462,
+      "GASOLINE",
+      "195/60R16",
+      "ICE"
+    ],
+    "after": [
+      5.1,
+      5.8,
+      7.2,
+      132.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1462,
+      "GASOLINE",
+      "195/60R16",
+      "ICE",
+      25.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_784000e3-160f-47da-968e-d22f1e5e8ee8_manufacturing.excise_tax_rate_186dab8576f0.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "3dae1ddf76a8d734a45a1a2e:spec",
+    "revision_id": "3dae1ddf76a8d734a45a1a2e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "suzuki.fronx.frx.trim.gl_1_5l_4at",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:32+00:00",
+    "payload": [
+      5.1,
+      5.8,
+      7.2,
+      132.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1462,
+      "GASOLINE",
+      "195/60R16",
+      "ICE",
+      25.0
+    ]
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "900505b381c23e49e257ea97",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-005-77a02922c989:392",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.civic.fe.trim.type_r_racing_black_package_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:56+00:00",
+    "before_hash": "967fa975e4e84fc551e22cb2521fdc0c2cf3e3b949ef7a6932a4636241293daf",
+    "after_hash": "a87538bcaf4aeca9e30b6b2dfcc08b9afb78dcfc3c652e3dd1cfccac6b4b588e",
+    "before": [
+      true,
+      true,
+      7.1,
+      8.3,
+      10.4,
+      188.0,
+      0.00244,
+      "TIS",
+      "GASOLINE",
+      1995,
+      "GASOLINE",
+      "265/30ZR19",
+      "ICE"
+    ],
+    "after": [
+      true,
+      true,
+      7.1,
+      8.3,
+      10.4,
+      188.0,
+      0.00244,
+      "TIS",
+      "GASOLINE",
+      1995,
+      "GASOLINE",
+      "265/30ZR19",
+      "ICE",
+      29.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d866c51b-50ae-472d-8a04-4276cfc67653_manufacturing.excise_tax_rate_dabbbdf5bfc5.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "900505b381c23e49e257ea97:spec",
+    "revision_id": "900505b381c23e49e257ea97",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.civic.fe.trim.type_r_racing_black_package_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:56+00:00",
+    "payload": [
+      true,
+      true,
+      7.1,
+      8.3,
+      10.4,
+      188.0,
+      0.00244,
+      "TIS",
+      "GASOLINE",
+      1995,
+      "GASOLINE",
+      "265/30ZR19",
+      "ICE",
+      29.0
+    ]
+  }
+}

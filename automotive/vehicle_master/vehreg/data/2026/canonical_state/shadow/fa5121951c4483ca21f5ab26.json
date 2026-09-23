@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "fa5121951c4483ca21f5ab26",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-037-986e7ff7e687:394",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.voxy.gen1.trim.sz_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:57+00:00",
+    "before_hash": "3c7dc75e9fb096f4b5b4c118da7cc8b89c7e3f79d9c808d33a1477a4a6449be2",
+    "after_hash": "790774a9161538ba9114e9cabf93fb9d117a9d420c1fe6a25ea07581ff4b02c7",
+    "before": [
+      true,
+      true,
+      5.0,
+      6.8,
+      10.0,
+      156.0,
+      0.004,
+      "TIS",
+      "GASOLINE"
+    ],
+    "after": [
+      true,
+      true,
+      5.0,
+      6.8,
+      10.0,
+      156.0,
+      0.004,
+      "TIS",
+      "GASOLINE",
+      1986
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_a0f8745e-c011-40a4-9575-dc6d93e2018d_engine.displacement_cc_620dc4a03f42.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "fa5121951c4483ca21f5ab26:spec",
+    "revision_id": "fa5121951c4483ca21f5ab26",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.voxy.gen1.trim.sz_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:57+00:00",
+    "payload": [
+      true,
+      true,
+      5.0,
+      6.8,
+      10.0,
+      156.0,
+      0.004,
+      "TIS",
+      "GASOLINE",
+      1986
+    ]
+  }
+}

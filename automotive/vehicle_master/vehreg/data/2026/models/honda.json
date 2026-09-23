@@ -319,16 +319,18 @@
               "name": "S+",
               "powertrain": "ICE",
               "seats": 5,
-              "length_mm": 4350,
+              "length_mm": 4362,
               "width_mm": 1748,
               "height_mm": 1488,
               "engine_cc": 988,
               "transmission": "CVT",
               "source_refs": {
                 "eco": [
-                  "3b30c732-3765-4c11-b515-b94479bfe682"
+                  "3b30c732-3765-4c11-b515-b94479bfe682",
+                  "90b78cad-87c2-4cfb-927e-b350070e6b85"
                 ]
-              }
+              },
+              "id": "s_ice"
             },
             {
               "name": "SV",
@@ -444,7 +446,8 @@
                   "owner_directory_2026_09_13:104"
                 ],
                 "eco": [
-                  "a8076733-593d-45b4-87e6-fb7b4feb86a1"
+                  "a8076733-593d-45b4-87e6-fb7b4feb86a1",
+                  "b43bea18-17d1-41d2-ab46-27f54637dc7b"
                 ]
               },
               "id": "e_hev_el_plus_hev",
@@ -1183,6 +1186,7 @@
                   "owner_directory_2026_09_13:111"
                 ],
                 "eco": [
+                  "982626bc-7135-4a4e-b2dc-333d3760ddaf",
                   "d5539fae-1cd2-4c0c-b2d4-6c6e70e4e572"
                 ]
               },

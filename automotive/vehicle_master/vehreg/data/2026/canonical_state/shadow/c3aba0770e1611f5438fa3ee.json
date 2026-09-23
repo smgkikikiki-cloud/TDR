@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c3aba0770e1611f5438fa3ee",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-001-2163ac0376be:74",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.carrera_coupe_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:45+00:00",
+    "before_hash": "e86210d6377c5014dadc3fde955d1dd230af008941baf30009cf5e08ad0858f3",
+    "after_hash": "43bc36d3bdd28feed7f6e98b7e4b8c9ddccbcfc04b24cd180d690dcd86998a54",
+    "before": [
+      true,
+      true,
+      9.4,
+      12.9,
+      19.0,
+      296.0,
+      0.00489,
+      0.00072,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35ZR20",
+      "305/30ZR21"
+    ],
+    "after": [
+      true,
+      true,
+      9.4,
+      12.9,
+      19.0,
+      296.0,
+      0.00489,
+      0.00072,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35ZR20",
+      "305/30ZR21",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_f166808b-e824-4717-aa10-ff97012d3324_identity.powertrain_25281d1e24b6.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c3aba0770e1611f5438fa3ee:spec",
+    "revision_id": "c3aba0770e1611f5438fa3ee",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.carrera_coupe_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:45+00:00",
+    "payload": [
+      true,
+      true,
+      9.4,
+      12.9,
+      19.0,
+      296.0,
+      0.00489,
+      0.00072,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35ZR20",
+      "305/30ZR21",
+      "ICE"
+    ]
+  }
+}

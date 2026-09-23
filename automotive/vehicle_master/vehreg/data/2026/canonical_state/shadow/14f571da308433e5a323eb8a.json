@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "14f571da308433e5a323eb8a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-014-8db054eb58a3:71",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "suzuki.fronx.frx.trim.gl_1_5l_4at",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:32+00:00",
+    "before_hash": "c81a627c1baecc5d942881d7072bc4b10f9953466854a0189168e9a1e588ce46",
+    "after_hash": "0949fd382e287c77f9c22bf29702f6c48025fee9efb0a2e560c82cefaf5204b9",
+    "before": [
+      5.1,
+      5.8,
+      7.2,
+      132.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1462,
+      "GASOLINE",
+      "195/60R16",
+      "ICE",
+      25.0,
+      4,
+      "AUTOMATIC",
+      true,
+      8,
+      true,
+      [
+        "R13H"
+      ]
+    ],
+    "after": [
+      5.1,
+      5.8,
+      7.2,
+      132.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1462,
+      "GASOLINE",
+      "195/60R16",
+      "ICE",
+      25.0,
+      4,
+      "AUTOMATIC",
+      true,
+      8,
+      true,
+      [
+        "R13H"
+      ],
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_784000e3-160f-47da-968e-d22f1e5e8ee8_technology.led_headlights_cdc9cb08e5fb.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "14f571da308433e5a323eb8a:spec",
+    "revision_id": "14f571da308433e5a323eb8a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "suzuki.fronx.frx.trim.gl_1_5l_4at",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:32+00:00",
+    "payload": [
+      5.1,
+      5.8,
+      7.2,
+      132.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1462,
+      "GASOLINE",
+      "195/60R16",
+      "ICE",
+      25.0,
+      4,
+      "AUTOMATIC",
+      true,
+      8,
+      true,
+      [
+        "R13H"
+      ],
+      true
+    ]
+  }
+}

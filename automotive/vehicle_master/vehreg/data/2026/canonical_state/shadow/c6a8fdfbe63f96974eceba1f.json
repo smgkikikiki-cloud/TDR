@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c6a8fdfbe63f96974eceba1f",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-034-5299aee8f0ab:6",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mazda6.gen1.trim.20th_anniversary_edition_nappa_leather_grand_luxury_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:32+00:00",
+    "before_hash": "496428035f129afe53b21f8d653caebae7c186b624d4bd69ad5e1ba52bbe4067",
+    "after_hash": "07c6639813636685869247fa50e216dd39c2e0bc97e2d020926d0c08851d0627",
+    "before": [
+      true,
+      true
+    ],
+    "after": [
+      true,
+      true,
+      5.8
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_4599a7ba-693f-4025-bd0b-40fbb08ff80e_efficiency.fuel_consumption_extra_urban_l_100km_78fdfb1b81ef.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c6a8fdfbe63f96974eceba1f:spec",
+    "revision_id": "c6a8fdfbe63f96974eceba1f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mazda6.gen1.trim.20th_anniversary_edition_nappa_leather_grand_luxury_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:32+00:00",
+    "payload": [
+      true,
+      true,
+      5.8
+    ]
+  }
+}

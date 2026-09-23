@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b1ffd3e679476ba02c5be158",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-048-9a296c6c8041:73",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_c_class.w206.trim.c_220_d_amg_dynamic_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:35+00:00",
+    "before_hash": "71f4b191d63da96dd3b48e2453a903848b6b7cf4bf1e8945f2fd3fcc4d199e31",
+    "after_hash": "ae10c4c18df36ac274188fdb525b0fabd2c90873d454463dbf1c0bc97b34398f",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      3.8,
+      4.6,
+      6.0,
+      122.0,
+      0.013,
+      0.00015,
+      "TIS",
+      "HEV",
+      1993,
+      "DIESEL",
+      "225/40R19",
+      "255/35R19",
+      "HEV"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      3.8,
+      4.6,
+      6.0,
+      122.0,
+      0.013,
+      0.00015,
+      "TIS",
+      "HEV",
+      1993,
+      "DIESEL",
+      "225/40R19",
+      "255/35R19",
+      "HEV",
+      25.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_2fbd28d311c544149f26c380e12b9f39_manufacturing.excise_tax_rate_efd3e72a3396.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b1ffd3e679476ba02c5be158:spec",
+    "revision_id": "b1ffd3e679476ba02c5be158",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_c_class.w206.trim.c_220_d_amg_dynamic_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:35+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      3.8,
+      4.6,
+      6.0,
+      122.0,
+      0.013,
+      0.00015,
+      "TIS",
+      "HEV",
+      1993,
+      "DIESEL",
+      "225/40R19",
+      "255/35R19",
+      "HEV",
+      25.0
+    ]
+  }
+}

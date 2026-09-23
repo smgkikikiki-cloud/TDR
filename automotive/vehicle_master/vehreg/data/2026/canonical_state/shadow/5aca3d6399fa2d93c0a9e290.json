@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5aca3d6399fa2d93c0a9e290",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-036-ba2d051d30aa:136",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.mini_cooper.j01.trim.clubman_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:48+00:00",
+    "before_hash": "13cf296ccaccb8db3515ada22eaca29c099c081de3fca529d04229aac77cc766",
+    "after_hash": "3726729ac679b022b63879b6894ace3da8eb0377d1691bbcd77a740899963a4b",
+    "before": [
+      true,
+      true,
+      true,
+      5.3,
+      6.0,
+      7.3,
+      138.0,
+      0.018,
+      "TIS",
+      "GASOLINE",
+      1499,
+      "GASOLINE"
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      5.3,
+      6.0,
+      7.3,
+      138.0,
+      0.018,
+      "TIS",
+      "GASOLINE",
+      1499,
+      "GASOLINE",
+      "225/45R17"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_96e97e89-bbd8-4d43-ba9f-5524f367c96c_fitment.tyre_size_f4d37fbd05a6.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5aca3d6399fa2d93c0a9e290:spec",
+    "revision_id": "5aca3d6399fa2d93c0a9e290",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.mini_cooper.j01.trim.clubman_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:48+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      5.3,
+      6.0,
+      7.3,
+      138.0,
+      0.018,
+      "TIS",
+      "GASOLINE",
+      1499,
+      "GASOLINE",
+      "225/45R17"
+    ]
+  }
+}

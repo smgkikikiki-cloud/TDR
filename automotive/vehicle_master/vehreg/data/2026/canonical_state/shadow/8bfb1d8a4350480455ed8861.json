@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "8bfb1d8a4350480455ed8861",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-054-d20b71816f05:2",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_altis.e210.trim.1_6g_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:52+00:00",
+    "before_hash": "c4653e91eefefe45e560947d406cea3ba594087c7509329f1092a48f3dd3f1c0",
+    "after_hash": "b0fe2d4196b8ed9f1da41ee49224a75e034680fae79c1ddd2a7a037eb02cad99",
+    "before": [
+      5.1,
+      6.3,
+      8.3,
+      146.0,
+      0.005,
+      "TIS",
+      "GASOLINE",
+      1598,
+      "E85",
+      "205/55R16",
+      "ICE",
+      20.0
+    ],
+    "after": [
+      5.1,
+      6.3,
+      8.3,
+      146.0,
+      0.005,
+      "TIS",
+      "GASOLINE",
+      1598,
+      "E85",
+      "205/55R16",
+      "ICE",
+      20.0,
+      "CVT"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_f89daa4aa1284659aab6b42d2c53c887_powertrain.transmission_8381140d1fdb.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "8bfb1d8a4350480455ed8861:spec",
+    "revision_id": "8bfb1d8a4350480455ed8861",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_altis.e210.trim.1_6g_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:52+00:00",
+    "payload": [
+      5.1,
+      6.3,
+      8.3,
+      146.0,
+      0.005,
+      "TIS",
+      "GASOLINE",
+      1598,
+      "E85",
+      "205/55R16",
+      "ICE",
+      20.0,
+      "CVT"
+    ]
+  }
+}

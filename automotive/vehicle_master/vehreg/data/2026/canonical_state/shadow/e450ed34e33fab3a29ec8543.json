@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e450ed34e33fab3a29ec8543",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-040-43e09f18d7ea:51",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.q8.gen1.trim.60_tfsi_e_quattro_s_line_black_edition_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:21+00:00",
+    "before_hash": "59a3dc57a18ef576905c05fe19f669cf547ca501925322f5251b9aa5886d8c82",
+    "after_hash": "3fb6f5b7390e843ec30897dca3312cd2d6358e7b18c6a6b80ff677fd752b1a4c",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      17.97,
+      374.4,
+      "Volkswagen/VW opt. Audi",
+      "ONBOARD_AC",
+      2.4,
+      55.0,
+      0.014,
+      0.00011,
+      "TIS",
+      "PHEV",
+      2995,
+      "GASOLINE"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      17.97,
+      374.4,
+      "Volkswagen/VW opt. Audi",
+      "ONBOARD_AC",
+      2.4,
+      55.0,
+      0.014,
+      0.00011,
+      "TIS",
+      "PHEV",
+      2995,
+      "GASOLINE",
+      380.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_3a93dd56-e690-4555-a3db-97e1a06e2bfc_ev.energy_consumption_wh_km_845f114c6bf6.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e450ed34e33fab3a29ec8543:spec",
+    "revision_id": "e450ed34e33fab3a29ec8543",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.q8.gen1.trim.60_tfsi_e_quattro_s_line_black_edition_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:21+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      17.97,
+      374.4,
+      "Volkswagen/VW opt. Audi",
+      "ONBOARD_AC",
+      2.4,
+      55.0,
+      0.014,
+      0.00011,
+      "TIS",
+      "PHEV",
+      2995,
+      "GASOLINE",
+      380.0
+    ]
+  }
+}

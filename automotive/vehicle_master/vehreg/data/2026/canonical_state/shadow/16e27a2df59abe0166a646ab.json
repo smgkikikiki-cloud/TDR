@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "16e27a2df59abe0166a646ab",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-014-8db054eb58a3:116",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.taycan.gen1.trim.4s_awd_544_hp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:32+00:00",
+    "before_hash": "14914b32100ae83158b00a6c4e119996634f720498f895106d6dc31df140c28f",
+    "after_hash": "c908e5574d32a2dfaef55e77a4e23bb41430831f560824c7bd9ffb5f32adc9be",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      104.69,
+      727.0,
+      "Draxlmaier",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      178.0,
+      625.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      104.69,
+      727.0,
+      "Draxlmaier",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      178.0,
+      625.0,
+      "245/45R20"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_1a72a7c4-9fdd-475c-b73d-208b40dd9fee_fitment.tyre_front_105ced8e7e9b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "16e27a2df59abe0166a646ab:spec",
+    "revision_id": "16e27a2df59abe0166a646ab",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.taycan.gen1.trim.4s_awd_544_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:32+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      104.69,
+      727.0,
+      "Draxlmaier",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      178.0,
+      625.0,
+      "245/45R20"
+    ]
+  }
+}

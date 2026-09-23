@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:ffc0a649-ce6c-4224-9bd3-a20697d3492c:emissions.co2_g_km",
+      "field_key": "emissions.co2_g_km",
+      "value_state": "KNOWN",
+      "value": 120.0,
+      "unit": "g/km",
+      "observed_at": "2022-12-15",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/ffc0a649-ce6c-4224-9bd3-a20697d3492c",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/ffc0a649-ce6c-4224-9bd3-a20697d3492c",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "gwm.haval_h6.h6hev.trim.hev_ultra_hev"
+    }
+  ]
+}

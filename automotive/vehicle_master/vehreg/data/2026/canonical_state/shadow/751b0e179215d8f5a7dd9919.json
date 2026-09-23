@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "751b0e179215d8f5a7dd9919",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-048-9a296c6c8041:27",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.almera.n18.trim.1_0t_s_cvt",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:34+00:00",
+    "before_hash": "24c7db4c240e898375936298ee97e363229b7ccbd98ba0db3c015e1f324bdf5c",
+    "after_hash": "9a3ee49113a38a86b402d6fff28fdfb730be567654b310a813f0b669b573e37a",
+    "before": [
+      true,
+      4.0,
+      4.3,
+      5.0,
+      100.0,
+      0.025,
+      "TIS",
+      "GASOLINE",
+      999,
+      "E20",
+      "195/65R15",
+      "ICE",
+      12.0,
+      "CVT",
+      true,
+      3,
+      true,
+      [
+        "R13H",
+        "R94",
+        "R95"
+      ],
+      1065
+    ],
+    "after": [
+      true,
+      4.0,
+      4.3,
+      5.0,
+      100.0,
+      0.025,
+      "TIS",
+      "GASOLINE",
+      999,
+      "E20",
+      "195/65R15",
+      "ICE",
+      12.0,
+      "CVT",
+      true,
+      3,
+      true,
+      [
+        "R13H",
+        "R94",
+        "R95"
+      ],
+      1065,
+      1460
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_cb15faeb28d74cfc95f93b6485390de2_vehicle.height_mm_75fdeb1eb90c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "751b0e179215d8f5a7dd9919:spec",
+    "revision_id": "751b0e179215d8f5a7dd9919",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.almera.n18.trim.1_0t_s_cvt",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:34+00:00",
+    "payload": [
+      true,
+      4.0,
+      4.3,
+      5.0,
+      100.0,
+      0.025,
+      "TIS",
+      "GASOLINE",
+      999,
+      "E20",
+      "195/65R15",
+      "ICE",
+      12.0,
+      "CVT",
+      true,
+      3,
+      true,
+      [
+        "R13H",
+        "R94",
+        "R95"
+      ],
+      1065,
+      1460
+    ]
+  }
+}

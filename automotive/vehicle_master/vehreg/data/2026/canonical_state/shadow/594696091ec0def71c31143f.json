@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "594696091ec0def71c31143f",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-006-b527dba9e80a:85",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.cle.gen1.trim.4matic_coup_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:59+00:00",
+    "before_hash": "5e65f3b6f9717cf5bca37a2bc3513e0824dc7953e3a02cccc6e0cfc6081e082f",
+    "after_hash": "c91b75e30151742d15410d093397e141cbb351b6ab2d27137463f5ffc45356fa",
+    "before": [
+      "EURO6",
+      "HEV",
+      "GASOLINE",
+      "HEV",
+      9
+    ],
+    "after": [
+      "EURO6",
+      "HEV",
+      "GASOLINE",
+      "HEV",
+      9,
+      "AUTOMATIC"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_54d263e0-394f-46c4-9e39-a981885682a6_powertrain.transmission_ab1559cfaf82.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "594696091ec0def71c31143f:spec",
+    "revision_id": "594696091ec0def71c31143f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.cle.gen1.trim.4matic_coup_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:59+00:00",
+    "payload": [
+      "EURO6",
+      "HEV",
+      "GASOLINE",
+      "HEV",
+      9,
+      "AUTOMATIC"
+    ]
+  }
+}

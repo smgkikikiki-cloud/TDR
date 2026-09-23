@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "46887ea51cdc9cff308510fb",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-025-74b815fdedac:227",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lotus.eletre.gen1.trim.r_905_hp_dual_speed_transmission_awd_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:26+00:00",
+    "before_hash": "b018198759ce23c718ad205d706c9a3c81b88092a37527ed65091b2dcaba1a90",
+    "after_hash": "db27057aef9fcc335ca8c0ca47a7d859ef4716e5f09feb02a38cef1fe2ae2364",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      113.46
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      113.46,
+      718.1
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_bc1ae94b-6db1-4644-96dd-fba2214c3229_battery.nominal_voltage_v_83d8a9281d98.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "46887ea51cdc9cff308510fb:spec",
+    "revision_id": "46887ea51cdc9cff308510fb",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lotus.eletre.gen1.trim.r_905_hp_dual_speed_transmission_awd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:26+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      113.46,
+      718.1
+    ]
+  }
+}

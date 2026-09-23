@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "33d751e35d0bd3db94471154",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-023-8723a19230b0:161",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.everest.u704.trim.titanium_plus_2_0l_bi_turbo_10at_4x4_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:16+00:00",
+    "before_hash": "147762a6aaef91beaf307d32841ea34bc99938961449fd18189dd5723a2cb623",
+    "after_hash": "299b2f13f4eab87f3ddf1aac310292a4c5092e9d28484b8662e9f7696d63cd22",
+    "before": [
+      true,
+      true,
+      6.6,
+      7.2,
+      8.3,
+      190.0,
+      0.092,
+      0.00037,
+      "TIS",
+      "DIESEL",
+      1996,
+      "B20",
+      "255/55R20"
+    ],
+    "after": [
+      true,
+      true,
+      6.6,
+      7.2,
+      8.3,
+      190.0,
+      0.092,
+      0.00037,
+      "TIS",
+      "DIESEL",
+      1996,
+      "B20",
+      "255/55R20",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_c382a2ae-f509-439d-aeed-26c0eb0d4b03_identity.powertrain_5ab13a02612b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "33d751e35d0bd3db94471154:spec",
+    "revision_id": "33d751e35d0bd3db94471154",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.everest.u704.trim.titanium_plus_2_0l_bi_turbo_10at_4x4_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:16+00:00",
+    "payload": [
+      true,
+      true,
+      6.6,
+      7.2,
+      8.3,
+      190.0,
+      0.092,
+      0.00037,
+      "TIS",
+      "DIESEL",
+      1996,
+      "B20",
+      "255/55R20",
+      "ICE"
+    ]
+  }
+}

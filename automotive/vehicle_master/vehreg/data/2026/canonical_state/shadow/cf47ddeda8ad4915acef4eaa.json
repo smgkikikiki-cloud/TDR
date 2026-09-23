@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "cf47ddeda8ad4915acef4eaa",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-041-97e292394981:169",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.mini_cooper.j01.trim.john_works_convertible_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:29+00:00",
+    "before_hash": "51fe94c28a68d3535182dda4f8d3ae135cde12fc82f064d8fd6d3b28511bb8d7",
+    "after_hash": "b14bf8cd5ec5d56892a0cb2aaa591ee0f7255cdab8bd258c195daf632bccb7f6",
+    "before": [
+      true,
+      true,
+      true,
+      5.3,
+      6.2,
+      7.7,
+      141.0,
+      0.021
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      5.3,
+      6.2,
+      7.7,
+      141.0,
+      0.021,
+      "TIS"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_53b10b97-f7b0-477f-8e41-10ce9f75007f_emissions.standard_b1f3150b9698.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "cf47ddeda8ad4915acef4eaa:spec",
+    "revision_id": "cf47ddeda8ad4915acef4eaa",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.mini_cooper.j01.trim.john_works_convertible_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:29+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      5.3,
+      6.2,
+      7.7,
+      141.0,
+      0.021,
+      "TIS"
+    ]
+  }
+}

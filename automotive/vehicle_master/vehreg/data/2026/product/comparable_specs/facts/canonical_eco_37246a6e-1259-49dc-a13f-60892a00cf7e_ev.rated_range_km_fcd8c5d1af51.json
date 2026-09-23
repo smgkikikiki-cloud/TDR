@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:37246a6e-1259-49dc-a13f-60892a00cf7e:ev.rated_range_km",
+      "field_key": "ev.rated_range_km",
+      "value_state": "KNOWN",
+      "value": 490.0,
+      "unit": "km",
+      "observed_at": "2025-10-10",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/37246a6e-1259-49dc-a13f-60892a00cf7e",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/37246a6e-1259-49dc-a13f-60892a00cf7e",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "geely.geely_ex5.gen1.trim.max_bev"
+    }
+  ]
+}

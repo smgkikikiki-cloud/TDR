@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:719801cb-7494-454d-b46e-862deb508f18:efficiency.fuel_consumption_extra_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_extra_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 10.5,
+      "unit": "L/100km",
+      "observed_at": "2026-02-23",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/719801cb-7494-454d-b46e-862deb508f18",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/719801cb-7494-454d-b46e-862deb508f18",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "ford.ranger_double_cab.p703.trim.raptor_3_0l_v6_twin_turbo_ecoboost_4wd_10at"
+    }
+  ]
+}

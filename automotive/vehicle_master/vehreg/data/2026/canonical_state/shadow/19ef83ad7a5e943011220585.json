@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "19ef83ad7a5e943011220585",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-055-949893759636:383",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q5.fy.trim.sportback_55_tfsi_e_quattro_s_line_black_edition_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:22:05+00:00",
+    "before_hash": "6ea92327be9ae0afad54367f64402911856b8a0aa3fc5b5bbbe0d64908143280",
+    "after_hash": "e6280ee91e9357efa674fe94533f17bc789f266c88c0181814f3a9f884d470ec",
+    "before": [
+      {
+        "trim_id": "audi.audi_q5.fy.trim.sportback_55_tfsi_e_quattro_s_line_black_edition_phev",
+        "amount_thb": 4190000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:14:2",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: Q5 Sportback 55 TFSI e quattro; canonical grade: Sportback 55 TFSI e quattro S line Black Edition; mapping: manual. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "audi.audi_q5.fy.trim.sportback_55_tfsi_e_quattro_s_line_black_edition_phev",
+        "amount_thb": 4190000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2025-12-30",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/0b9c7a8a-b9da-4f0d-ba3b-ff71fa5c7b13",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "audi.audi_q5.fy.trim.sportback_55_tfsi_e_quattro_s_line_black_edition_phev",
+        "amount_thb": 4190000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:14:2",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: Q5 Sportback 55 TFSI e quattro; canonical grade: Sportback 55 TFSI e quattro S line Black Edition; mapping: manual. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-055-949893759636:383.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "19ef83ad7a5e943011220585:price",
+    "revision_id": "19ef83ad7a5e943011220585",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q5.fy.trim.sportback_55_tfsi_e_quattro_s_line_black_edition_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:22:05+00:00",
+    "payload": [
+      {
+        "trim_id": "audi.audi_q5.fy.trim.sportback_55_tfsi_e_quattro_s_line_black_edition_phev",
+        "amount_thb": 4190000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2025-12-30",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/0b9c7a8a-b9da-4f0d-ba3b-ff71fa5c7b13",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "audi.audi_q5.fy.trim.sportback_55_tfsi_e_quattro_s_line_black_edition_phev",
+        "amount_thb": 4190000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:14:2",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: Q5 Sportback 55 TFSI e quattro; canonical grade: Sportback 55 TFSI e quattro S line Black Edition; mapping: manual. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ]
+  }
+}

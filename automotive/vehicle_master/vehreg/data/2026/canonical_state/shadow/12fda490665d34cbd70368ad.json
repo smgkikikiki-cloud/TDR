@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "12fda490665d34cbd70368ad",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-051-bcc716924fd5:94",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.vellfire.gen1.trim.hybrid_zrg_edition",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:11+00:00",
+    "before_hash": "005b8765680b5bc5ce09df2ec5220761a8f4e172f8020e86563412c32949d7d3",
+    "after_hash": "811f2ffdbd05a51cd04b7c95cbb6552c4036fa058595edaa51ae5e7a3f6ef100",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      true,
+      7.3,
+      5.8,
+      3.4,
+      137.0,
+      0.003,
+      "TIS",
+      "HEV",
+      2493,
+      "GASOLINE",
+      "225/60R17",
+      "HEV"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      true,
+      7.3,
+      5.8,
+      3.4,
+      137.0,
+      0.003,
+      "TIS",
+      "HEV",
+      2493,
+      "GASOLINE",
+      "225/60R17",
+      "HEV",
+      16.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_6016c4a4705c4337bc351966290e8c0e_manufacturing.excise_tax_rate_910743b741ca.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "12fda490665d34cbd70368ad:spec",
+    "revision_id": "12fda490665d34cbd70368ad",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.vellfire.gen1.trim.hybrid_zrg_edition",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:11+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      true,
+      7.3,
+      5.8,
+      3.4,
+      137.0,
+      0.003,
+      "TIS",
+      "HEV",
+      2493,
+      "GASOLINE",
+      "225/60R17",
+      "HEV",
+      16.0
+    ]
+  }
+}

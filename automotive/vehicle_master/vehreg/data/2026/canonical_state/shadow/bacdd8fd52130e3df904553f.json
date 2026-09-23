@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "bacdd8fd52130e3df904553f",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-025-74b815fdedac:235",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lotus.eletre.gen1.trim.r_905_hp_dual_speed_transmission_awd_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:26+00:00",
+    "before_hash": "233d78e02014f61472facb7947d432d8c8c704fb36b1eea6105c5dfb345f067f",
+    "after_hash": "9a8c871d7fe3439d39d76958314230cc0baeb21c5a5824e9fa7dc94dd46df2a7",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      113.46,
+      718.1,
+      "Contemporary Amperex Technology Co., Limited",
+      "355 kW/DC",
+      "EXTERNAL_DC",
+      true,
+      true,
+      307.0,
+      410.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      113.46,
+      718.1,
+      "Contemporary Amperex Technology Co., Limited",
+      "355 kW/DC",
+      "EXTERNAL_DC",
+      true,
+      true,
+      307.0,
+      410.0,
+      "275/35R23"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_bc1ae94b-6db1-4644-96dd-fba2214c3229_fitment.tyre_front_6635fc6e2eb0.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "bacdd8fd52130e3df904553f:spec",
+    "revision_id": "bacdd8fd52130e3df904553f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lotus.eletre.gen1.trim.r_905_hp_dual_speed_transmission_awd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:26+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      113.46,
+      718.1,
+      "Contemporary Amperex Technology Co., Limited",
+      "355 kW/DC",
+      "EXTERNAL_DC",
+      true,
+      true,
+      307.0,
+      410.0,
+      "275/35R23"
+    ]
+  }
+}

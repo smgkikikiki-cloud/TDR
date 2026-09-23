@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "8fc0bb9bcd3a30e19ca07387",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-029-c1bed9cb95f3:152",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.hyptec_ht.gen1.trim.620_luxury_gull_wing_doors_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:55+00:00",
+    "before_hash": "6b964dd31579b4cbc3c0960bac468512afe756c16c292b1a2f619bac30e218e0",
+    "after_hash": "8cb218ef8d18cde1dd62ebe7097c4863aa66bb02f9a259aa0bfb94ecb90155c7",
+    "before": [
+      "LFP",
+      83.64,
+      638.5,
+      "EVE Power Co., Ltd.",
+      "AC: 220 V, DC: 380~900 V"
+    ],
+    "after": [
+      "LFP",
+      83.64,
+      638.5,
+      "EVE Power Co., Ltd.",
+      "AC: 220 V, DC: 380~900 V",
+      "BOTH"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_da65f191-df51-44bb-95f6-829ea0ebe3a1_charging.port_type_e97f00dbc04c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "8fc0bb9bcd3a30e19ca07387:spec",
+    "revision_id": "8fc0bb9bcd3a30e19ca07387",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.hyptec_ht.gen1.trim.620_luxury_gull_wing_doors_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:55+00:00",
+    "payload": [
+      "LFP",
+      83.64,
+      638.5,
+      "EVE Power Co., Ltd.",
+      "AC: 220 V, DC: 380~900 V",
+      "BOTH"
+    ]
+  }
+}

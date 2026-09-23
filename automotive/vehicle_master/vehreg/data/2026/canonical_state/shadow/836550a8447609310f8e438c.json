@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "836550a8447609310f8e438c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-010-6f2b18f1a4fd:244",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.ranger_double_cab.p703.trim.wildtrak_x_3_0l_v6_turbo_4wd_10at",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:15+00:00",
+    "before_hash": "6dde21ab5d94bd4713997331eb38bec8001f70e839c29e63073d0b95247b1306",
+    "after_hash": "de2d3778910447533ebcb1e0f3292b35c38f66748758623f8ed49f7da7ed42a1",
+    "before": [
+      true,
+      true,
+      true,
+      9.1,
+      9.8,
+      10.8
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      9.1,
+      9.8,
+      10.8,
+      256.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_da4c93fd-752f-4ccc-ace8-cdf45e518234_emissions.co2_g_km_7a230cf6f539.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "836550a8447609310f8e438c:spec",
+    "revision_id": "836550a8447609310f8e438c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.ranger_double_cab.p703.trim.wildtrak_x_3_0l_v6_turbo_4wd_10at",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:15+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      9.1,
+      9.8,
+      10.8,
+      256.0
+    ]
+  }
+}

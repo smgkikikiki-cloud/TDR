@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "116ae2ab5f07d6994cb86daf",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-005-77a02922c989:332",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.voxy.gen1.trim.hybrid_s_z_2wd_car_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:56+00:00",
+    "before_hash": "1770a70d59bc11c6184cfec06b5b554ad634e03f5f1f30dc14e50ff2ab6ba9a2",
+    "after_hash": "644a0e4e7256460d3d5831c6bc6c1874295bdf62f801fc834ad089c8bb162862",
+    "before": [
+      true,
+      true,
+      5.7,
+      5.1,
+      4.2,
+      117.0,
+      0.00326,
+      "TIS",
+      "HEV"
+    ],
+    "after": [
+      true,
+      true,
+      5.7,
+      5.1,
+      4.2,
+      117.0,
+      0.00326,
+      "TIS",
+      "HEV",
+      1797
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_a1167020-6827-48a7-aff6-15b3cb33626c_engine.displacement_cc_aa7f6591a154.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "116ae2ab5f07d6994cb86daf:spec",
+    "revision_id": "116ae2ab5f07d6994cb86daf",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.voxy.gen1.trim.hybrid_s_z_2wd_car_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:56+00:00",
+    "payload": [
+      true,
+      true,
+      5.7,
+      5.1,
+      4.2,
+      117.0,
+      0.00326,
+      "TIS",
+      "HEV",
+      1797
+    ]
+  }
+}

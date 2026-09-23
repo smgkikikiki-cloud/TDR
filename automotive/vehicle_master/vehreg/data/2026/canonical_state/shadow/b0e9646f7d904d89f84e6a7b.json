@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b0e9646f7d904d89f84e6a7b",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-023-8723a19230b0:119",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.everest.u704.trim.titanium_plus_2_0l_bi_turbo_10at_4x2_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:16+00:00",
+    "before_hash": "402e9c2c8e67d8fcdead468c0c604a6aebf33f0814af090f3c7cee88c37e420f",
+    "after_hash": "f5c1593d514a282109002d3edbde7fd5fd10a319ce63cdc1591448ef3582d56d",
+    "before": [
+      true,
+      true,
+      true,
+      6.2,
+      6.9,
+      8.0
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      6.2,
+      6.9,
+      8.0,
+      182.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d2e4c842-e228-4daf-966a-e939d5136216_emissions.co2_g_km_87b2970eea5e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b0e9646f7d904d89f84e6a7b:spec",
+    "revision_id": "b0e9646f7d904d89f84e6a7b",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.everest.u704.trim.titanium_plus_2_0l_bi_turbo_10at_4x2_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:16+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      6.2,
+      6.9,
+      8.0,
+      182.0
+    ]
+  }
+}

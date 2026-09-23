@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "60476e3ae72fefb8aae6fb24",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-001-2163ac0376be:309",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.cayenne.e3.trim.s_electric_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:45+00:00",
+    "before_hash": "33f5cd292f17abb29a6c509a2d161b783f9b765f302f44975b559a43f87f978a",
+    "after_hash": "e9f040d49270cd3f116501b7efe5b4fef4d3e8c32198823c0b2ce0dae8c36a4c",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      107.8,
+      700.0,
+      "Webasto Convertibles Slovakia, s.r.o.",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      174.0,
+      705.0,
+      "285/40R22",
+      "325/35R22",
+      "BEV"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      107.8,
+      700.0,
+      "Webasto Convertibles Slovakia, s.r.o.",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      174.0,
+      705.0,
+      "285/40R22",
+      "325/35R22",
+      "BEV",
+      10.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_819cd062-4578-4f0d-8a80-fc40253d69a1_manufacturing.excise_tax_rate_553332030389.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "60476e3ae72fefb8aae6fb24:spec",
+    "revision_id": "60476e3ae72fefb8aae6fb24",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.cayenne.e3.trim.s_electric_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:45+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      107.8,
+      700.0,
+      "Webasto Convertibles Slovakia, s.r.o.",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      174.0,
+      705.0,
+      "285/40R22",
+      "325/35R22",
+      "BEV",
+      10.0
+    ]
+  }
+}

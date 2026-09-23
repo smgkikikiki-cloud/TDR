@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "573217ed1135cd2dcb48d55d",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-009-54711011662e:232",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "xpeng.xpeng_g6.g6.trim.performance_awd_87_5_kwh_dual_487_hp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:11+00:00",
+    "before_hash": "af77e4da70cea7b77f2ff32b13013d2fdf9f3095d257918f7e4e8d3432ed0a36",
+    "after_hash": "cb087eca2448df86a5fa8594adad5b2f02cb8ebd0723fc12c0536c43a906689f",
+    "before": [
+      "LFP",
+      80.81,
+      581.4,
+      "CALB Group Co., Ltd.",
+      "BOTH",
+      true,
+      163.0,
+      575.0,
+      "255/45R20",
+      "BEV",
+      10.0,
+      2,
+      "PMSM"
+    ],
+    "after": [
+      "LFP",
+      80.81,
+      581.4,
+      "CALB Group Co., Ltd.",
+      "BOTH",
+      true,
+      163.0,
+      575.0,
+      "255/45R20",
+      "BEV",
+      10.0,
+      2,
+      "PMSM",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_a3cd3664-2618-48a5-99fa-011d6eb568f6_safety.abs_5aa86c5a36fc.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "573217ed1135cd2dcb48d55d:spec",
+    "revision_id": "573217ed1135cd2dcb48d55d",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "xpeng.xpeng_g6.g6.trim.performance_awd_87_5_kwh_dual_487_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:11+00:00",
+    "payload": [
+      "LFP",
+      80.81,
+      581.4,
+      "CALB Group Co., Ltd.",
+      "BOTH",
+      true,
+      163.0,
+      575.0,
+      "255/45R20",
+      "BEV",
+      10.0,
+      2,
+      "PMSM",
+      true
+    ]
+  }
+}

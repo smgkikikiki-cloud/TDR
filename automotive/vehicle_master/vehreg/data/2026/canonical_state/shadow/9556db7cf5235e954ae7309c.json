@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9556db7cf5235e954ae7309c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-055-949893759636:312",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.2_5_g",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:22:04+00:00",
+    "before_hash": "9b12aba4d73968fbada9e638cae646c092a59ce1bf7922795a1b3fc070fbc243",
+    "after_hash": "40d114ad154a850542428f6548b66ad90cb212013c31c35293fe5ba013183f05",
+    "before": [
+      true,
+      true,
+      7.4,
+      8.3,
+      10.0,
+      194.0,
+      0.006,
+      "TIS"
+    ],
+    "after": [
+      true,
+      true,
+      7.4,
+      8.3,
+      10.0,
+      194.0,
+      0.006,
+      "TIS",
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_136d3939ed28488790a5f2d02ffd03c4_engine.combustion_type_32f81544ab69.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9556db7cf5235e954ae7309c:spec",
+    "revision_id": "9556db7cf5235e954ae7309c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.2_5_g",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:22:04+00:00",
+    "payload": [
+      true,
+      true,
+      7.4,
+      8.3,
+      10.0,
+      194.0,
+      0.006,
+      "TIS",
+      "GASOLINE"
+    ]
+  }
+}

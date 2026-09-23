@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:a6ecd7da-5c20-46d9-a866-dadf6b134977:efficiency.fuel_consumption_extra_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_extra_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 4.4,
+      "unit": "L/100km",
+      "observed_at": "2023-11-02",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/a6ecd7da-5c20-46d9-a866-dadf6b134977",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/a6ecd7da-5c20-46d9-a866-dadf6b134977",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "nissan.kicks.p15.trim.star_edition"
+    }
+  ]
+}

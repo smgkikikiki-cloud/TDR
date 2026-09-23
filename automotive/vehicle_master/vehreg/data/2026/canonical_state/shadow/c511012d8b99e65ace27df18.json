@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c511012d8b99e65ace27df18",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-050-6df028e5a85f:182",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.etron.gen1.trim.quattro_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:57+00:00",
+    "before_hash": "7e8f283b0f5707834b3b303452f4f9087c4a4e4a7e4cfba7b98c2c7dccad2e23",
+    "after_hash": "777a91fddbf81f753242880551182eb2f40f1e9629191df6d3ecd89898593918",
+    "before": [
+      true,
+      "GASOLINE",
+      "265/45R21",
+      "ICE",
+      8.0,
+      true,
+      3
+    ],
+    "after": [
+      true,
+      "GASOLINE",
+      "265/45R21",
+      "ICE",
+      8.0,
+      true,
+      3,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b73f15dba35c4beea606e04334a5b41c_safety.esc_d306c137d580.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c511012d8b99e65ace27df18:spec",
+    "revision_id": "c511012d8b99e65ace27df18",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.etron.gen1.trim.quattro_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:57+00:00",
+    "payload": [
+      true,
+      "GASOLINE",
+      "265/45R21",
+      "ICE",
+      8.0,
+      true,
+      3,
+      true
+    ]
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c324386a898a4a44349c7d6d",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-014-8db054eb58a3:350",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q5.fy.trim.sportback_55_tfsi_e_quattro_s_line_black_edition_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:33+00:00",
+    "before_hash": "c6c6efc9e3525382bfe843c7b900eec6eb1ffc5c31409dc5c823eaca3c8165b9",
+    "after_hash": "84186ffaea84db21d9395cecc63cfaa877df1bda70b9811f4ee3022062792a38",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      17.95,
+      374.0,
+      "Samsung",
+      "ONBOARD_AC",
+      1.9,
+      44.0,
+      0.012,
+      0.0028,
+      "TIS"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      17.95,
+      374.0,
+      "Samsung",
+      "ONBOARD_AC",
+      1.9,
+      44.0,
+      0.012,
+      0.0028,
+      "TIS",
+      "PHEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_0b9c7a8a-b9da-4f0d-ba3b-ff71fa5c7b13_engine.combustion_type_12f639ffb4ed.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c324386a898a4a44349c7d6d:spec",
+    "revision_id": "c324386a898a4a44349c7d6d",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q5.fy.trim.sportback_55_tfsi_e_quattro_s_line_black_edition_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:33+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      17.95,
+      374.0,
+      "Samsung",
+      "ONBOARD_AC",
+      1.9,
+      44.0,
+      0.012,
+      0.0028,
+      "TIS",
+      "PHEV"
+    ]
+  }
+}

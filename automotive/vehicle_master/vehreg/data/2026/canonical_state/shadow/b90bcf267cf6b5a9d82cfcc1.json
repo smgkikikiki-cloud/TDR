@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b90bcf267cf6b5a9d82cfcc1",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-037-986e7ff7e687:30",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.triton_double_cab.mv.trim.athlete_2_4_at",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:56+00:00",
+    "before_hash": "08a734de576fcf1e0f60a5aa7325c743d75ea360e456013df3cecf7918b46f40",
+    "after_hash": "e7e0ebe567f4d8c37ec0016aca68791aafdeab2bfb655319be03d7e3b7cd1692",
+    "before": [
+      6.4,
+      7.3,
+      9.0,
+      192.0,
+      0.388,
+      0.00069,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "265/60R18",
+      "ICE",
+      9.0,
+      6
+    ],
+    "after": [
+      6.4,
+      7.3,
+      9.0,
+      192.0,
+      0.388,
+      0.00069,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "265/60R18",
+      "ICE",
+      9.0,
+      6,
+      "AUTOMATIC"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_29463bd9-5df4-40ea-b900-b9fd5f8d373a_powertrain.transmission_161ce278c0b7.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b90bcf267cf6b5a9d82cfcc1:spec",
+    "revision_id": "b90bcf267cf6b5a9d82cfcc1",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.triton_double_cab.mv.trim.athlete_2_4_at",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:56+00:00",
+    "payload": [
+      6.4,
+      7.3,
+      9.0,
+      192.0,
+      0.388,
+      0.00069,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "265/60R18",
+      "ICE",
+      9.0,
+      6,
+      "AUTOMATIC"
+    ]
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "4b791d37361da1a485abe55c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-004-87075c4d97a5:102",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_s05.gen1.trim.reev_max_reev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:52+00:00",
+    "before_hash": "e2ff8f9a8f426926a8babb7086de1c89f34c8f6b195cce9840f73f0fe2f5560c",
+    "after_hash": "4c3b14a8d5ab379498eb17975417ea614f62f60725716d57154ff7947f056aba",
+    "before": [
+      "LFP",
+      27.32,
+      314.0,
+      "Contemporary Amperex Technology Co., Limited",
+      "ONBOARD_AC"
+    ],
+    "after": [
+      "LFP",
+      27.32,
+      314.0,
+      "Contemporary Amperex Technology Co., Limited",
+      "ONBOARD_AC",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_8c7ac610-7ae7-45a4-980e-aea86d46784b_comfort.auto_climate_463b78973582.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "4b791d37361da1a485abe55c:spec",
+    "revision_id": "4b791d37361da1a485abe55c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_s05.gen1.trim.reev_max_reev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:52+00:00",
+    "payload": [
+      "LFP",
+      27.32,
+      314.0,
+      "Contemporary Amperex Technology Co., Limited",
+      "ONBOARD_AC",
+      true
+    ]
+  }
+}

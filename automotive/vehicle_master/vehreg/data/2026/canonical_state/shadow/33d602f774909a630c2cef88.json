@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "33d602f774909a630c2cef88",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-008-bc3b92e93b52:139",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.crv.rs.trim.e_hev_hunt_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:07+00:00",
+    "before_hash": "66e185c7ba4bdf888555a09d663677959ee473fa34188c0dd0b1191c6f7899c5",
+    "after_hash": "98c0162ace786bd4fe564e3f267e531d44c8be8b84a7fb458113edb251cf5098",
+    "before": [
+      true,
+      true,
+      5.4,
+      5.1,
+      4.5,
+      117.0,
+      0.014,
+      0.00048,
+      "TIS"
+    ],
+    "after": [
+      true,
+      true,
+      5.4,
+      5.1,
+      4.5,
+      117.0,
+      0.014,
+      0.00048,
+      "TIS",
+      "HEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_21f728b0-4666-46f7-acb7-49f689d5ec32_engine.combustion_type_15bb016c2bac.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "33d602f774909a630c2cef88:spec",
+    "revision_id": "33d602f774909a630c2cef88",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.crv.rs.trim.e_hev_hunt_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:07+00:00",
+    "payload": [
+      true,
+      true,
+      5.4,
+      5.1,
+      4.5,
+      117.0,
+      0.014,
+      0.00048,
+      "TIS",
+      "HEV"
+    ]
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "8c80b1ffca03c76c364e388d",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-007-412f5563cca4:327",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.accord.cy.trim.e_hev_e_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:03+00:00",
+    "before_hash": "e8ce58511493fdd0435f300b6408df4e5963acc71abdaf6279f199a1e0d7c0a9",
+    "after_hash": "e2d0573318fc42c46dc2b3c6a3f74a421ed05367ffc9d15984db86c9c85546e3",
+    "before": [
+      true,
+      true,
+      4.3,
+      4.3,
+      4.2
+    ],
+    "after": [
+      true,
+      true,
+      4.3,
+      4.3,
+      4.2,
+      97.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e4e5ba65-ffde-4b84-b6f4-7ba09c0a3e82_emissions.co2_g_km_d44d00c6f9bf.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "8c80b1ffca03c76c364e388d:spec",
+    "revision_id": "8c80b1ffca03c76c364e388d",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.accord.cy.trim.e_hev_e_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:03+00:00",
+    "payload": [
+      true,
+      true,
+      4.3,
+      4.3,
+      4.2,
+      97.0
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:1f12a309-91b9-47aa-8a49-945d680c10e9:efficiency.fuel_consumption_extra_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_extra_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 6.8,
+      "unit": "L/100km",
+      "observed_at": "2026-03-09",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/1f12a309-91b9-47aa-8a49-945d680c10e9",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/1f12a309-91b9-47aa-8a49-945d680c10e9",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "honda.civic.fe.trim.type_r_ice"
+    }
+  ]
+}

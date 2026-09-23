@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d48ea8be0c498c35d8b99d0c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-048-9a296c6c8041:104",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover.gen1.trim.evoque_1_5_plug_in_hybrid_awd_autobiography_plus_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:35+00:00",
+    "before_hash": "ffae2a7fb5965b821a954bae7b5de20551e2c5072e0e7c859ed7d180e4d930cd",
+    "after_hash": "ffe43d910f50c6f22b464d8f3fa900f340164aa350a87059d5b8bcf50a0470f3",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      17.67,
+      357.0,
+      "Samsung SDI",
+      "EXTERNAL_DC",
+      true,
+      true,
+      2.0,
+      43.0,
+      0.011,
+      "TIS",
+      "PHEV"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      17.67,
+      357.0,
+      "Samsung SDI",
+      "EXTERNAL_DC",
+      true,
+      true,
+      2.0,
+      43.0,
+      0.011,
+      "TIS",
+      "PHEV",
+      1498
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_39354057673a42b6906d9beac23472dd_engine.displacement_cc_aa23f8dd6dfa.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d48ea8be0c498c35d8b99d0c:spec",
+    "revision_id": "d48ea8be0c498c35d8b99d0c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover.gen1.trim.evoque_1_5_plug_in_hybrid_awd_autobiography_plus_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:35+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      17.67,
+      357.0,
+      "Samsung SDI",
+      "EXTERNAL_DC",
+      true,
+      true,
+      2.0,
+      43.0,
+      0.011,
+      "TIS",
+      "PHEV",
+      1498
+    ]
+  }
+}

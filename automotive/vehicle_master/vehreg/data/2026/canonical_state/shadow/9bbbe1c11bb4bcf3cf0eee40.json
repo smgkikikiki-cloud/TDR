@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9bbbe1c11bb4bcf3cf0eee40",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-027-e2d326b095bb:235",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.ranger_double_cab.p703.trim.3_0l_v6_turbo_4wd_10at",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:39+00:00",
+    "before_hash": "cc858382e03010bec3033595858e4f999c666f42dd9988bd4fad21538f35cfd1",
+    "after_hash": "dd880d574b76a2eb538b50ecbc8a8000d098df981f7187f9cdbb1fc8e5bcacde",
+    "before": [
+      true,
+      true,
+      true,
+      7.3,
+      8.4,
+      10.1,
+      221.0,
+      0.212,
+      0.00045,
+      "TIS",
+      "DIESEL",
+      2993,
+      "B20"
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      7.3,
+      8.4,
+      10.1,
+      221.0,
+      0.212,
+      0.00045,
+      "TIS",
+      "DIESEL",
+      2993,
+      "B20",
+      "255/55R20"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_c907c04b-232f-455d-acd2-86f616640fc1_fitment.tyre_size_73cf5653c569.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9bbbe1c11bb4bcf3cf0eee40:spec",
+    "revision_id": "9bbbe1c11bb4bcf3cf0eee40",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.ranger_double_cab.p703.trim.3_0l_v6_turbo_4wd_10at",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:39+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      7.3,
+      8.4,
+      10.1,
+      221.0,
+      0.212,
+      0.00045,
+      "TIS",
+      "DIESEL",
+      2993,
+      "B20",
+      "255/55R20"
+    ]
+  }
+}

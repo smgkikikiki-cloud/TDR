@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a79645b75805af87a40842bf",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-021-33a0f14d51bc:270",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.city.gn2.trim.rs_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:06+00:00",
+    "before_hash": "c43694f758b2f94ac0d9e24bdcc8d07ce2a4a6e167fd46f039979e840bcf5dc8",
+    "after_hash": "4cd93e70f8c5da0a8a715a725f169c07f0423b6b6a0d8a1dda046fb7e2dd5047",
+    "before": [
+      true,
+      4.2,
+      4.4,
+      4.8,
+      100.0,
+      0.027,
+      0.00061,
+      "TIS",
+      "GASOLINE",
+      988,
+      "GASOLINE",
+      "185/60R16",
+      "ICE",
+      13.0
+    ],
+    "after": [
+      true,
+      4.2,
+      4.4,
+      4.8,
+      100.0,
+      0.027,
+      0.00061,
+      "TIS",
+      "GASOLINE",
+      988,
+      "GASOLINE",
+      "185/60R16",
+      "ICE",
+      13.0,
+      "CVT"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_dca25795-3477-433d-acba-ac2bfea771bf_powertrain.transmission_65e46085127e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a79645b75805af87a40842bf:spec",
+    "revision_id": "a79645b75805af87a40842bf",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.city.gn2.trim.rs_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:06+00:00",
+    "payload": [
+      true,
+      4.2,
+      4.4,
+      4.8,
+      100.0,
+      0.027,
+      0.00061,
+      "TIS",
+      "GASOLINE",
+      988,
+      "GASOLINE",
+      "185/60R16",
+      "ICE",
+      13.0,
+      "CVT"
+    ]
+  }
+}

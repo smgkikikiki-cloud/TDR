@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "4369c3798741400808f80314",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-008-bc3b92e93b52:211",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.hrv.rv.trim.e_hev_el_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:07+00:00",
+    "before_hash": "fcc80236a463f6031d2eed51564ae67c730ad5d497fface86fa3b978cfa02dd7",
+    "after_hash": "265c6fd417b76154d273647827e0aba2e657f9fe60d3158c3126c28331cc1135",
+    "before": [
+      true,
+      4.3,
+      4.1,
+      3.8,
+      94.0,
+      0.009,
+      0.00083,
+      "TIS",
+      "HEV",
+      1498
+    ],
+    "after": [
+      true,
+      4.3,
+      4.1,
+      3.8,
+      94.0,
+      0.009,
+      0.00083,
+      "TIS",
+      "HEV",
+      1498,
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_8b8723dd-bfd9-42ef-9c59-f3b9977f490a_engine.fuel_type_535a31ccc8fa.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "4369c3798741400808f80314:spec",
+    "revision_id": "4369c3798741400808f80314",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.hrv.rv.trim.e_hev_el_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:07+00:00",
+    "payload": [
+      true,
+      4.3,
+      4.1,
+      3.8,
+      94.0,
+      0.009,
+      0.00083,
+      "TIS",
+      "HEV",
+      1498,
+      "GASOLINE"
+    ]
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "46faa3e62b1b59f2e6e3d87a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-019-79c9da20e296:39",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "avatr.avatr_07.avatr_07.trim.ultra_awd_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:55+00:00",
+    "before_hash": "a6a3240a99ee6c6c6bf0d9dc5502b1de0f201cca61b1f5ddd2e2474ac421c669",
+    "after_hash": "de83eee0f4eb3a6e0deeb169eb7c344fb6a08b1fe8d5dc7a12844a28fc8e5243",
+    "before": [
+      "LFP",
+      82.22,
+      609.0,
+      "CATL",
+      "ONBOARD_AC",
+      true,
+      175.0,
+      545.0,
+      "265/45R21",
+      "BEV"
+    ],
+    "after": [
+      "LFP",
+      82.22,
+      609.0,
+      "CATL",
+      "ONBOARD_AC",
+      true,
+      175.0,
+      545.0,
+      "265/45R21",
+      "BEV",
+      10.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_63d314f5-a476-4170-bd84-71fdd0ed626e_manufacturing.excise_tax_rate_2dd26870481c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "46faa3e62b1b59f2e6e3d87a:spec",
+    "revision_id": "46faa3e62b1b59f2e6e3d87a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "avatr.avatr_07.avatr_07.trim.ultra_awd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:55+00:00",
+    "payload": [
+      "LFP",
+      82.22,
+      609.0,
+      "CATL",
+      "ONBOARD_AC",
+      true,
+      175.0,
+      545.0,
+      "265/45R21",
+      "BEV",
+      10.0
+    ]
+  }
+}

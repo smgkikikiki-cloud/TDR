@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "71f36ecfc1d2b6471a13f63a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-011-3c709241399c:395",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mazda6.gen1.trim.mazda6e_exclusive_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:19+00:00",
+    "before_hash": "f1009555ad524cf0c1b67afbf1373101a28ae91e1ad8fce2d09fa28fcc308906",
+    "after_hash": "e3e75651c812025d8e586f5b77369d3912d106192cb5d235ff278be70260bb60",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      77.9,
+      364.0,
+      "CALB Group Co.,Ltd.",
+      "AC: 230 V(single phase) / 230 V(three phases)"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      77.9,
+      364.0,
+      "CALB Group Co.,Ltd.",
+      "AC: 230 V(single phase) / 230 V(three phases)",
+      "BOTH"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_10b5aa8b-13f3-4894-bf3a-cf04481ca058_charging.port_type_6f95d59d35a3.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "71f36ecfc1d2b6471a13f63a:spec",
+    "revision_id": "71f36ecfc1d2b6471a13f63a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mazda6.gen1.trim.mazda6e_exclusive_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:19+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      77.9,
+      364.0,
+      "CALB Group Co.,Ltd.",
+      "AC: 230 V(single phase) / 230 V(three phases)",
+      "BOTH"
+    ]
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "4a407d238c69f360200ead28",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-007-412f5563cca4:72",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.gle.gen1.trim.hybrid_4matic_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:03+00:00",
+    "before_hash": "fa8139f870afe7ba79cdd4de1a0edff28108aed453a9ec24057bd7618944d778",
+    "after_hash": "d5f647b37b647fdee68fff034cbc00e78113f2df25317339f274ac095895e146",
+    "before": [
+      "NMC",
+      25.77,
+      363.0,
+      "Mercedes-Benz AG",
+      "BOTH",
+      1.7,
+      39.0,
+      0.0009
+    ],
+    "after": [
+      "NMC",
+      25.77,
+      363.0,
+      "Mercedes-Benz AG",
+      "BOTH",
+      1.7,
+      39.0,
+      0.0009,
+      2e-05
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_55661114-1e49-4157-a6c8-092b8c26b65b_emissions.pm_g_km_8f73040cfe8a.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "4a407d238c69f360200ead28:spec",
+    "revision_id": "4a407d238c69f360200ead28",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.gle.gen1.trim.hybrid_4matic_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:03+00:00",
+    "payload": [
+      "NMC",
+      25.77,
+      363.0,
+      "Mercedes-Benz AG",
+      "BOTH",
+      1.7,
+      39.0,
+      0.0009,
+      2e-05
+    ]
+  }
+}

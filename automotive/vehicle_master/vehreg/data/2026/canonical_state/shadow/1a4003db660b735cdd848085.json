@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "1a4003db660b735cdd848085",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-001-2163ac0376be:160",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.vellfire.gen1.trim.hybrid_z_premier_2wd",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:45+00:00",
+    "before_hash": "3c1522e7e4e80ec84d7dfb446a8061d40d6e7e5cb4db368adef95e500af91357",
+    "after_hash": "b09b98c0e70fb0fc2e8c22973d1b0ba2bb37f430f8dffdd815e5cb9971885cff",
+    "before": [
+      true,
+      true,
+      5.9,
+      6.1,
+      6.4,
+      140.0,
+      0.00255,
+      "TIS"
+    ],
+    "after": [
+      true,
+      true,
+      5.9,
+      6.1,
+      6.4,
+      140.0,
+      0.00255,
+      "TIS",
+      "HEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_4ae1c465-27b4-4ea2-aef9-d6efdd738f5a_engine.combustion_type_74b79967ee43.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "1a4003db660b735cdd848085:spec",
+    "revision_id": "1a4003db660b735cdd848085",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.vellfire.gen1.trim.hybrid_z_premier_2wd",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:45+00:00",
+    "payload": [
+      true,
+      true,
+      5.9,
+      6.1,
+      6.4,
+      140.0,
+      0.00255,
+      "TIS",
+      "HEV"
+    ]
+  }
+}

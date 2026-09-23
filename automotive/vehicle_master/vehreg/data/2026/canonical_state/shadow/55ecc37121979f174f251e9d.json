@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "55ecc37121979f174f251e9d",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-043-5c8c2001b8cb:364",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a4.gen1.trim.40_tfsi_s_line_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:45+00:00",
+    "before_hash": "c9cc6195032649a839dd011fa6b8472a98b51593e948c1bd5b33cd939067d01e",
+    "after_hash": "46d0f6006f9a4302491727f3bb520ad0c5346e92a63c593ab4c714aa03b5b13b",
+    "before": [
+      5.3,
+      6.3,
+      7.9,
+      143.0,
+      0.004,
+      0.00024,
+      "TIS",
+      "HEV",
+      1984,
+      "GASOLINE",
+      "245/40R18",
+      "HEV",
+      25.0,
+      "AUTOMATIC",
+      true,
+      5,
+      true,
+      true,
+      [
+        "R13H"
+      ]
+    ],
+    "after": [
+      5.3,
+      6.3,
+      7.9,
+      143.0,
+      0.004,
+      0.00024,
+      "TIS",
+      "HEV",
+      1984,
+      "GASOLINE",
+      "245/40R18",
+      "HEV",
+      25.0,
+      "AUTOMATIC",
+      true,
+      5,
+      true,
+      true,
+      [
+        "R13H"
+      ],
+      1431
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e1b09021-4284-4211-8b78-625a9939c8ab_vehicle.declared_total_weight_kg_6965f3e69fee.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "55ecc37121979f174f251e9d:spec",
+    "revision_id": "55ecc37121979f174f251e9d",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a4.gen1.trim.40_tfsi_s_line_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:45+00:00",
+    "payload": [
+      5.3,
+      6.3,
+      7.9,
+      143.0,
+      0.004,
+      0.00024,
+      "TIS",
+      "HEV",
+      1984,
+      "GASOLINE",
+      "245/40R18",
+      "HEV",
+      25.0,
+      "AUTOMATIC",
+      true,
+      5,
+      true,
+      true,
+      [
+        "R13H"
+      ],
+      1431
+    ]
+  }
+}

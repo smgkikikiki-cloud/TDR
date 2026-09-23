@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f2468283a69c8d7f0e207976",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-036-ba2d051d30aa:328",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.targa_4_gts_edition_50_years_porsche_design_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:48+00:00",
+    "before_hash": "52bf5809de12f71ecb3373b6ce75171c5008d8769081dc9d8832cae3d653e4b9",
+    "after_hash": "248eafe66c1d2047bf494ba3606cd4e32d6e150b4d01e2246ce434cb48e4faf0",
+    "before": [
+      true,
+      10.2,
+      13.0,
+      17.8,
+      309.0,
+      0.007,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35ZR20",
+      "305/30ZR21",
+      "ICE",
+      35.0
+    ],
+    "after": [
+      true,
+      10.2,
+      13.0,
+      17.8,
+      309.0,
+      0.007,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35ZR20",
+      "305/30ZR21",
+      "ICE",
+      35.0,
+      "AUTOMATIC"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_520a4ee6-8cbc-4f8b-8d0e-e6a3802de7c2_powertrain.transmission_1ce9c4db088f.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f2468283a69c8d7f0e207976:spec",
+    "revision_id": "f2468283a69c8d7f0e207976",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.targa_4_gts_edition_50_years_porsche_design_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:48+00:00",
+    "payload": [
+      true,
+      10.2,
+      13.0,
+      17.8,
+      309.0,
+      0.007,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35ZR20",
+      "305/30ZR21",
+      "ICE",
+      35.0,
+      "AUTOMATIC"
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "495cb068bf05d63b684f708e",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-043-5c8c2001b8cb:399",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "subaru.forester.sk.trim.2_0i_s_es_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:45+00:00",
+    "before_hash": "2749eb9a4bad3ca14a3d699d47393720b520a0e0a10e2f61ebe71cc29cd47217",
+    "after_hash": "2d5d7d1c89cbfeca50a8bdeb8028d46be93ecf970aa6d6d79ca497a7f29a2ae6",
+    "before": [
+      6.3
+    ],
+    "after": [
+      6.3,
+      7.6
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_9337be4e-fe81-4ced-95e3-864beb1426e2_efficiency.fuel_consumption_l_100km_91afbf785559.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "495cb068bf05d63b684f708e:spec",
+    "revision_id": "495cb068bf05d63b684f708e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "subaru.forester.sk.trim.2_0i_s_es_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:45+00:00",
+    "payload": [
+      6.3,
+      7.6
+    ]
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "63ae5c33e8635084a7e62562",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-022-20a8a8e94ae5:253",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lexus_rx.al30.trim.rx450h_grand_luxury_plus_awd_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:11+00:00",
+    "before_hash": "d1bf995fe677f6c701730a063d6e6288732ff3f8c59c0e0d6df0584eadd3c45e",
+    "after_hash": "81088eeb42149e9c43e7a5161207521a23b93a5dddbef07081943ce182e9c888",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      18.12,
+      355.2,
+      "TOYOTA MOTOR KYUSHU, INC.",
+      "ONBOARD_AC",
+      1.3,
+      29.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      18.12,
+      355.2,
+      "TOYOTA MOTOR KYUSHU, INC.",
+      "ONBOARD_AC",
+      1.3,
+      29.0,
+      0.001
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e253da8c-df5f-4e3e-b709-ae297f865932_emissions.nox_g_km_49fb96c14764.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "63ae5c33e8635084a7e62562:spec",
+    "revision_id": "63ae5c33e8635084a7e62562",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lexus_rx.al30.trim.rx450h_grand_luxury_plus_awd_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:11+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      18.12,
+      355.2,
+      "TOYOTA MOTOR KYUSHU, INC.",
+      "ONBOARD_AC",
+      1.3,
+      29.0,
+      0.001
+    ]
+  }
+}

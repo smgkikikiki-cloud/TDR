@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "4953f651a8542b959d067e44",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-033-6b6996ed6874:364",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.targa_4_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:25+00:00",
+    "before_hash": "d2c4c0821796423242febf2cb3ed1ba0031e3cc08efb66a630244b444e1d73fd",
+    "after_hash": "98006be4211bc47ae960b19dfe7833b172fcbcafc8dc8977d546c568a9c9f7f2",
+    "before": [
+      true,
+      7.5,
+      9.9,
+      13.9,
+      225.0,
+      0.019,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35ZR20",
+      "305/30ZR21",
+      "ICE",
+      35.0
+    ],
+    "after": [
+      true,
+      7.5,
+      9.9,
+      13.9,
+      225.0,
+      0.019,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35ZR20",
+      "305/30ZR21",
+      "ICE",
+      35.0,
+      8
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_0dcf8af0-19e2-4906-abfb-e76e2cfa04d6_powertrain.gear_count_6f2aa2712f68.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "4953f651a8542b959d067e44:spec",
+    "revision_id": "4953f651a8542b959d067e44",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.targa_4_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:25+00:00",
+    "payload": [
+      true,
+      7.5,
+      9.9,
+      13.9,
+      225.0,
+      0.019,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35ZR20",
+      "305/30ZR21",
+      "ICE",
+      35.0,
+      8
+    ]
+  }
+}

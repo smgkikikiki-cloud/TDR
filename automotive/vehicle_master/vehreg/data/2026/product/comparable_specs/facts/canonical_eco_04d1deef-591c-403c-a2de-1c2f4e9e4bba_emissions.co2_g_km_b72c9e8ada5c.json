@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:04d1deef-591c-403c-a2de-1c2f4e9e4bba:emissions.co2_g_km",
+      "field_key": "emissions.co2_g_km",
+      "value_state": "KNOWN",
+      "value": 71.0,
+      "unit": "g/km",
+      "observed_at": "2024-07-31",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/04d1deef-591c-403c-a2de-1c2f4e9e4bba",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/04d1deef-591c-403c-a2de-1c2f4e9e4bba",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "bentley.flying_spur.gen1.trim.a_hybrid_phev"
+    }
+  ]
+}

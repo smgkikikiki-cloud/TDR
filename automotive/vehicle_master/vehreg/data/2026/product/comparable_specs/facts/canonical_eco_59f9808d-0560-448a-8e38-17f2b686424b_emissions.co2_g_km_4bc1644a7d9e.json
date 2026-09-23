@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:59f9808d-0560-448a-8e38-17f2b686424b:emissions.co2_g_km",
+      "field_key": "emissions.co2_g_km",
+      "value_state": "KNOWN",
+      "value": 176.0,
+      "unit": "g/km",
+      "observed_at": "2025-12-18",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/59f9808d-0560-448a-8e38-17f2b686424b",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/59f9808d-0560-448a-8e38-17f2b686424b",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_prime"
+    }
+  ]
+}

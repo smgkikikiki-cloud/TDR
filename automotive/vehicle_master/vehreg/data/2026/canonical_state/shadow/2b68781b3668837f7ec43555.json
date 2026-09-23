@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2b68781b3668837f7ec43555",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-005-77a02922c989:9",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq5.ne.trim.ioniq5_n_line_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:56+00:00",
+    "before_hash": "95753ec1823013c41084968907da135bd00900ac292b3b719c1898906c351411",
+    "after_hash": "8aab3008c112ec3b2ab8622c22819e80f43e3eb1fa2382548b1e245e31eae2ef",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      84.34,
+      697.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      163.0,
+      591.0,
+      "255/45R20",
+      "BEV",
+      2.0,
+      "PMSM",
+      true
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      84.34,
+      697.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      163.0,
+      591.0,
+      "255/45R20",
+      "BEV",
+      2.0,
+      "PMSM",
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_bd148dda-ed62-46eb-86e0-4ffec5d07961_safety.adaptive_cruise_efd678e5f5a3.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2b68781b3668837f7ec43555:spec",
+    "revision_id": "2b68781b3668837f7ec43555",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq5.ne.trim.ioniq5_n_line_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:56+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      84.34,
+      697.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      163.0,
+      591.0,
+      "255/45R20",
+      "BEV",
+      2.0,
+      "PMSM",
+      true,
+      true
+    ]
+  }
+}

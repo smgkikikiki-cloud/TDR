@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a76784aab73a34c75a9935f0",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-029-c1bed9cb95f3:394",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.crv.rs.trim.es_4wd_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:55+00:00",
+    "before_hash": "dc6c3add6688a024d8b7800948bd827726a293378fc855e2e983147d6f2def43",
+    "after_hash": "d440dce74ceb7b001023b8a4e22a1d1448d4bc6aa818cb52f2f03e2dbda1bf0b",
+    "before": [
+      true,
+      true,
+      6.2,
+      7.4,
+      9.4,
+      176.0,
+      0.009,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85"
+    ],
+    "after": [
+      true,
+      true,
+      6.2,
+      7.4,
+      9.4,
+      176.0,
+      0.009,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "235/60R18"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b1776a0e-3550-41ca-8a6b-36f50fcc0eae_fitment.tyre_size_8954fe0cf4d3.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a76784aab73a34c75a9935f0:spec",
+    "revision_id": "a76784aab73a34c75a9935f0",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.crv.rs.trim.es_4wd_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:55+00:00",
+    "payload": [
+      true,
+      true,
+      6.2,
+      7.4,
+      9.4,
+      176.0,
+      0.009,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "235/60R18"
+    ]
+  }
+}

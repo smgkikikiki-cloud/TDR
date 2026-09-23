@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a055319356c8b96bf5f67d50",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-054-d20b71816f05:64",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.c_hr.gen1.trim.by_karl_lagerfeld_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:52+00:00",
+    "before_hash": "dd42e7ca05ee6bbee7e03e0d3046c83e8bbbb21a4bc620181cec5a9c1a34a7f1",
+    "after_hash": "26ae264c31f293b370981424e888653d472683dc52bb95b2eede0d9367299bd7",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      4.2,
+      4.1,
+      4.1,
+      95.0,
+      0.012,
+      "TIS",
+      "HEV",
+      1798,
+      "E20",
+      "215/60R17",
+      "HEV",
+      4.0,
+      "CVT",
+      true,
+      9,
+      true,
+      true,
+      [
+        "R13H"
+      ]
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      4.2,
+      4.1,
+      4.1,
+      95.0,
+      0.012,
+      "TIS",
+      "HEV",
+      1798,
+      "E20",
+      "215/60R17",
+      "HEV",
+      4.0,
+      "CVT",
+      true,
+      9,
+      true,
+      true,
+      [
+        "R13H"
+      ],
+      1460
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_3e55da0abba3447eaaf030db5325409c_vehicle.declared_total_weight_kg_1dd2014d8f69.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a055319356c8b96bf5f67d50:spec",
+    "revision_id": "a055319356c8b96bf5f67d50",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.c_hr.gen1.trim.by_karl_lagerfeld_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:52+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      4.2,
+      4.1,
+      4.1,
+      95.0,
+      0.012,
+      "TIS",
+      "HEV",
+      1798,
+      "E20",
+      "215/60R17",
+      "HEV",
+      4.0,
+      "CVT",
+      true,
+      9,
+      true,
+      true,
+      [
+        "R13H"
+      ],
+      1460
+    ]
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "996723db28dbca74f34ce991",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-049-18d26b73936f:155",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_zs.zsg.trim.1_5_edition_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:45+00:00",
+    "before_hash": "c358a539793e93e413829908874511edda3601d4eb5bf333903b0799ee9eb526",
+    "after_hash": "8e3366ca7e113c96d9216a22ab1916f16e2017a9dccaffa5478f945c9e4b316c",
+    "before": [
+      true,
+      6.9,
+      8.5,
+      11.2,
+      139.0,
+      0.009,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "215/55R17",
+      "ICE",
+      20.0
+    ],
+    "after": [
+      true,
+      6.9,
+      8.5,
+      11.2,
+      139.0,
+      0.009,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "215/55R17",
+      "ICE",
+      20.0,
+      "CVT"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_a96b5895a81c44a99d65cfcac1e9c7c8_powertrain.transmission_f2baa07d1e7b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "996723db28dbca74f34ce991:spec",
+    "revision_id": "996723db28dbca74f34ce991",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_zs.zsg.trim.1_5_edition_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:45+00:00",
+    "payload": [
+      true,
+      6.9,
+      8.5,
+      11.2,
+      139.0,
+      0.009,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "215/55R17",
+      "ICE",
+      20.0,
+      "CVT"
+    ]
+  }
+}

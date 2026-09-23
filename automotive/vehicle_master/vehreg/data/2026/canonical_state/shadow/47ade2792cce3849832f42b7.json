@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "47ade2792cce3849832f42b7",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-019-79c9da20e296:95",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.taycan.gen1.trim.turbo_cross_turismo_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:55+00:00",
+    "before_hash": "049dd4b99ab751dc946218e998f5d7ae9b50d205caa5da30dba3ddeafb03f64f",
+    "after_hash": "d812c0280df8832ca2609afd34803c5fafb25afd6372c98d67308d93bbbe3d18",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      104.69,
+      727.0,
+      "Draxlmaier",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      186.0,
+      597.0,
+      "245/45R20"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      104.69,
+      727.0,
+      "Draxlmaier",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      186.0,
+      597.0,
+      "245/45R20",
+      "285/40R20"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_42483076-18ce-4fe1-8b88-0d7edad6edbf_fitment.tyre_rear_8e2373e6e4d4.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "47ade2792cce3849832f42b7:spec",
+    "revision_id": "47ade2792cce3849832f42b7",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.taycan.gen1.trim.turbo_cross_turismo_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:55+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      104.69,
+      727.0,
+      "Draxlmaier",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      186.0,
+      597.0,
+      "245/45R20",
+      "285/40R20"
+    ]
+  }
+}

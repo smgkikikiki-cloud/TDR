@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d3dbf9fb2316fa9e218b1168",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-004-87075c4d97a5:338",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_s05.gen1.trim.plus_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:53+00:00",
+    "before_hash": "80d9d3fd36c4ce3c437d2eb5a32850ec81e8a821a9608c10831c663e79f8b165",
+    "after_hash": "8d9231b353c49c6f829d09cf6192536a89d134b8e821bd2f534efbcdfb4e164a",
+    "before": [
+      "LFP",
+      56.09,
+      379.0,
+      "Chongqing Changan Automobile Co.,Ltd.",
+      "220V ,7.0 kW",
+      "ONBOARD_AC",
+      true,
+      150.0,
+      470.0,
+      "225/60R18",
+      "BEV",
+      2.0,
+      "PMSM"
+    ],
+    "after": [
+      "LFP",
+      56.09,
+      379.0,
+      "Chongqing Changan Automobile Co.,Ltd.",
+      "220V ,7.0 kW",
+      "ONBOARD_AC",
+      true,
+      150.0,
+      470.0,
+      "225/60R18",
+      "BEV",
+      2.0,
+      "PMSM",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d7af13d3-7893-4d99-9550-2e80cf66105e_safety.abs_752e4b742cd3.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d3dbf9fb2316fa9e218b1168:spec",
+    "revision_id": "d3dbf9fb2316fa9e218b1168",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_s05.gen1.trim.plus_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:53+00:00",
+    "payload": [
+      "LFP",
+      56.09,
+      379.0,
+      "Chongqing Changan Automobile Co.,Ltd.",
+      "220V ,7.0 kW",
+      "ONBOARD_AC",
+      true,
+      150.0,
+      470.0,
+      "225/60R18",
+      "BEV",
+      2.0,
+      "PMSM",
+      true
+    ]
+  }
+}

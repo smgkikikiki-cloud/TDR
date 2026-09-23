@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "dae906c71f6b7f09fc5da0cb",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-046-2c82d6c5b603:376",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_glc.x254.trim.mercedes_amg_43_4matic_coupe_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:14+00:00",
+    "before_hash": "2895c5e7f63f3d37de8cc9a23053603a2b74f3767042715c485d34363ce946ef",
+    "after_hash": "1b5db62eb18391cc67bcaa653c1ad6f29d66f0b2f523905dbef3394f8584e08f",
+    "before": [
+      true,
+      7.6,
+      10.0,
+      14.1,
+      228.0,
+      0.021,
+      "TIS",
+      "GASOLINE",
+      2996,
+      "GASOLINE",
+      "255/40R21",
+      "285/35R21",
+      "ICE"
+    ],
+    "after": [
+      true,
+      7.6,
+      10.0,
+      14.1,
+      228.0,
+      0.021,
+      "TIS",
+      "GASOLINE",
+      2996,
+      "GASOLINE",
+      "255/40R21",
+      "285/35R21",
+      "ICE",
+      35.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_c24748b24266458c808b52b4367aa3cf_manufacturing.excise_tax_rate_7fef4b952580.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "dae906c71f6b7f09fc5da0cb:spec",
+    "revision_id": "dae906c71f6b7f09fc5da0cb",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_glc.x254.trim.mercedes_amg_43_4matic_coupe_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:14+00:00",
+    "payload": [
+      true,
+      7.6,
+      10.0,
+      14.1,
+      228.0,
+      0.021,
+      "TIS",
+      "GASOLINE",
+      2996,
+      "GASOLINE",
+      "255/40R21",
+      "285/35R21",
+      "ICE",
+      35.0
+    ]
+  }
+}

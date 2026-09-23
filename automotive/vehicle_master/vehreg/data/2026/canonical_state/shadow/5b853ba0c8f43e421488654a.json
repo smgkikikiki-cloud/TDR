@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5b853ba0c8f43e421488654a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-055-949893759636:57",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg3.mg3h.trim.new_hatchback_1_5_d_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:22:04+00:00",
+    "before_hash": "eb55597d40453f20bf56ddd858b65f024ed09b12112d1e665ddfec9be2234950",
+    "after_hash": "07a382f392521a244b5f2fadf7814acfc8ee3675b39b98d7ffb4e3acfaaba89a",
+    "before": [
+      6.9,
+      8.7,
+      11.9,
+      142.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "185/65R15",
+      "ICE",
+      20.0,
+      4,
+      "AUTOMATIC",
+      true,
+      1,
+      true,
+      [
+        "R13H"
+      ],
+      1160,
+      1516,
+      4055
+    ],
+    "after": [
+      6.9,
+      8.7,
+      11.9,
+      142.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "185/65R15",
+      "ICE",
+      20.0,
+      4,
+      "AUTOMATIC",
+      true,
+      1,
+      true,
+      [
+        "R13H"
+      ],
+      1160,
+      1516,
+      4055,
+      2018
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_7c497bee76e247b690316ad8fedd04ea_vehicle.model_year_e598acc21dcf.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5b853ba0c8f43e421488654a:spec",
+    "revision_id": "5b853ba0c8f43e421488654a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg3.mg3h.trim.new_hatchback_1_5_d_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:22:04+00:00",
+    "payload": [
+      6.9,
+      8.7,
+      11.9,
+      142.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "185/65R15",
+      "ICE",
+      20.0,
+      4,
+      "AUTOMATIC",
+      true,
+      1,
+      true,
+      [
+        "R13H"
+      ],
+      1160,
+      1516,
+      4055,
+      2018
+    ]
+  }
+}

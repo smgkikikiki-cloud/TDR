@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d30d052da4fbdedebaf6aa02",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-027-e2d326b095bb:100",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_e07.gen1.trim.plus_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:39+00:00",
+    "before_hash": "987a28b3283755574f50b8d493d8b3b87b504a300f5de3b849152c1b716d69c7",
+    "after_hash": "8109e05fbbaddab396a7e55f648ce5819a27698a4d6aee8ffa508308b44ec144",
+    "before": [
+      "NMC",
+      89.96,
+      612.0,
+      "CHONGQING CHANGAN AUTOMOBILE CO., LTD.",
+      "220V(AC)/ 612V(DC)",
+      "BOTH"
+    ],
+    "after": [
+      "NMC",
+      89.96,
+      612.0,
+      "CHONGQING CHANGAN AUTOMOBILE CO., LTD.",
+      "220V(AC)/ 612V(DC)",
+      "BOTH",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_6818c168-0500-433e-aa17-2bcd45a27b8f_comfort.ventilated_front_seats_21260ba66773.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d30d052da4fbdedebaf6aa02:spec",
+    "revision_id": "d30d052da4fbdedebaf6aa02",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_e07.gen1.trim.plus_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:39+00:00",
+    "payload": [
+      "NMC",
+      89.96,
+      612.0,
+      "CHONGQING CHANGAN AUTOMOBILE CO., LTD.",
+      "220V(AC)/ 612V(DC)",
+      "BOTH",
+      true
+    ]
+  }
+}

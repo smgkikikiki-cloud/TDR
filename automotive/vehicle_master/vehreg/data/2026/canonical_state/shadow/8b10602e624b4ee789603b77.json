@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "8b10602e624b4ee789603b77",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-009-54711011662e:348",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_s5_ev.gen1.trim.d_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:11+00:00",
+    "before_hash": "fd3700aa7f1652b0317a58ba32c78aeca172a85be2e7f17d92b13b64fa6db4c7",
+    "after_hash": "aa863eccfc84764660cf3a7f7bfd1388d5e0e1a214a2f7ffeefb32084ce1cbd9",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      50.08,
+      321.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      50.08,
+      321.0,
+      "SAICMOTOR-CP"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_25620477-2ecb-4265-bf04-f8925c3c17d1_battery.supplier_bbc20d52b5a1.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "8b10602e624b4ee789603b77:spec",
+    "revision_id": "8b10602e624b4ee789603b77",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_s5_ev.gen1.trim.d_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:11+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      50.08,
+      321.0,
+      "SAICMOTOR-CP"
+    ]
+  }
+}

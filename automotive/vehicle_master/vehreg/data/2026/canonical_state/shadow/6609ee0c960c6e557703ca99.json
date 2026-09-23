@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6609ee0c960c6e557703ca99",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-049-18d26b73936f:8",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "suzuki.ciaz.yl1.trim.gl_cvt_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:44+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "022bd7d7da60be176d8bdd3431bdc011061f064ec5e1658debfebb4a608892de",
+    "before": [],
+    "after": [
+      4.3
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_cef792777f20436086a081dff0145f91_efficiency.fuel_consumption_extra_urban_l_100km_8126e92455c6.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6609ee0c960c6e557703ca99:spec",
+    "revision_id": "6609ee0c960c6e557703ca99",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "suzuki.ciaz.yl1.trim.gl_cvt_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:44+00:00",
+    "payload": [
+      4.3
+    ]
+  }
+}

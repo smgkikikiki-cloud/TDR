@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5020a40eed0cd5d53f2d5cc6",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-004-87075c4d97a5:2",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.civic.fe.trim.e_hev_rs_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:52+00:00",
+    "before_hash": "852b4203182147916608601604e7c03b1fa8dacc028f976cac27308fbef6d9c0",
+    "after_hash": "d4994c0d1fd9ef484a9dbb81a29c19782d21e4f41ba68fb3f04ccaa399c021e5",
+    "before": [
+      true,
+      4.5,
+      4.3,
+      3.9,
+      97.0,
+      0.01809,
+      0.00047,
+      "TIS",
+      "HEV",
+      1993,
+      "GASOLINE",
+      "235/40ZR18",
+      "HEV"
+    ],
+    "after": [
+      true,
+      4.5,
+      4.3,
+      3.9,
+      97.0,
+      0.01809,
+      0.00047,
+      "TIS",
+      "HEV",
+      1993,
+      "GASOLINE",
+      "235/40ZR18",
+      "HEV",
+      6.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_3941ab4c-97d5-4207-b47c-0e9ab5ef7ab5_manufacturing.excise_tax_rate_1325423b1918.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5020a40eed0cd5d53f2d5cc6:spec",
+    "revision_id": "5020a40eed0cd5d53f2d5cc6",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.civic.fe.trim.e_hev_rs_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:52+00:00",
+    "payload": [
+      true,
+      4.5,
+      4.3,
+      3.9,
+      97.0,
+      0.01809,
+      0.00047,
+      "TIS",
+      "HEV",
+      1993,
+      "GASOLINE",
+      "235/40ZR18",
+      "HEV",
+      6.0
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:9dd0283e-3bfa-444f-8a0d-80a4c1c967af:efficiency.fuel_consumption_l_100km",
+      "field_key": "efficiency.fuel_consumption_l_100km",
+      "value_state": "KNOWN",
+      "value": 5.3,
+      "unit": "L/100km",
+      "observed_at": "2024-04-29",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/9dd0283e-3bfa-444f-8a0d-80a4c1c967af",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/9dd0283e-3bfa-444f-8a0d-80a4c1c967af",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "kia.sorento.gen1.trim.premium_hev_hev"
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "17aca0675b0ed087cd501b5d",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-055-949893759636:296",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_e_class.w214.trim.mercedes_benz_avantgarde_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:22:04+00:00",
+    "before_hash": "d859135115dda9e38d63e7341158ed21cf47e7ee5883ffaf3b65c2ede28cce0a",
+    "after_hash": "588728a7f3561c51bc54bda5508226cbf7ff7ee3ec4eca34c56d633b4dd17a72",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      2.0,
+      46.0,
+      0.006,
+      "TIS",
+      "HEV",
+      1991,
+      "GASOLINE",
+      "245/45R18",
+      "275/40R18",
+      "HEV",
+      4.0,
+      9,
+      "AUTOMATIC",
+      true,
+      13,
+      true,
+      true,
+      true,
+      true,
+      true,
+      [
+        "R13H"
+      ]
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      2.0,
+      46.0,
+      0.006,
+      "TIS",
+      "HEV",
+      1991,
+      "GASOLINE",
+      "245/45R18",
+      "275/40R18",
+      "HEV",
+      4.0,
+      9,
+      "AUTOMATIC",
+      true,
+      13,
+      true,
+      true,
+      true,
+      true,
+      true,
+      [
+        "R13H"
+      ],
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_2fde0faa5b1e499ea29389c847d5b0b2_technology.connected_services_65a0450411ae.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "17aca0675b0ed087cd501b5d:spec",
+    "revision_id": "17aca0675b0ed087cd501b5d",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_e_class.w214.trim.mercedes_benz_avantgarde_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:22:04+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      2.0,
+      46.0,
+      0.006,
+      "TIS",
+      "HEV",
+      1991,
+      "GASOLINE",
+      "245/45R18",
+      "275/40R18",
+      "HEV",
+      4.0,
+      9,
+      "AUTOMATIC",
+      true,
+      13,
+      true,
+      true,
+      true,
+      true,
+      true,
+      [
+        "R13H"
+      ],
+      true
+    ]
+  }
+}

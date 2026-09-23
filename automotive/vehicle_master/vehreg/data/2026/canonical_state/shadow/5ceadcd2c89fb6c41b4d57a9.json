@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5ceadcd2c89fb6c41b4d57a9",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-028-314da6945e4d:44",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_s07.gen1.trim.l_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:46+00:00",
+    "before_hash": "69f29590a5fb9fc6d7e8fd6fd819436d46d8128a49cbd6d9f85ffaad2542d4b8",
+    "after_hash": "3ff0e7c8d69c8b2a4a42f841d41b7c3ab47f9093920d85b09480e8e402f28711",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      79.9,
+      352.0,
+      "Chongqing Chang’an Automobile Co., Ltd.",
+      "230",
+      "ONBOARD_AC",
+      true,
+      163.0,
+      560.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      79.9,
+      352.0,
+      "Chongqing Chang’an Automobile Co., Ltd.",
+      "230",
+      "ONBOARD_AC",
+      true,
+      163.0,
+      560.0,
+      "255/45R20"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_afcb91d9-e74c-47d7-a1a6-a2e9db6c333f_fitment.tyre_size_2ea721b73838.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5ceadcd2c89fb6c41b4d57a9:spec",
+    "revision_id": "5ceadcd2c89fb6c41b4d57a9",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_s07.gen1.trim.l_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:46+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      79.9,
+      352.0,
+      "Chongqing Chang’an Automobile Co., Ltd.",
+      "230",
+      "ONBOARD_AC",
+      true,
+      163.0,
+      560.0,
+      "255/45R20"
+    ]
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "66d0d74eff7e38783b166d09",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-008-bc3b92e93b52:97",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.crv.rs.trim.e_hev_es_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:07+00:00",
+    "before_hash": "abf67edfccec4a60aa371e70f322860a233aba7c2fc4b22c91f65ba9e7d5d40a",
+    "after_hash": "d1b48cef17f62166977cc1c655072c0b994118b37896fe175e05a116c758820a",
+    "before": [
+      true,
+      true,
+      5.4,
+      5.1
+    ],
+    "after": [
+      true,
+      true,
+      5.4,
+      5.1,
+      4.5
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b187f14b-fdce-438a-9ced-6b5494daf7cf_efficiency.fuel_consumption_urban_l_100km_ebd7f554755c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "66d0d74eff7e38783b166d09:spec",
+    "revision_id": "66d0d74eff7e38783b166d09",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.crv.rs.trim.e_hev_es_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:07+00:00",
+    "payload": [
+      true,
+      true,
+      5.4,
+      5.1,
+      4.5
+    ]
+  }
+}

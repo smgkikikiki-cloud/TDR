@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "8a7319bf4c11b0c33c2b907a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-028-314da6945e4d:75",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "avatr.avatr_11.gen1.trim.standard_range_rwd_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:46+00:00",
+    "before_hash": "4d4d69f57ad01fd3d2a8832f9e753f7e28050b1703f6d5bab11934deec1766b7",
+    "after_hash": "c4f39a1cc502335665e9f393d724134c884b44894aa537c4f6b53403f6579543",
+    "before": [
+      "NMC",
+      90.26,
+      614.0,
+      "Contemporary Amperex Technology Co., Limited"
+    ],
+    "after": [
+      "NMC",
+      90.26,
+      614.0,
+      "Contemporary Amperex Technology Co., Limited",
+      "Charger external (DC) : 403V-740 V"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_6eefed2d-33ab-4320-aad7-3ff2e2660e99_charging.onboard_charger_spec_f1060b5b58d7.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "8a7319bf4c11b0c33c2b907a:spec",
+    "revision_id": "8a7319bf4c11b0c33c2b907a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "avatr.avatr_11.gen1.trim.standard_range_rwd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:46+00:00",
+    "payload": [
+      "NMC",
+      90.26,
+      614.0,
+      "Contemporary Amperex Technology Co., Limited",
+      "Charger external (DC) : 403V-740 V"
+    ]
+  }
+}

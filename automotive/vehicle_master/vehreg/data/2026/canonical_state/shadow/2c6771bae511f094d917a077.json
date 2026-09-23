@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2c6771bae511f094d917a077",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-038-caad162ad775:90",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq5.ne.trim.ioniq_5_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:04+00:00",
+    "before_hash": "f6156c4e94b460da27a01fae0cc6245800c1ac2f06a480f7d78a6469590900e1",
+    "after_hash": "c8a71fef6777529232a40d54196551ac15dbd616b5e141d37352e8a4d3c91b69",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      72.48,
+      653.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      171.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      72.48,
+      653.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      171.0,
+      451.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_745a69ba-fab8-42b2-b7e4-dd78ab685a10_ev.rated_range_km_d95c240186d1.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2c6771bae511f094d917a077:spec",
+    "revision_id": "2c6771bae511f094d917a077",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq5.ne.trim.ioniq_5_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:04+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      72.48,
+      653.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      171.0,
+      451.0
+    ]
+  }
+}

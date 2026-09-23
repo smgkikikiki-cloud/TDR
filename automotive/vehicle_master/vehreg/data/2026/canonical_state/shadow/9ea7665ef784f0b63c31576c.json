@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9ea7665ef784f0b63c31576c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-037-986e7ff7e687:61",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.panamera.gen1.trim.panamera_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:56+00:00",
+    "before_hash": "8eafcab565a55e533695655e0cd8209ec98041abab367405fb39a86c01dad877",
+    "after_hash": "b8a5e08ec3e4c970303fec7b46c796021b60ecfa52a1dcf3e2a12f7f951b1703",
+    "before": [
+      true,
+      8.0,
+      10.2,
+      14.2,
+      233.0,
+      0.011,
+      "TIS",
+      "GASOLINE",
+      2894,
+      "GASOLINE",
+      "275/35ZR21",
+      "325/30ZR21",
+      "ICE",
+      35.0
+    ],
+    "after": [
+      true,
+      8.0,
+      10.2,
+      14.2,
+      233.0,
+      0.011,
+      "TIS",
+      "GASOLINE",
+      2894,
+      "GASOLINE",
+      "275/35ZR21",
+      "325/30ZR21",
+      "ICE",
+      35.0,
+      8
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_bb33dcd9-9a52-45a5-87ca-af7ab8c8322f_powertrain.gear_count_bb5e8d4f1d60.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9ea7665ef784f0b63c31576c:spec",
+    "revision_id": "9ea7665ef784f0b63c31576c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.panamera.gen1.trim.panamera_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:56+00:00",
+    "payload": [
+      true,
+      8.0,
+      10.2,
+      14.2,
+      233.0,
+      0.011,
+      "TIS",
+      "GASOLINE",
+      2894,
+      "GASOLINE",
+      "275/35ZR21",
+      "325/30ZR21",
+      "ICE",
+      35.0,
+      8
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:8ca76c72-10f7-48d3-8505-8f1f9fa03185:efficiency.fuel_consumption_extra_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_extra_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 5.5,
+      "unit": "L/100km",
+      "observed_at": "2025-11-27",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/8ca76c72-10f7-48d3-8505-8f1f9fa03185",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/8ca76c72-10f7-48d3-8505-8f1f9fa03185",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "isuzu.dmax_cab.rg.trim.d_max_spark_2_2_ddi_b_cab_chassis"
+    }
+  ]
+}

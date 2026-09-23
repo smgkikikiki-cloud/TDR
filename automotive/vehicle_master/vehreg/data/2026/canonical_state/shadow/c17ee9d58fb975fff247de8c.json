@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c17ee9d58fb975fff247de8c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-048-9a296c6c8041:18",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.almera.n18.trim.1_0t_s_cvt",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:34+00:00",
+    "before_hash": "9ce4986ee4e58d613f3d43254fa19a9ee55c75135524bc3b8432b778cb2926f5",
+    "after_hash": "5a1d7df9ea5440b5eae1fdcfdb1bbb1921203a77e704dc2084785f29a3c92b99",
+    "before": [
+      true,
+      4.0,
+      4.3,
+      5.0,
+      100.0,
+      0.025,
+      "TIS",
+      "GASOLINE",
+      999,
+      "E20"
+    ],
+    "after": [
+      true,
+      4.0,
+      4.3,
+      5.0,
+      100.0,
+      0.025,
+      "TIS",
+      "GASOLINE",
+      999,
+      "E20",
+      "195/65R15"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_cb15faeb28d74cfc95f93b6485390de2_fitment.tyre_size_08b7ea42c6bd.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c17ee9d58fb975fff247de8c:spec",
+    "revision_id": "c17ee9d58fb975fff247de8c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.almera.n18.trim.1_0t_s_cvt",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:34+00:00",
+    "payload": [
+      true,
+      4.0,
+      4.3,
+      5.0,
+      100.0,
+      0.025,
+      "TIS",
+      "GASOLINE",
+      999,
+      "E20",
+      "195/65R15"
+    ]
+  }
+}

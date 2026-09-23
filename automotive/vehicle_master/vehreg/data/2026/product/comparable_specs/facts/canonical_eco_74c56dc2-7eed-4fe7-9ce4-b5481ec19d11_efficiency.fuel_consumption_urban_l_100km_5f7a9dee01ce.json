@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:74c56dc2-7eed-4fe7-9ce4-b5481ec19d11:efficiency.fuel_consumption_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 6.0,
+      "unit": "L/100km",
+      "observed_at": "2026-06-23",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/74c56dc2-7eed-4fe7-9ce4-b5481ec19d11",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/74c56dc2-7eed-4fe7-9ce4-b5481ec19d11",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "toyota.alphard.ah40.trim.eclipse_edition_hev_premium_luxury"
+    }
+  ]
+}

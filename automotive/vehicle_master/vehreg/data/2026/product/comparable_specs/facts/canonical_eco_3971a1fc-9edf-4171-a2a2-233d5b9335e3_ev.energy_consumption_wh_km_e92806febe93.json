@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:3971a1fc-9edf-4171-a2a2-233d5b9335e3:ev.energy_consumption_wh_km",
+      "field_key": "ev.energy_consumption_wh_km",
+      "value_state": "KNOWN",
+      "value": 161.0,
+      "unit": "Wh/km",
+      "observed_at": "2022-12-09",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/3971a1fc-9edf-4171-a2a2-233d5b9335e3",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/3971a1fc-9edf-4171-a2a2-233d5b9335e3",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "volvo.xc40.xc40g.trim.ultimate_t5_plug_in_hybrid_bright_phev"
+    }
+  ]
+}

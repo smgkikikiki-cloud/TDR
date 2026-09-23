@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "38a52f266ce2fb0e9b91d7c6",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-051-bcc716924fd5:294",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.harrier.gen1.trim.z_leather_package_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:11+00:00",
+    "before_hash": "b88e682f87022c988de9e2738291928b34413ef4fa915a39b3c40dd7b4dfcf33",
+    "after_hash": "b7ee498f110641c3814ea947969ac0bb4c3b6bd749d36c0e317cde57e686255d",
+    "before": [
+      true,
+      true,
+      6.3,
+      7.5,
+      9.4,
+      174.0,
+      0.005,
+      "TIS",
+      "GASOLINE",
+      1986,
+      "GASOLINE",
+      "225/55R19",
+      "ICE",
+      30.0
+    ],
+    "after": [
+      true,
+      true,
+      6.3,
+      7.5,
+      9.4,
+      174.0,
+      0.005,
+      "TIS",
+      "GASOLINE",
+      1986,
+      "GASOLINE",
+      "225/55R19",
+      "ICE",
+      30.0,
+      "CVT"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_5b814b88758244bb9477bb8e01e54036_powertrain.transmission_3c65adba7fc9.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "38a52f266ce2fb0e9b91d7c6:spec",
+    "revision_id": "38a52f266ce2fb0e9b91d7c6",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.harrier.gen1.trim.z_leather_package_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:11+00:00",
+    "payload": [
+      true,
+      true,
+      6.3,
+      7.5,
+      9.4,
+      174.0,
+      0.005,
+      "TIS",
+      "GASOLINE",
+      1986,
+      "GASOLINE",
+      "225/55R19",
+      "ICE",
+      30.0,
+      "CVT"
+    ]
+  }
+}

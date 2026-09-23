@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "90f92e9d516b6497cc388089",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-040-43e09f18d7ea:351",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mazda2.dj.trim.mazda_2_1_3_c",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:22+00:00",
+    "before_hash": "69c16a0fa9afa77b7326bf0d39ed8249208b7e27ca3ec126f54c5e3c6bf4ad68",
+    "after_hash": "f266fd62141b4aa96ab41d6f4bdeb673023b94ead5cc44e7a01772f9f7a496ba",
+    "before": [
+      true,
+      3.8,
+      4.3,
+      5.1,
+      100.0,
+      0.012,
+      0.00135,
+      "TIS",
+      "GASOLINE",
+      1299,
+      "E20",
+      "185/65R15",
+      "ICE",
+      12.0,
+      6,
+      "AUTOMATIC",
+      true,
+      2,
+      true,
+      [
+        "R13H",
+        "R94",
+        "R95"
+      ]
+    ],
+    "after": [
+      true,
+      3.8,
+      4.3,
+      5.1,
+      100.0,
+      0.012,
+      0.00135,
+      "TIS",
+      "GASOLINE",
+      1299,
+      "E20",
+      "185/65R15",
+      "ICE",
+      12.0,
+      6,
+      "AUTOMATIC",
+      true,
+      2,
+      true,
+      [
+        "R13H",
+        "R94",
+        "R95"
+      ],
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_eba62cc6-55ee-4e12-98ce-64de386c9706_technology.smartphone_mirroring_e681094634f5.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "90f92e9d516b6497cc388089:spec",
+    "revision_id": "90f92e9d516b6497cc388089",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mazda2.dj.trim.mazda_2_1_3_c",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:22+00:00",
+    "payload": [
+      true,
+      3.8,
+      4.3,
+      5.1,
+      100.0,
+      0.012,
+      0.00135,
+      "TIS",
+      "GASOLINE",
+      1299,
+      "E20",
+      "185/65R15",
+      "ICE",
+      12.0,
+      6,
+      "AUTOMATIC",
+      true,
+      2,
+      true,
+      [
+        "R13H",
+        "R94",
+        "R95"
+      ],
+      true
+    ]
+  }
+}

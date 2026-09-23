@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "dc9271f7f90d0238e8d17116",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-019-79c9da20e296:348",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.triton_double_cab.mv.trim.2_4_pro",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:55+00:00",
+    "before_hash": "b6610a4a7dac574835ab21f140653c89ac3a439fa98abf80aa065702e2a7cb6b",
+    "after_hash": "c84ef044fbf81c08606b631088a2d498025750bbb8a6c4aaedf0e59d761fe596",
+    "before": [
+      5.8,
+      6.7,
+      8.2,
+      175.0,
+      0.249,
+      0.00105,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "215/70R15C",
+      "ICE",
+      6.0,
+      "MANUAL"
+    ],
+    "after": [
+      5.8,
+      6.7,
+      8.2,
+      175.0,
+      0.249,
+      0.00105,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "215/70R15C",
+      "ICE",
+      6.0,
+      "MANUAL",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_876feda9-dc91-4b58-81be-ff33e5f23183_safety.abs_d822708e5f4d.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "dc9271f7f90d0238e8d17116:spec",
+    "revision_id": "dc9271f7f90d0238e8d17116",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.triton_double_cab.mv.trim.2_4_pro",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:55+00:00",
+    "payload": [
+      5.8,
+      6.7,
+      8.2,
+      175.0,
+      0.249,
+      0.00105,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "215/70R15C",
+      "ICE",
+      6.0,
+      "MANUAL",
+      true
+    ]
+  }
+}

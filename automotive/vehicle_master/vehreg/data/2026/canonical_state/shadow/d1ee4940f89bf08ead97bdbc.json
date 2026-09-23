@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d1ee4940f89bf08ead97bdbc",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-028-314da6945e4d:284",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "leapmotor.leapmotor_c10.gen1.trim.ev_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:46+00:00",
+    "before_hash": "4628aa7e20528eab00341521375e8e282502f7f15a2054b5beb29813394b258f",
+    "after_hash": "6230dc283de60fa7595dccb70f8d095f414b2c5b15b1d8751e4d67b8662919de",
+    "before": [
+      "LFP",
+      69.89,
+      332.8
+    ],
+    "after": [
+      "LFP",
+      69.89,
+      332.8,
+      "LEAPMOTOR"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_26a828cb-5bf0-4c3f-b8b3-1d94d2548478_battery.supplier_c9094ae59e03.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d1ee4940f89bf08ead97bdbc:spec",
+    "revision_id": "d1ee4940f89bf08ead97bdbc",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "leapmotor.leapmotor_c10.gen1.trim.ev_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:46+00:00",
+    "payload": [
+      "LFP",
+      69.89,
+      332.8,
+      "LEAPMOTOR"
+    ]
+  }
+}

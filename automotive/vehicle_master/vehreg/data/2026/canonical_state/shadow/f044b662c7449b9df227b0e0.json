@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f044b662c7449b9df227b0e0",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-048-9a296c6c8041:400",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "suzuki.ciaz.yl1.trim.glx_cvt_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:35+00:00",
+    "before_hash": "4390f84f3e5155ca930599b36d671bc4f28c1951bd1c4fcfc7f63c6a4f8fe201",
+    "after_hash": "c1f056eafa5148185b061eff7ebb2066773c3cf7c23990143686aef694eb0910",
+    "before": [
+      true,
+      4.3,
+      5.0,
+      6.2,
+      119.0,
+      0.003,
+      "TIS",
+      "GASOLINE",
+      1242,
+      "E20",
+      "195/55R16",
+      "ICE",
+      14.0,
+      "CVT",
+      true,
+      3,
+      [
+        "R94",
+        "R95"
+      ]
+    ],
+    "after": [
+      true,
+      4.3,
+      5.0,
+      6.2,
+      119.0,
+      0.003,
+      "TIS",
+      "GASOLINE",
+      1242,
+      "E20",
+      "195/55R16",
+      "ICE",
+      14.0,
+      "CVT",
+      true,
+      3,
+      [
+        "R94",
+        "R95"
+      ],
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_279bacc809764ac880b8195ecb6900f5_technology.led_headlights_9c085d76407e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f044b662c7449b9df227b0e0:spec",
+    "revision_id": "f044b662c7449b9df227b0e0",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "suzuki.ciaz.yl1.trim.glx_cvt_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:35+00:00",
+    "payload": [
+      true,
+      4.3,
+      5.0,
+      6.2,
+      119.0,
+      0.003,
+      "TIS",
+      "GASOLINE",
+      1242,
+      "E20",
+      "195/55R16",
+      "ICE",
+      14.0,
+      "CVT",
+      true,
+      3,
+      [
+        "R94",
+        "R95"
+      ],
+      true
+    ]
+  }
+}

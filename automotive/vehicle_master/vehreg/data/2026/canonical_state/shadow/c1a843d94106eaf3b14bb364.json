@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c1a843d94106eaf3b14bb364",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-029-c1bed9cb95f3:12",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_revo_double_cab.an120.trim.gr_sport_2_8_at_4x4_base",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:55+00:00",
+    "before_hash": "7d724457d6be10e8e650f2c94b19233e35aabbe5759937c198a746637e1177d9",
+    "after_hash": "38ae6f48fb8b3b91b118bce5402476b3f564f304d755ae7d35e89f76093dd274",
+    "before": [
+      true,
+      7.6,
+      8.4,
+      9.7,
+      221.0,
+      0.173,
+      0.0006,
+      "TIS",
+      "DIESEL",
+      2755,
+      "B20",
+      "265/65R17",
+      "ICE"
+    ],
+    "after": [
+      true,
+      7.6,
+      8.4,
+      9.7,
+      221.0,
+      0.173,
+      0.0006,
+      "TIS",
+      "DIESEL",
+      2755,
+      "B20",
+      "265/65R17",
+      "ICE",
+      12.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_c59b479e-28d0-4154-a78b-4406d9cdafd5_manufacturing.excise_tax_rate_ff1ab3297eff.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c1a843d94106eaf3b14bb364:spec",
+    "revision_id": "c1a843d94106eaf3b14bb364",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_revo_double_cab.an120.trim.gr_sport_2_8_at_4x4_base",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:55+00:00",
+    "payload": [
+      true,
+      7.6,
+      8.4,
+      9.7,
+      221.0,
+      0.173,
+      0.0006,
+      "TIS",
+      "DIESEL",
+      2755,
+      "B20",
+      "265/65R17",
+      "ICE",
+      12.0
+    ]
+  }
+}

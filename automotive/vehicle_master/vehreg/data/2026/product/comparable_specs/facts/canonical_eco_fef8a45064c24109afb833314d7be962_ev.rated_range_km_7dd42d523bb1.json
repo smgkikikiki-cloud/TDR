@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:fef8a45064c24109afb833314d7be962:ev.rated_range_km",
+      "field_key": "ev.rated_range_km",
+      "value_state": "KNOWN",
+      "value": 51.0,
+      "unit": "km",
+      "observed_at": "2020-07-12",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/fef8a45064c24109afb833314d7be962",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/fef8a45064c24109afb833314d7be962",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "land_rover.range_rover_sport.unresearched.trim.2_0_litre_plug_in_hybrid_petrol_dynamic_hse_phev"
+    }
+  ]
+}

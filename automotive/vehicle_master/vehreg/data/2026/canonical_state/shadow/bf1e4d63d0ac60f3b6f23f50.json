@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "bf1e4d63d0ac60f3b6f23f50",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-017-02b372e72add:108",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.poer_sahar.gen1.trim.gwm_2_4t_pro_double_cab_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:47+00:00",
+    "before_hash": "22858da56e7230bb577d6fadd3cd63c47e9ae58c51d704e6fd358a555bf9e558",
+    "after_hash": "86fba78e512f303e9e4c2fdbb55af598188b1393c6a2deb15b69c4fead746d61",
+    "before": [
+      true,
+      6.6,
+      7.1,
+      8.1,
+      185.0,
+      0.224,
+      0.00041,
+      "TIS",
+      "DIESEL",
+      2370,
+      "B20",
+      "265/60R18",
+      "ICE",
+      6.0
+    ],
+    "after": [
+      true,
+      6.6,
+      7.1,
+      8.1,
+      185.0,
+      0.224,
+      0.00041,
+      "TIS",
+      "DIESEL",
+      2370,
+      "B20",
+      "265/60R18",
+      "ICE",
+      6.0,
+      9
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d2a83358-d984-49ed-8edd-94d5a7ef5faf_powertrain.gear_count_1a743abda27b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "bf1e4d63d0ac60f3b6f23f50:spec",
+    "revision_id": "bf1e4d63d0ac60f3b6f23f50",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.poer_sahar.gen1.trim.gwm_2_4t_pro_double_cab_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:47+00:00",
+    "payload": [
+      true,
+      6.6,
+      7.1,
+      8.1,
+      185.0,
+      0.224,
+      0.00041,
+      "TIS",
+      "DIESEL",
+      2370,
+      "B20",
+      "265/60R18",
+      "ICE",
+      6.0,
+      9
+    ]
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "150e2909a49f79af4367c61c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-046-2c82d6c5b603:140",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_gt_premium_at",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:13+00:00",
+    "before_hash": "d21953564b993de0686c4cf13a64a75dc2e2dc68ca63e8b4a9286a353213e065",
+    "after_hash": "fac8bb3eed87d0dcbb1fb35ab7f959e20e0addc75459bbb01b60afbb8c3d2112",
+    "before": [
+      6.7,
+      7.4,
+      8.6,
+      196.0,
+      0.263,
+      0.029,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "265/60R18"
+    ],
+    "after": [
+      6.7,
+      7.4,
+      8.6,
+      196.0,
+      0.263,
+      0.029,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "265/60R18",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_8f993f3819d147dbbb2fe645fd737c31_identity.powertrain_9c0a6387da18.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "150e2909a49f79af4367c61c:spec",
+    "revision_id": "150e2909a49f79af4367c61c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_gt_premium_at",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:13+00:00",
+    "payload": [
+      6.7,
+      7.4,
+      8.6,
+      196.0,
+      0.263,
+      0.029,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "265/60R18",
+      "ICE"
+    ]
+  }
+}

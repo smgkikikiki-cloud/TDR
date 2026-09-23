@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:00f515d9-5e2b-4266-9ec7-c0955e85b165:ev.rated_range_km",
+      "field_key": "ev.rated_range_km",
+      "value_state": "KNOWN",
+      "value": 126.0,
+      "unit": "km",
+      "observed_at": "2024-06-13",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/00f515d9-5e2b-4266-9ec7-c0955e85b165",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/00f515d9-5e2b-4266-9ec7-c0955e85b165",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "land_rover.range_rover.gen1.trim.3_0p_phev_5dr_swb_sv_550ps_phev"
+    }
+  ]
+}

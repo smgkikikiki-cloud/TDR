@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:8d647f75-066d-4d1d-b3d1-2cab836c5b71:emissions.co2_g_km",
+      "field_key": "emissions.co2_g_km",
+      "value_state": "KNOWN",
+      "value": 146.0,
+      "unit": "g/km",
+      "observed_at": "2024-03-11",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/8d647f75-066d-4d1d-b3d1-2cab836c5b71",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/8d647f75-066d-4d1d-b3d1-2cab836c5b71",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "hyundai.stargazer.ks.trim.x7_ice"
+    }
+  ]
+}

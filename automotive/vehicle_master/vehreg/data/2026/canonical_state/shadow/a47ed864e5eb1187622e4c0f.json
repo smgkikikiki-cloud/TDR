@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a47ed864e5eb1187622e4c0f",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-047-23268458b262:206",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.ora_good_cat.gc.trim.400_pro_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:25+00:00",
+    "before_hash": "95ff1da3a8f05447eda64094d2d506626584ceab6c3192f7bb9ec28a866a8d12",
+    "after_hash": "d1dfc8b5b16a82333fc31ffe4d4fb99bc3cc508308c6eb566a33a30879475c80",
+    "before": [
+      true,
+      true,
+      true,
+      "GASOLINE",
+      "215/50R18",
+      "ICE",
+      2.0,
+      true
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      "GASOLINE",
+      "215/50R18",
+      "ICE",
+      2.0,
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_8d19c066044445b7ae26936ad979c143_safety.adaptive_cruise_6e85557c2aa4.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a47ed864e5eb1187622e4c0f:spec",
+    "revision_id": "a47ed864e5eb1187622e4c0f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.ora_good_cat.gc.trim.400_pro_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:25+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      "GASOLINE",
+      "215/50R18",
+      "ICE",
+      2.0,
+      true,
+      true
+    ]
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b93ebe245412cad33aa22bb2",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-013-01b2d6d40e8e:365",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_champ.champ.trim.swb_2_4_diesel_at_attractive_package_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:28+00:00",
+    "before_hash": "7de608fa46c82a43759d505df5b0a32635925be6acb4da43799d87681ef035e5",
+    "after_hash": "037354385a62c1e6b92fab4dba311296bf5fbd682401bbe1e388bf1223151d7f",
+    "before": [
+      6.5,
+      7.0,
+      7.7,
+      183.0,
+      0.147,
+      0.00094,
+      "TIS",
+      "DIESEL",
+      2393,
+      "B20",
+      "195R14C",
+      "ICE",
+      2.0,
+      6
+    ],
+    "after": [
+      6.5,
+      7.0,
+      7.7,
+      183.0,
+      0.147,
+      0.00094,
+      "TIS",
+      "DIESEL",
+      2393,
+      "B20",
+      "195R14C",
+      "ICE",
+      2.0,
+      6,
+      "AUTOMATIC"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_5e497481-f963-442c-acf2-61ebe010a561_powertrain.transmission_ba3f0f5e9653.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b93ebe245412cad33aa22bb2:spec",
+    "revision_id": "b93ebe245412cad33aa22bb2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_champ.champ.trim.swb_2_4_diesel_at_attractive_package_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:28+00:00",
+    "payload": [
+      6.5,
+      7.0,
+      7.7,
+      183.0,
+      0.147,
+      0.00094,
+      "TIS",
+      "DIESEL",
+      2393,
+      "B20",
+      "195R14C",
+      "ICE",
+      2.0,
+      6,
+      "AUTOMATIC"
+    ]
+  }
+}

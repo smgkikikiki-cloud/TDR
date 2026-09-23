@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c758780fc405098c88570c23",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-028-314da6945e4d:379",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lbx.gen1.trim.bespoke_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:46+00:00",
+    "before_hash": "cebd270f083a6b08584e42a7baebe56cc3d7351c157cf978d2be9bfeb6903f7a",
+    "after_hash": "553df187023664c8cdb75ecb44a3c440fb585a5ed99efe1a4dcd748f88c61fdd",
+    "before": [
+      4.0,
+      3.8,
+      3.6,
+      85.0,
+      0.003,
+      "EURO6",
+      "HEV"
+    ],
+    "after": [
+      4.0,
+      3.8,
+      3.6,
+      85.0,
+      0.003,
+      "EURO6",
+      "HEV",
+      1490
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_3214703d-3f34-4072-bc71-510132d1ec26_engine.displacement_cc_1bd6867e8c4e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c758780fc405098c88570c23:spec",
+    "revision_id": "c758780fc405098c88570c23",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lbx.gen1.trim.bespoke_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:46+00:00",
+    "payload": [
+      4.0,
+      3.8,
+      3.6,
+      85.0,
+      0.003,
+      "EURO6",
+      "HEV",
+      1490
+    ]
+  }
+}

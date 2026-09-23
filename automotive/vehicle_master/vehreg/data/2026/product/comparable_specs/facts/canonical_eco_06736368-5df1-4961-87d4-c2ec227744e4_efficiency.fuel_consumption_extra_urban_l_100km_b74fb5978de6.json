@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:06736368-5df1-4961-87d4-c2ec227744e4:efficiency.fuel_consumption_extra_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_extra_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 5.6,
+      "unit": "L/100km",
+      "observed_at": "2025-02-06",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/06736368-5df1-4961-87d4-c2ec227744e4",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/06736368-5df1-4961-87d4-c2ec227744e4",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mazda.mx_5.gen1.trim.2_0_rf_6mt_retractable_fastback_manual_ice"
+    }
+  ]
+}

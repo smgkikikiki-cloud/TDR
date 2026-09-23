@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6990bb4d3b6b2831969ba2be",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-013-01b2d6d40e8e:89",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.mini_cooper.j01.trim.se_bev_3_door_218_hp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:27+00:00",
+    "before_hash": "c560f16ca01d350852766b7a6f66b9cc4d1d8e60bb8ce66cc6234f608782bc19",
+    "after_hash": "c11edc6f2cdd74aad4f673521bb1e5230353c2742118ec800ce582650da770f5",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      54.16,
+      398.2
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      54.16,
+      398.2,
+      "Electrical Energy Storage System SE072"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_356292e0-9b87-4c2b-bfe8-85cb9d9b81d0_battery.supplier_ce7c648ae111.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6990bb4d3b6b2831969ba2be:spec",
+    "revision_id": "6990bb4d3b6b2831969ba2be",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.mini_cooper.j01.trim.se_bev_3_door_218_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:27+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      54.16,
+      398.2,
+      "Electrical Energy Storage System SE072"
+    ]
+  }
+}

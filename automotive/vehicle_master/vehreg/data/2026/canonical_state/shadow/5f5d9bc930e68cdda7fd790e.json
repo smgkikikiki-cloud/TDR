@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5f5d9bc930e68cdda7fd790e",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-028-314da6945e4d:309",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto3.atto3.trim.byd_atto3_480km_ext_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:46+00:00",
+    "before_hash": "47829fea5d8f6077e265b832c9d3ed7afe0fdb973954a06b0af81f0d67ae3fc6",
+    "after_hash": "329ea5424c493dd7f4772a6e271e2ba0c05b3e62d891a1d1c7887f56cd72378b",
+    "before": [
+      "LFP",
+      60.48,
+      403.2
+    ],
+    "after": [
+      "LFP",
+      60.48,
+      403.2,
+      "FinDreams"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e529321a-7be2-4dfe-9087-8fdf70958ca0_battery.supplier_365bf3ac2398.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5f5d9bc930e68cdda7fd790e:spec",
+    "revision_id": "5f5d9bc930e68cdda7fd790e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto3.atto3.trim.byd_atto3_480km_ext_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:46+00:00",
+    "payload": [
+      "LFP",
+      60.48,
+      403.2,
+      "FinDreams"
+    ]
+  }
+}

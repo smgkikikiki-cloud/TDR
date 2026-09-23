@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e27a38996e9faaadbdf8560d",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-051-bcc716924fd5:317",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.2_5_hybrid_x",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:11+00:00",
+    "before_hash": "611c2bb5f6f6eca351404ad3a69c3b63f52cdbce4590f84d2dee8701267d500c",
+    "after_hash": "eeda7d3096a025e555c957857397382f1fa1bf0a3d3dc1c9cff4cb124a91ca64",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      true,
+      7.1,
+      6.1,
+      4.4,
+      143.0,
+      0.003,
+      "TIS",
+      "HEV",
+      2493,
+      "GASOLINE"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      true,
+      7.1,
+      6.1,
+      4.4,
+      143.0,
+      0.003,
+      "TIS",
+      "HEV",
+      2493,
+      "GASOLINE",
+      "215/65R16"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_c178ea29c9a04704be18dcbab7859d23_fitment.tyre_size_45fbeac4e698.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e27a38996e9faaadbdf8560d:spec",
+    "revision_id": "e27a38996e9faaadbdf8560d",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.2_5_hybrid_x",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:11+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      true,
+      7.1,
+      6.1,
+      4.4,
+      143.0,
+      0.003,
+      "TIS",
+      "HEV",
+      2493,
+      "GASOLINE",
+      "215/65R16"
+    ]
+  }
+}

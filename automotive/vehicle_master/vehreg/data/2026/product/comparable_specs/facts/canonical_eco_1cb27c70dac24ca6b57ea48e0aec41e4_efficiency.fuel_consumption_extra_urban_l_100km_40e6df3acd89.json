@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:1cb27c70dac24ca6b57ea48e0aec41e4:efficiency.fuel_consumption_extra_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_extra_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 6.7,
+      "unit": "L/100km",
+      "observed_at": "2022-06-17",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/1cb27c70dac24ca6b57ea48e0aec41e4",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/1cb27c70dac24ca6b57ea48e0aec41e4",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_gt_at"
+    }
+  ]
+}

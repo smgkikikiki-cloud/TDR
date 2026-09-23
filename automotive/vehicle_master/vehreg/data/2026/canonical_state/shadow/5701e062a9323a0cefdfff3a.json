@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5701e062a9323a0cefdfff3a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-020-1a96ac574560:352",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.x_trail.gen1.trim.e_power_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:00+00:00",
+    "before_hash": "c7f4ed4191363f16b7e95f7220010cebc98b8c5f90f87418f9fb8ac154ad24c0",
+    "after_hash": "e5b187746e044ca2d5badffa8eea632f6b194356b44e7dc4444a05ea7f5c1c30",
+    "before": [
+      true,
+      true,
+      5.9,
+      5.7
+    ],
+    "after": [
+      true,
+      true,
+      5.9,
+      5.7,
+      5.3
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_db5df121-d617-4f9f-88da-bcf33d13e0bd_efficiency.fuel_consumption_urban_l_100km_fd54beaa33c1.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5701e062a9323a0cefdfff3a:spec",
+    "revision_id": "5701e062a9323a0cefdfff3a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.x_trail.gen1.trim.e_power_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:00+00:00",
+    "payload": [
+      true,
+      true,
+      5.9,
+      5.7,
+      5.3
+    ]
+  }
+}

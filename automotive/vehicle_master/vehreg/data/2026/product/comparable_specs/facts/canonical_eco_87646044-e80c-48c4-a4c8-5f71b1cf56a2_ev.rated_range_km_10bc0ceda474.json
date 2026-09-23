@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:87646044-e80c-48c4-a4c8-5f71b1cf56a2:ev.rated_range_km",
+      "field_key": "ev.rated_range_km",
+      "value_state": "KNOWN",
+      "value": 104.0,
+      "unit": "km",
+      "observed_at": "2025-11-20",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/87646044-e80c-48c4-a4c8-5f71b1cf56a2",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/87646044-e80c-48c4-a4c8-5f71b1cf56a2",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mercedes_benz.mb_c_class.w206.trim.c_350_e_amg_dynamic_phev_313_hp_phev"
+    }
+  ]
+}

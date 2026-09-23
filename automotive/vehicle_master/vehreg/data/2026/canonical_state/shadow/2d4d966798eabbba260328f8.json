@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2d4d966798eabbba260328f8",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-044-4ee92a315b21:115",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.bz4x.ea10.trim.bz4x_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:52+00:00",
+    "before_hash": "06a194ddc15a4c8d8376f82f5db5d80db40c3a8d388367b9e303c5e3d2f4b0e0",
+    "after_hash": "53c5f4eb10c276ea8232af72e27fd130df6782fd33dc38e56e1daaf555740df7",
+    "before": [
+      true,
+      true,
+      "GASOLINE",
+      "235/50R20",
+      "ICE",
+      2.0,
+      "Toyota Motor Corporation (Motomachi plant)",
+      true,
+      4,
+      true,
+      true
+    ],
+    "after": [
+      true,
+      true,
+      "GASOLINE",
+      "235/50R20",
+      "ICE",
+      2.0,
+      "Toyota Motor Corporation (Motomachi plant)",
+      true,
+      4,
+      true,
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b0219a8647df48f3af6703951212e304_safety.side_airbag_7a3dddb1cb7e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2d4d966798eabbba260328f8:spec",
+    "revision_id": "2d4d966798eabbba260328f8",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.bz4x.ea10.trim.bz4x_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:52+00:00",
+    "payload": [
+      true,
+      true,
+      "GASOLINE",
+      "235/50R20",
+      "ICE",
+      2.0,
+      "Toyota Motor Corporation (Motomachi plant)",
+      true,
+      4,
+      true,
+      true,
+      true
+    ]
+  }
+}

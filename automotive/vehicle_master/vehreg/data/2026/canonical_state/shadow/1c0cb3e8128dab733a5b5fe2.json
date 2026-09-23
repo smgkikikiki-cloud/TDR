@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "1c0cb3e8128dab733a5b5fe2",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-019-79c9da20e296:314",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_ultra_at",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:55+00:00",
+    "before_hash": "aa757de0bceef0c0a1c1676fa1fca757e5a0fd1993bd42558a363fb8e7a0d073",
+    "after_hash": "21e10243680528bb64691c70a06090da3b40cef1f6ba7653499df8e975fafd11",
+    "before": [
+      6.3,
+      6.9,
+      8.0,
+      182.0,
+      0.414,
+      0.00061,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "265/60R18",
+      "ICE",
+      6.0
+    ],
+    "after": [
+      6.3,
+      6.9,
+      8.0,
+      182.0,
+      0.414,
+      0.00061,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "265/60R18",
+      "ICE",
+      6.0,
+      "AUTOMATIC"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_58f9889c-86f8-42d7-9a69-93a6be5612b7_powertrain.transmission_621b88c56af0.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "1c0cb3e8128dab733a5b5fe2:spec",
+    "revision_id": "1c0cb3e8128dab733a5b5fe2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_ultra_at",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:55+00:00",
+    "payload": [
+      6.3,
+      6.9,
+      8.0,
+      182.0,
+      0.414,
+      0.00061,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "265/60R18",
+      "ICE",
+      6.0,
+      "AUTOMATIC"
+    ]
+  }
+}

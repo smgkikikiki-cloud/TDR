@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ccc0c992bae5cfc3d287f3eb",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-055-949893759636:283",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_e_class.w214.trim.mercedes_benz_avantgarde_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:22:04+00:00",
+    "before_hash": "07cf7f90154aaa0a53d233969475836b65b427a32b4ad8929b3d5f7706f00124",
+    "after_hash": "8d2853b1d4ce6d2546eee61659038daa160d624deb422c2f8e6c6b99a81d522f",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      2.0,
+      46.0,
+      0.006,
+      "TIS",
+      "HEV",
+      1991,
+      "GASOLINE",
+      "245/45R18"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      2.0,
+      46.0,
+      0.006,
+      "TIS",
+      "HEV",
+      1991,
+      "GASOLINE",
+      "245/45R18",
+      "275/40R18"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_2fde0faa5b1e499ea29389c847d5b0b2_fitment.tyre_rear_f9658a568a0a.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ccc0c992bae5cfc3d287f3eb:spec",
+    "revision_id": "ccc0c992bae5cfc3d287f3eb",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_e_class.w214.trim.mercedes_benz_avantgarde_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:22:04+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      2.0,
+      46.0,
+      0.006,
+      "TIS",
+      "HEV",
+      1991,
+      "GASOLINE",
+      "245/45R18",
+      "275/40R18"
+    ]
+  }
+}

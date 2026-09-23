@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f5c4e7cf766dd5ca4efff37a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-013-01b2d6d40e8e:297",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.serena.gen1.trim.e_power_highway_star_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:28+00:00",
+    "before_hash": "d39367bae5092e36e5e888f1da44a3e0ee9ff85457bf22289a97a8d4ff495ab4",
+    "after_hash": "37947dfa9f93e928cc71d0776e6d6099f31bbfaec400a2bb6aba0c901bb51701",
+    "before": [
+      true,
+      5.8,
+      5.5,
+      5.1,
+      124.0,
+      0.001,
+      0.00036,
+      "TIS",
+      "HEV",
+      1433
+    ],
+    "after": [
+      true,
+      5.8,
+      5.5,
+      5.1,
+      124.0,
+      0.001,
+      0.00036,
+      "TIS",
+      "HEV",
+      1433,
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_65730ae8-b1e4-4bf1-a566-d3d574dcedd8_engine.fuel_type_a3ee5bdcf238.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f5c4e7cf766dd5ca4efff37a:spec",
+    "revision_id": "f5c4e7cf766dd5ca4efff37a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.serena.gen1.trim.e_power_highway_star_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:28+00:00",
+    "payload": [
+      true,
+      5.8,
+      5.5,
+      5.1,
+      124.0,
+      0.001,
+      0.00036,
+      "TIS",
+      "HEV",
+      1433,
+      "GASOLINE"
+    ]
+  }
+}

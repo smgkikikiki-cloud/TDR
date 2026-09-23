@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:18247f81795d406a9ddbb752026bc483:efficiency.fuel_consumption_extra_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_extra_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 7.1,
+      "unit": "L/100km",
+      "observed_at": "2022-07-15",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/18247f81795d406a9ddbb752026bc483",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/18247f81795d406a9ddbb752026bc483",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mazda.cx5.kf.trim.2_5_turbo_sp_231_hp_awd_ice"
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c88f45000220120dbc09ee2c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-045-66f56137868e:210",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.almera.n18.trim.1_0t_sportech_x_cvt",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:02+00:00",
+    "before_hash": "7f4f9b30d7645f4fc479095528a696ea8a68c91ccf645c18b686919e39daa881",
+    "after_hash": "e6ed086f7bf67de56dabfe01b6d74df249dd428e770226fe8f48a1622d794921",
+    "before": [
+      4.5,
+      4.8,
+      5.4,
+      114.0,
+      0.012,
+      "TIS",
+      "GASOLINE",
+      999,
+      "E20",
+      "205/55R16",
+      "ICE",
+      14.0,
+      "CVT",
+      true,
+      4,
+      true,
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R94",
+        "R95"
+      ]
+    ],
+    "after": [
+      4.5,
+      4.8,
+      5.4,
+      114.0,
+      0.012,
+      "TIS",
+      "GASOLINE",
+      999,
+      "E20",
+      "205/55R16",
+      "ICE",
+      14.0,
+      "CVT",
+      true,
+      4,
+      true,
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R94",
+        "R95"
+      ],
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_2c0944ae-5a9a-46b0-8314-599cf46f07d7_technology.led_headlights_df17098d6927.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c88f45000220120dbc09ee2c:spec",
+    "revision_id": "c88f45000220120dbc09ee2c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.almera.n18.trim.1_0t_sportech_x_cvt",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:02+00:00",
+    "payload": [
+      4.5,
+      4.8,
+      5.4,
+      114.0,
+      0.012,
+      "TIS",
+      "GASOLINE",
+      999,
+      "E20",
+      "205/55R16",
+      "ICE",
+      14.0,
+      "CVT",
+      true,
+      4,
+      true,
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R94",
+        "R95"
+      ],
+      true
+    ]
+  }
+}

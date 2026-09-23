@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "abdf8317b393f9d06106e5ca",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-049-18d26b73936f:295",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_hs.hsg.trim.phev_x_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:45+00:00",
+    "before_hash": "37472749f9c63e04bc21f07531e5adae0e0dc0bd3e2316d3d4e2e4670efe253e",
+    "after_hash": "dd8b2a1b63c3139807c93075f9a79471c91f8a3ba877eb628159184a21fee0ed",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      16.63,
+      326.0,
+      "MG",
+      "ONBOARD_AC",
+      true,
+      1.5,
+      36.0,
+      0.003,
+      "TIS",
+      "PHEV",
+      1490
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      16.63,
+      326.0,
+      "MG",
+      "ONBOARD_AC",
+      true,
+      1.5,
+      36.0,
+      0.003,
+      "TIS",
+      "PHEV",
+      1490,
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_3fed66dee74648a59780137eeeadecef_engine.fuel_type_9dd2cc6fbd0b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "abdf8317b393f9d06106e5ca:spec",
+    "revision_id": "abdf8317b393f9d06106e5ca",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_hs.hsg.trim.phev_x_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:45+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      16.63,
+      326.0,
+      "MG",
+      "ONBOARD_AC",
+      true,
+      1.5,
+      36.0,
+      0.003,
+      "TIS",
+      "PHEV",
+      1490,
+      "GASOLINE"
+    ]
+  }
+}

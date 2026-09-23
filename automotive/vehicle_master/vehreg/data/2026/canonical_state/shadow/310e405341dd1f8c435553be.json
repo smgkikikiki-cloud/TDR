@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "310e405341dd1f8c435553be",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-043-5c8c2001b8cb:44",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_c_class.w206.trim.c_220_d_avantgarde_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:44+00:00",
+    "before_hash": "87b8146525ee191a3ba64635ff1027c26bae0225c03fa0057652f6706f3a2dcf",
+    "after_hash": "cb3919273c568c16cddc9071aabb19a64048bbd4b301898b62de799f272008ce",
+    "before": [
+      3.8,
+      4.6,
+      6.0,
+      122.0,
+      0.013,
+      0.00015,
+      "TIS",
+      "HEV",
+      1993,
+      "DIESEL",
+      "225/45R18",
+      "245/40R18"
+    ],
+    "after": [
+      3.8,
+      4.6,
+      6.0,
+      122.0,
+      0.013,
+      0.00015,
+      "TIS",
+      "HEV",
+      1993,
+      "DIESEL",
+      "225/45R18",
+      "245/40R18",
+      "HEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_f9e017b9-93b3-4566-85f9-924993d124cd_identity.powertrain_9395f835d02b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "310e405341dd1f8c435553be:spec",
+    "revision_id": "310e405341dd1f8c435553be",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_c_class.w206.trim.c_220_d_avantgarde_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:44+00:00",
+    "payload": [
+      3.8,
+      4.6,
+      6.0,
+      122.0,
+      0.013,
+      0.00015,
+      "TIS",
+      "HEV",
+      1993,
+      "DIESEL",
+      "225/45R18",
+      "245/40R18",
+      "HEV"
+    ]
+  }
+}

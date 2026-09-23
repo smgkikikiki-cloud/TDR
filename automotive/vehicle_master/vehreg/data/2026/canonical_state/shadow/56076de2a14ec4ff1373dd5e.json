@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "56076de2a14ec4ff1373dd5e",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-019-79c9da20e296:35",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "avatr.avatr_07.avatr_07.trim.ultra_awd_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:55+00:00",
+    "before_hash": "5918de4bb507f6210e3a1a28f27d1b217f31a11aabbf094dfbc0f115195adf73",
+    "after_hash": "e23a0081af9934c0c56ae52c9f413e8bb6f12a4c31a6e1a062f862a044dd53cd",
+    "before": [
+      "LFP",
+      82.22,
+      609.0,
+      "CATL",
+      "ONBOARD_AC",
+      true
+    ],
+    "after": [
+      "LFP",
+      82.22,
+      609.0,
+      "CATL",
+      "ONBOARD_AC",
+      true,
+      175.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_63d314f5-a476-4170-bd84-71fdd0ed626e_ev.energy_consumption_wh_km_690067ff2391.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "56076de2a14ec4ff1373dd5e:spec",
+    "revision_id": "56076de2a14ec4ff1373dd5e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "avatr.avatr_07.avatr_07.trim.ultra_awd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:55+00:00",
+    "payload": [
+      "LFP",
+      82.22,
+      609.0,
+      "CATL",
+      "ONBOARD_AC",
+      true,
+      175.0
+    ]
+  }
+}

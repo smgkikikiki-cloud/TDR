@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "dd0ae5b0757dd2ff6cc4b34a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-056-d87ca8b8ef3b:276",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_glc.x254.trim.350_e_4matic_amg_dynamic_phev_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:22:35+00:00",
+    "before_hash": "3651be7d12f302b3dea953903b58a392150bf606943ebd07bce1f2d5f5bfceeb",
+    "after_hash": "a14c4a716129b60092039f4db9817b6d84318d1eaf005fbf0d46b64d0f37dfd4",
+    "before": [
+      {
+        "trim_id": "mercedes_benz.mb_glc.x254.trim.350_e_4matic_amg_dynamic_phev_phev",
+        "amount_thb": 4180000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:189:1",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: GLC 350 e 4MATIC AMG Dynamic; canonical grade: 350 e 4MATIC AMG Dynamic (PHEV); mapping: manual. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "mercedes_benz.mb_glc.x254.trim.350_e_4matic_amg_dynamic_phev_phev",
+        "amount_thb": 4180000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2023-08-04",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/f2f2db11-a3df-4d8f-8ab5-b674c0dbd3d8",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "mercedes_benz.mb_glc.x254.trim.350_e_4matic_amg_dynamic_phev_phev",
+        "amount_thb": 4180000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:189:1",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: GLC 350 e 4MATIC AMG Dynamic; canonical grade: 350 e 4MATIC AMG Dynamic (PHEV); mapping: manual. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-056-d87ca8b8ef3b:276.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "dd0ae5b0757dd2ff6cc4b34a:price",
+    "revision_id": "dd0ae5b0757dd2ff6cc4b34a",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_glc.x254.trim.350_e_4matic_amg_dynamic_phev_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:22:35+00:00",
+    "payload": [
+      {
+        "trim_id": "mercedes_benz.mb_glc.x254.trim.350_e_4matic_amg_dynamic_phev_phev",
+        "amount_thb": 4180000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2023-08-04",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/f2f2db11-a3df-4d8f-8ab5-b674c0dbd3d8",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "mercedes_benz.mb_glc.x254.trim.350_e_4matic_amg_dynamic_phev_phev",
+        "amount_thb": 4180000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:189:1",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: GLC 350 e 4MATIC AMG Dynamic; canonical grade: 350 e 4MATIC AMG Dynamic (PHEV); mapping: manual. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ]
+  }
+}

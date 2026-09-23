@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d47922ac8c4f37aec8e8721b",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-043-5c8c2001b8cb:327",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.2_5_hybrid_s_type_gold_iii",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:45+00:00",
+    "before_hash": "e50ce7d686bc7fdb700a5dc64a537c7ee18dc3a5bcdf809a9f6a7a53d8d6d04f",
+    "after_hash": "9c4772913540dc7cac925e70fdb15a3f59edc19a2e58458bc9972ab7313d8170",
+    "before": [
+      true,
+      true,
+      7.1,
+      5.6,
+      3.2,
+      135.0,
+      0.017,
+      "TIS",
+      "HEV",
+      2493,
+      "GASOLINE"
+    ],
+    "after": [
+      true,
+      true,
+      7.1,
+      5.6,
+      3.2,
+      135.0,
+      0.017,
+      "TIS",
+      "HEV",
+      2493,
+      "GASOLINE",
+      "225/60R17"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e1b04f76-6121-4bba-bdba-ceeca42034f7_fitment.tyre_size_af4344e22331.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d47922ac8c4f37aec8e8721b:spec",
+    "revision_id": "d47922ac8c4f37aec8e8721b",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.2_5_hybrid_s_type_gold_iii",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:45+00:00",
+    "payload": [
+      true,
+      true,
+      7.1,
+      5.6,
+      3.2,
+      135.0,
+      0.017,
+      "TIS",
+      "HEV",
+      2493,
+      "GASOLINE",
+      "225/60R17"
+    ]
+  }
+}

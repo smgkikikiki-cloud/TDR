@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d0e8c85674b8622763a6a168",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-021-33a0f14d51bc:300",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.step_wgn.gen1.trim.spada_premium_line_e_hev_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:06+00:00",
+    "before_hash": "92a4ed464d5eb6c562e3ab933678703f444b42129fb6587dfe03196247947a59",
+    "after_hash": "9c75c29b062f4a1ffc2436f7ac9346f26c990b17aa0441ecf0f0632a387d5b7f",
+    "before": [
+      true,
+      true,
+      6.0,
+      5.6,
+      4.9,
+      138.0,
+      0.008,
+      "TIS",
+      "HEV",
+      1993,
+      "GASOLINE"
+    ],
+    "after": [
+      true,
+      true,
+      6.0,
+      5.6,
+      4.9,
+      138.0,
+      0.008,
+      "TIS",
+      "HEV",
+      1993,
+      "GASOLINE",
+      "205/55R17"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_982626bc-7135-4a4e-b2dc-333d3760ddaf_fitment.tyre_size_ff263a7dc08b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d0e8c85674b8622763a6a168:spec",
+    "revision_id": "d0e8c85674b8622763a6a168",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.step_wgn.gen1.trim.spada_premium_line_e_hev_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:06+00:00",
+    "payload": [
+      true,
+      true,
+      6.0,
+      5.6,
+      4.9,
+      138.0,
+      0.008,
+      "TIS",
+      "HEV",
+      1993,
+      "GASOLINE",
+      "205/55R17"
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:eba62cc6-55ee-4e12-98ce-64de386c9706:efficiency.fuel_consumption_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 5.1,
+      "unit": "L/100km",
+      "observed_at": "2023-05-22",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/eba62cc6-55ee-4e12-98ce-64de386c9706",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/eba62cc6-55ee-4e12-98ce-64de386c9706",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mazda.mazda2.dj.trim.mazda_2_1_3_c"
+    }
+  ]
+}

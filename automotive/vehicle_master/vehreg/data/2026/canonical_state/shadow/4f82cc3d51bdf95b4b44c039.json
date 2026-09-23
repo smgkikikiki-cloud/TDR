@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "4f82cc3d51bdf95b4b44c039",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-011-3c709241399c:94",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "geely.geely_ex5.gen1.trim.max_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:18+00:00",
+    "before_hash": "4b033bc06949368fb1ad0666d17248d27e994a10a1482b0024e45865cfd1f5a0",
+    "after_hash": "ecb13902be858449c4b8be3b7bdeb235e256024d261642f33efd092d3758305d",
+    "before": [
+      "LFP",
+      68.32,
+      427.0,
+      "Guiyang ShineGee Energy Technology Co., Ltd.",
+      "AC: INPUT 220 V, DC: INPUT 427 V",
+      "BOTH",
+      true,
+      149.0,
+      525.0,
+      "235/50R19"
+    ],
+    "after": [
+      "LFP",
+      68.32,
+      427.0,
+      "Guiyang ShineGee Energy Technology Co., Ltd.",
+      "AC: INPUT 220 V, DC: INPUT 427 V",
+      "BOTH",
+      true,
+      149.0,
+      525.0,
+      "235/50R19",
+      "BEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e9901aa9-5f90-406e-a56d-3d19da56b895_identity.powertrain_72c9ad0880ad.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "4f82cc3d51bdf95b4b44c039:spec",
+    "revision_id": "4f82cc3d51bdf95b4b44c039",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "geely.geely_ex5.gen1.trim.max_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:18+00:00",
+    "payload": [
+      "LFP",
+      68.32,
+      427.0,
+      "Guiyang ShineGee Energy Technology Co., Ltd.",
+      "AC: INPUT 220 V, DC: INPUT 427 V",
+      "BOTH",
+      true,
+      149.0,
+      525.0,
+      "235/50R19",
+      "BEV"
+    ]
+  }
+}

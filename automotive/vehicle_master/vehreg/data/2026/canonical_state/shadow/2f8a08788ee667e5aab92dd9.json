@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2f8a08788ee667e5aab92dd9",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-018-bf8b3c7bf841:234",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.ranger_double_cab.p703.trim.raptor_2_0l_bi_turbo_4wd_10at",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:52+00:00",
+    "before_hash": "585fa422137e11e6ba2ef923c4a78e2e3dbb78ca131d19922c6e7455c6051d37",
+    "after_hash": "965e35c980519392c041317613fdb2343c095f5676c0b6acd1c1b1fe8cfaab7d",
+    "before": [
+      true,
+      11.3,
+      10.6,
+      12.7,
+      278.0,
+      0.03,
+      0.00144,
+      "TIS"
+    ],
+    "after": [
+      true,
+      11.3,
+      10.6,
+      12.7,
+      278.0,
+      0.03,
+      0.00144,
+      "TIS",
+      "DIESEL"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_216c4c71-e7da-43b5-98f7-b8a5f23ef32b_engine.combustion_type_4f95342cc970.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2f8a08788ee667e5aab92dd9:spec",
+    "revision_id": "2f8a08788ee667e5aab92dd9",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.ranger_double_cab.p703.trim.raptor_2_0l_bi_turbo_4wd_10at",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:52+00:00",
+    "payload": [
+      true,
+      11.3,
+      10.6,
+      12.7,
+      278.0,
+      0.03,
+      0.00144,
+      "TIS",
+      "DIESEL"
+    ]
+  }
+}

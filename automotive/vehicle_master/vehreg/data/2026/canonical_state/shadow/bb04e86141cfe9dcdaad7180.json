@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "bb04e86141cfe9dcdaad7180",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-032-04b0adc6e162:171",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.almera.n18.trim.1_0t_e_cvt",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:17+00:00",
+    "before_hash": "8843455483c488dc098b10d4a15e6ebd4efa0d192109c912df72127a245b2844",
+    "after_hash": "4108f840b464a3ef76e1e540da48516b45e5ff80da5368fa5aa5f849c1686784",
+    "before": [
+      true,
+      true,
+      4.0,
+      4.3,
+      5.0,
+      100.0,
+      0.025,
+      "EURO5",
+      "GASOLINE",
+      999,
+      "E20",
+      "195/65R15",
+      "ICE"
+    ],
+    "after": [
+      true,
+      true,
+      4.0,
+      4.3,
+      5.0,
+      100.0,
+      0.025,
+      "EURO5",
+      "GASOLINE",
+      999,
+      "E20",
+      "195/65R15",
+      "ICE",
+      12.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_a357c6f0-a48c-4fa0-9ed9-279c3a5576cd_manufacturing.excise_tax_rate_4dc7a2b270e7.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "bb04e86141cfe9dcdaad7180:spec",
+    "revision_id": "bb04e86141cfe9dcdaad7180",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.almera.n18.trim.1_0t_e_cvt",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:17+00:00",
+    "payload": [
+      true,
+      true,
+      4.0,
+      4.3,
+      5.0,
+      100.0,
+      0.025,
+      "EURO5",
+      "GASOLINE",
+      999,
+      "E20",
+      "195/65R15",
+      "ICE",
+      12.0
+    ]
+  }
+}

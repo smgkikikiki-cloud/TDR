@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "afecb67bc38e53334007f6b7",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-024-8292d953d777:61",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_s05.gen1.trim.reev_plus_reev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:19+00:00",
+    "before_hash": "8bb10863bcc45a857fc0e5e7a57d1241284ec7616c7b797126699a02c38bd802",
+    "after_hash": "3774f6d4ebf6ed8a165b24c2b9e12649b32ac3bfdee15fbbf8bc1abdca292cfe",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      27.32,
+      314.0,
+      "CHANGAN",
+      "ONBOARD_AC",
+      true
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      27.32,
+      314.0,
+      "CHANGAN",
+      "ONBOARD_AC",
+      true,
+      0.6
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_a05ae9fe-e9ac-4609-b752-6066a1151085_efficiency.fuel_consumption_l_100km_ef8e96bba966.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "afecb67bc38e53334007f6b7:spec",
+    "revision_id": "afecb67bc38e53334007f6b7",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_s05.gen1.trim.reev_plus_reev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:19+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      27.32,
+      314.0,
+      "CHANGAN",
+      "ONBOARD_AC",
+      true,
+      0.6
+    ]
+  }
+}

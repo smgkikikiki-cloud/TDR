@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "abeb1c47ac203327eaaab35e",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-038-caad162ad775:264",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.crown.gen1.trim.crossover_hev_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:04+00:00",
+    "before_hash": "6e32e5a636bf53b610bbd85cda0d1eef5cfc9cd24ac498cf04faad19787e49c9",
+    "after_hash": "4229db076c2b80a14febbec1996e7ec993662db943b0ec0ad2fb821d17333f74",
+    "before": [
+      true,
+      true,
+      5.7,
+      4.8,
+      3.2,
+      115.0,
+      0.0024,
+      "TIS",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/55R19",
+      "HEV"
+    ],
+    "after": [
+      true,
+      true,
+      5.7,
+      4.8,
+      3.2,
+      115.0,
+      0.0024,
+      "TIS",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/55R19",
+      "HEV",
+      16.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_99e39afc-9701-49cf-888e-09ad6dcde82b_manufacturing.excise_tax_rate_82c963c787dd.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "abeb1c47ac203327eaaab35e:spec",
+    "revision_id": "abeb1c47ac203327eaaab35e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.crown.gen1.trim.crossover_hev_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:04+00:00",
+    "payload": [
+      true,
+      true,
+      5.7,
+      4.8,
+      3.2,
+      115.0,
+      0.0024,
+      "TIS",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/55R19",
+      "HEV",
+      16.0
+    ]
+  }
+}

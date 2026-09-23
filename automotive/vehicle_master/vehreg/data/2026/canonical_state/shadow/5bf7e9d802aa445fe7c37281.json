@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5bf7e9d802aa445fe7c37281",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-012-0c3fd0adac89:269",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.bz4x.ea10.trim.fwd_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:23+00:00",
+    "before_hash": "959ce704bf6e789300097d9ddb13a5d85b57c4df41f0fd73892b793522405583",
+    "after_hash": "2c5463542f024da2b7f2c86ac4fd8169f2ac131e14df2ccfaaf151d8d9ab84f6",
+    "before": [
+      "NMC"
+    ],
+    "after": [
+      "NMC",
+      73.11
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_46410b90-c335-44e2-957a-a95e0f353456_battery.gross_capacity_kwh_75082e98b35d.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5bf7e9d802aa445fe7c37281:spec",
+    "revision_id": "5bf7e9d802aa445fe7c37281",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.bz4x.ea10.trim.fwd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:23+00:00",
+    "payload": [
+      "NMC",
+      73.11
+    ]
+  }
+}

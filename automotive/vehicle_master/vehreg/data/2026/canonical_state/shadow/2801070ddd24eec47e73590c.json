@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2801070ddd24eec47e73590c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-013-01b2d6d40e8e:355",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_champ.champ.trim.swb_2_4_diesel_at_attractive_package_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:28+00:00",
+    "before_hash": "afc16a38fb962be4437b9ac2a1980cf41a73ddbcc22f9f3ce0567db1ad4b9717",
+    "after_hash": "8988963e9f3b7c1a941c2558c7b7f3ee62e87dbeaf3986955e43350677455564",
+    "before": [
+      6.5,
+      7.0,
+      7.7,
+      183.0
+    ],
+    "after": [
+      6.5,
+      7.0,
+      7.7,
+      183.0,
+      0.147
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_5e497481-f963-442c-acf2-61ebe010a561_emissions.nox_g_km_6093b0c0a836.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2801070ddd24eec47e73590c:spec",
+    "revision_id": "2801070ddd24eec47e73590c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_champ.champ.trim.swb_2_4_diesel_at_attractive_package_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:28+00:00",
+    "payload": [
+      6.5,
+      7.0,
+      7.7,
+      183.0,
+      0.147
+    ]
+  }
+}

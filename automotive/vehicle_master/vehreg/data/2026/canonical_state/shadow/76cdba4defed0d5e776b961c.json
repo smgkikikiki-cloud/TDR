@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "76cdba4defed0d5e776b961c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-024-8292d953d777:339",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lotus.emeya.gen1.trim.r_905_hp_dual_speed_awd_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:20+00:00",
+    "before_hash": "74fb1dba9a6a62f0e3473e55a5ecbba7d5991b71dbfb16c02391168a4b4f3d9b",
+    "after_hash": "5d19c23046ea07328d88ff7202a3a9daa006325813124490590736018be06c96",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      102.93,
+      705.0,
+      "CATL",
+      "EXTERNAL_DC",
+      true,
+      true,
+      241.0,
+      464.0,
+      "265/35R22",
+      "305/30R22",
+      "BEV",
+      8.0,
+      "PMSM"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      102.93,
+      705.0,
+      "CATL",
+      "EXTERNAL_DC",
+      true,
+      true,
+      241.0,
+      464.0,
+      "265/35R22",
+      "305/30R22",
+      "BEV",
+      8.0,
+      "PMSM",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d7af9040-28dc-4d70-a793-ccbcdccd9c58_safety.abs_a3ea5ced6fc9.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "76cdba4defed0d5e776b961c:spec",
+    "revision_id": "76cdba4defed0d5e776b961c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lotus.emeya.gen1.trim.r_905_hp_dual_speed_awd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:20+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      102.93,
+      705.0,
+      "CATL",
+      "EXTERNAL_DC",
+      true,
+      true,
+      241.0,
+      464.0,
+      "265/35R22",
+      "305/30R22",
+      "BEV",
+      8.0,
+      "PMSM",
+      true
+    ]
+  }
+}

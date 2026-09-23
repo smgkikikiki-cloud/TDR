@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "dbbd0c6a00a149b671a9f2cb",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-039-bb0c6084f37a:93",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q3.f3.trim.sportback_40_tfsi_quattro_s_line_black_edition_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:13+00:00",
+    "before_hash": "1e10e7013207fa1fe00f722717e8892c1df158cabbe1c94d82116dab3f735133",
+    "after_hash": "02863bbce310e5c4727b16ffc9db8596bcef0a75ec0ba9ae403e94ca9b3cf579",
+    "before": [
+      6.9,
+      7.91,
+      9.7,
+      180.0,
+      0.03,
+      0.00046,
+      "EURO6",
+      "GASOLINE",
+      1984,
+      "GASOLINE",
+      "255/40R20",
+      "ICE",
+      30.0,
+      "AUTOMATIC"
+    ],
+    "after": [
+      6.9,
+      7.91,
+      9.7,
+      180.0,
+      0.03,
+      0.00046,
+      "EURO6",
+      "GASOLINE",
+      1984,
+      "GASOLINE",
+      "255/40R20",
+      "ICE",
+      30.0,
+      "AUTOMATIC",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_642de555-48c6-4074-be2a-ed20b0aa0915_safety.abs_cd04db5e10e1.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "dbbd0c6a00a149b671a9f2cb:spec",
+    "revision_id": "dbbd0c6a00a149b671a9f2cb",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q3.f3.trim.sportback_40_tfsi_quattro_s_line_black_edition_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:13+00:00",
+    "payload": [
+      6.9,
+      7.91,
+      9.7,
+      180.0,
+      0.03,
+      0.00046,
+      "EURO6",
+      "GASOLINE",
+      1984,
+      "GASOLINE",
+      "255/40R20",
+      "ICE",
+      30.0,
+      "AUTOMATIC",
+      true
+    ]
+  }
+}

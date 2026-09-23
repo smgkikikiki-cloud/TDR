@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:83c43e264ed44392a135639f248b11c7:emissions.co2_g_km",
+      "field_key": "emissions.co2_g_km",
+      "value_state": "KNOWN",
+      "value": 145.0,
+      "unit": "g/km",
+      "observed_at": "2022-03-18",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/83c43e264ed44392a135639f248b11c7",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/83c43e264ed44392a135639f248b11c7",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mg.mg_hs.hsg.trim.turbo_c_ice"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "93f59285370c067f78ef025c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-050-6df028e5a85f:150",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "subaru.crosstrek.gu.trim.2_0i_p_es_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:57+00:00",
+    "before_hash": "496428035f129afe53b21f8d653caebae7c186b624d4bd69ad5e1ba52bbe4067",
+    "after_hash": "58c548e63ec3d511c9b0b27ef096835732edb5f645d6afd4a7e842254c9772af",
+    "before": [
+      true,
+      true
+    ],
+    "after": [
+      true,
+      true,
+      5.7
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_9d1fdc40ccf54776b0fb1e8a9ee0c35b_efficiency.fuel_consumption_extra_urban_l_100km_a341ebfef31b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "93f59285370c067f78ef025c:spec",
+    "revision_id": "93f59285370c067f78ef025c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "subaru.crosstrek.gu.trim.2_0i_p_es_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:57+00:00",
+    "payload": [
+      true,
+      true,
+      5.7
+    ]
+  }
+}

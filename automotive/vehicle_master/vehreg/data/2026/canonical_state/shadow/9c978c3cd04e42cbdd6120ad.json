@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9c978c3cd04e42cbdd6120ad",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-027-e2d326b095bb:209",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lotus.emeya.gen1.trim.s_603_hp_luxury_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:39+00:00",
+    "before_hash": "2ac2970d3bc8f227db46348c14c0cef863faee142418e66722efcdf8e6086123",
+    "after_hash": "5cf41ceff7542b84f6a210e2bd9b380b030f0597ce56a60f1368aab77a1fe9a3",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      102.93,
+      705.0,
+      "CATL",
+      "EXTERNAL_DC",
+      true,
+      true,
+      204.0,
+      540.0,
+      "265/40R21",
+      "305/35R21",
+      "BEV"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      102.93,
+      705.0,
+      "CATL",
+      "EXTERNAL_DC",
+      true,
+      true,
+      204.0,
+      540.0,
+      "265/40R21",
+      "305/35R21",
+      "BEV",
+      8.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_bf526674-fb36-4f35-b6d4-ddc0af6f2c8d_manufacturing.excise_tax_rate_1185ea65c844.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9c978c3cd04e42cbdd6120ad:spec",
+    "revision_id": "9c978c3cd04e42cbdd6120ad",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lotus.emeya.gen1.trim.s_603_hp_luxury_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:39+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      102.93,
+      705.0,
+      "CATL",
+      "EXTERNAL_DC",
+      true,
+      true,
+      204.0,
+      540.0,
+      "265/40R21",
+      "305/35R21",
+      "BEV",
+      8.0
+    ]
+  }
+}

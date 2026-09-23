@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "3b2427d0a18d2cffd5a16d61",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-019-79c9da20e296:233",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.triton_double_cab.mv.trim.2_4_prime_4wd",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:55+00:00",
+    "before_hash": "d7bf547bb052335a2d8706bd0734884ed09a95e3014f5bccffdec59cdbce0ecc",
+    "after_hash": "145c72ce5d38b6e1c319efac8328c7a0727cd63036cd5081391db6f086bd6e0f",
+    "before": [
+      6.0,
+      6.7,
+      8.0,
+      176.0,
+      0.475,
+      0.00088,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "265/65R17",
+      "ICE",
+      6.0
+    ],
+    "after": [
+      6.0,
+      6.7,
+      8.0,
+      176.0,
+      0.475,
+      0.00088,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "265/65R17",
+      "ICE",
+      6.0,
+      "MANUAL"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e2911e64-6f7f-42a4-bd22-dcb69ce6ddc6_powertrain.transmission_8f277d5d45af.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "3b2427d0a18d2cffd5a16d61:spec",
+    "revision_id": "3b2427d0a18d2cffd5a16d61",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.triton_double_cab.mv.trim.2_4_prime_4wd",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:55+00:00",
+    "payload": [
+      6.0,
+      6.7,
+      8.0,
+      176.0,
+      0.475,
+      0.00088,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "265/65R17",
+      "ICE",
+      6.0,
+      "MANUAL"
+    ]
+  }
+}

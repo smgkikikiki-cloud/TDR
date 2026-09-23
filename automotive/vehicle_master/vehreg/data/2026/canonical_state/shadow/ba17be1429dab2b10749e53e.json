@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ba17be1429dab2b10749e53e",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-043-5c8c2001b8cb:204",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.vellfire.gen1.trim.golden_eye_iii",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:44+00:00",
+    "before_hash": "b04ffffdb5898972f45c4c9354ffc8375e0691384cdd91e30f0243ee9d1d68db",
+    "after_hash": "7fe4ee6f0d8ba6791cb9aa7e9f3fe9089ef0c7ef62c8bd072d4beb70cd468182",
+    "before": [
+      true,
+      true,
+      7.4,
+      8.1,
+      9.5,
+      194.0,
+      0.006,
+      "TIS",
+      "GASOLINE",
+      2493,
+      "GASOLINE",
+      "235/50R18",
+      "ICE"
+    ],
+    "after": [
+      true,
+      true,
+      7.4,
+      8.1,
+      9.5,
+      194.0,
+      0.006,
+      "TIS",
+      "GASOLINE",
+      2493,
+      "GASOLINE",
+      "235/50R18",
+      "ICE",
+      30.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_c0e0d44b-da0d-449e-8d48-8a1193a072ec_manufacturing.excise_tax_rate_a6adaede0cca.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ba17be1429dab2b10749e53e:spec",
+    "revision_id": "ba17be1429dab2b10749e53e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.vellfire.gen1.trim.golden_eye_iii",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:44+00:00",
+    "payload": [
+      true,
+      true,
+      7.4,
+      8.1,
+      9.5,
+      194.0,
+      0.006,
+      "TIS",
+      "GASOLINE",
+      2493,
+      "GASOLINE",
+      "235/50R18",
+      "ICE",
+      30.0
+    ]
+  }
+}

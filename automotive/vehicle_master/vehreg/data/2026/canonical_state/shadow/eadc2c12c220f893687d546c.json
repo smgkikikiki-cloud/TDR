@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "eadc2c12c220f893687d546c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-010-6f2b18f1a4fd:141",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_x3.g45.trim.m50_xdrive_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:14+00:00",
+    "before_hash": "a1796140468da34cc18e048ae69de667f5a4e80434128fedfe1032d5bd0bd62c",
+    "after_hash": "c7d489ec6a4c51736d3ed9cfe192ccd2cd6e9e69d8d1fada22b0009fdd17b6d0",
+    "before": [
+      true,
+      true,
+      true,
+      7.1,
+      8.1,
+      9.8,
+      184.0,
+      0.018,
+      "EURO6",
+      "HEV",
+      2998
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      7.1,
+      8.1,
+      9.8,
+      184.0,
+      0.018,
+      "EURO6",
+      "HEV",
+      2998,
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d6c9d516-aa36-4031-87e0-c52199d59b8a_engine.fuel_type_702d42cdc82a.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "eadc2c12c220f893687d546c:spec",
+    "revision_id": "eadc2c12c220f893687d546c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_x3.g45.trim.m50_xdrive_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:14+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      7.1,
+      8.1,
+      9.8,
+      184.0,
+      0.018,
+      "EURO6",
+      "HEV",
+      2998,
+      "GASOLINE"
+    ]
+  }
+}

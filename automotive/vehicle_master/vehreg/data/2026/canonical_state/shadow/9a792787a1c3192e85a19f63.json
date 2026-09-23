@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9a792787a1c3192e85a19f63",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-013-01b2d6d40e8e:91",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.mini_cooper.j01.trim.se_bev_3_door_218_hp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:27+00:00",
+    "before_hash": "b593ea581f3f6c12d5019148845e25fba2f6c0dff6f1294a2d512af4e6ac06f7",
+    "after_hash": "dc3139aee92e7b217379cd75214942a4a75a7c85c9d502cf7c016ba166d2da02",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      54.16,
+      398.2,
+      "Electrical Energy Storage System SE072",
+      "ONBOARD_AC"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      54.16,
+      398.2,
+      "Electrical Energy Storage System SE072",
+      "ONBOARD_AC",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_356292e0-9b87-4c2b-bfe8-85cb9d9b81d0_comfort.auto_climate_efe38adf4c2c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9a792787a1c3192e85a19f63:spec",
+    "revision_id": "9a792787a1c3192e85a19f63",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.mini_cooper.j01.trim.se_bev_3_door_218_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:27+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      54.16,
+      398.2,
+      "Electrical Energy Storage System SE072",
+      "ONBOARD_AC",
+      true
+    ]
+  }
+}

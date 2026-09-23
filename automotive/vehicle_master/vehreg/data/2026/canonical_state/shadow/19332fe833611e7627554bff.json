@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "19332fe833611e7627554bff",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-049-18d26b73936f:388",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.hybrid_gf",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:45+00:00",
+    "before_hash": "85c1bc2dfd37d59cc42a4d69de9506b60ac8ea8e627bed08588069c70a972f75",
+    "after_hash": "32e7a6e74ff4c1af5b3268f27ad092c5b7718e15132349e37890b41b7d96df45",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      true,
+      7.1,
+      6.1,
+      4.4,
+      143.0,
+      0.003,
+      "TIS",
+      "HEV",
+      2493,
+      "GASOLINE",
+      "225/60R17",
+      "HEV"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      true,
+      7.1,
+      6.1,
+      4.4,
+      143.0,
+      0.003,
+      "TIS",
+      "HEV",
+      2493,
+      "GASOLINE",
+      "225/60R17",
+      "HEV",
+      16.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_55dfb7d46ff0459eafef0f23880adccd_manufacturing.excise_tax_rate_3e92bdd30dbb.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "19332fe833611e7627554bff:spec",
+    "revision_id": "19332fe833611e7627554bff",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.hybrid_gf",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:45+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      true,
+      7.1,
+      6.1,
+      4.4,
+      143.0,
+      0.003,
+      "TIS",
+      "HEV",
+      2493,
+      "GASOLINE",
+      "225/60R17",
+      "HEV",
+      16.0
+    ]
+  }
+}

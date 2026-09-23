@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f92109238e015a54760bf7d7",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-034-5299aee8f0ab:376",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_x3.g45.trim.xdrive20d_m_sport_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:32+00:00",
+    "before_hash": "c7510c0e4c285973d0b703ccc0de51e1cc7fe79738247e864510900f795c278e",
+    "after_hash": "bc03d0e69632cd3c4dd5912da75d51759026910ad5311447dbab22477d4d7835",
+    "before": [
+      true,
+      true,
+      true,
+      4.7,
+      5.2,
+      6.0
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      4.7,
+      5.2,
+      6.0,
+      137.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_646ca105-ff71-4847-a9e2-7902a2ecb0a1_emissions.co2_g_km_91cae78c965c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f92109238e015a54760bf7d7:spec",
+    "revision_id": "f92109238e015a54760bf7d7",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_x3.g45.trim.xdrive20d_m_sport_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:32+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      4.7,
+      5.2,
+      6.0,
+      137.0
+    ]
+  }
+}

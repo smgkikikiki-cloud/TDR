@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:cf7efbf1-82a1-4347-98e5-f1739232771d:efficiency.fuel_consumption_l_100km",
+      "field_key": "efficiency.fuel_consumption_l_100km",
+      "value_state": "KNOWN",
+      "value": 1.7,
+      "unit": "L/100km",
+      "observed_at": "2024-05-01",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/cf7efbf1-82a1-4347-98e5-f1739232771d",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/cf7efbf1-82a1-4347-98e5-f1739232771d",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "land_rover.range_rover.gen1.trim.3_0p_phev_5dr_lwb_sv_460ps_phev"
+    }
+  ]
+}

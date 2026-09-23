@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b57a88dacaa6b9671a5bf936",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-017-02b372e72add:380",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_cross.xg10.trim.hev_gr_sport_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:47+00:00",
+    "before_hash": "dbd1bf4a946245b8b77903bd6d6f28cb80a60af1582db87c9dda761af3dff5b6",
+    "after_hash": "74801f98aa553a39d7926bfe4b183d6f0e93b39c570862e3682da171f5d850e9",
+    "before": [
+      true,
+      4.4,
+      4.2
+    ],
+    "after": [
+      true,
+      4.4,
+      4.2,
+      4.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b96a7399-dbda-454b-828c-bb81edbfd23b_efficiency.fuel_consumption_urban_l_100km_2f7e1bf6f4f3.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b57a88dacaa6b9671a5bf936:spec",
+    "revision_id": "b57a88dacaa6b9671a5bf936",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_cross.xg10.trim.hev_gr_sport_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:47+00:00",
+    "payload": [
+      true,
+      4.4,
+      4.2,
+      4.0
+    ]
+  }
+}

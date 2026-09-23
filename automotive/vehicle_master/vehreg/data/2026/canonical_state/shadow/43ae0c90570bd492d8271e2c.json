@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "43ae0c90570bd492d8271e2c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-028-314da6945e4d:318",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto3.atto3.trim.byd_atto3_480km_ext_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:46+00:00",
+    "before_hash": "6506fa9112d25f61d00cb6fb6bf8587c8fdd845fb85ccd6184313c9319915836",
+    "after_hash": "c69db65f2187b816bbfca49e93e68a1f3775209cd11945b7db3ed13654005251",
+    "before": [
+      "LFP",
+      60.48,
+      403.2,
+      "FinDreams",
+      "Single-phase AC: 220V or DC: 252-472.5V",
+      "ONBOARD_AC",
+      149.0,
+      480.0,
+      "235/50R18",
+      "BEV",
+      2.0,
+      "PMSM"
+    ],
+    "after": [
+      "LFP",
+      60.48,
+      403.2,
+      "FinDreams",
+      "Single-phase AC: 220V or DC: 252-472.5V",
+      "ONBOARD_AC",
+      149.0,
+      480.0,
+      "235/50R18",
+      "BEV",
+      2.0,
+      "PMSM",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e529321a-7be2-4dfe-9087-8fdf70958ca0_safety.abs_7539ac58445a.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "43ae0c90570bd492d8271e2c:spec",
+    "revision_id": "43ae0c90570bd492d8271e2c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto3.atto3.trim.byd_atto3_480km_ext_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:46+00:00",
+    "payload": [
+      "LFP",
+      60.48,
+      403.2,
+      "FinDreams",
+      "Single-phase AC: 220V or DC: 252-472.5V",
+      "ONBOARD_AC",
+      149.0,
+      480.0,
+      "235/50R18",
+      "BEV",
+      2.0,
+      "PMSM",
+      true
+    ]
+  }
+}

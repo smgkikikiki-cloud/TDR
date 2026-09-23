@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b4edcd2f907dcf93e01b3d19",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-006-b527dba9e80a:54",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.gle.gen1.trim.4matic_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:59+00:00",
+    "before_hash": "0833e0ee308ac8f2a4bec76386daebcc4b639fba133e32d26b2d5e00b87b0cf7",
+    "after_hash": "b30d2db846a0bc339e5ff6ed6c5cf5e942f5b4025faef602c78ffc3e0c185cd7",
+    "before": [
+      true,
+      5.6,
+      6.5,
+      8.0,
+      170.0,
+      0.0089,
+      0.00012,
+      "EURO6",
+      "HEV",
+      1993,
+      "DIESEL",
+      "275/45R21"
+    ],
+    "after": [
+      true,
+      5.6,
+      6.5,
+      8.0,
+      170.0,
+      0.0089,
+      0.00012,
+      "EURO6",
+      "HEV",
+      1993,
+      "DIESEL",
+      "275/45R21",
+      "315/40R21"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_3d1ef02f-48e3-4462-aed1-b28dee1b6ed1_fitment.tyre_rear_5644543eb148.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b4edcd2f907dcf93e01b3d19:spec",
+    "revision_id": "b4edcd2f907dcf93e01b3d19",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.gle.gen1.trim.4matic_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:59+00:00",
+    "payload": [
+      true,
+      5.6,
+      6.5,
+      8.0,
+      170.0,
+      0.0089,
+      0.00012,
+      "EURO6",
+      "HEV",
+      1993,
+      "DIESEL",
+      "275/45R21",
+      "315/40R21"
+    ]
+  }
+}

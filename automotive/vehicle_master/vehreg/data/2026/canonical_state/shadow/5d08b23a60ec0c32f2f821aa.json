@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5d08b23a60ec0c32f2f821aa",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-009-54711011662e:290",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_s5_ev.gen1.trim.v_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:11+00:00",
+    "before_hash": "db5246b492e63b3cfb2a2382049552681fa8a3896934f6e15623942e9d1bea6e",
+    "after_hash": "d6ed4e2330bf6714fa54d1edf84b8832b65451e18d99dba3b51e2b28e9ab23d5",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      62.26,
+      340.2,
+      "SAIC MOTOR-CP",
+      "AC/DC",
+      "EXTERNAL_DC",
+      true,
+      137.0,
+      550.1
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      62.26,
+      340.2,
+      "SAIC MOTOR-CP",
+      "AC/DC",
+      "EXTERNAL_DC",
+      true,
+      137.0,
+      550.1,
+      "215/55R18"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_cdddcf9f-3d6b-4800-bcfc-05d273f281f0_fitment.tyre_size_1fa1a688db9a.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5d08b23a60ec0c32f2f821aa:spec",
+    "revision_id": "5d08b23a60ec0c32f2f821aa",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_s5_ev.gen1.trim.v_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:11+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      62.26,
+      340.2,
+      "SAIC MOTOR-CP",
+      "AC/DC",
+      "EXTERNAL_DC",
+      true,
+      137.0,
+      550.1,
+      "215/55R18"
+    ]
+  }
+}

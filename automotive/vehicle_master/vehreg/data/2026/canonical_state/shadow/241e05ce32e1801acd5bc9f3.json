@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "241e05ce32e1801acd5bc9f3",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-024-8292d953d777:6",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.cx30.dm.trim.2_0_prime_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:19+00:00",
+    "before_hash": "c0122c86bc95cfd76ed3107ed88cfe5a144203880fb86b5da960864a0346211c",
+    "after_hash": "aa93566a1d52cdc3c2c252376df38575b307b33f22db28e4e0f56cb836be23a1",
+    "before": [
+      5.5,
+      6.5,
+      8.3,
+      150.0,
+      0.009,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "E85",
+      "215/65R16",
+      "ICE",
+      20.0,
+      6,
+      "AUTOMATIC"
+    ],
+    "after": [
+      5.5,
+      6.5,
+      8.3,
+      150.0,
+      0.009,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "E85",
+      "215/65R16",
+      "ICE",
+      20.0,
+      6,
+      "AUTOMATIC",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_bf65b59a-75d2-41d0-93b8-bbb8fb0d5081_safety.abs_7fc0dd2e4f5c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "241e05ce32e1801acd5bc9f3:spec",
+    "revision_id": "241e05ce32e1801acd5bc9f3",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.cx30.dm.trim.2_0_prime_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:19+00:00",
+    "payload": [
+      5.5,
+      6.5,
+      8.3,
+      150.0,
+      0.009,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "E85",
+      "215/65R16",
+      "ICE",
+      20.0,
+      6,
+      "AUTOMATIC",
+      true
+    ]
+  }
+}

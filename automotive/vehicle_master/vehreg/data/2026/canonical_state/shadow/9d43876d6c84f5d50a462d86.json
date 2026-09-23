@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9d43876d6c84f5d50a462d86",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-035-5b8b3aecfae7:195",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg4.mg4e.trim.xpower_64_kwh_awd_dual_435_hp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:40+00:00",
+    "before_hash": "8f7d21ae1a89c3375e06f64bc18a375256c20c234db015e4a6e35bd58c1708b2",
+    "after_hash": "ce32b3f507ad0920499bec2115efb034ca3409fd3d98ca65521153cd0339ce43",
+    "before": [
+      "NMC",
+      64.6,
+      380.0,
+      "E-CON",
+      "CCS2  DC Three Phase 150~1000 V 200 A",
+      "EXTERNAL_DC",
+      true,
+      176.0,
+      480.1,
+      "235/45R18",
+      "BEV",
+      2.0,
+      "PMSM",
+      true
+    ],
+    "after": [
+      "NMC",
+      64.6,
+      380.0,
+      "E-CON",
+      "CCS2  DC Three Phase 150~1000 V 200 A",
+      "EXTERNAL_DC",
+      true,
+      176.0,
+      480.1,
+      "235/45R18",
+      "BEV",
+      2.0,
+      "PMSM",
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_149a5a0b-1932-4636-ba17-155979f340d2_safety.adaptive_cruise_1cdba7c09e23.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9d43876d6c84f5d50a462d86:spec",
+    "revision_id": "9d43876d6c84f5d50a462d86",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg4.mg4e.trim.xpower_64_kwh_awd_dual_435_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:40+00:00",
+    "payload": [
+      "NMC",
+      64.6,
+      380.0,
+      "E-CON",
+      "CCS2  DC Three Phase 150~1000 V 200 A",
+      "EXTERNAL_DC",
+      true,
+      176.0,
+      480.1,
+      "235/45R18",
+      "BEV",
+      2.0,
+      "PMSM",
+      true,
+      true
+    ]
+  }
+}

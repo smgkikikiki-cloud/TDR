@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b7bd1f31a56416059655beb4",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-007-412f5563cca4:398",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.ex40.gen1.trim.single_ultra_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:03+00:00",
+    "before_hash": "a455eb55c391a87fec1e46bd437306e26f5ff9c39e0952b7d285ae6dbd71833e",
+    "after_hash": "d6c0c6e21c4929e3649f88f1347398190521e611f76385ad804645454d1c94a1",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      69.49,
+      344.0,
+      "VOLVO",
+      "ONBOARD_AC",
+      145.0,
+      565.0,
+      "235/50R19",
+      "255/45R19",
+      "BEV"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      69.49,
+      344.0,
+      "VOLVO",
+      "ONBOARD_AC",
+      145.0,
+      565.0,
+      "235/50R19",
+      "255/45R19",
+      "BEV",
+      10.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_039d37fd-d95d-458a-957e-b78cbf759bc4_manufacturing.excise_tax_rate_ad3d3d94d233.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b7bd1f31a56416059655beb4:spec",
+    "revision_id": "b7bd1f31a56416059655beb4",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.ex40.gen1.trim.single_ultra_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:03+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      69.49,
+      344.0,
+      "VOLVO",
+      "ONBOARD_AC",
+      145.0,
+      565.0,
+      "235/50R19",
+      "255/45R19",
+      "BEV",
+      10.0
+    ]
+  }
+}

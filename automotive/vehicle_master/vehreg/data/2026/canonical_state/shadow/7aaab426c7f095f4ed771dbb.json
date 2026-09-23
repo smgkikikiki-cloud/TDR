@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7aaab426c7f095f4ed771dbb",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-030-80293fca2870:279",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_e_class.w214.trim.e_220_d_amg_line_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:02+00:00",
+    "before_hash": "ca6f8f374d1c95662e3dbbba60d7b125f6d63a28ca60f8e93b217c2c129fcf85",
+    "after_hash": "9fdd955a1c7f48181df6b590f68aba06e74f4ffd0c615239ff4751c1012b7757",
+    "before": [
+      4.9,
+      5.5,
+      6.4,
+      144.0,
+      0.014,
+      0.00023
+    ],
+    "after": [
+      4.9,
+      5.5,
+      6.4,
+      144.0,
+      0.014,
+      0.00023,
+      "EURO6"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b5fa291c-1f61-4d00-99fd-e47a74b38926_emissions.standard_b3b0c31a31cb.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7aaab426c7f095f4ed771dbb:spec",
+    "revision_id": "7aaab426c7f095f4ed771dbb",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_e_class.w214.trim.e_220_d_amg_line_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:02+00:00",
+    "payload": [
+      4.9,
+      5.5,
+      6.4,
+      144.0,
+      0.014,
+      0.00023,
+      "EURO6"
+    ]
+  }
+}

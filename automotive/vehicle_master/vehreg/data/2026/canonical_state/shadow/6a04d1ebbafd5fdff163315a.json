@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6a04d1ebbafd5fdff163315a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-019-79c9da20e296:335",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.triton_double_cab.mv.trim.2_4_pro",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:55+00:00",
+    "before_hash": "883ce481b79775f515a40e00fb86c56747a0316fcbc1f82866cbfb74b668ff36",
+    "after_hash": "bc82b394ca71c2178c793a17874dea13c7c9534a110b0f5874f9b3477ab60727",
+    "before": [
+      5.8
+    ],
+    "after": [
+      5.8,
+      6.7
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_876feda9-dc91-4b58-81be-ff33e5f23183_efficiency.fuel_consumption_l_100km_6355a325eae6.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6a04d1ebbafd5fdff163315a:spec",
+    "revision_id": "6a04d1ebbafd5fdff163315a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.triton_double_cab.mv.trim.2_4_pro",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:55+00:00",
+    "payload": [
+      5.8,
+      6.7
+    ]
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "59e22a2d3204948d051ad8b6",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-022-20a8a8e94ae5:394",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bentley.bentayga.gen1.trim.atelier_hybrid_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:12+00:00",
+    "before_hash": "5410e9438aff81e2b9d7caef4695ce3abd8eb72f70e7de73095a2d141a9f2c38",
+    "after_hash": "1d393a14a6f464022e280f7e3458e220bb11d4f637f7b48c73b8582e881e6bda",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      17.97,
+      374.4,
+      "Samsung SDI",
+      "ONBOARD_AC",
+      true,
+      true,
+      3.1,
+      71.0,
+      0.006,
+      "TIS",
+      "PHEV"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      17.97,
+      374.4,
+      "Samsung SDI",
+      "ONBOARD_AC",
+      true,
+      true,
+      3.1,
+      71.0,
+      0.006,
+      "TIS",
+      "PHEV",
+      2995
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b3efe398-45f2-4b79-8eb7-b8dca7841f03_engine.displacement_cc_0bf932ec3588.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "59e22a2d3204948d051ad8b6:spec",
+    "revision_id": "59e22a2d3204948d051ad8b6",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bentley.bentayga.gen1.trim.atelier_hybrid_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:12+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      17.97,
+      374.4,
+      "Samsung SDI",
+      "ONBOARD_AC",
+      true,
+      true,
+      3.1,
+      71.0,
+      0.006,
+      "TIS",
+      "PHEV",
+      2995
+    ]
+  }
+}

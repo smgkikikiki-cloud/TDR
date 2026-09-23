@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "bb87471498655de6edf9486a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-050-6df028e5a85f:7",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.etron_gt.gen1.trim.e_tron_gt_quattro_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:57+00:00",
+    "before_hash": "0c7fefaf68cb7778e0a14cc9d1057848384faad238e82cb38af82c72c659ee94",
+    "after_hash": "94ce449cdca269a9873ac7f430e6a74a4224bb238b13db7317c09124ca3bef16",
+    "before": [
+      "GASOLINE",
+      "245/45R20",
+      "285/40R20"
+    ],
+    "after": [
+      "GASOLINE",
+      "245/45R20",
+      "285/40R20",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_cea23dc3fcbe4877a1753948b9edfbfb_identity.powertrain_1e7c5b59d7b6.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "bb87471498655de6edf9486a:spec",
+    "revision_id": "bb87471498655de6edf9486a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.etron_gt.gen1.trim.e_tron_gt_quattro_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:57+00:00",
+    "payload": [
+      "GASOLINE",
+      "245/45R20",
+      "285/40R20",
+      "ICE"
+    ]
+  }
+}

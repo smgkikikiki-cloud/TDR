@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "dced40555a641cfae5452f29",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-045-66f56137868e:23",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover.gen1.trim.lwb_3_0p_phev_se_440ps_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:02+00:00",
+    "before_hash": "84fd95bf32819bb9cfe9c2c64f936a167d5b6b9aaef1ec9143f9d0492de0430a",
+    "after_hash": "967763342023c2e0755c23d2b58837282441464f382a47504693a8047d092e94",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      35.52,
+      370.0,
+      "Jaguar Land Rover",
+      "EXTERNAL_DC",
+      true,
+      true,
+      1.7,
+      39.0,
+      0.046
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      35.52,
+      370.0,
+      "Jaguar Land Rover",
+      "EXTERNAL_DC",
+      true,
+      true,
+      1.7,
+      39.0,
+      0.046,
+      0.00027
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_5dbabf17-e8fd-4821-97f3-df7a3caf1f7d_emissions.pm_g_km_144cc8fcbe23.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "dced40555a641cfae5452f29:spec",
+    "revision_id": "dced40555a641cfae5452f29",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover.gen1.trim.lwb_3_0p_phev_se_440ps_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:02+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      35.52,
+      370.0,
+      "Jaguar Land Rover",
+      "EXTERNAL_DC",
+      true,
+      true,
+      1.7,
+      39.0,
+      0.046,
+      0.00027
+    ]
+  }
+}

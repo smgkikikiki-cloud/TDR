@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "95ff574fef2eacfbe37f5e31",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-042-509b690f0202:328",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.xpander.a1.trim.gls_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:35+00:00",
+    "before_hash": "46745da9e1fc6b9b4aa022b5087c00a8a6fc39e5fc9881bab54a10c0e461d54f",
+    "after_hash": "c6893ce54571fd5262c585a64d9008c69d0a03012b3ffeb973033a239233d6b8",
+    "before": [
+      true,
+      5.5,
+      6.1,
+      7.0,
+      144.0,
+      0.022,
+      "TIS",
+      "GASOLINE",
+      1499,
+      "E20",
+      "195/65R16",
+      "ICE",
+      25.0,
+      "CVT",
+      true,
+      3,
+      true,
+      [
+        "R13H"
+      ],
+      1270
+    ],
+    "after": [
+      true,
+      5.5,
+      6.1,
+      7.0,
+      144.0,
+      0.022,
+      "TIS",
+      "GASOLINE",
+      1499,
+      "E20",
+      "195/65R16",
+      "ICE",
+      25.0,
+      "CVT",
+      true,
+      3,
+      true,
+      [
+        "R13H"
+      ],
+      1270,
+      1730
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_cd008175-9376-4e36-b833-9ab086880baa_vehicle.height_mm_837ec6059fdd.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "95ff574fef2eacfbe37f5e31:spec",
+    "revision_id": "95ff574fef2eacfbe37f5e31",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.xpander.a1.trim.gls_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:35+00:00",
+    "payload": [
+      true,
+      5.5,
+      6.1,
+      7.0,
+      144.0,
+      0.022,
+      "TIS",
+      "GASOLINE",
+      1499,
+      "E20",
+      "195/65R16",
+      "ICE",
+      25.0,
+      "CVT",
+      true,
+      3,
+      true,
+      [
+        "R13H"
+      ],
+      1270,
+      1730
+    ]
+  }
+}

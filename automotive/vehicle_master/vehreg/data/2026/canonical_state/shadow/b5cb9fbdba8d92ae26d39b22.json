@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b5cb9fbdba8d92ae26d39b22",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-041-97e292394981:103",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.defender.gen1.trim.2_0_phev_awd_5dr_swb_x_404ps_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:29+00:00",
+    "before_hash": "aecf43fb90a4365f25b6f03e076b397e3ba593fa348e7c8ad52d458f35453b32",
+    "after_hash": "83ab00f94afab1689bc4381e1289019c243e68b92cab8a349cdd01b4380d9dfc",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      18.32
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      18.32,
+      370.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_8ce62cda-b782-401f-b148-526304823c60_battery.nominal_voltage_v_385645effc69.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b5cb9fbdba8d92ae26d39b22:spec",
+    "revision_id": "b5cb9fbdba8d92ae26d39b22",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.defender.gen1.trim.2_0_phev_awd_5dr_swb_x_404ps_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:29+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      18.32,
+      370.0
+    ]
+  }
+}

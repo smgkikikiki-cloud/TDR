@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7c0eaf1074908b2a8c5dbbdb",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-037-986e7ff7e687:289",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.s60.gen1.trim.recharge_t8_plug_in_hybrid_ultimate_dark_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:57+00:00",
+    "before_hash": "b1153504e6078ebaaa706b452af20ea413e3a4bd4ef5ea70e1770fdd9bb89ec3",
+    "after_hash": "6059ed78a98d0eb60fb1891bbcbd7159f20afce67147ff4c6dd373cd5b7b423e",
+    "before": [
+      "NMC",
+      18.82,
+      369.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd.",
+      "ONBOARD_AC",
+      1.4,
+      33.0,
+      0.004,
+      9e-05,
+      "TIS",
+      "PHEV",
+      1969,
+      "GASOLINE"
+    ],
+    "after": [
+      "NMC",
+      18.82,
+      369.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd.",
+      "ONBOARD_AC",
+      1.4,
+      33.0,
+      0.004,
+      9e-05,
+      "TIS",
+      "PHEV",
+      1969,
+      "GASOLINE",
+      186.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_8d664282-9f25-4ecd-bcdc-ce2c386d3074_ev.energy_consumption_wh_km_80e2b85a8c00.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7c0eaf1074908b2a8c5dbbdb:spec",
+    "revision_id": "7c0eaf1074908b2a8c5dbbdb",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.s60.gen1.trim.recharge_t8_plug_in_hybrid_ultimate_dark_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:57+00:00",
+    "payload": [
+      "NMC",
+      18.82,
+      369.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd.",
+      "ONBOARD_AC",
+      1.4,
+      33.0,
+      0.004,
+      9e-05,
+      "TIS",
+      "PHEV",
+      1969,
+      "GASOLINE",
+      186.0
+    ]
+  }
+}

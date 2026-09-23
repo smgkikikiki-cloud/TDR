@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d8e1f1edc8310af7fed158d7",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-010-6f2b18f1a4fd:62",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.ora_good_cat.gc.trim.5_hev_ultra_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:14+00:00",
+    "before_hash": "dd8448ae760428e5212d4a1c339955355fc7607f725e12001a440223267540f4",
+    "after_hash": "a3b67e06321c3b58fe73b65377e3d15756a5b16d8154152af5f81ff9ece7e586",
+    "before": [
+      true,
+      4.5,
+      4.3,
+      3.9,
+      99.0,
+      0.01141,
+      0.00052,
+      "TIS",
+      "HEV",
+      1499,
+      "GASOLINE",
+      "225/60R18",
+      "HEV"
+    ],
+    "after": [
+      true,
+      4.5,
+      4.3,
+      3.9,
+      99.0,
+      0.01141,
+      0.00052,
+      "TIS",
+      "HEV",
+      1499,
+      "GASOLINE",
+      "225/60R18",
+      "HEV",
+      6.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_923c2b71-30b4-4312-80de-a1c7445c4ed6_manufacturing.excise_tax_rate_24304f51ac3c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d8e1f1edc8310af7fed158d7:spec",
+    "revision_id": "d8e1f1edc8310af7fed158d7",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.ora_good_cat.gc.trim.5_hev_ultra_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:14+00:00",
+    "payload": [
+      true,
+      4.5,
+      4.3,
+      3.9,
+      99.0,
+      0.01141,
+      0.00052,
+      "TIS",
+      "HEV",
+      1499,
+      "GASOLINE",
+      "225/60R18",
+      "HEV",
+      6.0
+    ]
+  }
+}

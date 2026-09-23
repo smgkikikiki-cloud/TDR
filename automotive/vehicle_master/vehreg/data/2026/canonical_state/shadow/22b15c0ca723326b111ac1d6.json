@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "22b15c0ca723326b111ac1d6",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-021-33a0f14d51bc:137",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.city_hatchback.gn7.trim.drival_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:06+00:00",
+    "before_hash": "de2a2717864b1decef252dcc9b2c1195947da21497f280f1f218721a88135c41",
+    "after_hash": "cf6276546d4a051643ad5ef3e400e51ff10370a6077d9d1eb7c7b658a1baf87e",
+    "before": [
+      true,
+      true,
+      3.8,
+      3.6,
+      3.3,
+      83.0,
+      0.008,
+      0.00052,
+      "EURO5",
+      "HEV",
+      1498,
+      "GASOLINE",
+      "185/60R16",
+      "HEV"
+    ],
+    "after": [
+      true,
+      true,
+      3.8,
+      3.6,
+      3.3,
+      83.0,
+      0.008,
+      0.00052,
+      "EURO5",
+      "HEV",
+      1498,
+      "GASOLINE",
+      "185/60R16",
+      "HEV",
+      6.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_865e0f2a-41ed-4010-a91b-e5a59fa11ff7_manufacturing.excise_tax_rate_ed6cd3b88740.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "22b15c0ca723326b111ac1d6:spec",
+    "revision_id": "22b15c0ca723326b111ac1d6",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.city_hatchback.gn7.trim.drival_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:06+00:00",
+    "payload": [
+      true,
+      true,
+      3.8,
+      3.6,
+      3.3,
+      83.0,
+      0.008,
+      0.00052,
+      "EURO5",
+      "HEV",
+      1498,
+      "GASOLINE",
+      "185/60R16",
+      "HEV",
+      6.0
+    ]
+  }
+}

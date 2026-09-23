@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7466900ad9612609cc0c2473",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-054-d20b71816f05:90",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6.gen1.trim.avant_40_tfsi_s_line_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:52+00:00",
+    "before_hash": "0be1947068427dcb0da98b37d8f0f2f9aefe78106c3237be3ec3d5777d2cf59d",
+    "after_hash": "f26387197b78aad971ad491713ec5185c741bfb8467f4ca587cb6592c6e5c92b",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      5.8,
+      6.6,
+      7.8,
+      150.0,
+      0.006,
+      0.00037,
+      "TIS",
+      "HEV",
+      1984,
+      "GASOLINE",
+      "225/55R18",
+      "HEV",
+      25.0,
+      "AUTOMATIC",
+      true,
+      5,
+      true,
+      true,
+      [
+        "R13H"
+      ]
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      5.8,
+      6.6,
+      7.8,
+      150.0,
+      0.006,
+      0.00037,
+      "TIS",
+      "HEV",
+      1984,
+      "GASOLINE",
+      "225/55R18",
+      "HEV",
+      25.0,
+      "AUTOMATIC",
+      true,
+      5,
+      true,
+      true,
+      [
+        "R13H"
+      ],
+      1541
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_20ae68103f5d4438ac17374270fe40c1_vehicle.declared_total_weight_kg_f96d3e10d1ad.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7466900ad9612609cc0c2473:spec",
+    "revision_id": "7466900ad9612609cc0c2473",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6.gen1.trim.avant_40_tfsi_s_line_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:52+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      5.8,
+      6.6,
+      7.8,
+      150.0,
+      0.006,
+      0.00037,
+      "TIS",
+      "HEV",
+      1984,
+      "GASOLINE",
+      "225/55R18",
+      "HEV",
+      25.0,
+      "AUTOMATIC",
+      true,
+      5,
+      true,
+      true,
+      [
+        "R13H"
+      ],
+      1541
+    ]
+  }
+}

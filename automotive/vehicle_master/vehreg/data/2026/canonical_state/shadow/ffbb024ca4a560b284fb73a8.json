@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ffbb024ca4a560b284fb73a8",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-018-bf8b3c7bf841:273",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.ranger_double_cab.p703.trim.wildtrak_3_0l_v6_turbo_4wd_10at",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:52+00:00",
+    "before_hash": "70bef3b3711c9d51d2e2afa2620ec9fd5f41da6b5a8cee56f2a058c98e4ce462",
+    "after_hash": "5775d0e1ede16ef3a28a27304afde5797b3a0c13fde4dcb5924db2400e50c0a6",
+    "before": [
+      true,
+      true,
+      true,
+      7.3,
+      8.4,
+      10.1,
+      221.0,
+      0.192,
+      0.00045,
+      "TIS",
+      "DIESEL",
+      2993,
+      "B20",
+      "255/55R20"
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      7.3,
+      8.4,
+      10.1,
+      221.0,
+      0.192,
+      0.00045,
+      "TIS",
+      "DIESEL",
+      2993,
+      "B20",
+      "255/55R20",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_9498c65e-267b-4325-add9-254f746f7c67_identity.powertrain_12ae87311cf6.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ffbb024ca4a560b284fb73a8:spec",
+    "revision_id": "ffbb024ca4a560b284fb73a8",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.ranger_double_cab.p703.trim.wildtrak_3_0l_v6_turbo_4wd_10at",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:52+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      7.3,
+      8.4,
+      10.1,
+      221.0,
+      0.192,
+      0.00045,
+      "TIS",
+      "DIESEL",
+      2993,
+      "B20",
+      "255/55R20",
+      "ICE"
+    ]
+  }
+}

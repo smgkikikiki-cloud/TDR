@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:9115ce0c-e7ee-44c1-a70b-133028bb12f3:efficiency.fuel_consumption_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 8.1,
+      "unit": "L/100km",
+      "observed_at": "2025-08-04",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/9115ce0c-e7ee-44c1-a70b-133028bb12f3",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/9115ce0c-e7ee-44c1-a70b-133028bb12f3",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "ford.everest.u704.trim.sport_2_0l_turbo_6at_4x2_ice"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "714ae8ba00bb42dc3d9938d5",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-033-6b6996ed6874:380",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.targa_4_gts_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:25+00:00",
+    "before_hash": "4d343d75b162c453153c621d422bc96d1d05542f2cd1dbda2cf10e1d0fc503eb",
+    "after_hash": "4e9177864addcca123fd02ffff495a21f61c471ce277893ce096e10e274143e0",
+    "before": [
+      true,
+      8.1,
+      10.7
+    ],
+    "after": [
+      true,
+      8.1,
+      10.7,
+      15.3
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ac9261a7-cf5c-4c49-8436-396dd19d3e08_efficiency.fuel_consumption_urban_l_100km_0c8ac3de3fa8.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "714ae8ba00bb42dc3d9938d5:spec",
+    "revision_id": "714ae8ba00bb42dc3d9938d5",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.targa_4_gts_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:25+00:00",
+    "payload": [
+      true,
+      8.1,
+      10.7,
+      15.3
+    ]
+  }
+}

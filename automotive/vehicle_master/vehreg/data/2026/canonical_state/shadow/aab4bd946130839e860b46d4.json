@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "aab4bd946130839e860b46d4",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-022-20a8a8e94ae5:396",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bentley.bentayga.gen1.trim.atelier_hybrid_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:12+00:00",
+    "before_hash": "4f42f3935fcd6f0f40ad1f9f5f35ecb1a262d5784ccc66712d05e141bbdb08a6",
+    "after_hash": "d47304a71ffc9cf4a01b73466f17e7ec231ddaac5c3ced87906b876570524fcd",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      17.97,
+      374.4,
+      "Samsung SDI",
+      "ONBOARD_AC",
+      true,
+      true,
+      3.1,
+      71.0,
+      0.006,
+      "TIS",
+      "PHEV",
+      2995,
+      "GASOLINE"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      17.97,
+      374.4,
+      "Samsung SDI",
+      "ONBOARD_AC",
+      true,
+      true,
+      3.1,
+      71.0,
+      0.006,
+      "TIS",
+      "PHEV",
+      2995,
+      "GASOLINE",
+      274.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b3efe398-45f2-4b79-8eb7-b8dca7841f03_ev.energy_consumption_wh_km_ff8a5be2f643.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "aab4bd946130839e860b46d4:spec",
+    "revision_id": "aab4bd946130839e860b46d4",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bentley.bentayga.gen1.trim.atelier_hybrid_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:12+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      17.97,
+      374.4,
+      "Samsung SDI",
+      "ONBOARD_AC",
+      true,
+      true,
+      3.1,
+      71.0,
+      0.006,
+      "TIS",
+      "PHEV",
+      2995,
+      "GASOLINE",
+      274.0
+    ]
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2b21a49459dd8800f9b104d7",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-028-314da6945e4d:21",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.macan.95b.trim.s_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:46+00:00",
+    "before_hash": "a72b3abfa8f82384f02d5c6129ab2759ab8b9282aed6d0bafb1b019bf35dc510",
+    "after_hash": "ce0e8fa0c92a77c2b135dc643ff4feea5aaf35512813a04e22b95b2a9061b2a1",
+    "before": [
+      true,
+      9.0,
+      10.6,
+      13.3,
+      241.0,
+      0.02,
+      "TIS",
+      "GASOLINE",
+      2894,
+      "GASOLINE",
+      "265/45R20",
+      "295/40R20",
+      "ICE"
+    ],
+    "after": [
+      true,
+      9.0,
+      10.6,
+      13.3,
+      241.0,
+      0.02,
+      "TIS",
+      "GASOLINE",
+      2894,
+      "GASOLINE",
+      "265/45R20",
+      "295/40R20",
+      "ICE",
+      35.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_c3d59e5e-802c-4162-98e5-94d95bd43212_manufacturing.excise_tax_rate_287fd0d5657b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2b21a49459dd8800f9b104d7:spec",
+    "revision_id": "2b21a49459dd8800f9b104d7",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.macan.95b.trim.s_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:46+00:00",
+    "payload": [
+      true,
+      9.0,
+      10.6,
+      13.3,
+      241.0,
+      0.02,
+      "TIS",
+      "GASOLINE",
+      2894,
+      "GASOLINE",
+      "265/45R20",
+      "295/40R20",
+      "ICE",
+      35.0
+    ]
+  }
+}

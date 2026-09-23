@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "707920f0cc240145bcb4ada0",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-045-66f56137868e:389",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.mini_cooper.j01.trim.john_works_clubman_all4_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:03+00:00",
+    "before_hash": "496428035f129afe53b21f8d653caebae7c186b624d4bd69ad5e1ba52bbe4067",
+    "after_hash": "e0e62f8b945fb2e0586e847e946d4b954d732c46755b0670bb141c4224ab2e21",
+    "before": [
+      true,
+      true
+    ],
+    "after": [
+      true,
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_3a13283ee86a4e5f9d11ac7c1a1981e8_comfort.power_windows_efff8bcc3fb7.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "707920f0cc240145bcb4ada0:spec",
+    "revision_id": "707920f0cc240145bcb4ada0",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.mini_cooper.j01.trim.john_works_clubman_all4_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:03+00:00",
+    "payload": [
+      true,
+      true,
+      true
+    ]
+  }
+}

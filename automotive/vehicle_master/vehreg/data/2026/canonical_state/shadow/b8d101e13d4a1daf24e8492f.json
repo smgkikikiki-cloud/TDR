@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b8d101e13d4a1daf24e8492f",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-018-bf8b3c7bf841:103",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.yaris_ativ.mxpa10.trim.hev_premium_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:52+00:00",
+    "before_hash": "09f304d1d73951611419229456ad09e72e6a05df64b92e4b9c626db8042944c2",
+    "after_hash": "b1c6b56cd8446a2863e53c60beda19b4176db96fd8799a2d224cb5530d41006b",
+    "before": [
+      true,
+      3.6,
+      3.4,
+      3.1,
+      77.0,
+      0.009,
+      "EURO6",
+      "HEV"
+    ],
+    "after": [
+      true,
+      3.6,
+      3.4,
+      3.1,
+      77.0,
+      0.009,
+      "EURO6",
+      "HEV",
+      1496
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_488b8ece-bfaf-4162-ab95-0afe24a38efa_engine.displacement_cc_a5955f351137.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b8d101e13d4a1daf24e8492f:spec",
+    "revision_id": "b8d101e13d4a1daf24e8492f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.yaris_ativ.mxpa10.trim.hev_premium_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:52+00:00",
+    "payload": [
+      true,
+      3.6,
+      3.4,
+      3.1,
+      77.0,
+      0.009,
+      "EURO6",
+      "HEV",
+      1496
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "311464ea5875c005a119312d",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-054-d20b71816f05:73",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6.gen1.trim.avant_40_tfsi_s_line_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:52+00:00",
+    "before_hash": "6bf9215021bf2acfea6c33103595d9cf7af1eb60eb53068e61448c9bb933b5ac",
+    "after_hash": "cb54e9ebcc1fc7bd9576a8ba7ffc8afa4879ff080b90a4f9a54080537eefed38",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      5.8,
+      6.6
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      5.8,
+      6.6,
+      7.8
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_20ae68103f5d4438ac17374270fe40c1_efficiency.fuel_consumption_urban_l_100km_596f201b9404.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "311464ea5875c005a119312d:spec",
+    "revision_id": "311464ea5875c005a119312d",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6.gen1.trim.avant_40_tfsi_s_line_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:52+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      5.8,
+      6.6,
+      7.8
+    ]
+  }
+}

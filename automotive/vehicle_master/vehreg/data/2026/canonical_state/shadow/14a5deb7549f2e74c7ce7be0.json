@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "14a5deb7549f2e74c7ce7be0",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-042-509b690f0202:206",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.stargazer.ks.trim.style_7_seater_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:35+00:00",
+    "before_hash": "9df8317f1e2aecd5279998d543ad43640b7df7d45165f44b810e3f07310bda7a",
+    "after_hash": "331cfcef39745b6f984de5f4f36a16b1b4b89cce368fc9cc315f5f5b367ba601",
+    "before": [
+      true,
+      true,
+      5.4,
+      6.2,
+      7.4,
+      143.0,
+      0.068,
+      "TIS",
+      "GASOLINE",
+      1497,
+      "GASOLINE",
+      "205/55R16",
+      "ICE"
+    ],
+    "after": [
+      true,
+      true,
+      5.4,
+      6.2,
+      7.4,
+      143.0,
+      0.068,
+      "TIS",
+      "GASOLINE",
+      1497,
+      "GASOLINE",
+      "205/55R16",
+      "ICE",
+      25.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_3101e275-5afd-4fe2-99e3-b0dd004550ce_manufacturing.excise_tax_rate_772278623e0c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "14a5deb7549f2e74c7ce7be0:spec",
+    "revision_id": "14a5deb7549f2e74c7ce7be0",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.stargazer.ks.trim.style_7_seater_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:35+00:00",
+    "payload": [
+      true,
+      true,
+      5.4,
+      6.2,
+      7.4,
+      143.0,
+      0.068,
+      "TIS",
+      "GASOLINE",
+      1497,
+      "GASOLINE",
+      "205/55R16",
+      "ICE",
+      25.0
+    ]
+  }
+}

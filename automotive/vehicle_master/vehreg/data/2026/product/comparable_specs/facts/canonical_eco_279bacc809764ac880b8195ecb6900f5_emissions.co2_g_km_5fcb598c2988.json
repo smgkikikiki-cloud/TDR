@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:279bacc809764ac880b8195ecb6900f5:emissions.co2_g_km",
+      "field_key": "emissions.co2_g_km",
+      "value_state": "KNOWN",
+      "value": 119.0,
+      "unit": "g/km",
+      "observed_at": "2022-04-04",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/279bacc809764ac880b8195ecb6900f5",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/279bacc809764ac880b8195ecb6900f5",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "suzuki.ciaz.yl1.trim.glx_cvt_ice"
+    }
+  ]
+}

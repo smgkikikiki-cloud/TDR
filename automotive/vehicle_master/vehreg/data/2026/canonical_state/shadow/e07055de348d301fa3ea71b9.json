@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e07055de348d301fa3ea71b9",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-052-52eba3c13659:287",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.outlander_phev.gen1.trim.2_4_phev_gt_premium_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:24+00:00",
+    "before_hash": "f313bede1a53896a29af5532f543cad3e786348f001165fb3b8852f27e027818",
+    "after_hash": "afc84252c83d3309dadf568a13fb9d4e9f5cc0f2534d3747470ac79cae6940f9",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      13.8,
+      300.0,
+      "Lithium Energy Japan",
+      "ONBOARD_AC",
+      true,
+      1.9,
+      43.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      13.8,
+      300.0,
+      "Lithium Energy Japan",
+      "ONBOARD_AC",
+      true,
+      1.9,
+      43.0,
+      0.001
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ecb34cfc0085472e9a5ba2d65101463b_emissions.nox_g_km_01ffd2196c68.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e07055de348d301fa3ea71b9:spec",
+    "revision_id": "e07055de348d301fa3ea71b9",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.outlander_phev.gen1.trim.2_4_phev_gt_premium_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:24+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      13.8,
+      300.0,
+      "Lithium Energy Japan",
+      "ONBOARD_AC",
+      true,
+      1.9,
+      43.0,
+      0.001
+    ]
+  }
+}

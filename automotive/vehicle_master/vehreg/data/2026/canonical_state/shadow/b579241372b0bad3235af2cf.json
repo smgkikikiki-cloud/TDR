@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b579241372b0bad3235af2cf",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-048-9a296c6c8041:70",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_c_class.w206.trim.c_220_d_amg_dynamic_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:35+00:00",
+    "before_hash": "38f395c23698108c04885ba98f4044b7e4e46c9d64a0edea2d3a0c5e98e2e1f8",
+    "after_hash": "a8127ddd09e3aa4cbe3282876c8d249624c04e4eea0d302b921875702f50268b",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      3.8,
+      4.6,
+      6.0,
+      122.0,
+      0.013,
+      0.00015,
+      "TIS",
+      "HEV",
+      1993,
+      "DIESEL"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      3.8,
+      4.6,
+      6.0,
+      122.0,
+      0.013,
+      0.00015,
+      "TIS",
+      "HEV",
+      1993,
+      "DIESEL",
+      "225/40R19"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_2fbd28d311c544149f26c380e12b9f39_fitment.tyre_front_e03cd458855b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b579241372b0bad3235af2cf:spec",
+    "revision_id": "b579241372b0bad3235af2cf",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_c_class.w206.trim.c_220_d_amg_dynamic_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:35+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      3.8,
+      4.6,
+      6.0,
+      122.0,
+      0.013,
+      0.00015,
+      "TIS",
+      "HEV",
+      1993,
+      "DIESEL",
+      "225/40R19"
+    ]
+  }
+}

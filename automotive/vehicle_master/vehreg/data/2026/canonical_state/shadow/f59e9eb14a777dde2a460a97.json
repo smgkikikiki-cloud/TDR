@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f59e9eb14a777dde2a460a97",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-029-c1bed9cb95f3:133",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "isuzu.dmax_cab.rg.trim.4_2_2_ddi_z",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:55+00:00",
+    "before_hash": "a2a645461671419dc5f1aeb5b840333994e2397c4627cb851ffef3776acf92e6",
+    "after_hash": "2638cf2496e3aa3805056567c22d1a86451346611ce674ce890b6363947e3efd",
+    "before": [
+      true,
+      5.5,
+      6.5,
+      8.2,
+      170.0,
+      0.156,
+      9e-05,
+      "TIS",
+      "DIESEL",
+      2164,
+      "B20"
+    ],
+    "after": [
+      true,
+      5.5,
+      6.5,
+      8.2,
+      170.0,
+      0.156,
+      9e-05,
+      "TIS",
+      "DIESEL",
+      2164,
+      "B20",
+      "215/70R16"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_dd969b51-08a0-435b-a7d4-2dc98bb6c1aa_fitment.tyre_size_f87b25dd4c8e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f59e9eb14a777dde2a460a97:spec",
+    "revision_id": "f59e9eb14a777dde2a460a97",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "isuzu.dmax_cab.rg.trim.4_2_2_ddi_z",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:55+00:00",
+    "payload": [
+      true,
+      5.5,
+      6.5,
+      8.2,
+      170.0,
+      0.156,
+      9e-05,
+      "TIS",
+      "DIESEL",
+      2164,
+      "B20",
+      "215/70R16"
+    ]
+  }
+}

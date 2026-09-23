@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "0851bcbd465a9383cf453fcc",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-001-2163ac0376be:346",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.panamera.gen1.trim.4_e_hybrid_phev_470_hp_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:45+00:00",
+    "before_hash": "4668c106422cc294b249ed1688626bf0acf47d76b687f367c8eed9e21ce0b0c9",
+    "after_hash": "4dd18fea744df462b93eb39e2cf0fafac53459084d2d5f99c12819b52f281517",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      25.9,
+      370.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      25.9,
+      370.0,
+      "Samsung SDI"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_999e4651-c18c-4639-b6b1-6a9bfc14cb35_battery.supplier_96e1fce6b83a.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "0851bcbd465a9383cf453fcc:spec",
+    "revision_id": "0851bcbd465a9383cf453fcc",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.panamera.gen1.trim.4_e_hybrid_phev_470_hp_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:45+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      25.9,
+      370.0,
+      "Samsung SDI"
+    ]
+  }
+}

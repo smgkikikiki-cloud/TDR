@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "3749c82707e19f8faa79f656",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-036-ba2d051d30aa:159",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.mini_cooper.j01.trim.s_clubman_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:48+00:00",
+    "before_hash": "c6dc017822115fc91909129cd663fcc33ba92c688a8134720c12dd5a7df3c7aa",
+    "after_hash": "2ace333062217dcda90dad7fa76c3bc4bf419961bd9109bff29291a3a252e163",
+    "before": [
+      true,
+      true,
+      true,
+      5.4,
+      6.2
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      5.4,
+      6.2,
+      7.6
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_c95b358c-3eb3-40fa-8eee-e9934b98da9a_efficiency.fuel_consumption_urban_l_100km_bc6e8a9eb7bc.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "3749c82707e19f8faa79f656:spec",
+    "revision_id": "3749c82707e19f8faa79f656",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.mini_cooper.j01.trim.s_clubman_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:48+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      5.4,
+      6.2,
+      7.6
+    ]
+  }
+}

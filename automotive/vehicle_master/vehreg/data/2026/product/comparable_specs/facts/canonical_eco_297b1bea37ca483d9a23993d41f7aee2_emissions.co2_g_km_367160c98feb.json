@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:297b1bea37ca483d9a23993d41f7aee2:emissions.co2_g_km",
+      "field_key": "emissions.co2_g_km",
+      "value_state": "KNOWN",
+      "value": 218.0,
+      "unit": "g/km",
+      "observed_at": "2021-04-27",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/297b1bea37ca483d9a23993d41f7aee2",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/297b1bea37ca483d9a23993d41f7aee2",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "porsche.cayenne.e3.trim.s_ice"
+    }
+  ]
+}

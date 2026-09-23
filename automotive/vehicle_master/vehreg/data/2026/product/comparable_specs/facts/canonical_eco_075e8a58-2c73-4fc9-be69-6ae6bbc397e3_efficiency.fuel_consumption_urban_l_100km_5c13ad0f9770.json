@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:075e8a58-2c73-4fc9-be69-6ae6bbc397e3:efficiency.fuel_consumption_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 8.9,
+      "unit": "L/100km",
+      "observed_at": "2022-11-07",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/075e8a58-2c73-4fc9-be69-6ae6bbc397e3",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/075e8a58-2c73-4fc9-be69-6ae6bbc397e3",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "land_rover.range_rover.gen1.trim.lwb_3_0d_autobiography_350ps_hev"
+    }
+  ]
+}

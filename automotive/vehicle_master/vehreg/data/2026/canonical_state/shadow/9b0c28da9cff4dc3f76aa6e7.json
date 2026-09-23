@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9b0c28da9cff4dc3f76aa6e7",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-019-79c9da20e296:400",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "isuzu.dmax_cab.rg.trim.d_max_spark_2_2_ddi_b_flat_deck_swb",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:55+00:00",
+    "before_hash": "7c44b3d0d7dafbb11510fc1a7d875d139484c71a01f1ae6316085fda4aeb2eb3",
+    "after_hash": "11198a67e76ef6e031ea8498a6b9b432e56f50f3e1b91f112f373e882c50d657",
+    "before": [
+      5.5,
+      6.5,
+      8.2,
+      170.0,
+      0.156,
+      9e-05,
+      "TIS"
+    ],
+    "after": [
+      5.5,
+      6.5,
+      8.2,
+      170.0,
+      0.156,
+      9e-05,
+      "TIS",
+      "DIESEL"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b41799d3-219c-48e4-be9f-a61797e1efd4_engine.combustion_type_948ce7605326.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9b0c28da9cff4dc3f76aa6e7:spec",
+    "revision_id": "9b0c28da9cff4dc3f76aa6e7",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "isuzu.dmax_cab.rg.trim.d_max_spark_2_2_ddi_b_flat_deck_swb",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:55+00:00",
+    "payload": [
+      5.5,
+      6.5,
+      8.2,
+      170.0,
+      0.156,
+      9e-05,
+      "TIS",
+      "DIESEL"
+    ]
+  }
+}

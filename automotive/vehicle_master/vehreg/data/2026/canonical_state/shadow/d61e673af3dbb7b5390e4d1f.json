@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d61e673af3dbb7b5390e4d1f",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-051-bcc716924fd5:197",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.vellfire.gen1.trim.hybrid",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:11+00:00",
+    "before_hash": "badba3d6f629f544dc7db57b3e3ca7a7e24e9fdc0f79535a55d333ee284baa03",
+    "after_hash": "0c47ca8b86712c9a7f8713b0d83f2ca727d902926f838cf43a5097f939828d21",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      true,
+      7.1
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      true,
+      7.1,
+      6.1
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_fa43da23deec4647b43bca09443be63b_efficiency.fuel_consumption_l_100km_3794ce45058d.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d61e673af3dbb7b5390e4d1f:spec",
+    "revision_id": "d61e673af3dbb7b5390e4d1f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.vellfire.gen1.trim.hybrid",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:11+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      true,
+      7.1,
+      6.1
+    ]
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "360db3da178ba76625db4c9a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-054-d20b71816f05:98",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover_velar.unresearched.trim.range_rover_velar_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:52+00:00",
+    "before_hash": "496428035f129afe53b21f8d653caebae7c186b624d4bd69ad5e1ba52bbe4067",
+    "after_hash": "d28b7784bda96a39ebb23d59751f3422061a8dfaeebc1917a7d83c86ba2615cd",
+    "before": [
+      true,
+      true
+    ],
+    "after": [
+      true,
+      true,
+      5.1
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_90d96f24d5f44f3a9e6566204cb33245_efficiency.fuel_consumption_extra_urban_l_100km_6976ad203b46.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "360db3da178ba76625db4c9a:spec",
+    "revision_id": "360db3da178ba76625db4c9a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover_velar.unresearched.trim.range_rover_velar_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:52+00:00",
+    "payload": [
+      true,
+      true,
+      5.1
+    ]
+  }
+}

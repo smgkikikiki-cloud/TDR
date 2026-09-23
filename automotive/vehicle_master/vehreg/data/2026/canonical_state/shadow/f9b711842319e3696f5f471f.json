@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f9b711842319e3696f5f471f",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-014-8db054eb58a3:140",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.cayenne.e3.trim.e_hybrid_phev_470_hp_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:32+00:00",
+    "before_hash": "ee123931953cae1a2ad3486f1d20b4927cd9176efc1a55d62f33691dae805300",
+    "after_hash": "f041d197c1e4d3d77aa76095dfce0a5d894930ff3e83b1d67e5c68c69e70a622",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      25.9,
+      370.0,
+      "Samsung",
+      "ONBOARD_AC",
+      true
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      25.9,
+      370.0,
+      "Samsung",
+      "ONBOARD_AC",
+      true,
+      1.9
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_3f30ccd4-bf4d-4660-a4d4-180b49fa1a51_efficiency.fuel_consumption_l_100km_67dfed713409.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f9b711842319e3696f5f471f:spec",
+    "revision_id": "f9b711842319e3696f5f471f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.cayenne.e3.trim.e_hybrid_phev_470_hp_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:32+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      25.9,
+      370.0,
+      "Samsung",
+      "ONBOARD_AC",
+      true,
+      1.9
+    ]
+  }
+}

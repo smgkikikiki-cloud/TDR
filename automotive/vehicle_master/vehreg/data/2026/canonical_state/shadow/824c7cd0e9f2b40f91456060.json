@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "824c7cd0e9f2b40f91456060",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-041-97e292394981:85",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover.gen1.trim.3_0d_5dr_lwb_sv_350ps_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:29+00:00",
+    "before_hash": "caea17a89ccc05c5f9d9efeb6d6cf2f8c5ea4321b3416ed3c9f3ffd73c690b35",
+    "after_hash": "b9cdcd33bee263fba87f2f2814d0516965d1f97e3aeee1e87219c3c58c7a1e6e",
+    "before": [
+      true,
+      true,
+      6.3,
+      7.2,
+      8.9,
+      190.0,
+      0.039,
+      0.00089,
+      "TIS",
+      "HEV",
+      2997,
+      "DIESEL",
+      "285/45R22"
+    ],
+    "after": [
+      true,
+      true,
+      6.3,
+      7.2,
+      8.9,
+      190.0,
+      0.039,
+      0.00089,
+      "TIS",
+      "HEV",
+      2997,
+      "DIESEL",
+      "285/45R22",
+      "HEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_1bd32344-8146-4d28-9736-c321a94954f2_identity.powertrain_d241dd77216c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "824c7cd0e9f2b40f91456060:spec",
+    "revision_id": "824c7cd0e9f2b40f91456060",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover.gen1.trim.3_0d_5dr_lwb_sv_350ps_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:29+00:00",
+    "payload": [
+      true,
+      true,
+      6.3,
+      7.2,
+      8.9,
+      190.0,
+      0.039,
+      0.00089,
+      "TIS",
+      "HEV",
+      2997,
+      "DIESEL",
+      "285/45R22",
+      "HEV"
+    ]
+  }
+}

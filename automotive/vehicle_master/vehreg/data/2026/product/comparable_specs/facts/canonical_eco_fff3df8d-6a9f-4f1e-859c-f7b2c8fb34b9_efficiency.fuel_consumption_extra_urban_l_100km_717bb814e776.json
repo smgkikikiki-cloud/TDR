@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:fff3df8d-6a9f-4f1e-859c-f7b2c8fb34b9:efficiency.fuel_consumption_extra_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_extra_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 5.5,
+      "unit": "L/100km",
+      "observed_at": "2026-01-14",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/fff3df8d-6a9f-4f1e-859c-f7b2c8fb34b9",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/fff3df8d-6a9f-4f1e-859c-f7b2c8fb34b9",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "toyota.vellfire.gen1.trim.z_premier_hybrid"
+    }
+  ]
+}

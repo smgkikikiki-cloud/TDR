@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9bfb027817bde2c216eab370",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-020-1a96ac574560:247",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "isuzu.dmax_cab.rg.trim.d_max_spark_2_2_ddi_s",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:00+00:00",
+    "before_hash": "5727a97a575a85d9afb7eabfd39ec8db6c5d3741cb224e20a41a7500b82434d0",
+    "after_hash": "0b9bfadfcc52029b6326719d6b8be3371d6fadcdd609ba9a0ad4eb3603046f67",
+    "before": [
+      true,
+      5.5,
+      6.5,
+      8.2,
+      170.0,
+      0.156,
+      9e-05,
+      "TIS",
+      "DIESEL",
+      2164,
+      "B20",
+      "215/70R15",
+      "ICE"
+    ],
+    "after": [
+      true,
+      5.5,
+      6.5,
+      8.2,
+      170.0,
+      0.156,
+      9e-05,
+      "TIS",
+      "DIESEL",
+      2164,
+      "B20",
+      "215/70R15",
+      "ICE",
+      2.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_cbfe5389-0c6a-4676-a5ae-c13e64e7a284_manufacturing.excise_tax_rate_d62465f84dd6.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9bfb027817bde2c216eab370:spec",
+    "revision_id": "9bfb027817bde2c216eab370",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "isuzu.dmax_cab.rg.trim.d_max_spark_2_2_ddi_s",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:00+00:00",
+    "payload": [
+      true,
+      5.5,
+      6.5,
+      8.2,
+      170.0,
+      0.156,
+      9e-05,
+      "TIS",
+      "DIESEL",
+      2164,
+      "B20",
+      "215/70R15",
+      "ICE",
+      2.0
+    ]
+  }
+}

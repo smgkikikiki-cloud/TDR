@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b54ef3aa197b44e1f63f402a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-033-6b6996ed6874:95",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_revo_double_cab.an120.trim.2_4_mid_mt_4x4",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:25+00:00",
+    "before_hash": "bfd99d56b0c6cfe7067be41aec879e7c0cf1fd5f1bf02448cf041714ce9acc46",
+    "after_hash": "4ca9e30d80b55c0212083ac226796ce90efb5a6944efd2582aa3a723fec6b4f2",
+    "before": [
+      true,
+      6.4,
+      7.2,
+      8.5,
+      189.0,
+      0.161,
+      0.00038,
+      "TIS",
+      "DIESEL",
+      2393,
+      "B20",
+      "265/60R 18"
+    ],
+    "after": [
+      true,
+      6.4,
+      7.2,
+      8.5,
+      189.0,
+      0.161,
+      0.00038,
+      "TIS",
+      "DIESEL",
+      2393,
+      "B20",
+      "265/60R 18",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_c1c46e58-019b-45c9-bb49-1de432b16079_identity.powertrain_be985afe8279.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b54ef3aa197b44e1f63f402a:spec",
+    "revision_id": "b54ef3aa197b44e1f63f402a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_revo_double_cab.an120.trim.2_4_mid_mt_4x4",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:25+00:00",
+    "payload": [
+      true,
+      6.4,
+      7.2,
+      8.5,
+      189.0,
+      0.161,
+      0.00038,
+      "TIS",
+      "DIESEL",
+      2393,
+      "B20",
+      "265/60R 18",
+      "ICE"
+    ]
+  }
+}

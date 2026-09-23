@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "8bbec84dd2e514beb1d9e983",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-048-9a296c6c8041:13",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.almera.n18.trim.1_0t_s_cvt",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:34+00:00",
+    "before_hash": "11f834a77544c9740a22f8d5c80fc9719e989c415963a96d1c8824abebf4de05",
+    "after_hash": "50fd8d309daedfacc2c5a811137334c44e16435d5283a332197c6f713967b5cf",
+    "before": [
+      true,
+      4.0,
+      4.3,
+      5.0,
+      100.0
+    ],
+    "after": [
+      true,
+      4.0,
+      4.3,
+      5.0,
+      100.0,
+      0.025
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_cb15faeb28d74cfc95f93b6485390de2_emissions.nox_g_km_63eeefb197d6.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "8bbec84dd2e514beb1d9e983:spec",
+    "revision_id": "8bbec84dd2e514beb1d9e983",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.almera.n18.trim.1_0t_s_cvt",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:34+00:00",
+    "payload": [
+      true,
+      4.0,
+      4.3,
+      5.0,
+      100.0,
+      0.025
+    ]
+  }
+}

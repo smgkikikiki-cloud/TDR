@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b7658e88e08ca34e7c103f0f",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-040-43e09f18d7ea:7",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.hybrid_g_f_package",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:21+00:00",
+    "before_hash": "a796e8007dae4ae73e17db79f81fa500b0418421ac634de09dc49630a6302a63",
+    "after_hash": "ee6e9eb884f9533fb81e18bf3e6be727059032e16a3f62e09a1fc7e74de10320",
+    "before": [
+      true,
+      true,
+      7.6,
+      6.0
+    ],
+    "after": [
+      true,
+      true,
+      7.6,
+      6.0,
+      3.3
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_266aabc5-6534-4250-b51f-350c11bbf6d0_efficiency.fuel_consumption_urban_l_100km_ad0be639a5bc.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b7658e88e08ca34e7c103f0f:spec",
+    "revision_id": "b7658e88e08ca34e7c103f0f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.hybrid_g_f_package",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:21+00:00",
+    "payload": [
+      true,
+      true,
+      7.6,
+      6.0,
+      3.3
+    ]
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9dc56911ddfc4ae8f22274dc",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-055-949893759636:388",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "audi.q8.gen1.trim.60_tfsi_e_quattro_s_line_black_edition_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:22:05+00:00",
+    "before_hash": "d141cbc2bd32ee6942d6fc4e25b4cc13022ce1bef903ad0ab738dea319ab0c72",
+    "after_hash": "f23b4ad433396d798d92ba9ce13acd8a58db1ad934a014b1dd5ad9cfab4d4079",
+    "before": [
+      {
+        "trim_id": "audi.q8.gen1.trim.60_tfsi_e_quattro_s_line_black_edition_phev",
+        "amount_thb": 5899000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:19:1",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: Q8 60 TFSI e quattro S line Black Ed.; canonical grade: 60 TFSI e quattro S line Black Edition; mapping: manual. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "audi.q8.gen1.trim.60_tfsi_e_quattro_s_line_black_edition_phev",
+        "amount_thb": 5899000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2023-07-06",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/3a93dd56-e690-4555-a3db-97e1a06e2bfc",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "audi.q8.gen1.trim.60_tfsi_e_quattro_s_line_black_edition_phev",
+        "amount_thb": 5899000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:19:1",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: Q8 60 TFSI e quattro S line Black Ed.; canonical grade: 60 TFSI e quattro S line Black Edition; mapping: manual. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-055-949893759636:388.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9dc56911ddfc4ae8f22274dc:price",
+    "revision_id": "9dc56911ddfc4ae8f22274dc",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "audi.q8.gen1.trim.60_tfsi_e_quattro_s_line_black_edition_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:22:05+00:00",
+    "payload": [
+      {
+        "trim_id": "audi.q8.gen1.trim.60_tfsi_e_quattro_s_line_black_edition_phev",
+        "amount_thb": 5899000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2023-07-06",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/3a93dd56-e690-4555-a3db-97e1a06e2bfc",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "audi.q8.gen1.trim.60_tfsi_e_quattro_s_line_black_edition_phev",
+        "amount_thb": 5899000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:19:1",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: Q8 60 TFSI e quattro S line Black Ed.; canonical grade: 60 TFSI e quattro S line Black Edition; mapping: manual. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ]
+  }
+}

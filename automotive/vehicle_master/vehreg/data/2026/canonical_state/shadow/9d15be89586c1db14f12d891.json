@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9d15be89586c1db14f12d891",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-043-5c8c2001b8cb:290",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.step_wgn.gen1.trim.spada_premium_line_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:44+00:00",
+    "before_hash": "74281159907a2a6c57b86c428c64eaf9237a00a49f795c967c6d13330fb132f8",
+    "after_hash": "22b0d53c72a3f382014487c788f876bba0cb1662d4d054edd88795c6d69b40f0",
+    "before": [
+      true,
+      true,
+      6.8
+    ],
+    "after": [
+      true,
+      true,
+      6.8,
+      8.3
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_1e8ffbd5-7815-44e2-b6b7-8d4f69ed35db_efficiency.fuel_consumption_l_100km_0cf7dd2e2766.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9d15be89586c1db14f12d891:spec",
+    "revision_id": "9d15be89586c1db14f12d891",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.step_wgn.gen1.trim.spada_premium_line_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:44+00:00",
+    "payload": [
+      true,
+      true,
+      6.8,
+      8.3
+    ]
+  }
+}

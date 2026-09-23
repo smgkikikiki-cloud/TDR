@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6a1aa773adde7ccaeb51a7d8",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-009-54711011662e:199",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "xpeng.xpeng_g6.g6.trim.long_range_rwd_87_5_kwh_ncm_286_hp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:11+00:00",
+    "before_hash": "7fd1333083db8d409fb4af010e6e88001d2206fc9cfc5e3282506dbe008fec70",
+    "after_hash": "a78db640a3702bbb77d42ee5076da621092b4c3c79222a0b21aabd0aa2315504",
+    "before": [
+      "LFP",
+      80.81,
+      581.4,
+      "CALB Group Co., Ltd.",
+      "BOTH",
+      true,
+      156.0,
+      600.0,
+      "255/45R20",
+      "BEV",
+      10.0,
+      "PMSM",
+      true
+    ],
+    "after": [
+      "LFP",
+      80.81,
+      581.4,
+      "CALB Group Co., Ltd.",
+      "BOTH",
+      true,
+      156.0,
+      600.0,
+      "255/45R20",
+      "BEV",
+      10.0,
+      "PMSM",
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_6ec43a69-a117-42e0-8ff6-f888228f04a5_safety.adaptive_cruise_cc728e2b74a7.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6a1aa773adde7ccaeb51a7d8:spec",
+    "revision_id": "6a1aa773adde7ccaeb51a7d8",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "xpeng.xpeng_g6.g6.trim.long_range_rwd_87_5_kwh_ncm_286_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:11+00:00",
+    "payload": [
+      "LFP",
+      80.81,
+      581.4,
+      "CALB Group Co., Ltd.",
+      "BOTH",
+      true,
+      156.0,
+      600.0,
+      "255/45R20",
+      "BEV",
+      10.0,
+      "PMSM",
+      true,
+      true
+    ]
+  }
+}

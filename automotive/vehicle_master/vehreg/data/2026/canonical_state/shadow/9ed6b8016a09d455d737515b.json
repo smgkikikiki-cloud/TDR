@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9ed6b8016a09d455d737515b",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-012-0c3fd0adac89:312",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_altis.e210.trim.gr_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:23+00:00",
+    "before_hash": "fd14120eb83ef3dcb01a53df57b088abc891cf9894c63984a7dc391540624566",
+    "after_hash": "ef6ae0c0e3848a058da29bf518a5d964165d30039250028fa4f652273ac15dee",
+    "before": [
+      true,
+      7.1,
+      9.6,
+      13.9,
+      218.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1618,
+      "GASOLINE",
+      "235/40R18"
+    ],
+    "after": [
+      true,
+      7.1,
+      9.6,
+      13.9,
+      218.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1618,
+      "GASOLINE",
+      "235/40R18",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_04c66218-207e-4e5a-97ed-999520d2fd2e_identity.powertrain_31d6a1d3e922.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9ed6b8016a09d455d737515b:spec",
+    "revision_id": "9ed6b8016a09d455d737515b",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_altis.e210.trim.gr_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:23+00:00",
+    "payload": [
+      true,
+      7.1,
+      9.6,
+      13.9,
+      218.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1618,
+      "GASOLINE",
+      "235/40R18",
+      "ICE"
+    ]
+  }
+}

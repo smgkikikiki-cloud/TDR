@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:10834306-505a-44b1-9db0-1071295a967c:efficiency.fuel_consumption_l_100km",
+      "field_key": "efficiency.fuel_consumption_l_100km",
+      "value_state": "KNOWN",
+      "value": 7.5,
+      "unit": "L/100km",
+      "observed_at": "2026-05-18",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/10834306-505a-44b1-9db0-1071295a967c",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/10834306-505a-44b1-9db0-1071295a967c",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mercedes_benz.gls.gen1.trim.4matic_hev"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a42be7ea015aa60df957f6e7",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-035-5b8b3aecfae7:157",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.creta.su2.trim.alpha_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:40+00:00",
+    "before_hash": "9969ce5af54afff878567ed4e5c785d4d78dd2ff8314ad091bd889408003b62a",
+    "after_hash": "a7e2c5af7d0c45765acfae93e8476079ebdfa5ed4b3582f701b354f895b1ab90",
+    "before": [
+      true,
+      true,
+      5.3,
+      6.0
+    ],
+    "after": [
+      true,
+      true,
+      5.3,
+      6.0,
+      7.2
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_2034cba2-4ab5-4607-93b3-ef968f55a9df_efficiency.fuel_consumption_urban_l_100km_d71b294cd73f.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a42be7ea015aa60df957f6e7:spec",
+    "revision_id": "a42be7ea015aa60df957f6e7",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.creta.su2.trim.alpha_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:40+00:00",
+    "payload": [
+      true,
+      true,
+      5.3,
+      6.0,
+      7.2
+    ]
+  }
+}

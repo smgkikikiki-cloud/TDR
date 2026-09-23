@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a76a806f91387d985f8fc043",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-013-01b2d6d40e8e:381",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.xc60.xc60g.trim.ultra_t8_plug_in_hybrid_bright_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:28+00:00",
+    "before_hash": "2f71474366fe3397d625b4b066f6a58445ecb2af938668908bee8e153004373b",
+    "after_hash": "7d4c55a53ecc00b2bf2e838df4573ce4e21c773acd01009cb597bdfb78e54c82",
+    "before": [
+      "NMC",
+      19.4,
+      373.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd.",
+      "ONBOARD_AC",
+      true
+    ],
+    "after": [
+      "NMC",
+      19.4,
+      373.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd.",
+      "ONBOARD_AC",
+      true,
+      1.6
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_7822724b-5ac9-487a-bb1d-42aa11a56c2c_efficiency.fuel_consumption_l_100km_227829778bcd.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a76a806f91387d985f8fc043:spec",
+    "revision_id": "a76a806f91387d985f8fc043",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.xc60.xc60g.trim.ultra_t8_plug_in_hybrid_bright_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:28+00:00",
+    "payload": [
+      "NMC",
+      19.4,
+      373.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd.",
+      "ONBOARD_AC",
+      true,
+      1.6
+    ]
+  }
+}

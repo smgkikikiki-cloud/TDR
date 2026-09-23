@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "eae39944fb557ffa63abaed3",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-019-79c9da20e296:63",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "avatr.avatr_07.avatr_07.trim.max_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:55+00:00",
+    "before_hash": "5918de4bb507f6210e3a1a28f27d1b217f31a11aabbf094dfbc0f115195adf73",
+    "after_hash": "5bb30585abfd399f8bc3731903715279e17ea0a460d11c2520cd31bb84b6aea6",
+    "before": [
+      "LFP",
+      82.22,
+      609.0,
+      "CATL",
+      "ONBOARD_AC",
+      true
+    ],
+    "after": [
+      "LFP",
+      82.22,
+      609.0,
+      "CATL",
+      "ONBOARD_AC",
+      true,
+      165.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_0918ff1d-77f6-4f26-986b-cd0283f6a72d_ev.energy_consumption_wh_km_31dd1dbe6f23.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "eae39944fb557ffa63abaed3:spec",
+    "revision_id": "eae39944fb557ffa63abaed3",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "avatr.avatr_07.avatr_07.trim.max_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:55+00:00",
+    "payload": [
+      "LFP",
+      82.22,
+      609.0,
+      "CATL",
+      "ONBOARD_AC",
+      true,
+      165.0
+    ]
+  }
+}

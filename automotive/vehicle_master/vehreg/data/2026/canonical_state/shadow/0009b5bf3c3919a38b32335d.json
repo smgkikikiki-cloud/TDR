@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "0009b5bf3c3919a38b32335d",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-002-6827d3f0606e:46",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.cayenne.e3.trim.electric_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:47+00:00",
+    "before_hash": "439e469bc05fadd2f4db094f1e9a7048c7944b0c1ddcbf19ebb2d3abec9e82e7",
+    "after_hash": "5000ca37dc3fc7abce9ddd9aef1b63146ae3705536996ede1e7b5e17893e51ad",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      107.8,
+      700.0,
+      "Webasto Convertibles Slovakia, s.r.o.",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      173.0,
+      691.0,
+      "285/40R22",
+      "325/35R22"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      107.8,
+      700.0,
+      "Webasto Convertibles Slovakia, s.r.o.",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      173.0,
+      691.0,
+      "285/40R22",
+      "325/35R22",
+      "BEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_0eca67ad-aea5-4d60-bf86-817b708d0cb5_identity.powertrain_cc7b1e42c8fd.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "0009b5bf3c3919a38b32335d:spec",
+    "revision_id": "0009b5bf3c3919a38b32335d",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.cayenne.e3.trim.electric_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:47+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      107.8,
+      700.0,
+      "Webasto Convertibles Slovakia, s.r.o.",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      173.0,
+      691.0,
+      "285/40R22",
+      "325/35R22",
+      "BEV"
+    ]
+  }
+}

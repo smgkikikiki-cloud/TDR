@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:fbd1406393ff41be80adb3511f8672c9:efficiency.fuel_consumption_extra_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_extra_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 7.5,
+      "unit": "L/100km",
+      "observed_at": "2021-07-12",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/fbd1406393ff41be80adb3511f8672c9",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/fbd1406393ff41be80adb3511f8672c9",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "lexus.lexus_rx.al30.trim.rx350_f_sport_ice"
+    }
+  ]
+}

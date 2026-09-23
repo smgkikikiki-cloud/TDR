@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9169eea63cf2f162bec9d0e2",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-034-5299aee8f0ab:110",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "kia.ev5.gen1.trim.earth_exclusive_awd_88_1_kwh_dual_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:32+00:00",
+    "before_hash": "a3910acf90e27b0091d7fd0c69855f03af19a018c6026c69f8577da14feb39c8",
+    "after_hash": "bd2dd5e4355b32de017a1eadb989d5e986f6340fca5f6a213c7da7a1ba31b121",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      87.87,
+      399.4,
+      "YANCHENG FINDREAMS BATTERY",
+      "ONBOARD_AC"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      87.87,
+      399.4,
+      "YANCHENG FINDREAMS BATTERY",
+      "ONBOARD_AC",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_75f4f9b1-1902-4b9e-876e-7bea996625ba_comfort.auto_climate_26de431568ef.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9169eea63cf2f162bec9d0e2:spec",
+    "revision_id": "9169eea63cf2f162bec9d0e2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "kia.ev5.gen1.trim.earth_exclusive_awd_88_1_kwh_dual_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:32+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      87.87,
+      399.4,
+      "YANCHENG FINDREAMS BATTERY",
+      "ONBOARD_AC",
+      true
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:42483076-18ce-4fe1-8b88-0d7edad6edbf:ev.energy_consumption_wh_km",
+      "field_key": "ev.energy_consumption_wh_km",
+      "value_state": "KNOWN",
+      "value": 186.0,
+      "unit": "Wh/km",
+      "observed_at": "2025-12-18",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/42483076-18ce-4fe1-8b88-0d7edad6edbf",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/42483076-18ce-4fe1-8b88-0d7edad6edbf",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "porsche.taycan.gen1.trim.turbo_cross_turismo_bev"
+    }
+  ]
+}

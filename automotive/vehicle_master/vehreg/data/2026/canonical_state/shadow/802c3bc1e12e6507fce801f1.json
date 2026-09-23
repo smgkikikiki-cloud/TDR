@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "802c3bc1e12e6507fce801f1",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-023-8723a19230b0:346",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.cx30.dm.trim.2_0_ultra_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:16+00:00",
+    "before_hash": "d0c49e7b419d9e0642e8427efc4b8beaea9153b4d22b3e87595d9ee12666a140",
+    "after_hash": "dfa79642807947294b8ef0f078bdd3c0af14034c84c512509e991398994e917c",
+    "before": [
+      true,
+      5.5,
+      6.5,
+      8.3,
+      150.0,
+      0.009,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "E85",
+      "215/65R16",
+      "ICE",
+      20.0
+    ],
+    "after": [
+      true,
+      5.5,
+      6.5,
+      8.3,
+      150.0,
+      0.009,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "E85",
+      "215/65R16",
+      "ICE",
+      20.0,
+      6
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_25e97632-8fe0-497d-ae63-42b0d8665da7_powertrain.gear_count_9a65f4dc7304.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "802c3bc1e12e6507fce801f1:spec",
+    "revision_id": "802c3bc1e12e6507fce801f1",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.cx30.dm.trim.2_0_ultra_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:16+00:00",
+    "payload": [
+      true,
+      5.5,
+      6.5,
+      8.3,
+      150.0,
+      0.009,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "E85",
+      "215/65R16",
+      "ICE",
+      20.0,
+      6
+    ]
+  }
+}

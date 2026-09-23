@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "1651f46feeb80478f870c49c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-009-54711011662e:44",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.haval_h6.h6hev.trim.phev_pro_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:10+00:00",
+    "before_hash": "cecd9e859aa0065eca6c163871717b4a162cc0cb06580038861d4c9658168cb5",
+    "after_hash": "1bb98057bb9ae6ca73321b43d4bedf5acd17bc3e085e7992ae93ce672dcbb98b",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      27.54,
+      313.0,
+      "SVOLT",
+      "ONBOARD_AC",
+      true,
+      0.8,
+      18.0,
+      0.003,
+      "TIS",
+      "PHEV",
+      1499,
+      "GASOLINE"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      27.54,
+      313.0,
+      "SVOLT",
+      "ONBOARD_AC",
+      true,
+      0.8,
+      18.0,
+      0.003,
+      "TIS",
+      "PHEV",
+      1499,
+      "GASOLINE",
+      200.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_398f552b-cc18-4c0d-9550-da4d8c290b48_ev.energy_consumption_wh_km_75276a236902.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "1651f46feeb80478f870c49c:spec",
+    "revision_id": "1651f46feeb80478f870c49c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.haval_h6.h6hev.trim.phev_pro_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:10+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      27.54,
+      313.0,
+      "SVOLT",
+      "ONBOARD_AC",
+      true,
+      0.8,
+      18.0,
+      0.003,
+      "TIS",
+      "PHEV",
+      1499,
+      "GASOLINE",
+      200.0
+    ]
+  }
+}

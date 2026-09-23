@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:5dbabf17-e8fd-4821-97f3-df7a3caf1f7d:emissions.co2_g_km",
+      "field_key": "emissions.co2_g_km",
+      "value_state": "KNOWN",
+      "value": 39.0,
+      "unit": "g/km",
+      "observed_at": "2022-10-28",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/5dbabf17-e8fd-4821-97f3-df7a3caf1f7d",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/5dbabf17-e8fd-4821-97f3-df7a3caf1f7d",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "land_rover.range_rover.gen1.trim.lwb_3_0p_phev_se_440ps_phev"
+    }
+  ]
+}

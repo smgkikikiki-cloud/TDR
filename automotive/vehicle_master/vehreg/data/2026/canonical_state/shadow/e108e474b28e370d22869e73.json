@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e108e474b28e370d22869e73",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-023-8723a19230b0:127",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.everest.u704.trim.titanium_plus_2_0l_bi_turbo_10at_4x2_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:16+00:00",
+    "before_hash": "e83eac2f2b8522b128b7d78b90263a568a3718910255cdf5ad97e01305898060",
+    "after_hash": "89c2960fdc4cc542f1567918ab7d3512143b603b57d970bc9aaab12efa6b7c13",
+    "before": [
+      true,
+      true,
+      true,
+      6.2,
+      6.9,
+      8.0,
+      182.0,
+      0.105,
+      0.00035,
+      "TIS",
+      "DIESEL",
+      1996,
+      "B20",
+      "255/55R20"
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      6.2,
+      6.9,
+      8.0,
+      182.0,
+      0.105,
+      0.00035,
+      "TIS",
+      "DIESEL",
+      1996,
+      "B20",
+      "255/55R20",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d2e4c842-e228-4daf-966a-e939d5136216_identity.powertrain_8bc2f042fbb6.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e108e474b28e370d22869e73:spec",
+    "revision_id": "e108e474b28e370d22869e73",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.everest.u704.trim.titanium_plus_2_0l_bi_turbo_10at_4x2_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:16+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      6.2,
+      6.9,
+      8.0,
+      182.0,
+      0.105,
+      0.00035,
+      "TIS",
+      "DIESEL",
+      1996,
+      "B20",
+      "255/55R20",
+      "ICE"
+    ]
+  }
+}

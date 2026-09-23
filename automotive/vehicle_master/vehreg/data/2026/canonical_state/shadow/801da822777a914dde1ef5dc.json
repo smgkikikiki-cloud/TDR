@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "801da822777a914dde1ef5dc",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-039-bb0c6084f37a:326",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_glc.x254.trim.350_e_4matic_amg_dynamic_phev_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:14+00:00",
+    "before_hash": "e887bdbeb8c2fc7153c0532a2815459d21eb61d54815254761811d1e529974f8",
+    "after_hash": "000ee688acbace96b5f39481f289f52c70d1c79d02626f82923dcf497b10b762",
+    "before": [
+      "NMC",
+      25.77,
+      363.0,
+      "Mercedes-Benz AG",
+      "EXTERNAL_DC",
+      1.2
+    ],
+    "after": [
+      "NMC",
+      25.77,
+      363.0,
+      "Mercedes-Benz AG",
+      "EXTERNAL_DC",
+      1.2,
+      27.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_f2f2db11-a3df-4d8f-8ab5-b674c0dbd3d8_emissions.co2_g_km_9e4d4d1a4fb5.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "801da822777a914dde1ef5dc:spec",
+    "revision_id": "801da822777a914dde1ef5dc",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_glc.x254.trim.350_e_4matic_amg_dynamic_phev_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:14+00:00",
+    "payload": [
+      "NMC",
+      25.77,
+      363.0,
+      "Mercedes-Benz AG",
+      "EXTERNAL_DC",
+      1.2,
+      27.0
+    ]
+  }
+}

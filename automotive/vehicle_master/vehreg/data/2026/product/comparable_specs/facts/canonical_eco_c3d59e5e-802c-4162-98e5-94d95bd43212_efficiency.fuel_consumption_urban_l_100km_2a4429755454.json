@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:c3d59e5e-802c-4162-98e5-94d95bd43212:efficiency.fuel_consumption_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 13.3,
+      "unit": "L/100km",
+      "observed_at": "2025-01-29",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/c3d59e5e-802c-4162-98e5-94d95bd43212",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/c3d59e5e-802c-4162-98e5-94d95bd43212",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "porsche.macan.95b.trim.s_ice"
+    }
+  ]
+}

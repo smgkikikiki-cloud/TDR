@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "3cd327999d5ddf463533e099",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-015-2f508ee80764:342",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_travo_double_cab.gen1.trim.4trex_2_8_premium_mt_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:37+00:00",
+    "before_hash": "203d0a76f605be3a1a2e283d44888878e40024c21300c5baf2e1d3a41a0640a2",
+    "after_hash": "0d90b10c5c4559c668696605c7bf7ab856d2b2d5b61ca0655c72f634f54f488c",
+    "before": [
+      true,
+      6.5,
+      7.0,
+      7.9,
+      185.0,
+      0.158,
+      0.00089,
+      "TIS",
+      "DIESEL",
+      2755,
+      "B20",
+      "265/65R 17"
+    ],
+    "after": [
+      true,
+      6.5,
+      7.0,
+      7.9,
+      185.0,
+      0.158,
+      0.00089,
+      "TIS",
+      "DIESEL",
+      2755,
+      "B20",
+      "265/65R 17",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ea6334aa-703e-4838-9e75-c2f454f4fbbb_identity.powertrain_ee0fb50af3ab.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "3cd327999d5ddf463533e099:spec",
+    "revision_id": "3cd327999d5ddf463533e099",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_travo_double_cab.gen1.trim.4trex_2_8_premium_mt_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:37+00:00",
+    "payload": [
+      true,
+      6.5,
+      7.0,
+      7.9,
+      185.0,
+      0.158,
+      0.00089,
+      "TIS",
+      "DIESEL",
+      2755,
+      "B20",
+      "265/65R 17",
+      "ICE"
+    ]
+  }
+}

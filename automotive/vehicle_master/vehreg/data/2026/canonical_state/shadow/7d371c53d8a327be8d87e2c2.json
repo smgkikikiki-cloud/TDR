@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7d371c53d8a327be8d87e2c2",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-013-01b2d6d40e8e:341",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_s07.gen1.trim.new_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:28+00:00",
+    "before_hash": "4b8ffa67bcce92acd3fbff260a3818141be29a92725bb9f7899f2c61b3b940d6",
+    "after_hash": "753358c17ecebd4c6fe66cd34918ef3a4f750ba7722ed29d28404b41e0fa3d71",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      68.98,
+      379.0,
+      "CATL",
+      "DC: 240-438 V., Single phase AC: 230 V.",
+      "ONBOARD_AC",
+      true,
+      158.0,
+      485.0,
+      "255/45R20",
+      "BEV",
+      10.0,
+      "PMSM",
+      true,
+      true,
+      4,
+      true,
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R100"
+      ]
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      68.98,
+      379.0,
+      "CATL",
+      "DC: 240-438 V., Single phase AC: 230 V.",
+      "ONBOARD_AC",
+      true,
+      158.0,
+      485.0,
+      "255/45R20",
+      "BEV",
+      10.0,
+      "PMSM",
+      true,
+      true,
+      4,
+      true,
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R100"
+      ],
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_544599a5-89eb-4c0e-8e4c-1d27c49efa4d_technology.connected_services_24848d3345ca.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7d371c53d8a327be8d87e2c2:spec",
+    "revision_id": "7d371c53d8a327be8d87e2c2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_s07.gen1.trim.new_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:28+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      68.98,
+      379.0,
+      "CATL",
+      "DC: 240-438 V., Single phase AC: 230 V.",
+      "ONBOARD_AC",
+      true,
+      158.0,
+      485.0,
+      "255/45R20",
+      "BEV",
+      10.0,
+      "PMSM",
+      true,
+      true,
+      4,
+      true,
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R100"
+      ],
+      true
+    ]
+  }
+}

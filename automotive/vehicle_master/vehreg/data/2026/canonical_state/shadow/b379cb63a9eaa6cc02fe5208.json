@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b379cb63a9eaa6cc02fe5208",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-014-8db054eb58a3:383",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq5.ne.trim.n_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:33+00:00",
+    "before_hash": "358861754adbc743c2fea82adca97267c8f3e039dded836a8bc662eb793d9ec9",
+    "after_hash": "d17c74c8bcdf5feaf3e67e50c67fcf4985d34f880c6f24332a065d4c5a7dc165",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      84.34,
+      697.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      212.0,
+      448.0,
+      "275/35ZR21",
+      "BEV"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      84.34,
+      697.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      212.0,
+      448.0,
+      "275/35ZR21",
+      "BEV",
+      10.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_5b3bd768-ab61-4284-a5ac-90b67722da3d_manufacturing.excise_tax_rate_c30268f96ac6.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b379cb63a9eaa6cc02fe5208:spec",
+    "revision_id": "b379cb63a9eaa6cc02fe5208",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq5.ne.trim.n_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:33+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      84.34,
+      697.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      212.0,
+      448.0,
+      "275/35ZR21",
+      "BEV",
+      10.0
+    ]
+  }
+}

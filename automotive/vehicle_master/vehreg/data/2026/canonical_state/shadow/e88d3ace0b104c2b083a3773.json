@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e88d3ace0b104c2b083a3773",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-009-54711011662e:126",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.s_class.gen1.trim.exclusive_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:10+00:00",
+    "before_hash": "285a5e43cf39c9a91305f7631fa6ca93af8e77ccf0d27f7722c4b0f43e4be5f4",
+    "after_hash": "d94506e0d057ef085e9ff9827f64c9fb9d0a37531d54d98fbc1533b56496649f",
+    "before": [
+      true,
+      5.3,
+      6.8,
+      9.3,
+      178.0,
+      0.012,
+      0.00094,
+      "EURO6",
+      "HEV",
+      2989,
+      "DIESEL"
+    ],
+    "after": [
+      true,
+      5.3,
+      6.8,
+      9.3,
+      178.0,
+      0.012,
+      0.00094,
+      "EURO6",
+      "HEV",
+      2989,
+      "DIESEL",
+      "255/40R20"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_60d7c344-6ee1-4081-a0a3-d9391da1d326_fitment.tyre_size_839e1c8e1b91.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e88d3ace0b104c2b083a3773:spec",
+    "revision_id": "e88d3ace0b104c2b083a3773",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.s_class.gen1.trim.exclusive_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:10+00:00",
+    "payload": [
+      true,
+      5.3,
+      6.8,
+      9.3,
+      178.0,
+      0.012,
+      0.00094,
+      "EURO6",
+      "HEV",
+      2989,
+      "DIESEL",
+      "255/40R20"
+    ]
+  }
+}

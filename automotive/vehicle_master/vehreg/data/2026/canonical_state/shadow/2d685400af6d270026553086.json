@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2d685400af6d270026553086",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-014-8db054eb58a3:384",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq5.ne.trim.n_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:33+00:00",
+    "before_hash": "d17c74c8bcdf5feaf3e67e50c67fcf4985d34f880c6f24332a065d4c5a7dc165",
+    "after_hash": "6b49990c8d1c0a6915b2d9335a34fbc2fa87c0b2a4bc892dc6c3da01f406130e",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      84.34,
+      697.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      212.0,
+      448.0,
+      "275/35ZR21",
+      "BEV",
+      10.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      84.34,
+      697.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      212.0,
+      448.0,
+      "275/35ZR21",
+      "BEV",
+      10.0,
+      "Ulsan Plant"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_5b3bd768-ab61-4284-a5ac-90b67722da3d_manufacturing.factory_076c4a5713ff.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2d685400af6d270026553086:spec",
+    "revision_id": "2d685400af6d270026553086",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq5.ne.trim.n_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:33+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      84.34,
+      697.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      212.0,
+      448.0,
+      "275/35ZR21",
+      "BEV",
+      10.0,
+      "Ulsan Plant"
+    ]
+  }
+}

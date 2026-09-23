@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "eeed9081d062575e81e7834f",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-051-bcc716924fd5:378",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.kicks.p15.trim.95kw_vl_2_tone_int",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:11+00:00",
+    "before_hash": "4880b771e9109582b1e023961585edf3fe3f8463628d905c4ab5e9e113ec69e7",
+    "after_hash": "fbb8c461653e7f818ba48747e9a1058c87285f0f90776e12956ee3920000f369",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      4.5,
+      4.2,
+      3.7,
+      100.0,
+      0.027,
+      "TIS",
+      "HEV",
+      1198,
+      "E20",
+      "205/55R17",
+      "HEV",
+      4.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      4.5,
+      4.2,
+      3.7,
+      100.0,
+      0.027,
+      "TIS",
+      "HEV",
+      1198,
+      "E20",
+      "205/55R17",
+      "HEV",
+      4.0,
+      "AUTOMATIC"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_c0166fad51ed483da16075d5fca70bca_powertrain.transmission_8306df1a6e2f.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "eeed9081d062575e81e7834f:spec",
+    "revision_id": "eeed9081d062575e81e7834f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.kicks.p15.trim.95kw_vl_2_tone_int",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:11+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      4.5,
+      4.2,
+      3.7,
+      100.0,
+      0.027,
+      "TIS",
+      "HEV",
+      1198,
+      "E20",
+      "205/55R17",
+      "HEV",
+      4.0,
+      "AUTOMATIC"
+    ]
+  }
+}

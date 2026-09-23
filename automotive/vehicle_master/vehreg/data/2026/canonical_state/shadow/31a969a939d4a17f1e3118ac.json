@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "31a969a939d4a17f1e3118ac",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-025-74b815fdedac:11",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_s05.gen1.trim.lite_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:25+00:00",
+    "before_hash": "064c8a6e8412ceea7e3a15f1768b83ac6e93ef08e35adac8bc9f7edada26ab99",
+    "after_hash": "e33c8577226e89850f943ac113065f0068da5fc8d4e22118a519641d60149084",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      56.09,
+      379.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      56.09,
+      379.0,
+      "CHANGAN"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_52035a1f-860a-4307-ba05-67cb4460a78f_battery.supplier_46c36a1042ba.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "31a969a939d4a17f1e3118ac:spec",
+    "revision_id": "31a969a939d4a17f1e3118ac",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_s05.gen1.trim.lite_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:25+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      56.09,
+      379.0,
+      "CHANGAN"
+    ]
+  }
+}

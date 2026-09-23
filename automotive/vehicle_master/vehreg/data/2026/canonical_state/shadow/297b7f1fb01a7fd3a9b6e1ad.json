@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "297b7f1fb01a7fd3a9b6e1ad",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-034-5299aee8f0ab:18",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mazda6.gen1.trim.20th_anniversary_edition_nappa_leather_grand_luxury_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:32+00:00",
+    "before_hash": "43f9acbf48d562fa054995ca64a17efce27256dceecef8202e756c0b8fb881be",
+    "after_hash": "1bf764d10d74822c49a456b1a05b8831f1d54a6f77427bc8936cb185a9df551c",
+    "before": [
+      true,
+      true,
+      5.8,
+      7.1,
+      9.4,
+      169.0,
+      0.005,
+      "TIS",
+      "GASOLINE",
+      2488,
+      "GASOLINE",
+      "225/45R19",
+      "ICE",
+      30.0
+    ],
+    "after": [
+      true,
+      true,
+      5.8,
+      7.1,
+      9.4,
+      169.0,
+      0.005,
+      "TIS",
+      "GASOLINE",
+      2488,
+      "GASOLINE",
+      "225/45R19",
+      "ICE",
+      30.0,
+      "MAZDA MOTOR CORPORATION HOFU PLANT"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_4599a7ba-693f-4025-bd0b-40fbb08ff80e_manufacturing.factory_fa578da4fae9.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "297b7f1fb01a7fd3a9b6e1ad:spec",
+    "revision_id": "297b7f1fb01a7fd3a9b6e1ad",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mazda6.gen1.trim.20th_anniversary_edition_nappa_leather_grand_luxury_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:32+00:00",
+    "payload": [
+      true,
+      true,
+      5.8,
+      7.1,
+      9.4,
+      169.0,
+      0.005,
+      "TIS",
+      "GASOLINE",
+      2488,
+      "GASOLINE",
+      "225/45R19",
+      "ICE",
+      30.0,
+      "MAZDA MOTOR CORPORATION HOFU PLANT"
+    ]
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6f5eb404a1cd6b4cfb517371",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-031-eac7506457fb:184",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_x1.u11.trim.sdrive20i_xline_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:09+00:00",
+    "before_hash": "9a1c7e0d1063c4d53eea7f695bd2e4a8a51a4a2ca91008cf66b510aa9f37700e",
+    "after_hash": "3c651cd941bd86dc1cbae9d1926769e566445f143d94875cedef8555860c3c98",
+    "before": [
+      true,
+      true,
+      true,
+      5.2,
+      6.3,
+      8.2,
+      147.0,
+      0.005,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "GASOLINE",
+      "225/55R18"
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      5.2,
+      6.3,
+      8.2,
+      147.0,
+      0.005,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "GASOLINE",
+      "225/55R18",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_8700bdad-8cee-4996-9fb8-d7f4cd4e29d2_identity.powertrain_130e06c88e50.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6f5eb404a1cd6b4cfb517371:spec",
+    "revision_id": "6f5eb404a1cd6b4cfb517371",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_x1.u11.trim.sdrive20i_xline_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:09+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      5.2,
+      6.3,
+      8.2,
+      147.0,
+      0.005,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "GASOLINE",
+      "225/55R18",
+      "ICE"
+    ]
+  }
+}

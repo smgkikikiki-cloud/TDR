@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d2d2feb4c2cbf3800f405c1a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-043-5c8c2001b8cb:325",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.2_5_hybrid_s_type_gold_iii",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:45+00:00",
+    "before_hash": "5738d67a836c8aa2e805835d67dfd6de506ef35ced8d166c7eea1c108ef39600",
+    "after_hash": "d1131e7461b5cb835b5429a450902d827a7c80e635adf798acdac66c5da07c16",
+    "before": [
+      true,
+      true,
+      7.1,
+      5.6,
+      3.2,
+      135.0,
+      0.017,
+      "TIS",
+      "HEV"
+    ],
+    "after": [
+      true,
+      true,
+      7.1,
+      5.6,
+      3.2,
+      135.0,
+      0.017,
+      "TIS",
+      "HEV",
+      2493
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e1b04f76-6121-4bba-bdba-ceeca42034f7_engine.displacement_cc_3b8d41b75315.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d2d2feb4c2cbf3800f405c1a:spec",
+    "revision_id": "d2d2feb4c2cbf3800f405c1a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.2_5_hybrid_s_type_gold_iii",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:45+00:00",
+    "payload": [
+      true,
+      true,
+      7.1,
+      5.6,
+      3.2,
+      135.0,
+      0.017,
+      "TIS",
+      "HEV",
+      2493
+    ]
+  }
+}

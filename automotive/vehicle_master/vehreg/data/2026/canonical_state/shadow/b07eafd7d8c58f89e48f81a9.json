@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b07eafd7d8c58f89e48f81a9",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-045-66f56137868e:204",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.almera.n18.trim.1_0t_sportech_x_cvt",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:02+00:00",
+    "before_hash": "8efe6e4b74cc9fbe19065c1b13a607ce2044c59f2cca19433231039dda217ac4",
+    "after_hash": "b8faf5f4186f37fae0501950ea18d4ea9f648df6962abd53e9001e471e7368c6",
+    "before": [
+      4.5,
+      4.8,
+      5.4,
+      114.0,
+      0.012,
+      "TIS",
+      "GASOLINE",
+      999,
+      "E20",
+      "205/55R16",
+      "ICE",
+      14.0,
+      "CVT",
+      true
+    ],
+    "after": [
+      4.5,
+      4.8,
+      5.4,
+      114.0,
+      0.012,
+      "TIS",
+      "GASOLINE",
+      999,
+      "E20",
+      "205/55R16",
+      "ICE",
+      14.0,
+      "CVT",
+      true,
+      4
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_2c0944ae-5a9a-46b0-8314-599cf46f07d7_safety.airbag_count_2c8da56a90c7.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b07eafd7d8c58f89e48f81a9:spec",
+    "revision_id": "b07eafd7d8c58f89e48f81a9",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.almera.n18.trim.1_0t_sportech_x_cvt",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:02+00:00",
+    "payload": [
+      4.5,
+      4.8,
+      5.4,
+      114.0,
+      0.012,
+      "TIS",
+      "GASOLINE",
+      999,
+      "E20",
+      "205/55R16",
+      "ICE",
+      14.0,
+      "CVT",
+      true,
+      4
+    ]
+  }
+}

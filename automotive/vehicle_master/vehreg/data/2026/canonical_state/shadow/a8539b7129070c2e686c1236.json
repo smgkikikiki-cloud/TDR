@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a8539b7129070c2e686c1236",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-010-6f2b18f1a4fd:313",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.ranger_double_cab.p703.trim.wildtrak_2_0l_turbo_hr_10at",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:15+00:00",
+    "before_hash": "4ff5c5a50de1641fbacf83b37c549751a6cdb8d04959c798671697f5b75a83f6",
+    "after_hash": "893a0b5bf7b1d312bac7d17b0418eae3c51d07fb2bfdfa3e52ea2e2cb79bff2b",
+    "before": [
+      true,
+      true,
+      6.7,
+      7.0,
+      7.6,
+      184.0,
+      0.2258,
+      0.00032,
+      "TIS",
+      "DIESEL",
+      1996,
+      "B20",
+      "255/65R18"
+    ],
+    "after": [
+      true,
+      true,
+      6.7,
+      7.0,
+      7.6,
+      184.0,
+      0.2258,
+      0.00032,
+      "TIS",
+      "DIESEL",
+      1996,
+      "B20",
+      "255/65R18",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_31b05a86-eeda-44de-a369-2d4fb8ec158d_identity.powertrain_3de39144b912.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a8539b7129070c2e686c1236:spec",
+    "revision_id": "a8539b7129070c2e686c1236",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.ranger_double_cab.p703.trim.wildtrak_2_0l_turbo_hr_10at",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:15+00:00",
+    "payload": [
+      true,
+      true,
+      6.7,
+      7.0,
+      7.6,
+      184.0,
+      0.2258,
+      0.00032,
+      "TIS",
+      "DIESEL",
+      1996,
+      "B20",
+      "255/65R18",
+      "ICE"
+    ]
+  }
+}

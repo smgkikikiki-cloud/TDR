@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "de1eb22e43b7e1e11ec45a38",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-040-43e09f18d7ea:41",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.q8.gen1.trim.60_tfsi_e_quattro_s_line_black_edition_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:21+00:00",
+    "before_hash": "df408c861d01b56e6b827d6a83c81f78c94cd20692e60fd419b0ed42d965ad2a",
+    "after_hash": "6b65e54bf79d06f89f6534b29b3a050c9570d58d37144d55094a0320d68fb744",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      17.97,
+      374.4
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      17.97,
+      374.4,
+      "Volkswagen/VW opt. Audi"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_3a93dd56-e690-4555-a3db-97e1a06e2bfc_battery.supplier_a02735e2f93e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "de1eb22e43b7e1e11ec45a38:spec",
+    "revision_id": "de1eb22e43b7e1e11ec45a38",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.q8.gen1.trim.60_tfsi_e_quattro_s_line_black_edition_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:21+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      17.97,
+      374.4,
+      "Volkswagen/VW opt. Audi"
+    ]
+  }
+}

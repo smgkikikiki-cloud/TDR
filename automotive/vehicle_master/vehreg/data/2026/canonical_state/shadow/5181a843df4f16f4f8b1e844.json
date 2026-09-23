@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5181a843df4f16f4f8b1e844",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-030-80293fca2870:30",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.crv.rs.trim.el_4wd_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:02+00:00",
+    "before_hash": "52faf5091609ac147d5af6973f8bd7d5d983f4e90e3a30561645c06ac13a8980",
+    "after_hash": "f3764d5fd6ee0db034c5d60e3b3210a2c2b336f71adf549f739a1faee992943a",
+    "before": [
+      true,
+      true,
+      6.2,
+      7.4,
+      9.4,
+      176.0,
+      0.009,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "235/60R18",
+      "ICE",
+      25.0
+    ],
+    "after": [
+      true,
+      true,
+      6.2,
+      7.4,
+      9.4,
+      176.0,
+      0.009,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "235/60R18",
+      "ICE",
+      25.0,
+      "CVT"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_bd032a33-f66e-4266-970e-667e3a5ec86d_powertrain.transmission_79c2e2f03388.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5181a843df4f16f4f8b1e844:spec",
+    "revision_id": "5181a843df4f16f4f8b1e844",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.crv.rs.trim.el_4wd_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:02+00:00",
+    "payload": [
+      true,
+      true,
+      6.2,
+      7.4,
+      9.4,
+      176.0,
+      0.009,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "235/60R18",
+      "ICE",
+      25.0,
+      "CVT"
+    ]
+  }
+}

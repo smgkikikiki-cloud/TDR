@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a67fdc74d12f9ee9f345667a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-050-6df028e5a85f:381",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.kicks.p15.trim.95kw_vl",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:58+00:00",
+    "before_hash": "c9dd01b322f2fdf31bca19adb72312e4d85ad8a7e770caddb8260f5b062693cb",
+    "after_hash": "4880b771e9109582b1e023961585edf3fe3f8463628d905c4ab5e9e113ec69e7",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      4.5,
+      4.2,
+      3.7,
+      100.0,
+      0.027,
+      "TIS",
+      "HEV",
+      1198,
+      "E20",
+      "205/55R17",
+      "HEV"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      4.5,
+      4.2,
+      3.7,
+      100.0,
+      0.027,
+      "TIS",
+      "HEV",
+      1198,
+      "E20",
+      "205/55R17",
+      "HEV",
+      4.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_6972b96319d943bfbacee09fd9e53376_manufacturing.excise_tax_rate_8b610faac462.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a67fdc74d12f9ee9f345667a:spec",
+    "revision_id": "a67fdc74d12f9ee9f345667a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.kicks.p15.trim.95kw_vl",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:58+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      4.5,
+      4.2,
+      3.7,
+      100.0,
+      0.027,
+      "TIS",
+      "HEV",
+      1198,
+      "E20",
+      "205/55R17",
+      "HEV",
+      4.0
+    ]
+  }
+}

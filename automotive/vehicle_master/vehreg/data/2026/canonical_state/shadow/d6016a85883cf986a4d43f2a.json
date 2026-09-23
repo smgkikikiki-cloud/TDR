@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d6016a85883cf986a4d43f2a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-052-52eba3c13659:243",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_c_class.w206.trim.amg_sport_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:24+00:00",
+    "before_hash": "4e122151f2764668e8f7e94dfe90eff5925bbc99883d2c2a6bbd90f8ea2c3502",
+    "after_hash": "da81ea01c79687f4ba61b87ff38ec48ce4f75ae3487b2f65ca6f9ce4fe7859ba",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      2.0,
+      45.0,
+      0.004,
+      "TIS",
+      "HEV",
+      1991,
+      "GASOLINE",
+      "225/45R18",
+      "245/40R18",
+      "HEV",
+      4.0,
+      9,
+      "AUTOMATIC",
+      true,
+      13,
+      true,
+      true,
+      true,
+      true,
+      true,
+      [
+        "R13H"
+      ]
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      2.0,
+      45.0,
+      0.004,
+      "TIS",
+      "HEV",
+      1991,
+      "GASOLINE",
+      "225/45R18",
+      "245/40R18",
+      "HEV",
+      4.0,
+      9,
+      "AUTOMATIC",
+      true,
+      13,
+      true,
+      true,
+      true,
+      true,
+      true,
+      [
+        "R13H"
+      ],
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_9dc1b0e785a3480e84f866f0d2c479da_technology.connected_services_f66202845e30.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d6016a85883cf986a4d43f2a:spec",
+    "revision_id": "d6016a85883cf986a4d43f2a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_c_class.w206.trim.amg_sport_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:24+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      2.0,
+      45.0,
+      0.004,
+      "TIS",
+      "HEV",
+      1991,
+      "GASOLINE",
+      "225/45R18",
+      "245/40R18",
+      "HEV",
+      4.0,
+      9,
+      "AUTOMATIC",
+      true,
+      13,
+      true,
+      true,
+      true,
+      true,
+      true,
+      [
+        "R13H"
+      ],
+      true
+    ]
+  }
+}

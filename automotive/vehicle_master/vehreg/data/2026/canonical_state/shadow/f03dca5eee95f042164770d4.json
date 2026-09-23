@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f03dca5eee95f042164770d4",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-054-d20b71816f05:337",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_zs.zsg.trim.1_5_c_plus_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:52+00:00",
+    "before_hash": "9f0300e930a2fd96e52d994a908f76d6ad671ccd55a98f79821076c9dec0ce62",
+    "after_hash": "13c1e5d51b512955b4de1a4b42634e8c7996767a2ca1c2ba0ee53692c2c09e22",
+    "before": [
+      true,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "ICE",
+      20.0,
+      true,
+      3,
+      true,
+      5
+    ],
+    "after": [
+      true,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "ICE",
+      20.0,
+      true,
+      3,
+      true,
+      5,
+      1809
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d67b0f1a94bc4009a2f581e09d8d5ea6_vehicle.width_mm_6df751457e2c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f03dca5eee95f042164770d4:spec",
+    "revision_id": "f03dca5eee95f042164770d4",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_zs.zsg.trim.1_5_c_plus_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:52+00:00",
+    "payload": [
+      true,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "ICE",
+      20.0,
+      true,
+      3,
+      true,
+      5,
+      1809
+    ]
+  }
+}

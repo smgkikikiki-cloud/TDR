@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5f05e13442942119111a8c24",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-014-8db054eb58a3:211",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "tesla.model3.m3h.trim.performance_all_wheel_drive_awd_460_hp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:32+00:00",
+    "before_hash": "a62f5b11ba7a429bc9585af7e936a2c7314785dd721dc358e77d207362c890e6",
+    "after_hash": "fae5e3be19080d915e8304ced7dd1557ff409128930570cea0ec78311ebe34be",
+    "before": [
+      "NMC",
+      84.84,
+      355.0,
+      "Tesla",
+      "240",
+      "ONBOARD_AC",
+      165.0
+    ],
+    "after": [
+      "NMC",
+      84.84,
+      355.0,
+      "Tesla",
+      "240",
+      "ONBOARD_AC",
+      165.0,
+      571.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d18e0bd7-43e7-4dc5-bc5c-4879b9400665_ev.rated_range_km_628073a26545.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5f05e13442942119111a8c24:spec",
+    "revision_id": "5f05e13442942119111a8c24",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "tesla.model3.m3h.trim.performance_all_wheel_drive_awd_460_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:32+00:00",
+    "payload": [
+      "NMC",
+      84.84,
+      355.0,
+      "Tesla",
+      "240",
+      "ONBOARD_AC",
+      165.0,
+      571.0
+    ]
+  }
+}

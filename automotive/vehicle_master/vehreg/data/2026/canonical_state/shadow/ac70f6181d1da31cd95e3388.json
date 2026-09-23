@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ac70f6181d1da31cd95e3388",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-028-314da6945e4d:313",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto3.atto3.trim.byd_atto3_480km_ext_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:46+00:00",
+    "before_hash": "c546f969c6133d5f1c1b35bf477af1dceefb17e347244ee2bdb3eddf0fb4259f",
+    "after_hash": "b45a444189428be89bc9c06d54b62614bd82ed63a578dea4b77c2848bb4150f9",
+    "before": [
+      "LFP",
+      60.48,
+      403.2,
+      "FinDreams",
+      "Single-phase AC: 220V or DC: 252-472.5V",
+      "ONBOARD_AC",
+      149.0
+    ],
+    "after": [
+      "LFP",
+      60.48,
+      403.2,
+      "FinDreams",
+      "Single-phase AC: 220V or DC: 252-472.5V",
+      "ONBOARD_AC",
+      149.0,
+      480.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e529321a-7be2-4dfe-9087-8fdf70958ca0_ev.rated_range_km_0cb1fcf57cc1.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ac70f6181d1da31cd95e3388:spec",
+    "revision_id": "ac70f6181d1da31cd95e3388",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto3.atto3.trim.byd_atto3_480km_ext_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:46+00:00",
+    "payload": [
+      "LFP",
+      60.48,
+      403.2,
+      "FinDreams",
+      "Single-phase AC: 220V or DC: 252-472.5V",
+      "ONBOARD_AC",
+      149.0,
+      480.0
+    ]
+  }
+}

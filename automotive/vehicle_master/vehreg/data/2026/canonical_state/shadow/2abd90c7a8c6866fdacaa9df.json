@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2abd90c7a8c6866fdacaa9df",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-030-80293fca2870:315",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq6.ce.trim.exclusive_77_4_kwh_rwd_229_hp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:02+00:00",
+    "before_hash": "a747564520a458032874dda8b79f7a60c9b56d4dd923a60da2a24d6fe7cb2c0c",
+    "after_hash": "7c90be4416f719bb8da79a8c77ecac644126618e98a0a20f3a6059118424eeea",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      77.37,
+      697.0,
+      "Hyundai Mobis"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      77.37,
+      697.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_443dfd43-1ae0-4c05-a011-5aa6fce50219_charging.port_type_30bf6b81e5f9.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2abd90c7a8c6866fdacaa9df:spec",
+    "revision_id": "2abd90c7a8c6866fdacaa9df",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq6.ce.trim.exclusive_77_4_kwh_rwd_229_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:02+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      77.37,
+      697.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC"
+    ]
+  }
+}

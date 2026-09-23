@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6a4645a095e10850a4e42baa",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:193",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.xc60.xc60g.trim.recharge_ultimate_t8_plug_in_hybrid_bright_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:23:41+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "41c950c965a21fc36e46d4f97079033ff7ec60ba4817a8d5f9d15b8a50900f16",
+    "before": [],
+    "after": [
+      {
+        "trim_id": "volvo.xc60.xc60g.trim.recharge_ultimate_t8_plug_in_hybrid_bright_phev",
+        "amount_thb": 3590000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2023-08-29",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/964603d2-28a8-4a07-b5f8-85e5ab5dc0ce",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:193.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6a4645a095e10850a4e42baa:price",
+    "revision_id": "6a4645a095e10850a4e42baa",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.xc60.xc60g.trim.recharge_ultimate_t8_plug_in_hybrid_bright_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:23:41+00:00",
+    "payload": [
+      {
+        "trim_id": "volvo.xc60.xc60g.trim.recharge_ultimate_t8_plug_in_hybrid_bright_phev",
+        "amount_thb": 3590000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2023-08-29",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/964603d2-28a8-4a07-b5f8-85e5ab5dc0ce",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

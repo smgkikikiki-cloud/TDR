@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9d3cf7e2b1f4b8601f1b9389",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-038-caad162ad775:165",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.mini_cooper.j01.trim.hatch_3_door_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:04+00:00",
+    "before_hash": "04331c78c649e22eab7eb310bd38899bfb78588d014e770251797a4c0b6600b7",
+    "after_hash": "139675ce58e01e5020b503f2ad0d863f53a963e35657872070191734301a3fd9",
+    "before": [
+      true,
+      true,
+      true,
+      5.1,
+      5.8,
+      7.0,
+      138.0,
+      0.017,
+      "TIS",
+      "GASOLINE",
+      1499,
+      "GASOLINE"
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      5.1,
+      5.8,
+      7.0,
+      138.0,
+      0.017,
+      "TIS",
+      "GASOLINE",
+      1499,
+      "GASOLINE",
+      "195/55R16"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_44556f9d-ace0-41af-a578-86d298247837_fitment.tyre_size_94a51bb09b32.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9d3cf7e2b1f4b8601f1b9389:spec",
+    "revision_id": "9d3cf7e2b1f4b8601f1b9389",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.mini_cooper.j01.trim.hatch_3_door_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:04+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      5.1,
+      5.8,
+      7.0,
+      138.0,
+      0.017,
+      "TIS",
+      "GASOLINE",
+      1499,
+      "GASOLINE",
+      "195/55R16"
+    ]
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2cadadcfbd07fb4d221f6a7d",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-006-b527dba9e80a:115",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.yaris_cross.ac200.trim.nightshade_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:59+00:00",
+    "before_hash": "ece9c1d62c43b7d80468ca697bee25bb3e89aef27b84eabe6400e5dd68ca7ce2",
+    "after_hash": "1e236f7239823d01b0b9910df7f9b96b465654a0ab7bf1adfbf59f5b9233576e",
+    "before": [
+      true,
+      true,
+      4.1,
+      3.8,
+      3.1,
+      86.0,
+      0.009,
+      "TIS",
+      "HEV",
+      1496,
+      "E20",
+      "215/55R18",
+      "HEV"
+    ],
+    "after": [
+      true,
+      true,
+      4.1,
+      3.8,
+      3.1,
+      86.0,
+      0.009,
+      "TIS",
+      "HEV",
+      1496,
+      "E20",
+      "215/55R18",
+      "HEV",
+      6.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_4ba74ee9-7f85-4611-bfd2-352ee6c92a9c_manufacturing.excise_tax_rate_d13de42d3ccb.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2cadadcfbd07fb4d221f6a7d:spec",
+    "revision_id": "2cadadcfbd07fb4d221f6a7d",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.yaris_cross.ac200.trim.nightshade_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:59+00:00",
+    "payload": [
+      true,
+      true,
+      4.1,
+      3.8,
+      3.1,
+      86.0,
+      0.009,
+      "TIS",
+      "HEV",
+      1496,
+      "E20",
+      "215/55R18",
+      "HEV",
+      6.0
+    ]
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "36f35313145a272ed2655ac3",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-048-9a296c6c8041:134",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_ep.gen1.trim.ep_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:35+00:00",
+    "before_hash": "32fd6a3a308251e083621a0e991cc69a19ab6a01db69264e15d819557d57fb23",
+    "after_hash": "94c47816a67bf8db5580c64ce6ebec8a7deb8a7fea1580af1cb9c652cfc07ba1",
+    "before": [
+      true,
+      "GASOLINE",
+      "205/60R16",
+      "ICE",
+      2.0,
+      true,
+      2,
+      true,
+      [
+        "R13H",
+        "R100"
+      ],
+      true
+    ],
+    "after": [
+      true,
+      "GASOLINE",
+      "205/60R16",
+      "ICE",
+      2.0,
+      true,
+      2,
+      true,
+      [
+        "R13H",
+        "R100"
+      ],
+      true,
+      1574
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_2784aa1866d44e679c710cd1ff33e545_vehicle.declared_total_weight_kg_9d573a7e9c1e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "36f35313145a272ed2655ac3:spec",
+    "revision_id": "36f35313145a272ed2655ac3",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_ep.gen1.trim.ep_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:35+00:00",
+    "payload": [
+      true,
+      "GASOLINE",
+      "205/60R16",
+      "ICE",
+      2.0,
+      true,
+      2,
+      true,
+      [
+        "R13H",
+        "R100"
+      ],
+      true,
+      1574
+    ]
+  }
+}

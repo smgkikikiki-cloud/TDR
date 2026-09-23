@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "762d801b03fb0c719bad0996",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-056-d87ca8b8ef3b:61",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "honda.accord.cy.trim.e_hev_el_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:22:20+00:00",
+    "before_hash": "282a04149f1290616c692e15e8737ee09b2d259029ed8beb964dd14bd1c0cec9",
+    "after_hash": "a58084283ed520a0c16029a0dcdf42ee9e214039446ee790306e5824ebfea3d9",
+    "before": [
+      {
+        "trim_id": "honda.accord.cy.trim.e_hev_el_hev",
+        "amount_thb": 1669000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:99:2",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: Accord e:HEV EL; canonical grade: e:HEV EL; mapping: auto_high_confidence. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "honda.accord.cy.trim.e_hev_el_hev",
+        "amount_thb": 1629000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-01-26",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/b81d866e-481d-41b0-8036-f0735d9e8ca4",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "honda.accord.cy.trim.e_hev_el_hev",
+        "amount_thb": 1669000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:99:2",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: Accord e:HEV EL; canonical grade: e:HEV EL; mapping: auto_high_confidence. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-056-d87ca8b8ef3b:61.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "762d801b03fb0c719bad0996:price",
+    "revision_id": "762d801b03fb0c719bad0996",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "honda.accord.cy.trim.e_hev_el_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:22:20+00:00",
+    "payload": [
+      {
+        "trim_id": "honda.accord.cy.trim.e_hev_el_hev",
+        "amount_thb": 1629000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-01-26",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/b81d866e-481d-41b0-8036-f0735d9e8ca4",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "honda.accord.cy.trim.e_hev_el_hev",
+        "amount_thb": 1669000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:99:2",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: Accord e:HEV EL; canonical grade: e:HEV EL; mapping: auto_high_confidence. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ]
+  }
+}

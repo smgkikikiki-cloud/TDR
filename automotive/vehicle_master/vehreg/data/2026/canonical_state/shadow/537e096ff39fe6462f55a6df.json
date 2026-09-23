@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "537e096ff39fe6462f55a6df",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-033-6b6996ed6874:224",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover.gen1.trim.evoque_1_5l_phev_5dr_swb_autobiography_309ps_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:25+00:00",
+    "before_hash": "d83a39716feebb3ac4b5b8f3639a65fa1b50bc75c9b428960f21e4c7e1428827",
+    "after_hash": "15e65aaca7d1c49dd58a4be1dff80dc8295bb514f7cf51ebb7420b14728ac5f0",
+    "before": [
+      "NMC",
+      17.85,
+      357.0,
+      "Samsung SDI",
+      "EXTERNAL_DC",
+      true,
+      true,
+      2.1,
+      49.0,
+      0.005,
+      3e-05,
+      "TIS"
+    ],
+    "after": [
+      "NMC",
+      17.85,
+      357.0,
+      "Samsung SDI",
+      "EXTERNAL_DC",
+      true,
+      true,
+      2.1,
+      49.0,
+      0.005,
+      3e-05,
+      "TIS",
+      "PHEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b9d68b42-3021-4661-8036-318d0e7b1c6a_engine.combustion_type_6ac193048c92.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "537e096ff39fe6462f55a6df:spec",
+    "revision_id": "537e096ff39fe6462f55a6df",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover.gen1.trim.evoque_1_5l_phev_5dr_swb_autobiography_309ps_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:25+00:00",
+    "payload": [
+      "NMC",
+      17.85,
+      357.0,
+      "Samsung SDI",
+      "EXTERNAL_DC",
+      true,
+      true,
+      2.1,
+      49.0,
+      0.005,
+      3e-05,
+      "TIS",
+      "PHEV"
+    ]
+  }
+}

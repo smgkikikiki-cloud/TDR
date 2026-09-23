@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "da5643688226b71b49f2716e",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-019-79c9da20e296:344",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.triton_double_cab.mv.trim.2_4_pro",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:55+00:00",
+    "before_hash": "5cdec8b85d410e406bbcde43b12b584b0f8c60ddfdd2b435c7c353478bd7234e",
+    "after_hash": "59fc6a60074396c7414673b15482e0c19038babee3384fbbe5fe0bfb6aec9e40",
+    "before": [
+      5.8,
+      6.7,
+      8.2,
+      175.0,
+      0.249,
+      0.00105,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20"
+    ],
+    "after": [
+      5.8,
+      6.7,
+      8.2,
+      175.0,
+      0.249,
+      0.00105,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "215/70R15C"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_876feda9-dc91-4b58-81be-ff33e5f23183_fitment.tyre_size_9477b92179a6.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "da5643688226b71b49f2716e:spec",
+    "revision_id": "da5643688226b71b49f2716e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.triton_double_cab.mv.trim.2_4_pro",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:55+00:00",
+    "payload": [
+      5.8,
+      6.7,
+      8.2,
+      175.0,
+      0.249,
+      0.00105,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "215/70R15C"
+    ]
+  }
+}

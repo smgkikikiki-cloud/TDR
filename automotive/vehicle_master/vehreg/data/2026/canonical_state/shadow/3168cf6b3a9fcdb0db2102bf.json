@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "3168cf6b3a9fcdb0db2102bf",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-038-caad162ad775:96",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq5.ne.trim.ioniq_5_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:04+00:00",
+    "before_hash": "6efcdd72c97319163139420e2f4f0beb06f66a247f7fc908823f48ad66681799",
+    "after_hash": "c55245579fee84e8c77d611f27da62db7b265b3e2480e428c032f783917a222b",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      72.48,
+      653.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      171.0,
+      451.0,
+      "255/45R20",
+      "BEV",
+      8.0,
+      "Hyundai Ulsan Plant",
+      "PMSM"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      72.48,
+      653.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      171.0,
+      451.0,
+      "255/45R20",
+      "BEV",
+      8.0,
+      "Hyundai Ulsan Plant",
+      "PMSM",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_745a69ba-fab8-42b2-b7e4-dd78ab685a10_safety.abs_b4341d76a729.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "3168cf6b3a9fcdb0db2102bf:spec",
+    "revision_id": "3168cf6b3a9fcdb0db2102bf",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq5.ne.trim.ioniq_5_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:04+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      72.48,
+      653.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      171.0,
+      451.0,
+      "255/45R20",
+      "BEV",
+      8.0,
+      "Hyundai Ulsan Plant",
+      "PMSM",
+      true
+    ]
+  }
+}

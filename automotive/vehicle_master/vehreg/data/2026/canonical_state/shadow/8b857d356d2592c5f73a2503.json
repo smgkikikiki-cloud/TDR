@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "8b857d356d2592c5f73a2503",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-044-4ee92a315b21:328",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover.gen1.trim.lwb_3_0d_autobiography_350ps_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:53+00:00",
+    "before_hash": "105e8a5144cbb74acea1ae38c811a2a345c0b6a293d5b089486e91dc9c5aa730",
+    "after_hash": "c50c03a51ce75e32df0d6e9e4ae9af6f8845b62f1e46dec8529a6787a75f0534",
+    "before": [
+      true,
+      true,
+      6.3,
+      7.2,
+      8.9,
+      190.0,
+      0.039,
+      0.00089,
+      "TIS",
+      "HEV"
+    ],
+    "after": [
+      true,
+      true,
+      6.3,
+      7.2,
+      8.9,
+      190.0,
+      0.039,
+      0.00089,
+      "TIS",
+      "HEV",
+      2997
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_075e8a58-2c73-4fc9-be69-6ae6bbc397e3_engine.displacement_cc_88c56c62e29e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "8b857d356d2592c5f73a2503:spec",
+    "revision_id": "8b857d356d2592c5f73a2503",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover.gen1.trim.lwb_3_0d_autobiography_350ps_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:53+00:00",
+    "payload": [
+      true,
+      true,
+      6.3,
+      7.2,
+      8.9,
+      190.0,
+      0.039,
+      0.00089,
+      "TIS",
+      "HEV",
+      2997
+    ]
+  }
+}

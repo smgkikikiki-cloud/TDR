@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b04dff46b6d983bbc5146630",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-031-eac7506457fb:213",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.dakar_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:09+00:00",
+    "before_hash": "7cdfe4d2075c200f6850c34f63d6f76c31de33ac3d43128cea271d2a946cbe15",
+    "after_hash": "2691b452af8daa5b8cea5861e93444c6c42a1b1d0e6a787eab99bd398872d1e9",
+    "before": [
+      true,
+      7.6,
+      10.3,
+      14.9,
+      235.0,
+      0.019,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE"
+    ],
+    "after": [
+      true,
+      7.6,
+      10.3,
+      14.9,
+      235.0,
+      0.019,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/45ZR19"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_367da002-397f-4765-95a7-e5550ca3537d_fitment.tyre_front_d80fdacb5ce4.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b04dff46b6d983bbc5146630:spec",
+    "revision_id": "b04dff46b6d983bbc5146630",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.dakar_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:09+00:00",
+    "payload": [
+      true,
+      7.6,
+      10.3,
+      14.9,
+      235.0,
+      0.019,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/45ZR19"
+    ]
+  }
+}

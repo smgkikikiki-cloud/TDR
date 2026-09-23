@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "03850941224e06ec48a23c01",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-037-986e7ff7e687:287",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.s60.gen1.trim.recharge_t8_plug_in_hybrid_ultimate_dark_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:57+00:00",
+    "before_hash": "ff4179ecb6f601fefac260ea934af2bf505d894ba4b9b57f4c9a44e57e391b59",
+    "after_hash": "19699831dcaddb4dc6b5ad56aa58a4b360d55e1846a4dc13832897779dee2fa3",
+    "before": [
+      "NMC",
+      18.82,
+      369.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd.",
+      "ONBOARD_AC",
+      1.4,
+      33.0,
+      0.004,
+      9e-05,
+      "TIS",
+      "PHEV"
+    ],
+    "after": [
+      "NMC",
+      18.82,
+      369.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd.",
+      "ONBOARD_AC",
+      1.4,
+      33.0,
+      0.004,
+      9e-05,
+      "TIS",
+      "PHEV",
+      1969
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_8d664282-9f25-4ecd-bcdc-ce2c386d3074_engine.displacement_cc_6b445c3baf7c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "03850941224e06ec48a23c01:spec",
+    "revision_id": "03850941224e06ec48a23c01",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.s60.gen1.trim.recharge_t8_plug_in_hybrid_ultimate_dark_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:57+00:00",
+    "payload": [
+      "NMC",
+      18.82,
+      369.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd.",
+      "ONBOARD_AC",
+      1.4,
+      33.0,
+      0.004,
+      9e-05,
+      "TIS",
+      "PHEV",
+      1969
+    ]
+  }
+}

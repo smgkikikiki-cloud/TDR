@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "45ba44646fd30056be6c28f1",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-019-79c9da20e296:206",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.taycan.gen1.trim.turbo_awd_884_hp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:55+00:00",
+    "before_hash": "4be890ea485723a9bad05e360a75fb2daecc15c8cc1deef7aa5bc2931790e2df",
+    "after_hash": "6a3a927d3fb513cf9a2e4ed52a59950ac6cf51704281280f0f07cf39f048bb1e",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      104.69,
+      727.0,
+      "Draxlmaier",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      178.0,
+      626.0,
+      "245/45R20",
+      "285/40R20",
+      "BEV",
+      10.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      104.69,
+      727.0,
+      "Draxlmaier",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      178.0,
+      626.0,
+      "245/45R20",
+      "285/40R20",
+      "BEV",
+      10.0,
+      "PMSM"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_baa34a4d-4691-4f95-8636-a4c9dd7389ae_powertrain.motor_type_7db53abf4618.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "45ba44646fd30056be6c28f1:spec",
+    "revision_id": "45ba44646fd30056be6c28f1",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.taycan.gen1.trim.turbo_awd_884_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:55+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      104.69,
+      727.0,
+      "Draxlmaier",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      178.0,
+      626.0,
+      "245/45R20",
+      "285/40R20",
+      "BEV",
+      10.0,
+      "PMSM"
+    ]
+  }
+}

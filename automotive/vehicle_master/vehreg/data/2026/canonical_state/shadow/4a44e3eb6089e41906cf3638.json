@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "4a44e3eb6089e41906cf3638",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-018-bf8b3c7bf841:107",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.yaris_ativ.mxpa10.trim.hev_premium_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:52+00:00",
+    "before_hash": "375962a04974f3771ecf0a270da7a4dc32249649dfded6cee8e0a113036af7bb",
+    "after_hash": "2bd04e0c4a88ae65ce278995ed8ac524ba8802a37e57fa4ee83389d740705da7",
+    "before": [
+      true,
+      3.6,
+      3.4,
+      3.1,
+      77.0,
+      0.009,
+      "EURO6",
+      "HEV",
+      1496,
+      "GASOLINE",
+      "195/60R16",
+      "HEV"
+    ],
+    "after": [
+      true,
+      3.6,
+      3.4,
+      3.1,
+      77.0,
+      0.009,
+      "EURO6",
+      "HEV",
+      1496,
+      "GASOLINE",
+      "195/60R16",
+      "HEV",
+      6.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_488b8ece-bfaf-4162-ab95-0afe24a38efa_manufacturing.excise_tax_rate_5271582ce820.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "4a44e3eb6089e41906cf3638:spec",
+    "revision_id": "4a44e3eb6089e41906cf3638",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.yaris_ativ.mxpa10.trim.hev_premium_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:52+00:00",
+    "payload": [
+      true,
+      3.6,
+      3.4,
+      3.1,
+      77.0,
+      0.009,
+      "EURO6",
+      "HEV",
+      1496,
+      "GASOLINE",
+      "195/60R16",
+      "HEV",
+      6.0
+    ]
+  }
+}

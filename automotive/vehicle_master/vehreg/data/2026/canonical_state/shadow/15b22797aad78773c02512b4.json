@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "15b22797aad78773c02512b4",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-048-9a296c6c8041:144",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_zs_ev.zsev.trim.x_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:35+00:00",
+    "before_hash": "fb12feb198539433068ef9d97dfdcd0849b75713da66339b9d249872527b6447",
+    "after_hash": "f29e0325cc52e26bc1d65ed1773cf0ef3daf816e5b50fe2ec2468f3feef986a8",
+    "before": [
+      true,
+      "GASOLINE",
+      "215/55R17",
+      "ICE"
+    ],
+    "after": [
+      true,
+      "GASOLINE",
+      "215/55R17",
+      "ICE",
+      2.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_1420bd13e3f34a3ca6bbfef98ed40f5d_manufacturing.excise_tax_rate_c86af344bfe3.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "15b22797aad78773c02512b4:spec",
+    "revision_id": "15b22797aad78773c02512b4",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_zs_ev.zsev.trim.x_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:35+00:00",
+    "payload": [
+      true,
+      "GASOLINE",
+      "215/55R17",
+      "ICE",
+      2.0
+    ]
+  }
+}

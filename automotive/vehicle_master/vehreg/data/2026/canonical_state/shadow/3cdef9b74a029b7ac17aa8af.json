@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "3cdef9b74a029b7ac17aa8af",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-046-2c82d6c5b603:345",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_c_class.w206.trim.c_43_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:14+00:00",
+    "before_hash": "1f57574543c25d569772b551847040552ccb2ec29dc9dcf5143bce7ef4456377",
+    "after_hash": "57e812f59bfa949aac5d4281200f02d8a98e60f1b4667422e747ffbd9a572a14",
+    "before": [
+      7.2,
+      9.4,
+      13.1,
+      214.0,
+      0.009,
+      "TIS",
+      "GASOLINE",
+      2996,
+      "GASOLINE",
+      "225/40R19",
+      "255/35R19",
+      "ICE",
+      35.0
+    ],
+    "after": [
+      7.2,
+      9.4,
+      13.1,
+      214.0,
+      0.009,
+      "TIS",
+      "GASOLINE",
+      2996,
+      "GASOLINE",
+      "225/40R19",
+      "255/35R19",
+      "ICE",
+      35.0,
+      9
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d52ee22a26e64768a0952e2f4dac7088_powertrain.gear_count_d0e5a10ccb65.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "3cdef9b74a029b7ac17aa8af:spec",
+    "revision_id": "3cdef9b74a029b7ac17aa8af",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_c_class.w206.trim.c_43_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:14+00:00",
+    "payload": [
+      7.2,
+      9.4,
+      13.1,
+      214.0,
+      0.009,
+      "TIS",
+      "GASOLINE",
+      2996,
+      "GASOLINE",
+      "225/40R19",
+      "255/35R19",
+      "ICE",
+      35.0,
+      9
+    ]
+  }
+}

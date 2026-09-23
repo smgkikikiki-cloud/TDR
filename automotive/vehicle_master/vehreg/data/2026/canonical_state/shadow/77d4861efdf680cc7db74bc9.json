@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "77d4861efdf680cc7db74bc9",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-030-80293fca2870:287",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_e_class.w214.trim.e_220_d_amg_line_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:02+00:00",
+    "before_hash": "ab55d91ce3e749f47158a147454ca453b62836a620832fe7ec13a96dc270881f",
+    "after_hash": "17000adbd3059a3cc1b297c855615eed445f427212999a681a313f10ee73d979",
+    "before": [
+      4.9,
+      5.5,
+      6.4,
+      144.0,
+      0.014,
+      0.00023,
+      "EURO6",
+      "HEV",
+      1993,
+      "DIESEL",
+      "245/45R19",
+      "275/40R19",
+      "HEV",
+      25.0
+    ],
+    "after": [
+      4.9,
+      5.5,
+      6.4,
+      144.0,
+      0.014,
+      0.00023,
+      "EURO6",
+      "HEV",
+      1993,
+      "DIESEL",
+      "245/45R19",
+      "275/40R19",
+      "HEV",
+      25.0,
+      9
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b5fa291c-1f61-4d00-99fd-e47a74b38926_powertrain.gear_count_9a974886f30e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "77d4861efdf680cc7db74bc9:spec",
+    "revision_id": "77d4861efdf680cc7db74bc9",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_e_class.w214.trim.e_220_d_amg_line_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:02+00:00",
+    "payload": [
+      4.9,
+      5.5,
+      6.4,
+      144.0,
+      0.014,
+      0.00023,
+      "EURO6",
+      "HEV",
+      1993,
+      "DIESEL",
+      "245/45R19",
+      "275/40R19",
+      "HEV",
+      25.0,
+      9
+    ]
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "bfb50bb3c09976a43b7c4e72",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-048-9a296c6c8041:183",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_zs_ev.zsev.trim.d_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:35+00:00",
+    "before_hash": "189cb315c272ba0995b25c5d1116d25aefa8e6e0cb8dec87064560093c38f76e",
+    "after_hash": "ecc089f0eeb7c3b300ab7d33f644ea109fedc761b0c124a05ccadcbcc8cc5bb8",
+    "before": [
+      true,
+      "GASOLINE",
+      "215/55R17",
+      "ICE",
+      2.0,
+      true,
+      true,
+      true,
+      5,
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R100"
+      ],
+      true,
+      true,
+      1570,
+      1649,
+      4323,
+      2022,
+      5
+    ],
+    "after": [
+      true,
+      "GASOLINE",
+      "215/55R17",
+      "ICE",
+      2.0,
+      true,
+      true,
+      true,
+      5,
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R100"
+      ],
+      true,
+      true,
+      1570,
+      1649,
+      4323,
+      2022,
+      5,
+      1809
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_5d4300a94f474d728d6745e8cd2d43c9_vehicle.width_mm_34153c261852.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "bfb50bb3c09976a43b7c4e72:spec",
+    "revision_id": "bfb50bb3c09976a43b7c4e72",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_zs_ev.zsev.trim.d_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:35+00:00",
+    "payload": [
+      true,
+      "GASOLINE",
+      "215/55R17",
+      "ICE",
+      2.0,
+      true,
+      true,
+      true,
+      5,
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R100"
+      ],
+      true,
+      true,
+      1570,
+      1649,
+      4323,
+      2022,
+      5,
+      1809
+    ]
+  }
+}

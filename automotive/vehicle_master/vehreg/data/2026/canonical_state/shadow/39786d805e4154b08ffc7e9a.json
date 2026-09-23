@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "39786d805e4154b08ffc7e9a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-056-d87ca8b8ef3b:281",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_glc.x254.trim.mercedes_benz_4matic_coupe_amg_dynamic_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:22:35+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "190a2aa24cfed461032fa4f50a1eae3edcbd5f03f047fe2d327636f645368027",
+    "before": [],
+    "after": [
+      {
+        "trim_id": "mercedes_benz.mb_glc.x254.trim.mercedes_benz_4matic_coupe_amg_dynamic_ice",
+        "amount_thb": 4180000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2022-11-29",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/ee2e682d-4420-4456-a810-c540d4c57a81",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-056-d87ca8b8ef3b:281.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "39786d805e4154b08ffc7e9a:price",
+    "revision_id": "39786d805e4154b08ffc7e9a",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_glc.x254.trim.mercedes_benz_4matic_coupe_amg_dynamic_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:22:35+00:00",
+    "payload": [
+      {
+        "trim_id": "mercedes_benz.mb_glc.x254.trim.mercedes_benz_4matic_coupe_amg_dynamic_ice",
+        "amount_thb": 4180000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2022-11-29",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/ee2e682d-4420-4456-a810-c540d4c57a81",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

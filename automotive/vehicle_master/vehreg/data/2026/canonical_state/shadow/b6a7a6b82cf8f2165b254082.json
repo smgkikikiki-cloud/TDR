@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b6a7a6b82cf8f2165b254082",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-030-80293fca2870:113",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_pro",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:02+00:00",
+    "before_hash": "9ad3bdea5a66d35539707181245c27006589f918aea455c49311d88106c6f5ba",
+    "after_hash": "a8b00dc61c6ecdbdbcf8ad91b6adc78c6264e1a5d6b17494c16edfabe493ac50",
+    "before": [
+      5.9,
+      6.7
+    ],
+    "after": [
+      5.9,
+      6.7,
+      7.9
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_38f3ae47-5868-4c1f-8bbf-558d0ceec3db_efficiency.fuel_consumption_urban_l_100km_efca42bb677f.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b6a7a6b82cf8f2165b254082:spec",
+    "revision_id": "b6a7a6b82cf8f2165b254082",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_pro",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:02+00:00",
+    "payload": [
+      5.9,
+      6.7,
+      7.9
+    ]
+  }
+}

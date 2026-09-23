@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "cb9565fe908d2b45b95c4e97",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-047-23268458b262:248",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_cross.xg10.trim.hev_premium_safety_60_years_cp_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:25+00:00",
+    "before_hash": "8fa4cba7b37ac70257535a63c853499b64dc39fba4357f1482989eea4bef5dbc",
+    "after_hash": "2793e374bfa94c681d5ec52b0aefff26819f94325cbbec606c5ce8c9eb8874c6",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      4.5,
+      4.3,
+      3.9,
+      98.0,
+      0.005,
+      "TIS",
+      "HEV",
+      1798
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      4.5,
+      4.3,
+      3.9,
+      98.0,
+      0.005,
+      "TIS",
+      "HEV",
+      1798,
+      "E20"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_8ed0f4040deb48f59ab1dc1bde490e0c_engine.fuel_type_88fd7e9a36b6.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "cb9565fe908d2b45b95c4e97:spec",
+    "revision_id": "cb9565fe908d2b45b95c4e97",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_cross.xg10.trim.hev_premium_safety_60_years_cp_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:25+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      4.5,
+      4.3,
+      3.9,
+      98.0,
+      0.005,
+      "TIS",
+      "HEV",
+      1798,
+      "E20"
+    ]
+  }
+}

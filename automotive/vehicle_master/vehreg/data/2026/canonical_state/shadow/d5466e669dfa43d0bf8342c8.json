@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d5466e669dfa43d0bf8342c8",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-013-01b2d6d40e8e:239",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q3.f3.trim.sportback_quattro_s_line_tech_pro_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:28+00:00",
+    "before_hash": "dc09a010e980eed2fd242e3de52e40ca89abc9b1aafaadfb90b540a3343b0fb0",
+    "after_hash": "df747e5efc14a94c75d6181819b2f98b7a84de3f09414ab98a4d4d211821ea57",
+    "before": [
+      6.2,
+      7.3,
+      9.2,
+      168.0,
+      0.0208,
+      0.00015,
+      "EURO6",
+      "GASOLINE"
+    ],
+    "after": [
+      6.2,
+      7.3,
+      9.2,
+      168.0,
+      0.0208,
+      0.00015,
+      "EURO6",
+      "GASOLINE",
+      1984
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d966025c-123f-493a-91d1-48d7248596a4_engine.displacement_cc_f8dae717fcb0.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d5466e669dfa43d0bf8342c8:spec",
+    "revision_id": "d5466e669dfa43d0bf8342c8",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q3.f3.trim.sportback_quattro_s_line_tech_pro_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:28+00:00",
+    "payload": [
+      6.2,
+      7.3,
+      9.2,
+      168.0,
+      0.0208,
+      0.00015,
+      "EURO6",
+      "GASOLINE",
+      1984
+    ]
+  }
+}

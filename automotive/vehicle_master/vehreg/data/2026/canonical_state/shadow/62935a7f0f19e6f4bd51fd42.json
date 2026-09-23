@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "62935a7f0f19e6f4bd51fd42",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-044-4ee92a315b21:179",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.xc40.xc40g.trim.pure_electric_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:52+00:00",
+    "before_hash": "ef45a7d9142f1bbd596260a2623d9df0ac3cafe8fa74ace483e799bf58c54fef",
+    "after_hash": "5bd927a845c77ba70d693b523f4eab5ab339793d7d14438a3d679af63a22ef5d",
+    "before": [
+      "NMC",
+      78.18,
+      403.0,
+      "VOLVO",
+      "BOTH",
+      true,
+      true,
+      221.0,
+      500.0,
+      "235/50R19",
+      "255/45R19",
+      "BEV",
+      8.0,
+      "OTHER",
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R94",
+        "R95",
+        "R100"
+      ],
+      true
+    ],
+    "after": [
+      "NMC",
+      78.18,
+      403.0,
+      "VOLVO",
+      "BOTH",
+      true,
+      true,
+      221.0,
+      500.0,
+      "235/50R19",
+      "255/45R19",
+      "BEV",
+      8.0,
+      "OTHER",
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R94",
+        "R95",
+        "R100"
+      ],
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_77c4c744-aab5-47e7-a042-b15370d670e3_technology.led_headlights_26136590a50b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "62935a7f0f19e6f4bd51fd42:spec",
+    "revision_id": "62935a7f0f19e6f4bd51fd42",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.xc40.xc40g.trim.pure_electric_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:52+00:00",
+    "payload": [
+      "NMC",
+      78.18,
+      403.0,
+      "VOLVO",
+      "BOTH",
+      true,
+      true,
+      221.0,
+      500.0,
+      "235/50R19",
+      "255/45R19",
+      "BEV",
+      8.0,
+      "OTHER",
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R94",
+        "R95",
+        "R100"
+      ],
+      true,
+      true
+    ]
+  }
+}

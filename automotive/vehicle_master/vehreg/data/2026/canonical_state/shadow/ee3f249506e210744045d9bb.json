@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ee3f249506e210744045d9bb",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-001-2163ac0376be:102",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.hybrid_z_2wd",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:45+00:00",
+    "before_hash": "89ae5081835c3a1447625d2fa0633d12302241e8809618641bf2c1c3e5a35e32",
+    "after_hash": "20ff7e9858f575c891778815d49b8024a1ca1356852a7736c1e35ab0b3b3cb2e",
+    "before": [
+      true,
+      true,
+      5.4,
+      5.2,
+      4.9,
+      129.0
+    ],
+    "after": [
+      true,
+      true,
+      5.4,
+      5.2,
+      4.9,
+      129.0,
+      0.00445
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_4512ebcb-fe40-4db4-84c9-6ffa52ccaaab_emissions.nox_g_km_c41a4a11ced4.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ee3f249506e210744045d9bb:spec",
+    "revision_id": "ee3f249506e210744045d9bb",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.hybrid_z_2wd",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:45+00:00",
+    "payload": [
+      true,
+      true,
+      5.4,
+      5.2,
+      4.9,
+      129.0,
+      0.00445
+    ]
+  }
+}

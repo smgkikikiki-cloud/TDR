@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:effe1fc4-a29f-44aa-ab7b-ca03d7d23556:emissions.co2_g_km",
+      "field_key": "emissions.co2_g_km",
+      "value_state": "KNOWN",
+      "value": 32.0,
+      "unit": "g/km",
+      "observed_at": "2026-05-18",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/effe1fc4-a29f-44aa-ab7b-ca03d7d23556",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/effe1fc4-a29f-44aa-ab7b-ca03d7d23556",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mercedes_benz.mb_c_class.w206.trim.c_350_e_plug_in_hybrid_phev"
+    }
+  ]
+}

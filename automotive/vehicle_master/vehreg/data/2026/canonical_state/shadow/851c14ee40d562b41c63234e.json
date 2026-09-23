@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "851c14ee40d562b41c63234e",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-016-3b184c133993:380",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.carrera_t_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:43+00:00",
+    "before_hash": "1e98019f34ec597242176e8f4c4c8fbd8dd1923c4cedf4d6951a0645e79b6fa0",
+    "after_hash": "eb6d7a4edb915cc14446c8158b05b31324251d2c006e4960c2d4bdbdcd51155f",
+    "before": [
+      true,
+      8.3,
+      11.7,
+      17.4,
+      266.0,
+      0.016,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35ZR20",
+      "305/30ZR21",
+      "ICE"
+    ],
+    "after": [
+      true,
+      8.3,
+      11.7,
+      17.4,
+      266.0,
+      0.016,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35ZR20",
+      "305/30ZR21",
+      "ICE",
+      35.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e239e8e8-693c-4b53-8ae7-384b4abbfd40_manufacturing.excise_tax_rate_55e7237de151.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "851c14ee40d562b41c63234e:spec",
+    "revision_id": "851c14ee40d562b41c63234e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.carrera_t_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:43+00:00",
+    "payload": [
+      true,
+      8.3,
+      11.7,
+      17.4,
+      266.0,
+      0.016,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35ZR20",
+      "305/30ZR21",
+      "ICE",
+      35.0
+    ]
+  }
+}
