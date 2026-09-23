@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2e3cba969997d3490ff73a4b",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-043-5c8c2001b8cb:357",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a4.gen1.trim.40_tfsi_s_line_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:45+00:00",
+    "before_hash": "983f80c7ad0a5f6e77cbf75638e2e41a6fc495e77d8a7db5d3441b80b62493dd",
+    "after_hash": "6aa677c1955b6206288783b82e6814b73db5ce8de111b2e995c510a5544b54fa",
+    "before": [
+      5.3,
+      6.3,
+      7.9,
+      143.0,
+      0.004,
+      0.00024,
+      "TIS",
+      "HEV",
+      1984,
+      "GASOLINE",
+      "245/40R18",
+      "HEV"
+    ],
+    "after": [
+      5.3,
+      6.3,
+      7.9,
+      143.0,
+      0.004,
+      0.00024,
+      "TIS",
+      "HEV",
+      1984,
+      "GASOLINE",
+      "245/40R18",
+      "HEV",
+      25.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e1b09021-4284-4211-8b78-625a9939c8ab_manufacturing.excise_tax_rate_9bcd91e1436a.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2e3cba969997d3490ff73a4b:spec",
+    "revision_id": "2e3cba969997d3490ff73a4b",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a4.gen1.trim.40_tfsi_s_line_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:45+00:00",
+    "payload": [
+      5.3,
+      6.3,
+      7.9,
+      143.0,
+      0.004,
+      0.00024,
+      "TIS",
+      "HEV",
+      1984,
+      "GASOLINE",
+      "245/40R18",
+      "HEV",
+      25.0
+    ]
+  }
+}

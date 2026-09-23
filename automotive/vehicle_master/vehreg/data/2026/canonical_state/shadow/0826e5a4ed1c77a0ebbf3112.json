@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "0826e5a4ed1c77a0ebbf3112",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-036-ba2d051d30aa:255",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.x6.gen1.trim.m_sport_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:48+00:00",
+    "before_hash": "e0e62f8b945fb2e0586e847e946d4b954d732c46755b0670bb141c4224ab2e21",
+    "after_hash": "c28468fd2b46a8347135e54274c9ac839619235baaab898cac02dacf44771b68",
+    "before": [
+      true,
+      true,
+      true
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      7.9
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_1917b250-5310-4951-ad9c-414bba10fa39_efficiency.fuel_consumption_extra_urban_l_100km_24c17e010c26.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "0826e5a4ed1c77a0ebbf3112:spec",
+    "revision_id": "0826e5a4ed1c77a0ebbf3112",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.x6.gen1.trim.m_sport_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:48+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      7.9
+    ]
+  }
+}

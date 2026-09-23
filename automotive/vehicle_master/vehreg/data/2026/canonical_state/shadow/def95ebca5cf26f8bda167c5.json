@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "def95ebca5cf26f8bda167c5",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-032-04b0adc6e162:261",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.noah.gen1.trim.x_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:17+00:00",
+    "before_hash": "4394d47e9c6b11ceed2a1aa3bca7605df5f2590ff78e32e9a8771ca6a61e4e72",
+    "after_hash": "b34e37e67c16c1dcc2efffe084d88d80ddbf79ab1ea1d212bed7acd5e6f0b1e8",
+    "before": [
+      true,
+      true,
+      4.9,
+      6.7,
+      10.0,
+      156.0,
+      0.004,
+      "TIS",
+      "GASOLINE",
+      1986,
+      "GASOLINE",
+      "205/55R17"
+    ],
+    "after": [
+      true,
+      true,
+      4.9,
+      6.7,
+      10.0,
+      156.0,
+      0.004,
+      "TIS",
+      "GASOLINE",
+      1986,
+      "GASOLINE",
+      "205/55R17",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_723bcab5-c106-494c-850b-03cce065599e_identity.powertrain_6f8898d73aff.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "def95ebca5cf26f8bda167c5:spec",
+    "revision_id": "def95ebca5cf26f8bda167c5",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.noah.gen1.trim.x_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:17+00:00",
+    "payload": [
+      true,
+      true,
+      4.9,
+      6.7,
+      10.0,
+      156.0,
+      0.004,
+      "TIS",
+      "GASOLINE",
+      1986,
+      "GASOLINE",
+      "205/55R17",
+      "ICE"
+    ]
+  }
+}

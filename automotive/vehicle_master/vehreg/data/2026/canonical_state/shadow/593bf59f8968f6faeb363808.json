@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "593bf59f8968f6faeb363808",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-042-509b690f0202:263",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:35+00:00",
+    "before_hash": "a57db94e3f3ffca7344b5ba38c7c43f7fe5cec4c4f98f0a80d92670eb8fd29ba",
+    "after_hash": "a6cd1c3ce39d36a7947eb58870f554347b9f7cda6204af3979488006c4654335",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      70.17,
+      353.3,
+      "Electrical Energy Storage System SE27",
+      "ONBOARD_AC",
+      true,
+      true,
+      true,
+      152.0,
+      490.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      70.17,
+      353.3,
+      "Electrical Energy Storage System SE27",
+      "ONBOARD_AC",
+      true,
+      true,
+      true,
+      152.0,
+      490.0,
+      "245/45R18"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e18d1a26-a0f4-4a1a-9cc9-ab4d74b7beba_fitment.tyre_front_c69215f6a594.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "593bf59f8968f6faeb363808:spec",
+    "revision_id": "593bf59f8968f6faeb363808",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:35+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      70.17,
+      353.3,
+      "Electrical Energy Storage System SE27",
+      "ONBOARD_AC",
+      true,
+      true,
+      true,
+      152.0,
+      490.0,
+      "245/45R18"
+    ]
+  }
+}

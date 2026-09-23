@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c8aa02e21c5621c050249294",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-048-9a296c6c8041:343",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg5.mg5g.trim.1_5_x_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:35+00:00",
+    "before_hash": "81233bd0a648195115737c2c23781b62db6d3a1591805fdf31b683ca72ad2093",
+    "after_hash": "39d8a7370f495730232a4ebd2f380e74e07ff886bf29d392d2328e6d47313fc3",
+    "before": [
+      true,
+      true,
+      4.4,
+      5.6,
+      7.7,
+      132.0,
+      0.001,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "215/50R17",
+      "ICE",
+      20.0
+    ],
+    "after": [
+      true,
+      true,
+      4.4,
+      5.6,
+      7.7,
+      132.0,
+      0.001,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "215/50R17",
+      "ICE",
+      20.0,
+      "CVT"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_c013c26d710642cc97725d1895545a52_powertrain.transmission_c7294211566f.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c8aa02e21c5621c050249294:spec",
+    "revision_id": "c8aa02e21c5621c050249294",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg5.mg5g.trim.1_5_x_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:35+00:00",
+    "payload": [
+      true,
+      true,
+      4.4,
+      5.6,
+      7.7,
+      132.0,
+      0.001,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "215/50R17",
+      "ICE",
+      20.0,
+      "CVT"
+    ]
+  }
+}

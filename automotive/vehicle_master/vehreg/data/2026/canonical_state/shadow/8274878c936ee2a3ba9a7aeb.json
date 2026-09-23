@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "8274878c936ee2a3ba9a7aeb",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-021-33a0f14d51bc:104",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.city_hatchback.gn7.trim.rs_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:06+00:00",
+    "before_hash": "64db5b4672b823aaaaeafe9070c91d357f0479b1830f4e0d488d71d5d9480f65",
+    "after_hash": "dc67fc451cee5165baef33832f9957bf996b8af7b70a1b053981bb836ac4a886",
+    "before": [
+      true,
+      4.2,
+      4.4,
+      4.7,
+      100.0,
+      0.022,
+      0.00047,
+      "TIS",
+      "GASOLINE",
+      988,
+      "GASOLINE",
+      "185/60R16",
+      "ICE",
+      13.0
+    ],
+    "after": [
+      true,
+      4.2,
+      4.4,
+      4.7,
+      100.0,
+      0.022,
+      0.00047,
+      "TIS",
+      "GASOLINE",
+      988,
+      "GASOLINE",
+      "185/60R16",
+      "ICE",
+      13.0,
+      "CVT"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e28c2952-594b-4e4d-9cb7-bee6aac945fb_powertrain.transmission_3d1de7bbc997.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "8274878c936ee2a3ba9a7aeb:spec",
+    "revision_id": "8274878c936ee2a3ba9a7aeb",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.city_hatchback.gn7.trim.rs_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:06+00:00",
+    "payload": [
+      true,
+      4.2,
+      4.4,
+      4.7,
+      100.0,
+      0.022,
+      0.00047,
+      "TIS",
+      "GASOLINE",
+      988,
+      "GASOLINE",
+      "185/60R16",
+      "ICE",
+      13.0,
+      "CVT"
+    ]
+  }
+}

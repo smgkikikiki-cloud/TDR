@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f5d69a4aa84756ac48cbe075",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-055-949893759636:97",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg3.mg3h.trim.new_hatchback_1_5_v_sunroof_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:22:04+00:00",
+    "before_hash": "ddb18370bb4d0e4c66b8e17bdfd8a25aba47d447889ca0055e4b9483eaadf418",
+    "after_hash": "68d4fc1b592467cfdf7914a86d5be9e85f3dce80cb7badde95f8341b23b66a6d",
+    "before": [
+      6.9,
+      8.7,
+      11.9,
+      142.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "195/55R16",
+      "ICE",
+      20.0,
+      4
+    ],
+    "after": [
+      6.9,
+      8.7,
+      11.9,
+      142.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "195/55R16",
+      "ICE",
+      20.0,
+      4,
+      "AUTOMATIC"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b111be5d136b4ceab20fca4200039f42_powertrain.transmission_8d990397c0fe.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f5d69a4aa84756ac48cbe075:spec",
+    "revision_id": "f5d69a4aa84756ac48cbe075",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg3.mg3h.trim.new_hatchback_1_5_v_sunroof_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:22:04+00:00",
+    "payload": [
+      6.9,
+      8.7,
+      11.9,
+      142.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "195/55R16",
+      "ICE",
+      20.0,
+      4,
+      "AUTOMATIC"
+    ]
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c2ab11266e577376535e696f",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-038-caad162ad775:288",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.voxy.gen1.trim.hybrid_s_z_captain_ottoman_seats_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:04+00:00",
+    "before_hash": "ac0911d15b5c3d1026f6272233dbcad179463ad793bfbe2dee49ebc53b01c68c",
+    "after_hash": "fa40819e4c68160322f76c6b42d42f4ccf767260f9b70b2633a86b668b78bdd7",
+    "before": [
+      true,
+      true,
+      5.4,
+      4.8,
+      3.7,
+      110.0,
+      0.002
+    ],
+    "after": [
+      true,
+      true,
+      5.4,
+      4.8,
+      3.7,
+      110.0,
+      0.002,
+      "TIS"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_cea90741-49e5-49e7-9c28-a875fea7bffb_emissions.standard_10785ac00b3b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c2ab11266e577376535e696f:spec",
+    "revision_id": "c2ab11266e577376535e696f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.voxy.gen1.trim.hybrid_s_z_captain_ottoman_seats_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:04+00:00",
+    "payload": [
+      true,
+      true,
+      5.4,
+      4.8,
+      3.7,
+      110.0,
+      0.002,
+      "TIS"
+    ]
+  }
+}

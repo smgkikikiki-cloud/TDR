@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "fcbb4d663333115b7915f8bd",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-030-80293fca2870:237",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.gle.gen1.trim.4matic_exclusive_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:02+00:00",
+    "before_hash": "e0185796c42c1b2c49bb42f49b45bf843774fc734482cc5e4d8849e5247fe01b",
+    "after_hash": "f594f9b7c80c593e852d1c02fe49b006f9ef53fad988ff97daac39d045012744",
+    "before": [
+      31.39
+    ],
+    "after": [
+      31.39,
+      365.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_11950b23-badf-475b-a02a-fd95f722d82b_battery.nominal_voltage_v_e7c4cd001964.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "fcbb4d663333115b7915f8bd:spec",
+    "revision_id": "fcbb4d663333115b7915f8bd",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.gle.gen1.trim.4matic_exclusive_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:02+00:00",
+    "payload": [
+      31.39,
+      365.0
+    ]
+  }
+}

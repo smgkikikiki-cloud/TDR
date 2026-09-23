@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "638cf0cb7513baed17bf8775",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-019-79c9da20e296:178",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.taycan.gen1.trim.turbo_s_awd_952_hp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:55+00:00",
+    "before_hash": "420077bf50b79f8f753ed9dd04431227c37b3735c466883b4111ffd5903ac764",
+    "after_hash": "3728545ce155bae0f04346dc0475b6e7fce7dda4ba9a4307ba268c4cbcb7d994",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      104.69,
+      727.0,
+      "Draxlmaier",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      178.0,
+      626.0,
+      "245/40R21",
+      "285/35R21",
+      "BEV"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      104.69,
+      727.0,
+      "Draxlmaier",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      178.0,
+      626.0,
+      "245/40R21",
+      "285/35R21",
+      "BEV",
+      10.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_307cbe75-772d-405a-a207-4ebc8d02b064_manufacturing.excise_tax_rate_c65b0207e064.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "638cf0cb7513baed17bf8775:spec",
+    "revision_id": "638cf0cb7513baed17bf8775",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.taycan.gen1.trim.turbo_s_awd_952_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:55+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      104.69,
+      727.0,
+      "Draxlmaier",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      178.0,
+      626.0,
+      "245/40R21",
+      "285/35R21",
+      "BEV",
+      10.0
+    ]
+  }
+}

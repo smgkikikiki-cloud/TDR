@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7f8a8765935f27085ff656e6",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-001-2163ac0376be:252",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.mini_cooper.j01.trim.s_convertible_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:45+00:00",
+    "before_hash": "fe724da32a6f1ffca718d2c4b18afbc11ce483e5eef19f5f5b175d6947027a8f",
+    "after_hash": "3aca071da2478eccc87249684f42c48871bd12ef7c5643f5d5bdc17cf3147cf7",
+    "before": [
+      true,
+      true,
+      true,
+      5.2,
+      6.4,
+      8.5,
+      145.0,
+      0.012,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "GASOLINE",
+      "215/40R18"
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      5.2,
+      6.4,
+      8.5,
+      145.0,
+      0.012,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "GASOLINE",
+      "215/40R18",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_22fd2856-7859-47c8-993f-9088b758c164_identity.powertrain_a8dd82991fc8.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7f8a8765935f27085ff656e6:spec",
+    "revision_id": "7f8a8765935f27085ff656e6",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.mini_cooper.j01.trim.s_convertible_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:45+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      5.2,
+      6.4,
+      8.5,
+      145.0,
+      0.012,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "GASOLINE",
+      "215/40R18",
+      "ICE"
+    ]
+  }
+}

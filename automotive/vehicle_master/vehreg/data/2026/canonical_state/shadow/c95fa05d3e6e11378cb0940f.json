@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c95fa05d3e6e11378cb0940f",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-039-bb0c6084f37a:249",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.hybrid_s_type_gold_iii",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:13+00:00",
+    "before_hash": "237f759880eacfad707b2a81faa7dadc2cd349fd3d9265cfc19c7177f36900d2",
+    "after_hash": "7d8b53404aa4858dab0edeed548a8236bf2968795b682ac1df578aba4592a06b",
+    "before": [
+      true,
+      true,
+      8.0,
+      6.4,
+      3.7,
+      149.0,
+      0.005,
+      "TIS",
+      "HEV"
+    ],
+    "after": [
+      true,
+      true,
+      8.0,
+      6.4,
+      3.7,
+      149.0,
+      0.005,
+      "TIS",
+      "HEV",
+      2493
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_92dde66d-3b76-4a32-87a1-61ee29f33a1b_engine.displacement_cc_84c1323208fb.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c95fa05d3e6e11378cb0940f:spec",
+    "revision_id": "c95fa05d3e6e11378cb0940f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.hybrid_s_type_gold_iii",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:13+00:00",
+    "payload": [
+      true,
+      true,
+      8.0,
+      6.4,
+      3.7,
+      149.0,
+      0.005,
+      "TIS",
+      "HEV",
+      2493
+    ]
+  }
+}

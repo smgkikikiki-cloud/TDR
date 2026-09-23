@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6bd9ac87dbb94529479ad83e",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-052-52eba3c13659:281",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.outlander_phev.gen1.trim.2_4_phev_gt_premium_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:24+00:00",
+    "before_hash": "bb8ac4a50d20592e92296fb4722c902359a9a69f4fdb89798b031493f10bd211",
+    "after_hash": "810b02be57a3a20364dcf04052d8af8ca238d7484fa6aad725dcafdac17b4bb4",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      13.8
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      13.8,
+      300.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ecb34cfc0085472e9a5ba2d65101463b_battery.nominal_voltage_v_f8453e4541cd.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6bd9ac87dbb94529479ad83e:spec",
+    "revision_id": "6bd9ac87dbb94529479ad83e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.outlander_phev.gen1.trim.2_4_phev_gt_premium_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:24+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      13.8,
+      300.0
+    ]
+  }
+}

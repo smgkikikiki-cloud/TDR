@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "0ff356c05a3a94762c22c834",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-028-314da6945e4d:295",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "leapmotor.leapmotor_c10.gen1.trim.ev_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:46+00:00",
+    "before_hash": "b0c956dca67cf6d08165e05ee41384633a81af88b9cd40f6e9facb2c23c49c72",
+    "after_hash": "f5f8b33e62c13d75b2b718dd2e1fd1844eca5b687f8fedd17c025991022bcc89",
+    "before": [
+      "LFP",
+      69.89,
+      332.8,
+      "LEAPMOTOR",
+      "ONBOARD_AC",
+      167.0,
+      477.0,
+      "245/45R20",
+      "BEV",
+      8.0,
+      "PMSM",
+      true,
+      true,
+      7
+    ],
+    "after": [
+      "LFP",
+      69.89,
+      332.8,
+      "LEAPMOTOR",
+      "ONBOARD_AC",
+      167.0,
+      477.0,
+      "245/45R20",
+      "BEV",
+      8.0,
+      "PMSM",
+      true,
+      true,
+      7,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_26a828cb-5bf0-4c3f-b8b3-1d94d2548478_safety.blind_spot_edbc6cc587b1.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "0ff356c05a3a94762c22c834:spec",
+    "revision_id": "0ff356c05a3a94762c22c834",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "leapmotor.leapmotor_c10.gen1.trim.ev_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:46+00:00",
+    "payload": [
+      "LFP",
+      69.89,
+      332.8,
+      "LEAPMOTOR",
+      "ONBOARD_AC",
+      167.0,
+      477.0,
+      "245/45R20",
+      "BEV",
+      8.0,
+      "PMSM",
+      true,
+      true,
+      7,
+      true
+    ]
+  }
+}

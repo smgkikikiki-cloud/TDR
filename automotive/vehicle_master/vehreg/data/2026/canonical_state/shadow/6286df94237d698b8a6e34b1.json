@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6286df94237d698b8a6e34b1",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-051-bcc716924fd5:172",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.vellfire.gen1.trim.vellfire",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:11+00:00",
+    "before_hash": "c292d099f9e58f4fb9b980853f0d61431b7c73b1722338365842ca6f2dac261a",
+    "after_hash": "81f32e4d6e1656c4567adaa2d7154619ce29237319174a38cbfa8a7f966e2c05",
+    "before": [
+      true,
+      true,
+      7.0,
+      8.2,
+      10.2,
+      191.0,
+      0.003,
+      "TIS"
+    ],
+    "after": [
+      true,
+      true,
+      7.0,
+      8.2,
+      10.2,
+      191.0,
+      0.003,
+      "TIS",
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_7574e074b56342449fad17b8cb627d33_engine.combustion_type_981149b4f2a3.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6286df94237d698b8a6e34b1:spec",
+    "revision_id": "6286df94237d698b8a6e34b1",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.vellfire.gen1.trim.vellfire",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:11+00:00",
+    "payload": [
+      true,
+      true,
+      7.0,
+      8.2,
+      10.2,
+      191.0,
+      0.003,
+      "TIS",
+      "GASOLINE"
+    ]
+  }
+}

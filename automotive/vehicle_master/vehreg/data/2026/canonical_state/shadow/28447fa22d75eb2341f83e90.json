@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "28447fa22d75eb2341f83e90",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-008-bc3b92e93b52:382",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.g_class.gen1.trim.g400d_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:07+00:00",
+    "before_hash": "2bdfe3383223fd36270b69fc45b423c375dc68d4785a49c35d8500267da31d46",
+    "after_hash": "f288f4f75e0989ba7d05b8adecbb87fdd3414d039fd34415b9200237a14c07e8",
+    "before": [
+      true,
+      true,
+      7.6,
+      8.4,
+      9.7,
+      219.0,
+      0.02672,
+      0.00143,
+      "TIS",
+      "DIESEL",
+      2925,
+      "DIESEL",
+      "270/50R20",
+      "ICE"
+    ],
+    "after": [
+      true,
+      true,
+      7.6,
+      8.4,
+      9.7,
+      219.0,
+      0.02672,
+      0.00143,
+      "TIS",
+      "DIESEL",
+      2925,
+      "DIESEL",
+      "270/50R20",
+      "ICE",
+      34.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_390fae66-9d91-4272-8ea3-fabbb1c210ab_manufacturing.excise_tax_rate_2d98a831c480.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "28447fa22d75eb2341f83e90:spec",
+    "revision_id": "28447fa22d75eb2341f83e90",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.g_class.gen1.trim.g400d_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:07+00:00",
+    "payload": [
+      true,
+      true,
+      7.6,
+      8.4,
+      9.7,
+      219.0,
+      0.02672,
+      0.00143,
+      "TIS",
+      "DIESEL",
+      2925,
+      "DIESEL",
+      "270/50R20",
+      "ICE",
+      34.0
+    ]
+  }
+}

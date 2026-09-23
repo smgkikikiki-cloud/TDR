@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:ef59c79e-8302-4844-a3e6-aacd2d6cbaa3:efficiency.fuel_consumption_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 2.7,
+      "unit": "L/100km",
+      "observed_at": "2024-01-31",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/ef59c79e-8302-4844-a3e6-aacd2d6cbaa3",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/ef59c79e-8302-4844-a3e6-aacd2d6cbaa3",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mg.mg_vs_hev.vsh.trim.100th_anniversary_special_edition_hev"
+    }
+  ]
+}

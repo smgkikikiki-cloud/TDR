@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "44a8fa49836f0171438884ab",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-050-6df028e5a85f:197",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.etron.gen1.trim.sportback_55_quattro_s_line_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:58+00:00",
+    "before_hash": "b8ecfa44e8552e995fe8400c6f97f76c44e095bf5ee4ce18a6d648000d8b1465",
+    "after_hash": "38c05330b43b037f1aedec96891d0f8f5e0ef77d30dbd4ff7b4652bfff108fda",
+    "before": [
+      "GASOLINE",
+      "265/45R21",
+      "ICE",
+      8.0,
+      true,
+      3
+    ],
+    "after": [
+      "GASOLINE",
+      "265/45R21",
+      "ICE",
+      8.0,
+      true,
+      3,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e73f518462df40d1aadcb799a64f8ab8_safety.esc_a3fab516f62c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "44a8fa49836f0171438884ab:spec",
+    "revision_id": "44a8fa49836f0171438884ab",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.etron.gen1.trim.sportback_55_quattro_s_line_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:58+00:00",
+    "payload": [
+      "GASOLINE",
+      "265/45R21",
+      "ICE",
+      8.0,
+      true,
+      3,
+      true
+    ]
+  }
+}

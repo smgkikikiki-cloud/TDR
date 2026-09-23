@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "428a5873e520a748e0f78d4e",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-051-bcc716924fd5:290",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.harrier.gen1.trim.z_leather_package_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:11+00:00",
+    "before_hash": "d89340461b4e8c38910e8edc11ccd0c6e44672ff9bd6b5c3ef300c8d1c9871cd",
+    "after_hash": "fa9f7fd87af8207db70b4d896c780887ccba0662883bf9fcea76fe743dba9cfd",
+    "before": [
+      true,
+      true,
+      6.3,
+      7.5,
+      9.4,
+      174.0,
+      0.005,
+      "TIS",
+      "GASOLINE",
+      1986
+    ],
+    "after": [
+      true,
+      true,
+      6.3,
+      7.5,
+      9.4,
+      174.0,
+      0.005,
+      "TIS",
+      "GASOLINE",
+      1986,
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_5b814b88758244bb9477bb8e01e54036_engine.fuel_type_e05862ea4c10.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "428a5873e520a748e0f78d4e:spec",
+    "revision_id": "428a5873e520a748e0f78d4e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.harrier.gen1.trim.z_leather_package_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:11+00:00",
+    "payload": [
+      true,
+      true,
+      6.3,
+      7.5,
+      9.4,
+      174.0,
+      0.005,
+      "TIS",
+      "GASOLINE",
+      1986,
+      "GASOLINE"
+    ]
+  }
+}

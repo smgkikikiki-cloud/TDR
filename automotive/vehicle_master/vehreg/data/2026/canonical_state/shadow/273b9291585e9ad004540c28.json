@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "273b9291585e9ad004540c28",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-028-314da6945e4d:248",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.defender.gen1.trim.2_0p_phev_5dr_swb_x_dynamic_se_404ps_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:46+00:00",
+    "before_hash": "166a190d66080d0a467e5f9116289bcb0e9631ea5b050a922f5c130fc6ad0d4f",
+    "after_hash": "002d061a0e0dbe521a0f739503cd691bf1ebe2f4ce2d47b6e77c9ffdba29d1ce",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      20.0,
+      400.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      20.0,
+      400.0,
+      "Samsung SDI"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_484f7c5b-855e-445a-96e0-f9b677af6167_battery.supplier_83a4224f04c9.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "273b9291585e9ad004540c28:spec",
+    "revision_id": "273b9291585e9ad004540c28",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.defender.gen1.trim.2_0p_phev_5dr_swb_x_dynamic_se_404ps_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:46+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      20.0,
+      400.0,
+      "Samsung SDI"
+    ]
+  }
+}

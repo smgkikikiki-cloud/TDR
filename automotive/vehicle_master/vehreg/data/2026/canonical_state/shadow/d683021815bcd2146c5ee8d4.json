@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d683021815bcd2146c5ee8d4",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-006-b527dba9e80a:348",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "changan.nevo_q05.nevo_q05.trim.ultra_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:00+00:00",
+    "before_hash": "3e80d1cbd10a91832e52d4db1895859d3f9c73d1ac1f12aff62383ad56457198",
+    "after_hash": "e23a5339b11794c7f68afa4a6dd3220685ea132ca5e4284e38af58d869120b52",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      51.8,
+      350.0,
+      "CHONGQING CHANGAN AUTOMOBILE CO., LTD.",
+      "230 (AC)/ 350 (DC)",
+      "BOTH",
+      true,
+      129.0,
+      462.0,
+      "225/55R18",
+      "BEV",
+      2.0,
+      "PMSM",
+      true
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      51.8,
+      350.0,
+      "CHONGQING CHANGAN AUTOMOBILE CO., LTD.",
+      "230 (AC)/ 350 (DC)",
+      "BOTH",
+      true,
+      129.0,
+      462.0,
+      "225/55R18",
+      "BEV",
+      2.0,
+      "PMSM",
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d9bcd1e3-1016-49a3-96c0-399fab33ab12_safety.adaptive_cruise_29d632b7f3fd.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d683021815bcd2146c5ee8d4:spec",
+    "revision_id": "d683021815bcd2146c5ee8d4",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "changan.nevo_q05.nevo_q05.trim.ultra_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:00+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      51.8,
+      350.0,
+      "CHONGQING CHANGAN AUTOMOBILE CO., LTD.",
+      "230 (AC)/ 350 (DC)",
+      "BOTH",
+      true,
+      129.0,
+      462.0,
+      "225/55R18",
+      "BEV",
+      2.0,
+      "PMSM",
+      true,
+      true
+    ]
+  }
+}

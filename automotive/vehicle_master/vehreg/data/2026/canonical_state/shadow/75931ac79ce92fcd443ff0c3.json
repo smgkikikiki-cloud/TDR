@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "75931ac79ce92fcd443ff0c3",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-029-c1bed9cb95f3:66",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lexus_nx.az20.trim.nx450h_premium_awd_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:55+00:00",
+    "before_hash": "a31e7810c8b28782ebeea380871a112a128b01248604c55603747cd079c0d095",
+    "after_hash": "01e208804cd1d867fac1b171720a1b0d5ee2032acc7eb8ea608ba64a8f815631",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      18.12,
+      355.2,
+      "TOYOTA MOTOR CORPORATION",
+      "ONBOARD_AC",
+      1.3,
+      29.0,
+      0.001
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      18.12,
+      355.2,
+      "TOYOTA MOTOR CORPORATION",
+      "ONBOARD_AC",
+      1.3,
+      29.0,
+      0.001,
+      4e-05
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_7848031d-f1c5-4b62-a7a2-2306217e763d_emissions.pm_g_km_c19d6fb8411e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "75931ac79ce92fcd443ff0c3:spec",
+    "revision_id": "75931ac79ce92fcd443ff0c3",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lexus_nx.az20.trim.nx450h_premium_awd_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:55+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      18.12,
+      355.2,
+      "TOYOTA MOTOR CORPORATION",
+      "ONBOARD_AC",
+      1.3,
+      29.0,
+      0.001,
+      4e-05
+    ]
+  }
+}

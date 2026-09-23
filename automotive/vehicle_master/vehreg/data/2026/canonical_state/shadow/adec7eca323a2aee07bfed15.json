@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "adec7eca323a2aee07bfed15",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-048-9a296c6c8041:372",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "suzuki.ciaz.yl1.trim.rs_cvt_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:35+00:00",
+    "before_hash": "22854dbd6c7ca7c33a3b92f1bd274fdded2981073eb42406104f8becc459b863",
+    "after_hash": "0a2866b53e32f1e125228fc12c30fc24d6ddec68cc1e2b15f1311982f0596957",
+    "before": [
+      true,
+      4.3,
+      5.0,
+      6.2,
+      119.0,
+      0.003,
+      "TIS",
+      "GASOLINE",
+      1242,
+      "E20",
+      "195/55R16",
+      "ICE",
+      14.0,
+      "CVT"
+    ],
+    "after": [
+      true,
+      4.3,
+      5.0,
+      6.2,
+      119.0,
+      0.003,
+      "TIS",
+      "GASOLINE",
+      1242,
+      "E20",
+      "195/55R16",
+      "ICE",
+      14.0,
+      "CVT",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_5173abd0bb284839a9c8cf2b4f3346df_safety.abs_5adb04f48ca4.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "adec7eca323a2aee07bfed15:spec",
+    "revision_id": "adec7eca323a2aee07bfed15",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "suzuki.ciaz.yl1.trim.rs_cvt_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:35+00:00",
+    "payload": [
+      true,
+      4.3,
+      5.0,
+      6.2,
+      119.0,
+      0.003,
+      "TIS",
+      "GASOLINE",
+      1242,
+      "E20",
+      "195/55R16",
+      "ICE",
+      14.0,
+      "CVT",
+      true
+    ]
+  }
+}

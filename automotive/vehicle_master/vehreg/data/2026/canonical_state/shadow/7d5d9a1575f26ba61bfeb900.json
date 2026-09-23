@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7d5d9a1575f26ba61bfeb900",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-055-949893759636:222",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_e_class.w214.trim.mercedes_benz_coupe_amg_dynamic_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:22:04+00:00",
+    "before_hash": "9a4cb866efa6bbf0ee0b8627101ff1ba35c7398c6c3cb8bba0a7c689bd5c1f08",
+    "after_hash": "355af7477f7104e6e041b93a105c74dc6adcb735edc3231f704c7a9487753dc4",
+    "before": [
+      5.8,
+      7.3,
+      9.7,
+      164.0,
+      0.018,
+      "TIS",
+      "GASOLINE",
+      1991,
+      "GASOLINE"
+    ],
+    "after": [
+      5.8,
+      7.3,
+      9.7,
+      164.0,
+      0.018,
+      "TIS",
+      "GASOLINE",
+      1991,
+      "GASOLINE",
+      "245/40R19"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_0702d3d994a64b49a5f9aad84a7d55af_fitment.tyre_front_3b63a4cd385d.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7d5d9a1575f26ba61bfeb900:spec",
+    "revision_id": "7d5d9a1575f26ba61bfeb900",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_e_class.w214.trim.mercedes_benz_coupe_amg_dynamic_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:22:04+00:00",
+    "payload": [
+      5.8,
+      7.3,
+      9.7,
+      164.0,
+      0.018,
+      "TIS",
+      "GASOLINE",
+      1991,
+      "GASOLINE",
+      "245/40R19"
+    ]
+  }
+}

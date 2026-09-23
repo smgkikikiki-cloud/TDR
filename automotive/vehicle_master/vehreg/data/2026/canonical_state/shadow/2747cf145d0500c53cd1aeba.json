@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2747cf145d0500c53cd1aeba",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-016-3b184c133993:398",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "subaru.forester.sk.trim.2_5i_s_awd_cvt_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:43+00:00",
+    "before_hash": "cffb501c4e290da1d1628712f6375876a9436a48322f1f468f2571dfd84d8c99",
+    "after_hash": "1707e8a98fc9e439b8e0a6eae16c779fbfe438a55fa5d6db689b870608fd9d39",
+    "before": [
+      0.01,
+      "EURO6",
+      "GASOLINE"
+    ],
+    "after": [
+      0.01,
+      "EURO6",
+      "GASOLINE",
+      2498
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b6d3da0a-2c80-42b7-b268-fa8420e87308_engine.displacement_cc_bc931a973462.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2747cf145d0500c53cd1aeba:spec",
+    "revision_id": "2747cf145d0500c53cd1aeba",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "subaru.forester.sk.trim.2_5i_s_awd_cvt_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:43+00:00",
+    "payload": [
+      0.01,
+      "EURO6",
+      "GASOLINE",
+      2498
+    ]
+  }
+}

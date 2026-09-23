@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "1bfd6b87346742f97a9fbd66",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-036-ba2d051d30aa:265",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.x6.gen1.trim.m_sport_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:48+00:00",
+    "before_hash": "e59f8b8c29e8a27d9b70d8f04ec8a2eab74dbfb310353380b221816cb547d9d9",
+    "after_hash": "53ec0a4ca17652055d6b60b1a77ba130c67de443adf73e23ec1f04b1c829ec1c",
+    "before": [
+      true,
+      true,
+      true,
+      7.9,
+      8.7,
+      10.2,
+      198.0,
+      0.008,
+      "EURO6",
+      "HEV",
+      2998,
+      "GASOLINE",
+      "275/35R22"
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      7.9,
+      8.7,
+      10.2,
+      198.0,
+      0.008,
+      "EURO6",
+      "HEV",
+      2998,
+      "GASOLINE",
+      "275/35R22",
+      "315/30R22"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_1917b250-5310-4951-ad9c-414bba10fa39_fitment.tyre_rear_c5a5459777f4.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "1bfd6b87346742f97a9fbd66:spec",
+    "revision_id": "1bfd6b87346742f97a9fbd66",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.x6.gen1.trim.m_sport_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:48+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      7.9,
+      8.7,
+      10.2,
+      198.0,
+      0.008,
+      "EURO6",
+      "HEV",
+      2998,
+      "GASOLINE",
+      "275/35R22",
+      "315/30R22"
+    ]
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "097e4efe59ec7748635b1f3e",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-011-3c709241399c:55",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:18+00:00",
+    "before_hash": "1ec5b8b3273d42d69ce9478dfe720dd79fa2d8406608dc1295a38e377ef82106",
+    "after_hash": "0a5af2ffa18c7d1dcab7feb24b590f30cecbeff82c0ae84ced48c23c22772b02",
+    "before": [
+      "LFP",
+      83.64,
+      638.5,
+      "EVE Power Co., Ltd.",
+      "AC: 220V, DC: 380~900V",
+      "BOTH"
+    ],
+    "after": [
+      "LFP",
+      83.64,
+      638.5,
+      "EVE Power Co., Ltd.",
+      "AC: 220V, DC: 380~900V",
+      "BOTH",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_513e48ad-0ef5-4323-8541-c753596b9451_comfort.electric_parking_brake_d4696d668f77.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "097e4efe59ec7748635b1f3e:spec",
+    "revision_id": "097e4efe59ec7748635b1f3e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:18+00:00",
+    "payload": [
+      "LFP",
+      83.64,
+      638.5,
+      "EVE Power Co., Ltd.",
+      "AC: 220V, DC: 380~900V",
+      "BOTH",
+      true
+    ]
+  }
+}

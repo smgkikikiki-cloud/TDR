@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c7fbf9eb7979653b2f899b72",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-012-0c3fd0adac89:52",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lexus_nx.az20.trim.nx450h_grand_luxury_plus_awd_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:23+00:00",
+    "before_hash": "2b1c72fef76e729bf4eb95d11e39d054dcacaedca3e63ad63b19b859ef344cbc",
+    "after_hash": "6f7a88911ad2248af4df0ce1ea24f87811de1534672a48748e29511a8a413dac",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      18.12,
+      355.2,
+      "TOYOTA MOTOR CORPORATION",
+      "ONBOARD_AC",
+      1.3,
+      29.0,
+      0.001,
+      "TIS",
+      "PHEV",
+      2487,
+      "GASOLINE",
+      140.0,
+      87.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      18.12,
+      355.2,
+      "TOYOTA MOTOR CORPORATION",
+      "ONBOARD_AC",
+      1.3,
+      29.0,
+      0.001,
+      "TIS",
+      "PHEV",
+      2487,
+      "GASOLINE",
+      140.0,
+      87.0,
+      "235/50R20"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_1112abab-11a1-4d32-a7b0-2ea1a8da4053_fitment.tyre_size_b924e85b17cf.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c7fbf9eb7979653b2f899b72:spec",
+    "revision_id": "c7fbf9eb7979653b2f899b72",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lexus_nx.az20.trim.nx450h_grand_luxury_plus_awd_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:23+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      18.12,
+      355.2,
+      "TOYOTA MOTOR CORPORATION",
+      "ONBOARD_AC",
+      1.3,
+      29.0,
+      0.001,
+      "TIS",
+      "PHEV",
+      2487,
+      "GASOLINE",
+      140.0,
+      87.0,
+      "235/50R20"
+    ]
+  }
+}

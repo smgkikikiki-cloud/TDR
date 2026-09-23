@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ad5c3395611cb80f837e8ba2",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-030-80293fca2870:245",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.gle.gen1.trim.4matic_exclusive_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:02+00:00",
+    "before_hash": "531ef2c0660558f0f70ef48600be3fb7f31b3d45076acb9aede05a9a6a0158f1",
+    "after_hash": "75af81ac9409f2793d4ba9a668a252f34522f86acf06ea2b98080aa92e223fcc",
+    "before": [
+      31.39,
+      365.0,
+      "Deutsche ACCUmotive",
+      "BOTH",
+      true,
+      1.1,
+      30.0,
+      0.01,
+      5e-05
+    ],
+    "after": [
+      31.39,
+      365.0,
+      "Deutsche ACCUmotive",
+      "BOTH",
+      true,
+      1.1,
+      30.0,
+      0.01,
+      5e-05,
+      "TIS"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_11950b23-badf-475b-a02a-fd95f722d82b_emissions.standard_130f4a4d935b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ad5c3395611cb80f837e8ba2:spec",
+    "revision_id": "ad5c3395611cb80f837e8ba2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.gle.gen1.trim.4matic_exclusive_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:02+00:00",
+    "payload": [
+      31.39,
+      365.0,
+      "Deutsche ACCUmotive",
+      "BOTH",
+      true,
+      1.1,
+      30.0,
+      0.01,
+      5e-05,
+      "TIS"
+    ]
+  }
+}

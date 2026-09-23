@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:5d138f42-0bbd-4a1b-8066-49a993e6e8c8:efficiency.fuel_consumption_extra_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_extra_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 4.0,
+      "unit": "L/100km",
+      "observed_at": "2026-01-06",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/5d138f42-0bbd-4a1b-8066-49a993e6e8c8",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/5d138f42-0bbd-4a1b-8066-49a993e6e8c8",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "nissan.almera.n18.trim.26my_1_0t_el_cvt"
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d471f1238302273775bc2355",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-034-5299aee8f0ab:13",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mazda6.gen1.trim.20th_anniversary_edition_nappa_leather_grand_luxury_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:32+00:00",
+    "before_hash": "af2b20f6792f564d27ca91ba2611225077795c746572cafa7154541f55af8075",
+    "after_hash": "10c7f73f3adf2271c17b2a8fa45fbf4e169e267443f726f0ea66416652d5b68a",
+    "before": [
+      true,
+      true,
+      5.8,
+      7.1,
+      9.4,
+      169.0,
+      0.005,
+      "TIS",
+      "GASOLINE"
+    ],
+    "after": [
+      true,
+      true,
+      5.8,
+      7.1,
+      9.4,
+      169.0,
+      0.005,
+      "TIS",
+      "GASOLINE",
+      2488
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_4599a7ba-693f-4025-bd0b-40fbb08ff80e_engine.displacement_cc_0a9369f9acdf.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d471f1238302273775bc2355:spec",
+    "revision_id": "d471f1238302273775bc2355",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mazda6.gen1.trim.20th_anniversary_edition_nappa_leather_grand_luxury_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:32+00:00",
+    "payload": [
+      true,
+      true,
+      5.8,
+      7.1,
+      9.4,
+      169.0,
+      0.005,
+      "TIS",
+      "GASOLINE",
+      2488
+    ]
+  }
+}

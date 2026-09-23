@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "055813bf31b3a9c28245bd72",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-042-509b690f0202:179",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.stargazer.ks.trim.trend_7_seater_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:35+00:00",
+    "before_hash": "907e3e66d6e08aafd661a664423227e7a7d3894ed53597eb1dcb9f8b94e76596",
+    "after_hash": "77db51c2ea6ab4d4c7ba69a417a89e81c004d3793bfd66a8cd3dcffd2cec5ce9",
+    "before": [
+      true,
+      true,
+      5.4,
+      6.2,
+      7.4,
+      143.0,
+      0.065,
+      "TIS",
+      "GASOLINE",
+      1497,
+      "GASOLINE",
+      "205/55R16"
+    ],
+    "after": [
+      true,
+      true,
+      5.4,
+      6.2,
+      7.4,
+      143.0,
+      0.065,
+      "TIS",
+      "GASOLINE",
+      1497,
+      "GASOLINE",
+      "205/55R16",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_16071ddb-7706-4194-bd43-de698dbeee3a_identity.powertrain_f7e285a145dc.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "055813bf31b3a9c28245bd72:spec",
+    "revision_id": "055813bf31b3a9c28245bd72",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.stargazer.ks.trim.trend_7_seater_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:35+00:00",
+    "payload": [
+      true,
+      true,
+      5.4,
+      6.2,
+      7.4,
+      143.0,
+      0.065,
+      "TIS",
+      "GASOLINE",
+      1497,
+      "GASOLINE",
+      "205/55R16",
+      "ICE"
+    ]
+  }
+}

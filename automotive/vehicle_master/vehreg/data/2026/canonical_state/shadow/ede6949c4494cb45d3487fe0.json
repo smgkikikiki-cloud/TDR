@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ede6949c4494cb45d3487fe0",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-054-d20b71816f05:108",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover_velar.unresearched.trim.range_rover_velar_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:52+00:00",
+    "before_hash": "7e63ddc77d31cc7b1b7b8cabc107c5a46479e7faca1ce4624740dc4e75bbf387",
+    "after_hash": "75c61f93288292693094609a001d5d6c890aa41c36073e40d62fdef4f3be25f4",
+    "before": [
+      true,
+      true,
+      5.1,
+      5.7,
+      6.9,
+      148.0,
+      0.138,
+      "TIS",
+      "DIESEL",
+      1999,
+      "DIESEL",
+      "265/45R21"
+    ],
+    "after": [
+      true,
+      true,
+      5.1,
+      5.7,
+      6.9,
+      148.0,
+      0.138,
+      "TIS",
+      "DIESEL",
+      1999,
+      "DIESEL",
+      "265/45R21",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_90d96f24d5f44f3a9e6566204cb33245_identity.powertrain_f50224008756.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ede6949c4494cb45d3487fe0:spec",
+    "revision_id": "ede6949c4494cb45d3487fe0",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover_velar.unresearched.trim.range_rover_velar_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:52+00:00",
+    "payload": [
+      true,
+      true,
+      5.1,
+      5.7,
+      6.9,
+      148.0,
+      0.138,
+      "TIS",
+      "DIESEL",
+      1999,
+      "DIESEL",
+      "265/45R21",
+      "ICE"
+    ]
+  }
+}

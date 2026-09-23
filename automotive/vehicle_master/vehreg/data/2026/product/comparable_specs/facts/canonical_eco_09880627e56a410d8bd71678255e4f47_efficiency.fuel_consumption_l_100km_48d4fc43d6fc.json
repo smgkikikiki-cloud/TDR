@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:09880627e56a410d8bd71678255e4f47:efficiency.fuel_consumption_l_100km",
+      "field_key": "efficiency.fuel_consumption_l_100km",
+      "value_state": "KNOWN",
+      "value": 6.6,
+      "unit": "L/100km",
+      "observed_at": "2021-07-20",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/09880627e56a410d8bd71678255e4f47",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/09880627e56a410d8bd71678255e4f47",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mercedes_benz.s_class.gen1.trim.amg_premium_ice"
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a652f758d94ecc23a9796cc2",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-054-d20b71816f05:159",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.2_5_hybrid_executive_lounge",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:52+00:00",
+    "before_hash": "9fdad1d0f754655d30dc0bbeb1a28af2ccbf4be3a03549f5326c034c43305b84",
+    "after_hash": "8c9a894717146d114b90c851aac00ab03d1774986fea593796b748efb4d01199",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      true,
+      7.6,
+      5.7,
+      2.5,
+      133.0,
+      0.022
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      true,
+      7.6,
+      5.7,
+      2.5,
+      133.0,
+      0.022,
+      "TIS"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_a6597e6fc4284395869bf69809dc8d16_emissions.standard_8dc6acba7d73.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a652f758d94ecc23a9796cc2:spec",
+    "revision_id": "a652f758d94ecc23a9796cc2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.2_5_hybrid_executive_lounge",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:52+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      true,
+      7.6,
+      5.7,
+      2.5,
+      133.0,
+      0.022,
+      "TIS"
+    ]
+  }
+}

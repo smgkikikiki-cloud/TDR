@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c7ebc96d5f66d9506cfbd876",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-047-23268458b262:381",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover.gen1.trim.evoque_1_5_plug_in_hybrid_awd_se_plus_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:25+00:00",
+    "before_hash": "270cd88f6c3b12c27592208655cc92be2a8a5099d557329f2e92ff12ce4e8ca9",
+    "after_hash": "f508888ea4c40b5c51a7cdc03f5b67d113b55ae32c235e3dd5af730220fb2218",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      17.67,
+      357.0,
+      "Samsung SDI",
+      "ONBOARD_AC",
+      true
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      17.67,
+      357.0,
+      "Samsung SDI",
+      "ONBOARD_AC",
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_7ba8cfe6b844440eaa642a58c31a9e07_comfort.power_windows_4ef1109a8edc.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c7ebc96d5f66d9506cfbd876:spec",
+    "revision_id": "c7ebc96d5f66d9506cfbd876",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover.gen1.trim.evoque_1_5_plug_in_hybrid_awd_se_plus_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:25+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      17.67,
+      357.0,
+      "Samsung SDI",
+      "ONBOARD_AC",
+      true,
+      true
+    ]
+  }
+}

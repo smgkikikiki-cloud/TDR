@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "dc086bb3ba9876d0406e16ad",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-053-c0bdc44365d7:305",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.voxy.gen1.trim.voxy_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:38+00:00",
+    "before_hash": "d00fb8f9bd8deb1c1cee09e766367d536cf25cfb25f8fa1652ec5a61f739abb1",
+    "after_hash": "7ba671966e99e18a9865d4aaa51bce21e7f059b4734ac0af279ab98c66b2d123",
+    "before": [
+      true,
+      true,
+      6.6
+    ],
+    "after": [
+      true,
+      true,
+      6.6,
+      7.5
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_380c26baec974256a0c6c53361234455_efficiency.fuel_consumption_l_100km_ee399cda639e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "dc086bb3ba9876d0406e16ad:spec",
+    "revision_id": "dc086bb3ba9876d0406e16ad",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.voxy.gen1.trim.voxy_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:38+00:00",
+    "payload": [
+      true,
+      true,
+      6.6,
+      7.5
+    ]
+  }
+}

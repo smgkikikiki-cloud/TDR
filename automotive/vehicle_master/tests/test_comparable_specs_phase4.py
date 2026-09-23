@@ -116,7 +116,7 @@ def test_eco_candidates_cover_the_cohort_but_publish_nothing():
         "models_with_candidates": 31,
         "candidate_trims": 118,
         "representative_candidates": 20,
-        "candidate_spec_values": 1842,
+        "candidate_spec_values": 1740,
         # Nothing is promoted, and the reason is recorded rather than implied.
         "published_market_trims": 0,
         "pilot_models_with_current_oem_evidence": 0,
@@ -253,7 +253,11 @@ def test_spec_import_is_dry_run_idempotent_and_registration_safe(local_data):
     assert not repeated["written"] and repeated["added"] == 0
     master = ProductMaster.load(local_data)
     resolved = master.detail(JAECOO_TRIM, as_of=date(2026, 9, 8))["comparable_specs"]
-    assert resolved[0]["value"] == 155
+    # By field_key, not position: this trim carries other resolved comparable
+    # specs too (from the bulk ECO import), and resolved() is sorted by
+    # field_key across all of them, not just this test's own injected fact.
+    power = next(row for row in resolved if row["field_key"] == "powertrain.max_power_kw")
+    assert power["value"] == 155
     assert master.validate() == []
     after = [r.as_row() for r in Catalog.load(local_data).iter_resolved()]
     assert after == before

@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "450ce75dd0fc68e2ebd6beb7",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-014-8db054eb58a3:93",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.hybrid_x",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:32+00:00",
+    "before_hash": "afdc17c43e62a5c5e016d4e715ef8275ce7a319a9a02444cf47285e63d64fb20",
+    "after_hash": "8c3b5998a069736440e1078b963f2b3feade16b7fac920f170f46d1edda0dc42",
+    "before": [
+      true,
+      true,
+      7.5,
+      6.5,
+      4.8,
+      150.0,
+      0.004,
+      "TIS",
+      "HEV",
+      2493,
+      "GASOLINE",
+      "215/65R16",
+      "HEV",
+      16.0
+    ],
+    "after": [
+      true,
+      true,
+      7.5,
+      6.5,
+      4.8,
+      150.0,
+      0.004,
+      "TIS",
+      "HEV",
+      2493,
+      "GASOLINE",
+      "215/65R16",
+      "HEV",
+      16.0,
+      "CVT"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_f06a9e3e-c72c-4ec2-b8bc-14046e60a226_powertrain.transmission_96521e9595c5.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "450ce75dd0fc68e2ebd6beb7:spec",
+    "revision_id": "450ce75dd0fc68e2ebd6beb7",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.hybrid_x",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:32+00:00",
+    "payload": [
+      true,
+      true,
+      7.5,
+      6.5,
+      4.8,
+      150.0,
+      0.004,
+      "TIS",
+      "HEV",
+      2493,
+      "GASOLINE",
+      "215/65R16",
+      "HEV",
+      16.0,
+      "CVT"
+    ]
+  }
+}

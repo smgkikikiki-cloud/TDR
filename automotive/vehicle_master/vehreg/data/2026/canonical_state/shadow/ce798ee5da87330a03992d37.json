@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ce798ee5da87330a03992d37",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-052-52eba3c13659:132",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q3.f3.trim.sportback_35_tfsi_s_line_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:24+00:00",
+    "before_hash": "9b3b961bfb984dde4ca01eef5cad7bbb545a416d2f11e5b719c178b89359c990",
+    "after_hash": "6411e20b377a5b6398867793535b577a97325939402e808d9b8fdca78b82bfb5",
+    "before": [
+      6.1,
+      7.3,
+      9.4,
+      167.0,
+      0.037,
+      "EURO6",
+      "GASOLINE",
+      1395,
+      "GASOLINE",
+      "235/50R19",
+      "ICE",
+      30.0,
+      6,
+      "AUTOMATIC"
+    ],
+    "after": [
+      6.1,
+      7.3,
+      9.4,
+      167.0,
+      0.037,
+      "EURO6",
+      "GASOLINE",
+      1395,
+      "GASOLINE",
+      "235/50R19",
+      "ICE",
+      30.0,
+      6,
+      "AUTOMATIC",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ff512c2c3f194bc285e860f92e697107_safety.abs_95abd26f7ba5.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ce798ee5da87330a03992d37:spec",
+    "revision_id": "ce798ee5da87330a03992d37",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q3.f3.trim.sportback_35_tfsi_s_line_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:24+00:00",
+    "payload": [
+      6.1,
+      7.3,
+      9.4,
+      167.0,
+      0.037,
+      "EURO6",
+      "GASOLINE",
+      1395,
+      "GASOLINE",
+      "235/50R19",
+      "ICE",
+      30.0,
+      6,
+      "AUTOMATIC",
+      true
+    ]
+  }
+}

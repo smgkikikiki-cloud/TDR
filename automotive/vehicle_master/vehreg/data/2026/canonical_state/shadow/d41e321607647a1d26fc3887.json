@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d41e321607647a1d26fc3887",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-035-5b8b3aecfae7:16",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_vs_hev.vsh.trim.100th_anniversary_special_edition_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:40+00:00",
+    "before_hash": "2823aca7564970d0e9477ed8606347c1de2a423616c19dfde559d7e2ae225e00",
+    "after_hash": "844996e7d2b3d664dc6087675516933dc115806d94f4af394e924051bbb4975a",
+    "before": [
+      true,
+      4.9,
+      4.1,
+      2.7,
+      98.0,
+      0.0024,
+      "TIS",
+      "HEV",
+      1498,
+      "E20",
+      "215/55R17",
+      "HEV",
+      4.0
+    ],
+    "after": [
+      true,
+      4.9,
+      4.1,
+      2.7,
+      98.0,
+      0.0024,
+      "TIS",
+      "HEV",
+      1498,
+      "E20",
+      "215/55R17",
+      "HEV",
+      4.0,
+      "CVT"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ef59c79e-8302-4844-a3e6-aacd2d6cbaa3_powertrain.transmission_680604339877.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d41e321607647a1d26fc3887:spec",
+    "revision_id": "d41e321607647a1d26fc3887",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_vs_hev.vsh.trim.100th_anniversary_special_edition_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:40+00:00",
+    "payload": [
+      true,
+      4.9,
+      4.1,
+      2.7,
+      98.0,
+      0.0024,
+      "TIS",
+      "HEV",
+      1498,
+      "E20",
+      "215/55R17",
+      "HEV",
+      4.0,
+      "CVT"
+    ]
+  }
+}

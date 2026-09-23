@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a43e458f5fd927637e027af7",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-013-01b2d6d40e8e:127",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.countryman.u25.trim.all4_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:27+00:00",
+    "before_hash": "8ee936f1c70e0ad75679361ab6b678c3ba4682cf2bad07b4aa382e3abf710f78",
+    "after_hash": "aedb3383cac862548b8b39d65f7829da4fee1a309df96b6216ce16dcaa97cb84",
+    "before": [
+      true,
+      true,
+      true,
+      6.2,
+      7.5,
+      9.8,
+      170.0,
+      0.025,
+      "EURO6",
+      "GASOLINE",
+      1998,
+      "GASOLINE",
+      "245/45R19",
+      "ICE"
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      6.2,
+      7.5,
+      9.8,
+      170.0,
+      0.025,
+      "EURO6",
+      "GASOLINE",
+      1998,
+      "GASOLINE",
+      "245/45R19",
+      "ICE",
+      29.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_15f61346-32d1-425c-ad36-423874390352_manufacturing.excise_tax_rate_246369b0ebd3.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a43e458f5fd927637e027af7:spec",
+    "revision_id": "a43e458f5fd927637e027af7",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.countryman.u25.trim.all4_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:27+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      6.2,
+      7.5,
+      9.8,
+      170.0,
+      0.025,
+      "EURO6",
+      "GASOLINE",
+      1998,
+      "GASOLINE",
+      "245/45R19",
+      "ICE",
+      29.0
+    ]
+  }
+}

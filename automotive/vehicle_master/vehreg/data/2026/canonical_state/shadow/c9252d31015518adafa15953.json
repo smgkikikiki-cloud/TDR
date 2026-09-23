@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c9252d31015518adafa15953",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-052-52eba3c13659:3",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.s_class.gen1.trim.amg_premium_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:24+00:00",
+    "before_hash": "cff1eb6195a81af93add7889a29feae382e0eae35e3dd192038ef71655cf8f8c",
+    "after_hash": "d24b88a64ffb0d4026a0c53e8e9a0aa19cce14175a0419fa9bcfc3a5de2ebbcb",
+    "before": [
+      5.3,
+      6.6,
+      8.7,
+      173.0,
+      0.039,
+      0.00032,
+      "TIS"
+    ],
+    "after": [
+      5.3,
+      6.6,
+      8.7,
+      173.0,
+      0.039,
+      0.00032,
+      "TIS",
+      "DIESEL"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_09880627e56a410d8bd71678255e4f47_engine.combustion_type_b924b3747a91.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c9252d31015518adafa15953:spec",
+    "revision_id": "c9252d31015518adafa15953",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.s_class.gen1.trim.amg_premium_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:24+00:00",
+    "payload": [
+      5.3,
+      6.6,
+      8.7,
+      173.0,
+      0.039,
+      0.00032,
+      "TIS",
+      "DIESEL"
+    ]
+  }
+}

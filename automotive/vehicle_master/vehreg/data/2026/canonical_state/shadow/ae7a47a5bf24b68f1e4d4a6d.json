@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ae7a47a5bf24b68f1e4d4a6d",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-047-23268458b262:235",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.ora_good_cat.gc.trim.400_tech_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:25+00:00",
+    "before_hash": "7967283ea81e9fd0243d73ea5bc82bf8b4a946a3a83575e594e95c4cc65d9a96",
+    "after_hash": "ee8c48bea0fa1b4ce0ac8055497ff6dbb4dc2089c96e6693335aeb979d26a7ba",
+    "before": [
+      true,
+      true,
+      "GASOLINE",
+      "205/55R17",
+      "ICE",
+      2.0,
+      true,
+      2,
+      true,
+      true,
+      1495,
+      1596,
+      4235
+    ],
+    "after": [
+      true,
+      true,
+      "GASOLINE",
+      "205/55R17",
+      "ICE",
+      2.0,
+      true,
+      2,
+      true,
+      true,
+      1495,
+      1596,
+      4235,
+      2022
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ac15a8652e2b46ca99de093774e37e4b_vehicle.model_year_171107234bb8.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ae7a47a5bf24b68f1e4d4a6d:spec",
+    "revision_id": "ae7a47a5bf24b68f1e4d4a6d",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.ora_good_cat.gc.trim.400_tech_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:25+00:00",
+    "payload": [
+      true,
+      true,
+      "GASOLINE",
+      "205/55R17",
+      "ICE",
+      2.0,
+      true,
+      2,
+      true,
+      true,
+      1495,
+      1596,
+      4235,
+      2022
+    ]
+  }
+}

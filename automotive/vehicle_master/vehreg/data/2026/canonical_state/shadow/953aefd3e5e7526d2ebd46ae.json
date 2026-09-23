@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "953aefd3e5e7526d2ebd46ae",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-012-0c3fd0adac89:343",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.2_5_hev_luxury",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:23+00:00",
+    "before_hash": "424eeeac6064250144689948a638016279e0e6fe3816d9197213406034283067",
+    "after_hash": "fa54c49517a6f458a4a037827fa92840704ec272186ac23cba134e2a39066a35",
+    "before": [
+      5.4,
+      5.6,
+      6.0,
+      128.0,
+      0.004,
+      "EURO6",
+      "HEV",
+      2487,
+      "GASOLINE"
+    ],
+    "after": [
+      5.4,
+      5.6,
+      6.0,
+      128.0,
+      0.004,
+      "EURO6",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/55R19"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_a73b7c7c-5fd0-4277-97e2-8eb7ee38a0ab_fitment.tyre_size_93cc2f01e527.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "953aefd3e5e7526d2ebd46ae:spec",
+    "revision_id": "953aefd3e5e7526d2ebd46ae",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.2_5_hev_luxury",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:23+00:00",
+    "payload": [
+      5.4,
+      5.6,
+      6.0,
+      128.0,
+      0.004,
+      "EURO6",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/55R19"
+    ]
+  }
+}

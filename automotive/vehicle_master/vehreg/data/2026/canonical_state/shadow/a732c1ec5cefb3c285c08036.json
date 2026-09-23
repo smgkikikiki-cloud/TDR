@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a732c1ec5cefb3c285c08036",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-015-2f508ee80764:383",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_travo_double_cab.gen1.trim.prerunner_2_8_premium_mt_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:37+00:00",
+    "before_hash": "1c28f2eb0958c3d15db1f0f0e7f2b8998ca2b8f67ab426a1fbb3d561fe76fad9",
+    "after_hash": "c23f86e0c4e7cd89a1422285d5830b4c9cbaace9b32123cf1033894381681af1",
+    "before": [
+      true
+    ],
+    "after": [
+      true,
+      6.3
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ed53397c-ced8-4e03-afbe-207664767aa3_efficiency.fuel_consumption_extra_urban_l_100km_7ceb4210fa34.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a732c1ec5cefb3c285c08036:spec",
+    "revision_id": "a732c1ec5cefb3c285c08036",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_travo_double_cab.gen1.trim.prerunner_2_8_premium_mt_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:37+00:00",
+    "payload": [
+      true,
+      6.3
+    ]
+  }
+}

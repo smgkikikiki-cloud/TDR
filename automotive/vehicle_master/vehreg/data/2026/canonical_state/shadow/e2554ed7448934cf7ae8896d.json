@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e2554ed7448934cf7ae8896d",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-026-fc1e159da290:296",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.cx5.kf.trim.2_0_sp_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:33+00:00",
+    "before_hash": "3245c017ddf82f8a718d0ebbee464ddeea4561fcadc7d26260f3df236b500c79",
+    "after_hash": "09ea6e0a125a838997bf95d383fca9c11dfbfffb627e00fff5dde2ac0b0ff1fb",
+    "before": [
+      true,
+      6.2,
+      7.2,
+      9.0,
+      171.0,
+      0.005,
+      "TIS",
+      "GASOLINE",
+      1998
+    ],
+    "after": [
+      true,
+      6.2,
+      7.2,
+      9.0,
+      171.0,
+      0.005,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "E85"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_861ed281-9524-4df0-9deb-1064f0ec73f9_engine.fuel_type_a4c6d11f3fc6.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e2554ed7448934cf7ae8896d:spec",
+    "revision_id": "e2554ed7448934cf7ae8896d",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.cx5.kf.trim.2_0_sp_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:33+00:00",
+    "payload": [
+      true,
+      6.2,
+      7.2,
+      9.0,
+      171.0,
+      0.005,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "E85"
+    ]
+  }
+}

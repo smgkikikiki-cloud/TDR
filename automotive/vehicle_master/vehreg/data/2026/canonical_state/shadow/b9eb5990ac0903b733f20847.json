@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b9eb5990ac0903b733f20847",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-017-02b372e72add:31",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.poer_sahar.gen1.trim.gwm_2_4t_ultra_double_cab_4wd_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:47+00:00",
+    "before_hash": "bc4e30d6fbc6708f8fa5dd28ad3ecd319a047b441a64aecebafcd5445303cf1f",
+    "after_hash": "8f9140b692693ea0bdc728fbf2bcc7fdab49a205a46b7f16771d7ef0f6705be1",
+    "before": [
+      true,
+      6.9,
+      7.4,
+      8.4,
+      196.0,
+      0.252,
+      0.00026,
+      "TIS",
+      "DIESEL",
+      2370
+    ],
+    "after": [
+      true,
+      6.9,
+      7.4,
+      8.4,
+      196.0,
+      0.252,
+      0.00026,
+      "TIS",
+      "DIESEL",
+      2370,
+      "B20"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_657487bc-97c3-4fb9-8bbe-412510363eec_engine.fuel_type_57998277dda4.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b9eb5990ac0903b733f20847:spec",
+    "revision_id": "b9eb5990ac0903b733f20847",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.poer_sahar.gen1.trim.gwm_2_4t_ultra_double_cab_4wd_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:47+00:00",
+    "payload": [
+      true,
+      6.9,
+      7.4,
+      8.4,
+      196.0,
+      0.252,
+      0.00026,
+      "TIS",
+      "DIESEL",
+      2370,
+      "B20"
+    ]
+  }
+}

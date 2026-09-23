@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "8ad5e522977b4c4153225b67",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-048-9a296c6c8041:131",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_ep.gen1.trim.ep_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:35+00:00",
+    "before_hash": "65a8f360c84ffe5fe4d93f5c56e90bb7fa1a7d8df12b39a2961501ac64b74b25",
+    "after_hash": "eb1c1d4072ebde51a4d4e47483aec7a96cf6d71ebf20278f8938230f244b5c32",
+    "before": [
+      true,
+      "GASOLINE",
+      "205/60R16",
+      "ICE",
+      2.0,
+      true,
+      2
+    ],
+    "after": [
+      true,
+      "GASOLINE",
+      "205/60R16",
+      "ICE",
+      2.0,
+      true,
+      2,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_2784aa1866d44e679c710cd1ff33e545_safety.esc_6afc9d7bcd68.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "8ad5e522977b4c4153225b67:spec",
+    "revision_id": "8ad5e522977b4c4153225b67",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_ep.gen1.trim.ep_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:35+00:00",
+    "payload": [
+      true,
+      "GASOLINE",
+      "205/60R16",
+      "ICE",
+      2.0,
+      true,
+      2,
+      true
+    ]
+  }
+}

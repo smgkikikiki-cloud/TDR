@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b738ec42f032313ace5a5190",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-050-6df028e5a85f:265",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.cayenne.e3.trim.s_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:58+00:00",
+    "before_hash": "0cbf8f95602b6bb4797388c72a5ffad48d29da11c95fdf435453ed1ffc3c5331",
+    "after_hash": "2a9cb42fb9b0a745251c2c0b295dcb1c8d2c567cd050eac40f4d08f86853200e",
+    "before": [
+      true,
+      true,
+      8.4,
+      9.6,
+      11.7,
+      218.0
+    ],
+    "after": [
+      true,
+      true,
+      8.4,
+      9.6,
+      11.7,
+      218.0,
+      0.017
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_297b1bea37ca483d9a23993d41f7aee2_emissions.nox_g_km_60f0f283a9fb.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b738ec42f032313ace5a5190:spec",
+    "revision_id": "b738ec42f032313ace5a5190",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.cayenne.e3.trim.s_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:58+00:00",
+    "payload": [
+      true,
+      true,
+      8.4,
+      9.6,
+      11.7,
+      218.0,
+      0.017
+    ]
+  }
+}

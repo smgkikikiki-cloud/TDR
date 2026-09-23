@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "754b63749581e940921913e8",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-025-74b815fdedac:84",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.2_5s_c_package_2wd",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:25+00:00",
+    "before_hash": "5a4d81771b19b7e3027c89ee57229e93a708ef78a935f03fdb7cb8e9c004aaa7",
+    "after_hash": "18f582bc45a3c5f9965ee0149ee963957ebf762fc3698db2ffd8008fefe6b886",
+    "before": [
+      true,
+      true,
+      7.5,
+      8.0,
+      8.9,
+      186.0,
+      0.007,
+      "TIS",
+      "GASOLINE",
+      2493,
+      "GASOLINE",
+      "235/50R18",
+      "ICE"
+    ],
+    "after": [
+      true,
+      true,
+      7.5,
+      8.0,
+      8.9,
+      186.0,
+      0.007,
+      "TIS",
+      "GASOLINE",
+      2493,
+      "GASOLINE",
+      "235/50R18",
+      "ICE",
+      30.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_a0450d7e-2e0d-4efe-aa21-002f870f1b29_manufacturing.excise_tax_rate_eb1c8da839ab.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "754b63749581e940921913e8:spec",
+    "revision_id": "754b63749581e940921913e8",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.2_5s_c_package_2wd",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:25+00:00",
+    "payload": [
+      true,
+      true,
+      7.5,
+      8.0,
+      8.9,
+      186.0,
+      0.007,
+      "TIS",
+      "GASOLINE",
+      2493,
+      "GASOLINE",
+      "235/50R18",
+      "ICE",
+      30.0
+    ]
+  }
+}

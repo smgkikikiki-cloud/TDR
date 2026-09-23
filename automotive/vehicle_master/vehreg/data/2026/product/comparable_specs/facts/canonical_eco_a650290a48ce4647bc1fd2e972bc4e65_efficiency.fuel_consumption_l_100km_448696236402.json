@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:a650290a48ce4647bc1fd2e972bc4e65:efficiency.fuel_consumption_l_100km",
+      "field_key": "efficiency.fuel_consumption_l_100km",
+      "value_state": "KNOWN",
+      "value": 8.2,
+      "unit": "L/100km",
+      "observed_at": "2022-01-14",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/a650290a48ce4647bc1fd2e972bc4e65",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/a650290a48ce4647bc1fd2e972bc4e65",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mercedes_benz.mb_e_class.w214.trim.cabriolet_amg_dynamic_ice"
+    }
+  ]
+}

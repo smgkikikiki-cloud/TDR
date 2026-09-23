@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "95b579c91a647b6e118c7d66",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-030-80293fca2870:26",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.crv.rs.trim.el_4wd_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:02+00:00",
+    "before_hash": "37065658412600953e00eeef1242959c538fa1150be0a8e6fa30217601e0e5e0",
+    "after_hash": "dc6c3add6688a024d8b7800948bd827726a293378fc855e2e983147d6f2def43",
+    "before": [
+      true,
+      true,
+      6.2,
+      7.4,
+      9.4,
+      176.0,
+      0.009,
+      "TIS",
+      "GASOLINE",
+      1498
+    ],
+    "after": [
+      true,
+      true,
+      6.2,
+      7.4,
+      9.4,
+      176.0,
+      0.009,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_bd032a33-f66e-4266-970e-667e3a5ec86d_engine.fuel_type_ceae9ccc4886.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "95b579c91a647b6e118c7d66:spec",
+    "revision_id": "95b579c91a647b6e118c7d66",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.crv.rs.trim.el_4wd_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:02+00:00",
+    "payload": [
+      true,
+      true,
+      6.2,
+      7.4,
+      9.4,
+      176.0,
+      0.009,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85"
+    ]
+  }
+}

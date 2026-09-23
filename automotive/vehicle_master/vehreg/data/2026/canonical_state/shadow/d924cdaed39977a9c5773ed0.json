@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d924cdaed39977a9c5773ed0",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-021-33a0f14d51bc:171",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.city.gn2.trim.e_hev_the_black_outshine_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:06+00:00",
+    "before_hash": "b143b305ba86189e750c88af7847bd8d63d23be422cc7255177722f3ab530f18",
+    "after_hash": "eaea6c2995d56480e3413b35ac57df81c535b6f3d450ce8cc246f9ecd1dc488b",
+    "before": [
+      true,
+      true,
+      3.8,
+      3.6,
+      3.3,
+      82.0,
+      0.01,
+      0.00033,
+      "EURO5",
+      "HEV",
+      1498,
+      "GASOLINE",
+      "185/60R16",
+      "HEV"
+    ],
+    "after": [
+      true,
+      true,
+      3.8,
+      3.6,
+      3.3,
+      82.0,
+      0.01,
+      0.00033,
+      "EURO5",
+      "HEV",
+      1498,
+      "GASOLINE",
+      "185/60R16",
+      "HEV",
+      6.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_decb9637-b6dc-47e6-adbb-dcbf22bba946_manufacturing.excise_tax_rate_c04b4d0286b4.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d924cdaed39977a9c5773ed0:spec",
+    "revision_id": "d924cdaed39977a9c5773ed0",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.city.gn2.trim.e_hev_the_black_outshine_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:06+00:00",
+    "payload": [
+      true,
+      true,
+      3.8,
+      3.6,
+      3.3,
+      82.0,
+      0.01,
+      0.00033,
+      "EURO5",
+      "HEV",
+      1498,
+      "GASOLINE",
+      "185/60R16",
+      "HEV",
+      6.0
+    ]
+  }
+}

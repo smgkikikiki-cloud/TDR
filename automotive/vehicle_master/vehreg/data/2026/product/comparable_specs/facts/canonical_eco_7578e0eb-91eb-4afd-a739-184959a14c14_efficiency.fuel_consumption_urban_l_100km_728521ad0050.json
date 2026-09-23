@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:7578e0eb-91eb-4afd-a739-184959a14c14:efficiency.fuel_consumption_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 6.2,
+      "unit": "L/100km",
+      "observed_at": "2024-01-05",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/7578e0eb-91eb-4afd-a739-184959a14c14",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/7578e0eb-91eb-4afd-a739-184959a14c14",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mercedes_benz.mb_glc.x254.trim.4matic_avantgarde_hev"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "1803030ba92ff015152907c7",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-013-01b2d6d40e8e:6",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_c_class.w206.trim.c_220_d_amg_line_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:27+00:00",
+    "before_hash": "dff4a8c0000af36b0a0d24d8401161954d8dd8cafa392c667792db2d7a101c81",
+    "after_hash": "139da5a366f54a86b988210330d578d0744f3c2992999818b574c33b85f5f1b3",
+    "before": [
+      3.8,
+      4.6,
+      6.0,
+      122.0,
+      0.013,
+      0.00015,
+      "TIS",
+      "HEV",
+      1993,
+      "DIESEL"
+    ],
+    "after": [
+      3.8,
+      4.6,
+      6.0,
+      122.0,
+      0.013,
+      0.00015,
+      "TIS",
+      "HEV",
+      1993,
+      "DIESEL",
+      "225/45R18"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_8139d235-a74d-40da-aa97-14df9f282a81_fitment.tyre_front_3b2c414753d9.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "1803030ba92ff015152907c7:spec",
+    "revision_id": "1803030ba92ff015152907c7",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_c_class.w206.trim.c_220_d_amg_line_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:27+00:00",
+    "payload": [
+      3.8,
+      4.6,
+      6.0,
+      122.0,
+      0.013,
+      0.00015,
+      "TIS",
+      "HEV",
+      1993,
+      "DIESEL",
+      "225/45R18"
+    ]
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "38629edad00e97d78e61cf42",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-037-986e7ff7e687:113",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.taycan.gen1.trim.gts_awd_598_hp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:56+00:00",
+    "before_hash": "4117c39517f04dbe307020eeb816dd9ebbaba25a9ff7640c8e589d46eab4dcc5",
+    "after_hash": "4c57a08c0d3571ecf3633ba626fee96ed5ebe075df1771f1462e5c8b7b531400",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      93.27
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      93.27,
+      723.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_9deda427-55b0-4693-a5d8-58f8f8b56367_battery.nominal_voltage_v_d9279faa1e0e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "38629edad00e97d78e61cf42:spec",
+    "revision_id": "38629edad00e97d78e61cf42",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.taycan.gen1.trim.gts_awd_598_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:56+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      93.27,
+      723.0
+    ]
+  }
+}

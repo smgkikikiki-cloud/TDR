@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "afda19d3bbef58bbe700d50e",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-046-2c82d6c5b603:33",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_i4.g26.trim.m_sport_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:13+00:00",
+    "before_hash": "1dc8b5204b1ae50462bbf24d2efcaa2fcd2bf0b5aeb54d1ff29010b74c176f08",
+    "after_hash": "1a273310dfaebadc22a2814126b211dff3b5ea1494db3ef2a193c0ce8d341200",
+    "before": [
+      true,
+      true,
+      true,
+      "GASOLINE",
+      "245/40R19",
+      "255/40R19",
+      "ICE",
+      8.0,
+      "BMW AG PLANT MÜNCHEN",
+      true,
+      5,
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R94",
+        "R95",
+        "R100"
+      ],
+      true
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      "GASOLINE",
+      "245/40R19",
+      "255/40R19",
+      "ICE",
+      8.0,
+      "BMW AG PLANT MÜNCHEN",
+      true,
+      5,
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R94",
+        "R95",
+        "R100"
+      ],
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_8b6381a62b2e42098dfbcde44d5701d2_technology.led_headlights_168fe78e64e1.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "afda19d3bbef58bbe700d50e:spec",
+    "revision_id": "afda19d3bbef58bbe700d50e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_i4.g26.trim.m_sport_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:13+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      "GASOLINE",
+      "245/40R19",
+      "255/40R19",
+      "ICE",
+      8.0,
+      "BMW AG PLANT MÜNCHEN",
+      true,
+      5,
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R94",
+        "R95",
+        "R100"
+      ],
+      true,
+      true
+    ]
+  }
+}

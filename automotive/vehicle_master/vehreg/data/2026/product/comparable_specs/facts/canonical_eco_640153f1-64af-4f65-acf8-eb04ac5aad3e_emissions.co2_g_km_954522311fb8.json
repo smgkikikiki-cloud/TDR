@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:640153f1-64af-4f65-acf8-eb04ac5aad3e:emissions.co2_g_km",
+      "field_key": "emissions.co2_g_km",
+      "value_state": "KNOWN",
+      "value": 94.0,
+      "unit": "g/km",
+      "observed_at": "2025-12-25",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/640153f1-64af-4f65-acf8-eb04ac5aad3e",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/640153f1-64af-4f65-acf8-eb04ac5aad3e",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mitsubishi.xforce.xf.trim.hev_ignite_hev"
+    }
+  ]
+}

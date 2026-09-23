@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7aa1042bbd7e046f70b821c8",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-024-8292d953d777:275",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.ranger_double_cab.p703.trim.xl_2_0l_turbo_hr_6mt",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:20+00:00",
+    "before_hash": "99cf5c8d36057dc33d4667212c31322148fb7febcb57601441e7c6dae4c1b8fa",
+    "after_hash": "5251d638742005e693dd212c94a82bdfae8856ec60698a65d91c238b19cf3cdb",
+    "before": [
+      6.0,
+      6.6,
+      7.5,
+      173.0,
+      0.131,
+      0.00022,
+      "TIS",
+      "DIESEL",
+      1996,
+      "B20",
+      "255/70R16"
+    ],
+    "after": [
+      6.0,
+      6.6,
+      7.5,
+      173.0,
+      0.131,
+      0.00022,
+      "TIS",
+      "DIESEL",
+      1996,
+      "B20",
+      "255/70R16",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b04c4434-ec1c-4ff7-8075-877a58ea5bc2_identity.powertrain_3dc7ff2c563f.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7aa1042bbd7e046f70b821c8:spec",
+    "revision_id": "7aa1042bbd7e046f70b821c8",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.ranger_double_cab.p703.trim.xl_2_0l_turbo_hr_6mt",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:20+00:00",
+    "payload": [
+      6.0,
+      6.6,
+      7.5,
+      173.0,
+      0.131,
+      0.00022,
+      "TIS",
+      "DIESEL",
+      1996,
+      "B20",
+      "255/70R16",
+      "ICE"
+    ]
+  }
+}

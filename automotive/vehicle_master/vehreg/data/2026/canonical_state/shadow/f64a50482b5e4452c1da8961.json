@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f64a50482b5e4452c1da8961",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-019-79c9da20e296:375",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.triton_double_cab.mv.trim.2_4_athlete_4wd_at",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:55+00:00",
+    "before_hash": "48d4149faf73468577ba812ae373d02cceb354af862c0e87d3c43972584d24b5",
+    "after_hash": "7322c6e4bf147784d9f113a1258c34e87a081a65f214c87a8dd08e6a8a31bba2",
+    "before": [
+      6.6,
+      7.5,
+      9.2,
+      198.0,
+      0.412,
+      0.00059,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "265/60R18",
+      "ICE",
+      9.0,
+      "AUTOMATIC"
+    ],
+    "after": [
+      6.6,
+      7.5,
+      9.2,
+      198.0,
+      0.412,
+      0.00059,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "265/60R18",
+      "ICE",
+      9.0,
+      "AUTOMATIC",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_85080d33-33c9-4db8-bf10-730f2207c0fa_safety.abs_6364c381bad3.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f64a50482b5e4452c1da8961:spec",
+    "revision_id": "f64a50482b5e4452c1da8961",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.triton_double_cab.mv.trim.2_4_athlete_4wd_at",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:55+00:00",
+    "payload": [
+      6.6,
+      7.5,
+      9.2,
+      198.0,
+      0.412,
+      0.00059,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "265/60R18",
+      "ICE",
+      9.0,
+      "AUTOMATIC",
+      true
+    ]
+  }
+}

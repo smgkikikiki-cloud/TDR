@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "4fce03cb524933981b62f5c1",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-013-01b2d6d40e8e:70",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.vellfire.gen1.trim.hybrid_z_premier",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:27+00:00",
+    "before_hash": "fdf63ed5a56799b8cf0e2788d2762f119d6f3e7d9458be219ae2ac6dc0f3ec12",
+    "after_hash": "e97f0c3014c63fa887e30f6c3bf72c855a02c12581de84a4410572bc6e53c694",
+    "before": [
+      true,
+      true,
+      4.6,
+      5.3,
+      6.4,
+      122.0,
+      0.00356,
+      0.00027,
+      "TIS",
+      "HEV",
+      2487,
+      "GASOLINE"
+    ],
+    "after": [
+      true,
+      true,
+      4.6,
+      5.3,
+      6.4,
+      122.0,
+      0.00356,
+      0.00027,
+      "TIS",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/60R18"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_39236d3e-5b9e-4262-adb3-bab74353334b_fitment.tyre_size_63e07e34d879.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "4fce03cb524933981b62f5c1:spec",
+    "revision_id": "4fce03cb524933981b62f5c1",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.vellfire.gen1.trim.hybrid_z_premier",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:27+00:00",
+    "payload": [
+      true,
+      true,
+      4.6,
+      5.3,
+      6.4,
+      122.0,
+      0.00356,
+      0.00027,
+      "TIS",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/60R18"
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:642de555-48c6-4074-be2a-ed20b0aa0915:efficiency.fuel_consumption_l_100km",
+      "field_key": "efficiency.fuel_consumption_l_100km",
+      "value_state": "KNOWN",
+      "value": 7.91,
+      "unit": "L/100km",
+      "observed_at": "2023-08-30",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/642de555-48c6-4074-be2a-ed20b0aa0915",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/642de555-48c6-4074-be2a-ed20b0aa0915",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "audi.audi_q3.f3.trim.sportback_40_tfsi_quattro_s_line_black_edition_ice"
+    }
+  ]
+}

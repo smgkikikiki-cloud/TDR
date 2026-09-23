@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "11edd75ff738199da07ab69b",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-024-8292d953d777:332",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lotus.emeya.gen1.trim.r_905_hp_dual_speed_awd_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:20+00:00",
+    "before_hash": "76ae853cd78404ae2a4c55473c163de343c0c6327d71f6d1f1c69b8e04662b87",
+    "after_hash": "9f4596ed46f7d095cbeca29ac6a05cd6d4b08db9b2bbd6773c3cd9cbe2d4b39d",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      102.93,
+      705.0,
+      "CATL",
+      "EXTERNAL_DC",
+      true,
+      true
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      102.93,
+      705.0,
+      "CATL",
+      "EXTERNAL_DC",
+      true,
+      true,
+      241.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d7af9040-28dc-4d70-a793-ccbcdccd9c58_ev.energy_consumption_wh_km_fb772d912638.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "11edd75ff738199da07ab69b:spec",
+    "revision_id": "11edd75ff738199da07ab69b",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lotus.emeya.gen1.trim.r_905_hp_dual_speed_awd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:20+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      102.93,
+      705.0,
+      "CATL",
+      "EXTERNAL_DC",
+      true,
+      true,
+      241.0
+    ]
+  }
+}

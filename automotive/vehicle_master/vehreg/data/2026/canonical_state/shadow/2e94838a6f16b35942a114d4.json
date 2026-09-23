@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2e94838a6f16b35942a114d4",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-045-66f56137868e:219",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.almera.n18.trim.1_0t_vl_sportech_cvt",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:02+00:00",
+    "before_hash": "1c28f2eb0958c3d15db1f0f0e7f2b8998ca2b8f67ab426a1fbb3d561fe76fad9",
+    "after_hash": "43f4c259cfa591a950297d8f573a5f93a8983a2a31403da68d2e7b7179cf0907",
+    "before": [
+      true
+    ],
+    "after": [
+      true,
+      4.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_4f6a0f62-f39f-4432-b316-b5000be676bb_efficiency.fuel_consumption_extra_urban_l_100km_4bbad59b1665.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2e94838a6f16b35942a114d4:spec",
+    "revision_id": "2e94838a6f16b35942a114d4",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.almera.n18.trim.1_0t_vl_sportech_cvt",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:02+00:00",
+    "payload": [
+      true,
+      4.0
+    ]
+  }
+}

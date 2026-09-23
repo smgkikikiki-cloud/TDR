@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "bac4dd5dbb4dc11dfb74469c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-020-1a96ac574560:309",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "isuzu.dmax_cab.rg.trim.d_max_spark_2_2_ddi_b_cab_chassis_refrigerator",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:00+00:00",
+    "before_hash": "8314c0b9e3b62921380c73d845337d2501d77ee103a8dd53291a3c19e0dc9bad",
+    "after_hash": "64902596e376e124268b4904c194d3ef13db4155f4ba232648a978a315cb9e2a",
+    "before": [
+      5.5,
+      6.5,
+      8.2,
+      170.0,
+      0.156
+    ],
+    "after": [
+      5.5,
+      6.5,
+      8.2,
+      170.0,
+      0.156,
+      9e-05
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d136e05c-af27-40a0-a9f0-1ab37abcaa7a_emissions.pm_g_km_fec1d445eeab.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "bac4dd5dbb4dc11dfb74469c:spec",
+    "revision_id": "bac4dd5dbb4dc11dfb74469c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "isuzu.dmax_cab.rg.trim.d_max_spark_2_2_ddi_b_cab_chassis_refrigerator",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:00+00:00",
+    "payload": [
+      5.5,
+      6.5,
+      8.2,
+      170.0,
+      0.156,
+      9e-05
+    ]
+  }
+}

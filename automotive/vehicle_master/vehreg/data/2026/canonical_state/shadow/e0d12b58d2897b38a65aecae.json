@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e0d12b58d2897b38a65aecae",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-035-5b8b3aecfae7:187",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg4.mg4e.trim.xpower_64_kwh_awd_dual_435_hp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:40+00:00",
+    "before_hash": "1cf36c3bfbc895f4fa0eb03cca08d8aee04b92b73effc1a5d307eb42eedb342d",
+    "after_hash": "d275f2314e04fe622258c0a2dba69eda1c93bbb45b61932553c9fdb552655b89",
+    "before": [
+      "NMC",
+      64.6,
+      380.0,
+      "E-CON",
+      "CCS2  DC Three Phase 150~1000 V 200 A",
+      "EXTERNAL_DC"
+    ],
+    "after": [
+      "NMC",
+      64.6,
+      380.0,
+      "E-CON",
+      "CCS2  DC Three Phase 150~1000 V 200 A",
+      "EXTERNAL_DC",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_149a5a0b-1932-4636-ba17-155979f340d2_comfort.auto_climate_88b1d010fb72.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e0d12b58d2897b38a65aecae:spec",
+    "revision_id": "e0d12b58d2897b38a65aecae",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg4.mg4e.trim.xpower_64_kwh_awd_dual_435_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:40+00:00",
+    "payload": [
+      "NMC",
+      64.6,
+      380.0,
+      "E-CON",
+      "CCS2  DC Three Phase 150~1000 V 200 A",
+      "EXTERNAL_DC",
+      true
+    ]
+  }
+}

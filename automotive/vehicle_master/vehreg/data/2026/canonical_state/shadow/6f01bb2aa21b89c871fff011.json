@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6f01bb2aa21b89c871fff011",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-044-4ee92a315b21:122",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.bz4x.ea10.trim.bz4x_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:52+00:00",
+    "before_hash": "4882db6ea25c8ba0d3f79ec542d30f5409faf0ea91ad1e4ec702e987ba9f4cb5",
+    "after_hash": "c7f850cca51ddfdf019db63f038483147cd7773e6a91b497d3424c365e4e7ac0",
+    "before": [
+      true,
+      true,
+      "GASOLINE",
+      "235/50R20",
+      "ICE",
+      2.0,
+      "Toyota Motor Corporation (Motomachi plant)",
+      true,
+      4,
+      true,
+      true,
+      true,
+      [
+        "R100"
+      ],
+      true,
+      2015,
+      1650,
+      4690,
+      2022
+    ],
+    "after": [
+      true,
+      true,
+      "GASOLINE",
+      "235/50R20",
+      "ICE",
+      2.0,
+      "Toyota Motor Corporation (Motomachi plant)",
+      true,
+      4,
+      true,
+      true,
+      true,
+      [
+        "R100"
+      ],
+      true,
+      2015,
+      1650,
+      4690,
+      2022,
+      5
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b0219a8647df48f3af6703951212e304_vehicle.seats_837f6fc38d37.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6f01bb2aa21b89c871fff011:spec",
+    "revision_id": "6f01bb2aa21b89c871fff011",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.bz4x.ea10.trim.bz4x_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:52+00:00",
+    "payload": [
+      true,
+      true,
+      "GASOLINE",
+      "235/50R20",
+      "ICE",
+      2.0,
+      "Toyota Motor Corporation (Motomachi plant)",
+      true,
+      4,
+      true,
+      true,
+      true,
+      [
+        "R100"
+      ],
+      true,
+      2015,
+      1650,
+      4690,
+      2022,
+      5
+    ]
+  }
+}

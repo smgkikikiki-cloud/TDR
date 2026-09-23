@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "13e2f4db1511d891c574bdb9",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-007-412f5563cca4:2",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.cle.gen1.trim.4matic_coup_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:02+00:00",
+    "before_hash": "b7951fc1cf06e0a2b0512b9e2e9fa6e454618913917ebace0c5cfcdc51061952",
+    "after_hash": "e2cf7db89385f5a821abbbe1051f12c86a84c1c710f28ecf51209324d3ed8c75",
+    "before": [
+      "EURO6",
+      "HEV",
+      "GASOLINE",
+      "HEV",
+      9,
+      "AUTOMATIC",
+      true,
+      true,
+      true,
+      11,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      [
+        "R13H"
+      ],
+      true,
+      true,
+      4
+    ],
+    "after": [
+      "EURO6",
+      "HEV",
+      "GASOLINE",
+      "HEV",
+      9,
+      "AUTOMATIC",
+      true,
+      true,
+      true,
+      11,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      [
+        "R13H"
+      ],
+      true,
+      true,
+      4,
+      7.3
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_8f9809c9-b2c0-4278-b1e6-91fee7bf15c5_efficiency.fuel_consumption_extra_urban_l_100km_2097a4dc3f2c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "13e2f4db1511d891c574bdb9:spec",
+    "revision_id": "13e2f4db1511d891c574bdb9",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.cle.gen1.trim.4matic_coup_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:02+00:00",
+    "payload": [
+      "EURO6",
+      "HEV",
+      "GASOLINE",
+      "HEV",
+      9,
+      "AUTOMATIC",
+      true,
+      true,
+      true,
+      11,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      [
+        "R13H"
+      ],
+      true,
+      true,
+      4,
+      7.3
+    ]
+  }
+}

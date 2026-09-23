@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a3c7ffc916e718cfb304e854",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-009-54711011662e:13",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.haval_h6.h6hev.trim.phev_ultra_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:10+00:00",
+    "before_hash": "a33a384ad07d9d6ba0f308d4f7beb8b7569820f6da0fe5d33ddfd6aa6ebee707",
+    "after_hash": "cecd9e859aa0065eca6c163871717b4a162cc0cb06580038861d4c9658168cb5",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      27.54,
+      313.0,
+      "SVOLT",
+      "ONBOARD_AC",
+      true,
+      0.8,
+      18.0,
+      0.003,
+      "TIS",
+      "PHEV",
+      1499
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      27.54,
+      313.0,
+      "SVOLT",
+      "ONBOARD_AC",
+      true,
+      0.8,
+      18.0,
+      0.003,
+      "TIS",
+      "PHEV",
+      1499,
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d2200be8-c078-4d83-990b-007c8db511af_engine.fuel_type_b58ecd31bca0.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a3c7ffc916e718cfb304e854:spec",
+    "revision_id": "a3c7ffc916e718cfb304e854",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.haval_h6.h6hev.trim.phev_ultra_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:10+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      27.54,
+      313.0,
+      "SVOLT",
+      "ONBOARD_AC",
+      true,
+      0.8,
+      18.0,
+      0.003,
+      "TIS",
+      "PHEV",
+      1499,
+      "GASOLINE"
+    ]
+  }
+}

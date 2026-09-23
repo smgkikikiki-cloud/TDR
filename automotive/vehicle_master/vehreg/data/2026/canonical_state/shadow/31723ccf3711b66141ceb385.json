@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "31723ccf3711b66141ceb385",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-047-23268458b262:239",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_cross.xg10.trim.hev_premium_safety_60_years_cp_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:25+00:00",
+    "before_hash": "58b479c6637a8eb6768caf16772e4b8536114e8530f05bd74ecfa582d212e197",
+    "after_hash": "99d6c19d7a4cc504453146c031d8dd009ac6f3d57ff6680a2beb5151c5126b0f",
+    "before": [
+      "LI_ION_UNSPECIFIED"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_8ed0f4040deb48f59ab1dc1bde490e0c_comfort.panoramic_roof_53d3e7f897f8.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "31723ccf3711b66141ceb385:spec",
+    "revision_id": "31723ccf3711b66141ceb385",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_cross.xg10.trim.hev_premium_safety_60_years_cp_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:25+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      true
+    ]
+  }
+}

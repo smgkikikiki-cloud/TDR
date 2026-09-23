@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c8d4833f2f90d0e2f97c1a33",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-054-d20b71816f05:12",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_altis.e210.trim.1_6g_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:52+00:00",
+    "before_hash": "37cd622ce9053395d7588bbc60008581ba85667857dc22082a8740f95de1f556",
+    "after_hash": "e9b65b343cc074a3e48515101f5271a7adde0e76d26ca324e95159b2dc42bf90",
+    "before": [
+      5.1,
+      6.3,
+      8.3,
+      146.0,
+      0.005,
+      "TIS",
+      "GASOLINE",
+      1598,
+      "E85",
+      "205/55R16",
+      "ICE",
+      20.0,
+      "CVT",
+      true,
+      6,
+      true,
+      true,
+      true,
+      true,
+      [
+        "R13H"
+      ],
+      true,
+      1285
+    ],
+    "after": [
+      5.1,
+      6.3,
+      8.3,
+      146.0,
+      0.005,
+      "TIS",
+      "GASOLINE",
+      1598,
+      "E85",
+      "205/55R16",
+      "ICE",
+      20.0,
+      "CVT",
+      true,
+      6,
+      true,
+      true,
+      true,
+      true,
+      [
+        "R13H"
+      ],
+      true,
+      1285,
+      1435
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_f89daa4aa1284659aab6b42d2c53c887_vehicle.height_mm_74da5f0a3894.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c8d4833f2f90d0e2f97c1a33:spec",
+    "revision_id": "c8d4833f2f90d0e2f97c1a33",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_altis.e210.trim.1_6g_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:52+00:00",
+    "payload": [
+      5.1,
+      6.3,
+      8.3,
+      146.0,
+      0.005,
+      "TIS",
+      "GASOLINE",
+      1598,
+      "E85",
+      "205/55R16",
+      "ICE",
+      20.0,
+      "CVT",
+      true,
+      6,
+      true,
+      true,
+      true,
+      true,
+      [
+        "R13H"
+      ],
+      true,
+      1285,
+      1435
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:f10418c8eba940a5a125d82f93889741:efficiency.fuel_consumption_l_100km",
+      "field_key": "efficiency.fuel_consumption_l_100km",
+      "value_state": "KNOWN",
+      "value": 2.0,
+      "unit": "L/100km",
+      "observed_at": "2022-05-18",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/f10418c8eba940a5a125d82f93889741",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/f10418c8eba940a5a125d82f93889741",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "land_rover.range_rover.gen1.trim.evoque_1_5_plug_in_hybrid_awd_r_dynamic_se_plus_phev"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a610c735eabf0fe61373d3e8",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-019-79c9da20e296:224",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.triton_double_cab.mv.trim.2_4_prime_4wd",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:55+00:00",
+    "before_hash": "731ca48784380fd4eefbf43a7428f3b991a6027f4c0ecaca30d887377c3c281d",
+    "after_hash": "e8db94a40147fadb8697bf85125b954b5482f616cc0f999ae1ac84845bcb303a",
+    "before": [
+      6.0,
+      6.7,
+      8.0,
+      176.0
+    ],
+    "after": [
+      6.0,
+      6.7,
+      8.0,
+      176.0,
+      0.475
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e2911e64-6f7f-42a4-bd22-dcb69ce6ddc6_emissions.nox_g_km_ebd9bc8fcb76.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a610c735eabf0fe61373d3e8:spec",
+    "revision_id": "a610c735eabf0fe61373d3e8",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.triton_double_cab.mv.trim.2_4_prime_4wd",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:55+00:00",
+    "payload": [
+      6.0,
+      6.7,
+      8.0,
+      176.0,
+      0.475
+    ]
+  }
+}

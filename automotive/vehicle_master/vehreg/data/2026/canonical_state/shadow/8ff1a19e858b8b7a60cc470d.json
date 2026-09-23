@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "8ff1a19e858b8b7a60cc470d",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-034-5299aee8f0ab:383",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_x3.g45.trim.xdrive20d_m_sport_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:32+00:00",
+    "before_hash": "fbaaa790c72b7ebd7f02dac5ef43a201411a0c19ce2c71ba9c61a16d81bdbfb0",
+    "after_hash": "e0812ab94ddd18b0bd80b8e46a5781bb157f589d60ea9f7ab270dd61f8d5743b",
+    "before": [
+      true,
+      true,
+      true,
+      4.7,
+      5.2,
+      6.0,
+      137.0,
+      0.17,
+      0.00053,
+      "TIS",
+      "DIESEL",
+      1995,
+      "DIESEL"
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      4.7,
+      5.2,
+      6.0,
+      137.0,
+      0.17,
+      0.00053,
+      "TIS",
+      "DIESEL",
+      1995,
+      "DIESEL",
+      "245/45R20"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_646ca105-ff71-4847-a9e2-7902a2ecb0a1_fitment.tyre_front_71fcba2109b4.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "8ff1a19e858b8b7a60cc470d:spec",
+    "revision_id": "8ff1a19e858b8b7a60cc470d",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_x3.g45.trim.xdrive20d_m_sport_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:32+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      4.7,
+      5.2,
+      6.0,
+      137.0,
+      0.17,
+      0.00053,
+      "TIS",
+      "DIESEL",
+      1995,
+      "DIESEL",
+      "245/45R20"
+    ]
+  }
+}

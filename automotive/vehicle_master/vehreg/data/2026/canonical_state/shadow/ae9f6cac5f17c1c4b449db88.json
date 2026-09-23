@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ae9f6cac5f17c1c4b449db88",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-050-6df028e5a85f:32",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_e_class.w214.trim.cabriolet_amg_dynamic_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:57+00:00",
+    "before_hash": "8126ea47319d6d3a2ad665dd96015bceb909ee57df1d3da071e1e392546efcfd",
+    "after_hash": "78e9aeaeed6481c96c6dc3e2dd9074b5e87caf1829cf3a5436e08dca9fa7bd95",
+    "before": [
+      6.6,
+      8.2,
+      10.8,
+      185.0,
+      0.025,
+      "TIS",
+      "GASOLINE",
+      1991,
+      "GASOLINE",
+      "245/35R20",
+      "275/30R20",
+      "ICE"
+    ],
+    "after": [
+      6.6,
+      8.2,
+      10.8,
+      185.0,
+      0.025,
+      "TIS",
+      "GASOLINE",
+      1991,
+      "GASOLINE",
+      "245/35R20",
+      "275/30R20",
+      "ICE",
+      30.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_a650290a48ce4647bc1fd2e972bc4e65_manufacturing.excise_tax_rate_2cc6e1fb8246.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ae9f6cac5f17c1c4b449db88:spec",
+    "revision_id": "ae9f6cac5f17c1c4b449db88",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_e_class.w214.trim.cabriolet_amg_dynamic_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:57+00:00",
+    "payload": [
+      6.6,
+      8.2,
+      10.8,
+      185.0,
+      0.025,
+      "TIS",
+      "GASOLINE",
+      1991,
+      "GASOLINE",
+      "245/35R20",
+      "275/30R20",
+      "ICE",
+      30.0
+    ]
+  }
+}

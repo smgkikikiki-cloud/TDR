@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "831f13276e9ac058fc2f5cb8",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-048-9a296c6c8041:68",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_c_class.w206.trim.c_220_d_amg_dynamic_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:35+00:00",
+    "before_hash": "9342e0f8956855b4fcdf119d24ee6b4589a17a473ee8840a8645393e7d1d0aad",
+    "after_hash": "9b0c5323f638320cafcf571ca1151cdb946e922f9822813389b237aad43779d0",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      3.8,
+      4.6,
+      6.0,
+      122.0,
+      0.013,
+      0.00015,
+      "TIS",
+      "HEV"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      3.8,
+      4.6,
+      6.0,
+      122.0,
+      0.013,
+      0.00015,
+      "TIS",
+      "HEV",
+      1993
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_2fbd28d311c544149f26c380e12b9f39_engine.displacement_cc_6b5a2d5cb721.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "831f13276e9ac058fc2f5cb8:spec",
+    "revision_id": "831f13276e9ac058fc2f5cb8",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_c_class.w206.trim.c_220_d_amg_dynamic_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:35+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      3.8,
+      4.6,
+      6.0,
+      122.0,
+      0.013,
+      0.00015,
+      "TIS",
+      "HEV",
+      1993
+    ]
+  }
+}

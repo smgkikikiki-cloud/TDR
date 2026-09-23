@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "edab2cc73452912521f865c2",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-017-02b372e72add:6",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "subaru.forester.sk.trim.2_5i_s_awd_cvt_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:47+00:00",
+    "before_hash": "391ba6d5d0c415e2bff96dcca2fccbb3060bc40df727dc4b6f7aff7c24fc26f8",
+    "after_hash": "40afd01bd5ee5f81b5518cc58ae74e3b6b2f7d50db201315019897f86207f945",
+    "before": [
+      0.01,
+      "EURO6",
+      "GASOLINE",
+      2498,
+      "GASOLINE",
+      "225/55R18",
+      "ICE",
+      29.0,
+      "SUBARU CORPORATION (GUNMA YAJIMA PLANT)",
+      "CVT",
+      true
+    ],
+    "after": [
+      0.01,
+      "EURO6",
+      "GASOLINE",
+      2498,
+      "GASOLINE",
+      "225/55R18",
+      "ICE",
+      29.0,
+      "SUBARU CORPORATION (GUNMA YAJIMA PLANT)",
+      "CVT",
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b6d3da0a-2c80-42b7-b268-fa8420e87308_safety.aeb_bb3af29410d7.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "edab2cc73452912521f865c2:spec",
+    "revision_id": "edab2cc73452912521f865c2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "subaru.forester.sk.trim.2_5i_s_awd_cvt_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:47+00:00",
+    "payload": [
+      0.01,
+      "EURO6",
+      "GASOLINE",
+      2498,
+      "GASOLINE",
+      "225/55R18",
+      "ICE",
+      29.0,
+      "SUBARU CORPORATION (GUNMA YAJIMA PLANT)",
+      "CVT",
+      true,
+      true
+    ]
+  }
+}

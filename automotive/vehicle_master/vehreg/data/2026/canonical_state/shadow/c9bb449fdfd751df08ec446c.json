@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c9bb449fdfd751df08ec446c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-036-ba2d051d30aa:63",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "kia.ev9.mv.trim.gt_line_awd_dual_6_seater_swivel_relaxation_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:48+00:00",
+    "before_hash": "e62c3e4f66f1f3620baef50e37dc3dd2a8f071b635265c607304c19ed268078e",
+    "after_hash": "65bbf1b24bdba44769d0da3cf1bf07f271b508536c444fcaa00a072a7343c707",
+    "before": [
+      "NMC",
+      99.36,
+      552.0,
+      "HYUNDAI MOBIS",
+      "230V/12A"
+    ],
+    "after": [
+      "NMC",
+      99.36,
+      552.0,
+      "HYUNDAI MOBIS",
+      "230V/12A",
+      "ONBOARD_AC"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_fd8bdbe1-26f4-4d4a-a1e1-eaa1d8297d69_charging.port_type_058df4d6c0b0.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c9bb449fdfd751df08ec446c:spec",
+    "revision_id": "c9bb449fdfd751df08ec446c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "kia.ev9.mv.trim.gt_line_awd_dual_6_seater_swivel_relaxation_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:48+00:00",
+    "payload": [
+      "NMC",
+      99.36,
+      552.0,
+      "HYUNDAI MOBIS",
+      "230V/12A",
+      "ONBOARD_AC"
+    ]
+  }
+}

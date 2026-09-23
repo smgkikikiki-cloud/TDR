@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "00976bf934e4a9de46047abc",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-056-d87ca8b8ef3b:87",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "honda.hrv.rv.trim.e_hev_rs_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:22:21+00:00",
+    "before_hash": "a97d14f2eae760015346ef0ace3ac8f903bab9a1f4a258ec76275681b7af1614",
+    "after_hash": "7cc2392911d4f3908bcc3bde2993479e224c4ce4c35d3e4e3900904b2c9103a6",
+    "before": [
+      {
+        "trim_id": "honda.hrv.rv.trim.e_hev_rs_hev",
+        "amount_thb": 1179000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:107:3",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: HR-V e:HEV RS; canonical grade: e:HEV RS; mapping: auto_high_confidence. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "honda.hrv.rv.trim.e_hev_rs_hev",
+        "amount_thb": 1189000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-04-23",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/ba81123e-c3d5-4e75-bd60-0e4f0657a347",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "honda.hrv.rv.trim.e_hev_rs_hev",
+        "amount_thb": 1179000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:107:3",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: HR-V e:HEV RS; canonical grade: e:HEV RS; mapping: auto_high_confidence. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-056-d87ca8b8ef3b:87.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "00976bf934e4a9de46047abc:price",
+    "revision_id": "00976bf934e4a9de46047abc",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "honda.hrv.rv.trim.e_hev_rs_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:22:21+00:00",
+    "payload": [
+      {
+        "trim_id": "honda.hrv.rv.trim.e_hev_rs_hev",
+        "amount_thb": 1189000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-04-23",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/ba81123e-c3d5-4e75-bd60-0e4f0657a347",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "honda.hrv.rv.trim.e_hev_rs_hev",
+        "amount_thb": 1179000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:107:3",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: HR-V e:HEV RS; canonical grade: e:HEV RS; mapping: auto_high_confidence. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ]
+  }
+}

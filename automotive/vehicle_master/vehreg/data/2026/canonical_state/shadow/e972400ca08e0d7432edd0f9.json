@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e972400ca08e0d7432edd0f9",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-032-04b0adc6e162:26",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.countryman.u25.trim.jcw_countryman_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:16+00:00",
+    "before_hash": "9094b3649f357d7d7a8d4b33426aca08d0e34f0342eb9c471279259bfb29da2a",
+    "after_hash": "0ac360ceea172405810368fb3903bfa871cda05f233a7de8b8462db82b38384f",
+    "before": [
+      true,
+      true,
+      true,
+      6.5,
+      7.6,
+      9.6,
+      175.0,
+      0.011,
+      "EURO6",
+      "GASOLINE",
+      1998,
+      "GASOLINE",
+      "245/40R20"
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      6.5,
+      7.6,
+      9.6,
+      175.0,
+      0.011,
+      "EURO6",
+      "GASOLINE",
+      1998,
+      "GASOLINE",
+      "245/40R20",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_1728ef02-bdec-4e2b-8169-667bbdd4ad28_identity.powertrain_ae74299b626d.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e972400ca08e0d7432edd0f9:spec",
+    "revision_id": "e972400ca08e0d7432edd0f9",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.countryman.u25.trim.jcw_countryman_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:16+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      6.5,
+      7.6,
+      9.6,
+      175.0,
+      0.011,
+      "EURO6",
+      "GASOLINE",
+      1998,
+      "GASOLINE",
+      "245/40R20",
+      "ICE"
+    ]
+  }
+}

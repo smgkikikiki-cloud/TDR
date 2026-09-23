@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ebffb8358bbf677b91d06cfb",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-022-20a8a8e94ae5:3",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.carrera_t_cabriolet_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:11+00:00",
+    "before_hash": "1c28f2eb0958c3d15db1f0f0e7f2b8998ca2b8f67ab426a1fbb3d561fe76fad9",
+    "after_hash": "5b168fa6f767917e2093a17210ee4bac68dc157b9e25eb19b7aa5ca4e5f8bd0b",
+    "before": [
+      true
+    ],
+    "after": [
+      true,
+      8.3
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_96942a62-6a45-4a41-8e19-4315fdcb6aee_efficiency.fuel_consumption_extra_urban_l_100km_30b7c61fd039.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ebffb8358bbf677b91d06cfb:spec",
+    "revision_id": "ebffb8358bbf677b91d06cfb",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.carrera_t_cabriolet_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:11+00:00",
+    "payload": [
+      true,
+      8.3
+    ]
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "de2d7fddd5cc2c40e1b6289a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-025-74b815fdedac:203",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "isuzu.dmax_cab.rg.trim.4_1_9_ddi_s_at_mhev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:25+00:00",
+    "before_hash": "21d65f5e7d1db9f1c9d58fae85f7ff2671e7787b2ded7cfd6968c99ef731363c",
+    "after_hash": "fb503746dc44e814612368a9895c032f78a8ba4ff90de9818bd045fcd6f3f70a",
+    "before": [
+      true,
+      6.0,
+      6.4,
+      7.2
+    ],
+    "after": [
+      true,
+      6.0,
+      6.4,
+      7.2,
+      167.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_573119a1-e7dd-4a18-adad-bf294b2aa623_emissions.co2_g_km_b21f24172cad.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "de2d7fddd5cc2c40e1b6289a:spec",
+    "revision_id": "de2d7fddd5cc2c40e1b6289a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "isuzu.dmax_cab.rg.trim.4_1_9_ddi_s_at_mhev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:25+00:00",
+    "payload": [
+      true,
+      6.0,
+      6.4,
+      7.2,
+      167.0
+    ]
+  }
+}

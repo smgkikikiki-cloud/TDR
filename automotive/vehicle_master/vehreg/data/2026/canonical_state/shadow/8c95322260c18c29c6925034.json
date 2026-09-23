@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "8c95322260c18c29c6925034",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-037-986e7ff7e687:53",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.panamera.gen1.trim.panamera_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:56+00:00",
+    "before_hash": "e8edcd9c903b5af9f3a2e9bf4928b31d5df4af3af9b064f0e89faf25170c7638",
+    "after_hash": "5602abc38a41bcc102af6ebe705df2b4c59c084c806dc3c77da18c9d3b392b75",
+    "before": [
+      true,
+      8.0,
+      10.2,
+      14.2,
+      233.0,
+      0.011
+    ],
+    "after": [
+      true,
+      8.0,
+      10.2,
+      14.2,
+      233.0,
+      0.011,
+      "TIS"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_bb33dcd9-9a52-45a5-87ca-af7ab8c8322f_emissions.standard_8cfd66d90d99.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "8c95322260c18c29c6925034:spec",
+    "revision_id": "8c95322260c18c29c6925034",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.panamera.gen1.trim.panamera_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:56+00:00",
+    "payload": [
+      true,
+      8.0,
+      10.2,
+      14.2,
+      233.0,
+      0.011,
+      "TIS"
+    ]
+  }
+}

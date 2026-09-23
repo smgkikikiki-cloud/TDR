@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:25e97632-8fe0-497d-ae63-42b0d8665da7:emissions.co2_g_km",
+      "field_key": "emissions.co2_g_km",
+      "value_state": "KNOWN",
+      "value": 150.0,
+      "unit": "g/km",
+      "observed_at": "2025-01-03",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/25e97632-8fe0-497d-ae63-42b0d8665da7",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/25e97632-8fe0-497d-ae63-42b0d8665da7",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mazda.cx30.dm.trim.2_0_ultra_ice"
+    }
+  ]
+}

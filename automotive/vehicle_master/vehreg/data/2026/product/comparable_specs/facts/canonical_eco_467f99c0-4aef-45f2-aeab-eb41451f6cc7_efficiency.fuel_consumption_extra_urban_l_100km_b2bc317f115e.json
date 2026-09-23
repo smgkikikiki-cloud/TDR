@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:467f99c0-4aef-45f2-aeab-eb41451f6cc7:efficiency.fuel_consumption_extra_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_extra_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 7.2,
+      "unit": "L/100km",
+      "observed_at": "2026-04-29",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/467f99c0-4aef-45f2-aeab-eb41451f6cc7",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/467f99c0-4aef-45f2-aeab-eb41451f6cc7",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mercedes_benz.g_class.gen1.trim.g450d_ice"
+    }
+  ]
+}

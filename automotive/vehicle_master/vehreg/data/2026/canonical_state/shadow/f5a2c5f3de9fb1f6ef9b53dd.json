@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f5a2c5f3de9fb1f6ef9b53dd",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-030-80293fca2870:313",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq6.ce.trim.exclusive_77_4_kwh_rwd_229_hp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:02+00:00",
+    "before_hash": "c2aa9f267e649430a71e4e1a11e803c48876937a80eef89e1a52aee41a39bef5",
+    "after_hash": "8ea16559bfead0f6a5854340a82bf0a18ea4d5adcf3c3b8fecdd8fd5276c139f",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      77.37
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      77.37,
+      697.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_443dfd43-1ae0-4c05-a011-5aa6fce50219_battery.nominal_voltage_v_c6247908be89.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f5a2c5f3de9fb1f6ef9b53dd:spec",
+    "revision_id": "f5a2c5f3de9fb1f6ef9b53dd",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq6.ce.trim.exclusive_77_4_kwh_rwd_229_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:02+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      77.37,
+      697.0
+    ]
+  }
+}

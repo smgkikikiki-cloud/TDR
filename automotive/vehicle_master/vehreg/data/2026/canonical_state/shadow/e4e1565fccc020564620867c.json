@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e4e1565fccc020564620867c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-043-5c8c2001b8cb:358",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a4.gen1.trim.40_tfsi_s_line_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:45+00:00",
+    "before_hash": "6aa677c1955b6206288783b82e6814b73db5ce8de111b2e995c510a5544b54fa",
+    "after_hash": "1e62270b855fff7f9223e6f3e17d413c7b5164f431beda5c270215100dd0e414",
+    "before": [
+      5.3,
+      6.3,
+      7.9,
+      143.0,
+      0.004,
+      0.00024,
+      "TIS",
+      "HEV",
+      1984,
+      "GASOLINE",
+      "245/40R18",
+      "HEV",
+      25.0
+    ],
+    "after": [
+      5.3,
+      6.3,
+      7.9,
+      143.0,
+      0.004,
+      0.00024,
+      "TIS",
+      "HEV",
+      1984,
+      "GASOLINE",
+      "245/40R18",
+      "HEV",
+      25.0,
+      "AUTOMATIC"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e1b09021-4284-4211-8b78-625a9939c8ab_powertrain.transmission_27d3ebbf5b48.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e4e1565fccc020564620867c:spec",
+    "revision_id": "e4e1565fccc020564620867c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a4.gen1.trim.40_tfsi_s_line_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:45+00:00",
+    "payload": [
+      5.3,
+      6.3,
+      7.9,
+      143.0,
+      0.004,
+      0.00024,
+      "TIS",
+      "HEV",
+      1984,
+      "GASOLINE",
+      "245/40R18",
+      "HEV",
+      25.0,
+      "AUTOMATIC"
+    ]
+  }
+}

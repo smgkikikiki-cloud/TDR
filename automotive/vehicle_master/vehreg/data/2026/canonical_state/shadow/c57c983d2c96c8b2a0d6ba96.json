@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c57c983d2c96c8b2a0d6ba96",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-025-74b815fdedac:1",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "leapmotor.leapmotor_c10.gen1.trim.ev_style_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:25+00:00",
+    "before_hash": "9c248a7b074ce285020142c1992bf9cd2e63b3e9a2108089e375e214ffdfe4f0",
+    "after_hash": "065b19952befd457e6d6985ae93c508a66fd0e3360594037c7c19e0ca1f1421a",
+    "before": [
+      "LFP",
+      69.89,
+      332.8,
+      "LEAPMOTOR",
+      "ONBOARD_AC",
+      167.0,
+      477.0,
+      "235/55R18",
+      "BEV",
+      8.0,
+      "PMSM",
+      true,
+      true,
+      7,
+      true,
+      true,
+      true,
+      true
+    ],
+    "after": [
+      "LFP",
+      69.89,
+      332.8,
+      "LEAPMOTOR",
+      "ONBOARD_AC",
+      167.0,
+      477.0,
+      "235/55R18",
+      "BEV",
+      8.0,
+      "PMSM",
+      true,
+      true,
+      7,
+      true,
+      true,
+      true,
+      true,
+      [
+        "R100"
+      ]
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e8acdff3-bce4-4a0e-b4a3-8377cd71787a_safety.un_regulations_75cfad5f2682.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c57c983d2c96c8b2a0d6ba96:spec",
+    "revision_id": "c57c983d2c96c8b2a0d6ba96",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "leapmotor.leapmotor_c10.gen1.trim.ev_style_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:25+00:00",
+    "payload": [
+      "LFP",
+      69.89,
+      332.8,
+      "LEAPMOTOR",
+      "ONBOARD_AC",
+      167.0,
+      477.0,
+      "235/55R18",
+      "BEV",
+      8.0,
+      "PMSM",
+      true,
+      true,
+      7,
+      true,
+      true,
+      true,
+      true,
+      [
+        "R100"
+      ]
+    ]
+  }
+}

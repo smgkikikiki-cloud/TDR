@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "57a7dbf59c35e5cafea8f2be",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-005-77a02922c989:298",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.z_2wd",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:56+00:00",
+    "before_hash": "735876b5ec2ef26ec71923c9a0843d9d34550aeb3ae157833f9fd09703d7ad1d",
+    "after_hash": "654b744510fa799008705be2d6a9b4c5fb205bc6190ef76c19b6a78bbfc0e543",
+    "before": [
+      true,
+      true,
+      7.3,
+      8.5,
+      10.6,
+      194.0,
+      0.00869,
+      "TIS",
+      "GASOLINE"
+    ],
+    "after": [
+      true,
+      true,
+      7.3,
+      8.5,
+      10.6,
+      194.0,
+      0.00869,
+      "TIS",
+      "GASOLINE",
+      2493
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b4059829-1cf2-4415-b750-da9c8a273b2b_engine.displacement_cc_899558cbbf07.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "57a7dbf59c35e5cafea8f2be:spec",
+    "revision_id": "57a7dbf59c35e5cafea8f2be",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.z_2wd",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:56+00:00",
+    "payload": [
+      true,
+      true,
+      7.3,
+      8.5,
+      10.6,
+      194.0,
+      0.00869,
+      "TIS",
+      "GASOLINE",
+      2493
+    ]
+  }
+}

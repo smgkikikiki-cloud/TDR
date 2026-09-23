@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c0ec22f701b1221b4a237351",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-051-bcc716924fd5:13",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lexus_rx.al30.trim.rx300_premium_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:10+00:00",
+    "before_hash": "bd3da47f88285be69a1ac3d42bcc0c404c4ec2417fac8fc99cdc88b7b36e7e58",
+    "after_hash": "18550ef3da5bd952a0bd9e5cadfe59dd6b64d967740debfef0863bf56992e68d",
+    "before": [
+      7.0,
+      8.1,
+      10.1,
+      189.0,
+      0.033,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "E20",
+      "235/55R20",
+      "ICE",
+      30.0,
+      "TOYOTA MOTOR KYUSHU INC. - MIYATA PLANT"
+    ],
+    "after": [
+      7.0,
+      8.1,
+      10.1,
+      189.0,
+      0.033,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "E20",
+      "235/55R20",
+      "ICE",
+      30.0,
+      "TOYOTA MOTOR KYUSHU INC. - MIYATA PLANT",
+      6
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_2105031041434de38ebf88734c078d57_powertrain.gear_count_56ba1e740bbd.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c0ec22f701b1221b4a237351:spec",
+    "revision_id": "c0ec22f701b1221b4a237351",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lexus_rx.al30.trim.rx300_premium_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:10+00:00",
+    "payload": [
+      7.0,
+      8.1,
+      10.1,
+      189.0,
+      0.033,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "E20",
+      "235/55R20",
+      "ICE",
+      30.0,
+      "TOYOTA MOTOR KYUSHU INC. - MIYATA PLANT",
+      6
+    ]
+  }
+}

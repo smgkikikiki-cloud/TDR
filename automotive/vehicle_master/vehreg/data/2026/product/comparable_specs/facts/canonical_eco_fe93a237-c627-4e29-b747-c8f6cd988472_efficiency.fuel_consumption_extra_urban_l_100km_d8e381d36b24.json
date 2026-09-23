@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:fe93a237-c627-4e29-b747-c8f6cd988472:efficiency.fuel_consumption_extra_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_extra_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 5.3,
+      "unit": "L/100km",
+      "observed_at": "2023-06-06",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/fe93a237-c627-4e29-b747-c8f6cd988472",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/fe93a237-c627-4e29-b747-c8f6cd988472",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "hyundai.creta.su2.trim.smart_ice"
+    }
+  ]
+}

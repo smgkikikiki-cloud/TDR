@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b23e2b53ec0325c206750b58",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-017-02b372e72add:386",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_cross.xg10.trim.hev_gr_sport_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:47+00:00",
+    "before_hash": "914465b8ab337fa70cfdd95dbcada68e389165b4111f6a51f0272d23e1c44010",
+    "after_hash": "66835cebeb394abdd50b674eed379e1fa2e909ccc6e513f7fafbcceefc463d1e",
+    "before": [
+      true,
+      4.4,
+      4.2,
+      4.0,
+      95.0,
+      0.005,
+      "TIS",
+      "HEV",
+      1798
+    ],
+    "after": [
+      true,
+      4.4,
+      4.2,
+      4.0,
+      95.0,
+      0.005,
+      "TIS",
+      "HEV",
+      1798,
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b96a7399-dbda-454b-828c-bb81edbfd23b_engine.fuel_type_de977ae72d0b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b23e2b53ec0325c206750b58:spec",
+    "revision_id": "b23e2b53ec0325c206750b58",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_cross.xg10.trim.hev_gr_sport_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:47+00:00",
+    "payload": [
+      true,
+      4.4,
+      4.2,
+      4.0,
+      95.0,
+      0.005,
+      "TIS",
+      "HEV",
+      1798,
+      "GASOLINE"
+    ]
+  }
+}

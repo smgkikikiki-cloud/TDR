@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "3af7162431ec7795fc21c95b",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-011-3c709241399c:363",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.en2.en2.trim.e_n2_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:19+00:00",
+    "before_hash": "af14b6df17917b728e63b26aaeec1964b9f4ffcecdd8ed83dff0c504e6f9d137",
+    "after_hash": "95a71fae22aa8493d3f94051a1ca43ac725473339fe07719820866548a000751",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      68.89,
+      353.3,
+      "CATL",
+      "AC 220 V (single phase) / 380 V (three-phase)",
+      "BOTH",
+      true,
+      true
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      68.89,
+      353.3,
+      "CATL",
+      "AC 220 V (single phase) / 380 V (three-phase)",
+      "BOTH",
+      true,
+      true,
+      135.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_9f3c4628-6107-49b7-a84a-7779c11b28a1_ev.energy_consumption_wh_km_a96b39fecedd.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "3af7162431ec7795fc21c95b:spec",
+    "revision_id": "3af7162431ec7795fc21c95b",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.en2.en2.trim.e_n2_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:19+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      68.89,
+      353.3,
+      "CATL",
+      "AC 220 V (single phase) / 380 V (three-phase)",
+      "BOTH",
+      true,
+      true,
+      135.0
+    ]
+  }
+}

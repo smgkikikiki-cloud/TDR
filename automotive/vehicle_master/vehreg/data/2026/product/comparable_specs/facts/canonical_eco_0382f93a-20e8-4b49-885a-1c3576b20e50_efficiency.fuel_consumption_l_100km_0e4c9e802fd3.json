@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:0382f93a-20e8-4b49-885a-1c3576b20e50:efficiency.fuel_consumption_l_100km",
+      "field_key": "efficiency.fuel_consumption_l_100km",
+      "value_state": "KNOWN",
+      "value": 0.6,
+      "unit": "L/100km",
+      "observed_at": "2026-08-04",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/0382f93a-20e8-4b49-885a-1c3576b20e50",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/0382f93a-20e8-4b49-885a-1c3576b20e50",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "byd.sealion6.sl6.trim.byd_sealion6_premium_phev"
+    }
+  ]
+}

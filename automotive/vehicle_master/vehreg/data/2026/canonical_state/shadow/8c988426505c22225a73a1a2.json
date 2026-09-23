@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "8c988426505c22225a73a1a2",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-034-5299aee8f0ab:45",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "kia.ev5.gen1.trim.light_64_2_kwh_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:32+00:00",
+    "before_hash": "843f6e1a12c2f7ee1aa63b2903de4131656a1de0c059e12b5cd8464a7cc3fb48",
+    "after_hash": "0789dede6d02cd2c241d2848f9697d997419684cb464a010523d6bd505791653",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      64.31,
+      397.0,
+      "XIANGYANG FINDREAMS BATTERY",
+      "ONBOARD_AC",
+      true
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      64.31,
+      397.0,
+      "XIANGYANG FINDREAMS BATTERY",
+      "ONBOARD_AC",
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_437ea7c9-9ddc-4ece-bce3-5ccd07cd071a_comfort.electric_parking_brake_70ef92abcbad.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "8c988426505c22225a73a1a2:spec",
+    "revision_id": "8c988426505c22225a73a1a2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "kia.ev5.gen1.trim.light_64_2_kwh_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:32+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      64.31,
+      397.0,
+      "XIANGYANG FINDREAMS BATTERY",
+      "ONBOARD_AC",
+      true,
+      true
+    ]
+  }
+}

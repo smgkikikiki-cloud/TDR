@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:44556f9d-ace0-41af-a578-86d298247837:emissions.co2_g_km",
+      "field_key": "emissions.co2_g_km",
+      "value_state": "KNOWN",
+      "value": 138.0,
+      "unit": "g/km",
+      "observed_at": "2023-01-17",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/44556f9d-ace0-41af-a578-86d298247837",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/44556f9d-ace0-41af-a578-86d298247837",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mini.mini_cooper.j01.trim.hatch_3_door_ice"
+    }
+  ]
+}

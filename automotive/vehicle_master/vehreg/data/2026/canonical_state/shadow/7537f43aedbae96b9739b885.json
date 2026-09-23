@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7537f43aedbae96b9739b885",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-051-bcc716924fd5:319",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.2_5_hybrid_x",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:11+00:00",
+    "before_hash": "2c4bb5cdaf0a1a8fe622ed7a33d29dce63a0a7ab472ba24782f65ea1ad2e8965",
+    "after_hash": "1decfaf17eb1aea18db381c718cfe801aae8717d8531e521c032e97198e7b94f",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      true,
+      7.1,
+      6.1,
+      4.4,
+      143.0,
+      0.003,
+      "TIS",
+      "HEV",
+      2493,
+      "GASOLINE",
+      "215/65R16",
+      "HEV"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      true,
+      7.1,
+      6.1,
+      4.4,
+      143.0,
+      0.003,
+      "TIS",
+      "HEV",
+      2493,
+      "GASOLINE",
+      "215/65R16",
+      "HEV",
+      16.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_c178ea29c9a04704be18dcbab7859d23_manufacturing.excise_tax_rate_42c96db85cb2.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7537f43aedbae96b9739b885:spec",
+    "revision_id": "7537f43aedbae96b9739b885",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.2_5_hybrid_x",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:11+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      true,
+      7.1,
+      6.1,
+      4.4,
+      143.0,
+      0.003,
+      "TIS",
+      "HEV",
+      2493,
+      "GASOLINE",
+      "215/65R16",
+      "HEV",
+      16.0
+    ]
+  }
+}

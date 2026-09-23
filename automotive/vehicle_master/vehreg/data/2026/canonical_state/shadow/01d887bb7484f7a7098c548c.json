@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "01d887bb7484f7a7098c548c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-049-18d26b73936f:233",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_hs.hsg.trim.turbo_d_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:45+00:00",
+    "before_hash": "38a48bae19580486b98ed67a181d2f3b66a7097d37e6ff2139118c14ef1b9721",
+    "after_hash": "11df0a62ef652f9bc4c809fe9e1173312e5ab1a73648219543850a13d6016664",
+    "before": [
+      true,
+      7.6,
+      8.5,
+      10.2,
+      140.0,
+      0.026,
+      "TIS",
+      "GASOLINE",
+      1490,
+      "E85",
+      "235/50R18"
+    ],
+    "after": [
+      true,
+      7.6,
+      8.5,
+      10.2,
+      140.0,
+      0.026,
+      "TIS",
+      "GASOLINE",
+      1490,
+      "E85",
+      "235/50R18",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_1cf426f1fab548a5b4f06bf4bf1e160b_identity.powertrain_c3dc1ed9ba5e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "01d887bb7484f7a7098c548c:spec",
+    "revision_id": "01d887bb7484f7a7098c548c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_hs.hsg.trim.turbo_d_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:45+00:00",
+    "payload": [
+      true,
+      7.6,
+      8.5,
+      10.2,
+      140.0,
+      0.026,
+      "TIS",
+      "GASOLINE",
+      1490,
+      "E85",
+      "235/50R18",
+      "ICE"
+    ]
+  }
+}

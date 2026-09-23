@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a134ab547f00a3bbfbfaf2ee",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-031-eac7506457fb:17",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq5.ne.trim.premium_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:08+00:00",
+    "before_hash": "9cf4a6759791174ad7c9fb455f0aefc03cbbb19b102a5f4f1d4efdb0078ac221",
+    "after_hash": "b85555cb5cd0b82736a5eeab50e6fc11e6feffe662d69a1b39e511e3c15684de",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      58.05,
+      523.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      167.0,
+      384.0,
+      "235/55R19",
+      "BEV"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      58.05,
+      523.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      167.0,
+      384.0,
+      "235/55R19",
+      "BEV",
+      2.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_0c4f2dc2-0f61-4248-82f7-e1e8d85e6c93_manufacturing.excise_tax_rate_3b6fa620a9c4.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a134ab547f00a3bbfbfaf2ee:spec",
+    "revision_id": "a134ab547f00a3bbfbfaf2ee",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq5.ne.trim.premium_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:08+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      58.05,
+      523.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      167.0,
+      384.0,
+      "235/55R19",
+      "BEV",
+      2.0
+    ]
+  }
+}

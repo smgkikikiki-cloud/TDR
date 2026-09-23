@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "0efb52aa6d13eab3e9226355",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-044-4ee92a315b21:109",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.bz4x.ea10.trim.bz4x_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:52+00:00",
+    "before_hash": "ea789c31acfe783e315d4baf44a98b4ad3737f52022d01913e5f197237b2e961",
+    "after_hash": "2fd0f4bcbfa069a8c1642244002f214fcd7764ec41391715f8209c7cfbba5987",
+    "before": [
+      true,
+      true,
+      "GASOLINE",
+      "235/50R20",
+      "ICE"
+    ],
+    "after": [
+      true,
+      true,
+      "GASOLINE",
+      "235/50R20",
+      "ICE",
+      2.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b0219a8647df48f3af6703951212e304_manufacturing.excise_tax_rate_2798a85be8ae.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "0efb52aa6d13eab3e9226355:spec",
+    "revision_id": "0efb52aa6d13eab3e9226355",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.bz4x.ea10.trim.bz4x_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:52+00:00",
+    "payload": [
+      true,
+      true,
+      "GASOLINE",
+      "235/50R20",
+      "ICE",
+      2.0
+    ]
+  }
+}

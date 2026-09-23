@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "bff928dae6f4e3f3fb3bcb31",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-005-77a02922c989:71",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.city_hatchback.gn7.trim.e_hev_sv_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:56+00:00",
+    "before_hash": "6fea86737e4736a78845c7b92d333112549e9e6797111e34deb768de1ff616d3",
+    "after_hash": "c2508aebbc2c3eaea0a2ff2865aa1d7d0fa3d8c76e6997e56804739fef6fe611",
+    "before": [
+      true,
+      true,
+      3.8,
+      3.6,
+      3.3,
+      83.0,
+      0.0084,
+      0.00052,
+      "EURO5",
+      "HEV"
+    ],
+    "after": [
+      true,
+      true,
+      3.8,
+      3.6,
+      3.3,
+      83.0,
+      0.0084,
+      0.00052,
+      "EURO5",
+      "HEV",
+      1498
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_2c8a6a4f-cb5d-4eb2-b18c-75ce07e44be3_engine.displacement_cc_a2e86948ec95.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "bff928dae6f4e3f3fb3bcb31:spec",
+    "revision_id": "bff928dae6f4e3f3fb3bcb31",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.city_hatchback.gn7.trim.e_hev_sv_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:56+00:00",
+    "payload": [
+      true,
+      true,
+      3.8,
+      3.6,
+      3.3,
+      83.0,
+      0.0084,
+      0.00052,
+      "EURO5",
+      "HEV",
+      1498
+    ]
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9f3c79755de1a455310a37b3",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-013-01b2d6d40e8e:292",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.serena.gen1.trim.e_power_highway_star_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:28+00:00",
+    "before_hash": "ede3888434dea8a8f23ac413fe03d0a0d666c26590b703f46e4d9021ad1c568a",
+    "after_hash": "405a8431f1066ebed5163a5c49ac5dc3215f3eb52b1240dd6900237ba395dc26",
+    "before": [
+      true,
+      5.8,
+      5.5,
+      5.1,
+      124.0
+    ],
+    "after": [
+      true,
+      5.8,
+      5.5,
+      5.1,
+      124.0,
+      0.001
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_65730ae8-b1e4-4bf1-a566-d3d574dcedd8_emissions.nox_g_km_54f05932a2aa.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9f3c79755de1a455310a37b3:spec",
+    "revision_id": "9f3c79755de1a455310a37b3",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.serena.gen1.trim.e_power_highway_star_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:28+00:00",
+    "payload": [
+      true,
+      5.8,
+      5.5,
+      5.1,
+      124.0,
+      0.001
+    ]
+  }
+}

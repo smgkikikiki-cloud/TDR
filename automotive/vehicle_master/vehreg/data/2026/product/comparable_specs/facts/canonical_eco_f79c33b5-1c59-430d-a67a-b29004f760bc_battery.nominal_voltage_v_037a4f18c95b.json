@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:f79c33b5-1c59-430d-a67a-b29004f760bc:battery.nominal_voltage_v",
+      "field_key": "battery.nominal_voltage_v",
+      "value_state": "KNOWN",
+      "value": 374.4,
+      "unit": "V",
+      "observed_at": "2025-08-25",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/f79c33b5-1c59-430d-a67a-b29004f760bc",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/f79c33b5-1c59-430d-a67a-b29004f760bc",
+      "trim_id": "bentley.bentayga.gen1.trim.hybrid_azure_hybrid_phev"
+    }
+  ]
+}

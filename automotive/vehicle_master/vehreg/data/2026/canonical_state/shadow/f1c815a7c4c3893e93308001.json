@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f1c815a7c4c3893e93308001",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-009-54711011662e:316",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_s5_ev.gen1.trim.x_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:11+00:00",
+    "before_hash": "4280c48f6b025c6622478a871ec4ede48291362274238e9f9aa0b63d007f3032",
+    "after_hash": "fd3700aa7f1652b0317a58ba32c78aeca172a85be2e7f17d92b13b64fa6db4c7",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      50.08
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      50.08,
+      321.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ee5085a9-67ca-40f6-9944-550da794d94c_battery.nominal_voltage_v_eac042c5911e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f1c815a7c4c3893e93308001:spec",
+    "revision_id": "f1c815a7c4c3893e93308001",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_s5_ev.gen1.trim.x_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:11+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      50.08,
+      321.0
+    ]
+  }
+}

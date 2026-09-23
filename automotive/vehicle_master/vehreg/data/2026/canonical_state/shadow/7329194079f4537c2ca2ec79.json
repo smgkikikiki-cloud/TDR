@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7329194079f4537c2ca2ec79",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-031-eac7506457fb:19",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq5.ne.trim.premium_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:08+00:00",
+    "before_hash": "1e0bf7488f89f0e60edf47d98b6648cb4daa7e8741626a2912b602e2f5b7c71d",
+    "after_hash": "f252528391d9c9b5bff093b3c0b14992b275daa8f14b0a478079f1769937076d",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      58.05,
+      523.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      167.0,
+      384.0,
+      "235/55R19",
+      "BEV",
+      2.0,
+      "Ulsan Plant"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      58.05,
+      523.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      167.0,
+      384.0,
+      "235/55R19",
+      "BEV",
+      2.0,
+      "Ulsan Plant",
+      "PMSM"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_0c4f2dc2-0f61-4248-82f7-e1e8d85e6c93_powertrain.motor_type_618ee5df1710.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7329194079f4537c2ca2ec79:spec",
+    "revision_id": "7329194079f4537c2ca2ec79",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq5.ne.trim.premium_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:08+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      58.05,
+      523.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      167.0,
+      384.0,
+      "235/55R19",
+      "BEV",
+      2.0,
+      "Ulsan Plant",
+      "PMSM"
+    ]
+  }
+}

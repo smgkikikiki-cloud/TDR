@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "16bbcdf105747e7915ff53ac",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-032-04b0adc6e162:85",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.almera.n18.trim.1_0t_el_cvt",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:17+00:00",
+    "before_hash": "816662e98cb5627bc10564f986bb68381f03db397aa5c75da3548a6af830d515",
+    "after_hash": "06f7445db966641b398660e0f1f54c92ce0a07e26ecce5b3f1ec17eeb534338e",
+    "before": [
+      true,
+      true,
+      true,
+      4.0,
+      4.3,
+      5.0,
+      100.0,
+      0.025,
+      "EURO5",
+      "GASOLINE",
+      999,
+      "E20",
+      "195/65R15",
+      "ICE"
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      4.0,
+      4.3,
+      5.0,
+      100.0,
+      0.025,
+      "EURO5",
+      "GASOLINE",
+      999,
+      "E20",
+      "195/65R15",
+      "ICE",
+      12.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_20692f72-35bb-4c52-80ec-17e29858bdcf_manufacturing.excise_tax_rate_70b6f8394659.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "16bbcdf105747e7915ff53ac:spec",
+    "revision_id": "16bbcdf105747e7915ff53ac",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.almera.n18.trim.1_0t_el_cvt",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:17+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      4.0,
+      4.3,
+      5.0,
+      100.0,
+      0.025,
+      "EURO5",
+      "GASOLINE",
+      999,
+      "E20",
+      "195/65R15",
+      "ICE",
+      12.0
+    ]
+  }
+}

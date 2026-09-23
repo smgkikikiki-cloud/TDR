@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "4406c7a9bc9a07ac21c09c16",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-009-54711011662e:34",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.haval_h6.h6hev.trim.phev_pro_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:10+00:00",
+    "before_hash": "e00b7041417b410070ef68e43107f0186d8a08fb3f4e1d344564e3c8a61846d8",
+    "after_hash": "15f32496af60b5c906178e404a9e561e3036609222d7277f2dfdc62cd83c9cc8",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      27.54,
+      313.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      27.54,
+      313.0,
+      "SVOLT"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_398f552b-cc18-4c0d-9550-da4d8c290b48_battery.supplier_b3f1c4c7f04e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "4406c7a9bc9a07ac21c09c16:spec",
+    "revision_id": "4406c7a9bc9a07ac21c09c16",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.haval_h6.h6hev.trim.phev_pro_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:10+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      27.54,
+      313.0,
+      "SVOLT"
+    ]
+  }
+}

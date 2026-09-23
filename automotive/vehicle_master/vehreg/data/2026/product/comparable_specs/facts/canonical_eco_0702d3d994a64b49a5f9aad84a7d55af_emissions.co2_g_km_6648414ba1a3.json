@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:0702d3d994a64b49a5f9aad84a7d55af:emissions.co2_g_km",
+      "field_key": "emissions.co2_g_km",
+      "value_state": "KNOWN",
+      "value": 164.0,
+      "unit": "g/km",
+      "observed_at": "2020-01-15",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/0702d3d994a64b49a5f9aad84a7d55af",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/0702d3d994a64b49a5f9aad84a7d55af",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mercedes_benz.mb_e_class.w214.trim.mercedes_benz_coupe_amg_dynamic_ice"
+    }
+  ]
+}

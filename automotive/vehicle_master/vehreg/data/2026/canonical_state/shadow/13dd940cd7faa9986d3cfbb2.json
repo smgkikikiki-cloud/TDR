@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "13dd940cd7faa9986d3cfbb2",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-020-1a96ac574560:294",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "isuzu.dmax_cab.rg.trim.d_max_spark_2_2_ddi_b_cab_chassis_refrigerator_at",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:00+00:00",
+    "before_hash": "cde0276f404da1b40c674c07b962942a266d6d3b7e07ed31083125671d5efe5c",
+    "after_hash": "faa499dc0ac27c530089a3c1ca61d2510723f92e2eced4195f03535a90e93863",
+    "before": [
+      5.5,
+      6.3,
+      7.7,
+      165.0,
+      0.239,
+      0.00011,
+      "TIS",
+      "DIESEL",
+      2164,
+      "B20",
+      "215/70R15",
+      "ICE",
+      8
+    ],
+    "after": [
+      5.5,
+      6.3,
+      7.7,
+      165.0,
+      0.239,
+      0.00011,
+      "TIS",
+      "DIESEL",
+      2164,
+      "B20",
+      "215/70R15",
+      "ICE",
+      8,
+      "AUTOMATIC"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_23681bfa-f98c-4c96-9b3c-31a8f340fd6e_powertrain.transmission_8fc3d1fe4703.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "13dd940cd7faa9986d3cfbb2:spec",
+    "revision_id": "13dd940cd7faa9986d3cfbb2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "isuzu.dmax_cab.rg.trim.d_max_spark_2_2_ddi_b_cab_chassis_refrigerator_at",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:00+00:00",
+    "payload": [
+      5.5,
+      6.3,
+      7.7,
+      165.0,
+      0.239,
+      0.00011,
+      "TIS",
+      "DIESEL",
+      2164,
+      "B20",
+      "215/70R15",
+      "ICE",
+      8,
+      "AUTOMATIC"
+    ]
+  }
+}

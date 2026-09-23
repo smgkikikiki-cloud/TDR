@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:daebf32b-6ee8-4734-be08-9646be01beda:emissions.co2_g_km",
+      "field_key": "emissions.co2_g_km",
+      "value_state": "KNOWN",
+      "value": 184.0,
+      "unit": "g/km",
+      "observed_at": "2025-02-17",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/daebf32b-6ee8-4734-be08-9646be01beda",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/daebf32b-6ee8-4734-be08-9646be01beda",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "ford.ranger_double_cab.p703.trim.wildtrak_2_0l_turbo_hr_6at"
+    }
+  ]
+}

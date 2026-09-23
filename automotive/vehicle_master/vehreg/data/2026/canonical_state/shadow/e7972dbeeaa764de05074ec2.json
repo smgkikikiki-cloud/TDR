@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e7972dbeeaa764de05074ec2",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-012-0c3fd0adac89:115",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "jaecoo.jaecoo_6t_ev.gen1.trim.long_range_4wd_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:23+00:00",
+    "before_hash": "181ef0f13d16830171ab548e2b44f76e141e77677ce0d30ae6610fa2cbd888be",
+    "after_hash": "7e4474938c9d81dc5f0c2a08ed2f8133f61d4bdbfce38198aebf916c7a71ec94",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      69.7,
+      363.0,
+      "Wuhu Qida Power Battery Systems Co., Ltd.",
+      "220",
+      "ONBOARD_AC",
+      true,
+      189.0,
+      436.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      69.7,
+      363.0,
+      "Wuhu Qida Power Battery Systems Co., Ltd.",
+      "220",
+      "ONBOARD_AC",
+      true,
+      189.0,
+      436.0,
+      "245/55R19"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b034991c-2d64-465a-8992-0a1feaa949ef_fitment.tyre_size_cd1de43975d5.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e7972dbeeaa764de05074ec2:spec",
+    "revision_id": "e7972dbeeaa764de05074ec2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "jaecoo.jaecoo_6t_ev.gen1.trim.long_range_4wd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:23+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      69.7,
+      363.0,
+      "Wuhu Qida Power Battery Systems Co., Ltd.",
+      "220",
+      "ONBOARD_AC",
+      true,
+      189.0,
+      436.0,
+      "245/55R19"
+    ]
+  }
+}

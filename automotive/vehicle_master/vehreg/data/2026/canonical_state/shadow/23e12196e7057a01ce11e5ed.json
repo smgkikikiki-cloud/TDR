@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "23e12196e7057a01ce11e5ed",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-048-9a296c6c8041:176",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_zs_ev.zsev.trim.d_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:35+00:00",
+    "before_hash": "9267a89731fcc2d88d1b60f432d6d8c1fc76f750e68c6fbf9093454be2879065",
+    "after_hash": "e367b9a10c78d721d4c6f89d151302641a7ab38885825c71dd2f071714dcb4b0",
+    "before": [
+      true,
+      "GASOLINE",
+      "215/55R17",
+      "ICE",
+      2.0,
+      true,
+      true,
+      true,
+      5,
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R100"
+      ]
+    ],
+    "after": [
+      true,
+      "GASOLINE",
+      "215/55R17",
+      "ICE",
+      2.0,
+      true,
+      true,
+      true,
+      5,
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R100"
+      ],
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_5d4300a94f474d728d6745e8cd2d43c9_technology.connected_services_0833f464f850.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "23e12196e7057a01ce11e5ed:spec",
+    "revision_id": "23e12196e7057a01ce11e5ed",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_zs_ev.zsev.trim.d_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:35+00:00",
+    "payload": [
+      true,
+      "GASOLINE",
+      "215/55R17",
+      "ICE",
+      2.0,
+      true,
+      true,
+      true,
+      5,
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R100"
+      ],
+      true
+    ]
+  }
+}

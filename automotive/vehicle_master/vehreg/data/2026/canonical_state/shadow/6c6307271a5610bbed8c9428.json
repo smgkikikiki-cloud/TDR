@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6c6307271a5610bbed8c9428",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-042-509b690f0202:226",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.stargazer.ks.trim.smart_7_7_seater_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:35+00:00",
+    "before_hash": "476095d1bf82ea5d616510a8274f33a71e6871dfd7166852c37d393486d49f34",
+    "after_hash": "665b8a6c90ac11e1a4c15d7cc48c6f90bd4567c4c389ec2b2b573fe99804135e",
+    "before": [
+      true,
+      true,
+      5.4,
+      6.2,
+      7.4,
+      143.0
+    ],
+    "after": [
+      true,
+      true,
+      5.4,
+      6.2,
+      7.4,
+      143.0,
+      0.068
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_4d8d6862-a202-446c-ba95-366ddec2ad86_emissions.nox_g_km_0a92d0cff6b4.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6c6307271a5610bbed8c9428:spec",
+    "revision_id": "6c6307271a5610bbed8c9428",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.stargazer.ks.trim.smart_7_7_seater_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:35+00:00",
+    "payload": [
+      true,
+      true,
+      5.4,
+      6.2,
+      7.4,
+      143.0,
+      0.068
+    ]
+  }
+}

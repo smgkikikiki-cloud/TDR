@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5e084a397d728e1d20a1e410",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-050-6df028e5a85f:203",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.etron.gen1.trim.sportback_55_quattro_s_line_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:58+00:00",
+    "before_hash": "62f5036a4760c12f6e25a2a470ab868eeef84e7d69d36102bb849df411b0f707",
+    "after_hash": "e301eb57c544b82dfb50acbd1d2824b95576217a7457dc8a87bd4c04a7395cb4",
+    "before": [
+      "GASOLINE",
+      "265/45R21",
+      "ICE",
+      8.0,
+      true,
+      3,
+      true,
+      true,
+      [
+        "R100"
+      ],
+      2511,
+      1616,
+      4901
+    ],
+    "after": [
+      "GASOLINE",
+      "265/45R21",
+      "ICE",
+      8.0,
+      true,
+      3,
+      true,
+      true,
+      [
+        "R100"
+      ],
+      2511,
+      1616,
+      4901,
+      2022
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e73f518462df40d1aadcb799a64f8ab8_vehicle.model_year_2e23793ba633.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5e084a397d728e1d20a1e410:spec",
+    "revision_id": "5e084a397d728e1d20a1e410",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.etron.gen1.trim.sportback_55_quattro_s_line_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:58+00:00",
+    "payload": [
+      "GASOLINE",
+      "265/45R21",
+      "ICE",
+      8.0,
+      true,
+      3,
+      true,
+      true,
+      [
+        "R100"
+      ],
+      2511,
+      1616,
+      4901,
+      2022
+    ]
+  }
+}

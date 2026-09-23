@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "bfe45bd6464af85c2d607283",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-020-1a96ac574560:172",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "isuzu.dmax_cab.rg.trim.d_max_spark_3_0_ddi_s_4x4",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:00+00:00",
+    "before_hash": "90fc421b764a25ba10ea39870b62d2006ae9d9cc4e0b037c3950e093cc31954b",
+    "after_hash": "744dd5c3dc9854803ea0cbe9d6b684de28512bdb0428a9f1ef0145a29d4a27b1",
+    "before": [
+      true,
+      6.6,
+      7.6,
+      9.5,
+      199.0,
+      0.237,
+      4e-05,
+      "TIS",
+      "DIESEL",
+      2999,
+      "B20",
+      "205R16"
+    ],
+    "after": [
+      true,
+      6.6,
+      7.6,
+      9.5,
+      199.0,
+      0.237,
+      4e-05,
+      "TIS",
+      "DIESEL",
+      2999,
+      "B20",
+      "205R16",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_cdd00b4b-280f-42a7-8097-55a57996953b_identity.powertrain_9626820b70e1.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "bfe45bd6464af85c2d607283:spec",
+    "revision_id": "bfe45bd6464af85c2d607283",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "isuzu.dmax_cab.rg.trim.d_max_spark_3_0_ddi_s_4x4",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:00+00:00",
+    "payload": [
+      true,
+      6.6,
+      7.6,
+      9.5,
+      199.0,
+      0.237,
+      4e-05,
+      "TIS",
+      "DIESEL",
+      2999,
+      "B20",
+      "205R16",
+      "ICE"
+    ]
+  }
+}

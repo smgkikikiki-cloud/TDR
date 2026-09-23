@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "75ceb1e8a48af18f65575ae2",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-014-8db054eb58a3:314",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a5.gen1.trim.sportback_e_hybrid_quattro_tech_plus_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:32+00:00",
+    "before_hash": "800f6c5e5a59bbe7083970ec347943b020a2789db4fcfd01913efcb4e1f58c6c",
+    "after_hash": "99536fc725a2ea1edd9882dacf53ea8e227eca8d8b5523058bbfbc11835e37bf",
+    "before": [
+      "NCA",
+      25.9,
+      370.0,
+      "Samsung SDI",
+      "ONBOARD_AC",
+      3.0,
+      67.0,
+      0.007,
+      0.00017,
+      "TIS",
+      "PHEV",
+      1984
+    ],
+    "after": [
+      "NCA",
+      25.9,
+      370.0,
+      "Samsung SDI",
+      "ONBOARD_AC",
+      3.0,
+      67.0,
+      0.007,
+      0.00017,
+      "TIS",
+      "PHEV",
+      1984,
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_8beae883-d002-431b-a85f-f4e9c19aee38_engine.fuel_type_860f1491a948.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "75ceb1e8a48af18f65575ae2:spec",
+    "revision_id": "75ceb1e8a48af18f65575ae2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a5.gen1.trim.sportback_e_hybrid_quattro_tech_plus_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:32+00:00",
+    "payload": [
+      "NCA",
+      25.9,
+      370.0,
+      "Samsung SDI",
+      "ONBOARD_AC",
+      3.0,
+      67.0,
+      0.007,
+      0.00017,
+      "TIS",
+      "PHEV",
+      1984,
+      "GASOLINE"
+    ]
+  }
+}

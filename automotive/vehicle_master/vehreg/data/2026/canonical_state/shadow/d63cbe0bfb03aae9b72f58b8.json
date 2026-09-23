@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d63cbe0bfb03aae9b72f58b8",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-009-54711011662e:352",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_s5_ev.gen1.trim.d_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:11+00:00",
+    "before_hash": "c6a9dadab20b1cec3219d0e07d70a1dac7e8093357f335f7b662c616950e620d",
+    "after_hash": "bf07c5892b15c08de7a947bf04c9f07ed3f1772a6bbba567a29e04aa59043963",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      50.08,
+      321.0,
+      "SAICMOTOR-CP",
+      "EXTERNAL_DC",
+      true,
+      153.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      50.08,
+      321.0,
+      "SAICMOTOR-CP",
+      "EXTERNAL_DC",
+      true,
+      153.0,
+      416.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_25620477-2ecb-4265-bf04-f8925c3c17d1_ev.rated_range_km_5f0585aa5c9c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d63cbe0bfb03aae9b72f58b8:spec",
+    "revision_id": "d63cbe0bfb03aae9b72f58b8",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_s5_ev.gen1.trim.d_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:11+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      50.08,
+      321.0,
+      "SAICMOTOR-CP",
+      "EXTERNAL_DC",
+      true,
+      153.0,
+      416.0
+    ]
+  }
+}

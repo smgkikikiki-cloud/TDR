@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "644fe57f3d25bc25487362b5",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-010-6f2b18f1a4fd:302",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.ranger_double_cab.p703.trim.wildtrak_2_0l_turbo_hr_10at",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:15+00:00",
+    "before_hash": "496428035f129afe53b21f8d653caebae7c186b624d4bd69ad5e1ba52bbe4067",
+    "after_hash": "fc6dc455fbf7e1be3f2757f85e628e492c74ff6760e3fb82078a1e41baa2c485",
+    "before": [
+      true,
+      true
+    ],
+    "after": [
+      true,
+      true,
+      6.7
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_31b05a86-eeda-44de-a369-2d4fb8ec158d_efficiency.fuel_consumption_extra_urban_l_100km_4a7279ef781d.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "644fe57f3d25bc25487362b5:spec",
+    "revision_id": "644fe57f3d25bc25487362b5",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.ranger_double_cab.p703.trim.wildtrak_2_0l_turbo_hr_10at",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:15+00:00",
+    "payload": [
+      true,
+      true,
+      6.7
+    ]
+  }
+}

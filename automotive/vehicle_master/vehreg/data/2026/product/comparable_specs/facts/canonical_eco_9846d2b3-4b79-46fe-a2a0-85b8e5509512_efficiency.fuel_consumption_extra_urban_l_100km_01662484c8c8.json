@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:9846d2b3-4b79-46fe-a2a0-85b8e5509512:efficiency.fuel_consumption_extra_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_extra_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 4.6,
+      "unit": "L/100km",
+      "observed_at": "2026-03-09",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/9846d2b3-4b79-46fe-a2a0-85b8e5509512",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/9846d2b3-4b79-46fe-a2a0-85b8e5509512",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "nissan.kicks.p15.trim.sv_moonstone"
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b197f88cb423af0ebbf89412",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-028-314da6945e4d:80",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "avatr.avatr_11.gen1.trim.standard_range_rwd_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:46+00:00",
+    "before_hash": "e32b57310437b16ad9a86148848498fd8e1749a18d991ddcd89770026b78fadc",
+    "after_hash": "72bf72c1da8bd3037caae676ba80e1454f62420f101e42a2f355130b7c94b20a",
+    "before": [
+      "NMC",
+      90.26,
+      614.0,
+      "Contemporary Amperex Technology Co., Limited",
+      "Charger external (DC) : 403V-740 V",
+      "EXTERNAL_DC",
+      182.0,
+      575.0,
+      "265/45R21"
+    ],
+    "after": [
+      "NMC",
+      90.26,
+      614.0,
+      "Contemporary Amperex Technology Co., Limited",
+      "Charger external (DC) : 403V-740 V",
+      "EXTERNAL_DC",
+      182.0,
+      575.0,
+      "265/45R21",
+      "BEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_6eefed2d-33ab-4320-aad7-3ff2e2660e99_identity.powertrain_f4fbc2031e35.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b197f88cb423af0ebbf89412:spec",
+    "revision_id": "b197f88cb423af0ebbf89412",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "avatr.avatr_11.gen1.trim.standard_range_rwd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:46+00:00",
+    "payload": [
+      "NMC",
+      90.26,
+      614.0,
+      "Contemporary Amperex Technology Co., Limited",
+      "Charger external (DC) : 403V-740 V",
+      "EXTERNAL_DC",
+      182.0,
+      575.0,
+      "265/45R21",
+      "BEV"
+    ]
+  }
+}

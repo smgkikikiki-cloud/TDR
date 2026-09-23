@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "864a4690118adcdca0d8fb9f",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-017-02b372e72add:178",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.xforce.xf.trim.hev_ignite_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:47+00:00",
+    "before_hash": "fa2e55ee6b74fa812c82025d5cb0554e68b159775c9299503e97ad786f50629c",
+    "after_hash": "c61c1c641c96610a49d0d181761ee0cd40cc1a90644363a579a85f7c546aa820",
+    "before": [
+      true,
+      true,
+      4.4,
+      4.1,
+      3.7,
+      94.0,
+      0.002,
+      "TIS",
+      "HEV"
+    ],
+    "after": [
+      true,
+      true,
+      4.4,
+      4.1,
+      3.7,
+      94.0,
+      0.002,
+      "TIS",
+      "HEV",
+      1590
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_640153f1-64af-4f65-acf8-eb04ac5aad3e_engine.displacement_cc_9e9677393057.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "864a4690118adcdca0d8fb9f:spec",
+    "revision_id": "864a4690118adcdca0d8fb9f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.xforce.xf.trim.hev_ignite_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:47+00:00",
+    "payload": [
+      true,
+      true,
+      4.4,
+      4.1,
+      3.7,
+      94.0,
+      0.002,
+      "TIS",
+      "HEV",
+      1590
+    ]
+  }
+}

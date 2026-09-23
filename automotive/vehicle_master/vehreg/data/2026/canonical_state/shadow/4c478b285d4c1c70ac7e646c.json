@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "4c478b285d4c1c70ac7e646c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-009-54711011662e:164",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "xpeng.xpeng_g6.g6.trim.standard_range_rwd_66_kwh_lfp_258_hp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:10+00:00",
+    "before_hash": "ce720124db1628501b857477e66650aa62b0df9460bd76c5efd44f072e7474cf",
+    "after_hash": "4571503a2b3579d1572b840ac46a1a2310cf85a4bc197ba7445d77897881f6c0",
+    "before": [
+      "LFP",
+      68.51,
+      492.9,
+      "CALB Group Co., Ltd.",
+      "BOTH",
+      true,
+      147.0,
+      540.0,
+      "255/45R20",
+      "BEV",
+      10.0
+    ],
+    "after": [
+      "LFP",
+      68.51,
+      492.9,
+      "CALB Group Co., Ltd.",
+      "BOTH",
+      true,
+      147.0,
+      540.0,
+      "255/45R20",
+      "BEV",
+      10.0,
+      "PMSM"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_40988a2a-0129-477a-a069-75b26b9de103_powertrain.motor_type_2db3ecae8e98.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "4c478b285d4c1c70ac7e646c:spec",
+    "revision_id": "4c478b285d4c1c70ac7e646c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "xpeng.xpeng_g6.g6.trim.standard_range_rwd_66_kwh_lfp_258_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:10+00:00",
+    "payload": [
+      "LFP",
+      68.51,
+      492.9,
+      "CALB Group Co., Ltd.",
+      "BOTH",
+      true,
+      147.0,
+      540.0,
+      "255/45R20",
+      "BEV",
+      10.0,
+      "PMSM"
+    ]
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "0a89dab1bd887997e9724f10",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-046-2c82d6c5b603:375",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_glc.x254.trim.mercedes_amg_43_4matic_coupe_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:14+00:00",
+    "before_hash": "aa93adb62c06d8cd36b141123bf534d500b47e87c8773b403449ac3a0345bf2b",
+    "after_hash": "2895c5e7f63f3d37de8cc9a23053603a2b74f3767042715c485d34363ce946ef",
+    "before": [
+      true,
+      7.6,
+      10.0,
+      14.1,
+      228.0,
+      0.021,
+      "TIS",
+      "GASOLINE",
+      2996,
+      "GASOLINE",
+      "255/40R21",
+      "285/35R21"
+    ],
+    "after": [
+      true,
+      7.6,
+      10.0,
+      14.1,
+      228.0,
+      0.021,
+      "TIS",
+      "GASOLINE",
+      2996,
+      "GASOLINE",
+      "255/40R21",
+      "285/35R21",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_c24748b24266458c808b52b4367aa3cf_identity.powertrain_05d379828191.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "0a89dab1bd887997e9724f10:spec",
+    "revision_id": "0a89dab1bd887997e9724f10",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_glc.x254.trim.mercedes_amg_43_4matic_coupe_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:14+00:00",
+    "payload": [
+      true,
+      7.6,
+      10.0,
+      14.1,
+      228.0,
+      0.021,
+      "TIS",
+      "GASOLINE",
+      2996,
+      "GASOLINE",
+      "255/40R21",
+      "285/35R21",
+      "ICE"
+    ]
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7d037023ecd37a5a4bdac81f",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-010-6f2b18f1a4fd:362",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.vellfire.gen1.trim.hybrid_executive_lounge_2wd",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:15+00:00",
+    "before_hash": "20ff7e9858f575c891778815d49b8024a1ca1356852a7736c1e35ab0b3b3cb2e",
+    "after_hash": "549460717d31fb0892455d1157dcbf91b29d78b955d2181a62b1c4e9b36650b6",
+    "before": [
+      true,
+      true,
+      5.4,
+      5.2,
+      4.9,
+      129.0,
+      0.00445
+    ],
+    "after": [
+      true,
+      true,
+      5.4,
+      5.2,
+      4.9,
+      129.0,
+      0.00445,
+      "TIS"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_18f77a3e-6883-424b-a9c2-fb383904ea69_emissions.standard_32d08144b43d.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7d037023ecd37a5a4bdac81f:spec",
+    "revision_id": "7d037023ecd37a5a4bdac81f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.vellfire.gen1.trim.hybrid_executive_lounge_2wd",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:15+00:00",
+    "payload": [
+      true,
+      true,
+      5.4,
+      5.2,
+      4.9,
+      129.0,
+      0.00445,
+      "TIS"
+    ]
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7ee2b74963c9baa505fc8e59",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-035-5b8b3aecfae7:383",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mazda2.dj.trim.xd",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:40+00:00",
+    "before_hash": "e55c03d48a6b59a7311223e845b5db0d51799c03f544f7a3610887233a478eda",
+    "after_hash": "2088b8b65e294f1ed9d79d7c48f58a33199761d5f5999ec8374a997758874a89",
+    "before": [
+      true,
+      3.4,
+      3.8,
+      4.5,
+      100.0,
+      0.05,
+      0.00054,
+      "TIS"
+    ],
+    "after": [
+      true,
+      3.4,
+      3.8,
+      4.5,
+      100.0,
+      0.05,
+      0.00054,
+      "TIS",
+      "DIESEL"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b25aa3cb-a408-4baa-97b8-ab65956533f9_engine.combustion_type_1316532b0400.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7ee2b74963c9baa505fc8e59:spec",
+    "revision_id": "7ee2b74963c9baa505fc8e59",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mazda2.dj.trim.xd",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:40+00:00",
+    "payload": [
+      true,
+      3.4,
+      3.8,
+      4.5,
+      100.0,
+      0.05,
+      0.00054,
+      "TIS",
+      "DIESEL"
+    ]
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "42d6fc91e525b0896ba94fe5",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-038-caad162ad775:295",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.voxy.gen1.trim.hybrid_s_z_captain_ottoman_seats_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:04+00:00",
+    "before_hash": "95e533b92d96ed34b88e8389cd886fa9a1c269d701ec4c737ba8a47af9a52bde",
+    "after_hash": "82c262382a505b9c2b0295b285c1a3993e2ada0aa07d58141f23054d515e8579",
+    "before": [
+      true,
+      true,
+      5.4,
+      4.8,
+      3.7,
+      110.0,
+      0.002,
+      "TIS",
+      "HEV",
+      1797,
+      "GASOLINE",
+      "205/55R17",
+      "HEV",
+      16.0
+    ],
+    "after": [
+      true,
+      true,
+      5.4,
+      4.8,
+      3.7,
+      110.0,
+      0.002,
+      "TIS",
+      "HEV",
+      1797,
+      "GASOLINE",
+      "205/55R17",
+      "HEV",
+      16.0,
+      "CVT"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_cea90741-49e5-49e7-9c28-a875fea7bffb_powertrain.transmission_9d7adf5eff59.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "42d6fc91e525b0896ba94fe5:spec",
+    "revision_id": "42d6fc91e525b0896ba94fe5",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.voxy.gen1.trim.hybrid_s_z_captain_ottoman_seats_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:04+00:00",
+    "payload": [
+      true,
+      true,
+      5.4,
+      4.8,
+      3.7,
+      110.0,
+      0.002,
+      "TIS",
+      "HEV",
+      1797,
+      "GASOLINE",
+      "205/55R17",
+      "HEV",
+      16.0,
+      "CVT"
+    ]
+  }
+}

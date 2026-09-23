@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a7ca36bf29b12e7abf601ee7",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-020-1a96ac574560:146",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "isuzu.dmax_cab.rg.trim.d_max_spark_3_0_ddi_s_4x4_at",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:00+00:00",
+    "before_hash": "cd4c16f888a3b6ff5882aaecc0e512c9fd23c47b0a6f7f366f6457f2f854b6ef",
+    "after_hash": "f3aaf3d48d9ea38b06d787bd5a78c134319f8caef95a530209198f3d6a63b9a6",
+    "before": [
+      true,
+      0.203,
+      0.00011,
+      "TIS",
+      "DIESEL",
+      2999,
+      "B20"
+    ],
+    "after": [
+      true,
+      0.203,
+      0.00011,
+      "TIS",
+      "DIESEL",
+      2999,
+      "B20",
+      "205R16"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_fbaefffe-f7cd-4017-b1eb-60ac30118e18_fitment.tyre_size_68b1fb37377c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a7ca36bf29b12e7abf601ee7:spec",
+    "revision_id": "a7ca36bf29b12e7abf601ee7",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "isuzu.dmax_cab.rg.trim.d_max_spark_3_0_ddi_s_4x4_at",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:00+00:00",
+    "payload": [
+      true,
+      0.203,
+      0.00011,
+      "TIS",
+      "DIESEL",
+      2999,
+      "B20",
+      "205R16"
+    ]
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a9444d1e702fed425e437867",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-026-fc1e159da290:78",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mazda2.dj.trim.1_3_prime_sports",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:32+00:00",
+    "before_hash": "60c2062d6105335d23c287a189cc92e4a02b44b0c9a7da1e69c9269068ed820b",
+    "after_hash": "63491bf02d8f1b73033ae46ce7e5ce51c7f53426bdd191e9a2f19d7862418ee8",
+    "before": [
+      3.8,
+      4.3,
+      5.1,
+      100.0,
+      0.013,
+      0.00135,
+      "TIS",
+      "GASOLINE"
+    ],
+    "after": [
+      3.8,
+      4.3,
+      5.1,
+      100.0,
+      0.013,
+      0.00135,
+      "TIS",
+      "GASOLINE",
+      1299
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_84703dee-b14c-4b1d-a94b-49f7f8ba38b4_engine.displacement_cc_531d35923ef3.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a9444d1e702fed425e437867:spec",
+    "revision_id": "a9444d1e702fed425e437867",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mazda2.dj.trim.1_3_prime_sports",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:32+00:00",
+    "payload": [
+      3.8,
+      4.3,
+      5.1,
+      100.0,
+      0.013,
+      0.00135,
+      "TIS",
+      "GASOLINE",
+      1299
+    ]
+  }
+}

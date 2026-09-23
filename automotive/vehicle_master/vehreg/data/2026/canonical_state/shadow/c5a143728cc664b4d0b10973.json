@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c5a143728cc664b4d0b10973",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-036-ba2d051d30aa:43",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.carrera_4s_cabriolet_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:48+00:00",
+    "before_hash": "12033016705691c464105b93b9bba3e37a0a884219e7f94014116d55d25d9504",
+    "after_hash": "196166d313af9f633b67095e4804bf5eb6c1056d11d63b96055aea4dd78b5d38",
+    "before": [
+      true,
+      7.2,
+      9.3,
+      13.0,
+      213.0,
+      0.017,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35ZR20",
+      "305/30ZR21"
+    ],
+    "after": [
+      true,
+      7.2,
+      9.3,
+      13.0,
+      213.0,
+      0.017,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35ZR20",
+      "305/30ZR21",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_5965a93b-59e9-4e2e-a97a-c07375d60b59_identity.powertrain_77eb6fd59e70.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c5a143728cc664b4d0b10973:spec",
+    "revision_id": "c5a143728cc664b4d0b10973",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.carrera_4s_cabriolet_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:48+00:00",
+    "payload": [
+      true,
+      7.2,
+      9.3,
+      13.0,
+      213.0,
+      0.017,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35ZR20",
+      "305/30ZR21",
+      "ICE"
+    ]
+  }
+}

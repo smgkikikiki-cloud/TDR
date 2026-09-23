@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "20d30d4eca0d3e876d9fdf60",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-032-04b0adc6e162:18",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.countryman.u25.trim.jcw_countryman_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:16+00:00",
+    "before_hash": "51ba97ba1fbc7074ce4a7ec2e9c740cc2840fd116c8ce3006ffd8c526e2703d3",
+    "after_hash": "85d5b084b51b1bd54256839f82551cd40bd17cd2bb5587212688c050fc59a182",
+    "before": [
+      true,
+      true,
+      true,
+      6.5,
+      7.6
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      6.5,
+      7.6,
+      9.6
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_1728ef02-bdec-4e2b-8169-667bbdd4ad28_efficiency.fuel_consumption_urban_l_100km_a1407407ec23.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "20d30d4eca0d3e876d9fdf60:spec",
+    "revision_id": "20d30d4eca0d3e876d9fdf60",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.countryman.u25.trim.jcw_countryman_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:16+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      6.5,
+      7.6,
+      9.6
+    ]
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "01981e6097ef4bdc15da2ae2",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-006-b527dba9e80a:104",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.yaris_cross.ac200.trim.nightshade_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:59+00:00",
+    "before_hash": "496428035f129afe53b21f8d653caebae7c186b624d4bd69ad5e1ba52bbe4067",
+    "after_hash": "e3d91d2b8c6a50a124dd556b4227e2f780b29ebce3f28116bd9d20429bcd85df",
+    "before": [
+      true,
+      true
+    ],
+    "after": [
+      true,
+      true,
+      4.1
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_4ba74ee9-7f85-4611-bfd2-352ee6c92a9c_efficiency.fuel_consumption_extra_urban_l_100km_d2154b579537.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "01981e6097ef4bdc15da2ae2:spec",
+    "revision_id": "01981e6097ef4bdc15da2ae2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.yaris_cross.ac200.trim.nightshade_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:59+00:00",
+    "payload": [
+      true,
+      true,
+      4.1
+    ]
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5cffdb782c2fb0e89eaffeff",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-032-04b0adc6e162:196",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_altis.e210.trim.gr_rz_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:17+00:00",
+    "before_hash": "5ee3ec3af6af3baed368212de6157214474d09a431dbdfb705272ffab6c63ad8",
+    "after_hash": "f71b8d574e1ee0f6d8c9cd89f6076abf6292a270ddb9bb90f3a771f0632ca1cb",
+    "before": [
+      true,
+      true,
+      7.2,
+      8.0,
+      9.4,
+      192.0,
+      0.019,
+      "TIS",
+      "GASOLINE",
+      1618,
+      "GASOLINE"
+    ],
+    "after": [
+      true,
+      true,
+      7.2,
+      8.0,
+      9.4,
+      192.0,
+      0.019,
+      "TIS",
+      "GASOLINE",
+      1618,
+      "GASOLINE",
+      "225/40RZ18"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_7afdec69-ffbf-4838-a33f-bddbb727f770_fitment.tyre_size_b14336abbade.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5cffdb782c2fb0e89eaffeff:spec",
+    "revision_id": "5cffdb782c2fb0e89eaffeff",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_altis.e210.trim.gr_rz_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:17+00:00",
+    "payload": [
+      true,
+      true,
+      7.2,
+      8.0,
+      9.4,
+      192.0,
+      0.019,
+      "TIS",
+      "GASOLINE",
+      1618,
+      "GASOLINE",
+      "225/40RZ18"
+    ]
+  }
+}

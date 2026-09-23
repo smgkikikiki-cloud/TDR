@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "104f1573adb7fb72fa7df0c5",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-010-6f2b18f1a4fd:388",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_s05.gen1.trim.max_long_range_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:15+00:00",
+    "before_hash": "240059910581404e91fc6986fa0a1337b140ef84f48283656092918d4366a66d",
+    "after_hash": "45fd10e98c61a20fe44baa8824998301013344c1e5509c89aa1f0a41cfbdceb9",
+    "before": [
+      "LFP",
+      68.6,
+      379.0,
+      "Chongqing Changan Automobile Co.,Ltd."
+    ],
+    "after": [
+      "LFP",
+      68.6,
+      379.0,
+      "Chongqing Changan Automobile Co.,Ltd.",
+      "220V ,7 kW"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_013a5796-a70b-4c75-8e5e-d2387df74c0d_charging.onboard_charger_spec_2a2330dfd404.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "104f1573adb7fb72fa7df0c5:spec",
+    "revision_id": "104f1573adb7fb72fa7df0c5",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_s05.gen1.trim.max_long_range_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:15+00:00",
+    "payload": [
+      "LFP",
+      68.6,
+      379.0,
+      "Chongqing Changan Automobile Co.,Ltd.",
+      "220V ,7 kW"
+    ]
+  }
+}

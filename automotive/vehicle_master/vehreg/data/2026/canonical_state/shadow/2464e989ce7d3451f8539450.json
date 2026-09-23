@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2464e989ce7d3451f8539450",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-039-bb0c6084f37a:57",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q3.f3.trim.rs_sportback_edition_10_years_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:13+00:00",
+    "before_hash": "2776cf76a21c30c06551ac288eb104fdf9eef8a9106ecc88ad87f524a72f7fda",
+    "after_hash": "e146081d1d22f13d1a7d7b704a1fa8cddf6a0658d20d03e741192228eb946160",
+    "before": [
+      7.8,
+      9.4,
+      12.0,
+      214.0,
+      0.027,
+      0.00031
+    ],
+    "after": [
+      7.8,
+      9.4,
+      12.0,
+      214.0,
+      0.027,
+      0.00031,
+      "EURO6"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_76d39365-5163-4e52-9011-1319bb1fe4c8_emissions.standard_1a518d5c4e67.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2464e989ce7d3451f8539450:spec",
+    "revision_id": "2464e989ce7d3451f8539450",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q3.f3.trim.rs_sportback_edition_10_years_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:13+00:00",
+    "payload": [
+      7.8,
+      9.4,
+      12.0,
+      214.0,
+      0.027,
+      0.00031,
+      "EURO6"
+    ]
+  }
+}

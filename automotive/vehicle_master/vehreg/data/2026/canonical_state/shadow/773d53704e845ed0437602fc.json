@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "773d53704e845ed0437602fc",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-025-74b815fdedac:116",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lotus.eletre.gen1.trim.s_603_hp_luxury_dual_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:25+00:00",
+    "before_hash": "3f9d7d4f04070902fa5d5df019362bbb999c00abac5df50d00267cf19a0dca11",
+    "after_hash": "307f0c49ef9c17035a22a32a72116f994c445660396e4e8eebc7e7c1d9871193",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      113.46,
+      718.1,
+      "Contemporary Amperex Technology Co., Limited",
+      "355 kW/DC",
+      "EXTERNAL_DC",
+      true,
+      true,
+      255.0,
+      490.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      113.46,
+      718.1,
+      "Contemporary Amperex Technology Co., Limited",
+      "355 kW/DC",
+      "EXTERNAL_DC",
+      true,
+      true,
+      255.0,
+      490.0,
+      "275/40R22"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_dfd41df4-1181-4113-b916-a777e3ee8e49_fitment.tyre_front_0e9cd3e01e07.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "773d53704e845ed0437602fc:spec",
+    "revision_id": "773d53704e845ed0437602fc",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lotus.eletre.gen1.trim.s_603_hp_luxury_dual_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:25+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      113.46,
+      718.1,
+      "Contemporary Amperex Technology Co., Limited",
+      "355 kW/DC",
+      "EXTERNAL_DC",
+      true,
+      true,
+      255.0,
+      490.0,
+      "275/40R22"
+    ]
+  }
+}

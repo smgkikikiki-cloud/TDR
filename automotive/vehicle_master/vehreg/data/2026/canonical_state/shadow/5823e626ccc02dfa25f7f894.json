@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5823e626ccc02dfa25f7f894",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-020-1a96ac574560:152",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "isuzu.dmax_cab.rg.trim.d_max_spark_3_0_ddi_s_4x4_at",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:00+00:00",
+    "before_hash": "d955b5218a5f27765a4309d11b5b44a8495bc7019422a7d72cfd10ebc65b0738",
+    "after_hash": "94c530f16442b526cbd7365031ac887be4f5bcaec63c3c88fa4a0bf90a6a7667",
+    "before": [
+      true,
+      0.203,
+      0.00011,
+      "TIS",
+      "DIESEL",
+      2999,
+      "B20",
+      "205R16",
+      "ICE",
+      3.0,
+      6,
+      "AUTOMATIC",
+      true
+    ],
+    "after": [
+      true,
+      0.203,
+      0.00011,
+      "TIS",
+      "DIESEL",
+      2999,
+      "B20",
+      "205R16",
+      "ICE",
+      3.0,
+      6,
+      "AUTOMATIC",
+      true,
+      3
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_fbaefffe-f7cd-4017-b1eb-60ac30118e18_safety.airbag_count_075cab04c885.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5823e626ccc02dfa25f7f894:spec",
+    "revision_id": "5823e626ccc02dfa25f7f894",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "isuzu.dmax_cab.rg.trim.d_max_spark_3_0_ddi_s_4x4_at",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:00+00:00",
+    "payload": [
+      true,
+      0.203,
+      0.00011,
+      "TIS",
+      "DIESEL",
+      2999,
+      "B20",
+      "205R16",
+      "ICE",
+      3.0,
+      6,
+      "AUTOMATIC",
+      true,
+      3
+    ]
+  }
+}

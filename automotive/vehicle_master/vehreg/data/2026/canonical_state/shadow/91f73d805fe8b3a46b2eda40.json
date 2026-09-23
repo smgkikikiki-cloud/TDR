@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "91f73d805fe8b3a46b2eda40",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-012-0c3fd0adac89:240",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.bz4x.ea10.trim.awd_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:23+00:00",
+    "before_hash": "f88b12177083154b13a3bdc1083eb42883e3adf16a8ceaa80dd5c9eaaeaa247f",
+    "after_hash": "19dffff81b1462292996cc278b190c4142ee83e7070ded0479dbe3be021fb26b",
+    "before": [
+      "NMC",
+      73.11,
+      384.8,
+      "TOYOTA MOTOR CORPORATION",
+      "ONBOARD_AC"
+    ],
+    "after": [
+      "NMC",
+      73.11,
+      384.8,
+      "TOYOTA MOTOR CORPORATION",
+      "ONBOARD_AC",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_70b68fdf-29af-4d35-88ea-ec859bc60f8c_comfort.panoramic_roof_444d9fc67a7b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "91f73d805fe8b3a46b2eda40:spec",
+    "revision_id": "91f73d805fe8b3a46b2eda40",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.bz4x.ea10.trim.awd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:23+00:00",
+    "payload": [
+      "NMC",
+      73.11,
+      384.8,
+      "TOYOTA MOTOR CORPORATION",
+      "ONBOARD_AC",
+      true
+    ]
+  }
+}

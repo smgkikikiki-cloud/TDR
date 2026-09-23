@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c37598ed2b1f64ff523c7174",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-017-02b372e72add:14",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "subaru.forester.sk.trim.2_5i_s_awd_cvt_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:47+00:00",
+    "before_hash": "67eacdd102d6327866e7a994c588b30f2e6191a4e2f117007e4c2c1c9cf4ce65",
+    "after_hash": "3150e5ff36e12ea02ddd7b5105f4ba569919872c0d9984bd867442c80a30c461",
+    "before": [
+      0.01,
+      "EURO6",
+      "GASOLINE",
+      2498,
+      "GASOLINE",
+      "225/55R18",
+      "ICE",
+      29.0,
+      "SUBARU CORPORATION (GUNMA YAJIMA PLANT)",
+      "CVT",
+      true,
+      true,
+      12,
+      true,
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R94",
+        "R95"
+      ],
+      true
+    ],
+    "after": [
+      0.01,
+      "EURO6",
+      "GASOLINE",
+      2498,
+      "GASOLINE",
+      "225/55R18",
+      "ICE",
+      29.0,
+      "SUBARU CORPORATION (GUNMA YAJIMA PLANT)",
+      "CVT",
+      true,
+      true,
+      12,
+      true,
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R94",
+        "R95"
+      ],
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b6d3da0a-2c80-42b7-b268-fa8420e87308_technology.surround_view_camera_182323dacf27.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c37598ed2b1f64ff523c7174:spec",
+    "revision_id": "c37598ed2b1f64ff523c7174",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "subaru.forester.sk.trim.2_5i_s_awd_cvt_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:47+00:00",
+    "payload": [
+      0.01,
+      "EURO6",
+      "GASOLINE",
+      2498,
+      "GASOLINE",
+      "225/55R18",
+      "ICE",
+      29.0,
+      "SUBARU CORPORATION (GUNMA YAJIMA PLANT)",
+      "CVT",
+      true,
+      true,
+      12,
+      true,
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R94",
+        "R95"
+      ],
+      true,
+      true
+    ]
+  }
+}

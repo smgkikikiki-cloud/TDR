@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e9c014f721cdee4a8470b87b",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-028-314da6945e4d:74",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "avatr.avatr_11.gen1.trim.standard_range_rwd_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:46+00:00",
+    "before_hash": "5dfd40dedfe07fff511e364dad31aaee301179bbc3a960c864064294ed5c75b1",
+    "after_hash": "4d4d69f57ad01fd3d2a8832f9e753f7e28050b1703f6d5bab11934deec1766b7",
+    "before": [
+      "NMC",
+      90.26,
+      614.0
+    ],
+    "after": [
+      "NMC",
+      90.26,
+      614.0,
+      "Contemporary Amperex Technology Co., Limited"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_6eefed2d-33ab-4320-aad7-3ff2e2660e99_battery.supplier_778edf414af6.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e9c014f721cdee4a8470b87b:spec",
+    "revision_id": "e9c014f721cdee4a8470b87b",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "avatr.avatr_11.gen1.trim.standard_range_rwd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:46+00:00",
+    "payload": [
+      "NMC",
+      90.26,
+      614.0,
+      "Contemporary Amperex Technology Co., Limited"
+    ]
+  }
+}

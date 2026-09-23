@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f9292f9674fb82d66029063b",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-013-01b2d6d40e8e:324",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_s07.gen1.trim.new_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:28+00:00",
+    "before_hash": "c9095fc4281a34e7b27422780b5768888de4a39ac69596dc46f88693f274281b",
+    "after_hash": "8973724059ab687b6c0b23131fa7b00943e263010e976607953e6f943b56c3ce",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      68.98,
+      379.0,
+      "CATL"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      68.98,
+      379.0,
+      "CATL",
+      "DC: 240-438 V., Single phase AC: 230 V."
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_544599a5-89eb-4c0e-8e4c-1d27c49efa4d_charging.onboard_charger_spec_7b8742d75d07.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f9292f9674fb82d66029063b:spec",
+    "revision_id": "f9292f9674fb82d66029063b",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_s07.gen1.trim.new_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:28+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      68.98,
+      379.0,
+      "CATL",
+      "DC: 240-438 V., Single phase AC: 230 V."
+    ]
+  }
+}

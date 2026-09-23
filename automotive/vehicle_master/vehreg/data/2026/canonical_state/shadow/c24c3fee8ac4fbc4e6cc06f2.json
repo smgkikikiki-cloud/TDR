@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c24c3fee8ac4fbc4e6cc06f2",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-037-986e7ff7e687:352",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.v60.gen1.trim.recharge_t8_plug_in_hybrid_plus_dark_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:57+00:00",
+    "before_hash": "5c8157110606b9745fa98ff01cc8b9662562dc0764d948a9756bf345b9bc984c",
+    "after_hash": "80765d0543053e54d27360229daa81873fb43ae4736f76782b9df65c79de4627",
+    "before": [
+      "NMC",
+      18.82,
+      369.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd."
+    ],
+    "after": [
+      "NMC",
+      18.82,
+      369.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd.",
+      "ONBOARD_AC"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_1c2c2bbd-fb47-495a-b31f-6779a6358430_charging.port_type_94249298ac29.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c24c3fee8ac4fbc4e6cc06f2:spec",
+    "revision_id": "c24c3fee8ac4fbc4e6cc06f2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.v60.gen1.trim.recharge_t8_plug_in_hybrid_plus_dark_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:57+00:00",
+    "payload": [
+      "NMC",
+      18.82,
+      369.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd.",
+      "ONBOARD_AC"
+    ]
+  }
+}

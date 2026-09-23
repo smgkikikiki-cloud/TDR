@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "687bfef748b7c75cbc010a79",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-036-ba2d051d30aa:36",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.carrera_4s_cabriolet_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:48+00:00",
+    "before_hash": "b43055c92860f21339038031a6638bc672c6857e7c7441b484197158bc7b3198",
+    "after_hash": "a98edc830a189d33df2fb65d16134cd3a6c81eea63868b8c8dc0f6ca32c3b21e",
+    "before": [
+      true,
+      7.2,
+      9.3,
+      13.0,
+      213.0
+    ],
+    "after": [
+      true,
+      7.2,
+      9.3,
+      13.0,
+      213.0,
+      0.017
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_5965a93b-59e9-4e2e-a97a-c07375d60b59_emissions.nox_g_km_f16943ea4efc.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "687bfef748b7c75cbc010a79:spec",
+    "revision_id": "687bfef748b7c75cbc010a79",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.carrera_4s_cabriolet_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:48+00:00",
+    "payload": [
+      true,
+      7.2,
+      9.3,
+      13.0,
+      213.0,
+      0.017
+    ]
+  }
+}

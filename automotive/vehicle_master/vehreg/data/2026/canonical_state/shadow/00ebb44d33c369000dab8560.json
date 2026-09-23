@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "00ebb44d33c369000dab8560",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-027-e2d326b095bb:291",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.ranger_double_cab.p703.trim.stormtrak_2_0l_bi_turbo_4x4_10at",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:39+00:00",
+    "before_hash": "f874241b4696d4581a9d3b574e8d189cf66ae29c93acf73134c241753181eee1",
+    "after_hash": "cc587c58b8e19dd1c3de22f589ea9974c729a69d883309107751dbac03fcacc1",
+    "before": [
+      true,
+      6.8,
+      7.1,
+      7.5,
+      186.0
+    ],
+    "after": [
+      true,
+      6.8,
+      7.1,
+      7.5,
+      186.0,
+      0.16
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_20f5bfac-6b6b-4037-a20e-7933162be9de_emissions.nox_g_km_4280235beb44.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "00ebb44d33c369000dab8560:spec",
+    "revision_id": "00ebb44d33c369000dab8560",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.ranger_double_cab.p703.trim.stormtrak_2_0l_bi_turbo_4x4_10at",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:39+00:00",
+    "payload": [
+      true,
+      6.8,
+      7.1,
+      7.5,
+      186.0,
+      0.16
+    ]
+  }
+}

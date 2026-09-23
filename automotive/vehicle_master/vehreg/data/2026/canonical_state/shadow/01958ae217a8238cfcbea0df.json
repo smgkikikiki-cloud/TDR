@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "01958ae217a8238cfcbea0df",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-051-bcc716924fd5:64",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lexus_rx.al30.trim.rx300_f_sport_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:10+00:00",
+    "before_hash": "2afb5276eeed1fcf831864c3f7ca9fbf724df70b731e2f8f207893b879a6a22f",
+    "after_hash": "abe1ec9ea28b38019fd54583f906ba1fce28c3829003f1dbb7c3cc16ae4924c0",
+    "before": [
+      7.2,
+      8.4,
+      10.5,
+      195.0,
+      0.033,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "E20",
+      "235/55R20",
+      "ICE"
+    ],
+    "after": [
+      7.2,
+      8.4,
+      10.5,
+      195.0,
+      0.033,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "E20",
+      "235/55R20",
+      "ICE",
+      30.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_952522d6bd154ee78e0594ea92b4c7f7_manufacturing.excise_tax_rate_19342e37896e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "01958ae217a8238cfcbea0df:spec",
+    "revision_id": "01958ae217a8238cfcbea0df",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lexus_rx.al30.trim.rx300_f_sport_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:10+00:00",
+    "payload": [
+      7.2,
+      8.4,
+      10.5,
+      195.0,
+      0.033,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "E20",
+      "235/55R20",
+      "ICE",
+      30.0
+    ]
+  }
+}

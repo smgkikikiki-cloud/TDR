@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "71ce909043be7a4933106c40",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-038-caad162ad775:52",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_s07.gen1.trim.s07_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:04+00:00",
+    "before_hash": "bc6871494d1da8702086222f5a15bf3f8d5742b8256140f0e22c18c12b591339",
+    "after_hash": "ad3de98660a7c031d5502fe96e273b5f98fdc9cd4b9d835b516e60136e779171",
+    "before": [
+      "NMC",
+      66.75,
+      395.0,
+      "Chongqing Chang’an Automobile Co., Ltd.",
+      "230",
+      "ONBOARD_AC"
+    ],
+    "after": [
+      "NMC",
+      66.75,
+      395.0,
+      "Chongqing Chang’an Automobile Co., Ltd.",
+      "230",
+      "ONBOARD_AC",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_aaf8d8bd-5e11-4c2d-8a66-1368dc6c21d9_comfort.auto_climate_661683d4c633.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "71ce909043be7a4933106c40:spec",
+    "revision_id": "71ce909043be7a4933106c40",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_s07.gen1.trim.s07_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:04+00:00",
+    "payload": [
+      "NMC",
+      66.75,
+      395.0,
+      "Chongqing Chang’an Automobile Co., Ltd.",
+      "230",
+      "ONBOARD_AC",
+      true
+    ]
+  }
+}

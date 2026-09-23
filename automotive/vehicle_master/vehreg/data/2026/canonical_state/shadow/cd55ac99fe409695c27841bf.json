@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "cd55ac99fe409695c27841bf",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-049-18d26b73936f:16",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "suzuki.ciaz.yl1.trim.gl_cvt_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:44+00:00",
+    "before_hash": "a9c6e04a9adb417b954d065a978cfbf88c82680f8f09ace366f768921787dbb0",
+    "after_hash": "1278e3f57fe7f9e6807eaeba07d294f99beb27ad3572d9c7865fb8f5cdcb9b4e",
+    "before": [
+      4.3,
+      5.0,
+      6.2,
+      119.0,
+      0.003,
+      "TIS",
+      "GASOLINE",
+      1242
+    ],
+    "after": [
+      4.3,
+      5.0,
+      6.2,
+      119.0,
+      0.003,
+      "TIS",
+      "GASOLINE",
+      1242,
+      "E20"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_cef792777f20436086a081dff0145f91_engine.fuel_type_263f402d6e25.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "cd55ac99fe409695c27841bf:spec",
+    "revision_id": "cd55ac99fe409695c27841bf",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "suzuki.ciaz.yl1.trim.gl_cvt_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:44+00:00",
+    "payload": [
+      4.3,
+      5.0,
+      6.2,
+      119.0,
+      0.003,
+      "TIS",
+      "GASOLINE",
+      1242,
+      "E20"
+    ]
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "28c1b6aa47af93d8eb71b680",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-039-bb0c6084f37a:113",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q3.f3.trim.40_tfsi_quattro_s_line_black_edition_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:13+00:00",
+    "before_hash": "6beae5566dff4e0a8c6c3114d639776dd297a7d9011e22f922551a99c87c5774",
+    "after_hash": "b3546eedf0f3fb8029e2e75eb80ac70aaaec2559600f4e19c370eea4d937a5a9",
+    "before": [
+      6.9,
+      7.91,
+      9.7,
+      180.0,
+      0.03,
+      0.00046,
+      "EURO6",
+      "GASOLINE",
+      1984,
+      "GASOLINE"
+    ],
+    "after": [
+      6.9,
+      7.91,
+      9.7,
+      180.0,
+      0.03,
+      0.00046,
+      "EURO6",
+      "GASOLINE",
+      1984,
+      "GASOLINE",
+      "255/45R19"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d226b496-d4d3-4c9d-ace2-19cff508ef91_fitment.tyre_size_5b9820e912fe.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "28c1b6aa47af93d8eb71b680:spec",
+    "revision_id": "28c1b6aa47af93d8eb71b680",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q3.f3.trim.40_tfsi_quattro_s_line_black_edition_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:13+00:00",
+    "payload": [
+      6.9,
+      7.91,
+      9.7,
+      180.0,
+      0.03,
+      0.00046,
+      "EURO6",
+      "GASOLINE",
+      1984,
+      "GASOLINE",
+      "255/45R19"
+    ]
+  }
+}

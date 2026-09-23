@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:0186e2ef-20e0-47f2-9447-41124a739491:efficiency.fuel_consumption_extra_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_extra_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 5.4,
+      "unit": "L/100km",
+      "observed_at": "2026-06-23",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/0186e2ef-20e0-47f2-9447-41124a739491",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/0186e2ef-20e0-47f2-9447-41124a739491",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "toyota.vellfire.gen1.trim.eclipse_edition_hev_premium"
+    }
+  ]
+}

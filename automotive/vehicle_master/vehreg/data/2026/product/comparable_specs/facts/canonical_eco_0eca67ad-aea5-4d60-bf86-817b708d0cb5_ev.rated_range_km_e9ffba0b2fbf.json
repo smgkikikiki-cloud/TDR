@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:0eca67ad-aea5-4d60-bf86-817b708d0cb5:ev.rated_range_km",
+      "field_key": "ev.rated_range_km",
+      "value_state": "KNOWN",
+      "value": 691.0,
+      "unit": "km",
+      "observed_at": "2026-08-18",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/0eca67ad-aea5-4d60-bf86-817b708d0cb5",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/0eca67ad-aea5-4d60-bf86-817b708d0cb5",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "porsche.cayenne.e3.trim.electric_bev"
+    }
+  ]
+}

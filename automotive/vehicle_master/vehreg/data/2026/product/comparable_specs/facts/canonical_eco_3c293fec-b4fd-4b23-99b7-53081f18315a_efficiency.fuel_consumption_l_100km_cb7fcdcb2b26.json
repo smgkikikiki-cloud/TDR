@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:3c293fec-b4fd-4b23-99b7-53081f18315a:efficiency.fuel_consumption_l_100km",
+      "field_key": "efficiency.fuel_consumption_l_100km",
+      "value_state": "KNOWN",
+      "value": 6.7,
+      "unit": "L/100km",
+      "observed_at": "2024-03-20",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/3c293fec-b4fd-4b23-99b7-53081f18315a",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/3c293fec-b4fd-4b23-99b7-53081f18315a",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "toyota.hilux_revo_double_cab.an120.trim.prerunner_2_4_entry_mt"
+    }
+  ]
+}

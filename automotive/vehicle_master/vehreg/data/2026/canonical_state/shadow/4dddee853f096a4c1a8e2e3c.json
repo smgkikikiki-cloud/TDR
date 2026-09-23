@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "4dddee853f096a4c1a8e2e3c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-027-e2d326b095bb:364",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.sealion6.sl6.trim.byd_dynamic_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:39+00:00",
+    "before_hash": "908b14db7981e6ec2f49853ba65e3446afd5d1b1c3e1820543ad6bc8347c683d",
+    "after_hash": "3f062443836e06b3909251ec0ad6b40be31058bb3cfd9f75fbc0a09bc1ae8df7",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      18.32,
+      339.2,
+      "FinDreams",
+      "ONBOARD_AC",
+      true,
+      0.9,
+      21.0,
+      0.001,
+      "TIS",
+      "PHEV",
+      1498,
+      "GASOLINE",
+      131.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      18.32,
+      339.2,
+      "FinDreams",
+      "ONBOARD_AC",
+      true,
+      0.9,
+      21.0,
+      0.001,
+      "TIS",
+      "PHEV",
+      1498,
+      "GASOLINE",
+      131.0,
+      104.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ed09424c-c3fa-4a7f-a0ce-0cc2aa0a2284_ev.rated_range_km_3799943de6f6.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "4dddee853f096a4c1a8e2e3c:spec",
+    "revision_id": "4dddee853f096a4c1a8e2e3c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.sealion6.sl6.trim.byd_dynamic_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:39+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      18.32,
+      339.2,
+      "FinDreams",
+      "ONBOARD_AC",
+      true,
+      0.9,
+      21.0,
+      0.001,
+      "TIS",
+      "PHEV",
+      1498,
+      "GASOLINE",
+      131.0,
+      104.0
+    ]
+  }
+}

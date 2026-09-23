@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "103b516c3ae9554aa74a8153",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-036-ba2d051d30aa:163",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.mini_cooper.j01.trim.s_clubman_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:48+00:00",
+    "before_hash": "01d140ee1aa8d63f22f61b8f1ab9332c3a2b9492718de12f1cb4b2efd97c6268",
+    "after_hash": "eb0c93214e066e9477e80c970e7a48bc8a6cc45d01d36176baf1b62289212a39",
+    "before": [
+      true,
+      true,
+      true,
+      5.4,
+      6.2,
+      7.6,
+      141.0,
+      0.01,
+      "TIS"
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      5.4,
+      6.2,
+      7.6,
+      141.0,
+      0.01,
+      "TIS",
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_c95b358c-3eb3-40fa-8eee-e9934b98da9a_engine.combustion_type_e02d62b2965d.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "103b516c3ae9554aa74a8153:spec",
+    "revision_id": "103b516c3ae9554aa74a8153",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.mini_cooper.j01.trim.s_clubman_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:48+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      5.4,
+      6.2,
+      7.6,
+      141.0,
+      0.01,
+      "TIS",
+      "GASOLINE"
+    ]
+  }
+}

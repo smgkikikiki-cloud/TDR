@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "bec23eade1cbcfb9a6dc2579",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-009-54711011662e:123",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.s_class.gen1.trim.exclusive_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:10+00:00",
+    "before_hash": "74f034f08090ef479794d0b475011ec4c345a3887ed45a5aaf43f19b5d477de3",
+    "after_hash": "fafd4e2f0eaf59b9680228ef8779acad47d8c8493c25dc0bb810877f6a6880ff",
+    "before": [
+      true,
+      5.3,
+      6.8,
+      9.3,
+      178.0,
+      0.012,
+      0.00094,
+      "EURO6"
+    ],
+    "after": [
+      true,
+      5.3,
+      6.8,
+      9.3,
+      178.0,
+      0.012,
+      0.00094,
+      "EURO6",
+      "HEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_60d7c344-6ee1-4081-a0a3-d9391da1d326_engine.combustion_type_c862f229c4e2.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "bec23eade1cbcfb9a6dc2579:spec",
+    "revision_id": "bec23eade1cbcfb9a6dc2579",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.s_class.gen1.trim.exclusive_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:10+00:00",
+    "payload": [
+      true,
+      5.3,
+      6.8,
+      9.3,
+      178.0,
+      0.012,
+      0.00094,
+      "EURO6",
+      "HEV"
+    ]
+  }
+}

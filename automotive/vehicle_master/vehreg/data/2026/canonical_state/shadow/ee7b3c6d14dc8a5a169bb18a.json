@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ee7b3c6d14dc8a5a169bb18a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-004-87075c4d97a5:150",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.taycan.gen1.trim.4_cross_turismo_gravel_all_terrain_wagon_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:53+00:00",
+    "before_hash": "109270683584a426a3224a7706e83ca8c2b78bb9888c72d4ab62a830f1ea1e63",
+    "after_hash": "5125e3051737b830f56b87afb65904b405cc8dd4ed98cf96d3469d42b58fcf63",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      104.69,
+      727.0,
+      "Draxlmaier",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      185.0,
+      601.0,
+      "245/45R20"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      104.69,
+      727.0,
+      "Draxlmaier",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      185.0,
+      601.0,
+      "245/45R20",
+      "285/40R20"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d859f6b2-4166-412f-b12f-7419c1446c15_fitment.tyre_rear_813f8535c7a8.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ee7b3c6d14dc8a5a169bb18a:spec",
+    "revision_id": "ee7b3c6d14dc8a5a169bb18a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.taycan.gen1.trim.4_cross_turismo_gravel_all_terrain_wagon_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:53+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      104.69,
+      727.0,
+      "Draxlmaier",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      185.0,
+      601.0,
+      "245/45R20",
+      "285/40R20"
+    ]
+  }
+}

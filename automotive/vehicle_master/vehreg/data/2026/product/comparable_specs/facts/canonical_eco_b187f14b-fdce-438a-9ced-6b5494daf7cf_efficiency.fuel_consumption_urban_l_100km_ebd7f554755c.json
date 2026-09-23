@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:b187f14b-fdce-438a-9ced-6b5494daf7cf:efficiency.fuel_consumption_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 4.5,
+      "unit": "L/100km",
+      "observed_at": "2026-04-23",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/b187f14b-fdce-438a-9ced-6b5494daf7cf",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/b187f14b-fdce-438a-9ced-6b5494daf7cf",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "honda.crv.rs.trim.e_hev_es_hev"
+    }
+  ]
+}

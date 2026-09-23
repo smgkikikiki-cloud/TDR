@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "cd2487e89766f5e60a7f960f",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-018-bf8b3c7bf841:179",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.tank500.t500.trim.gwm_2_4t_ultra_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:52+00:00",
+    "before_hash": "873d2137823281556675153f4fde88c11d414e84faaac355e2b075a6761a7ac4",
+    "after_hash": "fad3544a6af7bb27d0a2040bb533daa4144cf300bc44c1574e08806f1fbd0e51",
+    "before": [
+      true,
+      true,
+      true,
+      6.6,
+      7.1,
+      8.1,
+      185.0,
+      0.13,
+      0.00038,
+      "TIS",
+      "DIESEL",
+      2370
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      6.6,
+      7.1,
+      8.1,
+      185.0,
+      0.13,
+      0.00038,
+      "TIS",
+      "DIESEL",
+      2370,
+      "B20"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_1d785fd7-253e-4f65-944a-ba7268b2ca6f_engine.fuel_type_66b8b0d3e001.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "cd2487e89766f5e60a7f960f:spec",
+    "revision_id": "cd2487e89766f5e60a7f960f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.tank500.t500.trim.gwm_2_4t_ultra_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:52+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      6.6,
+      7.1,
+      8.1,
+      185.0,
+      0.13,
+      0.00038,
+      "TIS",
+      "DIESEL",
+      2370,
+      "B20"
+    ]
+  }
+}

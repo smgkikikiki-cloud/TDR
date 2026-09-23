@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:4d4d26d1-e1f9-432f-917b-86f6d5e3ada2:battery.gross_capacity_kwh",
+      "field_key": "battery.gross_capacity_kwh",
+      "value_state": "KNOWN",
+      "value": 69.19,
+      "unit": "kWh",
+      "observed_at": "2023-07-14",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/4d4d26d1-e1f9-432f-917b-86f6d5e3ada2",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/4d4d26d1-e1f9-432f-917b-86f6d5e3ada2",
+      "trim_id": "volvo.xc40.xc40g.trim.pure_electric_single_bev"
+    }
+  ]
+}

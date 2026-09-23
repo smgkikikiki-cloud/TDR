@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "dd14379e6564cf365b97e516",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-047-23268458b262:251",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_cross.xg10.trim.hev_premium_safety_60_years_cp_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:25+00:00",
+    "before_hash": "cea6a3ea2684e20b2f37efda22fb1476427dbf6e3d0df549e22e5e9b1b49b96d",
+    "after_hash": "5aff593b3ce79be4cf6fe308200b2f08e793fa161acee88c63e1e3accd51d32f",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      4.5,
+      4.3,
+      3.9,
+      98.0,
+      0.005,
+      "TIS",
+      "HEV",
+      1798,
+      "E20",
+      "225/50R18",
+      "HEV"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      4.5,
+      4.3,
+      3.9,
+      98.0,
+      0.005,
+      "TIS",
+      "HEV",
+      1798,
+      "E20",
+      "225/50R18",
+      "HEV",
+      4.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_8ed0f4040deb48f59ab1dc1bde490e0c_manufacturing.excise_tax_rate_b7b9695eaa2f.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "dd14379e6564cf365b97e516:spec",
+    "revision_id": "dd14379e6564cf365b97e516",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_cross.xg10.trim.hev_premium_safety_60_years_cp_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:25+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      4.5,
+      4.3,
+      3.9,
+      98.0,
+      0.005,
+      "TIS",
+      "HEV",
+      1798,
+      "E20",
+      "225/50R18",
+      "HEV",
+      4.0
+    ]
+  }
+}

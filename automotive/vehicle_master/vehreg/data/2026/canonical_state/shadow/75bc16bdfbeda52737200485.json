@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "75bc16bdfbeda52737200485",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-027-e2d326b095bb:326",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.ranger_double_cab.p703.trim.stormtrak_2_0l_bi_turbo_hr_10at",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:39+00:00",
+    "before_hash": "a2c963c78dc100277f09b69866e2d09cba3fd5b269bba17455846b82df57c3bf",
+    "after_hash": "4c4405c4d01127036bcb02e09261a4d83b966ecc0615ae013b72156f05b1ace4",
+    "before": [
+      true,
+      6.6,
+      6.8,
+      7.2,
+      180.0,
+      0.136,
+      0.00024,
+      "TIS"
+    ],
+    "after": [
+      true,
+      6.6,
+      6.8,
+      7.2,
+      180.0,
+      0.136,
+      0.00024,
+      "TIS",
+      "DIESEL"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_949ce678-c081-4c3e-9f40-082fb6893b7b_engine.combustion_type_1b3af08621fb.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "75bc16bdfbeda52737200485:spec",
+    "revision_id": "75bc16bdfbeda52737200485",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.ranger_double_cab.p703.trim.stormtrak_2_0l_bi_turbo_hr_10at",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:39+00:00",
+    "payload": [
+      true,
+      6.6,
+      6.8,
+      7.2,
+      180.0,
+      0.136,
+      0.00024,
+      "TIS",
+      "DIESEL"
+    ]
+  }
+}

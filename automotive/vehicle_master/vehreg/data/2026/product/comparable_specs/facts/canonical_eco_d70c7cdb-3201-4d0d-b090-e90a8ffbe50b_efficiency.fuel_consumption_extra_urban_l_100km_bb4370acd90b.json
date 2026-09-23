@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:d70c7cdb-3201-4d0d-b090-e90a8ffbe50b:efficiency.fuel_consumption_extra_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_extra_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 6.2,
+      "unit": "L/100km",
+      "observed_at": "2025-12-29",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/d70c7cdb-3201-4d0d-b090-e90a8ffbe50b",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/d70c7cdb-3201-4d0d-b090-e90a8ffbe50b",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "bmw.bmw_3.g20.trim.m340i_xdrive_ice"
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "0df17a2f613ea9b816035e89",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-052-52eba3c13659:372",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.kicks.p15.trim.95kw_s",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:24+00:00",
+    "before_hash": "c5638bd87a28ae0126ab29ac3bdb4adccbc0428c007feb706277183d9c07be90",
+    "after_hash": "6feac45d09b2fd6700777f387515d12c3be7b92df5562dd502d574d7f36c028f",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      4.5,
+      4.2,
+      3.7,
+      100.0,
+      0.027,
+      "TIS",
+      "HEV",
+      1198,
+      "E20",
+      "205/55R17",
+      "HEV",
+      4.0,
+      "AUTOMATIC",
+      true,
+      3,
+      true,
+      [
+        "R100"
+      ],
+      1340,
+      1615
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      4.5,
+      4.2,
+      3.7,
+      100.0,
+      0.027,
+      "TIS",
+      "HEV",
+      1198,
+      "E20",
+      "205/55R17",
+      "HEV",
+      4.0,
+      "AUTOMATIC",
+      true,
+      3,
+      true,
+      [
+        "R100"
+      ],
+      1340,
+      1615,
+      4290
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_c06461e5c72945d48271f14bbf6ad07b_vehicle.length_mm_865b2cf710fd.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "0df17a2f613ea9b816035e89:spec",
+    "revision_id": "0df17a2f613ea9b816035e89",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.kicks.p15.trim.95kw_s",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:24+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      4.5,
+      4.2,
+      3.7,
+      100.0,
+      0.027,
+      "TIS",
+      "HEV",
+      1198,
+      "E20",
+      "205/55R17",
+      "HEV",
+      4.0,
+      "AUTOMATIC",
+      true,
+      3,
+      true,
+      [
+        "R100"
+      ],
+      1340,
+      1615,
+      4290
+    ]
+  }
+}

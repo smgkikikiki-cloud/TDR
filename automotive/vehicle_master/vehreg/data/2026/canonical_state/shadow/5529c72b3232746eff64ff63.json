@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5529c72b3232746eff64ff63",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-049-18d26b73936f:19",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "suzuki.ciaz.yl1.trim.gl_cvt_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:44+00:00",
+    "before_hash": "0dee6e59deaf0c343b0a585f9bba12c45d00fe42c8b36319034eb3f1b6ee5659",
+    "after_hash": "8abff5dc7a49dd7c5f856b1933508a40cc2d5ef5f4b21e1aaa04fae2bf322a6f",
+    "before": [
+      4.3,
+      5.0,
+      6.2,
+      119.0,
+      0.003,
+      "TIS",
+      "GASOLINE",
+      1242,
+      "E20",
+      "185/65R15",
+      "ICE"
+    ],
+    "after": [
+      4.3,
+      5.0,
+      6.2,
+      119.0,
+      0.003,
+      "TIS",
+      "GASOLINE",
+      1242,
+      "E20",
+      "185/65R15",
+      "ICE",
+      14.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_cef792777f20436086a081dff0145f91_manufacturing.excise_tax_rate_e90049b82f42.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5529c72b3232746eff64ff63:spec",
+    "revision_id": "5529c72b3232746eff64ff63",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "suzuki.ciaz.yl1.trim.gl_cvt_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:44+00:00",
+    "payload": [
+      4.3,
+      5.0,
+      6.2,
+      119.0,
+      0.003,
+      "TIS",
+      "GASOLINE",
+      1242,
+      "E20",
+      "185/65R15",
+      "ICE",
+      14.0
+    ]
+  }
+}

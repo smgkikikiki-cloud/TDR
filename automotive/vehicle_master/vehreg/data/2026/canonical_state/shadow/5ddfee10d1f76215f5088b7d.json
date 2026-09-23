@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5ddfee10d1f76215f5088b7d",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-043-5c8c2001b8cb:170",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_e_class.w214.trim.e_220_d_amg_sport_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:44+00:00",
+    "before_hash": "6e6bba0c546e7c46a881c63274ab7ce5b3d3fa2685f00f067f2eb7867b943114",
+    "after_hash": "20cec80afe3ac209b3c08719560d1055520db6d637af9612ab3fedb606b31830",
+    "before": [
+      true,
+      4.5,
+      5.0,
+      6.0,
+      132.0,
+      0.057,
+      0.00075,
+      "TIS",
+      "DIESEL",
+      1950,
+      "DIESEL",
+      "245/40R19"
+    ],
+    "after": [
+      true,
+      4.5,
+      5.0,
+      6.0,
+      132.0,
+      0.057,
+      0.00075,
+      "TIS",
+      "DIESEL",
+      1950,
+      "DIESEL",
+      "245/40R19",
+      "275/35R19"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_089d1d42-f9d0-41a3-a117-462c78799f01_fitment.tyre_rear_ec3e6b4fa3ac.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5ddfee10d1f76215f5088b7d:spec",
+    "revision_id": "5ddfee10d1f76215f5088b7d",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_e_class.w214.trim.e_220_d_amg_sport_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:44+00:00",
+    "payload": [
+      true,
+      4.5,
+      5.0,
+      6.0,
+      132.0,
+      0.057,
+      0.00075,
+      "TIS",
+      "DIESEL",
+      1950,
+      "DIESEL",
+      "245/40R19",
+      "275/35R19"
+    ]
+  }
+}

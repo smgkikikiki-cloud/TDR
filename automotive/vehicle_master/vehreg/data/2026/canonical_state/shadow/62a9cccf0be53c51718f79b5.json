@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "62a9cccf0be53c51718f79b5",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-036-ba2d051d30aa:192",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.countryman.u25.trim.cooper_s_countryman_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:48+00:00",
+    "before_hash": "a06ca9b0d091ffd8647ba47b65a0f67dc46e1e01d7e047ac47d8df38a5019d9b",
+    "after_hash": "ffcc6e36a8cb5d480f66aa23f6fa05d1af04e4e8c84317ad6c15271df7b8661a",
+    "before": [
+      true,
+      true,
+      true,
+      5.3,
+      6.1,
+      7.4,
+      142.0,
+      0.009
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      5.3,
+      6.1,
+      7.4,
+      142.0,
+      0.009,
+      "TIS"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_c6dbae13-1ba1-45f9-bf50-afc422a90304_emissions.standard_08e94fbbb73f.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "62a9cccf0be53c51718f79b5:spec",
+    "revision_id": "62a9cccf0be53c51718f79b5",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.countryman.u25.trim.cooper_s_countryman_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:48+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      5.3,
+      6.1,
+      7.4,
+      142.0,
+      0.009,
+      "TIS"
+    ]
+  }
+}

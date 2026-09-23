@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "51721a0883223a8f5d0a61ca",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-052-52eba3c13659:235",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_c_class.w206.trim.amg_sport_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:24+00:00",
+    "before_hash": "2aebe09e304bd53c1211295ca367706435a7f69882092732348fac1d993b81cf",
+    "after_hash": "d6e73e07601b07ffd91bec679704bed6b0f4104d1406f4944be813d6f1398b3c",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      2.0,
+      45.0,
+      0.004,
+      "TIS",
+      "HEV",
+      1991,
+      "GASOLINE",
+      "225/45R18",
+      "245/40R18",
+      "HEV",
+      4.0,
+      9,
+      "AUTOMATIC"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      2.0,
+      45.0,
+      0.004,
+      "TIS",
+      "HEV",
+      1991,
+      "GASOLINE",
+      "225/45R18",
+      "245/40R18",
+      "HEV",
+      4.0,
+      9,
+      "AUTOMATIC",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_9dc1b0e785a3480e84f866f0d2c479da_safety.abs_070a6311d57a.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "51721a0883223a8f5d0a61ca:spec",
+    "revision_id": "51721a0883223a8f5d0a61ca",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_c_class.w206.trim.amg_sport_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:24+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      2.0,
+      45.0,
+      0.004,
+      "TIS",
+      "HEV",
+      1991,
+      "GASOLINE",
+      "225/45R18",
+      "245/40R18",
+      "HEV",
+      4.0,
+      9,
+      "AUTOMATIC",
+      true
+    ]
+  }
+}

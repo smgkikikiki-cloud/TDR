@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ccb26626e0613f3ee15f376e",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-035-5b8b3aecfae7:9",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_vs_hev.vsh.trim.100th_anniversary_special_edition_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:40+00:00",
+    "before_hash": "c0bb277bf6cf8e8fa9b84927eb19460fb006d7b815794d217c2539768208d452",
+    "after_hash": "91fdec94452a69205187d46b93d04b0e36a87e210d4140afbde6e8bb01131432",
+    "before": [
+      true,
+      4.9,
+      4.1,
+      2.7,
+      98.0,
+      0.0024
+    ],
+    "after": [
+      true,
+      4.9,
+      4.1,
+      2.7,
+      98.0,
+      0.0024,
+      "TIS"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ef59c79e-8302-4844-a3e6-aacd2d6cbaa3_emissions.standard_a65a7a6e9bd9.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ccb26626e0613f3ee15f376e:spec",
+    "revision_id": "ccb26626e0613f3ee15f376e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_vs_hev.vsh.trim.100th_anniversary_special_edition_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:40+00:00",
+    "payload": [
+      true,
+      4.9,
+      4.1,
+      2.7,
+      98.0,
+      0.0024,
+      "TIS"
+    ]
+  }
+}

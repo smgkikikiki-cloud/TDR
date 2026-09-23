@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "232430d4fcddbe4b6b956f3e",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-010-6f2b18f1a4fd:109",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.poer_sahar.gen1.trim.gwm_2_4t_pro_single_cab_4wd_l_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:14+00:00",
+    "before_hash": "ffe7eaa8cfe320de917eb55a0b74b8a61be21d22a45cca6cd707e357f92d0c1c",
+    "after_hash": "ea163ed626517fecbafd9fce084e6e1d3ec50baeee08e95f9f79b7a318ded2f1",
+    "before": [
+      true,
+      true,
+      true,
+      6.9
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      6.9,
+      7.5
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_71cce107-72a3-4d4a-8479-6303008497f4_efficiency.fuel_consumption_l_100km_af63f1be19a1.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "232430d4fcddbe4b6b956f3e:spec",
+    "revision_id": "232430d4fcddbe4b6b956f3e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.poer_sahar.gen1.trim.gwm_2_4t_pro_single_cab_4wd_l_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:14+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      6.9,
+      7.5
+    ]
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a656541e8bef7515dc7e70ad",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-025-74b815fdedac:221",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "isuzu.dmax_cab.rg.trim.4_1_9_ddi_s_at_mhev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:26+00:00",
+    "before_hash": "9da0d9b61029570b85c51cb50426c8821a5872a20525cfa35afff8454b2bcf4e",
+    "after_hash": "430c8fe99a354dbd843c594740ba1c25ba7e5a96a65c4c6cec7035552f2662b9",
+    "before": [
+      true,
+      6.0,
+      6.4,
+      7.2,
+      167.0,
+      0.222,
+      0.00011,
+      "TIS",
+      "OTHER",
+      1898,
+      "B20",
+      "215/70R15",
+      "ICE",
+      6.0,
+      6,
+      "AUTOMATIC",
+      true,
+      3,
+      true,
+      [
+        "R13H"
+      ],
+      1820,
+      1690
+    ],
+    "after": [
+      true,
+      6.0,
+      6.4,
+      7.2,
+      167.0,
+      0.222,
+      0.00011,
+      "TIS",
+      "OTHER",
+      1898,
+      "B20",
+      "215/70R15",
+      "ICE",
+      6.0,
+      6,
+      "AUTOMATIC",
+      true,
+      3,
+      true,
+      [
+        "R13H"
+      ],
+      1820,
+      1690,
+      5230
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_573119a1-e7dd-4a18-adad-bf294b2aa623_vehicle.length_mm_213980b0b411.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a656541e8bef7515dc7e70ad:spec",
+    "revision_id": "a656541e8bef7515dc7e70ad",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "isuzu.dmax_cab.rg.trim.4_1_9_ddi_s_at_mhev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:26+00:00",
+    "payload": [
+      true,
+      6.0,
+      6.4,
+      7.2,
+      167.0,
+      0.222,
+      0.00011,
+      "TIS",
+      "OTHER",
+      1898,
+      "B20",
+      "215/70R15",
+      "ICE",
+      6.0,
+      6,
+      "AUTOMATIC",
+      true,
+      3,
+      true,
+      [
+        "R13H"
+      ],
+      1820,
+      1690,
+      5230
+    ]
+  }
+}

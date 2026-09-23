@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:b0c7e69a-c05f-4036-bd3a-aedc440d3f12:emissions.co2_g_km",
+      "field_key": "emissions.co2_g_km",
+      "value_state": "KNOWN",
+      "value": 139.0,
+      "unit": "g/km",
+      "observed_at": "2024-05-21",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/b0c7e69a-c05f-4036-bd3a-aedc440d3f12",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/b0c7e69a-c05f-4036-bd3a-aedc440d3f12",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "honda.civic.fe.trim.el_ice"
+    }
+  ]
+}

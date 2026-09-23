@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a0723953a982b5a914e9bb0b",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-029-c1bed9cb95f3:283",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bentley.flying_spur.gen1.trim.hybrid_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:55+00:00",
+    "before_hash": "fac64e0dc54b8aa9b6b9fe48be9ac09813a3b341cc9a192ee2c4f27a671a491b",
+    "after_hash": "df408c861d01b56e6b827d6a83c81f78c94cd20692e60fd419b0ed42d965ad2a",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      17.97
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      17.97,
+      374.4
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_3d21a9a4-5daa-486a-b054-76f7fa815405_battery.nominal_voltage_v_1eac8411e4bf.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a0723953a982b5a914e9bb0b:spec",
+    "revision_id": "a0723953a982b5a914e9bb0b",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bentley.flying_spur.gen1.trim.hybrid_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:55+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      17.97,
+      374.4
+    ]
+  }
+}

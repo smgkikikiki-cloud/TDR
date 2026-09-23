@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "776a02eb828459c94ea1fe16",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-023-8723a19230b0:376",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.cx30.dm.trim.2_0_signature_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:16+00:00",
+    "before_hash": "c9cd34cfa83ba8adfd2c75066fc3280005e276c3e944616bf98172da836775a0",
+    "after_hash": "052f4c51eba1a4c423a01720c0a156b9f0f5c3d9e35335dfd540ac253ff5d7e7",
+    "before": [
+      true,
+      5.5,
+      6.5,
+      8.3,
+      150.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "E85",
+      "215/55R18",
+      "ICE",
+      20.0,
+      6
+    ],
+    "after": [
+      true,
+      5.5,
+      6.5,
+      8.3,
+      150.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "E85",
+      "215/55R18",
+      "ICE",
+      20.0,
+      6,
+      "AUTOMATIC"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d2939e10-9334-4b2c-b36a-fdac7e78d9b4_powertrain.transmission_b51dc5a7a205.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "776a02eb828459c94ea1fe16:spec",
+    "revision_id": "776a02eb828459c94ea1fe16",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.cx30.dm.trim.2_0_signature_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:16+00:00",
+    "payload": [
+      true,
+      5.5,
+      6.5,
+      8.3,
+      150.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "E85",
+      "215/55R18",
+      "ICE",
+      20.0,
+      6,
+      "AUTOMATIC"
+    ]
+  }
+}

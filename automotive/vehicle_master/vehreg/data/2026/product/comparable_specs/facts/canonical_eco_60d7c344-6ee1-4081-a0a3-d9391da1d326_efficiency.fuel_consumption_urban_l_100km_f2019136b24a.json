@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:60d7c344-6ee1-4081-a0a3-d9391da1d326:efficiency.fuel_consumption_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 9.3,
+      "unit": "L/100km",
+      "observed_at": "2024-02-02",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/60d7c344-6ee1-4081-a0a3-d9391da1d326",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/60d7c344-6ee1-4081-a0a3-d9391da1d326",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mercedes_benz.s_class.gen1.trim.exclusive_hev"
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "3696e14f0e6befef4f76688a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-035-5b8b3aecfae7:194",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg4.mg4e.trim.xpower_64_kwh_awd_dual_435_hp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:40+00:00",
+    "before_hash": "78c28222c981d1244117527c8a3924995124ceac23e907d7a798014f70700d6c",
+    "after_hash": "8f7d21ae1a89c3375e06f64bc18a375256c20c234db015e4a6e35bd58c1708b2",
+    "before": [
+      "NMC",
+      64.6,
+      380.0,
+      "E-CON",
+      "CCS2  DC Three Phase 150~1000 V 200 A",
+      "EXTERNAL_DC",
+      true,
+      176.0,
+      480.1,
+      "235/45R18",
+      "BEV",
+      2.0,
+      "PMSM"
+    ],
+    "after": [
+      "NMC",
+      64.6,
+      380.0,
+      "E-CON",
+      "CCS2  DC Three Phase 150~1000 V 200 A",
+      "EXTERNAL_DC",
+      true,
+      176.0,
+      480.1,
+      "235/45R18",
+      "BEV",
+      2.0,
+      "PMSM",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_149a5a0b-1932-4636-ba17-155979f340d2_safety.abs_01bd329dc44a.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "3696e14f0e6befef4f76688a:spec",
+    "revision_id": "3696e14f0e6befef4f76688a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg4.mg4e.trim.xpower_64_kwh_awd_dual_435_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:40+00:00",
+    "payload": [
+      "NMC",
+      64.6,
+      380.0,
+      "E-CON",
+      "CCS2  DC Three Phase 150~1000 V 200 A",
+      "EXTERNAL_DC",
+      true,
+      176.0,
+      480.1,
+      "235/45R18",
+      "BEV",
+      2.0,
+      "PMSM",
+      true
+    ]
+  }
+}

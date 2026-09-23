@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:6111171ad4c1465ab238e4390487d230:manufacturing.excise_tax_rate",
+      "field_key": "manufacturing.excise_tax_rate",
+      "value_state": "KNOWN",
+      "value": 30.0,
+      "unit": "%",
+      "observed_at": "2020-09-28",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/6111171ad4c1465ab238e4390487d230",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/6111171ad4c1465ab238e4390487d230",
+      "trim_id": "audi.audi_q3.f3.trim.35_tfsi_ice"
+    }
+  ]
+}

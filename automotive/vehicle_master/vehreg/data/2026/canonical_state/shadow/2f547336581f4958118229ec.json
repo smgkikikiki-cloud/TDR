@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2f547336581f4958118229ec",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-013-01b2d6d40e8e:385",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.xc60.xc60g.trim.ultra_t8_plug_in_hybrid_bright_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:28+00:00",
+    "before_hash": "47f0ce1d65569cc54bcaaa9b8231025692e978eae29aa2368a1e0267335cfa6f",
+    "after_hash": "c08ca3873bd721a1efa9cf2912cc0db5db237b7f00d6ad756aa1d8cc0b1d7317",
+    "before": [
+      "NMC",
+      19.4,
+      373.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd.",
+      "ONBOARD_AC",
+      true,
+      1.6,
+      36.0,
+      0.005,
+      0.00011
+    ],
+    "after": [
+      "NMC",
+      19.4,
+      373.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd.",
+      "ONBOARD_AC",
+      true,
+      1.6,
+      36.0,
+      0.005,
+      0.00011,
+      "TIS"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_7822724b-5ac9-487a-bb1d-42aa11a56c2c_emissions.standard_1ae89ebced02.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2f547336581f4958118229ec:spec",
+    "revision_id": "2f547336581f4958118229ec",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.xc60.xc60g.trim.ultra_t8_plug_in_hybrid_bright_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:28+00:00",
+    "payload": [
+      "NMC",
+      19.4,
+      373.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd.",
+      "ONBOARD_AC",
+      true,
+      1.6,
+      36.0,
+      0.005,
+      0.00011,
+      "TIS"
+    ]
+  }
+}

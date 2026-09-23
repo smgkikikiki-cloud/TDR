@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "908dc3a4edeb61f2538bddbf",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-056-d87ca8b8ef3b:131",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "jaecoo.jaecoo_5_ev.j5.trim.long_range_max_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:22:23+00:00",
+    "before_hash": "878b86d723bfd05260c649286f34ffa6a6e4f4fef2b316a323ccbc45e7e74e64",
+    "after_hash": "58499f2d33b35d03f4cf69472c3f91958c470de0539e0107c63e69c74f217445",
+    "before": [
+      {
+        "trim_id": "jaecoo.jaecoo_5_ev.j5.trim.long_range_max_bev",
+        "amount_thb": 679000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-07",
+        "source": "ecosticker",
+        "source_ref": "b4529bb4-d813-416b-b272-430b123cc06c",
+        "source_document_id": "",
+        "notes": "Recommended retail price shown on the ECO Sticker record. Kept as source evidence only; it is not promoted to current Thai MSRP.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "jaecoo.jaecoo_5_ev.j5.trim.long_range_max_bev",
+        "amount_thb": 679000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2025-08-15",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/b4529bb4-d813-416b-b272-430b123cc06c",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "jaecoo.jaecoo_5_ev.j5.trim.long_range_max_bev",
+        "amount_thb": 679000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-07",
+        "source": "ecosticker",
+        "source_ref": "b4529bb4-d813-416b-b272-430b123cc06c",
+        "source_document_id": "",
+        "notes": "Recommended retail price shown on the ECO Sticker record. Kept as source evidence only; it is not promoted to current Thai MSRP.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-056-d87ca8b8ef3b:131.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "908dc3a4edeb61f2538bddbf:price",
+    "revision_id": "908dc3a4edeb61f2538bddbf",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "jaecoo.jaecoo_5_ev.j5.trim.long_range_max_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:22:23+00:00",
+    "payload": [
+      {
+        "trim_id": "jaecoo.jaecoo_5_ev.j5.trim.long_range_max_bev",
+        "amount_thb": 679000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2025-08-15",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/b4529bb4-d813-416b-b272-430b123cc06c",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "jaecoo.jaecoo_5_ev.j5.trim.long_range_max_bev",
+        "amount_thb": 679000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-07",
+        "source": "ecosticker",
+        "source_ref": "b4529bb4-d813-416b-b272-430b123cc06c",
+        "source_document_id": "",
+        "notes": "Recommended retail price shown on the ECO Sticker record. Kept as source evidence only; it is not promoted to current Thai MSRP.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

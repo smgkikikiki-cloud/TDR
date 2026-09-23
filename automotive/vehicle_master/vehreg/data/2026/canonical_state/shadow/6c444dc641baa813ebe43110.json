@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6c444dc641baa813ebe43110",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-042-509b690f0202:302",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.xpander.a1.trim.gt_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:35+00:00",
+    "before_hash": "abc68e569393c17d45fabc76b01a182bfc2666ac5a7b463bea5772b4a31f4458",
+    "after_hash": "a437480fd720ef217e199d9a070c299f82804a8158eefac339ff95e962274f78",
+    "before": [
+      true,
+      5.5,
+      6.1,
+      7.0,
+      144.0,
+      0.022,
+      "TIS",
+      "GASOLINE",
+      1499,
+      "E20",
+      "205/55R17",
+      "ICE",
+      25.0,
+      "CVT",
+      true,
+      3,
+      true,
+      [
+        "R13H"
+      ]
+    ],
+    "after": [
+      true,
+      5.5,
+      6.1,
+      7.0,
+      144.0,
+      0.022,
+      "TIS",
+      "GASOLINE",
+      1499,
+      "E20",
+      "205/55R17",
+      "ICE",
+      25.0,
+      "CVT",
+      true,
+      3,
+      true,
+      [
+        "R13H"
+      ],
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_55cdb6fd-569c-4d6c-866f-8ecdd31a41ee_technology.led_headlights_6bfc86ca44aa.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6c444dc641baa813ebe43110:spec",
+    "revision_id": "6c444dc641baa813ebe43110",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.xpander.a1.trim.gt_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:35+00:00",
+    "payload": [
+      true,
+      5.5,
+      6.1,
+      7.0,
+      144.0,
+      0.022,
+      "TIS",
+      "GASOLINE",
+      1499,
+      "E20",
+      "205/55R17",
+      "ICE",
+      25.0,
+      "CVT",
+      true,
+      3,
+      true,
+      [
+        "R13H"
+      ],
+      true
+    ]
+  }
+}

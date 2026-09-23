@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "db2523a6fd96cb4c5b9a3c29",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-021-33a0f14d51bc:136",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.city_hatchback.gn7.trim.drival_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:06+00:00",
+    "before_hash": "6e89096477bfd563fcb5c1e81e130c2da659ad93f54f0c2296383a3232b2bab6",
+    "after_hash": "de2a2717864b1decef252dcc9b2c1195947da21497f280f1f218721a88135c41",
+    "before": [
+      true,
+      true,
+      3.8,
+      3.6,
+      3.3,
+      83.0,
+      0.008,
+      0.00052,
+      "EURO5",
+      "HEV",
+      1498,
+      "GASOLINE",
+      "185/60R16"
+    ],
+    "after": [
+      true,
+      true,
+      3.8,
+      3.6,
+      3.3,
+      83.0,
+      0.008,
+      0.00052,
+      "EURO5",
+      "HEV",
+      1498,
+      "GASOLINE",
+      "185/60R16",
+      "HEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_865e0f2a-41ed-4010-a91b-e5a59fa11ff7_identity.powertrain_7303a24f3e6c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "db2523a6fd96cb4c5b9a3c29:spec",
+    "revision_id": "db2523a6fd96cb4c5b9a3c29",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.city_hatchback.gn7.trim.drival_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:06+00:00",
+    "payload": [
+      true,
+      true,
+      3.8,
+      3.6,
+      3.3,
+      83.0,
+      0.008,
+      0.00052,
+      "EURO5",
+      "HEV",
+      1498,
+      "GASOLINE",
+      "185/60R16",
+      "HEV"
+    ]
+  }
+}

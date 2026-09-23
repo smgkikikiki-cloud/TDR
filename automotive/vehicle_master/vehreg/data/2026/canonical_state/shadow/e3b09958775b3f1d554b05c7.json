@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e3b09958775b3f1d554b05c7",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-002-6827d3f0606e:44",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.cayenne.e3.trim.electric_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:47+00:00",
+    "before_hash": "6cb3c9684683659c4239dd7f77e83f3c49ed916dbf9bc1ea375fe1ebf1660618",
+    "after_hash": "aa2fa29dbd44f71fc6aaa406b06737c04abe71c38c87f8a3d1dc6e08ba959071",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      107.8,
+      700.0,
+      "Webasto Convertibles Slovakia, s.r.o.",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      173.0,
+      691.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      107.8,
+      700.0,
+      "Webasto Convertibles Slovakia, s.r.o.",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      173.0,
+      691.0,
+      "285/40R22"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_0eca67ad-aea5-4d60-bf86-817b708d0cb5_fitment.tyre_front_b28d4a9fc794.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e3b09958775b3f1d554b05c7:spec",
+    "revision_id": "e3b09958775b3f1d554b05c7",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.cayenne.e3.trim.electric_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:47+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      107.8,
+      700.0,
+      "Webasto Convertibles Slovakia, s.r.o.",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      173.0,
+      691.0,
+      "285/40R22"
+    ]
+  }
+}

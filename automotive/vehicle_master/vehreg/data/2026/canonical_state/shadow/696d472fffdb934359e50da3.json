@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "696d472fffdb934359e50da3",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-027-e2d326b095bb:132",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_e07.gen1.trim.performance_awd_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:39+00:00",
+    "before_hash": "eb68f5b62b7beb49a90bf714868fdd0b64b61d6089df6d8283982b9b29dc357e",
+    "after_hash": "0ec3e781aa6ec7525f89a817b47d76f257028f67935da7d86c4289266a2439ad",
+    "before": [
+      "NMC",
+      89.96,
+      612.0
+    ],
+    "after": [
+      "NMC",
+      89.96,
+      612.0,
+      "CHONGQING CHANGAN AUTOMOBILE CO., LTD."
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_134aa3a6-38e1-46ee-a184-8b76b9e168da_battery.supplier_328028d18e97.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "696d472fffdb934359e50da3:spec",
+    "revision_id": "696d472fffdb934359e50da3",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_e07.gen1.trim.performance_awd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:39+00:00",
+    "payload": [
+      "NMC",
+      89.96,
+      612.0,
+      "CHONGQING CHANGAN AUTOMOBILE CO., LTD."
+    ]
+  }
+}

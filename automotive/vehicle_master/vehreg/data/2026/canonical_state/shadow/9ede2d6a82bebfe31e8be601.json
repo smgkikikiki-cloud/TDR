@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9ede2d6a82bebfe31e8be601",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-046-2c82d6c5b603:224",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_gt",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:13+00:00",
+    "before_hash": "1844ca6ef1b95d930235c9171b42401281e68900412be3e2115d7f1e7cc82ef5",
+    "after_hash": "04b5fc1e0fb23b221bd24847e7ce6f69d859a846ff2c42179fdf2845eaf73596",
+    "before": [
+      6.4,
+      7.1,
+      8.2,
+      187.0,
+      0.436,
+      0.082,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "265/60R18",
+      "ICE",
+      9.0,
+      6
+    ],
+    "after": [
+      6.4,
+      7.1,
+      8.2,
+      187.0,
+      0.436,
+      0.082,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "265/60R18",
+      "ICE",
+      9.0,
+      6,
+      "MANUAL"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_322622809faf45f5ac8a1e259846ebcc_powertrain.transmission_65203c38468e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9ede2d6a82bebfe31e8be601:spec",
+    "revision_id": "9ede2d6a82bebfe31e8be601",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_gt",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:13+00:00",
+    "payload": [
+      6.4,
+      7.1,
+      8.2,
+      187.0,
+      0.436,
+      0.082,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "265/60R18",
+      "ICE",
+      9.0,
+      6,
+      "MANUAL"
+    ]
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "06c2489b8b54cb1d7636eec8",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-030-80293fca2870:241",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.gle.gen1.trim.4matic_exclusive_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:02+00:00",
+    "before_hash": "c360d97ada3d6a830f0f3445c97f3223b2a4264cb895a21c1dae1344a158b6cc",
+    "after_hash": "92f8f68d5565725843a2ff47ea4558fe4566e3addcf62a761bc5de39d330efa2",
+    "before": [
+      31.39,
+      365.0,
+      "Deutsche ACCUmotive",
+      "BOTH",
+      true
+    ],
+    "after": [
+      31.39,
+      365.0,
+      "Deutsche ACCUmotive",
+      "BOTH",
+      true,
+      1.1
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_11950b23-badf-475b-a02a-fd95f722d82b_efficiency.fuel_consumption_l_100km_50b207910f21.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "06c2489b8b54cb1d7636eec8:spec",
+    "revision_id": "06c2489b8b54cb1d7636eec8",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.gle.gen1.trim.4matic_exclusive_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:02+00:00",
+    "payload": [
+      31.39,
+      365.0,
+      "Deutsche ACCUmotive",
+      "BOTH",
+      true,
+      1.1
+    ]
+  }
+}

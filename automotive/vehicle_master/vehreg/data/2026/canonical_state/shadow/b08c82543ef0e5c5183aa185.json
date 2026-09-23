@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b08c82543ef0e5c5183aa185",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-001-2163ac0376be:336",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "tesla.model3.m3h.trim.rear_wheel_drive_rwd_60_kwh_lfp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:45+00:00",
+    "before_hash": "96e95ee1e88460530d93b61bcfba43b8a8628a91d23d227e9ffadb409dccb419",
+    "after_hash": "5f27e2f9441f716acc62c17563ade9434da9dfec28b0234b7213009ca658e8d3",
+    "before": [
+      "LFP",
+      62.1,
+      345.0,
+      "Tesla",
+      "240",
+      "ONBOARD_AC",
+      122.0,
+      572.0,
+      "235/45R18",
+      "BEV",
+      10.0,
+      "PMSM",
+      7
+    ],
+    "after": [
+      "LFP",
+      62.1,
+      345.0,
+      "Tesla",
+      "240",
+      "ONBOARD_AC",
+      122.0,
+      572.0,
+      "235/45R18",
+      "BEV",
+      10.0,
+      "PMSM",
+      7,
+      [
+        "R13H",
+        "R94",
+        "R95",
+        "R100"
+      ]
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_9c121f88-94c7-44ce-84c3-4294efa6591f_safety.un_regulations_6d1b16ac4368.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b08c82543ef0e5c5183aa185:spec",
+    "revision_id": "b08c82543ef0e5c5183aa185",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "tesla.model3.m3h.trim.rear_wheel_drive_rwd_60_kwh_lfp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:45+00:00",
+    "payload": [
+      "LFP",
+      62.1,
+      345.0,
+      "Tesla",
+      "240",
+      "ONBOARD_AC",
+      122.0,
+      572.0,
+      "235/45R18",
+      "BEV",
+      10.0,
+      "PMSM",
+      7,
+      [
+        "R13H",
+        "R94",
+        "R95",
+        "R100"
+      ]
+    ]
+  }
+}

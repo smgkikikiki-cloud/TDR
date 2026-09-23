@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "8cf0c364fc18df6d9ee03e79",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-032-04b0adc6e162:301",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lexus_ls.unresearched.trim.luxury_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:17+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "aa2b4bd093b5b2541a2e76320219f9277d90f46f1aa62e0eea109462b4b8a228",
+    "before": [],
+    "after": [
+      7.3
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_001bc433-70bb-47f2-825a-b5d0a4a2c5f9_efficiency.fuel_consumption_extra_urban_l_100km_e464ae80fbbc.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "8cf0c364fc18df6d9ee03e79:spec",
+    "revision_id": "8cf0c364fc18df6d9ee03e79",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lexus_ls.unresearched.trim.luxury_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:17+00:00",
+    "payload": [
+      7.3
+    ]
+  }
+}

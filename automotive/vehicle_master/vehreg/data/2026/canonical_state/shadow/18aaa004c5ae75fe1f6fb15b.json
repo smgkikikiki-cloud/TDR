@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "18aaa004c5ae75fe1f6fb15b",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-050-6df028e5a85f:94",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.cx30.dm.trim.2_0_s_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:57+00:00",
+    "before_hash": "f394613a0c108a309ddea29117a3598a69dc4c2709076aab3d67e38be6886c2c",
+    "after_hash": "85fd4043d5f0ee847706c5db64d433c0fa1d6585bb38ffb9013c9be02eab2a74",
+    "before": [
+      true,
+      true,
+      true,
+      5.5,
+      6.5,
+      8.3,
+      150.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1998
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      5.5,
+      6.5,
+      8.3,
+      150.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "E85"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_76392dca635344e5853b9d5b39606792_engine.fuel_type_467eaa439fda.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "18aaa004c5ae75fe1f6fb15b:spec",
+    "revision_id": "18aaa004c5ae75fe1f6fb15b",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.cx30.dm.trim.2_0_s_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:57+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      5.5,
+      6.5,
+      8.3,
+      150.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "E85"
+    ]
+  }
+}

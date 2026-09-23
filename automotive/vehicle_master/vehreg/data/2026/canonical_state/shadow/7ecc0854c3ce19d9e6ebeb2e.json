@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7ecc0854c3ce19d9e6ebeb2e",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-021-33a0f14d51bc:168",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.city.gn2.trim.e_hev_the_black_outshine_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:06+00:00",
+    "before_hash": "a82327c6220e763bfdb40fc56b6e520eb0bd8dc6678feb6b3acc3cb2f448a081",
+    "after_hash": "d6707ce7d5f92ce8dd99e3a3cfaf542d518145d41fa04544332158b4034d5c1e",
+    "before": [
+      true,
+      true,
+      3.8,
+      3.6,
+      3.3,
+      82.0,
+      0.01,
+      0.00033,
+      "EURO5",
+      "HEV",
+      1498
+    ],
+    "after": [
+      true,
+      true,
+      3.8,
+      3.6,
+      3.3,
+      82.0,
+      0.01,
+      0.00033,
+      "EURO5",
+      "HEV",
+      1498,
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_decb9637-b6dc-47e6-adbb-dcbf22bba946_engine.fuel_type_420bf98149fb.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7ecc0854c3ce19d9e6ebeb2e:spec",
+    "revision_id": "7ecc0854c3ce19d9e6ebeb2e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.city.gn2.trim.e_hev_the_black_outshine_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:06+00:00",
+    "payload": [
+      true,
+      true,
+      3.8,
+      3.6,
+      3.3,
+      82.0,
+      0.01,
+      0.00033,
+      "EURO5",
+      "HEV",
+      1498,
+      "GASOLINE"
+    ]
+  }
+}

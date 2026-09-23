@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "14e2d59582878947d010f1b7",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-009-54711011662e:82",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.haval_h6.h6hev.trim.hev_pro_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:10+00:00",
+    "before_hash": "cc0addc8631b2afa0a7ff5bd1221aaff5ac4133b1a92c43a10df6d7998759ccf",
+    "after_hash": "e79ed4b38e958da1703aa17b3b742abab7dba1146158d3dd964de77f5ad19dc3",
+    "before": [
+      true,
+      6.4,
+      5.2,
+      3.4,
+      120.0,
+      0.03469,
+      0.00018,
+      "TIS",
+      "HEV",
+      1499,
+      "GASOLINE",
+      "225/55R19",
+      "HEV",
+      9.0,
+      "CVT",
+      true,
+      true,
+      [
+        "R100"
+      ],
+      true,
+      1690,
+      1730
+    ],
+    "after": [
+      true,
+      6.4,
+      5.2,
+      3.4,
+      120.0,
+      0.03469,
+      0.00018,
+      "TIS",
+      "HEV",
+      1499,
+      "GASOLINE",
+      "225/55R19",
+      "HEV",
+      9.0,
+      "CVT",
+      true,
+      true,
+      [
+        "R100"
+      ],
+      true,
+      1690,
+      1730,
+      4703
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_555f6a1a-cb7a-4018-8eb8-28315d457b4e_vehicle.length_mm_13f90d362cc1.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "14e2d59582878947d010f1b7:spec",
+    "revision_id": "14e2d59582878947d010f1b7",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.haval_h6.h6hev.trim.hev_pro_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:10+00:00",
+    "payload": [
+      true,
+      6.4,
+      5.2,
+      3.4,
+      120.0,
+      0.03469,
+      0.00018,
+      "TIS",
+      "HEV",
+      1499,
+      "GASOLINE",
+      "225/55R19",
+      "HEV",
+      9.0,
+      "CVT",
+      true,
+      true,
+      [
+        "R100"
+      ],
+      true,
+      1690,
+      1730,
+      4703
+    ]
+  }
+}

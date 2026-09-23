@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "dc45b11a5106736d6a23313f",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-046-2c82d6c5b603:26",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_i4.g26.trim.m_sport_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:13+00:00",
+    "before_hash": "358ddd85fa7f9b73b218352f695b72e30baa84cd909da64e61f88c64062c55d8",
+    "after_hash": "001fbcf108104cbf76e4365d0aa91d6d1170e508dc474e8b93947b0d499ba546",
+    "before": [
+      true,
+      true,
+      true,
+      "GASOLINE",
+      "245/40R19",
+      "255/40R19",
+      "ICE",
+      8.0,
+      "BMW AG PLANT MÜNCHEN"
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      "GASOLINE",
+      "245/40R19",
+      "255/40R19",
+      "ICE",
+      8.0,
+      "BMW AG PLANT MÜNCHEN",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_8b6381a62b2e42098dfbcde44d5701d2_safety.abs_1aa86e05e204.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "dc45b11a5106736d6a23313f:spec",
+    "revision_id": "dc45b11a5106736d6a23313f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_i4.g26.trim.m_sport_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:13+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      "GASOLINE",
+      "245/40R19",
+      "255/40R19",
+      "ICE",
+      8.0,
+      "BMW AG PLANT MÜNCHEN",
+      true
+    ]
+  }
+}

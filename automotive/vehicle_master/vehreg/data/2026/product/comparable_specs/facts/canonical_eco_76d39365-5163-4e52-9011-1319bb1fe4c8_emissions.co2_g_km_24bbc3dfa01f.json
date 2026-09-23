@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:76d39365-5163-4e52-9011-1319bb1fe4c8:emissions.co2_g_km",
+      "field_key": "emissions.co2_g_km",
+      "value_state": "KNOWN",
+      "value": 214.0,
+      "unit": "g/km",
+      "observed_at": "2023-07-25",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/76d39365-5163-4e52-9011-1319bb1fe4c8",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/76d39365-5163-4e52-9011-1319bb1fe4c8",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "audi.audi_q3.f3.trim.rs_sportback_edition_10_years_ice"
+    }
+  ]
+}

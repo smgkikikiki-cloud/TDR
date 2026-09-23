@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6965730a6e5804c6640b93dd",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-029-c1bed9cb95f3:148",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.hyptec_ht.gen1.trim.620_luxury_gull_wing_doors_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:55+00:00",
+    "before_hash": "2092e7600c0a18205b7962a1bcb3b703077911ab448c605d3f40d9304d39a9cf",
+    "after_hash": "d66ee9d32b05fd0ef654bcbfb37f3e19057a66ed5b482fdf95fda39b67eb2ddd",
+    "before": [
+      "LFP"
+    ],
+    "after": [
+      "LFP",
+      83.64
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_da65f191-df51-44bb-95f6-829ea0ebe3a1_battery.gross_capacity_kwh_da399500fecd.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6965730a6e5804c6640b93dd:spec",
+    "revision_id": "6965730a6e5804c6640b93dd",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.hyptec_ht.gen1.trim.620_luxury_gull_wing_doors_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:55+00:00",
+    "payload": [
+      "LFP",
+      83.64
+    ]
+  }
+}

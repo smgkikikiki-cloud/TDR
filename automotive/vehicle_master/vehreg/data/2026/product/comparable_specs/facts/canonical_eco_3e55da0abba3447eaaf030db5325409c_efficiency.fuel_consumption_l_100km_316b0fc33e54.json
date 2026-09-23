@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:3e55da0abba3447eaaf030db5325409c:efficiency.fuel_consumption_l_100km",
+      "field_key": "efficiency.fuel_consumption_l_100km",
+      "value_state": "KNOWN",
+      "value": 4.1,
+      "unit": "L/100km",
+      "observed_at": "2020-06-24",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/3e55da0abba3447eaaf030db5325409c",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/3e55da0abba3447eaaf030db5325409c",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "toyota.c_hr.gen1.trim.by_karl_lagerfeld_hev"
+    }
+  ]
+}

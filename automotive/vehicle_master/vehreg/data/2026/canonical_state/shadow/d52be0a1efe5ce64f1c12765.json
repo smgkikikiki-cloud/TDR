@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d52be0a1efe5ce64f1c12765",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-013-01b2d6d40e8e:97",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.mini_cooper.j01.trim.se_bev_3_door_218_hp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:27+00:00",
+    "before_hash": "7b7a5c67e960d462ff8a5b362f0ac8b5c44389e97b0065e0967750539dc16965",
+    "after_hash": "458688adc4a59de13ecb60414ee2b916e9563f36466b210f7afb243c0a0d2f10",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      54.16,
+      398.2,
+      "Electrical Energy Storage System SE072",
+      "ONBOARD_AC",
+      true,
+      true,
+      true,
+      151.0,
+      362.0,
+      "225/40R18"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      54.16,
+      398.2,
+      "Electrical Energy Storage System SE072",
+      "ONBOARD_AC",
+      true,
+      true,
+      true,
+      151.0,
+      362.0,
+      "225/40R18",
+      "BEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_356292e0-9b87-4c2b-bfe8-85cb9d9b81d0_identity.powertrain_5907575dbbb8.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d52be0a1efe5ce64f1c12765:spec",
+    "revision_id": "d52be0a1efe5ce64f1c12765",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.mini_cooper.j01.trim.se_bev_3_door_218_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:27+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      54.16,
+      398.2,
+      "Electrical Energy Storage System SE072",
+      "ONBOARD_AC",
+      true,
+      true,
+      true,
+      151.0,
+      362.0,
+      "225/40R18",
+      "BEV"
+    ]
+  }
+}

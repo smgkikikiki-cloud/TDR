@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6bb1597ab87357085ac588a5",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-040-43e09f18d7ea:163",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.creta.su2.trim.style_plus_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:21+00:00",
+    "before_hash": "a7e2c5af7d0c45765acfae93e8476079ebdfa5ed4b3582f701b354f895b1ab90",
+    "after_hash": "c109da2c5ee17d5d6221d9ca89981275d0d1678f599f79d66d8fa1d27fb27e97",
+    "before": [
+      true,
+      true,
+      5.3,
+      6.0,
+      7.2
+    ],
+    "after": [
+      true,
+      true,
+      5.3,
+      6.0,
+      7.2,
+      142.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e820ecaf-2db8-4fb4-8420-e675f3880624_emissions.co2_g_km_4ca8f5b433c2.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6bb1597ab87357085ac588a5:spec",
+    "revision_id": "6bb1597ab87357085ac588a5",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.creta.su2.trim.style_plus_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:21+00:00",
+    "payload": [
+      true,
+      true,
+      5.3,
+      6.0,
+      7.2,
+      142.0
+    ]
+  }
+}

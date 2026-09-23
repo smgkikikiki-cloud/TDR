@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:8139d235-a74d-40da-aa97-14df9f282a81:efficiency.fuel_consumption_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 6.0,
+      "unit": "L/100km",
+      "observed_at": "2025-12-24",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/8139d235-a74d-40da-aa97-14df9f282a81",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/8139d235-a74d-40da-aa97-14df9f282a81",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mercedes_benz.mb_c_class.w206.trim.c_220_d_amg_line_hev"
+    }
+  ]
+}

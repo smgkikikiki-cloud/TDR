@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c5d4a990deeaf241c0d853cc",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-046-2c82d6c5b603:21",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_i4.g26.trim.m_sport_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:13+00:00",
+    "before_hash": "ed11971b1f6ee1e358fd07c6aa7a2e59bc3e920c58557ccfff04a59bbcdc2257",
+    "after_hash": "28a1638d33688c16dffef6268f9e741fe34ef032293937fd426eb412524c006a",
+    "before": [
+      true,
+      true,
+      true,
+      "GASOLINE"
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      "GASOLINE",
+      "245/40R19"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_8b6381a62b2e42098dfbcde44d5701d2_fitment.tyre_front_3c9eecbc23da.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c5d4a990deeaf241c0d853cc:spec",
+    "revision_id": "c5d4a990deeaf241c0d853cc",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_i4.g26.trim.m_sport_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:13+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      "GASOLINE",
+      "245/40R19"
+    ]
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c590ea03ae86e0fb069f4024",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-029-c1bed9cb95f3:324",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bentley.flying_spur.gen1.trim.azure_hybrid_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:55+00:00",
+    "before_hash": "bdbbfb6ef369549c58e9e6589352ad73620cf6d265ae76783a785c774574b03b",
+    "after_hash": "e8c20f4b6bb3bddc0e2472fd7c7c5cc5d34a52a77abac4dbccbd8fa1d8ae63b3",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      17.97,
+      374.4,
+      "Samsung SDI",
+      "ONBOARD_AC",
+      true,
+      true,
+      3.1
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      17.97,
+      374.4,
+      "Samsung SDI",
+      "ONBOARD_AC",
+      true,
+      true,
+      3.1,
+      71.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_13ada63b-e29e-47b4-b46f-b46d41cf9585_emissions.co2_g_km_41ab54281824.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c590ea03ae86e0fb069f4024:spec",
+    "revision_id": "c590ea03ae86e0fb069f4024",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bentley.flying_spur.gen1.trim.azure_hybrid_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:55+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      17.97,
+      374.4,
+      "Samsung SDI",
+      "ONBOARD_AC",
+      true,
+      true,
+      3.1,
+      71.0
+    ]
+  }
+}

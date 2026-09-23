@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:e1b09021-4284-4211-8b78-625a9939c8ab:efficiency.fuel_consumption_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 7.9,
+      "unit": "L/100km",
+      "observed_at": "2022-12-23",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/e1b09021-4284-4211-8b78-625a9939c8ab",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/e1b09021-4284-4211-8b78-625a9939c8ab",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "audi.a4.gen1.trim.40_tfsi_s_line_hev"
+    }
+  ]
+}

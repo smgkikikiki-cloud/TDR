@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "0e9a6f23221d291f8a039ff2",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-054-d20b71816f05:102",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover_velar.unresearched.trim.range_rover_velar_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:52+00:00",
+    "before_hash": "ab3df9f9b519cce87e9483bf22e49014727685f1064f53b82817a7e2e8575acb",
+    "after_hash": "f0a9915fb7b2c5de08c738c18e658e613f7bc1a980beb9bf917189e682df39ea",
+    "before": [
+      true,
+      true,
+      5.1,
+      5.7,
+      6.9,
+      148.0
+    ],
+    "after": [
+      true,
+      true,
+      5.1,
+      5.7,
+      6.9,
+      148.0,
+      0.138
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_90d96f24d5f44f3a9e6566204cb33245_emissions.nox_g_km_70b07f334b3f.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "0e9a6f23221d291f8a039ff2:spec",
+    "revision_id": "0e9a6f23221d291f8a039ff2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover_velar.unresearched.trim.range_rover_velar_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:52+00:00",
+    "payload": [
+      true,
+      true,
+      5.1,
+      5.7,
+      6.9,
+      148.0,
+      0.138
+    ]
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "1ccc70a5c8d58705e0317df1",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-024-8292d953d777:33",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover_sport.unresearched.trim.3_0p_phev_5dr_swb_dynamic_se_460ps_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:19+00:00",
+    "before_hash": "afcb7fe80994cacf2e45d040117a3c978eb161b9f5af00de31a713c1f60a1069",
+    "after_hash": "ebb9811fff5dafc63a23c41d7a7230a2d1557f0ed744caa97262edcf0583d6e7",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      34.56,
+      360.0,
+      "Jaguar Land Rover",
+      "EXTERNAL_DC",
+      true,
+      true,
+      1.7,
+      37.0,
+      0.005,
+      0.00024,
+      "TIS",
+      "PHEV"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      34.56,
+      360.0,
+      "Jaguar Land Rover",
+      "EXTERNAL_DC",
+      true,
+      true,
+      1.7,
+      37.0,
+      0.005,
+      0.00024,
+      "TIS",
+      "PHEV",
+      2996
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ccf36a08-0272-441e-94d2-969431ad6023_engine.displacement_cc_a9624f1eaf3f.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "1ccc70a5c8d58705e0317df1:spec",
+    "revision_id": "1ccc70a5c8d58705e0317df1",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover_sport.unresearched.trim.3_0p_phev_5dr_swb_dynamic_se_460ps_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:19+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      34.56,
+      360.0,
+      "Jaguar Land Rover",
+      "EXTERNAL_DC",
+      true,
+      true,
+      1.7,
+      37.0,
+      0.005,
+      0.00024,
+      "TIS",
+      "PHEV",
+      2996
+    ]
+  }
+}

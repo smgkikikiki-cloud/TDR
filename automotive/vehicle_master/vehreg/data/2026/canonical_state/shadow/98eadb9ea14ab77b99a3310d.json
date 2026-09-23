@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "98eadb9ea14ab77b99a3310d",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-044-4ee92a315b21:35",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "subaru.forester.sk.trim.2_0i_l_es_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:52+00:00",
+    "before_hash": "6263ade7129e14c94a5f757f046d053716e3b2d2ffd074c2fcce3d09b4e0b01b",
+    "after_hash": "7a2d2311aead3af2f8053e9d09c246ecaca7a371f3e049f2f8dffa72ea93704d",
+    "before": [
+      6.3,
+      7.6,
+      9.8,
+      181.0,
+      0.002,
+      "TIS",
+      "GASOLINE",
+      1995,
+      "GASOLINE",
+      "225/60R17",
+      "ICE",
+      30.0,
+      "CVT"
+    ],
+    "after": [
+      6.3,
+      7.6,
+      9.8,
+      181.0,
+      0.002,
+      "TIS",
+      "GASOLINE",
+      1995,
+      "GASOLINE",
+      "225/60R17",
+      "ICE",
+      30.0,
+      "CVT",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_22d882e7-6178-4849-a8fb-34e40c33dd4e_safety.abs_a77792b6ab58.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "98eadb9ea14ab77b99a3310d:spec",
+    "revision_id": "98eadb9ea14ab77b99a3310d",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "subaru.forester.sk.trim.2_0i_l_es_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:52+00:00",
+    "payload": [
+      6.3,
+      7.6,
+      9.8,
+      181.0,
+      0.002,
+      "TIS",
+      "GASOLINE",
+      1995,
+      "GASOLINE",
+      "225/60R17",
+      "ICE",
+      30.0,
+      "CVT",
+      true
+    ]
+  }
+}

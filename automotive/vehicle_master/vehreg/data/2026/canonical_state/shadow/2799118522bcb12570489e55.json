@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2799118522bcb12570489e55",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-049-18d26b73936f:204",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_hs.hsg.trim.turbo_c_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:45+00:00",
+    "before_hash": "e9f2df4bab0478e6e122bf76b1caa495345cf9191854aecb8f456608fafe363b",
+    "after_hash": "5fc987b274c7d13ba8c0efe8dfb517447066e860edc7b0dae4cf1386c6ea4c37",
+    "before": [
+      true,
+      true,
+      5.6,
+      6.2,
+      7.4,
+      145.0,
+      0.026,
+      "TIS"
+    ],
+    "after": [
+      true,
+      true,
+      5.6,
+      6.2,
+      7.4,
+      145.0,
+      0.026,
+      "TIS",
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_83c43e264ed44392a135639f248b11c7_engine.combustion_type_dd1f71d468dd.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2799118522bcb12570489e55:spec",
+    "revision_id": "2799118522bcb12570489e55",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_hs.hsg.trim.turbo_c_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:45+00:00",
+    "payload": [
+      true,
+      true,
+      5.6,
+      6.2,
+      7.4,
+      145.0,
+      0.026,
+      "TIS",
+      "GASOLINE"
+    ]
+  }
+}

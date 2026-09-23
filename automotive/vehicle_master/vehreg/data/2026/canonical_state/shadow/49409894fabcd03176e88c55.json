@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "49409894fabcd03176e88c55",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-053-c0bdc44365d7:15",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.ux.gen1.trim.ux300e_premium_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:37+00:00",
+    "before_hash": "34833f2cb0bb2e1f5c04fc3ab77d23836852aa942ba8593a0d7837d4b578c504",
+    "after_hash": "b05c53d887345ed1e4f6e2cc9c7c7044c5e55ad5420f944fc2d918f51378870e",
+    "before": [
+      true,
+      "GASOLINE",
+      "225/50R18",
+      "ICE",
+      8.0,
+      "TOYOTA MOTOR KYUSHU INC. - MIYATA PLANT",
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R100"
+      ],
+      true,
+      1785
+    ],
+    "after": [
+      true,
+      "GASOLINE",
+      "225/50R18",
+      "ICE",
+      8.0,
+      "TOYOTA MOTOR KYUSHU INC. - MIYATA PLANT",
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R100"
+      ],
+      true,
+      1785,
+      1545
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d42ae9d775ac420698e3d518964732eb_vehicle.height_mm_dd6201d05684.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "49409894fabcd03176e88c55:spec",
+    "revision_id": "49409894fabcd03176e88c55",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.ux.gen1.trim.ux300e_premium_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:37+00:00",
+    "payload": [
+      true,
+      "GASOLINE",
+      "225/50R18",
+      "ICE",
+      8.0,
+      "TOYOTA MOTOR KYUSHU INC. - MIYATA PLANT",
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R100"
+      ],
+      true,
+      1785,
+      1545
+    ]
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "03f0ecd2a75d714e01450d81",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-028-314da6945e4d:39",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_s07.gen1.trim.l_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:46+00:00",
+    "before_hash": "3b884bf3f1d50dd71cd2d2fb849388b30690f1f77a5577199a01374994748613",
+    "after_hash": "bc9e9d9e198d1481fc3bcb2d02dc87094366617113e240f1dc53488d8ba7bc39",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      79.9,
+      352.0,
+      "Chongqing Chang’an Automobile Co., Ltd."
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      79.9,
+      352.0,
+      "Chongqing Chang’an Automobile Co., Ltd.",
+      "230"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_afcb91d9-e74c-47d7-a1a6-a2e9db6c333f_charging.onboard_charger_spec_9f023734a116.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "03f0ecd2a75d714e01450d81:spec",
+    "revision_id": "03f0ecd2a75d714e01450d81",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_s07.gen1.trim.l_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:46+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      79.9,
+      352.0,
+      "Chongqing Chang’an Automobile Co., Ltd.",
+      "230"
+    ]
+  }
+}

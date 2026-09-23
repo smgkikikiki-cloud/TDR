@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "eb2999d019384a36b0a155e9",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-034-5299aee8f0ab:270",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "kia.sorento.gen1.trim.premium_hev_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:32+00:00",
+    "before_hash": "1c28f2eb0958c3d15db1f0f0e7f2b8998ca2b8f67ab426a1fbb3d561fe76fad9",
+    "after_hash": "496428035f129afe53b21f8d653caebae7c186b624d4bd69ad5e1ba52bbe4067",
+    "before": [
+      true
+    ],
+    "after": [
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_9dd0283e-3bfa-444f-8a0d-80a4c1c967af_comfort.electric_parking_brake_8dc95f7fffa7.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "eb2999d019384a36b0a155e9:spec",
+    "revision_id": "eb2999d019384a36b0a155e9",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "kia.sorento.gen1.trim.premium_hev_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:32+00:00",
+    "payload": [
+      true,
+      true
+    ]
+  }
+}

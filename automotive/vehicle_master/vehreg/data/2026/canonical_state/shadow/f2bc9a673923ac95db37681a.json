@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f2bc9a673923ac95db37681a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-028-314da6945e4d:299",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "leapmotor.leapmotor_c10.gen1.trim.ev_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:46+00:00",
+    "before_hash": "41e00c339fcdb014d64c58831c754e6033c3a0935992281d5b924b33b7559f96",
+    "after_hash": "a9b8b2e079025e0281baaadccd89cb9e945b43e87595625b094da1f3ab938852",
+    "before": [
+      "LFP",
+      69.89,
+      332.8,
+      "LEAPMOTOR",
+      "ONBOARD_AC",
+      167.0,
+      477.0,
+      "245/45R20",
+      "BEV",
+      8.0,
+      "PMSM",
+      true,
+      true,
+      7,
+      true,
+      true,
+      true,
+      true
+    ],
+    "after": [
+      "LFP",
+      69.89,
+      332.8,
+      "LEAPMOTOR",
+      "ONBOARD_AC",
+      167.0,
+      477.0,
+      "245/45R20",
+      "BEV",
+      8.0,
+      "PMSM",
+      true,
+      true,
+      7,
+      true,
+      true,
+      true,
+      true,
+      [
+        "R100"
+      ]
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_26a828cb-5bf0-4c3f-b8b3-1d94d2548478_safety.un_regulations_2fcab063739a.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f2bc9a673923ac95db37681a:spec",
+    "revision_id": "f2bc9a673923ac95db37681a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "leapmotor.leapmotor_c10.gen1.trim.ev_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:46+00:00",
+    "payload": [
+      "LFP",
+      69.89,
+      332.8,
+      "LEAPMOTOR",
+      "ONBOARD_AC",
+      167.0,
+      477.0,
+      "245/45R20",
+      "BEV",
+      8.0,
+      "PMSM",
+      true,
+      true,
+      7,
+      true,
+      true,
+      true,
+      true,
+      [
+        "R100"
+      ]
+    ]
+  }
+}

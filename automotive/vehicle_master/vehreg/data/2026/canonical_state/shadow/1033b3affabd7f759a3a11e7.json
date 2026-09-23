@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "1033b3affabd7f759a3a11e7",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-025-74b815fdedac:286",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "jaecoo.jaecoo_7.gen1.trim.dynamic_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:26+00:00",
+    "before_hash": "cab81125fd1f876241159804f2b373c2408451939ef4d309b3e0cedb1221e46d",
+    "after_hash": "96a2c3e5051de279717699c617696a64d1897dfbd2088181470a92f24339dd1e",
+    "before": [
+      "LFP",
+      18.32,
+      339.2,
+      "Taizhou Ferdi Battery Co., LTD",
+      "ONBOARD_AC",
+      true
+    ],
+    "after": [
+      "LFP",
+      18.32,
+      339.2,
+      "Taizhou Ferdi Battery Co., LTD",
+      "ONBOARD_AC",
+      true,
+      1.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_4f4da8b7-f514-4d17-80cc-20f27b34f864_efficiency.fuel_consumption_l_100km_bb1263a55e6d.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "1033b3affabd7f759a3a11e7:spec",
+    "revision_id": "1033b3affabd7f759a3a11e7",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "jaecoo.jaecoo_7.gen1.trim.dynamic_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:26+00:00",
+    "payload": [
+      "LFP",
+      18.32,
+      339.2,
+      "Taizhou Ferdi Battery Co., LTD",
+      "ONBOARD_AC",
+      true,
+      1.0
+    ]
+  }
+}

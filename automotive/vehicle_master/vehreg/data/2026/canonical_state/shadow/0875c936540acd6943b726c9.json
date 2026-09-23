@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "0875c936540acd6943b726c9",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-031-eac7506457fb:79",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "xpeng.xpeng_g6.g6.trim.standard_range_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:09+00:00",
+    "before_hash": "f3cbf1b8e1279a58f0aeb6480a038d7b37263836a4ba371a0f97da37519fbdcc",
+    "after_hash": "8c2a8729f87367012cd2fff00c583bd52de81bdb7b3c6ec42688eb0f80f0a9b4",
+    "before": [
+      "LFP",
+      66.05,
+      512.0,
+      "XPENG",
+      "180-456 V"
+    ],
+    "after": [
+      "LFP",
+      66.05,
+      512.0,
+      "XPENG",
+      "180-456 V",
+      "EXTERNAL_DC"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ec196398-f75a-4998-b7e5-8b26e8934945_charging.port_type_66b0d71e2f66.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "0875c936540acd6943b726c9:spec",
+    "revision_id": "0875c936540acd6943b726c9",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "xpeng.xpeng_g6.g6.trim.standard_range_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:09+00:00",
+    "payload": [
+      "LFP",
+      66.05,
+      512.0,
+      "XPENG",
+      "180-456 V",
+      "EXTERNAL_DC"
+    ]
+  }
+}

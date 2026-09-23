@@ -7,7 +7,7 @@ from typing import Any, Optional, TYPE_CHECKING
 
 from .comparable_specs import (
     ComparisonRule, ComparableSpecError, ECOCandidateSpecStore, SpecFact,
-    SpecRegistry, ValueState,
+    SpecRegistry, ValueState, is_identified_manufacturing_plant,
 )
 from .entities import to_jsonable
 from .pricing import PriceType
@@ -108,7 +108,8 @@ class BattleCardEngine:
                 ("battery.chemistry", eco.battery_chemistry, ""),
                 ("battery.supplier", eco.battery_supplier, ""),
                 ("battery.nominal_voltage_v", eco.battery_voltage_v, "V"),
-                ("manufacturing.factory", eco.factory, ""),
+                ("manufacturing.factory",
+                 eco.factory if is_identified_manufacturing_plant(eco.factory) else None, ""),
             ]
             for key, raw, unit in eco_values:
                 if key in self.registry.fields and raw not in (None, ""):

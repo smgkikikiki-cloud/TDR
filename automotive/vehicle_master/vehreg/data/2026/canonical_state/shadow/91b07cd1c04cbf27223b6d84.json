@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "91b07cd1c04cbf27223b6d84",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-026-fc1e159da290:1",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mazda2.dj.trim.xdl_signature_sports",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:32+00:00",
+    "before_hash": "be3a45e66b2558313fdf83e710e440a50ee978d6a8873a74bc4c8b32dc007c60",
+    "after_hash": "3bfc7d63960c87e880387f23e8fbbfc4b23a84cfe5b17b9f36eda6a79939d2d5",
+    "before": [
+      true,
+      3.4,
+      3.8,
+      4.5,
+      100.0,
+      0.05,
+      0.00054,
+      "TIS",
+      "DIESEL",
+      1499,
+      "B10",
+      "185/60R16"
+    ],
+    "after": [
+      true,
+      3.4,
+      3.8,
+      4.5,
+      100.0,
+      0.05,
+      0.00054,
+      "TIS",
+      "DIESEL",
+      1499,
+      "B10",
+      "185/60R16",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d714c580-af57-4744-9c39-2b52346977ff_identity.powertrain_ad3a73700e1c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "91b07cd1c04cbf27223b6d84:spec",
+    "revision_id": "91b07cd1c04cbf27223b6d84",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mazda2.dj.trim.xdl_signature_sports",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:32+00:00",
+    "payload": [
+      true,
+      3.4,
+      3.8,
+      4.5,
+      100.0,
+      0.05,
+      0.00054,
+      "TIS",
+      "DIESEL",
+      1499,
+      "B10",
+      "185/60R16",
+      "ICE"
+    ]
+  }
+}

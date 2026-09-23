@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:52290d65-e787-46a5-96e2-5fb7dc64624b:emissions.co2_g_km",
+      "field_key": "emissions.co2_g_km",
+      "value_state": "KNOWN",
+      "value": 31.0,
+      "unit": "g/km",
+      "observed_at": "2026-03-27",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/52290d65-e787-46a5-96e2-5fb7dc64624b",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/52290d65-e787-46a5-96e2-5fb7dc64624b",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "deepal.deepal_hunter_k50.gen1.trim.reev_plus_awd_reev"
+    }
+  ]
+}

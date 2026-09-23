@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:ba597ad2-802d-4b27-942b-33c1a69035a1:ev.rated_range_km",
+      "field_key": "ev.rated_range_km",
+      "value_state": "KNOWN",
+      "value": 500.0,
+      "unit": "km",
+      "observed_at": "2026-04-01",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/ba597ad2-802d-4b27-942b-33c1a69035a1",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/ba597ad2-802d-4b27-942b-33c1a69035a1",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "aion.aion_v.av.trim.500_premium_bev"
+    }
+  ]
+}

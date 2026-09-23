@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "dcdb27611b6d189261fdd60a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-047-23268458b262:327",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ferrari.f8.gen1.trim.tributo_coupe_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:25+00:00",
+    "before_hash": "2a0f6499806842d1f6a458cc289f2fb352f169c14e92e1890c8e4a91fb0791fc",
+    "after_hash": "902dad678f03d4b045e36d12896078eac3fef82188ecdedcaece38740a2a5707",
+    "before": [
+      true,
+      true,
+      9.2,
+      12.0,
+      16.9,
+      273.0
+    ],
+    "after": [
+      true,
+      true,
+      9.2,
+      12.0,
+      16.9,
+      273.0,
+      0.041
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_69e8fdaca7fd463886c69c6b1160ece6_emissions.nox_g_km_0118f4119019.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "dcdb27611b6d189261fdd60a:spec",
+    "revision_id": "dcdb27611b6d189261fdd60a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ferrari.f8.gen1.trim.tributo_coupe_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:25+00:00",
+    "payload": [
+      true,
+      true,
+      9.2,
+      12.0,
+      16.9,
+      273.0,
+      0.041
+    ]
+  }
+}

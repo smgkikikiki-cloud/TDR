@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "14b028c28e7f0db249c75648",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-043-5c8c2001b8cb:383",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.haval_h6.h6hev.trim.hev_ultra_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:45+00:00",
+    "before_hash": "43f9aae7e997c0e935af4f0c611e28c3f290afe331333b9a0e642da54baf86f3",
+    "after_hash": "7dc74aa8bb77d4c1d916b45736181e89bd04e320bdb58f3333a701ab87db8152",
+    "before": [
+      true,
+      6.2,
+      5.2,
+      3.5,
+      120.0,
+      0.052,
+      "TIS",
+      "HEV",
+      1499,
+      "GASOLINE",
+      "225/55R19",
+      "HEV",
+      8.0
+    ],
+    "after": [
+      true,
+      6.2,
+      5.2,
+      3.5,
+      120.0,
+      0.052,
+      "TIS",
+      "HEV",
+      1499,
+      "GASOLINE",
+      "225/55R19",
+      "HEV",
+      8.0,
+      "CVT"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ffc0a649-ce6c-4224-9bd3-a20697d3492c_powertrain.transmission_343e395c6bd4.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "14b028c28e7f0db249c75648:spec",
+    "revision_id": "14b028c28e7f0db249c75648",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.haval_h6.h6hev.trim.hev_ultra_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:45+00:00",
+    "payload": [
+      true,
+      6.2,
+      5.2,
+      3.5,
+      120.0,
+      0.052,
+      "TIS",
+      "HEV",
+      1499,
+      "GASOLINE",
+      "225/55R19",
+      "HEV",
+      8.0,
+      "CVT"
+    ]
+  }
+}

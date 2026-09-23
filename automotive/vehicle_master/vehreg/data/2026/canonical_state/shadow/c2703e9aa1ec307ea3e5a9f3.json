@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c2703e9aa1ec307ea3e5a9f3",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-023-8723a19230b0:66",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.everest.u704.trim.trend_2_0l_turbo_6at_4x2_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:16+00:00",
+    "before_hash": "4332422f9353b4f7a90f017ad4ad9dfb9b3009d579c2f5c811b5184282f5e2f1",
+    "after_hash": "d1fa0be0c11879cf4baa3297984c28b27f0b6517385814a92748ff0fae0d1503",
+    "before": [
+      true,
+      true,
+      6.2,
+      7.0,
+      8.1,
+      182.0,
+      0.093,
+      0.00045,
+      "TIS",
+      "DIESEL",
+      1996,
+      "B20",
+      "255/65R18",
+      "ICE"
+    ],
+    "after": [
+      true,
+      true,
+      6.2,
+      7.0,
+      8.1,
+      182.0,
+      0.093,
+      0.00045,
+      "TIS",
+      "DIESEL",
+      1996,
+      "B20",
+      "255/65R18",
+      "ICE",
+      20.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_0d484197-9253-4702-96d3-fe00036f7631_manufacturing.excise_tax_rate_edc6a0dd476a.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c2703e9aa1ec307ea3e5a9f3:spec",
+    "revision_id": "c2703e9aa1ec307ea3e5a9f3",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.everest.u704.trim.trend_2_0l_turbo_6at_4x2_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:16+00:00",
+    "payload": [
+      true,
+      true,
+      6.2,
+      7.0,
+      8.1,
+      182.0,
+      0.093,
+      0.00045,
+      "TIS",
+      "DIESEL",
+      1996,
+      "B20",
+      "255/65R18",
+      "ICE",
+      20.0
+    ]
+  }
+}

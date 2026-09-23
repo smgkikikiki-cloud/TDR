@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "fbd0fbac31da30c745e9e691",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-029-c1bed9cb95f3:135",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "isuzu.dmax_cab.rg.trim.4_2_2_ddi_z",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:55+00:00",
+    "before_hash": "7b8247dbe03ed093ec9e2d555e2073b6641776565a5d5fb1dde10d3ae4cd15ca",
+    "after_hash": "63083b0897c713233e0880a31c0fd46ac1798a2d13c1ad4bd6eefda1dc6164b1",
+    "before": [
+      true,
+      5.5,
+      6.5,
+      8.2,
+      170.0,
+      0.156,
+      9e-05,
+      "TIS",
+      "DIESEL",
+      2164,
+      "B20",
+      "215/70R16",
+      "ICE"
+    ],
+    "after": [
+      true,
+      5.5,
+      6.5,
+      8.2,
+      170.0,
+      0.156,
+      9e-05,
+      "TIS",
+      "DIESEL",
+      2164,
+      "B20",
+      "215/70R16",
+      "ICE",
+      9.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_dd969b51-08a0-435b-a7d4-2dc98bb6c1aa_manufacturing.excise_tax_rate_7cfd27ba6c75.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "fbd0fbac31da30c745e9e691:spec",
+    "revision_id": "fbd0fbac31da30c745e9e691",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "isuzu.dmax_cab.rg.trim.4_2_2_ddi_z",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:55+00:00",
+    "payload": [
+      true,
+      5.5,
+      6.5,
+      8.2,
+      170.0,
+      0.156,
+      9e-05,
+      "TIS",
+      "DIESEL",
+      2164,
+      "B20",
+      "215/70R16",
+      "ICE",
+      9.0
+    ]
+  }
+}

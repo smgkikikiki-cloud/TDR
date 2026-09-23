@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "3f85cdb29c7a8f34a7a6784e",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-026-fc1e159da290:352",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.xc60.xc60g.trim.plus_t8_plug_in_hybrid_dark_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:33+00:00",
+    "before_hash": "7d69e74fc411d1087c071ba503db0cbdddc32ce24ffcbe619781876c8d1027b8",
+    "after_hash": "c5accecb6b494b7a00abfb5cb3208b017f587d1376f8d1b6d5aeca9995c3e87b",
+    "before": [
+      "NMC",
+      18.82,
+      369.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd.",
+      "ONBOARD_AC",
+      1.6,
+      37.0,
+      0.005
+    ],
+    "after": [
+      "NMC",
+      18.82,
+      369.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd.",
+      "ONBOARD_AC",
+      1.6,
+      37.0,
+      0.005,
+      0.00011
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_9a7d5e4d-90c0-42a2-bc5a-19bad288ed1d_emissions.pm_g_km_f4c9f6f6eb17.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "3f85cdb29c7a8f34a7a6784e:spec",
+    "revision_id": "3f85cdb29c7a8f34a7a6784e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.xc60.xc60g.trim.plus_t8_plug_in_hybrid_dark_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:33+00:00",
+    "payload": [
+      "NMC",
+      18.82,
+      369.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd.",
+      "ONBOARD_AC",
+      1.6,
+      37.0,
+      0.005,
+      0.00011
+    ]
+  }
+}

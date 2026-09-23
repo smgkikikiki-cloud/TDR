@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:97f12879-bf5f-4a2f-b43f-610fa1dc8a3c:efficiency.fuel_consumption_l_100km",
+      "field_key": "efficiency.fuel_consumption_l_100km",
+      "value_state": "KNOWN",
+      "value": 10.3,
+      "unit": "L/100km",
+      "observed_at": "2025-12-03",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/97f12879-bf5f-4a2f-b43f-610fa1dc8a3c",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/97f12879-bf5f-4a2f-b43f-610fa1dc8a3c",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "porsche.porsche_911.992.trim.carrera_gts_ice"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "36fc12e72c2fc994aff4575f",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-035-5b8b3aecfae7:91",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.stargazer.ks.trim.x7_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:40+00:00",
+    "before_hash": "1d9665278d2e0a053a38f11717d2c1acc41bd5ad362592948fa6b3d5c98954c3",
+    "after_hash": "b25b68ca1e3dab7e80ad88bdf2cc969bad3cccba2c2d734a6de339364176faed",
+    "before": [
+      true,
+      true,
+      5.3,
+      6.1
+    ],
+    "after": [
+      true,
+      true,
+      5.3,
+      6.1,
+      7.6
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_8d647f75-066d-4d1d-b3d1-2cab836c5b71_efficiency.fuel_consumption_urban_l_100km_3d7f9020b3a6.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "36fc12e72c2fc994aff4575f:spec",
+    "revision_id": "36fc12e72c2fc994aff4575f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.stargazer.ks.trim.x7_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:40+00:00",
+    "payload": [
+      true,
+      true,
+      5.3,
+      6.1,
+      7.6
+    ]
+  }
+}

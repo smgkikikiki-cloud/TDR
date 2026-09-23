@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a781badd0e27ba0c6e454c0e",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-013-01b2d6d40e8e:380",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.xc60.xc60g.trim.ultra_t8_plug_in_hybrid_bright_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:28+00:00",
+    "before_hash": "f1a4bb39f586a75dd7d72ca84a1fb3ca8b15b9016d6abda45983e1a1bff55716",
+    "after_hash": "2f71474366fe3397d625b4b066f6a58445ecb2af938668908bee8e153004373b",
+    "before": [
+      "NMC",
+      19.4,
+      373.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd.",
+      "ONBOARD_AC"
+    ],
+    "after": [
+      "NMC",
+      19.4,
+      373.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd.",
+      "ONBOARD_AC",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_7822724b-5ac9-487a-bb1d-42aa11a56c2c_comfort.panoramic_roof_a682de2eb82c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a781badd0e27ba0c6e454c0e:spec",
+    "revision_id": "a781badd0e27ba0c6e454c0e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.xc60.xc60g.trim.ultra_t8_plug_in_hybrid_bright_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:28+00:00",
+    "payload": [
+      "NMC",
+      19.4,
+      373.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd.",
+      "ONBOARD_AC",
+      true
+    ]
+  }
+}

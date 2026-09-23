@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "27bbdeed9dbaaa86038a09bf",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-007-412f5563cca4:261",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.carrera_s_coupe_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:03+00:00",
+    "before_hash": "ffdb527e60a220175c0225973e6b020a6f206e1acc28fa834c7b74b685e4351b",
+    "after_hash": "b7362bbd81969c24593b179c0560ae98953929ff727fb1b48c694298f0d6db7d",
+    "before": [
+      true,
+      true,
+      8.5,
+      11.8,
+      17.6,
+      277.0,
+      0.00795,
+      0.00072,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE"
+    ],
+    "after": [
+      true,
+      true,
+      8.5,
+      11.8,
+      17.6,
+      277.0,
+      0.00795,
+      0.00072,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "225/60R18"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_7c9148ec-74c1-45f9-b488-65802cf0371b_fitment.tyre_size_f02554634a76.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "27bbdeed9dbaaa86038a09bf:spec",
+    "revision_id": "27bbdeed9dbaaa86038a09bf",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.carrera_s_coupe_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:03+00:00",
+    "payload": [
+      true,
+      true,
+      8.5,
+      11.8,
+      17.6,
+      277.0,
+      0.00795,
+      0.00072,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "225/60R18"
+    ]
+  }
+}

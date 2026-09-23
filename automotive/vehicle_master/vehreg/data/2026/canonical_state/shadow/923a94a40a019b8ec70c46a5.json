@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "923a94a40a019b8ec70c46a5",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-011-3c709241399c:85",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "geely.geely_ex5.gen1.trim.max_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:18+00:00",
+    "before_hash": "2092e7600c0a18205b7962a1bcb3b703077911ab448c605d3f40d9304d39a9cf",
+    "after_hash": "3cb7bffbbea92716cc6de6c861a83f63c746697df3ea74e325ecb69ab60ad965",
+    "before": [
+      "LFP"
+    ],
+    "after": [
+      "LFP",
+      68.32
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e9901aa9-5f90-406e-a56d-3d19da56b895_battery.gross_capacity_kwh_37e0926ecf9e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "923a94a40a019b8ec70c46a5:spec",
+    "revision_id": "923a94a40a019b8ec70c46a5",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "geely.geely_ex5.gen1.trim.max_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:18+00:00",
+    "payload": [
+      "LFP",
+      68.32
+    ]
+  }
+}

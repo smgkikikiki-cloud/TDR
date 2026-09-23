@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:356292e0-9b87-4c2b-bfe8-85cb9d9b81d0:ev.energy_consumption_wh_km",
+      "field_key": "ev.energy_consumption_wh_km",
+      "value_state": "KNOWN",
+      "value": 151.0,
+      "unit": "Wh/km",
+      "observed_at": "2025-12-29",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/356292e0-9b87-4c2b-bfe8-85cb9d9b81d0",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/356292e0-9b87-4c2b-bfe8-85cb9d9b81d0",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mini.mini_cooper.j01.trim.se_bev_3_door_218_hp_bev"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2b639e89b05d2f581acb5f41",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-015-2f508ee80764:145",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_revo_double_cab.an120.trim.z_edition_2_4_entry_at",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:37+00:00",
+    "before_hash": "4f7139c61b7b22398171f67723201d2b30d0255de1d835d6b573124a725c863b",
+    "after_hash": "31734a024b4caeeef9fe49a354035d09d8c6a588a2cf07726657c4f6ac757f59",
+    "before": [
+      true,
+      5.8,
+      6.6,
+      7.8,
+      172.0,
+      0.106
+    ],
+    "after": [
+      true,
+      5.8,
+      6.6,
+      7.8,
+      172.0,
+      0.106,
+      0.00057
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_539dd437-41cd-40f8-9943-556cc35e8323_emissions.pm_g_km_ff6ad9c391f9.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2b639e89b05d2f581acb5f41:spec",
+    "revision_id": "2b639e89b05d2f581acb5f41",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_revo_double_cab.an120.trim.z_edition_2_4_entry_at",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:37+00:00",
+    "payload": [
+      true,
+      5.8,
+      6.6,
+      7.8,
+      172.0,
+      0.106,
+      0.00057
+    ]
+  }
+}

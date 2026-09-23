@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:9deda427-55b0-4693-a5d8-58f8f8b56367:battery.nominal_voltage_v",
+      "field_key": "battery.nominal_voltage_v",
+      "value_state": "KNOWN",
+      "value": 723.0,
+      "unit": "V",
+      "observed_at": "2024-01-18",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/9deda427-55b0-4693-a5d8-58f8f8b56367",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/9deda427-55b0-4693-a5d8-58f8f8b56367",
+      "trim_id": "porsche.taycan.gen1.trim.gts_awd_598_hp_bev"
+    }
+  ]
+}

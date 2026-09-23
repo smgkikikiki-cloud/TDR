@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e4be1feca7b3d5c4a79e1cba",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-044-4ee92a315b21:163",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.xc40.xc40g.trim.pure_electric_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:52+00:00",
+    "before_hash": "8ebf50f5e8aa6de80433f3fda27d194c7c1703ac5d308ceb407cb9ea807441ec",
+    "after_hash": "c7fde3da08f97eddf7c3d8dd5c1713475ed5524b11f71b4b6be0bd1d57016ba5",
+    "before": [
+      "NMC",
+      78.18,
+      403.0
+    ],
+    "after": [
+      "NMC",
+      78.18,
+      403.0,
+      "VOLVO"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_77c4c744-aab5-47e7-a042-b15370d670e3_battery.supplier_348a7cd1bb10.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e4be1feca7b3d5c4a79e1cba:spec",
+    "revision_id": "e4be1feca7b3d5c4a79e1cba",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.xc40.xc40g.trim.pure_electric_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:52+00:00",
+    "payload": [
+      "NMC",
+      78.18,
+      403.0,
+      "VOLVO"
+    ]
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2addca836d51a16328ec545a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-050-6df028e5a85f:177",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.etron.gen1.trim.quattro_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:57+00:00",
+    "before_hash": "8ac68ef4a9344ecc4ea65917675a51b48ee963fbb3fdf9317d363e01ca1ad00d",
+    "after_hash": "ec9fc291b8d4ec2e2621754d73f061e47ac11ca2da7c178c3ee6d92f9d28a872",
+    "before": [
+      true,
+      "GASOLINE"
+    ],
+    "after": [
+      true,
+      "GASOLINE",
+      "265/45R21"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b73f15dba35c4beea606e04334a5b41c_fitment.tyre_size_483a058a843d.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2addca836d51a16328ec545a:spec",
+    "revision_id": "2addca836d51a16328ec545a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.etron.gen1.trim.quattro_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:57+00:00",
+    "payload": [
+      true,
+      "GASOLINE",
+      "265/45R21"
+    ]
+  }
+}

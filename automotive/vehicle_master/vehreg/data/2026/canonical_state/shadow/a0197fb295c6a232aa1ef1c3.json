@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a0197fb295c6a232aa1ef1c3",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-011-3c709241399c:367",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.en2.en2.trim.e_n2_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:19+00:00",
+    "before_hash": "cc1006cdef85edd683f855cf08ec20fac7440c35f8953400f002b224b2afcb83",
+    "after_hash": "f3904fee6f9b9fb810136c4cc551aca3c7825a63754a9c7ddfe16a9146b3c6f6",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      68.89,
+      353.3,
+      "CATL",
+      "AC 220 V (single phase) / 380 V (three-phase)",
+      "BOTH",
+      true,
+      true,
+      135.0,
+      530.0,
+      "225/50R18",
+      "BEV"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      68.89,
+      353.3,
+      "CATL",
+      "AC 220 V (single phase) / 380 V (three-phase)",
+      "BOTH",
+      true,
+      true,
+      135.0,
+      530.0,
+      "225/50R18",
+      "BEV",
+      10.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_9f3c4628-6107-49b7-a84a-7779c11b28a1_manufacturing.excise_tax_rate_7a95e420c477.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a0197fb295c6a232aa1ef1c3:spec",
+    "revision_id": "a0197fb295c6a232aa1ef1c3",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.en2.en2.trim.e_n2_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:19+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      68.89,
+      353.3,
+      "CATL",
+      "AC 220 V (single phase) / 380 V (three-phase)",
+      "BOTH",
+      true,
+      true,
+      135.0,
+      530.0,
+      "225/50R18",
+      "BEV",
+      10.0
+    ]
+  }
+}

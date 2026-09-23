@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:2790d589-f7a2-4c26-a21d-36961ada881a:emissions.co2_g_km",
+      "field_key": "emissions.co2_g_km",
+      "value_state": "KNOWN",
+      "value": 212.0,
+      "unit": "g/km",
+      "observed_at": "2026-02-02",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/2790d589-f7a2-4c26-a21d-36961ada881a",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/2790d589-f7a2-4c26-a21d-36961ada881a",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mercedes_benz.g_class.gen1.trim.mercedes_benz_hev"
+    }
+  ]
+}

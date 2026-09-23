@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f93377818f7fb35f6756b869",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-046-2c82d6c5b603:289",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.etron_gt.gen1.trim.rs_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:14+00:00",
+    "before_hash": "2b7ae45adbd7ee3bf11855c537848cb8341bf8685a33e728047969dad76c6a29",
+    "after_hash": "7ea232e4e0f0232c138644716dc2b66551096974f6f58132f0ef6e9fefba899c",
+    "before": [
+      "GASOLINE",
+      "265/35R21",
+      "305/30R21",
+      "ICE",
+      8.0
+    ],
+    "after": [
+      "GASOLINE",
+      "265/35R21",
+      "305/30R21",
+      "ICE",
+      8.0,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ff6fa8c416e946088227524bab37f457_safety.abs_0612bbb3c426.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f93377818f7fb35f6756b869:spec",
+    "revision_id": "f93377818f7fb35f6756b869",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.etron_gt.gen1.trim.rs_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:14+00:00",
+    "payload": [
+      "GASOLINE",
+      "265/35R21",
+      "305/30R21",
+      "ICE",
+      8.0,
+      true
+    ]
+  }
+}

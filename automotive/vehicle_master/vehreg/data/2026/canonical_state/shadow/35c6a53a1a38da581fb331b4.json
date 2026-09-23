@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "35c6a53a1a38da581fb331b4",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-048-9a296c6c8041:279",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.hybrid_s_type_gold_ii",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:35+00:00",
+    "before_hash": "99d6c19d7a4cc504453146c031d8dd009ac6f3d57ff6680a2beb5151c5126b0f",
+    "after_hash": "0e4a85fa583f7abdb683f03b27684ede6ac7b122f856b466df2b5d7ca2e61250",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      true
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_20b0f8f65b314e15b0f2987508582efc_comfort.power_windows_0991d875fe4f.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "35c6a53a1a38da581fb331b4:spec",
+    "revision_id": "35c6a53a1a38da581fb331b4",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.hybrid_s_type_gold_ii",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:35+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      true
+    ]
+  }
+}

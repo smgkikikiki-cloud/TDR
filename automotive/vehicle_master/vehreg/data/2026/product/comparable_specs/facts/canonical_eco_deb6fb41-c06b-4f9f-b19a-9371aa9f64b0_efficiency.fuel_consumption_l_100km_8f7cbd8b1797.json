@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:deb6fb41-c06b-4f9f-b19a-9371aa9f64b0:efficiency.fuel_consumption_l_100km",
+      "field_key": "efficiency.fuel_consumption_l_100km",
+      "value_state": "KNOWN",
+      "value": 6.1,
+      "unit": "L/100km",
+      "observed_at": "2023-06-20",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/deb6fb41-c06b-4f9f-b19a-9371aa9f64b0",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/deb6fb41-c06b-4f9f-b19a-9371aa9f64b0",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mazda.cx3.dk.trim.2_0_comfort_ice"
+    }
+  ]
+}

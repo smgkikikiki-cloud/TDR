@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "0cc78d3660b82097455c7241",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-014-8db054eb58a3:217",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "tesla.model3.m3h.trim.performance_all_wheel_drive_awd_460_hp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:32+00:00",
+    "before_hash": "a0ebbc2f3ed0e746bf94afea212d342701181cb954271a11325cf1c3b1f40a8e",
+    "after_hash": "d6a3e4fbde4925f5320c648863d6018a1051887575af72a5aa392efdc440aeea",
+    "before": [
+      "NMC",
+      84.84,
+      355.0,
+      "Tesla",
+      "240",
+      "ONBOARD_AC",
+      165.0,
+      571.0,
+      "235/35R20",
+      "275/30R20",
+      "BEV",
+      10.0,
+      2
+    ],
+    "after": [
+      "NMC",
+      84.84,
+      355.0,
+      "Tesla",
+      "240",
+      "ONBOARD_AC",
+      165.0,
+      571.0,
+      "235/35R20",
+      "275/30R20",
+      "BEV",
+      10.0,
+      2,
+      "AC_INDUCTION"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d18e0bd7-43e7-4dc5-bc5c-4879b9400665_powertrain.motor_type_28397cfaffc2.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "0cc78d3660b82097455c7241:spec",
+    "revision_id": "0cc78d3660b82097455c7241",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "tesla.model3.m3h.trim.performance_all_wheel_drive_awd_460_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:32+00:00",
+    "payload": [
+      "NMC",
+      84.84,
+      355.0,
+      "Tesla",
+      "240",
+      "ONBOARD_AC",
+      165.0,
+      571.0,
+      "235/35R20",
+      "275/30R20",
+      "BEV",
+      10.0,
+      2,
+      "AC_INDUCTION"
+    ]
+  }
+}

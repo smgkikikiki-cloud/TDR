@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ee47ea8518fd5bdd81e67a08",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-011-3c709241399c:58",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:18+00:00",
+    "before_hash": "5a006b36e1de8d4a8b19e7b3afd42631eec1bb9e3cc6579b4893bed80f78e0b5",
+    "after_hash": "692aa60b9f9fc0975b382016da0a5b657bd5d53f743619541273c927579c1061",
+    "before": [
+      "LFP",
+      83.64,
+      638.5,
+      "EVE Power Co., Ltd.",
+      "AC: 220V, DC: 380~900V",
+      "BOTH",
+      true,
+      150.0,
+      620.0
+    ],
+    "after": [
+      "LFP",
+      83.64,
+      638.5,
+      "EVE Power Co., Ltd.",
+      "AC: 220V, DC: 380~900V",
+      "BOTH",
+      true,
+      150.0,
+      620.0,
+      "245/50R20"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_513e48ad-0ef5-4323-8541-c753596b9451_fitment.tyre_size_8b870329e8e2.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ee47ea8518fd5bdd81e67a08:spec",
+    "revision_id": "ee47ea8518fd5bdd81e67a08",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:18+00:00",
+    "payload": [
+      "LFP",
+      83.64,
+      638.5,
+      "EVE Power Co., Ltd.",
+      "AC: 220V, DC: 380~900V",
+      "BOTH",
+      true,
+      150.0,
+      620.0,
+      "245/50R20"
+    ]
+  }
+}

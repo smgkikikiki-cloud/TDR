@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "1718a41c4fcc4cf50e96e550",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-054-d20b71816f05:79",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6.gen1.trim.avant_40_tfsi_s_line_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:52+00:00",
+    "before_hash": "7620ed7460f221f6e83b13694858f08a3a04531f51c38148878033ad12f7f263",
+    "after_hash": "56435708156271e1244d6fb548d88ee38082b7d196b28d20083e8ba76ad6e90b",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      5.8,
+      6.6,
+      7.8,
+      150.0,
+      0.006,
+      0.00037,
+      "TIS",
+      "HEV"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      5.8,
+      6.6,
+      7.8,
+      150.0,
+      0.006,
+      0.00037,
+      "TIS",
+      "HEV",
+      1984
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_20ae68103f5d4438ac17374270fe40c1_engine.displacement_cc_c6402cb5579a.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "1718a41c4fcc4cf50e96e550:spec",
+    "revision_id": "1718a41c4fcc4cf50e96e550",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6.gen1.trim.avant_40_tfsi_s_line_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:52+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      5.8,
+      6.6,
+      7.8,
+      150.0,
+      0.006,
+      0.00037,
+      "TIS",
+      "HEV",
+      1984
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:4f4da8b7-f514-4d17-80cc-20f27b34f864:emissions.co2_g_km",
+      "field_key": "emissions.co2_g_km",
+      "value_state": "KNOWN",
+      "value": 31.0,
+      "unit": "g/km",
+      "observed_at": "2025-03-26",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/4f4da8b7-f514-4d17-80cc-20f27b34f864",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/4f4da8b7-f514-4d17-80cc-20f27b34f864",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "jaecoo.jaecoo_7.gen1.trim.dynamic_phev"
+    }
+  ]
+}

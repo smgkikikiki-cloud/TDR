@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "8e52880a46076b9f8a3623b4",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-050-6df028e5a85f:272",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.cayenne.e3.trim.s_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:58+00:00",
+    "before_hash": "c1571a0c375795a5648dba9ab9066d349c6200f3ba494cc3e8cde649ece7c4d4",
+    "after_hash": "28a98b6bb3307a1922267ebb7e439908f55959288004eb38aadea6199c02c22d",
+    "before": [
+      true,
+      true,
+      8.4,
+      9.6,
+      11.7,
+      218.0,
+      0.017,
+      "TIS",
+      "GASOLINE",
+      2894,
+      "GASOLINE",
+      "255/55R19",
+      "275/50R19"
+    ],
+    "after": [
+      true,
+      true,
+      8.4,
+      9.6,
+      11.7,
+      218.0,
+      0.017,
+      "TIS",
+      "GASOLINE",
+      2894,
+      "GASOLINE",
+      "255/55R19",
+      "275/50R19",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_297b1bea37ca483d9a23993d41f7aee2_identity.powertrain_d0b1a1c58ce5.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "8e52880a46076b9f8a3623b4:spec",
+    "revision_id": "8e52880a46076b9f8a3623b4",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.cayenne.e3.trim.s_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:58+00:00",
+    "payload": [
+      true,
+      true,
+      8.4,
+      9.6,
+      11.7,
+      218.0,
+      0.017,
+      "TIS",
+      "GASOLINE",
+      2894,
+      "GASOLINE",
+      "255/55R19",
+      "275/50R19",
+      "ICE"
+    ]
+  }
+}

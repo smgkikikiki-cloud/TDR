@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d6f5f247cf414277b2f207f7",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-010-6f2b18f1a4fd:343",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.ranger_double_cab.p703.trim.xls_2_0l_turbo_hr_10at",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:15+00:00",
+    "before_hash": "fe25f6dd658d0c3b8c28b3a45764c5e565089a8568cba7d3c952cda791d3c500",
+    "after_hash": "a950d9d137789c16fcee07f69747cfc0b9c4d99100d191c90ed60aed8c85797d",
+    "before": [
+      6.7,
+      7.0,
+      7.6,
+      184.0,
+      0.2258,
+      0.00032,
+      "TIS",
+      "DIESEL",
+      1996,
+      "B20",
+      "255/70R17",
+      "ICE",
+      6.0,
+      10
+    ],
+    "after": [
+      6.7,
+      7.0,
+      7.6,
+      184.0,
+      0.2258,
+      0.00032,
+      "TIS",
+      "DIESEL",
+      1996,
+      "B20",
+      "255/70R17",
+      "ICE",
+      6.0,
+      10,
+      "AUTOMATIC"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_a827c510-37a0-48a1-b51a-8e52e064c399_powertrain.transmission_ff4c96d86ecd.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d6f5f247cf414277b2f207f7:spec",
+    "revision_id": "d6f5f247cf414277b2f207f7",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.ranger_double_cab.p703.trim.xls_2_0l_turbo_hr_10at",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:15+00:00",
+    "payload": [
+      6.7,
+      7.0,
+      7.6,
+      184.0,
+      0.2258,
+      0.00032,
+      "TIS",
+      "DIESEL",
+      1996,
+      "B20",
+      "255/70R17",
+      "ICE",
+      6.0,
+      10,
+      "AUTOMATIC"
+    ]
+  }
+}

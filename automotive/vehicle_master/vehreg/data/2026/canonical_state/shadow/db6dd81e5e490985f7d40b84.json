@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "db6dd81e5e490985f7d40b84",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-042-509b690f0202:214",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.stargazer.ks.trim.style_7_seater_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:35+00:00",
+    "before_hash": "3118e4baf2dfcf2cc48bed65a5a1d449bd776dcd7da4c755095de5bee40344d5",
+    "after_hash": "784f7ebbe41a2784a9632a4d3e23f0e4cd90b69242b80e3880659530d800793d",
+    "before": [
+      true,
+      true,
+      5.4,
+      6.2,
+      7.4,
+      143.0,
+      0.068,
+      "TIS",
+      "GASOLINE",
+      1497,
+      "GASOLINE",
+      "205/55R16",
+      "ICE",
+      25.0,
+      "CVT",
+      true,
+      4,
+      true,
+      true,
+      [
+        "R13H"
+      ],
+      true
+    ],
+    "after": [
+      true,
+      true,
+      5.4,
+      6.2,
+      7.4,
+      143.0,
+      0.068,
+      "TIS",
+      "GASOLINE",
+      1497,
+      "GASOLINE",
+      "205/55R16",
+      "ICE",
+      25.0,
+      "CVT",
+      true,
+      4,
+      true,
+      true,
+      [
+        "R13H"
+      ],
+      true,
+      1245
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_3101e275-5afd-4fe2-99e3-b0dd004550ce_vehicle.declared_total_weight_kg_e3d610145e69.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "db6dd81e5e490985f7d40b84:spec",
+    "revision_id": "db6dd81e5e490985f7d40b84",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.stargazer.ks.trim.style_7_seater_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:35+00:00",
+    "payload": [
+      true,
+      true,
+      5.4,
+      6.2,
+      7.4,
+      143.0,
+      0.068,
+      "TIS",
+      "GASOLINE",
+      1497,
+      "GASOLINE",
+      "205/55R16",
+      "ICE",
+      25.0,
+      "CVT",
+      true,
+      4,
+      true,
+      true,
+      [
+        "R13H"
+      ],
+      true,
+      1245
+    ]
+  }
+}

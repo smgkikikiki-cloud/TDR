@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:5d9abf75-bdfd-4ef1-a2c2-07ef1ffb7809:efficiency.fuel_consumption_extra_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_extra_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 8.8,
+      "unit": "L/100km",
+      "observed_at": "2023-09-13",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/5d9abf75-bdfd-4ef1-a2c2-07ef1ffb7809",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/5d9abf75-bdfd-4ef1-a2c2-07ef1ffb7809",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "porsche.porsche_911.992.trim.carrera_4_gts_cabriolet_ice"
+    }
+  ]
+}

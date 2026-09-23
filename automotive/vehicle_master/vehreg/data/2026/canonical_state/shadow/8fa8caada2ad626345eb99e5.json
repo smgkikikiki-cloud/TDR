@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "8fa8caada2ad626345eb99e5",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-027-e2d326b095bb:32",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.ex40.gen1.trim.ultra_twin_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:39+00:00",
+    "before_hash": "cda63a9794d865f855bc2cf2efd78a03e284036b5ef194e4fd239c73f2aca1e4",
+    "after_hash": "2950f9c85124fb31a8b435d20363967ba909f360133c52dbbdb1a0a8bd9fbbd5",
+    "before": [
+      "NMC",
+      81.61,
+      404.0,
+      "VOLVO",
+      "220",
+      "ONBOARD_AC",
+      true,
+      152.0,
+      645.0,
+      "235/50R19",
+      "255/45R19",
+      "BEV",
+      8.0,
+      "PMSM"
+    ],
+    "after": [
+      "NMC",
+      81.61,
+      404.0,
+      "VOLVO",
+      "220",
+      "ONBOARD_AC",
+      true,
+      152.0,
+      645.0,
+      "235/50R19",
+      "255/45R19",
+      "BEV",
+      8.0,
+      "PMSM",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_7ad88bde-6b0c-4819-b8ab-f41983fb62e2_safety.abs_ffd586fa347a.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "8fa8caada2ad626345eb99e5:spec",
+    "revision_id": "8fa8caada2ad626345eb99e5",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.ex40.gen1.trim.ultra_twin_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:39+00:00",
+    "payload": [
+      "NMC",
+      81.61,
+      404.0,
+      "VOLVO",
+      "220",
+      "ONBOARD_AC",
+      true,
+      152.0,
+      645.0,
+      "235/50R19",
+      "255/45R19",
+      "BEV",
+      8.0,
+      "PMSM",
+      true
+    ]
+  }
+}

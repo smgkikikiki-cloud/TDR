@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7814f4815a57ab5435801820",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-032-04b0adc6e162:24",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.countryman.u25.trim.jcw_countryman_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:16+00:00",
+    "before_hash": "677807b95c483b825234738c6a215062efeeb124568b52e1f80ed525b0dd9dec",
+    "after_hash": "9a0b92729e06d1e4501e4fce3bcaf7964fbb58761688a32839f7369ed82a633d",
+    "before": [
+      true,
+      true,
+      true,
+      6.5,
+      7.6,
+      9.6,
+      175.0,
+      0.011,
+      "EURO6",
+      "GASOLINE",
+      1998
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      6.5,
+      7.6,
+      9.6,
+      175.0,
+      0.011,
+      "EURO6",
+      "GASOLINE",
+      1998,
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_1728ef02-bdec-4e2b-8169-667bbdd4ad28_engine.fuel_type_225077a1f4f7.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7814f4815a57ab5435801820:spec",
+    "revision_id": "7814f4815a57ab5435801820",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.countryman.u25.trim.jcw_countryman_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:16+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      6.5,
+      7.6,
+      9.6,
+      175.0,
+      0.011,
+      "EURO6",
+      "GASOLINE",
+      1998,
+      "GASOLINE"
+    ]
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d461cd099c3abb3c8b5ab337",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-011-3c709241399c:182",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.kicks.p15.trim.sv",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:19+00:00",
+    "before_hash": "2ec26915bc186d4a9e7330ff77d4f2c98bc6cc60cce1de41762562b62ff01efb",
+    "after_hash": "afc20dd7df8ff0bd7ceb48a36c1666c9b39989ecf84dbd62a24349672e3b144c",
+    "before": [
+      true,
+      true,
+      4.6,
+      4.4,
+      4.0,
+      100.0,
+      0.00755,
+      "TIS",
+      "HEV",
+      1198
+    ],
+    "after": [
+      true,
+      true,
+      4.6,
+      4.4,
+      4.0,
+      100.0,
+      0.00755,
+      "TIS",
+      "HEV",
+      1198,
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_fd2c6470-cfab-4f18-81a4-9eb265a089da_engine.fuel_type_3e01301cc33c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d461cd099c3abb3c8b5ab337:spec",
+    "revision_id": "d461cd099c3abb3c8b5ab337",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.kicks.p15.trim.sv",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:19+00:00",
+    "payload": [
+      true,
+      true,
+      4.6,
+      4.4,
+      4.0,
+      100.0,
+      0.00755,
+      "TIS",
+      "HEV",
+      1198,
+      "GASOLINE"
+    ]
+  }
+}

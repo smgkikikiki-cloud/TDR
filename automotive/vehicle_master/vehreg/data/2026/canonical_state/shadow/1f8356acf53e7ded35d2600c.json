@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "1f8356acf53e7ded35d2600c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-023-8723a19230b0:54",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.everest.u704.trim.trend_2_0l_turbo_6at_4x2_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:16+00:00",
+    "before_hash": "496428035f129afe53b21f8d653caebae7c186b624d4bd69ad5e1ba52bbe4067",
+    "after_hash": "d0f36b309c15deef5e8976bdadab83101669fdb9a2fc787947468116b53652f7",
+    "before": [
+      true,
+      true
+    ],
+    "after": [
+      true,
+      true,
+      6.2
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_0d484197-9253-4702-96d3-fe00036f7631_efficiency.fuel_consumption_extra_urban_l_100km_4008010d4562.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "1f8356acf53e7ded35d2600c:spec",
+    "revision_id": "1f8356acf53e7ded35d2600c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.everest.u704.trim.trend_2_0l_turbo_6at_4x2_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:16+00:00",
+    "payload": [
+      true,
+      true,
+      6.2
+    ]
+  }
+}

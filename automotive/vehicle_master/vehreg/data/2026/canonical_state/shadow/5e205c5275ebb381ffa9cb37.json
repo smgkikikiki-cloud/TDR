@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5e205c5275ebb381ffa9cb37",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-027-e2d326b095bb:22",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.ex40.gen1.trim.ultra_twin_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:39+00:00",
+    "before_hash": "c03d863f8ca866cbd014cf609ead61ea284aebe1f08f0c6bb24b9c3bd53c9af2",
+    "after_hash": "123e36ff06db3f2bf4054c64708116f6f23dc10f5bdecedac7dd8c0e4b3cd990",
+    "before": [
+      "NMC",
+      81.61,
+      404.0,
+      "VOLVO"
+    ],
+    "after": [
+      "NMC",
+      81.61,
+      404.0,
+      "VOLVO",
+      "220"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_7ad88bde-6b0c-4819-b8ab-f41983fb62e2_charging.onboard_charger_spec_8e53f89644e4.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5e205c5275ebb381ffa9cb37:spec",
+    "revision_id": "5e205c5275ebb381ffa9cb37",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.ex40.gen1.trim.ultra_twin_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:39+00:00",
+    "payload": [
+      "NMC",
+      81.61,
+      404.0,
+      "VOLVO",
+      "220"
+    ]
+  }
+}

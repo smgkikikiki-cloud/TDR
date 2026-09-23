@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a55370978b2f83be1aa4a4fa",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-001-2163ac0376be:73",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.carrera_coupe_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:45+00:00",
+    "before_hash": "a68b32736d1181a1079016cd0ac9f1bc8bbb1c9282a708849ac01ad57b7ed100",
+    "after_hash": "e86210d6377c5014dadc3fde955d1dd230af008941baf30009cf5e08ad0858f3",
+    "before": [
+      true,
+      true,
+      9.4,
+      12.9,
+      19.0,
+      296.0,
+      0.00489,
+      0.00072,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35ZR20"
+    ],
+    "after": [
+      true,
+      true,
+      9.4,
+      12.9,
+      19.0,
+      296.0,
+      0.00489,
+      0.00072,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35ZR20",
+      "305/30ZR21"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_f166808b-e824-4717-aa10-ff97012d3324_fitment.tyre_rear_8919de3cf4ec.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a55370978b2f83be1aa4a4fa:spec",
+    "revision_id": "a55370978b2f83be1aa4a4fa",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.carrera_coupe_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:45+00:00",
+    "payload": [
+      true,
+      true,
+      9.4,
+      12.9,
+      19.0,
+      296.0,
+      0.00489,
+      0.00072,
+      "TIS",
+      "GASOLINE",
+      2981,
+      "GASOLINE",
+      "245/35ZR20",
+      "305/30ZR21"
+    ]
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6923c0b7eead10b8ce8d28c0",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-021-33a0f14d51bc:236",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.city.gn2.trim.sv_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:06+00:00",
+    "before_hash": "92db7bd58dfd13ab3daab89cc3184f9f545daee0edbe7da31d1bf76bfdcd5f5b",
+    "after_hash": "941ded21306d302a48b47dce94a4ecd82c0a29b54f11801a2becba6de05f2f43",
+    "before": [
+      true,
+      true,
+      4.2,
+      4.4,
+      4.8,
+      100.0,
+      0.027,
+      0.00061,
+      "TIS",
+      "GASOLINE",
+      988,
+      "GASOLINE",
+      "185/60R15"
+    ],
+    "after": [
+      true,
+      true,
+      4.2,
+      4.4,
+      4.8,
+      100.0,
+      0.027,
+      0.00061,
+      "TIS",
+      "GASOLINE",
+      988,
+      "GASOLINE",
+      "185/60R15",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_4df6f224-416c-4cae-8861-785aad000903_identity.powertrain_559642e915f4.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6923c0b7eead10b8ce8d28c0:spec",
+    "revision_id": "6923c0b7eead10b8ce8d28c0",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.city.gn2.trim.sv_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:06+00:00",
+    "payload": [
+      true,
+      true,
+      4.2,
+      4.4,
+      4.8,
+      100.0,
+      0.027,
+      0.00061,
+      "TIS",
+      "GASOLINE",
+      988,
+      "GASOLINE",
+      "185/60R15",
+      "ICE"
+    ]
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "beef42142a5d5e7842fb41d8",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-012-0c3fd0adac89:174",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a5.gen1.trim.sportback_e_hybrid_quattro_tech_pro_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:23+00:00",
+    "before_hash": "ed9628e5913e7b164ffbf1a84b385aed56895cf40a65db202a237d6a026978d1",
+    "after_hash": "5575987a0849b7d29df195443f3aa86e78c210a0793d899a089eebe87c2d7aa4",
+    "before": [
+      "NCA",
+      25.9,
+      370.0,
+      "Samsung SDI",
+      "ONBOARD_AC",
+      3.0,
+      67.0,
+      0.007
+    ],
+    "after": [
+      "NCA",
+      25.9,
+      370.0,
+      "Samsung SDI",
+      "ONBOARD_AC",
+      3.0,
+      67.0,
+      0.007,
+      0.00017
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ec94d6d2-ceca-4c7d-b15d-23fddb5b2e9d_emissions.pm_g_km_6b3a958c6a8c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "beef42142a5d5e7842fb41d8:spec",
+    "revision_id": "beef42142a5d5e7842fb41d8",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a5.gen1.trim.sportback_e_hybrid_quattro_tech_pro_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:23+00:00",
+    "payload": [
+      "NCA",
+      25.9,
+      370.0,
+      "Samsung SDI",
+      "ONBOARD_AC",
+      3.0,
+      67.0,
+      0.007,
+      0.00017
+    ]
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9e062a48fabc8cde0e5e6bf8",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-042-509b690f0202:295",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.xpander.a1.trim.gt_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:35+00:00",
+    "before_hash": "f24008c27ff0f2c619dce32892638501e3b3f83c917557e556291f39e10838bf",
+    "after_hash": "02bbb23647f83d95e2b4b18088ec97b2d4b6f1d94a7f06db3a954fab031639d4",
+    "before": [
+      true,
+      5.5,
+      6.1,
+      7.0,
+      144.0,
+      0.022,
+      "TIS",
+      "GASOLINE",
+      1499,
+      "E20",
+      "205/55R17"
+    ],
+    "after": [
+      true,
+      5.5,
+      6.1,
+      7.0,
+      144.0,
+      0.022,
+      "TIS",
+      "GASOLINE",
+      1499,
+      "E20",
+      "205/55R17",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_55cdb6fd-569c-4d6c-866f-8ecdd31a41ee_identity.powertrain_2b0135f661fc.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9e062a48fabc8cde0e5e6bf8:spec",
+    "revision_id": "9e062a48fabc8cde0e5e6bf8",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.xpander.a1.trim.gt_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:35+00:00",
+    "payload": [
+      true,
+      5.5,
+      6.1,
+      7.0,
+      144.0,
+      0.022,
+      "TIS",
+      "GASOLINE",
+      1499,
+      "E20",
+      "205/55R17",
+      "ICE"
+    ]
+  }
+}

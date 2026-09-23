@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2ff873d02ea6dde1d7e8af37",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-010-6f2b18f1a4fd:397",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_s05.gen1.trim.max_long_range_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:15+00:00",
+    "before_hash": "01fd8a5d6b39c3007a63f84aff812eaa4e4756d2ee249c9295b6f7d93c3e7e3b",
+    "after_hash": "0ed85603ef14982203879bdf4e75cb6ed7d3c6d33c1eedef4e6ecf4d7be9b0a2",
+    "before": [
+      "LFP",
+      68.6,
+      379.0,
+      "Chongqing Changan Automobile Co.,Ltd.",
+      "220V ,7 kW",
+      "ONBOARD_AC",
+      true,
+      152.0,
+      560.0,
+      "245/45R20",
+      "BEV",
+      2.0,
+      "PMSM"
+    ],
+    "after": [
+      "LFP",
+      68.6,
+      379.0,
+      "Chongqing Changan Automobile Co.,Ltd.",
+      "220V ,7 kW",
+      "ONBOARD_AC",
+      true,
+      152.0,
+      560.0,
+      "245/45R20",
+      "BEV",
+      2.0,
+      "PMSM",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_013a5796-a70b-4c75-8e5e-d2387df74c0d_safety.abs_0a1304dc6a4f.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2ff873d02ea6dde1d7e8af37:spec",
+    "revision_id": "2ff873d02ea6dde1d7e8af37",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_s05.gen1.trim.max_long_range_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:15+00:00",
+    "payload": [
+      "LFP",
+      68.6,
+      379.0,
+      "Chongqing Changan Automobile Co.,Ltd.",
+      "220V ,7 kW",
+      "ONBOARD_AC",
+      true,
+      152.0,
+      560.0,
+      "245/45R20",
+      "BEV",
+      2.0,
+      "PMSM",
+      true
+    ]
+  }
+}

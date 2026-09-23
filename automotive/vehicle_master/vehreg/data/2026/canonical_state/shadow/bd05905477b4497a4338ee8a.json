@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "bd05905477b4497a4338ee8a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-008-bc3b92e93b52:34",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.g_class.gen1.trim.g450d_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:06+00:00",
+    "before_hash": "67bd78e3f1764b7ad49dc1c0efcbe9737323ddc6184d750983575fcfa32bcdb8",
+    "after_hash": "949983ed20cb6f7ab4bc99ddbcfc0bdff2993dadf1ed1e173ea0bccb8b230037",
+    "before": [
+      true,
+      true,
+      7.2,
+      8.4,
+      10.5,
+      222.0,
+      0.01924,
+      0.00043,
+      "TIS",
+      "DIESEL",
+      2989
+    ],
+    "after": [
+      true,
+      true,
+      7.2,
+      8.4,
+      10.5,
+      222.0,
+      0.01924,
+      0.00043,
+      "TIS",
+      "DIESEL",
+      2989,
+      "DIESEL"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_467f99c0-4aef-45f2-aeab-eb41451f6cc7_engine.fuel_type_abae2ca25706.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "bd05905477b4497a4338ee8a:spec",
+    "revision_id": "bd05905477b4497a4338ee8a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.g_class.gen1.trim.g450d_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:06+00:00",
+    "payload": [
+      true,
+      true,
+      7.2,
+      8.4,
+      10.5,
+      222.0,
+      0.01924,
+      0.00043,
+      "TIS",
+      "DIESEL",
+      2989,
+      "DIESEL"
+    ]
+  }
+}

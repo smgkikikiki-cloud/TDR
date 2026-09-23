@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f4f0bb4ca645f50230f9fc88",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-005-77a02922c989:7",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq5.ne.trim.ioniq5_n_line_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:56+00:00",
+    "before_hash": "9521374e5d2bdd2e2de858813d9021f06cc5ff8d1453e669c12236f992784d0b",
+    "after_hash": "aa70d29c50ead68ef6d6915f43c4aa40ceba0741dcafefffdbaa0fde549ba4dc",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      84.34,
+      697.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      163.0,
+      591.0,
+      "255/45R20",
+      "BEV",
+      2.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      84.34,
+      697.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      163.0,
+      591.0,
+      "255/45R20",
+      "BEV",
+      2.0,
+      "PMSM"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_bd148dda-ed62-46eb-86e0-4ffec5d07961_powertrain.motor_type_030b8bdee5d3.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f4f0bb4ca645f50230f9fc88:spec",
+    "revision_id": "f4f0bb4ca645f50230f9fc88",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq5.ne.trim.ioniq5_n_line_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:56+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      84.34,
+      697.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      163.0,
+      591.0,
+      "255/45R20",
+      "BEV",
+      2.0,
+      "PMSM"
+    ]
+  }
+}

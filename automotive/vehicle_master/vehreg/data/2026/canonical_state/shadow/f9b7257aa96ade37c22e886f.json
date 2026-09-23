@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f9b7257aa96ade37c22e886f",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-053-c0bdc44365d7:9",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.ux.gen1.trim.ux300e_premium_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:37+00:00",
+    "before_hash": "913b8af283f4c98f147ab410d4fd52c31be7dae974d1b0718c0ae3e62abfaf80",
+    "after_hash": "d78d58c0d82e2e458966c595e95b741377f3f73fc51b11cbc285f47fab95a909",
+    "before": [
+      true,
+      "GASOLINE",
+      "225/50R18",
+      "ICE",
+      8.0,
+      "TOYOTA MOTOR KYUSHU INC. - MIYATA PLANT"
+    ],
+    "after": [
+      true,
+      "GASOLINE",
+      "225/50R18",
+      "ICE",
+      8.0,
+      "TOYOTA MOTOR KYUSHU INC. - MIYATA PLANT",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d42ae9d775ac420698e3d518964732eb_safety.abs_f628796e4c55.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f9b7257aa96ade37c22e886f:spec",
+    "revision_id": "f9b7257aa96ade37c22e886f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.ux.gen1.trim.ux300e_premium_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:37+00:00",
+    "payload": [
+      true,
+      "GASOLINE",
+      "225/50R18",
+      "ICE",
+      8.0,
+      "TOYOTA MOTOR KYUSHU INC. - MIYATA PLANT",
+      true
+    ]
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f40446640f60ea3033fe90cd",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-013-01b2d6d40e8e:388",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.xc60.xc60g.trim.ultra_t8_plug_in_hybrid_bright_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:28+00:00",
+    "before_hash": "6cd1821fd87b7cd4f9fb0b2cfda8162c1640ed033e06759a9ab61d911ebd2a78",
+    "after_hash": "10543f6606151f4fe99c328fcb7ad7fce3b82374e76ec4b41c5c7a8a4b3f7da9",
+    "before": [
+      "NMC",
+      19.4,
+      373.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd.",
+      "ONBOARD_AC",
+      true,
+      1.6,
+      36.0,
+      0.005,
+      0.00011,
+      "TIS",
+      "PHEV",
+      1969
+    ],
+    "after": [
+      "NMC",
+      19.4,
+      373.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd.",
+      "ONBOARD_AC",
+      true,
+      1.6,
+      36.0,
+      0.005,
+      0.00011,
+      "TIS",
+      "PHEV",
+      1969,
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_7822724b-5ac9-487a-bb1d-42aa11a56c2c_engine.fuel_type_2442de5796c8.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f40446640f60ea3033fe90cd:spec",
+    "revision_id": "f40446640f60ea3033fe90cd",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.xc60.xc60g.trim.ultra_t8_plug_in_hybrid_bright_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:28+00:00",
+    "payload": [
+      "NMC",
+      19.4,
+      373.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd.",
+      "ONBOARD_AC",
+      true,
+      1.6,
+      36.0,
+      0.005,
+      0.00011,
+      "TIS",
+      "PHEV",
+      1969,
+      "GASOLINE"
+    ]
+  }
+}

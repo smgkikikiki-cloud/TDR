@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a509a0d9d7f90c59be8b61f8",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-028-314da6945e4d:113",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_y_plus.ayp.trim.490_premium_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:46+00:00",
+    "before_hash": "5246ecd29e7ceefaa70c64b557665b12660a61375c683ddc45fcbfe134371616",
+    "after_hash": "324ed2336804ef1c4db5562de36168d9958100600e2192c33e4ded90a700b918",
+    "before": [
+      "LFP",
+      61.17,
+      345.6,
+      "CALB Group Co., Ltd",
+      "AC: 220V, DC: 270 ~ 394.2V",
+      "BOTH",
+      true,
+      true
+    ],
+    "after": [
+      "LFP",
+      61.17,
+      345.6,
+      "CALB Group Co., Ltd",
+      "AC: 220V, DC: 270 ~ 394.2V",
+      "BOTH",
+      true,
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_2558d4e8-a7d2-4f99-b513-baf08070c26f_comfort.power_windows_c5574281f792.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a509a0d9d7f90c59be8b61f8:spec",
+    "revision_id": "a509a0d9d7f90c59be8b61f8",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_y_plus.ayp.trim.490_premium_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:46+00:00",
+    "payload": [
+      "LFP",
+      61.17,
+      345.6,
+      "CALB Group Co., Ltd",
+      "AC: 220V, DC: 270 ~ 394.2V",
+      "BOTH",
+      true,
+      true,
+      true
+    ]
+  }
+}

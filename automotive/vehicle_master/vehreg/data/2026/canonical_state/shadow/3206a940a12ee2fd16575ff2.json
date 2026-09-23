@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "3206a940a12ee2fd16575ff2",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-030-80293fca2870:321",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq6.ce.trim.exclusive_77_4_kwh_rwd_229_hp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:02+00:00",
+    "before_hash": "ad7d9481678c8519b762e01610ad4f8872f21826df4d24c8c9ace5241f4858a4",
+    "after_hash": "1e69bed0115bace348009d34384801ac283981541376a06672fe54c09328f1d7",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      77.37,
+      697.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      160.0,
+      545.0,
+      "245/40R20"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      77.37,
+      697.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      160.0,
+      545.0,
+      "245/40R20",
+      "BEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_443dfd43-1ae0-4c05-a011-5aa6fce50219_identity.powertrain_eb5cbe52ba2f.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "3206a940a12ee2fd16575ff2:spec",
+    "revision_id": "3206a940a12ee2fd16575ff2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq6.ce.trim.exclusive_77_4_kwh_rwd_229_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:02+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      77.37,
+      697.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      160.0,
+      545.0,
+      "245/40R20",
+      "BEV"
+    ]
+  }
+}

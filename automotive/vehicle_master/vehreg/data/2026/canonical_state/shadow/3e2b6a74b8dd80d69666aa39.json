@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "3e2b6a74b8dd80d69666aa39",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-019-79c9da20e296:126",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.taycan.gen1.trim.4s_cross_turismo_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:55+00:00",
+    "before_hash": "eea52270d28c3ecf191f2c18e388d462fb22b3ace35a7e1f7a268fd023b45c63",
+    "after_hash": "6ed00a2b0129af7d168429d85393f8dc4e68a1d77e4254925d519f37efb400af",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      104.69,
+      727.0,
+      "Draxlmaier",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      185.0,
+      601.0,
+      "245/45R20",
+      "285/40R20",
+      "BEV",
+      10.0,
+      "PMSM"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      104.69,
+      727.0,
+      "Draxlmaier",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      185.0,
+      601.0,
+      "245/45R20",
+      "285/40R20",
+      "BEV",
+      10.0,
+      "PMSM",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_4f9558bb-f488-40cc-a610-bb811fe8528e_safety.abs_bb23ba065d37.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "3e2b6a74b8dd80d69666aa39:spec",
+    "revision_id": "3e2b6a74b8dd80d69666aa39",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.taycan.gen1.trim.4s_cross_turismo_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:55+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      104.69,
+      727.0,
+      "Draxlmaier",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      185.0,
+      601.0,
+      "245/45R20",
+      "285/40R20",
+      "BEV",
+      10.0,
+      "PMSM",
+      true
+    ]
+  }
+}

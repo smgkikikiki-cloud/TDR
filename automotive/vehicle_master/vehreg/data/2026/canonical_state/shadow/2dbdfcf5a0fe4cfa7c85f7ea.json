@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2dbdfcf5a0fe4cfa7c85f7ea",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-017-02b372e72add:58",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.poer_sahar.gen1.trim.gwm_2_4t_pro_single_cab_4wd_s_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:47+00:00",
+    "before_hash": "e88bcecaa430fb06ce6adafa6f41c6c52c1a0e606095ecc8dc392ca578437061",
+    "after_hash": "1272d000d17b25f2de7dabf000fc33109a6690997b3947555f62990fc2f1d682",
+    "before": [
+      true,
+      true,
+      true,
+      6.9,
+      7.5,
+      8.4,
+      197.0,
+      0.252,
+      0.00026,
+      "TIS",
+      "DIESEL",
+      2370,
+      "B20"
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      6.9,
+      7.5,
+      8.4,
+      197.0,
+      0.252,
+      0.00026,
+      "TIS",
+      "DIESEL",
+      2370,
+      "B20",
+      "265/60R18"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_aa67d50e-9626-4923-bf9a-4adb8f87eb58_fitment.tyre_size_96dd1cbf6fc2.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2dbdfcf5a0fe4cfa7c85f7ea:spec",
+    "revision_id": "2dbdfcf5a0fe4cfa7c85f7ea",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.poer_sahar.gen1.trim.gwm_2_4t_pro_single_cab_4wd_s_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:47+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      6.9,
+      7.5,
+      8.4,
+      197.0,
+      0.252,
+      0.00026,
+      "TIS",
+      "DIESEL",
+      2370,
+      "B20",
+      "265/60R18"
+    ]
+  }
+}

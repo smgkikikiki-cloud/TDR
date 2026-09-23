@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7c4e01bf91e0963f0eda92ac",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-039-bb0c6084f37a:280",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mazda2.dj.trim.mazda_2_clap_pop_sports",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:13+00:00",
+    "before_hash": "d61f7f52512e3380c1e1b2f2d8abe64a32146f2589f4589ebe78dfa9abdd9814",
+    "after_hash": "7000bfc84c0b557f85b5e58ae6eedc009d75ada650778591bd3871e883ded773",
+    "before": [
+      true,
+      3.8,
+      4.3,
+      5.1,
+      100.0,
+      0.012,
+      0.00135,
+      "TIS",
+      "GASOLINE",
+      1299,
+      "E20",
+      "185/65R15",
+      "ICE",
+      12.0
+    ],
+    "after": [
+      true,
+      3.8,
+      4.3,
+      5.1,
+      100.0,
+      0.012,
+      0.00135,
+      "TIS",
+      "GASOLINE",
+      1299,
+      "E20",
+      "185/65R15",
+      "ICE",
+      12.0,
+      6
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_01cd26a6-36a6-4d89-9948-dad329c673ce_powertrain.gear_count_9ccbd621c933.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7c4e01bf91e0963f0eda92ac:spec",
+    "revision_id": "7c4e01bf91e0963f0eda92ac",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mazda2.dj.trim.mazda_2_clap_pop_sports",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:13+00:00",
+    "payload": [
+      true,
+      3.8,
+      4.3,
+      5.1,
+      100.0,
+      0.012,
+      0.00135,
+      "TIS",
+      "GASOLINE",
+      1299,
+      "E20",
+      "185/65R15",
+      "ICE",
+      12.0,
+      6
+    ]
+  }
+}

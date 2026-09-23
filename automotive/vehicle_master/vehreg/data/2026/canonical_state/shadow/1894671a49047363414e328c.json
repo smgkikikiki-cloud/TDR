@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "1894671a49047363414e328c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-049-18d26b73936f:45",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lexus_rx.al30.trim.rx350_f_sport_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:45+00:00",
+    "before_hash": "f6b3c4baae533f3910d91242dfaadd718928fc5700aef7ae88e56758b0d82bad",
+    "after_hash": "4fe288d4213def8fc41d52273aed680a0af206a1fb66e3e9e1d5d4f15ba0e56a",
+    "before": [
+      7.5,
+      9.8,
+      13.8,
+      228.0,
+      0.01,
+      "TIS",
+      "GASOLINE",
+      3456,
+      "GASOLINE",
+      "235/55R20",
+      "ICE",
+      40.0,
+      "TOYOTA MOTOR KYUSHU INC. - MIYATA PLANT",
+      8
+    ],
+    "after": [
+      7.5,
+      9.8,
+      13.8,
+      228.0,
+      0.01,
+      "TIS",
+      "GASOLINE",
+      3456,
+      "GASOLINE",
+      "235/55R20",
+      "ICE",
+      40.0,
+      "TOYOTA MOTOR KYUSHU INC. - MIYATA PLANT",
+      8,
+      "AUTOMATIC"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_fbd1406393ff41be80adb3511f8672c9_powertrain.transmission_d3b298099804.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "1894671a49047363414e328c:spec",
+    "revision_id": "1894671a49047363414e328c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lexus_rx.al30.trim.rx350_f_sport_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:45+00:00",
+    "payload": [
+      7.5,
+      9.8,
+      13.8,
+      228.0,
+      0.01,
+      "TIS",
+      "GASOLINE",
+      3456,
+      "GASOLINE",
+      "235/55R20",
+      "ICE",
+      40.0,
+      "TOYOTA MOTOR KYUSHU INC. - MIYATA PLANT",
+      8,
+      "AUTOMATIC"
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:5b814b88758244bb9477bb8e01e54036:efficiency.fuel_consumption_l_100km",
+      "field_key": "efficiency.fuel_consumption_l_100km",
+      "value_state": "KNOWN",
+      "value": 7.5,
+      "unit": "L/100km",
+      "observed_at": "2021-08-27",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/5b814b88758244bb9477bb8e01e54036",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/5b814b88758244bb9477bb8e01e54036",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "toyota.harrier.gen1.trim.z_leather_package_ice"
+    }
+  ]
+}

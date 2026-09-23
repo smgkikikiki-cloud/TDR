@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "3056c2a9cbe57a18a884e4ae",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-007-412f5563cca4:336",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.accord.cy.trim.e_hev_e_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:03+00:00",
+    "before_hash": "bac6084c509e46ea6014e50910b84175ec0da190d62015caf12f89ddf0589ceb",
+    "after_hash": "16321667d38e9518e2c35b3a1e1a8fcaa4778892396ec8406fc839835df629a6",
+    "before": [
+      true,
+      true,
+      4.3,
+      4.3,
+      4.2,
+      97.0,
+      0.01234,
+      0.00057,
+      "TIS",
+      "HEV",
+      1993,
+      "GASOLINE",
+      "225/50R17",
+      "HEV"
+    ],
+    "after": [
+      true,
+      true,
+      4.3,
+      4.3,
+      4.2,
+      97.0,
+      0.01234,
+      0.00057,
+      "TIS",
+      "HEV",
+      1993,
+      "GASOLINE",
+      "225/50R17",
+      "HEV",
+      6.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e4e5ba65-ffde-4b84-b6f4-7ba09c0a3e82_manufacturing.excise_tax_rate_13c78aaf0491.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "3056c2a9cbe57a18a884e4ae:spec",
+    "revision_id": "3056c2a9cbe57a18a884e4ae",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.accord.cy.trim.e_hev_e_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:03+00:00",
+    "payload": [
+      true,
+      true,
+      4.3,
+      4.3,
+      4.2,
+      97.0,
+      0.01234,
+      0.00057,
+      "TIS",
+      "HEV",
+      1993,
+      "GASOLINE",
+      "225/50R17",
+      "HEV",
+      6.0
+    ]
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b82ad357894b45374f6814a3",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-029-c1bed9cb95f3:161",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.hyptec_ht.gen1.trim.620_luxury_gull_wing_doors_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:55+00:00",
+    "before_hash": "c6b2ca39136f1be9ccf5439f47f89a21c9cbfe1e71386d78cce99647362aeea0",
+    "after_hash": "11cee41314eb67d2185b7b4ad6b9ea9e34b6caecf5ae8647bfc83efe57756f0c",
+    "before": [
+      "LFP",
+      83.64,
+      638.5,
+      "EVE Power Co., Ltd.",
+      "AC: 220 V, DC: 380~900 V",
+      "BOTH",
+      true,
+      150.0,
+      620.0,
+      "245/50R20",
+      "BEV",
+      2.0,
+      "OTHER",
+      true
+    ],
+    "after": [
+      "LFP",
+      83.64,
+      638.5,
+      "EVE Power Co., Ltd.",
+      "AC: 220 V, DC: 380~900 V",
+      "BOTH",
+      true,
+      150.0,
+      620.0,
+      "245/50R20",
+      "BEV",
+      2.0,
+      "OTHER",
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_da65f191-df51-44bb-95f6-829ea0ebe3a1_safety.adaptive_cruise_7880f5035cf8.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b82ad357894b45374f6814a3:spec",
+    "revision_id": "b82ad357894b45374f6814a3",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.hyptec_ht.gen1.trim.620_luxury_gull_wing_doors_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:55+00:00",
+    "payload": [
+      "LFP",
+      83.64,
+      638.5,
+      "EVE Power Co., Ltd.",
+      "AC: 220 V, DC: 380~900 V",
+      "BOTH",
+      true,
+      150.0,
+      620.0,
+      "245/50R20",
+      "BEV",
+      2.0,
+      "OTHER",
+      true,
+      true
+    ]
+  }
+}

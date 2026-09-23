@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e9976f000cc97e86dd61a19c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-049-18d26b73936f:71",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover.gen1.trim.range_rover_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:45+00:00",
+    "before_hash": "eb58d734770ae9e00964d8e542106af2caf34cacdb743b082bf172967d85939b",
+    "after_hash": "5e5bd2a542705d42a54b0221fdb84a88e8c51047132ed0a47555ee444d9bf5be",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      true,
+      6.3,
+      7.2,
+      8.9,
+      190.0,
+      0.039,
+      0.0089,
+      "TIS",
+      "HEV",
+      2997,
+      "DIESEL"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      true,
+      6.3,
+      7.2,
+      8.9,
+      190.0,
+      0.039,
+      0.0089,
+      "TIS",
+      "HEV",
+      2997,
+      "DIESEL",
+      "285/45R22"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_6f783669207b416e915d72883c6aa592_fitment.tyre_size_de95a24013ac.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e9976f000cc97e86dd61a19c:spec",
+    "revision_id": "e9976f000cc97e86dd61a19c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover.gen1.trim.range_rover_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:45+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      true,
+      6.3,
+      7.2,
+      8.9,
+      190.0,
+      0.039,
+      0.0089,
+      "TIS",
+      "HEV",
+      2997,
+      "DIESEL",
+      "285/45R22"
+    ]
+  }
+}

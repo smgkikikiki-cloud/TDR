@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:43cf9aca936947b5b7a54352f0a678a9:efficiency.fuel_consumption_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 2.5,
+      "unit": "L/100km",
+      "observed_at": "2020-07-03",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/43cf9aca936947b5b7a54352f0a678a9",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/43cf9aca936947b5b7a54352f0a678a9",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "toyota.alphard.ah40.trim.hybrid_s"
+    }
+  ]
+}

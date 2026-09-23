@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "775cd6ed76af14eadb37f417",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-054-d20b71816f05:118",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover_velar.unresearched.trim.range_rover_velar_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:52+00:00",
+    "before_hash": "f7e77b03123c9382e46b91bf2c33ed8b9247aabf40a8ea2901df359624ddde12",
+    "after_hash": "8c8ae779efd5c501c15b7fc2c2dbadc34f8f74c7f59cce18736c3f06fdec2640",
+    "before": [
+      true,
+      true,
+      5.1,
+      5.7,
+      6.9,
+      148.0,
+      0.138,
+      "TIS",
+      "DIESEL",
+      1999,
+      "DIESEL",
+      "265/45R21",
+      "ICE",
+      25.0,
+      8,
+      "AUTOMATIC",
+      true,
+      4,
+      true,
+      [
+        "R13H"
+      ],
+      1916,
+      1665
+    ],
+    "after": [
+      true,
+      true,
+      5.1,
+      5.7,
+      6.9,
+      148.0,
+      0.138,
+      "TIS",
+      "DIESEL",
+      1999,
+      "DIESEL",
+      "265/45R21",
+      "ICE",
+      25.0,
+      8,
+      "AUTOMATIC",
+      true,
+      4,
+      true,
+      [
+        "R13H"
+      ],
+      1916,
+      1665,
+      4803
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_90d96f24d5f44f3a9e6566204cb33245_vehicle.length_mm_aa4be4a70876.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "775cd6ed76af14eadb37f417:spec",
+    "revision_id": "775cd6ed76af14eadb37f417",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover_velar.unresearched.trim.range_rover_velar_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:52+00:00",
+    "payload": [
+      true,
+      true,
+      5.1,
+      5.7,
+      6.9,
+      148.0,
+      0.138,
+      "TIS",
+      "DIESEL",
+      1999,
+      "DIESEL",
+      "265/45R21",
+      "ICE",
+      25.0,
+      8,
+      "AUTOMATIC",
+      true,
+      4,
+      true,
+      [
+        "R13H"
+      ],
+      1916,
+      1665,
+      4803
+    ]
+  }
+}

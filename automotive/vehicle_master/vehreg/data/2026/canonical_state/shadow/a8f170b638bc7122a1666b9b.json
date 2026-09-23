@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a8f170b638bc7122a1666b9b",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-022-20a8a8e94ae5:127",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "geely.geely_ex5.gen1.trim.pro_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:11+00:00",
+    "before_hash": "0eac80d213c85ec73fc895d4ad505a35ed820abef45aa1707da8cdfdc5c12259",
+    "after_hash": "a1328f5bc00e7c05334b552effd7709466701aef310519d95d3ae59dbbbe6c20",
+    "before": [
+      "LFP",
+      60.16,
+      376.0,
+      "SVOLT Energy Technology Co.,Ltd",
+      "AC: INPUT 220 V, DC: INPUT 376 V",
+      "BOTH",
+      true,
+      139.0,
+      495.0,
+      "225/55R18"
+    ],
+    "after": [
+      "LFP",
+      60.16,
+      376.0,
+      "SVOLT Energy Technology Co.,Ltd",
+      "AC: INPUT 220 V, DC: INPUT 376 V",
+      "BOTH",
+      true,
+      139.0,
+      495.0,
+      "225/55R18",
+      "BEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_1d8a3c3a-2ce6-4dfd-8ba1-9d3454478c39_identity.powertrain_529e545890da.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a8f170b638bc7122a1666b9b:spec",
+    "revision_id": "a8f170b638bc7122a1666b9b",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "geely.geely_ex5.gen1.trim.pro_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:11+00:00",
+    "payload": [
+      "LFP",
+      60.16,
+      376.0,
+      "SVOLT Energy Technology Co.,Ltd",
+      "AC: INPUT 220 V, DC: INPUT 376 V",
+      "BOTH",
+      true,
+      139.0,
+      495.0,
+      "225/55R18",
+      "BEV"
+    ]
+  }
+}

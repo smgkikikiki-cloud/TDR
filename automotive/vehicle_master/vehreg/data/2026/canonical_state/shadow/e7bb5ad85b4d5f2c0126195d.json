@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e7bb5ad85b4d5f2c0126195d",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-040-43e09f18d7ea:48",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.q8.gen1.trim.60_tfsi_e_quattro_s_line_black_edition_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:21+00:00",
+    "before_hash": "74499a3c30b88130881ff71770cfb98b6d584bceb1f484229fd277f75756d6cb",
+    "after_hash": "f1eac97444a93f685be9de6d4e76e62c0d64587b09ca37e49175da4edefaa54c",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      17.97,
+      374.4,
+      "Volkswagen/VW opt. Audi",
+      "ONBOARD_AC",
+      2.4,
+      55.0,
+      0.014,
+      0.00011,
+      "TIS"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      17.97,
+      374.4,
+      "Volkswagen/VW opt. Audi",
+      "ONBOARD_AC",
+      2.4,
+      55.0,
+      0.014,
+      0.00011,
+      "TIS",
+      "PHEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_3a93dd56-e690-4555-a3db-97e1a06e2bfc_engine.combustion_type_7c51fe27d570.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e7bb5ad85b4d5f2c0126195d:spec",
+    "revision_id": "e7bb5ad85b4d5f2c0126195d",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.q8.gen1.trim.60_tfsi_e_quattro_s_line_black_edition_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:21+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      17.97,
+      374.4,
+      "Volkswagen/VW opt. Audi",
+      "ONBOARD_AC",
+      2.4,
+      55.0,
+      0.014,
+      0.00011,
+      "TIS",
+      "PHEV"
+    ]
+  }
+}

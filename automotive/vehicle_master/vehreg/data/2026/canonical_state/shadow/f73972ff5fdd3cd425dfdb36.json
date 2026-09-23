@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f73972ff5fdd3cd425dfdb36",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-012-0c3fd0adac89:215",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q3.f3.trim.s_line_tech_plus_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:23+00:00",
+    "before_hash": "d4a4d99bfd00729fbaf5c04bffd0834225a3b1893f9eee8bbe12bdcfe643d3f4",
+    "after_hash": "63531ba9cc404fd712974ffbcb77bdb2df6a3ab9c629429c691995554f6e94f9",
+    "before": [
+      4.9,
+      5.5,
+      6.6,
+      130.0,
+      0.0125,
+      "EURO6",
+      "MHEV",
+      1498,
+      "GASOLINE",
+      "255/45R19",
+      "ICE"
+    ],
+    "after": [
+      4.9,
+      5.5,
+      6.6,
+      130.0,
+      0.0125,
+      "EURO6",
+      "MHEV",
+      1498,
+      "GASOLINE",
+      "255/45R19",
+      "ICE",
+      25.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b9a4dcd1-c2a1-4b3d-b867-fe889686be93_manufacturing.excise_tax_rate_14fd3ddb6a4b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f73972ff5fdd3cd425dfdb36:spec",
+    "revision_id": "f73972ff5fdd3cd425dfdb36",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q3.f3.trim.s_line_tech_plus_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:23+00:00",
+    "payload": [
+      4.9,
+      5.5,
+      6.6,
+      130.0,
+      0.0125,
+      "EURO6",
+      "MHEV",
+      1498,
+      "GASOLINE",
+      "255/45R19",
+      "ICE",
+      25.0
+    ]
+  }
+}

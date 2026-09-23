@@ -1,0 +1,753 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "3850f7e74ddc171e95e5ac16",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-001-2163ac0376be:8",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mercedes_benz.gle",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:42+00:00",
+    "before_hash": "61e22c065292c5bcaf5a38fe704fa989187faa3b1df08ae226380a7666a43469",
+    "after_hash": "bd93d620399b85222c3ba18bd9441660d7b48ba59028cc5f1fe0d68055fe159f",
+    "before": {
+      "id": "gle",
+      "name_en": "GLE",
+      "name_th": "จีแอลอี",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "GLE 300 d",
+        "GLE 350 de",
+        "GLE 450",
+        "AMG GLE 53",
+        "MERCEDES-AMG GLE 53"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "ICE",
+              "drivetrain": "RWD",
+              "engine_cc": 1993,
+              "price_thb": 5290000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "4MATIC+",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4937,
+              "width_mm": 2015,
+              "height_mm": 1782,
+              "engine_cc": 2999,
+              "tire_front": "275/45R21",
+              "tire_rear": "315/40R21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "3ca040ed-a37b-4010-a28e-8b39fb4bebd3"
+                ]
+              }
+            },
+            {
+              "name": "HYBRID 4MATIC+",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4934,
+              "width_mm": 2015,
+              "height_mm": 1782,
+              "engine_cc": 2999,
+              "tire_front": "285/40R22",
+              "tire_rear": "325/35R22",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "81bfff52-b287-4b7b-9880-9be951fcc35a"
+                ]
+              }
+            },
+            {
+              "name": "4MATIC Exclusive",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4924,
+              "width_mm": 2010,
+              "height_mm": 1795,
+              "engine_cc": 1950,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "11950b23-badf-475b-a02a-fd95f722d82b"
+                ]
+              }
+            },
+            {
+              "name": "4MATIC AMG Line",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4926,
+              "width_mm": 2015,
+              "height_mm": 1797,
+              "engine_cc": 1993,
+              "tire_front": "275/50R20",
+              "tire_rear": "275/50R20",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "5f12ef6e-c967-471f-b8ad-6e392dc8ae94"
+                ]
+              }
+            },
+            {
+              "name": "4MATIC AMG Dynamic",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4926,
+              "width_mm": 2015,
+              "height_mm": 1797,
+              "engine_cc": 1993,
+              "tire_front": "275/45R21",
+              "tire_rear": "315/40R21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "72cf2e65-ccdb-4b02-a5db-d66cbc07fd0c"
+                ]
+              }
+            },
+            {
+              "name": "Mercedes-Benz 4MATIC AMG Dynamic",
+              "powertrain": "ICE",
+              "seats": 7,
+              "length_mm": 4924,
+              "width_mm": 1947,
+              "height_mm": 1797,
+              "engine_cc": 1950,
+              "tire_front": "275/45R21",
+              "tire_rear": "315/40R21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "399cfa8e-8644-4fa8-af78-e2cfd7dff604"
+                ]
+              }
+            },
+            {
+              "name": "350 d 4MATIC Coupe AMG Dynamic",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4946,
+              "width_mm": 2014,
+              "height_mm": 1716,
+              "engine_cc": 2925,
+              "tire_front": "285/40R22",
+              "tire_rear": "325/35R22",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "e8b88a4b49b74fef88e7c7354c60170c"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "mercedes_benz",
+        "name_en": "Mercedes-Benz",
+        "name_th": "เมอร์เซเดส-เบนซ์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Mercedes-Benz Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "benz",
+          "เบนซ์",
+          "mercedes"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mercedes_benz.gle",
+        "brand_id": "mercedes_benz",
+        "name_en": "GLE",
+        "name_th": "จีแอลอี",
+        "nameplate": "GLE",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "GLE 300 d",
+          "GLE 350 de",
+          "GLE 450",
+          "AMG GLE 53",
+          "MERCEDES-AMG GLE 53"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mercedes_benz.gle.gen1",
+          "model_id": "mercedes_benz.gle",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mercedes_benz.gle.gen1.spec",
+          "generation_id": "mercedes_benz.gle.gen1",
+          "name": "spec",
+          "powertrain": "ICE",
+          "drivetrain": "RWD",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "price_thb": 5290000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mercedes_benz.gle.gen1.trim.4matic_hev",
+          "generation_id": "mercedes_benz.gle.gen1",
+          "name": "4MATIC+",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4926,
+          "width_mm": 2015,
+          "height_mm": 1797,
+          "wheelbase_mm": null,
+          "tire_front": "275/45R21",
+          "tire_rear": "315/40R21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "3ca040ed-a37b-4010-a28e-8b39fb4bebd3",
+              "3d1ef02f-48e3-4462-aed1-b28dee1b6ed1"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.gle.gen1.trim.hybrid_4matic_phev",
+          "generation_id": "mercedes_benz.gle.gen1",
+          "name": "HYBRID 4MATIC+",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2999,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4934,
+          "width_mm": 2015,
+          "height_mm": 1782,
+          "wheelbase_mm": null,
+          "tire_front": "285/40R22",
+          "tire_rear": "325/35R22",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "81bfff52-b287-4b7b-9880-9be951fcc35a"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.gle.gen1.trim.4matic_exclusive_phev",
+          "generation_id": "mercedes_benz.gle.gen1",
+          "name": "4MATIC Exclusive",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1950,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4924,
+          "width_mm": 2010,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "11950b23-badf-475b-a02a-fd95f722d82b"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.gle.gen1.trim.4matic_amg_line_hev",
+          "generation_id": "mercedes_benz.gle.gen1",
+          "name": "4MATIC AMG Line",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4926,
+          "width_mm": 2015,
+          "height_mm": 1797,
+          "wheelbase_mm": null,
+          "tire_front": "275/50R20",
+          "tire_rear": "275/50R20",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "5f12ef6e-c967-471f-b8ad-6e392dc8ae94"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.gle.gen1.trim.4matic_amg_dynamic_hev",
+          "generation_id": "mercedes_benz.gle.gen1",
+          "name": "4MATIC AMG Dynamic",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4926,
+          "width_mm": 2015,
+          "height_mm": 1797,
+          "wheelbase_mm": null,
+          "tire_front": "275/45R21",
+          "tire_rear": "315/40R21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "72cf2e65-ccdb-4b02-a5db-d66cbc07fd0c"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.gle.gen1.trim.mercedes_benz_4matic_amg_dynamic_ice",
+          "generation_id": "mercedes_benz.gle.gen1",
+          "name": "Mercedes-Benz 4MATIC AMG Dynamic",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1950,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 7,
+          "length_mm": 4924,
+          "width_mm": 1947,
+          "height_mm": 1797,
+          "wheelbase_mm": null,
+          "tire_front": "275/45R21",
+          "tire_rear": "315/40R21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "399cfa8e-8644-4fa8-af78-e2cfd7dff604"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.gle.gen1.trim.350_d_4matic_coupe_amg_dynamic_ice",
+          "generation_id": "mercedes_benz.gle.gen1",
+          "name": "350 d 4MATIC Coupe AMG Dynamic",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2925,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4946,
+          "width_mm": 2014,
+          "height_mm": 1716,
+          "wheelbase_mm": null,
+          "tire_front": "285/40R22",
+          "tire_rear": "325/35R22",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "e8b88a4b49b74fef88e7c7354c60170c"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mercedes_benz.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "3850f7e74ddc171e95e5ac16:catalog",
+    "revision_id": "3850f7e74ddc171e95e5ac16",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mercedes_benz.gle",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:42+00:00",
+    "payload": {
+      "brand": {
+        "id": "mercedes_benz",
+        "name_en": "Mercedes-Benz",
+        "name_th": "เมอร์เซเดส-เบนซ์",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Mercedes-Benz Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "benz",
+          "เบนซ์",
+          "mercedes"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mercedes_benz.gle",
+        "brand_id": "mercedes_benz",
+        "name_en": "GLE",
+        "name_th": "จีแอลอี",
+        "nameplate": "GLE",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "GLE 300 d",
+          "GLE 350 de",
+          "GLE 450",
+          "AMG GLE 53",
+          "MERCEDES-AMG GLE 53"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mercedes_benz.gle.gen1",
+          "model_id": "mercedes_benz.gle",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mercedes_benz.gle.gen1.spec",
+          "generation_id": "mercedes_benz.gle.gen1",
+          "name": "spec",
+          "powertrain": "ICE",
+          "drivetrain": "RWD",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "price_thb": 5290000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mercedes_benz.gle.gen1.trim.4matic_hev",
+          "generation_id": "mercedes_benz.gle.gen1",
+          "name": "4MATIC+",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4926,
+          "width_mm": 2015,
+          "height_mm": 1797,
+          "wheelbase_mm": null,
+          "tire_front": "275/45R21",
+          "tire_rear": "315/40R21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "3ca040ed-a37b-4010-a28e-8b39fb4bebd3",
+              "3d1ef02f-48e3-4462-aed1-b28dee1b6ed1"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.gle.gen1.trim.hybrid_4matic_phev",
+          "generation_id": "mercedes_benz.gle.gen1",
+          "name": "HYBRID 4MATIC+",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2999,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4934,
+          "width_mm": 2015,
+          "height_mm": 1782,
+          "wheelbase_mm": null,
+          "tire_front": "285/40R22",
+          "tire_rear": "325/35R22",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "81bfff52-b287-4b7b-9880-9be951fcc35a"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.gle.gen1.trim.4matic_exclusive_phev",
+          "generation_id": "mercedes_benz.gle.gen1",
+          "name": "4MATIC Exclusive",
+          "powertrain": "PHEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1950,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4924,
+          "width_mm": 2010,
+          "height_mm": 1795,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "11950b23-badf-475b-a02a-fd95f722d82b"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.gle.gen1.trim.4matic_amg_line_hev",
+          "generation_id": "mercedes_benz.gle.gen1",
+          "name": "4MATIC AMG Line",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4926,
+          "width_mm": 2015,
+          "height_mm": 1797,
+          "wheelbase_mm": null,
+          "tire_front": "275/50R20",
+          "tire_rear": "275/50R20",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "5f12ef6e-c967-471f-b8ad-6e392dc8ae94"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.gle.gen1.trim.4matic_amg_dynamic_hev",
+          "generation_id": "mercedes_benz.gle.gen1",
+          "name": "4MATIC AMG Dynamic",
+          "powertrain": "HEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1993,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4926,
+          "width_mm": 2015,
+          "height_mm": 1797,
+          "wheelbase_mm": null,
+          "tire_front": "275/45R21",
+          "tire_rear": "315/40R21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "72cf2e65-ccdb-4b02-a5db-d66cbc07fd0c"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.gle.gen1.trim.mercedes_benz_4matic_amg_dynamic_ice",
+          "generation_id": "mercedes_benz.gle.gen1",
+          "name": "Mercedes-Benz 4MATIC AMG Dynamic",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1950,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 7,
+          "length_mm": 4924,
+          "width_mm": 1947,
+          "height_mm": 1797,
+          "wheelbase_mm": null,
+          "tire_front": "275/45R21",
+          "tire_rear": "315/40R21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "399cfa8e-8644-4fa8-af78-e2cfd7dff604"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mercedes_benz.gle.gen1.trim.350_d_4matic_coupe_amg_dynamic_ice",
+          "generation_id": "mercedes_benz.gle.gen1",
+          "name": "350 d 4MATIC Coupe AMG Dynamic",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2925,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4946,
+          "width_mm": 2014,
+          "height_mm": 1716,
+          "wheelbase_mm": null,
+          "tire_front": "285/40R22",
+          "tire_rear": "325/35R22",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "e8b88a4b49b74fef88e7c7354c60170c"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

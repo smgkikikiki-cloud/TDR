@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7248464d4976a417db044bf4",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-010-6f2b18f1a4fd:61",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.ora_good_cat.gc.trim.5_hev_ultra_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:14+00:00",
+    "before_hash": "73b38b580aabcd7be5318fb1fe66d8f3496e2176a9a43a302f8f4e7ae8530d2c",
+    "after_hash": "dd8448ae760428e5212d4a1c339955355fc7607f725e12001a440223267540f4",
+    "before": [
+      true,
+      4.5,
+      4.3,
+      3.9,
+      99.0,
+      0.01141,
+      0.00052,
+      "TIS",
+      "HEV",
+      1499,
+      "GASOLINE",
+      "225/60R18"
+    ],
+    "after": [
+      true,
+      4.5,
+      4.3,
+      3.9,
+      99.0,
+      0.01141,
+      0.00052,
+      "TIS",
+      "HEV",
+      1499,
+      "GASOLINE",
+      "225/60R18",
+      "HEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_923c2b71-30b4-4312-80de-a1c7445c4ed6_identity.powertrain_d660225f4ace.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7248464d4976a417db044bf4:spec",
+    "revision_id": "7248464d4976a417db044bf4",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.ora_good_cat.gc.trim.5_hev_ultra_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:14+00:00",
+    "payload": [
+      true,
+      4.5,
+      4.3,
+      3.9,
+      99.0,
+      0.01141,
+      0.00052,
+      "TIS",
+      "HEV",
+      1499,
+      "GASOLINE",
+      "225/60R18",
+      "HEV"
+    ]
+  }
+}

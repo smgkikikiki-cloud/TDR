@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "cf71ed320ff834b3b80435cf",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-022-20a8a8e94ae5:191",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lexus_rx.al30.trim.rx450h_luxury_awd_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:11+00:00",
+    "before_hash": "bdac2f439e4947aa04f8489d026cd64fcbc3b4f1cc94fa83e057f5f8a8dd444d",
+    "after_hash": "21f84e57c3d1fe1600e7416dee757b1349b2a92fd3129666b1b8f5f025fd60a8",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      18.12,
+      355.2,
+      "TOYOTA MOTOR KYUSHU, INC.",
+      "ONBOARD_AC",
+      1.3,
+      29.0,
+      0.001,
+      8e-05,
+      "EURO6",
+      "PHEV",
+      2487,
+      "GASOLINE",
+      135.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      18.12,
+      355.2,
+      "TOYOTA MOTOR KYUSHU, INC.",
+      "ONBOARD_AC",
+      1.3,
+      29.0,
+      0.001,
+      8e-05,
+      "EURO6",
+      "PHEV",
+      2487,
+      "GASOLINE",
+      135.0,
+      85.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_4da0bd73-d6cb-49c2-b32d-769ea35cb76b_ev.rated_range_km_a8ca577bc178.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "cf71ed320ff834b3b80435cf:spec",
+    "revision_id": "cf71ed320ff834b3b80435cf",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lexus_rx.al30.trim.rx450h_luxury_awd_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:11+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      18.12,
+      355.2,
+      "TOYOTA MOTOR KYUSHU, INC.",
+      "ONBOARD_AC",
+      1.3,
+      29.0,
+      0.001,
+      8e-05,
+      "EURO6",
+      "PHEV",
+      2487,
+      "GASOLINE",
+      135.0,
+      85.0
+    ]
+  }
+}

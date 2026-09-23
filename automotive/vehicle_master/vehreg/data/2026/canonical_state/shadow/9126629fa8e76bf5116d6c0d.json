@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9126629fa8e76bf5116d6c0d",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-003-71403c2b6ecf:3",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_3.g20.trim.m340i_xdrive_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:49+00:00",
+    "before_hash": "2da956be0a9d26eeb34c4aefe06bd08a8a74275118b070b19a816fe1376ebef2",
+    "after_hash": "9d917301c6ba2ab42052d190896554ac58678c5e592e2233445b347de5f176d2",
+    "before": [
+      true,
+      true,
+      true,
+      6.2
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      6.2,
+      7.5
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d70c7cdb-3201-4d0d-b090-e90a8ffbe50b_efficiency.fuel_consumption_l_100km_8ea17a9e0a17.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9126629fa8e76bf5116d6c0d:spec",
+    "revision_id": "9126629fa8e76bf5116d6c0d",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_3.g20.trim.m340i_xdrive_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:49+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      6.2,
+      7.5
+    ]
+  }
+}

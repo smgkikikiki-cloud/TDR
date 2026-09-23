@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b7a264a30f053451d9e835fc",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-028-314da6945e4d:386",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lbx.gen1.trim.bespoke_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:46+00:00",
+    "before_hash": "cdc815b977dbfd1792e512eed5280b9f26f899df3489062554dbd7cfb998ba52",
+    "after_hash": "8a85710bfd8faddc569062203126e2db7d98d675579ff863c0a5610b971f72f6",
+    "before": [
+      4.0,
+      3.8,
+      3.6,
+      85.0,
+      0.003,
+      "EURO6",
+      "HEV",
+      1490,
+      "GASOLINE",
+      "225/55R18",
+      "HEV",
+      8.0,
+      "TOYOTA MOTOR EAST JAPAN INCORPORATED (IWATE PLANT)",
+      "CVT"
+    ],
+    "after": [
+      4.0,
+      3.8,
+      3.6,
+      85.0,
+      0.003,
+      "EURO6",
+      "HEV",
+      1490,
+      "GASOLINE",
+      "225/55R18",
+      "HEV",
+      8.0,
+      "TOYOTA MOTOR EAST JAPAN INCORPORATED (IWATE PLANT)",
+      "CVT",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_3214703d-3f34-4072-bc71-510132d1ec26_safety.abs_24512b983110.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b7a264a30f053451d9e835fc:spec",
+    "revision_id": "b7a264a30f053451d9e835fc",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lbx.gen1.trim.bespoke_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:46+00:00",
+    "payload": [
+      4.0,
+      3.8,
+      3.6,
+      85.0,
+      0.003,
+      "EURO6",
+      "HEV",
+      1490,
+      "GASOLINE",
+      "225/55R18",
+      "HEV",
+      8.0,
+      "TOYOTA MOTOR EAST JAPAN INCORPORATED (IWATE PLANT)",
+      "CVT",
+      true
+    ]
+  }
+}

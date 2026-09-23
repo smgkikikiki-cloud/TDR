@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e33028c6177d979c352443b2",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-015-2f508ee80764:39",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_revo_double_cab.an120.trim.gr_sport_2_8_at_4x2",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:37+00:00",
+    "before_hash": "250381a3c89259efd7b71306dce278d5b6df41785383c2f87661b5a028ab3edd",
+    "after_hash": "bc6a416d78f8698cf45c465ec9c651d44b47a71b3652fc90eb1b74e53ab4e8ff",
+    "before": [
+      true,
+      6.0,
+      6.9,
+      8.4,
+      181.0,
+      0.129,
+      0.0006,
+      "TIS"
+    ],
+    "after": [
+      true,
+      6.0,
+      6.9,
+      8.4,
+      181.0,
+      0.129,
+      0.0006,
+      "TIS",
+      "DIESEL"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_c610d416-c53d-4383-8f99-bd33ad13eaae_engine.combustion_type_aff59ade9672.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e33028c6177d979c352443b2:spec",
+    "revision_id": "e33028c6177d979c352443b2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_revo_double_cab.an120.trim.gr_sport_2_8_at_4x2",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:37+00:00",
+    "payload": [
+      true,
+      6.0,
+      6.9,
+      8.4,
+      181.0,
+      0.129,
+      0.0006,
+      "TIS",
+      "DIESEL"
+    ]
+  }
+}

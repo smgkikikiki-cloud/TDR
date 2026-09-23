@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f68f38393b15c12a433bf22f",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-001-2163ac0376be:217",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.targa_4s_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:45+00:00",
+    "before_hash": "85014b1a1ca56725accbaa39ef2f0a2eb27e0e87716911b9777163c031195c95",
+    "after_hash": "9fa000bed0367d401fb1a77cb8a224155dd06fb2b348737cd2c2462b5659300b",
+    "before": [
+      true,
+      7.8,
+      10.5,
+      15.3,
+      240.0,
+      0.0212,
+      "TIS"
+    ],
+    "after": [
+      true,
+      7.8,
+      10.5,
+      15.3,
+      240.0,
+      0.0212,
+      "TIS",
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e4ec0782-9e03-40c9-b9ce-4f0d350da545_engine.combustion_type_017bd353cd1b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f68f38393b15c12a433bf22f:spec",
+    "revision_id": "f68f38393b15c12a433bf22f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.targa_4s_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:45+00:00",
+    "payload": [
+      true,
+      7.8,
+      10.5,
+      15.3,
+      240.0,
+      0.0212,
+      "TIS",
+      "GASOLINE"
+    ]
+  }
+}

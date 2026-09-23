@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e2bdb9c183593dc93a77fc85",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-046-2c82d6c5b603:117",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.triton_double_cab.mv.trim.4wd_2_4_gls",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:13+00:00",
+    "before_hash": "9310aeaa39aa38f4624ca8450311ba1e5dae371b85500d8bc1d399235ef1131b",
+    "after_hash": "1290446e032e21f9bbb03fc118305cc84a26f19c8b8f0c1fedd3102ea5c3043e",
+    "before": [
+      true,
+      6.6,
+      7.4,
+      8.6,
+      194.0,
+      0.232,
+      0.04,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "265/60R18",
+      "ICE",
+      9.0
+    ],
+    "after": [
+      true,
+      6.6,
+      7.4,
+      8.6,
+      194.0,
+      0.232,
+      0.04,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "265/60R18",
+      "ICE",
+      9.0,
+      6
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_19ae5c1532a442f59fd329b183e6c821_powertrain.gear_count_404990405ec9.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e2bdb9c183593dc93a77fc85:spec",
+    "revision_id": "e2bdb9c183593dc93a77fc85",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.triton_double_cab.mv.trim.4wd_2_4_gls",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:13+00:00",
+    "payload": [
+      true,
+      6.6,
+      7.4,
+      8.6,
+      194.0,
+      0.232,
+      0.04,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "265/60R18",
+      "ICE",
+      9.0,
+      6
+    ]
+  }
+}

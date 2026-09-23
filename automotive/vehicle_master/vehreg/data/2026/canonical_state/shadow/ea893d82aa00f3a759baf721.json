@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ea893d82aa00f3a759baf721",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-049-18d26b73936f:12",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "suzuki.ciaz.yl1.trim.gl_cvt_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:44+00:00",
+    "before_hash": "16c6113936917c4782c46f884a3d2c7d89f9f368f289f80caa230eed7d406c79",
+    "after_hash": "eaf86f0eb0f0638a3c47654496636aff32d75ac72fde8037121683e5995cecf7",
+    "before": [
+      4.3,
+      5.0,
+      6.2,
+      119.0
+    ],
+    "after": [
+      4.3,
+      5.0,
+      6.2,
+      119.0,
+      0.003
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_cef792777f20436086a081dff0145f91_emissions.nox_g_km_b2c5cac1e64b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ea893d82aa00f3a759baf721:spec",
+    "revision_id": "ea893d82aa00f3a759baf721",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "suzuki.ciaz.yl1.trim.gl_cvt_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:44+00:00",
+    "payload": [
+      4.3,
+      5.0,
+      6.2,
+      119.0,
+      0.003
+    ]
+  }
+}

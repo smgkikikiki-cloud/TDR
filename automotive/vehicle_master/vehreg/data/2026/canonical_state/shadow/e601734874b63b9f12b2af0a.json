@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e601734874b63b9f12b2af0a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-023-8723a19230b0:367",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.cx30.dm.trim.2_0_signature_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:16+00:00",
+    "before_hash": "774c487b9ce3a0cfe75be72cbd891faf8232dbc560289d478183b4cc8f627c4e",
+    "after_hash": "129f1361cae5b321e31894c2cdc526f97085c5ccb1f2c39ac9ff3e94ab55d750",
+    "before": [
+      true,
+      5.5,
+      6.5,
+      8.3,
+      150.0
+    ],
+    "after": [
+      true,
+      5.5,
+      6.5,
+      8.3,
+      150.0,
+      0.008
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d2939e10-9334-4b2c-b36a-fdac7e78d9b4_emissions.nox_g_km_e6f11efb7f7b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e601734874b63b9f12b2af0a:spec",
+    "revision_id": "e601734874b63b9f12b2af0a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.cx30.dm.trim.2_0_signature_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:16+00:00",
+    "payload": [
+      true,
+      5.5,
+      6.5,
+      8.3,
+      150.0,
+      0.008
+    ]
+  }
+}

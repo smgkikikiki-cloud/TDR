@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "868ae219b896d7b69d87fc1e",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-009-54711011662e:198",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "xpeng.xpeng_g6.g6.trim.long_range_rwd_87_5_kwh_ncm_286_hp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:11+00:00",
+    "before_hash": "2cc1968c16d023127b85563781494e2d232d17c0e0a9d0987abaf6ddac70a14c",
+    "after_hash": "7fd1333083db8d409fb4af010e6e88001d2206fc9cfc5e3282506dbe008fec70",
+    "before": [
+      "LFP",
+      80.81,
+      581.4,
+      "CALB Group Co., Ltd.",
+      "BOTH",
+      true,
+      156.0,
+      600.0,
+      "255/45R20",
+      "BEV",
+      10.0,
+      "PMSM"
+    ],
+    "after": [
+      "LFP",
+      80.81,
+      581.4,
+      "CALB Group Co., Ltd.",
+      "BOTH",
+      true,
+      156.0,
+      600.0,
+      "255/45R20",
+      "BEV",
+      10.0,
+      "PMSM",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_6ec43a69-a117-42e0-8ff6-f888228f04a5_safety.abs_9c6cf8896098.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "868ae219b896d7b69d87fc1e:spec",
+    "revision_id": "868ae219b896d7b69d87fc1e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "xpeng.xpeng_g6.g6.trim.long_range_rwd_87_5_kwh_ncm_286_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:11+00:00",
+    "payload": [
+      "LFP",
+      80.81,
+      581.4,
+      "CALB Group Co., Ltd.",
+      "BOTH",
+      true,
+      156.0,
+      600.0,
+      "255/45R20",
+      "BEV",
+      10.0,
+      "PMSM",
+      true
+    ]
+  }
+}

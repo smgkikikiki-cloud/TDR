@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "8dcf852997a1f932635e8256",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-051-bcc716924fd5:343",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.kicks.p15.trim.95kw_v",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:11+00:00",
+    "before_hash": "54e40816761e68f99d3baa51692c2a3052297f370f862219644608ea67ea7e51",
+    "after_hash": "e0017a13eaa9602f094c39310bb86447072a97352d4736fb315afb9e6fa752ed",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      4.5,
+      4.2,
+      3.7,
+      100.0,
+      0.027,
+      "TIS"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      4.5,
+      4.2,
+      3.7,
+      100.0,
+      0.027,
+      "TIS",
+      "HEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_3d01f6b0b6a14be3b1b2c1c557fb1a04_engine.combustion_type_1cca86d8b683.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "8dcf852997a1f932635e8256:spec",
+    "revision_id": "8dcf852997a1f932635e8256",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.kicks.p15.trim.95kw_v",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:11+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      true,
+      4.5,
+      4.2,
+      3.7,
+      100.0,
+      0.027,
+      "TIS",
+      "HEV"
+    ]
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a481787aa88a1e4c3f5178a8",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-024-8292d953d777:108",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "avatr.avatr_11.gen1.trim.long_range_rwd_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:19+00:00",
+    "before_hash": "bf6d78dd9e35793e52801be5630b0b67f2bb6ed47367a007bf3796adbbea13a3",
+    "after_hash": "699ffcd02f805d935b185721ba10b5fddc79ebac977f9a9b6d2142085b3d877e",
+    "before": [
+      "NMC",
+      116.69,
+      572.0,
+      "Contemporary Amperex Technology Co., Limited",
+      "Charger external (DC) : 403V-740 V",
+      "EXTERNAL_DC",
+      188.0,
+      680.0,
+      "265/40R22",
+      "BEV",
+      8.0,
+      "PMSM"
+    ],
+    "after": [
+      "NMC",
+      116.69,
+      572.0,
+      "Contemporary Amperex Technology Co., Limited",
+      "Charger external (DC) : 403V-740 V",
+      "EXTERNAL_DC",
+      188.0,
+      680.0,
+      "265/40R22",
+      "BEV",
+      8.0,
+      "PMSM",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_1dba1f1d-8e6c-4984-ae15-de9206d2eb17_safety.abs_1b9f591b6036.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a481787aa88a1e4c3f5178a8:spec",
+    "revision_id": "a481787aa88a1e4c3f5178a8",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "avatr.avatr_11.gen1.trim.long_range_rwd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:19+00:00",
+    "payload": [
+      "NMC",
+      116.69,
+      572.0,
+      "Contemporary Amperex Technology Co., Limited",
+      "Charger external (DC) : 403V-740 V",
+      "EXTERNAL_DC",
+      188.0,
+      680.0,
+      "265/40R22",
+      "BEV",
+      8.0,
+      "PMSM",
+      true
+    ]
+  }
+}

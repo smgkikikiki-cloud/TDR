@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "3eb7423e285a22dd535c9a77",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-013-01b2d6d40e8e:124",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.countryman.u25.trim.all4_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:27+00:00",
+    "before_hash": "8bf146c3724353f47418d8674384e8440d142984f1463e911432f1185f470fea",
+    "after_hash": "cea09ae623e951622ce495f01d029375bc31f8fa46dfe9f0a1814f72065a1bb7",
+    "before": [
+      true,
+      true,
+      true,
+      6.2,
+      7.5,
+      9.8,
+      170.0,
+      0.025,
+      "EURO6",
+      "GASOLINE",
+      1998
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      6.2,
+      7.5,
+      9.8,
+      170.0,
+      0.025,
+      "EURO6",
+      "GASOLINE",
+      1998,
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_15f61346-32d1-425c-ad36-423874390352_engine.fuel_type_149cd6ced40a.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "3eb7423e285a22dd535c9a77:spec",
+    "revision_id": "3eb7423e285a22dd535c9a77",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.countryman.u25.trim.all4_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:27+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      6.2,
+      7.5,
+      9.8,
+      170.0,
+      0.025,
+      "EURO6",
+      "GASOLINE",
+      1998,
+      "GASOLINE"
+    ]
+  }
+}

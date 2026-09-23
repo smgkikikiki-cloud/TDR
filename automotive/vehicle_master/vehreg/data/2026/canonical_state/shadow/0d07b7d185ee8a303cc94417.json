@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "0d07b7d185ee8a303cc94417",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-039-bb0c6084f37a:10",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "maserati.grecale.gen1.trim.gt_300_hp_mhev_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:13+00:00",
+    "before_hash": "6b35e3883f91289d190aa6df6207d3ff60c179a41a13c8fc48580bcb69808f00",
+    "after_hash": "578188a5968302e2e4f873e3126731282109fa411521925c2c7f87577578e0d0",
+    "before": [
+      true,
+      true,
+      6.5,
+      8.1,
+      10.9,
+      185.0,
+      0.033,
+      0.00067,
+      "TIS",
+      "GASOLINE",
+      1995,
+      "GASOLINE",
+      "255/45R20"
+    ],
+    "after": [
+      true,
+      true,
+      6.5,
+      8.1,
+      10.9,
+      185.0,
+      0.033,
+      0.00067,
+      "TIS",
+      "GASOLINE",
+      1995,
+      "GASOLINE",
+      "255/45R20",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_64aeb629-a7fe-4bf5-9b37-7036631143dd_identity.powertrain_81028a158fbd.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "0d07b7d185ee8a303cc94417:spec",
+    "revision_id": "0d07b7d185ee8a303cc94417",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "maserati.grecale.gen1.trim.gt_300_hp_mhev_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:13+00:00",
+    "payload": [
+      true,
+      true,
+      6.5,
+      8.1,
+      10.9,
+      185.0,
+      0.033,
+      0.00067,
+      "TIS",
+      "GASOLINE",
+      1995,
+      "GASOLINE",
+      "255/45R20",
+      "ICE"
+    ]
+  }
+}

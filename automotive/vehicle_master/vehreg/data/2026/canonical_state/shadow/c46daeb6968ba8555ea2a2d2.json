@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c46daeb6968ba8555ea2a2d2",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-028-314da6945e4d:3",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.vellfire.gen1.trim.2_5_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:46+00:00",
+    "before_hash": "271dc19d93c77feca10c00465066ccf7c3b05c741dc31df39ff2cad1d8c56aaf",
+    "after_hash": "31c0688843fba1416df80d1ff27e01e0feb02e48cb26ed74ee91e6d80a5b559e",
+    "before": [
+      5.4,
+      5.6,
+      6.0,
+      128.0,
+      0.004,
+      0.00028,
+      "EURO6",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/55R19",
+      "HEV",
+      16.0,
+      "TOYOTA AUTO BODY CO., LTD. (INABE PLANT)",
+      "CVT",
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R100"
+      ],
+      true,
+      2230
+    ],
+    "after": [
+      5.4,
+      5.6,
+      6.0,
+      128.0,
+      0.004,
+      0.00028,
+      "EURO6",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/55R19",
+      "HEV",
+      16.0,
+      "TOYOTA AUTO BODY CO., LTD. (INABE PLANT)",
+      "CVT",
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R100"
+      ],
+      true,
+      2230,
+      1950
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_150c9bf7-c210-42d6-998a-7ace2dc17464_vehicle.height_mm_23f39c44af5f.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c46daeb6968ba8555ea2a2d2:spec",
+    "revision_id": "c46daeb6968ba8555ea2a2d2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.vellfire.gen1.trim.2_5_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:46+00:00",
+    "payload": [
+      5.4,
+      5.6,
+      6.0,
+      128.0,
+      0.004,
+      0.00028,
+      "EURO6",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/55R19",
+      "HEV",
+      16.0,
+      "TOYOTA AUTO BODY CO., LTD. (INABE PLANT)",
+      "CVT",
+      true,
+      true,
+      true,
+      [
+        "R13H",
+        "R100"
+      ],
+      true,
+      2230,
+      1950
+    ]
+  }
+}

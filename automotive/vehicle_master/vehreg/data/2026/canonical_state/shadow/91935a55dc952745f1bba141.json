@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "91935a55dc952745f1bba141",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-039-bb0c6084f37a:332",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_glc.x254.trim.350_e_4matic_amg_dynamic_phev_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:14+00:00",
+    "before_hash": "dbb57de6ea0ca7fee189cd4080ff7672917b1e4e3bfd8435395d8d0a2b8f4542",
+    "after_hash": "639922802a023ea1bf48b7afe611510892c213cf7f3fa51da935abac87441e10",
+    "before": [
+      "NMC",
+      25.77,
+      363.0,
+      "Mercedes-Benz AG",
+      "EXTERNAL_DC",
+      1.2,
+      27.0,
+      0.002,
+      5e-05,
+      "EURO6",
+      "PHEV",
+      1999
+    ],
+    "after": [
+      "NMC",
+      25.77,
+      363.0,
+      "Mercedes-Benz AG",
+      "EXTERNAL_DC",
+      1.2,
+      27.0,
+      0.002,
+      5e-05,
+      "EURO6",
+      "PHEV",
+      1999,
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_f2f2db11-a3df-4d8f-8ab5-b674c0dbd3d8_engine.fuel_type_f56f652a96ef.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "91935a55dc952745f1bba141:spec",
+    "revision_id": "91935a55dc952745f1bba141",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_glc.x254.trim.350_e_4matic_amg_dynamic_phev_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:14+00:00",
+    "payload": [
+      "NMC",
+      25.77,
+      363.0,
+      "Mercedes-Benz AG",
+      "EXTERNAL_DC",
+      1.2,
+      27.0,
+      0.002,
+      5e-05,
+      "EURO6",
+      "PHEV",
+      1999,
+      "GASOLINE"
+    ]
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "324db18516836df44be82d89",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-028-314da6945e4d:320",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto3.atto3.trim.byd_atto3_480km_ext_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:46+00:00",
+    "before_hash": "32035049dbca0ef26bbd771ced320f5706ae73a3ff0edb766087907f699863c0",
+    "after_hash": "227a6c0cb240b121be454258f999b350135b96738df87a526de88e22d5012e02",
+    "before": [
+      "LFP",
+      60.48,
+      403.2,
+      "FinDreams",
+      "Single-phase AC: 220V or DC: 252-472.5V",
+      "ONBOARD_AC",
+      149.0,
+      480.0,
+      "235/50R18",
+      "BEV",
+      2.0,
+      "PMSM",
+      true,
+      true
+    ],
+    "after": [
+      "LFP",
+      60.48,
+      403.2,
+      "FinDreams",
+      "Single-phase AC: 220V or DC: 252-472.5V",
+      "ONBOARD_AC",
+      149.0,
+      480.0,
+      "235/50R18",
+      "BEV",
+      2.0,
+      "PMSM",
+      true,
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e529321a-7be2-4dfe-9087-8fdf70958ca0_safety.aeb_7f1d7cda4042.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "324db18516836df44be82d89:spec",
+    "revision_id": "324db18516836df44be82d89",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto3.atto3.trim.byd_atto3_480km_ext_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:46+00:00",
+    "payload": [
+      "LFP",
+      60.48,
+      403.2,
+      "FinDreams",
+      "Single-phase AC: 220V or DC: 252-472.5V",
+      "ONBOARD_AC",
+      149.0,
+      480.0,
+      "235/50R18",
+      "BEV",
+      2.0,
+      "PMSM",
+      true,
+      true,
+      true
+    ]
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "554960fe13e05e4deaefe88a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-018-bf8b3c7bf841:20",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_cross.xg10.trim.hev_smart_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:52+00:00",
+    "before_hash": "d74c2a3929a5d646aa5816ffa1979cff3adc0a4314fcbc0b8c3b5b16ab3d0d5a",
+    "after_hash": "848c2c1cdf97fa20dab436d04650d04b423d3b3d04df3bda37396417d201a987",
+    "before": [
+      4.4,
+      4.2,
+      4.0,
+      95.0,
+      0.005,
+      "TIS",
+      "HEV",
+      1798,
+      "GASOLINE",
+      "215/60R17",
+      "HEV",
+      6.0,
+      "CVT"
+    ],
+    "after": [
+      4.4,
+      4.2,
+      4.0,
+      95.0,
+      0.005,
+      "TIS",
+      "HEV",
+      1798,
+      "GASOLINE",
+      "215/60R17",
+      "HEV",
+      6.0,
+      "CVT",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_839dcd92-35c9-486e-824b-85c9a0a332ba_safety.abs_d33605fee319.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "554960fe13e05e4deaefe88a:spec",
+    "revision_id": "554960fe13e05e4deaefe88a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_cross.xg10.trim.hev_smart_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:52+00:00",
+    "payload": [
+      4.4,
+      4.2,
+      4.0,
+      95.0,
+      0.005,
+      "TIS",
+      "HEV",
+      1798,
+      "GASOLINE",
+      "215/60R17",
+      "HEV",
+      6.0,
+      "CVT",
+      true
+    ]
+  }
+}

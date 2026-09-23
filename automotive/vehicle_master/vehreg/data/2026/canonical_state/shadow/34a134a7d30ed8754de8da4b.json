@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "34a134a7d30ed8754de8da4b",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-041-97e292394981:138",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.macan.95b.trim.t_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:29+00:00",
+    "before_hash": "d53a2cffe7f105c2e0f41cab27031b6e65aef9212328aeedb8e6257208f628a4",
+    "after_hash": "44fbbf66a33aee6f95042fc0f39f7bc9a21e656f9c9cb05fd602f1d3899f66f1",
+    "before": [
+      true,
+      7.5,
+      8.7,
+      10.8
+    ],
+    "after": [
+      true,
+      7.5,
+      8.7,
+      10.8,
+      200.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ee770a24-d260-4d5f-9877-9af5bf85a301_emissions.co2_g_km_8afd0526ee2e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "34a134a7d30ed8754de8da4b:spec",
+    "revision_id": "34a134a7d30ed8754de8da4b",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.macan.95b.trim.t_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:29+00:00",
+    "payload": [
+      true,
+      7.5,
+      8.7,
+      10.8,
+      200.0
+    ]
+  }
+}

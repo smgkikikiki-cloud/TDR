@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "dbd73b3b770d769ad306d827",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-034-5299aee8f0ab:281",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "kia.sorento.gen1.trim.premium_hev_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:32+00:00",
+    "before_hash": "25dd3fe1aee49710454139674f8caa95a54a0b59c67688b30b06c644c00b2b47",
+    "after_hash": "c964dd0f2833e0c9ed609ad286b376a3dc11aa73bff3813beca5ee9a0f84afa0",
+    "before": [
+      true,
+      true,
+      true,
+      5.5,
+      5.3,
+      4.8,
+      126.0,
+      0.01,
+      "TIS",
+      "HEV",
+      1598,
+      "GASOLINE"
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      5.5,
+      5.3,
+      4.8,
+      126.0,
+      0.01,
+      "TIS",
+      "HEV",
+      1598,
+      "GASOLINE",
+      "235/55R19"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_9dd0283e-3bfa-444f-8a0d-80a4c1c967af_fitment.tyre_size_387b2b6933b3.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "dbd73b3b770d769ad306d827:spec",
+    "revision_id": "dbd73b3b770d769ad306d827",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "kia.sorento.gen1.trim.premium_hev_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:32+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      5.5,
+      5.3,
+      4.8,
+      126.0,
+      0.01,
+      "TIS",
+      "HEV",
+      1598,
+      "GASOLINE",
+      "235/55R19"
+    ]
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "bbf67880471fbeba1774eab6",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-035-5b8b3aecfae7:303",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_revo_double_cab.an120.trim.prerunner_2_4_high_at",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:40+00:00",
+    "before_hash": "a9616d9267fb31941ebeab9e182ff4849483d461a4dbe29739bcd32e35583365",
+    "after_hash": "dbcc8828f29225caa733d3108660e83e5279bf1993a12a47ffaa7656e4c3a9dd",
+    "before": [
+      true,
+      6.6,
+      7.3,
+      8.6,
+      192.0,
+      0.137,
+      0.00038,
+      "TIS",
+      "DIESEL",
+      2393,
+      "B20"
+    ],
+    "after": [
+      true,
+      6.6,
+      7.3,
+      8.6,
+      192.0,
+      0.137,
+      0.00038,
+      "TIS",
+      "DIESEL",
+      2393,
+      "B20",
+      "265/60R 18"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_bdba5e51-1306-4e1a-9683-882e69c2d427_fitment.tyre_size_56aad67181f9.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "bbf67880471fbeba1774eab6:spec",
+    "revision_id": "bbf67880471fbeba1774eab6",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_revo_double_cab.an120.trim.prerunner_2_4_high_at",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:40+00:00",
+    "payload": [
+      true,
+      6.6,
+      7.3,
+      8.6,
+      192.0,
+      0.137,
+      0.00038,
+      "TIS",
+      "DIESEL",
+      2393,
+      "B20",
+      "265/60R 18"
+    ]
+  }
+}

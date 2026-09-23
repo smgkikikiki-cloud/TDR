@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:94022927-c5df-480d-973d-eb320ca1a028:emissions.co2_g_km",
+      "field_key": "emissions.co2_g_km",
+      "value_state": "KNOWN",
+      "value": 138.0,
+      "unit": "g/km",
+      "observed_at": "2026-01-09",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/94022927-c5df-480d-973d-eb320ca1a028",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/94022927-c5df-480d-973d-eb320ca1a028",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "toyota.alphard.ah40.trim.hybrid_2_5_z_2wd"
+    }
+  ]
+}

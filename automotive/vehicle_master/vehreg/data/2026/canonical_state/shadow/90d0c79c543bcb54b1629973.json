@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "90d0c79c543bcb54b1629973",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-035-5b8b3aecfae7:333",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mazda2.dj.trim.xd_sports",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:40+00:00",
+    "before_hash": "aaa5b23711e52424a24a538a3a1a583d547fa64caefaef514854b9c26e3b1c4c",
+    "after_hash": "ece9968e230c60f553e589187ddf946554e7992e759b3c0f0873c0ddb3190835",
+    "before": [
+      true,
+      3.4,
+      3.8,
+      4.5,
+      100.0,
+      0.05,
+      0.00054,
+      "TIS",
+      "DIESEL",
+      1499,
+      "B10",
+      "185/60R16",
+      "ICE",
+      10.0
+    ],
+    "after": [
+      true,
+      3.4,
+      3.8,
+      4.5,
+      100.0,
+      0.05,
+      0.00054,
+      "TIS",
+      "DIESEL",
+      1499,
+      "B10",
+      "185/60R16",
+      "ICE",
+      10.0,
+      6
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e8529c4f-5d04-4db1-a9bb-f51f94e17843_powertrain.gear_count_00441749bc55.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "90d0c79c543bcb54b1629973:spec",
+    "revision_id": "90d0c79c543bcb54b1629973",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mazda2.dj.trim.xd_sports",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:40+00:00",
+    "payload": [
+      true,
+      3.4,
+      3.8,
+      4.5,
+      100.0,
+      0.05,
+      0.00054,
+      "TIS",
+      "DIESEL",
+      1499,
+      "B10",
+      "185/60R16",
+      "ICE",
+      10.0,
+      6
+    ]
+  }
+}

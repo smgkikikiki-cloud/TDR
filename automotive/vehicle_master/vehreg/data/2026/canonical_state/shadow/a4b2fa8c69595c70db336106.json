@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a4b2fa8c69595c70db336106",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-015-2f508ee80764:69",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_revo_double_cab.an120.trim.rocco_2_8_at_4x4",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:37+00:00",
+    "before_hash": "48dcb167e8f02554563813d2d3baad3bfaa9594334d084eaa4e7b6447267762f",
+    "after_hash": "d269ce3251681361b92d713b8678f167aa2a827cc8533013ac8f69cd329a8a5b",
+    "before": [
+      true,
+      6.7,
+      7.3,
+      8.3,
+      191.0,
+      0.15,
+      0.0006,
+      "TIS",
+      "DIESEL",
+      2755,
+      "B20",
+      "265/60R18",
+      "ICE"
+    ],
+    "after": [
+      true,
+      6.7,
+      7.3,
+      8.3,
+      191.0,
+      0.15,
+      0.0006,
+      "TIS",
+      "DIESEL",
+      2755,
+      "B20",
+      "265/60R18",
+      "ICE",
+      9.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_68b7091e-af8d-4349-a385-da60c8a71da5_manufacturing.excise_tax_rate_4fd23c0f71d0.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a4b2fa8c69595c70db336106:spec",
+    "revision_id": "a4b2fa8c69595c70db336106",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_revo_double_cab.an120.trim.rocco_2_8_at_4x4",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:37+00:00",
+    "payload": [
+      true,
+      6.7,
+      7.3,
+      8.3,
+      191.0,
+      0.15,
+      0.0006,
+      "TIS",
+      "DIESEL",
+      2755,
+      "B20",
+      "265/60R18",
+      "ICE",
+      9.0
+    ]
+  }
+}

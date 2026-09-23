@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "0acfb6693e7c78e2f941cc39",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-046-2c82d6c5b603:311",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.cx5.kf.trim.2_5_turbo_sp_231_hp_awd_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:14+00:00",
+    "before_hash": "ecaf11dc077223c7cf9f4ea120097f59a791100ed13a1692372360803834b22a",
+    "after_hash": "c414afb3fba5817f2a251936629b7b59638cd93d3cf257ab8758252d2288bf0f",
+    "before": [
+      7.1,
+      8.3,
+      10.6,
+      198.0,
+      0.013,
+      "TIS",
+      "GASOLINE",
+      2488,
+      "GASOLINE",
+      "225/55R19",
+      "ICE"
+    ],
+    "after": [
+      7.1,
+      8.3,
+      10.6,
+      198.0,
+      0.013,
+      "TIS",
+      "GASOLINE",
+      2488,
+      "GASOLINE",
+      "225/55R19",
+      "ICE",
+      30.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_18247f81795d406a9ddbb752026bc483_manufacturing.excise_tax_rate_c187ef180a2e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "0acfb6693e7c78e2f941cc39:spec",
+    "revision_id": "0acfb6693e7c78e2f941cc39",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.cx5.kf.trim.2_5_turbo_sp_231_hp_awd_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:14+00:00",
+    "payload": [
+      7.1,
+      8.3,
+      10.6,
+      198.0,
+      0.013,
+      "TIS",
+      "GASOLINE",
+      2488,
+      "GASOLINE",
+      "225/55R19",
+      "ICE",
+      30.0
+    ]
+  }
+}

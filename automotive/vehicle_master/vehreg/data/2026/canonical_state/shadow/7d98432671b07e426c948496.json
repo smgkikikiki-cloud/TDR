@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7d98432671b07e426c948496",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-037-986e7ff7e687:121",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.taycan.gen1.trim.gts_awd_598_hp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:56+00:00",
+    "before_hash": "03f1f8f5128f07a785eeec69665abf4e3b3737378627b19448ca910ab04ec40c",
+    "after_hash": "a7b91fba070e9667e8e17fc3c9477be179499756d492ae9c9d37ef602022accd",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      93.27,
+      723.0,
+      "DFS Draxlmaier Fahrzeugsystem GmbH",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      259.0,
+      485.0,
+      "265/35ZR21"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      93.27,
+      723.0,
+      "DFS Draxlmaier Fahrzeugsystem GmbH",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      259.0,
+      485.0,
+      "265/35ZR21",
+      "305/30ZR21"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_9deda427-55b0-4693-a5d8-58f8f8b56367_fitment.tyre_rear_e95c7f5d0bee.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7d98432671b07e426c948496:spec",
+    "revision_id": "7d98432671b07e426c948496",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.taycan.gen1.trim.gts_awd_598_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:56+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      93.27,
+      723.0,
+      "DFS Draxlmaier Fahrzeugsystem GmbH",
+      "230V / 400V, AC main voltage",
+      "ONBOARD_AC",
+      true,
+      259.0,
+      485.0,
+      "265/35ZR21",
+      "305/30ZR21"
+    ]
+  }
+}

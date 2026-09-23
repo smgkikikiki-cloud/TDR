@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6bb1b6bddeed6b981f1215d3",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-021-33a0f14d51bc:267",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.city.gn2.trim.rs_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:06+00:00",
+    "before_hash": "033932cd929626953bc7bf835793afeb8f085887341f8e0124e8e41ef554dc08",
+    "after_hash": "bb02ff62699ac0fe046e26fda19e281cc7da3b7a1a4780438ab454d70a639e95",
+    "before": [
+      true,
+      4.2,
+      4.4,
+      4.8,
+      100.0,
+      0.027,
+      0.00061,
+      "TIS",
+      "GASOLINE",
+      988,
+      "GASOLINE"
+    ],
+    "after": [
+      true,
+      4.2,
+      4.4,
+      4.8,
+      100.0,
+      0.027,
+      0.00061,
+      "TIS",
+      "GASOLINE",
+      988,
+      "GASOLINE",
+      "185/60R16"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_dca25795-3477-433d-acba-ac2bfea771bf_fitment.tyre_size_77a99842ceda.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6bb1b6bddeed6b981f1215d3:spec",
+    "revision_id": "6bb1b6bddeed6b981f1215d3",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.city.gn2.trim.rs_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:06+00:00",
+    "payload": [
+      true,
+      4.2,
+      4.4,
+      4.8,
+      100.0,
+      0.027,
+      0.00061,
+      "TIS",
+      "GASOLINE",
+      988,
+      "GASOLINE",
+      "185/60R16"
+    ]
+  }
+}

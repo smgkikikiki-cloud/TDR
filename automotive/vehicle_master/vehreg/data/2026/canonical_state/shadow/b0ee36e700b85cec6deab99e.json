@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b0ee36e700b85cec6deab99e",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-016-3b184c133993:195",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.z_hybrid",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:42+00:00",
+    "before_hash": "11f510b001c46db6bdef93fc29f7d2801e0986b0dbbb3f82369acc05e622a555",
+    "after_hash": "2fc5cfc47936222b8807ffb253fcb5dfb974acd0e5281f63a8c1009352bba0f0",
+    "before": [
+      true,
+      true,
+      5.5,
+      5.7,
+      6.0,
+      133.0,
+      0.00323,
+      "TIS",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/60R18"
+    ],
+    "after": [
+      true,
+      true,
+      5.5,
+      5.7,
+      6.0,
+      133.0,
+      0.00323,
+      "TIS",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/60R18",
+      "HEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_54d262c9-9956-42ef-8812-17e6dcfca0f5_identity.powertrain_35d16872900c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b0ee36e700b85cec6deab99e:spec",
+    "revision_id": "b0ee36e700b85cec6deab99e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.z_hybrid",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:42+00:00",
+    "payload": [
+      true,
+      true,
+      5.5,
+      5.7,
+      6.0,
+      133.0,
+      0.00323,
+      "TIS",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/60R18",
+      "HEV"
+    ]
+  }
+}

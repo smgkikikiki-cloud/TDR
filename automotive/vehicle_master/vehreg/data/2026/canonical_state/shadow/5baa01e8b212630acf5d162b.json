@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5baa01e8b212630acf5d162b",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-024-8292d953d777:64",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_s05.gen1.trim.reev_plus_reev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:19+00:00",
+    "before_hash": "0dee34298eb49d9b0588aec355a9abf6c02295fcaddb2e08d04a8fe4071b4d99",
+    "after_hash": "24442b766bcc6e0dfa2d87b18547e6e3609a8e0f9b515ec708389adf0398a80f",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      27.32,
+      314.0,
+      "CHANGAN",
+      "ONBOARD_AC",
+      true,
+      0.6,
+      14.0,
+      0.001
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      27.32,
+      314.0,
+      "CHANGAN",
+      "ONBOARD_AC",
+      true,
+      0.6,
+      14.0,
+      0.001,
+      "TIS"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_a05ae9fe-e9ac-4609-b752-6066a1151085_emissions.standard_d8be8f5346dd.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5baa01e8b212630acf5d162b:spec",
+    "revision_id": "5baa01e8b212630acf5d162b",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_s05.gen1.trim.reev_plus_reev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:19+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      27.32,
+      314.0,
+      "CHANGAN",
+      "ONBOARD_AC",
+      true,
+      0.6,
+      14.0,
+      0.001,
+      "TIS"
+    ]
+  }
+}

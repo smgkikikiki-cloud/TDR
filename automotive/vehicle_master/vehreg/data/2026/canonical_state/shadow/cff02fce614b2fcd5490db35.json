@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "cff02fce614b2fcd5490db35",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-032-04b0adc6e162:229",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "kia.ev9.mv.trim.earth_long_range_rwd_7_seater_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:17+00:00",
+    "before_hash": "17322a556f9991df5c733e3b1cdedb8eca492279e3ab94589942a538f8c09416",
+    "after_hash": "52765ce822039db368f35523ee9965df4279851de183ba4330d55244ce40a1a9",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      99.91,
+      552.0,
+      "HYUNDAI MOBIS",
+      "ONBOARD_AC",
+      true,
+      true,
+      true,
+      186.0,
+      680.9,
+      "275/50R20",
+      "BEV",
+      8.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      99.91,
+      552.0,
+      "HYUNDAI MOBIS",
+      "ONBOARD_AC",
+      true,
+      true,
+      true,
+      186.0,
+      680.9,
+      "275/50R20",
+      "BEV",
+      8.0,
+      "PMSM"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_3ce6ae0c-6264-42cd-9709-2261216eac9d_powertrain.motor_type_5ec61444acf0.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "cff02fce614b2fcd5490db35:spec",
+    "revision_id": "cff02fce614b2fcd5490db35",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "kia.ev9.mv.trim.earth_long_range_rwd_7_seater_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:17+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      99.91,
+      552.0,
+      "HYUNDAI MOBIS",
+      "ONBOARD_AC",
+      true,
+      true,
+      true,
+      186.0,
+      680.9,
+      "275/50R20",
+      "BEV",
+      8.0,
+      "PMSM"
+    ]
+  }
+}

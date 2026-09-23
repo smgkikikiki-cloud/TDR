@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "bf7e4b97b95252c465743f13",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-021-33a0f14d51bc:91",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.city_hatchback.gn7.trim.rs_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:06+00:00",
+    "before_hash": "1c28f2eb0958c3d15db1f0f0e7f2b8998ca2b8f67ab426a1fbb3d561fe76fad9",
+    "after_hash": "24cc5352a613fb233adfb30b47bfcb8372afa8cd0619f3e9373b84a4bd8fc6c2",
+    "before": [
+      true
+    ],
+    "after": [
+      true,
+      4.2
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e28c2952-594b-4e4d-9cb7-bee6aac945fb_efficiency.fuel_consumption_extra_urban_l_100km_3cdad5003922.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "bf7e4b97b95252c465743f13:spec",
+    "revision_id": "bf7e4b97b95252c465743f13",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.city_hatchback.gn7.trim.rs_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:06+00:00",
+    "payload": [
+      true,
+      4.2
+    ]
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9ba9dd7efcc93d7109836cb1",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-032-04b0adc6e162:224",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "kia.ev9.mv.trim.earth_long_range_rwd_7_seater_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:17+00:00",
+    "before_hash": "f8d81cb9bb8cfd1553b82b9e38e81552f1b945acead1ba62fed7a60c0eec18c5",
+    "after_hash": "48033a55c53dec182fb81a2ea441e353dda46543111b3c3d007d44694d1b4e72",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      99.91,
+      552.0,
+      "HYUNDAI MOBIS",
+      "ONBOARD_AC",
+      true,
+      true,
+      true
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      99.91,
+      552.0,
+      "HYUNDAI MOBIS",
+      "ONBOARD_AC",
+      true,
+      true,
+      true,
+      186.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_3ce6ae0c-6264-42cd-9709-2261216eac9d_ev.energy_consumption_wh_km_87df66a32fbc.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9ba9dd7efcc93d7109836cb1:spec",
+    "revision_id": "9ba9dd7efcc93d7109836cb1",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "kia.ev9.mv.trim.earth_long_range_rwd_7_seater_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:17+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      99.91,
+      552.0,
+      "HYUNDAI MOBIS",
+      "ONBOARD_AC",
+      true,
+      true,
+      true,
+      186.0
+    ]
+  }
+}

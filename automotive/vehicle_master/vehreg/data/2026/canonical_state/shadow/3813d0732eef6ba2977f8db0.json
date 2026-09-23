@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "3813d0732eef6ba2977f8db0",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-038-caad162ad775:94",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq5.ne.trim.ioniq_5_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:04+00:00",
+    "before_hash": "d48c5eee9050c219fea2572eefe978d06b4a99b7dc1f253f6a965258e1e18845",
+    "after_hash": "a8adf5d700dc444ca93164ee7eeedf4d32f279aa3f6f0562107573e559b91c25",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      72.48,
+      653.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      171.0,
+      451.0,
+      "255/45R20",
+      "BEV",
+      8.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      72.48,
+      653.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      171.0,
+      451.0,
+      "255/45R20",
+      "BEV",
+      8.0,
+      "Hyundai Ulsan Plant"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_745a69ba-fab8-42b2-b7e4-dd78ab685a10_manufacturing.factory_da3d746c260a.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "3813d0732eef6ba2977f8db0:spec",
+    "revision_id": "3813d0732eef6ba2977f8db0",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq5.ne.trim.ioniq_5_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:04+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      72.48,
+      653.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      171.0,
+      451.0,
+      "255/45R20",
+      "BEV",
+      8.0,
+      "Hyundai Ulsan Plant"
+    ]
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c41bedce4f614567b0df5045",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-002-6827d3f0606e:291",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.crv.rs.trim.e_hev_rs_4wd_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:47+00:00",
+    "before_hash": "48035ec253c871f3cab98039e3b9b08a6974a75facab3ed47b0aa085f925b2d8",
+    "after_hash": "951fc802d7d6f3b8f0e67c413df82451c308202b23c472c071326ba6d91c2b2c",
+    "before": [
+      true,
+      true,
+      5.3,
+      5.2,
+      5.0,
+      119.0,
+      0.01093,
+      0.00058,
+      "TIS",
+      "HEV",
+      1993,
+      "GASOLINE",
+      "235/55R19"
+    ],
+    "after": [
+      true,
+      true,
+      5.3,
+      5.2,
+      5.0,
+      119.0,
+      0.01093,
+      0.00058,
+      "TIS",
+      "HEV",
+      1993,
+      "GASOLINE",
+      "235/55R19",
+      "HEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_1fced373-f0a2-4d61-a703-34f8402dce28_identity.powertrain_f019f77a420d.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c41bedce4f614567b0df5045:spec",
+    "revision_id": "c41bedce4f614567b0df5045",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.crv.rs.trim.e_hev_rs_4wd_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:47+00:00",
+    "payload": [
+      true,
+      true,
+      5.3,
+      5.2,
+      5.0,
+      119.0,
+      0.01093,
+      0.00058,
+      "TIS",
+      "HEV",
+      1993,
+      "GASOLINE",
+      "235/55R19",
+      "HEV"
+    ]
+  }
+}

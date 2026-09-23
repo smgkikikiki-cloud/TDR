@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:ea6334aa-703e-4838-9e75-c2f454f4fbbb:efficiency.fuel_consumption_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 7.9,
+      "unit": "L/100km",
+      "observed_at": "2025-12-11",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/ea6334aa-703e-4838-9e75-c2f454f4fbbb",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/ea6334aa-703e-4838-9e75-c2f454f4fbbb",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "toyota.hilux_travo_double_cab.gen1.trim.4trex_2_8_premium_mt_ice"
+    }
+  ]
+}

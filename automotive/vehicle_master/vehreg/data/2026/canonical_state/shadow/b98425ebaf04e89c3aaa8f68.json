@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b98425ebaf04e89c3aaa8f68",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-004-87075c4d97a5:280",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.macan.95b.trim.gts_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:53+00:00",
+    "before_hash": "c74850ded4b7ea6f70728d15cccd934b68759cf50a442e219370d1011b988191",
+    "after_hash": "b0ef487dcc1c0c5ea5ca00547536406563aa2d1779a720021a3505e1f1d576af",
+    "before": [
+      true,
+      8.9,
+      10.3,
+      12.9,
+      235.0,
+      0.018,
+      "TIS",
+      "GASOLINE",
+      2894,
+      "GASOLINE"
+    ],
+    "after": [
+      true,
+      8.9,
+      10.3,
+      12.9,
+      235.0,
+      0.018,
+      "TIS",
+      "GASOLINE",
+      2894,
+      "GASOLINE",
+      "265/40R21"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_a456ef09-acc8-4bba-9697-33950048daf8_fitment.tyre_front_f1651d66114f.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b98425ebaf04e89c3aaa8f68:spec",
+    "revision_id": "b98425ebaf04e89c3aaa8f68",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.macan.95b.trim.gts_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:53+00:00",
+    "payload": [
+      true,
+      8.9,
+      10.3,
+      12.9,
+      235.0,
+      0.018,
+      "TIS",
+      "GASOLINE",
+      2894,
+      "GASOLINE",
+      "265/40R21"
+    ]
+  }
+}

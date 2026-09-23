@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "dbbd1162fead10e65a5614dd",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-029-c1bed9cb95f3:155",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.hyptec_ht.gen1.trim.620_luxury_gull_wing_doors_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:55+00:00",
+    "before_hash": "58753222a73ad300255f99679ad2ebbde2a42a53babbf5a84ae5dad403edbde0",
+    "after_hash": "b3dc6eae25d92d6d939d5ad6bb7e8df4d817aef22ace51f4f69da6a6f1ef0ec9",
+    "before": [
+      "LFP",
+      83.64,
+      638.5,
+      "EVE Power Co., Ltd.",
+      "AC: 220 V, DC: 380~900 V",
+      "BOTH",
+      true,
+      150.0
+    ],
+    "after": [
+      "LFP",
+      83.64,
+      638.5,
+      "EVE Power Co., Ltd.",
+      "AC: 220 V, DC: 380~900 V",
+      "BOTH",
+      true,
+      150.0,
+      620.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_da65f191-df51-44bb-95f6-829ea0ebe3a1_ev.rated_range_km_b5b2278f67e1.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "dbbd1162fead10e65a5614dd:spec",
+    "revision_id": "dbbd1162fead10e65a5614dd",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.hyptec_ht.gen1.trim.620_luxury_gull_wing_doors_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:55+00:00",
+    "payload": [
+      "LFP",
+      83.64,
+      638.5,
+      "EVE Power Co., Ltd.",
+      "AC: 220 V, DC: 380~900 V",
+      "BOTH",
+      true,
+      150.0,
+      620.0
+    ]
+  }
+}

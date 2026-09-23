@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "cec86893276d4115b48903d7",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-003-71403c2b6ecf:199",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.eclipse_edition_hev_premium_luxury",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:50+00:00",
+    "before_hash": "2c5ae40c5bae1696ee951a3163429652d43460396c957e82d782d7c0df0a38d9",
+    "after_hash": "e99ba691fbd538904088e2eec893458ce3b681ef4463cd123a84fadc914e0837",
+    "before": [
+      5.4,
+      5.6,
+      6.0,
+      128.0,
+      0.0044,
+      "TIS",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/55R19",
+      "HEV",
+      15.0,
+      "TOYOTA AUTO BODY CO.,LTD (INABE PLANT)",
+      "CVT"
+    ],
+    "after": [
+      5.4,
+      5.6,
+      6.0,
+      128.0,
+      0.0044,
+      "TIS",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/55R19",
+      "HEV",
+      15.0,
+      "TOYOTA AUTO BODY CO.,LTD (INABE PLANT)",
+      "CVT",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_74c56dc2-7eed-4fe7-9ce4-b5481ec19d11_safety.abs_4625948ad352.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "cec86893276d4115b48903d7:spec",
+    "revision_id": "cec86893276d4115b48903d7",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.eclipse_edition_hev_premium_luxury",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:50+00:00",
+    "payload": [
+      5.4,
+      5.6,
+      6.0,
+      128.0,
+      0.0044,
+      "TIS",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/55R19",
+      "HEV",
+      15.0,
+      "TOYOTA AUTO BODY CO.,LTD (INABE PLANT)",
+      "CVT",
+      true
+    ]
+  }
+}

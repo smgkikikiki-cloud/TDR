@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "24073644497eca81583824eb",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-045-66f56137868e:64",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover.gen1.trim.lwb_3_0p_phev_hse_440ps_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:02+00:00",
+    "before_hash": "4b564849c2bf22a700cbdfcc2aaceafc51f0ceef39e819ec99b09f73f1fc9694",
+    "after_hash": "15068e59efaf001f5b4ceb24789bd347975062fa952d7ab740d554e733f37cfb",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      35.52,
+      370.0,
+      "Jaguar Land Rover",
+      "EXTERNAL_DC",
+      true,
+      true,
+      1.7,
+      39.0,
+      0.046,
+      0.00027,
+      "TIS",
+      "PHEV",
+      2996
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      35.52,
+      370.0,
+      "Jaguar Land Rover",
+      "EXTERNAL_DC",
+      true,
+      true,
+      1.7,
+      39.0,
+      0.046,
+      0.00027,
+      "TIS",
+      "PHEV",
+      2996,
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_2024d18d-16a1-42fc-83c8-c9d56afdfe8a_engine.fuel_type_05fcf037bbba.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "24073644497eca81583824eb:spec",
+    "revision_id": "24073644497eca81583824eb",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover.gen1.trim.lwb_3_0p_phev_hse_440ps_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:02+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      35.52,
+      370.0,
+      "Jaguar Land Rover",
+      "EXTERNAL_DC",
+      true,
+      true,
+      1.7,
+      39.0,
+      0.046,
+      0.00027,
+      "TIS",
+      "PHEV",
+      2996,
+      "GASOLINE"
+    ]
+  }
+}

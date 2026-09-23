@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5a606554ee099268ca5d38d4",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-054-d20b71816f05:250",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.voxy.gen1.trim.2_0_zs_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:52+00:00",
+    "before_hash": "85d01ba9faf69f06d0d9cce39c795468be5f3c367c91fd42075f8e323949c903",
+    "after_hash": "4deb830f1d071f9ff3d54599c21f2454ab25c075b00f2a7177ed51e6b8ca2d0c",
+    "before": [
+      true,
+      true,
+      6.3,
+      7.4,
+      9.3,
+      174.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1986,
+      "GASOLINE",
+      "205/60R16"
+    ],
+    "after": [
+      true,
+      true,
+      6.3,
+      7.4,
+      9.3,
+      174.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1986,
+      "GASOLINE",
+      "205/60R16",
+      "205/60R16"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_f184838fd1db4accb6c0fb447b3d338e_fitment.tyre_rear_9e8201de0e20.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5a606554ee099268ca5d38d4:spec",
+    "revision_id": "5a606554ee099268ca5d38d4",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.voxy.gen1.trim.2_0_zs_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:52+00:00",
+    "payload": [
+      true,
+      true,
+      6.3,
+      7.4,
+      9.3,
+      174.0,
+      0.008,
+      "TIS",
+      "GASOLINE",
+      1986,
+      "GASOLINE",
+      "205/60R16",
+      "205/60R16"
+    ]
+  }
+}

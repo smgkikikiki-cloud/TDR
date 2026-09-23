@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:3214703d-3f34-4072-bc71-510132d1ec26:emissions.co2_g_km",
+      "field_key": "emissions.co2_g_km",
+      "value_state": "KNOWN",
+      "value": 85.0,
+      "unit": "g/km",
+      "observed_at": "2024-10-10",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/3214703d-3f34-4072-bc71-510132d1ec26",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/3214703d-3f34-4072-bc71-510132d1ec26",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "lexus.lbx.gen1.trim.bespoke_hev"
+    }
+  ]
+}

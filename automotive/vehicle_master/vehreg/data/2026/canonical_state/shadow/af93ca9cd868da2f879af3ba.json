@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "af93ca9cd868da2f879af3ba",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-050-6df028e5a85f:12",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.etron_gt.gen1.trim.e_tron_gt_quattro_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:57+00:00",
+    "before_hash": "ddb0b308f1df83945c583768a3468f2980d09de33ef577a9c90d8059870d4a9f",
+    "after_hash": "a8bd06e7ae805dd0b546552191bd65672d92e3c0dd547a9c944fc785300b0b1a",
+    "before": [
+      "GASOLINE",
+      "245/45R20",
+      "285/40R20",
+      "ICE",
+      8.0,
+      true,
+      3,
+      true
+    ],
+    "after": [
+      "GASOLINE",
+      "245/45R20",
+      "285/40R20",
+      "ICE",
+      8.0,
+      true,
+      3,
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_cea23dc3fcbe4877a1753948b9edfbfb_safety.side_airbag_7bff3b8b32c6.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "af93ca9cd868da2f879af3ba:spec",
+    "revision_id": "af93ca9cd868da2f879af3ba",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.etron_gt.gen1.trim.e_tron_gt_quattro_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:57+00:00",
+    "payload": [
+      "GASOLINE",
+      "245/45R20",
+      "285/40R20",
+      "ICE",
+      8.0,
+      true,
+      3,
+      true,
+      true
+    ]
+  }
+}

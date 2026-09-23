@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "edc20d296eb11bdc2e6cae2c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-050-6df028e5a85f:263",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.cayenne.e3.trim.s_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:58+00:00",
+    "before_hash": "f4cf4bc30329c348e23efd48eb297654ea70c4adc8eefb3145a2d96c8dc3709d",
+    "after_hash": "12d24012d1f21b3bdd33d6bcbfdcb0efd6ae573feb9a49edd6f97e8b16acac4d",
+    "before": [
+      true,
+      true,
+      8.4,
+      9.6
+    ],
+    "after": [
+      true,
+      true,
+      8.4,
+      9.6,
+      11.7
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_297b1bea37ca483d9a23993d41f7aee2_efficiency.fuel_consumption_urban_l_100km_67c40d6ca1bf.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "edc20d296eb11bdc2e6cae2c:spec",
+    "revision_id": "edc20d296eb11bdc2e6cae2c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.cayenne.e3.trim.s_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:58+00:00",
+    "payload": [
+      true,
+      true,
+      8.4,
+      9.6,
+      11.7
+    ]
+  }
+}

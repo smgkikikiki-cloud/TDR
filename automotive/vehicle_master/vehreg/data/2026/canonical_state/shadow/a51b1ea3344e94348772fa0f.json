@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a51b1ea3344e94348772fa0f",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-035-5b8b3aecfae7:265",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.gle.gen1.trim.4matic_amg_line_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:40+00:00",
+    "before_hash": "3ff4a5f1eef59730d66bdb6ddfb73a7dea686c2cac9bfbd7848067c05d6a5951",
+    "after_hash": "668b18a303e6a7cdea31ea3e80a6bb8c96f7fc0ab47405b6c25beb40570b9948",
+    "before": [
+      true,
+      5.6,
+      6.5,
+      8.0,
+      170.0,
+      0.009,
+      0.00012,
+      "EURO6",
+      "HEV",
+      1993,
+      "DIESEL",
+      "275/50R20"
+    ],
+    "after": [
+      true,
+      5.6,
+      6.5,
+      8.0,
+      170.0,
+      0.009,
+      0.00012,
+      "EURO6",
+      "HEV",
+      1993,
+      "DIESEL",
+      "275/50R20",
+      "275/50R20"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_5f12ef6e-c967-471f-b8ad-6e392dc8ae94_fitment.tyre_rear_e843dcefd645.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a51b1ea3344e94348772fa0f:spec",
+    "revision_id": "a51b1ea3344e94348772fa0f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.gle.gen1.trim.4matic_amg_line_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:40+00:00",
+    "payload": [
+      true,
+      5.6,
+      6.5,
+      8.0,
+      170.0,
+      0.009,
+      0.00012,
+      "EURO6",
+      "HEV",
+      1993,
+      "DIESEL",
+      "275/50R20",
+      "275/50R20"
+    ]
+  }
+}

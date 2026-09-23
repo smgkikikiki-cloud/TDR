@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:e200e013-eba6-4215-87c8-8b49a685620e:ev.energy_consumption_wh_km",
+      "field_key": "ev.energy_consumption_wh_km",
+      "value_state": "KNOWN",
+      "value": 267.0,
+      "unit": "Wh/km",
+      "observed_at": "2023-03-28",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/e200e013-eba6-4215-87c8-8b49a685620e",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/e200e013-eba6-4215-87c8-8b49a685620e",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "land_rover.range_rover_sport.unresearched.trim.3_0_phev_awd_5dr_swb_dynamic_se_510_ps_phev"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a823e97ce1e1a698b7b814f4",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-038-caad162ad775:337",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.z4.gen1.trim.m40i_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:04+00:00",
+    "before_hash": "faa72dcaa7a915aaf125593df76472890c1344f9706cfe69d34766f0e722fdf7",
+    "after_hash": "a683af21566a1a10eedf1279833d82a5759e94fa9a813275ab29801e22f6937a",
+    "before": [
+      true,
+      true,
+      true,
+      6.1
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      6.1,
+      7.5
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_cbb0f380-1111-45ac-b38e-c10a1360431f_efficiency.fuel_consumption_l_100km_e4752970c10f.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a823e97ce1e1a698b7b814f4:spec",
+    "revision_id": "a823e97ce1e1a698b7b814f4",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.z4.gen1.trim.m40i_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:04+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      6.1,
+      7.5
+    ]
+  }
+}

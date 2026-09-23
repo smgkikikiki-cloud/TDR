@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:caf0bf740d084c44ab9594e52b4459ac:emissions.co2_g_km",
+      "field_key": "emissions.co2_g_km",
+      "value_state": "KNOWN",
+      "value": 146.0,
+      "unit": "g/km",
+      "observed_at": "2022-05-31",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/caf0bf740d084c44ab9594e52b4459ac",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/caf0bf740d084c44ab9594e52b4459ac",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mercedes_benz.mb_glc.x254.trim.mercedes_benz_ice"
+    }
+  ]
+}

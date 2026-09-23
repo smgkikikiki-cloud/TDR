@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7ae080934e1eda9a4da38337",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-024-8292d953d777:353",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover_sport.unresearched.trim.3_0p_phev_5dr_swb_se_460ps_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:20+00:00",
+    "before_hash": "4a00e18ad19ee16990bb71339a59d3eb8ba9382fdb9a23efc85e1c6a9acdbcfa",
+    "after_hash": "7d642718469acec2cb6e63a4e28b3372c3c0847f2f49a9710d1b98a121d47c4e",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      34.56,
+      360.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      34.56,
+      360.0,
+      "Jaguar Land Rover"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_3bbe6417-4498-4cd8-b66b-7e3585d15779_battery.supplier_a78212500df3.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7ae080934e1eda9a4da38337:spec",
+    "revision_id": "7ae080934e1eda9a4da38337",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover_sport.unresearched.trim.3_0p_phev_5dr_swb_se_460ps_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:20+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      34.56,
+      360.0,
+      "Jaguar Land Rover"
+    ]
+  }
+}

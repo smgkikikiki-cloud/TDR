@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a951854c5097777095151112",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-050-6df028e5a85f:117",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.cx30.dm.trim.2_0_sp_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:57+00:00",
+    "before_hash": "496428035f129afe53b21f8d653caebae7c186b624d4bd69ad5e1ba52bbe4067",
+    "after_hash": "4e939f1e29fdbda4fd002021a4c145cebcfd2bac00620a9326651414cd8ff66b",
+    "before": [
+      true,
+      true
+    ],
+    "after": [
+      true,
+      true,
+      5.5
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_9a7cf92cf4eb423698b2fd27c2195951_efficiency.fuel_consumption_extra_urban_l_100km_ae88dc3e9419.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a951854c5097777095151112:spec",
+    "revision_id": "a951854c5097777095151112",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.cx30.dm.trim.2_0_sp_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:57+00:00",
+    "payload": [
+      true,
+      true,
+      5.5
+    ]
+  }
+}

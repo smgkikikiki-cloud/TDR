@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ee7099c26edd2373f3548523",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-030-80293fca2870:322",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq6.ce.trim.exclusive_77_4_kwh_rwd_229_hp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:02+00:00",
+    "before_hash": "1e69bed0115bace348009d34384801ac283981541376a06672fe54c09328f1d7",
+    "after_hash": "853631a7f529364e8f50e04a7f435723b2a25abf8859755c4d2321d5d7b3718c",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      77.37,
+      697.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      160.0,
+      545.0,
+      "245/40R20",
+      "BEV"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      77.37,
+      697.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      160.0,
+      545.0,
+      "245/40R20",
+      "BEV",
+      2.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_443dfd43-1ae0-4c05-a011-5aa6fce50219_manufacturing.excise_tax_rate_cac9d4d3617b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ee7099c26edd2373f3548523:spec",
+    "revision_id": "ee7099c26edd2373f3548523",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq6.ce.trim.exclusive_77_4_kwh_rwd_229_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:02+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      77.37,
+      697.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      160.0,
+      545.0,
+      "245/40R20",
+      "BEV",
+      2.0
+    ]
+  }
+}

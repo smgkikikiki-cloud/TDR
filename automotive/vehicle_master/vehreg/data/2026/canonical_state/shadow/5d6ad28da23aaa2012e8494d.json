@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5d6ad28da23aaa2012e8494d",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-012-0c3fd0adac89:205",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q3.f3.trim.s_line_tech_plus_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:23+00:00",
+    "before_hash": "f272786a0c973431825ee3ba48974d4e4c6c8c3c40a519adb9396688bee2e02e",
+    "after_hash": "a4063bed47ded1b756da1bd7b588bfefd378627910e1e29df2deed869e21b985",
+    "before": [
+      4.9
+    ],
+    "after": [
+      4.9,
+      5.5
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b9a4dcd1-c2a1-4b3d-b867-fe889686be93_efficiency.fuel_consumption_l_100km_7c727e2e9144.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5d6ad28da23aaa2012e8494d:spec",
+    "revision_id": "5d6ad28da23aaa2012e8494d",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q3.f3.trim.s_line_tech_plus_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:23+00:00",
+    "payload": [
+      4.9,
+      5.5
+    ]
+  }
+}

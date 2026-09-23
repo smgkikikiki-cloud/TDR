@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:4780aff8-b326-402a-ae0f-e5ade3b4c828:efficiency.fuel_consumption_l_100km",
+      "field_key": "efficiency.fuel_consumption_l_100km",
+      "value_state": "KNOWN",
+      "value": 1.8,
+      "unit": "L/100km",
+      "observed_at": "2026-01-15",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/4780aff8-b326-402a-ae0f-e5ade3b4c828",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/4780aff8-b326-402a-ae0f-e5ade3b4c828",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "porsche.panamera.gen1.trim.4s_e_hybrid_phev_544_hp_phev"
+    }
+  ]
+}

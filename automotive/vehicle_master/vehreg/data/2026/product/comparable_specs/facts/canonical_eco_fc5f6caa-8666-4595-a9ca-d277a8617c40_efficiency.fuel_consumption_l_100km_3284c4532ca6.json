@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:fc5f6caa-8666-4595-a9ca-d277a8617c40:efficiency.fuel_consumption_l_100km",
+      "field_key": "efficiency.fuel_consumption_l_100km",
+      "value_state": "KNOWN",
+      "value": 7.0,
+      "unit": "L/100km",
+      "observed_at": "2025-12-16",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/fc5f6caa-8666-4595-a9ca-d277a8617c40",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/fc5f6caa-8666-4595-a9ca-d277a8617c40",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "ford.ranger_double_cab.p703.trim.sport_2_0l_turbo_hr_6at"
+    }
+  ]
+}

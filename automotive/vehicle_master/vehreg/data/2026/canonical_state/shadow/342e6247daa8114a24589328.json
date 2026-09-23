@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "342e6247daa8114a24589328",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-036-ba2d051d30aa:167",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.mini_cooper.j01.trim.s_clubman_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:48+00:00",
+    "before_hash": "e9ed125a1ac4cea6d8f3bf84365fe79bfe667b099cbdfa5cf8f72b9ad1ff705b",
+    "after_hash": "1171dbe8a5663168af49b4f7e68fe73a00f87ace3494df3ad8c8da5de04b093d",
+    "before": [
+      true,
+      true,
+      true,
+      5.4,
+      6.2,
+      7.6,
+      141.0,
+      0.01,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "GASOLINE",
+      "225/40R18"
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      5.4,
+      6.2,
+      7.6,
+      141.0,
+      0.01,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "GASOLINE",
+      "225/40R18",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_c95b358c-3eb3-40fa-8eee-e9934b98da9a_identity.powertrain_1d8e84835a6b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "342e6247daa8114a24589328:spec",
+    "revision_id": "342e6247daa8114a24589328",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.mini_cooper.j01.trim.s_clubman_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:48+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      5.4,
+      6.2,
+      7.6,
+      141.0,
+      0.01,
+      "TIS",
+      "GASOLINE",
+      1998,
+      "GASOLINE",
+      "225/40R18",
+      "ICE"
+    ]
+  }
+}

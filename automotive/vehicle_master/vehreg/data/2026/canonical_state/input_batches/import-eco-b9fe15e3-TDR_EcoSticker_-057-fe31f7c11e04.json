@@ -1,0 +1,2021 @@
+{
+  "schema_version": 1,
+  "batch_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04",
+  "batch_hash": "c9b6e1f69f78cbd4fd80333ed7fdfdc43b553796c9a2fda93fe23942cb12244a",
+  "status": "APPLIED",
+  "year": 2026,
+  "source": {
+    "kind": "ECO",
+    "ref": "TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c"
+  },
+  "actor": "eco-publish-2026-09-23",
+  "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+  "submitted_at": "2026-09-23T11:00:00+00:00",
+  "applied_at": "2026-09-23T12:23:44+00:00",
+  "results": [
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:1",
+      "revision_id": "401a227e542600bb102f49f4",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.porsche_911.992.trim.carrera_s_cabriolet_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:2",
+      "revision_id": "2f7f88d1510d5d20e7077369",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.porsche_911.992.trim.carrera_s_coupe_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:3",
+      "revision_id": "b2eb121b428326365bfdd95b",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.porsche_911.992.trim.carrera_s_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:4",
+      "revision_id": "eb289812a6c62aea4cc0d6fd",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.porsche_911.992.trim.carrera_s_pdk_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:5",
+      "revision_id": "19e7992b08848518e4873704",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.porsche_911.992.trim.carrera_t_cabriolet_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:6",
+      "revision_id": "8a002f4a81954a23c2bcbad7",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.porsche_911.992.trim.carrera_t_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:7",
+      "revision_id": "c96759802f73c9b6aea3f285",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.porsche_911.992.trim.dakar_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:8",
+      "revision_id": "21ef0a6b2a669aaa646f3dc3",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.porsche_911.992.trim.targa_4_gts_edition_50_years_porsche_design_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:9",
+      "revision_id": "6719dabdd07684d3ac8bf13a",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.porsche_911.992.trim.targa_4_gts_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:10",
+      "revision_id": "2f1de135f401c736a759dada",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.porsche_911.992.trim.targa_4_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:11",
+      "revision_id": "7f6eecf984d44c1a0e9c87eb",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.porsche_911.992.trim.targa_4s_heritage_design_edition_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:12",
+      "revision_id": "b5e3e3d745d3df3fa2314436",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.porsche_911.992.trim.targa_4s_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:13",
+      "revision_id": "54a1a2e30bf07a8ea494531f",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.taycan.gen1.trim.4_cross_turismo_gravel_all_terrain_wagon_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:14",
+      "revision_id": "50cead69e776c74976cc7903",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.taycan.gen1.trim.4s_awd_544_hp_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:15",
+      "revision_id": "64e38c27331ac376aee8ef85",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.taycan.gen1.trim.4s_cross_turismo_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:16",
+      "revision_id": "60a14f71411102ea88cd9c1f",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.taycan.gen1.trim.gts_awd_598_hp_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:17",
+      "revision_id": "3844681fc7924747952616e1",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.taycan.gen1.trim.turbo_awd_884_hp_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:18",
+      "revision_id": "7352d7b190055f2e69cdf792",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.taycan.gen1.trim.turbo_cross_turismo_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:19",
+      "revision_id": "f2c4bb489408fa6865e7772e",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.taycan.gen1.trim.turbo_gt_awd_1_034_hp_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:20",
+      "revision_id": "febb6de54ac409f24af80866",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.taycan.gen1.trim.turbo_s_awd_952_hp_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:21",
+      "revision_id": "02e72a580923080abed137c8",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "subaru.crosstrek.gu.trim.2_0i_p_es_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:22",
+      "revision_id": "595a48b365cb0a1b9ddc95bc",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "subaru.crosstrek.gu.trim.2_0i_p_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:23",
+      "revision_id": "c9328c042c2b57d3f2ea3e3f",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "subaru.crosstrek.gu.trim.2_0i_s_es_awd_cvt_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:24",
+      "revision_id": "954b009e37313e0a34bfb7af",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "suzuki.ciaz.yl1.trim.gl_cvt_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:25",
+      "revision_id": "962aba6ee99fe24af75de324",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "suzuki.ciaz.yl1.trim.glx_cvt_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:26",
+      "revision_id": "a4aac9c6c3fcdb01f9f206fb",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "suzuki.ciaz.yl1.trim.rs_cvt_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:27",
+      "revision_id": "d65d2a172347c3b1f780aae2",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "suzuki.fronx.frx.trim.gl_1_5l_4at",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:28",
+      "revision_id": "230569c20546579105379126",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "tesla.model3.m3h.trim.performance_all_wheel_drive_awd_460_hp_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:29",
+      "revision_id": "d547d4c21a7800eba778aec3",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "tesla.model3.m3h.trim.rear_wheel_drive_rwd_60_kwh_lfp_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:30",
+      "revision_id": "58431e34cbf368aa5a950280",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.2_5_g",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:31",
+      "revision_id": "643babd172155cd6f57f0cce",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.2_5_hev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:32",
+      "revision_id": "df7bda87cb301249754f7429",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.2_5_hev_luxury",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:33",
+      "revision_id": "5d72fad000167cf8014a7e78",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.2_5_hybrid_executive_lounge",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:34",
+      "revision_id": "cd4f407a3d6c3fc952676f1f",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.2_5_hybrid_g",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:35",
+      "revision_id": "5f9ba793e0bc125bb0de76db",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.2_5_hybrid_g_f_package",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:36",
+      "revision_id": "ae824a63d7aeae0ddf1b9bed",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.2_5_hybrid_s_type_gold_iii",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:37",
+      "revision_id": "8665d34674420d8401b40073",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.2_5_hybrid_sr",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:38",
+      "revision_id": "c2687d0cdfa8330cb537869f",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.2_5_hybrid_sr_c_package",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:39",
+      "revision_id": "88bd5524104e038fe05a0a15",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.2_5_hybrid_sr_c_package",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:40",
+      "revision_id": "5fd2435e0b490a4650f9e898",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.2_5_hybrid_x",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:41",
+      "revision_id": "4b8ae11ac891a1051616a57a",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.2_5_hybrid_z_2wd",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:42",
+      "revision_id": "440f9ed9c2db14605591ca1f",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.2_5_hybrid_z_e_four",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:43",
+      "revision_id": "8ec27603f4d3408ece353ba7",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.2_5_s_type_gold",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:44",
+      "revision_id": "9c9b7cb7f04a4a18e58aeec0",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.2_5_sc_package",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:45",
+      "revision_id": "8fd7e1532d0a900d2e7dd300",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.2_5_x_side_lift_up_seat",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:46",
+      "revision_id": "3895322878fb6d08c7d87d19",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.2_5s_c_package_2wd",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:47",
+      "revision_id": "04cdcec03ebf414141ca81ce",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.alphard",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:48",
+      "revision_id": "e38a813a71a44a87d3d78d52",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.eclipse_edition_hev_premium",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:49",
+      "revision_id": "f8a6210483a07d9a6602dda3",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.eclipse_edition_hev_premium_luxury",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:50",
+      "revision_id": "0e2fda53e19ec1ec8df77e96",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.eclipse_edition_hev_smart",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:51",
+      "revision_id": "ed97d3b74f17a563ab938e67",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hev_premium",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:52",
+      "revision_id": "6d601756e4c40981662c7ef0",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hev_premium_luxury",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:53",
+      "revision_id": "fc49ea6ab8e32b2f7a24c81c",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hev_smart",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:54",
+      "revision_id": "7af1017abbad05fcdd449b91",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:55",
+      "revision_id": "d2d175003d15a7e3f96a8cb6",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid_2_5_z_2wd",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:56",
+      "revision_id": "2727ae1829f8d02a33985f8b",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid_executive_lounge",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:57",
+      "revision_id": "2e7fbce3c81a04d54901e6f3",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid_executive_lounge_2wd",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:58",
+      "revision_id": "d15af9dfbb28b785525b4ad8",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid_executive_lounge_2wd",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:59",
+      "revision_id": "a3362dec9a03ef65db19f34c",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid_executive_lounge_e_four",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:60",
+      "revision_id": "08761cd6553f72ed29dc0600",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid_executive_lounge_e_four",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:61",
+      "revision_id": "83530f3331d5ad8c79f9d969",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid_executive_lounge_s",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:62",
+      "revision_id": "812e5896b25ad5145c1f0e08",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid_g_2wd",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:63",
+      "revision_id": "155676624e2de5ac4913c499",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid_g_2wd",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:64",
+      "revision_id": "dc72fe04ee121c828c4cc2a7",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid_g_e_four",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:65",
+      "revision_id": "37b6e6e3a34ea462a59d8b6c",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid_g_f_package",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:66",
+      "revision_id": "101dbd8d2da3ad861c2af1c6",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid_gf",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:67",
+      "revision_id": "64c1e954a8de12759d2f51b8",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid_s",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:68",
+      "revision_id": "0943bf729fbef456610c1d60",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid_s_e_four",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:69",
+      "revision_id": "b69b137add3038af07e9d170",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid_s_type_gold_ii",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:70",
+      "revision_id": "d4c88b743d55fb7f6212f8bd",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid_s_type_gold_iii",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:71",
+      "revision_id": "191ef1da27c52aef066c6a0d",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid_sr_c_package",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:72",
+      "revision_id": "fd8914ef32060ae57d7277eb",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid_sr_c_package",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:73",
+      "revision_id": "480d288d8e59d3bb0f529b3b",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid_sr_c_package",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:74",
+      "revision_id": "84d5fad2452af34a5f5ce88d",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid_x",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:75",
+      "revision_id": "1140b7989416da2c229c86be",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid_x_2wd",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:76",
+      "revision_id": "a8b684a316e01e014df5caa2",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid_x_2wd",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:77",
+      "revision_id": "a5dc373c2f561cfb7a166cde",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid_x_e_four",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:78",
+      "revision_id": "76846466972abeedb8cad0e7",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid_x_e_four",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:79",
+      "revision_id": "aa3815fa865e5d000c4c1668",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid_z",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:80",
+      "revision_id": "90e6972bd59bb960bf44b3a4",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid_z_2wd",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:81",
+      "revision_id": "fe4dedd1fe300a2b0904a06f",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid_z_2wd",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:82",
+      "revision_id": "6aefb4cdcbc31b2eb42f1dd4",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid_z_e_four",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:83",
+      "revision_id": "94b729d8c3d18be792014e8c",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.hybrid_z_e_four",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:84",
+      "revision_id": "50d8ba1f26336d2deaea28cf",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.s_c_package",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:85",
+      "revision_id": "176ac4adc82cd3af49fdd25b",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.s_c_package",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:86",
+      "revision_id": "90fd99790268306524a59ccb",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.s_type_gold",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:87",
+      "revision_id": "926728a1daeea4bf1e4f390a",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.s_type_gold_iii",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:88",
+      "revision_id": "bcc3db8ef64e63918f6c3283",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.sc_package",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:89",
+      "revision_id": "4316dbbf1857d2dcbb510dc7",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.z",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:90",
+      "revision_id": "5bffd92826ae5fbbc9b8c14a",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.z_2wd",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:91",
+      "revision_id": "9f585e74d1683e0cdbc65f30",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.z_2wd",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:92",
+      "revision_id": "04734c9dca256ef7470d7abb",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.z_4wd",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:93",
+      "revision_id": "0306a2cf076f5e3b1f0dca9e",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.alphard.ah40.trim.z_hybrid",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:94",
+      "revision_id": "4c0c2391cc9160179996fe00",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.c_hr.gen1.trim.by_karl_lagerfeld_hev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:95",
+      "revision_id": "44cb6b317b1b393df0283bcb",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.c_hr.gen1.trim.hev_gr_sport_hev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:96",
+      "revision_id": "a4d0ea0f0c4cee66c6d1c92f",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.c_hr.gen1.trim.hev_premium_safety_hev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:97",
+      "revision_id": "401b0db60e79d1385f06d1b5",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.corolla_altis.e210.trim.1_6g_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:98",
+      "revision_id": "9f3437e1e34f603c755826ec",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.corolla_altis.e210.trim.1_8g_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:99",
+      "revision_id": "4a84dd85aa85e69b56d918f6",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.corolla_altis.e210.trim.gr_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:100",
+      "revision_id": "fb79ca2aeb8ec473d0f409cd",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.corolla_altis.e210.trim.gr_rz_8at_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:101",
+      "revision_id": "3012c1936377e21c12ab2226",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.corolla_altis.e210.trim.gr_rz_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:102",
+      "revision_id": "06d61ea4978d6627ca55d9fc",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.corolla_altis.e210.trim.limo_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:103",
+      "revision_id": "71d96bdca09f218c177eaeaa",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.crown.gen1.trim.crossover_hev_hev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:104",
+      "revision_id": "0049da79049b27a1cfa1e1d9",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.harrier.gen1.trim.2_0_g_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:105",
+      "revision_id": "8cbba411a3075de6e015347c",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.harrier.gen1.trim.harrier_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:106",
+      "revision_id": "0ec099a2152b7388d52733e6",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.harrier.gen1.trim.z_leather_package_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:107",
+      "revision_id": "6f9446ab255f607d2c03e2d9",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.hilux_champ.champ.trim.swb_2_4_diesel_at_attractive_package_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:108",
+      "revision_id": "9ee25fadee7d7c7394cd30d8",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.hilux_revo_double_cab.an120.trim.2_4_mid_mt_4x4",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:109",
+      "revision_id": "9c56de9148853131fac4d8e2",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.hilux_revo_double_cab.an120.trim.2_8_high_at_4x4",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:110",
+      "revision_id": "e530d25087c90c39efbb07bf",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.hilux_revo_double_cab.an120.trim.2_8_high_mt_4x4",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:111",
+      "revision_id": "aeb9545c3b2610b78d7a9656",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.hilux_revo_double_cab.an120.trim.2wd_2_8_gr_sport_at",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:112",
+      "revision_id": "9c524a43b2b937d6d182c65e",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.hilux_revo_double_cab.an120.trim.gr_sport_2_8_at_4x2",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:113",
+      "revision_id": "25a0669ad88816c4bb26dea9",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.hilux_revo_double_cab.an120.trim.gr_sport_2_8_at_4x4",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:114",
+      "revision_id": "5ce6510982d577b78e959972",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.hilux_revo_double_cab.an120.trim.gr_sport_2_8_at_4x4_base",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:115",
+      "revision_id": "295df569ba7425383cb26932",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.hilux_revo_double_cab.an120.trim.prerunner_2_4_entry_at",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:116",
+      "revision_id": "453f7de1a02b60670657f904",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.hilux_revo_double_cab.an120.trim.prerunner_2_4_entry_mt",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:117",
+      "revision_id": "ab6c4a11fdc5975241c0687f",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.hilux_revo_double_cab.an120.trim.prerunner_2_4_high_at",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:118",
+      "revision_id": "72a123fc9bdf4c5fa5b65ad0",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.hilux_revo_double_cab.an120.trim.prerunner_2_4_high_mt",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:119",
+      "revision_id": "135f65137cc4768ce9cb6cb8",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.hilux_revo_double_cab.an120.trim.prerunner_2_4_mid_at",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:120",
+      "revision_id": "d878c1d9bb0d0a0b632ecb11",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.hilux_revo_double_cab.an120.trim.prerunner_2_4_mid_mt",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:121",
+      "revision_id": "764b4035345535487de3f85e",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.hilux_revo_double_cab.an120.trim.prerunner_rocco_2_4_at",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:122",
+      "revision_id": "a875b203cf4152dfd2a022a7",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.hilux_revo_double_cab.an120.trim.rocco_2_8_at_4x4",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:123",
+      "revision_id": "759418e73983b072494e42f9",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.hilux_revo_double_cab.an120.trim.z_edition_2_4_entry_at",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:124",
+      "revision_id": "c07d5d5debce3b140f2cb8f9",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.hilux_revo_double_cab.an120.trim.z_edition_2_4_entry_mt",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:125",
+      "revision_id": "af847019251cda70d6cf701a",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.hilux_revo_double_cab.an120.trim.z_edition_2_4_mid_at",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:126",
+      "revision_id": "e60c091cfcff481b97f19b51",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.hilux_revo_double_cab.an120.trim.z_edition_2_4_mid_mt",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:127",
+      "revision_id": "dd0520c9523e80a88e75f309",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.hilux_travo_double_cab.gen1.trim.4trex_2_8_overland_at_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:128",
+      "revision_id": "9dabce8b38b969350400ce88",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.hilux_travo_double_cab.gen1.trim.4trex_2_8_overland_plus_at_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:129",
+      "revision_id": "1ce9ebd8783f442af8b729d3",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.hilux_travo_double_cab.gen1.trim.4trex_2_8_premium_mt_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:130",
+      "revision_id": "76a775083691fb811caa9dab",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.hilux_travo_double_cab.gen1.trim.prerunner_2_8_overland_at_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:131",
+      "revision_id": "d9d293d2c727d28f3c324116",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.hilux_travo_double_cab.gen1.trim.prerunner_2_8_overland_plus_at_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:132",
+      "revision_id": "251614abb2f4597fad7d96e0",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.hilux_travo_double_cab.gen1.trim.prerunner_2_8_premium_at_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:133",
+      "revision_id": "39332ff8b1fad8dd165ad36a",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.hilux_travo_double_cab.gen1.trim.prerunner_2_8_premium_mt_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:134",
+      "revision_id": "96b57b4ee36305d9f8867195",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.hilux_travo_double_cab.gen1.trim.prerunner_2_8_smart_at_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:135",
+      "revision_id": "f519afb457daef4cf5cf5771",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.hilux_travo_double_cab.gen1.trim.prerunner_2_8_smart_mt_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:136",
+      "revision_id": "0ff39c00284723de55b576ef",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.noah.gen1.trim.s_z_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:137",
+      "revision_id": "ac60daf82e8eb03886f31604",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.noah.gen1.trim.x_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:138",
+      "revision_id": "bdd4277feeb7481e63a46b95",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.vellfire.gen1.trim.250",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:139",
+      "revision_id": "928b82ae0bfcf4da9df81b05",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.vellfire.gen1.trim.250",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:140",
+      "revision_id": "e3997840d85424b33301a68a",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.vellfire.gen1.trim.2_5_hev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:141",
+      "revision_id": "17513da1af921111ad4eaf61",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.vellfire.gen1.trim.2_5_hybrid_v_l_edition",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:142",
+      "revision_id": "1857d26ed4f314310a050d57",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.vellfire.gen1.trim.2_5_hybrid_x",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:143",
+      "revision_id": "7fd5b9c33e5d815108bce41c",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.vellfire.gen1.trim.2_5_hybrid_zr_g",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:144",
+      "revision_id": "cd35ace2b40864ebf0c95701",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.vellfire.gen1.trim.2_5_zg_edition",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:145",
+      "revision_id": "a5894154cc4c7f50c4219597",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.vellfire.gen1.trim.eclipse_edition_hev_premium",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:146",
+      "revision_id": "3b3c20e2ec1bf194d7d1fb19",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.vellfire.gen1.trim.golden_eye_iii",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:147",
+      "revision_id": "92443ba8eb5686cf4f518851",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.vellfire.gen1.trim.hev_premium",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:148",
+      "revision_id": "34a8833a54c0d7d598fc51bd",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.vellfire.gen1.trim.hybrid",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:149",
+      "revision_id": "294fc7ec35bba144ee6595fe",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.vellfire.gen1.trim.hybrid_executive_lounge",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:150",
+      "revision_id": "d32ca0cd916d9e9c64191f05",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.vellfire.gen1.trim.hybrid_executive_lounge_2wd",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:151",
+      "revision_id": "1e1ff079477edc583c1eb4b0",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.vellfire.gen1.trim.hybrid_executive_lounge_2wd",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:152",
+      "revision_id": "0892fcf02ece661cd81db142",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.vellfire.gen1.trim.hybrid_executive_lounge_e_four",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:153",
+      "revision_id": "aa4374ee2067f4bf8957611f",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.vellfire.gen1.trim.hybrid_x_e_four",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:154",
+      "revision_id": "1bedf71773aaba3ff7efd093",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.vellfire.gen1.trim.hybrid_z_premier",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:155",
+      "revision_id": "b7e455da1dc2893755bb4d71",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.vellfire.gen1.trim.hybrid_z_premier_2wd",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:156",
+      "revision_id": "dc212dfb54cd32a50c26dd74",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.vellfire.gen1.trim.hybrid_z_premier_2wd",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:157",
+      "revision_id": "1c9e96cb67f78cdd780e0c3c",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.vellfire.gen1.trim.hybrid_z_premier_e_four",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:158",
+      "revision_id": "e6d34114e9cb83d691b5fb30",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.vellfire.gen1.trim.hybrid_z_premier_e_four",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:159",
+      "revision_id": "9506d722fb990de433bf0501",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.vellfire.gen1.trim.hybrid_zrg_edition",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:160",
+      "revision_id": "86fdc8a9e64d9a3408907368",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.vellfire.gen1.trim.vellfire",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:161",
+      "revision_id": "8600dc080162c75ec8f459c1",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.vellfire.gen1.trim.z_premier",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:162",
+      "revision_id": "3f86c89d5977c447e68768d1",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.vellfire.gen1.trim.z_premier_2wd",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:163",
+      "revision_id": "2e76432cfddb4cfee08881c6",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.vellfire.gen1.trim.z_premier_2wd",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:164",
+      "revision_id": "689dfd1c6fce1e143bdbaea3",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.vellfire.gen1.trim.z_premier_hybrid",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:165",
+      "revision_id": "363a51141b42da5ea652ab2b",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.vellfire.gen1.trim.zg",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:166",
+      "revision_id": "50b4e011e1f0fcfa6ad8667f",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.voxy.gen1.trim.2_0_zs_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:167",
+      "revision_id": "a273bf46bca78b4d0cd78460",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.voxy.gen1.trim.hybrid_s_z_2wd_car_hev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:168",
+      "revision_id": "ddbecbaa84e197b94c4a2d34",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.voxy.gen1.trim.hybrid_s_z_captain_ottoman_seats_hev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:169",
+      "revision_id": "1bd17cfa93067fdf993a3799",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.voxy.gen1.trim.hybrid_sz_hev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:170",
+      "revision_id": "9a8762288ee1b255c97ccbd7",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.voxy.gen1.trim.s_z_2wd_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:171",
+      "revision_id": "e3ae8ed0df4ff62e039b7a23",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.voxy.gen1.trim.s_z_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:172",
+      "revision_id": "4cb6872efd52247a16833b8e",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.voxy.gen1.trim.sz_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:173",
+      "revision_id": "ccab95ec2a726188e3d0bc5e",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.voxy.gen1.trim.voxy_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:174",
+      "revision_id": "cecf0a0a9a22c8f2490291d3",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.voxy.gen1.trim.zs_ice",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:175",
+      "revision_id": "0ac3ca08e748246cb17a8e6f",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.yaris_ativ.mxpa10.trim.hev_gr_sport_hev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:176",
+      "revision_id": "2cb5de96c485ccf9261a1d12",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.yaris_ativ.mxpa10.trim.hev_premium_hev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:177",
+      "revision_id": "de23b4b01f4d76429c626949",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.yaris_cross.ac200.trim.hev_premium_hev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:178",
+      "revision_id": "6065f7b1b0076c32812b2985",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.yaris_cross.ac200.trim.hev_premium_luxury_hev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:179",
+      "revision_id": "e50e33e7ad697ad52480b9c2",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.yaris_cross.ac200.trim.hev_smart_hev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:180",
+      "revision_id": "3312d7d9f11944b3b3fa20b6",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "toyota.yaris_cross.ac200.trim.nightshade_hev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:181",
+      "revision_id": "fa640a748178f03a0d4af4b5",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "volvo.ex30.ex30g.trim.ultra_twin_performance_69_kwh_awd_428_hp_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:182",
+      "revision_id": "df4345bdb6eef678510cf399",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "volvo.ex30.ex30g.trim.ultra_twin_performance_69_kwh_awd_428_hp_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:183",
+      "revision_id": "bf0b707c6da67575767a28f4",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "volvo.s60.gen1.trim.recharge_t8_plug_in_hybrid_ultimate_dark_phev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:184",
+      "revision_id": "ca738220ba678665cc10c7b4",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "volvo.v60.gen1.trim.recharge_t8_plug_in_hybrid_plus_dark_phev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:185",
+      "revision_id": "714c33aa68d357b1a3dfe5e4",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "volvo.xc40.xc40g.trim.plus_t5_plug_in_hybrid_dark_phev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:186",
+      "revision_id": "22db6a68518094bd97fa7e29",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "volvo.xc40.xc40g.trim.pure_electric_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:187",
+      "revision_id": "40eee6e9a3dbdbd1d112ad07",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "volvo.xc40.xc40g.trim.pure_electric_single_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:188",
+      "revision_id": "984c04b8191e81d2f93bfddb",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "volvo.xc40.xc40g.trim.pure_electric_twin_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:189",
+      "revision_id": "f011e706fa4f7f756dc0e8f6",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "volvo.xc40.xc40g.trim.ultimate_t5_plug_in_hybrid_bright_phev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:190",
+      "revision_id": "c8f7f78066702d134085ac31",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "volvo.xc60.xc60g.trim.plus_t8_plug_in_hybrid_dark_phev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:191",
+      "revision_id": "93603a6d3b4c629ce404ace8",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "volvo.xc60.xc60g.trim.recharge_t8_plug_in_hybrid_plus_dark_phev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:192",
+      "revision_id": "106dfbc2a2dbd4acf590eb19",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "volvo.xc60.xc60g.trim.recharge_t8_plug_in_hybrid_ultimate_dark_phev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:193",
+      "revision_id": "6a4645a095e10850a4e42baa",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "volvo.xc60.xc60g.trim.recharge_ultimate_t8_plug_in_hybrid_bright_phev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:194",
+      "revision_id": "1c63724a4a7ba43c1dbac568",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "volvo.xc60.xc60g.trim.ultra_t8_plug_in_hybrid_bright_phev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:195",
+      "revision_id": "e314e07294768820cd491c55",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "volvo.xc90.xc90g.trim.recharge_t8_plug_in_hybrid_plus_dark_phev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:196",
+      "revision_id": "6c6643b828077b3bccc43c3a",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "xpeng.xpeng_g6.g6.trim.long_range_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:197",
+      "revision_id": "7ac54fe82569434687d9bd2c",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "xpeng.xpeng_g6.g6.trim.long_range_rwd_87_5_kwh_ncm_286_hp_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:198",
+      "revision_id": "f90fc135142763305f8f4915",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "xpeng.xpeng_g6.g6.trim.performance_awd_87_5_kwh_dual_487_hp_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:199",
+      "revision_id": "ccc0ffd03f7169e2a1a44217",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "xpeng.xpeng_g6.g6.trim.standard_range_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:200",
+      "revision_id": "ec745b40de6d9544c66f4da0",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "xpeng.xpeng_g6.g6.trim.standard_range_rwd_66_kwh_lfp_258_hp_bev",
+      "idempotent_replay": false
+    }
+  ],
+  "changed_files": [
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:155.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:130.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:199.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:112.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:67.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:160.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:142.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:81.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:24.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:69.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:104.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:182.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:147.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:159.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:78.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:168.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:76.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:96.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:166.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:29.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:156.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:23.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:115.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:164.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:42.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:123.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:17.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:170.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:3.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:169.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:16.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:64.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:184.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:45.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:8.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:14.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:32.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:60.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:86.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:52.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:177.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:132.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:134.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:149.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:82.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:119.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:12.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:30.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:31.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:144.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:105.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:128.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:100.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:9.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:143.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:173.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:165.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:22.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:137.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:73.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:192.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:28.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:183.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:193.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:26.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:55.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:15.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:51.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:21.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:120.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:72.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:114.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:135.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:108.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:195.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:87.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:189.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:63.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:36.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:37.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:167.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:117.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:77.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:190.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:145.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:74.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:194.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:88.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:59.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:66.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:151.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:25.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:19.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:127.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:18.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:158.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:126.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:61.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:185.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:39.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:4.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:180.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:20.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:176.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:186.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:38.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:191.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:49.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:129.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:187.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:101.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:146.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:197.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:110.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:113.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:92.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:103.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:102.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:138.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:53.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:91.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:50.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:106.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:84.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:5.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:116.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:40.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:111.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:99.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:13.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:196.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:46.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:107.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:97.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:163.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:44.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:198.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:68.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:35.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:124.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:122.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:98.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:93.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:34.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:56.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:133.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:54.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:1.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:140.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:181.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:148.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:85.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:27.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:70.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:95.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:90.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:200.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:10.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:48.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:175.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:94.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:178.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:172.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:150.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:33.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:6.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:47.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:136.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:141.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:131.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:171.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:58.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:75.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:89.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:152.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:41.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:121.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:65.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:11.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:179.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:57.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:80.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:157.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:139.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:43.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:153.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:7.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:174.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:83.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:71.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:125.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:161.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:2.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:62.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:79.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:118.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:188.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:109.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:162.json",
+    "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-057-fe31f7c11e04:154.json",
+    "2026/canonical_state/shadow/ccc0ffd03f7169e2a1a44217.json",
+    "2026/canonical_state/shadow/0ec099a2152b7388d52733e6.json",
+    "2026/canonical_state/shadow/76846466972abeedb8cad0e7.json",
+    "2026/canonical_state/shadow/ae824a63d7aeae0ddf1b9bed.json",
+    "2026/canonical_state/shadow/984c04b8191e81d2f93bfddb.json",
+    "2026/canonical_state/shadow/8fd7e1532d0a900d2e7dd300.json",
+    "2026/canonical_state/shadow/e6d34114e9cb83d691b5fb30.json",
+    "2026/canonical_state/shadow/08761cd6553f72ed29dc0600.json",
+    "2026/canonical_state/shadow/50b4e011e1f0fcfa6ad8667f.json",
+    "2026/canonical_state/shadow/ed97d3b74f17a563ab938e67.json",
+    "2026/canonical_state/shadow/f90fc135142763305f8f4915.json",
+    "2026/canonical_state/shadow/3312d7d9f11944b3b3fa20b6.json",
+    "2026/canonical_state/shadow/64c1e954a8de12759d2f51b8.json",
+    "2026/canonical_state/shadow/bcc3db8ef64e63918f6c3283.json",
+    "2026/canonical_state/shadow/d65d2a172347c3b1f780aae2.json",
+    "2026/canonical_state/shadow/9dabce8b38b969350400ce88.json",
+    "2026/canonical_state/shadow/954b009e37313e0a34bfb7af.json",
+    "2026/canonical_state/shadow/e50e33e7ad697ad52480b9c2.json",
+    "2026/canonical_state/shadow/fb79ca2aeb8ec473d0f409cd.json",
+    "2026/canonical_state/shadow/812e5896b25ad5145c1f0e08.json",
+    "2026/canonical_state/shadow/0306a2cf076f5e3b1f0dca9e.json",
+    "2026/canonical_state/shadow/dc72fe04ee121c828c4cc2a7.json",
+    "2026/canonical_state/shadow/8600dc080162c75ec8f459c1.json",
+    "2026/canonical_state/shadow/926728a1daeea4bf1e4f390a.json",
+    "2026/canonical_state/shadow/5d72fad000167cf8014a7e78.json",
+    "2026/canonical_state/shadow/90fd99790268306524a59ccb.json",
+    "2026/canonical_state/shadow/8cbba411a3075de6e015347c.json",
+    "2026/canonical_state/shadow/9c56de9148853131fac4d8e2.json",
+    "2026/canonical_state/shadow/6065f7b1b0076c32812b2985.json",
+    "2026/canonical_state/shadow/251614abb2f4597fad7d96e0.json",
+    "2026/canonical_state/shadow/c96759802f73c9b6aea3f285.json",
+    "2026/canonical_state/shadow/f2c4bb489408fa6865e7772e.json",
+    "2026/canonical_state/shadow/ccab95ec2a726188e3d0bc5e.json",
+    "2026/canonical_state/shadow/ac60daf82e8eb03886f31604.json",
+    "2026/canonical_state/shadow/94b729d8c3d18be792014e8c.json",
+    "2026/canonical_state/shadow/e60c091cfcff481b97f19b51.json",
+    "2026/canonical_state/shadow/4cb6872efd52247a16833b8e.json",
+    "2026/canonical_state/shadow/2f1de135f401c736a759dada.json",
+    "2026/canonical_state/shadow/a8b684a316e01e014df5caa2.json",
+    "2026/canonical_state/shadow/643babd172155cd6f57f0cce.json",
+    "2026/canonical_state/shadow/dc212dfb54cd32a50c26dd74.json",
+    "2026/canonical_state/shadow/1bd17cfa93067fdf993a3799.json",
+    "2026/canonical_state/shadow/c9328c042c2b57d3f2ea3e3f.json",
+    "2026/canonical_state/shadow/295df569ba7425383cb26932.json",
+    "2026/canonical_state/shadow/cd4f407a3d6c3fc952676f1f.json",
+    "2026/canonical_state/shadow/eb289812a6c62aea4cc0d6fd.json",
+    "2026/canonical_state/shadow/0943bf729fbef456610c1d60.json",
+    "2026/canonical_state/shadow/9506d722fb990de433bf0501.json",
+    "2026/canonical_state/shadow/f8a6210483a07d9a6602dda3.json",
+    "2026/canonical_state/shadow/04734c9dca256ef7470d7abb.json",
+    "2026/canonical_state/shadow/9c9b7cb7f04a4a18e58aeec0.json",
+    "2026/canonical_state/shadow/34a8833a54c0d7d598fc51bd.json",
+    "2026/canonical_state/shadow/cecf0a0a9a22c8f2490291d3.json",
+    "2026/canonical_state/shadow/7fd5b9c33e5d815108bce41c.json",
+    "2026/canonical_state/shadow/106dfbc2a2dbd4acf590eb19.json",
+    "2026/canonical_state/shadow/21ef0a6b2a669aaa646f3dc3.json",
+    "2026/canonical_state/shadow/df4345bdb6eef678510cf399.json",
+    "2026/canonical_state/shadow/04cdcec03ebf414141ca81ce.json",
+    "2026/canonical_state/shadow/ca738220ba678665cc10c7b4.json",
+    "2026/canonical_state/shadow/06d61ea4978d6627ca55d9fc.json",
+    "2026/canonical_state/shadow/17513da1af921111ad4eaf61.json",
+    "2026/canonical_state/shadow/453f7de1a02b60670657f904.json",
+    "2026/canonical_state/shadow/ddbecbaa84e197b94c4a2d34.json",
+    "2026/canonical_state/shadow/8665d34674420d8401b40073.json",
+    "2026/canonical_state/shadow/bdd4277feeb7481e63a46b95.json",
+    "2026/canonical_state/shadow/96b57b4ee36305d9f8867195.json",
+    "2026/canonical_state/shadow/9f3437e1e34f603c755826ec.json",
+    "2026/canonical_state/shadow/22db6a68518094bd97fa7e29.json",
+    "2026/canonical_state/shadow/191ef1da27c52aef066c6a0d.json",
+    "2026/canonical_state/shadow/4b8ae11ac891a1051616a57a.json",
+    "2026/canonical_state/shadow/60a14f71411102ea88cd9c1f.json",
+    "2026/canonical_state/shadow/e530d25087c90c39efbb07bf.json",
+    "2026/canonical_state/shadow/230569c20546579105379126.json",
+    "2026/canonical_state/shadow/71d96bdca09f218c177eaeaa.json",
+    "2026/canonical_state/shadow/92443ba8eb5686cf4f518851.json",
+    "2026/canonical_state/shadow/7f6eecf984d44c1a0e9c87eb.json",
+    "2026/canonical_state/shadow/4316dbbf1857d2dcbb510dc7.json",
+    "2026/canonical_state/shadow/e38a813a71a44a87d3d78d52.json",
+    "2026/canonical_state/shadow/e3ae8ed0df4ff62e039b7a23.json",
+    "2026/canonical_state/shadow/93603a6d3b4c629ce404ace8.json",
+    "2026/canonical_state/shadow/af847019251cda70d6cf701a.json",
+    "2026/canonical_state/shadow/86fdc8a9e64d9a3408907368.json",
+    "2026/canonical_state/shadow/f011e706fa4f7f756dc0e8f6.json",
+    "2026/canonical_state/shadow/b5e3e3d745d3df3fa2314436.json",
+    "2026/canonical_state/shadow/b69b137add3038af07e9d170.json",
+    "2026/canonical_state/shadow/fe4dedd1fe300a2b0904a06f.json",
+    "2026/canonical_state/shadow/363a51141b42da5ea652ab2b.json",
+    "2026/canonical_state/shadow/2727ae1829f8d02a33985f8b.json",
+    "2026/canonical_state/shadow/90e6972bd59bb960bf44b3a4.json",
+    "2026/canonical_state/shadow/2e7fbce3c81a04d54901e6f3.json",
+    "2026/canonical_state/shadow/4c0c2391cc9160179996fe00.json",
+    "2026/canonical_state/shadow/1c63724a4a7ba43c1dbac568.json",
+    "2026/canonical_state/shadow/135f65137cc4768ce9cb6cb8.json",
+    "2026/canonical_state/shadow/a4d0ea0f0c4cee66c6d1c92f.json",
+    "2026/canonical_state/shadow/50d8ba1f26336d2deaea28cf.json",
+    "2026/canonical_state/shadow/1c9e96cb67f78cdd780e0c3c.json",
+    "2026/canonical_state/shadow/0e2fda53e19ec1ec8df77e96.json",
+    "2026/canonical_state/shadow/e314e07294768820cd491c55.json",
+    "2026/canonical_state/shadow/6aefb4cdcbc31b2eb42f1dd4.json",
+    "2026/canonical_state/shadow/7352d7b190055f2e69cdf792.json",
+    "2026/canonical_state/shadow/1857d26ed4f314310a050d57.json",
+    "2026/canonical_state/shadow/759418e73983b072494e42f9.json",
+    "2026/canonical_state/shadow/19e7992b08848518e4873704.json",
+    "2026/canonical_state/shadow/cd35ace2b40864ebf0c95701.json",
+    "2026/canonical_state/shadow/a273bf46bca78b4d0cd78460.json",
+    "2026/canonical_state/shadow/176ac4adc82cd3af49fdd25b.json",
+    "2026/canonical_state/shadow/5ce6510982d577b78e959972.json",
+    "2026/canonical_state/shadow/6c6643b828077b3bccc43c3a.json",
+    "2026/canonical_state/shadow/c2687d0cdfa8330cb537869f.json",
+    "2026/canonical_state/shadow/480d288d8e59d3bb0f529b3b.json",
+    "2026/canonical_state/shadow/155676624e2de5ac4913c499.json",
+    "2026/canonical_state/shadow/64e38c27331ac376aee8ef85.json",
+    "2026/canonical_state/shadow/0ac3ca08e748246cb17a8e6f.json",
+    "2026/canonical_state/shadow/6f9446ab255f607d2c03e2d9.json",
+    "2026/canonical_state/shadow/02e72a580923080abed137c8.json",
+    "2026/canonical_state/shadow/3895322878fb6d08c7d87d19.json",
+    "2026/canonical_state/shadow/714c33aa68d357b1a3dfe5e4.json",
+    "2026/canonical_state/shadow/1140b7989416da2c229c86be.json",
+    "2026/canonical_state/shadow/928b82ae0bfcf4da9df81b05.json",
+    "2026/canonical_state/shadow/aa3815fa865e5d000c4c1668.json",
+    "2026/canonical_state/shadow/d878c1d9bb0d0a0b632ecb11.json",
+    "2026/canonical_state/shadow/6d601756e4c40981662c7ef0.json",
+    "2026/canonical_state/shadow/689dfd1c6fce1e143bdbaea3.json",
+    "2026/canonical_state/shadow/de23b4b01f4d76429c626949.json",
+    "2026/canonical_state/shadow/3f86c89d5977c447e68768d1.json",
+    "2026/canonical_state/shadow/50cead69e776c74976cc7903.json",
+    "2026/canonical_state/shadow/1bedf71773aaba3ff7efd093.json",
+    "2026/canonical_state/shadow/d15af9dfbb28b785525b4ad8.json",
+    "2026/canonical_state/shadow/764b4035345535487de3f85e.json",
+    "2026/canonical_state/shadow/1e1ff079477edc583c1eb4b0.json",
+    "2026/canonical_state/shadow/bf0b707c6da67575767a28f4.json",
+    "2026/canonical_state/shadow/2e76432cfddb4cfee08881c6.json",
+    "2026/canonical_state/shadow/7af1017abbad05fcdd449b91.json",
+    "2026/canonical_state/shadow/39332ff8b1fad8dd165ad36a.json",
+    "2026/canonical_state/shadow/ec745b40de6d9544c66f4da0.json",
+    "2026/canonical_state/shadow/d547d4c21a7800eba778aec3.json",
+    "2026/canonical_state/shadow/88bd5524104e038fe05a0a15.json",
+    "2026/canonical_state/shadow/3844681fc7924747952616e1.json",
+    "2026/canonical_state/shadow/a4aac9c6c3fcdb01f9f206fb.json",
+    "2026/canonical_state/shadow/401b0db60e79d1385f06d1b5.json",
+    "2026/canonical_state/shadow/df7bda87cb301249754f7429.json",
+    "2026/canonical_state/shadow/dd0520c9523e80a88e75f309.json",
+    "2026/canonical_state/shadow/e3997840d85424b33301a68a.json",
+    "2026/canonical_state/shadow/3012c1936377e21c12ab2226.json",
+    "2026/canonical_state/shadow/4a84dd85aa85e69b56d918f6.json",
+    "2026/canonical_state/shadow/b2eb121b428326365bfdd95b.json",
+    "2026/canonical_state/shadow/2f7f88d1510d5d20e7077369.json",
+    "2026/canonical_state/shadow/8ec27603f4d3408ece353ba7.json",
+    "2026/canonical_state/shadow/76a775083691fb811caa9dab.json",
+    "2026/canonical_state/shadow/7ac54fe82569434687d9bd2c.json",
+    "2026/canonical_state/shadow/a3362dec9a03ef65db19f34c.json",
+    "2026/canonical_state/shadow/c07d5d5debce3b140f2cb8f9.json",
+    "2026/canonical_state/shadow/d32ca0cd916d9e9c64191f05.json",
+    "2026/canonical_state/shadow/294fc7ec35bba144ee6595fe.json",
+    "2026/canonical_state/shadow/44cb6b317b1b393df0283bcb.json",
+    "2026/canonical_state/shadow/b7e455da1dc2893755bb4d71.json",
+    "2026/canonical_state/shadow/8a002f4a81954a23c2bcbad7.json",
+    "2026/canonical_state/shadow/401a227e542600bb102f49f4.json",
+    "2026/canonical_state/shadow/0049da79049b27a1cfa1e1d9.json",
+    "2026/canonical_state/shadow/84d5fad2452af34a5f5ce88d.json",
+    "2026/canonical_state/shadow/72a123fc9bdf4c5fa5b65ad0.json",
+    "2026/canonical_state/shadow/2cb5de96c485ccf9261a1d12.json",
+    "2026/canonical_state/shadow/58431e34cbf368aa5a950280.json",
+    "2026/canonical_state/shadow/9ee25fadee7d7c7394cd30d8.json",
+    "2026/canonical_state/shadow/5f9ba793e0bc125bb0de76db.json",
+    "2026/canonical_state/shadow/5bffd92826ae5fbbc9b8c14a.json",
+    "2026/canonical_state/shadow/d4c88b743d55fb7f6212f8bd.json",
+    "2026/canonical_state/shadow/54a1a2e30bf07a8ea494531f.json",
+    "2026/canonical_state/shadow/5fd2435e0b490a4650f9e898.json",
+    "2026/canonical_state/shadow/d9d293d2c727d28f3c324116.json",
+    "2026/canonical_state/shadow/c8f7f78066702d134085ac31.json",
+    "2026/canonical_state/shadow/9a8762288ee1b255c97ccbd7.json",
+    "2026/canonical_state/shadow/aeb9545c3b2610b78d7a9656.json",
+    "2026/canonical_state/shadow/d2d175003d15a7e3f96a8cb6.json",
+    "2026/canonical_state/shadow/6719dabdd07684d3ac8bf13a.json",
+    "2026/canonical_state/shadow/9c524a43b2b937d6d182c65e.json",
+    "2026/canonical_state/shadow/40eee6e9a3dbdbd1d112ad07.json",
+    "2026/canonical_state/revisions.jsonl",
+    "2026/canonical_state/outbox.jsonl",
+    "2026/canonical_state/shadow/a5894154cc4c7f50c4219597.json",
+    "2026/canonical_state/shadow/aa4374ee2067f4bf8957611f.json",
+    "2026/canonical_state/shadow/fd8914ef32060ae57d7277eb.json",
+    "2026/canonical_state/shadow/25a0669ad88816c4bb26dea9.json",
+    "2026/canonical_state/shadow/fc49ea6ab8e32b2f7a24c81c.json",
+    "2026/canonical_state/shadow/0ff39c00284723de55b576ef.json",
+    "2026/canonical_state/shadow/fa640a748178f03a0d4af4b5.json",
+    "2026/canonical_state/shadow/101dbd8d2da3ad861c2af1c6.json",
+    "2026/canonical_state/shadow/f519afb457daef4cf5cf5771.json",
+    "2026/canonical_state/shadow/ab6c4a11fdc5975241c0687f.json",
+    "2026/canonical_state/shadow/6a4645a095e10850a4e42baa.json",
+    "2026/canonical_state/shadow/3b3c20e2ec1bf194d7d1fb19.json",
+    "2026/canonical_state/shadow/0892fcf02ece661cd81db142.json",
+    "2026/canonical_state/shadow/440f9ed9c2db14605591ca1f.json",
+    "2026/canonical_state/shadow/9f585e74d1683e0cdbc65f30.json",
+    "2026/canonical_state/shadow/febb6de54ac409f24af80866.json",
+    "2026/canonical_state/shadow/595a48b365cb0a1b9ddc95bc.json",
+    "2026/canonical_state/shadow/a875b203cf4152dfd2a022a7.json",
+    "2026/canonical_state/shadow/a5dc373c2f561cfb7a166cde.json",
+    "2026/canonical_state/shadow/1ce9ebd8783f442af8b729d3.json",
+    "2026/canonical_state/shadow/962aba6ee99fe24af75de324.json",
+    "2026/canonical_state/shadow/83530f3331d5ad8c79f9d969.json",
+    "2026/canonical_state/shadow/37b6e6e3a34ea462a59d8b6c.json"
+  ]
+}

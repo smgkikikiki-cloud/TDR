@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "32ccbdbc3839fde3ff2e730d",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-011-3c709241399c:271",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.kicks.p15.trim.v",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:19+00:00",
+    "before_hash": "6c9bd617e06331e1a93ef66847e1a3902bdc4b0d1fcb24488b8d3c49fb0c9340",
+    "after_hash": "bbfbd98ef7afbfc28588135a1c5d8d76e335d56f1ea83ddb5c3913ab82075c1d",
+    "before": [
+      true,
+      true,
+      4.6,
+      4.4,
+      4.0,
+      100.0
+    ],
+    "after": [
+      true,
+      true,
+      4.6,
+      4.4,
+      4.0,
+      100.0,
+      0.00755
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_bee958ee-6405-47e8-a9be-8484cca2f09a_emissions.nox_g_km_1615891c5a41.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "32ccbdbc3839fde3ff2e730d:spec",
+    "revision_id": "32ccbdbc3839fde3ff2e730d",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.kicks.p15.trim.v",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:19+00:00",
+    "payload": [
+      true,
+      true,
+      4.6,
+      4.4,
+      4.0,
+      100.0,
+      0.00755
+    ]
+  }
+}

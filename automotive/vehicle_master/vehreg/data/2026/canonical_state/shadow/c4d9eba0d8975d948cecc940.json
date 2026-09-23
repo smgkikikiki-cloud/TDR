@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c4d9eba0d8975d948cecc940",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-012-0c3fd0adac89:18",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mazda6.gen1.trim.mazda6e_premium_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:23+00:00",
+    "before_hash": "045198309405bdea1bf1b65f1ef5fc0eb80d985bd884adcff61275e5021f38fb",
+    "after_hash": "f1009555ad524cf0c1b67afbf1373101a28ae91e1ad8fce2d09fa28fcc308906",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      77.9,
+      364.0,
+      "CALB Group Co.,Ltd."
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      77.9,
+      364.0,
+      "CALB Group Co.,Ltd.",
+      "AC: 230 V(single phase) / 230 V(three phases)"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_9046fd24-b2f3-4426-b84f-f8bb53fe9fda_charging.onboard_charger_spec_cd91c88b5f91.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c4d9eba0d8975d948cecc940:spec",
+    "revision_id": "c4d9eba0d8975d948cecc940",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mazda6.gen1.trim.mazda6e_premium_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:23+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      77.9,
+      364.0,
+      "CALB Group Co.,Ltd.",
+      "AC: 230 V(single phase) / 230 V(three phases)"
+    ]
+  }
+}

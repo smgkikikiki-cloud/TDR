@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f7a1d0e8b4c005c63b4771b5",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-025-74b815fdedac:317",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "jaecoo.jaecoo_7.gen1.trim.max_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:26+00:00",
+    "before_hash": "2092e7600c0a18205b7962a1bcb3b703077911ab448c605d3f40d9304d39a9cf",
+    "after_hash": "781679997621bfdc5d49b2f9d89c89fa1b044e19e7fbc0cb97a6490525fd9772",
+    "before": [
+      "LFP"
+    ],
+    "after": [
+      "LFP",
+      18.32
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_014eeba9-211d-41ee-ae0d-bd051fff2b2d_battery.gross_capacity_kwh_86defe78a9b0.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f7a1d0e8b4c005c63b4771b5:spec",
+    "revision_id": "f7a1d0e8b4c005c63b4771b5",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "jaecoo.jaecoo_7.gen1.trim.max_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:26+00:00",
+    "payload": [
+      "LFP",
+      18.32
+    ]
+  }
+}

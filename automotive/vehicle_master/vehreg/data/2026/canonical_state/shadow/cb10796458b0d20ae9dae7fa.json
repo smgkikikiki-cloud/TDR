@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "cb10796458b0d20ae9dae7fa",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-053-c0bdc44365d7:162",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover.gen1.trim.2_0_litre_plug_in_hybrid_petrol_vogue_swb_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:38+00:00",
+    "before_hash": "37eef2234002bf572fc7291232fdd8f853b985f7967c479afd5aeda7496d13a2",
+    "after_hash": "83076492ae8842752dd5f281fa28ad93c1035b1e0e132ac9e103211defff6504",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      13.99,
+      370.0,
+      "Samsung SDI",
+      "EXTERNAL_DC",
+      true,
+      true,
+      2.7,
+      62.0,
+      0.005,
+      "TIS",
+      "PHEV",
+      1997,
+      "GASOLINE"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      13.99,
+      370.0,
+      "Samsung SDI",
+      "EXTERNAL_DC",
+      true,
+      true,
+      2.7,
+      62.0,
+      0.005,
+      "TIS",
+      "PHEV",
+      1997,
+      "GASOLINE",
+      210.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_f663b5c7245c49718815a52546ad2dd5_ev.energy_consumption_wh_km_f46b80e3eeac.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "cb10796458b0d20ae9dae7fa:spec",
+    "revision_id": "cb10796458b0d20ae9dae7fa",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover.gen1.trim.2_0_litre_plug_in_hybrid_petrol_vogue_swb_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:38+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      13.99,
+      370.0,
+      "Samsung SDI",
+      "EXTERNAL_DC",
+      true,
+      true,
+      2.7,
+      62.0,
+      0.005,
+      "TIS",
+      "PHEV",
+      1997,
+      "GASOLINE",
+      210.0
+    ]
+  }
+}

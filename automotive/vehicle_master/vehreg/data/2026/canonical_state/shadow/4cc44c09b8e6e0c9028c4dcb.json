@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "4cc44c09b8e6e0c9028c4dcb",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-024-8292d953d777:394",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "leapmotor.leapmotor_c10.gen1.trim.ev_style_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:20+00:00",
+    "before_hash": "f3f2f7facbb820e600c51456b216e8e4c619ea86e5af70791da7619c39be183f",
+    "after_hash": "7c26136257ebcb611f514e58a40cc02d019d93896e8b1f38597f2964ee22709c",
+    "before": [
+      "LFP",
+      69.89,
+      332.8,
+      "LEAPMOTOR",
+      "ONBOARD_AC",
+      167.0,
+      477.0,
+      "235/55R18",
+      "BEV",
+      8.0,
+      "PMSM"
+    ],
+    "after": [
+      "LFP",
+      69.89,
+      332.8,
+      "LEAPMOTOR",
+      "ONBOARD_AC",
+      167.0,
+      477.0,
+      "235/55R18",
+      "BEV",
+      8.0,
+      "PMSM",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e8acdff3-bce4-4a0e-b4a3-8377cd71787a_safety.adaptive_cruise_7c044c967c5c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "4cc44c09b8e6e0c9028c4dcb:spec",
+    "revision_id": "4cc44c09b8e6e0c9028c4dcb",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "leapmotor.leapmotor_c10.gen1.trim.ev_style_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:20+00:00",
+    "payload": [
+      "LFP",
+      69.89,
+      332.8,
+      "LEAPMOTOR",
+      "ONBOARD_AC",
+      167.0,
+      477.0,
+      "235/55R18",
+      "BEV",
+      8.0,
+      "PMSM",
+      true
+    ]
+  }
+}

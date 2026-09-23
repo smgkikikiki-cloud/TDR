@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:afcb91d9-e74c-47d7-a1a6-a2e9db6c333f:ev.energy_consumption_wh_km",
+      "field_key": "ev.energy_consumption_wh_km",
+      "value_state": "KNOWN",
+      "value": 163.0,
+      "unit": "Wh/km",
+      "observed_at": "2025-01-14",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/afcb91d9-e74c-47d7-a1a6-a2e9db6c333f",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/afcb91d9-e74c-47d7-a1a6-a2e9db6c333f",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "deepal.deepal_s07.gen1.trim.l_bev"
+    }
+  ]
+}

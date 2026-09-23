@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5eadf418990e6d77e4807c0c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-053-c0bdc44365d7:70",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover_velar.unresearched.trim.2_0_litre_ingenium_diesel_r_dynamic_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:37+00:00",
+    "before_hash": "5802624a9df1dff162b8817f9ced76e37c74e040c8801bc4b502338bb925ab66",
+    "after_hash": "8dcaba009f1737d43c844fe073e0667485fc2dbea305182c0b40ceb15e97d038",
+    "before": [
+      true,
+      true,
+      5.0,
+      5.6,
+      6.8,
+      145.0,
+      0.15,
+      0.00108,
+      "TIS",
+      "DIESEL",
+      1999,
+      "DIESEL",
+      "265/45R21"
+    ],
+    "after": [
+      true,
+      true,
+      5.0,
+      5.6,
+      6.8,
+      145.0,
+      0.15,
+      0.00108,
+      "TIS",
+      "DIESEL",
+      1999,
+      "DIESEL",
+      "265/45R21",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_2a48ca76776243a7935b5f81ee7c20bc_identity.powertrain_e37c877dd333.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5eadf418990e6d77e4807c0c:spec",
+    "revision_id": "5eadf418990e6d77e4807c0c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover_velar.unresearched.trim.2_0_litre_ingenium_diesel_r_dynamic_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:37+00:00",
+    "payload": [
+      true,
+      true,
+      5.0,
+      5.6,
+      6.8,
+      145.0,
+      0.15,
+      0.00108,
+      "TIS",
+      "DIESEL",
+      1999,
+      "DIESEL",
+      "265/45R21",
+      "ICE"
+    ]
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "80a478c4ddeed07faa41d498",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-005-77a02922c989:236",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.city.gn2.trim.s_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:56+00:00",
+    "before_hash": "2b49b2e954e99f6604962eafb2942214316afb679765ccc614f77f31c6b9e39b",
+    "after_hash": "c8b595f5db5c57f205b370c4154d8b5117bb88f1e1c17b2c89a2f1060801b9b7",
+    "before": [
+      4.1,
+      4.4,
+      4.8,
+      99.0,
+      0.027,
+      0.00111,
+      "TIS",
+      "GASOLINE",
+      988
+    ],
+    "after": [
+      4.1,
+      4.4,
+      4.8,
+      99.0,
+      0.027,
+      0.00111,
+      "TIS",
+      "GASOLINE",
+      988,
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_4c3c6fd4-2f55-4a1b-ab43-91c3a568041a_engine.fuel_type_9770fa1405d6.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "80a478c4ddeed07faa41d498:spec",
+    "revision_id": "80a478c4ddeed07faa41d498",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.city.gn2.trim.s_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:56+00:00",
+    "payload": [
+      4.1,
+      4.4,
+      4.8,
+      99.0,
+      0.027,
+      0.00111,
+      "TIS",
+      "GASOLINE",
+      988,
+      "GASOLINE"
+    ]
+  }
+}

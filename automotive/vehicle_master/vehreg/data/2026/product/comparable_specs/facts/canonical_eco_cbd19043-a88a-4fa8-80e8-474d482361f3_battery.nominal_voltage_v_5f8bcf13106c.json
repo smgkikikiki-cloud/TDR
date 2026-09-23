@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:cbd19043-a88a-4fa8-80e8-474d482361f3:battery.nominal_voltage_v",
+      "field_key": "battery.nominal_voltage_v",
+      "value_state": "KNOWN",
+      "value": 397.0,
+      "unit": "V",
+      "observed_at": "2024-04-22",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/cbd19043-a88a-4fa8-80e8-474d482361f3",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/cbd19043-a88a-4fa8-80e8-474d482361f3",
+      "trim_id": "kia.ev5.gen1.trim.air_64_2_kwh_bev"
+    }
+  ]
+}

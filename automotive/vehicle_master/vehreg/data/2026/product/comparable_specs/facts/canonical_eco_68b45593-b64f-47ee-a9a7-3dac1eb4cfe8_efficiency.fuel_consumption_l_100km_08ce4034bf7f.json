@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:68b45593-b64f-47ee-a9a7-3dac1eb4cfe8:efficiency.fuel_consumption_l_100km",
+      "field_key": "efficiency.fuel_consumption_l_100km",
+      "value_state": "KNOWN",
+      "value": 6.3,
+      "unit": "L/100km",
+      "observed_at": "2025-11-28",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/68b45593-b64f-47ee-a9a7-3dac1eb4cfe8",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/68b45593-b64f-47ee-a9a7-3dac1eb4cfe8",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "isuzu.dmax_cab.rg.trim.4_2_2_ddi_z_at"
+    }
+  ]
+}

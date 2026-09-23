@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "0c894bc9ef9b5abacf2f3291",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-046-2c82d6c5b603:304",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.cx5.kf.trim.2_5_turbo_sp_231_hp_awd_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:14+00:00",
+    "before_hash": "d01142c810bad9ced3d918532be631911f43f33e9f243eea370ea2a24b952c96",
+    "after_hash": "3cdeb3f813187d7b6e923cb22dab96d8113f9f00a6b2bd841894f89b5fda0d30",
+    "before": [
+      7.1,
+      8.3,
+      10.6,
+      198.0
+    ],
+    "after": [
+      7.1,
+      8.3,
+      10.6,
+      198.0,
+      0.013
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_18247f81795d406a9ddbb752026bc483_emissions.nox_g_km_4f9bd694c5c1.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "0c894bc9ef9b5abacf2f3291:spec",
+    "revision_id": "0c894bc9ef9b5abacf2f3291",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.cx5.kf.trim.2_5_turbo_sp_231_hp_awd_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:14+00:00",
+    "payload": [
+      7.1,
+      8.3,
+      10.6,
+      198.0,
+      0.013
+    ]
+  }
+}

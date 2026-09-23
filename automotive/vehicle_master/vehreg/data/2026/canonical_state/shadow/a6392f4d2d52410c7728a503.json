@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a6392f4d2d52410c7728a503",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-001-2163ac0376be:110",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.hybrid_z_2wd",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:45+00:00",
+    "before_hash": "33650490023ee62f3b7027cb02646bfdebebbd7ff08f84bf7eeab82acca04079",
+    "after_hash": "cc49729bd0ec8975f12d935f67297d8ce12600983cf3d0cef030b0f09e33c4bd",
+    "before": [
+      true,
+      true,
+      5.4,
+      5.2,
+      4.9,
+      129.0,
+      0.00445,
+      "TIS",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/60R18",
+      "HEV",
+      15.0
+    ],
+    "after": [
+      true,
+      true,
+      5.4,
+      5.2,
+      4.9,
+      129.0,
+      0.00445,
+      "TIS",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/60R18",
+      "HEV",
+      15.0,
+      "CVT"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_4512ebcb-fe40-4db4-84c9-6ffa52ccaaab_powertrain.transmission_e2e74d8fdceb.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a6392f4d2d52410c7728a503:spec",
+    "revision_id": "a6392f4d2d52410c7728a503",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.hybrid_z_2wd",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:45+00:00",
+    "payload": [
+      true,
+      true,
+      5.4,
+      5.2,
+      4.9,
+      129.0,
+      0.00445,
+      "TIS",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/60R18",
+      "HEV",
+      15.0,
+      "CVT"
+    ]
+  }
+}

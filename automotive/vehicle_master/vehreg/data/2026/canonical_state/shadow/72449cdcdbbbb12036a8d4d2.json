@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "72449cdcdbbbb12036a8d4d2",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-036-ba2d051d30aa:223",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_x3.g45.trim.xdrive30e_m_sport_phev_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:48+00:00",
+    "before_hash": "ec47c590263a95ec1cafcc7ee43916fcf0dbb560b00c83ff269d1fa31278bc32",
+    "after_hash": "31ce00abafba8cd7711b02269a50340d7f5d486fa5b6cd555597bfd03ce5069e",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      12.04,
+      354.2,
+      "Electrical energy storage system SP41",
+      "ONBOARD_AC",
+      true,
+      true,
+      true,
+      2.8,
+      64.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      12.04,
+      354.2,
+      "Electrical energy storage system SP41",
+      "ONBOARD_AC",
+      true,
+      true,
+      true,
+      2.8,
+      64.0,
+      0.012
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_c9432326-b020-45bd-8408-ba6662d8c6e5_emissions.nox_g_km_850b90cd177c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "72449cdcdbbbb12036a8d4d2:spec",
+    "revision_id": "72449cdcdbbbb12036a8d4d2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_x3.g45.trim.xdrive30e_m_sport_phev_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:48+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      12.04,
+      354.2,
+      "Electrical energy storage system SP41",
+      "ONBOARD_AC",
+      true,
+      true,
+      true,
+      2.8,
+      64.0,
+      0.012
+    ]
+  }
+}

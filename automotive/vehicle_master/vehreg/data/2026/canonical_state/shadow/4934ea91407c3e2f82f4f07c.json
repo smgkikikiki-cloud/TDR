@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "4934ea91407c3e2f82f4f07c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-022-20a8a8e94ae5:119",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "geely.geely_ex5.gen1.trim.pro_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:11+00:00",
+    "before_hash": "c3f4048f7172e5a8c21829b1d6ba99e5f31476e638493b37f8e1f02fb8170121",
+    "after_hash": "f72ba95f3d6ce5186ce6d46dcd584361ef8a7049ac5f5c4acddddc701327ffa5",
+    "before": [
+      "LFP",
+      60.16
+    ],
+    "after": [
+      "LFP",
+      60.16,
+      376.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_1d8a3c3a-2ce6-4dfd-8ba1-9d3454478c39_battery.nominal_voltage_v_470a564dde8f.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "4934ea91407c3e2f82f4f07c:spec",
+    "revision_id": "4934ea91407c3e2f82f4f07c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "geely.geely_ex5.gen1.trim.pro_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:11+00:00",
+    "payload": [
+      "LFP",
+      60.16,
+      376.0
+    ]
+  }
+}

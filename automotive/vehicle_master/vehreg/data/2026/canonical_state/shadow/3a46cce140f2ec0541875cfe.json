@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "3a46cce140f2ec0541875cfe",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-009-54711011662e:80",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.haval_h6.h6hev.trim.hev_pro_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:10+00:00",
+    "before_hash": "ddf546b02d15dae9a26308563ddba36110a9ae8fbc360413820edfac60f8d8ba",
+    "after_hash": "c4b1e48b7a23803d4633663b426294c45fc19f16434d83d10b8d61f7a8d293a8",
+    "before": [
+      true,
+      6.4,
+      5.2,
+      3.4,
+      120.0,
+      0.03469,
+      0.00018,
+      "TIS",
+      "HEV",
+      1499,
+      "GASOLINE",
+      "225/55R19",
+      "HEV",
+      9.0,
+      "CVT",
+      true,
+      true,
+      [
+        "R100"
+      ],
+      true
+    ],
+    "after": [
+      true,
+      6.4,
+      5.2,
+      3.4,
+      120.0,
+      0.03469,
+      0.00018,
+      "TIS",
+      "HEV",
+      1499,
+      "GASOLINE",
+      "225/55R19",
+      "HEV",
+      9.0,
+      "CVT",
+      true,
+      true,
+      [
+        "R100"
+      ],
+      true,
+      1690
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_555f6a1a-cb7a-4018-8eb8-28315d457b4e_vehicle.declared_total_weight_kg_4f7fc27de5d2.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "3a46cce140f2ec0541875cfe:spec",
+    "revision_id": "3a46cce140f2ec0541875cfe",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.haval_h6.h6hev.trim.hev_pro_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:10+00:00",
+    "payload": [
+      true,
+      6.4,
+      5.2,
+      3.4,
+      120.0,
+      0.03469,
+      0.00018,
+      "TIS",
+      "HEV",
+      1499,
+      "GASOLINE",
+      "225/55R19",
+      "HEV",
+      9.0,
+      "CVT",
+      true,
+      true,
+      [
+        "R100"
+      ],
+      true,
+      1690
+    ]
+  }
+}

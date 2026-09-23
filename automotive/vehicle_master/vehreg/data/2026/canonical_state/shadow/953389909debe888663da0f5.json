@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "953389909debe888663da0f5",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-008-bc3b92e93b52:271",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.hrv.rv.trim.e_hev_rs_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:07+00:00",
+    "before_hash": "532df9582eb28007aa4a7f6161ad4efce7aba5cc9ef586b1a5bff76514d88336",
+    "after_hash": "9fb65d25480a8ef25ab35e780e85afb68179c8d47641857eb99d49e4be44c029",
+    "before": [
+      true,
+      true,
+      4.3
+    ],
+    "after": [
+      true,
+      true,
+      4.3,
+      4.1
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ba81123e-c3d5-4e75-bd60-0e4f0657a347_efficiency.fuel_consumption_l_100km_878afd635646.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "953389909debe888663da0f5:spec",
+    "revision_id": "953389909debe888663da0f5",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.hrv.rv.trim.e_hev_rs_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:07+00:00",
+    "payload": [
+      true,
+      true,
+      4.3,
+      4.1
+    ]
+  }
+}

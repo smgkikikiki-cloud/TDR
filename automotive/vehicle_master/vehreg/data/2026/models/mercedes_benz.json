@@ -969,18 +969,20 @@
               "name": "4MATIC+ Coupé",
               "powertrain": "HEV",
               "seats": 4,
-              "length_mm": 4853,
-              "width_mm": 1936,
-              "height_mm": 1435,
-              "engine_cc": 2999,
-              "tire_front": "265/35R20",
-              "tire_rear": "295/30R20",
+              "length_mm": 4850,
+              "width_mm": 1861,
+              "height_mm": 1422,
+              "engine_cc": 1999,
+              "tire_front": "245/40R19",
+              "tire_rear": "275/35R19",
               "transmission": "AUTOMATIC",
               "source_refs": {
                 "eco": [
-                  "1b9d7600-3a8d-42e0-bc69-2c2be804c18c"
+                  "1b9d7600-3a8d-42e0-bc69-2c2be804c18c",
+                  "8f9809c9-b2c0-4278-b1e6-91fee7bf15c5"
                 ]
-              }
+              },
+              "id": "4matic_coup_hev"
             },
             {
               "name": "4MATIC Coupé AMG Dynamic",
@@ -1204,18 +1206,20 @@
               "name": "4MATIC+",
               "powertrain": "HEV",
               "seats": 5,
-              "length_mm": 4937,
+              "length_mm": 4926,
               "width_mm": 2015,
-              "height_mm": 1782,
-              "engine_cc": 2999,
+              "height_mm": 1797,
+              "engine_cc": 1993,
               "tire_front": "275/45R21",
               "tire_rear": "315/40R21",
               "transmission": "AUTOMATIC",
               "source_refs": {
                 "eco": [
-                  "3ca040ed-a37b-4010-a28e-8b39fb4bebd3"
+                  "3ca040ed-a37b-4010-a28e-8b39fb4bebd3",
+                  "3d1ef02f-48e3-4462-aed1-b28dee1b6ed1"
                 ]
-              }
+              },
+              "id": "4matic_hev"
             },
             {
               "name": "HYBRID 4MATIC+",
@@ -1230,9 +1234,11 @@
               "transmission": "AUTOMATIC",
               "source_refs": {
                 "eco": [
+                  "55661114-1e49-4157-a6c8-092b8c26b65b",
                   "81bfff52-b287-4b7b-9880-9be951fcc35a"
                 ]
-              }
+              },
+              "id": "hybrid_4matic_phev"
             },
             {
               "name": "4MATIC Exclusive",

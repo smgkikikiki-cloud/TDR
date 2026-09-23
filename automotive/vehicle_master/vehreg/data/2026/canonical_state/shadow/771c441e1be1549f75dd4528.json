@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "771c441e1be1549f75dd4528",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-056-d87ca8b8ef3b:139",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "kia.ev9.mv.trim.gt_line_awd_dual_6_seater_swivel_relaxation_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:22:24+00:00",
+    "before_hash": "da39c491060bc3762011b87e6a54ab46141a15c9ab9cc6ed7fa531b19e399cb7",
+    "after_hash": "2d2651b5960a0bbd60c7b2f7388e41e4226999e5a0917fe322d2af2ab2dad59e",
+    "before": [
+      {
+        "trim_id": "kia.ev9.mv.trim.gt_line_awd_dual_6_seater_swivel_relaxation_bev",
+        "amount_thb": 3899000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:136:2",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: GT-Line AWD (99.8 kWh); canonical grade: GT-Line AWD (Dual Motor, 6-Seater Swivel / Relaxation); mapping: auto_high_confidence. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "kia.ev9.mv.trim.gt_line_awd_dual_6_seater_swivel_relaxation_bev",
+        "amount_thb": 3899000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2024-03-07",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/fd8bdbe1-26f4-4d4a-a1e1-eaa1d8297d69",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "kia.ev9.mv.trim.gt_line_awd_dual_6_seater_swivel_relaxation_bev",
+        "amount_thb": 3899000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:136:2",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: GT-Line AWD (99.8 kWh); canonical grade: GT-Line AWD (Dual Motor, 6-Seater Swivel / Relaxation); mapping: auto_high_confidence. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-056-d87ca8b8ef3b:139.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "771c441e1be1549f75dd4528:price",
+    "revision_id": "771c441e1be1549f75dd4528",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "kia.ev9.mv.trim.gt_line_awd_dual_6_seater_swivel_relaxation_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:22:24+00:00",
+    "payload": [
+      {
+        "trim_id": "kia.ev9.mv.trim.gt_line_awd_dual_6_seater_swivel_relaxation_bev",
+        "amount_thb": 3899000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2024-03-07",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/fd8bdbe1-26f4-4d4a-a1e1-eaa1d8297d69",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "kia.ev9.mv.trim.gt_line_awd_dual_6_seater_swivel_relaxation_bev",
+        "amount_thb": 3899000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:136:2",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: GT-Line AWD (99.8 kWh); canonical grade: GT-Line AWD (Dual Motor, 6-Seater Swivel / Relaxation); mapping: auto_high_confidence. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ]
+  }
+}

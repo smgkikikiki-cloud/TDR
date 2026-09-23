@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "71b0b7fc04eae563f3dab1bb",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-033-6b6996ed6874:97",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_revo_double_cab.an120.trim.2_4_mid_mt_4x4",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:25+00:00",
+    "before_hash": "50e377c3b48568d3e94c0a26c3ff54f54c97d307badf43f801e5097b82a72137",
+    "after_hash": "0ade2dd9808017b7d360611f66e2cae62e64eb591ef5369ec44edc62e981880e",
+    "before": [
+      true,
+      6.4,
+      7.2,
+      8.5,
+      189.0,
+      0.161,
+      0.00038,
+      "TIS",
+      "DIESEL",
+      2393,
+      "B20",
+      "265/60R 18",
+      "ICE",
+      9.0
+    ],
+    "after": [
+      true,
+      6.4,
+      7.2,
+      8.5,
+      189.0,
+      0.161,
+      0.00038,
+      "TIS",
+      "DIESEL",
+      2393,
+      "B20",
+      "265/60R 18",
+      "ICE",
+      9.0,
+      6
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_c1c46e58-019b-45c9-bb49-1de432b16079_powertrain.gear_count_aaf35b49ecac.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "71b0b7fc04eae563f3dab1bb:spec",
+    "revision_id": "71b0b7fc04eae563f3dab1bb",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_revo_double_cab.an120.trim.2_4_mid_mt_4x4",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:25+00:00",
+    "payload": [
+      true,
+      6.4,
+      7.2,
+      8.5,
+      189.0,
+      0.161,
+      0.00038,
+      "TIS",
+      "DIESEL",
+      2393,
+      "B20",
+      "265/60R 18",
+      "ICE",
+      9.0,
+      6
+    ]
+  }
+}

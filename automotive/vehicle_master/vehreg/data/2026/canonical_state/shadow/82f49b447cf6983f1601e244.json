@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "82f49b447cf6983f1601e244",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-027-e2d326b095bb:71",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.ex30.ex30g.trim.ultra_twin_performance_69_kwh_awd_428_hp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:39+00:00",
+    "before_hash": "5ca5a22c0e3fc67f4354b2deddb18905bf3c6f19b223a448461bb0508be9151a",
+    "after_hash": "5933d3d1881250b98779704866c8c387cb487fce5f94e8ff4207f5690ea04d4c",
+    "before": [
+      "OTHER",
+      66.25,
+      392.0,
+      "Viridi",
+      "220",
+      "BOTH",
+      true,
+      true,
+      150.0,
+      520.0,
+      "245/45R19",
+      "BEV",
+      8.0,
+      "PMSM"
+    ],
+    "after": [
+      "OTHER",
+      66.25,
+      392.0,
+      "Viridi",
+      "220",
+      "BOTH",
+      true,
+      true,
+      150.0,
+      520.0,
+      "245/45R19",
+      "BEV",
+      8.0,
+      "PMSM",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_9fb52b18-cbef-4569-8b46-71901110b8ab_safety.abs_3ed6171be1d8.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "82f49b447cf6983f1601e244:spec",
+    "revision_id": "82f49b447cf6983f1601e244",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.ex30.ex30g.trim.ultra_twin_performance_69_kwh_awd_428_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:39+00:00",
+    "payload": [
+      "OTHER",
+      66.25,
+      392.0,
+      "Viridi",
+      "220",
+      "BOTH",
+      true,
+      true,
+      150.0,
+      520.0,
+      "245/45R19",
+      "BEV",
+      8.0,
+      "PMSM",
+      true
+    ]
+  }
+}

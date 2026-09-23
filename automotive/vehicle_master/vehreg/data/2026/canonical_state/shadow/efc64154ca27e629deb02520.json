@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "efc64154ca27e629deb02520",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-008-bc3b92e93b52:371",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.g_class.gen1.trim.g400d_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:07+00:00",
+    "before_hash": "3b59954ef4037c1521c9877856bf036ac8449a015220e274e07cd26ebd4c8602",
+    "after_hash": "9e36284b95380b9f52c6d1319d799014ebf86f067a597f1642cdca42af36a708",
+    "before": [
+      true,
+      true,
+      7.6
+    ],
+    "after": [
+      true,
+      true,
+      7.6,
+      8.4
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_390fae66-9d91-4272-8ea3-fabbb1c210ab_efficiency.fuel_consumption_l_100km_0a52b3ca45d3.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "efc64154ca27e629deb02520:spec",
+    "revision_id": "efc64154ca27e629deb02520",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.g_class.gen1.trim.g400d_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:07+00:00",
+    "payload": [
+      true,
+      true,
+      7.6,
+      8.4
+    ]
+  }
+}

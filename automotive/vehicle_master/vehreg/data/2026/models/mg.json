@@ -444,14 +444,15 @@
                   "owner_directory_2026_09_13:210"
                 ],
                 "eco": [
-                  "352f0fadc438491684812fb72c019084"
+                  "352f0fadc438491684812fb72c019084",
+                  "d67b0f1a94bc4009a2f581e09d8d5ea6"
                 ]
               },
               "id": "1_5_c_plus_ice",
               "seats": 5,
-              "length_mm": 4314,
+              "length_mm": 4323,
               "width_mm": 1809,
-              "height_mm": 1624,
+              "height_mm": 1628,
               "engine_cc": 1498,
               "transmission": "AUTOMATIC"
             },
@@ -463,7 +464,8 @@
                   "owner_directory_2026_09_13:210"
                 ],
                 "eco": [
-                  "0069de9ca11643859ccb243bbe609a83"
+                  "0069de9ca11643859ccb243bbe609a83",
+                  "756e4558-b6f9-472a-b74a-af5f3731389c"
                 ]
               },
               "id": "1_5_d_plus_ice",
@@ -482,7 +484,8 @@
                   "owner_directory_2026_09_13:210"
                 ],
                 "eco": [
-                  "21275247e2354fcda9135069ef85185d"
+                  "21275247e2354fcda9135069ef85185d",
+                  "9517cfcc-4116-4c40-912a-ef351ab82d32"
                 ]
               },
               "id": "1_5_x_plus_ice",
@@ -696,46 +699,52 @@
               "name": "TURBO X",
               "powertrain": "ICE",
               "seats": 5,
-              "length_mm": 4574,
+              "length_mm": 4610,
               "width_mm": 1876,
               "height_mm": 1664,
               "engine_cc": 1490,
               "transmission": "AUTOMATIC",
               "source_refs": {
                 "eco": [
-                  "174c6f84f1e14f51bed9bd40573f2861"
+                  "174c6f84f1e14f51bed9bd40573f2861",
+                  "cd6e61e28ec54ba6a06cdc2463569f09"
                 ]
-              }
+              },
+              "id": "turbo_x_ice"
             },
             {
               "name": "TURBO C",
               "powertrain": "ICE",
               "seats": 5,
-              "length_mm": 4574,
+              "length_mm": 4610,
               "width_mm": 1876,
               "height_mm": 1664,
               "engine_cc": 1490,
               "transmission": "AUTOMATIC",
               "source_refs": {
                 "eco": [
-                  "305b0ddb29ab4baa902fc7527fdebbb5"
+                  "305b0ddb29ab4baa902fc7527fdebbb5",
+                  "83c43e264ed44392a135639f248b11c7"
                 ]
-              }
+              },
+              "id": "turbo_c_ice"
             },
             {
               "name": "TURBO D",
               "powertrain": "ICE",
               "seats": 5,
-              "length_mm": 4574,
+              "length_mm": 4610,
               "width_mm": 1876,
               "height_mm": 1664,
               "engine_cc": 1490,
               "transmission": "AUTOMATIC",
               "source_refs": {
                 "eco": [
+                  "1cf426f1fab548a5b4f06bf4bf1e160b",
                   "61e3341939e9423a91651bde5327ec2f"
                 ]
-              }
+              },
+              "id": "turbo_d_ice"
             },
             {
               "name": "PHEV D",
@@ -1200,9 +1209,11 @@
               "height_mm": 1621,
               "source_refs": {
                 "eco": [
-                  "2e5ff0c2-24d7-447d-94bf-4c1ebd31c8ab"
+                  "2e5ff0c2-24d7-447d-94bf-4c1ebd31c8ab",
+                  "cdddcf9f-3d6b-4800-bcfc-05d273f281f0"
                 ]
-              }
+              },
+              "id": "v_bev"
             },
             {
               "name": "X",
@@ -1213,9 +1224,11 @@
               "height_mm": 1621,
               "source_refs": {
                 "eco": [
-                  "375ae711-d3a4-482b-941b-9c6bef61c68c"
+                  "375ae711-d3a4-482b-941b-9c6bef61c68c",
+                  "ee5085a9-67ca-40f6-9944-550da794d94c"
                 ]
-              }
+              },
+              "id": "x_bev"
             },
             {
               "name": "D+",

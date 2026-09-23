@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7af43d902815c3142defdc1f",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-047-23268458b262:298",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ferrari.f8.gen1.trim.spider_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:25+00:00",
+    "before_hash": "78d2673c8f3cdee85a3cdf09df89161184172e5ea5ec8db3ecb6119ae270bcfc",
+    "after_hash": "4679d34d51fe4abbc39cf44696ebab37e5670d75e012be13af35fd65fde40d2a",
+    "before": [
+      true,
+      true,
+      9.4,
+      12.3
+    ],
+    "after": [
+      true,
+      true,
+      9.4,
+      12.3,
+      17.3
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e29bfd363b074853a13cde8d1436bc18_efficiency.fuel_consumption_urban_l_100km_050e2533e73e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7af43d902815c3142defdc1f:spec",
+    "revision_id": "7af43d902815c3142defdc1f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ferrari.f8.gen1.trim.spider_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:25+00:00",
+    "payload": [
+      true,
+      true,
+      9.4,
+      12.3,
+      17.3
+    ]
+  }
+}

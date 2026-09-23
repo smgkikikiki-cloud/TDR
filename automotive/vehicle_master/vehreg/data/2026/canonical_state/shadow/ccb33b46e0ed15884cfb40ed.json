@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ccb33b46e0ed15884cfb40ed",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-008-bc3b92e93b52:143",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.crv.rs.trim.e_hev_hunt_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:07+00:00",
+    "before_hash": "2b1e4a28be7a343eb55186c4bcab88748ef8016eeac65174018b0bbc979bf283",
+    "after_hash": "af3f691f04c9b3ff2e914c7d1c03f2ba1bf168a1943a420a8a20353c61f5ad4d",
+    "before": [
+      true,
+      true,
+      5.4,
+      5.1,
+      4.5,
+      117.0,
+      0.014,
+      0.00048,
+      "TIS",
+      "HEV",
+      1993,
+      "GASOLINE",
+      "235/60R18"
+    ],
+    "after": [
+      true,
+      true,
+      5.4,
+      5.1,
+      4.5,
+      117.0,
+      0.014,
+      0.00048,
+      "TIS",
+      "HEV",
+      1993,
+      "GASOLINE",
+      "235/60R18",
+      "HEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_21f728b0-4666-46f7-acb7-49f689d5ec32_identity.powertrain_decfcb477696.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ccb33b46e0ed15884cfb40ed:spec",
+    "revision_id": "ccb33b46e0ed15884cfb40ed",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.crv.rs.trim.e_hev_hunt_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:07+00:00",
+    "payload": [
+      true,
+      true,
+      5.4,
+      5.1,
+      4.5,
+      117.0,
+      0.014,
+      0.00048,
+      "TIS",
+      "HEV",
+      1993,
+      "GASOLINE",
+      "235/60R18",
+      "HEV"
+    ]
+  }
+}

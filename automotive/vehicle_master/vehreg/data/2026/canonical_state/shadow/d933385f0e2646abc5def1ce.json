@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d933385f0e2646abc5def1ce",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-010-6f2b18f1a4fd:207",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.ranger_double_cab.p703.trim.raptor_3_0l_v6_twin_turbo_ecoboost_4wd_10at",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:15+00:00",
+    "before_hash": "bdc8af2d6cb1da946fc9942bf1be70109378cd6de9e92a023ed5ae69fea7cd5e",
+    "after_hash": "8f07bed5b8978266f4bef18cab8031e36262f01f04087551084f53ca7da527a1",
+    "before": [
+      true,
+      10.5
+    ],
+    "after": [
+      true,
+      10.5,
+      12.1
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_719801cb-7494-454d-b46e-862deb508f18_efficiency.fuel_consumption_l_100km_f23b76421fba.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d933385f0e2646abc5def1ce:spec",
+    "revision_id": "d933385f0e2646abc5def1ce",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.ranger_double_cab.p703.trim.raptor_3_0l_v6_twin_turbo_ecoboost_4wd_10at",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:15+00:00",
+    "payload": [
+      true,
+      10.5,
+      12.1
+    ]
+  }
+}

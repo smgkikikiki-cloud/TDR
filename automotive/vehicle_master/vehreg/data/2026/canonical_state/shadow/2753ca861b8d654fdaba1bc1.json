@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2753ca861b8d654fdaba1bc1",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-032-04b0adc6e162:283",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lexus_ls.unresearched.trim.executive_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:17+00:00",
+    "before_hash": "d114ffac82598ad70d183ef082182467b9f4baa19c7e469a5692fcd6be95c1b0",
+    "after_hash": "79ab061eb308c00fd4542188ca25e8f2f490640d8212ea0cb803b6414a1e086a",
+    "before": [
+      7.5,
+      9.9,
+      14.1,
+      230.0,
+      0.017,
+      "TIS",
+      "GASOLINE",
+      3445
+    ],
+    "after": [
+      7.5,
+      9.9,
+      14.1,
+      230.0,
+      0.017,
+      "TIS",
+      "GASOLINE",
+      3445,
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_f2a7d133-ab14-4a53-9862-25e97242495e_engine.fuel_type_c9dbd5ded7d6.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2753ca861b8d654fdaba1bc1:spec",
+    "revision_id": "2753ca861b8d654fdaba1bc1",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lexus_ls.unresearched.trim.executive_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:17+00:00",
+    "payload": [
+      7.5,
+      9.9,
+      14.1,
+      230.0,
+      0.017,
+      "TIS",
+      "GASOLINE",
+      3445,
+      "GASOLINE"
+    ]
+  }
+}

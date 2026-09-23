@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:3634b9ca-fbe8-4342-9b06-5f6af4ced43e:ev.energy_consumption_wh_km",
+      "field_key": "ev.energy_consumption_wh_km",
+      "value_state": "KNOWN",
+      "value": 151.0,
+      "unit": "Wh/km",
+      "observed_at": "2026-07-21",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/3634b9ca-fbe8-4342-9b06-5f6af4ced43e",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/3634b9ca-fbe8-4342-9b06-5f6af4ced43e",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "kia.ev5.gen1.trim.earth_long_range_88_1_kwh_fwd_bev"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:1c16da0c-8360-4a9b-9b70-3ba00b1781c2:efficiency.fuel_consumption_l_100km",
+      "field_key": "efficiency.fuel_consumption_l_100km",
+      "value_state": "KNOWN",
+      "value": 7.6,
+      "unit": "L/100km",
+      "observed_at": "2023-01-25",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/1c16da0c-8360-4a9b-9b70-3ba00b1781c2",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/1c16da0c-8360-4a9b-9b70-3ba00b1781c2",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mazda.cx8.kg.trim.2_5_sp_7_seater_ice"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:555f6a1a-cb7a-4018-8eb8-28315d457b4e:efficiency.fuel_consumption_extra_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_extra_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 6.4,
+      "unit": "L/100km",
+      "observed_at": "2026-01-20",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/555f6a1a-cb7a-4018-8eb8-28315d457b4e",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/555f6a1a-cb7a-4018-8eb8-28315d457b4e",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "gwm.haval_h6.h6hev.trim.hev_pro_hev"
+    }
+  ]
+}

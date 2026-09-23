@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6bbda977934ff1f94404b3e3",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-056-d87ca8b8ef3b:290",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg4.mg4e.trim.xpower_64_kwh_awd_dual_435_hp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:22:36+00:00",
+    "before_hash": "fc4fb461202100dabf34c24757456a930e9b8ceaf487d97f11df2758a6696b71",
+    "after_hash": "c645cf26a2668f39242151810b31b102ace3d0814a483cc3a14176756bb23415",
+    "before": [
+      {
+        "trim_id": "mg.mg4.mg4e.trim.xpower_64_kwh_awd_dual_435_hp_bev",
+        "amount_thb": 1119900,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:209:4",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: XPOWER AWD (435 hp); canonical grade: XPOWER (64 kWh AWD Dual Motor, 435 hp); mapping: manual. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "mg.mg4.mg4e.trim.xpower_64_kwh_awd_dual_435_hp_bev",
+        "amount_thb": 1119900,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2024-03-25",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/149a5a0b-1932-4636-ba17-155979f340d2",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "mg.mg4.mg4e.trim.xpower_64_kwh_awd_dual_435_hp_bev",
+        "amount_thb": 1119900,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:209:4",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: XPOWER AWD (435 hp); canonical grade: XPOWER (64 kWh AWD Dual Motor, 435 hp); mapping: manual. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-056-d87ca8b8ef3b:290.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6bbda977934ff1f94404b3e3:price",
+    "revision_id": "6bbda977934ff1f94404b3e3",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg4.mg4e.trim.xpower_64_kwh_awd_dual_435_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:22:36+00:00",
+    "payload": [
+      {
+        "trim_id": "mg.mg4.mg4e.trim.xpower_64_kwh_awd_dual_435_hp_bev",
+        "amount_thb": 1119900,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2024-03-25",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/149a5a0b-1932-4636-ba17-155979f340d2",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "mg.mg4.mg4e.trim.xpower_64_kwh_awd_dual_435_hp_bev",
+        "amount_thb": 1119900,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:209:4",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: XPOWER AWD (435 hp); canonical grade: XPOWER (64 kWh AWD Dual Motor, 435 hp); mapping: manual. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ]
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "172382b44b2a4400a43ad6f9",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-040-43e09f18d7ea:44",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.q8.gen1.trim.60_tfsi_e_quattro_s_line_black_edition_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:21+00:00",
+    "before_hash": "e005e68d2cd1b4ac5133add300076880296d7119bfae4a229538ebb75b4ff1d9",
+    "after_hash": "2530eecfa5e0713cba2b57f0d761f93179555f0e26c10771b54fe6156347b896",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      17.97,
+      374.4,
+      "Volkswagen/VW opt. Audi",
+      "ONBOARD_AC",
+      2.4
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      17.97,
+      374.4,
+      "Volkswagen/VW opt. Audi",
+      "ONBOARD_AC",
+      2.4,
+      55.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_3a93dd56-e690-4555-a3db-97e1a06e2bfc_emissions.co2_g_km_17571e933795.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "172382b44b2a4400a43ad6f9:spec",
+    "revision_id": "172382b44b2a4400a43ad6f9",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.q8.gen1.trim.60_tfsi_e_quattro_s_line_black_edition_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:21+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      17.97,
+      374.4,
+      "Volkswagen/VW opt. Audi",
+      "ONBOARD_AC",
+      2.4,
+      55.0
+    ]
+  }
+}

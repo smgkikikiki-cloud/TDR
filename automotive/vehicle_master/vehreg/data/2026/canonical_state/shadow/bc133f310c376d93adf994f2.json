@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "bc133f310c376d93adf994f2",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-036-ba2d051d30aa:39",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.carrera_4s_cabriolet_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:48+00:00",
+    "before_hash": "8420d3d6f71c9a5d35e226d82277541ac31942f28e0cc814cecb588a719668fe",
+    "after_hash": "3fb1929743b6283f3a89eac49c36a8c9f52a1db9bf061d28df5bf684b1b3f7de",
+    "before": [
+      true,
+      7.2,
+      9.3,
+      13.0,
+      213.0,
+      0.017,
+      "TIS",
+      "GASOLINE"
+    ],
+    "after": [
+      true,
+      7.2,
+      9.3,
+      13.0,
+      213.0,
+      0.017,
+      "TIS",
+      "GASOLINE",
+      2981
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_5965a93b-59e9-4e2e-a97a-c07375d60b59_engine.displacement_cc_328c9d3c59d3.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "bc133f310c376d93adf994f2:spec",
+    "revision_id": "bc133f310c376d93adf994f2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.carrera_4s_cabriolet_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:48+00:00",
+    "payload": [
+      true,
+      7.2,
+      9.3,
+      13.0,
+      213.0,
+      0.017,
+      "TIS",
+      "GASOLINE",
+      2981
+    ]
+  }
+}

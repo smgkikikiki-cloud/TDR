@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b2c4b570512639fcd2947ff2",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-042-509b690f0202:61",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.kicks.p15.trim.vl_wrl",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:35+00:00",
+    "before_hash": "d3f5d1625735b04d5f61c93686ab2263841fa551463833c8684567325cd325bf",
+    "after_hash": "1625850c700d9c0ca24c6cf4126a2de5b244424096b8fb50895a3d58333392d9",
+    "before": [
+      true,
+      4.4,
+      4.2,
+      3.8,
+      100.0,
+      0.007,
+      "TIS",
+      "HEV",
+      1198,
+      "E20"
+    ],
+    "after": [
+      true,
+      4.4,
+      4.2,
+      3.8,
+      100.0,
+      0.007,
+      "TIS",
+      "HEV",
+      1198,
+      "E20",
+      "205/55R17"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_beb1d805-4533-4ce1-ba87-a911e36e7436_fitment.tyre_size_2177a4cea1e6.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b2c4b570512639fcd2947ff2:spec",
+    "revision_id": "b2c4b570512639fcd2947ff2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.kicks.p15.trim.vl_wrl",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:35+00:00",
+    "payload": [
+      true,
+      4.4,
+      4.2,
+      3.8,
+      100.0,
+      0.007,
+      "TIS",
+      "HEV",
+      1198,
+      "E20",
+      "205/55R17"
+    ]
+  }
+}

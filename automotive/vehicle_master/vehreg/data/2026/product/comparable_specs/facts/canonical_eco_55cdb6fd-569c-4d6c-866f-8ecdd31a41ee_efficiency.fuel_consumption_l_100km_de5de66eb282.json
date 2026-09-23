@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:55cdb6fd-569c-4d6c-866f-8ecdd31a41ee:efficiency.fuel_consumption_l_100km",
+      "field_key": "efficiency.fuel_consumption_l_100km",
+      "value_state": "KNOWN",
+      "value": 6.1,
+      "unit": "L/100km",
+      "observed_at": "2022-11-02",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/55cdb6fd-569c-4d6c-866f-8ecdd31a41ee",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/55cdb6fd-569c-4d6c-866f-8ecdd31a41ee",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mitsubishi.xpander.a1.trim.gt_ice"
+    }
+  ]
+}

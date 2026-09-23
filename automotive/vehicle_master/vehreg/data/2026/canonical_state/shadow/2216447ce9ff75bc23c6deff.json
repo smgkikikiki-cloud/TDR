@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2216447ce9ff75bc23c6deff",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-013-01b2d6d40e8e:212",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.civic.fe.trim.type_r_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:28+00:00",
+    "before_hash": "434b74f21c8d7aed3bcbb57cd9b3e5fcf4e19a724023fbd9316cb090190769fb",
+    "after_hash": "af266087a25fa201e062ee5cfc3e9369758789136e417abaf603605901478232",
+    "before": [
+      true,
+      true,
+      6.8,
+      8.0,
+      9.9,
+      190.0,
+      0.00152,
+      "TIS"
+    ],
+    "after": [
+      true,
+      true,
+      6.8,
+      8.0,
+      9.9,
+      190.0,
+      0.00152,
+      "TIS",
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_1f12a309-91b9-47aa-8a49-945d680c10e9_engine.combustion_type_fbb63319b356.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2216447ce9ff75bc23c6deff:spec",
+    "revision_id": "2216447ce9ff75bc23c6deff",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.civic.fe.trim.type_r_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:28+00:00",
+    "payload": [
+      true,
+      true,
+      6.8,
+      8.0,
+      9.9,
+      190.0,
+      0.00152,
+      "TIS",
+      "GASOLINE"
+    ]
+  }
+}

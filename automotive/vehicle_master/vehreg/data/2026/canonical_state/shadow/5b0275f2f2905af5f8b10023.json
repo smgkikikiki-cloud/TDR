@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5b0275f2f2905af5f8b10023",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-014-8db054eb58a3:182",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.vellfire.gen1.trim.z_premier_2wd",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:32+00:00",
+    "before_hash": "06524eaa12c2e50b006967d62954b7701e1d0419d95c5310e98a10162c96acb2",
+    "after_hash": "f924e12ca6292d137d5c8dff45b56f1117786c501f1a3eb7927a0e59f52fe398",
+    "before": [
+      true,
+      true,
+      7.4,
+      8.7,
+      11.1,
+      215.0,
+      0.00488,
+      "TIS",
+      "GASOLINE",
+      2393,
+      "GASOLINE",
+      "225/55R19"
+    ],
+    "after": [
+      true,
+      true,
+      7.4,
+      8.7,
+      11.1,
+      215.0,
+      0.00488,
+      "TIS",
+      "GASOLINE",
+      2393,
+      "GASOLINE",
+      "225/55R19",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_79ca400a-e879-43a1-b939-e2d379b94c13_identity.powertrain_5a114667c819.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5b0275f2f2905af5f8b10023:spec",
+    "revision_id": "5b0275f2f2905af5f8b10023",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.vellfire.gen1.trim.z_premier_2wd",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:32+00:00",
+    "payload": [
+      true,
+      true,
+      7.4,
+      8.7,
+      11.1,
+      215.0,
+      0.00488,
+      "TIS",
+      "GASOLINE",
+      2393,
+      "GASOLINE",
+      "225/55R19",
+      "ICE"
+    ]
+  }
+}

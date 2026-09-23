@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "8ec5a804e526a90a553075e4",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-026-fc1e159da290:83",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mazda2.dj.trim.1_3_prime_sports",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:32+00:00",
+    "before_hash": "2cfedcad48e7154e5fe7be00adaca812a2f85202e9368e356b55e50fb53ff598",
+    "after_hash": "10c4405ef8ccbac0258e982963e06b67334cdaca33b2e765d326ae575e25c16b",
+    "before": [
+      3.8,
+      4.3,
+      5.1,
+      100.0,
+      0.013,
+      0.00135,
+      "TIS",
+      "GASOLINE",
+      1299,
+      "E20",
+      "185/65R15",
+      "ICE",
+      12.0
+    ],
+    "after": [
+      3.8,
+      4.3,
+      5.1,
+      100.0,
+      0.013,
+      0.00135,
+      "TIS",
+      "GASOLINE",
+      1299,
+      "E20",
+      "185/65R15",
+      "ICE",
+      12.0,
+      6
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_84703dee-b14c-4b1d-a94b-49f7f8ba38b4_powertrain.gear_count_9e59c041f236.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "8ec5a804e526a90a553075e4:spec",
+    "revision_id": "8ec5a804e526a90a553075e4",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mazda2.dj.trim.1_3_prime_sports",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:32+00:00",
+    "payload": [
+      3.8,
+      4.3,
+      5.1,
+      100.0,
+      0.013,
+      0.00135,
+      "TIS",
+      "GASOLINE",
+      1299,
+      "E20",
+      "185/65R15",
+      "ICE",
+      12.0,
+      6
+    ]
+  }
+}

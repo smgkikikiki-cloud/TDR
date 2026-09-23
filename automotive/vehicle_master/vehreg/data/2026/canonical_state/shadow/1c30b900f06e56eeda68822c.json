@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "1c30b900f06e56eeda68822c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-035-5b8b3aecfae7:44",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_zs.zsg.trim.100th_anniversary_special_edition_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:40+00:00",
+    "before_hash": "08311b85e0cfb3dc55d9fdf692edf90c69487bff164fa68728d7b559f835c11a",
+    "after_hash": "5505e1441bb49473782c1252c92e14e05289da0ae66f470a772b5ed07e6818ed",
+    "before": [
+      true,
+      5.2,
+      6.4,
+      8.3,
+      148.0,
+      0.009,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "215/55R17",
+      "ICE",
+      20.0
+    ],
+    "after": [
+      true,
+      5.2,
+      6.4,
+      8.3,
+      148.0,
+      0.009,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "215/55R17",
+      "ICE",
+      20.0,
+      "CVT"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_0f10915e-7f3f-4b6e-b611-645a575036e2_powertrain.transmission_a5964a0547c8.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "1c30b900f06e56eeda68822c:spec",
+    "revision_id": "1c30b900f06e56eeda68822c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_zs.zsg.trim.100th_anniversary_special_edition_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:40+00:00",
+    "payload": [
+      true,
+      5.2,
+      6.4,
+      8.3,
+      148.0,
+      0.009,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "E85",
+      "215/55R17",
+      "ICE",
+      20.0,
+      "CVT"
+    ]
+  }
+}

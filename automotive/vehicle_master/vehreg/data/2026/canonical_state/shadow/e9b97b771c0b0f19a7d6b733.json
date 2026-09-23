@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e9b97b771c0b0f19a7d6b733",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-039-bb0c6084f37a:89",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q3.f3.trim.sportback_40_tfsi_quattro_s_line_black_edition_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:13+00:00",
+    "before_hash": "6beae5566dff4e0a8c6c3114d639776dd297a7d9011e22f922551a99c87c5774",
+    "after_hash": "26e375cd37343a31a28486843e43e4e8f66748d8fb0ffb2aa798dee3677930a1",
+    "before": [
+      6.9,
+      7.91,
+      9.7,
+      180.0,
+      0.03,
+      0.00046,
+      "EURO6",
+      "GASOLINE",
+      1984,
+      "GASOLINE"
+    ],
+    "after": [
+      6.9,
+      7.91,
+      9.7,
+      180.0,
+      0.03,
+      0.00046,
+      "EURO6",
+      "GASOLINE",
+      1984,
+      "GASOLINE",
+      "255/40R20"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_642de555-48c6-4074-be2a-ed20b0aa0915_fitment.tyre_size_7c12d7e480d1.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e9b97b771c0b0f19a7d6b733:spec",
+    "revision_id": "e9b97b771c0b0f19a7d6b733",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.audi_q3.f3.trim.sportback_40_tfsi_quattro_s_line_black_edition_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:13+00:00",
+    "payload": [
+      6.9,
+      7.91,
+      9.7,
+      180.0,
+      0.03,
+      0.00046,
+      "EURO6",
+      "GASOLINE",
+      1984,
+      "GASOLINE",
+      "255/40R20"
+    ]
+  }
+}

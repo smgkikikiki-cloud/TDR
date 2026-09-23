@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "4f9411f15d9481f05c0311a1",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-053-c0bdc44365d7:97",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover_sport.unresearched.trim.2_0_litre_plug_in_hybrid_petrol_dynamic_hse_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:38+00:00",
+    "before_hash": "b0be711eec8be329d222f53bea0f8200112949e77617b7206f1132059e214e4e",
+    "after_hash": "a973cf27a907d26c4aaa7985cac897c9ad4abeea5395adce2cb4b819c96bc23d",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      13.99,
+      370.0,
+      "Sumsung SDI",
+      "EXTERNAL_DC",
+      true,
+      true,
+      2.7,
+      62.0,
+      0.005,
+      "TIS",
+      "PHEV",
+      1997
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      13.99,
+      370.0,
+      "Sumsung SDI",
+      "EXTERNAL_DC",
+      true,
+      true,
+      2.7,
+      62.0,
+      0.005,
+      "TIS",
+      "PHEV",
+      1997,
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_fef8a45064c24109afb833314d7be962_engine.fuel_type_f798390091aa.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "4f9411f15d9481f05c0311a1:spec",
+    "revision_id": "4f9411f15d9481f05c0311a1",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover_sport.unresearched.trim.2_0_litre_plug_in_hybrid_petrol_dynamic_hse_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:38+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      13.99,
+      370.0,
+      "Sumsung SDI",
+      "EXTERNAL_DC",
+      true,
+      true,
+      2.7,
+      62.0,
+      0.005,
+      "TIS",
+      "PHEV",
+      1997,
+      "GASOLINE"
+    ]
+  }
+}

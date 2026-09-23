@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "703fce2e6e806812a96eec1c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-032-04b0adc6e162:25",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.countryman.u25.trim.jcw_countryman_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:16+00:00",
+    "before_hash": "9a0b92729e06d1e4501e4fce3bcaf7964fbb58761688a32839f7369ed82a633d",
+    "after_hash": "9094b3649f357d7d7a8d4b33426aca08d0e34f0342eb9c471279259bfb29da2a",
+    "before": [
+      true,
+      true,
+      true,
+      6.5,
+      7.6,
+      9.6,
+      175.0,
+      0.011,
+      "EURO6",
+      "GASOLINE",
+      1998,
+      "GASOLINE"
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      6.5,
+      7.6,
+      9.6,
+      175.0,
+      0.011,
+      "EURO6",
+      "GASOLINE",
+      1998,
+      "GASOLINE",
+      "245/40R20"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_1728ef02-bdec-4e2b-8169-667bbdd4ad28_fitment.tyre_size_17c881fde30d.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "703fce2e6e806812a96eec1c:spec",
+    "revision_id": "703fce2e6e806812a96eec1c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.countryman.u25.trim.jcw_countryman_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:16+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      6.5,
+      7.6,
+      9.6,
+      175.0,
+      0.011,
+      "EURO6",
+      "GASOLINE",
+      1998,
+      "GASOLINE",
+      "245/40R20"
+    ]
+  }
+}

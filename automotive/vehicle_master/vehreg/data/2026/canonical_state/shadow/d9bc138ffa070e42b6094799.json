@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d9bc138ffa070e42b6094799",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-001-2163ac0376be:335",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "tesla.model3.m3h.trim.rear_wheel_drive_rwd_60_kwh_lfp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:45+00:00",
+    "before_hash": "3dc0087ba48b8bd1fb7d8e626e2f69856f46e4df72dd1e5b7ddb5ba8ca220d8d",
+    "after_hash": "96e95ee1e88460530d93b61bcfba43b8a8628a91d23d227e9ffadb409dccb419",
+    "before": [
+      "LFP",
+      62.1,
+      345.0,
+      "Tesla",
+      "240",
+      "ONBOARD_AC",
+      122.0,
+      572.0,
+      "235/45R18",
+      "BEV",
+      10.0,
+      "PMSM"
+    ],
+    "after": [
+      "LFP",
+      62.1,
+      345.0,
+      "Tesla",
+      "240",
+      "ONBOARD_AC",
+      122.0,
+      572.0,
+      "235/45R18",
+      "BEV",
+      10.0,
+      "PMSM",
+      7
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_9c121f88-94c7-44ce-84c3-4294efa6591f_safety.airbag_count_94dc806378f7.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d9bc138ffa070e42b6094799:spec",
+    "revision_id": "d9bc138ffa070e42b6094799",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "tesla.model3.m3h.trim.rear_wheel_drive_rwd_60_kwh_lfp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:45+00:00",
+    "payload": [
+      "LFP",
+      62.1,
+      345.0,
+      "Tesla",
+      "240",
+      "ONBOARD_AC",
+      122.0,
+      572.0,
+      "235/45R18",
+      "BEV",
+      10.0,
+      "PMSM",
+      7
+    ]
+  }
+}

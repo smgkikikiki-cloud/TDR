@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c1cddeb86215d07d3f908f47",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-013-01b2d6d40e8e:362",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_champ.champ.trim.swb_2_4_diesel_at_attractive_package_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:28+00:00",
+    "before_hash": "4f6ec1f5d704e95b451b29558c1d31e823032e418aa566b26964a87272ae3af4",
+    "after_hash": "c8432ac51f3428d7f568c40eebdcbb62f1f1652e0e018ec8822f133131d66665",
+    "before": [
+      6.5,
+      7.0,
+      7.7,
+      183.0,
+      0.147,
+      0.00094,
+      "TIS",
+      "DIESEL",
+      2393,
+      "B20",
+      "195R14C"
+    ],
+    "after": [
+      6.5,
+      7.0,
+      7.7,
+      183.0,
+      0.147,
+      0.00094,
+      "TIS",
+      "DIESEL",
+      2393,
+      "B20",
+      "195R14C",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_5e497481-f963-442c-acf2-61ebe010a561_identity.powertrain_cfdb9a6383d7.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c1cddeb86215d07d3f908f47:spec",
+    "revision_id": "c1cddeb86215d07d3f908f47",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.hilux_champ.champ.trim.swb_2_4_diesel_at_attractive_package_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:28+00:00",
+    "payload": [
+      6.5,
+      7.0,
+      7.7,
+      183.0,
+      0.147,
+      0.00094,
+      "TIS",
+      "DIESEL",
+      2393,
+      "B20",
+      "195R14C",
+      "ICE"
+    ]
+  }
+}

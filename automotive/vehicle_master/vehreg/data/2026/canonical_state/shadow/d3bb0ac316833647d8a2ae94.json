@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d3bb0ac316833647d8a2ae94",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-027-e2d326b095bb:358",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.sealion6.sl6.trim.byd_dynamic_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:39+00:00",
+    "before_hash": "8e73704fdde40105558918da611736cc3189fb0dfcf1be10643aa378ba21ff0f",
+    "after_hash": "3aad1248e3c41913dc74bda68fc595dd614a4a1577cd2cc9071e00cec4c0e8ae",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      18.32,
+      339.2,
+      "FinDreams",
+      "ONBOARD_AC",
+      true,
+      0.9,
+      21.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      18.32,
+      339.2,
+      "FinDreams",
+      "ONBOARD_AC",
+      true,
+      0.9,
+      21.0,
+      0.001
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_ed09424c-c3fa-4a7f-a0ce-0cc2aa0a2284_emissions.nox_g_km_cbabce7baf8d.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d3bb0ac316833647d8a2ae94:spec",
+    "revision_id": "d3bb0ac316833647d8a2ae94",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.sealion6.sl6.trim.byd_dynamic_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:39+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      18.32,
+      339.2,
+      "FinDreams",
+      "ONBOARD_AC",
+      true,
+      0.9,
+      21.0,
+      0.001
+    ]
+  }
+}

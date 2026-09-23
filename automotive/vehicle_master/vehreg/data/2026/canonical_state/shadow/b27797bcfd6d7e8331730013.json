@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b27797bcfd6d7e8331730013",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-035-5b8b3aecfae7:267",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.gle.gen1.trim.4matic_amg_line_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:40+00:00",
+    "before_hash": "7739327c2da6b442fe87ac8d6fadc8da2bbdbbbf43bf6d61f50fd5e26cda721d",
+    "after_hash": "26c606a12f734a56c687f162762dd874058ab00514214c9ffb8d7f43ea8cf27b",
+    "before": [
+      true,
+      5.6,
+      6.5,
+      8.0,
+      170.0,
+      0.009,
+      0.00012,
+      "EURO6",
+      "HEV",
+      1993,
+      "DIESEL",
+      "275/50R20",
+      "275/50R20",
+      "HEV"
+    ],
+    "after": [
+      true,
+      5.6,
+      6.5,
+      8.0,
+      170.0,
+      0.009,
+      0.00012,
+      "EURO6",
+      "HEV",
+      1993,
+      "DIESEL",
+      "275/50R20",
+      "275/50R20",
+      "HEV",
+      30.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_5f12ef6e-c967-471f-b8ad-6e392dc8ae94_manufacturing.excise_tax_rate_0b90389f5e7b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b27797bcfd6d7e8331730013:spec",
+    "revision_id": "b27797bcfd6d7e8331730013",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.gle.gen1.trim.4matic_amg_line_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:40+00:00",
+    "payload": [
+      true,
+      5.6,
+      6.5,
+      8.0,
+      170.0,
+      0.009,
+      0.00012,
+      "EURO6",
+      "HEV",
+      1993,
+      "DIESEL",
+      "275/50R20",
+      "275/50R20",
+      "HEV",
+      30.0
+    ]
+  }
+}

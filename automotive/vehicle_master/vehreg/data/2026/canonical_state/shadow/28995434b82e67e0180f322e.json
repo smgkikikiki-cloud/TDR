@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "28995434b82e67e0180f322e",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-043-5c8c2001b8cb:271",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.step_wgn.gen1.trim.air_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:44+00:00",
+    "before_hash": "19d3232ed62a4e9a50b5b8050a1fd83b52aa3759542ec07093e35d55a230f685",
+    "after_hash": "80087a1c47d61bc8f2a889ba5be3e046f67e4bc0812af96759170a8fd82c4f53",
+    "before": [
+      true,
+      true,
+      6.8,
+      8.3,
+      10.8,
+      191.0,
+      0.005,
+      "TIS",
+      "GASOLINE",
+      1496,
+      "GASOLINE",
+      "205/55R17",
+      "ICE"
+    ],
+    "after": [
+      true,
+      true,
+      6.8,
+      8.3,
+      10.8,
+      191.0,
+      0.005,
+      "TIS",
+      "GASOLINE",
+      1496,
+      "GASOLINE",
+      "205/55R17",
+      "ICE",
+      30.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_a8cb241e-e1cc-499c-a3af-22e7f28a7c3f_manufacturing.excise_tax_rate_0bede7072a2d.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "28995434b82e67e0180f322e:spec",
+    "revision_id": "28995434b82e67e0180f322e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.step_wgn.gen1.trim.air_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:44+00:00",
+    "payload": [
+      true,
+      true,
+      6.8,
+      8.3,
+      10.8,
+      191.0,
+      0.005,
+      "TIS",
+      "GASOLINE",
+      1496,
+      "GASOLINE",
+      "205/55R17",
+      "ICE",
+      30.0
+    ]
+  }
+}

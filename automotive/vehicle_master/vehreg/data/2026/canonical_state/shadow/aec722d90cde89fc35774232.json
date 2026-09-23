@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "aec722d90cde89fc35774232",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-030-80293fca2870:125",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_pro",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:02+00:00",
+    "before_hash": "d79c6d1562c320fa3a81c800b987a8ad378851e8e42904fc201ecdba3fc5de9a",
+    "after_hash": "f836654930f387bb2e94aedf413167b4e763da932e70455ebe5233c2089cf3bf",
+    "before": [
+      5.9,
+      6.7,
+      7.9,
+      175.0,
+      0.245,
+      0.00035,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "265/70R16",
+      "ICE",
+      9.0,
+      6
+    ],
+    "after": [
+      5.9,
+      6.7,
+      7.9,
+      175.0,
+      0.245,
+      0.00035,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "265/70R16",
+      "ICE",
+      9.0,
+      6,
+      "MANUAL"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_38f3ae47-5868-4c1f-8bbf-558d0ceec3db_powertrain.transmission_86ff413ec4fd.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "aec722d90cde89fc35774232:spec",
+    "revision_id": "aec722d90cde89fc35774232",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_pro",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:02+00:00",
+    "payload": [
+      5.9,
+      6.7,
+      7.9,
+      175.0,
+      0.245,
+      0.00035,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "265/70R16",
+      "ICE",
+      9.0,
+      6,
+      "MANUAL"
+    ]
+  }
+}

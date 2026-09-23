@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ce518fc8082fdbbbdc5860f4",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-044-4ee92a315b21:169",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.xc40.xc40g.trim.pure_electric_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:52+00:00",
+    "before_hash": "c22bc48177d0773ca0daaababc89e56b1b10187585bca89317209f24a0a81390",
+    "after_hash": "280d95871bd48f638664ec10d9458341606b8f669ed6d308886c59252eabeab4",
+    "before": [
+      "NMC",
+      78.18,
+      403.0,
+      "VOLVO",
+      "BOTH",
+      true,
+      true,
+      221.0,
+      500.0
+    ],
+    "after": [
+      "NMC",
+      78.18,
+      403.0,
+      "VOLVO",
+      "BOTH",
+      true,
+      true,
+      221.0,
+      500.0,
+      "235/50R19"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_77c4c744-aab5-47e7-a042-b15370d670e3_fitment.tyre_front_23bc361374dc.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ce518fc8082fdbbbdc5860f4:spec",
+    "revision_id": "ce518fc8082fdbbbdc5860f4",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.xc40.xc40g.trim.pure_electric_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:52+00:00",
+    "payload": [
+      "NMC",
+      78.18,
+      403.0,
+      "VOLVO",
+      "BOTH",
+      true,
+      true,
+      221.0,
+      500.0,
+      "235/50R19"
+    ]
+  }
+}

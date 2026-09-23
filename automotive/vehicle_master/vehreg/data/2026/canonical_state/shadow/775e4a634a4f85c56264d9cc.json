@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "775e4a634a4f85c56264d9cc",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-037-986e7ff7e687:396",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.voxy.gen1.trim.sz_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:57+00:00",
+    "before_hash": "d5b90830ac799284ede8b2b4696ce7a8f03e36e47d29d48488517a371b74735a",
+    "after_hash": "b22367c68e6a885ec6e95cc23ec7938804ce69d85f0f078a8ecdde5161125246",
+    "before": [
+      true,
+      true,
+      5.0,
+      6.8,
+      10.0,
+      156.0,
+      0.004,
+      "TIS",
+      "GASOLINE",
+      1986,
+      "GASOLINE"
+    ],
+    "after": [
+      true,
+      true,
+      5.0,
+      6.8,
+      10.0,
+      156.0,
+      0.004,
+      "TIS",
+      "GASOLINE",
+      1986,
+      "GASOLINE",
+      "205/55R17"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_a0f8745e-c011-40a4-9575-dc6d93e2018d_fitment.tyre_size_4d4f307d3d2d.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "775e4a634a4f85c56264d9cc:spec",
+    "revision_id": "775e4a634a4f85c56264d9cc",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.voxy.gen1.trim.sz_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:57+00:00",
+    "payload": [
+      true,
+      true,
+      5.0,
+      6.8,
+      10.0,
+      156.0,
+      0.004,
+      "TIS",
+      "GASOLINE",
+      1986,
+      "GASOLINE",
+      "205/55R17"
+    ]
+  }
+}

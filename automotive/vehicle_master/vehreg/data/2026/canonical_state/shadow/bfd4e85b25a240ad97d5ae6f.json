@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "bfd4e85b25a240ad97d5ae6f",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-040-43e09f18d7ea:43",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.q8.gen1.trim.60_tfsi_e_quattro_s_line_black_edition_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:21+00:00",
+    "before_hash": "bd758152745e149a998896403d8713e6efca730299c4c56fad3920c274e4fbb3",
+    "after_hash": "e005e68d2cd1b4ac5133add300076880296d7119bfae4a229538ebb75b4ff1d9",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      17.97,
+      374.4,
+      "Volkswagen/VW opt. Audi",
+      "ONBOARD_AC"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      17.97,
+      374.4,
+      "Volkswagen/VW opt. Audi",
+      "ONBOARD_AC",
+      2.4
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_3a93dd56-e690-4555-a3db-97e1a06e2bfc_efficiency.fuel_consumption_l_100km_c87df0ef87f6.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "bfd4e85b25a240ad97d5ae6f:spec",
+    "revision_id": "bfd4e85b25a240ad97d5ae6f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.q8.gen1.trim.60_tfsi_e_quattro_s_line_black_edition_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:21+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      17.97,
+      374.4,
+      "Volkswagen/VW opt. Audi",
+      "ONBOARD_AC",
+      2.4
+    ]
+  }
+}

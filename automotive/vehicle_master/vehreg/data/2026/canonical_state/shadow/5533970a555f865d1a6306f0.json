@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5533970a555f865d1a6306f0",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-017-02b372e72add:33",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.poer_sahar.gen1.trim.gwm_2_4t_ultra_double_cab_4wd_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:47+00:00",
+    "before_hash": "fe3a20d5b0399e2438d513b4424398ff38252cd58c8539d9b338159c767c0f85",
+    "after_hash": "52027ebf4209018ed836974dea05116af021fc7901929ab47acd1270369cfe3f",
+    "before": [
+      true,
+      6.9,
+      7.4,
+      8.4,
+      196.0,
+      0.252,
+      0.00026,
+      "TIS",
+      "DIESEL",
+      2370,
+      "B20",
+      "265/60R18"
+    ],
+    "after": [
+      true,
+      6.9,
+      7.4,
+      8.4,
+      196.0,
+      0.252,
+      0.00026,
+      "TIS",
+      "DIESEL",
+      2370,
+      "B20",
+      "265/60R18",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_657487bc-97c3-4fb9-8bbe-412510363eec_identity.powertrain_235899bc2783.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5533970a555f865d1a6306f0:spec",
+    "revision_id": "5533970a555f865d1a6306f0",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.poer_sahar.gen1.trim.gwm_2_4t_ultra_double_cab_4wd_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:47+00:00",
+    "payload": [
+      true,
+      6.9,
+      7.4,
+      8.4,
+      196.0,
+      0.252,
+      0.00026,
+      "TIS",
+      "DIESEL",
+      2370,
+      "B20",
+      "265/60R18",
+      "ICE"
+    ]
+  }
+}

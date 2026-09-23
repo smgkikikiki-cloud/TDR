@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e821ff497591426d5532f752",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-024-8292d953d777:274",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.ranger_double_cab.p703.trim.xl_2_0l_turbo_hr_6mt",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:20+00:00",
+    "before_hash": "5b6806ccaa3ecef0952aa17f12481f8d0174743e15a03e5610f0183fe103ce41",
+    "after_hash": "99cf5c8d36057dc33d4667212c31322148fb7febcb57601441e7c6dae4c1b8fa",
+    "before": [
+      6.0,
+      6.6,
+      7.5,
+      173.0,
+      0.131,
+      0.00022,
+      "TIS",
+      "DIESEL",
+      1996,
+      "B20"
+    ],
+    "after": [
+      6.0,
+      6.6,
+      7.5,
+      173.0,
+      0.131,
+      0.00022,
+      "TIS",
+      "DIESEL",
+      1996,
+      "B20",
+      "255/70R16"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b04c4434-ec1c-4ff7-8075-877a58ea5bc2_fitment.tyre_size_4874105c2d78.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e821ff497591426d5532f752:spec",
+    "revision_id": "e821ff497591426d5532f752",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "ford.ranger_double_cab.p703.trim.xl_2_0l_turbo_hr_6mt",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:20+00:00",
+    "payload": [
+      6.0,
+      6.6,
+      7.5,
+      173.0,
+      0.131,
+      0.00022,
+      "TIS",
+      "DIESEL",
+      1996,
+      "B20",
+      "255/70R16"
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "fe0d0d132bfd57d57366f6eb",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-017-02b372e72add:203",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.xforce.xf.trim.hev_ultimate_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:47+00:00",
+    "before_hash": "27a300072a23689f695616366170451d497e3c0fab29a9c7fbda04a2060377fb",
+    "after_hash": "d85d53274070d49f433f1b2a1cec216920627e29e1431268002a2ebb1d794679",
+    "before": [
+      true,
+      true,
+      4.4
+    ],
+    "after": [
+      true,
+      true,
+      4.4,
+      4.1
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e1c1a8f0-9b89-442f-8a34-6a80a4e40c4f_efficiency.fuel_consumption_l_100km_8598503b4779.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "fe0d0d132bfd57d57366f6eb:spec",
+    "revision_id": "fe0d0d132bfd57d57366f6eb",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.xforce.xf.trim.hev_ultimate_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:47+00:00",
+    "payload": [
+      true,
+      true,
+      4.4,
+      4.1
+    ]
+  }
+}

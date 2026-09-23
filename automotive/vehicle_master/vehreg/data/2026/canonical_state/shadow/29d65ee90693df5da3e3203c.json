@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "29d65ee90693df5da3e3203c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-036-ba2d051d30aa:60",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "kia.ev9.mv.trim.gt_line_awd_dual_6_seater_swivel_relaxation_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:48+00:00",
+    "before_hash": "f76604595e75173c9a81248b1ceeaa1c89201ffdf2c82276fb87c5d7b49fc310",
+    "after_hash": "c759fe728a982c2f07b5a9d851b963b54348232c84af9fff9863a0ab1852e890",
+    "before": [
+      "NMC",
+      99.36
+    ],
+    "after": [
+      "NMC",
+      99.36,
+      552.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_fd8bdbe1-26f4-4d4a-a1e1-eaa1d8297d69_battery.nominal_voltage_v_3e976b9abe4e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "29d65ee90693df5da3e3203c:spec",
+    "revision_id": "29d65ee90693df5da3e3203c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "kia.ev9.mv.trim.gt_line_awd_dual_6_seater_swivel_relaxation_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:48+00:00",
+    "payload": [
+      "NMC",
+      99.36,
+      552.0
+    ]
+  }
+}

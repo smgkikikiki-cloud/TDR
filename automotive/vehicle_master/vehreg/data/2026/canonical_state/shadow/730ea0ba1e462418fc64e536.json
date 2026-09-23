@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "730ea0ba1e462418fc64e536",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-006-b527dba9e80a:374",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "changan.nevo_q05.nevo_q05.trim.max_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:00+00:00",
+    "before_hash": "24cee21ff6a7c7e2450488cba4e708dcc1304ef7ef555bd69e4d9e6b06563684",
+    "after_hash": "dda0cf8fcfb80ea593f42e1d71ba75574dd4f18676e3eab94ce8fecf8e81ad85",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      51.8,
+      350.0,
+      "CHONGQING CHANGAN AUTOMOBILE CO., LTD.",
+      "230 (AC)/ 350 (DC)"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      51.8,
+      350.0,
+      "CHONGQING CHANGAN AUTOMOBILE CO., LTD.",
+      "230 (AC)/ 350 (DC)",
+      "BOTH"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_bc30b5ee-504c-427e-9b8c-e69f0fc03a67_charging.port_type_c9eaa191af2f.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "730ea0ba1e462418fc64e536:spec",
+    "revision_id": "730ea0ba1e462418fc64e536",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "changan.nevo_q05.nevo_q05.trim.max_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:00+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      51.8,
+      350.0,
+      "CHONGQING CHANGAN AUTOMOBILE CO., LTD.",
+      "230 (AC)/ 350 (DC)",
+      "BOTH"
+    ]
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f388d739e58641fa38960de0",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-052-52eba3c13659:217",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a1.gen1.trim.sportback_35_tfsi_s_line_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:24+00:00",
+    "before_hash": "92fa7156d87095f16d645e3e737b7360fd7b8d9c9477e26c99e134fcf6f08a41",
+    "after_hash": "65db53adf00cd2c4bcc5439299e278fdd5c5c2d72660f650c024a34c3a4642f6",
+    "before": [
+      5.1,
+      5.9,
+      7.3,
+      134.0,
+      0.029,
+      0.00011,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "GASOLINE",
+      "215/40R18",
+      "ICE",
+      25.0,
+      7,
+      "AUTOMATIC",
+      true,
+      5,
+      true,
+      true,
+      [
+        "R13H"
+      ],
+      1091,
+      1409
+    ],
+    "after": [
+      5.1,
+      5.9,
+      7.3,
+      134.0,
+      0.029,
+      0.00011,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "GASOLINE",
+      "215/40R18",
+      "ICE",
+      25.0,
+      7,
+      "AUTOMATIC",
+      true,
+      5,
+      true,
+      true,
+      [
+        "R13H"
+      ],
+      1091,
+      1409,
+      4029
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_70df451ca3c04bd58acf483aabc89912_vehicle.length_mm_9c5dbd1db8ca.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f388d739e58641fa38960de0:spec",
+    "revision_id": "f388d739e58641fa38960de0",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a1.gen1.trim.sportback_35_tfsi_s_line_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:24+00:00",
+    "payload": [
+      5.1,
+      5.9,
+      7.3,
+      134.0,
+      0.029,
+      0.00011,
+      "TIS",
+      "GASOLINE",
+      1498,
+      "GASOLINE",
+      "215/40R18",
+      "ICE",
+      25.0,
+      7,
+      "AUTOMATIC",
+      true,
+      5,
+      true,
+      true,
+      [
+        "R13H"
+      ],
+      1091,
+      1409,
+      4029
+    ]
+  }
+}

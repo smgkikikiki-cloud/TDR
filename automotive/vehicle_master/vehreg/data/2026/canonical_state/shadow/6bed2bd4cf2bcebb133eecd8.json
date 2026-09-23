@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6bed2bd4cf2bcebb133eecd8",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-050-6df028e5a85f:30",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_e_class.w214.trim.cabriolet_amg_dynamic_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:57+00:00",
+    "before_hash": "070faea1c7cf88cf21fe7d710140bcc6aa1021efccaff502b27f62067c06c8bc",
+    "after_hash": "58421870327ccbc54d8f779db5897d2c5c417c7bb6d44ee2ea9778b1e0a2987e",
+    "before": [
+      6.6,
+      8.2,
+      10.8,
+      185.0,
+      0.025,
+      "TIS",
+      "GASOLINE",
+      1991,
+      "GASOLINE",
+      "245/35R20"
+    ],
+    "after": [
+      6.6,
+      8.2,
+      10.8,
+      185.0,
+      0.025,
+      "TIS",
+      "GASOLINE",
+      1991,
+      "GASOLINE",
+      "245/35R20",
+      "275/30R20"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_a650290a48ce4647bc1fd2e972bc4e65_fitment.tyre_rear_dafab2c86923.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6bed2bd4cf2bcebb133eecd8:spec",
+    "revision_id": "6bed2bd4cf2bcebb133eecd8",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.mb_e_class.w214.trim.cabriolet_amg_dynamic_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:57+00:00",
+    "payload": [
+      6.6,
+      8.2,
+      10.8,
+      185.0,
+      0.025,
+      "TIS",
+      "GASOLINE",
+      1991,
+      "GASOLINE",
+      "245/35R20",
+      "275/30R20"
+    ]
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9a845e815a53597481635c35",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-056-d87ca8b8ef3b:181",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lbx.gen1.trim.luxury_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:22:26+00:00",
+    "before_hash": "c93550ed0c3103769f0bf4efe438d72d3f5952b83f55b4f4581b554a3344b3d1",
+    "after_hash": "b4091aa3200879262f82e4a79be47430f9a917052c23de3ddf4ac509a16d96cb",
+    "before": [
+      {
+        "trim_id": "lexus.lbx.gen1.trim.luxury_hev",
+        "amount_thb": 2229000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:147:1",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: LBX Luxury; canonical grade: Luxury; mapping: auto_high_confidence. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "lexus.lbx.gen1.trim.luxury_hev",
+        "amount_thb": 2229000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2024-01-10",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/7872b6bc-2f8b-44e2-9bc8-6c567ef9276a",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "lexus.lbx.gen1.trim.luxury_hev",
+        "amount_thb": 2229000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:147:1",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: LBX Luxury; canonical grade: Luxury; mapping: auto_high_confidence. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_import-eco-b9fe15e3-TDR_EcoSticker_-056-d87ca8b8ef3b:181.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9a845e815a53597481635c35:price",
+    "revision_id": "9a845e815a53597481635c35",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "lexus.lbx.gen1.trim.luxury_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:22:26+00:00",
+    "payload": [
+      {
+        "trim_id": "lexus.lbx.gen1.trim.luxury_hev",
+        "amount_thb": 2229000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2024-01-10",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/7872b6bc-2f8b-44e2-9bc8-6c567ef9276a",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "lexus.lbx.gen1.trim.luxury_hev",
+        "amount_thb": 2229000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:147:1",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: LBX Luxury; canonical grade: Luxury; mapping: auto_high_confidence. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ]
+  }
+}

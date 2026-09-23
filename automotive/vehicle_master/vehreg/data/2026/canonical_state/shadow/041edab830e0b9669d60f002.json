@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "041edab830e0b9669d60f002",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-016-3b184c133993:337",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.panamera.gen1.trim.4s_e_hybrid_phev_544_hp_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:43+00:00",
+    "before_hash": "040e899ad95d51fe111749dfcb0f339ea5aa7f5a7b2c3dfc4614e4089e27d3c5",
+    "after_hash": "14e4f719b91288f0edec5d47aeb8e5753ab3bef30741db4ab39768e0029b8c25",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      25.9,
+      370.0,
+      "Samsung SDI",
+      "ONBOARD_AC",
+      true
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      25.9,
+      370.0,
+      "Samsung SDI",
+      "ONBOARD_AC",
+      true,
+      1.8
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_4780aff8-b326-402a-ae0f-e5ade3b4c828_efficiency.fuel_consumption_l_100km_38c65c04d781.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "041edab830e0b9669d60f002:spec",
+    "revision_id": "041edab830e0b9669d60f002",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.panamera.gen1.trim.4s_e_hybrid_phev_544_hp_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:43+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      25.9,
+      370.0,
+      "Samsung SDI",
+      "ONBOARD_AC",
+      true,
+      1.8
+    ]
+  }
+}

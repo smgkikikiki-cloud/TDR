@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d4cf8bc404a98c92eef54ad3",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-026-fc1e159da290:391",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.ex40.gen1.trim.ultra_twin_black_edition_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:33+00:00",
+    "before_hash": "ec7400b31b7226ea9a42331119297b305d32afaa1f6d90ed5a871d4135587326",
+    "after_hash": "fc6b5120f523261d45fe9e3ce75dbf653e33cd01588a1d857aa7c6c3bdfc2643",
+    "before": [
+      "NMC",
+      81.61,
+      404.0,
+      "VOLVO",
+      "220",
+      "ONBOARD_AC",
+      true,
+      152.0,
+      645.0,
+      "235/45R20",
+      "255/40R20",
+      "BEV"
+    ],
+    "after": [
+      "NMC",
+      81.61,
+      404.0,
+      "VOLVO",
+      "220",
+      "ONBOARD_AC",
+      true,
+      152.0,
+      645.0,
+      "235/45R20",
+      "255/40R20",
+      "BEV",
+      8.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_a686a62e-34ae-4492-8d25-672d3901c008_manufacturing.excise_tax_rate_729aafba47a7.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d4cf8bc404a98c92eef54ad3:spec",
+    "revision_id": "d4cf8bc404a98c92eef54ad3",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.ex40.gen1.trim.ultra_twin_black_edition_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:33+00:00",
+    "payload": [
+      "NMC",
+      81.61,
+      404.0,
+      "VOLVO",
+      "220",
+      "ONBOARD_AC",
+      true,
+      152.0,
+      645.0,
+      "235/45R20",
+      "255/40R20",
+      "BEV",
+      8.0
+    ]
+  }
+}

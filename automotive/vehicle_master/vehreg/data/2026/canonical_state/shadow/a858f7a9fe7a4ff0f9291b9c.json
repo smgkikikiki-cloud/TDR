@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a858f7a9fe7a4ff0f9291b9c",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-053-c0bdc44365d7:123",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover.gen1.trim.2_0_litre_plug_in_hybrid_petrol_autobiography_lwb_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:38+00:00",
+    "before_hash": "736688393336637ff816602a64769197de82d68d213534b35122328bd779a5ee",
+    "after_hash": "3f37a14ec237a1ccb355889835751159ccbdc510c9db6d3129614076037ae8a2",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      13.99,
+      370.0,
+      "Samsung SDI",
+      "EXTERNAL_DC",
+      true,
+      true
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      13.99,
+      370.0,
+      "Samsung SDI",
+      "EXTERNAL_DC",
+      true,
+      true,
+      2.7
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_5e98e5004e3f4789b271fde88a2702cf_efficiency.fuel_consumption_l_100km_6d73f47fbf2e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a858f7a9fe7a4ff0f9291b9c:spec",
+    "revision_id": "a858f7a9fe7a4ff0f9291b9c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover.gen1.trim.2_0_litre_plug_in_hybrid_petrol_autobiography_lwb_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:38+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      13.99,
+      370.0,
+      "Samsung SDI",
+      "EXTERNAL_DC",
+      true,
+      true,
+      2.7
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:61a9a246-175b-4cf7-86e3-621defa89a34:efficiency.fuel_consumption_urban_l_100km",
+      "field_key": "efficiency.fuel_consumption_urban_l_100km",
+      "value_state": "KNOWN",
+      "value": 7.6,
+      "unit": "L/100km",
+      "observed_at": "2024-03-05",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/61a9a246-175b-4cf7-86e3-621defa89a34",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/61a9a246-175b-4cf7-86e3-621defa89a34",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "hyundai.stargazer.ks.trim.x6_ice"
+    }
+  ]
+}

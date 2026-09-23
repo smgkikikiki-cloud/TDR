@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c3d6db8dcc36aa2aacd32c3d",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-009-54711011662e:100",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.tank300.t300.trim.gwm_2_4t_ultra_4wd_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:10+00:00",
+    "before_hash": "23d2ad97a323152add536e8bb5e7de05b948f3e03745df137db56d88cda87b87",
+    "after_hash": "35b5a7a7d2db02a5751d474c41b6fbd5d5776d3797e8bc4c76f7a9330212f32b",
+    "before": [
+      true,
+      true,
+      6.6,
+      7.1,
+      8.0,
+      185.0,
+      0.131,
+      0.00042,
+      "TIS",
+      "DIESEL",
+      2370,
+      "B20",
+      "265/65R17",
+      "ICE"
+    ],
+    "after": [
+      true,
+      true,
+      6.6,
+      7.1,
+      8.0,
+      185.0,
+      0.131,
+      0.00042,
+      "TIS",
+      "DIESEL",
+      2370,
+      "B20",
+      "265/65R17",
+      "ICE",
+      16.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_268f1e63-e264-402b-a399-176f828fe0f3_manufacturing.excise_tax_rate_7f897851953f.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c3d6db8dcc36aa2aacd32c3d:spec",
+    "revision_id": "c3d6db8dcc36aa2aacd32c3d",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "gwm.tank300.t300.trim.gwm_2_4t_ultra_4wd_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:10+00:00",
+    "payload": [
+      true,
+      true,
+      6.6,
+      7.1,
+      8.0,
+      185.0,
+      0.131,
+      0.00042,
+      "TIS",
+      "DIESEL",
+      2370,
+      "B20",
+      "265/65R17",
+      "ICE",
+      16.0
+    ]
+  }
+}

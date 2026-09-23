@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "205f8aae05a9ef3418767eee",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-030-80293fca2870:323",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq6.ce.trim.exclusive_77_4_kwh_rwd_229_hp_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:02+00:00",
+    "before_hash": "853631a7f529364e8f50e04a7f435723b2a25abf8859755c4d2321d5d7b3718c",
+    "after_hash": "cb170026bff0d75bc6c68187c54e431a1af6b17b5a0c070cd41066e62668e8b0",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      77.37,
+      697.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      160.0,
+      545.0,
+      "245/40R20",
+      "BEV",
+      2.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      77.37,
+      697.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      160.0,
+      545.0,
+      "245/40R20",
+      "BEV",
+      2.0,
+      "Asan Plant"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_443dfd43-1ae0-4c05-a011-5aa6fce50219_manufacturing.factory_493e9da3b2c6.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "205f8aae05a9ef3418767eee:spec",
+    "revision_id": "205f8aae05a9ef3418767eee",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "hyundai.ioniq6.ce.trim.exclusive_77_4_kwh_rwd_229_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:02+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      77.37,
+      697.0,
+      "Hyundai Mobis",
+      "ONBOARD_AC",
+      true,
+      true,
+      160.0,
+      545.0,
+      "245/40R20",
+      "BEV",
+      2.0,
+      "Asan Plant"
+    ]
+  }
+}

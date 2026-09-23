@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9689aa00a632c76cf52af05a",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-038-caad162ad775:347",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.z4.gen1.trim.m40i_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:04+00:00",
+    "before_hash": "f3c674f4cf996ef5b3af4d956706937ff60948fc30f8844ed5c0fc9ae3c19f04",
+    "after_hash": "cef581c5a445e901f6420518ef6a973e9d37e69d713834730eabf2d1cd103c38",
+    "before": [
+      true,
+      true,
+      true,
+      6.1,
+      7.5,
+      9.8,
+      171.0,
+      0.023,
+      "TIS",
+      "GASOLINE",
+      2998,
+      "GASOLINE",
+      "255/35ZR19",
+      "275/35ZR19"
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      6.1,
+      7.5,
+      9.8,
+      171.0,
+      0.023,
+      "TIS",
+      "GASOLINE",
+      2998,
+      "GASOLINE",
+      "255/35ZR19",
+      "275/35ZR19",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_cbb0f380-1111-45ac-b38e-c10a1360431f_identity.powertrain_b9f74b3db501.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9689aa00a632c76cf52af05a:spec",
+    "revision_id": "9689aa00a632c76cf52af05a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.z4.gen1.trim.m40i_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:04+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      6.1,
+      7.5,
+      9.8,
+      171.0,
+      0.023,
+      "TIS",
+      "GASOLINE",
+      2998,
+      "GASOLINE",
+      "255/35ZR19",
+      "275/35ZR19",
+      "ICE"
+    ]
+  }
+}

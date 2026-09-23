@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "3b07ca7af802f8e238acb446",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-017-02b372e72add:150",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.xforce.xf.trim.hev_ultimate_x_black_roof_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:47+00:00",
+    "before_hash": "9754a58e88771360f9d569fc674fb7cebdb9641a2c153e7a0c0662313d787d12",
+    "after_hash": "707378633b38c602efd037bf3c66906727f72b5697a9761f2172198d8c526048",
+    "before": [
+      true,
+      4.4,
+      4.1,
+      3.7,
+      94.0,
+      0.002,
+      "TIS",
+      "HEV",
+      1590,
+      "GASOLINE"
+    ],
+    "after": [
+      true,
+      4.4,
+      4.1,
+      3.7,
+      94.0,
+      0.002,
+      "TIS",
+      "HEV",
+      1590,
+      "GASOLINE",
+      "225/50R18"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_d5f398cf-de06-4735-9298-b29dfa60af41_fitment.tyre_size_a37c5559db0b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "3b07ca7af802f8e238acb446:spec",
+    "revision_id": "3b07ca7af802f8e238acb446",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.xforce.xf.trim.hev_ultimate_x_black_roof_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:47+00:00",
+    "payload": [
+      true,
+      4.4,
+      4.1,
+      3.7,
+      94.0,
+      0.002,
+      "TIS",
+      "HEV",
+      1590,
+      "GASOLINE",
+      "225/50R18"
+    ]
+  }
+}

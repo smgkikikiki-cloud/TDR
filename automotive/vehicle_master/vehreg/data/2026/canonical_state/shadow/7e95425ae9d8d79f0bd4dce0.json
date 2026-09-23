@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7e95425ae9d8d79f0bd4dce0",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-053-c0bdc44365d7:184",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover_sport.unresearched.trim.2_0_litre_plug_in_hybrid_petrol_hse_plus_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:21:38+00:00",
+    "before_hash": "ede60dcc1438479a84c5ba7466775e056a91d316303749e7876c4de32f487be6",
+    "after_hash": "9116ce348691ad5049c23e42c55ff42849ecccf2a9bf1ba82b963c9645a52eee",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      13.99,
+      370.0,
+      "Sumsung SDI"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      13.99,
+      370.0,
+      "Sumsung SDI",
+      "EXTERNAL_DC"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_8f8b7f3572a845d0926c701c766f5734_charging.port_type_ddd13a369206.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7e95425ae9d8d79f0bd4dce0:spec",
+    "revision_id": "7e95425ae9d8d79f0bd4dce0",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "land_rover.range_rover_sport.unresearched.trim.2_0_litre_plug_in_hybrid_petrol_hse_plus_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:21:38+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      13.99,
+      370.0,
+      "Sumsung SDI",
+      "EXTERNAL_DC"
+    ]
+  }
+}

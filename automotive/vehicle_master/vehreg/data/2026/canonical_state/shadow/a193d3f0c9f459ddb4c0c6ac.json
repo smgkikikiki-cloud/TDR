@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a193d3f0c9f459ddb4c0c6ac",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-003-71403c2b6ecf:137",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.eclipse_edition_hev_smart",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:50+00:00",
+    "before_hash": "61b19a1a3b439d22f1373f1e1f64b5950c85ffe20b9c98b443a9ee63148bd55d",
+    "after_hash": "0ba8dc14151e7604e9147c3ce3c22b54be5fff82f0b18e4acdbc980d497af23d",
+    "before": [
+      5.4,
+      5.6,
+      6.0,
+      128.0,
+      0.0044,
+      "TIS",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/55R19",
+      "HEV",
+      15.0
+    ],
+    "after": [
+      5.4,
+      5.6,
+      6.0,
+      128.0,
+      0.0044,
+      "TIS",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/55R19",
+      "HEV",
+      15.0,
+      "TOYOTA AUTO BODY CO.,LTD (INABE PLANT)"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_263551ea-a035-49fd-b675-dfea529a6e71_manufacturing.factory_e2f1aac57edd.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a193d3f0c9f459ddb4c0c6ac:spec",
+    "revision_id": "a193d3f0c9f459ddb4c0c6ac",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.alphard.ah40.trim.eclipse_edition_hev_smart",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:50+00:00",
+    "payload": [
+      5.4,
+      5.6,
+      6.0,
+      128.0,
+      0.0044,
+      "TIS",
+      "HEV",
+      2487,
+      "GASOLINE",
+      "225/55R19",
+      "HEV",
+      15.0,
+      "TOYOTA AUTO BODY CO.,LTD (INABE PLANT)"
+    ]
+  }
+}

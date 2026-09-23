@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f97583e608e66dcd89a8f670",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-004-87075c4d97a5:109",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_s05.gen1.trim.reev_max_reev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:52+00:00",
+    "before_hash": "7d9fafae26ba85b581714512b2efa56304e5bf8da8d64dd60a7cfb9f14b71c14",
+    "after_hash": "6866d0f5dcbd91cf64aed665f47177a7cee1eb44ed2c7724eeb3730b569ade30",
+    "before": [
+      "LFP",
+      27.32,
+      314.0,
+      "Contemporary Amperex Technology Co., Limited",
+      "ONBOARD_AC",
+      true,
+      0.6,
+      14.0,
+      0.001,
+      "TIS",
+      "PHEV",
+      1497
+    ],
+    "after": [
+      "LFP",
+      27.32,
+      314.0,
+      "Contemporary Amperex Technology Co., Limited",
+      "ONBOARD_AC",
+      true,
+      0.6,
+      14.0,
+      0.001,
+      "TIS",
+      "PHEV",
+      1497,
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_8c7ac610-7ae7-45a4-980e-aea86d46784b_engine.fuel_type_fd9ac6cae19c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f97583e608e66dcd89a8f670:spec",
+    "revision_id": "f97583e608e66dcd89a8f670",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_s05.gen1.trim.reev_max_reev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:52+00:00",
+    "payload": [
+      "LFP",
+      27.32,
+      314.0,
+      "Contemporary Amperex Technology Co., Limited",
+      "ONBOARD_AC",
+      true,
+      0.6,
+      14.0,
+      0.001,
+      "TIS",
+      "PHEV",
+      1497,
+      "GASOLINE"
+    ]
+  }
+}

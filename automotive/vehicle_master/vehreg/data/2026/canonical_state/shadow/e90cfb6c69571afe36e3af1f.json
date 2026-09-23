@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e90cfb6c69571afe36e3af1f",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-032-04b0adc6e162:219",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "kia.ev9.mv.trim.earth_long_range_rwd_7_seater_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:17+00:00",
+    "before_hash": "ed03baf6559a2b468b7de6f02bdde17fac7e47f4c1cde577071cbb44de726513",
+    "after_hash": "d1214730a14f068ca7bbf9f35a099b34e19af5132d03fbdc4c2f1039b4996424",
+    "before": [
+      "LI_ION_UNSPECIFIED",
+      99.91,
+      552.0
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      99.91,
+      552.0,
+      "HYUNDAI MOBIS"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_3ce6ae0c-6264-42cd-9709-2261216eac9d_battery.supplier_1c6e80809d68.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e90cfb6c69571afe36e3af1f:spec",
+    "revision_id": "e90cfb6c69571afe36e3af1f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "kia.ev9.mv.trim.earth_long_range_rwd_7_seater_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:17+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      99.91,
+      552.0,
+      "HYUNDAI MOBIS"
+    ]
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6c50b4963588f4930b360387",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-038-caad162ad775:261",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.crown.gen1.trim.crossover_hev_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:19:04+00:00",
+    "before_hash": "46f18a4da7ac2ab6c2fd16da6156fd7e602fa640a8eabd3b14aca9474d868698",
+    "after_hash": "6cc20622085780b45cfd4381e212c11c53c94069019bc7c8510d8f044721c059",
+    "before": [
+      true,
+      true,
+      5.7,
+      4.8,
+      3.2,
+      115.0,
+      0.0024,
+      "TIS",
+      "HEV",
+      2487
+    ],
+    "after": [
+      true,
+      true,
+      5.7,
+      4.8,
+      3.2,
+      115.0,
+      0.0024,
+      "TIS",
+      "HEV",
+      2487,
+      "GASOLINE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_99e39afc-9701-49cf-888e-09ad6dcde82b_engine.fuel_type_93057fb4719e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6c50b4963588f4930b360387:spec",
+    "revision_id": "6c50b4963588f4930b360387",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.crown.gen1.trim.crossover_hev_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:19:04+00:00",
+    "payload": [
+      true,
+      true,
+      5.7,
+      4.8,
+      3.2,
+      115.0,
+      0.0024,
+      "TIS",
+      "HEV",
+      2487,
+      "GASOLINE"
+    ]
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "acfedfe68707e2b9bdad8c42",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-026-fc1e159da290:354",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.xc60.xc60g.trim.plus_t8_plug_in_hybrid_dark_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:33+00:00",
+    "before_hash": "25e0eb2cef877ab8693acd647b7ee64ce4a8334b5f34780317352328b02ebb57",
+    "after_hash": "a89c5637c7edc1062784d4a02fed8621e5075ab678d697e0aa16547a6118d978",
+    "before": [
+      "NMC",
+      18.82,
+      369.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd.",
+      "ONBOARD_AC",
+      1.6,
+      37.0,
+      0.005,
+      0.00011,
+      "TIS"
+    ],
+    "after": [
+      "NMC",
+      18.82,
+      369.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd.",
+      "ONBOARD_AC",
+      1.6,
+      37.0,
+      0.005,
+      0.00011,
+      "TIS",
+      "PHEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_9a7d5e4d-90c0-42a2-bc5a-19bad288ed1d_engine.combustion_type_5e290d3024b5.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "acfedfe68707e2b9bdad8c42:spec",
+    "revision_id": "acfedfe68707e2b9bdad8c42",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.xc60.xc60g.trim.plus_t8_plug_in_hybrid_dark_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:33+00:00",
+    "payload": [
+      "NMC",
+      18.82,
+      369.0,
+      "Viridi E-Mobility Technology (Ningbo) Co., Ltd.",
+      "ONBOARD_AC",
+      1.6,
+      37.0,
+      0.005,
+      0.00011,
+      "TIS",
+      "PHEV"
+    ]
+  }
+}

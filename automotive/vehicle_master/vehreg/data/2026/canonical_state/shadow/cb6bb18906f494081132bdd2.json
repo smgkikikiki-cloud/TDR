@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "cb6bb18906f494081132bdd2",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-021-33a0f14d51bc:169",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.city.gn2.trim.e_hev_the_black_outshine_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:06+00:00",
+    "before_hash": "d6707ce7d5f92ce8dd99e3a3cfaf542d518145d41fa04544332158b4034d5c1e",
+    "after_hash": "29f3c3b85cdf3e462ba9df7be9908f7b528980542deb93ad31d232a3e2bb341f",
+    "before": [
+      true,
+      true,
+      3.8,
+      3.6,
+      3.3,
+      82.0,
+      0.01,
+      0.00033,
+      "EURO5",
+      "HEV",
+      1498,
+      "GASOLINE"
+    ],
+    "after": [
+      true,
+      true,
+      3.8,
+      3.6,
+      3.3,
+      82.0,
+      0.01,
+      0.00033,
+      "EURO5",
+      "HEV",
+      1498,
+      "GASOLINE",
+      "185/60R16"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_decb9637-b6dc-47e6-adbb-dcbf22bba946_fitment.tyre_size_061adaf2950f.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "cb6bb18906f494081132bdd2:spec",
+    "revision_id": "cb6bb18906f494081132bdd2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "honda.city.gn2.trim.e_hev_the_black_outshine_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:06+00:00",
+    "payload": [
+      true,
+      true,
+      3.8,
+      3.6,
+      3.3,
+      82.0,
+      0.01,
+      0.00033,
+      "EURO5",
+      "HEV",
+      1498,
+      "GASOLINE",
+      "185/60R16"
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "97a079f033b2c25a44cbd064",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-001-2163ac0376be:344",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.panamera.gen1.trim.4_e_hybrid_phev_470_hp_phev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:15:45+00:00",
+    "before_hash": "58b479c6637a8eb6768caf16772e4b8536114e8530f05bd74ecfa582d212e197",
+    "after_hash": "356aec8fd1ffc129b6df98f5975987cdf941780f9e9c474b17e4cb65529150da",
+    "before": [
+      "LI_ION_UNSPECIFIED"
+    ],
+    "after": [
+      "LI_ION_UNSPECIFIED",
+      25.9
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_999e4651-c18c-4639-b6b1-6a9bfc14cb35_battery.gross_capacity_kwh_0235f6e7afcc.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "97a079f033b2c25a44cbd064:spec",
+    "revision_id": "97a079f033b2c25a44cbd064",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.panamera.gen1.trim.4_e_hybrid_phev_470_hp_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:15:45+00:00",
+    "payload": [
+      "LI_ION_UNSPECIFIED",
+      25.9
+    ]
+  }
+}

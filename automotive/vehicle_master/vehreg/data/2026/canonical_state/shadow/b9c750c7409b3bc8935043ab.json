@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b9c750c7409b3bc8935043ab",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-022-20a8a8e94ae5:94",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.carrera_gts_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:17:11+00:00",
+    "before_hash": "dda6c5ff2ee51149ca7ab612c3466156b9436166d4a77f630559d13c659a6872",
+    "after_hash": "51a2f803dc0dd4290131a9ac677dadb6f74ec03beb218bf97f662c4ba89bf415",
+    "before": [
+      true,
+      7.7,
+      10.3,
+      14.8,
+      234.0
+    ],
+    "after": [
+      true,
+      7.7,
+      10.3,
+      14.8,
+      234.0,
+      0.026
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_97f12879-bf5f-4a2f-b43f-610fa1dc8a3c_emissions.nox_g_km_dfda7051e4c9.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b9c750c7409b3bc8935043ab:spec",
+    "revision_id": "b9c750c7409b3bc8935043ab",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.porsche_911.992.trim.carrera_gts_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:17:11+00:00",
+    "payload": [
+      true,
+      7.7,
+      10.3,
+      14.8,
+      234.0,
+      0.026
+    ]
+  }
+}

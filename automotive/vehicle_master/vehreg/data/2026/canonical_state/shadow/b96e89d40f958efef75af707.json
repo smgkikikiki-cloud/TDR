@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b96e89d40f958efef75af707",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-046-2c82d6c5b603:271",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_gls",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:20:14+00:00",
+    "before_hash": "030a7b11ee0dc8971c1107031bba4c62b7ee633c5defc2633bd09410fed21cf8",
+    "after_hash": "9e36320bbd41c62f9d37562d10399a16a70abb2bb51fb4c66ee65471b675d1a9",
+    "before": [
+      6.5,
+      7.2,
+      8.6,
+      191.0,
+      0.436,
+      0.082,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "245/65R17"
+    ],
+    "after": [
+      6.5,
+      7.2,
+      8.6,
+      191.0,
+      0.436,
+      0.082,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "245/65R17",
+      "ICE"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_b8ed69192e824446aa8ad241018e9c0e_identity.powertrain_118dd8246cc2.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b96e89d40f958efef75af707:spec",
+    "revision_id": "b96e89d40f958efef75af707",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mitsubishi.triton_double_cab.mv.trim.plus_2_4_gls",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:20:14+00:00",
+    "payload": [
+      6.5,
+      7.2,
+      8.6,
+      191.0,
+      0.436,
+      0.082,
+      "TIS",
+      "DIESEL",
+      2442,
+      "B20",
+      "245/65R17",
+      "ICE"
+    ]
+  }
+}

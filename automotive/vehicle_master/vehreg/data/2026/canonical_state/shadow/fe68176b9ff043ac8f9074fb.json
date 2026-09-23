@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "fe68176b9ff043ac8f9074fb",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-032-04b0adc6e162:27",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.countryman.u25.trim.jcw_countryman_ice",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:16+00:00",
+    "before_hash": "0ac360ceea172405810368fb3903bfa871cda05f233a7de8b8462db82b38384f",
+    "after_hash": "fd80c5bc5f6d9ca86bd8aebb6df3afcdd337aad604a35f9625b92cdcd0b5fccd",
+    "before": [
+      true,
+      true,
+      true,
+      6.5,
+      7.6,
+      9.6,
+      175.0,
+      0.011,
+      "EURO6",
+      "GASOLINE",
+      1998,
+      "GASOLINE",
+      "245/40R20",
+      "ICE"
+    ],
+    "after": [
+      true,
+      true,
+      true,
+      6.5,
+      7.6,
+      9.6,
+      175.0,
+      0.011,
+      "EURO6",
+      "GASOLINE",
+      1998,
+      "GASOLINE",
+      "245/40R20",
+      "ICE",
+      30.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_1728ef02-bdec-4e2b-8169-667bbdd4ad28_manufacturing.excise_tax_rate_27c7beb82a60.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "fe68176b9ff043ac8f9074fb:spec",
+    "revision_id": "fe68176b9ff043ac8f9074fb",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mini.countryman.u25.trim.jcw_countryman_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:16+00:00",
+    "payload": [
+      true,
+      true,
+      true,
+      6.5,
+      7.6,
+      9.6,
+      175.0,
+      0.011,
+      "EURO6",
+      "GASOLINE",
+      1998,
+      "GASOLINE",
+      "245/40R20",
+      "ICE",
+      30.0
+    ]
+  }
+}

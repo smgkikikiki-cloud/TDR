@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "de9417dff94bd3c207176191",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-035-5b8b3aecfae7:58",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.kicks.p15.trim.star_edition",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:18:40+00:00",
+    "before_hash": "1c28f2eb0958c3d15db1f0f0e7f2b8998ca2b8f67ab426a1fbb3d561fe76fad9",
+    "after_hash": "8b7cddbf8abd81cd69fe478f571e8b13d204026ec5e8d264e6059b3093b78edc",
+    "before": [
+      true
+    ],
+    "after": [
+      true,
+      4.4
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_a6ecd7da-5c20-46d9-a866-dadf6b134977_efficiency.fuel_consumption_extra_urban_l_100km_0afa80350d2e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "de9417dff94bd3c207176191:spec",
+    "revision_id": "de9417dff94bd3c207176191",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "nissan.kicks.p15.trim.star_edition",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:18:40+00:00",
+    "payload": [
+      true,
+      4.4
+    ]
+  }
+}

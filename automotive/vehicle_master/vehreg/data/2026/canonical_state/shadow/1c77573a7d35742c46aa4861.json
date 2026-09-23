@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "1c77573a7d35742c46aa4861",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-017-02b372e72add:331",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_cross.xg10.trim.hev_premium_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:47+00:00",
+    "before_hash": "ba3060e801909219657038aa4179dd1fa4a0dc0d060bcd7da0390df66474f7fb",
+    "after_hash": "dacfcbd6bbe7130d48cbb144a8ba95eee2c79a7e3938dae494c2b7677d44abf5",
+    "before": [
+      4.4,
+      4.2,
+      4.0,
+      95.0,
+      0.005,
+      "TIS",
+      "HEV",
+      1798,
+      "GASOLINE",
+      "225/50R18",
+      "HEV",
+      6.0,
+      "CVT",
+      true
+    ],
+    "after": [
+      4.4,
+      4.2,
+      4.0,
+      95.0,
+      0.005,
+      "TIS",
+      "HEV",
+      1798,
+      "GASOLINE",
+      "225/50R18",
+      "HEV",
+      6.0,
+      "CVT",
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_45fb3f35-5428-43f5-b085-9b1f8b63682c_safety.adaptive_cruise_86d41ed98dba.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "1c77573a7d35742c46aa4861:spec",
+    "revision_id": "1c77573a7d35742c46aa4861",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.corolla_cross.xg10.trim.hev_premium_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:47+00:00",
+    "payload": [
+      4.4,
+      4.2,
+      4.0,
+      95.0,
+      0.005,
+      "TIS",
+      "HEV",
+      1798,
+      "GASOLINE",
+      "225/50R18",
+      "HEV",
+      6.0,
+      "CVT",
+      true,
+      true
+    ]
+  }
+}

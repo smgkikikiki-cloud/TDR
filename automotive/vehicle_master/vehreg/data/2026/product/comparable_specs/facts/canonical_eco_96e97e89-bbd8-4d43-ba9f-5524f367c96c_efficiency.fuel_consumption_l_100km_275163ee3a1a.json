@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "eco:96e97e89-bbd8-4d43-ba9f-5524f367c96c:efficiency.fuel_consumption_l_100km",
+      "field_key": "efficiency.fuel_consumption_l_100km",
+      "value_state": "KNOWN",
+      "value": 6.0,
+      "unit": "L/100km",
+      "observed_at": "2023-03-13",
+      "verification_status": "VERIFIED",
+      "source": "ecosticker",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/96e97e89-bbd8-4d43-ba9f-5524f367c96c",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/96e97e89-bbd8-4d43-ba9f-5524f367c96c",
+      "qualifiers": {
+        "measurement_basis": "ECO_STICKER_TH"
+      },
+      "trim_id": "mini.mini_cooper.j01.trim.clubman_ice"
+    }
+  ]
+}

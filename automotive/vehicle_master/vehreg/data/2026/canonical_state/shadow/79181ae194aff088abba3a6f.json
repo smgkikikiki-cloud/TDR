@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "79181ae194aff088abba3a6f",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-013-01b2d6d40e8e:187",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.voxy.gen1.trim.hybrid_sz_hev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:28+00:00",
+    "before_hash": "ad43579f23a589dfa4780219127e0916a1a264c57afb49f6850ccf0a7628d6a5",
+    "after_hash": "f0a7828abe2647fe15fd1a21720fdcb4ca947d3f09ad5762941ba00a8fc49014",
+    "before": [
+      true,
+      true,
+      5.3,
+      4.4,
+      2.8,
+      101.0,
+      0.00646,
+      0.00061,
+      "TIS"
+    ],
+    "after": [
+      true,
+      true,
+      5.3,
+      4.4,
+      2.8,
+      101.0,
+      0.00646,
+      0.00061,
+      "TIS",
+      "HEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_e128fb4b-94ea-4f6b-a466-264a69892007_engine.combustion_type_f95213ed07c2.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "79181ae194aff088abba3a6f:spec",
+    "revision_id": "79181ae194aff088abba3a6f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "toyota.voxy.gen1.trim.hybrid_sz_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:28+00:00",
+    "payload": [
+      true,
+      true,
+      5.3,
+      4.4,
+      2.8,
+      101.0,
+      0.00646,
+      0.00061,
+      "TIS",
+      "HEV"
+    ]
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "1d57ad972170d728021a827b",
+    "command_id": "import-eco-b9fe15e3-TDR_EcoSticker_-008-bc3b92e93b52:342",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.cla.cla.trim.electric_bev",
+    "actor": "eco-publish-2026-09-23",
+    "reason": "bulk import from TDR EcoSticker - ข้อมูลอัตโนมัติ(1)(1).xlsx sha256:e1952b49d308c76d09c893c1331ddf3e6626268ac888903bade286996866ed0c",
+    "submitted_at": "2026-09-23T11:00:00+00:00",
+    "applied_at": "2026-09-23T12:16:07+00:00",
+    "before_hash": "8a533170379b469f31e6ab2a74262059ef95ce33e11edcb4fc87981e51905bdb",
+    "after_hash": "29d514c8e3ebda7d985cfdf7f44a3e336ad6d436a7efd9df4791f12b484e6d71",
+    "before": [
+      "NMC",
+      85.4,
+      700.0,
+      "Accumotive GmbH & Co. KG",
+      "400V",
+      "BOTH",
+      true,
+      119.0,
+      820.0
+    ],
+    "after": [
+      "NMC",
+      85.4,
+      700.0,
+      "Accumotive GmbH & Co. KG",
+      "400V",
+      "BOTH",
+      true,
+      119.0,
+      820.0,
+      "225/45R18"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_eco_6ea5211a-43ed-4c25-845b-445197120fd6_fitment.tyre_front_7503b3788b68.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "1d57ad972170d728021a827b:spec",
+    "revision_id": "1d57ad972170d728021a827b",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.cla.cla.trim.electric_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-23T12:16:07+00:00",
+    "payload": [
+      "NMC",
+      85.4,
+      700.0,
+      "Accumotive GmbH & Co. KG",
+      "400V",
+      "BOTH",
+      true,
+      119.0,
+      820.0,
+      "225/45R18"
+    ]
+  }
+}
