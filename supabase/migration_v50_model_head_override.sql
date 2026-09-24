@@ -10,4 +10,4 @@ alter table public.vehicle_media_assets
   drop constraint if exists vehicle_media_assets_source_type_check;
 alter table public.vehicle_media_assets
   add constraint vehicle_media_assets_source_type_check
-  check (source_type in ('manufacturer_media','official_site','press_release','automotive_publication','manual'));
+  check (source_type in ('manufacturer_media','official_site','press_release','manual'));
