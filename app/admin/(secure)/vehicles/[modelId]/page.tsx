@@ -7,6 +7,8 @@ import { trimEditorFields } from "@/lib/spec-field-registry";
 import { fieldAppliesTo } from "@/lib/trim-editor-fields";
 import { BODY_TYPES, SEGMENTS } from "@/lib/vehicle-taxonomy";
 import { prepareModelGenerationEdit } from "@/app/admin/vehicle-editor-actions";
+import { saveModelHeadImage, removeModelHeadImage } from "@/app/admin/model-head-actions";
+import { getCanonicalModelHeadOverride, getCanonicalVehicleMedia } from "@/lib/canonical-data";
 import { saveTrimPrice, closeTrimCampaign } from "@/app/admin/trim-price-actions";
 import type { WorkspaceTrim } from "@/lib/canonical-editor";
 import TrimEditorForm from "@/components/admin/TrimEditorForm";
@@ -45,6 +47,11 @@ export default async function VehicleWorkspacePage({
   if (!workspace) notFound();
 
   const { brand, model, generation, trims, specFactsByTrim, evidenceTargets, releaseId, releaseYear } = workspace;
+  const override = await getCanonicalModelHeadOverride(modelId);
+  const images = override === null && model.generationId
+    ? await getCanonicalVehicleMedia(model.generationId) : (override || []);
+  const head = images.find((item) => item.image_type === "hero")
+    || images.find((item) => item.image_type === "front_3q");
   const submittedAt = new Date().toISOString();
   const today = submittedAt.slice(0, 10);
   const allFields = trimEditorFields(releaseYear);
@@ -60,7 +67,7 @@ export default async function VehicleWorkspacePage({
     </div>
 
     {saved ? <div className="adminSaved">
-      บันทึก {KIND_LABEL[saved] || "canonical"} แล้ว — ระบบกำลังเขียนและ publish ให้อัตโนมัติ ใช้เวลาสักครู่แล้วรีเฟรช
+      {saved.startsWith("IMAGE") ? "บันทึกรูป Model แล้ว" : `บันทึก ${KIND_LABEL[saved] || "canonical"} แล้ว — ระบบกำลังเขียนและ publish ให้อัตโนมัติ ใช้เวลาสักครู่แล้วรีเฟรช`}
     </div> : null}
 
     {fromExceptions ? <div className="adminNotice">
@@ -72,6 +79,7 @@ export default async function VehicleWorkspacePage({
 
     <nav className="adminQuickGrid" aria-label="Vehicle workspace sections">
       <a href="#model-generation"><b>Canonical vehicle</b><span>Model / Generation ↓</span></a>
+      <a href="#model-head"><b>Model image</b><span>Head image ↓</span></a>
       <a href="#trims"><b>Trims &amp; specs</b><span>{trims.length} trims ↓</span></a>
       <a href="#evidence"><b>Evidence</b><span>Registered OEM sources ↓</span></a>
     </nav>
@@ -94,6 +102,29 @@ export default async function VehicleWorkspacePage({
       <label className="adminField"><span>Ended (ปัจจุบัน: {generation?.ended || "—"})</span><input name="ended" type="date" /></label>
       <EvidenceFields today={today} />
       <div className="adminFormActions"><button className="adminPrimary">บันทึก</button></div>
+    </form>
+
+    <div id="model-head" className="adminHeader"><div><small>MODEL IMAGE</small><h2>ภาพหลักของรุ่นรถ</h2>
+      <p>แสดงภาพเต็มโดยไม่ crop · รูปนี้เป็นของ Model ไม่ใช่รุ่นย่อย</p>
+    </div></div>
+    <div className="adminNotice">
+      {head ? <div>
+        <img src={head.public_url} alt={`${brand.nameEn} ${model.nameEn}`}
+          style={{ width: "100%", maxWidth: 440, height: 260, objectFit: "contain" }} />
+        <p><a href={head.source_url || head.public_url} target="_blank" rel="noopener noreferrer">ต้นทางของภาพ</a></p>
+      </div> : <p>ยังไม่มีภาพหลัก</p>}
+    </div>
+    <form action={saveModelHeadImage} className="adminForm" encType="multipart/form-data">
+      <input type="hidden" name="model_id" value={modelId} />
+      <input type="hidden" name="page_release_id" value={releaseId} />
+      <label className="adminField"><span>เพิ่ม / แทนภาพ</span><input name="image" type="file" accept="image/jpeg,image/png,image/webp,image/avif" required /></label>
+      <label className="adminField"><span>URL ต้นทาง</span><input name="source_url" type="url" required /></label>
+      <div className="adminFormActions"><button className="adminPrimary">บันทึกภาพ</button></div>
+    </form>
+    <form action={removeModelHeadImage}>
+      <input type="hidden" name="model_id" value={modelId} />
+      <input type="hidden" name="page_release_id" value={releaseId} />
+      <button type="submit">ลบภาพและเว้นว่าง</button>
     </form>
 
     {/* ---------- Trims: one complete editor per trim ---------- */}
