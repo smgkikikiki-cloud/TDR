@@ -137,6 +137,7 @@ def discover(row: dict, catalog: Catalog, current: dict, cache: Path, max_pages:
         "existing_source": prior.get("source_url") if prior else None,
         "selected_image": None, "source_url": None, "source_domain": None,
         "status": "NO_IMAGE", "reason": "", "sha256": None, "storage_path": None,
+        "review_candidates": [],
     }
     generation = catalog.generations.get(generation_id)
     model = catalog.models.get(model_id)
@@ -151,7 +152,13 @@ def discover(row: dict, catalog: Catalog, current: dict, cache: Path, max_pages:
         model_year=catalog.year, aliases=tuple(dict.fromkeys((model.nameplate, *model.aliases))),
     )
     try:
-        candidates = [c for c in collect_candidates(identity, max_pages=max_pages) if candidate_ok(c)]
+        discovered = collect_candidates(identity, max_pages=max_pages)
+        base["review_candidates"] = [
+            {"image_url": c.image_url, "source_page": c.source_page,
+             "score": c.score, "slot": c.slot.value, "alt": c.alt[:120]}
+            for c in discovered[:3]
+        ]
+        candidates = [c for c in discovered if candidate_ok(c)]
     except Exception as exc:
         base["status"] = "NEEDS_REVIEW" if prior else "NO_IMAGE"
         base["reason"] = f"discovery_failed:{type(exc).__name__}"
