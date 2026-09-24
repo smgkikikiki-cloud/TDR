@@ -80,6 +80,4 @@ jobs:
               "".join(json.dumps(row) + "\n" for row in rows))
           PY
           npm run media:model-head:apply -- --manifest /tmp/model-head-pilot-approved.jsonl
-      - name: Apply seven reviewed pilot heads once
-        run: npm run media:model-head:apply -- --manifest /tmp/model-head-pilot-approved.jsonl --apply
 
