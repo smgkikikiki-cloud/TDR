@@ -94,6 +94,16 @@ def activate_existing_oem_registry(models: list[dict]) -> None:
         if brand not in SOURCES and any(m["brand_id"] == brand for m in models):
             SOURCES[brand] = OfficialSource(
                 brand_id=brand, seed_urls=(index,), allowed_hosts=(host,))
+    # Lexus exposes exact model overview pages alongside its generic price index.
+    # Keep one page per canonical Model; the image itself must still name it.
+    for row in models:
+        if row["brand_id"] == "lexus":
+            slug = row["name_en"].casefold()
+            if slug in {"lbx", "lc", "es", "is", "lm", "ls", "nx", "rx", "lx", "rz", "ux"}:
+                model_page = f"https://www.lexus.co.th/en/models/{slug}.html"
+                generation_id = row["generation_id"]
+                MODEL_PAGE_HINTS[generation_id] = tuple(dict.fromkeys(
+                    (model_page, *MODEL_PAGE_HINTS.get(generation_id, ()))))
     for brand, entries in pages.items():
         for generation_id, url in entries:
             MODEL_PAGE_HINTS[generation_id] = tuple(dict.fromkeys(
