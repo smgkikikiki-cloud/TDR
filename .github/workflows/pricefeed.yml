@@ -34,8 +34,11 @@ jobs:
         working-directory: automotive/vehicle_master
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      # Full ancestry of this one commit, not every branch/tag in the repo
+      # -- see source-import.yml's checkout comment for why `fetch-depth: 0`
+      # was failing here with "pack has 2 unresolved deltas".
+      - name: Deepen this commit's history for the publish ordinal guard
+        run: git fetch --no-tags --prune --no-recurse-submodules --depth=2147483647 origin "$(git rev-parse HEAD)"
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"

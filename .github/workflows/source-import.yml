@@ -28,12 +28,26 @@ jobs:
         working-directory: automotive/vehicle_master
     steps:
       - uses: actions/checkout@v4
-        with:
-          # Full clone: tools.publish_canonical computes `git rev-list
-          # --count` to guard the publish RPC against an older commit's
-          # publish racing a newer one's (migration_v44). A shallow clone
-          # would undercount and disable that guard for this workflow.
-          fetch-depth: 0
+      # tools.publish_canonical computes `git rev-list --count` on this
+      # commit to guard the publish RPC against an older commit's publish
+      # racing a newer one's (migration_v44). That guard only needs this
+      # commit's own complete ancestry -- never any other branch or tag.
+      #
+      # `fetch-depth: 0` used to be how this got a full history, but per
+      # actions/checkout's own docs that fetches "all history for all
+      # branches and tags", i.e. every historical feature/fix/consolidation
+      # branch this repo has ever had, every run. Once there were enough of
+      # them, that full-repository fetch started failing outright ("pack
+      # has 2 unresolved deltas" / "invalid index-pack output" from
+      # actions/checkout@v4, repeatable on retry) -- before Python,
+      # Supabase, or any canonical write ever ran. A plain shallow checkout
+      # (the default above, same as "Test TDR" uses) then a `git fetch
+      # --depth=<huge> origin <the exact commit just checked out>` gets
+      # identical ancestry for `git rev-list --count` on that commit --
+      # deepening one already-fetched commit, not fetching every ref in
+      # the repository.
+      - name: Deepen this commit's history for the publish ordinal guard
+        run: git fetch --no-tags --prune --no-recurse-submodules --depth=2147483647 origin "$(git rev-parse HEAD)"
       - name: Preflight
         id: preflight
         shell: bash
