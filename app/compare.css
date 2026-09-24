@@ -66,3 +66,11 @@
 .compareStatusHistorical { background: #eceff1; color: #5c6266; }
 .compareStatusUnverified { background: #fff4e0; color: #8a5a00; }
 .compareTable thead span.compareLaunchMeta { color: var(--sf-slot-ink); font-size: 10px; margin-top: 5px; }
+
+/* Evidence-safe winner highlighting (lib/compare-winners.ts decides which
+   cells qualify -- this is display only). Same pale green as
+   .compareStatusCurrent above, for one "this is good" color across the
+   page. Subtle on purpose: a background tint and bolder green text, no
+   badge, no icon -- this is a scan aid, not a scorecard. */
+.compareTable td.compareWinnerCell { background: #e6f4ea; color: #146c30; font-weight: 800; }
+.compareDifferent td.compareWinnerCell { background: #e3f3e7; }
