@@ -219,6 +219,23 @@ export function resolvedSpec(trim: FreeCompareTrim, fieldKey: string): ResolvedS
   return rows.find((row) => row && row.field_key === fieldKey) || null;
 }
 
+/** Every resolved fact for one field on one trim, not just the first.
+ *
+ *  SpecLedger.resolved() (vehreg/comparable_specs.py) is keyed by
+ *  (field_key, qualifier_key), so a single trim can legitimately carry more
+ *  than one fact for the same field under different measurement contexts --
+ *  a WLTP range next to an NEDC one, two DC charging times for two SOC
+ *  windows. resolvedSpec() above picks whichever comes first, which is fine
+ *  for display (both wind up on screen somewhere), but winner highlighting
+ *  (lib/compare-winners.ts) must see all of them: more than one KNOWN
+ *  context on a single trim is exactly the ambiguity it fails closed on
+ *  rather than silently picking one to rank. */
+export function resolvedSpecs(trim: FreeCompareTrim, fieldKey: string): ResolvedSpec[] {
+  const rows = trim.comparable_specs;
+  if (!Array.isArray(rows)) return [];
+  return rows.filter((row) => row && row.field_key === fieldKey);
+}
+
 /** The registry field key a row's value ultimately reads from, if any --
  *  the `spec:` prefix stripped for a pure registry row, or SPEC_BACKED_ROWS'
  *  mapping for a built-in one. Null for a built-in row with no ledger

@@ -71,13 +71,24 @@ console.log("\n2 — lower-better numeric winner");
   check("the faster (lower) time wins", result.bestIndexes, [1]);
 }
 
-console.log("\n3 — exact tie");
+console.log("\n3 — exact tie (150/150 implies no advantage, nobody is painted a winner)");
 {
   const a = trim("a", [spec("powertrain.max_power_kw", 150, { output_scope: "MOTOR", rating_basis: "PEAK" })]);
   const b = trim("b", [spec("powertrain.max_power_kw", 150, { output_scope: "MOTOR", rating_basis: "PEAK" })]);
   const result = evaluateCompareWinner([a, b], "spec:powertrain.max_power_kw", definitions);
   check("comparable stays true on a tie", result.comparable, true);
-  check("both indexes are returned, nobody alone wins", result.bestIndexes, [0, 1]);
+  check("nobody is highlighted -- an exact tie is not a comparative advantage",
+    result.bestIndexes, []);
+}
+
+console.log("\n3b — three-way exact tie is also nobody's win");
+{
+  const a = trim("a", [spec("powertrain.max_power_kw", 150, { output_scope: "MOTOR", rating_basis: "PEAK" })]);
+  const b = trim("b", [spec("powertrain.max_power_kw", 150, { output_scope: "MOTOR", rating_basis: "PEAK" })]);
+  const c = trim("c", [spec("powertrain.max_power_kw", 150, { output_scope: "MOTOR", rating_basis: "PEAK" })]);
+  const result = evaluateCompareWinner([a, b, c], "spec:powertrain.max_power_kw", definitions);
+  check("comparable stays true", result.comparable, true);
+  check("no winner among three identical values", result.bestIndexes, []);
 }
 
 console.log("\n4 — three-vehicle comparison with one winner");
@@ -89,8 +100,11 @@ console.log("\n4 — three-vehicle comparison with one winner");
   check("only the middle car (index 1) wins", result.bestIndexes, [1]);
 }
 
-console.log("\n5 — three-vehicle comparison with tied winners");
+console.log("\n5 — three-vehicle comparison with tied winners (a partial tie, unlike case 3)");
 {
+  // Not every value agrees here (204/150/204), so this is not the "no
+  // advantage" case above -- the two 204s genuinely beat the 150 and both
+  // must still be highlighted.
   const a = trim("a", [spec("powertrain.max_power_kw", 204, { output_scope: "MOTOR", rating_basis: "PEAK" })]);
   const b = trim("b", [spec("powertrain.max_power_kw", 150, { output_scope: "MOTOR", rating_basis: "PEAK" })]);
   const c = trim("c", [spec("powertrain.max_power_kw", 204, { output_scope: "MOTOR", rating_basis: "PEAK" })]);
@@ -175,6 +189,31 @@ console.log("\n12 — compatible qualifiers allow winner calculation");
   const result = evaluateCompareWinner([a, b], "spec:ev.rated_range_km", definitions);
   check("same measurement_basis and range_scope is comparable", result.comparable, true);
   check("the longer WLTP range wins", result.bestIndexes, [1]);
+}
+
+console.log("\n13 — a trim with multiple KNOWN contexts for the same field fails the row closed");
+{
+  // SpecLedger.resolved() is keyed by (field_key, qualifier_key): a single
+  // trim can legitimately carry both a WLTP and an NEDC range fact at once.
+  // resolvedSpec() (singular, display-only) would pick whichever comes
+  // first; winner highlighting must not silently do the same.
+  const a = trim("a", [
+    spec("ev.rated_range_km", 480, { measurement_basis: "WLTP", range_scope: "FULL" }),
+    spec("ev.rated_range_km", 510, { measurement_basis: "NEDC", range_scope: "FULL" }),
+  ]);
+  const b = trim("b", [spec("ev.rated_range_km", 490, { measurement_basis: "WLTP", range_scope: "FULL" })]);
+  const result = evaluateCompareWinner([a, b], "spec:ev.rated_range_km", definitions);
+  check("ambiguous single-trim basis fails the whole row closed", result.comparable, false);
+  check("no winner is guessed from either of trim a's two contexts", result.bestIndexes, []);
+}
+
+console.log("\n14 — the same ambiguity fails presence rows closed too");
+{
+  const a = trim("a", [spec("safety.aeb", true), spec("safety.aeb", false)]);
+  const b = trim("b", [spec("safety.aeb", true)]);
+  const result = evaluateCompareWinner([a, b], "spec:safety.aeb", definitions);
+  check("a trim with two KNOWN facts for one field is never comparable", result.comparable, false);
+  check("no advantage is guessed either way", result.bestIndexes, []);
 }
 
 console.log("\nextra — a field with no known values at all is never comparable");

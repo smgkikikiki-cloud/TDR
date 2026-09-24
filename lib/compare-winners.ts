@@ -27,26 +27,43 @@
  * fact with value_state KNOWN participates, an unknown boolean is never
  * "false", and a field needs at least two KNOWN, same-basis values before
  * any index can win.
+ *
+ * SpecLedger.resolved() is keyed by (field_key, qualifier_key), not just
+ * field_key -- one trim can carry more than one KNOWN fact for the same
+ * field (a WLTP range next to an NEDC one on the same car). Picking one of
+ * those automatically would be exactly the kind of guess this feature
+ * exists to avoid, so a trim with more than one KNOWN context for a field
+ * makes the whole row fail closed (`comparable: false`) rather than
+ * choosing a basis for it. Basis auto-selection is deliberately out of
+ * scope here.
+ *
+ * An exact tie is not a win either. Every known value agreeing (150 kW vs
+ * 150 kW) leaves the row `comparable: true` but highlights nobody -- there
+ * is no advantage to point at. A *partial* tie for best (204/180/204) is
+ * different: the two 204s really do beat the 180, so both are highlighted.
  */
 import {
-  registryFieldKeyForRow, resolvedSpec, type CompareRowKey, type CompareSpecField,
-  type FreeCompareTrim, type SpecDefinitionIndex,
+  registryFieldKeyForRow, resolvedSpecs, type CompareRowKey, type CompareSpecField,
+  type FreeCompareTrim, type ResolvedSpec, type SpecDefinitionIndex,
 } from "./free-compare.ts";
 
 export type CompareWinnerMode = "QUANTITATIVE_WINNER" | "PRESENCE_ADVANTAGE" | "NEUTRAL";
 
 export type CompareWinnerEvaluation = {
   comparisonMode: CompareWinnerMode;
-  /** True only when at least two selected trims have a KNOWN value on the
-   *  same measurement basis for this field -- i.e. a winner *could* be
-   *  shown, whether or not any index actually is one (a real tie is still
-   *  `comparable: true` with every tied index in bestIndexes; a two-value
-   *  presence field where both are true is `comparable: true` with an
-   *  empty bestIndexes, since there is nothing to prefer). False means the
-   *  row must render exactly as it would have before this feature. */
+  /** True only when at least two selected trims have exactly one KNOWN
+   *  value on the same measurement basis for this field -- i.e. a winner
+   *  *could* be shown, whether or not any index actually is one. A trim
+   *  with more than one KNOWN context for the field (see the module doc
+   *  comment) fails the whole row closed instead of guessing which one to
+   *  use. False means the row must render exactly as it would have before
+   *  this feature. */
   comparable: boolean;
   /** Indexes into the same trims array the row's `values` were built from.
-   *  Ties are listed in full. Never populated when `comparable` is false. */
+   *  A partial tie for best lists every tied index; an exact tie across
+   *  every known value (nobody actually ahead of anyone) and a
+   *  presence field everyone agrees on both leave this empty even though
+   *  `comparable` is true. Never populated when `comparable` is false. */
   bestIndexes: number[];
 };
 
@@ -128,16 +145,26 @@ function qualifierContext(qualifiers: Record<string, unknown> | null | undefined
   return qualifierNames.map((name) => `${name}=${String(qualifiers?.[name] ?? "")}`).join("|");
 }
 
+/** A trim's resolved facts for this field, filtered to KNOWN. More than one
+ *  is an ambiguous basis on that trim alone -- the caller must fail closed
+ *  rather than guess which context the trim's single displayed value
+ *  belongs to (resolvedSpec() picks the first arbitrarily, for display
+ *  only; see its doc comment). */
+function knownFactsFor(trim: FreeCompareTrim, fieldKey: string): ResolvedSpec[] {
+  return resolvedSpecs(trim, fieldKey).filter((spec) => spec.value_state === "KNOWN");
+}
+
 function knownNumericValues(trims: FreeCompareTrim[], fieldKey: string,
-                            qualifierNames: string[]): KnownNumeric[] {
+                            qualifierNames: string[]): KnownNumeric[] | null {
   const known: KnownNumeric[] = [];
-  trims.forEach((trim, index) => {
-    const spec = resolvedSpec(trim, fieldKey);
-    if (!spec || spec.value_state !== "KNOWN") return; // UNKNOWN/NOT_AVAILABLE/NOT_APPLICABLE/no fact at all
-    const value = typeof spec.value === "number" ? spec.value : Number(spec.value);
-    if (!Number.isFinite(value)) return;
-    known.push({ index, value, context: qualifierContext(spec.qualifiers, qualifierNames) });
-  });
+  for (let index = 0; index < trims.length; index++) {
+    const facts = knownFactsFor(trims[index], fieldKey);
+    if (facts.length > 1) return null; // ambiguous basis on this trim -- fail closed, no auto-selection
+    if (facts.length === 0) continue; // UNKNOWN/NOT_AVAILABLE/NOT_APPLICABLE/no fact at all
+    const value = typeof facts[0].value === "number" ? facts[0].value : Number(facts[0].value);
+    if (!Number.isFinite(value)) continue;
+    known.push({ index, value, context: qualifierContext(facts[0].qualifiers, qualifierNames) });
+  }
   return known;
 }
 
@@ -147,13 +174,24 @@ function evaluateQuantitative(trims: FreeCompareTrim[], fieldKey: string,
   if (direction !== "HIGHER_BETTER" && direction !== "LOWER_BETTER") return NOT_COMPARABLE;
 
   const known = knownNumericValues(trims, fieldKey, definition.comparisonQualifiers || []);
-  if (known.length < 2) return { comparisonMode: "QUANTITATIVE_WINNER", comparable: false, bestIndexes: [] };
+  if (known === null || known.length < 2) {
+    return { comparisonMode: "QUANTITATIVE_WINNER", comparable: false, bestIndexes: [] };
+  }
 
   // Every known value must be on the same measurement basis, or nobody can
   // honestly be called the winner -- a 30-minute DC charge from 10-80% is
   // not "slower" than a 25-minute one from 30-80%.
   const contexts = new Set(known.map((row) => row.context));
   if (contexts.size > 1) return { comparisonMode: "QUANTITATIVE_WINNER", comparable: false, bestIndexes: [] };
+
+  // All known values agreeing exactly (150 vs 150) is not a comparative
+  // advantage for anyone -- data is known and comparable, so the row stays
+  // `comparable: true`, but nothing is highlighted. A partial tie (204,
+  // 180, 204) is different: two of the three genuinely beat the third, so
+  // both still win below.
+  if (new Set(known.map((row) => row.value)).size === 1) {
+    return { comparisonMode: "QUANTITATIVE_WINNER", comparable: true, bestIndexes: [] };
+  }
 
   const best = direction === "HIGHER_BETTER"
     ? Math.max(...known.map((row) => row.value))
@@ -164,12 +202,13 @@ function evaluateQuantitative(trims: FreeCompareTrim[], fieldKey: string,
 
 function evaluatePresence(trims: FreeCompareTrim[], fieldKey: string): CompareWinnerEvaluation {
   const known: KnownBoolean[] = [];
-  trims.forEach((trim, index) => {
-    const spec = resolvedSpec(trim, fieldKey);
-    if (!spec || spec.value_state !== "KNOWN") return; // never treat unknown as "does not have"
-    if (typeof spec.value !== "boolean") return;
-    known.push({ index, value: spec.value });
-  });
+  for (let index = 0; index < trims.length; index++) {
+    const facts = knownFactsFor(trims[index], fieldKey);
+    if (facts.length > 1) return { comparisonMode: "PRESENCE_ADVANTAGE", comparable: false, bestIndexes: [] };
+    if (facts.length === 0) continue; // never treat unknown as "does not have"
+    if (typeof facts[0].value !== "boolean") continue;
+    known.push({ index, value: facts[0].value });
+  }
   if (known.length < 2) return { comparisonMode: "PRESENCE_ADVANTAGE", comparable: false, bestIndexes: [] };
 
   const hasTrue = known.some((row) => row.value === true);
