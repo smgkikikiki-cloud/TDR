@@ -55,7 +55,9 @@ def propose(row: dict, cache: Path) -> dict:
             image_url = image.get("source_url")
             alt = image.get("alt_text", "")
             width = (image.get("media_details") or {}).get("width")
-            # A multi-model article may feature the *other* car. Require the\n            # media itself to carry the full model name, not just the title.\n            if (not image_url or model_term not in compact(image_url + " " + alt)\n                    or (width and width < 900) or BAD.search(image_url + " " + alt)):
+            # A multi-model article may feature the *other* car. Require the
+            # media itself to carry the full model name, not just the title.
+            if (not image_url or model_term not in compact(image_url + " " + alt)\n                    or (width and width < 900) or BAD.search(image_url + " " + alt)):
                 continue
             try:
                 body, mime = fetch_bytes(image_url)
