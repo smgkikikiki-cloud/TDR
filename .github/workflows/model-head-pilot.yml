@@ -63,3 +63,21 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run typecheck
+      - name: Dry-run the seven visually inspected pilot images
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          source = Path("automotive/vehicle_master/integration_data/model_head_manifest.jsonl")
+          approved = {"bmw.bmw_3", "byd.atto3", "byd.seal", "gwm.haval_h6",
+                      "toyota.camry", "toyota.corolla_cross", "toyota.hilux_champ"}
+          rows = [json.loads(line) for line in source.read_text().splitlines()]
+          if {r["model_id"] for r in rows if r["status"] == "READY"} != approved:
+              raise SystemExit("Pilot selection changed; visual approval must be repeated")
+          for row in rows:
+              row["approved"] = row["model_id"] in approved
+          Path("/tmp/model-head-pilot-approved.jsonl").write_text(
+              "".join(json.dumps(row) + "\\n" for row in rows))
+          PY
+          npm run media:model-head:apply -- --manifest /tmp/model-head-pilot-approved.jsonl
+
