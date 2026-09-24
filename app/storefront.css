@@ -95,7 +95,7 @@
 .sfGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px 22px; }
 .sfCard { display: flex; flex-direction: column; }
 .sfSlot { aspect-ratio: 4 / 3; background: var(--sf-slot); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; overflow: hidden; text-align: center; padding: 12px; }
-.sfSlot img { width: 100%; height: 100%; object-fit: cover; }
+.sfSlot img { width: 100%; height: 100%; object-fit: contain; }
 .sfSlot small { font-size: 12px; font-weight: 800; letter-spacing: .14em; color: var(--sf-slot-ink); }
 .sfSlot b { font-size: 20px; font-weight: 700; letter-spacing: -.02em; color: #b6bcc7; }
 .sfCard:hover .sfSlot { background: #e5e8ee; }
@@ -123,7 +123,7 @@
 /* zone A — consumer */
 .sfHero { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 38px; padding: 34px 0 30px; align-items: start; }
 .sfHeroSlot { aspect-ratio: 16 / 10; background: var(--sf-slot); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; overflow: hidden; text-align: center; padding: 16px; }
-.sfHeroSlot img { width: 100%; height: 100%; object-fit: cover; }
+.sfHeroSlot img { width: 100%; height: 100%; object-fit: contain; }
 .sfHeroSlot small { font-size: 12px; font-weight: 800; letter-spacing: .14em; color: var(--sf-slot-ink); }
 .sfHeroSlot b { font-size: 28px; font-weight: 700; letter-spacing: -.025em; color: #b6bcc7; }
 .sfHeroCopy h1 { margin: 9px 0 0; font-size: 40px; font-weight: 800; letter-spacing: -.035em; line-height: 1.1; }
@@ -233,7 +233,7 @@
 .sfLeadMain h1 { margin: 10px 0 0; font-size: 40px; font-weight: 800; letter-spacing: -.035em; line-height: 1.1; }
 .sfLeadMain > p { margin: 13px 0 0; max-width: 640px; font-size: 15px; line-height: 1.75; color: var(--sf-body); }
 .sfLeadSlot { aspect-ratio: 16 / 9; background: var(--sf-slot); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; margin-top: 20px; overflow: hidden; text-align: center; padding: 16px; }
-.sfLeadSlot img { width: 100%; height: 100%; object-fit: cover; }
+.sfLeadSlot img { width: 100%; height: 100%; object-fit: contain; }
 .sfLeadSlot small { font-size: 12px; font-weight: 800; letter-spacing: .14em; color: var(--sf-slot-ink); }
 .sfLeadSlot b { font-size: 30px; font-weight: 700; letter-spacing: -.025em; color: #b6bcc7; }
 .sfLeadFacts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); margin: 20px 0 0; }
@@ -245,7 +245,7 @@
 .sfLeadSide { padding: 0 0 34px 32px; display: flex; flex-direction: column; }
 .sfSideItem { display: grid; grid-template-columns: 82px minmax(0, 1fr); gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--sf-line-soft); align-items: center; }
 .sfSideSlot { height: 54px; background: var(--sf-slot); display: grid; place-items: center; overflow: hidden; font-size: 12px; font-weight: 800; letter-spacing: .04em; color: var(--sf-slot-ink); text-align: center; padding: 4px; }
-.sfSideSlot img { width: 100%; height: 100%; object-fit: cover; }
+.sfSideSlot img { width: 100%; height: 100%; object-fit: contain; }
 .sfSideItem h3 { margin: 0; font-size: 15px; font-weight: 700; letter-spacing: -.01em; }
 .sfSideItem p { margin: 3px 0 0; font-size: 13px; color: var(--sf-muted); }
 .sfSideMore { margin-top: 16px; font-size: 13px; font-weight: 700; color: var(--red); }
