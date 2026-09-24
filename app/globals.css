@@ -41,6 +41,14 @@ button:not(:disabled):active {
   button:not(:disabled) { transition: none; }
   button:not(:disabled):hover, button:not(:disabled):active { transform: none; box-shadow: none; }
 }
+
+/* NoCopyGuard (components/NoCopyGuard.tsx) toggles this class on <body>
+   for every route except /admin. Inputs/textareas stay selectable --
+   otherwise nobody could edit what they typed into a search box. */
+body.no-copy { -webkit-user-select: none; user-select: none; }
+body.no-copy input, body.no-copy textarea {
+  -webkit-user-select: text; user-select: text;
+}
 .pageFrame { width: min(1460px, calc(100% - 36px)); margin: 0 auto; background: var(--white); min-height: 100vh; border-left: 1px solid var(--line); border-right: 1px solid var(--line); }
 main { padding: 0 var(--pagePad) 68px; }
 .siteHeader { border-bottom: 4px solid var(--red); padding: 19px var(--pagePad) 0; background: var(--white); }

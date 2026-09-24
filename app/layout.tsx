@@ -8,6 +8,7 @@ import "./home-polish.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { PublicChrome } from "@/components/PublicChrome";
+import { NoCopyGuard } from "@/components/NoCopyGuard";
 
 export const metadata: Metadata = {
   title: "TDR Automotive Intelligence",
@@ -18,6 +19,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="th">
       <body>
+        <NoCopyGuard />
         <div className="pageFrame">
           <PublicChrome><Header /></PublicChrome>
           <main>{children}</main>
