@@ -63,12 +63,28 @@ def test_all_four_canonical_publishers_share_one_concurrency_group():
 
 def test_every_publisher_that_needs_the_ordinal_guard_fetches_full_history():
     """git rev-list --count undercounts on a shallow clone, silently
-    disabling migration_v44's guard for that workflow."""
+    disabling migration_v44's guard for that workflow.
+
+    Full history can come either from actions/checkout's own
+    fetch-depth: 0, or from a follow-up deepen fetch scoped to just the
+    commit actually checked out. The latter replaced the former in every
+    one of these workflows: fetch-depth: 0 fetches every branch and tag
+    in the repository on every run, which started failing outright
+    ("pack has 2 unresolved deltas") once there were enough of them --
+    see each workflow's checkout comment. Either way, the requirement
+    this test guards is the same: a shallow clone must never reach
+    tools.publish_canonical's ordinal computation."""
     for workflow in ("source-import.yml", "canonical-input.yml",
                      "pricefeed.yml", "vehicle-release.yml"):
         checkouts = [step for step in _steps(workflow) if step.get("uses", "").startswith("actions/checkout")]
         assert checkouts, workflow
-        assert any((step.get("with") or {}).get("fetch-depth") == 0 for step in checkouts), workflow
+        full_depth_checkout = any((step.get("with") or {}).get("fetch-depth") == 0 for step in checkouts)
+        script = _script(workflow)
+        deepen_fetch_scoped_to_this_commit = (
+            "git fetch" in script and "--depth=2147483647" in script
+            and 'origin "$(git rev-parse HEAD)"' in script
+        )
+        assert full_depth_checkout or deepen_fetch_scoped_to_this_commit, workflow
 
 
 def test_canonical_input_marks_its_own_batches_published_after_a_real_publish():
