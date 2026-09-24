@@ -208,10 +208,25 @@ const SPEC_BACKED_ROWS: Partial<Record<BuiltinCompareRowKey, string>> = {
   seats: "vehicle.seats",
 };
 
-function resolvedSpec(trim: FreeCompareTrim, fieldKey: string): ResolvedSpec | null {
+/** The raw resolved fact behind a row, exactly as the ledger wrote it --
+ *  unformatted, with its value_state and qualifiers intact. Winner
+ *  highlighting (lib/compare-winners.ts) needs this, not the display string
+ *  formatSpecValue produces: a qualifier-compatibility check can't be done
+ *  on "150 kW (WLTP)" text. */
+export function resolvedSpec(trim: FreeCompareTrim, fieldKey: string): ResolvedSpec | null {
   const rows = trim.comparable_specs;
   if (!Array.isArray(rows)) return null;
   return rows.find((row) => row && row.field_key === fieldKey) || null;
+}
+
+/** The registry field key a row's value ultimately reads from, if any --
+ *  the `spec:` prefix stripped for a pure registry row, or SPEC_BACKED_ROWS'
+ *  mapping for a built-in one. Null for a built-in row with no ledger
+ *  backing at all (price, campaign, cab_type, ...): there is no comparable
+ *  spec fact behind those, so winner highlighting never applies to them. */
+export function registryFieldKeyForRow(key: CompareRowKey): string | null {
+  if (key.startsWith("spec:")) return key.slice(5);
+  return SPEC_BACKED_ROWS[key as BuiltinCompareRowKey] || null;
 }
 
 /** A fact's value as a reader sees it, or null.
@@ -323,6 +338,14 @@ export type CompareSpecField = {
   valueType?: string;
   canonicalUnit?: string;
   displayPrecision?: number | null;
+  /** The registry's own comparison intent (HIGHER_BETTER / LOWER_BETTER /
+   *  PRESENCE / SET_DIFFERENCE / INFORMATION_ONLY) and the qualifier names
+   *  that must match for two values to be on the same measurement basis.
+   *  lib/compare-winners.ts reads both -- see its module doc for why an
+   *  explicit UI allowlist sits on top rather than trusting every
+   *  registry-comparable field to produce a green winner. */
+  comparisonRule?: string;
+  comparisonQualifiers?: string[];
 };
 
 export type SpecDefinitionIndex = Map<string, CompareSpecField>;

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCanonicalCompareTrims } from "@/lib/canonical-data";
 import { compareValue, indexSpecFields, rowIsDifferent, visibleCompareGroups, type CompareSpecField, type FreeCompareTrim } from "@/lib/free-compare";
+import { evaluateCompareWinner } from "@/lib/compare-winners";
 import { loadSpecFieldRegistry } from "@/lib/spec-field-registry";
 import { requireMemberAccess, requireUsage, AccessPolicyError } from "@/lib/access-policy-server";
 import { recordEvent } from "@/lib/telemetry";
@@ -31,12 +32,18 @@ async function buildComparison(requestedIds: string[], diffOnly: boolean) {
   const definitions = indexSpecFields(specFields);
   const groups = visibleCompareGroups(selected, diffOnly, specFields).map((group) => ({
     title: group.title,
-    rows: group.rows.map((row) => ({
-      key: row.key,
-      label: row.label,
-      different: rowIsDifferent(selected, row.key, definitions),
-      values: selected.map((trim) => compareValue(trim, row.key, definitions)),
-    })),
+    rows: group.rows.map((row) => {
+      const winner = evaluateCompareWinner(selected, row.key, definitions);
+      return {
+        key: row.key,
+        label: row.label,
+        different: rowIsDifferent(selected, row.key, definitions),
+        values: selected.map((trim) => compareValue(trim, row.key, definitions)),
+        comparisonMode: winner.comparisonMode,
+        comparable: winner.comparable,
+        bestIndexes: winner.bestIndexes,
+      };
+    }),
   }));
   return {
     selected: selected.map((trim) => ({

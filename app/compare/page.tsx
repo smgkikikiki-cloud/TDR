@@ -11,7 +11,17 @@ type TrimOption = {
   name: string | null; powertrain: string | null; price_baht: number | null;
 };
 type ModelOption = { id: string; brand: string; model: string; trims: TrimOption[] };
-type CompareRow = { key: string; label: string; different: boolean; values: (string | null)[] };
+type CompareRow = {
+  key: string; label: string; different: boolean; values: (string | null)[];
+  // Evidence-safe winner highlighting -- lib/compare-winners.ts decides all
+  // three server-side; the page only ever reads them, never re-derives a
+  // winner itself. comparable is false (and bestIndexes empty) for every
+  // row the policy has not explicitly allowlisted, so old rows render
+  // exactly as before.
+  comparisonMode: "QUANTITATIVE_WINNER" | "PRESENCE_ADVANTAGE" | "NEUTRAL";
+  comparable: boolean;
+  bestIndexes: number[];
+};
 type CompareGroup = { title: string; rows: CompareRow[] };
 type SelectedTrim = {
   id: string; brand_name: string | null; model_name: string | null; name: string | null;
@@ -311,7 +321,16 @@ export default function ComparePage() {
                     const displayValue = row.key === "body_type" && value ? bodyLabel(value)
                       : row.key === "cab_type" && value ? cabLabel(value)
                       : value;
-                    return <td key={`${row.key}:${index}`} className={displayValue ? undefined : "compareMissing"}>{displayValue || "—"}</td>;
+                    // A winner is only ever painted for a row the server
+                    // already marked comparable -- an incompatible-qualifier
+                    // or missing-data row never reaches bestIndexes, so
+                    // there is nothing here to double-check client-side.
+                    const isWinner = row.comparable && row.bestIndexes.includes(index);
+                    const cellClass = [
+                      displayValue ? null : "compareMissing",
+                      isWinner ? "compareWinnerCell" : null,
+                    ].filter(Boolean).join(" ") || undefined;
+                    return <td key={`${row.key}:${index}`} className={cellClass}>{displayValue || "—"}</td>;
                   })}
                 </tr>
               )),
