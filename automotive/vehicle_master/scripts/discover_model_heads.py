@@ -137,7 +137,7 @@ def discover(row: dict, catalog: Catalog, current: dict, cache: Path, max_pages:
         "existing_source": prior.get("source_url") if prior else None,
         "selected_image": None, "source_url": None, "source_domain": None,
         "status": "NO_IMAGE", "reason": "", "sha256": None, "storage_path": None,
-        "review_candidates": [],
+        "review_candidates": [], "approved": False,
     }
     generation = catalog.generations.get(generation_id)
     model = catalog.models.get(model_id)
