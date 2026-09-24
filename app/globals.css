@@ -27,14 +27,14 @@ button, input { font: inherit; }
    buttons only (not every element that happens to look like one), and
    turned off for anyone who has asked their OS for reduced motion. */
 button:not(:disabled) {
-  transition: transform .16s cubic-bezier(.34, 1.56, .64, 1), box-shadow .16s ease;
+  transition: transform .2s cubic-bezier(.34, 1.7, .64, 1), box-shadow .2s ease;
 }
 button:not(:disabled):hover {
-  transform: translateY(-1px) scale(1.03);
-  box-shadow: 0 6px 14px rgba(1, 32, 97, .16);
+  transform: translateY(-3px) scale(1.07);
+  box-shadow: 0 10px 20px rgba(1, 32, 97, .22);
 }
 button:not(:disabled):active {
-  transform: translateY(0) scale(.97);
+  transform: translateY(0) scale(.95);
   transition-duration: .05s;
 }
 @media (prefers-reduced-motion: reduce) {
