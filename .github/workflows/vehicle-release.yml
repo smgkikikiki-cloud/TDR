@@ -36,12 +36,26 @@ jobs:
         working-directory: automotive/vehicle_master
     steps:
       - uses: actions/checkout@v4
+        with:
+          # The push trigger above is already restricted to main; this
+          # only changes workflow_dispatch, which otherwise lets a human
+          # pick a different branch in the UI -- never correct for a
+          # workflow that publishes straight to production. See
+          # source-import.yml's checkout comment for the same reasoning.
+          ref: main
       # Full ancestry of this one commit, needed to compute the
       # revision-ordinal below -- not every branch/tag in the repo. See
       # source-import.yml's checkout comment for why `fetch-depth: 0` was
       # failing here with "pack has 2 unresolved deltas".
       - name: Deepen this commit's history for the revision ordinal
         run: git fetch --no-tags --prune --no-recurse-submodules --depth=2147483647 origin "$(git rev-parse HEAD)"
+      - name: Fail loudly if the deepen fetch left the checkout shallow
+        run: |
+          set -euo pipefail
+          if [ "$(git rev-parse --is-shallow-repository)" != "false" ]; then
+            echo "::error::Checkout is still shallow after the deepen fetch -- migration_v44's ordinal guard would be silently disabled."
+            exit 1
+          fi
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"

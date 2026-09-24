@@ -87,6 +87,37 @@ def test_every_publisher_that_needs_the_ordinal_guard_fetches_full_history():
         assert full_depth_checkout or deepen_fetch_scoped_to_this_commit, workflow
 
 
+def test_a_deepen_fetch_fails_loudly_if_it_leaves_the_checkout_shallow():
+    """tools/publish_canonical.py's _revision_ordinal() treats a shallow
+    repo as "no ordinal, no guard" rather than erroring -- exactly the
+    failure mode that would make a broken deepen step invisible. Any
+    workflow relying on the deepen-fetch pattern (rather than
+    fetch-depth: 0) must verify it actually worked."""
+    for workflow in ("source-import.yml", "canonical-input.yml",
+                     "pricefeed.yml", "vehicle-release.yml"):
+        checkouts = [step for step in _steps(workflow) if step.get("uses", "").startswith("actions/checkout")]
+        full_depth_checkout = any((step.get("with") or {}).get("fetch-depth") == 0 for step in checkouts)
+        if full_depth_checkout:
+            continue
+        script = _script(workflow)
+        assert "is-shallow-repository" in script and '!= "false"' in script, workflow
+
+
+def test_production_writers_pin_checkout_to_main():
+    """These workflows push straight to main (git push origin HEAD:main)
+    regardless of what they started from, so starting anywhere else is
+    never correct -- and workflow_dispatch lets a human pick an arbitrary
+    branch in the UI. Pinning also guarantees actions/checkout creates
+    refs/remotes/origin/main locally, which pricefeed_guard.py reads
+    directly (`--base origin/main`) without needing every other branch
+    fetched just to get that one ref."""
+    for workflow in ("source-import.yml", "canonical-input.yml",
+                     "pricefeed.yml", "vehicle-release.yml"):
+        checkouts = [step for step in _steps(workflow) if step.get("uses", "").startswith("actions/checkout")]
+        assert checkouts, workflow
+        assert any((step.get("with") or {}).get("ref") == "main" for step in checkouts), workflow
+
+
 def test_canonical_input_marks_its_own_batches_published_after_a_real_publish():
     script = _script("canonical-input.yml")
     assert "mark-published" in script

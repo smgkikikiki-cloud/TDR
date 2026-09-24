@@ -28,6 +28,17 @@ jobs:
         working-directory: automotive/vehicle_master
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Pinned rather than left to default to whatever ref triggered
+          # the run: this is a production writer that pushes straight to
+          # main (git push origin HEAD:main below) regardless of what it
+          # started from, so starting anywhere else is never correct --
+          # and workflow_dispatch lets a human pick an arbitrary branch in
+          # the UI. Pinning also guarantees actions/checkout creates
+          # refs/remotes/origin/main locally, which pricefeed.yml's own
+          # checkout comment covers in more detail (pricefeed_guard.py
+          # reads `origin/main` directly).
+          ref: main
       # tools.publish_canonical computes `git rev-list --count` on this
       # commit to guard the publish RPC against an older commit's publish
       # racing a newer one's (migration_v44). That guard only needs this
@@ -48,6 +59,18 @@ jobs:
       # the repository.
       - name: Deepen this commit's history for the publish ordinal guard
         run: git fetch --no-tags --prune --no-recurse-submodules --depth=2147483647 origin "$(git rev-parse HEAD)"
+      # tools/publish_canonical.py's _revision_ordinal() silently returns
+      # None (no ordinal, guard skipped) for a shallow repo rather than
+      # erroring -- exactly the failure mode that would make a broken
+      # deepen step invisible. Fail the job outright instead so migration_v44's
+      # staleness guard is never quietly disabled by a future change here.
+      - name: Fail loudly if the deepen fetch left the checkout shallow
+        run: |
+          set -euo pipefail
+          if [ "$(git rev-parse --is-shallow-repository)" != "false" ]; then
+            echo "::error::Checkout is still shallow after the deepen fetch -- migration_v44's ordinal guard would be silently disabled."
+            exit 1
+          fi
       - name: Preflight
         id: preflight
         shell: bash
