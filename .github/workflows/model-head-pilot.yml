@@ -1,0 +1,51 @@
+name: Model head backfill pilot
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/model-head-pilot.yml"
+      - "automotive/vehicle_master/scripts/discover_model_heads.py"
+      - "scripts/apply-model-head-manifest.ts"
+      - "lib/canonical-data.ts"
+      - "app/admin/model-head-actions.ts"
+      - "app/admin/(secure)/vehicles/[modelId]/page.tsx"
+      - "supabase/migration_v50_model_head_override.sql"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Discover pilot images without production writes
+        working-directory: automotive/vehicle_master
+        run: python scripts/discover_model_heads.py --pilot --workers 4 --max-pages 4
+      - name: Preserve manifest and original image bytes for visual review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: model-head-pilot-${{ github.sha }}
+          path: |
+            automotive/vehicle_master/integration_data/model_head_manifest.jsonl
+            automotive/vehicle_master/integration_data/model_head_manifest.review.csv
+            automotive/vehicle_master/data/media/cache/model-head
+          if-no-files-found: warn
+          retention-days: 14
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
