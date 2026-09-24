@@ -60,6 +60,14 @@ for (const row of ready) {
   const { data: prior, error: priorError } = await db.from("vehicle_media_assets")
     .select("id,sha256,source_type").eq("visual_key", row.model_id).eq("image_type", "hero");
   if (priorError) throw priorError;
+  const { data: modelBinding, error: bindingReadError } = await db.from("vehicle_media_bindings")
+    .select("entity_id").eq("entity_id", row.model_id).eq("entity_type", "model").maybeSingle();
+  if (bindingReadError) throw bindingReadError;
+  if (modelBinding && !prior?.length && !replaceManual) {
+    console.log(`${row.model_id}: keep intentional blank from Admin`);
+    skipped++;
+    continue;
+  }
   if (prior?.some(asset => asset.source_type === "manual") && !replaceManual) {
     console.log(`${row.model_id}: keep manual Admin override`);
     skipped++;
