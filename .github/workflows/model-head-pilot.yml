@@ -19,7 +19,7 @@ permissions:
 jobs:
   pilot:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 60
     env:
       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
@@ -40,6 +40,20 @@ jobs:
           path: |
             automotive/vehicle_master/integration_data/model_head_manifest.jsonl
             automotive/vehicle_master/integration_data/model_head_manifest.review.csv
+            automotive/vehicle_master/data/media/cache/model-head
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Attempt every active canonical Model without production writes
+        working-directory: automotive/vehicle_master
+        run: python scripts/discover_model_heads.py --workers 6 --max-pages 3 --output integration_data/model_head_full.jsonl
+      - name: Preserve full manifest and review list
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: model-head-full-${{ github.sha }}
+          path: |
+            automotive/vehicle_master/integration_data/model_head_full.jsonl
+            automotive/vehicle_master/integration_data/model_head_full.review.csv
             automotive/vehicle_master/data/media/cache/model-head
           if-no-files-found: warn
           retention-days: 14
