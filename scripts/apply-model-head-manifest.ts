@@ -10,6 +10,7 @@ type Row = {
   source_domain: string | null; source_type?: string;
   sha256: string | null; storage_path: string | null;
   confidence?: number; width?: number | null; height?: number | null;
+  approved?: boolean;
 };
 const args = process.argv.slice(2);
 function arg(name: string, fallback: string) {
@@ -25,7 +26,7 @@ const key = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE
 if (!url || !key) throw new Error("Supabase server credentials required");
 const db = createClient(url, key, { auth: { persistSession: false } });
 const rows = readFileSync(manifest, "utf8").split(/\r?\n/).filter(Boolean).map(line => JSON.parse(line) as Row);
-const ready = rows.filter(row => row.status === "READY");
+const ready = rows.filter(row => row.status === "READY" && row.approved === true);
 const ids = ready.map(row => row.model_id);
 if (new Set(ids).size !== ids.length) throw new Error("duplicate Model in manifest");
 const active = new Map<string, string>();
@@ -112,4 +113,5 @@ for (const row of ready) {
   applied++;
 }
 console.log(JSON.stringify({ total: rows.length, ready: ready.length, review: rows.length - ready.length,
-  applied, skipped, dry_run: !applying }));
+  applied, skipped, awaiting_review: rows.filter(row => row.status === "READY" && !row.approved).length,
+  dry_run: !applying }));
