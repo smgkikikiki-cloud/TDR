@@ -82,6 +82,17 @@ def activate_existing_oem_registry(models: list[dict]) -> None:
             continue
         row = by_id[model_id]
         pages[row["brand_id"]].append((row["generation_id"], url))
+    # Official Thai model indexes; keep discovery within each OEM host.
+    index_sources = {
+        "mercedes_benz": ("https://www.mercedes-benz.co.th/en/passengercars/models.html", "mercedes-benz.co.th"),
+        "audi": ("https://www.audi.co.th/en/models/", "audi.co.th"),
+        "lexus": ("https://www.lexus.co.th/en/price-and-model-tools/price-list.html", "lexus.co.th"),
+        "volvo": ("https://www.volvocars.com/en-th/cars/compare-cars/", "volvocars.com"),
+    }
+    for brand, (index, host) in index_sources.items():
+        if brand not in SOURCES and any(m["brand_id"] == brand for m in models):
+            SOURCES[brand] = OfficialSource(
+                brand_id=brand, seed_urls=(index,), allowed_hosts=(host,))
     for brand, entries in pages.items():
         for generation_id, url in entries:
             MODEL_PAGE_HINTS[generation_id] = tuple(dict.fromkeys(
