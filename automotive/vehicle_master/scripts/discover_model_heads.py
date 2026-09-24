@@ -52,6 +52,7 @@ PILOT_REJECTED_SHA256 = {
     "49346f46eb8da0bd386d4de522ed8c5a5db70abd0f973b5ce5504639f6386dca",
     "66025652a781596679302dd3862fa6232e543016afba6a97668e292f17061025",
     "683b622fea48613de6b0e9d1c7cbeba3ae0a8086a41c8572b76b7c84d1eb53e8",
+    "1f02bfc452b006b1552d8b25b9355340827d783f66b9e13aea35b82818c907dd",  # MG HS two-car banner
 }
 PILOT_IDS = (
     "toyota.camry.xv80", "toyota.hilux_champ.champ", "honda.civic.fe",
