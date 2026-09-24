@@ -46,23 +46,6 @@ jobs:
       - name: Attempt every active canonical Model without production writes
         working-directory: automotive/vehicle_master
         run: python scripts/discover_model_heads.py --workers 6 --max-pages 3 --output integration_data/model_head_full.jsonl
-      - name: Probe publication fallback for unsupported brands
-        working-directory: automotive/vehicle_master
-        run: |
-          python scripts/publication_head_fallback.py \
-            --input integration_data/model_head_full.jsonl \
-            --output integration_data/model_head_publication_pilot.jsonl \
-            --model-ids mazda.cx5 nissan.almera mitsubishi.pajero_sport mercedes_benz.c_class audi.a4 lexus.es volvo.xc60 hyundai.tucson kia.ev6 porsche.cayenne
-      - name: Preserve publication fallback pilot
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: model-head-publication-pilot-${{ github.sha }}
-          path: |
-            automotive/vehicle_master/integration_data/model_head_publication_pilot.jsonl
-            automotive/vehicle_master/data/media/cache/model-head
-          if-no-files-found: warn
-          retention-days: 14
       - name: Preserve full manifest and review list
         if: always()
         uses: actions/upload-artifact@v4
