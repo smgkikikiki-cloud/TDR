@@ -144,7 +144,8 @@ def discover(row: dict, catalog: Catalog, current: dict, cache: Path, max_pages:
     source = get_source(row["brand_id"])
     if not source or not generation or not model:
         base["status"] = "NEEDS_REVIEW" if prior else "NO_IMAGE"
-        base["reason"] = "no_verified_official_adapter_or_catalog_identity"
+        base["reason"] = ("no_verified_official_adapter" if not source
+                          else "canonical_identity_not_in_catalog_snapshot")
         return base
     identity = VehicleIdentity(
         brand_id=row["brand_id"], model_id=model_id, generation_id=generation_id,
@@ -164,7 +165,7 @@ def discover(row: dict, catalog: Catalog, current: dict, cache: Path, max_pages:
         base["reason"] = f"discovery_failed:{type(exc).__name__}"
         return base
     if not candidates:
-        base["status"] = "NEEDS_REVIEW" if prior else "NO_IMAGE"
+        base["status"] = "NEEDS_REVIEW" if prior or base["review_candidates"] else "NO_IMAGE"
         base["source_url"] = (get_page_hints(generation_id) or source.seed_urls)[0]
         base["reason"] = "no_confident_exterior_candidate;existing_image_unverified" if prior else "no_confident_exterior_candidate"
         return base
@@ -194,7 +195,7 @@ def discover(row: dict, catalog: Catalog, current: dict, cache: Path, max_pages:
             return base
         except Exception:
             continue
-    base["status"] = "NEEDS_REVIEW" if prior else "NO_IMAGE"
+    base["status"] = "NEEDS_REVIEW"
     base["reason"] = "candidate_download_or_format_failed"
     return base
 
