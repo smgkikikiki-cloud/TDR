@@ -35,13 +35,23 @@ REJECT = re.compile(
 EXTENSIONS = {"image/jpeg": ".jpg", "image/png": ".png", "image/webp": ".webp", "image/avif": ".avif"}
 # Visual inspection of the first 14-model pilot: these exact binaries were a
 # wheel/mirror close-up, interior collage, tiny-car portrait, tiny-car scenery,
-# and two clipped vehicles. Hashes avoid guessing from anonymous OEM CDN paths.
+# and two clipped vehicles; the full contact sheet also caught promotional\n# collages, tiny cars and a close-up. Hashes avoid guessing from anonymous OEM CDN paths.
 PILOT_REJECTED_SHA256 = {
     "1e0027ab167b2926191c29799a0dfb47707f62268ffdf8b5399377dc9600a120",
     "c501af89009f17ceb2509dcb2d16be343667dfa553d832f57e8ef1012cf2f674",
     "7f890a97d9e84b058fc3c43b73965345e3416c7fe40a89526b8404a0215f3f63",
     "a877ddba5fd5d9e3a1edbb5d177b13d34d7bbb58a52130ea69d9e11293f3e33c",
     "166241e267704d81e6967fec436ee01d798bf5d60f25ee1c4bae1a8f66c6d489",
+    "b4f8eb6602503f86d0c642965f24a09102d06f20e5a49dba63d8ae7fd4e4255a",
+    "c7f68b391afb65a0b70e1d6911f8445126594b4c89e25853ac13c3ddc4666ef9",
+    "b1bef4505e9bea83fba6abd971043f8fe9d2ef155be71028e3fe951f739f17b5",
+    "c558c07628b16903392cf20b6e7195c1f0465a22f2eb2eab1b20f0f6f0498460",
+    "2d3985b30511d97fb979959c86e5c82cec6290241180329b69754a7f248d0166",
+    "8d9a38ed7960efbcb4f2b2d02362099659cb5c3d9f72e6f20141a9ee5cee9420",
+    "27cfc6a5c8bbbd09ff4725d37068145fd29ccde7941c800d04c8106fbe07abc3",
+    "49346f46eb8da0bd386d4de522ed8c5a5db70abd0f973b5ce5504639f6386dca",
+    "66025652a781596679302dd3862fa6232e543016afba6a97668e292f17061025",
+    "683b622fea48613de6b0e9d1c7cbeba3ae0a8086a41c8572b76b7c84d1eb53e8",
 }
 PILOT_IDS = (
     "toyota.camry.xv80", "toyota.hilux_champ.champ", "honda.civic.fe",
