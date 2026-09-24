@@ -1,0 +1,83 @@
+{
+  "batch_ref": "pricefeed-2026-09-24-c54a71c6832b3dc3",
+  "generated_at": "2026-09-24T13:34:08+00:00",
+  "exceptions": [
+    {
+      "kind": "PRICE_IDENTITY",
+      "reason": "no_trim_match, price_type_unclear",
+      "source_identity": {
+        "trim_id": null,
+        "trim_candidates": [],
+        "amount_thb": 990000,
+        "price_type": "UNKNOWN",
+        "effective_from": null,
+        "campaign_id": null,
+        "urls": [
+          "https://www.headlightmag.com/2026-09-24-picture-specs-honda-super-one-edit/"
+        ],
+        "claim_ids": [
+          "8ca12e9b437b5670",
+          "af1ace6211d8cea5"
+        ]
+      }
+    },
+    {
+      "kind": "PRICE_IDENTITY",
+      "reason": "no_trim_match",
+      "source_identity": {
+        "trim_id": null,
+        "trim_candidates": [],
+        "amount_thb": 990000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "campaign_id": null,
+        "urls": [
+          "https://www.headlightmag.com/2026-09-24-picture-specs-honda-super-one-edit/"
+        ],
+        "claim_ids": [
+          "3dfd37272fe4d2a6"
+        ]
+      }
+    },
+    {
+      "kind": "PRICE_IDENTITY",
+      "reason": "single_tier_b, sources_disagree",
+      "source_identity": {
+        "trim_id": "honda.city.gn2.trim.s_ice",
+        "trim_candidates": [
+          "honda.city.gn2.trim.s_ice"
+        ],
+        "amount_thb": 569000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "campaign_id": null,
+        "urls": [
+          "https://autolifethailand.tv/official-price-honda-city-minorchange-2026-hatchback-ehev-turbo/"
+        ],
+        "claim_ids": [
+          "9398a4056e1b38a5"
+        ]
+      }
+    },
+    {
+      "kind": "PRICE_IDENTITY",
+      "reason": "single_tier_b, sources_disagree",
+      "source_identity": {
+        "trim_id": "honda.city.gn2.trim.s_ice",
+        "trim_candidates": [
+          "honda.city.gn2.trim.s_ice"
+        ],
+        "amount_thb": 579000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "campaign_id": null,
+        "urls": [
+          "https://autolifethailand.tv/official-price-honda-city-minorchange-2026-hatchback-ehev-turbo/"
+        ],
+        "claim_ids": [
+          "abcf4e7910e2a160"
+        ]
+      }
+    }
+  ]
+}
