@@ -20,7 +20,8 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 # Reuse verified OEM hints without invoking the old Generation publisher.
 import ingest_official_media_followup  # noqa: F401,E402
-from vehreg.official_media.adapters import get_source, get_page_hints
+from vehreg.official_media.adapters import get_source, get_page_hints, MODEL_PAGE_HINTS, SOURCES
+from vehreg.official_media.models import OfficialSource
 from vehreg.official_media.models import ImageSlot, ReviewStatus, VehicleIdentity
 from vehreg.official_media.pipeline import collect_candidates, fetch_bytes
 from vehreg.catalog import Catalog, DATA_DIR
@@ -49,6 +50,38 @@ PILOT_IDS = (
     "honda.crv.rs", "mg.mg_s5_ev.gen1", "tesla.model3.m3h",
     "xpeng.xpeng_g6.g6", "zeekr.zeekr_x.zx",
 )
+
+
+def activate_existing_oem_registry(models: list[dict]) -> None:
+    """Reuse verified canonical model-page URLs from the Price Feed registry."""
+    path = ROOT / "vehreg/data/2026/market/pricefeed/targets.json"
+    registry = json.loads(path.read_text(encoding="utf-8"))
+    official_ids = {p["source_id"] for p in registry.get("source_profiles", [])
+                    if p.get("kind") == "OEM"}
+    by_id = {m["canonical_id"]: m for m in models}
+    pages = defaultdict(list)
+    for target in registry.get("targets", []):
+        model_id = target.get("model_hint")
+        if (target.get("source_id") not in official_ids
+                or target.get("role") != "CURRENT_MODEL_PAGE"
+                or target.get("enabled") is False or model_id not in by_id):
+            continue
+        url = target.get("url", "")
+        parsed = urlparse(url)
+        if parsed.scheme != "https" or not parsed.hostname:
+            continue
+        row = by_id[model_id]
+        pages[row["brand_id"]].append((row["generation_id"], url))
+    for brand, entries in pages.items():
+        for generation_id, url in entries:
+            MODEL_PAGE_HINTS[generation_id] = tuple(dict.fromkeys(
+                (url, *MODEL_PAGE_HINTS.get(generation_id, ()))))
+        if brand not in SOURCES:
+            hosts = tuple(sorted({urlparse(url).hostname for _, url in entries}))
+            SOURCES[brand] = OfficialSource(
+                brand_id=brand, seed_urls=(entries[0][1],),
+                allowed_hosts=hosts,
+            )
 
 
 def active_rows(table: str, select: str) -> list[dict]:
@@ -186,6 +219,7 @@ def main() -> None:
         wanted = set(args.model_ids)
         models = [m for m in models if m["canonical_id"] in wanted]
     catalog = Catalog.load(args.data_dir, args.year)
+    activate_existing_oem_registry(models)
     results = []
     with ThreadPoolExecutor(max_workers=max(1, args.workers)) as pool:
         jobs = [pool.submit(discover, row, catalog, current, args.cache, args.max_pages) for row in models]
