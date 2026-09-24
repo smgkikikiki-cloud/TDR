@@ -27,7 +27,7 @@ check("current/historical require HTTP(S) evidence", action.includes("Evidence à
 check("dispatcher requires ADMIN source", input.includes("UPSERT_TRIM_RETAIL_LIFECYCLE_REVIEW requires source.kind ADMIN"), true);
 check("dispatcher requires HUMAN actor", input.includes("_validate_trim_lifecycle_review_command") && input.includes("_validated_human_actor(command, operation)"), true);
 check("review-only batches do not fake canonical state changes", input.includes("canonical_write_applied = False") && input.includes("if canonical_write_applied:"), true);
-check("HUMAN trim review precedes price inference", lifecycle.indexOf("elif trim_id in decisions:") < lifecycle.indexOf("elif _positive_amount"), true);
+check("HUMAN trim review precedes the CURRENT-by-default fallback", lifecycle.indexOf("elif trim_id in decisions:") < lifecycle.lastIndexOf("else:"), true);
 check("historical parent precedes HUMAN trim review", lifecycle.indexOf('model_status.get(model_id) == "HISTORICAL"') < lifecycle.indexOf("elif trim_id in decisions:"), true);
 
 console.log("\ntrim retail lifecycle â€” operator UX");

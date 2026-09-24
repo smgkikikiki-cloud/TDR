@@ -71,9 +71,9 @@ def test_enriched_release_identity_is_stable_and_covers_lifecycle_and_history():
 
     assert "historical_model_state" in first
     assert set(SEMANTIC_KEYS).issubset(first.keys())
-    # apply_retail_lifecycle is fail-closed: every trim must land on an
-    # explicit, evidence-backed status rather than silently inheriting an
-    # "active generation implies current" default.
+    # apply_retail_lifecycle always resolves every trim to one of these
+    # three enum values -- CURRENT by default under the owner's policy,
+    # HISTORICAL only on an explicit archive/ended-generation/HUMAN review.
     for trim in first["market_trims"]:
         assert trim["status"] in {"CURRENT", "HISTORICAL", "UNVERIFIED"}
 

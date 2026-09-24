@@ -32,8 +32,8 @@ export default async function PriceCoveragePage() {
     <div className="adminHeader">
       <div>
         <small>ADMIN BENCH · RETAIL + PRICE COVERAGE WORKLIST</small>
-        <h1>แก้ retail lifecycle ก่อน แล้วค่อยเติม Verified LIST_PRICE</h1>
-        <p>เรียง canonical models ตามยอดจดทะเบียน 3 เดือนล่าสุด แต่ไม่ถือว่า identity ใน Vehicle Master = รถที่ขายอยู่วันนี้. Model/trim ที่ยังไม่มี retail evidence ถูกบล็อกเป็น UNVERIFIED ก่อนเข้าสู่ price work.</p>
+        <h1>ไล่หา Verified LIST_PRICE ตาม retail lifecycle ปัจจุบัน</h1>
+        <p>เรียง canonical models ตามยอดจดทะเบียน 3 เดือนล่าสุด. Model/trim ทุกตัวถือว่าขายอยู่ (CURRENT) โดย default จนกว่าเจ้าของจะกด "เลิกขาย" เอง — ราคาที่ยังไม่มีคือ price debt ที่ต้องไล่หาต่อ ไม่ใช่ lifecycle ที่ต้องรอ verify ก่อน.</p>
       </div>
       <Link className="adminPrimaryLink" href="/admin/prices">เปิด Price Ledger ↗</Link>
     </div>
@@ -52,18 +52,18 @@ export default async function PriceCoveragePage() {
     </div>
 
     <div className="adminNotice">
-      <b>Fail-closed denominator</b>
-      <span>HISTORICAL model ถูกตัดออกจาก current retail denominator. UNVERIFIED model ยังอยู่ใน denominator และยังบล็อก readiness เพื่อไม่ให้การ “ยังไม่รู้ว่าขายไหม” ทำ coverage สูงขึ้นเอง. HISTORICAL trim ไม่ต้องมี current LIST_PRICE; UNVERIFIED trim บล็อก lifecycle แทนที่จะถูกนับเป็น price debt.</span>
+      <b>CURRENT-by-default denominator</b>
+      <span>HISTORICAL model/trim ถูกตัดออกจาก denominator เพราะเจ้าของกด "เลิกขาย" เองแล้ว (หรือ generation จบแล้ว). ทุก model/trim อื่นถือเป็น CURRENT โดย default แม้ยังไม่มีราคา — ราคาที่ยังหาไม่เจอนับเป็น price debt (MISSING_LIST_PRICE) ไม่ใช่ lifecycle block. HISTORICAL trim ไม่ต้องมี current LIST_PRICE.</span>
     </div>
 
     <div className="adminNotice">
       <b>Deferred ≠ ready</b>
-      <span>Price defer จาก evidence conflict/รอ MSRP final ยังทำงานเหมือนเดิม แต่ใช้ได้เฉพาะ current trim ที่ผ่าน lifecycle แล้ว. Deferred trim ยังเป็น missing LIST_PRICE และยังบล็อก Paid Price Range.</span>
+      <span>Price defer จาก evidence conflict/รอ MSRP final ยังทำงานเหมือนเดิม แต่ใช้ได้เฉพาะ current trim เท่านั้น. Deferred trim ยังเป็น missing LIST_PRICE และยังบล็อก Paid Price Range.</span>
     </div>
 
     <div className="adminNotice">
       <b>Source boundary</b>
-      <span>Legacy TDR editorial status, ECO identity, generation ที่ยังไม่ ended และ seed price ล้วนไม่ใช่หลักฐานว่า retail trim ยังขายอยู่. CURRENT ต้องมาจาก canonical retail evidence; current canonical LIST_PRICE เป็นหลักฐาน currentness ระดับ trim ได้.</span>
+      <span>Identity จาก ECO/homologation evidence ก็เพียงพอให้ trim เป็น CURRENT โดย default แล้ว — ไม่ต้องรอ canonical LIST_PRICE หรือ evidence เพิ่มเติมมายืนยัน currentness อีก. สิ่งเดียวที่เปลี่ยนสถานะได้คือเจ้าของกด "เลิกขาย" เอง, generation ที่ ended แล้ว, หรือ HUMAN trim lifecycle review ที่บันทึกไว้ก่อนหน้า.</span>
     </div>
 
     <div className="libraryTable"><table>

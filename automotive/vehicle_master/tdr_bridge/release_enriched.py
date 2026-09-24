@@ -54,8 +54,10 @@ def enrich_release(
     out = apply_canonical_trim_overlay(release, data_dir=data_dir, year=year)
     out = apply_verified_trim_fragments(out, data_dir=data_dir, year=year)
 
-    # Canonical identity and "orderable today" are separate claims. Lifecycle
-    # remains fail-closed after every retail identity batch is present.
+    # Canonical identity and "orderable today" are separate claims, but the
+    # owner-selected policy resolves that gap as CURRENT-by-default: lifecycle
+    # is evaluated after every retail identity batch is present so an
+    # explicit HISTORICAL archive or ended generation still wins.
     out = apply_retail_lifecycle(out, data_dir=data_dir, year=year)
     out["historical_model_state"] = build_historical_model_state(
         data_dir=data_dir,

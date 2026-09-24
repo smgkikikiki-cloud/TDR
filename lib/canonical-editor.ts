@@ -8,6 +8,7 @@
  * app/admin/vehicle-editor-actions.ts -> lib/canonical-command-builder.ts ->
  * lib/canonical-input-queue.ts, same as the rest of Admin.
  */
+import { cache } from "react";
 import { adminDb } from "@/lib/supabase";
 import { oemTargetsForModel, type OemEvidenceTarget } from "@/lib/price-evidence-registry";
 import { trimEditorFields } from "@/lib/spec-field-registry";
@@ -132,7 +133,10 @@ function firstCampaignOffer(quote: unknown): WorkspaceCampaign | null {
   };
 }
 
-export async function loadVehicleWorkspace(modelId: string): Promise<VehicleWorkspace | null> {
+// The [modelId] layout (archive/reopen bar) and page both need the full
+// workspace on every request; cache() dedupes the underlying query fan-out
+// to one call per request instead of running it twice.
+export const loadVehicleWorkspace = cache(async function loadVehicleWorkspace(modelId: string): Promise<VehicleWorkspace | null> {
   const db = adminDb();
   if (!db) throw new Error("ยังไม่ได้ตั้งค่า Supabase server credential");
 
@@ -274,7 +278,7 @@ export async function loadVehicleWorkspace(modelId: string): Promise<VehicleWork
     evidenceTargets: oemTargetsForModel(modelId),
     relatedBatches,
   };
-}
+});
 
 export async function listVehicleModelsForPicker(searchTerm: string): Promise<Array<{
   canonicalId: string; brandId: string; nameEn: string; nameTh: string; status: string | null;
