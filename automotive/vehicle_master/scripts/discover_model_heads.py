@@ -28,10 +28,20 @@ from vehreg.catalog import Catalog, DATA_DIR
 REJECT = re.compile(
     r"mirror|wheel|tyre|tire|headlight|tail.?light|lamp|badge|logo|icon|"
     r"charge.?port|interior|dashboard|cockpit|seat|infotainment|engine|"
-    r"grille|accessor|brochure|collage|detail|close.?up",
+    r"grille|accessor|brochure|collage|detail|close.?up|2[-_ ]cars|mobile",
     re.I,
 )
 EXTENSIONS = {"image/jpeg": ".jpg", "image/png": ".png", "image/webp": ".webp", "image/avif": ".avif"}
+# Visual inspection of the first 14-model pilot: these exact binaries were a
+# wheel/mirror close-up, interior collage, tiny-car portrait, tiny-car scenery,
+# and two clipped vehicles. Hashes avoid guessing from anonymous OEM CDN paths.
+PILOT_REJECTED_SHA256 = {
+    "1e0027ab167b2926191c29799a0dfb47707f62268ffdf8b5399377dc9600a120",
+    "c501af89009f17ceb2509dcb2d16be343667dfa553d832f57e8ef1012cf2f674",
+    "7f890a97d9e84b058fc3c43b73965345e3416c7fe40a89526b8404a0215f3f63",
+    "a877ddba5fd5d9e3a1edbb5d177b13d34d7bbb58a52130ea69d9e11293f3e33c",
+    "166241e267704d81e6967fec436ee01d798bf5d60f25ee1c4bae1a8f66c6d489",
+}
 PILOT_IDS = (
     "toyota.camry.xv80", "toyota.hilux_champ.champ", "honda.civic.fe",
     "byd.seal.seal", "mg.mg4.mg4e", "gwm.haval_h6.h6hev",
@@ -115,6 +125,8 @@ def discover(row: dict, catalog: Catalog, current: dict, cache: Path, max_pages:
             if mime not in EXTENSIONS or not (20_000 <= len(body) <= 20 * 1024 * 1024):
                 continue
             digest = hashlib.sha256(body).hexdigest()
+            if digest in PILOT_REJECTED_SHA256:
+                continue
             relative = Path("model-head") / model_id / (digest + EXTENSIONS[mime])
             target = cache / relative
             target.parent.mkdir(parents=True, exist_ok=True)
