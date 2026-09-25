@@ -341,38 +341,49 @@
       "aliases": [
         "A1 SB"
       ],
+      "notes": "Thai-market A1 Sportback 35 TFSI S line launch specification verified against Headlightmag on 2026-09-25. Launched at THB 2,149,000 as a German-built CBU with FWD. Audi Thailand's current 2026 model catalog no longer lists A1, so this record is retained as historical rather than current retail. The Edition One row is retained from the owner directory but was not promoted to source-verified in this pass.",
+      "retail_status": "DISCONTINUED",
+      "retail_checked_at": "2026-09-25",
+      "retail_source": "https://www.audi.co.th/en/models/",
       "generations": [
         {
           "code": "gen1",
           "segment": "B",
           "seats": 5,
-          "launched": "2023-01-01",
+          "launched": "2019-10-21",
           "ended": null,
           "variants": [
             {
-              "name": "spec",
+              "name": "1.5L TFSI ICE",
               "powertrain": "ICE",
-              "drivetrain": "AWD",
+              "drivetrain": "FWD",
               "engine_cc": 1498,
-              "price_thb": 2290000.0,
-              "price_min_thb": null,
-              "price_max_thb": null,
+              "price_thb": 2149000,
+              "price_min_thb": 2149000,
+              "price_max_thb": 2149000,
               "import_type": "CBU",
               "origin_country": "DE",
-              "price_note": "seed-unverified",
-              "aliases": []
+              "price_note": "Official Thai launch list price published 2019-10-21; later campaign prices are not treated as MSRP.",
+              "aliases": [
+                "35 TFSI S line"
+              ]
             }
           ],
           "trims": [
             {
               "name": "Sportback 35 TFSI S line",
+              "variant": "1.5L TFSI ICE",
               "powertrain": "ICE",
+              "drivetrain": "FWD",
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:006"
                 ],
                 "eco": [
                   "70df451ca3c04bd58acf483aabc89912"
+                ],
+                "headlightmag": [
+                  "https://www.headlightmag.com/offcial-price-audi-a1-35-tfsi-s-line/"
                 ]
               },
               "aliases": [
@@ -381,10 +392,16 @@
               "id": "sportback_35_tfsi_s_line_ice",
               "seats": 5,
               "length_mm": 4029,
-              "width_mm": 1940,
-              "height_mm": 1409,
+              "width_mm": 1740,
+              "height_mm": 1433,
+              "wheelbase_mm": 2563,
               "engine_cc": 1498,
-              "transmission": "AUTOMATIC"
+              "transmission": "7-speed S tronic",
+              "tire_front": "215/40 R18",
+              "tire_rear": "215/40 R18",
+              "wheel_front": "18 in",
+              "wheel_rear": "18 in",
+              "notes": "Thai-market launch spec: 1.5 TFSI turbo, 150 hp, 250 Nm, 7-speed S tronic, front-wheel drive, CBU Germany."
             },
             {
               "name": "Sportback 35 TFSI Edition One",
@@ -401,7 +418,8 @@
             }
           ]
         }
-      ]
+      ],
+      "powertrain_checked": true
     },
     {
       "id": "a4",
