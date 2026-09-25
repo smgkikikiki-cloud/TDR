@@ -56,9 +56,13 @@ from vehreg.price_extract import ExtractionError, extract_oem_price_claims
 from vehreg.price_fetch import FetchError, Transport, UrllibTransport, adapter_for
 from vehreg.price_match import TrimMatchMethod, TrimMatchResult, TrimMatchState, match_trim_diagnostic
 from vehreg.price_sources import SourceKind, TargetRole, load_source_target_registry
-from vehreg.pricefeed import PriceClaim
+from vehreg.pricefeed import PriceClaim, grade_tokens
 from vehreg.pricefeed_writer import batch_id_for
 from vehreg.pricing import PriceLedger, PriceType
+from vehreg.retail_scope import (
+    ModelScope, retail_scope_index, siblings_from_scope, trim_price_eligibility,
+    trim_review_index,
+)
 
 
 # --------------------------------------------------------------------- enums
@@ -129,6 +133,13 @@ class GradeClassification:
     note: str = ""
     applied: bool = False
     applied_command_id: Optional[str] = None
+    #: The current generation this grade was resolved against at discovery
+    #: time. Apply-time revalidation compares this to a freshly resolved
+    #: current generation and blocks the write if they differ -- a
+    #: generation changeover between --discover and --apply is exactly the
+    #: kind of identity drift that must never auto-repair (see
+    #: vehreg.retail_scope).
+    generation_id: Optional[str] = None
 
     @property
     def trim_id(self) -> Optional[str]:
@@ -138,6 +149,7 @@ class GradeClassification:
         return {
             "raw_grade": self.evidence.raw_grade,
             "trim_id": self.trim_id,
+            "generation_id": self.generation_id,
             "amount_thb": self.evidence.amount_thb,
             "extracted_price_type": self.evidence.extracted_price_type.value
                 if self.evidence.extracted_price_type else None,
@@ -156,31 +168,37 @@ class GradeClassification:
 
 
 def classify_grade(evidence: GradeEvidence, match: Optional[TrimMatchResult], *,
-                   existing_list_price_thb: Optional[int]) -> GradeClassification:
+                   existing_list_price_thb: Optional[int],
+                   generation_id: Optional[str] = None) -> GradeClassification:
     """The exact terminal-state decision table from the architecture report.
 
     Evaluated in a fixed order; the first matching rule wins. Nothing here
     is a score or a threshold -- every branch is a boolean check against
     already-existing, already-reviewed primitives (TrimMatchState/Method,
-    PriceType, PriceLedger.current_list_price).
+    PriceType, PriceLedger.current_list_price). ``match`` is expected to
+    have been resolved against an already lifecycle-scoped siblings map
+    (see vehreg.retail_scope), so a trim outside the current generation or
+    explicitly retired by a HUMAN reviewer never appears as a candidate in
+    the first place -- there is no separate generation/lifecycle branch
+    here because the matcher itself cannot see those trims.
     """
     if evidence.evidence_tier is EvidenceTier.NONE:
         return GradeClassification(
             evidence=evidence, match=match, terminal_state=TerminalState.NO_SOURCE,
-            existing_list_price_thb=None,
+            existing_list_price_thb=None, generation_id=generation_id,
             note="no qualifying evidence tier reached this grade")
 
     if not evidence.semantics_clear or evidence.extracted_price_type is None \
             or evidence.extracted_price_type is PriceType.UNKNOWN:
         return GradeClassification(
             evidence=evidence, match=match, terminal_state=TerminalState.SEMANTIC_BLOCKED,
-            existing_list_price_thb=None,
+            existing_list_price_thb=None, generation_id=generation_id,
             note="price type or lineup semantics could not be safely established")
 
     if evidence.extracted_price_type in _NON_LIST_PRICE_TYPES:
         return GradeClassification(
             evidence=evidence, match=match, terminal_state=TerminalState.CAMPAIGN_ONLY,
-            existing_list_price_thb=None,
+            existing_list_price_thb=None, generation_id=generation_id,
             note=(f"{evidence.extracted_price_type.value} evidence only; "
                   "no accompanying normal LIST_PRICE found for this grade"))
 
@@ -189,13 +207,13 @@ def classify_grade(evidence: GradeEvidence, match: Optional[TrimMatchResult], *,
         state = match.state.value if match else "NONE"
         return GradeClassification(
             evidence=evidence, match=match, terminal_state=TerminalState.IDENTITY_BLOCKED,
-            existing_list_price_thb=None,
+            existing_list_price_thb=None, generation_id=generation_id,
             note=f"match state {state}; identity is not safe to auto-write")
 
     if match.method not in _AUTO_READY_METHODS:
         return GradeClassification(
             evidence=evidence, match=match, terminal_state=TerminalState.IDENTITY_BLOCKED,
-            existing_list_price_thb=None,
+            existing_list_price_thb=None, generation_id=generation_id,
             note=(f"match method {match.method.value} resolves to one trim but is "
                   "inference, not exact identity -- never auto-written"))
 
@@ -203,23 +221,23 @@ def classify_grade(evidence: GradeEvidence, match: Optional[TrimMatchResult], *,
         if existing_list_price_thb == evidence.amount_thb:
             return GradeClassification(
                 evidence=evidence, match=match, terminal_state=TerminalState.COMPLETE,
-                existing_list_price_thb=existing_list_price_thb,
+                existing_list_price_thb=existing_list_price_thb, generation_id=generation_id,
                 note="discovered amount matches the existing current LIST_PRICE")
         return GradeClassification(
             evidence=evidence, match=match, terminal_state=TerminalState.PRICE_CONFLICT,
-            existing_list_price_thb=existing_list_price_thb,
+            existing_list_price_thb=existing_list_price_thb, generation_id=generation_id,
             note=(f"discovered {evidence.amount_thb} THB differs from existing current "
                   f"LIST_PRICE {existing_list_price_thb} THB; never auto-corrected"))
 
     if evidence.evidence_tier not in (EvidenceTier.OEM_CURRENT_MODEL_PAGE, EvidenceTier.MEDIA_TWO_AGREE):
         return GradeClassification(
             evidence=evidence, match=match, terminal_state=TerminalState.NO_SOURCE,
-            existing_list_price_thb=None,
+            existing_list_price_thb=None, generation_id=generation_id,
             note=f"evidence tier {evidence.evidence_tier.value} is not strong enough to auto-write")
 
     return GradeClassification(
         evidence=evidence, match=match, terminal_state=TerminalState.AUTO_READY,
-        existing_list_price_thb=None, note="")
+        existing_list_price_thb=None, generation_id=generation_id, note="")
 
 
 # ------------------------------------------------------------------- model
@@ -231,6 +249,13 @@ class ModelManifestEntry:
     evidence_tier: EvidenceTier
     lineup_source: dict[str, Any]
     grades: list[GradeClassification] = field(default_factory=list)
+    #: Set when discovery was never attempted for this model -- it was
+    #: under maintenance, canonically HISTORICAL, or its current generation
+    #: could not be resolved with confidence (vehreg.retail_scope). No
+    #: network call is made and no grade is produced for a blocked model;
+    #: the whole point is that the price system never repairs or guesses
+    #: its way past an identity problem, it just leaves the model alone.
+    blocked_reason: str = ""
 
     @property
     def current_retail_model_complete(self) -> bool:
@@ -259,6 +284,7 @@ class ModelManifestEntry:
             "lineup_status": self.lineup_status.value,
             "evidence_tier": self.evidence_tier.value,
             "lineup_source": self.lineup_source,
+            "blocked_reason": self.blocked_reason,
             "current_retail_model_complete": self.current_retail_model_complete,
             "grades": [grade.to_dict() for grade in self.grades],
         }
@@ -386,34 +412,66 @@ def _search_media_source(source_id: str, base_url: str, brand: str, model: str, 
     return results
 
 
-def _preferred_amount(hits: list[MediaHit]) -> tuple[Optional[int], str]:
+def _preferred_amount_for_grade(hits: list[MediaHit], wanted: frozenset[str],
+                                model_name: str) -> tuple[Optional[int], str]:
+    """The one hit, if any, that both names this exact grade and reads as
+    an unambiguous official single-amount price claim.
+
+    ``wanted`` is never free-extracted text: it is always one of this
+    model's own current, scoped MarketTrim names/aliases (see
+    ``discover_media_grades``), the same token space
+    ``match_trim_diagnostic`` resolves against, so a hit can only be
+    credited to a grade the catalog already knows exists.
+    """
     for hit in hits:
-        if hit.official_title and not hit.excluded_title and len(hit.amounts) == 1:
+        if not hit.official_title or hit.excluded_title or len(hit.amounts) != 1:
+            continue
+        if wanted <= grade_tokens(hit.title, model_name):
             return hit.amounts[0], hit.url
     return None, ""
 
 
-def discover_media_grade(model: Model, *, transport: Transport) -> Optional[GradeEvidence]:
-    """Tier-2 fallback: only when both preferred media sources agree on a
-    single amount, with official-price title semantics and no excluded
-    (used/predicted/promo) title, does this produce MEDIA_TWO_AGREE
-    evidence. A single-source hit alone is never enough -- see
-    classify_grade's NO_SOURCE handling for weak-tier evidence."""
-    per_source: dict[str, tuple[Optional[int], str]] = {}
-    for source_id, base_url in _MEDIA_SOURCES:
-        hits = _search_media_source(source_id, base_url, model.brand_id, model.name_en, transport=transport)
-        per_source[source_id] = _preferred_amount(hits)
+def discover_media_grades(model: Model, siblings: list, *,
+                          transport: Transport) -> list[GradeEvidence]:
+    """Tier-2 fallback, one grade at a time.
 
-    amounts = [amount for amount, _ in per_source.values() if amount is not None]
-    if len(amounts) < 2 or len(set(amounts)) != 1:
-        return None  # disagreement or insufficient corroboration -- no evidence produced here
-    amount = amounts[0]
-    url = next(url for amount_found, url in per_source.values() if amount_found == amount)
-    return GradeEvidence(
-        raw_grade=model.name_en, amount_thb=amount, extracted_price_type=PriceType.LIST_PRICE,
-        evidence_tier=EvidenceTier.MEDIA_TWO_AGREE, source_ref=url,
-        observed_at=date.today().isoformat(), semantics_clear=True,
-    )
+    Media evidence never invents a grade from the model name. For each of
+    this model's own current, lifecycle-scoped MarketTrims, both preferred
+    media sources must independently name *that exact trim* (by its
+    canonical name or alias, matched the same way match_trim_diagnostic
+    matches) and agree on one amount before MEDIA_TWO_AGREE evidence is
+    produced for it. A single-source hit, or two sources that only agree
+    on an amount without both naming the same grade, is never enough --
+    see classify_grade's NO_SOURCE handling for weak-tier evidence.
+    """
+    if not siblings:
+        return []
+    hits_by_source: dict[str, list[MediaHit]] = {
+        source_id: _search_media_source(source_id, base_url, model.brand_id, model.name_en,
+                                        transport=transport)
+        for source_id, base_url in _MEDIA_SOURCES
+    }
+
+    evidence: list[GradeEvidence] = []
+    for trim in siblings:
+        wanted = grade_tokens(trim.name, model.name_en)
+        if not wanted:
+            continue
+        per_source = {
+            source_id: _preferred_amount_for_grade(hits, wanted, model.name_en)
+            for source_id, hits in hits_by_source.items()
+        }
+        amounts = [amount for amount, _ in per_source.values() if amount is not None]
+        if len(amounts) < 2 or len(set(amounts)) != 1:
+            continue  # disagreement, or fewer than two sources named this grade
+        amount = amounts[0]
+        url = next(url for amount_found, url in per_source.values() if amount_found == amount)
+        evidence.append(GradeEvidence(
+            raw_grade=trim.name, amount_thb=amount, extracted_price_type=PriceType.LIST_PRICE,
+            evidence_tier=EvidenceTier.MEDIA_TWO_AGREE, source_ref=url,
+            observed_at=date.today().isoformat(), semantics_clear=True,
+        ))
+    return evidence
 
 
 # ----------------------------------------------------------- OEM discovery
@@ -460,15 +518,20 @@ def discover_oem_grades(model: Model, registry, *, transport: Transport) -> Opti
             )
             for claim in extraction.claims
         ]
-        # A page yielding two or more distinct LIST_PRICE-classified grades
-        # in one fetch is treated as a genuine enumerated price table
-        # (EXHAUSTIVE); a single figure is a mention, not proof of a
-        # complete lineup (PARTIAL). This is a new, explicit heuristic --
-        # nothing in price_extract.py currently distinguishes the two, and
-        # the architecture report flags that gap rather than assuming it
-        # away.
-        lineup_status = LineupStatus.EXHAUSTIVE if len({c.trim_raw for c in list_claims}) >= 2 \
-            else LineupStatus.PARTIAL
+        # EXHAUSTIVE requires a concrete source/parser signal that this
+        # target represents the complete current retail lineup -- counting
+        # distinct grades in one fetch is not that signal (a buyer-guide
+        # article covering two of five grades would satisfy it just as
+        # well as an actual full price table). The registry's own
+        # TargetRole is that signal instead: PRICE_LIST is an explicit
+        # operator assertion, made when the target was registered, that
+        # this URL is the official price list for the model. BLOG
+        # (buyer-guide) and PROMOTION (campaign detail) pages never carry
+        # that assertion, however many grades they happen to mention, so
+        # they can only ever produce PARTIAL lineup evidence.
+        lineup_status = (LineupStatus.EXHAUSTIVE
+                         if target.role is TargetRole.PRICE_LIST and list_claims
+                         else LineupStatus.PARTIAL)
         source = {"role": target.role.value, "source_id": target.source_id,
                   "url": target.url, "fetched_at": observed}
         return lineup_status, source, grades
@@ -478,19 +541,32 @@ def discover_oem_grades(model: Model, registry, *, transport: Transport) -> Opti
 # --------------------------------------------------------- orchestration
 
 def discover_model(model: Model, catalog: Catalog, ledger: PriceLedger, registry, *,
+                   scope: ModelScope, siblings_by_model: dict[str, list],
                    transport: Transport) -> ModelManifestEntry:
+    """Discover and classify one model's current lineup.
+
+    Only called for a model ``scope.in_scope`` already cleared -- current
+    generation resolved, not under maintenance, not canonically HISTORICAL.
+    ``siblings_by_model`` is the lifecycle-scoped map from
+    vehreg.retail_scope: every match below can only ever resolve to a trim
+    of this model's current generation that no HUMAN reviewer has retired,
+    so AUTO_READY is structurally impossible for anything else -- there is
+    no separate generation check to remember to add here.
+    """
+    generation_id = scope.current_generation.id if scope.current_generation else None
     oem_result = discover_oem_grades(model, registry, transport=transport)
     if oem_result is not None:
         lineup_status, source, grade_evidence_list = oem_result
         evidence_tier = EvidenceTier.OEM_CURRENT_MODEL_PAGE
     else:
-        media_grade = discover_media_grade(model, transport=transport)
-        if media_grade is not None:
+        siblings = siblings_by_model.get(model.id, [])
+        media_grades = discover_media_grades(model, siblings, transport=transport)
+        if media_grades:
             lineup_status = LineupStatus.PARTIAL
             evidence_tier = EvidenceTier.MEDIA_TWO_AGREE
             source = {"role": "MEDIA_SEARCH", "source_id": "autolifethailand+headlightmag",
-                      "url": media_grade.source_ref, "fetched_at": media_grade.observed_at}
-            grade_evidence_list = [media_grade]
+                      "url": media_grades[0].source_ref, "fetched_at": media_grades[0].observed_at}
+            grade_evidence_list = media_grades
         else:
             lineup_status = LineupStatus.UNKNOWN
             evidence_tier = EvidenceTier.NONE
@@ -513,12 +589,13 @@ def discover_model(model: Model, catalog: Catalog, ledger: PriceLedger, registry
                 amount_thb=evidence.amount_thb or 0,
                 price_type=evidence.extracted_price_type or PriceType.UNKNOWN,
             )
-            match = match_trim_diagnostic(catalog, claim)
+            match = match_trim_diagnostic(catalog, claim, siblings_by_model=siblings_by_model)
         existing = None
         if match is not None and match.trim_id is not None:
             row = ledger.current_list_price(match.trim_id)
             existing = row.amount_thb if row else None
-        grades.append(classify_grade(evidence, match, existing_list_price_thb=existing))
+        grades.append(classify_grade(evidence, match, existing_list_price_thb=existing,
+                                     generation_id=generation_id))
 
     return ModelManifestEntry(
         model_id=model.id, lineup_status=lineup_status, evidence_tier=evidence_tier,
@@ -534,6 +611,16 @@ def run_discover(*, data_dir: Path = DATA_DIR, year: int = DEFAULT_YEAR,
     registry = load_source_target_registry(data_dir, year)
     transport = transport or UrllibTransport()
 
+    # Computed once for the whole run: which models are safe to touch at
+    # all (current generation resolved, not under maintenance/HISTORICAL),
+    # and the lifecycle-scoped siblings every match below resolves
+    # against. A model that fails this gate is never fetched or matched --
+    # the price system does not try to repair or guess past an identity
+    # problem, it leaves the model alone and records why.
+    scope_index = retail_scope_index(catalog, data_dir=data_dir, year=year)
+    trim_reviews = trim_review_index(data_dir=data_dir, year=year)
+    siblings_by_model = siblings_from_scope(catalog, scope_index, trim_reviews)
+
     model_ids = sorted(catalog.models)
     if limit:
         model_ids = model_ids[:limit]
@@ -541,7 +628,17 @@ def run_discover(*, data_dir: Path = DATA_DIR, year: int = DEFAULT_YEAR,
     manifest = Manifest(generated_at=datetime.now(timezone.utc).date().isoformat())
     for model_id in model_ids:
         model = catalog.models[model_id]
-        manifest.models.append(discover_model(model, catalog, ledger, registry, transport=transport))
+        scope = scope_index[model_id]
+        if not scope.in_scope:
+            manifest.models.append(ModelManifestEntry(
+                model_id=model_id, lineup_status=LineupStatus.UNKNOWN,
+                evidence_tier=EvidenceTier.NONE, lineup_source={}, grades=[],
+                blocked_reason=scope.blocked_reason,
+            ))
+            continue
+        manifest.models.append(discover_model(
+            model, catalog, ledger, registry, scope=scope,
+            siblings_by_model=siblings_by_model, transport=transport))
 
     manifest.save(out_path)
     return manifest
@@ -585,12 +682,120 @@ def build_append_price_batch(manifest_dict: dict[str, Any], *, year: int) -> Opt
     }
 
 
+def _revalidate_auto_ready_row(catalog: Catalog, ledger: PriceLedger, *,
+                               scope_index: dict[str, ModelScope],
+                               siblings_by_model: dict[str, list],
+                               trim_reviews: dict[str, dict],
+                               model_id: str, grade: dict[str, Any]) -> tuple[bool, str, str]:
+    """Re-run the AUTO_READY gate fresh, right now, for one manifest row.
+
+    A --discover manifest can be arbitrarily old by the time --apply runs
+    against it. This does not trust any of its stored dispositions as
+    still true -- it rebuilds the match and re-checks scope/price/
+    semantics against the current catalog, ledger and lifecycle sidecars,
+    exactly as run_discover would if it saw this evidence today. Returns
+    ``(still_ok, blocked_terminal_state, note)``; the first is empty when
+    ``still_ok`` is True.
+    """
+    scope = scope_index.get(model_id)
+    if scope is None or not scope.in_scope:
+        reason = scope.blocked_reason if scope else "model not found in current catalog"
+        return False, TerminalState.IDENTITY_BLOCKED.value, \
+            f"model no longer in scope at apply time ({reason})"
+
+    generation_id = scope.current_generation.id if scope.current_generation else None
+    if grade.get("generation_id") and grade["generation_id"] != generation_id:
+        return False, TerminalState.IDENTITY_BLOCKED.value, \
+            "current generation changed since --discover; re-run discovery for this model"
+
+    trim_id = grade.get("trim_id")
+    if not trim_id:
+        return False, TerminalState.IDENTITY_BLOCKED.value, "no trim_id recorded at discovery time"
+
+    eligible, reason = trim_price_eligibility(
+        catalog, trim_id, scope_index=scope_index, trim_reviews=trim_reviews)
+    if not eligible:
+        return False, TerminalState.IDENTITY_BLOCKED.value, \
+            f"trim no longer price-eligible at apply time ({reason})"
+
+    model = catalog.models.get(model_id)
+    claim = PriceClaim(
+        claim_id=f"apply-revalidate-{trim_id}", document_id="sha256:" + "0" * 64,
+        source_id="", brand_raw=model.brand_id if model else "",
+        model_raw=model.name_en if model else "", trim_raw=str(grade.get("raw_grade") or ""),
+        amount_thb=int(grade.get("amount_thb") or 0),
+        price_type=PriceType.parse(grade.get("extracted_price_type") or "UNKNOWN"),
+    )
+    match = match_trim_diagnostic(catalog, claim, siblings_by_model=siblings_by_model)
+    if (match.state is not TrimMatchState.EXACT or match.method not in _AUTO_READY_METHODS
+            or match.trim_id != trim_id):
+        return False, TerminalState.IDENTITY_BLOCKED.value, \
+            "identity no longer resolves the same way at apply time"
+
+    row = ledger.current_list_price(trim_id)
+    existing = row.amount_thb if row else None
+    amount_thb = grade.get("amount_thb")
+    if existing is not None and existing == amount_thb:
+        return False, TerminalState.COMPLETE.value, \
+            "current LIST_PRICE already matches at apply time; nothing to write"
+    if existing is not None and existing != amount_thb:
+        return False, TerminalState.PRICE_CONFLICT.value, \
+            (f"current LIST_PRICE changed to {existing} THB since discovery; "
+             "never auto-corrected")
+
+    price_type = PriceType.parse(grade.get("extracted_price_type") or "UNKNOWN")
+    if price_type is not PriceType.LIST_PRICE:
+        return False, TerminalState.SEMANTIC_BLOCKED.value, \
+            "evidence price type no longer reads as a clean LIST_PRICE at apply time"
+
+    return True, "", ""
+
+
+def revalidate_manifest_for_apply(manifest_dict: dict[str, Any], *,
+                                  data_dir: Path = DATA_DIR, year: int = DEFAULT_YEAR) -> int:
+    """Downgrade any AUTO_READY row that no longer qualifies, in place.
+
+    Returns how many rows were downgraded. A row that survives is left
+    completely untouched; a row that is downgraded gets a new
+    terminal_state and note explaining why, and is never written.
+    """
+    catalog = Catalog.load(data_dir, year)
+    ledger = PriceLedger.load(data_dir, year=year, catalog=catalog)
+    scope_index = retail_scope_index(catalog, data_dir=data_dir, year=year)
+    trim_reviews = trim_review_index(data_dir=data_dir, year=year)
+    siblings_by_model = siblings_from_scope(catalog, scope_index, trim_reviews)
+
+    downgraded = 0
+    for model in manifest_dict.get("models", []):
+        model_id = model.get("model_id")
+        for grade in model.get("grades", []):
+            if grade.get("terminal_state") != TerminalState.AUTO_READY.value or grade.get("applied"):
+                continue
+            ok, blocked_state, note = _revalidate_auto_ready_row(
+                catalog, ledger, scope_index=scope_index, siblings_by_model=siblings_by_model,
+                trim_reviews=trim_reviews, model_id=model_id, grade=grade)
+            if ok:
+                continue
+            grade["terminal_state"] = blocked_state
+            grade["note"] = note
+            downgraded += 1
+    return downgraded
+
+
 def run_apply(*, data_dir: Path = DATA_DIR, year: int = DEFAULT_YEAR,
              manifest_path: Path):
     manifest_dict = load_manifest_dict(manifest_path)
+    downgraded = revalidate_manifest_for_apply(manifest_dict, data_dir=data_dir, year=year)
     batch = build_append_price_batch(manifest_dict, year=year)
     if batch is None:
-        return {"applied": False, "reason": "no unapplied AUTO_READY rows in manifest"}
+        manifest_path.write_text(
+            json.dumps(manifest_dict, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        return {
+            "applied": False,
+            "reason": "no unapplied AUTO_READY rows survived apply-time revalidation"
+                     if downgraded else "no unapplied AUTO_READY rows in manifest",
+            "revalidation_blocked": downgraded,
+        }
     result = CanonicalInputPipeline(data_dir).apply(batch)
 
     applied_ids = {command["canonical_id"] for command in batch["commands"]}
@@ -605,6 +810,7 @@ def run_apply(*, data_dir: Path = DATA_DIR, year: int = DEFAULT_YEAR,
     return {
         "applied": True, "batch_id": batch["batch_id"], "commands": len(batch["commands"]),
         "idempotent_replay": result.idempotent_replay, "changed_files": list(result.changed_files),
+        "revalidation_blocked": downgraded,
     }
 
 

@@ -17,6 +17,7 @@ import unicodedata
 from vehreg.catalog import Catalog, DATA_DIR, DEFAULT_YEAR
 from vehreg.entities import to_jsonable
 from vehreg.product import ProductMaster
+from vehreg.retail_scope import scoped_siblings_by_model
 
 
 SCHEMA_VERSION = 1
@@ -48,6 +49,7 @@ class ReleaseBuilder:
                  year: int = DEFAULT_YEAR, canonical_revision: str = "working-tree",
                  overrides: dict | None = None):
         self.inventory = inventory
+        self.data_dir = data_dir
         self.year = year
         self.canonical_revision = canonical_revision
         self.overrides = overrides or {}
@@ -195,6 +197,18 @@ class ReleaseBuilder:
         for trim in catalog.trims.values():
             trims_by_generation.setdefault(trim.generation_id, []).append(trim)
 
+        # retail_price_min/max is a claim about what a buyer can order
+        # *today*: it must only ever aggregate the model's own
+        # confidently-resolved current generation, filtered to trims a
+        # HUMAN reviewer has not retired, and never anything from a model
+        # under active maintenance -- the same lifecycle scope price
+        # matching and the coverage backfill use (vehreg.retail_scope).
+        # generation_id/segment/etc. below stay on the existing display
+        # fallback: they are informational, not a price claim, and do not
+        # need to fail closed the same way.
+        price_eligible_by_model = scoped_siblings_by_model(
+            catalog, data_dir=self.data_dir, year=self.year)
+
         for model in sorted(catalog.models.values(), key=lambda row: row.id):
             tdr = model_map.get(model.id)
             brand = catalog.brands[model.brand_id]
@@ -203,7 +217,6 @@ class ReleaseBuilder:
                 key=lambda g: (g.launched or "", g.id), reverse=True)
             current_generation = next((g for g in generation_rows if not g.ended),
                                       generation_rows[0] if generation_rows else None)
-            model_trims = [t for g in generation_rows for t in trims_by_generation.get(g.id, [])]
             generation_ids = {g.id for g in generation_rows}
             model_variants = [v for v in catalog.variants.values()
                               if v.generation_id in generation_ids]
@@ -214,7 +227,7 @@ class ReleaseBuilder:
             origin_countries = sorted({v.origin_country for v in model_variants
                                        if v.origin_country not in ("", "UNKNOWN")})
             current_amounts = [self.master.prices.current_list_amount(t.id, as_of=as_of)
-                               for t in model_trims]
+                               for t in price_eligible_by_model.get(model.id, [])]
             current_amounts = [n for n in current_amounts if n is not None]
             editorial = tdr or {}
             models.append({

@@ -441,3 +441,29 @@ class PublishPromotionTests(unittest.TestCase):
     def test_a_person_rejecting_drops_the_claim_entirely(self):
         result = self.run_with(self.decision("reject", "vehicle-master-owner"))
         self.assertEqual([], result.offers + result.provisional + result.review)
+
+
+class SiblingsByModelOverrideTests(unittest.TestCase):
+    """pf.run defaults to the unscoped trims_by_model(catalog) so every
+    direct caller/unit test of this function keeps its existing behavior;
+    only tools/pricefeed_write.py (the real production writer) passes a
+    lifecycle-scoped map (see vehreg.retail_scope). This proves the
+    override, when a caller does supply one, is actually honored."""
+
+    def _run(self, **changes):
+        from vehreg.catalog import Catalog
+        doc = document("d1", "official_oem")
+        c = claim("c1", "official_oem", document_id="d1")
+        return pf.run([doc], [c], SOURCES, Catalog.load(year=2026), **changes)
+
+    def test_default_matches_against_the_real_unscoped_catalog(self):
+        result = self._run()
+        self.assertEqual([], result.review)
+        self.assertTrue(result.offers or result.provisional)
+
+    def test_an_explicit_empty_siblings_by_model_blocks_every_match(self):
+        result = self._run(siblings_by_model={})
+        self.assertEqual([], result.offers)
+        self.assertEqual([], result.provisional)
+        self.assertEqual(1, len(result.review))
+        self.assertIn(pf.ReviewReason.NO_TRIM_MATCH.value, result.review[0]["reasons"])

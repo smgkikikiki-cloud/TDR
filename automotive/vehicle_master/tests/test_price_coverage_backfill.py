@@ -4,6 +4,8 @@ import json
 
 import pytest
 
+from pathlib import Path
+
 from tools.price_coverage_backfill import (
     EvidenceTier,
     GradeClassification,
@@ -14,14 +16,24 @@ from tools.price_coverage_backfill import (
     TerminalState,
     build_append_price_batch,
     classify_grade,
-    discover_media_grade,
+    discover_media_grades,
+    discover_oem_grades,
     load_manifest_dict,
+    revalidate_manifest_for_apply,
+    run_apply,
 )
-from vehreg.catalog import Model
-from vehreg.input_pipeline import CanonicalInputBatch
+from vehreg.catalog import Catalog, Model
+from vehreg.entities import MarketTrim
+from vehreg.input_pipeline import CanonicalInputBatch, CanonicalInputPipeline
+from vehreg.model_operational_state import upsert_model_operational_state
 from vehreg.price_fetch import HttpResponse
 from vehreg.price_match import TrimMatchMethod, TrimMatchResult, TrimMatchState
+from vehreg.price_sources import (
+    SourceKind, SourceProfile, SourceTarget, SourceTargetRegistry, TargetRole,
+)
+from vehreg.pricefeed import Source, Tier
 from vehreg.pricing import PriceType
+from vehreg.taxonomy import Powertrain
 
 
 J5_MODEL_ID = "jaecoo.jaecoo_5_ev"
@@ -298,7 +310,7 @@ def test_build_append_price_batch_parses_as_a_valid_canonical_input_batch():
     assert parsed.commands[0]["canonical_id"] == J5_ULTRA_TRIM
 
 
-# ------------------------------------------------------------- discover_media_grade
+# ------------------------------------------------------------ discover_media_grades
 
 
 class _FakeMediaTransport:
@@ -315,51 +327,325 @@ class _FakeMediaTransport:
         return HttpResponse(status=404, url=url, headers={}, body=b"[]")
 
 
-def _official_hit(amount_thb: int) -> dict:
+def _official_hit(amount_thb: int, *, grade: str = "ULTRA") -> dict:
     return {
-        "title": f"JAECOO 5 EV ราคาอย่างเป็นทางการ {amount_thb:,} บาท",
+        "title": f"JAECOO 5 EV {grade} ราคาอย่างเป็นทางการ {amount_thb:,} บาท",
         "url": "https://example.com/j5-price",
     }
 
 
-def test_discover_media_grade_requires_both_sources_to_agree():
+def _trim(name: str, trim_id: str = J5_ULTRA_TRIM) -> MarketTrim:
+    return MarketTrim(id=trim_id, generation_id=f"{J5_MODEL_ID}.j5", name=name,
+                      powertrain=Powertrain.BEV)
+
+
+def test_discover_media_grades_requires_both_sources_to_agree_on_a_known_grade():
     model = Model(id=J5_MODEL_ID, brand_id="JAECOO", name_en="JAECOO 5 EV")
     transport = _FakeMediaTransport({
-        "autolifethailand.tv": [_official_hit(699_000)],
-        "headlightmag.com": [_official_hit(699_000)],
+        "autolifethailand.tv": [_official_hit(699_000, grade="ULTRA")],
+        "headlightmag.com": [_official_hit(699_000, grade="ULTRA")],
     })
-    evidence = discover_media_grade(model, transport=transport)
-    assert evidence is not None
-    assert evidence.amount_thb == 699_000
-    assert evidence.evidence_tier is EvidenceTier.MEDIA_TWO_AGREE
+    evidence = discover_media_grades(model, [_trim("Ultra")], transport=transport)
+    assert len(evidence) == 1
+    assert evidence[0].raw_grade == "Ultra"
+    assert evidence[0].amount_thb == 699_000
+    assert evidence[0].evidence_tier is EvidenceTier.MEDIA_TWO_AGREE
 
 
-def test_discover_media_grade_returns_none_on_disagreement():
+def test_discover_media_grades_never_invents_a_grade_from_the_model_name():
+    """Regression: the earlier design set raw_grade=model.name_en whenever
+    both sources merely agreed on *an* amount, without either source
+    naming an actual grade. Evidence must only ever be produced for one of
+    the model's own known current MarketTrims."""
     model = Model(id=J5_MODEL_ID, brand_id="JAECOO", name_en="JAECOO 5 EV")
+    hit = {"title": "JAECOO 5 EV ราคาอย่างเป็นทางการ 699,000 บาท", "url": "https://example.com/j5"}
     transport = _FakeMediaTransport({
-        "autolifethailand.tv": [_official_hit(699_000)],
-        "headlightmag.com": [_official_hit(650_000)],
+        "autolifethailand.tv": [hit],
+        "headlightmag.com": [hit],
     })
-    assert discover_media_grade(model, transport=transport) is None
+    evidence = discover_media_grades(model, [_trim("Ultra")], transport=transport)
+    assert evidence == []
 
 
-def test_discover_media_grade_returns_none_with_only_one_source_confirming():
+def test_discover_media_grades_returns_nothing_without_siblings():
     model = Model(id=J5_MODEL_ID, brand_id="JAECOO", name_en="JAECOO 5 EV")
     transport = _FakeMediaTransport({
-        "autolifethailand.tv": [_official_hit(699_000)],
+        "autolifethailand.tv": [_official_hit(699_000, grade="ULTRA")],
+        "headlightmag.com": [_official_hit(699_000, grade="ULTRA")],
+    })
+    # An empty siblings list is what a blocked/out-of-scope model gets --
+    # discovery must not fall back to searching for anything at all.
+    assert discover_media_grades(model, [], transport=transport) == []
+
+
+def test_discover_media_grades_returns_nothing_on_amount_disagreement():
+    model = Model(id=J5_MODEL_ID, brand_id="JAECOO", name_en="JAECOO 5 EV")
+    transport = _FakeMediaTransport({
+        "autolifethailand.tv": [_official_hit(699_000, grade="ULTRA")],
+        "headlightmag.com": [_official_hit(650_000, grade="ULTRA")],
+    })
+    assert discover_media_grades(model, [_trim("Ultra")], transport=transport) == []
+
+
+def test_discover_media_grades_returns_nothing_with_only_one_source_naming_the_grade():
+    model = Model(id=J5_MODEL_ID, brand_id="JAECOO", name_en="JAECOO 5 EV")
+    transport = _FakeMediaTransport({
+        "autolifethailand.tv": [_official_hit(699_000, grade="ULTRA")],
         # headlightmag.com: no matching hits at all
     })
-    assert discover_media_grade(model, transport=transport) is None
+    assert discover_media_grades(model, [_trim("Ultra")], transport=transport) == []
 
 
-def test_discover_media_grade_ignores_used_and_predicted_titles():
+def test_discover_media_grades_ignores_used_and_predicted_titles():
     model = Model(id=J5_MODEL_ID, brand_id="JAECOO", name_en="JAECOO 5 EV")
     bad_hit = {
-        "title": "JAECOO 5 EV มือสอง ราคาพิเศษ 500,000 บาท",
+        "title": "JAECOO 5 EV ULTRA มือสอง ราคาพิเศษ 500,000 บาท",
         "url": "https://example.com/used",
     }
     transport = _FakeMediaTransport({
         "autolifethailand.tv": [bad_hit],
         "headlightmag.com": [bad_hit],
     })
-    assert discover_media_grade(model, transport=transport) is None
+    assert discover_media_grades(model, [_trim("Ultra")], transport=transport) == []
+
+
+def test_discover_media_grades_attributes_each_hit_to_its_own_grade():
+    """Two siblings, two grades independently confirmed by both sources --
+    each grade's evidence must carry its own amount, never the other's."""
+    model = Model(id=J5_MODEL_ID, brand_id="JAECOO", name_en="JAECOO 5 EV")
+    ultra_trim = f"{J5_MODEL_ID}.j5.trim.ultra_bev"
+    standard_trim = f"{J5_MODEL_ID}.j5.trim.standard_bev"
+    transport = _FakeMediaTransport({
+        "autolifethailand.tv": [_official_hit(699_000, grade="ULTRA"),
+                                _official_hit(599_000, grade="STANDARD")],
+        "headlightmag.com": [_official_hit(699_000, grade="ULTRA"),
+                             _official_hit(599_000, grade="STANDARD")],
+    })
+    siblings = [_trim("Ultra", ultra_trim), _trim("Standard", standard_trim)]
+    evidence = discover_media_grades(model, siblings, transport=transport)
+    by_grade = {row.raw_grade: row.amount_thb for row in evidence}
+    assert by_grade == {"Ultra": 699_000, "Standard": 599_000}
+
+
+# --------------------------------------------------------------- discover_oem_grades
+
+
+class _FakeOemTransport:
+    """Serves one fixed HTML body for any URL, as the real OEM host would."""
+
+    def __init__(self, html: str):
+        self._html = html.encode("utf-8")
+
+    def fetch(self, url, *, headers, timeout):
+        return HttpResponse(status=200, url=url,
+                            headers={"content-type": "text/html; charset=utf-8"},
+                            body=self._html)
+
+
+def _oem_registry(target: SourceTarget) -> SourceTargetRegistry:
+    return SourceTargetRegistry(
+        sources={"official_jaecoo_th": Source(
+            id="official_jaecoo_th", name="Jaecoo TH", tier=Tier.A,
+            adapter="omoda_jaecoo_th")},
+        profiles=[SourceProfile(source_id="official_jaecoo_th", kind=SourceKind.OEM)],
+        targets=[target],
+    )
+
+
+def test_discover_oem_grades_price_list_role_is_exhaustive_with_real_extraction():
+    target = SourceTarget(
+        id="jaecoo_price_list", source_id="official_jaecoo_th",
+        url="https://www.omodajaecoo.co.th/th", role=TargetRole.PRICE_LIST,
+        model_hint=J5_MODEL_ID,
+    )
+    html = """
+    <html><body>
+      <section>JAECOO 5 EV ULTRA JAECOO 5 EV
+        Price THB 699,000 Test drive More information
+      </section>
+      <section>JAECOO 5 EV MAX+ JAECOO 5 EV
+        Price THB 899,000 Test drive More information
+      </section>
+    </body></html>
+    """
+    model = Model(id=J5_MODEL_ID, brand_id="jaecoo", name_en="JAECOO 5 EV")
+    result = discover_oem_grades(model, _oem_registry(target), transport=_FakeOemTransport(html))
+    assert result is not None
+    lineup_status, source, grades = result
+    assert lineup_status is LineupStatus.EXHAUSTIVE
+    assert source["role"] == "PRICE_LIST"
+    assert len(grades) == 2
+
+
+def test_discover_oem_grades_blog_role_is_never_exhaustive_even_with_two_grades():
+    """Regression: the old heuristic classified EXHAUSTIVE from >=2 distinct
+    grades in one fetch regardless of source role. A BLOG buyer-guide
+    article covering two grades is not proof the full lineup was
+    enumerated -- only an operator-tagged PRICE_LIST target is."""
+    target = SourceTarget(
+        id="jaecoo_blog", source_id="official_jaecoo_th",
+        url="https://www.omodajaecoo.co.th/th", role=TargetRole.BLOG,
+        model_hint=J5_MODEL_ID,
+    )
+    html = "<html><body><p>ULTRA 699,000 MAX+ 899,000</p></body></html>"
+    model = Model(id=J5_MODEL_ID, brand_id="jaecoo", name_en="JAECOO 5 EV")
+    result = discover_oem_grades(model, _oem_registry(target), transport=_FakeOemTransport(html))
+    assert result is not None
+    lineup_status, source, grades = result
+    assert lineup_status is LineupStatus.PARTIAL
+    assert len(grades) == 2
+
+
+# ----------------------------------------------- apply-time revalidation (--apply)
+
+
+def _write_json(path: Path, payload: dict) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def _seed_apply_fixture(tmp_path: Path, *, existing_price_thb: int | None = None) -> Path:
+    """One model, one current (non-ended) generation, one trim -- the same
+    minimal Jaecoo 5 EV fixture used across the retail_scope tests, plus
+    (optionally) an already-published current LIST_PRICE for the trim, so
+    apply-time revalidation has something concrete to compare against."""
+    data = tmp_path / "data"
+    _write_json(data / "2026" / "models" / "jaecoo.json", {
+        "brand": {
+            "id": "jaecoo", "name_en": "Jaecoo", "name_th": "เจคู",
+            "brand_segment": "MASS", "oem_group": "Chery", "brand_origin": "CN",
+            "trim_detail": True, "aliases": [],
+        },
+        "models": [{
+            "id": "jaecoo_5_ev", "name_en": "Jaecoo 5 EV", "name_th": "เจคู 5",
+            "nameplate": "Jaecoo 5", "body_type": "CROSSOVER",
+            "cab_type": "NOT_APPLICABLE", "registration_type": "",
+            "market_scope": "CORE", "aliases": [],
+            "retail_status": "CURRENT",
+            "retail_checked_at": "2026-09-11",
+            "retail_source": "https://example.test/j5/model",
+            "generations": [{
+                "code": "J5", "segment": "B", "seats": 5,
+                "launched": "2025-08-19", "ended": None,
+                "variants": [{
+                    "id": "bev_cbu", "name": "58.9 kWh BEV CBU", "powertrain": "BEV",
+                    "drivetrain": "FWD", "engine_cc": None, "battery_kwh": 58.9,
+                    "price_thb": None, "price_min_thb": None, "price_max_thb": None,
+                    "import_type": "CBU", "origin_country": "CN",
+                    "price_note": "", "aliases": [],
+                }],
+                "trims": [{
+                    "id": "ultra_bev", "name": "Ultra", "variant": "58.9 kWh BEV CBU",
+                    "powertrain": "BEV", "drivetrain": "FWD", "battery_kwh": 58.9,
+                    "seats": 5, "aliases": [],
+                    "source_refs": {"oem": ["https://example.test/j5"]},
+                }],
+            }],
+        }],
+    })
+    if existing_price_thb is not None:
+        _write_json(data / "2026" / "market" / "prices" / "canonical_seed.json", {
+            "prices": [{
+                "trim_id": J5_ULTRA_TRIM, "amount_thb": existing_price_thb,
+                "price_type": "LIST_PRICE", "effective_from": "2026-01-01",
+                "observed_at": "2026-01-01", "source": "seed",
+            }],
+        })
+    return data
+
+
+def _manifest_dict_with_auto_ready_row(*, amount_thb=699_000,
+                                       generation_id="jaecoo.jaecoo_5_ev.j5") -> dict:
+    return {
+        "schema_version": 1,
+        "models": [{
+            "model_id": J5_MODEL_ID,
+            "evidence_tier": "OEM_CURRENT_MODEL_PAGE",
+            "grades": [{
+                "raw_grade": "Ultra", "trim_id": J5_ULTRA_TRIM, "generation_id": generation_id,
+                "amount_thb": amount_thb, "extracted_price_type": "LIST_PRICE",
+                "match_state": "EXACT", "match_method": "EXACT_NAME",
+                "evidence_tier": "OEM_CURRENT_MODEL_PAGE", "existing_list_price_thb": None,
+                "terminal_state": "AUTO_READY", "note": "", "source_ref": "https://example.test/j5",
+                "observed_at": "2026-09-24", "applied": False, "applied_command_id": None,
+            }],
+        }],
+    }
+
+
+def test_revalidate_leaves_a_still_valid_row_untouched(tmp_path: Path):
+    data = _seed_apply_fixture(tmp_path)
+    manifest = _manifest_dict_with_auto_ready_row()
+    downgraded = revalidate_manifest_for_apply(manifest, data_dir=data, year=2026)
+    assert downgraded == 0
+    assert manifest["models"][0]["grades"][0]["terminal_state"] == "AUTO_READY"
+
+
+def test_revalidate_blocks_row_when_model_enters_maintenance(tmp_path: Path):
+    data = _seed_apply_fixture(tmp_path)
+    upsert_model_operational_state(
+        data_dir=data, year=2026, model_id=J5_MODEL_ID, action="under_maintenance",
+        reviewer="ops", reviewed_at="2026-09-24", write=True,
+    )
+    manifest = _manifest_dict_with_auto_ready_row()
+    downgraded = revalidate_manifest_for_apply(manifest, data_dir=data, year=2026)
+    assert downgraded == 1
+    grade = manifest["models"][0]["grades"][0]
+    assert grade["terminal_state"] == "IDENTITY_BLOCKED"
+    assert "maintenance" in grade["note"].lower()
+
+
+def test_revalidate_blocks_row_when_generation_changed(tmp_path: Path):
+    data = _seed_apply_fixture(tmp_path)
+    manifest = _manifest_dict_with_auto_ready_row(generation_id="jaecoo.jaecoo_5_ev.j4")
+    downgraded = revalidate_manifest_for_apply(manifest, data_dir=data, year=2026)
+    assert downgraded == 1
+    assert manifest["models"][0]["grades"][0]["terminal_state"] == "IDENTITY_BLOCKED"
+
+
+def test_revalidate_becomes_price_conflict_when_existing_price_now_differs(tmp_path: Path):
+    data = _seed_apply_fixture(tmp_path, existing_price_thb=650_000)
+    manifest = _manifest_dict_with_auto_ready_row(amount_thb=699_000)
+    downgraded = revalidate_manifest_for_apply(manifest, data_dir=data, year=2026)
+    assert downgraded == 1
+    assert manifest["models"][0]["grades"][0]["terminal_state"] == "PRICE_CONFLICT"
+
+
+def test_revalidate_becomes_complete_when_existing_price_now_matches(tmp_path: Path):
+    data = _seed_apply_fixture(tmp_path, existing_price_thb=699_000)
+    manifest = _manifest_dict_with_auto_ready_row(amount_thb=699_000)
+    downgraded = revalidate_manifest_for_apply(manifest, data_dir=data, year=2026)
+    assert downgraded == 1
+    assert manifest["models"][0]["grades"][0]["terminal_state"] == "COMPLETE"
+
+
+def test_run_apply_writes_a_freshly_valid_row(tmp_path: Path):
+    data = _seed_apply_fixture(tmp_path)
+    manifest_path = data / "manifest.json"
+    _write_json(manifest_path, _manifest_dict_with_auto_ready_row())
+    result = run_apply(data_dir=data, year=2026, manifest_path=manifest_path)
+    assert result["applied"] is True
+    assert result["revalidation_blocked"] == 0
+    catalog = Catalog.load(data, 2026)
+    from vehreg.pricing import PriceLedger
+    ledger = PriceLedger.load(data, year=2026, catalog=catalog)
+    row = ledger.current_list_price(J5_ULTRA_TRIM)
+    assert row is not None
+    assert row.amount_thb == 699_000
+
+
+def test_run_apply_never_writes_a_row_blocked_by_revalidation(tmp_path: Path):
+    data = _seed_apply_fixture(tmp_path)
+    upsert_model_operational_state(
+        data_dir=data, year=2026, model_id=J5_MODEL_ID, action="under_maintenance",
+        reviewer="ops", reviewed_at="2026-09-24", write=True,
+    )
+    manifest_path = data / "manifest.json"
+    _write_json(manifest_path, _manifest_dict_with_auto_ready_row())
+    result = run_apply(data_dir=data, year=2026, manifest_path=manifest_path)
+    assert result["applied"] is False
+    assert result["revalidation_blocked"] == 1
+    catalog = Catalog.load(data, 2026)
+    from vehreg.pricing import PriceLedger
+    ledger = PriceLedger.load(data, year=2026, catalog=catalog)
+    assert ledger.current_list_price(J5_ULTRA_TRIM) is None
