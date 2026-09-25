@@ -2,11 +2,11 @@ name: Price feed
 
 on:
   schedule:
-    - cron: "*/20 * * * *"
+    - cron: "0 */12 * * *"
   workflow_dispatch:
     inputs:
       since:
-        description: "ISO timestamp to poll from (default: 3 hours ago)"
+        description: "ISO timestamp to poll from (default: 13 hours ago)"
         required: false
 
 permissions:
@@ -72,7 +72,7 @@ jobs:
           if [ -n "${{ inputs.since }}" ]; then
             echo "since=${{ inputs.since }}" >> "$GITHUB_OUTPUT"
           else
-            echo "since=$(date -u -d '3 hours ago' +%Y-%m-%dT%H:%M:%S)" >> "$GITHUB_OUTPUT"
+            echo "since=$(date -u -d '13 hours ago' +%Y-%m-%dT%H:%M:%S)" >> "$GITHUB_OUTPUT"
           fi
       - name: Harvest price news
         run: |
