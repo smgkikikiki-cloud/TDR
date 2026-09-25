@@ -167,12 +167,6 @@ jobs:
           git push origin HEAD:main
           echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
           echo "changed=true" >> "$GITHUB_OUTPUT"
-      # A price nobody is serving is not a price change. Publish the exact
-      # commit here and wait for it, rather than pushing and hoping another
-      # workflow picks it up.
-      - name: Publish the pushed revision
-        if: steps.commit.outputs.changed == 'true'
-        run: PYTHONPATH=. python -m tools.publish_canonical --revision "${{ steps.commit.outputs.sha }}"
       # The one place this workflow actively tells anyone anything: every
       # other artifact just sits in git for whoever looks. A PRICE_IDENTITY
       # exception means a grade name a real source used right now does not
@@ -205,3 +199,9 @@ jobs:
             gh issue create --repo "$GITHUB_REPOSITORY" --title "$title" \
               --assignee smgkikikiki-cloud --body-file /tmp/notice.md
           fi
+      # A price nobody is serving is not a price change. Publish the exact
+      # commit here and wait for it, rather than pushing and hoping another
+      # workflow picks it up.
+      - name: Publish the pushed revision
+        if: steps.commit.outputs.changed == 'true'
+        run: PYTHONPATH=. python -m tools.publish_canonical --revision "${{ steps.commit.outputs.sha }}"
