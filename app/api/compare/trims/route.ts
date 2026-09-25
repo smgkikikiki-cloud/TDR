@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getCanonicalCompareTrims } from "@/lib/canonical-data";
+import { getCanonicalCompareTrimOptions } from "@/lib/compare-canonical-data";
 
 // Public: picking which vehicles to compare is browsing, same as any other
 // catalogue page. Only the produced comparison itself (POST/GET
@@ -8,19 +8,13 @@ import { getCanonicalCompareTrims } from "@/lib/canonical-data";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  // No limit: a car missing from the picker is a car a reader cannot compare.
-  const trims = (await getCanonicalCompareTrims()) as any[];
-  // model_id and powertrain travel with each trim so the picker can be the
-  // two steps a person actually takes -- which car, then which version of it --
-  // rather than one list of every trim in the country.
-  const slim = trims.map((trim) => ({
-    id: trim.id,
-    model_id: trim.model_id,
-    brand_name: trim.brand_name,
-    model_name: trim.model_name,
-    name: trim.name,
-    powertrain: trim.powertrain ?? null,
-    price_baht: trim.price_baht ?? null,
-  }));
-  return NextResponse.json({ trims: slim }, { headers: { "Cache-Control": "public, max-age=300" } });
+  try {
+    // The picker deliberately reads a lightweight projection of every trim.
+    // Rich compare payloads are fetched later, only for the <=4 selected IDs.
+    const trims = (await getCanonicalCompareTrimOptions()) as any[];
+    return NextResponse.json({ trims }, { headers: { "Cache-Control": "public, max-age=300" } });
+  } catch (error) {
+    console.error("compare trim picker error", error);
+    return NextResponse.json({ error: "could not load compare vehicles" }, { status: 500 });
+  }
 }

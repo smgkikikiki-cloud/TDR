@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCanonicalCompareTrims } from "@/lib/canonical-data";
+import { getCanonicalCompareTrimsByIds } from "@/lib/compare-canonical-data";
 import { compareValue, indexSpecFields, rowIsDifferent, visibleCompareGroups, type CompareSpecField, type FreeCompareTrim } from "@/lib/free-compare";
 import { evaluateCompareWinner } from "@/lib/compare-winners";
 import { loadSpecFieldRegistry } from "@/lib/spec-field-registry";
@@ -21,9 +21,9 @@ function bearer(request: NextRequest) {
  *  Entitlement decides whether it runs and what quota line comes back with
  *  it; it does not change a single number in the table. */
 async function buildComparison(requestedIds: string[], diffOnly: boolean) {
-  const all = (await getCanonicalCompareTrims()) as FreeCompareTrim[];
-  const byId = new Map(all.map((trim) => [trim.id, trim]));
-  const selected = requestedIds.map((id) => byId.get(id)).filter(Boolean) as FreeCompareTrim[];
+  // A comparison has at most four selected trims. Fetch those rich payloads
+  // directly rather than reading/sorting the entire 1,500+ row trim projection.
+  const selected = (await getCanonicalCompareTrimsByIds(requestedIds)) as FreeCompareTrim[];
   // Which fields are comparable, and what they are called, comes from the
   // canonical registry rather than a list kept here -- the same file
   // APPEND_SPEC validates against, so a field is comparable the day it is
@@ -108,9 +108,6 @@ export async function GET(request: NextRequest) {
       [...requestedIds].sort().join(","), diffOnly,
     ]);
 
-    // Every trim, not the first page of them: a selection made from the
-    // catalogue must resolve, and reporting a real car as missing is worse
-    // than the query being a little larger.
     const body = await buildComparison(requestedIds, diffOnly);
 
     await recordEvent({ eventName: "compare_run", userId: ctx.userId, props: { trim_count: body.selected.length } });
