@@ -35,9 +35,28 @@ console.log("quota architecture — lower-level fetchers never consume quota the
 function functionBody(source: string, signature: string): string {
   const start = source.indexOf(signature);
   if (start === -1) throw new Error(`signature not found: ${signature}`);
-  // Find the matching closing brace for the function body by depth count,
-  // starting from the first "{" after the signature.
-  const braceStart = source.indexOf("{", start);
+  // The parameter list itself can carry braces of its own (an inline
+  // `args: { ... }` type, as most functions in this file use) -- so the
+  // function body's own opening brace is not simply "the first { after the
+  // signature", it is "the first { after the parameter list's matching )".
+  // Find that ) by paren depth count first (the signature may or may not
+  // already include the opening "(").
+  let parenStart = signature.indexOf("(");
+  parenStart = parenStart === -1 ? source.indexOf("(", start) : start + parenStart;
+  let parenDepth = 0;
+  let parenEnd = -1;
+  for (let i = parenStart; i < source.length; i++) {
+    if (source[i] === "(") parenDepth++;
+    if (source[i] === ")") {
+      parenDepth--;
+      if (parenDepth === 0) { parenEnd = i; break; }
+    }
+  }
+  if (parenEnd === -1) throw new Error(`unbalanced parens for: ${signature}`);
+  // Then the function body's own opening brace by depth count, starting
+  // from the first "{" after the parameter list closes (skipping any return
+  // type annotation in between, e.g. "): Promise<Foo> {").
+  const braceStart = source.indexOf("{", parenEnd);
   let depth = 0;
   for (let i = braceStart; i < source.length; i++) {
     if (source[i] === "{") depth++;
@@ -108,6 +127,36 @@ check("member dashboard no longer fans out to /api/report/registration per dimen
 const loadMarketFn = functionBody(marketWorkspace, "async function loadMarket(");
 check("loadMarket makes exactly one HTTP request per Update-market click, not a per-dimension fan-out",
   occurrences(loadMarketFn, "jsonFetch("), 1);
+
+console.log("\nquota architecture — one 'Update market' click reads registration facts from Postgres once, not once per window");
+// current + comparison + up to 6 trend months used to each independently
+// re-run fetchRegistrationRows + canonicalizeRegistrationRows (paginated
+// fact rows, canonical model/brand/alias lookups, historical model state) --
+// up to 8 full re-fetches of the same underlying data per click. Now the
+// GET handler resolves every window it needs up front and calls
+// loadRegistrationFactSpan exactly once for their union span;
+// marketSliceWithPrice only slices the shared result in memory (see
+// lib/registration-analytics.ts's sliceLoadedFacts) and must never fetch
+// anything itself.
+const getFn = functionBody(marketRoute, "export async function GET(request: NextRequest) {");
+check("the market route calls loadRegistrationFactSpan exactly once per request",
+  occurrences(getFn, "loadRegistrationFactSpan("), 1);
+check("the single fetch happens before any window is sliced (current/comparison/trend all reuse it)",
+  getFn.indexOf("await loadRegistrationFactSpan(") < getFn.indexOf("await marketSliceWithPrice("),
+  true);
+const marketSliceWithPriceFn = functionBody(marketRoute, "async function marketSliceWithPrice(args: {");
+for (const fetcher of ["fetchRegistrationRows(", "canonicalizeRegistrationRows(", "loadRegistrationFactSpan("]) {
+  check(`marketSliceWithPrice never calls ${fetcher} itself -- it only slices facts it was handed`,
+    marketSliceWithPriceFn.includes(fetcher), false);
+}
+const loadFactSpanFn = functionBody(registrationAnalytics, "export async function loadRegistrationFactSpan(args: {");
+check("loadRegistrationFactSpan fetches registration rows exactly once",
+  occurrences(loadFactSpanFn, "fetchRegistrationRows("), 1);
+check("loadRegistrationFactSpan canonicalizes exactly once",
+  occurrences(loadFactSpanFn, "canonicalizeRegistrationRows("), 1);
+const sliceLoadedFactsFn = functionBody(registrationAnalytics, "export function sliceLoadedFacts(args: {");
+check("sliceLoadedFacts is pure in-memory work -- it never touches the database",
+  /\bawait\b|\bdb\b/.test(sliceLoadedFactsFn), false);
 
 console.log("\nquota architecture — fingerprint is computed inside requireUsage/consumeUsage, callers only pass semantic parts");
 const requireUsageFn = functionBody(accessPolicyServer, "export async function requireUsage(");

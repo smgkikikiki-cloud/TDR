@@ -492,6 +492,87 @@ function hasNarrowingFilter(filters: MarketSliceFilters | undefined): boolean {
   });
 }
 
+// The tier/history/filter gates a market slice must pass, split out from the
+// fetch below so a caller juggling several windows in one request (current +
+// comparison + trend months -- see loadRegistrationFactSpan/sliceLoadedFacts)
+// can run this once per (dimension, window) it actually touches without
+// paying for a registration-fact fetch each time just to find out whether
+// it's allowed to ask.
+export async function assertMarketSliceAllowed(
+  ctx: AccessContext, dimension: MarketDimension, window: MarketPeriodWindow,
+  filters: MarketSliceFilters | undefined,
+): Promise<void> {
+  const selectedModules = await selectedModulesFor(ctx);
+  if (!isMarketDimensionAllowed(dimension, ctx.tier, selectedModules)) {
+    throw new RegistrationAccessError(403, `dimension "${dimension}" is not available on this account's plan`);
+  }
+  const historyStart = historyWindowStart(ctx.tier);
+  if (historyStart && window.from < historyStart) {
+    throw new RegistrationAccessError(403, `window is outside this account's history window (from ${historyStart})`);
+  }
+  // Narrowing a slice to chosen brands, models or segments is the difference
+  // between reading the market and interrogating it, so it is checked here
+  // where the rows are actually read rather than only in the controls. A
+  // caller that hides the inputs but still sends the parameter gets a 403.
+  if (!areMarketFiltersAllowed(ctx.tier) && hasNarrowingFilter(filters)) {
+    throw new RegistrationAccessError(403, "filtering a market slice is not available on this account's plan");
+  }
+}
+
+// Fetches and canonicalizes registration facts for one SPAN covering every
+// window a caller needs, exactly once -- not once per window. A single
+// "Update market" click can ask for a current window, a comparison window
+// and up to six trend months (app/api/report/market/route.ts), and every one
+// of those used to repeat the full pipeline independently: paginated fact
+// rows, canonical model/brand/alias lookups, historical model state,
+// canonicalization. None of that depends on which window is being looked
+// at -- only sliceLoadedFacts' window filter does -- so a caller with
+// several windows fetches this once for their union span and slices each
+// window from the same in-memory facts afterwards.
+export async function loadRegistrationFactSpan(args: {
+  ctx: AccessContext;
+  span: MarketPeriodWindow;
+  filters?: MarketSliceFilters;
+  // Every dimension any window in this request will be sliced by -- e.g.
+  // [dimensionValue, "oem_group"] when a trend sparkline (always ranked by
+  // the neutral oem_group dimension) is requested alongside a ranking by
+  // something else. Determines whether historical model state needs to be
+  // required for the whole fetch (see needsHistoricalModelState).
+  dimensionsNeeded: MarketDimension[];
+}): Promise<CanonicalRegistrationFact[]> {
+  const db = args.ctx.db;
+  const filters = args.filters || {};
+  const rows = await fetchRegistrationRows(
+    db,
+    args.span,
+    filters.registrationTypes,
+    args.dimensionsNeeded.includes("registration_type"),
+  );
+  const requireHistorical = args.dimensionsNeeded.some((dimension) => needsHistoricalModelState(dimension, filters));
+  return canonicalizeRegistrationRows(db, rows, requireHistorical);
+}
+
+// The pure, in-memory half of a market slice: filters an already-loaded fact
+// array down to one window and hands it to sliceMarketFacts. No DB access --
+// this is what lets several windows share one loadRegistrationFactSpan call.
+export function sliceLoadedFacts(args: {
+  facts: CanonicalRegistrationFact[];
+  dimension: MarketDimension;
+  window: MarketPeriodWindow;
+  filters?: MarketSliceFilters;
+  includeUnmapped?: boolean;
+  limit?: number;
+}): MarketSliceRow[] {
+  const windowed = args.facts.filter((fact) => fact.period >= args.window.from && fact.period <= args.window.to);
+  return sliceMarketFacts({
+    facts: windowed,
+    dimension: args.dimension,
+    filters: args.filters,
+    includeUnmapped: args.includeUnmapped,
+    limit: args.limit,
+  });
+}
+
 export async function getRegistrationMarketSlice(args: {
   ctx: AccessContext;
   dimension: MarketDimension;
@@ -500,39 +581,15 @@ export async function getRegistrationMarketSlice(args: {
   includeUnmapped?: boolean;
   limit?: number;
 }): Promise<MarketSliceRow[]> {
-  const { ctx } = args;
-  const selectedModules = await selectedModulesFor(ctx);
-  if (!isMarketDimensionAllowed(args.dimension, ctx.tier, selectedModules)) {
-    throw new RegistrationAccessError(403, `dimension "${args.dimension}" is not available on this account's plan`);
-  }
-  const historyStart = historyWindowStart(ctx.tier);
-  if (historyStart && args.window.from < historyStart) {
-    throw new RegistrationAccessError(403, `window is outside this account's history window (from ${historyStart})`);
-  }
-  // Narrowing a slice to chosen brands, models or segments is the difference
-  // between reading the market and interrogating it, so it is checked here
-  // where the rows are actually read rather than only in the controls. A
-  // caller that hides the inputs but still sends the parameter gets a 403.
-  if (!areMarketFiltersAllowed(ctx.tier) && hasNarrowingFilter(args.filters)) {
-    throw new RegistrationAccessError(403, "filtering a market slice is not available on this account's plan");
-  }
-
-  const db = ctx.db;
   const filters = args.filters || {};
-  const rows = await fetchRegistrationRows(
-    db,
-    args.window,
-    filters.registrationTypes,
-    args.dimension === "registration_type",
-  );
-  const facts = await canonicalizeRegistrationRows(
-    db,
-    rows,
-    needsHistoricalModelState(args.dimension, filters),
-  );
-  return sliceMarketFacts({
+  await assertMarketSliceAllowed(args.ctx, args.dimension, args.window, filters);
+  const facts = await loadRegistrationFactSpan({
+    ctx: args.ctx, span: args.window, filters, dimensionsNeeded: [args.dimension],
+  });
+  return sliceLoadedFacts({
     facts,
     dimension: args.dimension,
+    window: args.window,
     filters,
     includeUnmapped: args.includeUnmapped,
     limit: args.limit,

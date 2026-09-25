@@ -8,20 +8,24 @@ import {
   isMarketWindowAllowed,
 } from "@/lib/access-policy";
 import {
+  assertMarketSliceAllowed,
   compareMarketSliceRows,
   comparisonMarketWindow,
   consumeMarketReportQuota,
   getRegistrationAvailablePeriods,
-  getRegistrationMarketSlice,
   isMarketComparison,
   isMarketDimension,
   isMarketWindow,
+  loadRegistrationFactSpan,
   missingReportPeriods,
   normalizeReportPeriod,
   RegistrationAccessError,
   resolveMarketWindow,
   resolveRegistrationAccess,
+  sliceLoadedFacts,
   type AccessContext,
+  type CanonicalRegistrationFact,
+  type MarketDimension,
   type MarketPeriodWindow,
   type MarketSliceFilters,
   type MarketSliceRow,
@@ -141,21 +145,29 @@ function eligibleModels(state: MarketPriceState | null, period: string, band: Ma
 // request via consumeMarketReportQuota() exactly once. This may be called
 // several times per request (current window, comparison window, trend
 // months) and none of those calls pay again -- see
-// lib/registration-analytics.ts::getRegistrationMarketSlice.
+// lib/registration-analytics.ts::loadRegistrationFactSpan.
+//
+// `facts` is the whole request's registration facts, already fetched and
+// canonicalized ONCE for the union of every window this request needs (see
+// GET below) -- this function only gates the specific (dimension, window)
+// combination it was called for and slices the shared facts down to it, in
+// memory. It never fetches anything itself.
 async function marketSliceWithPrice(args: {
   ctx: AccessContext;
-  dimension: Parameters<typeof getRegistrationMarketSlice>[0]["dimension"];
+  dimension: MarketDimension;
   window: MarketPeriodWindow;
   filters: MarketSliceFilters;
   includeUnmapped: boolean;
   limit: number;
   priceBand: MarketPriceBand | null;
   priceState: MarketPriceState | null;
+  facts: CanonicalRegistrationFact[];
 }) {
+  await assertMarketSliceAllowed(args.ctx, args.dimension, args.window, args.filters);
   const eligible = args.priceBand ? eligibleModels(args.priceState, args.window.to, args.priceBand) : null;
   const filters = eligible ? intersectModelFilter(args.filters, eligible, args.dimension) : args.filters;
-  const rows = await getRegistrationMarketSlice({
-    ctx: args.ctx,
+  const rows = sliceLoadedFacts({
+    facts: args.facts,
     dimension: args.dimension,
     window: args.window,
     filters,
@@ -266,17 +278,65 @@ export async function GET(request: NextRequest) {
     // The ONE quota-consuming call for this entire request -- everything
     // below (current window, comparison window, trend months) reuses this
     // same ctx and pays nothing further, regardless of how many internal
-    // getRegistrationMarketSlice calls that takes. The fingerprint must
-    // cover every output-changing request parameter, not just the
-    // filters/window/dimension: `limit` and `trend_months` both change
-    // what the response actually contains, so two requests that differ
-    // only in those must not be treated as the same request and coalesce.
+    // slices that takes. The fingerprint must cover every output-changing
+    // request parameter, not just the filters/window/dimension: `limit` and
+    // `trend_months` both change what the response actually contains, so
+    // two requests that differ only in those must not be treated as the
+    // same request and coalesce.
     const quota = await consumeMarketReportQuota(ctx, [
       dimensionValue, windowValue, currentWindow.from, currentWindow.to,
       comparisonMode ?? "", priceBand ?? "", includeUnmapped,
       limit, trendMonths,
       canonicalFilterFingerprint(filters),
     ]);
+
+    // Every window this request could need, resolved up front -- before any
+    // registration-fact fetch -- so the underlying facts (paginated fact
+    // rows, canonical model/brand/alias lookups, historical model state) can
+    // be loaded once for their union span and sliced per window in memory,
+    // instead of once per window (up to 8 per "Update market" click: current
+    // + comparison + up to 6 trend months, each re-running the full
+    // fetch-and-canonicalize pipeline from scratch against the same data).
+    let previousWindow: MarketPeriodWindow | null = null;
+    let previousPriceCoverage: PriceCoverage | null = null;
+    if (comparisonMode) {
+      previousWindow = comparisonMarketWindow(currentWindow, comparisonMode);
+      const missingPrevious = missingReportPeriods(previousWindow, available);
+      if (missingPrevious.length) {
+        return NextResponse.json({
+          error: "comparison registration window is incomplete",
+          window: currentWindow,
+          comparison_window: previousWindow,
+          missing_periods: missingPrevious,
+        }, { status: 409 });
+      }
+      previousPriceCoverage = await priceCoverage(priceState, previousWindow.to);
+      if (priceBand && previousPriceCoverage.coverage_pct < MARKET_PRICE_MIN_COVERAGE_PCT) {
+        return NextResponse.json({
+          error: "comparison price cohort does not have enough verified canonical LIST_PRICE coverage",
+          price_band: priceBand,
+          comparison_window: previousWindow,
+          price_coverage: previousPriceCoverage,
+        }, { status: 409 });
+      }
+    }
+    // market_total is the same number whichever dimension it is grouped by
+    // -- it is a sum over the filtered scope, not a slice of it -- so
+    // "oem_group" here is just one arbitrary, always-open dimension (unlike
+    // "model", which needs a tier check) rather than the ranked dimension:
+    // every selected filter still applies, so market_total remains the true
+    // scope total for each trailing month regardless of what is being ranked.
+    const trendPeriods = trendMonths > 0 ? available.filter((p) => p <= currentWindow.to).slice(-trendMonths) : [];
+    const trendWindows = trendPeriods.map((trendPeriod) => resolveMarketWindow(trendPeriod, "month"));
+
+    const spanWindows = [currentWindow, ...(previousWindow ? [previousWindow] : []), ...trendWindows];
+    const span: MarketPeriodWindow = {
+      from: spanWindows.reduce((min, w) => (w.from < min ? w.from : min), spanWindows[0].from),
+      to: spanWindows.reduce((max, w) => (w.to > max ? w.to : max), spanWindows[0].to),
+    };
+    const dimensionsNeeded: MarketDimension[] = trendWindows.length
+      ? [dimensionValue, "oem_group"] : [dimensionValue];
+    const facts = await loadRegistrationFactSpan({ ctx, span, filters, dimensionsNeeded });
 
     // A comparison must be calculated from the full competitive set, not the
     // display limit. Otherwise rank 11 becomes a fake zero merely because the
@@ -291,29 +351,11 @@ export async function GET(request: NextRequest) {
       limit: queryLimit,
       priceBand,
       priceState,
+      facts,
     });
 
     let comparison = null;
-    if (comparisonMode) {
-      const previousWindow = comparisonMarketWindow(currentWindow, comparisonMode);
-      const missingPrevious = missingReportPeriods(previousWindow, available);
-      if (missingPrevious.length) {
-        return NextResponse.json({
-          error: "comparison registration window is incomplete",
-          window: currentWindow,
-          comparison_window: previousWindow,
-          missing_periods: missingPrevious,
-        }, { status: 409 });
-      }
-      const previousPriceCoverage = await priceCoverage(priceState, previousWindow.to);
-      if (priceBand && previousPriceCoverage.coverage_pct < MARKET_PRICE_MIN_COVERAGE_PCT) {
-        return NextResponse.json({
-          error: "comparison price cohort does not have enough verified canonical LIST_PRICE coverage",
-          price_band: priceBand,
-          comparison_window: previousWindow,
-          price_coverage: previousPriceCoverage,
-        }, { status: 409 });
-      }
+    if (comparisonMode && previousWindow && previousPriceCoverage) {
       const previousRows = await marketSliceWithPrice({
         ctx,
         dimension: dimensionValue,
@@ -323,6 +365,7 @@ export async function GET(request: NextRequest) {
         limit: 500,
         priceBand,
         priceState,
+        facts,
       });
       comparison = {
         mode: comparisonMode,
@@ -333,39 +376,31 @@ export async function GET(request: NextRequest) {
       };
     }
 
-    // Trend sparkline, computed server-side within this same paid request.
-    // market_total is the same number whichever dimension it is grouped by
-    // -- it is a sum over the filtered scope, not a slice of it -- so
-    // "oem_group" here is just one arbitrary, always-open dimension (unlike
-    // "model", which needs a tier check) rather than the ranked dimension:
-    // every selected filter (whichever ones the reader set, oem_group
-    // included) still applies via trendFilters, so market_total remains the
-    // true scope total for each trailing month regardless of what is being
-    // ranked.
-    let trend: Array<{ period: string; total: number }> = [];
-    if (trendMonths > 0) {
-      const trendPeriods = available.filter((p) => p <= currentWindow.to).slice(-trendMonths);
-      const trendFilters = { ...filters };
-      const points = await Promise.all(trendPeriods.map(async (trendPeriod) => {
-        try {
-          const trendWindow = resolveMarketWindow(trendPeriod, "month");
-          const rows = await marketSliceWithPrice({
-            ctx,
-            dimension: "oem_group",
-            window: trendWindow,
-            filters: trendFilters,
-            includeUnmapped,
-            limit: 1,
-            priceBand: null,
-            priceState,
-          });
-          return { period: trendPeriod, total: Number(rows[0]?.market_total || 0) };
-        } catch {
-          return null;
-        }
-      }));
-      trend = points.filter(Boolean) as Array<{ period: string; total: number }>;
-    }
+    // Trend sparkline, computed server-side within this same paid request,
+    // now sliced from the already-loaded `facts` rather than fetching again
+    // per month. Each month still gates and slices independently (and still
+    // silently drops on failure) so one month outside this account's history
+    // window does not blank the whole sparkline.
+    const trendFilters = { ...filters };
+    const points = await Promise.all(trendPeriods.map(async (trendPeriod, index) => {
+      try {
+        const rows = await marketSliceWithPrice({
+          ctx,
+          dimension: "oem_group",
+          window: trendWindows[index],
+          filters: trendFilters,
+          includeUnmapped,
+          limit: 1,
+          priceBand: null,
+          priceState,
+          facts,
+        });
+        return { period: trendPeriod, total: Number(rows[0]?.market_total || 0) };
+      } catch {
+        return null;
+      }
+    }));
+    const trend = points.filter(Boolean) as Array<{ period: string; total: number }>;
 
     await recordEvent({ eventName: "sales_run", userId: ctx.userId, props: { dimension: dimensionValue, window: windowValue, compare: comparisonMode } });
 
