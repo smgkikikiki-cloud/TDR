@@ -16,7 +16,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: feature/vehreg-fill-batch-01
-          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -49,7 +48,6 @@ jobs:
           trim_ids = {t.id for t in trims}
           print('TARGET_MODELS', len(touched), 'TARGET_TRIMS', len(trims), 'REGISTRY_FIELDS', len(registry.fields))
 
-          # Index existing facts and ECO UUID facts once.
           facts_root = DATA / str(YEAR) / 'product' / 'comparable_specs' / 'facts'
           existing_by_trim = {tid: {} for tid in trim_ids}
           eco_by_uuid = {}
@@ -114,7 +112,6 @@ jobs:
 
           added_catalog = added_na = added_eco = 0
           for trim in trims:
-              # 1) Reuse exact ECO Sticker evidence referenced by this MarketTrim.
               refs = getattr(trim, 'source_refs', {}) or {}
               for eco_uuid in refs.get('eco', ()):
                   for field, srcfact in eco_by_uuid.get(str(eco_uuid).lower(), {}).items():
@@ -165,7 +162,6 @@ jobs:
                       if add_fact(trim, field, 'KNOWN', value, source=src_name, source_ref=src_ref, tag='catalog'):
                           added_catalog += 1
 
-              # 2) Explicitly close fields the registry itself says do not apply to this powertrain.
               pt = trim.powertrain.value
               for field, definition in registry.fields.items():
                   if field in existing_by_trim[trim.id]:
@@ -174,7 +170,6 @@ jobs:
                       if add_fact(trim, field, 'NOT_APPLICABLE', None, source='registry', source_ref='product/comparable_specs/registry.json', tag='na'):
                           added_na += 1
 
-          # Validate every touched trim after repair and print an auditable coverage summary.
           post = SpecLedger.load(DATA, YEAR, registry=registry, catalog=catalog)
           problems = post.validate()
           touched_problems = [p for p in problems if any(tid in p for tid in trim_ids)]
