@@ -434,41 +434,92 @@
         "A4 AV",
         "A4"
       ],
+      "notes": "Thai-market B9.5 A4 lifecycle and late retail specification verified on 2026-09-25. Audi Thailand's price list effective 2024-08-15 listed A4 40 TFSI S line Icon Black at THB 2,699,000 and A4 Avant 45 TFSI quattro S line Icon Black at THB 3,499,000, both CBU. Current Audi Thailand model catalog no longer lists A4; the nameplate is therefore retained as historical/discontinued rather than current retail.",
+      "retail_status": "DISCONTINUED",
+      "retail_checked_at": "2026-09-25",
+      "retail_source": "https://www.audi.co.th/en/models/",
       "generations": [
         {
-          "code": "gen1",
+          "code": "B9.5",
           "segment": "D",
           "seats": 5,
-          "launched": "2023-01-01",
+          "launched": "2020-08-18",
           "ended": null,
           "variants": [
             {
-              "name": "spec",
-              "powertrain": "ICE",
-              "drivetrain": "AWD",
+              "name": "40 TFSI MHEV",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
               "engine_cc": 1984,
-              "price_thb": 3290000.0,
-              "price_min_thb": null,
-              "price_max_thb": null,
+              "battery_kwh": null,
+              "price_thb": 2699000,
+              "price_min_thb": 2699000,
+              "price_max_thb": 2699000,
               "import_type": "CBU",
               "origin_country": "DE",
-              "price_note": "seed-unverified",
-              "aliases": []
+              "price_note": "Audi Thailand recommended retail price effective 2024-08-15 for A4 40 TFSI S line Icon Black.",
+              "aliases": [
+                "40 TFSI S line",
+                "40 TFSI S line Icon Black"
+              ]
+            },
+            {
+              "name": "45 TFSI quattro MHEV",
+              "powertrain": "HEV",
+              "drivetrain": "AWD",
+              "engine_cc": 1984,
+              "battery_kwh": null,
+              "price_thb": 3499000,
+              "price_min_thb": 3499000,
+              "price_max_thb": 3499000,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "Audi Thailand recommended retail price effective 2024-08-15 for A4 Avant 45 TFSI quattro S line Icon Black.",
+              "aliases": [
+                "45 TFSI quattro S line",
+                "45 TFSI quattro S line Black Edition",
+                "45 TFSI quattro S line Icon Black"
+              ]
             }
           ],
           "trims": [
             {
-              "name": "40 TFSI S line (Sedan)",
-              "powertrain": "ICE",
+              "name": "40 TFSI S line Icon Black",
+              "variant": "40 TFSI MHEV",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:007"
+                ],
+                "eco": [
+                  "e1b09021-4284-4211-8b78-625a9939c8ab"
+                ],
+                "official_audi": [
+                  "https://www.audi.co.th/dam/nemo/sea/th/pdf/Audi_Price_List.pdf"
+                ],
+                "headlightmag": [
+                  "https://www.headlightmag.com/official-price-audi-a4-sedan-40-tfsi/",
+                  "https://www.headlightmag.com/2023-06-26-picture-specs-audi-a4-40-tfsi-s-line-icon-black/"
                 ]
               },
               "aliases": [
-                "A4 40 TFSI S line (Sedan)"
+                "A4 40 TFSI S line (Sedan)",
+                "A4 40 TFSI S line Icon Black"
               ],
-              "id": "40_tfsi_s_line_sedan_ice"
+              "id": "40_tfsi_s_line_sedan_ice",
+              "seats": 5,
+              "length_mm": 4762,
+              "width_mm": 1847,
+              "height_mm": 1428,
+              "wheelbase_mm": 2820,
+              "engine_cc": 1984,
+              "transmission": "7-speed S tronic",
+              "tire_front": "245/40 R18",
+              "tire_rear": "245/40 R18",
+              "wheel_front": "18 in",
+              "wheel_rear": "18 in",
+              "notes": "Late Thai-market sedan specification: 2.0 TFSI 190 PS / 320 Nm with 12V mild-hybrid system, 7-speed S tronic and FWD. Stable canonical trim ID retained for downstream compatibility."
             },
             {
               "name": "45 TFSI quattro S line Black Edition (Sedan)",
@@ -484,36 +535,44 @@
               "id": "45_tfsi_quattro_s_line_black_edition_sedan_ice"
             },
             {
-              "name": "Avant 45 TFSI quattro S line Black Edition (Station Wagon)",
-              "powertrain": "ICE",
+              "name": "Avant 45 TFSI quattro S line Icon Black",
+              "variant": "45 TFSI quattro MHEV",
+              "powertrain": "HEV",
+              "drivetrain": "AWD",
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:007"
+                ],
+                "official_audi": [
+                  "https://www.audi.co.th/dam/nemo/sea/th/pdf/Audi_Price_List.pdf",
+                  "https://www.audi.co.th/dam/nemo/sea/th/pdf/Audi_A4_Avant_Brochure.pdf"
+                ],
+                "headlightmag": [
+                  "https://www.headlightmag.com/official-price-audi-a4-avant-minorchange/"
                 ]
               },
               "aliases": [
-                "A4 Avant 45 TFSI quattro S line Black Edition (Station Wagon)"
+                "A4 Avant 45 TFSI quattro S line Black Edition (Station Wagon)",
+                "A4 Avant 45 TFSI quattro S line Icon Black"
               ],
-              "id": "avant_45_tfsi_quattro_s_line_black_edition_station_wagon_ice"
-            },
-            {
-              "name": "40 TFSI S line",
-              "powertrain": "HEV",
+              "id": "avant_45_tfsi_quattro_s_line_black_edition_station_wagon_ice",
               "seats": 5,
               "length_mm": 4762,
               "width_mm": 1847,
-              "height_mm": 1428,
+              "height_mm": 1435,
+              "wheelbase_mm": 2820,
               "engine_cc": 1984,
-              "transmission": "AUTOMATIC",
-              "source_refs": {
-                "eco": [
-                  "e1b09021-4284-4211-8b78-625a9939c8ab"
-                ]
-              }
+              "transmission": "7-speed S tronic",
+              "tire_front": "245/35 R19",
+              "tire_rear": "245/35 R19",
+              "wheel_front": "19 in",
+              "wheel_rear": "19 in",
+              "notes": "Late Thai-market Avant specification: 2.0 TFSI 249 PS / 370 Nm with 12V mild-hybrid system, quattro with ultra technology and 7-speed S tronic. Stable canonical trim ID retained for downstream compatibility."
             }
           ]
         }
-      ]
+      ],
+      "powertrain_checked": true
     },
     {
       "id": "a5",
