@@ -96,12 +96,44 @@ jobs:
           latest=$(ls -1 vehreg/data/2026/market/pricefeed/batch-*.json | tail -1)
           PYTHONPATH=. python -m tools.pricefeed_write "$latest" \
             --observed-at "$(date -u +%F)" | tee /tmp/price-write.json
-      - run: python tools/pricefeed_guard.py --base origin/main --repo-prefix automotive/vehicle_master/
+      # Harvest creates a timestamped batch on every poll, and the writer
+      # also creates an exception artifact even when there are zero
+      # exceptions. Those artifacts are useful only when the run produced a
+      # real canonical write or new unresolved work. Otherwise they must not
+      # dirty main: a no-op poll is not a production change and must not
+      # trigger another frontend deployment.
+      - name: Classify semantic change and drop no-op artifacts
+        id: semantic
+        run: |
+          set -euo pipefail
+          written=$(python -c "import json; d=json.load(open('/tmp/price-write.json')); print(int(d.get('planned', {}).get('WRITTEN', 0)))")
+          exceptions=$(python -c "import json; d=json.load(open('/tmp/price-write.json')); print(int(d.get('exceptions_stored', {}).get('count', 0)))")
+          exception_file=$(python -c "import json; d=json.load(open('/tmp/price-write.json')); print(d.get('exceptions_stored', {}).get('file') or '')")
+
+          # Never keep an empty exception report in git, even when the same
+          # run did write a real price.
+          if [ "$exceptions" -eq 0 ] && [ -n "$exception_file" ]; then
+            rm -f "$exception_file"
+          fi
+
+          if [ "$written" -eq 0 ] && [ "$exceptions" -eq 0 ]; then
+            latest=$(ls -1 vehreg/data/2026/market/pricefeed/batch-*.json | tail -1)
+            rm -f "$latest"
+            echo "meaningful=false" >> "$GITHUB_OUTPUT"
+            echo "No semantic price change; harvest artifacts discarded."
+          else
+            echo "meaningful=true" >> "$GITHUB_OUTPUT"
+            echo "Semantic price change detected: written=$written exceptions=$exceptions"
+          fi
+      - name: Guard price-feed changes
+        if: steps.semantic.outputs.meaningful == 'true'
+        run: python tools/pricefeed_guard.py --base origin/main --repo-prefix automotive/vehicle_master/
       # Unit tests must not inherit the production Supabase credentials from
       # the harvest job. Pricefeed writer tests intentionally use temporary
       # local data; exposing SUPABASE_URL makes exception cases POST into the
       # live import_runs table and turns deterministic tests into 409 conflicts.
       - name: Test without production database access
+        if: steps.semantic.outputs.meaningful == 'true'
         env:
           SUPABASE_URL: ""
           SUPABASE_SECRET_KEY: ""
@@ -116,6 +148,9 @@ jobs:
         id: commit
         run: |
           set -euo pipefail
+          if [ "${{ steps.semantic.outputs.meaningful }}" != "true" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"; exit 0
+          fi
           # Untracked too: a canonical write's price file, batch marker and
           # exception report are all new files, and `git diff` cannot see
           # them -- which is how a run reports "nothing changed" over a
