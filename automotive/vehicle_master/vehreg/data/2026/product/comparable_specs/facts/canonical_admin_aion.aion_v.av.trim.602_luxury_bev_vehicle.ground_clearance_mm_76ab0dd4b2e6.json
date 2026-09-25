@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "field_key": "vehicle.ground_clearance_mm",
+      "value_state": "KNOWN",
+      "value": 166,
+      "unit": "mm",
+      "qualifiers": {
+        "load_state": "UNLADEN"
+      },
+      "observed_at": "2026-09-26",
+      "verification_status": "VERIFIED",
+      "source": "official_gac",
+      "source_ref": "https://www.gacgroup.com/th-th/configuration/aion-v/2024",
+      "source_locator": "https://www.gacgroup.com/th-th/configuration/aion-v/2024",
+      "trim_id": "aion.aion_v.av.trim.602_luxury_bev",
+      "fact_id": "admin:aion.aion_v.av.trim.602_luxury_bev:vehicle.ground_clearance_mm"
+    }
+  ]
+}

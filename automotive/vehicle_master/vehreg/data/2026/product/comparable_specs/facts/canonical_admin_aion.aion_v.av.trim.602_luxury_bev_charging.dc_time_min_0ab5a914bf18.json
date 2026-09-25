@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "field_key": "charging.dc_time_min",
+      "value_state": "KNOWN",
+      "value": 16,
+      "unit": "min",
+      "qualifiers": {
+        "soc_from": "30%",
+        "soc_to": "80%",
+        "charger_power_kw": "180"
+      },
+      "observed_at": "2026-09-26",
+      "verification_status": "VERIFIED",
+      "source": "official_gac",
+      "source_ref": "https://www.gacgroup.com/th-th/configuration/aion-v/2024",
+      "source_locator": "https://www.gacgroup.com/th-th/configuration/aion-v/2024",
+      "trim_id": "aion.aion_v.av.trim.602_luxury_bev",
+      "fact_id": "admin:aion.aion_v.av.trim.602_luxury_bev:charging.dc_time_min"
+    }
+  ]
+}
