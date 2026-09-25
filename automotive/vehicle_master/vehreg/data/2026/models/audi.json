@@ -1868,20 +1868,55 @@
         "A6 40 TFSI",
         "A6 45 TFSI"
       ],
-      "incomplete": true,
-      "notes": "Evidence-reviewed 2026-09-08 against the grade labels in the registration data; not an owner ruling. Powertrain is settled per label, not per nameplate: Audi's plug-in hybrids carry a trailing e (60 TFSI e), and every other TFSI/TDI grade is combustion. See powertrain_rules.py.",
+      "notes": "Thai-market Audi A6 C8 retail status verified on 2026-09-26. Audi Thailand still lists A6 Sedan and A6 Avant while the newer A6 e-tron is a separate canonical model. Current Thai retail evidence supports A6 40 TFSI S line sedan and A6 Avant 45 TFSI quattro S line Black Edition as legacy C8 CBU stock. Both use 2.0 TFSI mild-hybrid systems; the older 55 TFSI e PHEV row is retained as historical registration evidence rather than current retail.",
+      "retail_status": "CURRENT",
+      "retail_checked_at": "2026-09-26",
+      "retail_source": "https://www.audi.co.th/en/models/",
       "generations": [
         {
-          "code": "gen1",
+          "code": "C8",
           "segment": "E",
           "seats": 5,
           "launched": "2021-01-01",
           "ended": null,
           "variants": [
             {
-              "name": "spec",
-              "powertrain": "ICE",
+              "name": "40 TFSI MHEV",
+              "powertrain": "HEV",
               "drivetrain": "FWD",
+              "engine_cc": 1984,
+              "battery_kwh": null,
+              "price_thb": 3799000,
+              "price_min_thb": 3799000,
+              "price_max_thb": 3799000,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "Current 2026 KLeasing vehicle-price reference. Audi Motor Show 2026 THB 3,409,000 is treated as a campaign/special price, not normal MSRP.",
+              "aliases": [
+                "40 TFSI S line"
+              ]
+            },
+            {
+              "name": "45 TFSI quattro MHEV",
+              "powertrain": "HEV",
+              "drivetrain": "AWD",
+              "engine_cc": 1984,
+              "battery_kwh": null,
+              "price_thb": 4649000,
+              "price_min_thb": 4649000,
+              "price_max_thb": 4649000,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "Current 2026 KLeasing vehicle-price reference for A6 Avant 45 TFSI quattro S line Black Edition.",
+              "aliases": [
+                "A6 Avant 45 TFSI quattro S line Black Edition",
+                "45 TFSI quattro S line Black Edition"
+              ]
+            },
+            {
+              "name": "55 TFSI e quattro PHEV (historical)",
+              "powertrain": "PHEV",
+              "drivetrain": "AWD",
               "engine_cc": 1984,
               "battery_kwh": null,
               "price_thb": null,
@@ -1889,21 +1924,7 @@
               "price_max_thb": null,
               "import_type": "CBU",
               "origin_country": "DE",
-              "price_note": "ยังไม่ได้ตรวจราคา",
-              "aliases": []
-            },
-            {
-              "name": "PHEV",
-              "powertrain": "PHEV",
-              "drivetrain": "AWD",
-              "engine_cc": null,
-              "battery_kwh": null,
-              "price_thb": null,
-              "price_min_thb": null,
-              "price_max_thb": null,
-              "import_type": "CBU",
-              "origin_country": "DE",
-              "price_note": "ยังไม่ได้ตรวจราคา",
+              "price_note": "Historical owner-directory evidence retained; not in the current 2026 two-model A6 retail lineup.",
               "aliases": [
                 "55 TFSI e",
                 "A6 55 TFSI e"
@@ -1914,48 +1935,104 @@
           "trims": [
             {
               "name": "A6 40 TFSI S line (Sedan)",
-              "powertrain": "ICE",
+              "variant": "40 TFSI MHEV",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:009"
+                ],
+                "official_audi": [
+                  "https://www.audi.co.th/en/models/a6/a6-sedan/",
+                  "https://www.audi.co.th/en/models/",
+                  "https://www.audi.co.th/dam/nemo/sea/th/pdf/Audi_Price_List.pdf"
+                ],
+                "headlightmag": [
+                  "https://www.headlightmag.com/official-price-audi-a6-sedan-40-tfsi-s-line/"
+                ],
+                "kbank": [
+                  "https://www.kasikornbank.com/th/personal/newcarloan/pages/audi_a6.aspx"
                 ]
               },
-              "id": "a6_40_tfsi_s_line_sedan_ice"
+              "id": "a6_40_tfsi_s_line_sedan_ice",
+              "seats": 5,
+              "length_mm": 4939,
+              "width_mm": 1886,
+              "height_mm": 1457,
+              "wheelbase_mm": 2924,
+              "engine_cc": 1984,
+              "transmission": "7-speed S tronic",
+              "tire_front": "245/45 R19",
+              "tire_rear": "245/45 R19",
+              "wheel_front": "19 in",
+              "wheel_rear": "19 in",
+              "notes": "Current Thai legacy-stock C8 sedan: 2.0 TFSI 190 PS / 320 Nm, mild hybrid, FWD and 7-speed S tronic. Stable canonical trim ID retained."
             },
             {
               "name": "A6 Avant 45 TFSI quattro S line Black Edition",
-              "powertrain": "ICE",
-              "source_refs": {
-                "owner_directory": [
-                  "owner_directory_2026_09_13:009"
-                ]
-              },
-              "id": "a6_avant_45_tfsi_quattro_s_line_black_edition_ice"
-            },
-            {
-              "name": "A6 Avant 55 TFSI e quattro S line Black Edition",
-              "powertrain": "PHEV",
-              "source_refs": {
-                "owner_directory": [
-                  "owner_directory_2026_09_13:009"
-                ]
-              },
-              "id": "a6_avant_55_tfsi_e_quattro_s_line_black_edition_phev"
-            },
-            {
-              "name": "Avant 40 TFSI S line",
+              "variant": "45 TFSI quattro MHEV",
               "powertrain": "HEV",
+              "drivetrain": "AWD",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:009"
+                ],
+                "official_audi": [
+                  "https://www.audi.co.th/en/models/a6/a6-avant-2025/",
+                  "https://www.audi.co.th/en/models/",
+                  "https://www.audi.co.th/dam/nemo/sea/th/pdf/Audi_Price_List.pdf"
+                ],
+                "headlightmag": [
+                  "https://www.headlightmag.com/2024-03-25-official-price-audi-a6-avant-45-tfsi-quattro-s-line-black-edition/"
+                ],
+                "kbank": [
+                  "https://www.kasikornbank.com/th/personal/newcarloan/pages/audi_a6.aspx"
+                ]
+              },
+              "id": "a6_avant_45_tfsi_quattro_s_line_black_edition_ice",
               "seats": 5,
               "length_mm": 4939,
               "width_mm": 1886,
               "height_mm": 1467,
+              "wheelbase_mm": 2924,
               "engine_cc": 1984,
-              "transmission": "AUTOMATIC",
+              "transmission": "7-speed S tronic",
+              "tire_front": "255/40 R20",
+              "tire_rear": "255/40 R20",
+              "wheel_front": "20 in",
+              "wheel_rear": "20 in",
+              "notes": "Current Thai legacy-stock C8 Avant: 2.0 TFSI 245 PS / 370 Nm, mild hybrid, quattro AWD and 7-speed S tronic. Stable canonical trim ID retained."
+            },
+            {
+              "name": "A6 Avant 55 TFSI e quattro S line Black Edition",
+              "variant": "55 TFSI e quattro PHEV (historical)",
+              "powertrain": "PHEV",
+              "drivetrain": "AWD",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:009"
+                ]
+              },
+              "id": "a6_avant_55_tfsi_e_quattro_s_line_black_edition_phev",
+              "notes": "Historical registration/owner-directory row; not promoted into current 2026 retail lineup."
+            },
+            {
+              "name": "Avant 40 TFSI S line",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "seats": 5,
+              "length_mm": 4939,
+              "width_mm": 1886,
+              "height_mm": 1467,
+              "wheelbase_mm": 2924,
+              "engine_cc": 1984,
+              "transmission": "7-speed S tronic",
               "source_refs": {
                 "eco": [
                   "20ae68103f5d4438ac17374270fe40c1"
                 ]
-              }
+              },
+              "notes": "Historical ECO row retained; not the current 2026 Avant retail grade."
             }
           ]
         }
