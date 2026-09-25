@@ -1,5 +1,6 @@
 import { getCanonicalModels } from "@/lib/canonical-data";
 import { publicDb } from "@/lib/supabase";
+import { paginateAll } from "@/lib/paginate-all";
 
 /**
  * Compare has two very different read shapes:
@@ -17,44 +18,70 @@ const PICKER_COLUMNS = "canonical_id,model_id,name,powertrain,status,current_lis
 const COMPARE_COLUMNS = "canonical_id,model_id,generation_id,variant_id,name,powertrain,status,payload,current_list_price,campaign_quote";
 
 async function allSlimTrimRows(db: any, pageSize = 1000) {
-  const rows: any[] = [];
-  for (let from = 0; ; from += pageSize) {
-    const { data, error } = await db.from("current_market_trims")
+  return paginateAll<any>(
+    (from, to) => db.from("current_market_trims")
       .select(PICKER_COLUMNS)
       .order("canonical_id")
-      .range(from, from + pageSize - 1);
-    if (error) throw error;
-    rows.push(...(data || []));
-    if (!data || data.length < pageSize) return rows;
-  }
+      .range(from, to),
+    pageSize,
+  );
 }
 
 function isCurrentTrim(row: any) {
   return String(row?.status || "current").toLowerCase() !== "discontinued";
 }
 
+const MODEL_NAME_COLUMNS = "canonical_id,name_en,name_th,payload";
+
+/**
+ * Just enough of the model row to label a picker option: which brand, which
+ * nameplate. getCanonicalModels() answers a bigger question -- it also
+ * resolves each model's primary media (getCanonicalPrimaryMediaIndex(), a
+ * second query plus a join the picker never renders) -- so reusing it here
+ * would pay for images nobody sees on this screen. Models are ~321 rows, one
+ * order of magnitude under PostgREST's page cap, so a single generous
+ * .limit() (matching getCanonicalModels()'s own default) is enough; this is
+ * a projection, not a second copy of what a model row means.
+ */
+async function picklistModelNames(db: any) {
+  const { data, error } = await db.from("current_vehicle_models")
+    .select(MODEL_NAME_COLUMNS)
+    .order("canonical_id")
+    .limit(1000);
+  if (error) throw error;
+  const byId = new Map<string, { brand_name: string; model_name: string }>();
+  for (const row of data || []) {
+    const brand = row.payload?.brand || {};
+    byId.set(row.canonical_id, {
+      brand_name: brand.name_en || brand.name_th || "",
+      model_name: row.name_en || row.name_th || row.canonical_id,
+    });
+  }
+  return byId;
+}
+
 export async function getCanonicalCompareTrimOptions() {
   const db = publicDb();
   if (!db) return [];
 
-  // Models are only ~321 rows and are already the catalogue read path.  The
-  // expensive table is the 1,500+ trim projection with its large JSON columns.
-  const [rawTrims, modelRows] = await Promise.all([
+  // Models are only ~321 rows and read a lean projection (see
+  // picklistModelNames). The expensive table is the 1,500+ trim projection
+  // with its large JSON columns, paged in allSlimTrimRows.
+  const [rawTrims, models] = await Promise.all([
     allSlimTrimRows(db),
-    getCanonicalModels(1000),
+    picklistModelNames(db),
   ]);
-  const models = new Map((modelRows || []).map((row: any) => [row.canonical_id, row]));
 
   return rawTrims
     .filter(isCurrentTrim)
     .map((raw: any) => {
-      const model: any = models.get(raw.model_id) || null;
+      const model = models.get(raw.model_id);
       const list = raw.current_list_price || null;
       return {
         id: raw.canonical_id,
         model_id: raw.model_id,
-        brand_name: model?.brands?.name_en || model?.brands?.name_th || "",
-        model_name: model?.name_en || model?.name_th || raw.model_id,
+        brand_name: model?.brand_name || "",
+        model_name: model?.model_name || raw.model_id,
         name: raw.name,
         powertrain: raw.powertrain ?? null,
         price_baht: list?.amount_thb ?? null,
