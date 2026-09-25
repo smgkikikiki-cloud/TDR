@@ -1,0 +1,216 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "web:crv_e_hev_rs_4wd:2026-09-25:vehicle.wheelbase_mm",
+      "trim_id": "honda.crv.rs.trim.e_hev_rs_4wd_hev",
+      "field_key": "vehicle.wheelbase_mm",
+      "value_state": "KNOWN",
+      "value": 2700,
+      "unit": "mm",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "oem_official_website",
+      "source_ref": "https://www.honda.co.th/crv/specification",
+      "source_locator": "Specification table > dimensions (shared by RS 2WD and RS 4WD)"
+    },
+    {
+      "fact_id": "web:crv_e_hev_rs_4wd:2026-09-25:vehicle.ground_clearance_mm",
+      "trim_id": "honda.crv.rs.trim.e_hev_rs_4wd_hev",
+      "field_key": "vehicle.ground_clearance_mm",
+      "value_state": "KNOWN",
+      "value": 208,
+      "unit": "mm",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "oem_official_website",
+      "source_ref": "https://www.honda.co.th/crv/specification",
+      "source_locator": "Specification table > ground clearance, RS 4WD row",
+      "qualifiers": {
+        "load_state": "AS_DECLARED"
+      }
+    },
+    {
+      "fact_id": "web:crv_e_hev_rs_4wd:2026-09-25:vehicle.curb_weight_kg",
+      "trim_id": "honda.crv.rs.trim.e_hev_rs_4wd_hev",
+      "field_key": "vehicle.curb_weight_kg",
+      "value_state": "KNOWN",
+      "value": 1808,
+      "unit": "kg",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "oem_official_website",
+      "source_ref": "https://www.honda.co.th/crv/specification",
+      "source_locator": "Specification table > weight, e:HEV RS 4WD row",
+      "qualifiers": {
+        "measurement_basis": "AS_DECLARED"
+      }
+    },
+    {
+      "fact_id": "web:crv_e_hev_rs_4wd:2026-09-25:vehicle.turning_radius_m",
+      "trim_id": "honda.crv.rs.trim.e_hev_rs_4wd_hev",
+      "field_key": "vehicle.turning_radius_m",
+      "value_state": "KNOWN",
+      "value": 5.5,
+      "unit": "m",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "oem_official_website",
+      "source_ref": "https://www.honda.co.th/crv/specification",
+      "source_locator": "Specification table > turning radius (shared by RS 2WD and RS 4WD)",
+      "qualifiers": {
+        "measurement_basis": "AS_DECLARED"
+      }
+    },
+    {
+      "fact_id": "web:crv_e_hev_rs_4wd:2026-09-25:powertrain.max_power_kw:engine",
+      "trim_id": "honda.crv.rs.trim.e_hev_rs_4wd_hev",
+      "field_key": "powertrain.max_power_kw",
+      "value_state": "KNOWN",
+      "value": 109,
+      "unit": "kW",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "oem_official_website",
+      "source_ref": "https://www.honda.co.th/crv/specification",
+      "source_locator": "Specification table > engine max power: 109 kW (148 PS) / 6,100 rpm",
+      "qualifiers": {
+        "output_scope": "ENGINE",
+        "rating_basis": "PEAK"
+      }
+    },
+    {
+      "fact_id": "web:crv_e_hev_rs_4wd:2026-09-25:powertrain.max_power_kw:motor",
+      "trim_id": "honda.crv.rs.trim.e_hev_rs_4wd_hev",
+      "field_key": "powertrain.max_power_kw",
+      "value_state": "KNOWN",
+      "value": 135,
+      "unit": "kW",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "oem_official_website",
+      "source_ref": "https://www.honda.co.th/crv/specification",
+      "source_locator": "Specification table > motor max power: 135 kW (184 PS) / 5,000-8,000 rpm",
+      "qualifiers": {
+        "output_scope": "MOTOR",
+        "rating_basis": "PEAK"
+      }
+    },
+    {
+      "fact_id": "web:crv_e_hev_rs_4wd:2026-09-25:powertrain.max_power_kw:system",
+      "trim_id": "honda.crv.rs.trim.e_hev_rs_4wd_hev",
+      "field_key": "powertrain.max_power_kw",
+      "value_state": "KNOWN",
+      "value": 152.2,
+      "unit": "kW",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "oem_official_website",
+      "source_ref": "https://www.honda.co.th/crv/specification",
+      "source_locator": "Specification table > system max power: 207 PS; converted to kW (207 x 0.7355)",
+      "qualifiers": {
+        "output_scope": "SYSTEM",
+        "rating_basis": "PEAK"
+      }
+    },
+    {
+      "fact_id": "web:crv_e_hev_rs_4wd:2026-09-25:powertrain.max_torque_nm:engine",
+      "trim_id": "honda.crv.rs.trim.e_hev_rs_4wd_hev",
+      "field_key": "powertrain.max_torque_nm",
+      "value_state": "KNOWN",
+      "value": 183,
+      "unit": "Nm",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "oem_official_website",
+      "source_ref": "https://www.honda.co.th/crv/specification",
+      "source_locator": "Specification table > engine max torque: 183 N*m (18.7 kg-m) / 4,500 rpm",
+      "qualifiers": {
+        "output_scope": "ENGINE",
+        "rating_basis": "PEAK"
+      }
+    },
+    {
+      "fact_id": "web:crv_e_hev_rs_4wd:2026-09-25:powertrain.max_torque_nm:motor",
+      "trim_id": "honda.crv.rs.trim.e_hev_rs_4wd_hev",
+      "field_key": "powertrain.max_torque_nm",
+      "value_state": "KNOWN",
+      "value": 335,
+      "unit": "Nm",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "oem_official_website",
+      "source_ref": "https://www.honda.co.th/crv/specification",
+      "source_locator": "Specification table > motor max torque: 335 N*m (34.2 kg-m) / 0-2,000 rpm",
+      "qualifiers": {
+        "output_scope": "MOTOR",
+        "rating_basis": "PEAK"
+      }
+    },
+    {
+      "fact_id": "web:crv_e_hev_rs_4wd:2026-09-25:powertrain.transmission_as_declared",
+      "trim_id": "honda.crv.rs.trim.e_hev_rs_4wd_hev",
+      "field_key": "powertrain.transmission_as_declared",
+      "value_state": "KNOWN",
+      "value": "E-CVT (Electrical Continuously Variable Transmission)",
+      "unit": "",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "oem_official_website",
+      "source_ref": "https://www.honda.co.th/crv/specification",
+      "source_locator": "Specification table > transmission"
+    },
+    {
+      "fact_id": "web:crv_e_hev_rs_4wd:2026-09-25:powertrain.drivetrain",
+      "trim_id": "honda.crv.rs.trim.e_hev_rs_4wd_hev",
+      "field_key": "powertrain.drivetrain",
+      "value_state": "KNOWN",
+      "value": "AWD",
+      "unit": "",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "oem_official_website",
+      "source_ref": "https://www.honda.co.th/crv/specification",
+      "source_locator": "Grade name 'e:HEV RS 4WD' on the same table; AWD is this catalogue's established token for Honda's prior CR-V HEV 4WD grade (see vehreg/data/2023/models/honda.json)"
+    },
+    {
+      "fact_id": "web:crv_e_hev_rs_4wd:2026-09-25:chassis.suspension_front",
+      "trim_id": "honda.crv.rs.trim.e_hev_rs_4wd_hev",
+      "field_key": "chassis.suspension_front",
+      "value_state": "KNOWN",
+      "value": "MacPherson strut, independent, with stabilizer bar",
+      "unit": "",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "oem_official_website",
+      "source_ref": "https://www.honda.co.th/crv/specification",
+      "source_locator": "Specification table > suspension front (translated from Thai)"
+    },
+    {
+      "fact_id": "web:crv_e_hev_rs_4wd:2026-09-25:chassis.suspension_rear",
+      "trim_id": "honda.crv.rs.trim.e_hev_rs_4wd_hev",
+      "field_key": "chassis.suspension_rear",
+      "value_state": "KNOWN",
+      "value": "Multi-link, independent, with stabilizer bar",
+      "unit": "",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "oem_official_website",
+      "source_ref": "https://www.honda.co.th/crv/specification",
+      "source_locator": "Specification table > suspension rear (translated from Thai)"
+    },
+    {
+      "fact_id": "web:crv_e_hev_rs_4wd:2026-09-25:battery.chemistry_as_declared",
+      "trim_id": "honda.crv.rs.trim.e_hev_rs_4wd_hev",
+      "field_key": "battery.chemistry_as_declared",
+      "value_state": "KNOWN",
+      "value": "Lithium-ion",
+      "unit": "",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "oem_official_website",
+      "source_ref": "https://www.honda.co.th/crv/specification",
+      "source_locator": "Specification table > battery type"
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "web:yaris_ativ_hev_gr_sport:2026-09-25:vehicle.wheelbase_mm",
+      "trim_id": "toyota.yaris_ativ.mxpa10.trim.hev_gr_sport_hev",
+      "field_key": "vehicle.wheelbase_mm",
+      "value_state": "KNOWN",
+      "value": 2620,
+      "unit": "mm",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "third_party_spec_aggregator",
+      "source_ref": "https://www.zigwheels.co.th/en/new-cars/toyota/yaris-ativ-gr-sport/specifications",
+      "source_locator": "Dimensions & Clearance > Wheelbase"
+    },
+    {
+      "fact_id": "web:yaris_ativ_hev_gr_sport:2026-09-25:vehicle.ground_clearance_mm",
+      "trim_id": "toyota.yaris_ativ.mxpa10.trim.hev_gr_sport_hev",
+      "field_key": "vehicle.ground_clearance_mm",
+      "value_state": "KNOWN",
+      "value": 160,
+      "unit": "mm",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "third_party_spec_aggregator",
+      "source_ref": "https://www.zigwheels.co.th/en/new-cars/toyota/yaris-ativ-gr-sport/specifications",
+      "source_locator": "Dimensions & Clearance > Ground Clearance",
+      "qualifiers": {
+        "load_state": "AS_DECLARED"
+      }
+    },
+    {
+      "fact_id": "web:yaris_ativ_hev_gr_sport:2026-09-25:vehicle.turning_radius_m",
+      "trim_id": "toyota.yaris_ativ.mxpa10.trim.hev_gr_sport_hev",
+      "field_key": "vehicle.turning_radius_m",
+      "value_state": "KNOWN",
+      "value": 5.2,
+      "unit": "m",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "third_party_spec_aggregator",
+      "source_ref": "https://www.zigwheels.co.th/en/new-cars/toyota/yaris-ativ-gr-sport/specifications",
+      "source_locator": "Performance Specifications > Turning Radius",
+      "qualifiers": {
+        "measurement_basis": "AS_DECLARED"
+      }
+    },
+    {
+      "fact_id": "web:yaris_ativ_hev_gr_sport:2026-09-25:powertrain.max_power_kw:engine",
+      "trim_id": "toyota.yaris_ativ.mxpa10.trim.hev_gr_sport_hev",
+      "field_key": "powertrain.max_power_kw",
+      "value_state": "KNOWN",
+      "value": 67.1,
+      "unit": "kW",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "third_party_spec_aggregator",
+      "source_ref": "https://www.zigwheels.co.th/en/new-cars/toyota/yaris-ativ-gr-sport/specifications",
+      "source_locator": "Performance Specifications > Max Power: 90 hp (petrol engine); converted to kW (90 x 0.7457)",
+      "qualifiers": {
+        "output_scope": "ENGINE",
+        "rating_basis": "PEAK"
+      }
+    },
+    {
+      "fact_id": "web:yaris_ativ_hev_gr_sport:2026-09-25:powertrain.max_power_kw:motor",
+      "trim_id": "toyota.yaris_ativ.mxpa10.trim.hev_gr_sport_hev",
+      "field_key": "powertrain.max_power_kw",
+      "value_state": "KNOWN",
+      "value": 58.1,
+      "unit": "kW",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "third_party_spec_aggregator",
+      "source_ref": "https://www.zigwheels.co.th/en/new-cars/toyota/yaris-ativ-gr-sport/specifications",
+      "source_locator": "Performance Specifications > Max Power: 79 ps (electric motor); converted to kW (79 x 0.7355)",
+      "qualifiers": {
+        "output_scope": "MOTOR",
+        "rating_basis": "PEAK"
+      }
+    },
+    {
+      "fact_id": "web:yaris_ativ_hev_gr_sport:2026-09-25:powertrain.max_torque_nm:engine",
+      "trim_id": "toyota.yaris_ativ.mxpa10.trim.hev_gr_sport_hev",
+      "field_key": "powertrain.max_torque_nm",
+      "value_state": "KNOWN",
+      "value": 121,
+      "unit": "Nm",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "third_party_spec_aggregator",
+      "source_ref": "https://www.zigwheels.co.th/en/new-cars/toyota/yaris-ativ-gr-sport/specifications",
+      "source_locator": "Performance Specifications > Max Torque: 121 Nm (petrol)",
+      "qualifiers": {
+        "output_scope": "ENGINE",
+        "rating_basis": "PEAK"
+      }
+    },
+    {
+      "fact_id": "web:yaris_ativ_hev_gr_sport:2026-09-25:powertrain.max_torque_nm:motor",
+      "trim_id": "toyota.yaris_ativ.mxpa10.trim.hev_gr_sport_hev",
+      "field_key": "powertrain.max_torque_nm",
+      "value_state": "KNOWN",
+      "value": 141,
+      "unit": "Nm",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "third_party_spec_aggregator",
+      "source_ref": "https://www.zigwheels.co.th/en/new-cars/toyota/yaris-ativ-gr-sport/specifications",
+      "source_locator": "Performance Specifications > Max Torque: 141 Nm (electric motor)",
+      "qualifiers": {
+        "output_scope": "MOTOR",
+        "rating_basis": "PEAK"
+      }
+    },
+    {
+      "fact_id": "web:yaris_ativ_hev_gr_sport:2026-09-25:powertrain.transmission_as_declared",
+      "trim_id": "toyota.yaris_ativ.mxpa10.trim.hev_gr_sport_hev",
+      "field_key": "powertrain.transmission_as_declared",
+      "value_state": "KNOWN",
+      "value": "E-CVT (Electronic Continuously Variable Transmission)",
+      "unit": "",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "third_party_spec_aggregator",
+      "source_ref": "https://www.zigwheels.co.th/en/new-cars/toyota/yaris-ativ-gr-sport/specifications",
+      "source_locator": "Drivetrain & Transmission > Transmission"
+    },
+    {
+      "fact_id": "web:yaris_ativ_hev_gr_sport:2026-09-25:powertrain.drivetrain",
+      "trim_id": "toyota.yaris_ativ.mxpa10.trim.hev_gr_sport_hev",
+      "field_key": "powertrain.drivetrain",
+      "value_state": "KNOWN",
+      "value": "FWD",
+      "unit": "",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "third_party_spec_aggregator",
+      "source_ref": "https://www.zigwheels.co.th/en/new-cars/toyota/yaris-ativ-gr-sport/specifications",
+      "source_locator": "Drivetrain & Transmission > Drivetrain: 'Front-wheel drive (FWD)'"
+    },
+    {
+      "fact_id": "web:yaris_ativ_hev_gr_sport:2026-09-25:battery.catalog_capacity_kwh",
+      "trim_id": "toyota.yaris_ativ.mxpa10.trim.hev_gr_sport_hev",
+      "field_key": "battery.catalog_capacity_kwh",
+      "value_state": "KNOWN",
+      "value": 0.76,
+      "unit": "kWh",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "third_party_spec_aggregator",
+      "source_ref": "https://www.zigwheels.co.th/en/new-cars/toyota/yaris-ativ-gr-sport/specifications",
+      "source_locator": "Additional Notes prose: 'a hybrid system using a 0.76 kWh lithium-ion battery'"
+    }
+  ]
+}

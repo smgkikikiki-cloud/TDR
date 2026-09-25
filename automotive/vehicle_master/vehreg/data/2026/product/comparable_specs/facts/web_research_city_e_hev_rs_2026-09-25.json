@@ -1,0 +1,199 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "web:city_e_hev_rs:2026-09-25:vehicle.wheelbase_mm",
+      "trim_id": "honda.city.gn2.trim.e_hev_rs_hev",
+      "field_key": "vehicle.wheelbase_mm",
+      "value_state": "KNOWN",
+      "value": 2589,
+      "unit": "mm",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "oem_official_website",
+      "source_ref": "https://www.honda.co.th/city/specification",
+      "source_locator": "Specification table > wheelbase"
+    },
+    {
+      "fact_id": "web:city_e_hev_rs:2026-09-25:vehicle.ground_clearance_mm",
+      "trim_id": "honda.city.gn2.trim.e_hev_rs_hev",
+      "field_key": "vehicle.ground_clearance_mm",
+      "value_state": "KNOWN",
+      "value": 149,
+      "unit": "mm",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "oem_official_website",
+      "source_ref": "https://www.honda.co.th/city/specification",
+      "source_locator": "Specification table > ground clearance",
+      "qualifiers": {
+        "load_state": "AS_DECLARED"
+      }
+    },
+    {
+      "fact_id": "web:city_e_hev_rs:2026-09-25:vehicle.curb_weight_kg",
+      "trim_id": "honda.city.gn2.trim.e_hev_rs_hev",
+      "field_key": "vehicle.curb_weight_kg",
+      "value_state": "KNOWN",
+      "value": 1232,
+      "unit": "kg",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "oem_official_website",
+      "source_ref": "https://www.honda.co.th/city/specification",
+      "source_locator": "Specification table > curb weight",
+      "qualifiers": {
+        "measurement_basis": "AS_DECLARED"
+      }
+    },
+    {
+      "fact_id": "web:city_e_hev_rs:2026-09-25:vehicle.turning_radius_m",
+      "trim_id": "honda.city.gn2.trim.e_hev_rs_hev",
+      "field_key": "vehicle.turning_radius_m",
+      "value_state": "KNOWN",
+      "value": 5,
+      "unit": "m",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "oem_official_website",
+      "source_ref": "https://www.honda.co.th/city/specification",
+      "source_locator": "Specification table > turning radius",
+      "qualifiers": {
+        "measurement_basis": "AS_DECLARED"
+      }
+    },
+    {
+      "fact_id": "web:city_e_hev_rs:2026-09-25:powertrain.max_power_kw:engine",
+      "trim_id": "honda.city.gn2.trim.e_hev_rs_hev",
+      "field_key": "powertrain.max_power_kw",
+      "value_state": "KNOWN",
+      "value": 72,
+      "unit": "kW",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "oem_official_website",
+      "source_ref": "https://www.honda.co.th/city/specification",
+      "source_locator": "Specification table > engine max power: 72 kW (98 PS) / 5,600-6,400 rpm",
+      "qualifiers": {
+        "output_scope": "ENGINE",
+        "rating_basis": "PEAK"
+      }
+    },
+    {
+      "fact_id": "web:city_e_hev_rs:2026-09-25:powertrain.max_power_kw:motor",
+      "trim_id": "honda.city.gn2.trim.e_hev_rs_hev",
+      "field_key": "powertrain.max_power_kw",
+      "value_state": "KNOWN",
+      "value": 80,
+      "unit": "kW",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "oem_official_website",
+      "source_ref": "https://www.honda.co.th/city/specification",
+      "source_locator": "Specification table > motor max power: 80 kW (109 PS) / 3,500-8,000 rpm",
+      "qualifiers": {
+        "output_scope": "MOTOR",
+        "rating_basis": "PEAK"
+      }
+    },
+    {
+      "fact_id": "web:city_e_hev_rs:2026-09-25:powertrain.max_torque_nm:engine",
+      "trim_id": "honda.city.gn2.trim.e_hev_rs_hev",
+      "field_key": "powertrain.max_torque_nm",
+      "value_state": "KNOWN",
+      "value": 127,
+      "unit": "Nm",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "oem_official_website",
+      "source_ref": "https://www.honda.co.th/city/specification",
+      "source_locator": "Specification table > engine max torque: 127 Nm (13 kg-m) / 4,500-5,000 rpm",
+      "qualifiers": {
+        "output_scope": "ENGINE",
+        "rating_basis": "PEAK"
+      }
+    },
+    {
+      "fact_id": "web:city_e_hev_rs:2026-09-25:powertrain.max_torque_nm:motor",
+      "trim_id": "honda.city.gn2.trim.e_hev_rs_hev",
+      "field_key": "powertrain.max_torque_nm",
+      "value_state": "KNOWN",
+      "value": 253,
+      "unit": "Nm",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "oem_official_website",
+      "source_ref": "https://www.honda.co.th/city/specification",
+      "source_locator": "Specification table > motor max torque: 253 Nm (25.8 kg-m) / 0-3,000 rpm",
+      "qualifiers": {
+        "output_scope": "MOTOR",
+        "rating_basis": "PEAK"
+      }
+    },
+    {
+      "fact_id": "web:city_e_hev_rs:2026-09-25:powertrain.transmission_as_declared",
+      "trim_id": "honda.city.gn2.trim.e_hev_rs_hev",
+      "field_key": "powertrain.transmission_as_declared",
+      "value_state": "KNOWN",
+      "value": "E-CVT (Electrical Continuously Variable Transmission)",
+      "unit": "",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "oem_official_website",
+      "source_ref": "https://www.honda.co.th/city/specification",
+      "source_locator": "Specification table > transmission"
+    },
+    {
+      "fact_id": "web:city_e_hev_rs:2026-09-25:powertrain.drivetrain",
+      "trim_id": "honda.city.gn2.trim.e_hev_rs_hev",
+      "field_key": "powertrain.drivetrain",
+      "value_state": "KNOWN",
+      "value": "FWD",
+      "unit": "",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "third_party_automotive_press",
+      "source_ref": "https://paultan.org/2024/02/08/2024-honda-city-hatchback-facelift-launched-in-thailand/",
+      "source_locator": "Article body: 'The e:HEV RS is priced at 799,000 baht... power being driven to the front wheels'"
+    },
+    {
+      "fact_id": "web:city_e_hev_rs:2026-09-25:chassis.suspension_front",
+      "trim_id": "honda.city.gn2.trim.e_hev_rs_hev",
+      "field_key": "chassis.suspension_front",
+      "value_state": "KNOWN",
+      "value": "MacPherson strut with stabilizer bar",
+      "unit": "",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "oem_official_website",
+      "source_ref": "https://www.honda.co.th/city/specification",
+      "source_locator": "Specification table > suspension front"
+    },
+    {
+      "fact_id": "web:city_e_hev_rs:2026-09-25:chassis.suspension_rear",
+      "trim_id": "honda.city.gn2.trim.e_hev_rs_hev",
+      "field_key": "chassis.suspension_rear",
+      "value_state": "KNOWN",
+      "value": "Torsion beam",
+      "unit": "",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "oem_official_website",
+      "source_ref": "https://www.honda.co.th/city/specification",
+      "source_locator": "Specification table > suspension rear"
+    },
+    {
+      "fact_id": "web:city_e_hev_rs:2026-09-25:battery.chemistry_as_declared",
+      "trim_id": "honda.city.gn2.trim.e_hev_rs_hev",
+      "field_key": "battery.chemistry_as_declared",
+      "value_state": "KNOWN",
+      "value": "Lithium-ion",
+      "unit": "",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "oem_official_website",
+      "source_ref": "https://www.honda.co.th/city/specification",
+      "source_locator": "Specification table > battery type"
+    }
+  ]
+}

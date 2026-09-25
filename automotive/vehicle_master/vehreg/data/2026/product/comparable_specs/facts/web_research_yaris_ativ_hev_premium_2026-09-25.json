@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "web:yaris_ativ_hev_premium:2026-09-25:vehicle.wheelbase_mm",
+      "trim_id": "toyota.yaris_ativ.mxpa10.trim.hev_premium_hev",
+      "field_key": "vehicle.wheelbase_mm",
+      "value_state": "KNOWN",
+      "value": 2620,
+      "unit": "mm",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "third_party_spec_aggregator",
+      "source_ref": "https://www.zigwheels.co.th/en/new-cars/toyota/yaris-ativ/specifications",
+      "source_locator": "Dimensions & Chassis > Wheelbase"
+    },
+    {
+      "fact_id": "web:yaris_ativ_hev_premium:2026-09-25:vehicle.ground_clearance_mm",
+      "trim_id": "toyota.yaris_ativ.mxpa10.trim.hev_premium_hev",
+      "field_key": "vehicle.ground_clearance_mm",
+      "value_state": "KNOWN",
+      "value": 160,
+      "unit": "mm",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "third_party_spec_aggregator",
+      "source_ref": "https://www.zigwheels.co.th/en/new-cars/toyota/yaris-ativ/specifications",
+      "source_locator": "Dimensions & Chassis > Ground clearance",
+      "qualifiers": {
+        "load_state": "AS_DECLARED"
+      }
+    },
+    {
+      "fact_id": "web:yaris_ativ_hev_premium:2026-09-25:powertrain.transmission_as_declared",
+      "trim_id": "toyota.yaris_ativ.mxpa10.trim.hev_premium_hev",
+      "field_key": "powertrain.transmission_as_declared",
+      "value_state": "KNOWN",
+      "value": "E-CVT (Electronic Continuously Variable)",
+      "unit": "",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "third_party_spec_aggregator",
+      "source_ref": "https://www.zigwheels.co.th/en/new-cars/toyota/yaris-ativ/specifications",
+      "source_locator": "Powertrain > Transmission"
+    },
+    {
+      "fact_id": "web:yaris_ativ_hev_premium:2026-09-25:powertrain.drivetrain",
+      "trim_id": "toyota.yaris_ativ.mxpa10.trim.hev_premium_hev",
+      "field_key": "powertrain.drivetrain",
+      "value_state": "KNOWN",
+      "value": "FWD",
+      "unit": "",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "third_party_spec_aggregator",
+      "source_ref": "https://www.zigwheels.co.th/en/new-cars/toyota/yaris-ativ/specifications",
+      "source_locator": "Dimensions & Chassis > Drivetrain: '2WD'; MXPA10 Yaris Ativ has no AWD variant in any market, so 2WD here means front-wheel drive"
+    },
+    {
+      "fact_id": "web:yaris_ativ_hev_premium:2026-09-25:chassis.suspension_front",
+      "trim_id": "toyota.yaris_ativ.mxpa10.trim.hev_premium_hev",
+      "field_key": "chassis.suspension_front",
+      "value_state": "KNOWN",
+      "value": "MacPherson Strut",
+      "unit": "",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "third_party_spec_aggregator",
+      "source_ref": "https://www.zigwheels.co.th/en/new-cars/toyota/yaris-ativ/specifications",
+      "source_locator": "Suspension > Front"
+    },
+    {
+      "fact_id": "web:yaris_ativ_hev_premium:2026-09-25:chassis.suspension_rear",
+      "trim_id": "toyota.yaris_ativ.mxpa10.trim.hev_premium_hev",
+      "field_key": "chassis.suspension_rear",
+      "value_state": "KNOWN",
+      "value": "Torsion Beam",
+      "unit": "",
+      "observed_at": "2026-09-25",
+      "verification_status": "VERIFIED",
+      "source": "third_party_spec_aggregator",
+      "source_ref": "https://www.zigwheels.co.th/en/new-cars/toyota/yaris-ativ/specifications",
+      "source_locator": "Suspension > Rear"
+    }
+  ]
+}
