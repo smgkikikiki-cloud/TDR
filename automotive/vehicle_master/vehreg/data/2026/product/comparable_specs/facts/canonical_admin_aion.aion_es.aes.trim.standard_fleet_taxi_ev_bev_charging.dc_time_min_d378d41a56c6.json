@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "field_key": "charging.dc_time_min",
+      "value_state": "KNOWN",
+      "value": 40,
+      "unit": "min",
+      "qualifiers": {},
+      "observed_at": "2026-09-26",
+      "verification_status": "VERIFIED",
+      "source": "official_gac",
+      "source_ref": "https://www.gacgroup.com/th-th/sedan/aion-es",
+      "source_locator": "https://www.gacgroup.com/th-th/sedan/aion-es",
+      "trim_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "fact_id": "admin:aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev:charging.dc_time_min"
+    }
+  ]
+}

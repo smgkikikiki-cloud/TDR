@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "field_key": "comfort.auto_climate",
+      "value_state": "KNOWN",
+      "value": true,
+      "unit": "",
+      "qualifiers": {},
+      "observed_at": "2026-09-26",
+      "verification_status": "VERIFIED",
+      "source": "official_gac",
+      "source_ref": "https://www.gacgroup.com/th-th/configuration/aion-es/2024",
+      "source_locator": "https://www.gacgroup.com/th-th/configuration/aion-es/2024",
+      "trim_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "fact_id": "admin:aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev:comfort.auto_climate"
+    }
+  ]
+}

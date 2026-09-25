@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "field_key": "ev.rated_range_km",
+      "value_state": "KNOWN",
+      "value": 442,
+      "unit": "km",
+      "qualifiers": {
+        "measurement_basis": "NEDC",
+        "range_scope": "COMBINED"
+      },
+      "observed_at": "2026-09-26",
+      "verification_status": "VERIFIED",
+      "source": "official_gac",
+      "source_ref": "https://www.gacgroup.com/th-th/configuration/aion-es/2024",
+      "source_locator": "https://www.gacgroup.com/th-th/configuration/aion-es/2024",
+      "trim_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "fact_id": "admin:aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev:ev.rated_range_km"
+    }
+  ]
+}
