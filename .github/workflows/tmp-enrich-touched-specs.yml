@@ -1,0 +1,304 @@
+name: Temporary enrich touched vehicle comparable specs
+
+on:
+  push:
+    branches: [feature/vehreg-fill-batch-01]
+    paths:
+      - ".github/workflows/tmp-enrich-touched-specs.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  enrich:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/vehreg-fill-batch-01
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Add OEM-backed structured facts
+        shell: bash
+        run: |
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          from automotive.vehicle_master.vehreg.catalog import Catalog
+          from automotive.vehicle_master.vehreg.comparable_specs import SpecRegistry
+          from automotive.vehicle_master.vehreg.canonical_write import CanonicalWritePipeline
+
+          DATA=Path('automotive/vehicle_master/vehreg/data'); YEAR=2026
+          catalog=Catalog.load(DATA,YEAR); registry=SpecRegistry.load(DATA,YEAR); pipe=CanonicalWritePipeline(DATA)
+          facts_root=DATA/str(YEAR)/'product'/'comparable_specs'/'facts'
+
+          existing={}
+          for path in facts_root.glob('*.json'):
+            try: payload=json.loads(path.read_text(encoding='utf-8'))
+            except Exception: continue
+            for f in payload.get('facts',[]):
+              tid=str(f.get('trim_id') or ''); key=str(f.get('field_key') or '')
+              if tid and key: existing.setdefault(tid,{}).setdefault(key,[]).append(f)
+
+          def qkey(field,qual):
+            d=registry.fields[field]
+            return tuple((k,str((qual or {}).get(k,''))) for k in d.comparison_qualifiers)
+          def has(tid,field,qual=None):
+            target=qkey(field,qual)
+            return any(qkey(field,f.get('qualifiers') or {})==target for f in existing.get(tid,{}).get(field,[]))
+          def trims(model_id, needle):
+            xs=[t for t in catalog.trims_of(model_id) if needle.lower() in t.name.lower()]
+            if not xs: raise RuntimeError(f'no trim: {model_id} / {needle}')
+            return xs
+          def one(model_id,needle):
+            xs=trims(model_id,needle)
+            if len(xs)!=1: raise RuntimeError(f'ambiguous trim: {model_id}/{needle}: {[x.name for x in xs]}')
+            return xs[0]
+          def add(trim,field,value,src,qual=None,observed='2026-09-26',status='VERIFIED'):
+            if field not in registry.fields: raise RuntimeError(f'unknown field {field}')
+            d=registry.fields[field]
+            if d.applicable_powertrains and trim.powertrain.value not in d.applicable_powertrains: return False
+            qual=qual or {}
+            if has(trim.id,field,qual): return False
+            unit=d.canonical_unit if d.value_type.value=='NUMBER' else ''
+            fact={'field_key':field,'value_state':'KNOWN','value':value,'unit':unit,'qualifiers':qual,
+                  'observed_at':observed,'verification_status':status,'source':'OEM_OR_PRIMARY_RESEARCH',
+                  'source_ref':src,'source_locator':src}
+            h=hashlib.sha1((trim.id+'|'+field+'|'+json.dumps(qual,sort_keys=True,ensure_ascii=False)).encode()).hexdigest()[:24]
+            pipe.apply({'command_id':'enrich99-'+h,'operation':'APPEND_SPEC','year':YEAR,'actor':'tdr-enrich99',
+                        'reason':'Structured comparable-spec repair from OEM/primary sources','canonical_id':trim.id,
+                        'payload':fact,'submitted_at':'2026-09-26T00:30:00+07:00'})
+            existing.setdefault(trim.id,{}).setdefault(field,[]).append({**fact,'trim_id':trim.id})
+            return True
+          count=0
+          def A(t,*args,**kwargs):
+            global count
+            if add(t,*args,**kwargs): count+=1
+
+          G_UT='https://www.gacgroup.com/th-th/configuration/aion-ut/2024'
+          G_V='https://www.gacgroup.com/th-th/configuration/aion-v/2024'
+          G_Y='https://www.gacgroup.com/th-th/configuration/aion-y-plus/2024'
+          G_ES='https://www.gacgroup.com/th-th/configuration/aion-es/2024'
+          G_HT='https://www.gacgroup.com/th-th/configuration/hyptec-ht/2024'
+
+          # AION UT current Thai trims: official GAC Thailand configuration.
+          for name,power,torque,accel,top,curb,gross,range_km,energy,dc in [
+            ('420 Standard',100,145,11.6,145,1580,1990,420,133,70),
+            ('500 Premium',150,210,7.3,160,1700,2110,500,140,87)]:
+            t=one('aion.aion_ut',name)
+            for field,val,qual in [
+              ('vehicle.ground_clearance_mm',147,{'load_state':'UNLADEN'}),('vehicle.ground_clearance_mm',130,{'load_state':'LADEN'}),
+              ('vehicle.cargo_volume_l',440,{'seat_configuration':'SEATS_UP','measurement_basis':'OEM_WATER_VOLUME'}),
+              ('vehicle.curb_weight_kg',curb,{'measurement_basis':'OEM'}),('vehicle.gross_vehicle_weight_kg',gross,{'measurement_basis':'OEM'}),
+              ('vehicle.turning_radius_m',5.35,{'measurement_basis':'OEM'}),('powertrain.motor_type','Permanent magnet synchronous motor',{}),
+              ('powertrain.motor_count',1,{}),('powertrain.max_power_kw',power,{'output_scope':'SYSTEM','rating_basis':'MAXIMUM'}),
+              ('powertrain.max_torque_nm',torque,{'output_scope':'SYSTEM','rating_basis':'MAXIMUM'}),
+              ('performance.acceleration_0_100_s',accel,{'measurement_basis':'OEM'}),('performance.top_speed_kmh',top,{'measurement_basis':'OEM'}),
+              ('battery.chemistry','LFP',{}),('battery.chemistry_as_declared','LFP',{}),
+              ('ev.rated_range_km',range_km,{'measurement_basis':'NEDC','range_scope':'COMBINED'}),
+              ('ev.energy_consumption_wh_km',energy,{'measurement_basis':'NEDC'}),('charging.ac_max_kw',6.6,{'rating_basis':'MAXIMUM'}),
+              ('charging.dc_max_kw',dc,{'rating_basis':'MAXIMUM'}),('charging.dc_time_min',24,{'soc_from':'30%','soc_to':'80%','charger_power':f'{dc} kW'}),
+              ('charging.v2l_supported',True,{}),('chassis.suspension_front','Independent MacPherson strut',{}),
+              ('chassis.suspension_rear','Semi-independent torsion beam',{}),('comfort.power_windows',True,{}),
+              ('comfort.electric_parking_brake',True,{}),('comfort.heat_pump',True,{}),('technology.smartphone_mirroring',True,{}),
+              ('technology.connected_services',True,{}),('technology.surround_view_camera',True,{}),('technology.led_headlights',True,{}),
+              ('safety.abs',True,{}),('safety.esc',True,{}),('safety.aeb',True,{}),('safety.forward_collision_warning',True,{}),
+              ('safety.lane_departure_warning',True,{}),('safety.lane_keep_assist',True,{}),('safety.blind_spot',True,{}),('safety.rear_cross_traffic',True,{})]:
+                A(t,field,val,G_UT,qual)
+
+          # AION V: exact two-column official Thai configuration.
+          for name,cap,range_km,energy,dc,curb,gross,dms in [
+            ('500 Premium',64.5,500,144,150,1790,2250,False),('602 Luxury',75.26,602,141,180,1880,2280,True)]:
+            t=one('aion.aion_v',name)
+            for field,val,qual in [
+              ('vehicle.ground_clearance_mm',166,{'load_state':'UNLADEN'}),('vehicle.cargo_volume_l',427,{'seat_configuration':'SEATS_UP','measurement_basis':'OEM'}),
+              ('vehicle.curb_weight_kg',curb,{'measurement_basis':'OEM'}),('vehicle.gross_vehicle_weight_kg',gross,{'measurement_basis':'OEM'}),
+              ('vehicle.turning_radius_m',5.6,{'measurement_basis':'OEM'}),('powertrain.motor_type','Permanent magnet synchronous motor',{}),
+              ('powertrain.motor_count',1,{}),('powertrain.max_power_kw',150,{'output_scope':'SYSTEM','rating_basis':'MAXIMUM'}),
+              ('powertrain.max_torque_nm',210,{'output_scope':'SYSTEM','rating_basis':'MAXIMUM'}),('performance.top_speed_kmh',160,{'measurement_basis':'OEM'}),
+              ('battery.chemistry','LFP',{}),('battery.chemistry_as_declared','LFP',{}),
+              ('ev.rated_range_km',range_km,{'measurement_basis':'NEDC','range_scope':'COMBINED'}),('ev.energy_consumption_wh_km',energy,{'measurement_basis':'NEDC'}),
+              ('charging.ac_max_kw',6.6,{'rating_basis':'MAXIMUM'}),('charging.dc_max_kw',dc,{'rating_basis':'MAXIMUM'}),
+              ('charging.dc_time_min',16,{'soc_from':'30%','soc_to':'80%','charger_power':f'{dc} kW'}),('charging.v2l_supported',True,{}),
+              ('chassis.suspension_front','Independent MacPherson strut',{}),('chassis.suspension_rear','Semi-independent torsion beam',{}),
+              ('comfort.ventilated_front_seats',True,{}),('comfort.panoramic_roof',True,{}),('comfort.power_windows',True,{}),
+              ('comfort.auto_climate',True,{}),('comfort.electric_parking_brake',True,{}),('comfort.heat_pump',True,{}),
+              ('technology.smartphone_mirroring',True,{}),('technology.connected_services',True,{}),('technology.surround_view_camera',True,{}),('technology.led_headlights',True,{}),
+              ('safety.side_airbag',True,{}),('safety.curtain_airbag',True,{}),('safety.abs',True,{}),('safety.esc',True,{}),
+              ('safety.driver_attention_alert',dms,{}),('safety.adaptive_cruise',True,{}),('safety.aeb',True,{}),('safety.forward_collision_warning',True,{}),
+              ('safety.lane_departure_warning',True,{}),('safety.lane_keep_assist',True,{}),('safety.blind_spot',True,{}),('safety.rear_cross_traffic',True,{})]:
+                A(t,field,val,G_V,qual)
+
+          # AION Y Plus 490 Premium.
+          t=one('aion.aion_y_plus','490 Premium')
+          for field,val,qual in [
+            ('vehicle.ground_clearance_mm',150,{'load_state':'LADEN'}),('vehicle.cargo_volume_l',405,{'seat_configuration':'SEATS_UP','measurement_basis':'OEM'}),
+            ('vehicle.curb_weight_kg',1750,{'measurement_basis':'OEM'}),('vehicle.gross_vehicle_weight_kg',2180,{'measurement_basis':'OEM'}),
+            ('powertrain.motor_type','Permanent magnet synchronous motor',{}),('powertrain.motor_count',1,{}),
+            ('powertrain.max_power_kw',150,{'output_scope':'SYSTEM','rating_basis':'MAXIMUM'}),('powertrain.max_torque_nm',225,{'output_scope':'SYSTEM','rating_basis':'MAXIMUM'}),
+            ('battery.chemistry','LFP',{}),('battery.chemistry_as_declared','Lithium iron phosphate (LFP)',{}),
+            ('ev.rated_range_km',490,{'measurement_basis':'NEDC','range_scope':'COMBINED'}),('charging.v2l_supported',True,{}),
+            ('chassis.suspension_front','Independent MacPherson strut',{}),('chassis.suspension_rear','Torsion beam',{}),
+            ('comfort.panoramic_roof',True,{}),('comfort.keyless_entry',True,{}),('comfort.power_windows',True,{}),('comfort.auto_climate',True,{}),
+            ('comfort.electric_parking_brake',True,{}),('technology.connected_services',True,{}),('technology.surround_view_camera',True,{}),('technology.led_headlights',True,{}),
+            ('safety.side_airbag',True,{}),('safety.curtain_airbag',True,{}),('safety.abs',True,{}),('safety.esc',True,{}),
+            ('safety.adaptive_cruise',True,{}),('safety.aeb',True,{}),('safety.forward_collision_warning',True,{}),
+            ('safety.lane_departure_warning',True,{}),('safety.lane_keep_assist',True,{})]: A(t,field,val,G_Y,qual)
+
+          # AION ES fleet/taxi specification.
+          t=one('aion.aion_es','Standard')
+          for field,val,qual in [
+            ('vehicle.ground_clearance_mm',120,{'load_state':'LADEN'}),('vehicle.cargo_volume_l',450,{'seat_configuration':'SEATS_UP','measurement_basis':'OEM'}),
+            ('vehicle.curb_weight_kg',1665,{'measurement_basis':'OEM'}),('vehicle.gross_vehicle_weight_kg',2135,{'measurement_basis':'OEM'}),
+            ('powertrain.motor_type','Permanent magnet synchronous motor',{}),('powertrain.motor_count',1,{}),
+            ('powertrain.max_power_kw',100,{'output_scope':'SYSTEM','rating_basis':'MAXIMUM'}),('powertrain.max_torque_nm',225,{'output_scope':'SYSTEM','rating_basis':'MAXIMUM'}),
+            ('performance.acceleration_0_100_s',12.1,{'measurement_basis':'OEM'}),('battery.chemistry','LFP',{}),('battery.chemistry_as_declared','Lithium iron phosphate (LFP)',{}),
+            ('ev.rated_range_km',442,{'measurement_basis':'NEDC','range_scope':'COMBINED'}),('ev.energy_consumption_wh_km',136,{'measurement_basis':'NEDC'}),
+            ('chassis.suspension_front','Independent MacPherson strut',{}),('chassis.suspension_rear','Non-independent torsion beam',{}),
+            ('comfort.power_windows',True,{}),('comfort.auto_climate',True,{}),('comfort.electric_parking_brake',True,{}),
+            ('technology.led_headlights',True,{}),('safety.abs',True,{}),('safety.esc',True,{})]: A(t,field,val,G_ES,qual)
+
+          # HYPTEC HT 620 Premium.
+          t=one('aion.hyptec_ht','620 Premium')
+          for field,val,qual in [
+            ('vehicle.ground_clearance_mm',158,{'load_state':'LADEN'}),('vehicle.cargo_volume_l',670,{'seat_configuration':'SEATS_UP','measurement_basis':'OEM'}),
+            ('vehicle.curb_weight_kg',2232,{'measurement_basis':'OEM'}),('vehicle.gross_vehicle_weight_kg',2607,{'measurement_basis':'OEM'}),
+            ('vehicle.turning_radius_m',5.6,{'measurement_basis':'OEM'}),('powertrain.motor_count',1,{}),
+            ('powertrain.max_power_kw',250,{'output_scope':'SYSTEM','rating_basis':'MAXIMUM'}),('powertrain.max_torque_nm',430,{'output_scope':'SYSTEM','rating_basis':'MAXIMUM'}),
+            ('performance.acceleration_0_100_s',6.3,{'measurement_basis':'OEM'}),('performance.top_speed_kmh',183,{'measurement_basis':'OEM'}),
+            ('battery.chemistry','LFP',{}),('battery.chemistry_as_declared','LFP',{}),
+            ('ev.rated_range_km',620,{'measurement_basis':'NEDC','range_scope':'COMBINED'}),('ev.energy_consumption_wh_km',150,{'measurement_basis':'NEDC'}),
+            ('charging.ac_max_kw',6.6,{'rating_basis':'MAXIMUM'}),('charging.dc_max_kw',280,{'rating_basis':'MAXIMUM'}),
+            ('charging.dc_time_min',15,{'soc_from':'30%','soc_to':'80%','charger_power':'280 kW'}),('charging.v2l_supported',True,{}),
+            ('chassis.suspension_front','Independent double wishbone',{}),('chassis.suspension_rear','Independent five-link',{}),
+            ('comfort.ventilated_front_seats',True,{}),('comfort.panoramic_roof',True,{}),('comfort.keyless_entry',True,{}),('comfort.power_windows',True,{}),
+            ('comfort.auto_climate',True,{}),('comfort.electric_parking_brake',True,{}),('technology.smartphone_mirroring',True,{}),
+            ('technology.connected_services',True,{}),('technology.surround_view_camera',True,{}),('technology.led_headlights',True,{}),
+            ('safety.side_airbag',True,{}),('safety.curtain_airbag',True,{}),('safety.abs',True,{}),('safety.esc',True,{}),
+            ('safety.adaptive_cruise',True,{}),('safety.aeb',True,{}),('safety.forward_collision_warning',True,{}),
+            ('safety.lane_departure_warning',True,{}),('safety.lane_keep_assist',True,{}),('safety.blind_spot',True,{}),('safety.rear_cross_traffic',True,{})]: A(t,field,val,G_HT,qual)
+
+          H_A1='https://www.headlightmag.com/offcial-price-audi-a1-35-tfsi-s-line/'
+          H_A4='https://www.headlightmag.com/official-price-audi-a4-sedan-40-tfsi/'
+          H_A4AV='https://www.headlightmag.com/official-price-audi-a4-avant-minorchange/'
+          H_A5='https://www.headlightmag.com/official-price-audi-a5-sportback-tfsi-e/'
+          H_A5AV='https://www.headlightmag.com/official-price-audi-a5-avant-tfsi-e-quattro/'
+          AU_S6='https://www.audi.co.th/en/models/a6-e-tron/s6-sportback-e-tron/'
+          AU_S6C='https://www.audi.co.th/en/models/a6-e-tron/s6-sportback-e-tron/range-charging/'
+          AU_S6A='https://www.audi.co.th/en/models/a6-e-tron/s6-avant-e-tron/range-charging/'
+          H_A7='https://www.headlightmag.com/2023-11-14-audi-a7-sportback-55-tfsi-e/'
+          H_A8='https://www.headlightmag.com/2023-11-29-official-price-audi-a8-l-60-tfsi-e-quattro-prestige-s-line/'
+          AU_A7='https://www.audi.co.th/en/models/a7/a7-sportback-tfsi-e/'
+          AU_A8='https://www.audi.co.th/en/models/a8/a8-l-tfsi-e/'
+          AU_PRICE='https://www.audi.co.th/dam/nemo/sea/th/pdf/Audi_Price_List.pdf'
+
+          # Audi A1 35 TFSI S line historical/current-catalog spec.
+          for t in trims('audi.a1','35 TFSI'):
+            for field,val,qual in [('vehicle.cargo_volume_l',335,{'seat_configuration':'SEATS_UP','measurement_basis':'OEM'}),
+              ('powertrain.max_power_kw',110,{'output_scope':'ENGINE','rating_basis':'MAXIMUM'}),('powertrain.max_torque_nm',250,{'output_scope':'ENGINE','rating_basis':'MAXIMUM'}),
+              ('engine.fuel_type','GASOLINE',{}),('engine.combustion_type','TURBOCHARGED',{}),('powertrain.gear_count',7,{}),
+              ('technology.smartphone_mirroring',True,{}),('technology.led_headlights',True,{})]: A(t,field,val,H_A1,qual)
+
+          # Audi A4 current/historical 40/45 spec lines.
+          for t in catalog.trims_of('audi.a4'):
+            if '40 TFSI' in t.name:
+              p,q,src=140,320,H_A4
+            elif '45 TFSI' in t.name:
+              p,q,src=183,370,H_A4AV
+            else: continue
+            for field,val,qual in [('powertrain.max_power_kw',p,{'output_scope':'ENGINE','rating_basis':'MAXIMUM'}),('powertrain.max_torque_nm',q,{'output_scope':'ENGINE','rating_basis':'MAXIMUM'}),
+              ('engine.fuel_type','GASOLINE',{}),('engine.combustion_type','TURBOCHARGED',{}),('powertrain.gear_count',7,{}),('technology.led_headlights',True,{})]: A(t,field,val,src,qual)
+
+          # Audi A5 current PHEVs + low-hanging historical B9.5 40/45 facts.
+          for t in catalog.trims_of('audi.a5'):
+            if t.powertrain.value=='PHEV':
+              src=H_A5AV if 'Avant' in t.name else H_A5
+              for field,val,qual in [
+                ('vehicle.cargo_volume_l',476 if 'Avant' in t.name else 445,{'seat_configuration':'SEATS_UP','measurement_basis':'OEM'}),
+                ('powertrain.max_power_kw',270,{'output_scope':'SYSTEM','rating_basis':'MAXIMUM'}),('powertrain.max_torque_nm',500,{'output_scope':'SYSTEM','rating_basis':'MAXIMUM'}),
+                ('performance.top_speed_kmh',250,{'measurement_basis':'OEM'}),('engine.fuel_type','GASOLINE',{}),('engine.combustion_type','TURBOCHARGED',{}),
+                ('powertrain.motor_count',1,{}),('powertrain.gear_count',7,{}),('battery.gross_capacity_kwh',25.9,{}),('battery.chemistry','LI_ION_UNSPECIFIED',{}),
+                ('battery.chemistry_as_declared','Lithium-ion',{}),('battery.warranty_years',8,{}),('battery.warranty_km',160000,{}),
+                ('ev.rated_range_km',86,{'measurement_basis':'WLTP','range_scope':'EV_ONLY'}),('charging.ac_max_kw',7.4,{'rating_basis':'MAXIMUM'}),
+                ('safety.airbag_count',6,{}),('safety.side_airbag',True,{}),('safety.curtain_airbag',True,{}),('safety.abs',True,{}),('safety.esc',True,{}),
+                ('safety.lane_departure_warning',True,{}),('comfort.keyless_entry',True,{}),('comfort.auto_climate',True,{}),('comfort.electric_parking_brake',True,{}),
+                ('technology.smartphone_mirroring',True,{}),('technology.led_headlights',True,{})]: A(t,field,val,src,qual)
+              is_pro='Tech Pro' in t.name
+              A(t,'comfort.panoramic_roof',is_pro,src); A(t,'technology.head_up_display',is_pro,src)
+            elif '40 TFSI' in t.name or '45 TFSI' in t.name:
+              p,q=(140,320) if '40 TFSI' in t.name else (183,370)
+              for field,val,qual in [('powertrain.max_power_kw',p,{'output_scope':'ENGINE','rating_basis':'MAXIMUM'}),('powertrain.max_torque_nm',q,{'output_scope':'ENGINE','rating_basis':'MAXIMUM'}),
+                ('engine.fuel_type','GASOLINE',{}),('engine.combustion_type','TURBOCHARGED',{}),('powertrain.gear_count',7,{})]: A(t,field,val,AU_PRICE,qual)
+
+          # Audi A6 C8 current 40/45 and easy historical 40 facts.
+          for t in catalog.trims_of('audi.a6'):
+            if '40 TFSI' in t.name: p,q=140,320
+            elif '45 TFSI' in t.name: p,q=180,370
+            else: continue
+            for field,val,qual in [('powertrain.max_power_kw',p,{'output_scope':'ENGINE','rating_basis':'MAXIMUM'}),('powertrain.max_torque_nm',q,{'output_scope':'ENGINE','rating_basis':'MAXIMUM'}),
+              ('engine.fuel_type','GASOLINE',{}),('engine.combustion_type','TURBOCHARGED',{}),('powertrain.gear_count',7,{})]: A(t,field,val,AU_PRICE,qual)
+
+          # Audi S6 e-tron current Thai Sportback + Avant.
+          for name,rng,src in [('S6 Sportback',678,AU_S6C),('S6 Avant',649,AU_S6A)]:
+            t=one('audi.a6_etron',name)
+            for field,val,qual in [
+              ('powertrain.max_power_kw',370,{'output_scope':'SYSTEM','rating_basis':'NORMAL_MAX'}),('powertrain.max_power_kw',405,{'output_scope':'SYSTEM','rating_basis':'LAUNCH_CONTROL'}),
+              ('performance.acceleration_0_100_s',3.9,{'measurement_basis':'LAUNCH_CONTROL'}),('powertrain.motor_count',2,{}),
+              ('battery.gross_capacity_kwh',100,{}),('battery.usable_capacity_kwh',94.9,{}),('battery.warranty_years',8,{}),('battery.warranty_km',160000,{}),
+              ('ev.rated_range_km',rng,{'measurement_basis':'WLTP','range_scope':'COMBINED'}),('charging.ac_max_kw',11,{'rating_basis':'MAXIMUM'}),
+              ('charging.dc_max_kw',270,{'rating_basis':'MAXIMUM'}),('charging.dc_time_min',21,{'soc_from':'10%','soc_to':'80%','charger_power':'270 kW'})]: A(t,field,val,src,qual)
+
+          # Audi A7 55 TFSI e two current trims.
+          for t in trims('audi.a7','55 TFSI e'):
+            for field,val,qual in [
+              ('powertrain.max_power_kw',270,{'output_scope':'SYSTEM','rating_basis':'MAXIMUM'}),('powertrain.max_torque_nm',500,{'output_scope':'SYSTEM','rating_basis':'MAXIMUM'}),
+              ('performance.acceleration_0_100_s',5.7,{'measurement_basis':'OEM'}),('performance.top_speed_kmh',250,{'measurement_basis':'OEM'}),
+              ('engine.fuel_type','GASOLINE',{}),('engine.combustion_type','TURBOCHARGED',{}),('powertrain.motor_count',1,{}),('powertrain.gear_count',7,{}),
+              ('battery.gross_capacity_kwh',17.9,{}),('battery.chemistry','LI_ION_UNSPECIFIED',{}),('battery.chemistry_as_declared','Lithium-ion',{}),
+              ('battery.warranty_years',8,{}),('battery.warranty_km',160000,{}),('ev.rated_range_km',69,{'measurement_basis':'WLTP','range_scope':'EV_ONLY'}),
+              ('charging.ac_max_kw',7.4,{'rating_basis':'MAXIMUM'}),('chassis.suspension_front','Independent double wishbone',{}),('chassis.suspension_rear','Independent multi-link',{}),
+              ('safety.airbag_count',6,{}),('safety.side_airbag',True,{}),('safety.curtain_airbag',True,{}),('safety.abs',True,{}),('safety.esc',True,{}),
+              ('safety.blind_spot',True,{}),('safety.rear_cross_traffic',True,{}),('comfort.panoramic_roof',True,{}),('comfort.keyless_entry',True,{}),
+              ('comfort.auto_climate',True,{}),('comfort.electric_parking_brake',True,{}),('technology.smartphone_mirroring',True,{}),
+              ('technology.connected_services',True,{}),('technology.surround_view_camera',True,{}),('technology.led_headlights',True,{}),('technology.head_up_display',True,{})]: A(t,field,val,H_A7 if field!='technology.connected_services' else AU_A7,qual)
+
+          # Audi A8 L 60 TFSI e current Thai trim.
+          t=one('audi.a8','60 TFSI e')
+          for field,val,qual in [
+            ('powertrain.max_power_kw',340,{'output_scope':'SYSTEM','rating_basis':'MAXIMUM'}),('powertrain.max_torque_nm',700,{'output_scope':'SYSTEM','rating_basis':'MAXIMUM'}),
+            ('performance.acceleration_0_100_s',4.7,{'measurement_basis':'THAI_OEM_SPEC'}),('performance.top_speed_kmh',250,{'measurement_basis':'OEM'}),
+            ('engine.fuel_type','GASOLINE',{}),('engine.combustion_type','TURBOCHARGED',{}),('powertrain.motor_count',1,{}),
+            ('battery.gross_capacity_kwh',17.9,{}),('battery.chemistry','LI_ION_UNSPECIFIED',{}),('battery.chemistry_as_declared','Lithium-ion',{}),
+            ('battery.warranty_years',8,{}),('battery.warranty_km',160000,{}),('ev.rated_range_km',52,{'measurement_basis':'WLTP','range_scope':'EV_ONLY'}),
+            ('charging.ac_max_kw',7.4,{'rating_basis':'MAXIMUM'}),('chassis.suspension_front','Independent double wishbone',{}),('chassis.suspension_rear','Independent multi-link',{}),
+            ('safety.airbag_count',8,{}),('safety.side_airbag',True,{}),('safety.curtain_airbag',True,{}),('safety.abs',True,{}),('safety.esc',True,{}),
+            ('safety.blind_spot',True,{}),('safety.rear_cross_traffic',True,{}),('comfort.ventilated_front_seats',True,{}),('comfort.panoramic_roof',True,{}),
+            ('comfort.keyless_entry',True,{}),('comfort.auto_climate',True,{}),('technology.smartphone_mirroring',True,{}),('technology.connected_services',True,{}),
+            ('technology.surround_view_camera',True,{}),('technology.led_headlights',True,{}),('technology.head_up_display',True,{})]: A(t,field,val,H_A8 if field!='technology.connected_services' else AU_A8,qual)
+
+          print('ADDED_FACTS',count)
+          # Persist an audit snapshot for touched models.
+          targets={'aion.aion_y_plus','aion.aion_es','aion.aion_v','aion.aion_ut','aion.hyptec_ht','audi.a1','audi.a4','audi.a5','audi.a6','audi.a6_etron','audi.a7','audi.a8'}
+          rows=[]
+          for mid in sorted(targets):
+            for t in catalog.trims_of(mid):
+              applicable={k for k,d in registry.fields.items() if not d.applicable_powertrains or t.powertrain.value in d.applicable_powertrains}
+              covered=set(existing.get(t.id,{})) & applicable
+              rows.append({'model':mid,'trim':t.name,'trim_id':t.id,'powertrain':t.powertrain.value,'applicable':len(applicable),'covered':len(covered),'missing':len(applicable)-len(covered),'implicit_not_applicable':len(registry.fields)-len(applicable)})
+          Path('/tmp/enrich99-audit.json').write_text(json.dumps({'registry_fields':len(registry.fields),'rows':rows},ensure_ascii=False,indent=2),encoding='utf-8')
+          for r in rows: print('COVERAGE',json.dumps(r,ensure_ascii=False))
+          PY
+          git config user.name "TDR vehicle data bot"
+          git config user.email "noreply@github.com"
+          git rm .github/workflows/tmp-enrich-touched-specs.yml
+          git add automotive/vehicle_master/vehreg/data/2026/product/comparable_specs automotive/vehicle_master/vehreg/data/2026/canonical_state
+          git commit -m "data(vehreg): enrich structured specs for touched models"
+          git push origin HEAD:feature/vehreg-fill-batch-01
+      - name: Upload audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: enrich99-audit
+          path: /tmp/enrich99-audit.json
+          if-no-files-found: ignore
