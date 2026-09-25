@@ -1,0 +1,67 @@
+name: Temporary AION Y Plus CarNewsChina backfill
+
+on:
+  push:
+    branches: [feature/vehreg-fill-batch-01]
+    paths:
+      - ".github/workflows/tmp-aion-yplus-cnc.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/vehreg-fill-batch-01
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Add CarNewsChina-backed Y Plus facts
+        shell: bash
+        run: |
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          from automotive.vehicle_master.vehreg.catalog import Catalog
+          from automotive.vehicle_master.vehreg.comparable_specs import SpecRegistry
+          from automotive.vehicle_master.vehreg.canonical_write import CanonicalWritePipeline
+
+          DATA=Path('automotive/vehicle_master/vehreg/data'); YEAR=2026
+          catalog=Catalog.load(DATA,YEAR); registry=SpecRegistry.load(DATA,YEAR); pipe=CanonicalWritePipeline(DATA)
+          trim=[t for t in catalog.trims_of('aion.aion_y_plus') if '490 Premium' in t.name][0]
+          facts_root=DATA/str(YEAR)/'product'/'comparable_specs'/'facts'
+          existing=set()
+          for path in facts_root.glob('*.json'):
+            try: payload=json.loads(path.read_text(encoding='utf-8'))
+            except Exception: continue
+            for f in payload.get('facts',[]):
+              if f.get('trim_id')==trim.id: existing.add(f.get('field_key'))
+
+          rows=[
+            ('performance.top_speed_kmh',150,'km/h',{'measurement_basis':'CARNEWSCHINA_SAME_150KW_225NM_Y_PLUS'},'https://data.carnewschina.com/database/aion/aion-y/2023','PROVISIONAL'),
+            ('powertrain.motor_count',1,'motor',{},'https://data.carnewschina.com/database/aion/aion-y/2023','PROVISIONAL'),
+            ('manufacturing.factory','GAC Aion Rayong Plant, Rayong, Thailand','',{},'https://th.carnewschina.com/2024/07/04/gac-aion-thai-factory-to-open-this-month/','PROVISIONAL'),
+          ]
+          added=0
+          for field,value,unit,qual,src,status in rows:
+            if field in existing: continue
+            d=registry.fields[field]
+            fact={'field_key':field,'value_state':'KNOWN','value':value,'unit':unit,'qualifiers':qual,
+                  'observed_at':'2026-09-26','verification_status':status,'source':'carnewschina',
+                  'source_ref':src,'source_locator':src}
+            h=hashlib.sha1((trim.id+'|'+field).encode()).hexdigest()[:24]
+            pipe.apply({'command_id':'yplus-cnc-'+h,'operation':'APPEND_SPEC','year':YEAR,'actor':'tdr-aion-yplus-cnc',
+                        'reason':'AION Y Plus CarNewsChina supplemental spec backfill','canonical_id':trim.id,
+                        'payload':fact,'submitted_at':'2026-09-26T01:10:00+07:00'})
+            added+=1
+          print('ADDED',added)
+          PY
+          git config user.name "TDR vehicle data bot"
+          git config user.email "noreply@github.com"
+          git rm .github/workflows/tmp-aion-yplus-cnc.yml
+          git add automotive/vehicle_master/vehreg/data/2026/product/comparable_specs automotive/vehicle_master/vehreg/data/2026/canonical_state
+          git commit -m "data(vehreg): add CarNewsChina AION Y Plus facts"
+          git push origin HEAD:feature/vehreg-fill-batch-01
