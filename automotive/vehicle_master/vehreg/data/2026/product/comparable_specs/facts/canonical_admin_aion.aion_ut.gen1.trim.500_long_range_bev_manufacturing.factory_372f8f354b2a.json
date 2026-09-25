@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "field_key": "manufacturing.factory",
+      "value_state": "KNOWN",
+      "value": "GAC AION Rayong Plant, Rayong, Thailand",
+      "unit": "",
+      "qualifiers": {},
+      "observed_at": "2026-09-26",
+      "verification_status": "VERIFIED",
+      "source": "official_gac",
+      "source_ref": "https://www.gacgroup.com/th-th/news/article/gac-aion-rayong-factory-ut-v-delivery-122",
+      "source_locator": "https://www.gacgroup.com/th-th/news/article/gac-aion-rayong-factory-ut-v-delivery-122",
+      "trim_id": "aion.aion_ut.gen1.trim.500_long_range_bev",
+      "fact_id": "admin:aion.aion_ut.gen1.trim.500_long_range_bev:manufacturing.factory"
+    }
+  ]
+}
