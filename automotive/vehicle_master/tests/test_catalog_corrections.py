@@ -99,20 +99,19 @@ class KiaEv6Tests(unittest.TestCase):
             matched = {json.loads(line)["matched_model_id"] for line in handle}
         self.assertNotIn("kia.ev6", matched)
 
-    def test_the_cohort_does_not_claim_to_be_the_current_retail_set(self):
-        """It is an ECO-derived pilot, and it says so rather than implying it.
+    def test_the_cohort_is_not_a_lifecycle_contract(self):
+        """Cohort eligibility and CURRENT/HISTORICAL are separate concerns.
 
-        The earlier version of this test asserted every cohort model was
-        ``CURRENT`` -- which passed only because ``CURRENT`` was the default
-        and no model had ever been checked against a distributor listing. It
-        was reading its own default back and calling it verification.
+        The cohort is an ECO-derived comparison eligibility universe. Some of
+        its models can now carry independently verified CURRENT retail status,
+        while others remain UNVERIFIED; lifecycle must therefore not be baked
+        into this cohort regression test. Kia EV6 itself stays outside because
+        the cohort selection rule has no ECO detail evidence for it.
         """
         catalog = Catalog.load(year=2026)
         from vehreg.comparable_specs import ComparableCohort
         cohort = ComparableCohort.load()
-        statuses = {catalog.models[m].retail_status.value for m in cohort.model_ids}
-        self.assertEqual({"UNVERIFIED"}, statuses)
-        # And it still loads and validates while saying so.
+        self.assertNotIn("kia.ev6", cohort.model_ids)
         self.assertEqual([], cohort.validate(catalog))
         self.assertTrue(cohort.model_ids)
 
