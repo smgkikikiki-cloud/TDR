@@ -1,36 +1,24 @@
 /**
- * What somebody may do before they have an account.
+ * Anonymous action allowance helpers.
  *
- * Counted in an httpOnly cookie, which is a deliberate choice rather than a
- * shortcut. localStorage is cleared by the reader in two clicks; an IP address
- * is shared by everyone behind one mobile carrier and changes when they walk
- * between cells. A cookie is wrong in the other direction -- a private window
- * resets it -- and that is the direction to be wrong in. The point is to ask
- * a regular reader to sign up after a fair trial, not to stop somebody who
- * has decided to get around it. Anyone determined enough to clear cookies
- * repeatedly was never going to be converted by a harder wall.
+ * Only actions that are genuinely metered before signup belong here. Merely
+ * opening a public page does not: /market is a quota-free snapshot, while
+ * interactive market analysis starts after sign-in and uses the member usage
+ * policy instead.
  *
- * Kept free of every other import so it can run in middleware as well as in a
- * route handler.
+ * The anonymous compare allowance is stored in an httpOnly cookie. That is a
+ * deliberate soft gate: enough to ask a regular reader to sign up, without
+ * pretending to be DRM against somebody determined to clear cookies.
  */
 
-/** Comparisons an anonymous reader may run per day. Daily rather than a
- *  lifetime total, so a return visitor keeps getting a reason to come back
- *  (and keeps generating page views) instead of hitting a wall once, ever. */
+/** Comparisons an anonymous reader may run per day. */
 export const ANON_COMPARE_DAILY_LIMIT = 10;
-
-/** Market views an anonymous reader may take per day. */
-export const ANON_MARKET_DAILY_LIMIT = 1;
-
 export const ANON_COMPARE_COOKIE = "tdr_c";
-export const ANON_MARKET_COOKIE = "tdr_m";
 
-/** A year: long enough that the compare allowance behaves as "ever" without
- *  the cookie outliving any plausible interest in the site. */
 const MAX_AGE_SECONDS = 60 * 60 * 24 * 365;
 
 /** The Thai calendar day. Thailand has no DST, but this resolves through Intl
- *  rather than a fixed +7 so it stays right if the tz database moves. */
+ * rather than a fixed +7 so it stays right if the tz database moves. */
 export function bangkokDayKey(date: Date = new Date()): string {
   const parts = new Intl.DateTimeFormat("en-CA", {
     timeZone: "Asia/Bangkok", year: "numeric", month: "2-digit", day: "2-digit",
@@ -40,8 +28,7 @@ export function bangkokDayKey(date: Date = new Date()): string {
 }
 
 /** Cookie value is `scope.count`. A scope that does not match the one being
- *  asked about has expired -- yesterday's market count is not today's -- so it
- *  reads as zero rather than being carried over. */
+ * asked about has expired, so it reads as zero rather than carrying over. */
 export function readCount(raw: string | undefined, scope: string): number {
   if (!raw) return 0;
   const at = raw.lastIndexOf(".");
