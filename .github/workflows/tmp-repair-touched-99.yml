@@ -28,12 +28,9 @@ jobs:
 
           DATA = Path('automotive/vehicle_master/vehreg/data')
           YEAR = 2026
-
-          # DISCONTINUED was written by the earlier repair pass, but RetailStatus
-          # has no such enum. HISTORICAL is the canonical value for officially
-          # sold models no longer listed. Normalize this invalid value first so
-          # the catalog can be validated normally.
           model_dir = DATA / str(YEAR) / 'models'
+
+          # Normalize a bad enum value introduced by the earlier pass.
           normalized_files = []
           for path in model_dir.glob('*.json'):
               payload = json.loads(path.read_text(encoding='utf-8'))
@@ -92,7 +89,7 @@ jobs:
                   values = refs.get(key) or ()
                   if values:
                       return key, str(values[0])
-              return 'catalog', ''
+              return 'catalog', 'automotive/vehicle_master/vehreg/data/2026/models'
 
           def command_id(trim_id, field, tag):
               h = hashlib.sha1(f'{trim_id}|{field}|{tag}'.encode()).hexdigest()[:24]
@@ -111,41 +108,40 @@ jobs:
                   'observed_at': observed,
                   'verification_status': 'VERIFIED',
                   'source': source,
-                  'source_ref': source_ref,
-                  'source_locator': source_ref,
+                  'source_ref': source_ref or 'automotive/vehicle_master/vehreg/data/2026/models',
+                  'source_locator': source_ref or 'automotive/vehicle_master/vehreg/data/2026/models',
               }
               pipeline.apply({
                   'command_id': command_id(trim.id, field, tag),
-                  'operation': 'APPEND_SPEC',
-                  'year': YEAR,
+                  'operation': 'APPEND_SPEC', 'year': YEAR,
                   'actor': 'tdr-repair99',
-                  'reason': 'Backfill touched models against the 99-field comparable spec registry',
-                  'canonical_id': trim.id,
-                  'payload': fact,
+                  'reason': 'Backfill touched models against comparable spec registry',
+                  'canonical_id': trim.id, 'payload': fact,
                   'submitted_at': '2026-09-26T00:00:00+07:00',
               })
               existing_by_trim[trim.id].setdefault(field, []).append({**fact, 'trim_id': trim.id})
               return True
 
-          added_catalog = added_na = added_eco = 0
+          added_catalog = added_eco = 0
           for trim in trims:
               refs = getattr(trim, 'source_refs', {}) or {}
+              # Promote already-imported ECO facts by exact ECO UUID.
               for eco_uuid in refs.get('eco', ()):
                   for field, srcfact in eco_by_uuid.get(str(eco_uuid).lower(), {}).items():
-                      if field not in registry.fields or field in existing_by_trim[trim.id]:
+                      definition = registry.fields.get(field)
+                      if definition is None or field in existing_by_trim[trim.id]:
+                          continue
+                      if definition.applicable_powertrains and trim.powertrain.value not in definition.applicable_powertrains:
                           continue
                       raw = dict(srcfact)
-                      raw.pop('fact_id', None)
-                      raw.pop('trim_id', None)
+                      raw.pop('fact_id', None); raw.pop('trim_id', None)
                       raw['field_key'] = field
                       pipeline.apply({
                           'command_id': command_id(trim.id, field, f'eco-{eco_uuid}'),
-                          'operation': 'APPEND_SPEC',
-                          'year': YEAR,
+                          'operation': 'APPEND_SPEC', 'year': YEAR,
                           'actor': 'tdr-repair99',
                           'reason': f'Promote exact ECO Sticker evidence {eco_uuid} already referenced by MarketTrim',
-                          'canonical_id': trim.id,
-                          'payload': raw,
+                          'canonical_id': trim.id, 'payload': raw,
                           'submitted_at': '2026-09-26T00:00:00+07:00',
                       })
                       existing_by_trim[trim.id].setdefault(field, []).append({**raw, 'trim_id': trim.id})
@@ -177,17 +173,13 @@ jobs:
                   elif 'single-speed' in trim.transmission.lower() or '1-speed' in trim.transmission.lower():
                       known['powertrain.gear_count'] = 1
               for field, value in known.items():
-                  if field in registry.fields and value not in (None, '', 'UNKNOWN'):
-                      if add_fact(trim, field, 'KNOWN', value, source=src_name, source_ref=src_ref, tag='catalog'):
-                          added_catalog += 1
-
-              pt = trim.powertrain.value
-              for field, definition in registry.fields.items():
-                  if field in existing_by_trim[trim.id]:
+                  definition = registry.fields.get(field)
+                  if definition is None or value in (None, '', 'UNKNOWN'):
                       continue
-                  if definition.applicable_powertrains and pt not in definition.applicable_powertrains:
-                      if add_fact(trim, field, 'NOT_APPLICABLE', None, source='registry', source_ref='product/comparable_specs/registry.json', tag='na'):
-                          added_na += 1
+                  if definition.applicable_powertrains and trim.powertrain.value not in definition.applicable_powertrains:
+                      continue
+                  if add_fact(trim, field, 'KNOWN', value, source=src_name, source_ref=src_ref, tag='catalog'):
+                      added_catalog += 1
 
           post = SpecLedger.load(DATA, YEAR, registry=registry, catalog=catalog)
           problems = post.validate()
@@ -195,7 +187,7 @@ jobs:
           if touched_problems:
               raise SystemExit('TOUCHED_SPEC_VALIDATION_FAILED\n' + '\n'.join(touched_problems[:50]))
 
-          print('ADDED_ECO', added_eco, 'ADDED_CATALOG', added_catalog, 'ADDED_NA', added_na)
+          print('ADDED_ECO', added_eco, 'ADDED_CATALOG', added_catalog)
           facts_by_trim = {tid: {} for tid in trim_ids}
           for fact in post.facts:
               if fact.trim_id in facts_by_trim:
@@ -203,12 +195,24 @@ jobs:
           summary = []
           for trim in trims:
               fields = facts_by_trim[trim.id]
-              known_n = sum(any(f.value_state.value == 'KNOWN' for f in fs) for fs in fields.values())
-              na_n = sum(any(f.value_state.value == 'NOT_APPLICABLE' for f in fs) for fs in fields.values())
-              unavailable_n = sum(any(f.value_state.value == 'NOT_AVAILABLE' for f in fs) for fs in fields.values())
-              unknown_n = sum(any(f.value_state.value == 'UNKNOWN' for f in fs) for fs in fields.values())
-              absent = len(registry.fields) - len(fields)
-              row = {'trim_id': trim.id, 'known': known_n, 'not_applicable': na_n, 'not_available': unavailable_n, 'unknown': unknown_n, 'absent': absent, 'covered': len(fields)}
+              applicable = {
+                  key for key, definition in registry.fields.items()
+                  if not definition.applicable_powertrains or trim.powertrain.value in definition.applicable_powertrains
+              }
+              non_applicable = len(registry.fields) - len(applicable)
+              covered_applicable = len(set(fields) & applicable)
+              row = {
+                  'trim_id': trim.id,
+                  'powertrain': trim.powertrain.value,
+                  'registry_fields': len(registry.fields),
+                  'applicable_fields': len(applicable),
+                  'implicit_not_applicable': non_applicable,
+                  'covered_applicable': covered_applicable,
+                  'missing_applicable': len(applicable) - covered_applicable,
+                  'known': sum(any(f.value_state.value == 'KNOWN' for f in fs) for key, fs in fields.items() if key in applicable),
+                  'not_available': sum(any(f.value_state.value == 'NOT_AVAILABLE' for f in fs) for key, fs in fields.items() if key in applicable),
+                  'unknown': sum(any(f.value_state.value == 'UNKNOWN' for f in fs) for key, fs in fields.items() if key in applicable),
+              }
               summary.append(row)
               print('COVERAGE', json.dumps(row, ensure_ascii=False))
           Path('/tmp/touched_99_summary.json').write_text(json.dumps({'registry_fields': len(registry.fields), 'summary': summary}, ensure_ascii=False, indent=2), encoding='utf-8')
@@ -217,7 +221,7 @@ jobs:
           git config user.email "noreply@github.com"
           git rm .github/workflows/tmp-repair-touched-99.yml
           git add automotive/vehicle_master/vehreg/data/2026/models automotive/vehicle_master/vehreg/data/2026/product/comparable_specs
-          git commit -m "data(vehreg): repair 99-field coverage for touched models"
+          git commit -m "data(vehreg): repair comparable-spec coverage for touched models"
           git push origin HEAD:feature/vehreg-fill-batch-01
       - name: Upload coverage audit
         if: always()
