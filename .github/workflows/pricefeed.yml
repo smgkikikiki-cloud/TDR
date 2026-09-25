@@ -12,6 +12,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  issues: write
 
 concurrency:
   # Shared with every other workflow that can activate a canonical vehicle
@@ -172,3 +173,35 @@ jobs:
       - name: Publish the pushed revision
         if: steps.commit.outputs.changed == 'true'
         run: PYTHONPATH=. python -m tools.publish_canonical --revision "${{ steps.commit.outputs.sha }}"
+      # The one place this workflow actively tells anyone anything: every
+      # other artifact just sits in git for whoever looks. A PRICE_IDENTITY
+      # exception means a grade name a real source used right now does not
+      # match any canonical MarketTrim -- a new, renamed, or discontinued
+      # trim, not routine price drift a person needs to see every tick.
+      # Silence on purpose means nothing here: an unchanged trim's price is
+      # not re-announced by news outlets every 12 hours, so no exception
+      # this run is not evidence the lineup is still the same, only that
+      # nothing new was harvested about it.
+      - name: Notify on unmatched trim names
+        if: steps.semantic.outputs.meaningful == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          exceptions=$(python -c "import json; print(int(json.load(open('/tmp/price-write.json')).get('exceptions_stored', {}).get('count', 0)))")
+          if [ "$exceptions" -eq 0 ]; then
+            echo "no exceptions this run"; exit 0
+          fi
+          exception_file=$(python -c "import json; print(json.load(open('/tmp/price-write.json')).get('exceptions_stored', {}).get('file') or '')")
+          if ! python tools/notify_price_exceptions.py "$exception_file" > /tmp/notice.md; then
+            echo "no PRICE_IDENTITY exceptions this run (only price conflicts, if any)"; exit 0
+          fi
+          title="Price feed: unmatched trim names need review"
+          existing=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open \
+            --search "in:title \"$title\"" --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --repo "$GITHUB_REPOSITORY" --body-file /tmp/notice.md
+          else
+            gh issue create --repo "$GITHUB_REPOSITORY" --title "$title" \
+              --assignee smgkikikiki-cloud --body-file /tmp/notice.md
+          fi
