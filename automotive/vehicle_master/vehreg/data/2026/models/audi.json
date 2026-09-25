@@ -868,34 +868,131 @@
       "registration_type": "",
       "market_scope": "NICHE",
       "aliases": [
-        "A7 SB"
+        "A7 SB",
+        "A7 Sportback"
       ],
+      "notes": "Thai-market A7 Sportback C8 retail lineup verified on 2026-09-26. Current Audi Thailand price list contains two 55 TFSI e quattro PHEV grades: S line and S line Black Edition. Earlier 45 TFSI combustion grade is retained as historical owner-directory evidence rather than current retail.",
+      "retail_status": "CURRENT",
+      "retail_checked_at": "2026-09-26",
+      "retail_source": "https://www.audi.co.th/en/models/a7/a7-sportback-tfsi-e/",
       "generations": [
         {
-          "code": "gen1",
+          "code": "C8",
           "segment": "E",
           "seats": 5,
-          "launched": "2023-01-01",
+          "launched": "2023-11-14",
           "ended": null,
           "variants": [
             {
-              "name": "spec",
+              "name": "55 TFSI e quattro PHEV",
+              "powertrain": "PHEV",
+              "drivetrain": "AWD",
+              "engine_cc": 1984,
+              "battery_kwh": 17.9,
+              "price_thb": 4799000,
+              "price_min_thb": 4799000,
+              "price_max_thb": 5099000,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "Current Audi Thailand recommended prices: S line THB 4,799,000; S line Black Edition THB 5,099,000.",
+              "aliases": [
+                "A7 Sportback 55 TFSI e quattro S line",
+                "A7 Sportback 55 TFSI e quattro S line Black Edition"
+              ]
+            },
+            {
+              "name": "45 TFSI quattro ICE (historical)",
               "powertrain": "ICE",
               "drivetrain": "AWD",
-              "engine_cc": 2995,
-              "price_thb": 5490000.0,
+              "engine_cc": 1984,
+              "battery_kwh": null,
+              "price_thb": null,
               "price_min_thb": null,
               "price_max_thb": null,
               "import_type": "CBU",
               "origin_country": "DE",
-              "price_note": "seed-unverified",
-              "aliases": []
+              "price_note": "Historical owner-directory grade; not in current 2026 Audi Thailand price list.",
+              "aliases": [
+                "A7 Sportback 45 TFSI quattro S line Black Edition"
+              ],
+              "incomplete": true
             }
           ],
           "trims": [
             {
+              "name": "Sportback 55 TFSI e quattro S line",
+              "variant": "55 TFSI e quattro PHEV",
+              "powertrain": "PHEV",
+              "drivetrain": "AWD",
+              "seats": 5,
+              "length_mm": 4969,
+              "width_mm": 1908,
+              "height_mm": 1421,
+              "wheelbase_mm": 2926,
+              "engine_cc": 1984,
+              "battery_kwh": 17.9,
+              "transmission": "7-speed S tronic",
+              "source_refs": {
+                "eco": [
+                  "0128920e-65e2-41cd-b7d3-74fcaaa5e9fb"
+                ],
+                "official_audi": [
+                  "https://www.audi.co.th/en/models/a7/a7-sportback-tfsi-e/",
+                  "https://www.audi.co.th/dam/nemo/sea/th/pdf/Audi_Price_List.pdf"
+                ],
+                "headlightmag": [
+                  "https://www.headlightmag.com/2023-11-14-audi-a7-sportback-55-tfsi-e/"
+                ]
+              },
+              "aliases": [
+                "A7 Sportback 55 TFSI e quattro S line"
+              ],
+              "id": "sportback_55_tfsi_e_quattro_s_line_phev",
+              "notes": "Thai PHEV: 2.0 TFSI + electric motor, 367 PS system output, 500 Nm, quattro AWD, 17.9 kWh battery, 7-speed S tronic, up to 69 km WLTP EV range."
+            },
+            {
+              "name": "Sportback 55 TFSI e quattro S line Black Edition",
+              "variant": "55 TFSI e quattro PHEV",
+              "powertrain": "PHEV",
+              "drivetrain": "AWD",
+              "seats": 5,
+              "length_mm": 4969,
+              "width_mm": 1908,
+              "height_mm": 1421,
+              "wheelbase_mm": 2926,
+              "engine_cc": 1984,
+              "battery_kwh": 17.9,
+              "transmission": "7-speed S tronic",
+              "tire_front": "255/40 R20",
+              "tire_rear": "255/40 R20",
+              "wheel_front": "20 in",
+              "wheel_rear": "20 in",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:011"
+                ],
+                "eco": [
+                  "44322647-1272-4fcd-b2c6-8949f5f5c1aa"
+                ],
+                "official_audi": [
+                  "https://www.audi.co.th/en/models/a7/a7-sportback-tfsi-e/",
+                  "https://www.audi.co.th/dam/nemo/sea/th/pdf/Audi_Price_List.pdf"
+                ],
+                "headlightmag": [
+                  "https://www.headlightmag.com/2023-11-14-audi-a7-sportback-55-tfsi-e/"
+                ]
+              },
+              "aliases": [
+                "A7 Sportback 55 TFSI e quattro S line Black Edition"
+              ],
+              "id": "sportback_55_tfsi_e_quattro_s_line_black_edition_phev",
+              "notes": "Thai PHEV: 367 PS / 500 Nm, quattro AWD, 17.9 kWh battery; Black Edition uses 20-inch wheels with 255/40 R20 tyres."
+            },
+            {
               "name": "Sportback 45 TFSI quattro S line Black Edition",
+              "variant": "45 TFSI quattro ICE (historical)",
               "powertrain": "ICE",
+              "drivetrain": "AWD",
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:011"
@@ -904,48 +1001,13 @@
               "aliases": [
                 "A7 Sportback 45 TFSI quattro S line Black Edition"
               ],
-              "id": "sportback_45_tfsi_quattro_s_line_black_edition_ice"
-            },
-            {
-              "name": "Sportback 55 TFSI e quattro S line Black Edition",
-              "powertrain": "PHEV",
-              "source_refs": {
-                "owner_directory": [
-                  "owner_directory_2026_09_13:011"
-                ],
-                "eco": [
-                  "44322647-1272-4fcd-b2c6-8949f5f5c1aa"
-                ]
-              },
-              "aliases": [
-                "A7 Sportback 55 TFSI e quattro S line Black Edition"
-              ],
-              "id": "sportback_55_tfsi_e_quattro_s_line_black_edition_phev",
-              "seats": 5,
-              "length_mm": 4969,
-              "width_mm": 1908,
-              "height_mm": 1421,
-              "engine_cc": 1984,
-              "transmission": "AUTOMATIC"
-            },
-            {
-              "name": "Sportback 55 TFSI e quattro S line",
-              "powertrain": "PHEV",
-              "seats": 5,
-              "length_mm": 4969,
-              "width_mm": 1908,
-              "height_mm": 1421,
-              "engine_cc": 1984,
-              "transmission": "AUTOMATIC",
-              "source_refs": {
-                "eco": [
-                  "0128920e-65e2-41cd-b7d3-74fcaaa5e9fb"
-                ]
-              }
+              "id": "sportback_45_tfsi_quattro_s_line_black_edition_ice",
+              "notes": "Historical owner-directory row; not promoted into current 2026 retail lineup."
             }
           ]
         }
-      ]
+      ],
+      "powertrain_checked": true
     },
     {
       "id": "a8",
