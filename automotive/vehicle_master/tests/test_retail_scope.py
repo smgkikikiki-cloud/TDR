@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from datetime import date
 import json
 from pathlib import Path
 
@@ -11,6 +12,7 @@ from vehreg.retail_scope import (
     MODEL_HISTORICAL,
     TRIM_RETIRED,
     UNDER_MAINTENANCE,
+    active_generations_of,
     current_generation_of,
     retail_scope_index,
     scoped_siblings_by_model,
@@ -34,12 +36,7 @@ def _write_json(path: Path, payload: dict) -> None:
 def _seed(tmp_path: Path, *, second_generation: bool = False,
          second_generation_ended: str | None = "2025-01-01",
          retail_status: str = "CURRENT") -> Path:
-    """One model, one current generation (J5, not ended), one trim (Ultra).
-
-    ``second_generation`` adds a J4 generation so tests can exercise
-    ambiguity (two non-ended generations) or a fully historical model
-    (both generations ended).
-    """
+    """One model, one current generation (J5), optionally plus J4."""
     data = tmp_path / "data"
     generations = [{
         "code": "J5", "segment": "B", "seats": 5,
@@ -100,28 +97,46 @@ def _catalog(data_dir: Path) -> Catalog:
     return Catalog.load(data_dir, YEAR)
 
 
-def test_current_generation_of_resolves_the_one_non_ended_generation(tmp_path):
+def test_current_generation_of_resolves_the_one_active_generation(tmp_path):
     data = _seed(tmp_path)
     catalog = _catalog(data)
-    generation = current_generation_of(catalog, MODEL_ID)
+    generation = current_generation_of(catalog, MODEL_ID, as_of=date(2026, 9, 25))
     assert generation is not None
     assert generation.id == GEN_ID
 
 
 def test_current_generation_of_is_none_when_every_generation_has_ended(tmp_path):
     data = _seed(tmp_path, second_generation=True, second_generation_ended="2025-01-01")
-    # Force the "current" generation to have ended too, so both are historical.
     raw = json.loads((data / str(YEAR) / "models" / "jaecoo.json").read_text(encoding="utf-8"))
     raw["models"][0]["generations"][0]["ended"] = "2026-01-01"
     _write_json(data / str(YEAR) / "models" / "jaecoo.json", raw)
     catalog = _catalog(data)
-    assert current_generation_of(catalog, MODEL_ID) is None
+    assert current_generation_of(catalog, MODEL_ID, as_of=date(2026, 9, 25)) is None
+    assert active_generations_of(catalog, MODEL_ID, as_of=date(2026, 9, 25)) == ()
 
 
-def test_current_generation_of_is_none_when_two_generations_are_both_open(tmp_path):
+def test_overlap_is_allowed_and_both_generations_are_active(tmp_path):
     data = _seed(tmp_path, second_generation=True, second_generation_ended=None)
     catalog = _catalog(data)
-    assert current_generation_of(catalog, MODEL_ID) is None
+    assert current_generation_of(catalog, MODEL_ID, as_of=date(2026, 9, 25)) is None
+    active = active_generations_of(catalog, MODEL_ID, as_of=date(2026, 9, 25))
+    assert {generation.id for generation in active} == {GEN_ID, OLD_GEN_ID}
+    scope = retail_scope_index(
+        catalog, data_dir=data, year=YEAR, as_of=date(2026, 9, 25))[MODEL_ID]
+    assert scope.in_scope
+    assert scope.blocked_reason == ""
+    siblings = scoped_siblings_by_model(
+        catalog, data_dir=data, year=YEAR, as_of=date(2026, 9, 25))
+    assert {trim.id for trim in siblings[MODEL_ID]} == {TRIM_ID, OLD_TRIM_ID}
+
+
+def test_future_end_date_remains_active_until_as_of_reaches_it(tmp_path):
+    data = _seed(tmp_path, second_generation=True, second_generation_ended="2026-12-31")
+    catalog = _catalog(data)
+    september = active_generations_of(catalog, MODEL_ID, as_of=date(2026, 9, 25))
+    assert {generation.id for generation in september} == {GEN_ID, OLD_GEN_ID}
+    december_31 = active_generations_of(catalog, MODEL_ID, as_of=date(2026, 12, 31))
+    assert {generation.id for generation in december_31} == {GEN_ID}
 
 
 def test_scope_blocks_model_under_maintenance(tmp_path):
@@ -160,18 +175,23 @@ def test_scope_blocks_canonically_historical_model(tmp_path):
     assert scope.blocked_reason == MODEL_HISTORICAL
 
 
-def test_scope_blocks_ambiguous_generation(tmp_path):
-    data = _seed(tmp_path, second_generation=True, second_generation_ended=None)
+def test_scope_blocks_when_no_generation_is_active(tmp_path):
+    data = _seed(tmp_path)
+    raw = json.loads((data / str(YEAR) / "models" / "jaecoo.json").read_text(encoding="utf-8"))
+    raw["models"][0]["generations"][0]["ended"] = "2026-01-01"
+    _write_json(data / str(YEAR) / "models" / "jaecoo.json", raw)
     catalog = _catalog(data)
-    scope = retail_scope_index(catalog, data_dir=data, year=YEAR)[MODEL_ID]
+    scope = retail_scope_index(
+        catalog, data_dir=data, year=YEAR, as_of=date(2026, 9, 25))[MODEL_ID]
     assert not scope.in_scope
     assert scope.blocked_reason == GENERATION_UNRESOLVED
 
 
-def test_scoped_siblings_excludes_trims_outside_the_current_generation(tmp_path):
+def test_scoped_siblings_excludes_trims_outside_active_generations(tmp_path):
     data = _seed(tmp_path, second_generation=True, second_generation_ended="2025-01-01")
     catalog = _catalog(data)
-    siblings = scoped_siblings_by_model(catalog, data_dir=data, year=YEAR)
+    siblings = scoped_siblings_by_model(
+        catalog, data_dir=data, year=YEAR, as_of=date(2026, 9, 25))
     trim_ids = {t.id for t in siblings.get(MODEL_ID, [])}
     assert trim_ids == {TRIM_ID}
     assert OLD_TRIM_ID not in trim_ids
@@ -186,7 +206,7 @@ def test_scoped_siblings_excludes_human_retired_trim(tmp_path):
     )
     catalog = _catalog(data)
     siblings = scoped_siblings_by_model(catalog, data_dir=data, year=YEAR)
-    assert MODEL_ID not in siblings  # the model's only trim was just retired
+    assert MODEL_ID not in siblings
 
 
 def test_scoped_siblings_omits_blocked_models_entirely(tmp_path):
@@ -203,7 +223,8 @@ def test_scoped_siblings_omits_blocked_models_entirely(tmp_path):
 def test_trim_price_eligibility_mirrors_scoped_siblings(tmp_path):
     data = _seed(tmp_path, second_generation=True, second_generation_ended="2025-01-01")
     catalog = _catalog(data)
-    scope_index = retail_scope_index(catalog, data_dir=data, year=YEAR)
+    scope_index = retail_scope_index(
+        catalog, data_dir=data, year=YEAR, as_of=date(2026, 9, 25))
     trim_reviews = trim_review_index(data_dir=data, year=YEAR)
 
     ok, reason = trim_price_eligibility(
@@ -233,10 +254,7 @@ def test_trim_price_eligibility_reports_retired(tmp_path):
 
 
 def test_real_catalog_has_zero_blocked_models_and_full_trim_coverage():
-    """Sanity check against the actual repository catalog: the strict
-    generation/lifecycle scope must not silently drop real coverage today
-    -- every one of the 321 real models resolves to exactly one current
-    generation and no trim has been human-retired yet."""
+    """The stricter scope must not silently drop the current real catalog."""
     from vehreg.catalog import DATA_DIR, DEFAULT_YEAR
 
     catalog = Catalog.load(DATA_DIR, DEFAULT_YEAR)
