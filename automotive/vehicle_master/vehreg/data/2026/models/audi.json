@@ -1020,60 +1020,110 @@
       "market_scope": "NICHE",
       "aliases": [
         "A8L",
-        "A8"
+        "A8",
+        "A8 L"
       ],
+      "notes": "Thai-market A8 D5 facelift retail lineup verified on 2026-09-26. Current Audi Thailand price list contains one A8 grade: A8 L 60 TFSI e quattro Prestige S line PHEV at THB 7,199,000. Earlier A8 L 55 TFSI quattro combustion/mild-hybrid grade is retained as historical evidence rather than current retail.",
+      "retail_status": "CURRENT",
+      "retail_checked_at": "2026-09-26",
+      "retail_source": "https://www.audi.co.th/en/models/a8/a8-l-tfsi-e/",
       "generations": [
         {
-          "code": "gen1",
+          "code": "D5-facelift",
           "segment": "E",
           "seats": 5,
-          "launched": "2023-01-01",
+          "launched": "2023-11-28",
           "ended": null,
           "variants": [
             {
-              "name": "spec",
-              "powertrain": "ICE",
+              "name": "L 60 TFSI e quattro PHEV",
+              "powertrain": "PHEV",
               "drivetrain": "AWD",
               "engine_cc": 2995,
-              "price_thb": 8990000.0,
+              "battery_kwh": 17.9,
+              "price_thb": 7199000,
+              "price_min_thb": 7199000,
+              "price_max_thb": 7199000,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "Current Audi Thailand recommended price for A8 L 60 TFSI e quattro Prestige S line.",
+              "aliases": [
+                "A8 L 60 TFSI e quattro Prestige S line",
+                "A8 L 60 TFSI e quattro Prestige"
+              ]
+            },
+            {
+              "name": "L 55 TFSI quattro MHEV (historical)",
+              "powertrain": "HEV",
+              "drivetrain": "AWD",
+              "engine_cc": 2995,
+              "battery_kwh": null,
+              "price_thb": null,
               "price_min_thb": null,
               "price_max_thb": null,
               "import_type": "CBU",
               "origin_country": "DE",
-              "price_note": "seed-unverified",
-              "aliases": []
+              "price_note": "Historical Thai-market grade; not in current 2026 Audi Thailand price list.",
+              "aliases": [
+                "A8 L 55 TFSI quattro Prestige"
+              ],
+              "incomplete": true
             }
           ],
           "trims": [
             {
-              "name": "L 55 TFSI quattro Prestige",
-              "powertrain": "ICE",
-              "source_refs": {
-                "owner_directory": [
-                  "owner_directory_2026_09_13:012"
-                ]
-              },
-              "aliases": [
-                "A8 L 55 TFSI quattro Prestige"
-              ],
-              "id": "l_55_tfsi_quattro_prestige_ice"
-            },
-            {
-              "name": "L 60 TFSI e quattro Prestige",
+              "name": "L 60 TFSI e quattro Prestige S line",
+              "variant": "L 60 TFSI e quattro PHEV",
               "powertrain": "PHEV",
+              "drivetrain": "AWD",
+              "seats": 5,
+              "length_mm": 5230,
+              "width_mm": 1945,
+              "height_mm": 1488,
+              "wheelbase_mm": 3128,
+              "engine_cc": 2995,
+              "battery_kwh": 17.9,
+              "transmission": "7-speed S tronic",
+              "tire_front": "265/40 R20",
+              "tire_rear": "265/40 R20",
+              "wheel_front": "20 in",
+              "wheel_rear": "20 in",
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:012"
+                ],
+                "official_audi": [
+                  "https://www.audi.co.th/en/models/a8/a8-l-tfsi-e/",
+                  "https://www.audi.co.th/dam/nemo/sea/th/pdf/Audi_Price_List.pdf"
+                ],
+                "headlightmag": [
+                  "https://www.headlightmag.com/2023-11-29-official-price-audi-a8-l-60-tfsi-e-quattro-prestige-s-line/"
                 ]
               },
               "aliases": [
                 "A8 L 60 TFSI e quattro Prestige"
               ],
-              "id": "l_60_tfsi_e_quattro_prestige_phev"
+              "id": "l_60_tfsi_e_quattro_prestige_phev",
+              "notes": "Current Thai PHEV: 3.0 TFSI V6 + electric motor, 462 PS system output, 700 Nm, quattro AWD, 17.9 kWh battery, 7-speed S tronic, up to 52 km WLTP EV range."
+            },
+            {
+              "name": "L 55 TFSI quattro Prestige",
+              "variant": "L 55 TFSI quattro MHEV (historical)",
+              "powertrain": "HEV",
+              "drivetrain": "AWD",
+              "engine_cc": 2995,
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:012"
+                ]
+              },
+              "id": "l_55_tfsi_quattro_prestige_ice",
+              "notes": "Historical Thai-market 48V mild-hybrid grade; stable canonical ID retained for downstream compatibility."
             }
           ]
         }
-      ]
+      ],
+      "powertrain_checked": true
     },
     {
       "id": "q8",
