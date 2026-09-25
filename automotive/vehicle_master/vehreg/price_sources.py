@@ -87,9 +87,10 @@ class SourceProfile:
 class SourceTarget:
     """One URL/feed P2 may fetch.
 
-    ``adapter`` and ``poll_minutes`` override the source defaults only for this
-    target. ``model_hint`` is a canonical model id hint, never permission to
-    skip entity/trim matching.
+    ``role`` says what the page *is*. ``lineup_complete`` is a separate,
+    explicit reviewed assertion that the target/parser enumerates the whole
+    current retail lineup for its ``model_hint``. A PRICE_LIST role alone is
+    never proof of completeness.
     """
 
     id: str
@@ -100,6 +101,7 @@ class SourceTarget:
     poll_minutes: Optional[int] = None
     enabled: bool = True
     model_hint: str = ""
+    lineup_complete: bool = False
     notes: str = ""
 
     def validate(self, sources: dict[str, Source]) -> list[str]:
@@ -120,6 +122,11 @@ class SourceTarget:
             problems.append(f"target {self.id}: poll_minutes must be positive")
         if not isinstance(self.enabled, bool):
             problems.append(f"target {self.id}: enabled must be boolean")
+        if not isinstance(self.lineup_complete, bool):
+            problems.append(f"target {self.id}: lineup_complete must be boolean")
+        if self.lineup_complete and not self.model_hint:
+            problems.append(
+                f"target {self.id}: lineup_complete requires one explicit model_hint")
         return problems
 
 
@@ -183,7 +190,7 @@ def _target_from_dict(raw: object, source: str) -> SourceTarget:
     if not isinstance(raw, dict):
         raise ValueError(f"{source}: target must be an object")
     allowed = {"id", "source_id", "url", "role", "adapter", "poll_minutes",
-               "enabled", "model_hint", "notes"}
+               "enabled", "model_hint", "lineup_complete", "notes"}
     unknown = set(raw) - allowed
     if unknown:
         raise ValueError(f"{source}: unknown target fields: {sorted(unknown)}")
@@ -193,6 +200,9 @@ def _target_from_dict(raw: object, source: str) -> SourceTarget:
     enabled = raw.get("enabled", True)
     if not isinstance(enabled, bool):
         raise ValueError(f"{source}: enabled must be boolean")
+    lineup_complete = raw.get("lineup_complete", False)
+    if not isinstance(lineup_complete, bool):
+        raise ValueError(f"{source}: lineup_complete must be boolean")
     return SourceTarget(
         id=str(raw.get("id") or "").strip(),
         source_id=str(raw.get("source_id") or "").strip(),
@@ -202,6 +212,7 @@ def _target_from_dict(raw: object, source: str) -> SourceTarget:
         poll_minutes=int(poll) if poll is not None else None,
         enabled=enabled,
         model_hint=str(raw.get("model_hint") or "").strip(),
+        lineup_complete=lineup_complete,
         notes=str(raw.get("notes") or "").strip(),
     )
 

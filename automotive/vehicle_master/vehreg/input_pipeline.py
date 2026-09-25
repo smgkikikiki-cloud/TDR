@@ -28,6 +28,7 @@ from typing import Any
 from .canonical_write import CanonicalWriteCommand, CanonicalWriteError, CanonicalWritePipeline
 from .catalog import DATA_DIR, DEFAULT_YEAR
 from .eco_review_write import upsert_review_dispositions
+from .model_operational_state import upsert_model_operational_state
 from .price_coverage_review import upsert_coverage_disposition
 from .retail_lifecycle_review import upsert_trim_lifecycle_disposition
 
@@ -43,6 +44,7 @@ _SPECIAL_OPERATIONS = {
     "UPSERT_ECO_REVIEW",
     "UPSERT_PRICE_COVERAGE_REVIEW",
     "UPSERT_TRIM_RETAIL_LIFECYCLE_REVIEW",
+    "UPSERT_MODEL_OPERATIONAL_STATE",
 }
 _PRICE_COVERAGE_REASONS = {
     "AWAITING_FINAL_LIST_PRICE",
@@ -180,6 +182,29 @@ def _validate_trim_lifecycle_review_command(command: dict[str, Any]) -> None:
     _validated_submitted_at(command, operation)
 
 
+def _validate_model_operational_state_command(command: dict[str, Any]) -> None:
+    operation = "UPSERT_MODEL_OPERATIONAL_STATE"
+    unknown = set(command) - {
+        "operation", "command_id", "year", "actor", "reason", "submitted_at", "payload",
+    }
+    if unknown:
+        raise CanonicalInputError(f"{operation} unknown fields: {sorted(unknown)}")
+    payload = command.get("payload")
+    if not isinstance(payload, dict):
+        raise CanonicalInputError(f"{operation} requires payload object")
+    unknown_payload = set(payload) - {"model_id", "action", "source_ref", "notes"}
+    if unknown_payload:
+        raise CanonicalInputError(f"{operation} payload unknown fields: {sorted(unknown_payload)}")
+    model_id = str(payload.get("model_id") or "").strip()
+    if not model_id or len(model_id) > 255:
+        raise CanonicalInputError(f"{operation} model_id is required")
+    action = str(payload.get("action") or "").strip().lower()
+    if action not in {"under_maintenance", "normal"}:
+        raise CanonicalInputError(f"{operation} action must be under_maintenance or normal")
+    _validated_human_actor(command, operation)
+    _validated_submitted_at(command, operation)
+
+
 def _apply_eco_review_command(staged: Path, command: dict[str, Any]) -> tuple[dict[str, Any], Path | None]:
     _validate_eco_review_command(command)
     payload = command["payload"]
@@ -259,6 +284,34 @@ def _apply_trim_lifecycle_review_command(
         "topic": "trim_retail_lifecycle_review",
         "entity_type": "market_trim_retail_lifecycle_review",
         "entity_id": str(payload["trim_id"]),
+        "idempotent_replay": not bool(result["changed"]),
+    }, path if result["changed"] else None)
+
+
+def _apply_model_operational_state_command(
+        staged: Path, command: dict[str, Any]) -> tuple[dict[str, Any], Path | None]:
+    operation = "UPSERT_MODEL_OPERATIONAL_STATE"
+    _validate_model_operational_state_command(command)
+    payload = command["payload"]
+    reviewed_at = _validated_submitted_at(command, operation).date().isoformat()
+    result = upsert_model_operational_state(
+        data_dir=staged,
+        year=int(command["year"]),
+        model_id=str(payload["model_id"]),
+        action=str(payload["action"]),
+        reviewer=str(command["actor"]),
+        reviewed_at=reviewed_at,
+        source_ref=str(payload.get("source_ref") or ""),
+        notes=str(payload.get("notes") or command.get("reason") or ""),
+        write=True,
+    )
+    path = Path(result["path"])
+    return ({
+        "command_id": str(command["command_id"]),
+        "revision_id": f"model-operational-state-{_hash(command)[:16]}",
+        "topic": "model_operational_state",
+        "entity_type": "model_operational_state",
+        "entity_id": str(payload["model_id"]),
         "idempotent_replay": not bool(result["changed"]),
     }, path if result["changed"] else None)
 
@@ -352,6 +405,11 @@ class CanonicalInputBatch:
                         raise CanonicalInputError(
                             "UPSERT_TRIM_RETAIL_LIFECYCLE_REVIEW requires source.kind ADMIN")
                     _validate_trim_lifecycle_review_command(command)
+                elif operation == "UPSERT_MODEL_OPERATIONAL_STATE":
+                    if source_kind != "ADMIN":
+                        raise CanonicalInputError(
+                            "UPSERT_MODEL_OPERATIONAL_STATE requires source.kind ADMIN")
+                    _validate_model_operational_state_command(command)
                 parsed_id = str(command["command_id"])
             else:
                 parsed = CanonicalWriteCommand.from_dict(command)
@@ -445,8 +503,11 @@ class CanonicalInputPipeline:
                         elif operation == "UPSERT_PRICE_COVERAGE_REVIEW":
                             review_result, changed_path = _apply_price_coverage_review_command(
                                 staged, command)
-                        else:
+                        elif operation == "UPSERT_TRIM_RETAIL_LIFECYCLE_REVIEW":
                             review_result, changed_path = _apply_trim_lifecycle_review_command(
+                                staged, command)
+                        else:
+                            review_result, changed_path = _apply_model_operational_state_command(
                                 staged, command)
                     except (CanonicalInputError, ValueError, KeyError, TypeError) as exc:
                         raise CanonicalInputError(

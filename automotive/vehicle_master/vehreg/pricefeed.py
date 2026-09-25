@@ -817,11 +817,23 @@ def run(documents: list[SourceDocument], claims: list[PriceClaim],
         campaigns: Optional[dict] = None,
         decisions: Optional[dict[str, dict]] = None,
         ledger: Optional[object] = None,
-        as_of: Optional[date] = None) -> RunResult:
-    """Match, group, decide. Pure: no file or network access."""
+        as_of: Optional[date] = None,
+        siblings_by_model: Optional[dict[str, list]] = None) -> RunResult:
+    """Match, group, decide. Pure: no file or network access.
+
+    ``siblings_by_model`` defaults to the unscoped ``trims_by_model(catalog)``
+    -- every trim of a model, any generation -- which is what every direct
+    caller and unit test of this function has always gotten. A caller that
+    wants matching restricted to a lifecycle-safe current-generation set
+    (see ``vehreg.retail_scope.scoped_siblings_by_model``) passes it in
+    explicitly; ``tools/pricefeed_write.py``, the actual production writer,
+    does exactly that, so the scheduled feed shares the same identity
+    safety contract as the one-time coverage backfill.
+    """
     campaigns = campaigns or {}
     decisions = decisions or {}
-    siblings_by_model = trims_by_model(catalog)
+    siblings_by_model = (trims_by_model(catalog) if siblings_by_model is None
+                         else siblings_by_model)
     model_memo: dict = {}
     matched: list[PriceClaim] = []
     for claim in claims:

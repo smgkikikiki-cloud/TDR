@@ -36,6 +36,7 @@ from vehreg.pricefeed_writer import (
     plan_offers, summarize,
 )
 from vehreg.pricing import PriceLedger, PriceType, PricingError
+from vehreg.retail_scope import scoped_siblings_by_model
 
 SOURCE_KIND = "PRICE"
 
@@ -238,10 +239,19 @@ def run(path: Path, *, data_dir: Path, year: int,
     input_id = _harvest_input_id(observed_at, documents, claims)
     catalog = Catalog.load(data_dir, year)
     ledger = PriceLedger.load(data_dir, year=year, catalog=catalog)
+    # Matching is restricted to each model's own confidently-resolved
+    # current generation, filtered to trims no HUMAN reviewer has retired,
+    # excluding any model under maintenance -- the same lifecycle scope
+    # the one-time coverage backfill uses (vehreg.retail_scope). A trim
+    # outside that set simply is not a candidate the matcher can see, so
+    # the scheduled feed cannot resolve a claim onto a wrong-generation or
+    # retired MarketTrim, however narrow or stale the incoming evidence is.
+    siblings_by_model = scoped_siblings_by_model(catalog, data_dir=data_dir, year=year)
     result = pricefeed.run(documents, claims,
                            pricefeed.load_sources(data_dir, year),
                            catalog, campaigns=ledger.campaigns,
-                           decisions={}, ledger=ledger)
+                           decisions={}, ledger=ledger,
+                           siblings_by_model=siblings_by_model)
 
     as_of = date.fromisoformat(observed_at)
     held, unresolvable = held_prices(ledger, result.offers, as_of=as_of)
