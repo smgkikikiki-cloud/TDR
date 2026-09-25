@@ -39,6 +39,7 @@ export function ResearchUnlock({ slug }: { slug: string }) {
     setMessage("");
     try {
       const response = await fetch(`/api/research/read?slug=${encodeURIComponent(slug)}`, {
+        method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         cache: "no-store",
       });

@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { periodKeyForMetric } from "@/lib/access-policy";
-import { AccessPolicyError, requireMemberAccess, requireUsage } from "@/lib/access-policy-server";
+import { AccessPolicyError, requireMemberAccess, unlockResearchArticle } from "@/lib/access-policy-server";
 import { recordEvent } from "@/lib/telemetry";
 
 export const dynamic = "force-dynamic";
@@ -11,16 +10,27 @@ function bearer(request: NextRequest) {
 }
 
 /**
- * The one route that ever returns an article's full text.
+ * The one route that ever returns an article's full text, and the one
+ * place in the codebase that ever selects body_th (see
+ * lib/research.ts::getPublishedResearchArticlePreviewBySlug, which the
+ * public article page reads instead and never selects it).
+ *
+ * POST, not GET: unlocking spends a quota unit and writes a permanent
+ * entitlement row (research_article_reads), so it must never be something
+ * a prefetcher, browser extension or proxy can trigger just by resolving a
+ * URL -- GET is meant to be safe/idempotent, and this isn't.
  *
  * An anonymous reader never reaches this at all -- the public page renders
- * only the title, author and summary itself, and this route 401s without a
- * token. A signed-in reader unlocks an article by spending one unit of the
- * `research_full` quota (null on paid tiers = unlimited); reading the same
- * article again afterward is free forever, because research_article_reads
- * existing for (user, article) is checked before any quota is touched.
+ * only the title, author and summary itself, and this route 401s without
+ * a token. A signed-in reader unlocks an article by spending one unit of
+ * the `research_full` quota (null on paid tiers = unlimited); reading the
+ * same article again afterward is free forever. The existence check, the
+ * quota spend and the read-record insert all happen inside one Postgres
+ * transaction (tdr_unlock_research_article, migration_v50) rather than as
+ * three separate round trips -- see unlockResearchArticle's own doc
+ * comment for the two correctness bugs that fixes.
  */
-export async function GET(request: NextRequest) {
+export async function POST(request: NextRequest) {
   const accessToken = bearer(request);
   if (!accessToken) {
     return NextResponse.json({ error: "เข้าสู่ระบบเพื่ออ่านบทวิเคราะห์ฉบับเต็ม" }, { status: 401 });
@@ -41,27 +51,7 @@ export async function GET(request: NextRequest) {
     if (articleError) throw new AccessPolicyError(503, "could not load the article");
     if (!article) return NextResponse.json({ error: "ไม่พบบทวิเคราะห์นี้" }, { status: 404 });
 
-    const { data: existingRead, error: readError } = await ctx.db
-      .from("research_article_reads")
-      .select("article_id")
-      .eq("user_id", ctx.userId)
-      .eq("article_id", article.id)
-      .maybeSingle();
-    if (readError) throw new AccessPolicyError(503, "could not check reading history");
-
-    let quota: Awaited<ReturnType<typeof requireUsage>> | null = null;
-    if (!existingRead) {
-      quota = await requireUsage(ctx, "research_full", ctx.policy.researchFullMonthlyLimit, [article.id]);
-      const { error: insertError } = await ctx.db.from("research_article_reads").insert({
-        user_id: ctx.userId,
-        article_id: article.id,
-        period_key: periodKeyForMetric("research_full"),
-      });
-      // A concurrent double-submit racing this same unlock is the only
-      // expected cause -- the read is already recorded either way, so this
-      // is not an error worth failing the request over.
-      if (insertError && insertError.code !== "23505") throw new AccessPolicyError(503, "could not record the unlock");
-    }
+    const { alreadyUnlocked, quota } = await unlockResearchArticle(ctx, article.id, ctx.policy.researchFullMonthlyLimit);
 
     await recordEvent({ eventName: "research_full_opened", userId: ctx.userId, props: { article_id: article.id } });
 
@@ -74,7 +64,7 @@ export async function GET(request: NextRequest) {
         author: article.author,
         published_at: article.published_at,
       },
-      already_unlocked: Boolean(existingRead),
+      already_unlocked: alreadyUnlocked,
       quota,
     }, { headers: { "Cache-Control": "private, no-store" } });
   } catch (error) {

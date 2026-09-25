@@ -300,6 +300,56 @@ export async function requireUsage(
   return result;
 }
 
+export interface ArticleUnlockResult {
+  alreadyUnlocked: boolean;
+  // Null when alreadyUnlocked -- rereading an already-unlocked article never
+  // touches the quota, so there is no fresh QuotaResult to report, same as
+  // consumeUsage's shape for any call that never happened.
+  quota: QuotaResult | null;
+}
+
+// Atomically checks whether (userId, articleId) already has a
+// research_article_reads row and, if not, spends one research_full quota
+// unit and records the unlock -- all inside tdr_unlock_research_article's
+// own Postgres transaction (migration_v50), not as three separate round
+// trips. The old sequence (check existing read, then requireUsage, then
+// insert) could leave a member charged with no entitlement to show for it
+// if the insert failed for any reason other than the row already
+// existing, and could double-charge two unlock attempts for the same
+// article landing in different 5-second fingerprint buckets
+// (requestFingerprint) -- both would see "not yet read" before either
+// committed. The RPC's own advisory lock, keyed on (user_id, article_id)
+// rather than the fingerprint bucket, closes both.
+export async function unlockResearchArticle(
+  ctx: Pick<AccessContext, "db" | "userId">,
+  articleId: string,
+  limit: number | null,
+): Promise<ArticleUnlockResult> {
+  const now = new Date();
+  const periodKey = periodKeyForMetric("research_full", now);
+  const { data, error } = await ctx.db.rpc("tdr_unlock_research_article", {
+    p_user_id: ctx.userId,
+    p_article_id: articleId,
+    p_period_key: periodKey,
+    p_limit: limit,
+  });
+  if (error) throw new AccessPolicyError(503, "could not unlock the article");
+  const row = Array.isArray(data) ? data[0] : data;
+  if (Boolean(row?.already_unlocked)) return { alreadyUnlocked: true, quota: null };
+  if (!row?.allowed) throw new AccessPolicyError(429, "research_full quota exceeded for this period");
+  const used = Number(row?.used ?? 0);
+  return {
+    alreadyUnlocked: false,
+    quota: {
+      allowed: true,
+      used,
+      limit,
+      remaining: limit === null ? null : Math.max(limit - used, 0),
+      resets_at: resetsAtForMetric("research_full", now),
+    },
+  };
+}
+
 export async function getSalesModuleSelection(
   db: AccessContext["db"],
   userId: string,

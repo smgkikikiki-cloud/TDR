@@ -27,14 +27,45 @@ check("missing bearer token is refused before any query runs",
 check("only published articles resolve", route.includes('.eq("status", "published")'));
 check("an unknown or unpublished slug reads as 404, not leaked draft content",
   route.includes('status: 404'));
+check("unlocking is POST, not GET -- it mutates state (spends quota, writes an entitlement row)",
+  route.includes("export async function POST(request: NextRequest)"));
+check("the route never exports a GET handler that could do the same thing by accident",
+  !route.includes("export async function GET"));
+const unlockPage = fs.readFileSync("app/research/[slug]/ResearchUnlock.tsx", "utf8");
+check("the client actually calls with POST, matching the route",
+  /method: "POST"/.test(unlockPage));
 
 console.log("\nrereading an unlocked article never spends quota again");
-check("the read log is checked before requireUsage is ever called",
-  route.indexOf("research_article_reads") < route.indexOf("requireUsage("));
-check("quota is only consumed on a first-ever unlock",
-  /if \(!existingRead\) \{\s*\n\s*quota = await requireUsage/.test(route));
-check("a racing double-submit of the same unlock does not fail the request",
-  route.includes('insertError.code !== "23505"'));
+// The two server-rendered public pages have no legitimate reason to mention
+// body_th at all -- neither ever fetches an unlocked article, so any
+// occurrence there would be a real leak. ResearchUnlock.tsx is the one
+// deliberate exception on the client side: it legitimately RECEIVES body_th
+// as response data from the protected route after a successful authenticated
+// unlock and has to reference the field name to render it -- that is not a
+// query, so it is not a leak.
+for (const path of ["app/research/page.tsx", "app/research/[slug]/page.tsx"]) {
+  check(`${path} never references body_th`, fs.readFileSync(path, "utf8").includes("body_th"), false);
+}
+check("the public article page reads the preview-only loader, not the body_th-selecting one",
+  fs.readFileSync("app/research/[slug]/page.tsx", "utf8").includes("getPublishedResearchArticlePreviewBySlug"));
+const researchLib = fs.readFileSync("lib/research.ts", "utf8");
+check("the old body_th-selecting loader is gone, not just unused -- there is nothing left to accidentally import",
+  !researchLib.includes("getPublishedResearchArticleBySlug"));
+check("no query built in lib/research.ts ever selects body_th -- the one place that still may is the protected route's own inline query",
+  !researchLib.includes('.select("id,slug,title_th,summary_th,body_th'));
+check("the existence check, quota spend and read-record insert are one atomic RPC call, not three separate round trips",
+  route.includes("unlockResearchArticle(ctx, article.id,"));
+check("the route itself no longer queries research_article_reads or calls requireUsage directly -- that all moved into the atomic RPC",
+  !route.includes('.from("research_article_reads")') && !route.includes("requireUsage("));
+const helper = fs.readFileSync("lib/access-policy-server.ts", "utf8");
+check("unlockResearchArticle calls the atomic RPC, not the three-step sequence",
+  helper.includes('ctx.db.rpc("tdr_unlock_research_article"'));
+const unlockMigration = fs.readFileSync("supabase/migration_v50_research_article_unlock_atomic.sql", "utf8");
+check("the RPC serializes on an advisory lock keyed by (user, article), not tdr_consume_usage's own fingerprint bucket",
+  unlockMigration.includes("perform pg_advisory_xact_lock(hashtextextended("));
+check("the RPC is locked down to service_role only, same posture as tdr_consume_usage",
+  unlockMigration.includes("revoke all on function public.tdr_unlock_research_article")
+  && unlockMigration.includes("grant execute on function public.tdr_unlock_research_article(uuid, uuid, text, integer) to service_role"));
 
 console.log("\nFree's limit is real, not a placeholder");
 check("researchAccess (the old binary preview/full gate) is gone",

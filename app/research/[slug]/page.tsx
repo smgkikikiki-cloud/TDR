@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPublishedResearchArticleBySlug } from "@/lib/research";
+import { getPublishedResearchArticlePreviewBySlug } from "@/lib/research";
 import { ResearchUnlock } from "./ResearchUnlock";
 
 export const dynamic = "force-dynamic";
@@ -14,7 +14,7 @@ export const dynamic = "force-dynamic";
  */
 export default async function ResearchArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const article = await getPublishedResearchArticleBySlug(slug);
+  const article = await getPublishedResearchArticlePreviewBySlug(slug);
   if (!article) notFound();
 
   return <div className="researchPage">

@@ -18,8 +18,6 @@ export type ResearchArticlePreview = {
   publishedAt: string;
 };
 
-export type ResearchArticleFull = ResearchArticlePreview & { bodyTh: string };
-
 function toPreview(row: any): ResearchArticlePreview {
   return {
     id: row.id,
@@ -69,15 +67,23 @@ export async function getPublishedResearchArticles(limit = 100): Promise<Researc
   return (data || []).map(toPreview);
 }
 
-/** One published piece by its public slug, or null. A draft or a slug
- *  nobody has published never resolves here -- the article page's notFound()
- *  and the unlock route's 404 both rely on that. */
-export async function getPublishedResearchArticleBySlug(slug: string): Promise<ResearchArticleFull | null> {
+/** One published piece by its public slug, or null -- metadata only, never
+ *  body_th. A draft or a slug nobody has published never resolves here --
+ *  the article page's notFound() relies on that.
+ *
+ *  This is the only place the public article page reads from: body_th is
+ *  never selected here, so it is structurally impossible for the public
+ *  rendering path to leak it, even by accident. The one place in the
+ *  codebase that ever selects body_th is app/api/research/read/route.ts,
+ *  the protected unlock route, which reads it with its own query rather
+ *  than through this file -- so a leak stays a one-file, one-query
+ *  surface, not something a future change to this module could reopen. */
+export async function getPublishedResearchArticlePreviewBySlug(slug: string): Promise<ResearchArticlePreview | null> {
   const db = adminDb();
   if (!db || !slug) return null;
   const { data, error } = await db
     .from("research_articles")
-    .select("id,slug,title_th,summary_th,body_th,author,published_at")
+    .select("id,slug,title_th,summary_th,author,published_at")
     .eq("slug", slug)
     .eq("status", "published")
     .maybeSingle();
@@ -85,5 +91,5 @@ export async function getPublishedResearchArticleBySlug(slug: string): Promise<R
     if (researchTableMissing(error)) return null;
     throw error;
   }
-  return data ? { ...toPreview(data), bodyTh: data.body_th } : null;
+  return data ? toPreview(data) : null;
 }
