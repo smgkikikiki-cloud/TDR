@@ -62,6 +62,11 @@ const FIELDS: CompareSpecField[] = [
   { key: "charging.dc_max_kw", group: "charging", labelTh: "ชาร์จเร็ว DC สูงสุด", valueType: "NUMBER", canonicalUnit: "kW", displayPrecision: 0 },
   { key: "ev.rated_range_km", group: "efficiency", labelTh: "ระยะทางวิ่งที่ประกาศ", valueType: "NUMBER", canonicalUnit: "km", displayPrecision: 0 },
   { key: "engine.displacement_cc", group: "powertrain", labelTh: "ความจุกระบอกสูบ", valueType: "NUMBER", canonicalUnit: "cc", displayPrecision: 0 },
+  { key: "powertrain.max_power_kw", group: "powertrain", labelTh: "กำลังสูงสุด", valueType: "NUMBER",
+    canonicalUnit: "kW", displayPrecision: 1, comparisonQualifiers: ["output_scope", "rating_basis"] },
+  { key: "charging.dc_time_min", group: "charging", labelTh: "เวลาชาร์จ DC", valueType: "NUMBER",
+    canonicalUnit: "min", displayPrecision: 0,
+    comparisonQualifiers: ["soc_from", "soc_to", "charger_power_kw"] },
 ];
 const definitions = indexSpecFields(FIELDS);
 const derived = compareGroupDefinitions(FIELDS).flatMap((group) => group.rows.map((row) => String(row.key)));
@@ -112,6 +117,35 @@ check("a defined precision still rounds",
   compareValue({ id: "g", comparable_specs: [
     { field_key: "charging.dc_max_kw", value: 149.6, value_state: "KNOWN", unit: "kW" }] },
     "spec:charging.dc_max_kw", definitions), "150 kW");
+
+// A 150 kW system figure and a 130 kW motor-only figure are not the same
+// claim, and the winner engine refuses to rank them against each other for
+// exactly that reason (lib/compare-winners.ts) -- the reader needs to see
+// why, not just two bare numbers that look directly comparable.
+const systemPower: FreeCompareTrim = {
+  id: "h", comparable_specs: [
+    { field_key: "powertrain.max_power_kw", value: 150, value_state: "KNOWN", unit: "kW",
+      qualifiers: { output_scope: "SYSTEM", rating_basis: "PEAK" } }],
+};
+const motorPower: FreeCompareTrim = {
+  id: "i", comparable_specs: [
+    { field_key: "powertrain.max_power_kw", value: 130, value_state: "KNOWN", unit: "kW",
+      qualifiers: { output_scope: "MOTOR", rating_basis: "PEAK" } }],
+};
+check("a system power figure names its own scope, not just measurement_basis",
+  compareValue(systemPower, "spec:powertrain.max_power_kw", definitions), "150 kW (SYSTEM, PEAK)");
+check("a motor power figure reads distinctly from a system one",
+  compareValue(motorPower, "spec:powertrain.max_power_kw", definitions), "130 kW (MOTOR, PEAK)");
+
+// A 10-80% DC charge time and a 30-80% one at a different charger power are
+// different claims wearing the same "25 min" / "30 min" clothes.
+const dcFast: FreeCompareTrim = {
+  id: "j", comparable_specs: [
+    { field_key: "charging.dc_time_min", value: 25, value_state: "KNOWN", unit: "min",
+      qualifiers: { soc_from: 10, soc_to: 80, charger_power_kw: 150 } }],
+};
+check("a DC charge time names its SOC window and charger power",
+  compareValue(dcFast, "spec:charging.dc_time_min", definitions), "25 min (10→80% SOC @150kW)");
 
 const specGroups = visibleCompareGroups([withSpecs, columnOnly], false, FIELDS);
 check("a spec group with no values at all stays hidden",

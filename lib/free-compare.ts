@@ -246,6 +246,53 @@ export function registryFieldKeyForRow(key: CompareRowKey): string | null {
   return SPEC_BACKED_ROWS[key as BuiltinCompareRowKey] || null;
 }
 
+/** Qualifier names lib/compare-winners.ts special-cases into a combined,
+ *  readable fragment rather than printing the raw value -- the raw value
+ *  alone ("10", "80", "150") means nothing without its partner or a unit. */
+function socAndChargerSuffix(qualifiers: Record<string, unknown> | null | undefined): string | null {
+  const parts: string[] = [];
+  const from = qualifiers?.soc_from;
+  const to = qualifiers?.soc_to;
+  if ((from !== null && from !== undefined && from !== "")
+      || (to !== null && to !== undefined && to !== "")) {
+    parts.push(`${from ?? "?"}→${to ?? "?"}% SOC`);
+  }
+  const kw = qualifiers?.charger_power_kw;
+  if (kw !== null && kw !== undefined && kw !== "") parts.push(`@${kw}kW`);
+  return parts.length ? parts.join(" ") : null;
+}
+
+/** Every qualifier a fact carries that the field itself says matters for
+ *  comparison (`comparisonQualifiers` -- the exact list
+ *  lib/compare-winners.ts uses to decide two facts are even on the same
+ *  measurement basis), rendered as one parenthetical. Before this, only
+ *  `measurement_basis` ever reached the screen: a 150 kW SYSTEM figure and a
+ *  130 kW MOTOR figure rendered as plain "150 kW" / "130 kW", so a reader had
+ *  no way to see why the winner engine correctly refused to crown one over
+ *  the other -- worse, they would assume the two numbers meant the same
+ *  thing. Every qualifier the winner engine treats as context-defining now
+ *  travels with the number it belongs to. */
+function qualifierSuffix(qualifiers: Record<string, unknown> | null | undefined,
+                         qualifierNames: string[]): string | null {
+  if (!qualifiers || !qualifierNames.length) return null;
+  const parts: string[] = [];
+  let socAdded = false;
+  for (const name of qualifierNames) {
+    if (name === "soc_from" || name === "soc_to" || name === "charger_power_kw") {
+      if (!socAdded) {
+        const combined = socAndChargerSuffix(qualifiers);
+        if (combined) parts.push(combined);
+        socAdded = true;
+      }
+      continue;
+    }
+    const value = qualifiers[name];
+    if (value === null || value === undefined || value === "") continue;
+    parts.push(String(value));
+  }
+  return parts.length ? parts.join(", ") : null;
+}
+
 /** A fact's value as a reader sees it, or null.
  *
  *  Only KNOWN carries a value. The other states are the ledger saying, on the
@@ -255,7 +302,8 @@ export function registryFieldKeyForRow(key: CompareRowKey): string | null {
  *  "we do not have this". */
 export function formatSpecValue(spec: ResolvedSpec | null,
                                 definition?: { valueType?: string; canonicalUnit?: string;
-                                               displayPrecision?: number | null } | null): string | null {
+                                               displayPrecision?: number | null;
+                                               comparisonQualifiers?: string[] } | null): string | null {
   if (!spec || (spec.value_state && spec.value_state !== "KNOWN")) return null;
   const value = spec.value;
   if (value === null || value === undefined || value === "") return null;
@@ -279,16 +327,22 @@ export function formatSpecValue(spec: ResolvedSpec | null,
   }
 
   // A range measured on NEDC and a range measured on WLTP are not the same
-  // claim, so the basis travels with the number rather than being dropped to
-  // make the cell tidier.
-  const basis = spec.qualifiers?.measurement_basis;
-  if (basis) text = `${text} (${String(basis)})`;
+  // claim, and a 150 kW SYSTEM figure is not a 130 kW MOTOR one, so every
+  // qualifier the field declares as comparison-relevant travels with the
+  // number rather than being dropped to make the cell tidier. Without a
+  // definition (comparisonQualifiers absent, not just empty) we don't know
+  // the field's full qualifier list, so fall back to the one qualifier every
+  // caller has always been able to rely on.
+  const qualifierNames = definition?.comparisonQualifiers ?? ["measurement_basis"];
+  const suffix = qualifierSuffix(spec.qualifiers, qualifierNames);
+  if (suffix) text = `${text} (${suffix})`;
   return text;
 }
 
 export function compareValue(trim: FreeCompareTrim, key: CompareRowKey,
                              definitions?: Map<string, { valueType?: string; canonicalUnit?: string;
-                                                         displayPrecision?: number | null }>): string | null {
+                                                         displayPrecision?: number | null;
+                                                         comparisonQualifiers?: string[] }>): string | null {
   if (key.startsWith("spec:")) {
     const fieldKey = key.slice(5);
     return formatSpecValue(resolvedSpec(trim, fieldKey), definitions?.get(fieldKey));
