@@ -1,0 +1,214 @@
+name: Temporary repair touched vehicle 99-field coverage
+
+on:
+  push:
+    branches: [feature/vehreg-fill-batch-01]
+    paths:
+      - ".github/workflows/tmp-repair-touched-99.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/vehreg-fill-batch-01
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Repair comparable-spec coverage
+        shell: bash
+        run: |
+          python - <<'PY'
+          import hashlib, json, re
+          from pathlib import Path
+          from automotive.vehicle_master.vehreg.catalog import Catalog
+          from automotive.vehicle_master.vehreg.comparable_specs import SpecRegistry, SpecLedger
+          from automotive.vehicle_master.vehreg.canonical_write import CanonicalWritePipeline
+
+          DATA = Path('automotive/vehicle_master/vehreg/data')
+          YEAR = 2026
+          touched = {
+              'aion.aion_y_plus','aion.aion_es','aion.aion_v','aion.aion_ut','aion.hyptec_ht',
+              'audi.a1','audi.a4','audi.a5','audi.a6','audi.a6_etron','audi.a7','audi.a8',
+          }
+          catalog = Catalog.load(DATA, YEAR)
+          registry = SpecRegistry.load(DATA, YEAR)
+          pipeline = CanonicalWritePipeline(DATA)
+
+          trims = []
+          for model_id in sorted(touched):
+              if model_id not in catalog.models:
+                  print('MISSING_MODEL', model_id)
+                  continue
+              trims.extend(catalog.trims_of(model_id))
+          trim_ids = {t.id for t in trims}
+          print('TARGET_MODELS', len(touched), 'TARGET_TRIMS', len(trims), 'REGISTRY_FIELDS', len(registry.fields))
+
+          # Index existing facts and ECO UUID facts once.
+          facts_root = DATA / str(YEAR) / 'product' / 'comparable_specs' / 'facts'
+          existing_by_trim = {tid: {} for tid in trim_ids}
+          eco_by_uuid = {}
+          for path in facts_root.glob('*.json'):
+              try:
+                  payload = json.loads(path.read_text(encoding='utf-8'))
+              except Exception:
+                  continue
+              for fact in payload.get('facts', []):
+                  tid = str(fact.get('trim_id') or '')
+                  field = str(fact.get('field_key') or '')
+                  if tid in existing_by_trim and field:
+                      existing_by_trim[tid].setdefault(field, []).append(fact)
+                  ref = str(fact.get('source_ref') or '')
+                  m = re.search(r'([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})', ref)
+                  if m and field:
+                      eco_by_uuid.setdefault(m.group(1).lower(), {}).setdefault(field, fact)
+
+          def source_for(trim):
+              refs = getattr(trim, 'source_refs', {}) or {}
+              for key in ('official_audi','official_gac','official','headlightmag','owner_directory'):
+                  values = refs.get(key) or ()
+                  if values:
+                      return key, str(values[0])
+              return 'catalog', ''
+
+          def unit_for(key):
+              return registry.fields[key].canonical_unit
+
+          def command_id(trim_id, field, tag):
+              h = hashlib.sha1(f'{trim_id}|{field}|{tag}'.encode()).hexdigest()[:24]
+              return f'repair99-{h}'
+
+          def add_fact(trim, field, state, value=None, qualifiers=None, source='catalog', source_ref='', observed='2026-09-26', tag='derived'):
+              if field in existing_by_trim[trim.id]:
+                  return False
+              fact = {
+                  'field_key': field,
+                  'value_state': state,
+                  'value': value,
+                  'unit': unit_for(field) if state == 'KNOWN' and registry.fields[field].value_type.value == 'NUMBER' else '',
+                  'qualifiers': qualifiers or {},
+                  'observed_at': observed,
+                  'verification_status': 'VERIFIED',
+                  'source': source,
+                  'source_ref': source_ref,
+                  'source_locator': source_ref,
+              }
+              raw = {
+                  'command_id': command_id(trim.id, field, tag),
+                  'operation': 'APPEND_SPEC',
+                  'year': YEAR,
+                  'actor': 'tdr-repair99',
+                  'reason': 'Backfill touched models against the 99-field comparable spec registry',
+                  'canonical_id': trim.id,
+                  'payload': fact,
+                  'submitted_at': '2026-09-26T00:00:00+07:00',
+              }
+              pipeline.apply(raw)
+              existing_by_trim[trim.id].setdefault(field, []).append({**fact, 'trim_id': trim.id})
+              return True
+
+          added_catalog = added_na = added_eco = 0
+          for trim in trims:
+              # 1) Reuse exact ECO Sticker evidence referenced by this MarketTrim.
+              refs = getattr(trim, 'source_refs', {}) or {}
+              for eco_uuid in refs.get('eco', ()):
+                  for field, srcfact in eco_by_uuid.get(str(eco_uuid).lower(), {}).items():
+                      if field not in registry.fields or field in existing_by_trim[trim.id]:
+                          continue
+                      raw = dict(srcfact)
+                      raw.pop('fact_id', None)
+                      raw.pop('trim_id', None)
+                      raw['field_key'] = field
+                      cmd = {
+                          'command_id': command_id(trim.id, field, f'eco-{eco_uuid}'),
+                          'operation': 'APPEND_SPEC', 'year': YEAR,
+                          'actor': 'tdr-repair99',
+                          'reason': f'Promote exact ECO Sticker evidence {eco_uuid} already referenced by MarketTrim',
+                          'canonical_id': trim.id, 'payload': raw,
+                          'submitted_at': '2026-09-26T00:00:00+07:00',
+                      }
+                      pipeline.apply(cmd)
+                      existing_by_trim[trim.id].setdefault(field, []).append({**raw, 'trim_id': trim.id})
+                      added_eco += 1
+
+              src_name, src_ref = source_for(trim)
+              known = {
+                  'identity.powertrain': trim.powertrain.value,
+                  'vehicle.seats': trim.seats,
+                  'vehicle.length_mm': trim.length_mm,
+                  'vehicle.width_mm': trim.width_mm,
+                  'vehicle.height_mm': trim.height_mm,
+                  'vehicle.wheelbase_mm': trim.wheelbase_mm,
+                  'engine.displacement_cc': trim.engine_cc,
+                  'powertrain.drivetrain': trim.drivetrain.value if trim.drivetrain else None,
+                  'powertrain.transmission': trim.transmission or None,
+                  'powertrain.transmission_as_declared': trim.transmission or None,
+                  'battery.catalog_capacity_kwh': trim.battery_kwh,
+                  'fitment.tyre_front': trim.tire_front or None,
+                  'fitment.tyre_rear': trim.tire_rear or None,
+              }
+              if trim.tire_front and trim.tire_front == trim.tire_rear:
+                  known['fitment.tyre_size'] = trim.tire_front
+              if trim.transmission:
+                  m = re.match(r'\s*(\d+)\s*[- ]?speed', trim.transmission, re.I)
+                  if m:
+                      known['powertrain.gear_count'] = int(m.group(1))
+                  elif 'single-speed' in trim.transmission.lower():
+                      known['powertrain.gear_count'] = 1
+              for field, value in known.items():
+                  if field in registry.fields and value not in (None, '', 'UNKNOWN'):
+                      if add_fact(trim, field, 'KNOWN', value, source=src_name, source_ref=src_ref, tag='catalog'):
+                          added_catalog += 1
+
+              # 2) Explicitly close fields the registry itself says do not apply to this powertrain.
+              pt = trim.powertrain.value
+              for field, definition in registry.fields.items():
+                  if field in existing_by_trim[trim.id]:
+                      continue
+                  if definition.applicable_powertrains and pt not in definition.applicable_powertrains:
+                      if add_fact(trim, field, 'NOT_APPLICABLE', None, source='registry', source_ref='product/comparable_specs/registry.json', tag='na'):
+                          added_na += 1
+
+          # Validate every touched trim after repair and print an auditable coverage summary.
+          post = SpecLedger.load(DATA, YEAR, registry=registry, catalog=catalog)
+          problems = post.validate()
+          touched_problems = [p for p in problems if any(tid in p for tid in trim_ids)]
+          if touched_problems:
+              raise SystemExit('TOUCHED_SPEC_VALIDATION_FAILED\n' + '\n'.join(touched_problems[:50]))
+
+          print('ADDED_ECO', added_eco, 'ADDED_CATALOG', added_catalog, 'ADDED_NA', added_na)
+          facts_by_trim = {tid: {} for tid in trim_ids}
+          for fact in post.facts:
+              if fact.trim_id in facts_by_trim:
+                  facts_by_trim[fact.trim_id].setdefault(fact.field_key, []).append(fact)
+          summary = []
+          for trim in trims:
+              fields = facts_by_trim[trim.id]
+              known_n = sum(any(f.value_state.value == 'KNOWN' for f in fs) for fs in fields.values())
+              na_n = sum(any(f.value_state.value == 'NOT_APPLICABLE' for f in fs) for fs in fields.values())
+              unavailable_n = sum(any(f.value_state.value == 'NOT_AVAILABLE' for f in fs) for fs in fields.values())
+              unknown_n = sum(any(f.value_state.value == 'UNKNOWN' for f in fs) for fs in fields.values())
+              absent = len(registry.fields) - len(fields)
+              row = {'trim_id': trim.id, 'known': known_n, 'not_applicable': na_n, 'not_available': unavailable_n, 'unknown': unknown_n, 'absent': absent, 'covered': len(fields)}
+              summary.append(row)
+              print('COVERAGE', json.dumps(row, ensure_ascii=False))
+          Path('/tmp/touched_99_summary.json').write_text(json.dumps({'registry_fields': len(registry.fields), 'summary': summary}, ensure_ascii=False, indent=2), encoding='utf-8')
+          PY
+          git config user.name "TDR vehicle data bot"
+          git config user.email "noreply@github.com"
+          git rm .github/workflows/tmp-repair-touched-99.yml
+          git add automotive/vehicle_master/vehreg/data/2026/product/comparable_specs
+          git commit -m "data(vehreg): repair 99-field coverage for touched models"
+          git push origin HEAD:feature/vehreg-fill-batch-01
+      - name: Upload coverage audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: touched-99-summary
+          path: /tmp/touched_99_summary.json
+          if-no-files-found: ignore
