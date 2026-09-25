@@ -1,0 +1,178 @@
+name: Temporary Audi canonical schema repair
+
+on:
+  push:
+    branches: [feature/vehreg-fill-batch-01]
+    paths:
+      - ".github/workflows/tmp-repair-audi-schema-fill.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/vehreg-fill-batch-01
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Repair A6 e-tron A7 A8 canonical fields
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          p = Path('automotive/vehicle_master/vehreg/data/2026/models/audi.json')
+          data = json.loads(p.read_text(encoding='utf-8'))
+          models = {m['id']: m for m in data['models']}
+
+          def trim_map(model):
+              return {t.get('id'): t for g in model.get('generations', []) for t in g.get('trims', []) if t.get('id')}
+
+          # --- A6 e-tron / S6 e-tron family ---
+          m = models['a6_etron']
+          m['nameplate'] = 'A6 e-tron'
+          m['notes'] = ('Thai-market A6 e-tron family verified 2026-09-26. Current Thai retail is S6 Sportback e-tron quattro and '
+                        'S6 Avant e-tron quattro at THB 6,099,000 each. Earlier A6 Sportback/Avant e-tron performance RWD rows '
+                        'are retained as historical owner-directory evidence; their Thai historical prices remain unresolved.')
+          g = m['generations'][0]
+          g['code'] = 'PPE'
+          g['segment'] = 'E'
+          g['seats'] = 5
+          g['launched'] = '2025-03-17'
+          g['ended'] = None
+          for v in g['variants']:
+              if v['name'] == 'S6 Sportback e-tron quattro':
+                  v.update(powertrain='BEV', drivetrain='AWD', engine_cc=None, battery_kwh=100.0,
+                           price_thb=6099000, price_min_thb=6099000, price_max_thb=6099000,
+                           import_type='CBU', origin_country='DE')
+              elif v['name'] == 'S6 Avant e-tron quattro':
+                  v.update(powertrain='BEV', drivetrain='AWD', engine_cc=None, battery_kwh=100.0,
+                           price_thb=6099000, price_min_thb=6099000, price_max_thb=6099000,
+                           import_type='CBU', origin_country='DE')
+              elif 'performance RWD' in v['name']:
+                  v.update(powertrain='BEV', drivetrain='RWD', engine_cc=None, battery_kwh=100.0,
+                           price_thb=None, price_min_thb=None, price_max_thb=None,
+                           import_type='CBU', origin_country='DE', incomplete=True)
+          ts = trim_map(m)
+          s6sb = ts['s6_sportback_e_tron_quattro_awd_bev']
+          s6sb.update(variant='S6 Sportback e-tron quattro', price_thb=6099000, powertrain='BEV', drivetrain='AWD',
+                      engine_code='ECF/ECC', engine_cc=None, battery_kwh=100.0, transmission='1-speed reduction gear', seats=5,
+                      length_mm=4928, width_mm=1923, height_mm=1455, wheelbase_mm=2951,
+                      tire_front='245/40 R21', tire_rear='275/35 R21', wheel_front='8.5J x 21', wheel_rear='9.5J x 21')
+          s6sb['notes'] = ('Current Thai BEV: dual-motor quattro, 370 kW normal / 405 kW (551 hp) Launch Control, 855 Nm; '
+                           '100 kWh gross / 94.9 kWh usable; DC up to 270 kW; up to 678 km WLTP.')
+          s6av = ts['s6_avant_e_tron_quattro_awd_bev']
+          s6av.update(variant='S6 Avant e-tron quattro', price_thb=6099000, powertrain='BEV', drivetrain='AWD',
+                      engine_code='ECF/ECC', engine_cc=None, battery_kwh=100.0, transmission='1-speed reduction gear', seats=5,
+                      length_mm=4928, width_mm=1923, height_mm=1504, wheelbase_mm=2951,
+                      tire_front='245/40 R21', tire_rear='275/35 R21', wheel_front='8.5J x 21', wheel_rear='9.5J x 21')
+          s6av['notes'] = ('Current Thai BEV: dual-motor quattro, 370 kW normal / 405 kW (551 hp) Launch Control, 855 Nm; '
+                           '100 kWh gross / 94.9 kWh usable; DC up to 270 kW; up to 649 km WLTP.')
+          a6sb = ts['a6_sportback_e_tron_performance_rwd_bev']
+          a6sb.update(variant='A6 e-tron performance RWD (historical)', price_thb=None, powertrain='BEV', drivetrain='RWD',
+                      engine_code='ECC', engine_cc=None, battery_kwh=100.0, transmission='1-speed reduction gear', seats=5,
+                      length_mm=4928, width_mm=1923, height_mm=1487, wheelbase_mm=2946,
+                      tire_front='245/40 R21', tire_rear='275/35 R21', wheel_front='8.5J x 21', wheel_rear='9.5J x 21')
+          a6av = ts['a6_avant_e_tron_performance_rwd_bev']
+          a6av.update(variant='A6 e-tron performance RWD (historical)', price_thb=None, powertrain='BEV', drivetrain='RWD',
+                      engine_code='ECC', engine_cc=None, battery_kwh=100.0, transmission='1-speed reduction gear', seats=5,
+                      length_mm=4928, width_mm=1923, height_mm=1527, wheelbase_mm=2946,
+                      tire_front='245/40 R21', tire_rear='275/35 R21', wheel_front='8.5J x 21', wheel_rear='9.5J x 21')
+
+          # --- A7 ---
+          m = models['a7']
+          m['nameplate'] = 'A7'
+          m['notes'] = ('Thai-market A7 Sportback C8 verified 2026-09-26. Current retail grades are 55 TFSI e quattro S line '
+                        'and S line Black Edition. The older 45 TFSI quattro is a mild-hybrid grade and is retained as historical.')
+          g = m['generations'][0]
+          g['code'] = 'C8'
+          g['segment'] = 'E'
+          g['seats'] = 5
+          for v in g['variants']:
+              if v['name'] == '55 TFSI e quattro PHEV':
+                  v.update(powertrain='PHEV', drivetrain='AWD', engine_cc=1984, battery_kwh=17.9,
+                           price_thb=4799000, price_min_thb=4799000, price_max_thb=5099000,
+                           import_type='CBU', origin_country='DE')
+              elif '45 TFSI' in v['name']:
+                  v['name'] = '45 TFSI quattro MHEV (historical)'
+                  v.update(powertrain='HEV', drivetrain='AWD', engine_cc=1984, battery_kwh=None,
+                           price_thb=None, price_min_thb=None, price_max_thb=None,
+                           import_type='CBU', origin_country='DE', incomplete=True)
+          ts = trim_map(m)
+          a7base = ts['sportback_55_tfsi_e_quattro_s_line_phev']
+          a7base.update(variant='55 TFSI e quattro PHEV', price_thb=4799000, powertrain='PHEV', drivetrain='AWD',
+                        engine_code='DLGA', engine_cc=1984, battery_kwh=17.9, transmission='7-speed S tronic', seats=5,
+                        length_mm=4969, width_mm=1908, height_mm=1421, wheelbase_mm=2926,
+                        tire_front='255/40 R20', tire_rear='255/40 R20', wheel_front='8.5J x 20', wheel_rear='8.5J x 20')
+          a7black = ts['sportback_55_tfsi_e_quattro_s_line_black_edition_phev']
+          a7black.update(variant='55 TFSI e quattro PHEV', price_thb=5099000, powertrain='PHEV', drivetrain='AWD',
+                         engine_code='DLGA', engine_cc=1984, battery_kwh=17.9, transmission='7-speed S tronic', seats=5,
+                         length_mm=4969, width_mm=1908, height_mm=1421, wheelbase_mm=2926,
+                         tire_front='255/40 R20', tire_rear='255/40 R20', wheel_front='8.5J x 20', wheel_rear='8.5J x 20')
+          old45 = ts['sportback_45_tfsi_quattro_s_line_black_edition_ice']
+          old45.update(variant='45 TFSI quattro MHEV (historical)', price_thb=None, powertrain='HEV', drivetrain='AWD',
+                       engine_code='DKNA', engine_cc=1984, battery_kwh=None, transmission='7-speed S tronic', seats=5,
+                       length_mm=4969, width_mm=1908, height_mm=1421, wheelbase_mm=2926,
+                       tire_front='255/40 R20', tire_rear='255/40 R20', wheel_front='8.5J x 20', wheel_rear='8.5J x 20')
+          old45['notes'] = ('Historical Thai 45 TFSI quattro mild-hybrid grade; mapped to HEV by TDR convention. Stable _ice ID '
+                            'retained for downstream compatibility; exact historical Black Edition MSRP remains unresolved.')
+
+          # --- A8 ---
+          m = models['a8']
+          m['nameplate'] = 'A8'
+          m['notes'] = ('Thai-market A8 D5 facelift verified 2026-09-26. Current retail is A8 L 60 TFSI e quattro Prestige S line '
+                        'PHEV at THB 7,199,000. Historical A8 L 55 TFSI quattro Prestige S line MHEV is retained with its '
+                        'facelift launch price of THB 8,250,000.')
+          g = m['generations'][0]
+          g['code'] = 'D5-facelift'
+          g['segment'] = 'E'
+          g['seats'] = 5
+          for v in g['variants']:
+              if '60 TFSI e' in v['name']:
+                  v.update(powertrain='PHEV', drivetrain='AWD', engine_cc=2995, battery_kwh=17.9,
+                           price_thb=7199000, price_min_thb=7199000, price_max_thb=7199000,
+                           import_type='CBU', origin_country='DE')
+              elif '55 TFSI' in v['name']:
+                  v['name'] = 'L 55 TFSI quattro MHEV (historical)'
+                  v.update(powertrain='HEV', drivetrain='AWD', engine_cc=2995, battery_kwh=None,
+                           price_thb=8250000, price_min_thb=8250000, price_max_thb=8250000,
+                           import_type='CBU', origin_country='DE', incomplete=False)
+                  v['price_note'] = 'Historical facelift launch price for A8 L 55 TFSI quattro Prestige S line.'
+          ts = trim_map(m)
+          a8p = ts['l_60_tfsi_e_quattro_prestige_phev']
+          a8p.update(variant='L 60 TFSI e quattro PHEV', price_thb=7199000, powertrain='PHEV', drivetrain='AWD',
+                     engine_code='CZSE', engine_cc=2995, battery_kwh=17.9, transmission='8-speed tiptronic', seats=5,
+                     length_mm=5320, width_mm=1945, height_mm=1488, wheelbase_mm=3128,
+                     tire_front='265/40 R20', tire_rear='265/40 R20', wheel_front='20 in', wheel_rear='20 in')
+          a8p['notes'] = ('Current Thai PHEV: 3.0 TFSI V6 + electric motor, 462 PS system output, 700 Nm, quattro AWD; '
+                          '17.9 kWh battery; 8-speed tiptronic; up to 52 km WLTP EV range.')
+          a8old = ts['l_55_tfsi_quattro_prestige_ice']
+          a8old.update(name='L 55 TFSI quattro Prestige S line', variant='L 55 TFSI quattro MHEV (historical)',
+                       price_thb=8250000, powertrain='HEV', drivetrain='AWD', engine_cc=2995, battery_kwh=None,
+                       transmission='8-speed tiptronic', seats=5, length_mm=5320, width_mm=1945, height_mm=1488,
+                       wheelbase_mm=3128, tire_front='265/40 R20', tire_rear='265/40 R20',
+                       wheel_front='20 in', wheel_rear='20 in')
+          a8old['notes'] = ('Historical facelift A8 L 55 TFSI quattro Prestige S line: 48V MHEV, 340 PS / 500 Nm, '
+                            '8-speed tiptronic, 20-inch 265/40 R20 fitment. Stable _ice ID retained for compatibility.')
+
+          # Assertions: catch the specific bad values that prompted this repair.
+          assert s6sb['height_mm'] == 1455
+          assert s6av['tire_front'] == '245/40 R21' and s6av['tire_rear'] == '275/35 R21'
+          assert a7base['price_thb'] == 4799000 and a7black['price_thb'] == 5099000
+          assert old45['powertrain'] == 'HEV'
+          assert a8p['length_mm'] == 5320 and a8p['transmission'] == '8-speed tiptronic'
+          assert a8old['price_thb'] == 8250000
+
+          p.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          PY
+          git config user.name "TDR vehicle data bot"
+          git config user.email "noreply@github.com"
+          git rm .github/workflows/tmp-repair-audi-schema-fill.yml
+          git add automotive/vehicle_master/vehreg/data/2026/models/audi.json
+          git commit -m "data(vehreg): repair Audi A6 e-tron A7 A8 canonical fields"
+          git push origin HEAD:feature/vehreg-fill-batch-01
