@@ -465,82 +465,77 @@
         "hyptec ht",
         "hyptec"
       ],
+      "notes": "Thai-market lineup and specification verified against GAC Thailand official sources on 2026-09-25. Current official retail lineup is 620 Premium only; former 620 Luxury and 670 Ultra are not listed in the current OEM product/configuration pages.",
+      "retail_status": "CURRENT",
+      "retail_checked_at": "2026-09-25",
+      "retail_source": "https://www.gacgroup.com/th-th/configuration/hyptec-ht/2024",
       "generations": [
         {
           "code": "gen1",
           "segment": "D",
           "seats": 5,
-          "launched": "2025-06-01",
+          "launched": "2024-09-19",
           "ended": null,
           "variants": [
             {
-              "name": "77 kWh BEV",
+              "name": "83 kWh BEV",
               "powertrain": "BEV",
               "drivetrain": "RWD",
               "engine_cc": null,
-              "battery_kwh": 76.8,
-              "price_thb": 1299000.0,
-              "price_min_thb": null,
-              "price_max_thb": null,
+              "battery_kwh": 83,
+              "price_thb": 1199000,
+              "price_min_thb": 1199000,
+              "price_max_thb": 1199000,
               "import_type": "CBU",
               "origin_country": "CN",
-              "price_note": "seed-unverified",
-              "aliases": []
+              "price_note": "Current advertised retail price on GAC Thailand official HYPTEC HT product page, verified 2026-09-25; imported CBU from China.",
+              "aliases": [
+                "620 Premium",
+                "77 kWh BEV"
+              ]
             }
           ],
           "trims": [
             {
-              "name": "620 Premium (Standard Doors)",
+              "name": "620 Premium",
+              "variant": "83 kWh BEV",
               "powertrain": "BEV",
+              "drivetrain": "RWD",
+              "engine_code": "",
+              "engine_cc": null,
+              "battery_kwh": 83,
+              "transmission": "single-speed",
+              "seats": 5,
+              "length_mm": 4935,
+              "width_mm": 1920,
+              "height_mm": 1700,
+              "wheelbase_mm": 2935,
+              "tire_front": "245/50 R20",
+              "tire_rear": "245/50 R20",
+              "wheel_front": "20 in",
+              "wheel_rear": "20 in",
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:005"
                 ],
                 "eco": [
                   "513e48ad-0ef5-4323-8541-c753596b9451"
+                ],
+                "official_gac": [
+                  "https://www.gacgroup.com/th-th/configuration/hyptec-ht/2024",
+                  "https://www.gacgroup.com/th-th/suv/hyptec-ht",
+                  "https://www.gacgroup.com/th-th/news/article/gac-thailand-3rd-anniversary-promotions-195"
+                ],
+                "import_source": [
+                  "https://autolifethailand.tv/official-price-aion-hyptec-ht-ev-thailand/"
                 ]
               },
               "aliases": [
+                "Hyptec HT 620 Premium",
                 "Hyptec HT 620 Premium (Standard Doors)"
               ],
               "id": "620_premium_standard_doors_bev",
-              "seats": 5,
-              "length_mm": 4935,
-              "width_mm": 1920,
-              "height_mm": 1700
-            },
-            {
-              "name": "620 Luxury (Gull-Wing Doors)",
-              "powertrain": "BEV",
-              "source_refs": {
-                "owner_directory": [
-                  "owner_directory_2026_09_13:005"
-                ],
-                "eco": [
-                  "da65f191-df51-44bb-95f6-829ea0ebe3a1"
-                ]
-              },
-              "aliases": [
-                "Hyptec HT 620 Luxury (Gull-Wing Doors)"
-              ],
-              "id": "620_luxury_gull_wing_doors_bev",
-              "seats": 5,
-              "length_mm": 4935,
-              "width_mm": 1920,
-              "height_mm": 1700
-            },
-            {
-              "name": "670 Ultra (Gull-Wing Doors, 800V Architecture)",
-              "powertrain": "BEV",
-              "source_refs": {
-                "owner_directory": [
-                  "owner_directory_2026_09_13:005"
-                ]
-              },
-              "aliases": [
-                "Hyptec HT 670 Ultra (Gull-Wing Doors, 800V Architecture)"
-              ],
-              "id": "670_ultra_gull_wing_doors_800v_architecture_bev"
+              "notes": "Current Thai-market retail SKU verified 2026-09-25. Stable canonical ID retained from the prior Standard Doors label; former 620 Luxury and 670 Ultra were removed from the current 2026 retail catalog."
             }
           ]
         }
