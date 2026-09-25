@@ -862,7 +862,7 @@
       "id": "a7",
       "name_en": "A7",
       "name_th": "เอ7",
-      "nameplate": "",
+      "nameplate": "A7",
       "body_type": "SEDAN",
       "cab_type": "NOT_APPLICABLE",
       "registration_type": "",
@@ -871,7 +871,7 @@
         "A7 SB",
         "A7 Sportback"
       ],
-      "notes": "Thai-market A7 Sportback C8 retail lineup verified on 2026-09-26. Current Audi Thailand price list contains two 55 TFSI e quattro PHEV grades: S line and S line Black Edition. Earlier 45 TFSI combustion grade is retained as historical owner-directory evidence rather than current retail.",
+      "notes": "Thai-market A7 Sportback C8 verified 2026-09-26. Current retail grades are 55 TFSI e quattro S line and S line Black Edition. The older 45 TFSI quattro is a mild-hybrid grade and is retained as historical.",
       "retail_status": "CURRENT",
       "retail_checked_at": "2026-09-26",
       "retail_source": "https://www.audi.co.th/en/models/a7/a7-sportback-tfsi-e/",
@@ -901,8 +901,8 @@
               ]
             },
             {
-              "name": "45 TFSI quattro ICE (historical)",
-              "powertrain": "ICE",
+              "name": "45 TFSI quattro MHEV (historical)",
+              "powertrain": "HEV",
               "drivetrain": "AWD",
               "engine_cc": 1984,
               "battery_kwh": null,
@@ -948,7 +948,13 @@
                 "A7 Sportback 55 TFSI e quattro S line"
               ],
               "id": "sportback_55_tfsi_e_quattro_s_line_phev",
-              "notes": "Thai PHEV: 2.0 TFSI + electric motor, 367 PS system output, 500 Nm, quattro AWD, 17.9 kWh battery, 7-speed S tronic, up to 69 km WLTP EV range."
+              "notes": "Thai PHEV: 2.0 TFSI + electric motor, 367 PS system output, 500 Nm, quattro AWD, 17.9 kWh battery, 7-speed S tronic, up to 69 km WLTP EV range.",
+              "price_thb": 4799000,
+              "engine_code": "DLGA",
+              "tire_front": "255/40 R20",
+              "tire_rear": "255/40 R20",
+              "wheel_front": "8.5J x 20",
+              "wheel_rear": "8.5J x 20"
             },
             {
               "name": "Sportback 55 TFSI e quattro S line Black Edition",
@@ -965,8 +971,8 @@
               "transmission": "7-speed S tronic",
               "tire_front": "255/40 R20",
               "tire_rear": "255/40 R20",
-              "wheel_front": "20 in",
-              "wheel_rear": "20 in",
+              "wheel_front": "8.5J x 20",
+              "wheel_rear": "8.5J x 20",
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:011"
@@ -986,12 +992,14 @@
                 "A7 Sportback 55 TFSI e quattro S line Black Edition"
               ],
               "id": "sportback_55_tfsi_e_quattro_s_line_black_edition_phev",
-              "notes": "Thai PHEV: 367 PS / 500 Nm, quattro AWD, 17.9 kWh battery; Black Edition uses 20-inch wheels with 255/40 R20 tyres."
+              "notes": "Thai PHEV: 367 PS / 500 Nm, quattro AWD, 17.9 kWh battery; Black Edition uses 20-inch wheels with 255/40 R20 tyres.",
+              "price_thb": 5099000,
+              "engine_code": "DLGA"
             },
             {
               "name": "Sportback 45 TFSI quattro S line Black Edition",
-              "variant": "45 TFSI quattro ICE (historical)",
-              "powertrain": "ICE",
+              "variant": "45 TFSI quattro MHEV (historical)",
+              "powertrain": "HEV",
               "drivetrain": "AWD",
               "source_refs": {
                 "owner_directory": [
@@ -1002,7 +1010,21 @@
                 "A7 Sportback 45 TFSI quattro S line Black Edition"
               ],
               "id": "sportback_45_tfsi_quattro_s_line_black_edition_ice",
-              "notes": "Historical owner-directory row; not promoted into current 2026 retail lineup."
+              "notes": "Historical Thai 45 TFSI quattro mild-hybrid grade; mapped to HEV by TDR convention. Stable _ice ID retained for downstream compatibility; exact historical Black Edition MSRP remains unresolved.",
+              "price_thb": null,
+              "engine_code": "DKNA",
+              "engine_cc": 1984,
+              "battery_kwh": null,
+              "transmission": "7-speed S tronic",
+              "seats": 5,
+              "length_mm": 4969,
+              "width_mm": 1908,
+              "height_mm": 1421,
+              "wheelbase_mm": 2926,
+              "tire_front": "255/40 R20",
+              "tire_rear": "255/40 R20",
+              "wheel_front": "8.5J x 20",
+              "wheel_rear": "8.5J x 20"
             }
           ]
         }
@@ -1013,7 +1035,7 @@
       "id": "a8",
       "name_en": "A8",
       "name_th": "เอ8",
-      "nameplate": "",
+      "nameplate": "A8",
       "body_type": "SEDAN",
       "cab_type": "NOT_APPLICABLE",
       "registration_type": "",
@@ -1023,7 +1045,7 @@
         "A8",
         "A8 L"
       ],
-      "notes": "Thai-market A8 D5 facelift retail lineup verified on 2026-09-26. Current Audi Thailand price list contains one A8 grade: A8 L 60 TFSI e quattro Prestige S line PHEV at THB 7,199,000. Earlier A8 L 55 TFSI quattro combustion/mild-hybrid grade is retained as historical evidence rather than current retail.",
+      "notes": "Thai-market A8 D5 facelift verified 2026-09-26. Current retail is A8 L 60 TFSI e quattro Prestige S line PHEV at THB 7,199,000. Historical A8 L 55 TFSI quattro Prestige S line MHEV is retained with its facelift launch price of THB 8,250,000.",
       "retail_status": "CURRENT",
       "retail_checked_at": "2026-09-26",
       "retail_source": "https://www.audi.co.th/en/models/a8/a8-l-tfsi-e/",
@@ -1058,16 +1080,16 @@
               "drivetrain": "AWD",
               "engine_cc": 2995,
               "battery_kwh": null,
-              "price_thb": null,
-              "price_min_thb": null,
-              "price_max_thb": null,
+              "price_thb": 8250000,
+              "price_min_thb": 8250000,
+              "price_max_thb": 8250000,
               "import_type": "CBU",
               "origin_country": "DE",
-              "price_note": "Historical Thai-market grade; not in current 2026 Audi Thailand price list.",
+              "price_note": "Historical facelift launch price for A8 L 55 TFSI quattro Prestige S line.",
               "aliases": [
                 "A8 L 55 TFSI quattro Prestige"
               ],
-              "incomplete": true
+              "incomplete": false
             }
           ],
           "trims": [
@@ -1077,13 +1099,13 @@
               "powertrain": "PHEV",
               "drivetrain": "AWD",
               "seats": 5,
-              "length_mm": 5230,
+              "length_mm": 5320,
               "width_mm": 1945,
               "height_mm": 1488,
               "wheelbase_mm": 3128,
               "engine_cc": 2995,
               "battery_kwh": 17.9,
-              "transmission": "7-speed S tronic",
+              "transmission": "8-speed tiptronic",
               "tire_front": "265/40 R20",
               "tire_rear": "265/40 R20",
               "wheel_front": "20 in",
@@ -1104,10 +1126,12 @@
                 "A8 L 60 TFSI e quattro Prestige"
               ],
               "id": "l_60_tfsi_e_quattro_prestige_phev",
-              "notes": "Current Thai PHEV: 3.0 TFSI V6 + electric motor, 462 PS system output, 700 Nm, quattro AWD, 17.9 kWh battery, 7-speed S tronic, up to 52 km WLTP EV range."
+              "notes": "Current Thai PHEV: 3.0 TFSI V6 + electric motor, 462 PS system output, 700 Nm, quattro AWD; 17.9 kWh battery; 8-speed tiptronic; up to 52 km WLTP EV range.",
+              "price_thb": 7199000,
+              "engine_code": "CZSE"
             },
             {
-              "name": "L 55 TFSI quattro Prestige",
+              "name": "L 55 TFSI quattro Prestige S line",
               "variant": "L 55 TFSI quattro MHEV (historical)",
               "powertrain": "HEV",
               "drivetrain": "AWD",
@@ -1118,7 +1142,19 @@
                 ]
               },
               "id": "l_55_tfsi_quattro_prestige_ice",
-              "notes": "Historical Thai-market 48V mild-hybrid grade; stable canonical ID retained for downstream compatibility."
+              "notes": "Historical facelift A8 L 55 TFSI quattro Prestige S line: 48V MHEV, 340 PS / 500 Nm, 8-speed tiptronic, 20-inch 265/40 R20 fitment. Stable _ice ID retained for compatibility.",
+              "price_thb": 8250000,
+              "battery_kwh": null,
+              "transmission": "8-speed tiptronic",
+              "seats": 5,
+              "length_mm": 5320,
+              "width_mm": 1945,
+              "height_mm": 1488,
+              "wheelbase_mm": 3128,
+              "tire_front": "265/40 R20",
+              "tire_rear": "265/40 R20",
+              "wheel_front": "20 in",
+              "wheel_rear": "20 in"
             }
           ]
         }
@@ -1802,7 +1838,7 @@
       "id": "a6_etron",
       "name_en": "Audi A6 e-tron",
       "name_th": "ออดี้ เอ6 อี-ทรอน",
-      "nameplate": "",
+      "nameplate": "A6 e-tron",
       "body_type": "SEDAN",
       "cab_type": "NOT_APPLICABLE",
       "registration_type": "",
@@ -1813,7 +1849,7 @@
         "S6 Sportback e-tron",
         "S6 Avant e-tron"
       ],
-      "notes": "Thai-market A6 e-tron family verified on 2026-09-26. Audi Thailand currently lists two retail models: S6 Sportback e-tron quattro and S6 Avant e-tron quattro, both at THB 6,099,000. Earlier owner-directory A6 Sportback/Avant e-tron performance RWD rows are retained as historical evidence but are not promoted into the current 2026 Thai price-list lineup.",
+      "notes": "Thai-market A6 e-tron family verified 2026-09-26. Current Thai retail is S6 Sportback e-tron quattro and S6 Avant e-tron quattro at THB 6,099,000 each. Earlier A6 Sportback/Avant e-tron performance RWD rows are retained as historical owner-directory evidence; their Thai historical prices remain unresolved.",
       "retail_status": "CURRENT",
       "retail_checked_at": "2026-09-26",
       "retail_source": "https://www.audi.co.th/en/models/",
@@ -1898,11 +1934,18 @@
               "seats": 5,
               "length_mm": 4928,
               "width_mm": 1923,
-              "height_mm": 1465,
+              "height_mm": 1455,
               "wheelbase_mm": 2951,
               "battery_kwh": 100.0,
-              "transmission": "single-speed",
-              "notes": "Current Thai BEV: dual-motor quattro, 370 kW normal / 405 kW (551 hp) Launch Control, 855 Nm, 94.9 kWh usable (100 kWh gross), DC charging up to 270 kW, up to 678 km WLTP."
+              "transmission": "1-speed reduction gear",
+              "notes": "Current Thai BEV: dual-motor quattro, 370 kW normal / 405 kW (551 hp) Launch Control, 855 Nm; 100 kWh gross / 94.9 kWh usable; DC up to 270 kW; up to 678 km WLTP.",
+              "price_thb": 6099000,
+              "engine_code": "ECF/ECC",
+              "engine_cc": null,
+              "tire_front": "245/40 R21",
+              "tire_rear": "275/35 R21",
+              "wheel_front": "8.5J x 21",
+              "wheel_rear": "9.5J x 21"
             },
             {
               "name": "S6 Avant e-tron quattro",
@@ -1925,12 +1968,15 @@
               "height_mm": 1504,
               "wheelbase_mm": 2951,
               "battery_kwh": 100.0,
-              "transmission": "single-speed",
-              "tire_front": "235/45 R20",
-              "tire_rear": "265/40 R20",
-              "wheel_front": "20 in",
-              "wheel_rear": "20 in",
-              "notes": "Current Thai BEV: dual-motor quattro, 370 kW normal / 405 kW (551 hp) Launch Control, 855 Nm, 94.9 kWh usable (100 kWh gross), DC charging up to 270 kW, up to 649 km WLTP."
+              "transmission": "1-speed reduction gear",
+              "tire_front": "245/40 R21",
+              "tire_rear": "275/35 R21",
+              "wheel_front": "8.5J x 21",
+              "wheel_rear": "9.5J x 21",
+              "notes": "Current Thai BEV: dual-motor quattro, 370 kW normal / 405 kW (551 hp) Launch Control, 855 Nm; 100 kWh gross / 94.9 kWh usable; DC up to 270 kW; up to 649 km WLTP.",
+              "price_thb": 6099000,
+              "engine_code": "ECF/ECC",
+              "engine_cc": null
             },
             {
               "name": "A6 Sportback e-tron performance (RWD)",
@@ -1943,7 +1989,21 @@
                 ]
               },
               "id": "a6_sportback_e_tron_performance_rwd_bev",
-              "notes": "Historical owner-directory row; not in the current 2026 Thai recommended-price list."
+              "notes": "Historical owner-directory row; not in the current 2026 Thai recommended-price list.",
+              "price_thb": null,
+              "engine_code": "ECC",
+              "engine_cc": null,
+              "battery_kwh": 100.0,
+              "transmission": "1-speed reduction gear",
+              "seats": 5,
+              "length_mm": 4928,
+              "width_mm": 1923,
+              "height_mm": 1487,
+              "wheelbase_mm": 2946,
+              "tire_front": "245/40 R21",
+              "tire_rear": "275/35 R21",
+              "wheel_front": "8.5J x 21",
+              "wheel_rear": "9.5J x 21"
             },
             {
               "name": "A6 Avant e-tron performance (RWD)",
@@ -1956,7 +2016,21 @@
                 ]
               },
               "id": "a6_avant_e_tron_performance_rwd_bev",
-              "notes": "Historical owner-directory row; not in the current 2026 Thai recommended-price list."
+              "notes": "Historical owner-directory row; not in the current 2026 Thai recommended-price list.",
+              "price_thb": null,
+              "engine_code": "ECC",
+              "engine_cc": null,
+              "battery_kwh": 100.0,
+              "transmission": "1-speed reduction gear",
+              "seats": 5,
+              "length_mm": 4928,
+              "width_mm": 1923,
+              "height_mm": 1527,
+              "wheelbase_mm": 2946,
+              "tire_front": "245/40 R21",
+              "tire_rear": "275/35 R21",
+              "wheel_front": "8.5J x 21",
+              "wheel_rear": "9.5J x 21"
             }
           ]
         }
