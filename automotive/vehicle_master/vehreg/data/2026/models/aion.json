@@ -273,69 +273,123 @@
         "ut",
         "aion ut"
       ],
+      "notes": "Thai-market lineup and specification verified against GAC Thailand official sources on 2026-09-25. Current lineup is 420 Standard / 500 Premium; Rayong local production is confirmed by GAC Thailand.",
+      "retail_status": "CURRENT",
+      "retail_checked_at": "2026-09-25",
+      "retail_source": "https://www.gacgroup.com/th-th/configuration/aion-ut/2024",
       "generations": [
         {
           "code": "gen1",
           "segment": "B",
           "seats": 5,
-          "launched": "2025-11-01",
+          "launched": "2025-06-24",
           "ended": null,
           "variants": [
             {
-              "name": "44 kWh BEV",
+              "name": "50.27 kWh BEV",
               "powertrain": "BEV",
               "drivetrain": "FWD",
               "engine_cc": null,
-              "battery_kwh": 44.2,
-              "price_thb": 459000.0,
-              "price_min_thb": null,
-              "price_max_thb": null,
+              "battery_kwh": 50.27,
+              "price_thb": 519900,
+              "price_min_thb": 519900,
+              "price_max_thb": 519900,
               "import_type": "CKD",
               "origin_country": "TH",
-              "price_note": "seed-unverified",
-              "aliases": []
+              "price_note": "GAC Thailand official September 2026 retail price; local production confirmed at Rayong.",
+              "aliases": [
+                "420 Standard",
+                "400 Standard Range"
+              ]
             },
             {
-              "name": "53 kWh BEV",
+              "name": "60 kWh BEV",
               "powertrain": "BEV",
               "drivetrain": "FWD",
               "engine_cc": null,
-              "battery_kwh": 52.9,
-              "price_thb": 559000.0,
-              "price_min_thb": null,
-              "price_max_thb": null,
+              "battery_kwh": 60,
+              "price_thb": 619900,
+              "price_min_thb": 619900,
+              "price_max_thb": 619900,
               "import_type": "CKD",
               "origin_country": "TH",
-              "price_note": "seed-unverified",
-              "aliases": []
+              "price_note": "GAC Thailand official September 2026 retail price; local production confirmed at Rayong.",
+              "aliases": [
+                "500 Premium",
+                "500 Long Range"
+              ]
             }
           ],
           "trims": [
             {
-              "name": "400 Standard Range",
+              "name": "420 Standard",
+              "variant": "50.27 kWh BEV",
               "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_code": "",
+              "engine_cc": null,
+              "battery_kwh": 50.27,
+              "transmission": "single-speed",
+              "seats": 5,
+              "length_mm": 4270,
+              "width_mm": 1850,
+              "height_mm": 1575,
+              "wheelbase_mm": 2750,
+              "tire_front": "215/60 R16",
+              "tire_rear": "215/60 R16",
+              "wheel_front": "16 in",
+              "wheel_rear": "16 in",
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:002"
+                ],
+                "official_gac": [
+                  "https://www.gacgroup.com/th-th/configuration/aion-ut/2024",
+                  "https://www.gacgroup.com/th-th/news/article/gac-thailand-3rd-anniversary-promotions-195",
+                  "https://www.gacgroup.com/th-th/news/article/gac-aion-rayong-factory-ut-v-delivery-122"
                 ]
               },
               "aliases": [
+                "Aion UT 420 Standard",
                 "Aion UT 400 Standard Range"
               ],
-              "id": "400_standard_range_bev"
+              "id": "400_standard_range_bev",
+              "notes": "Official Thai-market identity/spec corrected to 420 Standard on 2026-09-25. Stable canonical ID retained for downstream compatibility."
             },
             {
-              "name": "500 Long Range",
+              "name": "500 Premium",
+              "variant": "60 kWh BEV",
               "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_code": "",
+              "engine_cc": null,
+              "battery_kwh": 60,
+              "transmission": "single-speed",
+              "seats": 5,
+              "length_mm": 4270,
+              "width_mm": 1850,
+              "height_mm": 1575,
+              "wheelbase_mm": 2750,
+              "tire_front": "215/55 R17",
+              "tire_rear": "215/55 R17",
+              "wheel_front": "17 in",
+              "wheel_rear": "17 in",
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:002"
+                ],
+                "official_gac": [
+                  "https://www.gacgroup.com/th-th/configuration/aion-ut/2024",
+                  "https://www.gacgroup.com/th-th/news/article/gac-thailand-3rd-anniversary-promotions-195",
+                  "https://www.gacgroup.com/th-th/news/article/gac-aion-rayong-factory-ut-v-delivery-122"
                 ]
               },
               "aliases": [
+                "Aion UT 500 Premium",
                 "Aion UT 500 Long Range"
               ],
-              "id": "500_long_range_bev"
+              "id": "500_long_range_bev",
+              "notes": "Official Thai-market identity/spec corrected to 500 Premium on 2026-09-25. Stable canonical ID retained for downstream compatibility."
             }
           ]
         }
