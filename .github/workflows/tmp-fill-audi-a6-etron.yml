@@ -1,0 +1,144 @@
+name: Temporary Audi A6 e-tron canonical patch
+
+on:
+  push:
+    branches: [feature/vehreg-fill-batch-01]
+    paths:
+      - ".github/workflows/tmp-fill-audi-a6-etron.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/vehreg-fill-batch-01
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Patch A6 e-tron only
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('automotive/vehicle_master/vehreg/data/2026/models/audi.json')
+          data = json.loads(p.read_text(encoding='utf-8'))
+          model = next(m for m in data['models'] if m['id'] == 'a6_etron')
+          model.clear()
+          model.update({
+            'id': 'a6_etron',
+            'name_en': 'Audi A6 e-tron',
+            'name_th': 'ออดี้ เอ6 อี-ทรอน',
+            'nameplate': '',
+            'body_type': 'SEDAN',
+            'cab_type': 'NOT_APPLICABLE',
+            'registration_type': '',
+            'market_scope': 'CORE',
+            'aliases': ['A6 e-tron', 'S6 e-tron', 'S6 Sportback e-tron', 'S6 Avant e-tron'],
+            'notes': 'Thai-market A6 e-tron family verified on 2026-09-26. Audi Thailand currently lists two retail models: S6 Sportback e-tron quattro and S6 Avant e-tron quattro, both at THB 6,099,000. Earlier owner-directory A6 Sportback/Avant e-tron performance RWD rows are retained as historical evidence but are not promoted into the current 2026 Thai price-list lineup.',
+            'retail_status': 'CURRENT',
+            'retail_checked_at': '2026-09-26',
+            'retail_source': 'https://www.audi.co.th/en/models/',
+            'generations': [{
+              'code': 'PPE',
+              'segment': 'E',
+              'seats': 5,
+              'launched': '2025-03-17',
+              'ended': None,
+              'variants': [
+                {
+                  'name': 'S6 Sportback e-tron quattro',
+                  'powertrain': 'BEV', 'drivetrain': 'AWD', 'engine_cc': None,
+                  'battery_kwh': 100.0, 'price_thb': 6099000,
+                  'price_min_thb': 6099000, 'price_max_thb': 6099000,
+                  'import_type': 'CBU', 'origin_country': 'DE',
+                  'price_note': 'Audi Thailand recommended price list in 2026; launch price in March 2025 was lower and is not used as current MSRP.',
+                  'aliases': ['S6 Sportback e-tron']
+                },
+                {
+                  'name': 'S6 Avant e-tron quattro',
+                  'powertrain': 'BEV', 'drivetrain': 'AWD', 'engine_cc': None,
+                  'battery_kwh': 100.0, 'price_thb': 6099000,
+                  'price_min_thb': 6099000, 'price_max_thb': 6099000,
+                  'import_type': 'CBU', 'origin_country': 'DE',
+                  'price_note': 'Audi Thailand recommended price list in 2026; launch price in March 2025 was lower and is not used as current MSRP.',
+                  'aliases': ['S6 Avant e-tron']
+                },
+                {
+                  'name': 'A6 e-tron performance RWD (historical)',
+                  'powertrain': 'BEV', 'drivetrain': 'RWD', 'engine_cc': None,
+                  'battery_kwh': 100.0, 'price_thb': None, 'price_min_thb': None,
+                  'price_max_thb': None, 'import_type': 'CBU', 'origin_country': 'DE',
+                  'price_note': 'Historical owner-directory evidence retained; no current 2026 Thai recommended price verified in this pass.',
+                  'aliases': ['A6 Sportback e-tron performance', 'A6 Avant e-tron performance'],
+                  'incomplete': True
+                }
+              ],
+              'trims': [
+                {
+                  'name': 'S6 Sportback e-tron quattro',
+                  'variant': 'S6 Sportback e-tron quattro',
+                  'powertrain': 'BEV', 'drivetrain': 'AWD',
+                  'source_refs': {
+                    'owner_directory': ['owner_directory_2026_09_13:010'],
+                    'official_audi': [
+                      'https://www.audi.co.th/en/models/a6-e-tron/s6-sportback-e-tron/',
+                      'https://emea-dam.audi.com/adobe/assets/urn:aaid:aem:2e39fcb4-a135-4a27-ac83-c26c4fbb4195/original/as/Audi-Pricelist.pdf'
+                    ]
+                  },
+                  'aliases': ['S6 Sportback e-tron (quattro AWD)'],
+                  'id': 's6_sportback_e_tron_quattro_awd_bev',
+                  'seats': 5, 'length_mm': 4928, 'width_mm': 1923,
+                  'height_mm': 1465, 'wheelbase_mm': 2951,
+                  'battery_kwh': 100.0, 'transmission': 'single-speed',
+                  'notes': 'Current Thai BEV: dual-motor quattro, 370 kW normal / 405 kW (551 hp) Launch Control, 855 Nm, 94.9 kWh usable (100 kWh gross), DC charging up to 270 kW, up to 678 km WLTP.'
+                },
+                {
+                  'name': 'S6 Avant e-tron quattro',
+                  'variant': 'S6 Avant e-tron quattro',
+                  'powertrain': 'BEV', 'drivetrain': 'AWD',
+                  'source_refs': {
+                    'official_audi': [
+                      'https://www.audi.co.th/en/models/a6-e-tron/s6-avant-e-tron/',
+                      'https://emea-dam.audi.com/adobe/assets/urn:aaid:aem:2e39fcb4-a135-4a27-ac83-c26c4fbb4195/original/as/Audi-Pricelist.pdf'
+                    ]
+                  },
+                  'aliases': ['S6 Avant e-tron'],
+                  'id': 's6_avant_e_tron_quattro_awd_bev',
+                  'seats': 5, 'length_mm': 4928, 'width_mm': 1923,
+                  'height_mm': 1504, 'wheelbase_mm': 2951,
+                  'battery_kwh': 100.0, 'transmission': 'single-speed',
+                  'tire_front': '235/45 R20', 'tire_rear': '265/40 R20',
+                  'wheel_front': '20 in', 'wheel_rear': '20 in',
+                  'notes': 'Current Thai BEV: dual-motor quattro, 370 kW normal / 405 kW (551 hp) Launch Control, 855 Nm, 94.9 kWh usable (100 kWh gross), DC charging up to 270 kW, up to 649 km WLTP.'
+                },
+                {
+                  'name': 'A6 Sportback e-tron performance (RWD)',
+                  'variant': 'A6 e-tron performance RWD (historical)',
+                  'powertrain': 'BEV', 'drivetrain': 'RWD',
+                  'source_refs': {'owner_directory': ['owner_directory_2026_09_13:010']},
+                  'id': 'a6_sportback_e_tron_performance_rwd_bev',
+                  'notes': 'Historical owner-directory row; not in the current 2026 Thai recommended-price list.'
+                },
+                {
+                  'name': 'A6 Avant e-tron performance (RWD)',
+                  'variant': 'A6 e-tron performance RWD (historical)',
+                  'powertrain': 'BEV', 'drivetrain': 'RWD',
+                  'source_refs': {'owner_directory': ['owner_directory_2026_09_13:010']},
+                  'id': 'a6_avant_e_tron_performance_rwd_bev',
+                  'notes': 'Historical owner-directory row; not in the current 2026 Thai recommended-price list.'
+                }
+              ]
+            }],
+            'powertrain_checked': True
+          })
+          p.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          PY
+          git config user.name "TDR vehicle data bot"
+          git config user.email "noreply@github.com"
+          git add automotive/vehicle_master/vehreg/data/2026/models/audi.json
+          git commit -m "data(vehreg): verify Audi A6 e-tron Thai-market lineup"
+          git push origin HEAD:feature/vehreg-fill-batch-01
