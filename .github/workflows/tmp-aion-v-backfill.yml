@@ -1,0 +1,134 @@
+name: Temporary AION V comparable spec backfill
+
+on:
+  push:
+    branches: [feature/vehreg-fill-batch-01]
+    paths:
+      - ".github/workflows/tmp-aion-v-backfill.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/vehreg-fill-batch-01
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Backfill AION V structured specs
+        shell: bash
+        run: |
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          from automotive.vehicle_master.vehreg.catalog import Catalog
+          from automotive.vehicle_master.vehreg.comparable_specs import SpecRegistry
+          from automotive.vehicle_master.vehreg.canonical_write import CanonicalWritePipeline
+
+          DATA=Path('automotive/vehicle_master/vehreg/data'); YEAR=2026
+          catalog=Catalog.load(DATA,YEAR); registry=SpecRegistry.load(DATA,YEAR); pipe=CanonicalWritePipeline(DATA)
+          facts_root=DATA/str(YEAR)/'product'/'comparable_specs'/'facts'
+          G='https://www.gacgroup.com/th-th/configuration/aion-v/2024'
+          FACTORY='https://www.gacgroup.com/th-th/news/article/gac-aion-rayong-factory-ut-v-delivery-122'
+
+          def load_existing(trim_id):
+            out={}
+            for path in facts_root.glob('*.json'):
+              try: payload=json.loads(path.read_text(encoding='utf-8'))
+              except Exception: continue
+              for f in payload.get('facts',[]):
+                if f.get('trim_id')==trim_id: out.setdefault(f.get('field_key'),[]).append(f)
+            return out
+
+          def qkey(field,qual):
+            d=registry.fields[field]
+            return tuple((k,str((qual or {}).get(k,''))) for k in d.comparison_qualifiers)
+
+          audits=[]
+          for needle,cap,range_km,energy,dc,curb,total,dms in [
+            ('500 Premium',64.5,500,144,150,1790,2250,False),
+            ('602 Luxury',75.26,602,141,180,1880,2280,True),
+          ]:
+            trim=[t for t in catalog.trims_of('aion.aion_v') if needle.lower() in t.name.lower()][0]
+            existing=load_existing(trim.id)
+            def has(field,qual=None):
+              target=qkey(field,qual)
+              return any(qkey(field,f.get('qualifiers') or {})==target for f in existing.get(field,[]))
+            def add(field,value,src=G,qual=None,status='VERIFIED'):
+              d=registry.fields[field]; qual=qual or {}
+              if d.applicable_powertrains and trim.powertrain.value not in d.applicable_powertrains: return False
+              if has(field,qual): return False
+              fact={'field_key':field,'value_state':'KNOWN','value':value,
+                    'unit':d.canonical_unit if d.value_type.value=='NUMBER' else '',
+                    'qualifiers':qual,'observed_at':'2026-09-26','verification_status':status,
+                    'source':'official_gac','source_ref':src,'source_locator':src}
+              h=hashlib.sha1((trim.id+'|'+field+'|'+json.dumps(qual,sort_keys=True,ensure_ascii=False)).encode()).hexdigest()[:24]
+              pipe.apply({'command_id':'aion-v-'+h,'operation':'APPEND_SPEC','year':YEAR,'actor':'tdr-aion-v',
+                          'reason':'AION V official GAC Thailand structured spec backfill','canonical_id':trim.id,
+                          'payload':fact,'submitted_at':'2026-09-26T01:30:00+07:00'})
+              existing.setdefault(field,[]).append({**fact,'trim_id':trim.id}); return True
+
+            rows=[
+              ('vehicle.turning_radius_m',5.6,G,{'measurement_basis':'OEM'}),
+              ('vehicle.ground_clearance_mm',166,G,{'load_state':'UNLADEN'}),
+              ('vehicle.cargo_volume_l',427,G,{'measurement_basis':'OEM','seat_configuration':'SEATS_UP'}),
+              ('vehicle.curb_weight_kg',curb,G,{'measurement_basis':'OEM'}),
+              ('vehicle.declared_total_weight_kg',total,G,{}),
+              ('powertrain.motor_type','Permanent magnet synchronous motor',G,{}),
+              ('powertrain.motor_count',1,G,{}),
+              ('powertrain.max_power_kw',150,G,{'output_scope':'SYSTEM','rating_basis':'MAXIMUM'}),
+              ('powertrain.max_torque_nm',210,G,{'output_scope':'SYSTEM','rating_basis':'MAXIMUM'}),
+              ('performance.top_speed_kmh',160,G,{'measurement_basis':'OEM'}),
+              ('battery.gross_capacity_kwh',cap,G,{}),
+              ('battery.chemistry','LFP',G,{}),
+              ('battery.chemistry_as_declared','LFP / Magazine Battery 2.0',G,{}),
+              ('ev.rated_range_km',range_km,G,{'measurement_basis':'NEDC','range_scope':'COMBINED'}),
+              ('ev.energy_consumption_wh_km',energy,G,{'measurement_basis':'NEDC','range_scope':'COMBINED'}),
+              ('charging.ac_max_kw',6.6,G,{}),
+              ('charging.dc_max_kw',dc,G,{'rating_basis':'MAXIMUM'}),
+              ('charging.dc_time_min',16,G,{'soc_from':'30%','soc_to':'80%','charger_power_kw':str(dc)}),
+              ('charging.v2l_supported',True,G,{}),
+              ('chassis.suspension_front','Independent MacPherson strut',G,{}),
+              ('chassis.suspension_rear','Semi-independent torsion beam',G,{}),
+              ('comfort.ventilated_front_seats',True,G,{}),
+              ('comfort.panoramic_roof',True,G,{}),
+              ('comfort.power_windows',True,G,{}),
+              ('comfort.auto_climate',True,G,{}),
+              ('comfort.electric_parking_brake',True,G,{}),
+              ('comfort.heat_pump',True,G,{}),
+              ('technology.smartphone_mirroring',True,G,{}),
+              ('technology.connected_services',True,G,{}),
+              ('technology.surround_view_camera',True,G,{}),
+              ('technology.led_headlights',True,G,{}),
+              ('safety.side_airbag',True,G,{}),
+              ('safety.curtain_airbag',True,G,{}),
+              ('safety.abs',True,G,{}),
+              ('safety.esc',True,G,{}),
+              ('safety.driver_attention_alert',dms,G,{}),
+              ('safety.adaptive_cruise',True,G,{}),
+              ('safety.aeb',True,G,{}),
+              ('safety.forward_collision_warning',True,G,{}),
+              ('safety.lane_departure_warning',True,G,{}),
+              ('safety.lane_keep_assist',True,G,{}),
+              ('safety.blind_spot',True,G,{}),
+              ('safety.rear_cross_traffic',True,G,{}),
+              ('manufacturing.factory','GAC AION Smart Ecological Factory, Amata City Rayong, Thailand',FACTORY,{}),
+            ]
+            added=0
+            for r in rows:
+              if add(*r): added+=1
+            applicable={k for k,d in registry.fields.items() if not d.applicable_powertrains or trim.powertrain.value in d.applicable_powertrains}
+            covered=set(existing)&applicable
+            audits.append({'trim':trim.name,'trim_id':trim.id,'applicable':len(applicable),'covered':len(covered),'missing':len(applicable)-len(covered),'added':added,'missing_fields':sorted(applicable-covered)})
+          print('AUDIT',json.dumps(audits,ensure_ascii=False))
+          PY
+          git config user.name "TDR vehicle data bot"
+          git config user.email "noreply@github.com"
+          git rm .github/workflows/tmp-aion-v-backfill.yml
+          git add automotive/vehicle_master/vehreg/data/2026/product/comparable_specs automotive/vehicle_master/vehreg/data/2026/canonical_state
+          git commit -m "data(vehreg): complete AION V structured spec pass"
+          git push origin HEAD:feature/vehreg-fill-batch-01
