@@ -20,8 +20,6 @@ def test_safe_backfill_aggregates_oem_and_preserves_media_provenance(monkeypatch
     }
     try:
         follow = importlib.import_module("tools.price_coverage_backfill_safe")
-        # Force a reload so this test is deterministic even if another test imported it.
-        follow = importlib.reload(follow)
 
         targets = {
             "a": SimpleNamespace(
