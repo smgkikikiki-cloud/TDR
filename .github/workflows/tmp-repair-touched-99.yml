@@ -25,12 +25,32 @@ jobs:
           python - <<'PY'
           import hashlib, json, re
           from pathlib import Path
+
+          DATA = Path('automotive/vehicle_master/vehreg/data')
+          YEAR = 2026
+
+          # DISCONTINUED was written by the earlier repair pass, but RetailStatus
+          # has no such enum. HISTORICAL is the canonical value for officially
+          # sold models no longer listed. Normalize this invalid value first so
+          # the catalog can be validated normally.
+          model_dir = DATA / str(YEAR) / 'models'
+          normalized_files = []
+          for path in model_dir.glob('*.json'):
+              payload = json.loads(path.read_text(encoding='utf-8'))
+              changed = False
+              for model in payload.get('models', []):
+                  if model.get('retail_status') == 'DISCONTINUED':
+                      model['retail_status'] = 'HISTORICAL'
+                      changed = True
+              if changed:
+                  path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+                  normalized_files.append(str(path))
+          print('NORMALIZED_RETAIL_STATUS', normalized_files)
+
           from automotive.vehicle_master.vehreg.catalog import Catalog
           from automotive.vehicle_master.vehreg.comparable_specs import SpecRegistry, SpecLedger
           from automotive.vehicle_master.vehreg.canonical_write import CanonicalWritePipeline
 
-          DATA = Path('automotive/vehicle_master/vehreg/data')
-          YEAR = 2026
           touched = {
               'aion.aion_y_plus','aion.aion_es','aion.aion_v','aion.aion_ut','aion.hyptec_ht',
               'audi.a1','audi.a4','audi.a5','audi.a6','audi.a6_etron','audi.a7','audi.a8',
@@ -74,9 +94,6 @@ jobs:
                       return key, str(values[0])
               return 'catalog', ''
 
-          def unit_for(key):
-              return registry.fields[key].canonical_unit
-
           def command_id(trim_id, field, tag):
               h = hashlib.sha1(f'{trim_id}|{field}|{tag}'.encode()).hexdigest()[:24]
               return f'repair99-{h}'
@@ -84,11 +101,12 @@ jobs:
           def add_fact(trim, field, state, value=None, qualifiers=None, source='catalog', source_ref='', observed='2026-09-26', tag='derived'):
               if field in existing_by_trim[trim.id]:
                   return False
+              definition = registry.fields[field]
               fact = {
                   'field_key': field,
                   'value_state': state,
                   'value': value,
-                  'unit': unit_for(field) if state == 'KNOWN' and registry.fields[field].value_type.value == 'NUMBER' else '',
+                  'unit': definition.canonical_unit if state == 'KNOWN' and definition.value_type.value == 'NUMBER' else '',
                   'qualifiers': qualifiers or {},
                   'observed_at': observed,
                   'verification_status': 'VERIFIED',
@@ -96,7 +114,7 @@ jobs:
                   'source_ref': source_ref,
                   'source_locator': source_ref,
               }
-              raw = {
+              pipeline.apply({
                   'command_id': command_id(trim.id, field, tag),
                   'operation': 'APPEND_SPEC',
                   'year': YEAR,
@@ -105,8 +123,7 @@ jobs:
                   'canonical_id': trim.id,
                   'payload': fact,
                   'submitted_at': '2026-09-26T00:00:00+07:00',
-              }
-              pipeline.apply(raw)
+              })
               existing_by_trim[trim.id].setdefault(field, []).append({**fact, 'trim_id': trim.id})
               return True
 
@@ -121,21 +138,23 @@ jobs:
                       raw.pop('fact_id', None)
                       raw.pop('trim_id', None)
                       raw['field_key'] = field
-                      cmd = {
+                      pipeline.apply({
                           'command_id': command_id(trim.id, field, f'eco-{eco_uuid}'),
-                          'operation': 'APPEND_SPEC', 'year': YEAR,
+                          'operation': 'APPEND_SPEC',
+                          'year': YEAR,
                           'actor': 'tdr-repair99',
                           'reason': f'Promote exact ECO Sticker evidence {eco_uuid} already referenced by MarketTrim',
-                          'canonical_id': trim.id, 'payload': raw,
+                          'canonical_id': trim.id,
+                          'payload': raw,
                           'submitted_at': '2026-09-26T00:00:00+07:00',
-                      }
-                      pipeline.apply(cmd)
+                      })
                       existing_by_trim[trim.id].setdefault(field, []).append({**raw, 'trim_id': trim.id})
                       added_eco += 1
 
               src_name, src_ref = source_for(trim)
               known = {
                   'identity.powertrain': trim.powertrain.value,
+                  'vehicle.model_year': YEAR,
                   'vehicle.seats': trim.seats,
                   'vehicle.length_mm': trim.length_mm,
                   'vehicle.width_mm': trim.width_mm,
@@ -155,7 +174,7 @@ jobs:
                   m = re.match(r'\s*(\d+)\s*[- ]?speed', trim.transmission, re.I)
                   if m:
                       known['powertrain.gear_count'] = int(m.group(1))
-                  elif 'single-speed' in trim.transmission.lower():
+                  elif 'single-speed' in trim.transmission.lower() or '1-speed' in trim.transmission.lower():
                       known['powertrain.gear_count'] = 1
               for field, value in known.items():
                   if field in registry.fields and value not in (None, '', 'UNKNOWN'):
@@ -197,7 +216,7 @@ jobs:
           git config user.name "TDR vehicle data bot"
           git config user.email "noreply@github.com"
           git rm .github/workflows/tmp-repair-touched-99.yml
-          git add automotive/vehicle_master/vehreg/data/2026/product/comparable_specs
+          git add automotive/vehicle_master/vehreg/data/2026/models automotive/vehicle_master/vehreg/data/2026/product/comparable_specs
           git commit -m "data(vehreg): repair 99-field coverage for touched models"
           git push origin HEAD:feature/vehreg-fill-batch-01
       - name: Upload coverage audit
