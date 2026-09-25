@@ -3,11 +3,21 @@ import {
   compareGroupDefinitions,
   compareValue,
   indexSpecFields,
+  qualifierContextKey,
   rowIsDifferent,
+  specGroupsForTrim,
   visibleCompareGroups,
+  type CompareRowKey,
   type CompareSpecField,
   type FreeCompareTrim,
 } from "../lib/free-compare.ts";
+
+/** The exact row key production code would generate for one field's
+ *  context -- callers (real ones and these tests alike) always ask for a
+ *  specific basis, never a bare key on a field that has more than one. */
+function rowKeyFor(fieldKey: string, qualifiers: Record<string, unknown>, qualifierNames: string[]): CompareRowKey {
+  return `spec:${fieldKey}::${qualifierContextKey(qualifiers, qualifierNames)}` as CompareRowKey;
+}
 import { paginateAll } from "../lib/paginate-all.ts";
 
 let failed = 0;
@@ -69,7 +79,7 @@ const FIELDS: CompareSpecField[] = [
     comparisonQualifiers: ["soc_from", "soc_to", "charger_power_kw"] },
 ];
 const definitions = indexSpecFields(FIELDS);
-const derived = compareGroupDefinitions(FIELDS).flatMap((group) => group.rows.map((row) => String(row.key)));
+const derived = compareGroupDefinitions([], FIELDS).flatMap((group) => group.rows.map((row) => String(row.key)));
 check("a registry field becomes a compare row without this file listing it",
   derived.includes("spec:safety.aeb"), true);
 check("a field a built-in row already shows is not printed twice",
@@ -132,10 +142,14 @@ const motorPower: FreeCompareTrim = {
     { field_key: "powertrain.max_power_kw", value: 130, value_state: "KNOWN", unit: "kW",
       qualifiers: { output_scope: "MOTOR", rating_basis: "PEAK" } }],
 };
+const systemPowerKey = rowKeyFor("powertrain.max_power_kw", { output_scope: "SYSTEM", rating_basis: "PEAK" },
+  ["output_scope", "rating_basis"]);
+const motorPowerKey = rowKeyFor("powertrain.max_power_kw", { output_scope: "MOTOR", rating_basis: "PEAK" },
+  ["output_scope", "rating_basis"]);
 check("a system power figure names its own scope, not just measurement_basis",
-  compareValue(systemPower, "spec:powertrain.max_power_kw", definitions), "150 kW (SYSTEM, PEAK)");
+  compareValue(systemPower, systemPowerKey, definitions), "150 kW (SYSTEM, PEAK)");
 check("a motor power figure reads distinctly from a system one",
-  compareValue(motorPower, "spec:powertrain.max_power_kw", definitions), "130 kW (MOTOR, PEAK)");
+  compareValue(motorPower, motorPowerKey, definitions), "130 kW (MOTOR, PEAK)");
 
 // A 10-80% DC charge time and a 30-80% one at a different charger power are
 // different claims wearing the same "25 min" / "30 min" clothes.
@@ -144,8 +158,74 @@ const dcFast: FreeCompareTrim = {
     { field_key: "charging.dc_time_min", value: 25, value_state: "KNOWN", unit: "min",
       qualifiers: { soc_from: 10, soc_to: 80, charger_power_kw: 150 } }],
 };
+const dcFastKey = rowKeyFor("charging.dc_time_min", { soc_from: 10, soc_to: 80, charger_power_kw: 150 },
+  ["soc_from", "soc_to", "charger_power_kw"]);
 check("a DC charge time names its SOC window and charger power",
-  compareValue(dcFast, "spec:charging.dc_time_min", definitions), "25 min (10→80% SOC @150kW)");
+  compareValue(dcFast, dcFastKey, definitions), "25 min (10→80% SOC @150kW)");
+
+console.log("\nfree compare — a field with more than one qualifier context is more than one row, not one guessed row");
+{
+  // The bug this fixes: resolvedSpec() used to pick whichever fact came
+  // first, so a trim carrying both a WLTP and an NEDC range fact silently
+  // showed only one of them, and the winner engine's own fail-closed
+  // ambiguity check never reached the reader as an explanation. Now each
+  // context is its own row -- ev.rated_range_km needs its own declared
+  // qualifier for that, added here rather than to the shared FIELDS above so
+  // the pre-existing "range" tests (which rely on it staying one unqualified
+  // row) are untouched.
+  const rangeQualified = FIELDS.map((field) => field.key === "ev.rated_range_km"
+    ? { ...field, comparisonQualifiers: ["measurement_basis"] } : field);
+  const rangeDefs = indexSpecFields(rangeQualified);
+  const wltpOnly: FreeCompareTrim = {
+    id: "k", comparable_specs: [
+      { field_key: "ev.rated_range_km", value: 480, value_state: "KNOWN", unit: "km",
+        qualifiers: { measurement_basis: "WLTP" } }],
+  };
+  const bothBases: FreeCompareTrim = {
+    id: "l", comparable_specs: [
+      { field_key: "ev.rated_range_km", value: 480, value_state: "KNOWN", unit: "km",
+        qualifiers: { measurement_basis: "WLTP" } },
+      { field_key: "ev.rated_range_km", value: 510, value_state: "KNOWN", unit: "km",
+        qualifiers: { measurement_basis: "NEDC" } },
+    ],
+  };
+  const rangeRows = visibleCompareGroups([wltpOnly, bothBases], false, rangeQualified)
+    .flatMap((group) => group.rows).filter((row) => row.key.startsWith("range"));
+  check("two distinct contexts across the compared trims produce two rows",
+    rangeRows.length, 2);
+  const wltpRow = rangeRows.find((row) => row.key.includes("WLTP"));
+  const nedcRow = rangeRows.find((row) => row.key.includes("NEDC"));
+  check("the WLTP row's label carries its own context, not just the field's bare name",
+    wltpRow?.label, "ระยะทางที่ผู้ผลิตประกาศ — WLTP");
+  check("the NEDC row's label carries its own context too",
+    nedcRow?.label, "ระยะทางที่ผู้ผลิตประกาศ — NEDC");
+  check("the trim with only a WLTP fact answers the WLTP row",
+    compareValue(wltpOnly, wltpRow!.key, rangeDefs), "480 km (WLTP)");
+  check("the dual-basis trim answers the WLTP row on its own WLTP fact",
+    compareValue(bothBases, wltpRow!.key, rangeDefs), "480 km (WLTP)");
+  check("the trim with no NEDC fact does not answer the NEDC row",
+    compareValue(wltpOnly, nedcRow!.key, rangeDefs), null);
+  check("the dual-basis trim answers the NEDC row on its own NEDC fact",
+    compareValue(bothBases, nedcRow!.key, rangeDefs), "510 km (NEDC)");
+
+  // The same split on a single trim's own page: one car legitimately quoting
+  // two DC charging times (10-80% and 30-80%) is two rows there too.
+  const dualCharging: FreeCompareTrim = {
+    id: "m", comparable_specs: [
+      { field_key: "charging.dc_time_min", value: 30, value_state: "KNOWN", unit: "min",
+        qualifiers: { soc_from: 10, soc_to: 80, charger_power_kw: 150 } },
+      { field_key: "charging.dc_time_min", value: 18, value_state: "KNOWN", unit: "min",
+        qualifiers: { soc_from: 30, soc_to: 80, charger_power_kw: 150 } },
+    ],
+  };
+  const chargingRows = specGroupsForTrim(dualCharging, FIELDS)
+    .flatMap((group) => group.rows).filter((row) => row.key.startsWith("spec:charging.dc_time_min"));
+  check("one trim with two SOC windows gets two rows on its own spec page",
+    chargingRows.length, 2);
+  check("each row's value carries only its own SOC window, not the other one's",
+    chargingRows.map((row) => row.value).sort(),
+    ["18 min (30→80% SOC @150kW)", "30 min (10→80% SOC @150kW)"].sort());
+}
 
 const specGroups = visibleCompareGroups([withSpecs, columnOnly], false, FIELDS);
 check("a spec group with no values at all stays hidden",

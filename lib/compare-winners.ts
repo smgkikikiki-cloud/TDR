@@ -17,25 +17,21 @@
  * deliberate, not an oversight: start conservative, widen the allowlist
  * later with product sign-off, never the other way around.
  *
- * The other half of "evidence-safe" is qualifiers. A registry field can
- * declare which qualifier names matter for it (comparisonQualifiers, e.g.
- * `measurement_basis`, `range_scope`, `soc_from`/`soc_to`) -- two facts are
- * only on the same measurement basis if every one of those qualifiers
- * matches exactly. A WLTP range and an NEDC range are both "range", but
- * they are not the same claim, so they never produce a winner against each
- * other; they just both display. Missing data works the same way: only a
- * fact with value_state KNOWN participates, an unknown boolean is never
- * "false", and a field needs at least two KNOWN, same-basis values before
- * any index can win.
- *
- * SpecLedger.resolved() is keyed by (field_key, qualifier_key), not just
- * field_key -- one trim can carry more than one KNOWN fact for the same
- * field (a WLTP range next to an NEDC one on the same car). Picking one of
- * those automatically would be exactly the kind of guess this feature
- * exists to avoid, so a trim with more than one KNOWN context for a field
- * makes the whole row fail closed (`comparable: false`) rather than
- * choosing a basis for it. Basis auto-selection is deliberately out of
- * scope here.
+ * The other half of "evidence-safe" is qualifiers. SpecLedger.resolved() is
+ * keyed by (field_key, qualifier_key), not just field_key -- one trim can
+ * carry more than one KNOWN fact for the same field (a WLTP range next to
+ * an NEDC one on the same car). Row identity in lib/free-compare.ts
+ * (compareGroupDefinitions/CompareRowKey) already turns each distinct
+ * qualifier context into its own row before this module ever sees a value,
+ * so "evaluate this row" never has to choose a basis: `contextForRow(key)`
+ * says exactly which context the row is for, and only a KNOWN fact whose
+ * own qualifiers resolve to that same context (qualifierContextKey)
+ * participates. A WLTP range and an NEDC range are both "range", but they
+ * land on two different rows and never produce a winner against each other.
+ * Missing data works the same way on top: only a fact with value_state
+ * KNOWN participates, an unknown boolean is never "false", and a field
+ * needs at least two KNOWN values on the row's own basis before any index
+ * can win.
  *
  * An exact tie is not a win either. Every known value agreeing (150 kW vs
  * 150 kW) leaves the row `comparable: true` but highlights nobody -- there
@@ -43,21 +39,19 @@
  * different: the two 204s really do beat the 180, so both are highlighted.
  */
 import {
-  registryFieldKeyForRow, resolvedSpecs, type CompareRowKey, type CompareSpecField,
-  type FreeCompareTrim, type ResolvedSpec, type SpecDefinitionIndex,
+  contextForRow, qualifierContextKey, registryFieldKeyForRow, resolvedSpecs,
+  type CompareRowKey, type CompareSpecField, type FreeCompareTrim, type ResolvedSpec,
+  type SpecDefinitionIndex,
 } from "./free-compare.ts";
 
 export type CompareWinnerMode = "QUANTITATIVE_WINNER" | "PRESENCE_ADVANTAGE" | "NEUTRAL";
 
 export type CompareWinnerEvaluation = {
   comparisonMode: CompareWinnerMode;
-  /** True only when at least two selected trims have exactly one KNOWN
-   *  value on the same measurement basis for this field -- i.e. a winner
-   *  *could* be shown, whether or not any index actually is one. A trim
-   *  with more than one KNOWN context for the field (see the module doc
-   *  comment) fails the whole row closed instead of guessing which one to
-   *  use. False means the row must render exactly as it would have before
-   *  this feature. */
+  /** True only when at least two selected trims have a KNOWN value on this
+   *  row's own qualifier context -- i.e. a winner *could* be shown, whether
+   *  or not any index actually is one. False means the row must render
+   *  exactly as it would have before this feature. */
   comparable: boolean;
   /** Indexes into the same trims array the row's `values` were built from.
    *  A partial tie for best lists every tied index; an exact tie across
@@ -129,60 +123,49 @@ export const PRESENCE_ADVANTAGE_FIELDS: ReadonlySet<string> = new Set([
   "charging.v2l_supported",
 ]);
 
-type KnownNumeric = { index: number; value: number; context: string };
+type KnownNumeric = { index: number; value: number };
 type KnownBoolean = { index: number; value: boolean };
 
-/** One string per known value's qualifier context, built only from the
- *  qualifier names the field itself declares as relevant. A field with no
- *  declared qualifiers (e.g. AC charging power) always resolves to the
- *  same empty context, which is correct: there is nothing about its
- *  measurement basis that could disagree. A qualifier the fact does not
- *  carry defaults to "", so a fact missing `range_scope` never silently
- *  matches one that states it explicitly -- the same fallback
- *  SpecFact.qualifier_key() uses on the Python side (comparable_specs.py). */
-function qualifierContext(qualifiers: Record<string, unknown> | null | undefined,
-                          qualifierNames: string[]): string {
-  return qualifierNames.map((name) => `${name}=${String(qualifiers?.[name] ?? "")}`).join("|");
+/** The one fact on this trim that belongs on this row -- KNOWN, and whose
+ *  own qualifiers resolve to the exact context the row was generated for.
+ *
+ *  Ordinarily at most one can match: SpecLedger.resolved() already dedupes
+ *  by (field_key, qualifier_key), so two facts sharing every
+ *  comparisonQualifiers value would have to collide at that step. If a
+ *  stale or hand-built payload still manages to carry two, picking one
+ *  would be exactly the kind of guess this feature exists to avoid -- so
+ *  that trim contributes no value to this row, same as having none at all,
+ *  rather than the row failing for every other trim too. */
+function knownFactForRow(trim: FreeCompareTrim, fieldKey: string, context: string,
+                         qualifierNames: string[]): ResolvedSpec | null {
+  const matches = resolvedSpecs(trim, fieldKey).filter((spec) =>
+    spec.value_state === "KNOWN" && qualifierContextKey(spec.qualifiers, qualifierNames) === context);
+  return matches.length === 1 ? matches[0] : null;
 }
 
-/** A trim's resolved facts for this field, filtered to KNOWN. More than one
- *  is an ambiguous basis on that trim alone -- the caller must fail closed
- *  rather than guess which context the trim's single displayed value
- *  belongs to (resolvedSpec() picks the first arbitrarily, for display
- *  only; see its doc comment). */
-function knownFactsFor(trim: FreeCompareTrim, fieldKey: string): ResolvedSpec[] {
-  return resolvedSpecs(trim, fieldKey).filter((spec) => spec.value_state === "KNOWN");
-}
-
-function knownNumericValues(trims: FreeCompareTrim[], fieldKey: string,
-                            qualifierNames: string[]): KnownNumeric[] | null {
+function knownNumericValues(trims: FreeCompareTrim[], fieldKey: string, context: string,
+                            qualifierNames: string[]): KnownNumeric[] {
   const known: KnownNumeric[] = [];
   for (let index = 0; index < trims.length; index++) {
-    const facts = knownFactsFor(trims[index], fieldKey);
-    if (facts.length > 1) return null; // ambiguous basis on this trim -- fail closed, no auto-selection
-    if (facts.length === 0) continue; // UNKNOWN/NOT_AVAILABLE/NOT_APPLICABLE/no fact at all
-    const value = typeof facts[0].value === "number" ? facts[0].value : Number(facts[0].value);
+    const fact = knownFactForRow(trims[index], fieldKey, context, qualifierNames);
+    if (!fact) continue;
+    const value = typeof fact.value === "number" ? fact.value : Number(fact.value);
     if (!Number.isFinite(value)) continue;
-    known.push({ index, value, context: qualifierContext(facts[0].qualifiers, qualifierNames) });
+    known.push({ index, value });
   }
   return known;
 }
 
-function evaluateQuantitative(trims: FreeCompareTrim[], fieldKey: string,
+function evaluateQuantitative(trims: FreeCompareTrim[], fieldKey: string, context: string,
+                              qualifierNames: string[],
                               definition: CompareSpecField): CompareWinnerEvaluation {
   const direction = definition.comparisonRule;
   if (direction !== "HIGHER_BETTER" && direction !== "LOWER_BETTER") return NOT_COMPARABLE;
 
-  const known = knownNumericValues(trims, fieldKey, definition.comparisonQualifiers || []);
-  if (known === null || known.length < 2) {
+  const known = knownNumericValues(trims, fieldKey, context, qualifierNames);
+  if (known.length < 2) {
     return { comparisonMode: "QUANTITATIVE_WINNER", comparable: false, bestIndexes: [] };
   }
-
-  // Every known value must be on the same measurement basis, or nobody can
-  // honestly be called the winner -- a 30-minute DC charge from 10-80% is
-  // not "slower" than a 25-minute one from 30-80%.
-  const contexts = new Set(known.map((row) => row.context));
-  if (contexts.size > 1) return { comparisonMode: "QUANTITATIVE_WINNER", comparable: false, bestIndexes: [] };
 
   // All known values agreeing exactly (150 vs 150) is not a comparative
   // advantage for anyone -- data is known and comparable, so the row stays
@@ -200,14 +183,13 @@ function evaluateQuantitative(trims: FreeCompareTrim[], fieldKey: string,
   return { comparisonMode: "QUANTITATIVE_WINNER", comparable: true, bestIndexes };
 }
 
-function evaluatePresence(trims: FreeCompareTrim[], fieldKey: string): CompareWinnerEvaluation {
+function evaluatePresence(trims: FreeCompareTrim[], fieldKey: string, context: string,
+                          qualifierNames: string[]): CompareWinnerEvaluation {
   const known: KnownBoolean[] = [];
   for (let index = 0; index < trims.length; index++) {
-    const facts = knownFactsFor(trims[index], fieldKey);
-    if (facts.length > 1) return { comparisonMode: "PRESENCE_ADVANTAGE", comparable: false, bestIndexes: [] };
-    if (facts.length === 0) continue; // never treat unknown as "does not have"
-    if (typeof facts[0].value !== "boolean") continue;
-    known.push({ index, value: facts[0].value });
+    const fact = knownFactForRow(trims[index], fieldKey, context, qualifierNames);
+    if (!fact || typeof fact.value !== "boolean") continue; // never treat unknown/absent as "does not have"
+    known.push({ index, value: fact.value });
   }
   if (known.length < 2) return { comparisonMode: "PRESENCE_ADVANTAGE", comparable: false, bestIndexes: [] };
 
@@ -221,18 +203,22 @@ function evaluatePresence(trims: FreeCompareTrim[], fieldKey: string): CompareWi
 }
 
 /** The one entry point the compare API route calls per row. Everything
- *  upstream (which field backs this row, the registry's rule and
- *  qualifiers for it) comes from lib/free-compare.ts and the loaded
- *  registry -- this function adds no comparison metadata of its own beyond
- *  the two allowlists above. */
+ *  upstream (which field backs this row, which qualifier context it's for,
+ *  the registry's rule and qualifiers for it) comes from lib/free-compare.ts
+ *  and the loaded registry -- this function adds no comparison metadata of
+ *  its own beyond the two allowlists above. */
 export function evaluateCompareWinner(trims: FreeCompareTrim[], key: CompareRowKey,
                                       definitions: SpecDefinitionIndex): CompareWinnerEvaluation {
   const fieldKey = registryFieldKeyForRow(key);
   if (!fieldKey) return NOT_COMPARABLE;
   const definition = definitions.get(fieldKey);
   if (!definition) return NOT_COMPARABLE;
+  const context = contextForRow(key);
+  const qualifierNames = definition.comparisonQualifiers || [];
 
-  if (QUANTITATIVE_WINNER_FIELDS.has(fieldKey)) return evaluateQuantitative(trims, fieldKey, definition);
-  if (PRESENCE_ADVANTAGE_FIELDS.has(fieldKey)) return evaluatePresence(trims, fieldKey);
+  if (QUANTITATIVE_WINNER_FIELDS.has(fieldKey))
+    return evaluateQuantitative(trims, fieldKey, context, qualifierNames, definition);
+  if (PRESENCE_ADVANTAGE_FIELDS.has(fieldKey))
+    return evaluatePresence(trims, fieldKey, context, qualifierNames);
   return NOT_COMPARABLE;
 }

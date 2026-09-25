@@ -82,8 +82,16 @@ export type BuiltinCompareRowKey =
 
 /** A row is either one of the built-in rows above -- which draw on model-level
  *  and price data the spec ledger does not carry -- or a comparable-spec field,
- *  named by its registry key. */
-export type CompareRowKey = BuiltinCompareRowKey | `spec:${string}`;
+ *  named by its registry key. Either can carry a `::`-separated qualifier
+ *  context suffix (see qualifierContextKey/contextRowKey below): a field with
+ *  more than one measurement basis in play (a WLTP range next to an NEDC one)
+ *  is more than one row, not one row with an ambiguous value. A field nobody
+ *  has ever recorded a second basis for keeps the exact bare key it always
+ *  had -- the suffix only appears when there is something to disambiguate. */
+export type CompareRowKey =
+  | BuiltinCompareRowKey
+  | `${BuiltinCompareRowKey}::${string}`
+  | `spec:${string}`;
 
 export type CompareRowDefinition = {
   key: CompareRowKey;
@@ -208,32 +216,67 @@ const SPEC_BACKED_ROWS: Partial<Record<BuiltinCompareRowKey, string>> = {
   seats: "vehicle.seats",
 };
 
-/** The raw resolved fact behind a row, exactly as the ledger wrote it --
- *  unformatted, with its value_state and qualifiers intact. Winner
- *  highlighting (lib/compare-winners.ts) needs this, not the display string
- *  formatSpecValue produces: a qualifier-compatibility check can't be done
- *  on "150 kW (WLTP)" text. */
-export function resolvedSpec(trim: FreeCompareTrim, fieldKey: string): ResolvedSpec | null {
-  const rows = trim.comparable_specs;
-  if (!Array.isArray(rows)) return null;
-  return rows.find((row) => row && row.field_key === fieldKey) || null;
-}
-
-/** Every resolved fact for one field on one trim, not just the first.
+/** Every resolved fact for one field on one trim.
  *
  *  SpecLedger.resolved() (vehreg/comparable_specs.py) is keyed by
  *  (field_key, qualifier_key), so a single trim can legitimately carry more
  *  than one fact for the same field under different measurement contexts --
  *  a WLTP range next to an NEDC one, two DC charging times for two SOC
- *  windows. resolvedSpec() above picks whichever comes first, which is fine
- *  for display (both wind up on screen somewhere), but winner highlighting
- *  (lib/compare-winners.ts) must see all of them: more than one KNOWN
- *  context on a single trim is exactly the ambiguity it fails closed on
- *  rather than silently picking one to rank. */
+ *  windows. Row identity (see qualifierContextKey/contextRowKey below)
+ *  already splits those into separate rows before either display or winner
+ *  highlighting ever looks at a value, so both read this the same way:
+ *  filter to the one fact whose own context matches the row being rendered. */
 export function resolvedSpecs(trim: FreeCompareTrim, fieldKey: string): ResolvedSpec[] {
   const rows = trim.comparable_specs;
   if (!Array.isArray(rows)) return [];
   return rows.filter((row) => row && row.field_key === fieldKey);
+}
+
+/** One string per qualifier context, built only from the qualifier names the
+ *  field itself declares as relevant (comparisonQualifiers). A field with no
+ *  declared qualifiers (e.g. AC charging power) always resolves to the same
+ *  empty context, which is correct: there is nothing about its measurement
+ *  basis that could disagree. A qualifier the fact does not carry defaults to
+ *  "", so a fact missing `range_scope` never silently matches one that states
+ *  it explicitly -- the same fallback SpecFact.qualifier_key() uses on the
+ *  Python side (comparable_specs.py). This is the single definition row
+ *  generation (below), display (compareValue) and winner highlighting
+ *  (lib/compare-winners.ts) all share, so none of the three can drift from
+ *  what the others consider "the same claim". */
+export function qualifierContextKey(qualifiers: Record<string, unknown> | null | undefined,
+                                    qualifierNames: string[]): string {
+  return qualifierNames.map((name) => `${name}=${String(qualifiers?.[name] ?? "")}`).join("|");
+}
+
+/** A row's key with its qualifier-context part, if any, split off -- "" for
+ *  a bare key (a field with only one basis in play keeps its plain key). */
+function splitRowKey(key: CompareRowKey): { base: string; context: string } {
+  const i = key.indexOf("::");
+  return i === -1 ? { base: key, context: "" } : { base: key.slice(0, i), context: key.slice(i + 2) };
+}
+
+/** The context-qualified row key for one field's context, or the bare base
+ *  key when there is nothing to disambiguate -- see CompareRowKey's doc
+ *  comment for why an unambiguous field's key never changes shape. */
+function contextRowKey(base: string, context: string): CompareRowKey {
+  return (context ? `${base}::${context}` : base) as CompareRowKey;
+}
+
+/** The single KNOWN fact on this trim whose own qualifier context matches the
+ *  one this row was generated for, or null.
+ *
+ *  Ordinarily at most one fact can match: SpecLedger.resolved() already
+ *  dedupes by (field_key, qualifier_key), so two facts sharing every
+ *  comparisonQualifiers value would have to collide at that step. If a stale
+ *  or hand-built payload still manages to carry two, picking one would be
+ *  exactly the kind of guess this whole scheme exists to avoid -- so that
+ *  trim's cell renders blank instead, same as "no fact at all", rather than
+ *  the row failing for every other trim too. */
+function factForContext(trim: FreeCompareTrim, fieldKey: string, context: string,
+                        qualifierNames: string[]): ResolvedSpec | null {
+  const matches = resolvedSpecs(trim, fieldKey).filter((spec) =>
+    spec.value_state === "KNOWN" && qualifierContextKey(spec.qualifiers, qualifierNames) === context);
+  return matches.length === 1 ? matches[0] : null;
 }
 
 /** The registry field key a row's value ultimately reads from, if any --
@@ -242,8 +285,17 @@ export function resolvedSpecs(trim: FreeCompareTrim, fieldKey: string): Resolved
  *  backing at all (price, campaign, cab_type, ...): there is no comparable
  *  spec fact behind those, so winner highlighting never applies to them. */
 export function registryFieldKeyForRow(key: CompareRowKey): string | null {
-  if (key.startsWith("spec:")) return key.slice(5);
-  return SPEC_BACKED_ROWS[key as BuiltinCompareRowKey] || null;
+  const { base } = splitRowKey(key);
+  if (base.startsWith("spec:")) return base.slice(5);
+  return SPEC_BACKED_ROWS[base as BuiltinCompareRowKey] || null;
+}
+
+/** The qualifier context a row's key was generated for -- "" for a field
+ *  with only one basis in play. lib/compare-winners.ts uses this the same
+ *  way compareValue below does, so a row is always evaluated on exactly the
+ *  basis its label says it is. */
+export function contextForRow(key: CompareRowKey): string {
+  return splitRowKey(key).context;
 }
 
 /** Qualifier names lib/compare-winners.ts special-cases into a combined,
@@ -340,19 +392,27 @@ export function formatSpecValue(spec: ResolvedSpec | null,
 }
 
 export function compareValue(trim: FreeCompareTrim, key: CompareRowKey,
-                             definitions?: Map<string, { valueType?: string; canonicalUnit?: string;
-                                                         displayPrecision?: number | null;
-                                                         comparisonQualifiers?: string[] }>): string | null {
-  if (key.startsWith("spec:")) {
-    const fieldKey = key.slice(5);
-    return formatSpecValue(resolvedSpec(trim, fieldKey), definitions?.get(fieldKey));
+                             definitions?: SpecDefinitionIndex): string | null {
+  const { base, context } = splitRowKey(key);
+  if (base.startsWith("spec:")) {
+    const fieldKey = base.slice(5);
+    const definition = definitions?.get(fieldKey);
+    const qualifierNames = definition?.comparisonQualifiers || [];
+    return formatSpecValue(factForContext(trim, fieldKey, context, qualifierNames), definition);
   }
-  const backing = SPEC_BACKED_ROWS[key as BuiltinCompareRowKey];
+  const backing = SPEC_BACKED_ROWS[base as BuiltinCompareRowKey];
   if (backing) {
-    const fromLedger = formatSpecValue(resolvedSpec(trim, backing), definitions?.get(backing));
+    const definition = definitions?.get(backing);
+    const qualifierNames = definition?.comparisonQualifiers || [];
+    const fromLedger = formatSpecValue(factForContext(trim, backing, context, qualifierNames), definition);
     if (fromLedger !== null) return fromLedger;
+    // The flat MarketTrim column behind a built-in row (trim.published_range_km,
+    // trim.torque_nm, ...) carries no qualifier metadata of its own -- it can
+    // only ever answer the bare "" context, never stand in for a row asking
+    // specifically for the WLTP or the 10-80% SOC basis.
+    if (context !== "") return null;
   }
-  switch (key as BuiltinCompareRowKey) {
+  switch (base as BuiltinCompareRowKey) {
     case "price": return baht(trim.price_baht);
     case "campaign": return activeCampaign(trim);
     case "segment": return trim.segment || null;
@@ -450,21 +510,71 @@ export function indexSpecFields(fields: CompareSpecField[]): SpecDefinitionIndex
   return new Map(fields.map((field) => [field.key, field]));
 }
 
+/** Every qualifier context worth its own row for one field, across the given
+ *  trims -- "" (no declared qualifiers, or nothing but the flat MarketTrim
+ *  column) is always a candidate, plus one entry per distinct context a KNOWN
+ *  fact actually carries. A field nobody has ever recorded a second basis for
+ *  yields exactly one candidate ("") and so expands back into its own
+ *  original single row; a field with a WLTP fact on one trim and an NEDC one
+ *  on another yields both, as two rows, before either trim's value is looked
+ *  up. Order is deterministic (bare first, then alphabetical) so the table
+ *  does not reshuffle between renders of the same data. */
+function discoverContexts(trims: FreeCompareTrim[], fieldKey: string, qualifierNames: string[]):
+    { context: string; qualifiers: Record<string, unknown> | null | undefined }[] {
+  const seen = new Map<string, Record<string, unknown> | null | undefined>([["", undefined]]);
+  for (const trim of trims) {
+    for (const spec of resolvedSpecs(trim, fieldKey)) {
+      if (spec.value_state !== "KNOWN") continue;
+      const context = qualifierContextKey(spec.qualifiers, qualifierNames);
+      if (!seen.has(context)) seen.set(context, spec.qualifiers);
+    }
+  }
+  return [...seen.entries()]
+    .map(([context, qualifiers]) => ({ context, qualifiers }))
+    .sort((a, b) => (a.context === b.context ? 0 : a.context === "" ? -1 : b.context === "" ? 1
+      : a.context.localeCompare(b.context)));
+}
+
+/** One field/built-in row's base key and label, expanded into one row per
+ *  context discoverContexts finds worth showing. `fieldKey` null means this
+ *  row has no ledger backing at all (price, campaign, cab_type, ...) -- there
+ *  is no qualifier concept for those, so they always stay exactly one row. */
+function expandRow(baseKey: string, baseLabel: string, fieldKey: string | null,
+                   trims: FreeCompareTrim[], definitions: SpecDefinitionIndex): CompareRowDefinition[] {
+  if (!fieldKey) return [{ key: baseKey as CompareRowKey, label: baseLabel }];
+  const qualifierNames = definitions.get(fieldKey)?.comparisonQualifiers || [];
+  return discoverContexts(trims, fieldKey, qualifierNames).map(({ context, qualifiers }) => {
+    const suffix = qualifierSuffix(qualifiers, qualifierNames);
+    return {
+      key: contextRowKey(baseKey, context),
+      label: suffix ? `${baseLabel} — ${suffix}` : baseLabel,
+    };
+  });
+}
+
 /** The built-in groups, then one group per registry group.
  *
  *  The registry is the source of which fields exist and what they are called,
  *  so a field added to the canonical registry is comparable here without this
  *  file changing. Fields a built-in row already covers are skipped rather than
- *  printed twice. */
-export function compareGroupDefinitions(fields: CompareSpecField[] = []): CompareGroupDefinition[] {
+ *  printed twice. Row generation needs to see the trims being compared (or
+ *  the single trim a trim page asks about) because which qualifier contexts
+ *  are worth their own row is a property of the data, not of the registry --
+ *  the registry only says which qualifier *names* a field cares about. */
+export function compareGroupDefinitions(trims: FreeCompareTrim[],
+                                        fields: CompareSpecField[] = []): CompareGroupDefinition[] {
+  const definitions = indexSpecFields(fields);
   const groups: CompareGroupDefinition[] = FREE_COMPARE_GROUPS.map((group) => ({
-    ...group, rows: [...group.rows],
+    ...group,
+    rows: group.rows.flatMap((row) =>
+      expandRow(row.key, row.label, SPEC_BACKED_ROWS[row.key as BuiltinCompareRowKey] || null, trims, definitions)),
   }));
   const byGroup = new Map<string, CompareRowDefinition[]>();
   for (const field of fields) {
     if (COVERED_BY_BUILTIN.has(field.key)) continue;
     const bucket = byGroup.get(field.group) || [];
-    bucket.push({ key: `spec:${field.key}`, label: field.labelTh || field.labelEn || field.key });
+    bucket.push(...expandRow(`spec:${field.key}`, field.labelTh || field.labelEn || field.key,
+      field.key, trims, definitions));
     byGroup.set(field.group, bucket);
   }
   const ordered = [
@@ -484,10 +594,12 @@ export function compareGroupDefinitions(fields: CompareSpecField[] = []): Compar
  *  instead of four, so they share the grouping, the headings and the
  *  formatting rather than growing a second copy that drifts. Empty groups are
  *  dropped; a field with no fact is simply absent, which is what a blank cell
- *  already means everywhere else on the site. */
+ *  already means everywhere else on the site. A field this one trim carries
+ *  under two contexts (a WLTP range next to an NEDC one) is two rows here
+ *  too, not one row picking either arbitrarily. */
 export function specGroupsForTrim(trim: FreeCompareTrim, fields: CompareSpecField[] = []) {
   const definitions = indexSpecFields(fields);
-  return compareGroupDefinitions(fields)
+  return compareGroupDefinitions([trim], fields)
     .map((group) => ({
       title: group.title,
       rows: group.rows
@@ -501,7 +613,7 @@ export function specGroupsForTrim(trim: FreeCompareTrim, fields: CompareSpecFiel
 export function visibleCompareGroups(trims: FreeCompareTrim[], differencesOnly = false,
                                      fields: CompareSpecField[] = []) {
   const definitions = indexSpecFields(fields);
-  return compareGroupDefinitions(fields)
+  return compareGroupDefinitions(trims, fields)
     .map((group) => ({
       ...group,
       rows: group.rows.filter((row) => rowHasAnyValue(trims, row.key, definitions)
