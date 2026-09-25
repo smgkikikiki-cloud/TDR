@@ -17,7 +17,7 @@ import unicodedata
 from vehreg.catalog import Catalog, DATA_DIR, DEFAULT_YEAR
 from vehreg.entities import to_jsonable
 from vehreg.product import ProductMaster
-from vehreg.retail_scope import scoped_siblings_by_model
+from vehreg.retail_scope import active_generations_of, scoped_siblings_by_model
 
 
 SCHEMA_VERSION = 1
@@ -104,9 +104,6 @@ class ReleaseBuilder:
         claimed_tdr_ids: set[str] = set()
         review: list[dict] = []
 
-        # Reviewed overrides win over legacy source markers; several old TDR
-        # rows retained pre-correction IDs after the canonical catalog moved a
-        # marque (Deepal/Jaecoo) or merged an alias (Galaxy E5 -> EX5).
         for canonical_id, tdr_id in self.overrides.get("models", {}).items():
             row = by_id.get(tdr_id)
             if canonical_id not in catalog.models or row is None or tdr_id in claimed_tdr_ids:
@@ -116,7 +113,6 @@ class ReleaseBuilder:
             mapped[canonical_id] = row
             claimed_tdr_ids.add(tdr_id)
 
-        # An explicit source marker is authoritative when it names a real model.
         for row in by_id.values():
             source = _explicit_source(row.get("notes"))
             source = self.overrides.get("source_aliases", {}).get(source, source)
@@ -163,7 +159,6 @@ class ReleaseBuilder:
                     "candidate_slugs": sorted(r.get("slug") or "" for r in candidates.values()),
                 })
 
-        # TDR-only rows are retained for manual review; publishing never deletes them.
         for row in by_id.values():
             if row["id"] not in claimed_tdr_ids:
                 review.append({
@@ -197,17 +192,8 @@ class ReleaseBuilder:
         for trim in catalog.trims.values():
             trims_by_generation.setdefault(trim.generation_id, []).append(trim)
 
-        # retail_price_min/max is a claim about what a buyer can order
-        # *today*: it must only ever aggregate the model's own
-        # confidently-resolved current generation, filtered to trims a
-        # HUMAN reviewer has not retired, and never anything from a model
-        # under active maintenance -- the same lifecycle scope price
-        # matching and the coverage backfill use (vehreg.retail_scope).
-        # generation_id/segment/etc. below stay on the existing display
-        # fallback: they are informational, not a price claim, and do not
-        # need to fail closed the same way.
         price_eligible_by_model = scoped_siblings_by_model(
-            catalog, data_dir=self.data_dir, year=self.year)
+            catalog, data_dir=self.data_dir, year=self.year, as_of=as_of)
 
         for model in sorted(catalog.models.values(), key=lambda row: row.id):
             tdr = model_map.get(model.id)
@@ -215,8 +201,13 @@ class ReleaseBuilder:
             generation_rows = sorted(
                 (g for g in catalog.generations.values() if g.model_id == model.id),
                 key=lambda g: (g.launched or "", g.id), reverse=True)
-            current_generation = next((g for g in generation_rows if not g.ended),
-                                      generation_rows[0] if generation_rows else None)
+            active_rows = sorted(
+                active_generations_of(catalog, model.id, as_of=as_of),
+                key=lambda g: (g.launched or "", g.id), reverse=True)
+            current_generation = (
+                active_rows[0] if active_rows else
+                (generation_rows[0] if generation_rows else None)
+            )
             generation_ids = {g.id for g in generation_rows}
             model_variants = [v for v in catalog.variants.values()
                               if v.generation_id in generation_ids]
@@ -244,23 +235,29 @@ class ReleaseBuilder:
                 "retail_price_max": max(current_amounts) if current_amounts else None,
                 "payload": {
                     **to_jsonable(asdict(model)),
-                    "brand": {"id": brand.id, "slug": brand_map.get(brand.id, {}).get("slug") or _slug(brand.id),
-                              "name_en": brand.name_en, "name_th": brand.name_th},
+                    "brand": {
+                        "id": brand.id,
+                        "slug": brand_map.get(brand.id, {}).get("slug") or _slug(brand.id),
+                        "name_en": brand.name_en, "name_th": brand.name_th,
+                    },
                     "generation": current_generation.code if current_generation else None,
                     "seats": current_generation.seats if current_generation else None,
                     "powertrains": powertrains,
-                    "market_position": (editorial.get("market_position")
-                                        or brand.brand_segment.value.title()),
+                    "market_position": (
+                        editorial.get("market_position") or brand.brand_segment.value.title()),
                     "image_url": editorial.get("image_url"),
                     "consumer_description": editorial.get("consumer_description"),
                     "featured": bool(editorial.get("featured")),
-                    "production_type": (import_types[0] if len(import_types) == 1
-                                        else "MIXED" if import_types else editorial.get("production_type")),
-                    "production_country": (origin_countries[0] if len(origin_countries) == 1
-                                           else "MIXED" if origin_countries else editorial.get("production_country")),
-                    "launch_year": (int(current_generation.launched[:4])
-                                    if current_generation and current_generation.launched
-                                    else editorial.get("launch_year")),
+                    "production_type": (
+                        import_types[0] if len(import_types) == 1
+                        else "MIXED" if import_types else editorial.get("production_type")),
+                    "production_country": (
+                        origin_countries[0] if len(origin_countries) == 1
+                        else "MIXED" if origin_countries else editorial.get("production_country")),
+                    "launch_year": (
+                        int(current_generation.launched[:4])
+                        if current_generation and current_generation.launched
+                        else editorial.get("launch_year")),
                     "launch_quarter": editorial.get("launch_quarter"),
                 },
             })
@@ -278,8 +275,10 @@ class ReleaseBuilder:
                         "canonical_id": trim.id, "model_id": model.id,
                         "generation_id": generation.id, "variant_id": trim.variant_id,
                         "name": trim.name, "powertrain": trim.powertrain.value,
-                        "status": ("discontinued" if generation.ended and generation.ended <= as_of.isoformat()
-                                   else "current"),
+                        "status": (
+                            "discontinued"
+                            if generation.ended and generation.ended <= as_of.isoformat()
+                            else "current"),
                         "payload": detail,
                         "current_list_price": detail["current_list_price"],
                         "campaign_quote": quote,
@@ -332,11 +331,11 @@ def main(argv=None) -> int:
     parser.add_argument("--overrides", type=Path)
     args = parser.parse_args(argv)
     inventory = json.loads(args.inventory.read_text(encoding="utf-8"))
-    overrides = (json.loads(args.overrides.read_text(encoding="utf-8"))
-                 if args.overrides else {})
-    release = ReleaseBuilder(inventory, year=args.year,
-                             canonical_revision=args.revision,
-                             overrides=overrides).build(as_of=args.as_of)
+    overrides = (
+        json.loads(args.overrides.read_text(encoding="utf-8")) if args.overrides else {})
+    release = ReleaseBuilder(
+        inventory, year=args.year, canonical_revision=args.revision,
+        overrides=overrides).build(as_of=args.as_of)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(release, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({
@@ -349,4 +348,3 @@ def main(argv=None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
