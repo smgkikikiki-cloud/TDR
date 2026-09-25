@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "field_key": "battery.catalog_capacity_kwh",
+      "value_state": "KNOWN",
+      "value": 25.9,
+      "unit": "kWh",
+      "qualifiers": {},
+      "observed_at": "2026-09-26",
+      "verification_status": "VERIFIED",
+      "source": "official_audi",
+      "source_ref": "https://www.audi.co.th/en/models/a5/a5-sportback-e-hybrid/",
+      "source_locator": "https://www.audi.co.th/en/models/a5/a5-sportback-e-hybrid/",
+      "trim_id": "audi.a5.b10.trim.sportback_e_hybrid_quattro_tech_pro_phev",
+      "fact_id": "admin:audi.a5.b10.trim.sportback_e_hybrid_quattro_tech_pro_phev:battery.catalog_capacity_kwh"
+    }
+  ]
+}

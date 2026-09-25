@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "32725d214b7c0a4cb67ef2d4",
+    "command_id": "repair99-5913dcb275200a9e3f9ad11e",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6.c8.trim.avant_40_tfsi_s_line_hev",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "2d23d0e6c93bef007120eab2a28fcced73657b99cfc0b04907bd99641fd1c57f",
+    "after_hash": "eaad68c693302d99fbf7d5d0b2d86874c168e08befe8fdbc3dd77b5f2e85a1dd",
+    "before": [
+      1984,
+      "HEV",
+      "FWD",
+      "7-speed S tronic",
+      1467,
+      4939,
+      2026,
+      5,
+      2924,
+      1886
+    ],
+    "after": [
+      1984,
+      "HEV",
+      "FWD",
+      "7-speed S tronic",
+      1467,
+      4939,
+      2026,
+      5,
+      2924,
+      1886,
+      "7-speed S tronic"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a6.c8.trim.avant_40_tfsi_s_line_hev_powertrain.transmission_as_declared_3d50de565236.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "32725d214b7c0a4cb67ef2d4:spec",
+    "revision_id": "32725d214b7c0a4cb67ef2d4",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6.c8.trim.avant_40_tfsi_s_line_hev",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      1984,
+      "HEV",
+      "FWD",
+      "7-speed S tronic",
+      1467,
+      4939,
+      2026,
+      5,
+      2924,
+      1886,
+      "7-speed S tronic"
+    ]
+  }
+}

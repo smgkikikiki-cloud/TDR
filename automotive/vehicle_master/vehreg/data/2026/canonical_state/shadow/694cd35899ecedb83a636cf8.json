@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "694cd35899ecedb83a636cf8",
+    "command_id": "repair99-5a6508bc0404170a23cf5c8d",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6.c8.trim.a6_40_tfsi_s_line_sedan_ice",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "98253ced03669af5971ddd1c1bb54b25fc65a8e3de294569a0189cab07cb96fd",
+    "after_hash": "a77f1d8333a0fadd6e3b5055310c93176667fde8fefc41e7f964fe5c1f85d549",
+    "before": [
+      1984,
+      "HEV",
+      1457,
+      4939,
+      2026,
+      5,
+      2924,
+      1886
+    ],
+    "after": [
+      1984,
+      "HEV",
+      1457,
+      4939,
+      2026,
+      5,
+      2924,
+      1886,
+      "FWD"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a6.c8.trim.a6_40_tfsi_s_line_sedan_ice_powertrain.drivetrain_14c2ec1204d5.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "694cd35899ecedb83a636cf8:spec",
+    "revision_id": "694cd35899ecedb83a636cf8",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6.c8.trim.a6_40_tfsi_s_line_sedan_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      1984,
+      "HEV",
+      1457,
+      4939,
+      2026,
+      5,
+      2924,
+      1886,
+      "FWD"
+    ]
+  }
+}

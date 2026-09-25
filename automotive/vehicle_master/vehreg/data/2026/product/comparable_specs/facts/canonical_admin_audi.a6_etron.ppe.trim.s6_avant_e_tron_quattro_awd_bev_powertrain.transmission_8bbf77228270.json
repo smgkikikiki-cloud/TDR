@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "field_key": "powertrain.transmission",
+      "value_state": "KNOWN",
+      "value": "1-speed reduction gear",
+      "unit": "",
+      "qualifiers": {},
+      "observed_at": "2026-09-26",
+      "verification_status": "VERIFIED",
+      "source": "official_audi",
+      "source_ref": "https://www.audi.co.th/en/models/a6-e-tron/s6-avant-e-tron/",
+      "source_locator": "https://www.audi.co.th/en/models/a6-e-tron/s6-avant-e-tron/",
+      "trim_id": "audi.a6_etron.ppe.trim.s6_avant_e_tron_quattro_awd_bev",
+      "fact_id": "admin:audi.a6_etron.ppe.trim.s6_avant_e_tron_quattro_awd_bev:powertrain.transmission"
+    }
+  ]
+}

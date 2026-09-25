@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "30525ca9b3d43b318543762f",
+    "command_id": "repair99-ab144c10ef40c53c07f86533",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a4.b9_5.trim.avant_45_tfsi_quattro_s_line_black_edition_station_wagon_ice",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "5aa54f9ee0bb47b4ac5462beff4f03b676c5c9443ea0301c6226c95ef766647a",
+    "after_hash": "802b0ba096767c35a93b98406eca7938c30acc5227e6534e027867cca3654ce4",
+    "before": [
+      1984,
+      "245/35 R19",
+      "245/35 R19",
+      "245/35 R19",
+      "HEV",
+      "AWD",
+      "7-speed S tronic",
+      "7-speed S tronic",
+      1435,
+      4762,
+      2026,
+      5,
+      2820,
+      1847
+    ],
+    "after": [
+      1984,
+      "245/35 R19",
+      "245/35 R19",
+      "245/35 R19",
+      "HEV",
+      "AWD",
+      "7-speed S tronic",
+      "7-speed S tronic",
+      1435,
+      4762,
+      2026,
+      5,
+      2820,
+      1847,
+      7
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a4.b9_5.trim.avant_45_tfsi_quattro_s_line_black_edition_station_wagon_ice_powertrain.gear_count_8619aed9c2f3.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "30525ca9b3d43b318543762f:spec",
+    "revision_id": "30525ca9b3d43b318543762f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a4.b9_5.trim.avant_45_tfsi_quattro_s_line_black_edition_station_wagon_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      1984,
+      "245/35 R19",
+      "245/35 R19",
+      "245/35 R19",
+      "HEV",
+      "AWD",
+      "7-speed S tronic",
+      "7-speed S tronic",
+      1435,
+      4762,
+      2026,
+      5,
+      2820,
+      1847,
+      7
+    ]
+  }
+}

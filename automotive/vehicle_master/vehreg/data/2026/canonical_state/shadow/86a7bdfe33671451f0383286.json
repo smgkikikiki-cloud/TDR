@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "86a7bdfe33671451f0383286",
+    "command_id": "repair99-0483ccd840547654a20bbc7f",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a8.d5_facelift.trim.l_55_tfsi_quattro_prestige_ice",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "0f6e41c7e6b976e5daac99c1f2d8513b9517b27ee0dcf71c86c018f8fa34c967",
+    "after_hash": "225cb3a3b0c2e450db15aff5952446467a60cadcde316268b0cf51d6a9af997c",
+    "before": [
+      2995,
+      "265/40 R20",
+      "265/40 R20",
+      "HEV",
+      "AWD",
+      "8-speed tiptronic",
+      "8-speed tiptronic",
+      1488,
+      5320,
+      2026,
+      5,
+      3128,
+      1945
+    ],
+    "after": [
+      2995,
+      "265/40 R20",
+      "265/40 R20",
+      "HEV",
+      "AWD",
+      "8-speed tiptronic",
+      "8-speed tiptronic",
+      1488,
+      5320,
+      2026,
+      5,
+      3128,
+      1945,
+      "265/40 R20"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a8.d5_facelift.trim.l_55_tfsi_quattro_prestige_ice_fitment.tyre_size_29ac397648ac.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "86a7bdfe33671451f0383286:spec",
+    "revision_id": "86a7bdfe33671451f0383286",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a8.d5_facelift.trim.l_55_tfsi_quattro_prestige_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      2995,
+      "265/40 R20",
+      "265/40 R20",
+      "HEV",
+      "AWD",
+      "8-speed tiptronic",
+      "8-speed tiptronic",
+      1488,
+      5320,
+      2026,
+      5,
+      3128,
+      1945,
+      "265/40 R20"
+    ]
+  }
+}

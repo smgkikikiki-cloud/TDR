@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e9a874b39914d5fe03dcb7e5",
+    "command_id": "repair99-4017ab953e4f66fe46dd9bca",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.ppe.trim.a6_avant_e_tron_performance_rwd_bev",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "528d55565bd3b723aa2488481b0709f69c1a10ad8781535b2e374f0b4930e875",
+    "after_hash": "cadc233a5c79222331034570c6fdcb61aa9a85872b6f99091d37e2ac67552da7",
+    "before": [
+      100.0,
+      "245/40 R21",
+      "275/35 R21",
+      "BEV",
+      "RWD",
+      "1-speed reduction gear",
+      "1-speed reduction gear",
+      1527,
+      4928,
+      2026,
+      5,
+      2946,
+      1923
+    ],
+    "after": [
+      100.0,
+      "245/40 R21",
+      "275/35 R21",
+      "BEV",
+      "RWD",
+      "1-speed reduction gear",
+      "1-speed reduction gear",
+      1527,
+      4928,
+      2026,
+      5,
+      2946,
+      1923,
+      1
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.ppe.trim.a6_avant_e_tron_performance_rwd_bev_powertrain.gear_count_b8d91f7e6a6d.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e9a874b39914d5fe03dcb7e5:spec",
+    "revision_id": "e9a874b39914d5fe03dcb7e5",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.ppe.trim.a6_avant_e_tron_performance_rwd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      100.0,
+      "245/40 R21",
+      "275/35 R21",
+      "BEV",
+      "RWD",
+      "1-speed reduction gear",
+      "1-speed reduction gear",
+      1527,
+      4928,
+      2026,
+      5,
+      2946,
+      1923,
+      1
+    ]
+  }
+}

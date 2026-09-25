@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "98dcbb3c87de24898411a1b0",
+    "command_id": "repair99-e6684230620a9b3454f6b263",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6.c8.trim.a6_avant_45_tfsi_quattro_s_line_black_edition_ice",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "adef5665eb2383f15a449c1a2b847c2e9318a85ed3061ddf76c000d4ec962576",
+    "after_hash": "898d00e9ab83bbed1359c9bda02c932f1a1f24d3ce5eb3742c6fe44f8f3e51f6",
+    "before": [
+      "HEV",
+      1467,
+      4939,
+      2026,
+      5,
+      1886
+    ],
+    "after": [
+      "HEV",
+      1467,
+      4939,
+      2026,
+      5,
+      1886,
+      2924
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a6.c8.trim.a6_avant_45_tfsi_quattro_s_line_black_edition_ice_vehicle.wheelbase_mm_65b558fd2858.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "98dcbb3c87de24898411a1b0:spec",
+    "revision_id": "98dcbb3c87de24898411a1b0",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6.c8.trim.a6_avant_45_tfsi_quattro_s_line_black_edition_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      "HEV",
+      1467,
+      4939,
+      2026,
+      5,
+      1886,
+      2924
+    ]
+  }
+}

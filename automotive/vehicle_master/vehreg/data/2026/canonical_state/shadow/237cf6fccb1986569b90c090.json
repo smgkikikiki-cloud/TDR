@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "237cf6fccb1986569b90c090",
+    "command_id": "repair99-e4f3d6cf30b16a8dc5970441",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.ppe.trim.a6_sportback_e_tron_performance_rwd_bev",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "a898ac51c49465b611c2aaf8d381374252c8c725f0346cf83c6ca8cc581ba471",
+    "after_hash": "21baf7a0575b6997cafc6a70681d53d0299b884e6f9069f9bf36b59b7c6305b3",
+    "before": [
+      "BEV",
+      "RWD",
+      1487,
+      4928,
+      2026,
+      5,
+      2946,
+      1923
+    ],
+    "after": [
+      "BEV",
+      "RWD",
+      1487,
+      4928,
+      2026,
+      5,
+      2946,
+      1923,
+      "1-speed reduction gear"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.ppe.trim.a6_sportback_e_tron_performance_rwd_bev_powertrain.transmission_a76799e11979.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "237cf6fccb1986569b90c090:spec",
+    "revision_id": "237cf6fccb1986569b90c090",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.ppe.trim.a6_sportback_e_tron_performance_rwd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      "BEV",
+      "RWD",
+      1487,
+      4928,
+      2026,
+      5,
+      2946,
+      1923,
+      "1-speed reduction gear"
+    ]
+  }
+}

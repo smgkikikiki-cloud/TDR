@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7bb16b3d8b649e2cf073cec5",
+    "command_id": "repair99-6adec93cc68ee40056f69809",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a7.c8.trim.sportback_45_tfsi_quattro_s_line_black_edition_ice",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "df59308e05864bf13ac77d45224e6e9dcb106f3f8d18fe12c35430c0bddfb383",
+    "after_hash": "65524f4c864a7feb46403c9cb0562a286d75995b831213c450f1bd18d1e0c92c",
+    "before": [
+      "HEV",
+      4969,
+      2026,
+      5
+    ],
+    "after": [
+      "HEV",
+      4969,
+      2026,
+      5,
+      1908
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a7.c8.trim.sportback_45_tfsi_quattro_s_line_black_edition_ice_vehicle.width_mm_0d3dfedafaf9.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7bb16b3d8b649e2cf073cec5:spec",
+    "revision_id": "7bb16b3d8b649e2cf073cec5",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a7.c8.trim.sportback_45_tfsi_quattro_s_line_black_edition_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      "HEV",
+      4969,
+      2026,
+      5,
+      1908
+    ]
+  }
+}

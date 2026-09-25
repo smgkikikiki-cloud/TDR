@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ccaa662381008599ddef8442",
+    "command_id": "repair99-78070371985d70099c0bd7b3",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a8.d5_facelift.trim.l_60_tfsi_e_quattro_prestige_phev",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "18140318e4b808051b96d4b0fe3b682949d7434da31760d3c15acd7fc0a136a3",
+    "after_hash": "4b7c84c3b969b9beeac268f40b6736bb06dd743392aa8961efb4c655e2fbd101",
+    "before": [
+      17.9,
+      2995,
+      "265/40 R20",
+      "265/40 R20",
+      "PHEV",
+      "AWD",
+      "8-speed tiptronic",
+      "8-speed tiptronic",
+      1488,
+      5320,
+      2026,
+      5,
+      3128,
+      1945
+    ],
+    "after": [
+      17.9,
+      2995,
+      "265/40 R20",
+      "265/40 R20",
+      "PHEV",
+      "AWD",
+      "8-speed tiptronic",
+      "8-speed tiptronic",
+      1488,
+      5320,
+      2026,
+      5,
+      3128,
+      1945,
+      "265/40 R20"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a8.d5_facelift.trim.l_60_tfsi_e_quattro_prestige_phev_fitment.tyre_size_3851ddffeeb8.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ccaa662381008599ddef8442:spec",
+    "revision_id": "ccaa662381008599ddef8442",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a8.d5_facelift.trim.l_60_tfsi_e_quattro_prestige_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      17.9,
+      2995,
+      "265/40 R20",
+      "265/40 R20",
+      "PHEV",
+      "AWD",
+      "8-speed tiptronic",
+      "8-speed tiptronic",
+      1488,
+      5320,
+      2026,
+      5,
+      3128,
+      1945,
+      "265/40 R20"
+    ]
+  }
+}

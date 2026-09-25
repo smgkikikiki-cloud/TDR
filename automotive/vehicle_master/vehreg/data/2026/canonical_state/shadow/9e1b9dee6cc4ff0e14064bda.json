@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9e1b9dee6cc4ff0e14064bda",
+    "command_id": "repair99-6e87232b9b1437bd5e3027f7",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.ppe.trim.a6_sportback_e_tron_performance_rwd_bev",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "964a8635db7de961cc4dc3e7ce0d541cd7975a70e33f98eb3f8b11ca5383f54f",
+    "after_hash": "29833ffa4b289f224ddddcb5dbab4453aa94eeb85e76de32c9b8ea4c4a7da9c3",
+    "before": [
+      "BEV",
+      1487,
+      4928,
+      2026,
+      5,
+      2946,
+      1923
+    ],
+    "after": [
+      "BEV",
+      1487,
+      4928,
+      2026,
+      5,
+      2946,
+      1923,
+      "RWD"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.ppe.trim.a6_sportback_e_tron_performance_rwd_bev_powertrain.drivetrain_6ec201e5eb73.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9e1b9dee6cc4ff0e14064bda:spec",
+    "revision_id": "9e1b9dee6cc4ff0e14064bda",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.ppe.trim.a6_sportback_e_tron_performance_rwd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      "BEV",
+      1487,
+      4928,
+      2026,
+      5,
+      2946,
+      1923,
+      "RWD"
+    ]
+  }
+}

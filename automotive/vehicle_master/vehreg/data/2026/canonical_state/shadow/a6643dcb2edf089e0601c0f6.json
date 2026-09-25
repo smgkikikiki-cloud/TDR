@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a6643dcb2edf089e0601c0f6",
+    "command_id": "repair99-cb2921a03a0cff605a68d7cd",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.ppe.trim.s6_avant_e_tron_quattro_awd_bev",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "c6cd6c3560dced7def9885155183b32d0885e8e406c07c02f4029932c9b7430d",
+    "after_hash": "b8da71e30b6e5d59ba078a8af1cfad043ec96e4a16391256a74784c37cc215fd",
+    "before": [
+      100.0,
+      "245/40 R21",
+      "275/35 R21",
+      "BEV",
+      "AWD",
+      "1-speed reduction gear",
+      "1-speed reduction gear",
+      1504,
+      4928,
+      2026,
+      5,
+      2951,
+      1923
+    ],
+    "after": [
+      100.0,
+      "245/40 R21",
+      "275/35 R21",
+      "BEV",
+      "AWD",
+      "1-speed reduction gear",
+      "1-speed reduction gear",
+      1504,
+      4928,
+      2026,
+      5,
+      2951,
+      1923,
+      1
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.ppe.trim.s6_avant_e_tron_quattro_awd_bev_powertrain.gear_count_36bbff139d80.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a6643dcb2edf089e0601c0f6:spec",
+    "revision_id": "a6643dcb2edf089e0601c0f6",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.ppe.trim.s6_avant_e_tron_quattro_awd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      100.0,
+      "245/40 R21",
+      "275/35 R21",
+      "BEV",
+      "AWD",
+      "1-speed reduction gear",
+      "1-speed reduction gear",
+      1504,
+      4928,
+      2026,
+      5,
+      2951,
+      1923,
+      1
+    ]
+  }
+}

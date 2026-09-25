@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5d4d8a81e75e42606b7ba638",
+    "command_id": "repair99-7726176a910cc19babc2538d",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "4b13932b3496c855cfd7fc6c7fb1c0581279e7b4b7885c6825cf1e888ee1c30d",
+    "after_hash": "a3c7cfe58392d1ef8822caa18e6dcbb7cf336d9f56ea1e5e669acc15fdd69ee8",
+    "before": [
+      "BEV",
+      "FWD",
+      "single-speed",
+      "single-speed",
+      1545,
+      4810,
+      2026,
+      5,
+      2750,
+      1880
+    ],
+    "after": [
+      "BEV",
+      "FWD",
+      "single-speed",
+      "single-speed",
+      1545,
+      4810,
+      2026,
+      5,
+      2750,
+      1880,
+      55.2
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_battery.catalog_capacity_kwh_bbf22b403138.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5d4d8a81e75e42606b7ba638:spec",
+    "revision_id": "5d4d8a81e75e42606b7ba638",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      "BEV",
+      "FWD",
+      "single-speed",
+      "single-speed",
+      1545,
+      4810,
+      2026,
+      5,
+      2750,
+      1880,
+      55.2
+    ]
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2a2d251a909ab31e53440913",
+    "command_id": "repair99-4545cd01ed98e7f208be7089",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_ut.gen1.trim.500_long_range_bev",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "5bd4c2e3ea585e19b38ad276620d1a438404faf07579a1259b267695763f6fe1",
+    "after_hash": "2f427f9ef878c41395df1093037d69b4498b7a000e44b4b3af63de3d2a0d69c1",
+    "before": [
+      60,
+      "BEV",
+      "FWD",
+      "single-speed",
+      "single-speed",
+      1575,
+      4270,
+      2026,
+      5,
+      2750,
+      1850
+    ],
+    "after": [
+      60,
+      "BEV",
+      "FWD",
+      "single-speed",
+      "single-speed",
+      1575,
+      4270,
+      2026,
+      5,
+      2750,
+      1850,
+      "215/55 R17"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_aion.aion_ut.gen1.trim.500_long_range_bev_fitment.tyre_front_6c1c3c689546.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2a2d251a909ab31e53440913:spec",
+    "revision_id": "2a2d251a909ab31e53440913",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_ut.gen1.trim.500_long_range_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      60,
+      "BEV",
+      "FWD",
+      "single-speed",
+      "single-speed",
+      1575,
+      4270,
+      2026,
+      5,
+      2750,
+      1850,
+      "215/55 R17"
+    ]
+  }
+}

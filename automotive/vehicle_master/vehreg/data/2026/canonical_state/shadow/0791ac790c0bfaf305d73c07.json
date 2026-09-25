@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "0791ac790c0bfaf305d73c07",
+    "command_id": "repair99-0a2b280bccf8540617086ac4",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6.c8.trim.a6_avant_45_tfsi_quattro_s_line_black_edition_ice",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "e9f2db9d158bc72d3444f993bc1e6d08ff22a2a7597e87d36e8f9c667a8eb5b6",
+    "after_hash": "6712e0f563dd2436388d2359d537debc5c6c1238c5f01e07033e1c9724f2679d",
+    "before": [
+      1984,
+      "255/40 R20",
+      "255/40 R20",
+      "255/40 R20",
+      "HEV",
+      "AWD",
+      "7-speed S tronic",
+      "7-speed S tronic",
+      1467,
+      4939,
+      2026,
+      5,
+      2924,
+      1886
+    ],
+    "after": [
+      1984,
+      "255/40 R20",
+      "255/40 R20",
+      "255/40 R20",
+      "HEV",
+      "AWD",
+      "7-speed S tronic",
+      "7-speed S tronic",
+      1467,
+      4939,
+      2026,
+      5,
+      2924,
+      1886,
+      7
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a6.c8.trim.a6_avant_45_tfsi_quattro_s_line_black_edition_ice_powertrain.gear_count_f6ee2850f466.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "0791ac790c0bfaf305d73c07:spec",
+    "revision_id": "0791ac790c0bfaf305d73c07",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6.c8.trim.a6_avant_45_tfsi_quattro_s_line_black_edition_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      1984,
+      "255/40 R20",
+      "255/40 R20",
+      "255/40 R20",
+      "HEV",
+      "AWD",
+      "7-speed S tronic",
+      "7-speed S tronic",
+      1467,
+      4939,
+      2026,
+      5,
+      2924,
+      1886,
+      7
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "field_key": "vehicle.length_mm",
+      "value_state": "KNOWN",
+      "value": 4928,
+      "unit": "mm",
+      "qualifiers": {},
+      "observed_at": "2026-09-26",
+      "verification_status": "VERIFIED",
+      "source": "owner_directory",
+      "source_ref": "owner_directory_2026_09_13:010",
+      "source_locator": "owner_directory_2026_09_13:010",
+      "trim_id": "audi.a6_etron.ppe.trim.a6_sportback_e_tron_performance_rwd_bev",
+      "fact_id": "admin:audi.a6_etron.ppe.trim.a6_sportback_e_tron_performance_rwd_bev:vehicle.length_mm"
+    }
+  ]
+}

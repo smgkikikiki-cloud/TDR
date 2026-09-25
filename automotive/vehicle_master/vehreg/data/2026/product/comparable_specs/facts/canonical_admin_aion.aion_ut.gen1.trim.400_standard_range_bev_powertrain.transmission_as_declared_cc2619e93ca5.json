@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "field_key": "powertrain.transmission_as_declared",
+      "value_state": "KNOWN",
+      "value": "single-speed",
+      "unit": "",
+      "qualifiers": {},
+      "observed_at": "2026-09-26",
+      "verification_status": "VERIFIED",
+      "source": "official_gac",
+      "source_ref": "https://www.gacgroup.com/th-th/configuration/aion-ut/2024",
+      "source_locator": "https://www.gacgroup.com/th-th/configuration/aion-ut/2024",
+      "trim_id": "aion.aion_ut.gen1.trim.400_standard_range_bev",
+      "fact_id": "admin:aion.aion_ut.gen1.trim.400_standard_range_bev:powertrain.transmission_as_declared"
+    }
+  ]
+}

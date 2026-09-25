@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "42b97ace3af1d372f0d1be5a",
+    "command_id": "repair99-29811eb0cf94a0ac0de7dacf",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6.c8.trim.a6_avant_45_tfsi_quattro_s_line_black_edition_ice",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "d463ba9c179840ab2120ae6103e6680fe5c049944726cb14929fea8de0651c5a",
+    "after_hash": "bd722a231a34baf372d55a65efe0642726020a19efb0f83d33366cdceb518977",
+    "before": [
+      1984,
+      "255/40 R20",
+      "HEV",
+      "AWD",
+      "7-speed S tronic",
+      "7-speed S tronic",
+      1467,
+      4939,
+      2026,
+      5,
+      2924,
+      1886
+    ],
+    "after": [
+      1984,
+      "255/40 R20",
+      "HEV",
+      "AWD",
+      "7-speed S tronic",
+      "7-speed S tronic",
+      1467,
+      4939,
+      2026,
+      5,
+      2924,
+      1886,
+      "255/40 R20"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a6.c8.trim.a6_avant_45_tfsi_quattro_s_line_black_edition_ice_fitment.tyre_rear_0d592a250fc2.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "42b97ace3af1d372f0d1be5a:spec",
+    "revision_id": "42b97ace3af1d372f0d1be5a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6.c8.trim.a6_avant_45_tfsi_quattro_s_line_black_edition_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      1984,
+      "255/40 R20",
+      "HEV",
+      "AWD",
+      "7-speed S tronic",
+      "7-speed S tronic",
+      1467,
+      4939,
+      2026,
+      5,
+      2924,
+      1886,
+      "255/40 R20"
+    ]
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "029faeb6c9339b82ada9a268",
+    "command_id": "repair99-082eb1771ecae266eff5b18a",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_ut.gen1.trim.500_long_range_bev",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "8ae26941a349f2fb339d9a46031a50d22534622a3cffd6a7d9b50dc2db8a630a",
+    "after_hash": "1fb5f98111cc24a0ee0e3eb224e5c7c9f2aa051a4fc8cc312af107e1ca5606f8",
+    "before": [
+      "BEV",
+      1575,
+      4270,
+      2026,
+      5,
+      2750,
+      1850
+    ],
+    "after": [
+      "BEV",
+      1575,
+      4270,
+      2026,
+      5,
+      2750,
+      1850,
+      "FWD"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_aion.aion_ut.gen1.trim.500_long_range_bev_powertrain.drivetrain_415002101b53.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "029faeb6c9339b82ada9a268:spec",
+    "revision_id": "029faeb6c9339b82ada9a268",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_ut.gen1.trim.500_long_range_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      "BEV",
+      1575,
+      4270,
+      2026,
+      5,
+      2750,
+      1850,
+      "FWD"
+    ]
+  }
+}

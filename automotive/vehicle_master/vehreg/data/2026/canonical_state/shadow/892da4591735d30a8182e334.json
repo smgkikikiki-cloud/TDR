@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "892da4591735d30a8182e334",
+    "command_id": "repair99-a7475660274f061089dbf70c",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a8.d5_facelift.trim.l_60_tfsi_e_quattro_prestige_phev",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "8ac01faaeb0de5fbadf3985c2e9cb6d8eebf95e77e535d7ac6423dac20eb7521",
+    "after_hash": "39d1c0d27058d4f6503b74ae231e740bd33008f55bef5b078b3966862933b779",
+    "before": [
+      "PHEV",
+      1488,
+      5320,
+      2026,
+      5,
+      1945
+    ],
+    "after": [
+      "PHEV",
+      1488,
+      5320,
+      2026,
+      5,
+      1945,
+      3128
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a8.d5_facelift.trim.l_60_tfsi_e_quattro_prestige_phev_vehicle.wheelbase_mm_283d7144afb5.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "892da4591735d30a8182e334:spec",
+    "revision_id": "892da4591735d30a8182e334",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a8.d5_facelift.trim.l_60_tfsi_e_quattro_prestige_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      "PHEV",
+      1488,
+      5320,
+      2026,
+      5,
+      1945,
+      3128
+    ]
+  }
+}

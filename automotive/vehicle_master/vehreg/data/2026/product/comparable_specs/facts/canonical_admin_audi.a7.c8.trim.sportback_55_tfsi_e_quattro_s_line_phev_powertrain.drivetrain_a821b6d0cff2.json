@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "field_key": "powertrain.drivetrain",
+      "value_state": "KNOWN",
+      "value": "AWD",
+      "unit": "",
+      "qualifiers": {},
+      "observed_at": "2026-09-26",
+      "verification_status": "VERIFIED",
+      "source": "official_audi",
+      "source_ref": "https://www.audi.co.th/en/models/a7/a7-sportback-tfsi-e/",
+      "source_locator": "https://www.audi.co.th/en/models/a7/a7-sportback-tfsi-e/",
+      "trim_id": "audi.a7.c8.trim.sportback_55_tfsi_e_quattro_s_line_phev",
+      "fact_id": "admin:audi.a7.c8.trim.sportback_55_tfsi_e_quattro_s_line_phev:powertrain.drivetrain"
+    }
+  ]
+}

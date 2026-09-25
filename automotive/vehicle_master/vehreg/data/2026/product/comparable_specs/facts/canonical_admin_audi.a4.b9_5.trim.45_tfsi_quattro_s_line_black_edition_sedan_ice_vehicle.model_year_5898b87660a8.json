@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "field_key": "vehicle.model_year",
+      "value_state": "KNOWN",
+      "value": 2026,
+      "unit": "year",
+      "qualifiers": {},
+      "observed_at": "2026-09-26",
+      "verification_status": "VERIFIED",
+      "source": "owner_directory",
+      "source_ref": "owner_directory_2026_09_13:007",
+      "source_locator": "owner_directory_2026_09_13:007",
+      "trim_id": "audi.a4.b9_5.trim.45_tfsi_quattro_s_line_black_edition_sedan_ice",
+      "fact_id": "admin:audi.a4.b9_5.trim.45_tfsi_quattro_s_line_black_edition_sedan_ice:vehicle.model_year"
+    }
+  ]
+}

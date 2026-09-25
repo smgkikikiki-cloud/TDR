@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b3b8c898ffe9b044d8e0ab57",
+    "command_id": "repair99-771e6e559e4309a3933c774b",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_ut.gen1.trim.500_long_range_bev",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "3ac317e88e18a210a8ddc2405bd992358ca8129bfb2ea51ee6a63fc392e90c0b",
+    "after_hash": "c73043afba163e853f34719cdb2a0971b43197ccc04ed5b0d0f0c915a108ee49",
+    "before": [
+      "BEV",
+      "FWD",
+      "single-speed",
+      "single-speed",
+      1575,
+      4270,
+      2026,
+      5,
+      2750,
+      1850
+    ],
+    "after": [
+      "BEV",
+      "FWD",
+      "single-speed",
+      "single-speed",
+      1575,
+      4270,
+      2026,
+      5,
+      2750,
+      1850,
+      60
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_aion.aion_ut.gen1.trim.500_long_range_bev_battery.catalog_capacity_kwh_25b8854956b7.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b3b8c898ffe9b044d8e0ab57:spec",
+    "revision_id": "b3b8c898ffe9b044d8e0ab57",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_ut.gen1.trim.500_long_range_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      "BEV",
+      "FWD",
+      "single-speed",
+      "single-speed",
+      1575,
+      4270,
+      2026,
+      5,
+      2750,
+      1850,
+      60
+    ]
+  }
+}

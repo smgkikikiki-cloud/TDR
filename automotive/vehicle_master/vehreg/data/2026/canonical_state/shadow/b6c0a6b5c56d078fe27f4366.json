@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b6c0a6b5c56d078fe27f4366",
+    "command_id": "repair99-611b23edd6b9f21b4e308894",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "370be5d424fc70a1e2dd252d6b07ac73a1b6d531bc12f56a6da85b3a6b9e3d17",
+    "after_hash": "7c0cb17efb0181f9ac7743e79fd297c21c0df19a2dbe2131ffa4b3bbba260b34",
+    "before": [
+      "BEV",
+      "FWD",
+      "single-speed",
+      1545,
+      4810,
+      2026,
+      5,
+      2750,
+      1880
+    ],
+    "after": [
+      "BEV",
+      "FWD",
+      "single-speed",
+      1545,
+      4810,
+      2026,
+      5,
+      2750,
+      1880,
+      "single-speed"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_powertrain.transmission_as_declared_7d08386bd062.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b6c0a6b5c56d078fe27f4366:spec",
+    "revision_id": "b6c0a6b5c56d078fe27f4366",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      "BEV",
+      "FWD",
+      "single-speed",
+      1545,
+      4810,
+      2026,
+      5,
+      2750,
+      1880,
+      "single-speed"
+    ]
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9cad1f8c6beaefc5b95fc8e8",
+    "command_id": "repair99-9163ba68ab58f694aa2ca562",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a8.d5_facelift.trim.l_60_tfsi_e_quattro_prestige_phev",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "86b2577beaac50a65cbd5f8f5d367aa34fdb54c85d7e45f0486acbec0bd2cdcb",
+    "after_hash": "07d1dd8cf9e9080fe8cfbeb9a1c21f6a5cf6883809b6c314cdb385b2e87539ca",
+    "before": [
+      2995,
+      "PHEV",
+      "AWD",
+      "8-speed tiptronic",
+      "8-speed tiptronic",
+      1488,
+      5320,
+      2026,
+      5,
+      3128,
+      1945
+    ],
+    "after": [
+      2995,
+      "PHEV",
+      "AWD",
+      "8-speed tiptronic",
+      "8-speed tiptronic",
+      1488,
+      5320,
+      2026,
+      5,
+      3128,
+      1945,
+      17.9
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a8.d5_facelift.trim.l_60_tfsi_e_quattro_prestige_phev_battery.catalog_capacity_kwh_0cea90e322c5.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9cad1f8c6beaefc5b95fc8e8:spec",
+    "revision_id": "9cad1f8c6beaefc5b95fc8e8",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a8.d5_facelift.trim.l_60_tfsi_e_quattro_prestige_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      2995,
+      "PHEV",
+      "AWD",
+      "8-speed tiptronic",
+      "8-speed tiptronic",
+      1488,
+      5320,
+      2026,
+      5,
+      3128,
+      1945,
+      17.9
+    ]
+  }
+}

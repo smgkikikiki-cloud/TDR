@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "3b0109d95804b08a986ec864",
+    "command_id": "repair99-4e7f024832d5f9ee74607f2f",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.ppe.trim.s6_avant_e_tron_quattro_awd_bev",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "d5c6fe2a8cfe8b8a3fdba8c33cab82a77a8b8038f209c77457c0265c43c63518",
+    "after_hash": "827380da3b9d403dd9bb580fe75118227076b394983f18a88739914dc6389a6a",
+    "before": [
+      100.0,
+      "245/40 R21",
+      "BEV",
+      "AWD",
+      "1-speed reduction gear",
+      "1-speed reduction gear",
+      1504,
+      4928,
+      2026,
+      5,
+      2951,
+      1923
+    ],
+    "after": [
+      100.0,
+      "245/40 R21",
+      "BEV",
+      "AWD",
+      "1-speed reduction gear",
+      "1-speed reduction gear",
+      1504,
+      4928,
+      2026,
+      5,
+      2951,
+      1923,
+      "275/35 R21"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.ppe.trim.s6_avant_e_tron_quattro_awd_bev_fitment.tyre_rear_431fe132d1b0.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "3b0109d95804b08a986ec864:spec",
+    "revision_id": "3b0109d95804b08a986ec864",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.ppe.trim.s6_avant_e_tron_quattro_awd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      100.0,
+      "245/40 R21",
+      "BEV",
+      "AWD",
+      "1-speed reduction gear",
+      "1-speed reduction gear",
+      1504,
+      4928,
+      2026,
+      5,
+      2951,
+      1923,
+      "275/35 R21"
+    ]
+  }
+}

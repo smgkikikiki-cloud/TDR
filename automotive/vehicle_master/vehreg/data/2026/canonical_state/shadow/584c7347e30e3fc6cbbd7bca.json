@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "584c7347e30e3fc6cbbd7bca",
+    "command_id": "repair99-bb017a3b622ecfb2e6051c2e",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a8.d5_facelift.trim.l_55_tfsi_quattro_prestige_ice",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "8bf9c7f337235b00e88805c84d86bb17b456834912b689af3b1f63f04a14c340",
+    "after_hash": "a8b9f0de7f45e61aadc79f8ae41cf6e7e96fe3390c89a0088c57bc1ed676cfdd",
+    "before": [
+      2995,
+      "HEV",
+      "AWD",
+      "8-speed tiptronic",
+      1488,
+      5320,
+      2026,
+      5,
+      3128,
+      1945
+    ],
+    "after": [
+      2995,
+      "HEV",
+      "AWD",
+      "8-speed tiptronic",
+      1488,
+      5320,
+      2026,
+      5,
+      3128,
+      1945,
+      "8-speed tiptronic"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a8.d5_facelift.trim.l_55_tfsi_quattro_prestige_ice_powertrain.transmission_as_declared_dbdbb94d2429.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "584c7347e30e3fc6cbbd7bca:spec",
+    "revision_id": "584c7347e30e3fc6cbbd7bca",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a8.d5_facelift.trim.l_55_tfsi_quattro_prestige_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      2995,
+      "HEV",
+      "AWD",
+      "8-speed tiptronic",
+      1488,
+      5320,
+      2026,
+      5,
+      3128,
+      1945,
+      "8-speed tiptronic"
+    ]
+  }
+}

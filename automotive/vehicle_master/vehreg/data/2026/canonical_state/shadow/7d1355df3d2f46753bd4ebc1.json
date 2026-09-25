@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7d1355df3d2f46753bd4ebc1",
+    "command_id": "repair99-55c2310b81f90ffbfaad07f2",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "9dbc9bb0dcec1f56f3b0f2f58bcda86be009cae075c527c86d2dae6d18ced465",
+    "after_hash": "f536e150c5c79259aa204771101a10e592f13b4523cfd3568546bfd37823aef2",
+    "before": [
+      "BEV",
+      4810,
+      2026,
+      5
+    ],
+    "after": [
+      "BEV",
+      4810,
+      2026,
+      5,
+      1880
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_vehicle.width_mm_49a0930f8769.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7d1355df3d2f46753bd4ebc1:spec",
+    "revision_id": "7d1355df3d2f46753bd4ebc1",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      "BEV",
+      4810,
+      2026,
+      5,
+      1880
+    ]
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e50b4a8db826187be87f49d2",
+    "command_id": "repair99-5b97718f4cc2c0d151530b8f",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6.c8.trim.a6_avant_45_tfsi_quattro_s_line_black_edition_ice",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "ea07f7904fde49b1611a986a38b3ba2805e8c3bf469c5528bb5ac53e1c3e8f90",
+    "after_hash": "581e1f94832b2e2c36ad93ef1e8327ac1ba361444c9eaf13e9d793fee7a9390a",
+    "before": [
+      "HEV",
+      4939,
+      2026,
+      5,
+      1886
+    ],
+    "after": [
+      "HEV",
+      4939,
+      2026,
+      5,
+      1886,
+      1467
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a6.c8.trim.a6_avant_45_tfsi_quattro_s_line_black_edition_ice_vehicle.height_mm_a8bbaa6ebab5.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e50b4a8db826187be87f49d2:spec",
+    "revision_id": "e50b4a8db826187be87f49d2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6.c8.trim.a6_avant_45_tfsi_quattro_s_line_black_edition_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      "HEV",
+      4939,
+      2026,
+      5,
+      1886,
+      1467
+    ]
+  }
+}

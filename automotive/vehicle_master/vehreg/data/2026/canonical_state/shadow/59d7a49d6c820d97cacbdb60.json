@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "59d7a49d6c820d97cacbdb60",
+    "command_id": "repair99-3f4bc0c0bf28f03bb66b6142",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.ppe.trim.s6_avant_e_tron_quattro_awd_bev",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "b2146c75d3da75d798119ea134f76228f78d6792eea24374409c98b9cc7a170d",
+    "after_hash": "802bbd7f04f043b55a916b88cdaa740f2aeb5353a9e16b04563c2d3cabc058d0",
+    "before": [
+      "BEV",
+      1504,
+      4928,
+      2026,
+      5,
+      2951,
+      1923
+    ],
+    "after": [
+      "BEV",
+      1504,
+      4928,
+      2026,
+      5,
+      2951,
+      1923,
+      "AWD"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.ppe.trim.s6_avant_e_tron_quattro_awd_bev_powertrain.drivetrain_a09eeeae2356.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "59d7a49d6c820d97cacbdb60:spec",
+    "revision_id": "59d7a49d6c820d97cacbdb60",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.ppe.trim.s6_avant_e_tron_quattro_awd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      "BEV",
+      1504,
+      4928,
+      2026,
+      5,
+      2951,
+      1923,
+      "AWD"
+    ]
+  }
+}

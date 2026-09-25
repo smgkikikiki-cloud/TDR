@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e72e40cf4f36a5afbe722747",
+    "command_id": "repair99-609ec58186388fa002290d8d",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6.c8.trim.a6_40_tfsi_s_line_sedan_ice",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "eefd34b3eb16ce1b4df0959c9174aa34093dca913a2888f3216e03a9c549348d",
+    "after_hash": "89e2c0cd7e87f74fcccc00b416e2673844f6814e6bd9fbfc875aac89a41d9a78",
+    "before": [
+      1984,
+      "245/45 R19",
+      "245/45 R19",
+      "HEV",
+      "FWD",
+      "7-speed S tronic",
+      "7-speed S tronic",
+      1457,
+      4939,
+      2026,
+      5,
+      2924,
+      1886
+    ],
+    "after": [
+      1984,
+      "245/45 R19",
+      "245/45 R19",
+      "HEV",
+      "FWD",
+      "7-speed S tronic",
+      "7-speed S tronic",
+      1457,
+      4939,
+      2026,
+      5,
+      2924,
+      1886,
+      "245/45 R19"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a6.c8.trim.a6_40_tfsi_s_line_sedan_ice_fitment.tyre_size_a2ad4b337b13.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e72e40cf4f36a5afbe722747:spec",
+    "revision_id": "e72e40cf4f36a5afbe722747",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6.c8.trim.a6_40_tfsi_s_line_sedan_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      1984,
+      "245/45 R19",
+      "245/45 R19",
+      "HEV",
+      "FWD",
+      "7-speed S tronic",
+      "7-speed S tronic",
+      1457,
+      4939,
+      2026,
+      5,
+      2924,
+      1886,
+      "245/45 R19"
+    ]
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "71faa154e5ece80f99358f62",
+    "command_id": "repair99-b274a416f7ff3b4cb9a2eeff",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a4.b9_5.trim.avant_45_tfsi_quattro_s_line_black_edition_station_wagon_ice",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "76353aadfde1d871810003c62fd43eba79e10d7d0b6ce53a9c62aedea552c644",
+    "after_hash": "1c70f5b3197b236c908a8a12715e3f59a13af88b6c1997aa1cba62f89b361efb",
+    "before": [
+      1984,
+      "245/35 R19",
+      "HEV",
+      "AWD",
+      "7-speed S tronic",
+      "7-speed S tronic",
+      1435,
+      4762,
+      2026,
+      5,
+      2820,
+      1847
+    ],
+    "after": [
+      1984,
+      "245/35 R19",
+      "HEV",
+      "AWD",
+      "7-speed S tronic",
+      "7-speed S tronic",
+      1435,
+      4762,
+      2026,
+      5,
+      2820,
+      1847,
+      "245/35 R19"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a4.b9_5.trim.avant_45_tfsi_quattro_s_line_black_edition_station_wagon_ice_fitment.tyre_rear_54a9ef5d2c39.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "71faa154e5ece80f99358f62:spec",
+    "revision_id": "71faa154e5ece80f99358f62",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a4.b9_5.trim.avant_45_tfsi_quattro_s_line_black_edition_station_wagon_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      1984,
+      "245/35 R19",
+      "HEV",
+      "AWD",
+      "7-speed S tronic",
+      "7-speed S tronic",
+      1435,
+      4762,
+      2026,
+      5,
+      2820,
+      1847,
+      "245/35 R19"
+    ]
+  }
+}

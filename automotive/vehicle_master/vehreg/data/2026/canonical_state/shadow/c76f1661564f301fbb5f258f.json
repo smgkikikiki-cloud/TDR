@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c76f1661564f301fbb5f258f",
+    "command_id": "repair99-3da2ed290c717925b7896209",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.ppe.trim.s6_sportback_e_tron_quattro_awd_bev",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "ab7849eae6859156061aecd59da836de822e98885e81aae60659be3fa16a346e",
+    "after_hash": "acef626db17d1f495d3581980caeb4cc983e1721397e2c2beb3f84c629eb9641",
+    "before": [
+      100.0,
+      "BEV",
+      "AWD",
+      "1-speed reduction gear",
+      "1-speed reduction gear",
+      1455,
+      4928,
+      2026,
+      5,
+      2951,
+      1923
+    ],
+    "after": [
+      100.0,
+      "BEV",
+      "AWD",
+      "1-speed reduction gear",
+      "1-speed reduction gear",
+      1455,
+      4928,
+      2026,
+      5,
+      2951,
+      1923,
+      "245/40 R21"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.ppe.trim.s6_sportback_e_tron_quattro_awd_bev_fitment.tyre_front_d5c2782127e0.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c76f1661564f301fbb5f258f:spec",
+    "revision_id": "c76f1661564f301fbb5f258f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.ppe.trim.s6_sportback_e_tron_quattro_awd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      100.0,
+      "BEV",
+      "AWD",
+      "1-speed reduction gear",
+      "1-speed reduction gear",
+      1455,
+      4928,
+      2026,
+      5,
+      2951,
+      1923,
+      "245/40 R21"
+    ]
+  }
+}

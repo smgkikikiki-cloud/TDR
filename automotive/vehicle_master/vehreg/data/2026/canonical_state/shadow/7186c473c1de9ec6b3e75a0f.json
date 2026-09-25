@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7186c473c1de9ec6b3e75a0f",
+    "command_id": "repair99-504ab1a46464e29c7d6ff1ad",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.ppe.trim.s6_sportback_e_tron_quattro_awd_bev",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "9296769eb0670444682ab9f10d5b50f1d1c253ef0f52c8d14cbc535cace606ec",
+    "after_hash": "a25c20c177adcd43a024d78fed33e21da727f8bb637896e9f9870e82514fd3fc",
+    "before": [
+      "BEV",
+      1455,
+      4928,
+      2026,
+      5,
+      1923
+    ],
+    "after": [
+      "BEV",
+      1455,
+      4928,
+      2026,
+      5,
+      1923,
+      2951
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.ppe.trim.s6_sportback_e_tron_quattro_awd_bev_vehicle.wheelbase_mm_e8639414355d.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7186c473c1de9ec6b3e75a0f:spec",
+    "revision_id": "7186c473c1de9ec6b3e75a0f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.ppe.trim.s6_sportback_e_tron_quattro_awd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      "BEV",
+      1455,
+      4928,
+      2026,
+      5,
+      1923,
+      2951
+    ]
+  }
+}

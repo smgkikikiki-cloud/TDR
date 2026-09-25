@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d96167550fbca477f6cf43d9",
+    "command_id": "repair99-520961b15905d3cdb32de3d1",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.ppe.trim.s6_sportback_e_tron_quattro_awd_bev",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "25e2d887049df3140a424a3100e3ffcdd2a466d5bf4c4391c65e99c320dab3f5",
+    "after_hash": "c4f658ec508dcd9251c72ca174d109ce3c5c9e589ae171c2207b602926407f74",
+    "before": [
+      "BEV",
+      "AWD",
+      "1-speed reduction gear",
+      1455,
+      4928,
+      2026,
+      5,
+      2951,
+      1923
+    ],
+    "after": [
+      "BEV",
+      "AWD",
+      "1-speed reduction gear",
+      1455,
+      4928,
+      2026,
+      5,
+      2951,
+      1923,
+      "1-speed reduction gear"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.ppe.trim.s6_sportback_e_tron_quattro_awd_bev_powertrain.transmission_as_declared_92315bd33044.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d96167550fbca477f6cf43d9:spec",
+    "revision_id": "d96167550fbca477f6cf43d9",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.ppe.trim.s6_sportback_e_tron_quattro_awd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      "BEV",
+      "AWD",
+      "1-speed reduction gear",
+      1455,
+      4928,
+      2026,
+      5,
+      2951,
+      1923,
+      "1-speed reduction gear"
+    ]
+  }
+}

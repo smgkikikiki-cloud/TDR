@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "76895fda523a6214345fe492",
+    "command_id": "repair99-e05ad6145081ea6034a6f76c",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6.c8.trim.a6_avant_55_tfsi_e_quattro_s_line_black_edition_phev",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "68d5273aaf54ac567c34a5636908f765487e474580739f5447deee795c29bd6e",
+    "before": [],
+    "after": [
+      "PHEV"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a6.c8.trim.a6_avant_55_tfsi_e_quattro_s_line_black_edition_phev_identity.powertrain_e61d6933608c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "76895fda523a6214345fe492:spec",
+    "revision_id": "76895fda523a6214345fe492",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6.c8.trim.a6_avant_55_tfsi_e_quattro_s_line_black_edition_phev",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      "PHEV"
+    ]
+  }
+}

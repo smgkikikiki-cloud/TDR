@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f3000412397d984a4ef23965",
+    "command_id": "repair99-c202c93e083e68d5393c2342",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_ut.gen1.trim.400_standard_range_bev",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "925b2c396dce1b61a0aab7b82ac9ae8fd59f1e5c8ee93e64050c667ea6d4029f",
+    "after_hash": "bd0232b1d465e0307b82fc684be379eb51f3b4a100e25ddc6d1d60ffef7dbb03",
+    "before": [
+      50.27,
+      "215/60 R16",
+      "215/60 R16",
+      "215/60 R16",
+      "BEV",
+      "FWD",
+      "single-speed",
+      "single-speed",
+      1575,
+      4270,
+      2026,
+      5,
+      2750,
+      1850
+    ],
+    "after": [
+      50.27,
+      "215/60 R16",
+      "215/60 R16",
+      "215/60 R16",
+      "BEV",
+      "FWD",
+      "single-speed",
+      "single-speed",
+      1575,
+      4270,
+      2026,
+      5,
+      2750,
+      1850,
+      1
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_aion.aion_ut.gen1.trim.400_standard_range_bev_powertrain.gear_count_a486b538f4ee.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f3000412397d984a4ef23965:spec",
+    "revision_id": "f3000412397d984a4ef23965",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_ut.gen1.trim.400_standard_range_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      50.27,
+      "215/60 R16",
+      "215/60 R16",
+      "215/60 R16",
+      "BEV",
+      "FWD",
+      "single-speed",
+      "single-speed",
+      1575,
+      4270,
+      2026,
+      5,
+      2750,
+      1850,
+      1
+    ]
+  }
+}

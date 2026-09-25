@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "field_key": "powertrain.gear_count",
+      "value_state": "KNOWN",
+      "value": 7,
+      "unit": "gear",
+      "qualifiers": {},
+      "observed_at": "2026-09-26",
+      "verification_status": "VERIFIED",
+      "source": "eco",
+      "source_ref": "https://car.ecosticker.go.th/landing-page/detail/20ae68103f5d4438ac17374270fe40c1",
+      "source_locator": "https://car.ecosticker.go.th/landing-page/detail/20ae68103f5d4438ac17374270fe40c1",
+      "trim_id": "audi.a6.c8.trim.avant_40_tfsi_s_line_hev",
+      "fact_id": "admin:audi.a6.c8.trim.avant_40_tfsi_s_line_hev:powertrain.gear_count"
+    }
+  ]
+}

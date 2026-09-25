@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "3190a7bb7f50762292817ba7",
+    "command_id": "repair99-4b2a2f85a0a8507c73918bf3",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_ut.gen1.trim.500_long_range_bev",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "5323ca33bd5340402ed05136cc6e2adf1dfc867153746245c4e4dd116877e9b4",
+    "after_hash": "abb576d22958f2028486e7f7e1d5c4b3798ecce9687317c9f45bf387a16856cf",
+    "before": [
+      60,
+      "215/55 R17",
+      "215/55 R17",
+      "BEV",
+      "FWD",
+      "single-speed",
+      "single-speed",
+      1575,
+      4270,
+      2026,
+      5,
+      2750,
+      1850
+    ],
+    "after": [
+      60,
+      "215/55 R17",
+      "215/55 R17",
+      "BEV",
+      "FWD",
+      "single-speed",
+      "single-speed",
+      1575,
+      4270,
+      2026,
+      5,
+      2750,
+      1850,
+      "215/55 R17"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_aion.aion_ut.gen1.trim.500_long_range_bev_fitment.tyre_size_8ea1ba1679a9.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "3190a7bb7f50762292817ba7:spec",
+    "revision_id": "3190a7bb7f50762292817ba7",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_ut.gen1.trim.500_long_range_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      60,
+      "215/55 R17",
+      "215/55 R17",
+      "BEV",
+      "FWD",
+      "single-speed",
+      "single-speed",
+      1575,
+      4270,
+      2026,
+      5,
+      2750,
+      1850,
+      "215/55 R17"
+    ]
+  }
+}

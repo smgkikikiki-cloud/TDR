@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d5d8014eb902fc824c77d395",
+    "command_id": "repair99-d3f121f91079496c29fdbc77",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.ppe.trim.a6_avant_e_tron_performance_rwd_bev",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "abfe055119017dec068ebc97887c72e6d3debbe4f8f0b572e3bd166680230218",
+    "after_hash": "c83f6721e56c288ea9a40720cdccb8bb35447f530724051793cd95ba363193d7",
+    "before": [
+      "BEV",
+      4928,
+      2026,
+      5,
+      1923
+    ],
+    "after": [
+      "BEV",
+      4928,
+      2026,
+      5,
+      1923,
+      1527
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.ppe.trim.a6_avant_e_tron_performance_rwd_bev_vehicle.height_mm_22fd92bdf84c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d5d8014eb902fc824c77d395:spec",
+    "revision_id": "d5d8014eb902fc824c77d395",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.ppe.trim.a6_avant_e_tron_performance_rwd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      "BEV",
+      4928,
+      2026,
+      5,
+      1923,
+      1527
+    ]
+  }
+}

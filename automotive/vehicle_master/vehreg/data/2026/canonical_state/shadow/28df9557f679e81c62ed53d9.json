@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "28df9557f679e81c62ed53d9",
+    "command_id": "repair99-90517d964d598796aae21fb6",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6.c8.trim.a6_40_tfsi_s_line_sedan_ice",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "20052dc9dec4208bbd42759955624e9b3fde33b4dae3095befecfa4fad228c93",
+    "after_hash": "ea07f7904fde49b1611a986a38b3ba2805e8c3bf469c5528bb5ac53e1c3e8f90",
+    "before": [
+      "HEV",
+      4939,
+      2026,
+      5
+    ],
+    "after": [
+      "HEV",
+      4939,
+      2026,
+      5,
+      1886
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a6.c8.trim.a6_40_tfsi_s_line_sedan_ice_vehicle.width_mm_f76eb9bb8b2a.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "28df9557f679e81c62ed53d9:spec",
+    "revision_id": "28df9557f679e81c62ed53d9",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6.c8.trim.a6_40_tfsi_s_line_sedan_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      "HEV",
+      4939,
+      2026,
+      5,
+      1886
+    ]
+  }
+}

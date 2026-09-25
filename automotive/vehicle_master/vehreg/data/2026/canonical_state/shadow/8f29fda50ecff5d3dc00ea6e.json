@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "8f29fda50ecff5d3dc00ea6e",
+    "command_id": "repair99-481b17fdd81710ab55dc81be",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a8.d5_facelift.trim.l_55_tfsi_quattro_prestige_ice",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "668d25269399dd21b8d11ec8fab4756c78716f4f52c8b6cd6ea3ff9b136227bb",
+    "after_hash": "b2a702e5841e4c74587584d763a6331c14aabf0fb655c52c89cb0cc3df868abc",
+    "before": [
+      "HEV",
+      1488,
+      5320,
+      2026,
+      5,
+      1945
+    ],
+    "after": [
+      "HEV",
+      1488,
+      5320,
+      2026,
+      5,
+      1945,
+      3128
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a8.d5_facelift.trim.l_55_tfsi_quattro_prestige_ice_vehicle.wheelbase_mm_d537a871075c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "8f29fda50ecff5d3dc00ea6e:spec",
+    "revision_id": "8f29fda50ecff5d3dc00ea6e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a8.d5_facelift.trim.l_55_tfsi_quattro_prestige_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      "HEV",
+      1488,
+      5320,
+      2026,
+      5,
+      1945,
+      3128
+    ]
+  }
+}

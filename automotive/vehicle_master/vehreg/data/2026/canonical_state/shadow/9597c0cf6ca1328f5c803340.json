@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9597c0cf6ca1328f5c803340",
+    "command_id": "repair99-f8411a1de9b0045992763338",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_ut.gen1.trim.400_standard_range_bev",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "c9b21ca47abb81851490f6fb98c7d07b9ba66c296c9f81f88434b6c5f131ed62",
+    "after_hash": "bcfc9765ba49b1e2585865c79ad63e9ade17db35bffac0260ab9270ea7eccd58",
+    "before": [
+      "BEV",
+      "FWD",
+      "single-speed",
+      1575,
+      4270,
+      2026,
+      5,
+      2750,
+      1850
+    ],
+    "after": [
+      "BEV",
+      "FWD",
+      "single-speed",
+      1575,
+      4270,
+      2026,
+      5,
+      2750,
+      1850,
+      "single-speed"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_aion.aion_ut.gen1.trim.400_standard_range_bev_powertrain.transmission_as_declared_cc2619e93ca5.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9597c0cf6ca1328f5c803340:spec",
+    "revision_id": "9597c0cf6ca1328f5c803340",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_ut.gen1.trim.400_standard_range_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      "BEV",
+      "FWD",
+      "single-speed",
+      1575,
+      4270,
+      2026,
+      5,
+      2750,
+      1850,
+      "single-speed"
+    ]
+  }
+}

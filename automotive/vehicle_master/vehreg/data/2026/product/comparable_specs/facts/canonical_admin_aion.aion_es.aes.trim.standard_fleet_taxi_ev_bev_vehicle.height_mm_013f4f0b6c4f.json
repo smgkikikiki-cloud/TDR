@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "field_key": "vehicle.height_mm",
+      "value_state": "KNOWN",
+      "value": 1545,
+      "unit": "mm",
+      "qualifiers": {},
+      "observed_at": "2026-09-26",
+      "verification_status": "VERIFIED",
+      "source": "owner_directory",
+      "source_ref": "owner_directory_2026_09_13:001",
+      "source_locator": "owner_directory_2026_09_13:001",
+      "trim_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "fact_id": "admin:aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev:vehicle.height_mm"
+    }
+  ]
+}

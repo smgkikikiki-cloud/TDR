@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "eda30d7fb2deaddf1c75f253",
+    "command_id": "repair99-a1ceef6c3a58d75e68352832",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a4.b9_5.trim.avant_45_tfsi_quattro_s_line_black_edition_station_wagon_ice",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "2c22125648a5e85bc14bb4b0fd47c748cc8a7e12807bfb88b605a4d899b0876c",
+    "after_hash": "f96b05a84d6776dc61cc8c29d4fb406978305a96ebb1ef650458f661c4c6fcc4",
+    "before": [
+      1984,
+      "245/35 R19",
+      "245/35 R19",
+      "HEV",
+      "AWD",
+      "7-speed S tronic",
+      "7-speed S tronic",
+      1435,
+      4762,
+      2026,
+      5,
+      2820,
+      1847
+    ],
+    "after": [
+      1984,
+      "245/35 R19",
+      "245/35 R19",
+      "HEV",
+      "AWD",
+      "7-speed S tronic",
+      "7-speed S tronic",
+      1435,
+      4762,
+      2026,
+      5,
+      2820,
+      1847,
+      "245/35 R19"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a4.b9_5.trim.avant_45_tfsi_quattro_s_line_black_edition_station_wagon_ice_fitment.tyre_size_c5b4683dba39.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "eda30d7fb2deaddf1c75f253:spec",
+    "revision_id": "eda30d7fb2deaddf1c75f253",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a4.b9_5.trim.avant_45_tfsi_quattro_s_line_black_edition_station_wagon_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      1984,
+      "245/35 R19",
+      "245/35 R19",
+      "HEV",
+      "AWD",
+      "7-speed S tronic",
+      "7-speed S tronic",
+      1435,
+      4762,
+      2026,
+      5,
+      2820,
+      1847,
+      "245/35 R19"
+    ]
+  }
+}

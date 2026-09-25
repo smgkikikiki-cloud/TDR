@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "71a45064ab0b092eef92f5f9",
+    "command_id": "repair99-12b2b5d7580f95fa20bab9bc",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a8.d5_facelift.trim.l_55_tfsi_quattro_prestige_ice",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "a3f994f7944d7f2046cab9003c5db59913bf65539f07386a55bd213bf948ca04",
+    "after_hash": "385e09129fb464205d77ee239f2123c7292fb1b2c38d7e21c20fbb057efe404e",
+    "before": [
+      2995,
+      "265/40 R20",
+      "HEV",
+      "AWD",
+      "8-speed tiptronic",
+      "8-speed tiptronic",
+      1488,
+      5320,
+      2026,
+      5,
+      3128,
+      1945
+    ],
+    "after": [
+      2995,
+      "265/40 R20",
+      "HEV",
+      "AWD",
+      "8-speed tiptronic",
+      "8-speed tiptronic",
+      1488,
+      5320,
+      2026,
+      5,
+      3128,
+      1945,
+      "265/40 R20"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a8.d5_facelift.trim.l_55_tfsi_quattro_prestige_ice_fitment.tyre_rear_5167b062ee1d.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "71a45064ab0b092eef92f5f9:spec",
+    "revision_id": "71a45064ab0b092eef92f5f9",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a8.d5_facelift.trim.l_55_tfsi_quattro_prestige_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      2995,
+      "265/40 R20",
+      "HEV",
+      "AWD",
+      "8-speed tiptronic",
+      "8-speed tiptronic",
+      1488,
+      5320,
+      2026,
+      5,
+      3128,
+      1945,
+      "265/40 R20"
+    ]
+  }
+}

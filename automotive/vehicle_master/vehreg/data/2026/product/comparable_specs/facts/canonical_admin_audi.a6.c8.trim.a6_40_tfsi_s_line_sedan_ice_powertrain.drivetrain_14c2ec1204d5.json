@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "field_key": "powertrain.drivetrain",
+      "value_state": "KNOWN",
+      "value": "FWD",
+      "unit": "",
+      "qualifiers": {},
+      "observed_at": "2026-09-26",
+      "verification_status": "VERIFIED",
+      "source": "official_audi",
+      "source_ref": "https://www.audi.co.th/en/models/a6/a6-sedan/",
+      "source_locator": "https://www.audi.co.th/en/models/a6/a6-sedan/",
+      "trim_id": "audi.a6.c8.trim.a6_40_tfsi_s_line_sedan_ice",
+      "fact_id": "admin:audi.a6.c8.trim.a6_40_tfsi_s_line_sedan_ice:powertrain.drivetrain"
+    }
+  ]
+}

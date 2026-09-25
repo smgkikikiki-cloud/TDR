@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "field_key": "identity.powertrain",
+      "value_state": "KNOWN",
+      "value": "ICE",
+      "unit": "",
+      "qualifiers": {},
+      "observed_at": "2026-09-26",
+      "verification_status": "VERIFIED",
+      "source": "owner_directory",
+      "source_ref": "owner_directory_2026_09_13:006",
+      "source_locator": "owner_directory_2026_09_13:006",
+      "trim_id": "audi.a1.gen1.trim.sportback_35_tfsi_edition_one_ice",
+      "fact_id": "admin:audi.a1.gen1.trim.sportback_35_tfsi_edition_one_ice:identity.powertrain"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "dff738dc6f978e8a55d8f8fd",
+    "command_id": "repair99-199c69f8ca09dbb6f775762b",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.ppe.trim.s6_avant_e_tron_quattro_awd_bev",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "eaa324481c7ff2989d484bee7dc9f00a7493aebb602c4b9aeee08b0a47023ab6",
+    "after_hash": "0cf4c6d3f41fe43f19cea0b5185ed37e184b68d33e67222d17bb45fc88fece29",
+    "before": [
+      "BEV",
+      "AWD",
+      "1-speed reduction gear",
+      "1-speed reduction gear",
+      1504,
+      4928,
+      2026,
+      5,
+      2951,
+      1923
+    ],
+    "after": [
+      "BEV",
+      "AWD",
+      "1-speed reduction gear",
+      "1-speed reduction gear",
+      1504,
+      4928,
+      2026,
+      5,
+      2951,
+      1923,
+      100.0
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.ppe.trim.s6_avant_e_tron_quattro_awd_bev_battery.catalog_capacity_kwh_64743c6e7ba6.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "dff738dc6f978e8a55d8f8fd:spec",
+    "revision_id": "dff738dc6f978e8a55d8f8fd",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.ppe.trim.s6_avant_e_tron_quattro_awd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      "BEV",
+      "AWD",
+      "1-speed reduction gear",
+      "1-speed reduction gear",
+      1504,
+      4928,
+      2026,
+      5,
+      2951,
+      1923,
+      100.0
+    ]
+  }
+}

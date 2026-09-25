@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "field_key": "vehicle.model_year",
+      "value_state": "KNOWN",
+      "value": 2026,
+      "unit": "year",
+      "qualifiers": {},
+      "observed_at": "2026-09-26",
+      "verification_status": "VERIFIED",
+      "source": "owner_directory",
+      "source_ref": "owner_directory_2026_09_13:008",
+      "source_locator": "owner_directory_2026_09_13:008",
+      "trim_id": "audi.a5.b9_5.trim.coupe_45_tfsi_quattro_s_line_black_edition_ice",
+      "fact_id": "admin:audi.a5.b9_5.trim.coupe_45_tfsi_quattro_s_line_black_edition_ice:vehicle.model_year"
+    }
+  ]
+}

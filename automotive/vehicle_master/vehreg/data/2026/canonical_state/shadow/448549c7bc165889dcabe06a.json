@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "448549c7bc165889dcabe06a",
+    "command_id": "repair99-0c67e4544e0a06fd354dfbb2",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a4.b9_5.trim.avant_45_tfsi_quattro_s_line_black_edition_station_wagon_ice",
+    "actor": "tdr-repair99",
+    "reason": "Backfill touched models against comparable spec registry",
+    "submitted_at": "2026-09-26T00:00:00+07:00",
+    "applied_at": "2026-09-25T18:19:49+00:00",
+    "before_hash": "b949da01c71a5a52348bc283a19523a8d653e65fae0900c2593ff119852b8998",
+    "after_hash": "56b3b74269c501367f374d0734908c61bfab0203aac010da27ebf0704d247775",
+    "before": [
+      "HEV",
+      1435,
+      4762,
+      2026,
+      5,
+      1847
+    ],
+    "after": [
+      "HEV",
+      1435,
+      4762,
+      2026,
+      5,
+      1847,
+      2820
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a4.b9_5.trim.avant_45_tfsi_quattro_s_line_black_edition_station_wagon_ice_vehicle.wheelbase_mm_260e22f8a576.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "448549c7bc165889dcabe06a:spec",
+    "revision_id": "448549c7bc165889dcabe06a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a4.b9_5.trim.avant_45_tfsi_quattro_s_line_black_edition_station_wagon_ice",
+    "state": "PENDING",
+    "created_at": "2026-09-25T18:19:49+00:00",
+    "payload": [
+      "HEV",
+      1435,
+      4762,
+      2026,
+      5,
+      1847,
+      2820
+    ]
+  }
+}

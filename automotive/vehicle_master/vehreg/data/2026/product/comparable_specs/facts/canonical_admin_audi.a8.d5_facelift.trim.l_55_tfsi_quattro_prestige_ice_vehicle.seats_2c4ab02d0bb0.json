@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "field_key": "vehicle.seats",
+      "value_state": "KNOWN",
+      "value": 5,
+      "unit": "seat",
+      "qualifiers": {},
+      "observed_at": "2026-09-26",
+      "verification_status": "VERIFIED",
+      "source": "owner_directory",
+      "source_ref": "owner_directory_2026_09_13:012",
+      "source_locator": "owner_directory_2026_09_13:012",
+      "trim_id": "audi.a8.d5_facelift.trim.l_55_tfsi_quattro_prestige_ice",
+      "fact_id": "admin:audi.a8.d5_facelift.trim.l_55_tfsi_quattro_prestige_ice:vehicle.seats"
+    }
+  ]
+}

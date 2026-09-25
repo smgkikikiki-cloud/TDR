@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "field_key": "powertrain.transmission",
+      "value_state": "KNOWN",
+      "value": "single-speed",
+      "unit": "",
+      "qualifiers": {},
+      "observed_at": "2026-09-26",
+      "verification_status": "VERIFIED",
+      "source": "official_gac",
+      "source_ref": "https://www.gacgroup.com/th-th/configuration/hyptec-ht/2024",
+      "source_locator": "https://www.gacgroup.com/th-th/configuration/hyptec-ht/2024",
+      "trim_id": "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev",
+      "fact_id": "admin:aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev:powertrain.transmission"
+    }
+  ]
+}
