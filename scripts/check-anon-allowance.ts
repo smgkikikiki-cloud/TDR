@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import {
-  ANON_COMPARE_DAILY_LIMIT, ANON_MARKET_DAILY_LIMIT, allowanceFrom, bangkokDayKey,
+  ANON_COMPARE_DAILY_LIMIT, allowanceFrom, bangkokDayKey,
   encodeCount, readCount,
 } from "../lib/anon-allowance.ts";
 
@@ -11,14 +11,11 @@ function check(name: string, got: unknown, want: unknown = true) {
   else console.log(`  ok   ${name}`);
 }
 
-console.log("anonymous allowance — a real trial, then an account");
+console.log("anonymous allowance — browse freely, meter real actions");
 check("ten comparisons a day before signing up", ANON_COMPARE_DAILY_LIMIT, 10);
-check("one market view a day", ANON_MARKET_DAILY_LIMIT, 1);
 
 check("a fresh reader has used nothing", readCount(undefined, "2026-09-18"), 0);
 check("a count is read back", readCount(encodeCount("2026-09-18", 3), "2026-09-18"), 3);
-// Yesterday's count is not today's: a scope that does not match has
-// expired, and expiry must read as zero rather than as a carried-over total.
 check("another day's count does not carry over", readCount(encodeCount("2026-09-17", 1), "2026-09-18"), 0);
 check("a tampered value is not trusted", readCount("2026-09-18.-5", "2026-09-18"), 0);
 check("neither is a non-number", readCount("2026-09-18.abc", "2026-09-18"), 0);
@@ -36,31 +33,36 @@ check("the day key is the Thai calendar day",
 check("and rolls at Thai midnight, not UTC",
   bangkokDayKey(new Date("2026-09-18T16:59:00Z")), "2026-09-18");
 
-console.log("\nwiring — the gate is where the data is, not only in the UI");
-const route = fs.readFileSync("app/api/tools/compare/route.ts", "utf8");
+console.log("\nwiring — page views are free; analysis actions are metered");
+const compareRoute = fs.readFileSync("app/api/tools/compare/route.ts", "utf8");
 check("an anonymous comparison is served rather than refused",
-  route.includes("anonymousComparison") && !route.includes('if (!accessToken) return NextResponse.json({ error: "sign in'), true);
-check("the table itself is built once for both callers",
-  (route.match(/buildComparison\(/g) || []).length >= 3, true);
-check("spending the allowance writes the cookie back", route.includes("response.cookies.set("), true);
-check("the compare cookie resets daily, same as market -- not a lifetime total",
-  route.includes("bangkokDayKey()") && !route.includes('"life"'), true);
+  compareRoute.includes("anonymousComparison") && !compareRoute.includes('if (!accessToken) return NextResponse.json({ error: "sign in'), true);
+check("spending the compare allowance writes its cookie back", compareRoute.includes("response.cookies.set("), true);
+check("the compare cookie resets daily, not as a lifetime total",
+  compareRoute.includes("bangkokDayKey()") && !compareRoute.includes('"life"'), true);
 
-const mw = fs.readFileSync("middleware.ts", "utf8");
-check("the market view is counted on the server, before the page renders",
-  mw.includes('matcher: ["/market"]') && mw.includes("x-tdr-market-remaining"), true);
-check("a signed-in reader is not counted at all", mw.includes("if (signedIn) return"), true);
+check("there is no middleware left to count /market page requests", !fs.existsSync("middleware.ts"), true);
 
 const market = fs.readFileSync("app/market/page.tsx", "utf8");
-check("what is covered is the real page, not a picture of one",
-  market.includes("marketLockBody") && market.includes("<MarketCharts"), true);
-check("the blurred copy is hidden from assistive technology",
-  market.includes('aria-hidden="true"'), true);
+check("opening the public market does not read an allowance header",
+  !market.includes("x-tdr-market-remaining") && !market.includes("headers()"), true);
+check("the public market has no exhausted/blurred page-view lock",
+  !market.includes("marketLock") && !market.includes("ดูฟรีได้วันละ 1 ครั้ง"), true);
+check("the public snapshot always renders the real chart",
+  market.includes('getPublicMarket("brand")') && market.includes("<MarketCharts"), true);
+check("analysis starts in the member market rather than through public query params",
+  market.includes('href="/member/market"') && !market.includes("searchParams"), true);
+
+const memberMarketRoute = fs.readFileSync("app/api/report/market/route.ts", "utf8");
+check("member market analysis requires a bearer session",
+  memberMarketRoute.includes("member bearer token required"), true);
+check("member market analysis consumes quota at the action boundary",
+  memberMarketRoute.includes("consumeMarketReportQuota"), true);
 
 const policy = fs.readFileSync("lib/access-policy.ts", "utf8");
 const free = policy.slice(policy.indexOf("FREE: {"), policy.indexOf("PRO: {"));
 check("an account removes the comparison limit", /compareDailyLimit: null/.test(free), true);
-check("five market queries a day", /salesQueryDailyLimit: 5/.test(free), true);
+check("five market analyses a day", /salesQueryDailyLimit: 5/.test(free), true);
 check("two full analyses a month", /researchFullMonthlyLimit: 2/.test(free), true);
 check("one export a month", /pdfMonthlyLimit: 1/.test(free), true);
 
