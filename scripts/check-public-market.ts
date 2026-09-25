@@ -11,20 +11,13 @@ function check(name: string, got: unknown, want: unknown = true) {
 const lib = fs.readFileSync("lib/public-market.ts", "utf8");
 const page = fs.readFileSync("app/market/page.tsx", "utf8");
 
-console.log("public market — the opening in the paywall stays the size it was cut");
-// Registration data answers the browser's own key with 401, so this module is
-// the one deliberate way any of it reaches an anonymous reader. These hold the
-// shape of that opening; widening it should have to be a decision, not a diff.
+console.log("public market — free snapshot, analysis behind an account");
 check("it runs on the server credential, never the browser's", lib.includes("adminDb()"));
-// The cut can change; the grain cannot. A reader may ask what the market
-// looks like by powertrain or by body type -- that is its shape. Asking about
-// one model is asking about a product, and that is the paid question.
-check("the public cuts are declared in one list", lib.includes("PUBLIC_DIMENSIONS"));
-check("model grain is never one of them", !/value: "model"/.test(lib));
+check("the public page is pinned to the default brand snapshot",
+  page.includes('getPublicMarket("brand")') && !page.includes("searchParams"));
+check("model grain is never exposed by the public aggregate helper", !/value: "model"/.test(lib));
 check("neither is any per-row filter",
   !/brandIds|modelIds|segments:|registrationTypes:/.test(lib));
-check("an unknown cut falls back rather than being passed through",
-  fs.readFileSync("app/market/page.tsx", "utf8").includes('isPublicDimension(by) ? by : "brand"'));
 check("the window is the latest published month, never a caller's choice",
   lib.includes("latestPublishedPeriod") && !/window:\s*args\./.test(lib));
 check("no rolling or year-to-date window is offered",
@@ -37,12 +30,11 @@ check("the trend is a total, not a per-brand series",
   lib.includes('key: "total"') || fs.readFileSync("app/market/MarketCharts.tsx", "utf8").includes('key: "total"'));
 check("no export path is offered from the public page",
   !/export|download|csv/i.test(page.replace(/export default|export const/g, "")));
-check("the page says what is behind the account", page.includes("/member/market"));
+check("analysis starts in the member market", page.includes('href="/member/market"'));
+check("page opening itself has no quota/blur gate",
+  !page.includes("x-tdr-market-remaining") && !page.includes("marketLock") && !page.includes("ดูฟรีได้วันละ 1 ครั้ง"));
 
 console.log("\nnumbers — identical on the server and in the browser");
-// A client component is rendered twice: once in Node, once in the browser.
-// toLocaleString resolves against whatever ICU each has, and one different
-// character makes React throw the subtree away.
 check("grouping is done here, not by the runtime's locale data",
   !/toLocaleString/.test(fs.readFileSync("app/market/MarketCharts.tsx", "utf8")));
 check("thousands", groupedNumber(54318), "54,318");
