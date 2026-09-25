@@ -16,8 +16,11 @@ import {
 import { coverageForPeriod, defaultMarketPeriod, periodKey, provisionalMarketPeriods, type CoverageRowLike } from "@/lib/member-market";
 import styles from "./market.module.css";
 
-type BrandOption = { id: string; name: string };
-type ModelOption = { id: string; name: string; brandId: string; brandName: string; segment: string | null; bodyType: string | null; powertrains: string[] };
+type BrandOption = { id: string; name: string; oemGroup: string | null; brandOrigin: string | null };
+type ModelOption = {
+  id: string; name: string; brandId: string; brandName: string; segment: string | null; bodyType: string | null;
+  powertrains: string[]; importType: string | null; originCountry: string | null; marketScope: string | null;
+};
 type MarketRow = Record<string, any>;
 type MarketResponse = {
   dimension: string;
@@ -30,27 +33,47 @@ type MarketResponse = {
   trend: TrendPoint[];
   quota: { used: number; limit: number | null; remaining: number | null; resets_at: string };
 };
+type MarketDimensionValue =
+  "model" | "brand" | "segment" | "body_type" | "powertrain"
+  | "oem_group" | "import_type" | "origin_country" | "brand_origin" | "registration_type" | "market_scope";
 type FilterState = {
   period: string;
   window: MarketWindow;
   compare: "none" | MarketComparison;
-  dimension: "model" | "brand" | "segment" | "body_type" | "powertrain";
+  dimension: MarketDimensionValue;
   registrationType: string;
   brand: string;
   model: string;
   segment: string;
   bodyType: string;
   powertrain: string;
+  oemGroup: string;
+  importType: string;
+  originCountry: string;
+  brandOrigin: string;
   allScopes: boolean;
 };
 type TrendPoint = { period: string; total: number };
 
+// B2B buyers of this data care about MiT/CBU-CKD, Chinese OEM penetration and
+// market positioning as much as -- often more than -- body type, so these
+// carry the same weight in the ranking picker as the original five. The
+// engine (app/api/report/market/route.ts, lib/registration-market.ts) has
+// always accepted all of these; only the picker was five wide. Market
+// position is deliberately left out for now -- the admin surface marks it
+// "current snapshot, diagnosis only" (not period-aware like the others).
 const DIMENSIONS: Array<{ value: FilterState["dimension"]; label: string }> = [
   { value: "model", label: "รุ่น" },
   { value: "brand", label: "แบรนด์" },
   { value: "segment", label: "Segment" },
   { value: "body_type", label: "ตัวถัง" },
   { value: "powertrain", label: "Powertrain" },
+  { value: "oem_group", label: "OEM Group" },
+  { value: "import_type", label: "CBU / CKD" },
+  { value: "origin_country", label: "ประเทศผลิต" },
+  { value: "brand_origin", label: "ต้นกำเนิดแบรนด์" },
+  { value: "registration_type", label: "ประเภทรถ DLT" },
+  { value: "market_scope", label: "Market Scope" },
 ];
 const WINDOWS: Array<{ value: MarketWindow; label: string }> = [
   { value: "month", label: "เดือน" },
@@ -74,6 +97,11 @@ const PAID = " · แพ็กเกจเสียค่าบริการ";
 
 const FILTER_BY_DIMENSION: Record<string, keyof FilterState | undefined> = {
   brand: "brand", model: "model", segment: "segment", body_type: "bodyType", powertrain: "powertrain",
+  oem_group: "oemGroup", import_type: "importType", origin_country: "originCountry", brand_origin: "brandOrigin",
+  registration_type: "registrationType",
+  // market_scope has no single-value filter counterpart -- the "allScopes"
+  // checkbox is a coarse CORE/ALL toggle, not a select the same-dimension
+  // auto-hide logic (ignoredFilter/ignoredValue below) applies to.
 };
 
 function n(value: unknown) { return Number(value || 0).toLocaleString("th-TH"); }
@@ -119,17 +147,28 @@ function marketPath(
   if (filters.segment) params.set("segment", filters.segment);
   if (filters.bodyType) params.set("body_type", filters.bodyType);
   if (filters.powertrain) params.set("powertrain", filters.powertrain);
+  if (filters.oemGroup) params.set("oem_group", filters.oemGroup);
+  if (filters.importType) params.set("import_type", filters.importType);
+  if (filters.originCountry) params.set("origin_country", filters.originCountry);
+  if (filters.brandOrigin) params.set("brand_origin", filters.brandOrigin);
   if (filters.allScopes) params.set("market_scope", "ALL");
   return `/api/report/market?${params.toString()}`;
 }
+
+/** The scope-filter half of FilterState, reset to nothing selected -- shared
+ *  by the initial state, boot()'s first load and the "ล้าง scope" button so
+ *  the three can't drift apart on which fields count as "scope". */
+const EMPTY_SCOPE_FILTERS = {
+  registrationType: "", brand: "", model: "", segment: "", bodyType: "", powertrain: "",
+  oemGroup: "", importType: "", originCountry: "", brandOrigin: "", allScopes: false,
+} as const;
 
 export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; models: ModelOption[] }) {
   const router = useRouter();
   const [token, setToken] = useState("");
   const [coverage, setCoverage] = useState<CoverageRowLike[]>([]);
   const [filters, setFilters] = useState<FilterState>({
-    period: "", window: "month", compare: "previous", dimension: "model",
-    registrationType: "", brand: "", model: "", segment: "", bodyType: "", powertrain: "", allScopes: false,
+    period: "", window: "month", compare: "previous", dimension: "model", ...EMPTY_SCOPE_FILTERS,
   });
   const [applied, setApplied] = useState<FilterState | null>(null);
   const [data, setData] = useState<MarketResponse | null>(null);
@@ -144,6 +183,10 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
   const bodyTypes = useMemo(() => [...new Set(models.map((row) => row.bodyType).filter(Boolean) as string[])].sort(), [models]);
   const segments = useMemo(() => [...new Set(models.map((row) => row.segment).filter(Boolean) as string[])].sort(), [models]);
   const powertrains = useMemo(() => [...new Set(models.flatMap((row) => row.powertrains).filter(Boolean))].sort(), [models]);
+  const importTypes = useMemo(() => [...new Set(models.map((row) => row.importType).filter(Boolean) as string[])].sort(), [models]);
+  const originCountries = useMemo(() => [...new Set(models.map((row) => row.originCountry).filter(Boolean) as string[])].sort(), [models]);
+  const oemGroups = useMemo(() => [...new Set(brands.map((row) => row.oemGroup).filter(Boolean) as string[])].sort(), [brands]);
+  const brandOrigins = useMemo(() => [...new Set(brands.map((row) => row.brandOrigin).filter(Boolean) as string[])].sort(), [brands]);
   const modelOptions = useMemo(() => filters.brand ? models.filter((row) => row.brandId === filters.brand) : models, [filters.brand, models]);
 
   function windowAvailable(period: string, window: MarketWindow) {
@@ -212,8 +255,7 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
         const period = defaultMarketPeriod(rows);
         if (!period) throw new Error("ยังไม่มีข้อมูลจดทะเบียนในระบบ");
         const initial: FilterState = {
-          period, window: "month", compare: "previous", dimension: "model",
-          registrationType: "", brand: "", model: "", segment: "", bodyType: "", powertrain: "", allScopes: false,
+          period, window: "month", compare: "previous", dimension: "model", ...EMPTY_SCOPE_FILTERS,
         };
         setToken(accessToken); setCoverage(rows); setFilters(initial);
         await loadMarket(initial, accessToken);
@@ -290,7 +332,7 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
 
     <form className={styles.workspace} onSubmit={submit}>
       <aside className={styles.filters}>
-        <div className={styles.filterHead}><div><span>DEFINE MARKET</span><b>กำหนดตลาด</b></div><button type="button" onClick={() => setFilters((current) => ({ ...current, registrationType: "", brand: "", model: "", segment: "", bodyType: "", powertrain: "", allScopes: false }))}>ล้าง scope</button></div>
+        <div className={styles.filterHead}><div><span>DEFINE MARKET</span><b>กำหนดตลาด</b></div><button type="button" onClick={() => setFilters((current) => ({ ...current, ...EMPTY_SCOPE_FILTERS }))}>ล้าง scope</button></div>
         <label><span>เดือนข้อมูล</span><select value={filters.period} onChange={(event) => changePeriod(event.target.value)}>{periods.map((period) => <option key={period} value={period}>{monthLabel(period)}{provisional.has(period) ? " · provisional" : ""}</option>)}</select></label>
         <label><span>ช่วงเวลา</span><select value={filters.window} onChange={(event) => changeWindow(event.target.value as MarketWindow)}>{WINDOWS.map((item) => {
             const locked = plan?.windows ? !plan.windows.includes(item.value) : false;
@@ -311,10 +353,14 @@ export function MarketWorkspace({ brands, models }: { brands: BrandOption[]; mod
         <label><span>Segment</span><select disabled={plan ? !plan.filters : false} value={filters.segment} onChange={(event) => setFilters((current) => ({ ...current, segment: event.target.value }))}><option value="">ทุก Segment</option>{segments.map((segment) => <option key={segment}>{segment}</option>)}</select></label>
         <label><span>ตัวถัง</span><select disabled={plan ? !plan.filters : false} value={filters.bodyType} onChange={(event) => setFilters((current) => ({ ...current, bodyType: event.target.value }))}><option value="">ทุกตัวถัง</option>{bodyTypes.map((body) => <option key={body} value={body}>{bodyLabel(body)}</option>)}</select></label>
         <label><span>Powertrain</span><select disabled={plan ? !plan.filters : false} value={filters.powertrain} onChange={(event) => setFilters((current) => ({ ...current, powertrain: event.target.value }))}><option value="">ทุก Powertrain</option>{powertrains.map((powertrain) => <option key={powertrain}>{powertrain}</option>)}</select></label>
+        <label><span>OEM Group</span><select disabled={plan ? !plan.filters : false} value={filters.oemGroup} onChange={(event) => setFilters((current) => ({ ...current, oemGroup: event.target.value }))}><option value="">ทุก OEM Group</option>{oemGroups.map((group) => <option key={group}>{group}</option>)}</select></label>
+        <label><span>CBU / CKD</span><select disabled={plan ? !plan.filters : false} value={filters.importType} onChange={(event) => setFilters((current) => ({ ...current, importType: event.target.value }))}><option value="">ทุกรูปแบบ</option>{importTypes.map((type) => <option key={type}>{type}</option>)}</select></label>
+        <label><span>ประเทศผลิต</span><select disabled={plan ? !plan.filters : false} value={filters.originCountry} onChange={(event) => setFilters((current) => ({ ...current, originCountry: event.target.value }))}><option value="">ทุกประเทศ</option>{originCountries.map((country) => <option key={country}>{country}</option>)}</select></label>
+        <label><span>ต้นกำเนิดแบรนด์</span><select disabled={plan ? !plan.filters : false} value={filters.brandOrigin} onChange={(event) => setFilters((current) => ({ ...current, brandOrigin: event.target.value }))}><option value="">ทุกต้นกำเนิด</option>{brandOrigins.map((origin) => <option key={origin}>{origin}</option>)}</select></label>
         <label className={styles.disabled}><span>Price range</span><select disabled><option>รอ canonical Price Ledger coverage</option></select></label>
         {plan && !plan.filters ? (
           <p className={styles.planNote}>
-            การกรองตามแบรนด์ รุ่น Segment ตัวถัง และ Powertrain อยู่ในแพ็กเกจแบบเสียค่าบริการ ·{" "}
+            การกรองตามแบรนด์ รุ่น Segment ตัวถัง Powertrain OEM Group CBU/CKD ประเทศผลิต และต้นกำเนิดแบรนด์ อยู่ในแพ็กเกจแบบเสียค่าบริการ ·{" "}
             <Link href="/pricing">ดูแพ็กเกจ</Link>
           </p>
         ) : null}

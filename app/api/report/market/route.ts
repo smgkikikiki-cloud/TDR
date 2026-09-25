@@ -334,11 +334,14 @@ export async function GET(request: NextRequest) {
     }
 
     // Trend sparkline, computed server-side within this same paid request.
-    // OEM group is deliberately neutral here: the customer-facing filter
-    // rail does not expose an OEM-group filter, so every selected
-    // Brand/Model/Segment/Body/Powertrain/DLT filter stays applied instead
-    // of opening up the currently ranked dimension -- market_total is
-    // therefore the true scope total for each trailing month.
+    // market_total is the same number whichever dimension it is grouped by
+    // -- it is a sum over the filtered scope, not a slice of it -- so
+    // "oem_group" here is just one arbitrary, always-open dimension (unlike
+    // "model", which needs a tier check) rather than the ranked dimension:
+    // every selected filter (whichever ones the reader set, oem_group
+    // included) still applies via trendFilters, so market_total remains the
+    // true scope total for each trailing month regardless of what is being
+    // ranked.
     let trend: Array<{ period: string; total: number }> = [];
     if (trendMonths > 0) {
       const trendPeriods = available.filter((p) => p <= currentWindow.to).slice(-trendMonths);

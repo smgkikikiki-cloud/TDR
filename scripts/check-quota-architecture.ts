@@ -98,7 +98,16 @@ check("the market workspace page never sends an X-TDR-Action-Id header", HEADER_
 console.log("\nquota architecture — the dashboard is one HTTP request, not a client-side fan-out");
 check("member dashboard calls the composite /api/tools/sales-dashboard endpoint", memberPage.includes("/api/tools/sales-dashboard"), true);
 check("member dashboard no longer fans out to /api/report/registration per dimension", memberPage.includes("/api/report/registration"), false);
-check("market workspace no longer builds its own client-side trend fan-out (oem_group)", marketWorkspace.includes('"oem_group"'), false);
+// "oem_group" itself is no longer a safe marker for the old fan-out: it is
+// now also a legitimate ranking-dimension option in the filter picker
+// (OEM Group). What actually matters is that loadMarket() -- the function
+// one "Update market" click runs -- still makes exactly one jsonFetch call,
+// not a per-dimension/per-period loop; the trend fan-out this section is
+// about was already proven gone by the two checks above (trend is computed
+// server-side and returned in that same response).
+const loadMarketFn = functionBody(marketWorkspace, "async function loadMarket(");
+check("loadMarket makes exactly one HTTP request per Update-market click, not a per-dimension fan-out",
+  occurrences(loadMarketFn, "jsonFetch("), 1);
 
 console.log("\nquota architecture — fingerprint is computed inside requireUsage/consumeUsage, callers only pass semantic parts");
 const requireUsageFn = functionBody(accessPolicyServer, "export async function requireUsage(");
