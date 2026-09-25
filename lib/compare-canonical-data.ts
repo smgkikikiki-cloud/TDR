@@ -28,7 +28,7 @@ async function allSlimTrimRows(db: any, pageSize = 1000) {
 }
 
 function isCurrentTrim(row: any) {
-  return String(row?.status || "current").toLowerCase() !== "discontinued";
+  return row?.status === "CURRENT";
 }
 
 const MODEL_NAME_COLUMNS = "canonical_id,name_en,name_th,payload";
