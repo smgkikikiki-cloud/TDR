@@ -280,11 +280,30 @@ function canonicalPowertrain(payload: JsonObject | null | undefined): string {
   return powertrains.length === 1 ? powertrains[0] : "MIXED";
 }
 
-function needsHistoricalImportOrigin(dimension: MarketDimension, filters: MarketSliceFilters) {
-  return dimension === "import_type"
-    || dimension === "origin_country"
+// Every field the historical model state carries a year baseline for --
+// origin_country/import_type (which also walk the sparse monthly_changes
+// layer) plus the five that resolve from the baseline alone (see
+// lib/historical-model-state.ts's HistoricalModelBaseline doc comment):
+// powertrain, market_position, oem_group, brand_origin, market_scope.
+// Reading any of them for a period other than "now" from the current
+// canonical payload would silently rewrite history -- a nameplate that was
+// ICE-only in 2022 reading back as MIXED today because it later gained a
+// hybrid variant, an OEM's ownership change appearing to have always been
+// true, and so on.
+const HISTORICAL_STATE_DIMENSIONS: ReadonlySet<MarketDimension> = new Set([
+  "import_type", "origin_country", "powertrain", "market_position",
+  "oem_group", "brand_origin", "market_scope",
+]);
+
+function needsHistoricalModelState(dimension: MarketDimension, filters: MarketSliceFilters) {
+  return HISTORICAL_STATE_DIMENSIONS.has(dimension)
     || Boolean(filters.importTypes?.length)
-    || Boolean(filters.originCountries?.length);
+    || Boolean(filters.originCountries?.length)
+    || Boolean(filters.powertrains?.length)
+    || Boolean(filters.marketPositions?.length)
+    || Boolean(filters.oemGroups?.length)
+    || Boolean(filters.brandOrigins?.length)
+    || Boolean(filters.marketScopes?.length);
 }
 
 export async function fetchRegistrationRows(
@@ -332,7 +351,7 @@ export async function fetchRegistrationRows(
 export async function canonicalizeRegistrationRows(
   db: any,
   rows: any[],
-  requireHistoricalImportOrigin: boolean,
+  requireHistoricalModelState: boolean,
 ): Promise<CanonicalRegistrationFact[]> {
   const [
     { data: modelRows, error: modelError },
@@ -354,8 +373,8 @@ export async function canonicalizeRegistrationRows(
   if (modelError) throw new RegistrationAccessError(500, `canonical model query failed: ${modelError.message}`);
   if (brandError) throw new RegistrationAccessError(500, `canonical brand query failed: ${brandError.message}`);
   if (aliasError) throw new RegistrationAccessError(500, `registration brand crosswalk query failed: ${aliasError.message}`);
-  if (requireHistoricalImportOrigin && !historicalState) {
-    throw new RegistrationAccessError(503, "period-aware import/origin state is not available in the active canonical release");
+  if (requireHistoricalModelState && !historicalState) {
+    throw new RegistrationAccessError(503, "period-aware model state is not available in the active canonical release");
   }
 
   const typedModels = (modelRows || []) as CanonicalModelRow[];
@@ -406,6 +425,22 @@ export async function canonicalizeRegistrationRows(
     const originCountry = historical
       ? historical.origin_country
       : String(payload.production_country || "UNKNOWN");
+    // These five move on generation/model-year timescales rather than
+    // mid-year, so -- unlike import/origin above -- the historical answer is
+    // the year baseline alone (see HistoricalModelBaseline's doc comment).
+    // Reading them from the CURRENT canonical payload for a past period
+    // would silently rewrite history: a nameplate that was ICE-only in 2022
+    // reading back as MIXED today just because it later gained a hybrid
+    // variant, an OEM's ownership change appearing to have always been true.
+    const powertrain = historical
+      ? historical.powertrain
+      : canonicalModelId ? canonicalPowertrain(payload) : "UNKNOWN";
+    const marketPosition = historical ? historical.market_position : String(payload.market_position || "UNKNOWN");
+    const oemGroup = historical ? historical.oem_group : String(brandPayload.oem_group || "UNKNOWN");
+    const brandOrigin = historical ? historical.brand_origin : String(brandPayload.brand_origin || "UNKNOWN");
+    const marketScope = historical
+      ? historical.market_scope
+      : canonicalModelId ? String(payload.market_scope || "UNKNOWN") : canonicalBrandId ? "MIXED" : "UNKNOWN";
 
     return {
       period: String(row.period).slice(0, 10),
@@ -417,13 +452,13 @@ export async function canonicalizeRegistrationRows(
       model_name: String(model?.name_en || model?.name_th || row.model_name_raw || "UNKNOWN"),
       segment: String(model?.segment || "UNKNOWN"),
       body_type: String(model?.body_type || "UNKNOWN"),
-      powertrain: canonicalModelId ? canonicalPowertrain(payload) : "UNKNOWN",
-      oem_group: String(brandPayload.oem_group || "UNKNOWN"),
-      market_position: String(payload.market_position || "UNKNOWN"),
+      powertrain,
+      oem_group: oemGroup,
+      market_position: marketPosition,
       import_type: importType,
       origin_country: originCountry,
-      brand_origin: String(brandPayload.brand_origin || "UNKNOWN"),
-      market_scope: canonicalModelId ? String(payload.market_scope || "UNKNOWN") : canonicalBrandId ? "MIXED" : "UNKNOWN",
+      brand_origin: brandOrigin,
+      market_scope: marketScope,
       raw_brand_name: String(row.brand_name_raw || ""),
       raw_model_name: String(row.model_name_raw || ""),
       brand_mapped: Boolean(canonicalBrandId),
@@ -493,7 +528,7 @@ export async function getRegistrationMarketSlice(args: {
   const facts = await canonicalizeRegistrationRows(
     db,
     rows,
-    needsHistoricalImportOrigin(args.dimension, filters),
+    needsHistoricalModelState(args.dimension, filters),
   );
   return sliceMarketFacts({
     facts,

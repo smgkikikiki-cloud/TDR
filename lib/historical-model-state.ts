@@ -3,6 +3,15 @@ export type HistoricalModelBaseline = {
   catalog_year: number;
   origin_country: string | null;
   import_type: string | null;
+  // These five move on generation/model-year timescales the year catalogs
+  // already capture correctly, unlike origin_country/import_type which can
+  // pivot mid-year -- so they resolve from this year baseline alone, with no
+  // monthly_changes counterpart below (see resolveHistoricalModelState).
+  powertrain: string | null;
+  market_position: string | null;
+  oem_group: string | null;
+  brand_origin: string | null;
+  market_scope: string | null;
 };
 
 export type HistoricalModelChange = {
@@ -24,6 +33,11 @@ export type HistoricalModelStatePayload = {
 type HistoricalResolvedState = {
   origin_country: string;
   import_type: string;
+  powertrain: string;
+  market_position: string;
+  oem_group: string;
+  brand_origin: string;
+  market_scope: string;
   baseline_found: boolean;
 };
 
@@ -63,16 +77,22 @@ export function compileHistoricalModelState(payload: HistoricalModelStatePayload
   return { baselines, changes };
 }
 
+const UNRESOLVED: HistoricalResolvedState = {
+  origin_country: "UNKNOWN", import_type: "UNKNOWN", powertrain: "UNKNOWN",
+  market_position: "UNKNOWN", oem_group: "UNKNOWN", brand_origin: "UNKNOWN",
+  market_scope: "UNKNOWN", baseline_found: false,
+};
+
 export function resolveHistoricalModelState(
   index: HistoricalModelStateIndex,
   modelId: string | null | undefined,
   period: string,
 ): HistoricalResolvedState {
-  if (!modelId) return { origin_country: "UNKNOWN", import_type: "UNKNOWN", baseline_found: false };
+  if (!modelId) return UNRESOLVED;
   const year = Number(String(period).slice(0, 4));
-  if (!Number.isFinite(year)) return { origin_country: "UNKNOWN", import_type: "UNKNOWN", baseline_found: false };
+  if (!Number.isFinite(year)) return UNRESOLVED;
   const baseline = index.baselines.get(baselineKey(String(modelId), year));
-  if (!baseline) return { origin_country: "UNKNOWN", import_type: "UNKNOWN", baseline_found: false };
+  if (!baseline) return UNRESOLVED;
 
   let originCountry = String(baseline.origin_country || "UNKNOWN");
   let importType = String(baseline.import_type || "UNKNOWN");
@@ -86,7 +106,19 @@ export function resolveHistoricalModelState(
       importType = String(change.import_type);
     }
   }
-  return { origin_country: originCountry, import_type: importType, baseline_found: true };
+  return {
+    origin_country: originCountry,
+    import_type: importType,
+    // No monthly_changes counterpart for these five -- see
+    // HistoricalModelBaseline's doc comment -- so the year baseline is the
+    // whole answer, not a starting point walked forward.
+    powertrain: String(baseline.powertrain || "UNKNOWN"),
+    market_position: String(baseline.market_position || "UNKNOWN"),
+    oem_group: String(baseline.oem_group || "UNKNOWN"),
+    brand_origin: String(baseline.brand_origin || "UNKNOWN"),
+    market_scope: String(baseline.market_scope || "UNKNOWN"),
+    baseline_found: true,
+  };
 }
 
 export async function getActiveHistoricalModelState(db: any): Promise<HistoricalModelStateIndex | null> {

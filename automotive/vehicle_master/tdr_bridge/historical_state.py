@@ -41,8 +41,15 @@ def build_historical_model_state(
         conn.close()
         raise ValueError("historical production-state seed errors: " + "; ".join(report["errors"]))
 
+    # origin_country/import_type can pivot mid-year (a plant switch), so they
+    # also carry the sparse monthly_changes layer below. The other five --
+    # powertrain, market_position, oem_group, brand_origin, market_scope --
+    # move on generation/model-year timescales the year catalogs themselves
+    # already capture correctly, so a year baseline alone is enough; no
+    # monthly research burden is added for them.
     baselines = [dict(row) for row in conn.execute(
-        "SELECT unit_id AS canonical_model_id, catalog_year, origin_country, import_type "
+        "SELECT unit_id AS canonical_model_id, catalog_year, origin_country, import_type, "
+        "powertrain, market_position, oem_group, brand_origin, market_scope "
         "FROM dim_unit WHERE grain='MODEL' ORDER BY catalog_year, unit_id"
     )]
     changes = [dict(row) for row in conn.execute(
