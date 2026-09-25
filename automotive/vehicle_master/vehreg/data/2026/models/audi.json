@@ -6,7 +6,9 @@
     "brand_segment": "PREMIUM_LUXURY",
     "oem_group": "Volkswagen Group",
     "brand_origin": "DE",
-    "aliases": ["เอาดี้"]
+    "aliases": [
+      "เอาดี้"
+    ]
   },
   "models": [
     {
@@ -18,96 +20,1947 @@
       "cab_type": "NOT_APPLICABLE",
       "registration_type": "",
       "market_scope": "CORE",
-      "aliases": ["q 3"],
+      "aliases": [
+        "q 3"
+      ],
       "notes": "",
-      "generations": [{
-        "code": "F3",
-        "segment": "C",
-        "seats": 5,
-        "launched": "2019-01-01",
-        "ended": null,
-        "variants": [{"name":"1.5L ICE","powertrain":"ICE","drivetrain":"FWD","engine_cc":1498,"battery_kwh":null,"aliases":["35 TFSI S line"],"overrides":{},"price_thb":2799000,"import_type":"CBU","origin_country":"DE","price_note":"seed-unverified","price_min_thb":2799000,"price_max_thb":2799000}],
-        "trims": [
-          {"name":"35 TFSI","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:013"],"eco":["6111171ad4c1465ab238e4390487d230"]},"aliases":["Q3 35 TFSI"],"id":"35_tfsi_ice","seats":5,"length_mm":4484,"width_mm":1849,"height_mm":1616,"engine_cc":1395,"transmission":"AUTOMATIC"},
-          {"name":"35 TFSI S line","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:013"],"eco":["5614de86-218c-4c2c-b3ec-e3791818ea6d"]},"aliases":["Q3 35 TFSI S line"],"id":"35_tfsi_s_line_ice","seats":5,"length_mm":4484,"width_mm":1849,"height_mm":1616,"engine_cc":1395,"transmission":"AUTOMATIC"},
-          {"name":"40 TFSI quattro S line Black Edition","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:013"],"eco":["d226b496-d4d3-4c9d-ace2-19cff508ef91"]},"aliases":["Q3 40 TFSI quattro S line Black Edition"],"id":"40_tfsi_quattro_s_line_black_edition_ice","seats":5,"length_mm":4484,"width_mm":1849,"height_mm":1616,"engine_cc":1984,"transmission":"AUTOMATIC"},
-          {"name":"Sportback 35 TFSI S line","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:013"],"eco":["ff512c2c3f194bc285e860f92e697107"]},"aliases":["Q3 Sportback 35 TFSI S line"],"id":"sportback_35_tfsi_s_line_ice","seats":5,"length_mm":4500,"width_mm":1843,"height_mm":1567,"engine_cc":1395,"transmission":"AUTOMATIC"},
-          {"name":"Sportback 40 TFSI quattro S line Black Edition","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:013"],"eco":["642de555-48c6-4074-be2a-ed20b0aa0915"]},"aliases":["Q3 Sportback 40 TFSI quattro S line Black Edition"],"id":"sportback_40_tfsi_quattro_s_line_black_edition_ice","seats":5,"length_mm":4500,"width_mm":1843,"height_mm":1567,"engine_cc":1984,"transmission":"AUTOMATIC"},
-          {"name":"S line Tech Plus","powertrain":"ICE","seats":5,"length_mm":4531,"width_mm":1859,"height_mm":1601,"engine_cc":1498,"transmission":"AUTOMATIC","source_refs":{"eco":["b9a4dcd1-c2a1-4b3d-b867-fe889686be93"]}},
-          {"name":"Sportback quattro S line Tech Pro","powertrain":"ICE","seats":5,"length_mm":4531,"width_mm":1859,"height_mm":1559,"engine_cc":1984,"transmission":"AUTOMATIC","source_refs":{"eco":["d966025c-123f-493a-91d1-48d7248596a4"]}},
-          {"name":"RS Sportback quattro","powertrain":"ICE","seats":5,"length_mm":4507,"width_mm":1851,"height_mm":1557,"engine_cc":2480,"transmission":"AUTOMATIC","source_refs":{"eco":["f94a3e8f-f9a9-4117-8637-058ca299fe2d"]}},
-          {"name":"RS Sportback edition 10 years","powertrain":"ICE","seats":5,"length_mm":4507,"width_mm":1851,"height_mm":1557,"engine_cc":2480,"transmission":"AUTOMATIC","source_refs":{"eco":["76d39365-5163-4e52-9011-1319bb1fe4c8"]}}
-        ]
-      }]
+      "generations": [
+        {
+          "code": "F3",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2019-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.5L ICE",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "engine_cc": 1498,
+              "battery_kwh": null,
+              "aliases": [
+                "35 TFSI S line"
+              ],
+              "overrides": {},
+              "price_thb": 2799000,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "seed-unverified",
+              "price_min_thb": 2799000,
+              "price_max_thb": 2799000
+            }
+          ],
+          "trims": [
+            {
+              "name": "35 TFSI",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:013"
+                ],
+                "eco": [
+                  "6111171ad4c1465ab238e4390487d230"
+                ]
+              },
+              "aliases": [
+                "Q3 35 TFSI"
+              ],
+              "id": "35_tfsi_ice",
+              "seats": 5,
+              "length_mm": 4484,
+              "width_mm": 1849,
+              "height_mm": 1616,
+              "engine_cc": 1395,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "name": "35 TFSI S line",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:013"
+                ],
+                "eco": [
+                  "5614de86-218c-4c2c-b3ec-e3791818ea6d"
+                ]
+              },
+              "aliases": [
+                "Q3 35 TFSI S line"
+              ],
+              "id": "35_tfsi_s_line_ice",
+              "seats": 5,
+              "length_mm": 4484,
+              "width_mm": 1849,
+              "height_mm": 1616,
+              "engine_cc": 1395,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "name": "40 TFSI quattro S line Black Edition",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:013"
+                ],
+                "eco": [
+                  "d226b496-d4d3-4c9d-ace2-19cff508ef91"
+                ]
+              },
+              "aliases": [
+                "Q3 40 TFSI quattro S line Black Edition"
+              ],
+              "id": "40_tfsi_quattro_s_line_black_edition_ice",
+              "seats": 5,
+              "length_mm": 4484,
+              "width_mm": 1849,
+              "height_mm": 1616,
+              "engine_cc": 1984,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "name": "Sportback 35 TFSI S line",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:013"
+                ],
+                "eco": [
+                  "ff512c2c3f194bc285e860f92e697107"
+                ]
+              },
+              "aliases": [
+                "Q3 Sportback 35 TFSI S line"
+              ],
+              "id": "sportback_35_tfsi_s_line_ice",
+              "seats": 5,
+              "length_mm": 4500,
+              "width_mm": 1843,
+              "height_mm": 1567,
+              "engine_cc": 1395,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "name": "Sportback 40 TFSI quattro S line Black Edition",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:013"
+                ],
+                "eco": [
+                  "642de555-48c6-4074-be2a-ed20b0aa0915"
+                ]
+              },
+              "aliases": [
+                "Q3 Sportback 40 TFSI quattro S line Black Edition"
+              ],
+              "id": "sportback_40_tfsi_quattro_s_line_black_edition_ice",
+              "seats": 5,
+              "length_mm": 4500,
+              "width_mm": 1843,
+              "height_mm": 1567,
+              "engine_cc": 1984,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "name": "S line Tech Plus",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4531,
+              "width_mm": 1859,
+              "height_mm": 1601,
+              "engine_cc": 1498,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "b9a4dcd1-c2a1-4b3d-b867-fe889686be93"
+                ]
+              }
+            },
+            {
+              "name": "Sportback quattro S line Tech Pro",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4531,
+              "width_mm": 1859,
+              "height_mm": 1559,
+              "engine_cc": 1984,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "d966025c-123f-493a-91d1-48d7248596a4"
+                ]
+              }
+            },
+            {
+              "name": "RS Sportback quattro",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4507,
+              "width_mm": 1851,
+              "height_mm": 1557,
+              "engine_cc": 2480,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "f94a3e8f-f9a9-4117-8637-058ca299fe2d"
+                ]
+              }
+            },
+            {
+              "name": "RS Sportback edition 10 years",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4507,
+              "width_mm": 1851,
+              "height_mm": 1557,
+              "engine_cc": 2480,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "76d39365-5163-4e52-9011-1319bb1fe4c8"
+                ]
+              }
+            }
+          ]
+        }
+      ]
     },
     {
-      "id":"audi_q5","name_en":"Q5","name_th":"คิว5","nameplate":"","body_type":"CROSSOVER","cab_type":"NOT_APPLICABLE","registration_type":"","market_scope":"CORE","aliases":["q 5"],"notes":"",
-      "generations":[{"code":"FY","segment":"D","seats":5,"launched":"2018-01-01","ended":null,"variants":[{"name":"2.0L ICE AWD","powertrain":"ICE","drivetrain":"AWD","engine_cc":1984,"aliases":["45 TFSI quattro S line"],"overrides":{},"price_thb":3999000,"import_type":"CBU","origin_country":"DE","price_note":"seed-unverified","price_min_thb":3999000,"price_max_thb":3999000}],"trims":[
-        {"name":"45 TFSI quattro S line Black Edition","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:014"]},"aliases":["Q5 45 TFSI quattro S line Black Edition"],"id":"45_tfsi_quattro_s_line_black_edition_ice"},
-        {"name":"55 TFSI e quattro S line Black Edition","powertrain":"PHEV","source_refs":{"owner_directory":["owner_directory_2026_09_13:014"]},"aliases":["Q5 55 TFSI e quattro S line Black Edition"],"id":"55_tfsi_e_quattro_s_line_black_edition_phev"},
-        {"name":"Sportback 45 TFSI quattro S line Black Edition","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:014"]},"aliases":["Q5 Sportback 45 TFSI quattro S line Black Edition"],"id":"sportback_45_tfsi_quattro_s_line_black_edition_ice"},
-        {"name":"Sportback 55 TFSI e quattro S line Black Edition","powertrain":"PHEV","source_refs":{"owner_directory":["owner_directory_2026_09_13:014"],"eco":["0b9c7a8a-b9da-4f0d-ba3b-ff71fa5c7b13"]},"aliases":["Q5 Sportback 55 TFSI e quattro S line Black Edition"],"id":"sportback_55_tfsi_e_quattro_s_line_black_edition_phev","seats":5,"length_mm":4689,"width_mm":2140,"height_mm":1658,"engine_cc":1984,"transmission":"AUTOMATIC"}
-      ]}]
+      "id": "audi_q5",
+      "name_en": "Q5",
+      "name_th": "คิว5",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "q 5"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "FY",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2018-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.0L ICE AWD",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "engine_cc": 1984,
+              "aliases": [
+                "45 TFSI quattro S line"
+              ],
+              "overrides": {},
+              "price_thb": 3999000,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "seed-unverified",
+              "price_min_thb": 3999000,
+              "price_max_thb": 3999000
+            }
+          ],
+          "trims": [
+            {
+              "name": "45 TFSI quattro S line Black Edition",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:014"
+                ]
+              },
+              "aliases": [
+                "Q5 45 TFSI quattro S line Black Edition"
+              ],
+              "id": "45_tfsi_quattro_s_line_black_edition_ice"
+            },
+            {
+              "name": "55 TFSI e quattro S line Black Edition",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:014"
+                ]
+              },
+              "aliases": [
+                "Q5 55 TFSI e quattro S line Black Edition"
+              ],
+              "id": "55_tfsi_e_quattro_s_line_black_edition_phev"
+            },
+            {
+              "name": "Sportback 45 TFSI quattro S line Black Edition",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:014"
+                ]
+              },
+              "aliases": [
+                "Q5 Sportback 45 TFSI quattro S line Black Edition"
+              ],
+              "id": "sportback_45_tfsi_quattro_s_line_black_edition_ice"
+            },
+            {
+              "name": "Sportback 55 TFSI e quattro S line Black Edition",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:014"
+                ],
+                "eco": [
+                  "0b9c7a8a-b9da-4f0d-ba3b-ff71fa5c7b13"
+                ]
+              },
+              "aliases": [
+                "Q5 Sportback 55 TFSI e quattro S line Black Edition"
+              ],
+              "id": "sportback_55_tfsi_e_quattro_s_line_black_edition_phev",
+              "seats": 5,
+              "length_mm": 4689,
+              "width_mm": 2140,
+              "height_mm": 1658,
+              "engine_cc": 1984,
+              "transmission": "AUTOMATIC"
+            }
+          ]
+        }
+      ]
     },
     {
-      "id":"a1","name_en":"A1","name_th":"เอ1","nameplate":"","body_type":"HATCHBACK","cab_type":"NOT_APPLICABLE","registration_type":"","market_scope":"NICHE","aliases":["A1 SB"],
-      "notes":"Thai-market A1 Sportback 35 TFSI S line launch specification verified against Headlightmag on 2026-09-25. Launched at THB 2,149,000 as a German-built CBU with FWD. Audi Thailand's current 2026 model catalog no longer lists A1, so this record is retained as historical rather than current retail. The Edition One row is retained from the owner directory but was not promoted to source-verified in this pass.","retail_status":"DISCONTINUED","retail_checked_at":"2026-09-25","retail_source":"https://www.audi.co.th/en/models/",
-      "generations":[{"code":"gen1","segment":"B","seats":5,"launched":"2019-10-21","ended":null,"variants":[{"name":"1.5L TFSI ICE","powertrain":"ICE","drivetrain":"FWD","engine_cc":1498,"price_thb":2149000,"price_min_thb":2149000,"price_max_thb":2149000,"import_type":"CBU","origin_country":"DE","price_note":"Official Thai launch list price published 2019-10-21; later campaign prices are not treated as MSRP.","aliases":["35 TFSI S line"]}],"trims":[
-        {"name":"Sportback 35 TFSI S line","variant":"1.5L TFSI ICE","powertrain":"ICE","drivetrain":"FWD","source_refs":{"owner_directory":["owner_directory_2026_09_13:006"],"eco":["70df451ca3c04bd58acf483aabc89912"],"headlightmag":["https://www.headlightmag.com/offcial-price-audi-a1-35-tfsi-s-line/"]},"aliases":["A1 Sportback 35 TFSI S line"],"id":"sportback_35_tfsi_s_line_ice","seats":5,"length_mm":4029,"width_mm":1740,"height_mm":1433,"wheelbase_mm":2563,"engine_cc":1498,"transmission":"7-speed S tronic","tire_front":"215/40 R18","tire_rear":"215/40 R18","wheel_front":"18 in","wheel_rear":"18 in","notes":"Thai-market launch spec: 1.5 TFSI turbo, 150 hp, 250 Nm, 7-speed S tronic, front-wheel drive, CBU Germany."},
-        {"name":"Sportback 35 TFSI Edition One","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:006"]},"aliases":["A1 Sportback 35 TFSI Edition One"],"id":"sportback_35_tfsi_edition_one_ice"}
-      ]}],"powertrain_checked":true
+      "id": "a1",
+      "name_en": "A1",
+      "name_th": "เอ1",
+      "nameplate": "",
+      "body_type": "HATCHBACK",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "NICHE",
+      "aliases": [
+        "A1 SB"
+      ],
+      "notes": "Thai-market A1 Sportback 35 TFSI S line launch specification verified against Headlightmag on 2026-09-25. Launched at THB 2,149,000 as a German-built CBU with FWD. Audi Thailand's current 2026 model catalog no longer lists A1, so this record is retained as historical rather than current retail. The Edition One row is retained from the owner directory but was not promoted to source-verified in this pass.",
+      "retail_status": "DISCONTINUED",
+      "retail_checked_at": "2026-09-25",
+      "retail_source": "https://www.audi.co.th/en/models/",
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2019-10-21",
+          "ended": null,
+          "variants": [
+            {
+              "name": "1.5L TFSI ICE",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "engine_cc": 1498,
+              "price_thb": 2149000,
+              "price_min_thb": 2149000,
+              "price_max_thb": 2149000,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "Official Thai launch list price published 2019-10-21; later campaign prices are not treated as MSRP.",
+              "aliases": [
+                "35 TFSI S line"
+              ]
+            }
+          ],
+          "trims": [
+            {
+              "name": "Sportback 35 TFSI S line",
+              "variant": "1.5L TFSI ICE",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:006"
+                ],
+                "eco": [
+                  "70df451ca3c04bd58acf483aabc89912"
+                ],
+                "headlightmag": [
+                  "https://www.headlightmag.com/offcial-price-audi-a1-35-tfsi-s-line/"
+                ]
+              },
+              "aliases": [
+                "A1 Sportback 35 TFSI S line"
+              ],
+              "id": "sportback_35_tfsi_s_line_ice",
+              "seats": 5,
+              "length_mm": 4029,
+              "width_mm": 1740,
+              "height_mm": 1433,
+              "wheelbase_mm": 2563,
+              "engine_cc": 1498,
+              "transmission": "7-speed S tronic",
+              "tire_front": "215/40 R18",
+              "tire_rear": "215/40 R18",
+              "wheel_front": "18 in",
+              "wheel_rear": "18 in",
+              "notes": "Thai-market launch spec: 1.5 TFSI turbo, 150 hp, 250 Nm, 7-speed S tronic, front-wheel drive, CBU Germany."
+            },
+            {
+              "name": "Sportback 35 TFSI Edition One",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:006"
+                ]
+              },
+              "aliases": [
+                "A1 Sportback 35 TFSI Edition One"
+              ],
+              "id": "sportback_35_tfsi_edition_one_ice"
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
     },
     {
-      "id":"a4","name_en":"A4","name_th":"เอ4","nameplate":"","body_type":"SEDAN","cab_type":"NOT_APPLICABLE","registration_type":"","market_scope":"NICHE","aliases":["A4 AV","A4"],
-      "notes":"Thai-market B9.5 A4 lifecycle and late retail specification verified on 2026-09-25. Audi Thailand's price list effective 2024-08-15 listed A4 40 TFSI S line Icon Black at THB 2,699,000 and A4 Avant 45 TFSI quattro S line Icon Black at THB 3,499,000, both CBU. Current Audi Thailand model catalog no longer lists A4; the nameplate is therefore retained as historical/discontinued rather than current retail.","retail_status":"DISCONTINUED","retail_checked_at":"2026-09-25","retail_source":"https://www.audi.co.th/en/models/",
-      "generations":[{"code":"B9.5","segment":"D","seats":5,"launched":"2020-08-18","ended":null,"variants":[
-        {"name":"40 TFSI MHEV","powertrain":"HEV","drivetrain":"FWD","engine_cc":1984,"battery_kwh":null,"price_thb":2699000,"price_min_thb":2699000,"price_max_thb":2699000,"import_type":"CBU","origin_country":"DE","price_note":"Audi Thailand recommended retail price effective 2024-08-15 for A4 40 TFSI S line Icon Black.","aliases":["40 TFSI S line","40 TFSI S line Icon Black"]},
-        {"name":"45 TFSI quattro MHEV","powertrain":"HEV","drivetrain":"AWD","engine_cc":1984,"battery_kwh":null,"price_thb":3499000,"price_min_thb":3499000,"price_max_thb":3499000,"import_type":"CBU","origin_country":"DE","price_note":"Audi Thailand recommended retail price effective 2024-08-15 for A4 Avant 45 TFSI quattro S line Icon Black.","aliases":["45 TFSI quattro S line","45 TFSI quattro S line Black Edition","45 TFSI quattro S line Icon Black"]}
-      ],"trims":[
-        {"name":"40 TFSI S line Icon Black","variant":"40 TFSI MHEV","powertrain":"HEV","drivetrain":"FWD","source_refs":{"owner_directory":["owner_directory_2026_09_13:007"],"eco":["e1b09021-4284-4211-8b78-625a9939c8ab"],"official_audi":["https://www.audi.co.th/dam/nemo/sea/th/pdf/Audi_Price_List.pdf"],"headlightmag":["https://www.headlightmag.com/official-price-audi-a4-sedan-40-tfsi/","https://www.headlightmag.com/2023-06-26-picture-specs-audi-a4-40-tfsi-s-line-icon-black/"]},"aliases":["A4 40 TFSI S line (Sedan)","A4 40 TFSI S line Icon Black"],"id":"40_tfsi_s_line_sedan_ice","seats":5,"length_mm":4762,"width_mm":1847,"height_mm":1428,"wheelbase_mm":2820,"engine_cc":1984,"transmission":"7-speed S tronic","tire_front":"245/40 R18","tire_rear":"245/40 R18","wheel_front":"18 in","wheel_rear":"18 in","notes":"Late Thai-market sedan specification: 2.0 TFSI 190 PS / 320 Nm with 12V mild-hybrid system, 7-speed S tronic and FWD. Stable canonical trim ID retained for downstream compatibility."},
-        {"name":"45 TFSI quattro S line Black Edition (Sedan)","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:007"]},"aliases":["A4 45 TFSI quattro S line Black Edition (Sedan)"],"id":"45_tfsi_quattro_s_line_black_edition_sedan_ice"},
-        {"name":"Avant 45 TFSI quattro S line Icon Black","variant":"45 TFSI quattro MHEV","powertrain":"HEV","drivetrain":"AWD","source_refs":{"owner_directory":["owner_directory_2026_09_13:007"],"official_audi":["https://www.audi.co.th/dam/nemo/sea/th/pdf/Audi_Price_List.pdf","https://www.audi.co.th/dam/nemo/sea/th/pdf/Audi_A4_Avant_Brochure.pdf"],"headlightmag":["https://www.headlightmag.com/official-price-audi-a4-avant-minorchange/"]},"aliases":["A4 Avant 45 TFSI quattro S line Black Edition (Station Wagon)","A4 Avant 45 TFSI quattro S line Icon Black"],"id":"avant_45_tfsi_quattro_s_line_black_edition_station_wagon_ice","seats":5,"length_mm":4762,"width_mm":1847,"height_mm":1435,"wheelbase_mm":2820,"engine_cc":1984,"transmission":"7-speed S tronic","tire_front":"245/35 R19","tire_rear":"245/35 R19","wheel_front":"19 in","wheel_rear":"19 in","notes":"Late Thai-market Avant specification: 2.0 TFSI 249 PS / 370 Nm with 12V mild-hybrid system, quattro with ultra technology and 7-speed S tronic. Stable canonical trim ID retained for downstream compatibility."}
-      ]}],"powertrain_checked":true
+      "id": "a4",
+      "name_en": "A4",
+      "name_th": "เอ4",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "NICHE",
+      "aliases": [
+        "A4 AV",
+        "A4"
+      ],
+      "notes": "Thai-market B9.5 A4 lifecycle and late retail specification verified on 2026-09-25. Audi Thailand's price list effective 2024-08-15 listed A4 40 TFSI S line Icon Black at THB 2,699,000 and A4 Avant 45 TFSI quattro S line Icon Black at THB 3,499,000, both CBU. Current Audi Thailand model catalog no longer lists A4; the nameplate is therefore retained as historical/discontinued rather than current retail.",
+      "retail_status": "DISCONTINUED",
+      "retail_checked_at": "2026-09-25",
+      "retail_source": "https://www.audi.co.th/en/models/",
+      "generations": [
+        {
+          "code": "B9.5",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2020-08-18",
+          "ended": null,
+          "variants": [
+            {
+              "name": "40 TFSI MHEV",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "engine_cc": 1984,
+              "battery_kwh": null,
+              "price_thb": 2699000,
+              "price_min_thb": 2699000,
+              "price_max_thb": 2699000,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "Audi Thailand recommended retail price effective 2024-08-15 for A4 40 TFSI S line Icon Black.",
+              "aliases": [
+                "40 TFSI S line",
+                "40 TFSI S line Icon Black"
+              ]
+            },
+            {
+              "name": "45 TFSI quattro MHEV",
+              "powertrain": "HEV",
+              "drivetrain": "AWD",
+              "engine_cc": 1984,
+              "battery_kwh": null,
+              "price_thb": 3499000,
+              "price_min_thb": 3499000,
+              "price_max_thb": 3499000,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "Audi Thailand recommended retail price effective 2024-08-15 for A4 Avant 45 TFSI quattro S line Icon Black.",
+              "aliases": [
+                "45 TFSI quattro S line",
+                "45 TFSI quattro S line Black Edition",
+                "45 TFSI quattro S line Icon Black"
+              ]
+            }
+          ],
+          "trims": [
+            {
+              "name": "40 TFSI S line Icon Black",
+              "variant": "40 TFSI MHEV",
+              "powertrain": "HEV",
+              "drivetrain": "FWD",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:007"
+                ],
+                "eco": [
+                  "e1b09021-4284-4211-8b78-625a9939c8ab"
+                ],
+                "official_audi": [
+                  "https://www.audi.co.th/dam/nemo/sea/th/pdf/Audi_Price_List.pdf"
+                ],
+                "headlightmag": [
+                  "https://www.headlightmag.com/official-price-audi-a4-sedan-40-tfsi/",
+                  "https://www.headlightmag.com/2023-06-26-picture-specs-audi-a4-40-tfsi-s-line-icon-black/"
+                ]
+              },
+              "aliases": [
+                "A4 40 TFSI S line (Sedan)",
+                "A4 40 TFSI S line Icon Black"
+              ],
+              "id": "40_tfsi_s_line_sedan_ice",
+              "seats": 5,
+              "length_mm": 4762,
+              "width_mm": 1847,
+              "height_mm": 1428,
+              "wheelbase_mm": 2820,
+              "engine_cc": 1984,
+              "transmission": "7-speed S tronic",
+              "tire_front": "245/40 R18",
+              "tire_rear": "245/40 R18",
+              "wheel_front": "18 in",
+              "wheel_rear": "18 in",
+              "notes": "Late Thai-market sedan specification: 2.0 TFSI 190 PS / 320 Nm with 12V mild-hybrid system, 7-speed S tronic and FWD. Stable canonical trim ID retained for downstream compatibility."
+            },
+            {
+              "name": "45 TFSI quattro S line Black Edition (Sedan)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:007"
+                ]
+              },
+              "aliases": [
+                "A4 45 TFSI quattro S line Black Edition (Sedan)"
+              ],
+              "id": "45_tfsi_quattro_s_line_black_edition_sedan_ice"
+            },
+            {
+              "name": "Avant 45 TFSI quattro S line Icon Black",
+              "variant": "45 TFSI quattro MHEV",
+              "powertrain": "HEV",
+              "drivetrain": "AWD",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:007"
+                ],
+                "official_audi": [
+                  "https://www.audi.co.th/dam/nemo/sea/th/pdf/Audi_Price_List.pdf",
+                  "https://www.audi.co.th/dam/nemo/sea/th/pdf/Audi_A4_Avant_Brochure.pdf"
+                ],
+                "headlightmag": [
+                  "https://www.headlightmag.com/official-price-audi-a4-avant-minorchange/"
+                ]
+              },
+              "aliases": [
+                "A4 Avant 45 TFSI quattro S line Black Edition (Station Wagon)",
+                "A4 Avant 45 TFSI quattro S line Icon Black"
+              ],
+              "id": "avant_45_tfsi_quattro_s_line_black_edition_station_wagon_ice",
+              "seats": 5,
+              "length_mm": 4762,
+              "width_mm": 1847,
+              "height_mm": 1435,
+              "wheelbase_mm": 2820,
+              "engine_cc": 1984,
+              "transmission": "7-speed S tronic",
+              "tire_front": "245/35 R19",
+              "tire_rear": "245/35 R19",
+              "wheel_front": "19 in",
+              "wheel_rear": "19 in",
+              "notes": "Late Thai-market Avant specification: 2.0 TFSI 249 PS / 370 Nm with 12V mild-hybrid system, quattro with ultra technology and 7-speed S tronic. Stable canonical trim ID retained for downstream compatibility."
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
     },
     {
-      "id":"a5","name_en":"A5","name_th":"เอ5","nameplate":"","body_type":"COUPE","cab_type":"NOT_APPLICABLE","registration_type":"","market_scope":"NICHE","aliases":["A5 CP","A5 SB","A5 Avant","A5"],
-      "notes":"Current Thai-market A5 B10 verified on 2026-09-26. The B10 family launched in Thailand in March 2025 as PHEV-only A5 Sportback and A5 Avant, replacing the former A4 Sedan/A4 Avant and previous A5 Sportback. Current Audi Thailand product pages list the A5 e-hybrid family with quattro, 25.9 kWh gross battery and up to 270 kW system output. Historical B9.5 Coupe/Sportback rows are retained separately rather than mixed into the current generation. RS 5 remains under the repository's separate RS canonical model.",
-      "retail_status":"CURRENT","retail_checked_at":"2026-09-26","retail_source":"https://www.audi.co.th/en/models/",
-      "generations":[
-        {"code":"B9.5","segment":"D","seats":5,"launched":"2020-01-01","ended":"2025-03-06","variants":[{"name":"historical seed","powertrain":"ICE","drivetrain":"AWD","engine_cc":1984,"price_thb":3690000.0,"price_min_thb":null,"price_max_thb":null,"import_type":"CBU","origin_country":"DE","price_note":"Historical seed retained pending dedicated B9.5 audit.","aliases":[]}],"trims":[
-          {"name":"Coupe 40 TFSI S line","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:008"]},"aliases":["A5 Coupe 40 TFSI S line"],"id":"coupe_40_tfsi_s_line_ice"},
-          {"name":"Coupe 45 TFSI quattro S line Black Edition","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:008"]},"aliases":["A5 Coupe 45 TFSI quattro S line Black Edition"],"id":"coupe_45_tfsi_quattro_s_line_black_edition_ice"},
-          {"name":"Sportback 40 TFSI S line","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:008"]},"aliases":["A5 Sportback 40 TFSI S line"],"id":"sportback_40_tfsi_s_line_ice"},
-          {"name":"Sportback 45 TFSI quattro S line Black Edition","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:008"]},"aliases":["A5 Sportback 45 TFSI quattro S line Black Edition"],"id":"sportback_45_tfsi_quattro_s_line_black_edition_ice"}
-        ]},
-        {"code":"B10","segment":"D","seats":5,"launched":"2025-03-07","ended":null,"variants":[
-          {"name":"Sportback 2.0L TFSI e quattro PHEV","powertrain":"PHEV","drivetrain":"AWD","engine_cc":1984,"battery_kwh":25.9,"price_thb":3299000,"price_min_thb":3299000,"price_max_thb":3899000,"import_type":"CBU","origin_country":"DE","price_note":"Official Thai launch prices published 2025-03-07: Tech Plus THB 3,299,000; Tech Pro THB 3,899,000. Later campaign/event pricing is not promoted to normal MSRP in this pass.","aliases":["A5 Sportback TFSI e quattro","A5 Sportback e-hybrid quattro"]},
-          {"name":"Avant 2.0L TFSI e quattro PHEV","powertrain":"PHEV","drivetrain":"AWD","engine_cc":1984,"battery_kwh":25.9,"price_thb":3499000,"price_min_thb":3499000,"price_max_thb":3999000,"import_type":"CBU","origin_country":"DE","price_note":"Official Thai launch prices published 2025-03-07: Tech Plus THB 3,499,000; Tech Pro THB 3,999,000. Later campaign/event pricing is not promoted to normal MSRP in this pass.","aliases":["A5 Avant TFSI e quattro","A5 Avant e-hybrid quattro"]}
-        ],"trims":[
-          {"name":"Sportback e-hybrid quattro Tech Plus","variant":"Sportback 2.0L TFSI e quattro PHEV","powertrain":"PHEV","drivetrain":"AWD","seats":5,"length_mm":4829,"width_mm":1860,"height_mm":1443,"wheelbase_mm":2892,"engine_cc":1984,"battery_kwh":25.9,"transmission":"7-speed S tronic","tire_front":"245/40 R19","tire_rear":"245/40 R19","wheel_front":"19 in","wheel_rear":"19 in","source_refs":{"eco":["8beae883-d002-431b-a85f-f4e9c19aee38"],"official_audi":["https://www.audi.co.th/en/models/a5/a5-sportback-e-hybrid/","https://media.audi.com/is/content/audi/country/th/assets/A5_e-hybrid_Brochure_Apr2025.pdf"],"headlightmag":["https://www.headlightmag.com/official-price-audi-a5-sportback-tfsi-e/"]},"aliases":["A5 Sportback TFSI e quattro Tech Plus"],"id":"sportback_e_hybrid_quattro_tech_plus_phev","notes":"Thai B10 PHEV: 367 PS system output, 500 Nm, quattro, 25.9 kWh gross battery; 114 km NEDC / 86 km WLTP EV range."},
-          {"name":"Sportback e-hybrid quattro Tech Pro","variant":"Sportback 2.0L TFSI e quattro PHEV","powertrain":"PHEV","drivetrain":"AWD","seats":5,"length_mm":4829,"width_mm":1860,"height_mm":1443,"wheelbase_mm":2892,"engine_cc":1984,"battery_kwh":25.9,"transmission":"7-speed S tronic","tire_front":"245/35 R20","tire_rear":"245/35 R20","wheel_front":"20 in","wheel_rear":"20 in","source_refs":{"eco":["ec94d6d2-ceca-4c7d-b15d-23fddb5b2e9d"],"official_audi":["https://www.audi.co.th/en/models/a5/a5-sportback-e-hybrid/","https://media.audi.com/is/content/audi/country/th/assets/A5_e-hybrid_Brochure_Apr2025.pdf"],"headlightmag":["https://www.headlightmag.com/official-price-audi-a5-sportback-tfsi-e/"]},"aliases":["A5 Sportback TFSI e quattro Tech Pro"],"id":"sportback_e_hybrid_quattro_tech_pro_phev","notes":"Thai B10 PHEV: 367 PS system output, 500 Nm, quattro, 25.9 kWh gross battery; Tech Pro uses 20-inch wheels."},
-          {"name":"Avant e-hybrid quattro Tech Plus","variant":"Avant 2.0L TFSI e quattro PHEV","powertrain":"PHEV","drivetrain":"AWD","seats":5,"length_mm":4829,"width_mm":1860,"height_mm":1458,"wheelbase_mm":2892,"engine_cc":1984,"battery_kwh":25.9,"transmission":"7-speed S tronic","tire_front":"245/40 R19","tire_rear":"245/40 R19","wheel_front":"19 in","wheel_rear":"19 in","source_refs":{"eco":["0d8d8e0d-06ee-449d-ba28-c16bee134420"],"official_audi":["https://www.audi.co.th/en/models/a5/a5-avant-e-hybrid/","https://media.audi.com/is/content/audi/country/th/assets/A5_e-hybrid_Brochure_Apr2025.pdf"],"headlightmag":["https://www.headlightmag.com/official-price-audi-a5-avant-tfsi-e-quattro/"]},"aliases":["A5 Avant TFSI e quattro Tech Plus"],"id":"avant_e_hybrid_quattro_tech_plus_phev","notes":"Thai B10 PHEV: 367 PS system output, 500 Nm, quattro, 25.9 kWh gross battery; 114 km NEDC / 86 km WLTP EV range."},
-          {"name":"Avant e-hybrid quattro Tech Pro","variant":"Avant 2.0L TFSI e quattro PHEV","powertrain":"PHEV","drivetrain":"AWD","seats":5,"length_mm":4829,"width_mm":1860,"height_mm":1458,"wheelbase_mm":2892,"engine_cc":1984,"battery_kwh":25.9,"transmission":"7-speed S tronic","tire_front":"245/35 R20","tire_rear":"245/35 R20","wheel_front":"20 in","wheel_rear":"20 in","source_refs":{"eco":["bff1c0a2-b034-4b4b-82b2-0bb3cdafec85"],"official_audi":["https://www.audi.co.th/en/models/a5/a5-avant-e-hybrid/","https://media.audi.com/is/content/audi/country/th/assets/A5_e-hybrid_Brochure_Apr2025.pdf"],"headlightmag":["https://www.headlightmag.com/official-price-audi-a5-avant-tfsi-e-quattro/"]},"aliases":["A5 Avant TFSI e quattro Tech Pro"],"id":"avant_e_hybrid_quattro_tech_pro_phev","notes":"Thai B10 PHEV: 367 PS system output, 500 Nm, quattro, 25.9 kWh gross battery; Tech Pro uses 20-inch wheels."}
-        ]}
-      ],"powertrain_checked":true
+      "id": "a5",
+      "name_en": "A5",
+      "name_th": "เอ5",
+      "nameplate": "",
+      "body_type": "COUPE",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "NICHE",
+      "aliases": [
+        "A5 CP",
+        "A5 SB",
+        "A5 Avant",
+        "A5"
+      ],
+      "notes": "Current Thai-market A5 B10 verified on 2026-09-26. The B10 family launched in Thailand in March 2025 as PHEV-only A5 Sportback and A5 Avant, replacing the former A4 Sedan/A4 Avant and previous A5 Sportback. Current Audi Thailand product pages list the A5 e-hybrid family with quattro, 25.9 kWh gross battery and up to 270 kW system output. Historical B9.5 Coupe/Sportback rows are retained separately rather than mixed into the current generation. RS 5 remains under the repository's separate RS canonical model.",
+      "retail_status": "CURRENT",
+      "retail_checked_at": "2026-09-26",
+      "retail_source": "https://www.audi.co.th/en/models/",
+      "generations": [
+        {
+          "code": "B9.5",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2020-01-01",
+          "ended": "2025-03-06",
+          "variants": [
+            {
+              "name": "historical seed",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "engine_cc": 1984,
+              "price_thb": 3690000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "Historical seed retained pending dedicated B9.5 audit.",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Coupe 40 TFSI S line",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:008"
+                ]
+              },
+              "aliases": [
+                "A5 Coupe 40 TFSI S line"
+              ],
+              "id": "coupe_40_tfsi_s_line_ice"
+            },
+            {
+              "name": "Coupe 45 TFSI quattro S line Black Edition",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:008"
+                ]
+              },
+              "aliases": [
+                "A5 Coupe 45 TFSI quattro S line Black Edition"
+              ],
+              "id": "coupe_45_tfsi_quattro_s_line_black_edition_ice"
+            },
+            {
+              "name": "Sportback 40 TFSI S line",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:008"
+                ]
+              },
+              "aliases": [
+                "A5 Sportback 40 TFSI S line"
+              ],
+              "id": "sportback_40_tfsi_s_line_ice"
+            },
+            {
+              "name": "Sportback 45 TFSI quattro S line Black Edition",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:008"
+                ]
+              },
+              "aliases": [
+                "A5 Sportback 45 TFSI quattro S line Black Edition"
+              ],
+              "id": "sportback_45_tfsi_quattro_s_line_black_edition_ice"
+            }
+          ]
+        },
+        {
+          "code": "B10",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2025-03-07",
+          "ended": null,
+          "variants": [
+            {
+              "name": "Sportback 2.0L TFSI e quattro PHEV",
+              "powertrain": "PHEV",
+              "drivetrain": "AWD",
+              "engine_cc": 1984,
+              "battery_kwh": 25.9,
+              "price_thb": 3299000,
+              "price_min_thb": 3299000,
+              "price_max_thb": 3899000,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "Official Thai launch prices published 2025-03-07: Tech Plus THB 3,299,000; Tech Pro THB 3,899,000. Later campaign/event pricing is not promoted to normal MSRP in this pass.",
+              "aliases": [
+                "A5 Sportback TFSI e quattro",
+                "A5 Sportback e-hybrid quattro"
+              ]
+            },
+            {
+              "name": "Avant 2.0L TFSI e quattro PHEV",
+              "powertrain": "PHEV",
+              "drivetrain": "AWD",
+              "engine_cc": 1984,
+              "battery_kwh": 25.9,
+              "price_thb": 3499000,
+              "price_min_thb": 3499000,
+              "price_max_thb": 3999000,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "Official Thai launch prices published 2025-03-07: Tech Plus THB 3,499,000; Tech Pro THB 3,999,000. Later campaign/event pricing is not promoted to normal MSRP in this pass.",
+              "aliases": [
+                "A5 Avant TFSI e quattro",
+                "A5 Avant e-hybrid quattro"
+              ]
+            }
+          ],
+          "trims": [
+            {
+              "name": "Sportback e-hybrid quattro Tech Plus",
+              "variant": "Sportback 2.0L TFSI e quattro PHEV",
+              "powertrain": "PHEV",
+              "drivetrain": "AWD",
+              "seats": 5,
+              "length_mm": 4829,
+              "width_mm": 1860,
+              "height_mm": 1443,
+              "wheelbase_mm": 2892,
+              "engine_cc": 1984,
+              "battery_kwh": 25.9,
+              "transmission": "7-speed S tronic",
+              "tire_front": "245/40 R19",
+              "tire_rear": "245/40 R19",
+              "wheel_front": "19 in",
+              "wheel_rear": "19 in",
+              "source_refs": {
+                "eco": [
+                  "8beae883-d002-431b-a85f-f4e9c19aee38"
+                ],
+                "official_audi": [
+                  "https://www.audi.co.th/en/models/a5/a5-sportback-e-hybrid/",
+                  "https://media.audi.com/is/content/audi/country/th/assets/A5_e-hybrid_Brochure_Apr2025.pdf"
+                ],
+                "headlightmag": [
+                  "https://www.headlightmag.com/official-price-audi-a5-sportback-tfsi-e/"
+                ]
+              },
+              "aliases": [
+                "A5 Sportback TFSI e quattro Tech Plus"
+              ],
+              "id": "sportback_e_hybrid_quattro_tech_plus_phev",
+              "notes": "Thai B10 PHEV: 367 PS system output, 500 Nm, quattro, 25.9 kWh gross battery; 114 km NEDC / 86 km WLTP EV range."
+            },
+            {
+              "name": "Sportback e-hybrid quattro Tech Pro",
+              "variant": "Sportback 2.0L TFSI e quattro PHEV",
+              "powertrain": "PHEV",
+              "drivetrain": "AWD",
+              "seats": 5,
+              "length_mm": 4829,
+              "width_mm": 1860,
+              "height_mm": 1443,
+              "wheelbase_mm": 2892,
+              "engine_cc": 1984,
+              "battery_kwh": 25.9,
+              "transmission": "7-speed S tronic",
+              "tire_front": "245/35 R20",
+              "tire_rear": "245/35 R20",
+              "wheel_front": "20 in",
+              "wheel_rear": "20 in",
+              "source_refs": {
+                "eco": [
+                  "ec94d6d2-ceca-4c7d-b15d-23fddb5b2e9d"
+                ],
+                "official_audi": [
+                  "https://www.audi.co.th/en/models/a5/a5-sportback-e-hybrid/",
+                  "https://media.audi.com/is/content/audi/country/th/assets/A5_e-hybrid_Brochure_Apr2025.pdf"
+                ],
+                "headlightmag": [
+                  "https://www.headlightmag.com/official-price-audi-a5-sportback-tfsi-e/"
+                ]
+              },
+              "aliases": [
+                "A5 Sportback TFSI e quattro Tech Pro"
+              ],
+              "id": "sportback_e_hybrid_quattro_tech_pro_phev",
+              "notes": "Thai B10 PHEV: 367 PS system output, 500 Nm, quattro, 25.9 kWh gross battery; Tech Pro uses 20-inch wheels."
+            },
+            {
+              "name": "Avant e-hybrid quattro Tech Plus",
+              "variant": "Avant 2.0L TFSI e quattro PHEV",
+              "powertrain": "PHEV",
+              "drivetrain": "AWD",
+              "seats": 5,
+              "length_mm": 4829,
+              "width_mm": 1860,
+              "height_mm": 1458,
+              "wheelbase_mm": 2892,
+              "engine_cc": 1984,
+              "battery_kwh": 25.9,
+              "transmission": "7-speed S tronic",
+              "tire_front": "245/40 R19",
+              "tire_rear": "245/40 R19",
+              "wheel_front": "19 in",
+              "wheel_rear": "19 in",
+              "source_refs": {
+                "eco": [
+                  "0d8d8e0d-06ee-449d-ba28-c16bee134420"
+                ],
+                "official_audi": [
+                  "https://www.audi.co.th/en/models/a5/a5-avant-e-hybrid/",
+                  "https://media.audi.com/is/content/audi/country/th/assets/A5_e-hybrid_Brochure_Apr2025.pdf"
+                ],
+                "headlightmag": [
+                  "https://www.headlightmag.com/official-price-audi-a5-avant-tfsi-e-quattro/"
+                ]
+              },
+              "aliases": [
+                "A5 Avant TFSI e quattro Tech Plus"
+              ],
+              "id": "avant_e_hybrid_quattro_tech_plus_phev",
+              "notes": "Thai B10 PHEV: 367 PS system output, 500 Nm, quattro, 25.9 kWh gross battery; 114 km NEDC / 86 km WLTP EV range."
+            },
+            {
+              "name": "Avant e-hybrid quattro Tech Pro",
+              "variant": "Avant 2.0L TFSI e quattro PHEV",
+              "powertrain": "PHEV",
+              "drivetrain": "AWD",
+              "seats": 5,
+              "length_mm": 4829,
+              "width_mm": 1860,
+              "height_mm": 1458,
+              "wheelbase_mm": 2892,
+              "engine_cc": 1984,
+              "battery_kwh": 25.9,
+              "transmission": "7-speed S tronic",
+              "tire_front": "245/35 R20",
+              "tire_rear": "245/35 R20",
+              "wheel_front": "20 in",
+              "wheel_rear": "20 in",
+              "source_refs": {
+                "eco": [
+                  "bff1c0a2-b034-4b4b-82b2-0bb3cdafec85"
+                ],
+                "official_audi": [
+                  "https://www.audi.co.th/en/models/a5/a5-avant-e-hybrid/",
+                  "https://media.audi.com/is/content/audi/country/th/assets/A5_e-hybrid_Brochure_Apr2025.pdf"
+                ],
+                "headlightmag": [
+                  "https://www.headlightmag.com/official-price-audi-a5-avant-tfsi-e-quattro/"
+                ]
+              },
+              "aliases": [
+                "A5 Avant TFSI e quattro Tech Pro"
+              ],
+              "id": "avant_e_hybrid_quattro_tech_pro_phev",
+              "notes": "Thai B10 PHEV: 367 PS system output, 500 Nm, quattro, 25.9 kWh gross battery; Tech Pro uses 20-inch wheels."
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
     },
     {
-      "id":"a7","name_en":"A7","name_th":"เอ7","nameplate":"","body_type":"SEDAN","cab_type":"NOT_APPLICABLE","registration_type":"","market_scope":"NICHE","aliases":["A7 SB"],"generations":[{"code":"gen1","segment":"E","seats":5,"launched":"2023-01-01","ended":null,"variants":[{"name":"spec","powertrain":"ICE","drivetrain":"AWD","engine_cc":2995,"price_thb":5490000.0,"price_min_thb":null,"price_max_thb":null,"import_type":"CBU","origin_country":"DE","price_note":"seed-unverified","aliases":[]}],"trims":[
-        {"name":"Sportback 45 TFSI quattro S line Black Edition","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:011"]},"aliases":["A7 Sportback 45 TFSI quattro S line Black Edition"],"id":"sportback_45_tfsi_quattro_s_line_black_edition_ice"},
-        {"name":"Sportback 55 TFSI e quattro S line Black Edition","powertrain":"PHEV","source_refs":{"owner_directory":["owner_directory_2026_09_13:011"],"eco":["44322647-1272-4fcd-b2c6-8949f5f5c1aa"]},"aliases":["A7 Sportback 55 TFSI e quattro S line Black Edition"],"id":"sportback_55_tfsi_e_quattro_s_line_black_edition_phev","seats":5,"length_mm":4969,"width_mm":1908,"height_mm":1421,"engine_cc":1984,"transmission":"AUTOMATIC"},
-        {"name":"Sportback 55 TFSI e quattro S line","powertrain":"PHEV","seats":5,"length_mm":4969,"width_mm":1908,"height_mm":1421,"engine_cc":1984,"transmission":"AUTOMATIC","source_refs":{"eco":["0128920e-65e2-41cd-b7d3-74fcaaa5e9fb"]}}
-      ]}]
+      "id": "a7",
+      "name_en": "A7",
+      "name_th": "เอ7",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "NICHE",
+      "aliases": [
+        "A7 SB"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "engine_cc": 2995,
+              "price_thb": 5490000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Sportback 45 TFSI quattro S line Black Edition",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:011"
+                ]
+              },
+              "aliases": [
+                "A7 Sportback 45 TFSI quattro S line Black Edition"
+              ],
+              "id": "sportback_45_tfsi_quattro_s_line_black_edition_ice"
+            },
+            {
+              "name": "Sportback 55 TFSI e quattro S line Black Edition",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:011"
+                ],
+                "eco": [
+                  "44322647-1272-4fcd-b2c6-8949f5f5c1aa"
+                ]
+              },
+              "aliases": [
+                "A7 Sportback 55 TFSI e quattro S line Black Edition"
+              ],
+              "id": "sportback_55_tfsi_e_quattro_s_line_black_edition_phev",
+              "seats": 5,
+              "length_mm": 4969,
+              "width_mm": 1908,
+              "height_mm": 1421,
+              "engine_cc": 1984,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "name": "Sportback 55 TFSI e quattro S line",
+              "powertrain": "PHEV",
+              "seats": 5,
+              "length_mm": 4969,
+              "width_mm": 1908,
+              "height_mm": 1421,
+              "engine_cc": 1984,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "0128920e-65e2-41cd-b7d3-74fcaaa5e9fb"
+                ]
+              }
+            }
+          ]
+        }
+      ]
     },
-    {"id":"a8","name_en":"A8","name_th":"เอ8","nameplate":"","body_type":"SEDAN","cab_type":"NOT_APPLICABLE","registration_type":"","market_scope":"NICHE","aliases":["A8L","A8"],"generations":[{"code":"gen1","segment":"E","seats":5,"launched":"2023-01-01","ended":null,"variants":[{"name":"spec","powertrain":"ICE","drivetrain":"AWD","engine_cc":2995,"price_thb":8990000.0,"price_min_thb":null,"price_max_thb":null,"import_type":"CBU","origin_country":"DE","price_note":"seed-unverified","aliases":[]}],"trims":[{"name":"L 55 TFSI quattro Prestige","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:012"]},"aliases":["A8 L 55 TFSI quattro Prestige"],"id":"l_55_tfsi_quattro_prestige_ice"},{"name":"L 60 TFSI e quattro Prestige","powertrain":"PHEV","source_refs":{"owner_directory":["owner_directory_2026_09_13:012"]},"aliases":["A8 L 60 TFSI e quattro Prestige"],"id":"l_60_tfsi_e_quattro_prestige_phev"}]}]},
-    {"id":"q8","name_en":"Q8","name_th":"คิว8","nameplate":"","body_type":"CROSSOVER","cab_type":"NOT_APPLICABLE","registration_type":"","market_scope":"NICHE","aliases":["Q8 SB","Q8"],"generations":[{"code":"gen1","segment":"E","seats":5,"launched":"2023-01-01","ended":null,"variants":[{"name":"spec","powertrain":"ICE","drivetrain":"AWD","engine_cc":2995,"price_thb":6490000.0,"price_min_thb":null,"price_max_thb":null,"import_type":"CBU","origin_country":"DE","price_note":"seed-unverified","aliases":[]}],"trims":[{"name":"55 TFSI e quattro S line Black Edition","powertrain":"PHEV","source_refs":{"owner_directory":["owner_directory_2026_09_13:019"]},"aliases":["Q8 55 TFSI e quattro S line Black Edition"],"id":"55_tfsi_e_quattro_s_line_black_edition_phev"},{"name":"60 TFSI e quattro S line Black Edition","powertrain":"PHEV","source_refs":{"owner_directory":["owner_directory_2026_09_13:019"],"eco":["3a93dd56-e690-4555-a3db-97e1a06e2bfc"]},"aliases":["Q8 60 TFSI e quattro S line Black Edition"],"id":"60_tfsi_e_quattro_s_line_black_edition_phev","seats":5,"length_mm":5063,"width_mm":1970,"height_mm":1741,"engine_cc":2995,"transmission":"AUTOMATIC"}]}]},
-    {"id":"tt","name_en":"TT","name_th":"ทีที","nameplate":"","body_type":"COUPE","cab_type":"NOT_APPLICABLE","registration_type":"","market_scope":"NICHE","aliases":["TT Coupe","TT RS","TT"],"generations":[{"code":"gen1","segment":"C","seats":5,"launched":"2023-01-01","ended":null,"variants":[{"name":"spec","powertrain":"ICE","drivetrain":"AWD","engine_cc":1984,"price_thb":3990000.0,"price_min_thb":null,"price_max_thb":null,"import_type":"CBU","origin_country":"DE","price_note":"seed-unverified","aliases":[]}],"trims":[{"name":"Coupe 45 TFSI quattro S line","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:022"]},"aliases":["TT Coupe 45 TFSI quattro S line"],"id":"coupe_45_tfsi_quattro_s_line_ice"},{"name":"Roadster 45 TFSI quattro S line","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:022"],"eco":["45c338b501144c5b91d519e33be7f5e8"]},"aliases":["TT Roadster 45 TFSI quattro S line"],"id":"roadster_45_tfsi_quattro_s_line_ice","seats":2,"length_mm":4191,"width_mm":1832,"height_mm":1355,"engine_cc":1984,"transmission":"AUTOMATIC"},{"name":"TTS Coupe quattro","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:022"]},"id":"tts_coupe_quattro_ice"},{"name":"RS Coupe quattro","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:022"]},"aliases":["TT RS Coupe quattro"],"id":"rs_coupe_quattro_ice"}]}]},
-    {"id":"rs","name_en":"RS","name_th":"อาร์เอส","nameplate":"","body_type":"SEDAN","cab_type":"NOT_APPLICABLE","registration_type":"","market_scope":"NICHE","aliases":["RS 4","RS 5","RS 7","RS Q8","S3"],"generations":[{"code":"gen1","segment":"D","seats":5,"launched":"2023-01-01","ended":null,"variants":[{"name":"spec","powertrain":"ICE","drivetrain":"AWD","engine_cc":2894,"price_thb":8990000.0,"price_min_thb":null,"price_max_thb":null,"import_type":"CBU","origin_country":"DE","price_note":"seed-unverified","aliases":[]}],"trims":[{"name":"3 Sportback (2.5 TFSI quattro, 400 hp)","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:021"]},"aliases":["RS 3 Sportback (2.5 TFSI quattro, 400 hp)"],"id":"3_sportback_2_5_tfsi_quattro_400_hp_ice"},{"name":"4 Avant (2.9 TFSI V6 twin-turbo, 450 hp)","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:021"]},"aliases":["RS 4 Avant (2.9 TFSI V6 twin-turbo, 450 hp)"],"id":"4_avant_2_9_tfsi_v6_twin_turbo_450_hp_ice"},{"name":"5 Coupe / Sportback (2.9 TFSI V6, 450 hp)","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:021"]},"aliases":["RS 5 Coupe / Sportback (2.9 TFSI V6, 450 hp)"],"id":"5_coupe_sportback_2_9_tfsi_v6_450_hp_ice"},{"name":"6 Avant (4.0 TFSI V8 twin-turbo, 600 hp)","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:021"]},"aliases":["RS 6 Avant (4.0 TFSI V8 twin-turbo, 600 hp)"],"id":"6_avant_4_0_tfsi_v8_twin_turbo_600_hp_ice"},{"name":"7 Sportback (4.0 TFSI V8 twin-turbo, 600 hp)","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:021"]},"aliases":["RS 7 Sportback (4.0 TFSI V8 twin-turbo, 600 hp)"],"id":"7_sportback_4_0_tfsi_v8_twin_turbo_600_hp_ice"},{"name":"Q3 Sportback (2.5 TFSI quattro, 400 hp)","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:021"]},"aliases":["RS Q3 Sportback (2.5 TFSI quattro, 400 hp)"],"id":"q3_sportback_2_5_tfsi_quattro_400_hp_ice"},{"name":"Q8 (4.0 TFSI V8 twin-turbo, 600 hp)","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:021"]},"aliases":["RS Q8 (4.0 TFSI V8 twin-turbo, 600 hp)"],"id":"q8_4_0_tfsi_v8_twin_turbo_600_hp_ice"}]}]},
-    {"id":"etron","name_en":"Audi e-tron","name_th":"ออดี้ อี-ทรอน","nameplate":"","body_type":"CROSSOVER","cab_type":"NOT_APPLICABLE","registration_type":"","market_scope":"CORE","aliases":["e-tron","etron","e tron","e-tron 55","e-tron SB","e-tron 55 q"],"incomplete":true,"notes":"รถไฟฟ้าตระกูล e-tron แยกเป็นรุ่นของตัวเอง — DLT จดแยก และเดิมมันไปเกาะรุ่นเบนซินชื่อคล้ายกัน สเปกยังไม่ได้ตรวจ","generations":[{"code":"gen1","segment":"E","seats":5,"launched":"2022-01-01","ended":null,"variants":[{"name":"spec","powertrain":"BEV","drivetrain":"AWD","engine_cc":null,"battery_kwh":null,"price_thb":null,"price_min_thb":null,"price_max_thb":null,"import_type":"CBU","origin_country":"DE","price_note":"ยังไม่ได้ตรวจราคา","aliases":[]}],"trims":[{"name":"e-tron 50 quattro","powertrain":"BEV","source_refs":{"owner_directory":["owner_directory_2026_09_13:015"]},"id":"e_tron_50_quattro_bev"},{"name":"e-tron 55 quattro","powertrain":"BEV","source_refs":{"owner_directory":["owner_directory_2026_09_13:015"]},"id":"e_tron_55_quattro_bev"},{"name":"e-tron Sportback 55 quattro S line","powertrain":"BEV","source_refs":{"owner_directory":["owner_directory_2026_09_13:015"]},"id":"e_tron_sportback_55_quattro_s_line_bev"},{"name":"quattro","powertrain":"ICE","seats":5,"length_mm":4901,"width_mm":1935,"height_mm":1692,"source_refs":{"eco":["b73f15dba35c4beea606e04334a5b41c"]}},{"name":"Sportback 55 quattro S line","powertrain":"ICE","seats":5,"length_mm":4901,"width_mm":1935,"height_mm":1616,"source_refs":{"eco":["e73f518462df40d1aadcb799a64f8ab8"]}}]}]},
-    {"id":"etron_gt","name_en":"Audi e-tron GT","name_th":"ออดี้ อี-ทรอน จีที","nameplate":"","body_type":"SEDAN","cab_type":"NOT_APPLICABLE","registration_type":"","market_scope":"CORE","aliases":["e-tron GT","etron GT","e-tron GT quattro"],"incomplete":true,"notes":"รถไฟฟ้าตระกูล e-tron แยกเป็นรุ่นของตัวเอง — DLT จดแยก และเดิมมันไปเกาะรุ่นเบนซินชื่อคล้ายกัน สเปกยังไม่ได้ตรวจ","generations":[{"code":"gen1","segment":"E","seats":5,"launched":"2022-01-01","ended":null,"variants":[{"name":"spec","powertrain":"BEV","drivetrain":"AWD","engine_cc":null,"battery_kwh":null,"price_thb":null,"price_min_thb":null,"price_max_thb":null,"import_type":"CBU","origin_country":"DE","price_note":"ยังไม่ได้ตรวจราคา","aliases":[]}],"trims":[{"name":"e-tron GT quattro","powertrain":"BEV","source_refs":{"owner_directory":["owner_directory_2026_09_13:016"]},"id":"e_tron_gt_quattro_bev"},{"name":"e-tron GT quattro Performance","powertrain":"BEV","source_refs":{"owner_directory":["owner_directory_2026_09_13:016"]},"id":"e_tron_gt_quattro_performance_bev"},{"name":"RS e-tron GT","powertrain":"BEV","source_refs":{"owner_directory":["owner_directory_2026_09_13:016"]},"id":"rs_e_tron_gt_bev"},{"name":"RS","powertrain":"ICE","seats":5,"length_mm":4989,"width_mm":1964,"height_mm":1414,"tire_front":"265/35R21","tire_rear":"305/30R21","source_refs":{"eco":["ff6fa8c416e946088227524bab37f457"]}},{"name":"e-tron GT quattro","powertrain":"ICE","seats":5,"length_mm":4989,"width_mm":1964,"height_mm":1413,"tire_front":"245/45R20","tire_rear":"285/40R20","source_refs":{"eco":["cea23dc3fcbe4877a1753948b9edfbfb"]}}]}]},
-    {"id":"q8_etron","name_en":"Audi Q8 e-tron","name_th":"ออดี้ คิว8 อี-ทรอน","nameplate":"","body_type":"CROSSOVER","cab_type":"NOT_APPLICABLE","registration_type":"","market_scope":"CORE","aliases":["Q8 e-tron","Q8 etron","Q8 SB e-tron","Q8 SB etron"],"incomplete":true,"notes":"รถไฟฟ้าตระกูล e-tron แยกเป็นรุ่นของตัวเอง — DLT จดแยก และเดิมมันไปเกาะรุ่นเบนซินชื่อคล้ายกัน สเปกยังไม่ได้ตรวจ","generations":[{"code":"gen1","segment":"E","seats":5,"launched":"2022-01-01","ended":null,"variants":[{"name":"spec","powertrain":"BEV","drivetrain":"AWD","engine_cc":null,"battery_kwh":null,"price_thb":null,"price_min_thb":null,"price_max_thb":null,"import_type":"CBU","origin_country":"DE","price_note":"ยังไม่ได้ตรวจราคา","aliases":[]}],"trims":[{"name":"Q8 e-tron 50 quattro","powertrain":"BEV","source_refs":{"owner_directory":["owner_directory_2026_09_13:020"]},"id":"q8_e_tron_50_quattro_bev"},{"name":"Q8 e-tron 55 quattro Black Edition","powertrain":"BEV","source_refs":{"owner_directory":["owner_directory_2026_09_13:020"]},"id":"q8_e_tron_55_quattro_black_edition_bev"},{"name":"Q8 Sportback e-tron 50 quattro","powertrain":"BEV","source_refs":{"owner_directory":["owner_directory_2026_09_13:020"]},"id":"q8_sportback_e_tron_50_quattro_bev"},{"name":"Q8 Sportback e-tron 55 quattro Black Edition","powertrain":"BEV","source_refs":{"owner_directory":["owner_directory_2026_09_13:020"]},"id":"q8_sportback_e_tron_55_quattro_black_edition_bev"}]}]},
-    {"id":"q6_etron","name_en":"Audi Q6 e-tron","name_th":"ออดี้ คิว6 อี-ทรอน","nameplate":"","body_type":"CROSSOVER","cab_type":"NOT_APPLICABLE","registration_type":"","market_scope":"CORE","aliases":["Q6 e-tron","Q6 etron"],"incomplete":true,"notes":"รถไฟฟ้าตระกูล e-tron แยกเป็นรุ่นของตัวเอง — DLT จดแยก และเดิมมันไปเกาะรุ่นเบนซินชื่อคล้ายกัน สเปกยังไม่ได้ตรวจ","generations":[{"code":"gen1","segment":"D","seats":5,"launched":"2022-01-01","ended":null,"variants":[{"name":"spec","powertrain":"BEV","drivetrain":"AWD","engine_cc":null,"battery_kwh":null,"price_thb":null,"price_min_thb":null,"price_max_thb":null,"import_type":"CBU","origin_country":"DE","price_note":"ยังไม่ได้ตรวจราคา","aliases":[]}],"trims":[{"name":"Q6 e-tron performance (RWD)","powertrain":"BEV","source_refs":{"owner_directory":["owner_directory_2026_09_13:017"]},"id":"q6_e_tron_performance_rwd_bev"},{"name":"Q6 e-tron quattro (AWD)","powertrain":"BEV","source_refs":{"owner_directory":["owner_directory_2026_09_13:017"]},"id":"q6_e_tron_quattro_awd_bev"},{"name":"SQ6 e-tron (High-Performance AWD)","powertrain":"BEV","source_refs":{"owner_directory":["owner_directory_2026_09_13:017"]},"id":"sq6_e_tron_high_performance_awd_bev"}]}]},
-    {"id":"a6_etron","name_en":"Audi A6 e-tron","name_th":"ออดี้ เอ6 อี-ทรอน","nameplate":"","body_type":"SEDAN","cab_type":"NOT_APPLICABLE","registration_type":"","market_scope":"CORE","aliases":["A6 e-tron","S6 e-tron","S6 Sportback e-tron"],"incomplete":true,"notes":"รถไฟฟ้าตระกูล e-tron แยกเป็นรุ่นของตัวเอง — DLT จดแยก และเดิมมันไปเกาะรุ่นเบนซินชื่อคล้ายกัน สเปกยังไม่ได้ตรวจ","generations":[{"code":"gen1","segment":"E","seats":5,"launched":"2022-01-01","ended":null,"variants":[{"name":"spec","powertrain":"BEV","drivetrain":"AWD","engine_cc":null,"battery_kwh":null,"price_thb":null,"price_min_thb":null,"price_max_thb":null,"import_type":"CBU","origin_country":"DE","price_note":"ยังไม่ได้ตรวจราคา","aliases":[]}],"trims":[{"name":"A6 Sportback e-tron performance (RWD)","powertrain":"BEV","source_refs":{"owner_directory":["owner_directory_2026_09_13:010"]},"id":"a6_sportback_e_tron_performance_rwd_bev"},{"name":"A6 Avant e-tron performance (RWD)","powertrain":"BEV","source_refs":{"owner_directory":["owner_directory_2026_09_13:010"]},"id":"a6_avant_e_tron_performance_rwd_bev"},{"name":"S6 Sportback e-tron (quattro AWD)","powertrain":"BEV","source_refs":{"owner_directory":["owner_directory_2026_09_13:010"]},"id":"s6_sportback_e_tron_quattro_awd_bev"}]}]},
-    {"id":"q7","name_en":"Audi Q7","name_th":"ออดี้ คิว7","nameplate":"","body_type":"CROSSOVER","cab_type":"NOT_APPLICABLE","registration_type":"","market_scope":"CORE","aliases":["Q7","Q7 45 TDI","Q7 55 TFSI"],"incomplete":true,"notes":"Evidence-reviewed 2026-09-08 against the grade labels in the registration data; not an owner ruling. Powertrain is settled per label, not per nameplate: Audi's plug-in hybrids carry a trailing e (60 TFSI e), and every other TFSI/TDI grade is combustion. See powertrain_rules.py.","generations":[{"code":"gen1","segment":"E","seats":7,"launched":"2021-01-01","ended":null,"variants":[{"name":"spec","powertrain":"ICE","drivetrain":"AWD","engine_cc":2967,"battery_kwh":null,"price_thb":null,"price_min_thb":null,"price_max_thb":null,"import_type":"CBU","origin_country":"DE","price_note":"ยังไม่ได้ตรวจราคา","aliases":[]},{"name":"PHEV","powertrain":"PHEV","drivetrain":"AWD","engine_cc":null,"battery_kwh":null,"price_thb":null,"price_min_thb":null,"price_max_thb":null,"import_type":"CBU","origin_country":"DE","price_note":"ยังไม่ได้ตรวจราคา","aliases":["60 TFSI e","Q7 60 TFSI e"],"incomplete":true}],"trims":[{"name":"Q7 45 TDI quattro","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:018"]},"id":"q7_45_tdi_quattro_ice"},{"name":"Q7 45 TDI quattro S line","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:018"]},"id":"q7_45_tdi_quattro_s_line_ice"},{"name":"Q7 60 TFSI e quattro S line Black Edition","powertrain":"PHEV","source_refs":{"owner_directory":["owner_directory_2026_09_13:018"]},"id":"q7_60_tfsi_e_quattro_s_line_black_edition_phev"}]}],"powertrain_checked":true},
-    {"id":"a6","name_en":"Audi A6","name_th":"ออดี้ เอ6","nameplate":"","body_type":"SEDAN","cab_type":"NOT_APPLICABLE","registration_type":"","market_scope":"CORE","aliases":["A6","A6 AV","A6 40 TFSI","A6 45 TFSI"],"incomplete":true,"notes":"Evidence-reviewed 2026-09-08 against the grade labels in the registration data; not an owner ruling. Powertrain is settled per label, not per nameplate: Audi's plug-in hybrids carry a trailing e (60 TFSI e), and every other TFSI/TDI grade is combustion. See powertrain_rules.py.","generations":[{"code":"gen1","segment":"E","seats":5,"launched":"2021-01-01","ended":null,"variants":[{"name":"spec","powertrain":"ICE","drivetrain":"FWD","engine_cc":1984,"battery_kwh":null,"price_thb":null,"price_min_thb":null,"price_max_thb":null,"import_type":"CBU","origin_country":"DE","price_note":"ยังไม่ได้ตรวจราคา","aliases":[]},{"name":"PHEV","powertrain":"PHEV","drivetrain":"AWD","engine_cc":null,"battery_kwh":null,"price_thb":null,"price_min_thb":null,"price_max_thb":null,"import_type":"CBU","origin_country":"DE","price_note":"ยังไม่ได้ตรวจราคา","aliases":["55 TFSI e","A6 55 TFSI e"],"incomplete":true}],"trims":[{"name":"A6 40 TFSI S line (Sedan)","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:009"]},"id":"a6_40_tfsi_s_line_sedan_ice"},{"name":"A6 Avant 45 TFSI quattro S line Black Edition","powertrain":"ICE","source_refs":{"owner_directory":["owner_directory_2026_09_13:009"]},"id":"a6_avant_45_tfsi_quattro_s_line_black_edition_ice"},{"name":"A6 Avant 55 TFSI e quattro S line Black Edition","powertrain":"PHEV","source_refs":{"owner_directory":["owner_directory_2026_09_13:009"]},"id":"a6_avant_55_tfsi_e_quattro_s_line_black_edition_phev"},{"name":"Avant 40 TFSI S line","powertrain":"HEV","seats":5,"length_mm":4939,"width_mm":1886,"height_mm":1467,"engine_cc":1984,"transmission":"AUTOMATIC","source_refs":{"eco":["20ae68103f5d4438ac17374270fe40c1"]}}]}],"powertrain_checked":true}
+    {
+      "id": "a8",
+      "name_en": "A8",
+      "name_th": "เอ8",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "NICHE",
+      "aliases": [
+        "A8L",
+        "A8"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "engine_cc": 2995,
+              "price_thb": 8990000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "L 55 TFSI quattro Prestige",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:012"
+                ]
+              },
+              "aliases": [
+                "A8 L 55 TFSI quattro Prestige"
+              ],
+              "id": "l_55_tfsi_quattro_prestige_ice"
+            },
+            {
+              "name": "L 60 TFSI e quattro Prestige",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:012"
+                ]
+              },
+              "aliases": [
+                "A8 L 60 TFSI e quattro Prestige"
+              ],
+              "id": "l_60_tfsi_e_quattro_prestige_phev"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q8",
+      "name_en": "Q8",
+      "name_th": "คิว8",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "NICHE",
+      "aliases": [
+        "Q8 SB",
+        "Q8"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "engine_cc": 2995,
+              "price_thb": 6490000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "55 TFSI e quattro S line Black Edition",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:019"
+                ]
+              },
+              "aliases": [
+                "Q8 55 TFSI e quattro S line Black Edition"
+              ],
+              "id": "55_tfsi_e_quattro_s_line_black_edition_phev"
+            },
+            {
+              "name": "60 TFSI e quattro S line Black Edition",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:019"
+                ],
+                "eco": [
+                  "3a93dd56-e690-4555-a3db-97e1a06e2bfc"
+                ]
+              },
+              "aliases": [
+                "Q8 60 TFSI e quattro S line Black Edition"
+              ],
+              "id": "60_tfsi_e_quattro_s_line_black_edition_phev",
+              "seats": 5,
+              "length_mm": 5063,
+              "width_mm": 1970,
+              "height_mm": 1741,
+              "engine_cc": 2995,
+              "transmission": "AUTOMATIC"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tt",
+      "name_en": "TT",
+      "name_th": "ทีที",
+      "nameplate": "",
+      "body_type": "COUPE",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "NICHE",
+      "aliases": [
+        "TT Coupe",
+        "TT RS",
+        "TT"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "engine_cc": 1984,
+              "price_thb": 3990000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Coupe 45 TFSI quattro S line",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:022"
+                ]
+              },
+              "aliases": [
+                "TT Coupe 45 TFSI quattro S line"
+              ],
+              "id": "coupe_45_tfsi_quattro_s_line_ice"
+            },
+            {
+              "name": "Roadster 45 TFSI quattro S line",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:022"
+                ],
+                "eco": [
+                  "45c338b501144c5b91d519e33be7f5e8"
+                ]
+              },
+              "aliases": [
+                "TT Roadster 45 TFSI quattro S line"
+              ],
+              "id": "roadster_45_tfsi_quattro_s_line_ice",
+              "seats": 2,
+              "length_mm": 4191,
+              "width_mm": 1832,
+              "height_mm": 1355,
+              "engine_cc": 1984,
+              "transmission": "AUTOMATIC"
+            },
+            {
+              "name": "TTS Coupe quattro",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:022"
+                ]
+              },
+              "id": "tts_coupe_quattro_ice"
+            },
+            {
+              "name": "RS Coupe quattro",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:022"
+                ]
+              },
+              "aliases": [
+                "TT RS Coupe quattro"
+              ],
+              "id": "rs_coupe_quattro_ice"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rs",
+      "name_en": "RS",
+      "name_th": "อาร์เอส",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "NICHE",
+      "aliases": [
+        "RS 4",
+        "RS 5",
+        "RS 7",
+        "RS Q8",
+        "S3"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2023-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "engine_cc": 2894,
+              "price_thb": 8990000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "3 Sportback (2.5 TFSI quattro, 400 hp)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:021"
+                ]
+              },
+              "aliases": [
+                "RS 3 Sportback (2.5 TFSI quattro, 400 hp)"
+              ],
+              "id": "3_sportback_2_5_tfsi_quattro_400_hp_ice"
+            },
+            {
+              "name": "4 Avant (2.9 TFSI V6 twin-turbo, 450 hp)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:021"
+                ]
+              },
+              "aliases": [
+                "RS 4 Avant (2.9 TFSI V6 twin-turbo, 450 hp)"
+              ],
+              "id": "4_avant_2_9_tfsi_v6_twin_turbo_450_hp_ice"
+            },
+            {
+              "name": "5 Coupe / Sportback (2.9 TFSI V6, 450 hp)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:021"
+                ]
+              },
+              "aliases": [
+                "RS 5 Coupe / Sportback (2.9 TFSI V6, 450 hp)"
+              ],
+              "id": "5_coupe_sportback_2_9_tfsi_v6_450_hp_ice"
+            },
+            {
+              "name": "6 Avant (4.0 TFSI V8 twin-turbo, 600 hp)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:021"
+                ]
+              },
+              "aliases": [
+                "RS 6 Avant (4.0 TFSI V8 twin-turbo, 600 hp)"
+              ],
+              "id": "6_avant_4_0_tfsi_v8_twin_turbo_600_hp_ice"
+            },
+            {
+              "name": "7 Sportback (4.0 TFSI V8 twin-turbo, 600 hp)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:021"
+                ]
+              },
+              "aliases": [
+                "RS 7 Sportback (4.0 TFSI V8 twin-turbo, 600 hp)"
+              ],
+              "id": "7_sportback_4_0_tfsi_v8_twin_turbo_600_hp_ice"
+            },
+            {
+              "name": "Q3 Sportback (2.5 TFSI quattro, 400 hp)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:021"
+                ]
+              },
+              "aliases": [
+                "RS Q3 Sportback (2.5 TFSI quattro, 400 hp)"
+              ],
+              "id": "q3_sportback_2_5_tfsi_quattro_400_hp_ice"
+            },
+            {
+              "name": "Q8 (4.0 TFSI V8 twin-turbo, 600 hp)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:021"
+                ]
+              },
+              "aliases": [
+                "RS Q8 (4.0 TFSI V8 twin-turbo, 600 hp)"
+              ],
+              "id": "q8_4_0_tfsi_v8_twin_turbo_600_hp_ice"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "etron",
+      "name_en": "Audi e-tron",
+      "name_th": "ออดี้ อี-ทรอน",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "e-tron",
+        "etron",
+        "e tron",
+        "e-tron 55",
+        "e-tron SB",
+        "e-tron 55 q"
+      ],
+      "incomplete": true,
+      "notes": "รถไฟฟ้าตระกูล e-tron แยกเป็นรุ่นของตัวเอง — DLT จดแยก และเดิมมันไปเกาะรุ่นเบนซินชื่อคล้ายกัน สเปกยังไม่ได้ตรวจ",
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "BEV",
+              "drivetrain": "AWD",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "ยังไม่ได้ตรวจราคา",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "e-tron 50 quattro",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:015"
+                ]
+              },
+              "id": "e_tron_50_quattro_bev"
+            },
+            {
+              "name": "e-tron 55 quattro",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:015"
+                ]
+              },
+              "id": "e_tron_55_quattro_bev"
+            },
+            {
+              "name": "e-tron Sportback 55 quattro S line",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:015"
+                ]
+              },
+              "id": "e_tron_sportback_55_quattro_s_line_bev"
+            },
+            {
+              "name": "quattro",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4901,
+              "width_mm": 1935,
+              "height_mm": 1692,
+              "source_refs": {
+                "eco": [
+                  "b73f15dba35c4beea606e04334a5b41c"
+                ]
+              }
+            },
+            {
+              "name": "Sportback 55 quattro S line",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4901,
+              "width_mm": 1935,
+              "height_mm": 1616,
+              "source_refs": {
+                "eco": [
+                  "e73f518462df40d1aadcb799a64f8ab8"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "etron_gt",
+      "name_en": "Audi e-tron GT",
+      "name_th": "ออดี้ อี-ทรอน จีที",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "e-tron GT",
+        "etron GT",
+        "e-tron GT quattro"
+      ],
+      "incomplete": true,
+      "notes": "รถไฟฟ้าตระกูล e-tron แยกเป็นรุ่นของตัวเอง — DLT จดแยก และเดิมมันไปเกาะรุ่นเบนซินชื่อคล้ายกัน สเปกยังไม่ได้ตรวจ",
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "BEV",
+              "drivetrain": "AWD",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "ยังไม่ได้ตรวจราคา",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "e-tron GT quattro",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:016"
+                ]
+              },
+              "id": "e_tron_gt_quattro_bev"
+            },
+            {
+              "name": "e-tron GT quattro Performance",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:016"
+                ]
+              },
+              "id": "e_tron_gt_quattro_performance_bev"
+            },
+            {
+              "name": "RS e-tron GT",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:016"
+                ]
+              },
+              "id": "rs_e_tron_gt_bev"
+            },
+            {
+              "name": "RS",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4989,
+              "width_mm": 1964,
+              "height_mm": 1414,
+              "tire_front": "265/35R21",
+              "tire_rear": "305/30R21",
+              "source_refs": {
+                "eco": [
+                  "ff6fa8c416e946088227524bab37f457"
+                ]
+              }
+            },
+            {
+              "name": "e-tron GT quattro",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4989,
+              "width_mm": 1964,
+              "height_mm": 1413,
+              "tire_front": "245/45R20",
+              "tire_rear": "285/40R20",
+              "source_refs": {
+                "eco": [
+                  "cea23dc3fcbe4877a1753948b9edfbfb"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q8_etron",
+      "name_en": "Audi Q8 e-tron",
+      "name_th": "ออดี้ คิว8 อี-ทรอน",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "Q8 e-tron",
+        "Q8 etron",
+        "Q8 SB e-tron",
+        "Q8 SB etron"
+      ],
+      "incomplete": true,
+      "notes": "รถไฟฟ้าตระกูล e-tron แยกเป็นรุ่นของตัวเอง — DLT จดแยก และเดิมมันไปเกาะรุ่นเบนซินชื่อคล้ายกัน สเปกยังไม่ได้ตรวจ",
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "BEV",
+              "drivetrain": "AWD",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "ยังไม่ได้ตรวจราคา",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Q8 e-tron 50 quattro",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:020"
+                ]
+              },
+              "id": "q8_e_tron_50_quattro_bev"
+            },
+            {
+              "name": "Q8 e-tron 55 quattro Black Edition",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:020"
+                ]
+              },
+              "id": "q8_e_tron_55_quattro_black_edition_bev"
+            },
+            {
+              "name": "Q8 Sportback e-tron 50 quattro",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:020"
+                ]
+              },
+              "id": "q8_sportback_e_tron_50_quattro_bev"
+            },
+            {
+              "name": "Q8 Sportback e-tron 55 quattro Black Edition",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:020"
+                ]
+              },
+              "id": "q8_sportback_e_tron_55_quattro_black_edition_bev"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q6_etron",
+      "name_en": "Audi Q6 e-tron",
+      "name_th": "ออดี้ คิว6 อี-ทรอน",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "Q6 e-tron",
+        "Q6 etron"
+      ],
+      "incomplete": true,
+      "notes": "รถไฟฟ้าตระกูล e-tron แยกเป็นรุ่นของตัวเอง — DLT จดแยก และเดิมมันไปเกาะรุ่นเบนซินชื่อคล้ายกัน สเปกยังไม่ได้ตรวจ",
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "BEV",
+              "drivetrain": "AWD",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "ยังไม่ได้ตรวจราคา",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Q6 e-tron performance (RWD)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:017"
+                ]
+              },
+              "id": "q6_e_tron_performance_rwd_bev"
+            },
+            {
+              "name": "Q6 e-tron quattro (AWD)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:017"
+                ]
+              },
+              "id": "q6_e_tron_quattro_awd_bev"
+            },
+            {
+              "name": "SQ6 e-tron (High-Performance AWD)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:017"
+                ]
+              },
+              "id": "sq6_e_tron_high_performance_awd_bev"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "a6_etron",
+      "name_en": "Audi A6 e-tron",
+      "name_th": "ออดี้ เอ6 อี-ทรอน",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "A6 e-tron",
+        "S6 e-tron",
+        "S6 Sportback e-tron"
+      ],
+      "incomplete": true,
+      "notes": "รถไฟฟ้าตระกูล e-tron แยกเป็นรุ่นของตัวเอง — DLT จดแยก และเดิมมันไปเกาะรุ่นเบนซินชื่อคล้ายกัน สเปกยังไม่ได้ตรวจ",
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "BEV",
+              "drivetrain": "AWD",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "ยังไม่ได้ตรวจราคา",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "A6 Sportback e-tron performance (RWD)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:010"
+                ]
+              },
+              "id": "a6_sportback_e_tron_performance_rwd_bev"
+            },
+            {
+              "name": "A6 Avant e-tron performance (RWD)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:010"
+                ]
+              },
+              "id": "a6_avant_e_tron_performance_rwd_bev"
+            },
+            {
+              "name": "S6 Sportback e-tron (quattro AWD)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:010"
+                ]
+              },
+              "id": "s6_sportback_e_tron_quattro_awd_bev"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "q7",
+      "name_en": "Audi Q7",
+      "name_th": "ออดี้ คิว7",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "Q7",
+        "Q7 45 TDI",
+        "Q7 55 TFSI"
+      ],
+      "incomplete": true,
+      "notes": "Evidence-reviewed 2026-09-08 against the grade labels in the registration data; not an owner ruling. Powertrain is settled per label, not per nameplate: Audi's plug-in hybrids carry a trailing e (60 TFSI e), and every other TFSI/TDI grade is combustion. See powertrain_rules.py.",
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "E",
+          "seats": 7,
+          "launched": "2021-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "engine_cc": 2967,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "ยังไม่ได้ตรวจราคา",
+              "aliases": []
+            },
+            {
+              "name": "PHEV",
+              "powertrain": "PHEV",
+              "drivetrain": "AWD",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "ยังไม่ได้ตรวจราคา",
+              "aliases": [
+                "60 TFSI e",
+                "Q7 60 TFSI e"
+              ],
+              "incomplete": true
+            }
+          ],
+          "trims": [
+            {
+              "name": "Q7 45 TDI quattro",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:018"
+                ]
+              },
+              "id": "q7_45_tdi_quattro_ice"
+            },
+            {
+              "name": "Q7 45 TDI quattro S line",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:018"
+                ]
+              },
+              "id": "q7_45_tdi_quattro_s_line_ice"
+            },
+            {
+              "name": "Q7 60 TFSI e quattro S line Black Edition",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:018"
+                ]
+              },
+              "id": "q7_60_tfsi_e_quattro_s_line_black_edition_phev"
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    {
+      "id": "a6",
+      "name_en": "Audi A6",
+      "name_th": "ออดี้ เอ6",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "A6",
+        "A6 AV",
+        "A6 40 TFSI",
+        "A6 45 TFSI"
+      ],
+      "incomplete": true,
+      "notes": "Evidence-reviewed 2026-09-08 against the grade labels in the registration data; not an owner ruling. Powertrain is settled per label, not per nameplate: Audi's plug-in hybrids carry a trailing e (60 TFSI e), and every other TFSI/TDI grade is combustion. See powertrain_rules.py.",
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2021-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "ICE",
+              "drivetrain": "FWD",
+              "engine_cc": 1984,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "ยังไม่ได้ตรวจราคา",
+              "aliases": []
+            },
+            {
+              "name": "PHEV",
+              "powertrain": "PHEV",
+              "drivetrain": "AWD",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "ยังไม่ได้ตรวจราคา",
+              "aliases": [
+                "55 TFSI e",
+                "A6 55 TFSI e"
+              ],
+              "incomplete": true
+            }
+          ],
+          "trims": [
+            {
+              "name": "A6 40 TFSI S line (Sedan)",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:009"
+                ]
+              },
+              "id": "a6_40_tfsi_s_line_sedan_ice"
+            },
+            {
+              "name": "A6 Avant 45 TFSI quattro S line Black Edition",
+              "powertrain": "ICE",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:009"
+                ]
+              },
+              "id": "a6_avant_45_tfsi_quattro_s_line_black_edition_ice"
+            },
+            {
+              "name": "A6 Avant 55 TFSI e quattro S line Black Edition",
+              "powertrain": "PHEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:009"
+                ]
+              },
+              "id": "a6_avant_55_tfsi_e_quattro_s_line_black_edition_phev"
+            },
+            {
+              "name": "Avant 40 TFSI S line",
+              "powertrain": "HEV",
+              "seats": 5,
+              "length_mm": 4939,
+              "width_mm": 1886,
+              "height_mm": 1467,
+              "engine_cc": 1984,
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "20ae68103f5d4438ac17374270fe40c1"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    }
   ]
 }
