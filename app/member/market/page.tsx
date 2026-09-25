@@ -10,7 +10,7 @@ export default async function MemberMarketPage() {
     getCanonicalModels(700),
   ]);
   const models = (modelRows as any[])
-    .filter((row) => String(row.status || "current").toLowerCase() !== "discontinued")
+    .filter((row) => row.status === "CURRENT")
     .map((row) => ({
       id: String(row.id),
       name: displayName(row),
