@@ -61,18 +61,18 @@ function numberOrNull(value: unknown): number | null {
 }
 
 function lifecycle(value: unknown): RetailLifecycle {
-  // Exact uppercase is deliberate. Old serving releases emitted lowercase
-  // `current` by default; accepting it would silently reintroduce the bug this
-  // worklist is meant to expose.
   return value === "CURRENT" || value === "HISTORICAL" || value === "UNVERIFIED"
     ? value
     : "UNVERIFIED";
 }
 
 function canonicalModelLifecycle(model: any): RetailLifecycle {
-  // Canonical Model.retail_status is the authority. Legacy editorial `status`
-  // in the serving row is not allowed to promote an unreviewed model.
-  return lifecycle(model?.payload?.retail_status);
+  // The enriched serving projection is the lifecycle authority. Under the
+  // owner-selected policy it treats catalog rows as CURRENT by default and
+  // preserves explicit HISTORICAL archive decisions. Reading payload here
+  // would resurrect the old second truth where every untouched model looked
+  // UNVERIFIED even though the serving release correctly considers it current.
+  return lifecycle(model?.status);
 }
 
 function variantSeedPrices(payload: JsonObject | null | undefined): number[] {
@@ -208,9 +208,9 @@ export async function getPriceCoverageWorklist(db: any, limit = 100): Promise<Pr
     };
   });
 
-  // HISTORICAL models are resolved as outside today's retail-price surface.
-  // UNVERIFIED models remain in the denominator so unresolved lifecycle work
-  // can never make price coverage look artificially complete.
+  // Only owner-archived HISTORICAL models leave today's price surface. Every
+  // other serving model stays in the denominator so a missing price remains
+  // visible as price debt and the price updater keeps hunting it.
   const retailRows = rows.filter((row) => row.modelStatus !== "HISTORICAL");
   const mappedRegistrations3m = retailRows.reduce((sum, row) => sum + row.registrations3m, 0);
   const ready = retailRows.filter((row) => row.modelStatus === "CURRENT"
