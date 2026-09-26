@@ -32,7 +32,7 @@ type CanonicalMediaRow = {
 
 type CanonicalMediaBinding = {
   entity_id: string;
-  entity_type: "generation" | "trim";
+  entity_type: "model" | "generation" | "trim";
   visual_key: string;
   inherited_from: string | null;
 };
@@ -55,13 +55,13 @@ function primaryExteriorMedia(rows: CanonicalMediaRow[]) {
 
 async function getCanonicalPrimaryMediaIndex() {
   const db = publicDb();
-  const index = new Map<string, CanonicalMediaRow>();
+  const index = new Map<string, CanonicalMediaRow | null>();
   if (!db) return index;
 
   const [{ data: bindingData, error: bindingError }, { data: mediaData, error: mediaError }] = await Promise.all([
     db.from("vehicle_media_bindings")
       .select("entity_id,entity_type,visual_key,inherited_from")
-      .eq("entity_type", "generation"),
+      .in("entity_type", ["model", "generation"]),
     db.from("vehicle_media_assets")
       .select("vehicle_id,visual_key,public_url,image_type,confidence,width,height,source_url,source_type")
       .in("image_type", ["hero", "front_3q"])
@@ -79,7 +79,8 @@ async function getCanonicalPrimaryMediaIndex() {
 
   for (const binding of (bindingData || []) as CanonicalMediaBinding[]) {
     const chosen = primaryExteriorMedia(assetsByVisualKey.get(binding.visual_key) || []);
-    if (chosen) index.set(binding.entity_id, chosen);
+    // A model binding with no asset is an intentional blank override.
+    if (chosen || binding.entity_type === "model") index.set(binding.entity_id, chosen);
   }
 
   // Backward-compatible fallback for media rows created before bindings were
@@ -188,6 +189,21 @@ export async function getCanonicalVehicleMedia(entityId: string) {
   return ((data || []) as CanonicalMediaRow[]).sort(compareMedia);
 }
 
+/** A model override is null when absent, [] when intentionally blank. */
+export async function getCanonicalModelHeadOverride(modelId: string): Promise<CanonicalMediaRow[] | null> {
+  const db = publicDb();
+  if (!db) return null;
+  const { data: binding, error } = await db.from("vehicle_media_bindings")
+    .select("visual_key").eq("entity_id", modelId).eq("entity_type", "model").maybeSingle();
+  if (error) throw error;
+  if (!binding) return null;
+  const { data: assets, error: assetError } = await db.from("vehicle_media_assets")
+    .select("vehicle_id,visual_key,public_url,image_type,confidence,width,height,source_url,source_type")
+    .eq("visual_key", binding.visual_key).eq("image_type", "hero");
+  if (assetError) throw assetError;
+  return (assets || []) as CanonicalMediaRow[];
+}
+
 export async function getCanonicalBrands(limit = 150) {
   const db = publicDb();
   if (!db) return [];
@@ -251,7 +267,9 @@ export async function getCanonicalModels(limit = 600) {
   if (error) throw error;
   return (data || []).map((raw: any) => {
     const row: any = modelRow(raw);
-    const media = row.generation_id ? mediaIndex.get(row.generation_id) : null;
+    const media = mediaIndex.has(row.id)
+      ? mediaIndex.get(row.id)
+      : row.generation_id ? mediaIndex.get(row.generation_id) : null;
     return {
       ...row,
       image_url: media?.public_url || null,
@@ -268,9 +286,10 @@ export async function getCanonicalModelBundle(slug: string) {
     .select("*").eq("slug", slug).maybeSingle();
   if (modelError) throw modelError;
   if (!model) return null;
-  const [{ data: rawTrims, error: trimError }, media] = await Promise.all([
+  const [{ data: rawTrims, error: trimError }, media, modelHead] = await Promise.all([
     db.from("current_market_trims").select("*").eq("model_id", model.canonical_id).order("name"),
     getCanonicalVehicleMedia(model.generation_id || model.payload?.generation_id || ""),
+    getCanonicalModelHeadOverride(model.canonical_id),
   ]);
   if (trimError) throw trimError;
   const trims = (rawTrims || []).map(trimRow);
@@ -285,7 +304,7 @@ export async function getCanonicalModelBundle(slug: string) {
     const values = numeric(trimKey);
     if (!row[modelKey] && values.length && new Set(values).size === 1) row[modelKey] = values[0];
   }
-  const hero = primaryExteriorMedia(media as CanonicalMediaRow[]);
+  const hero = primaryExteriorMedia(modelHead === null ? media as CanonicalMediaRow[] : modelHead);
   return {
     ...row,
     image_url: hero?.public_url || null,
