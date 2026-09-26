@@ -1,0 +1,51 @@
+name: Apply Reviewed Model Head Batch 1
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - ops/model-head-batch1-apply
+    paths:
+      - '.github/workflows/model-head-batch1-apply.yml'
+      - 'scripts/prepare-reviewed-model-heads.py'
+      - 'scripts/apply-reviewed-model-heads.mjs'
+      - 'automotive/vehicle_master/integration_data/model_head_batch1_approved.json'
+
+permissions:
+  contents: read
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci
+      - name: Download exactly the human-approved images and build hash manifest
+        run: |
+          python scripts/prepare-reviewed-model-heads.py \
+            --decisions automotive/vehicle_master/integration_data/model_head_batch1_approved.json \
+            --cache automotive/vehicle_master/data/media/cache \
+            --output automotive/vehicle_master/integration_data/model_head_batch1_apply.jsonl
+      - name: Dry-run guarded apply
+        run: |
+          node scripts/apply-reviewed-model-heads.mjs \
+            --manifest automotive/vehicle_master/integration_data/model_head_batch1_apply.jsonl \
+            --cache automotive/vehicle_master/data/media/cache
+      - name: Apply reviewed batch to production media tables and storage
+        run: |
+          node scripts/apply-reviewed-model-heads.mjs \
+            --manifest automotive/vehicle_master/integration_data/model_head_batch1_apply.jsonl \
+            --cache automotive/vehicle_master/data/media/cache \
+            --apply
