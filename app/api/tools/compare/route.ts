@@ -93,7 +93,7 @@ export async function GET(request: NextRequest) {
   if (selected.length !== requestedIds.length) {
     return NextResponse.json({
       error: "one or more selected trims are unavailable",
-      missing_selection: true,
+      missing_selection: requestedIds.length !== selected.length,
     }, { status: 400 });
   }
 
