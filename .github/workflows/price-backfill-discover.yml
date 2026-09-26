@@ -1,0 +1,54 @@
+name: Price Backfill Discovery
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - fix/price-backfill-followup-v2
+    paths:
+      - '.github/workflows/price-backfill-discover.yml'
+      - 'automotive/vehicle_master/tools/price_coverage_backfill_safe.py'
+      - 'automotive/vehicle_master/tools/price_coverage_backfill.py'
+      - 'automotive/vehicle_master/vehreg/**'
+      - 'automotive/vehicle_master/vehreg/data/**'
+
+permissions:
+  contents: read
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    defaults:
+      run:
+        working-directory: automotive/vehicle_master
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: automotive/vehicle_master/requirements.txt
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt pyyaml
+
+      - name: Run full read-only current retail price discovery
+        run: |
+          python -m tools.price_coverage_backfill_safe \
+            --out price_coverage_discovery.json \
+            | tee price_coverage_discovery_summary.json
+
+      - name: Upload discovery manifest
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: price-coverage-discovery
+          path: |
+            automotive/vehicle_master/price_coverage_discovery.json
+            automotive/vehicle_master/price_coverage_discovery_summary.json
+          if-no-files-found: warn
+          retention-days: 7
