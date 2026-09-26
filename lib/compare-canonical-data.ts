@@ -1,5 +1,6 @@
 import { getCanonicalModels } from "@/lib/canonical-data";
 import { publicDb } from "@/lib/supabase";
+import { paginateAll } from "@/lib/paginate-all";
 
 /**
  * Compare has three deliberately different read shapes:
@@ -56,17 +57,22 @@ function slimTrim(raw: any, model: { brand_name: string; model_name: string } | 
   };
 }
 
+async function allSlimModelRows(db: any, pageSize = 1000) {
+  return paginateAll<any>(
+    (from, to) => db.from("current_vehicle_models")
+      .select(MODEL_NAME_COLUMNS)
+      .order("canonical_id")
+      .range(from, to),
+    pageSize,
+  );
+}
+
 export async function getCanonicalCompareModelOptions() {
   const db = publicDb();
   if (!db) return [];
 
-  const { data, error } = await db.from("current_vehicle_models")
-    .select(MODEL_NAME_COLUMNS)
-    .order("canonical_id")
-    .limit(1000);
-  if (error) throw error;
-
-  return (data || [])
+  const rows = await allSlimModelRows(db);
+  return rows
     .filter(isCurrentModel)
     .map(slimModel)
     .sort((a: any, b: any) =>
