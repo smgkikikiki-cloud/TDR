@@ -133,27 +133,38 @@ def _rpc(name: str, params: dict, *, url: str, service_key: str,
     raise AssertionError("unreachable")  # pragma: no cover
 
 
+def _prune_releases(*, url: str, service_key: str) -> dict:
+    """Apply the bounded release-retention policy from migration_v51.
+
+    Keep the current ACTIVE release plus one SUPERSEDED rollback release;
+    stale STAGING attempts are removed by the database only after its grace
+    period. The RPC shares activate_vehicle_release's advisory lock, so it
+    cannot race an activation.
+    """
+    return _rpc("prune_vehicle_releases", {}, url=url, service_key=service_key)
+
+
 def publish(release: dict, *, url: str, service_key: str) -> dict:
     """The legacy, unstaged path: one call to publish_vehicle_release(jsonb),
-    which does the entire projection rewrite in one transaction. Preserved
-    unchanged for callers/release sizes that don't need staging -- see
-    migration_v48, which does not touch this function or the RPC it calls."""
-    return _rpc("publish_vehicle_release", {"release": release}, url=url, service_key=service_key)
+    followed by the same bounded release retention as the staged path."""
+    result = _rpc("publish_vehicle_release", {"release": release}, url=url, service_key=service_key)
+    result["retention"] = _prune_releases(url=url, service_key=service_key)
+    return result
 
 
 def publish_staged(release: dict, *, url: str, service_key: str,
                    chunk_size: int = CHUNK_SIZE) -> dict:
     """begin_vehicle_release -> stage_vehicle_release_chunk (in FK order,
-    chunked) -> activate_vehicle_release (migration_v48).
+    chunked) -> activate_vehicle_release -> prune_vehicle_releases.
 
     Every call is safe to resend: begin_vehicle_release no-ops for an
     already-ACTIVE/SUPERSEDED release_id and resumes an in-progress STAGING
     one, each stage_vehicle_release_chunk call is idempotent by
     (release_id, section, chunk_index, chunk_hash), and activate_vehicle_release
-    is a no-op once the release is already ACTIVE. A caller that re-invokes
-    this function from the top after a partial failure -- a killed process,
-    a network cut mid-release -- always converges on the same outcome
-    rather than needing any of the prior chunks repaired or deleted.
+    is a no-op once the release is already ACTIVE. Retention is also retried
+    when begin reports that this release is already ACTIVE, so a publish that
+    activated successfully but failed during pruning converges on the next
+    invocation instead of leaving storage growth silent.
     """
     release_id = str(release["release_id"])
     manifest = _manifest(release)
@@ -164,7 +175,6 @@ def publish_staged(release: dict, *, url: str, service_key: str,
     timings["begin"] = time.monotonic() - t_start
 
     if begun.get("already_finalized"):
-        timings["total"] = time.monotonic() - t_start
         status = begun["status"]
         if status != "ACTIVE":
             # SUPERSEDED means this exact release_id was once served and no
@@ -179,8 +189,12 @@ def publish_staged(release: dict, *, url: str, service_key: str,
                 f"release {release_id} is already finalized as {status}, not ACTIVE -- "
                 "this publish did not make it the active release"
             )
+        t_prune = time.monotonic()
+        retention = _prune_releases(url=url, service_key=service_key)
+        timings["prune"] = time.monotonic() - t_prune
+        timings["total"] = time.monotonic() - t_start
         return {"release_id": release_id, "status": status,
-               "already_finalized": True, "timings": timings}
+               "already_finalized": True, "retention": retention, "timings": timings}
 
     largest_chunk_seconds = 0.0
     for section in RELEASE_SECTIONS:
@@ -209,11 +223,16 @@ def publish_staged(release: dict, *, url: str, service_key: str,
     activated = _rpc("activate_vehicle_release", {"p_release_id": release_id},
                      url=url, service_key=service_key)
     timings["activate"] = time.monotonic() - t_activate
+
+    t_prune = time.monotonic()
+    retention = _prune_releases(url=url, service_key=service_key)
+    timings["prune"] = time.monotonic() - t_prune
     timings["largest_chunk"] = largest_chunk_seconds
     timings["total"] = time.monotonic() - t_start
 
     return {"release_id": release_id, "status": activated.get("status", "ACTIVE"),
-           "counts": activated.get("counts"), "timings": timings}
+           "counts": activated.get("counts"), "retention": retention,
+           "timings": timings}
 
 
 def main(argv=None) -> int:
