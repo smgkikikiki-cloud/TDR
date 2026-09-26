@@ -239,21 +239,19 @@ def run(path: Path, *, data_dir: Path, year: int,
     input_id = _harvest_input_id(observed_at, documents, claims)
     catalog = Catalog.load(data_dir, year)
     ledger = PriceLedger.load(data_dir, year=year, catalog=catalog)
-    # Matching is restricted to each model's own confidently-resolved
-    # current generation, filtered to trims no HUMAN reviewer has retired,
-    # excluding any model under maintenance -- the same lifecycle scope
-    # the one-time coverage backfill uses (vehreg.retail_scope). A trim
-    # outside that set simply is not a candidate the matcher can see, so
-    # the scheduled feed cannot resolve a claim onto a wrong-generation or
-    # retired MarketTrim, however narrow or stale the incoming evidence is.
-    siblings_by_model = scoped_siblings_by_model(catalog, data_dir=data_dir, year=year)
+    as_of = date.fromisoformat(observed_at)
+    # Matching is restricted to each model's own confidently-resolved retail
+    # generation(s) as of the evidence observation date, filtered to trims no
+    # HUMAN reviewer has retired and excluding models under maintenance. This
+    # keeps historical replays from resolving against today's lineup.
+    siblings_by_model = scoped_siblings_by_model(
+        catalog, data_dir=data_dir, year=year, as_of=as_of)
     result = pricefeed.run(documents, claims,
                            pricefeed.load_sources(data_dir, year),
                            catalog, campaigns=ledger.campaigns,
                            decisions={}, ledger=ledger,
                            siblings_by_model=siblings_by_model)
 
-    as_of = date.fromisoformat(observed_at)
     held, unresolvable = held_prices(ledger, result.offers, as_of=as_of)
     writable, blocked = _split_unresolvable(result.offers, unresolvable)
     outcomes = plan_offers(writable, held, observed_at=observed_at)
