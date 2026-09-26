@@ -13,7 +13,7 @@ permissions:
 jobs:
   review:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
     env:
       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
@@ -23,49 +23,34 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Rediscover only the two reviewed Jaecoo heads
-        working-directory: automotive/vehicle_master
-        run: |
-          python scripts/discover_model_heads.py \
-            --workers 2 --max-pages 4 \
-            --model-ids jaecoo.jaecoo_6_ev jaecoo.jaecoo_6t_reev \
-            --output integration_data/model_head_jaecoo_retry.jsonl
-      - name: Cache only the reviewed candidates
+      - name: Fetch exactly the two reviewed Jaecoo binaries
         working-directory: automotive/vehicle_master
         run: |
           python - <<'PY'
-          import hashlib, json, shutil
+          import hashlib, json
           from pathlib import Path
-          from urllib.parse import urlparse
           from vehreg.official_media.pipeline import fetch_bytes
 
           reviewed = {
               "jaecoo.jaecoo_6_ev": {
                   "generation_id": "jaecoo.jaecoo_6_ev.gen1",
-                  "index": 0,
+                  "image_url": "https://dpqbiopi6rdm.cloudfront.net/resize_JAECOO_6_1407x585_f29deded97.png",
+                  "source_url": "https://www.omodajaecoo.co.th/th/model/jaecoo-6-ev",
                   "sha256": "74891422a421bbd2bbee94acdb11418ac17eaf4159530dc01c5ce61de1c7f2fc",
                   "width": 1407, "height": 585,
               },
               "jaecoo.jaecoo_6t_reev": {
                   "generation_id": "jaecoo.jaecoo_6t_reev.gen1",
-                  "index": 0,
+                  "image_url": "https://dpqbiopi6rdm.cloudfront.net/Product_page_eeb14dfe8b.png",
+                  "source_url": "https://www.omodajaecoo.co.th/th/model/jaecoo-6t-reev",
                   "sha256": "8a96691c77c853617b3a40589fa959ecf1de211bfd0644c0a015b118f6622c4b",
                   "width": 1407, "height": 585,
               },
           }
-          rows = {
-              r["model_id"]: r
-              for r in (json.loads(line) for line in Path("integration_data/model_head_jaecoo_retry.jsonl").read_text().splitlines() if line.strip())
-          }
           cache_root = Path("data/media/cache")
           approved = []
           for model_id, spec in reviewed.items():
-              meta = (rows[model_id].get("review_candidates") or [])[spec["index"]]
-              image_url = meta.get("image_url")
-              source_url = meta.get("source_page")
-              if not image_url or not source_url or (urlparse(source_url).hostname or "") != "www.omodajaecoo.co.th":
-                  raise SystemExit(f"{model_id}: reviewed provenance changed; refusing retry")
-              body, mime = fetch_bytes(image_url)
+              body, mime = fetch_bytes(spec["image_url"])
               mime = mime.split(";", 1)[0].lower()
               suffix = {"image/jpeg": ".jpg", "image/png": ".png", "image/webp": ".webp", "image/avif": ".avif"}.get(mime)
               if not suffix:
@@ -81,8 +66,8 @@ jobs:
                   "model_id": model_id,
                   "generation_id": spec["generation_id"],
                   "status": "READY",
-                  "selected_image": image_url,
-                  "source_url": source_url,
+                  "selected_image": spec["image_url"],
+                  "source_url": spec["source_url"],
                   "source_domain": "www.omodajaecoo.co.th",
                   "source_type": "official_site",
                   "sha256": digest,
