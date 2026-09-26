@@ -72,6 +72,107 @@ jobs:
                   except Exception as exc:
                       print(row["model_id"], label, "FAILED", type(exc).__name__)
           PY
+      - name: Prepare exactly the five visually reviewed Lexus heads
+        working-directory: automotive/vehicle_master
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          import shutil
+          from pathlib import Path
+
+          reviewed = {
+              "lexus.lbx": {
+                  "generation_id": "lexus.lbx.gen1",
+                  "label": "selected",
+                  "sha256": "d87894f1042fe4c4745f955eabffe3a141ba88ba2e31b71d2f1ccd1537c6269e",
+                  "selected_image": "https://www.lexus.co.th/content/dam/lexus-v3-blueprint/models/suv/lbx/my24/bespoke/side-view-thumbnail/my24-lbx-mlp-side-view-thumbnail.png",
+                  "source_url": "https://www.lexus.co.th/en/models/lbx.html",
+                  "width": 450,
+                  "height": 176,
+              },
+              "lexus.lexus_is": {
+                  "generation_id": "lexus.lexus_is.unresearched",
+                  "label": "candidate-2",
+                  "sha256": "ef62909f8ffb853a1377ba23b836a7c5e806c242b5fee1603522b5d011411896",
+                  "selected_image": "https://www.lexus.co.th/content/dam/lexus-v3-blueprint/models/sedan/is/my26/is-300h-fsport/overview/is-300h-fsport-sideprofile.png",
+                  "source_url": "https://www.lexus.co.th/en/models/is.html",
+                  "width": 449,
+                  "height": 142,
+              },
+              "lexus.lexus_lm": {
+                  "generation_id": "lexus.lexus_lm.ah40l",
+                  "label": "candidate-1",
+                  "sha256": "31ca8f4d406d6f053068eaca4465f70a56345e0258a038257dcc6b77ca543afb",
+                  "selected_image": "https://www.lexus.co.th/content/dam/lexus-v3-blueprint/models/mpv/lm/my24/lm-350h-4-seater/masthead/lexus-mgp-lm350h.png",
+                  "source_url": "https://www.lexus.co.th/en/configurator.html?step=model&series=lm-mpv",
+                  "width": 1200,
+                  "height": 455,
+              },
+              "lexus.rz": {
+                  "generation_id": "lexus.rz.gen1",
+                  "label": "candidate-3",
+                  "sha256": "ad02891521877f9a57c15b23761adbf1b578ddbd01d81db00bc32c86140f642d",
+                  "selected_image": "https://www.lexus.co.th/content/dam/lexus-v3-blueprint/models/suv/rz/rz-450e-luxury/my23/masthead/exterior/my23-rz-luxury-8z2-aether-metallic.png",
+                  "source_url": "https://www.lexus.co.th/en/configurator.html?step=model&series=rz-suv",
+                  "width": 1200,
+                  "height": 455,
+              },
+              "lexus.ux": {
+                  "generation_id": "lexus.ux.gen1",
+                  "label": "candidate-2",
+                  "sha256": "b3a8fcb261d401668f73f474189aa6633d4725b488ca9c600fafa5088b392be9",
+                  "selected_image": "https://www.lexus.co.th/content/dam/lexus-v3-thailand/models/suv/ux/my26/ux-300h-grand-luxury/thumbnail/ux-300h-grand-luxury-sideprofile.png",
+                  "source_url": "https://www.lexus.co.th/en/models/ux.html",
+                  "width": 450,
+                  "height": 143,
+              },
+          }
+          review_root = Path("data/media/candidate-review")
+          cache_root = Path("data/media/cache")
+          rows = []
+          for model_id, spec in reviewed.items():
+              matches = list((review_root / model_id).glob(spec["label"] + ".*"))
+              if len(matches) != 1:
+                  raise SystemExit(f"{model_id}: expected exactly one cached {spec['label']} candidate, got {matches}")
+              candidate = matches[0]
+              digest = hashlib.sha256(candidate.read_bytes()).hexdigest()
+              if digest != spec["sha256"]:
+                  raise SystemExit(f"{model_id}: reviewed bytes changed ({digest}); refusing production write")
+              suffix = candidate.suffix.lower()
+              if suffix not in {".jpg", ".png", ".webp", ".avif"}:
+                  raise SystemExit(f"{model_id}: unsupported reviewed format {suffix}")
+              rel = Path("model-head") / model_id / f"{digest}{suffix}"
+              target = cache_root / rel
+              target.parent.mkdir(parents=True, exist_ok=True)
+              shutil.copyfile(candidate, target)
+              rows.append({
+                  "model_id": model_id,
+                  "generation_id": spec["generation_id"],
+                  "status": "READY",
+                  "selected_image": spec["selected_image"],
+                  "source_url": spec["source_url"],
+                  "source_domain": "www.lexus.co.th",
+                  "source_type": "official_site",
+                  "sha256": digest,
+                  "storage_path": rel.as_posix(),
+                  "confidence": 85,
+                  "width": spec["width"],
+                  "height": spec["height"],
+                  "approved": True,
+              })
+          Path("/tmp/model-head-approved.jsonl").write_text(
+              "".join(json.dumps(row) + "\n" for row in rows), encoding="utf-8"
+          )
+          print(json.dumps({"approved": [row["model_id"] for row in rows]}))
+          PY
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - name: Apply only the SHA-pinned reviewed Lexus heads
+        run: node --experimental-strip-types scripts/apply-model-head-manifest.ts --manifest /tmp/model-head-approved.jsonl --apply
       - name: Render visual review page
         working-directory: automotive/vehicle_master
         run: |
