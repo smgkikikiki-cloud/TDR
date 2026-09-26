@@ -27,8 +27,8 @@ check("invalid-selection validation happens before anonymous allowance lookup", 
 check("invalid-selection validation happens before member quota usage", invalidAt < quotaAt, true);
 check("invalid selection is a 400 and keeps the missing_selection signal",
   route.includes('error: "one or more selected trims are unavailable"')
-    && route.includes("missing_selection: true")
-    && /missing_selection:\s*true,[\s\S]{0,100}\}, \{ status: 400 \}/.test(route), true);
+    && route.includes("missing_selection: requestedIds.length !== selected.length")
+    && /missing_selection:\s*requestedIds\.length !== selected\.length,[\s\S]{0,100}\}, \{ status: 400 \}/.test(route), true);
 
 const selectionCalls = route.match(/getCanonicalCompareTrimsByIds\(requestedIds\)/g) || [];
 check("canonical selected trims are fetched exactly once per request", selectionCalls.length, 1);
