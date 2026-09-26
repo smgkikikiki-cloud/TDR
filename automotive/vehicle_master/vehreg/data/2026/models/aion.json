@@ -26,7 +26,7 @@
         "aion y",
         "y plus"
       ],
-      "notes": "Thai-market lineup and specification verified against GAC Thailand official sources on 2026-09-25. Current official retail lineup is 490 Premium only; the former 410 Premium and 490 Elite are no longer listed in the current OEM lineup. AION Y Plus has been locally assembled at GAC's Rayong plant since 2024.",
+      "notes": "Thai-market lineup and specification verified against GAC Thailand official sources on 2026-09-25. Current official retail lineup is 490 Premium only; the former 410 Premium and 490 Elite are retained as historical canonical identities for source and price-history provenance. AION Y Plus has been locally assembled at GAC's Rayong plant since 2024.",
       "retail_status": "CURRENT",
       "retail_checked_at": "2026-09-25",
       "retail_source": "https://www.gacgroup.com/th-th/configuration/aion-y-plus/2024",
@@ -58,6 +58,41 @@
             }
           ],
           "trims": [
+            {
+              "name": "410 Premium",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:004"
+                ],
+                "eco": [
+                  "9d818c38-a8c6-4bfb-b915-8c1de68264d1"
+                ]
+              },
+              "aliases": [
+                "Aion Y Plus 410 Premium"
+              ],
+              "id": "410_premium_bev",
+              "seats": 5,
+              "length_mm": 4535,
+              "width_mm": 1870,
+              "height_mm": 1650,
+              "notes": "Former Thai-market grade retained as HISTORICAL canonical identity so ECO Sticker and price-history facts remain referentially valid."
+            },
+            {
+              "name": "490 Elite",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:004"
+                ]
+              },
+              "aliases": [
+                "Aion Y Plus 490 Elite"
+              ],
+              "id": "490_elite_bev",
+              "notes": "Former Thai-market grade retained as HISTORICAL canonical identity for historical provenance."
+            },
             {
               "name": "490 Premium",
               "variant": "63.2 kWh BEV",
@@ -97,7 +132,7 @@
                 "AION Y PLUS 490 Premium"
               ],
               "id": "490_premium_bev",
-              "notes": "Current Thai-market retail SKU verified 2026-09-25. OEM currently lists only 490 Premium; former 410 Premium and 490 Elite were removed from the current 2026 retail catalog."
+              "notes": "Current Thai-market retail SKU verified 2026-09-25. OEM currently lists only 490 Premium; former 410 Premium and 490 Elite are retained as historical canonical identities."
             }
           ]
         }
