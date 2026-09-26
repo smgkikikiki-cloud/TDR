@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "batch_id": "admin-trim-lifecycle-8bcb4fe0-52bc-45de-823e-d6b5996ee3fe",
+  "batch_hash": "a3ab4e25c76e940221d4ffefd6718280255e78bb43aa6a0f8e447e6dd5f5c7de",
+  "status": "APPLIED",
+  "year": 2026,
+  "source": {
+    "kind": "ADMIN",
+    "ref": "https://www.toyota.co.th/model/alphard/grade"
+  },
+  "actor": "siriwich",
+  "reason": "HUMAN retail lifecycle review: 2.5 G is absent from Toyota Thailand's current Alphard grade lineup; the retained ECO Sticker evidence for this identity is dated 2019-12-03, before the current AH40 Thai launch in 2023. Keep the MarketTrim identity/evidence; classify only retail lifecycle as historical.",
+  "submitted_at": "2026-09-26T19:31:43.676626Z",
+  "applied_at": "2026-09-26T19:32:54+00:00",
+  "results": [
+    {
+      "command_id": "admin-trim-lifecycle-8bcb4fe0-52bc-45de-823e-d6b5996ee3fe:1",
+      "revision_id": "trim-retail-lifecycle-review-21d4d4213c65eee3",
+      "topic": "trim_retail_lifecycle_review",
+      "entity_type": "market_trim_retail_lifecycle_review",
+      "entity_id": "toyota.alphard.ah40.trim.2_5_g",
+      "idempotent_replay": false
+    }
+  ],
+  "changed_files": [
+    "2026/market/retail_lifecycle/trim_review.json"
+  ]
+}

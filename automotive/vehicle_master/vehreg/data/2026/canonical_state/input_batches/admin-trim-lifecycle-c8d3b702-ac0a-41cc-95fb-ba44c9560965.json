@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "batch_id": "admin-trim-lifecycle-c8d3b702-ac0a-41cc-95fb-ba44c9560965",
+  "batch_hash": "419663dfc466d0e568d55339bbe41260e1fdd28e9f339179a1d74e1da4a345c2",
+  "status": "APPLIED",
+  "year": 2026,
+  "source": {
+    "kind": "ADMIN",
+    "ref": "https://www.toyota.co.th/model/alphard/grade"
+  },
+  "actor": "siriwich",
+  "reason": "HUMAN retail lifecycle review: 2.5 HYBRID EXECUTIVE LOUNGE is absent from Toyota Thailand's current Alphard grade lineup; the retained ECO Sticker evidence for this identity is dated 2020-05-07, before the current AH40 Thai launch in 2023. Keep the MarketTrim identity/evidence; classify only retail lifecycle as historical.",
+  "submitted_at": "2026-09-26T19:31:43.676626Z",
+  "applied_at": "2026-09-26T19:33:00+00:00",
+  "results": [
+    {
+      "command_id": "admin-trim-lifecycle-c8d3b702-ac0a-41cc-95fb-ba44c9560965:1",
+      "revision_id": "trim-retail-lifecycle-review-6a1eb6cf0bc8013b",
+      "topic": "trim_retail_lifecycle_review",
+      "entity_type": "market_trim_retail_lifecycle_review",
+      "entity_id": "toyota.alphard.ah40.trim.2_5_hybrid_executive_lounge",
+      "idempotent_replay": false
+    }
+  ],
+  "changed_files": [
+    "2026/market/retail_lifecycle/trim_review.json"
+  ]
+}
