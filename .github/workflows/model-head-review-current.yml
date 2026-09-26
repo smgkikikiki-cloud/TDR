@@ -35,6 +35,43 @@ jobs:
               lexus.lbx lexus.lc lexus.lexus_es lexus.lexus_is \
               lexus.lexus_lm lexus.lx lexus.rz lexus.ux \
             --output integration_data/model_head_lexus.jsonl
+      - name: Cache all discovered candidates for visual review
+        working-directory: automotive/vehicle_master
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from urllib.parse import urlparse
+          from vehreg.official_media.pipeline import fetch_bytes
+
+          manifest = Path("integration_data/model_head_lexus.jsonl")
+          out = Path("data/media/candidate-review")
+          out.mkdir(parents=True, exist_ok=True)
+          ext = {"image/jpeg": ".jpg", "image/png": ".png", "image/webp": ".webp", "image/avif": ".avif"}
+          for row in [json.loads(line) for line in manifest.read_text().splitlines() if line.strip()]:
+              seen = set()
+              urls = []
+              if row.get("selected_image"):
+                  urls.append(("selected", row["selected_image"]))
+              for i, candidate in enumerate(row.get("review_candidates") or [], 1):
+                  urls.append((f"candidate-{i}", candidate.get("image_url")))
+              for label, url in urls:
+                  if not url or url in seen:
+                      continue
+                  seen.add(url)
+                  try:
+                      body, mime = fetch_bytes(url)
+                      mime = mime.split(";", 1)[0].lower()
+                      suffix = ext.get(mime)
+                      if not suffix:
+                          continue
+                      target = out / row["model_id"] / f"{label}{suffix}"
+                      target.parent.mkdir(parents=True, exist_ok=True)
+                      target.write_bytes(body)
+                      print(row["model_id"], label, len(body), urlparse(url).path)
+                  except Exception as exc:
+                      print(row["model_id"], label, "FAILED", type(exc).__name__)
+          PY
       - name: Render visual review page
         working-directory: automotive/vehicle_master
         run: |
@@ -51,5 +88,6 @@ jobs:
             automotive/vehicle_master/integration_data/model_head_lexus.review.csv
             automotive/vehicle_master/integration_data/model_head_lexus.html
             automotive/vehicle_master/data/media/cache/model-head
+            automotive/vehicle_master/data/media/candidate-review
           if-no-files-found: warn
           retention-days: 7
