@@ -1,0 +1,95 @@
+name: Model head review current
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/model-head-review-current.yml"
+      - "automotive/vehicle_master/scripts/discover_model_heads.py"
+      - "automotive/vehicle_master/scripts/render_model_head_review.py"
+      - "scripts/apply-model-head-manifest.ts"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Discover missing Toyota model heads
+        working-directory: automotive/vehicle_master
+        run: |
+          python scripts/discover_model_heads.py \
+            --workers 5 --max-pages 4 \
+            --model-ids \
+              toyota.avanza toyota.c_hr toyota.crown toyota.gr_supra toyota.gr86 \
+              toyota.harrier toyota.hiace_majesty toyota.hilux_travo_cab \
+              toyota.hilux_travo_double_cab toyota.land_cruiser_300 toyota.noah \
+              toyota.prius toyota.vellfire toyota.voxy \
+            --output integration_data/model_head_toyota.jsonl
+      - name: Cache all discovered candidates for visual review
+        working-directory: automotive/vehicle_master
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from urllib.parse import urlparse
+          from vehreg.official_media.pipeline import fetch_bytes
+
+          manifest = Path("integration_data/model_head_toyota.jsonl")
+          out = Path("data/media/candidate-review")
+          out.mkdir(parents=True, exist_ok=True)
+          ext = {"image/jpeg": ".jpg", "image/png": ".png", "image/webp": ".webp", "image/avif": ".avif"}
+          for row in [json.loads(line) for line in manifest.read_text().splitlines() if line.strip()]:
+              seen = set()
+              urls = []
+              if row.get("selected_image"):
+                  urls.append(("selected", row["selected_image"]))
+              for i, candidate in enumerate(row.get("review_candidates") or [], 1):
+                  urls.append((f"candidate-{i}", candidate.get("image_url")))
+              for label, url in urls:
+                  if not url or url in seen:
+                      continue
+                  seen.add(url)
+                  try:
+                      body, mime = fetch_bytes(url)
+                      mime = mime.split(";", 1)[0].lower()
+                      suffix = ext.get(mime)
+                      if not suffix:
+                          continue
+                      target = out / row["model_id"] / f"{label}{suffix}"
+                      target.parent.mkdir(parents=True, exist_ok=True)
+                      target.write_bytes(body)
+                      print(row["model_id"], label, len(body), urlparse(url).path)
+                  except Exception as exc:
+                      print(row["model_id"], label, "FAILED", type(exc).__name__)
+          PY
+      - name: Render visual review page
+        working-directory: automotive/vehicle_master
+        run: |
+          python scripts/render_model_head_review.py \
+            integration_data/model_head_toyota.jsonl \
+            --output integration_data/model_head_toyota.html
+      - name: Preserve review pack
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: model-head-toyota-${{ github.sha }}
+          path: |
+            automotive/vehicle_master/integration_data/model_head_toyota.jsonl
+            automotive/vehicle_master/integration_data/model_head_toyota.review.csv
+            automotive/vehicle_master/integration_data/model_head_toyota.html
+            automotive/vehicle_master/data/media/cache/model-head
+            automotive/vehicle_master/data/media/candidate-review
+          if-no-files-found: warn
+          retention-days: 7
