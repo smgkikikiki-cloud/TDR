@@ -1,0 +1,55 @@
+name: Model head review current
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/model-head-review-current.yml"
+      - "automotive/vehicle_master/scripts/discover_model_heads.py"
+      - "automotive/vehicle_master/scripts/render_model_head_review.py"
+      - "scripts/apply-model-head-manifest.ts"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Discover missing Lexus model heads
+        working-directory: automotive/vehicle_master
+        run: |
+          python scripts/discover_model_heads.py \
+            --workers 4 --max-pages 4 \
+            --model-ids \
+              lexus.lbx lexus.lc lexus.lexus_es lexus.lexus_is \
+              lexus.lexus_lm lexus.lx lexus.rz lexus.ux \
+            --output integration_data/model_head_lexus.jsonl
+      - name: Render visual review page
+        working-directory: automotive/vehicle_master
+        run: |
+          python scripts/render_model_head_review.py \
+            integration_data/model_head_lexus.jsonl \
+            --output integration_data/model_head_lexus.html
+      - name: Preserve review pack
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: model-head-lexus-${{ github.sha }}
+          path: |
+            automotive/vehicle_master/integration_data/model_head_lexus.jsonl
+            automotive/vehicle_master/integration_data/model_head_lexus.review.csv
+            automotive/vehicle_master/integration_data/model_head_lexus.html
+            automotive/vehicle_master/data/media/cache/model-head
+          if-no-files-found: warn
+          retention-days: 7
