@@ -74,6 +74,95 @@ jobs:
                   except Exception as exc:
                       print(row["model_id"], label, "FAILED", type(exc).__name__)
           PY
+      - name: Prepare exactly the three visually reviewed Toyota heads
+        working-directory: automotive/vehicle_master
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          import shutil
+          from pathlib import Path
+          from urllib.parse import urlparse
+
+          reviewed = {
+              "toyota.hilux_travo_cab": {
+                  "generation_id": "toyota.hilux_travo_cab.gen1",
+                  "sha256": "485c30ee52398d65062d2db7632e45908384a56763f0e2b114b06d38a0de1da7",
+                  "width": 959,
+                  "height": 586,
+              },
+              "toyota.hilux_travo_double_cab": {
+                  "generation_id": "toyota.hilux_travo_double_cab.gen1",
+                  "sha256": "073d1f521d06778bcc615070b93ddbf614c8e1aa26f6f29b4dc7da0eac2c85cf",
+                  "width": 959,
+                  "height": 586,
+              },
+              "toyota.vellfire": {
+                  "generation_id": "toyota.vellfire.gen1",
+                  "sha256": "9576a5614578bebee4770b4012fe53b2d795e7963ff9a283e52881a1d19bfe48",
+                  "width": 959,
+                  "height": 586,
+              },
+          }
+          rows_by_model = {
+              row["model_id"]: row
+              for row in [
+                  json.loads(line)
+                  for line in Path("integration_data/model_head_toyota.jsonl").read_text().splitlines()
+                  if line.strip()
+              ]
+          }
+          review_root = Path("data/media/candidate-review")
+          cache_root = Path("data/media/cache")
+          approved = []
+          for model_id, spec in reviewed.items():
+              row = rows_by_model[model_id]
+              matches = list((review_root / model_id).glob("selected.*"))
+              if len(matches) != 1:
+                  raise SystemExit(f"{model_id}: expected one selected candidate, got {matches}")
+              candidate = matches[0]
+              digest = hashlib.sha256(candidate.read_bytes()).hexdigest()
+              if digest != spec["sha256"]:
+                  raise SystemExit(f"{model_id}: reviewed bytes changed ({digest}); refusing production write")
+              if row.get("selected_image") is None or row.get("source_url") is None:
+                  raise SystemExit(f"{model_id}: missing reviewed provenance")
+              source_domain = urlparse(row["source_url"]).hostname or ""
+              if source_domain != "www.toyota.co.th":
+                  raise SystemExit(f"{model_id}: unexpected source host {source_domain}")
+              suffix = candidate.suffix.lower()
+              if suffix not in {".jpg", ".png", ".webp", ".avif"}:
+                  raise SystemExit(f"{model_id}: unsupported format {suffix}")
+              rel = Path("model-head") / model_id / f"{digest}{suffix}"
+              target = cache_root / rel
+              target.parent.mkdir(parents=True, exist_ok=True)
+              shutil.copyfile(candidate, target)
+              approved.append({
+                  "model_id": model_id,
+                  "generation_id": spec["generation_id"],
+                  "status": "READY",
+                  "selected_image": row["selected_image"],
+                  "source_url": row["source_url"],
+                  "source_domain": source_domain,
+                  "source_type": "official_site",
+                  "sha256": digest,
+                  "storage_path": rel.as_posix(),
+                  "confidence": 90,
+                  "width": spec["width"],
+                  "height": spec["height"],
+                  "approved": True,
+              })
+          Path("/tmp/model-head-approved.jsonl").write_text(
+              "".join(json.dumps(row) + "\n" for row in approved), encoding="utf-8"
+          )
+          print(json.dumps({"approved": [row["model_id"] for row in approved]}))
+          PY
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - name: Apply only the SHA-pinned reviewed Toyota heads
+        run: node --experimental-strip-types scripts/apply-model-head-manifest.ts --manifest /tmp/model-head-approved.jsonl --apply
       - name: Render visual review page
         working-directory: automotive/vehicle_master
         run: |
