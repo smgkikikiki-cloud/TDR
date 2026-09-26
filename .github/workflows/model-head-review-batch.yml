@@ -1,0 +1,61 @@
+name: Model Head Review Batch
+
+on:
+  push:
+    branches:
+      - feature/model-head-discovery-current
+    paths:
+      - '.github/workflows/model-head-review-batch.yml'
+      - 'automotive/vehicle_master/scripts/discover_model_heads.py'
+      - 'automotive/vehicle_master/scripts/render_model_head_review.py'
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Discover 23 exact-page missing model heads
+        working-directory: automotive/vehicle_master
+        run: |
+          python scripts/discover_model_heads.py \
+            --workers 8 --max-pages 3 \
+            --model-ids \
+              lexus.lexus_ls lexus.lexus_nx lexus.lexus_rx lexus.lexus_lx lexus.lexus_rz lexus.lexus_ux \
+              aion.aion_ut aion.aion_v aion.aion_y_plus \
+              chery.chery_v23 chery.tiggo8 chery.omoda_c5 \
+              honda.city_hatchback \
+              mitsubishi.pajero_sport mitsubishi.triton_cab mitsubishi.triton_double_cab \
+              mazda.mazda2 mazda.cx5 \
+              jaecoo.jaecoo_5_ev \
+              isuzu.dmax_cab isuzu.dmax_double_cab isuzu.mux \
+              nissan.almera nissan.kicks \
+            --output integration_data/model_head_review_batch.jsonl
+      - name: Build visual review page
+        working-directory: automotive/vehicle_master
+        run: |
+          python scripts/render_model_head_review.py \
+            integration_data/model_head_review_batch.jsonl \
+            --output integration_data/model_head_review_batch.html
+      - name: Upload review pack
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: model-head-review-batch-${{ github.sha }}
+          path: |
+            automotive/vehicle_master/integration_data/model_head_review_batch.jsonl
+            automotive/vehicle_master/integration_data/model_head_review_batch.review.csv
+            automotive/vehicle_master/integration_data/model_head_review_batch.html
+            automotive/vehicle_master/data/media/cache/model-head
+          if-no-files-found: warn
+          retention-days: 7
