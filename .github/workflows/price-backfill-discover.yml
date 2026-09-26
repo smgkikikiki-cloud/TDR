@@ -1,5 +1,6 @@
 name: Price Backfill Discovery
 
+# Trigger token: post-merge read-only sweep 2026-09-26
 on:
   workflow_dispatch:
   push:
