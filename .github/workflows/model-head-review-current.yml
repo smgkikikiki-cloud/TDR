@@ -5,9 +5,6 @@ on:
     branches: [main]
     paths:
       - ".github/workflows/model-head-review-current.yml"
-      - "automotive/vehicle_master/scripts/discover_model_heads.py"
-      - "automotive/vehicle_master/scripts/render_model_head_review.py"
-      - "scripts/apply-model-head-manifest.ts"
   workflow_dispatch:
 
 permissions:
@@ -16,7 +13,7 @@ permissions:
 jobs:
   review:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 15
     env:
       SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
       SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
@@ -26,142 +23,67 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Discover priority missing model heads
+      - name: Rediscover only the two reviewed Jaecoo heads
         working-directory: automotive/vehicle_master
         run: |
           python scripts/discover_model_heads.py \
-            --workers 6 --max-pages 4 \
-            --model-ids \
-              aion.aion_es aion.aion_y_plus aion.hyptec_ht \
-              bmw.bmw_i4 bmw.bmw_ix3 bmw.i7 bmw.i8 bmw.ix1 \
-              byd.byd_t3 byd.seagull byd.shark6 \
-              deepal.deepal_e07 deepal.deepal_hunter_k50 deepal.deepal_l07 \
-              deepal.deepal_s05 deepal.deepal_s07 gwm.ora_03 \
-              honda.en2 honda.mobilio honda.odyssey honda.step_wgn \
-              jaecoo.jaecoo_5_ev jaecoo.jaecoo_6_ev jaecoo.jaecoo_6t_ev \
-              jaecoo.jaecoo_6t_reev jaecoo.jaecoo_7 \
-            --output integration_data/model_head_priority.jsonl
-      - name: Cache all discovered candidates for visual review
+            --workers 2 --max-pages 4 \
+            --model-ids jaecoo.jaecoo_6_ev jaecoo.jaecoo_6t_reev \
+            --output integration_data/model_head_jaecoo_retry.jsonl
+      - name: Cache only the reviewed candidates
         working-directory: automotive/vehicle_master
         run: |
           python - <<'PY'
-          import json
+          import hashlib, json, shutil
           from pathlib import Path
           from urllib.parse import urlparse
           from vehreg.official_media.pipeline import fetch_bytes
 
-          manifest = Path("integration_data/model_head_priority.jsonl")
-          out = Path("data/media/candidate-review")
-          out.mkdir(parents=True, exist_ok=True)
-          ext = {"image/jpeg": ".jpg", "image/png": ".png", "image/webp": ".webp", "image/avif": ".avif"}
-          for row in [json.loads(line) for line in manifest.read_text().splitlines() if line.strip()]:
-              seen = set()
-              urls = []
-              if row.get("selected_image"):
-                  urls.append(("selected", row["selected_image"]))
-              for i, candidate in enumerate(row.get("review_candidates") or [], 1):
-                  urls.append((f"candidate-{i}", candidate.get("image_url")))
-              for label, url in urls:
-                  if not url or url in seen:
-                      continue
-                  seen.add(url)
-                  try:
-                      body, mime = fetch_bytes(url)
-                      mime = mime.split(";", 1)[0].lower()
-                      suffix = ext.get(mime)
-                      if not suffix:
-                          continue
-                      target = out / row["model_id"] / f"{label}{suffix}"
-                      target.parent.mkdir(parents=True, exist_ok=True)
-                      target.write_bytes(body)
-                      print(row["model_id"], label, len(body), urlparse(url).path)
-                  except Exception as exc:
-                      print(row["model_id"], label, "FAILED", type(exc).__name__)
-          PY
-      - name: Prepare exactly the four visually reviewed priority heads
-        working-directory: automotive/vehicle_master
-        run: |
-          python - <<'PY'
-          import hashlib
-          import json
-          import shutil
-          from pathlib import Path
-          from urllib.parse import urlparse
-
           reviewed = {
-              "aion.aion_es": {
-                  "generation_id": "aion.aion_es.aes",
-                  "label": "candidate-3",
-                  "sha256": "08e8731019d85165d41d6fc5978ba38a98a355ac12560ef5be096cd1d1ab33bb",
-                  "width": 1680,
-                  "height": 1120,
-              },
-              "aion.hyptec_ht": {
-                  "generation_id": "aion.hyptec_ht.gen1",
-                  "label": "candidate-3",
-                  "sha256": "1cc9fc2beea8e6cc87afcf80ae696cf11d3fa32141987e132e966d4c4760d359",
-                  "width": 1680,
-                  "height": 1120,
-              },
               "jaecoo.jaecoo_6_ev": {
                   "generation_id": "jaecoo.jaecoo_6_ev.gen1",
-                  "label": "candidate-1",
+                  "index": 0,
                   "sha256": "74891422a421bbd2bbee94acdb11418ac17eaf4159530dc01c5ce61de1c7f2fc",
-                  "width": 1407,
-                  "height": 585,
+                  "width": 1407, "height": 585,
               },
               "jaecoo.jaecoo_6t_reev": {
                   "generation_id": "jaecoo.jaecoo_6t_reev.gen1",
-                  "label": "candidate-1",
+                  "index": 0,
                   "sha256": "8a96691c77c853617b3a40589fa959ecf1de211bfd0644c0a015b118f6622c4b",
-                  "width": 1407,
-                  "height": 585,
+                  "width": 1407, "height": 585,
               },
           }
-          rows_by_model = {
-              row["model_id"]: row
-              for row in [
-                  json.loads(line)
-                  for line in Path("integration_data/model_head_priority.jsonl").read_text().splitlines()
-                  if line.strip()
-              ]
+          rows = {
+              r["model_id"]: r
+              for r in (json.loads(line) for line in Path("integration_data/model_head_jaecoo_retry.jsonl").read_text().splitlines() if line.strip())
           }
-          review_root = Path("data/media/candidate-review")
           cache_root = Path("data/media/cache")
           approved = []
           for model_id, spec in reviewed.items():
-              row = rows_by_model[model_id]
-              label = spec["label"]
-              matches = list((review_root / model_id).glob(label + ".*"))
-              if len(matches) != 1:
-                  raise SystemExit(f"{model_id}: expected one cached {label}, got {matches}")
-              candidate = matches[0]
-              digest = hashlib.sha256(candidate.read_bytes()).hexdigest()
-              if digest != spec["sha256"]:
-                  raise SystemExit(f"{model_id}: reviewed bytes changed ({digest}); refusing production write")
-              idx = int(label.split("-", 1)[1]) - 1
-              meta = (row.get("review_candidates") or [])[idx]
-              selected_image = meta.get("image_url")
+              meta = (rows[model_id].get("review_candidates") or [])[spec["index"]]
+              image_url = meta.get("image_url")
               source_url = meta.get("source_page")
-              if not selected_image or not source_url:
-                  raise SystemExit(f"{model_id}: reviewed provenance incomplete")
-              source_domain = urlparse(source_url).hostname or ""
-              if source_domain not in {"www.gacgroup.com", "www.omodajaecoo.co.th"}:
-                  raise SystemExit(f"{model_id}: unexpected source host {source_domain}")
-              suffix = candidate.suffix.lower()
-              if suffix not in {".jpg", ".png", ".webp", ".avif"}:
-                  raise SystemExit(f"{model_id}: unsupported format {suffix}")
+              if not image_url or not source_url or (urlparse(source_url).hostname or "") != "www.omodajaecoo.co.th":
+                  raise SystemExit(f"{model_id}: reviewed provenance changed; refusing retry")
+              body, mime = fetch_bytes(image_url)
+              mime = mime.split(";", 1)[0].lower()
+              suffix = {"image/jpeg": ".jpg", "image/png": ".png", "image/webp": ".webp", "image/avif": ".avif"}.get(mime)
+              if not suffix:
+                  raise SystemExit(f"{model_id}: unsupported mime {mime}")
+              digest = hashlib.sha256(body).hexdigest()
+              if digest != spec["sha256"]:
+                  raise SystemExit(f"{model_id}: reviewed bytes changed ({digest}); refusing retry")
               rel = Path("model-head") / model_id / f"{digest}{suffix}"
               target = cache_root / rel
               target.parent.mkdir(parents=True, exist_ok=True)
-              shutil.copyfile(candidate, target)
+              target.write_bytes(body)
               approved.append({
                   "model_id": model_id,
                   "generation_id": spec["generation_id"],
                   "status": "READY",
-                  "selected_image": selected_image,
+                  "selected_image": image_url,
                   "source_url": source_url,
-                  "source_domain": source_domain,
+                  "source_domain": "www.omodajaecoo.co.th",
                   "source_type": "official_site",
                   "sha256": digest,
                   "storage_path": rel.as_posix(),
@@ -170,34 +92,12 @@ jobs:
                   "height": spec["height"],
                   "approved": True,
               })
-          Path("/tmp/model-head-approved.jsonl").write_text(
-              "".join(json.dumps(row) + "\n" for row in approved), encoding="utf-8"
-          )
-          print(json.dumps({"approved": [row["model_id"] for row in approved]}))
+          Path("/tmp/model-head-approved.jsonl").write_text("".join(json.dumps(r) + "\n" for r in approved))
           PY
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
           cache: npm
       - run: npm ci
-      - name: Apply only the SHA-pinned reviewed priority heads
+      - name: Retry only the two reviewed Jaecoo writes
         run: node --experimental-strip-types scripts/apply-model-head-manifest.ts --manifest /tmp/model-head-approved.jsonl --apply
-      - name: Render visual review page
-        working-directory: automotive/vehicle_master
-        run: |
-          python scripts/render_model_head_review.py \
-            integration_data/model_head_priority.jsonl \
-            --output integration_data/model_head_priority.html
-      - name: Preserve review pack
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: model-head-priority-${{ github.sha }}
-          path: |
-            automotive/vehicle_master/integration_data/model_head_priority.jsonl
-            automotive/vehicle_master/integration_data/model_head_priority.review.csv
-            automotive/vehicle_master/integration_data/model_head_priority.html
-            automotive/vehicle_master/data/media/cache/model-head
-            automotive/vehicle_master/data/media/candidate-review
-          if-no-files-found: warn
-          retention-days: 7
