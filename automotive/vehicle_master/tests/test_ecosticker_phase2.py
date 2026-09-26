@@ -296,7 +296,9 @@ def test_committed_1640_record_snapshot_and_reference_review_are_self_consistent
     # (tools.import_source, a different, later-published path than the
     # staged review this test otherwise covers).
     assert ProductMaster.load().prices.coverage()["eco_sticker_price_records"] == 643
-    assert len(list(Catalog.load(year=2026).iter_resolved())) == 367
+    # Restoring the former AION Y Plus 410 Premium as a historical identity
+    # adds one resolved catalog row while preserving its ECO Sticker provenance.
+    assert len(list(Catalog.load(year=2026).iter_resolved())) == 368
 
 
 def _decision(**changes):

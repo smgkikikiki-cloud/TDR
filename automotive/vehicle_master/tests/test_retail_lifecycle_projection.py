@@ -12,7 +12,6 @@ def _release(*, model_status="UNVERIFIED", model_row_status="current", ended=Non
         "as_of": "2026-09-11",
         "models": [{
             "canonical_id": "brand.model",
-            # Deliberately simulate the legacy editorial projection bug.
             "status": model_row_status,
             "payload": {"retail_status": model_status},
         }],
@@ -42,59 +41,55 @@ def _decision(status: str):
     }]
 
 
-def test_legacy_editorial_current_cannot_promote_unverified_canonical_model_or_trim():
+def test_catalog_vehicle_is_current_by_default_even_without_price():
     source = _release()
     before = deepcopy(source)
     projected = apply_retail_lifecycle(source)
 
     assert source == before  # enrichment does not mutate the builder output
-    assert projected["models"][0]["status"] == "UNVERIFIED"
-    assert projected["market_trims"][0]["status"] == "UNVERIFIED"
-
-
-def test_current_canonical_list_price_is_trim_currentness_evidence():
-    projected = apply_retail_lifecycle(_release(
-        model_status="CURRENT",
-        current_list_price={"amount_thb": 699000, "price_type": "LIST_PRICE"},
-    ))
     assert projected["models"][0]["status"] == "CURRENT"
     assert projected["market_trims"][0]["status"] == "CURRENT"
 
 
-def test_active_generation_without_retail_evidence_does_not_make_trim_current():
-    projected = apply_retail_lifecycle(_release(model_status="CURRENT"))
-    assert projected["models"][0]["status"] == "CURRENT"
-    assert projected["market_trims"][0]["status"] == "UNVERIFIED"
+def test_missing_price_is_price_debt_not_lifecycle_debt():
+    unpriced = apply_retail_lifecycle(_release(model_status="UNVERIFIED"))
+    priced = apply_retail_lifecycle(_release(
+        model_status="UNVERIFIED",
+        current_list_price={"amount_thb": 699000, "price_type": "LIST_PRICE"},
+    ))
+
+    assert unpriced["models"][0]["status"] == "CURRENT"
+    assert unpriced["market_trims"][0]["status"] == "CURRENT"
+    assert priced["models"][0]["status"] == "CURRENT"
+    assert priced["market_trims"][0]["status"] == "CURRENT"
 
 
-def test_human_current_review_can_resolve_unpriced_trim():
+def test_human_current_review_remains_auditable():
     with patch("tdr_bridge.lifecycle.load_trim_lifecycle_decisions", return_value=_decision("CURRENT")):
-        projected = apply_retail_lifecycle(_release(model_status="CURRENT"))
+        projected = apply_retail_lifecycle(_release())
     trim = projected["market_trims"][0]
     assert trim["status"] == "CURRENT"
     assert trim["retail_lifecycle_review"]["reviewer"] == "Human Reviewer"
 
 
-def test_human_historical_review_overrides_open_ended_old_price():
+def test_human_historical_review_archives_one_trim():
     with patch("tdr_bridge.lifecycle.load_trim_lifecycle_decisions", return_value=_decision("HISTORICAL")):
         projected = apply_retail_lifecycle(_release(
-            model_status="CURRENT",
             current_list_price={"amount_thb": 999000},
         ))
+    assert projected["models"][0]["status"] == "CURRENT"
     assert projected["market_trims"][0]["status"] == "HISTORICAL"
 
 
-def test_ended_generation_beats_human_current_review():
+def test_ended_generation_beats_default_current_and_human_current_review():
     with patch("tdr_bridge.lifecycle.load_trim_lifecycle_decisions", return_value=_decision("CURRENT")):
-        projected = apply_retail_lifecycle(_release(
-            model_status="CURRENT",
-            ended="2026-08-31",
-        ))
+        projected = apply_retail_lifecycle(_release(ended="2026-08-31"))
+    assert projected["models"][0]["status"] == "CURRENT"
     assert projected["market_trims"][0]["status"] == "HISTORICAL"
     assert "retail_lifecycle_review" not in projected["market_trims"][0]
 
 
-def test_historical_model_forces_child_trim_historical_even_with_human_current_review():
+def test_archived_model_forces_child_trim_historical_even_with_human_current_review():
     with patch("tdr_bridge.lifecycle.load_trim_lifecycle_decisions", return_value=_decision("CURRENT")):
         projected = apply_retail_lifecycle(_release(
             model_status="HISTORICAL",
@@ -104,9 +99,11 @@ def test_historical_model_forces_child_trim_historical_even_with_human_current_r
     assert projected["market_trims"][0]["status"] == "HISTORICAL"
 
 
-def test_unknown_or_malformed_status_fails_closed():
-    projected = apply_retail_lifecycle(_release(model_status="current"))
-    # Lowercase is intentionally not accepted: that is the exact legacy value
-    # that used to be supplied for free by the serving bridge.
-    assert projected["models"][0]["status"] == "UNVERIFIED"
-    assert projected["market_trims"][0]["status"] == "UNVERIFIED"
+def test_legacy_or_unknown_non_historical_status_stays_current_by_owner_policy():
+    lowercase = apply_retail_lifecycle(_release(model_status="current"))
+    unknown = apply_retail_lifecycle(_release(model_status="SOMETHING_OLD"))
+
+    assert lowercase["models"][0]["status"] == "CURRENT"
+    assert lowercase["market_trims"][0]["status"] == "CURRENT"
+    assert unknown["models"][0]["status"] == "CURRENT"
+    assert unknown["market_trims"][0]["status"] == "CURRENT"

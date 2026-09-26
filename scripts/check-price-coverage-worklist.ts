@@ -21,15 +21,16 @@ const nav = fs.readFileSync("components/admin/AdminNav.tsx", "utf8");
 console.log("price coverage worklist — canonical trust boundary");
 check("current price requires amount_thb, so JSON null is not counted", helper.includes("current_list_price?.amount_thb"), true);
 check("catalog seed values are read only as separate hints", helper.includes("variantSeedPrices"), true);
-check("legacy lowercase current is not accepted as lifecycle evidence", helper.includes("Exact uppercase is deliberate") && helper.includes('return value === "CURRENT"'), true);
-check("model lifecycle comes from canonical payload, not editorial serving status", helper.includes("model?.payload?.retail_status"), true);
+check("model lifecycle comes from enriched serving status", helper.includes("return lifecycle(model?.status)"), true);
+check("MarketTrim coverage pages beyond PostgREST's 1000-row cap", helper.includes("paginateAll") && helper.includes("allTrimRows(db)") && helper.includes(".range(from, to)"), true);
+check("MarketTrim coverage no longer truncates at limit(1000)", helper.includes('db.from("current_market_trims")\n      .select("canonical_id,model_id,current_list_price,status")\n      .limit(1000)') === false, true);
 check("missing price is computed only across CURRENT trims", helper.includes("const missing = current.filter((trim) => actualCurrentPrice(trim) == null)"), true);
-check("unverified trim lifecycle blocks readiness", helper.includes("row.unverifiedTrims === 0"), true);
-check("ready model must itself be canonical CURRENT", helper.includes('row.modelStatus === "CURRENT"'), true);
+check("unverified trim lifecycle blocks readiness only as stale serving state", helper.includes("row.unverifiedTrims === 0"), true);
+check("ready model must itself be CURRENT", helper.includes('row.modelStatus === "CURRENT"'), true);
 check("historical models are excluded from current retail denominator", helper.includes('row.modelStatus !== "HISTORICAL"'), true);
-check("unverified models stay in denominator", helper.includes("UNVERIFIED models remain in the denominator"), true);
-check("model lifecycle blocker exists", helper.includes('"UNRESOLVED_MODEL_LIFECYCLE"'), true);
-check("trim lifecycle blocker exists", helper.includes('"UNRESOLVED_TRIM_LIFECYCLE"'), true);
+check("only owner-archived models leave the price surface", helper.includes("Only owner-archived HISTORICAL models leave today's price surface"), true);
+check("model lifecycle blocker remains as stale-release diagnostic", helper.includes('"UNRESOLVED_MODEL_LIFECYCLE"'), true);
+check("trim lifecycle blocker remains as stale-release diagnostic", helper.includes('"UNRESOLVED_TRIM_LIFECYCLE"'), true);
 check("models without MarketTrim remain visible blockers", helper.includes('"NO_MARKET_TRIM"'), true);
 check("price debt remains a separate blocker", helper.includes('"MISSING_LIST_PRICE"'), true);
 check("worklist is prioritized by registration impact", helper.includes("b.registrations3m - a.registrations3m"), true);
@@ -48,12 +49,13 @@ check("browser cannot choose reviewer identity for coverage disposition", review
 console.log("\nprice coverage worklist — operator UX");
 check("page labels seeds unverified", page.includes("UNVERIFIED seed hint"), true);
 check("page exposes all four blocker states", page.includes("UNRESOLVED_MODEL_LIFECYCLE") && page.includes("NO_MARKET_TRIM") && page.includes("UNRESOLVED_TRIM_LIFECYCLE") && page.includes("MISSING_LIST_PRICE"), true);
-check("page explains fail-closed denominator", page.includes("Fail-closed denominator"), true);
+check("page explains the CURRENT-by-default denominator", page.includes("CURRENT-by-default denominator"), true);
 check("page says historical trims do not require current price", page.includes("HISTORICAL trim ไม่ต้องมี current LIST_PRICE"), true);
 check("page says deferred is not ready", page.includes("Deferred ≠ ready"), true);
 check("page exposes current/unverified/historical trim counts", page.includes("currentTrims") && page.includes("unverifiedTrims") && page.includes("historicalTrims"), true);
 check("page exposes actionable and deferred price counts", page.includes("actionableMissingTrims") && page.includes("deferredTrims"), true);
 check("page shows registration weighted coverage", page.includes("3M registration coverage"), true);
+check("stale lifecycle blockers route to normal Vehicle Editor", page.includes("Open Vehicle Editor ↗") && page.includes('/admin/vehicles/${encodeURIComponent(row.canonicalModelId)}'), true);
 check("missing-price action carries canonical model into quick input", page.includes('/admin/vehicle-input?model=${encodeURIComponent(row.canonicalModelId)}'), true);
 check("no-trim action uses model-scoped ECO review when snapshot candidates exist", page.includes('/admin/eco-trims?model=${encodeURIComponent(row.canonicalModelId)}') && page.includes("Review ECO"), true);
 check("no-trim action preserves manual fallback", page.includes("Manual fallback") && page.includes("Manual MarketTrim"), true);
@@ -63,8 +65,6 @@ check("focused quick input removes deferred trims from actionable list", inputPa
 check("focused quick input exposes defer and reopen controls", inputPage.includes("Defer from actionable queue") && inputPage.includes("Reopen"), true);
 check("focused quick input exposes registered OEM targets", inputPage.includes("Registered OEM target") && inputPage.includes("oemTargetsForModel(focusedModel)"), true);
 check("registry target stays optional when the registered page has no usable price", inputPage.includes("ไม่ใช้ registry target — ใช้ source ref ด้านล่าง"), true);
-// Coverage is a report on the data, not a job queue: a missing price is
-// filled on the car's own page, so the nav does not send anybody here.
 check("the coverage report is not handed to the operator as a queue",
   !nav.includes('href="/admin/prices/coverage"'), true);
 

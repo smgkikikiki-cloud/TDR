@@ -1,5 +1,6 @@
 import targetsRegistry from "@/automotive/vehicle_master/vehreg/data/2026/market/pricefeed/targets.json";
 import { defaultMarketPeriod, periodKey } from "@/lib/member-market";
+import { paginateAll } from "@/lib/paginate-all";
 import { priceCoverageDecisions } from "@/lib/price-coverage-review";
 
 export type PriceCoverageBlocker =
@@ -61,18 +62,18 @@ function numberOrNull(value: unknown): number | null {
 }
 
 function lifecycle(value: unknown): RetailLifecycle {
-  // Exact uppercase is deliberate. Old serving releases emitted lowercase
-  // `current` by default; accepting it would silently reintroduce the bug this
-  // worklist is meant to expose.
   return value === "CURRENT" || value === "HISTORICAL" || value === "UNVERIFIED"
     ? value
     : "UNVERIFIED";
 }
 
 function canonicalModelLifecycle(model: any): RetailLifecycle {
-  // Canonical Model.retail_status is the authority. Legacy editorial `status`
-  // in the serving row is not allowed to promote an unreviewed model.
-  return lifecycle(model?.payload?.retail_status);
+  // The enriched serving projection is the lifecycle authority. Under the
+  // owner-selected policy it treats catalog rows as CURRENT by default and
+  // preserves explicit HISTORICAL archive decisions. Reading payload here
+  // would resurrect the old second truth where every untouched model looked
+  // UNVERIFIED even though the serving release correctly considers it current.
+  return lifecycle(model?.status);
 }
 
 function variantSeedPrices(payload: JsonObject | null | undefined): number[] {
@@ -106,24 +107,35 @@ function actualCurrentPrice(row: any): number | null {
   return numberOrNull(row?.current_list_price?.amount_thb);
 }
 
+async function allTrimRows(db: any) {
+  // current_market_trims is already >1,000 rows. A single `.limit(1000)` made
+  // price coverage silently ignore the tail of the catalogue, understating
+  // both trim counts and missing-price debt. Page the narrow projection all
+  // the way through just like the Compare picker does.
+  return paginateAll<any>(
+    (from, to) => db.from("current_market_trims")
+      .select("canonical_id,model_id,current_list_price,status")
+      .order("canonical_id")
+      .range(from, to),
+    1000,
+  );
+}
+
 export async function getPriceCoverageWorklist(db: any, limit = 100): Promise<PriceCoverageWorklist> {
-  const [{ data: coverageRows, error: coverageError }, { data: modelRows, error: modelError }, { data: trimRows, error: trimError }, { data: brandRows, error: brandError }] = await Promise.all([
+  const [{ data: coverageRows, error: coverageError }, { data: modelRows, error: modelError }, trimRows, { data: brandRows, error: brandError }] = await Promise.all([
     db.from("registration_analytics_coverage")
       .select("period,total_registrations,mapped_registrations,mapped_unit_pct")
       .order("period", { ascending: true }).limit(240),
     db.from("current_vehicle_models")
       .select("canonical_id,tdr_model_id,brand_id,name_en,name_th,status,payload")
       .limit(1000),
-    db.from("current_market_trims")
-      .select("canonical_id,model_id,current_list_price,status")
-      .limit(1000),
+    allTrimRows(db),
     db.from("current_vehicle_brands")
       .select("canonical_id,name_en,name_th")
       .limit(500),
   ]);
   if (coverageError) throw new Error(`price worklist coverage query failed: ${coverageError.message}`);
   if (modelError) throw new Error(`price worklist model query failed: ${modelError.message}`);
-  if (trimError) throw new Error(`price worklist trim query failed: ${trimError.message}`);
   if (brandError) throw new Error(`price worklist brand query failed: ${brandError.message}`);
 
   const coverage = coverageRows || [];
@@ -208,9 +220,9 @@ export async function getPriceCoverageWorklist(db: any, limit = 100): Promise<Pr
     };
   });
 
-  // HISTORICAL models are resolved as outside today's retail-price surface.
-  // UNVERIFIED models remain in the denominator so unresolved lifecycle work
-  // can never make price coverage look artificially complete.
+  // Only owner-archived HISTORICAL models leave today's price surface. Every
+  // other serving model stays in the denominator so a missing price remains
+  // visible as price debt and the price updater keeps hunting it.
   const retailRows = rows.filter((row) => row.modelStatus !== "HISTORICAL");
   const mappedRegistrations3m = retailRows.reduce((sum, row) => sum + row.registrations3m, 0);
   const ready = retailRows.filter((row) => row.modelStatus === "CURRENT"

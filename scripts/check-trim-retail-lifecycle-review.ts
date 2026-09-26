@@ -27,16 +27,15 @@ check("current/historical require HTTP(S) evidence", action.includes("Evidence �
 check("dispatcher requires ADMIN source", input.includes("UPSERT_TRIM_RETAIL_LIFECYCLE_REVIEW requires source.kind ADMIN"), true);
 check("dispatcher requires HUMAN actor", input.includes("_validate_trim_lifecycle_review_command") && input.includes("_validated_human_actor(command, operation)"), true);
 check("review-only batches do not fake canonical state changes", input.includes("canonical_write_applied = False") && input.includes("if canonical_write_applied:"), true);
-check("HUMAN trim review precedes price inference", lifecycle.indexOf("elif trim_id in decisions:") < lifecycle.indexOf("elif _positive_amount"), true);
+check("HUMAN trim review precedes CURRENT-by-default fallback", lifecycle.indexOf("elif trim_id in decisions:") < lifecycle.lastIndexOf("else:"), true);
 check("historical parent precedes HUMAN trim review", lifecycle.indexOf('model_status.get(model_id) == "HISTORICAL"') < lifecycle.indexOf("elif trim_id in decisions:"), true);
 
 console.log("\ntrim retail lifecycle — operator UX");
-check("lifecycle bench includes both model and trim debt", page.includes("UNRESOLVED_MODEL_LIFECYCLE") && page.includes("UNRESOLVED_TRIM_LIFECYCLE"), true);
+check("legacy lifecycle bench still exposes model and trim debt diagnostics", page.includes("UNRESOLVED_MODEL_LIFECYCLE") && page.includes("UNRESOLVED_TRIM_LIFECYCLE"), true);
 check("trim form only appears after worklist reaches trim blocker", page.includes('focused.blocker === "UNRESOLVED_TRIM_LIFECYCLE"'), true);
 check("trim UI exposes CURRENT and HISTORICAL decisions", page.includes("CURRENT — grade นี้ยังอยู่ใน line-up") && page.includes("HISTORICAL — grade นี้ไม่อยู่ current line-up"), true);
 check("trim UI exposes reopen path", page.includes("Reopen HUMAN decision") && page.includes('value="reopen"'), true);
-check("price worklist routes model lifecycle debt to bench", coverage.includes("Review model lifecycle ↗"), true);
-check("price worklist routes trim lifecycle debt to bench", coverage.includes("Review trim lifecycle ↗"), true);
+check("price worklist routes stale lifecycle diagnostics to normal Vehicle Editor", coverage.includes("Open Vehicle Editor ↗") && coverage.includes('/admin/vehicles/${encodeURIComponent(row.canonicalModelId)}'), true);
 
 console.log(failed ? `\n${failed} check(s) failed` : "\nall trim retail lifecycle checks passed");
 process.exit(failed ? 1 : 0);

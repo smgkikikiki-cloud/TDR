@@ -253,8 +253,8 @@ def test_trim_price_eligibility_reports_retired(tmp_path):
     assert reason == TRIM_RETIRED
 
 
-def test_real_catalog_has_zero_blocked_models_and_full_trim_coverage():
-    """The stricter scope must not silently drop the current real catalog."""
+def test_real_catalog_has_zero_blocked_models_and_full_current_trim_coverage():
+    """Price scope may omit only trims explicitly retired by HUMAN review."""
     from vehreg.catalog import DATA_DIR, DEFAULT_YEAR
 
     catalog = Catalog.load(DATA_DIR, DEFAULT_YEAR)
@@ -264,4 +264,10 @@ def test_real_catalog_has_zero_blocked_models_and_full_trim_coverage():
     assert blocked == {}
 
     siblings = scoped_siblings_by_model(catalog, data_dir=DATA_DIR, year=DEFAULT_YEAR)
-    assert sum(len(v) for v in siblings.values()) == len(catalog.trims)
+    scoped_trim_ids = {trim.id for trims in siblings.values() for trim in trims}
+    reviews = trim_review_index(data_dir=DATA_DIR, year=DEFAULT_YEAR)
+    historical_trim_ids = {
+        trim_id for trim_id, review in reviews.items()
+        if review.get("status") == "HISTORICAL"
+    }
+    assert scoped_trim_ids == set(catalog.trims) - historical_trim_ids

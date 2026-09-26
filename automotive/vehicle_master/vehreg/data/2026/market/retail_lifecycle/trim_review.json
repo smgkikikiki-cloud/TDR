@@ -1,4 +1,21 @@
 {
   "schema_version": 1,
-  "decisions": []
+  "decisions": [
+    {
+      "trim_id": "aion.aion_y_plus.ayp.trim.410_premium_bev",
+      "status": "HISTORICAL",
+      "reviewer": "Owner",
+      "reviewed_at": "2026-09-26",
+      "source_ref": "https://www.gacgroup.com/th-th/configuration/aion-y-plus/2024",
+      "notes": "Retain the former Thai-market 410 Premium canonical identity for ECO Sticker and price-history provenance. GAC Thailand's current lineup lists only 490 Premium, so this grade is historical."
+    },
+    {
+      "trim_id": "aion.aion_y_plus.ayp.trim.490_elite_bev",
+      "status": "HISTORICAL",
+      "reviewer": "Owner",
+      "reviewed_at": "2026-09-26",
+      "source_ref": "https://www.gacgroup.com/th-th/configuration/aion-y-plus/2024",
+      "notes": "Retain the former Thai-market 490 Elite canonical identity for historical provenance. GAC Thailand's current lineup lists only 490 Premium, so this grade is historical."
+    }
+  ]
 }
