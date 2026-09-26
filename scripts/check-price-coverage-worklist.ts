@@ -22,6 +22,8 @@ console.log("price coverage worklist — canonical trust boundary");
 check("current price requires amount_thb, so JSON null is not counted", helper.includes("current_list_price?.amount_thb"), true);
 check("catalog seed values are read only as separate hints", helper.includes("variantSeedPrices"), true);
 check("model lifecycle comes from enriched serving status", helper.includes("return lifecycle(model?.status)"), true);
+check("MarketTrim coverage pages beyond PostgREST's 1000-row cap", helper.includes("paginateAll") && helper.includes("allTrimRows(db)") && helper.includes(".range(from, to)"), true);
+check("MarketTrim coverage no longer truncates at limit(1000)", helper.includes('db.from("current_market_trims")\n      .select("canonical_id,model_id,current_list_price,status")\n      .limit(1000)') === false, true);
 check("missing price is computed only across CURRENT trims", helper.includes("const missing = current.filter((trim) => actualCurrentPrice(trim) == null)"), true);
 check("unverified trim lifecycle blocks readiness only as stale serving state", helper.includes("row.unverifiedTrims === 0"), true);
 check("ready model must itself be CURRENT", helper.includes('row.modelStatus === "CURRENT"'), true);
