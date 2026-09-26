@@ -36,6 +36,8 @@ const {
   buildTrimEditBatch, diffTrimEdit, describeValue, composeReason,
   findDuplicateMarketTrim, isStaleRelease, applySourceRefEdits, normalizedTrimName,
 } = await import("../lib/canonical-command-builder.ts");
+const { applyPendingCanonicalBatches, batchNeedsOptimisticOverlay } =
+  await import("../lib/canonical-pending-overlay.ts");
 
 const REGISTRY = loadSpecFieldRegistry(2026);
 const FIELDS = resolveTrimEditorFields(REGISTRY);
@@ -546,6 +548,63 @@ console.log("\nunchanged behaviour that still has to hold");
 }
 
 // =====================================================================
+console.log("\nTEST 11 — Admin save is read-through while canonical publication is pending");
+// =====================================================================
+{
+  const trimId = "aion.aion_ut.gen1.trim.400_standard_range_bev";
+  const trim = {
+    canonicalId: trimId,
+    name: "420 Standard",
+    powertrain: "BEV",
+    sourceRefs: {},
+    editor: normalizeTrimForEditor({
+      payload: { specs: { name: "420 Standard", powertrain: "BEV", battery_kwh: 50.27 } },
+      fields: FIELDS, canonicalId: trimId, generationId: "aion.aion_ut.gen1",
+      name: "420 Standard", powertrain: "BEV",
+    }),
+  };
+  const model = { name_en: "Aion UT", name_th: "ไอออน ยูที", body_type: "HATCHBACK" };
+  const generation = {
+    code: "gen1", segment: "B", seats: 5, launched: "2025-06-24", ended: null,
+    payload: { seats: 5 },
+  };
+  applyPendingCanonicalBatches({
+    modelId: "aion.aion_ut",
+    activeReleaseCreatedAt: "2026-09-26T06:39:28Z",
+    model, generation, trims: [trim], fields: FIELDS,
+    batches: [{
+      status: "QUEUED", created_at: "2026-09-26T07:00:00Z",
+      payload: { commands: [
+        {
+          operation: "UPSERT_MODEL_BUNDLE", canonical_id: "aion.aion_ut",
+          payload: {
+            model: { name_en: "Aion UT live" }, generation: { code: "gen1", seats: 5 },
+            trims: [{ canonical_id: trimId, name: "420 Standard", powertrain: "BEV", battery_kwh: 51 }],
+          },
+        },
+        {
+          operation: "APPEND_SPEC", canonical_id: trimId,
+          payload: {
+            trim_id: trimId, field_key: "powertrain.max_power_kw", value_state: "KNOWN", value: 100,
+            qualifiers: { output_scope: "MOTOR" },
+          },
+        },
+      ] },
+    }],
+  });
+  check("queued MarketTrim value is visible immediately", trim.editor.editableSpecs.battery_kwh.value, "51");
+  check("queued spec value is visible immediately", trim.editor.editableSpecs.max_power_kw.value, "100");
+  check("queued spec qualifiers survive read-through", trim.editor.editableSpecs.max_power_kw.qualifiers.output_scope, "MOTOR");
+  check("queued model edit is visible immediately", model.name_en, "Aion UT live");
+  ok("a queued write remains visible even if another release appeared later",
+    batchNeedsOptimisticOverlay({ status: "QUEUED", created_at: "2026-09-26T06:00:00Z" }, "2026-09-26T07:00:00Z"));
+  ok("failed writes never overlay",
+    !batchNeedsOptimisticOverlay({ status: "FAILED", created_at: "2026-09-26T08:00:00Z" }, "2026-09-26T07:00:00Z"));
+  ok("a published write already covered by the active release stops overlaying",
+    !batchNeedsOptimisticOverlay({ status: "PUBLISHED", created_at: "2026-09-26T06:00:00Z" }, "2026-09-26T07:00:00Z"));
+}
+
+// =====================================================================
 console.log("\nsource-text regression — the shape the mandate requires");
 // =====================================================================
 {
@@ -571,8 +630,9 @@ console.log("\nsource-text regression — the shape the mandate requires");
     && !/existing\.payload\./.test(actions) && !/\.payload\.drivetrain/.test(actions));
   ok("it returns validation errors to the form instead of throwing to the boundary",
     /return \{ formError: "", fieldErrors \}/.test(actions));
-  ok("a stale release comes back to the form too, not as a crash",
-    /isStaleRelease\(pageReleaseId, workspace\.releaseId\)\)\s*\{\s*return/.test(actions));
+  ok("an old page release no longer blocks an Admin save",
+    !/isStaleRelease\(pageReleaseId, workspace\.releaseId\)/.test(actions)
+    && !/const pageReleaseId = requiredField\(formData, "page_release_id"/.test(actions));
   ok("it compiles through the one unified builder", /buildTrimEditBatch\(/.test(actions));
   ok("the old add-one-spec-at-a-time flow is gone",
     ["addSpecDraftEntry", "removeSpecDraftEntry", "discardSpecDraft", "prepareSpecDraftReview",

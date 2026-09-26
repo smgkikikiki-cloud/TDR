@@ -11,13 +11,11 @@
  *                                 a single diff, a single queued batch.
  *
  * Both build a canonical batch and write it: the editor owns this data, so
- * Save is the decision, not a request for one. The only thing standing
- * between the form and the write is integrity -- the release the page was
- * rendered from must still be the live one, so a save cannot silently
- * overwrite an edit that landed while the form sat open -- and
- * enqueueCanonicalInputBatch's (batch_key, payload-hash) idempotency, so a
- * retry after a transient failure resolves to the same batch instead of
- * losing the edit or writing it twice.
+ * Save is the decision, not a request for one. Saves are compiled against the
+ * latest workspace at submit time and inserted durably into canonical_input_batches
+ * immediately; the editor reads those pending writes through while GitHub/release
+ * publication finishes in the background. Batch-key/payload-hash idempotency keeps
+ * retries from losing an edit or writing it twice.
  *
  * Reason and evidence are optional everywhere. Nothing downstream requires
  * them (both CanonicalInputBatch.from_dict and CanonicalWriteCommand.from_dict
@@ -31,11 +29,11 @@ import { currentEditor, isAdmin, type AdminEditor } from "@/lib/admin-auth";
 import { field, requiredField, isoDate, safeSubmissionId, submissionTimestamp } from "@/lib/admin-form";
 import {
   buildModelGenerationBatch, buildTrimEditBatch,
-  findDuplicateMarketTrim, isStaleRelease, applySourceRefEdits,
+  findDuplicateMarketTrim, applySourceRefEdits,
   type Evidence, type EvidenceKind,
   type SpecFactValueState, type TrimFieldSubmission, type SourceRefEdit,
 } from "@/lib/canonical-command-builder";
-import { loadVehicleWorkspace, liveModelReleaseId } from "@/lib/canonical-editor";
+import { loadVehicleWorkspace } from "@/lib/canonical-editor";
 import { enqueueCanonicalInputBatch } from "@/lib/canonical-input-queue";
 import { trimEditorFields } from "@/lib/spec-field-registry";
 import {
@@ -70,22 +68,11 @@ async function loadWorkspaceOrThrow(modelId: string) {
   return workspace;
 }
 
-function assertNotStale(pageReleaseId: string, liveReleaseId: string) {
-  if (isStaleRelease(pageReleaseId, liveReleaseId)) {
-    throw new Error(
-      "มี canonical release ใหม่ออกมาระหว่างที่เปิดหน้านี้ ข้อมูลบนหน้าจอจึงอาจไม่ตรงกับของจริงแล้ว "
-      + "กรุณากด refresh หน้านี้แล้วแก้ไขใหม่อีกครั้ง (กันการเขียนทับข้อมูลที่เพิ่งอัปเดตไป)",
-    );
-  }
-}
-
 export async function prepareModelGenerationEdit(formData: FormData) {
   if (!(await isAdmin())) redirect("/admin/login");
   const editor = await requireEditor();
   const modelId = requiredField(formData, "model_id", "canonical model");
-  const pageReleaseId = requiredField(formData, "page_release_id", "release fingerprint");
   const workspace = await loadWorkspaceOrThrow(modelId);
-  assertNotStale(pageReleaseId, workspace.releaseId);
   if (!workspace.generation) throw new Error("รุ่นนี้ไม่มี active generation ให้แก้ผ่าน editor");
 
   const nameEn = field(formData, "name_en");
@@ -181,19 +168,8 @@ export async function prepareTrimEdit(
   if (!(await isAdmin())) redirect("/admin/login");
   const editor = await requireEditor();
   const modelId = requiredField(formData, "model_id", "canonical model");
-  const pageReleaseId = requiredField(formData, "page_release_id", "release fingerprint");
   const workspace = await loadWorkspaceOrThrow(modelId);
   if (!workspace.generation) throw new Error("รุ่นนี้ไม่มี active generation ให้เพิ่ม/แก้ MarketTrim");
-
-  // A release activating under an open form is an ordinary race, not a bug:
-  // the admin needs to see it on the page they are typing in.
-  if (isStaleRelease(pageReleaseId, workspace.releaseId)) {
-    return {
-      fieldErrors: {},
-      formError: "มี canonical release ใหม่ออกมาระหว่างที่เปิดหน้านี้ ข้อมูลบนหน้าจอจึงอาจไม่ตรงกับของจริงแล้ว "
-        + "กรุณา refresh หน้านี้แล้วแก้ไขใหม่อีกครั้ง",
-    };
-  }
 
   const existingTrimId = field(formData, "trim_id") || undefined;
   const existing = existingTrimId
