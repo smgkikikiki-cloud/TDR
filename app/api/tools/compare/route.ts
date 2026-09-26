@@ -18,12 +18,11 @@ function bearer(request: NextRequest) {
 
 /** The comparison itself, which is the same work whoever asked for it.
  *
- *  Entitlement decides whether it runs and what quota line comes back with
- *  it; it does not change a single number in the table. */
-async function buildComparison(requestedIds: string[], diffOnly: boolean) {
-  // A comparison has at most four selected trims. Fetch those rich payloads
-  // directly rather than reading/sorting the entire 1,500+ row trim projection.
-  const selected = (await getCanonicalCompareTrimsByIds(requestedIds)) as FreeCompareTrim[];
+ *  Selection resolution happens before entitlement/quota handling. This
+ *  function therefore receives the already-validated trims and never performs
+ *  another database read. Entitlement decides whether the comparison runs;
+ *  it does not change a single number in the table. */
+function buildComparison(selected: FreeCompareTrim[], diffOnly: boolean) {
   // Which fields are comparable, and what they are called, comes from the
   // canonical registry rather than a list kept here -- the same file
   // APPEND_SPEC validates against, so a field is comparable the day it is
@@ -58,13 +57,13 @@ async function buildComparison(requestedIds: string[], diffOnly: boolean) {
       launch_year: trim.launch_year ?? null,
       launch_quarter: trim.launch_quarter ?? null,
     })),
-    missing_selection: requestedIds.length !== selected.length,
+    missing_selection: false,
     groups,
   };
 }
 
-async function anonymousComparison(requestedIds: string[], diffOnly: boolean, remaining: number) {
-  const body = await buildComparison(requestedIds, diffOnly);
+function anonymousComparison(selected: FreeCompareTrim[], diffOnly: boolean, remaining: number) {
+  const body = buildComparison(selected, diffOnly);
   return NextResponse.json({
     ...body,
     quota: { used: 0, limit: null, remaining: null, resets_at: "" },
@@ -81,11 +80,27 @@ export async function GET(request: NextRequest) {
   }
   const diffOnly = request.nextUrl.searchParams.get("diff") === "1";
 
+  // Resolve the selected canonical trims exactly once before touching either
+  // the anonymous allowance or a member's usage quota. A stale/deleted deep
+  // link is bad input, not a comparison, and must cost the reader nothing.
+  let selected: FreeCompareTrim[];
+  try {
+    selected = (await getCanonicalCompareTrimsByIds(requestedIds)) as FreeCompareTrim[];
+  } catch (error) {
+    console.error("compare selection lookup error", error);
+    return NextResponse.json({ error: "could not resolve selected vehicles" }, { status: 500 });
+  }
+  if (selected.length !== requestedIds.length) {
+    return NextResponse.json({
+      error: "one or more selected trims are unavailable",
+      missing_selection: requestedIds.length !== selected.length,
+    }, { status: 400 });
+  }
+
   // Comparing specifications is the free product. An anonymous reader gets a
-  // real trial of it -- ten comparisons a day, counted per press of the
-  // button -- before being asked for an account, because a tool nobody has
-  // used is a tool nobody signs up for. The allowance is a cookie: see
-  // lib/anon-allowance.
+  // real trial of it -- ten valid comparisons a day, counted per press of the
+  // button -- before being asked for an account. Invalid selections returned
+  // above never advance this cookie.
   if (!accessToken) {
     const scope = bangkokDayKey();
     const allowance = allowanceFrom(
@@ -96,7 +111,7 @@ export async function GET(request: NextRequest) {
         signup_required: true,
       }, { status: 401 });
     }
-    const response = await anonymousComparison(requestedIds, diffOnly, allowance.remaining - 1);
+    const response = anonymousComparison(selected, diffOnly, allowance.remaining - 1);
     response.cookies.set(
       ANON_COMPARE_COOKIE, encodeCount(scope, allowance.used + 1), cookieOptions());
     return response;
@@ -108,7 +123,7 @@ export async function GET(request: NextRequest) {
       [...requestedIds].sort().join(","), diffOnly,
     ]);
 
-    const body = await buildComparison(requestedIds, diffOnly);
+    const body = buildComparison(selected, diffOnly);
 
     await recordEvent({ eventName: "compare_run", userId: ctx.userId, props: { trim_count: body.selected.length } });
 
