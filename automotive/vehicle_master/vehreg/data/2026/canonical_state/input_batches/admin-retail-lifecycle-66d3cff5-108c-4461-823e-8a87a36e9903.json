@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "batch_id": "admin-retail-lifecycle-66d3cff5-108c-4461-823e-8a87a36e9903",
+  "batch_hash": "8d9de80ab1d3e28ca559c79b7d9ddc0db40d80d9783baf483c3fb57224ea5e1f",
+  "status": "APPLIED",
+  "year": 2026,
+  "source": {
+    "kind": "ADMIN",
+    "ref": "https://www.toyota.co.th/model/alphard/grade"
+  },
+  "actor": "siriwich",
+  "reason": "HUMAN retail lifecycle review: Toyota Thailand current MODEL LINE-UP confirms Alphard is currently offered in Thailand.",
+  "submitted_at": "2026-09-26T19:21:48.363644Z",
+  "applied_at": "2026-09-26T19:24:39+00:00",
+  "results": [
+    {
+      "command_id": "admin-retail-lifecycle-66d3cff5-108c-4461-823e-8a87a36e9903:1",
+      "revision_id": "f0693bf1dbda2ce8af6ca085",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "toyota.alphard",
+      "idempotent_replay": false
+    }
+  ],
+  "changed_files": [
+    "2026/models/toyota.json",
+    "2026/canonical_state/revisions.jsonl",
+    "2026/canonical_state/outbox.jsonl",
+    "2026/canonical_state/shadow/f0693bf1dbda2ce8af6ca085.json"
+  ]
+}
