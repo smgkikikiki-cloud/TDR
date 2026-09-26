@@ -26,15 +26,17 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Discover missing Lexus model heads
+      - name: Discover missing Toyota model heads
         working-directory: automotive/vehicle_master
         run: |
           python scripts/discover_model_heads.py \
-            --workers 4 --max-pages 4 \
+            --workers 5 --max-pages 4 \
             --model-ids \
-              lexus.lbx lexus.lc lexus.lexus_es lexus.lexus_is \
-              lexus.lexus_lm lexus.lx lexus.rz lexus.ux \
-            --output integration_data/model_head_lexus.jsonl
+              toyota.avanza toyota.c_hr toyota.crown toyota.gr_supra toyota.gr86 \
+              toyota.harrier toyota.hiace_majesty toyota.hilux_travo_cab \
+              toyota.hilux_travo_double_cab toyota.land_cruiser_300 toyota.noah \
+              toyota.prius toyota.vellfire toyota.voxy \
+            --output integration_data/model_head_toyota.jsonl
       - name: Cache all discovered candidates for visual review
         working-directory: automotive/vehicle_master
         run: |
@@ -44,7 +46,7 @@ jobs:
           from urllib.parse import urlparse
           from vehreg.official_media.pipeline import fetch_bytes
 
-          manifest = Path("integration_data/model_head_lexus.jsonl")
+          manifest = Path("integration_data/model_head_toyota.jsonl")
           out = Path("data/media/candidate-review")
           out.mkdir(parents=True, exist_ok=True)
           ext = {"image/jpeg": ".jpg", "image/png": ".png", "image/webp": ".webp", "image/avif": ".avif"}
@@ -72,151 +74,21 @@ jobs:
                   except Exception as exc:
                       print(row["model_id"], label, "FAILED", type(exc).__name__)
           PY
-      - name: Prepare exactly the five visually reviewed Lexus heads
-        working-directory: automotive/vehicle_master
-        run: |
-          python - <<'PY'
-          import hashlib
-          import json
-          import shutil
-          from pathlib import Path
-          from urllib.parse import urlparse
-
-          reviewed = {
-              "lexus.lbx": {
-                  "generation_id": "lexus.lbx.gen1",
-                  "label": "selected",
-                  "sha256s": {
-                      "d87894f1042fe4c4745f955eabffe3a141ba88ba2e31b71d2f1ccd1537c6269e",
-                  },
-                  "width": 450,
-                  "height": 176,
-              },
-              "lexus.lexus_is": {
-                  "generation_id": "lexus.lexus_is.unresearched",
-                  "label": "candidate-2",
-                  "sha256s": {
-                      "ef62909f8ffb853a1377ba23b836a7c5e806c242b5fee1603522b5d011411896",
-                      "7d4c18fbae5d9455698da56f10f2a73df948d222ef72b3f11ff6332e9dde4b76",
-                  },
-                  "width": 449,
-                  "height": 142,
-              },
-              "lexus.lexus_lm": {
-                  "generation_id": "lexus.lexus_lm.ah40l",
-                  "label": "candidate-1",
-                  "sha256s": {
-                      "31ca8f4d406d6f053068eaca4465f70a56345e0258a038257dcc6b77ca543afb",
-                      "b2c47e38bc932bedeecd55b7e0a6880d953f4575559f973dbfee767899fbc7e0",
-                  },
-                  "width": 1200,
-                  "height": 455,
-              },
-              "lexus.rz": {
-                  "generation_id": "lexus.rz.gen1",
-                  "label": "candidate-3",
-                  "sha256s": {
-                      "ad02891521877f9a57c15b23761adbf1b578ddbd01d81db00bc32c86140f642d",
-                      "88068352d1d01b1725ffbd6e68c0e371cd29b62d0d0522104d26d73375b0dc9f",
-                  },
-                  "width": 1200,
-                  "height": 455,
-              },
-              "lexus.ux": {
-                  "generation_id": "lexus.ux.gen1",
-                  "label": "selected",
-                  "sha256s": {
-                      "b3a8fcb261d401668f73f474189aa6633d4725b488ca9c600fafa5088b392be9",
-                  },
-                  "width": 450,
-                  "height": 143,
-              },
-          }
-          manifest_rows = {
-              row["model_id"]: row
-              for row in [
-                  json.loads(line)
-                  for line in Path("integration_data/model_head_lexus.jsonl").read_text().splitlines()
-                  if line.strip()
-              ]
-          }
-          review_root = Path("data/media/candidate-review")
-          cache_root = Path("data/media/cache")
-          rows = []
-          for model_id, spec in reviewed.items():
-              row = manifest_rows[model_id]
-              label = spec["label"]
-              matches = list((review_root / model_id).glob(label + ".*"))
-              if len(matches) != 1:
-                  raise SystemExit(f"{model_id}: expected exactly one cached {label} candidate, got {matches}")
-              candidate_file = matches[0]
-              digest = hashlib.sha256(candidate_file.read_bytes()).hexdigest()
-              if digest not in spec["sha256s"]:
-                  raise SystemExit(f"{model_id}: bytes are not one of the visually reviewed encodings ({digest}); refusing production write")
-
-              if label == "selected":
-                  selected_image = row.get("selected_image")
-                  source_url = row.get("source_url")
-              else:
-                  index = int(label.split("-", 1)[1]) - 1
-                  candidate_meta = (row.get("review_candidates") or [])[index]
-                  selected_image = candidate_meta.get("image_url")
-                  source_url = candidate_meta.get("source_page")
-              if not selected_image or not source_url:
-                  raise SystemExit(f"{model_id}: reviewed candidate provenance is incomplete")
-              source_domain = urlparse(source_url).hostname or ""
-              if source_domain != "www.lexus.co.th":
-                  raise SystemExit(f"{model_id}: unexpected source host {source_domain}")
-
-              suffix = candidate_file.suffix.lower()
-              if suffix not in {".jpg", ".png", ".webp", ".avif"}:
-                  raise SystemExit(f"{model_id}: unsupported reviewed format {suffix}")
-              rel = Path("model-head") / model_id / f"{digest}{suffix}"
-              target = cache_root / rel
-              target.parent.mkdir(parents=True, exist_ok=True)
-              shutil.copyfile(candidate_file, target)
-              rows.append({
-                  "model_id": model_id,
-                  "generation_id": spec["generation_id"],
-                  "status": "READY",
-                  "selected_image": selected_image,
-                  "source_url": source_url,
-                  "source_domain": source_domain,
-                  "source_type": "official_site",
-                  "sha256": digest,
-                  "storage_path": rel.as_posix(),
-                  "confidence": 85,
-                  "width": spec["width"],
-                  "height": spec["height"],
-                  "approved": True,
-              })
-          Path("/tmp/model-head-approved.jsonl").write_text(
-              "".join(json.dumps(row) + "\n" for row in rows), encoding="utf-8"
-          )
-          print(json.dumps({"approved": [row["model_id"] for row in rows]}))
-          PY
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-          cache: npm
-      - run: npm ci
-      - name: Apply only the SHA-pinned reviewed Lexus heads
-        run: node --experimental-strip-types scripts/apply-model-head-manifest.ts --manifest /tmp/model-head-approved.jsonl --apply
       - name: Render visual review page
         working-directory: automotive/vehicle_master
         run: |
           python scripts/render_model_head_review.py \
-            integration_data/model_head_lexus.jsonl \
-            --output integration_data/model_head_lexus.html
+            integration_data/model_head_toyota.jsonl \
+            --output integration_data/model_head_toyota.html
       - name: Preserve review pack
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: model-head-lexus-${{ github.sha }}
+          name: model-head-toyota-${{ github.sha }}
           path: |
-            automotive/vehicle_master/integration_data/model_head_lexus.jsonl
-            automotive/vehicle_master/integration_data/model_head_lexus.review.csv
-            automotive/vehicle_master/integration_data/model_head_lexus.html
+            automotive/vehicle_master/integration_data/model_head_toyota.jsonl
+            automotive/vehicle_master/integration_data/model_head_toyota.review.csv
+            automotive/vehicle_master/integration_data/model_head_toyota.html
             automotive/vehicle_master/data/media/cache/model-head
             automotive/vehicle_master/data/media/candidate-review
           if-no-files-found: warn
