@@ -58,6 +58,15 @@ function trimModelKey(trim: TrimOption) {
   return trim.model_id || `${trim.brand_name}:${trim.model_name}`;
 }
 
+function groupByModel(trims: TrimOption[]) {
+  const grouped: Record<string, TrimOption[]> = {};
+  for (const trim of trims) {
+    const key = trimModelKey(trim);
+    (grouped[key] ||= []).push(trim);
+  }
+  return grouped;
+}
+
 export default function ComparePage() {
   const [models, setModels] = useState<ModelOption[]>([]);
   const [seedTrims, setSeedTrims] = useState<TrimOption[]>([]);
@@ -107,13 +116,14 @@ export default function ComparePage() {
     () => [...seedTrims, ...Object.values(trimsByModel).flat()],
     [seedTrims, trimsByModel],
   );
+  const seedTrimsByModel = useMemo(() => groupByModel(seedTrims), [seedTrims]);
   const byId = useMemo(() => new Map(loadedTrims.map((trim) => [trim.id, trim])), [loadedTrims]);
   const matches = useMemo(() => {
     const needle = query.trim().toLowerCase();
     if (!needle) return models;
     return models.filter((model) => `${model.brand} ${model.model}`.toLowerCase().includes(needle));
   }, [models, query]);
-  const openTrims = modelId ? trimsByModel[modelId] : undefined;
+  const openTrims = modelId ? (trimsByModel[modelId] ?? seedTrimsByModel[modelId]) : undefined;
   const chosen = useMemo(() => slots.filter((id): id is string => Boolean(id)), [slots]);
   const selectedCount = chosen.length;
 
