@@ -12,6 +12,7 @@ import { adminDb } from "@/lib/supabase";
 import { oemTargetsForModel, type OemEvidenceTarget } from "@/lib/price-evidence-registry";
 import { trimEditorFields } from "@/lib/spec-field-registry";
 import { normalizeTrimForEditor, type NormalizedTrim } from "@/lib/trim-editor-state";
+import { applyPendingCanonicalBatches } from "@/lib/canonical-pending-overlay";
 
 export type WorkspaceBrand = { canonicalId: string; nameEn: string; nameTh: string; originCountry: string | null };
 export type WorkspaceModel = {
@@ -31,6 +32,7 @@ export type WorkspaceGeneration = {
   modelId: string;
   code: string;
   segment: string | null;
+  seats: number | null;
   launched: string | null;
   ended: string | null;
 };
@@ -152,12 +154,12 @@ export async function loadVehicleWorkspace(modelId: string): Promise<VehicleWork
   ] = await Promise.all([
     db.from("current_vehicle_brands").select("canonical_id,name_en,name_th,origin_country").eq("canonical_id", model.brand_id).maybeSingle(),
     model.generation_id
-      ? db.from("current_vehicle_generations").select("canonical_id,model_id,code,segment,launched,ended").eq("canonical_id", model.generation_id).maybeSingle()
+      ? db.from("current_vehicle_generations").select("canonical_id,model_id,code,segment,launched,ended,payload").eq("canonical_id", model.generation_id).maybeSingle()
       : Promise.resolve({ data: null, error: null }),
     db.from("current_market_trims")
       .select("canonical_id,model_id,generation_id,variant_id,name,powertrain,status,payload,current_list_price,campaign_quote,source_refs")
       .eq("model_id", modelId).order("name", { ascending: true }).limit(500),
-    db.from("canonical_vehicle_releases").select("release_id,as_of,payload").eq("release_id", model.release_id).maybeSingle(),
+    db.from("canonical_vehicle_releases").select("release_id,as_of,created_at,payload").eq("release_id", model.release_id).maybeSingle(),
     db.from("canonical_input_batches")
       .select("batch_key,source_kind,item_count,status,pull_request_url,release_id,error,created_at,actor,payload")
       .order("created_at", { ascending: false }).limit(60),
@@ -242,6 +244,20 @@ export async function loadVehicleWorkspace(modelId: string): Promise<VehicleWork
     }),
   }));
 
+  // The queue insert is the Admin save. Read it through immediately so a
+  // redirect/refresh shows the value the owner just entered while canonical
+  // publication catches up asynchronously. Failed writes never overlay, and a
+  // published write disappears once the active release represents it.
+  applyPendingCanonicalBatches({
+    modelId,
+    activeReleaseCreatedAt: (release as any)?.created_at || null,
+    model,
+    generation: generation as any,
+    trims: trimRows,
+    fields,
+    batches: (batches || []) as any[],
+  });
+
   // canonical_input_batches carries no model FK; a batch is "related" when its
   // payload mentions this model's canonical_id anywhere in its commands. Good
   // enough at admin-bench data volumes (60 most recent batches), same
@@ -267,7 +283,10 @@ export async function loadVehicleWorkspace(modelId: string): Promise<VehicleWork
     },
     generation: generation ? {
       canonicalId: generation.canonical_id, modelId: generation.model_id, code: generation.code,
-      segment: generation.segment, launched: generation.launched, ended: generation.ended,
+      segment: generation.segment,
+      seats: Number.isFinite(Number((generation as any).seats ?? (generation as any).payload?.seats))
+        ? Number((generation as any).seats ?? (generation as any).payload?.seats) : null,
+      launched: generation.launched, ended: generation.ended,
     } : null,
     trims: trimRows,
     specFactsByTrim,

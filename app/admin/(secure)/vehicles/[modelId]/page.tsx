@@ -60,7 +60,7 @@ export default async function VehicleWorkspacePage({
     </div>
 
     {saved ? <div className="adminSaved">
-      บันทึก {KIND_LABEL[saved] || "canonical"} แล้ว — ระบบกำลังเขียนและ publish ให้อัตโนมัติ ใช้เวลาสักครู่แล้วรีเฟรช
+      บันทึก {KIND_LABEL[saved] || "canonical"} แล้ว — ค่าที่แก้แสดงทันที ส่วน canonical/GitHub publish ทำงานต่อเบื้องหลัง
     </div> : null}
 
     {fromExceptions ? <div className="adminNotice">
@@ -89,7 +89,7 @@ export default async function VehicleWorkspacePage({
       <label className="adminField"><span>Name TH (ปัจจุบัน: {model.nameTh || "—"})</span><input name="name_th" type="text" /></label>
       <label className="adminField"><span>Body type (ปัจจุบัน: {model.bodyType || "—"})</span><select name="body_type" defaultValue=""><option value="">ไม่แก้</option>{BODY_TYPES.map((v) => <option key={v} value={v}>{v}</option>)}</select></label>
       <label className="adminField"><span>Segment (ปัจจุบัน: {generation?.segment || "—"})</span><select name="segment" defaultValue=""><option value="">ไม่แก้</option>{SEGMENTS.map((v) => <option key={v} value={v}>{v}</option>)}</select></label>
-      <label className="adminField"><span>Seats (ปัจจุบัน: {(generation as any)?.seats || "—"})</span><input name="seats" type="number" min="1" step="1" /></label>
+      <label className="adminField"><span>Seats (ปัจจุบัน: {generation?.seats || "—"})</span><input name="seats" type="number" min="1" step="1" /></label>
       <label className="adminField"><span>Launched (ปัจจุบัน: {generation?.launched || "—"})</span><input name="launched" type="date" /></label>
       <label className="adminField"><span>Ended (ปัจจุบัน: {generation?.ended || "—"})</span><input name="ended" type="date" /></label>
       <EvidenceFields today={today} />
