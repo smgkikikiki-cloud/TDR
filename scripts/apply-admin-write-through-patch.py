@@ -22,7 +22,7 @@ replace_once(
 )
 replace_once(
     actions,
-    '''Both build a canonical batch and write it: the editor owns this data, so
+    ''' * Both build a canonical batch and write it: the editor owns this data, so
  * Save is the decision, not a request for one. The only thing standing
  * between the form and the write is integrity -- the release the page was
  * rendered from must still be the live one, so a save cannot silently
@@ -31,7 +31,7 @@ replace_once(
  * retry after a transient failure resolves to the same batch instead of
  * losing the edit or writing it twice.
 ''',
-    '''Both build a canonical batch and write it: the editor owns this data, so
+    ''' * Both build a canonical batch and write it: the editor owns this data, so
  * Save is the decision, not a request for one. Saves are compiled against the
  * latest workspace at submit time and inserted durably into canonical_input_batches
  * immediately; the editor reads those pending writes through while GitHub/release
