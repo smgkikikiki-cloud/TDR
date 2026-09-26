@@ -5,6 +5,8 @@ import { getRelatedEvents, getProductionProgramsByModel } from "@/lib/data";
 import { bodyLabel } from "@/lib/body-labels";
 import { displayName, initials } from "@/lib/display-name";
 import { trimLocalId } from "@/lib/trim-editor-state";
+import { trimSummarySpecs } from "@/lib/model-trim-summary";
+import { loadSpecFieldRegistry } from "@/lib/spec-field-registry";
 
 function launch(r: any) { return [r.launch_quarter, r.launch_year].filter(Boolean).join(" ") || null }
 function baht(n: any) { return n ? `฿${Number(n).toLocaleString()}` : null }
@@ -12,7 +14,7 @@ function baht(n: any) { return n ? `฿${Number(n).toLocaleString()}` : null }
 function bahtRange(values: number[]) {
   if (!values.length) return null;
   const min = Math.min(...values), max = Math.max(...values);
-  return min === max ? `฿${min.toLocaleString()}` : `฿${min.toLocaleString()} – ${max.toLocaleString()}`;
+  return min === max ? `฿${min.toLocaleString()} – ${max.toLocaleString()}`.replace(` – ${max.toLocaleString()}`, "") : `฿${min.toLocaleString()} – ${max.toLocaleString()}`;
 }
 function numberRange(values: number[], formatter: (n: number) => string) {
   if (!values.length) return null;
@@ -39,10 +41,17 @@ function officialRangeLabel(trims: any[]) {
 }
 
 /** One trim row. Shared by the current and the discontinued list. */
-function TrimRow({ t, ptById, muted, slug }: { t: any; ptById: Map<any, any>; muted?: boolean; slug: string }) {
+function TrimRow({ t, ptById, specFields, muted, slug }: {
+  t: any;
+  ptById: Map<any, any>;
+  specFields: any[];
+  muted?: boolean;
+  slug: string;
+}) {
   const linked = (t.trim_powertrains || []).map((x: any) => ptById.get(x.powertrain_id)).filter(Boolean);
   const price = baht(t.price_baht);
   const offers = (t.campaign_quote?.campaign_options || []).filter((offer: any) => offer.status_as_of === "ACTIVE");
+  const summarySpecs = trimSummarySpecs(t, specFields, 6);
   return (
     <details className={muted ? "sfTrimRow sfDiscontinued" : "sfTrimRow"}>
       <summary>
@@ -56,14 +65,10 @@ function TrimRow({ t, ptById, muted, slug }: { t: any; ptById: Map<any, any>; mu
         </div>
       </summary>
       <div className="sfTrimBody">
-        <div className="sfSpecGrid">
-          {linked.map((p: any) => <div key={p.id}><small>ระบบขับเคลื่อน</small><b>{ptSummary(p)}</b></div>)}
-          {t.published_range_km ? <div><small>ระยะทางที่ผู้ผลิตประกาศ</small><b>{Number(t.published_range_km).toLocaleString()} km {t.published_range_cycle || ""}</b></div> : null}
-          {t.standardized_wltp_km ? <div><small>เทียบเท่า WLTP</small><b>~{Number(t.standardized_wltp_km).toLocaleString()} km WLTP-equivalent</b></div> : null}
-          {t.standardized_epa_km ? <div><small>เทียบเท่า EPA</small><b>~{Number(t.standardized_epa_km).toLocaleString()} km</b></div> : null}
-          {(t.seats_override || t.payload_capacity_kg_override) ? <div><small>ความจุ</small><b>{[t.seats_override ? `${t.seats_override} ที่นั่ง` : null, t.payload_capacity_kg_override ? `Payload ${t.payload_capacity_kg_override} kg` : null].filter(Boolean).join(" · ")}</b></div> : null}
-        </div>
-        {t.description ? <p>{t.description}</p> : <p className="sfMissing">ยังไม่มีรายละเอียดอุปกรณ์ของรุ่นย่อยนี้</p>}
+        {summarySpecs.length ? <div className="sfSpecGrid">
+          {summarySpecs.map((spec) => <div key={spec.key}><small>{spec.label}</small><b>{spec.value}</b></div>)}
+        </div> : null}
+        {t.description ? <p>{t.description}</p> : summarySpecs.length ? null : <p className="sfMissing">ยังไม่มีรายละเอียดอุปกรณ์ของรุ่นย่อยนี้</p>}
         {offers.length ? <div className="sfRows">
           {offers.map((offer: any) => <div className="sfRow" key={`${offer.campaign_id}:${offer.option_id}`}>
             <span>
@@ -95,6 +100,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
     getModelMarketTeasers(r.id)
   ]);
   const ptById = new Map((r.powertrains_detail || []).map((p: any) => [p.id, p]));
+  const specFields = loadSpecFieldRegistry(new Date().getFullYear());
   const allTrims = (r.trims || []) as any[];
   const currentTrims = allTrims.filter((t) => String(t.status || "current").toLowerCase() !== "discontinued");
   const pastTrims = allTrims.filter((t) => String(t.status || "current").toLowerCase() === "discontinued");
@@ -157,12 +163,12 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
         <span>{currentTrims.length} Trim</span>
       </div>
       {currentTrims.length
-        ? <div>{currentTrims.map((t: any) => <TrimRow key={t.id} t={t} ptById={ptById} slug={slug} />)}</div>
+        ? <div>{currentTrims.map((t: any) => <TrimRow key={t.id} t={t} ptById={ptById} specFields={specFields} slug={slug} />)}</div>
         : <div className="sfEmpty"><b>ยังไม่มีรุ่นย่อยในฐานข้อมูล</b></div>}
       {pastTrims.length ? (
         <details style={{ marginTop: 18 }}>
           <summary className="sfEyebrow ink" style={{ cursor: "pointer", padding: "10px 0" }}>รุ่นย่อยที่เลิกจำหน่ายแล้ว ({pastTrims.length})</summary>
-          <div>{pastTrims.map((t: any) => <TrimRow key={t.id} t={t} ptById={ptById} slug={slug} muted />)}</div>
+          <div>{pastTrims.map((t: any) => <TrimRow key={t.id} t={t} ptById={ptById} specFields={specFields} slug={slug} muted />)}</div>
         </details>
       ) : null}
     </section>

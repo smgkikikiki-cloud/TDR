@@ -1,0 +1,39 @@
+/* Model-page trim preview only. Full technical detail remains on the trim route. */
+.sfTrimBody > .sfSpecGrid {
+  margin-top: 2px;
+}
+
+.sfTrimMore {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 54px;
+  margin-top: 18px;
+  padding: 14px 16px;
+  border: 1px solid var(--navy);
+  background: #fff;
+  color: var(--navy);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.sfTrimMore:hover,
+.sfTrimMore:focus-visible {
+  background: var(--navy);
+  color: #fff;
+}
+
+.sfTrimMore:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .sfTrimMore {
+    min-height: 58px;
+    padding: 15px 14px;
+    font-size: 14px;
+  }
+}
