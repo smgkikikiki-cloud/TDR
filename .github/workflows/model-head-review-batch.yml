@@ -25,21 +25,34 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Discover 23 exact-page missing model heads
+      - name: Discover 76-model visual review batch 2
         working-directory: automotive/vehicle_master
         run: |
           python scripts/discover_model_heads.py \
             --workers 8 --max-pages 3 \
             --model-ids \
-              lexus.lexus_ls lexus.lexus_nx lexus.lexus_rx lexus.lexus_lx lexus.lexus_rz lexus.lexus_ux \
-              aion.aion_ut aion.aion_v aion.aion_y_plus \
-              chery.chery_v23 chery.tiggo8 chery.omoda_c5 \
-              honda.city_hatchback \
-              mitsubishi.pajero_sport mitsubishi.triton_cab mitsubishi.triton_double_cab \
-              mazda.mazda2 mazda.cx5 \
-              jaecoo.jaecoo_5_ev \
-              isuzu.dmax_cab isuzu.dmax_double_cab isuzu.mux \
-              nissan.almera nissan.kicks \
+              aion.aion_es aion.hyptec_ht \
+              avatr.avatr_07 avatr.avatr_11 \
+              bmw.bmw_i4 bmw.bmw_ix3 bmw.i7 bmw.ix1 \
+              byd.byd_t3 byd.seagull byd.shark6 \
+              changan.changan_lumin changan.nevo_q05 \
+              deepal.deepal_e07 deepal.deepal_hunter_k50 deepal.deepal_l07 deepal.deepal_s05 deepal.deepal_s07 \
+              denza.denza_d9 \
+              farizon.farizon_sv \
+              ford.everest ford.mustang ford.ranger_cab ford.ranger_double_cab \
+              gac.gac_m8 \
+              geely.geely_ex2 geely.geely_ex5 \
+              gwm.ora_03 \
+              honda.en2 honda.mobilio honda.odyssey honda.step_wgn \
+              hyundai.creta hyundai.ioniq5 hyundai.ioniq6 hyundai.palisade hyundai.santa_fe hyundai.stargazer hyundai.staria \
+              jaecoo.jaecoo_6_ev jaecoo.jaecoo_6t_ev jaecoo.jaecoo_6t_reev jaecoo.jaecoo_7 \
+              kia.carnival kia.ev5 kia.ev6 kia.ev9 kia.kia_pv5 kia.sorento \
+              land_rover.defender land_rover.range_rover land_rover.range_rover_sport land_rover.range_rover_velar \
+              leapmotor.leapmotor_b10 leapmotor.leapmotor_c10 \
+              lotus.eletre lotus.emeya \
+              mazda.bt50_cab mazda.bt50_double_cab mazda.cx3 mazda.cx30 mazda.cx8 mazda.mazda2_hatchback mazda.mazda3 mazda.mazda3_hatchback mazda.mazda6 mazda.mx_5 \
+              mitsubishi.attrage mitsubishi.mirage mitsubishi.outlander_phev mitsubishi.xforce mitsubishi.xpander mitsubishi.xpander_cross \
+              nissan.gtr nissan.navara_cab nissan.navara_double_cab \
             --output integration_data/model_head_review_batch.jsonl
       - name: Build visual review page
         working-directory: automotive/vehicle_master
@@ -51,7 +64,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: model-head-review-batch-${{ github.sha }}
+          name: model-head-review-batch2-${{ github.sha }}
           path: |
             automotive/vehicle_master/integration_data/model_head_review_batch.jsonl
             automotive/vehicle_master/integration_data/model_head_review_batch.review.csv
