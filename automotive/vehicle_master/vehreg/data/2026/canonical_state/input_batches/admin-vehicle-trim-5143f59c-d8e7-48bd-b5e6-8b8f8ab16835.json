@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "batch_id": "admin-vehicle-trim-5143f59c-d8e7-48bd-b5e6-8b8f8ab16835",
+  "batch_hash": "48169169d7cbd3c995076ae0b9c9b9c8537bc1f0ea9fe881c9895a1f1278b401",
+  "status": "APPLIED",
+  "year": 2026,
+  "source": {
+    "kind": "ADMIN",
+    "ref": null
+  },
+  "actor": "siriwich",
+  "reason": "Manual edit via Canonical Vehicle Editor",
+  "submitted_at": "2026-09-26T06:32:12.957Z",
+  "applied_at": "2026-09-26T06:38:59+00:00",
+  "results": [
+    {
+      "command_id": "admin-vehicle-trim-5143f59c-d8e7-48bd-b5e6-8b8f8ab16835:1",
+      "revision_id": "b865b5d8fe3bc7beb08554d5",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "aion.aion_ut",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "admin-vehicle-trim-5143f59c-d8e7-48bd-b5e6-8b8f8ab16835:2",
+      "revision_id": "6ebde75d00ebac5eda2a444e",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_ut.gen1.trim.400_standard_range_bev",
+      "idempotent_replay": false
+    }
+  ],
+  "changed_files": [
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_ut.gen1.trim.400_standard_range_bev_powertrain.transmission_2d5e759e5353.json",
+    "2026/models/aion.json",
+    "2026/canonical_state/shadow/b865b5d8fe3bc7beb08554d5.json",
+    "2026/canonical_state/revisions.jsonl",
+    "2026/canonical_state/shadow/6ebde75d00ebac5eda2a444e.json",
+    "2026/canonical_state/outbox.jsonl"
+  ]
+}
