@@ -10,7 +10,7 @@ type TrimOption = {
   id: string; model_id: string | null; brand_name: string | null; model_name: string | null;
   name: string | null; powertrain: string | null; price_baht: number | null;
 };
-type ModelOption = { id: string; brand: string; model: string; trims: TrimOption[] };
+type ModelOption = { id: string; brand: string; model: string };
 type CompareRow = {
   key: string; label: string; different: boolean; values: (string | null)[];
   // Evidence-safe winner highlighting -- lib/compare-winners.ts decides all
@@ -58,22 +58,21 @@ function trimModelKey(trim: TrimOption) {
   return trim.model_id || `${trim.brand_name}:${trim.model_name}`;
 }
 
-function groupByModel(trims: TrimOption[]): ModelOption[] {
-  const models = new Map<string, ModelOption>();
+function groupByModel(trims: TrimOption[]) {
+  const grouped: Record<string, TrimOption[]> = {};
   for (const trim of trims) {
-    const id = trimModelKey(trim);
-    const existing = models.get(id);
-    if (existing) { existing.trims.push(trim); continue; }
-    models.set(id, {
-      id, brand: trim.brand_name || "", model: trim.model_name || "", trims: [trim],
-    });
+    const key = trimModelKey(trim);
+    (grouped[key] ||= []).push(trim);
   }
-  return [...models.values()].sort((a, b) =>
-    `${a.brand} ${a.model}`.localeCompare(`${b.brand} ${b.model}`, "th"));
+  return grouped;
 }
 
 export default function ComparePage() {
-  const [allTrims, setAllTrims] = useState<TrimOption[]>([]);
+  const [models, setModels] = useState<ModelOption[]>([]);
+  const [seedTrims, setSeedTrims] = useState<TrimOption[]>([]);
+  const [trimsByModel, setTrimsByModel] = useState<Record<string, TrimOption[]>>({});
+  const [trimLoadingModel, setTrimLoadingModel] = useState<string | null>(null);
+  const [pickerError, setPickerError] = useState("");
   const [slots, setSlots] = useState<(string | null)[]>([null, null, null, null]);
   const [activeSlot, setActiveSlot] = useState<number | null>(null);
   const [query, setQuery] = useState("");
@@ -86,36 +85,74 @@ export default function ComparePage() {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    fetch("/api/compare/trims").then((r) => r.json()).then((body) => {
-      setAllTrims(body.trims || []);
-      const wanted = [...new Set(new URLSearchParams(window.location.search).getAll("trims").filter(Boolean))].slice(0, 4);
-      if (wanted.length) {
-        setSlots([wanted[0] || null, wanted[1] || null, wanted[2] || null, wanted[3] || null]);
-      }
-    });
+    fetch("/api/compare/models")
+      .then(async (response) => {
+        const body = await response.json();
+        if (!response.ok) throw new Error(body.error || "โหลดรุ่นรถไม่สำเร็จ");
+        setModels(body.models || []);
+      })
+      .catch((error) => setPickerError(error instanceof Error ? error.message : "โหลดรุ่นรถไม่สำเร็จ"));
+
+    const wanted = [...new Set(new URLSearchParams(window.location.search).getAll("trims").filter(Boolean))].slice(0, 4);
+    if (wanted.length) {
+      setSlots([wanted[0] || null, wanted[1] || null, wanted[2] || null, wanted[3] || null]);
+      const params = new URLSearchParams();
+      wanted.forEach((id) => params.append("ids", id));
+      fetch(`/api/compare/trims?${params.toString()}`)
+        .then(async (response) => {
+          const body = await response.json();
+          if (!response.ok) throw new Error(body.error || "โหลดรถที่เลือกไว้ไม่สำเร็จ");
+          setSeedTrims(body.trims || []);
+        })
+        .catch((error) => setPickerError(error instanceof Error ? error.message : "โหลดรถที่เลือกไว้ไม่สำเร็จ"));
+    }
+
     const db = browserDb();
     if (!db) { setToken(null); return; }
     db.auth.getSession().then(({ data }) => setToken(data.session?.access_token ?? null));
   }, []);
 
-  const byId = useMemo(() => new Map(allTrims.map((trim) => [trim.id, trim])), [allTrims]);
-  const models = useMemo(() => groupByModel(allTrims), [allTrims]);
+  const loadedTrims = useMemo(
+    () => [...seedTrims, ...Object.values(trimsByModel).flat()],
+    [seedTrims, trimsByModel],
+  );
+  const seedTrimsByModel = useMemo(() => groupByModel(seedTrims), [seedTrims]);
+  const byId = useMemo(() => new Map(loadedTrims.map((trim) => [trim.id, trim])), [loadedTrims]);
   const matches = useMemo(() => {
     const needle = query.trim().toLowerCase();
     if (!needle) return models;
     return models.filter((model) => `${model.brand} ${model.model}`.toLowerCase().includes(needle));
   }, [models, query]);
-  const openModel = useMemo(() => models.find((model) => model.id === modelId) || null, [models, modelId]);
+  const openTrims = modelId ? (trimsByModel[modelId] ?? seedTrimsByModel[modelId]) : undefined;
   const chosen = useMemo(() => slots.filter((id): id is string => Boolean(id)), [slots]);
   const selectedCount = chosen.length;
+
+  async function loadModelTrims(nextModelId: string) {
+    if (!nextModelId || trimsByModel[nextModelId]) return;
+    setTrimLoadingModel(nextModelId);
+    setPickerError("");
+    try {
+      const response = await fetch(`/api/compare/trims?model_id=${encodeURIComponent(nextModelId)}`);
+      const body = await response.json();
+      if (!response.ok) throw new Error(body.error || "โหลดรุ่นย่อยไม่สำเร็จ");
+      setTrimsByModel((current) => ({ ...current, [nextModelId]: body.trims || [] }));
+    } catch (error) {
+      setPickerError(error instanceof Error ? error.message : "โหลดรุ่นย่อยไม่สำเร็จ");
+    } finally {
+      setTrimLoadingModel((current) => current === nextModelId ? null : current);
+    }
+  }
 
   function openPicker(index: number) {
     const currentId = slots[index];
     const currentTrim = currentId ? byId.get(currentId) : null;
+    const currentModelId = currentTrim ? trimModelKey(currentTrim) : "";
     setActiveSlot(index);
     setQuery("");
-    setModelId(currentTrim ? trimModelKey(currentTrim) : "");
+    setModelId(currentModelId);
     setPendingTrimId(currentId || "");
+    setPickerError("");
+    if (currentModelId) void loadModelTrims(currentModelId);
   }
 
   function closePicker() {
@@ -123,6 +160,14 @@ export default function ComparePage() {
     setQuery("");
     setModelId("");
     setPendingTrimId("");
+    setPickerError("");
+  }
+
+  function chooseModel(nextModelId: string) {
+    setModelId(nextModelId);
+    setPendingTrimId("");
+    setPickerError("");
+    if (nextModelId) void loadModelTrims(nextModelId);
   }
 
   function confirmPicker() {
@@ -212,13 +257,12 @@ export default function ComparePage() {
           <label className="compareSlotField">
             <span>เลือกรุ่น</span>
             <input type="search" value={query} placeholder="พิมพ์ชื่อแบรนด์หรือรุ่น"
-                   onChange={(event) => { setQuery(event.target.value); setModelId(""); setPendingTrimId(""); }} />
-            <select value={modelId} aria-label="รุ่นรถ"
-                    onChange={(event) => { setModelId(event.target.value); setPendingTrimId(""); }}>
+                   onChange={(event) => { setQuery(event.target.value); setModelId(""); setPendingTrimId(""); setPickerError(""); }} />
+            <select value={modelId} aria-label="รุ่นรถ" onChange={(event) => chooseModel(event.target.value)}>
               <option value="">{matches.length ? `เลือกจาก ${matches.length} รุ่น` : "ไม่พบรุ่นที่ค้นหา"}</option>
               {matches.map((model) => (
                 <option key={model.id} value={model.id}>
-                  {[model.brand, model.model].filter(Boolean).join(" ")} · {model.trims.length} รุ่นย่อย
+                  {[model.brand, model.model].filter(Boolean).join(" ")}
                 </option>
               ))}
             </select>
@@ -226,22 +270,25 @@ export default function ComparePage() {
 
           <div className="compareSlotField">
             <span>เลือกรุ่นย่อย</span>
-            {openModel ? (
-              <div className="compareSlotTrimList">
-                {openModel.trims.map((trim) => {
-                  const usedElsewhere = slots.some((slotId, slotIndex) => slotId === trim.id && slotIndex !== activeSlot);
-                  return (
-                    <button type="button" key={trim.id}
-                            className={pendingTrimId === trim.id ? "compareSlotTrim on" : "compareSlotTrim"}
-                            aria-pressed={pendingTrimId === trim.id}
-                            disabled={usedElsewhere}
-                            onClick={() => setPendingTrimId(trim.id)}>
-                      {trimLabel(trim)}{usedElsewhere ? " · เลือกไว้แล้ว" : ""}
-                    </button>
-                  );
-                })}
-              </div>
-            ) : <p className="comparePickHint">เลือกรุ่นก่อน แล้วรุ่นย่อยจะขึ้นตรงนี้</p>}
+            {!modelId ? <p className="comparePickHint">เลือกรุ่นก่อน แล้วรุ่นย่อยจะขึ้นตรงนี้</p>
+              : trimLoadingModel === modelId ? <p className="comparePickHint">กำลังโหลดรุ่นย่อย…</p>
+              : pickerError ? <p className="comparePickHint">{pickerError}</p>
+              : openTrims ? (
+                openTrims.length ? <div className="compareSlotTrimList">
+                  {openTrims.map((trim) => {
+                    const usedElsewhere = slots.some((slotId, slotIndex) => slotId === trim.id && slotIndex !== activeSlot);
+                    return (
+                      <button type="button" key={trim.id}
+                              className={pendingTrimId === trim.id ? "compareSlotTrim on" : "compareSlotTrim"}
+                              aria-pressed={pendingTrimId === trim.id}
+                              disabled={usedElsewhere}
+                              onClick={() => setPendingTrimId(trim.id)}>
+                        {trimLabel(trim)}{usedElsewhere ? " · เลือกไว้แล้ว" : ""}
+                      </button>
+                    );
+                  })}
+                </div> : <p className="comparePickHint">ไม่พบรุ่นย่อย CURRENT ของรุ่นนี้</p>
+              ) : <p className="comparePickHint">เลือกรุ่นก่อน แล้วรุ่นย่อยจะขึ้นตรงนี้</p>}
           </div>
 
           <div className="compareSlotPickerFoot">

@@ -3,95 +3,138 @@ import { publicDb } from "@/lib/supabase";
 import { paginateAll } from "@/lib/paginate-all";
 
 /**
- * Compare has two very different read shapes:
+ * Compare has three deliberately different read shapes:
  *
- * 1. the picker needs every trim, but only six tiny fields;
- * 2. an actual comparison needs the full payload, but for at most four trims.
+ * 1. opening the picker reads the small model projection (~321 rows);
+ * 2. opening one model reads only that model's CURRENT trim rows;
+ * 3. running a comparison reads rich payloads for at most four selected trims.
  *
- * Do not collapse those back into `select("*")` across current_market_trims.
- * The projection contains large JSON payload/history columns and Postgres can
- * spill a full-table ORDER BY to temporary disk.  The picker must stay narrow;
- * the rich read must stay targeted.
+ * Do not collapse these back into a full current_market_trims scan. The trim
+ * projection carries large JSON payload/history columns and the picker does not
+ * need to know every trim in Thailand just to let somebody choose a model.
  */
 
 const PICKER_COLUMNS = "canonical_id,model_id,name,powertrain,status,current_list_price";
 const COMPARE_COLUMNS = "canonical_id,model_id,generation_id,variant_id,name,powertrain,status,payload,current_list_price,campaign_quote";
+const MODEL_NAME_COLUMNS = "canonical_id,name_en,name_th,status,payload";
 
-async function allSlimTrimRows(db: any, pageSize = 1000) {
+function isCurrentTrim(row: any) {
+  return row?.status === "CURRENT";
+}
+
+function isCurrentModel(row: any) {
+  return row?.status === "CURRENT";
+}
+
+function slimModel(row: any) {
+  const brand = row.payload?.brand || {};
+  return {
+    id: row.canonical_id,
+    brand: brand.name_en || brand.name_th || "",
+    model: row.name_en || row.name_th || row.canonical_id,
+  };
+}
+
+function modelName(row: any) {
+  if (!row) return null;
+  const brand = row.payload?.brand || {};
+  return {
+    brand_name: brand.name_en || brand.name_th || "",
+    model_name: row.name_en || row.name_th || row.canonical_id,
+  };
+}
+
+function slimTrim(raw: any, model: { brand_name: string; model_name: string } | null) {
+  const list = raw.current_list_price || null;
+  return {
+    id: raw.canonical_id,
+    model_id: raw.model_id,
+    brand_name: model?.brand_name || "",
+    model_name: model?.model_name || raw.model_id,
+    name: raw.name,
+    powertrain: raw.powertrain ?? null,
+    price_baht: list?.amount_thb ?? null,
+  };
+}
+
+async function allSlimModelRows(db: any, pageSize = 1000) {
   return paginateAll<any>(
-    (from, to) => db.from("current_market_trims")
-      .select(PICKER_COLUMNS)
+    (from, to) => db.from("current_vehicle_models")
+      .select(MODEL_NAME_COLUMNS)
       .order("canonical_id")
       .range(from, to),
     pageSize,
   );
 }
 
-function isCurrentTrim(row: any) {
-  return row?.status === "CURRENT";
-}
-
-const MODEL_NAME_COLUMNS = "canonical_id,name_en,name_th,payload";
-
-/**
- * Just enough of the model row to label a picker option: which brand, which
- * nameplate. getCanonicalModels() answers a bigger question -- it also
- * resolves each model's primary media (getCanonicalPrimaryMediaIndex(), a
- * second query plus a join the picker never renders) -- so reusing it here
- * would pay for images nobody sees on this screen. Models are ~321 rows, one
- * order of magnitude under PostgREST's page cap, so a single generous
- * .limit() (matching getCanonicalModels()'s own default) is enough; this is
- * a projection, not a second copy of what a model row means.
- */
-async function picklistModelNames(db: any) {
-  const { data, error } = await db.from("current_vehicle_models")
-    .select(MODEL_NAME_COLUMNS)
-    .order("canonical_id")
-    .limit(1000);
-  if (error) throw error;
-  const byId = new Map<string, { brand_name: string; model_name: string }>();
-  for (const row of data || []) {
-    const brand = row.payload?.brand || {};
-    byId.set(row.canonical_id, {
-      brand_name: brand.name_en || brand.name_th || "",
-      model_name: row.name_en || row.name_th || row.canonical_id,
-    });
-  }
-  return byId;
-}
-
-export async function getCanonicalCompareTrimOptions() {
+export async function getCanonicalCompareModelOptions() {
   const db = publicDb();
   if (!db) return [];
 
-  // Models are only ~321 rows and read a lean projection (see
-  // picklistModelNames). The expensive table is the 1,500+ trim projection
-  // with its large JSON columns, paged in allSlimTrimRows.
-  const [rawTrims, models] = await Promise.all([
-    allSlimTrimRows(db),
-    picklistModelNames(db),
-  ]);
-
-  return rawTrims
-    .filter(isCurrentTrim)
-    .map((raw: any) => {
-      const model = models.get(raw.model_id);
-      const list = raw.current_list_price || null;
-      return {
-        id: raw.canonical_id,
-        model_id: raw.model_id,
-        brand_name: model?.brand_name || "",
-        model_name: model?.model_name || raw.model_id,
-        name: raw.name,
-        powertrain: raw.powertrain ?? null,
-        price_baht: list?.amount_thb ?? null,
-      };
-    })
+  const rows = await allSlimModelRows(db);
+  return rows
+    .filter(isCurrentModel)
+    .map(slimModel)
     .sort((a: any, b: any) =>
-      `${a.brand_name} ${a.model_name} ${a.name}`.localeCompare(
-        `${b.brand_name} ${b.model_name} ${b.name}`,
-        "th",
-      ));
+      `${a.brand} ${a.model}`.localeCompare(`${b.brand} ${b.model}`, "th"),
+    );
+}
+
+export async function getCanonicalCompareTrimOptionsForModel(modelId: string) {
+  const db = publicDb();
+  if (!db || !modelId) return [];
+
+  const [{ data: rawTrims, error: trimError }, { data: rawModel, error: modelError }] = await Promise.all([
+    db.from("current_market_trims")
+      .select(PICKER_COLUMNS)
+      .eq("model_id", modelId)
+      .eq("status", "CURRENT")
+      .order("canonical_id"),
+    db.from("current_vehicle_models")
+      .select(MODEL_NAME_COLUMNS)
+      .eq("canonical_id", modelId)
+      .maybeSingle(),
+  ]);
+  if (trimError) throw trimError;
+  if (modelError) throw modelError;
+
+  const model = rawModel && isCurrentModel(rawModel) ? modelName(rawModel) : null;
+  if (!model) return [];
+
+  return (rawTrims || [])
+    .filter(isCurrentTrim)
+    .map((raw: any) => slimTrim(raw, model));
+}
+
+export async function getCanonicalCompareTrimOptionsByIds(ids: string[]) {
+  const db = publicDb();
+  const requested = [...new Set(ids.filter(Boolean))].slice(0, 4);
+  if (!db || !requested.length) return [];
+
+  const { data: rawTrims, error: trimError } = await db.from("current_market_trims")
+    .select(PICKER_COLUMNS)
+    .in("canonical_id", requested);
+  if (trimError) throw trimError;
+
+  const currentTrims = (rawTrims || []).filter(isCurrentTrim);
+  const modelIds = [...new Set(currentTrims.map((row: any) => row.model_id).filter(Boolean))];
+  if (!modelIds.length) return [];
+
+  const { data: rawModels, error: modelError } = await db.from("current_vehicle_models")
+    .select(MODEL_NAME_COLUMNS)
+    .in("canonical_id", modelIds);
+  if (modelError) throw modelError;
+
+  const models = new Map(
+    (rawModels || [])
+      .filter(isCurrentModel)
+      .map((row: any) => [row.canonical_id, modelName(row)]),
+  );
+  const trims = new Map(
+    currentTrims.map((raw: any) => [raw.canonical_id, slimTrim(raw, models.get(raw.model_id) || null)]),
+  );
+
+  return requested.map((id) => trims.get(id)).filter(Boolean);
 }
 
 function richCompareTrim(raw: any, model: any) {
