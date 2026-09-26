@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "batch_id": "admin-trim-lifecycle-6bd3ee05-1dad-49af-9f9d-3b31d8538e18",
+  "batch_hash": "4ba9de10f9516419d021cd2475af3ce6121d9b1e86e71d34c623066bf7e20c18",
+  "status": "APPLIED",
+  "year": 2026,
+  "source": {
+    "kind": "ADMIN",
+    "ref": "https://www.toyota.co.th/model/alphard/grade"
+  },
+  "actor": "siriwich",
+  "reason": "HUMAN retail lifecycle review: Toyota Thailand official Alphard grade page lists HEV Smart in the current Thai lineup.",
+  "submitted_at": "2026-09-26T19:28:04.365513Z",
+  "applied_at": "2026-09-26T19:29:22+00:00",
+  "results": [
+    {
+      "command_id": "admin-trim-lifecycle-6bd3ee05-1dad-49af-9f9d-3b31d8538e18:1",
+      "revision_id": "trim-retail-lifecycle-review-ec8fb8817d9bc69a",
+      "topic": "trim_retail_lifecycle_review",
+      "entity_type": "market_trim_retail_lifecycle_review",
+      "entity_id": "toyota.alphard.ah40.trim.hev_smart",
+      "idempotent_replay": false
+    }
+  ],
+  "changed_files": [
+    "2026/market/retail_lifecycle/trim_review.json"
+  ]
+}

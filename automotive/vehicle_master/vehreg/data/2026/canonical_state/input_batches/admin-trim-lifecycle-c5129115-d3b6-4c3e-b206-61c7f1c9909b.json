@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "batch_id": "admin-trim-lifecycle-c5129115-d3b6-4c3e-b206-61c7f1c9909b",
+  "batch_hash": "4422a555e8cade36954423ec3ea03d3d4c01051e959f068e8b83e393a359154b",
+  "status": "APPLIED",
+  "year": 2026,
+  "source": {
+    "kind": "ADMIN",
+    "ref": "https://www.toyota.co.th/model/alphard/grade"
+  },
+  "actor": "siriwich",
+  "reason": "HUMAN retail lifecycle review: Toyota Thailand official Alphard grade page lists HEV Premium in the current Thai lineup.",
+  "submitted_at": "2026-09-26T19:28:04.365513Z",
+  "applied_at": "2026-09-26T19:29:29+00:00",
+  "results": [
+    {
+      "command_id": "admin-trim-lifecycle-c5129115-d3b6-4c3e-b206-61c7f1c9909b:1",
+      "revision_id": "trim-retail-lifecycle-review-5be2201b5ba6f020",
+      "topic": "trim_retail_lifecycle_review",
+      "entity_type": "market_trim_retail_lifecycle_review",
+      "entity_id": "toyota.alphard.ah40.trim.hev_premium",
+      "idempotent_replay": false
+    }
+  ],
+  "changed_files": [
+    "2026/market/retail_lifecycle/trim_review.json"
+  ]
+}
