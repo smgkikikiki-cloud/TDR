@@ -4,7 +4,8 @@ six bulk section arrays, chunks are sent to stage_vehicle_release_chunk in
 strict foreign-key order, a transient network failure is retried but a
 real server rejection is not (retrying an invalid/rejected request would
 just fail the same way again), an already-finalized release short-circuits
-before any chunk is sent, and every phase's timing is reported.
+before any chunk is sent, retention runs after a successful/confirmed ACTIVE
+release, and every phase's timing is reported.
 
 No real HTTP or Postgres here -- urlopen itself is faked so these stay
 fast and only exercise the client's own orchestration; the RPCs' actual
@@ -49,6 +50,10 @@ def _ok_response(payload: dict) -> MagicMock:
     cm = MagicMock()
     cm.__enter__.return_value.read.return_value = json.dumps(payload).encode()
     return cm
+
+
+def _retention_response() -> dict:
+    return {"deleted_superseded": 0, "deleted_staging": 0, "kept_superseded": 1}
 
 
 def _rpc_name(request) -> str:
@@ -114,15 +119,18 @@ def test_publish_staged_calls_begin_then_chunks_in_fk_order_then_activate():
         if name == "activate_vehicle_release":
             return _ok_response({"release_id": release["release_id"], "status": "ACTIVE",
                                  "counts": release["counts"]})
+        if name == "prune_vehicle_releases":
+            return _ok_response(_retention_response())
         raise AssertionError(f"unexpected rpc {name}")
 
     with patch("tdr_bridge.publish.urlopen", side_effect=fake_urlopen):
         result = publish.publish_staged(release, url="https://example.supabase.co", service_key="k")
 
     assert calls[0] == "begin_vehicle_release"
-    assert calls[-1] == "activate_vehicle_release"
-    assert calls[1:-1] == ["stage_vehicle_release_chunk", "stage_vehicle_release_chunk"]
+    assert calls[-2:] == ["activate_vehicle_release", "prune_vehicle_releases"]
+    assert calls[1:-2] == ["stage_vehicle_release_chunk", "stage_vehicle_release_chunk"]
     assert result["status"] == "ACTIVE"
+    assert result["retention"]["kept_superseded"] == 1
 
 
 def test_publish_staged_stops_before_any_chunk_when_already_finalized():
@@ -132,14 +140,17 @@ def test_publish_staged_stops_before_any_chunk_when_already_finalized():
     def fake_urlopen(request, timeout=None):
         name = _rpc_name(request)
         calls.append(name)
-        assert name == "begin_vehicle_release"
-        return _ok_response({"release_id": release["release_id"], "status": "ACTIVE",
-                             "already_finalized": True})
+        if name == "begin_vehicle_release":
+            return _ok_response({"release_id": release["release_id"], "status": "ACTIVE",
+                                 "already_finalized": True})
+        if name == "prune_vehicle_releases":
+            return _ok_response(_retention_response())
+        raise AssertionError(f"unexpected rpc {name}")
 
     with patch("tdr_bridge.publish.urlopen", side_effect=fake_urlopen):
         result = publish.publish_staged(release, url="https://example.supabase.co", service_key="k")
 
-    assert calls == ["begin_vehicle_release"]
+    assert calls == ["begin_vehicle_release", "prune_vehicle_releases"]
     assert result["already_finalized"] is True
 
 
@@ -186,6 +197,8 @@ def test_publish_staged_retries_a_transient_network_failure_and_succeeds(monkeyp
         if name == "activate_vehicle_release":
             return _ok_response({"release_id": release["release_id"], "status": "ACTIVE",
                                  "counts": release["counts"]})
+        if name == "prune_vehicle_releases":
+            return _ok_response(_retention_response())
         raise AssertionError(f"unexpected rpc {name}")
 
     with patch("tdr_bridge.publish.urlopen", side_effect=fake_urlopen):
@@ -229,6 +242,8 @@ def test_publish_staged_reports_timings_for_every_phase():
         if name == "activate_vehicle_release":
             return _ok_response({"release_id": release["release_id"], "status": "ACTIVE",
                                  "counts": release["counts"]})
+        if name == "prune_vehicle_releases":
+            return _ok_response(_retention_response())
         raise AssertionError(f"unexpected rpc {name}")
 
     with patch("tdr_bridge.publish.urlopen", side_effect=fake_urlopen):
@@ -236,7 +251,7 @@ def test_publish_staged_reports_timings_for_every_phase():
                                         chunk_size=1)
 
     timings = result["timings"]
-    assert set(timings) == {"begin", "chunks", "activate", "largest_chunk", "total"}
+    assert set(timings) == {"begin", "chunks", "activate", "prune", "largest_chunk", "total"}
     assert timings["chunks"]["brands"]["count"] == 2
     assert timings["chunks"]["brands"]["total_seconds"] >= 0
     assert timings["total"] >= timings["begin"]
