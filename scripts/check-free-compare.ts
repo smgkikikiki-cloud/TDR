@@ -232,11 +232,10 @@ check("a spec group with no values at all stays hidden",
   specGroups.some((group) => group.rows.some((row) => row.key === "spec:performance.top_speed_kmh")), false);
 check("safety reaches the table", specGroups.some((group) => group.title.includes("ความปลอดภัย")), true);
 
-console.log("\nfree compare — every car in the catalogue can be compared");
-// A live proof, not just a text match: drive the real paginateAll() against a
-// fake source of 1,300 rows -- more than PostgREST's 1,000-row page cap --
-// and confirm it actually walked more than one page rather than trusting a
-// single .range() call to have returned everything.
+console.log("\nfree compare — query shape stays model-first and targeted");
+// The model list is small today, but still uses the shared pager so Compare
+// does not gain a hidden 1,000-row ceiling if the catalogue grows. Paging is
+// for model options only; trims are never loaded catalogue-wide anymore.
 {
   const totalRows = 1_300;
   const allFakeRows = Array.from({ length: totalRows }, (_, i) => ({ id: i }));
@@ -245,72 +244,70 @@ console.log("\nfree compare — every car in the catalogue can be compared");
     pagesFetched.push([from, to]);
     return { data: allFakeRows.slice(from, to + 1), error: null };
   });
-  check("paginateAll returns every row of a catalogue larger than one page",
+  check("paginateAll still reads a model list larger than one PostgREST page",
     rows.length, totalRows);
-  check("paginateAll actually walked more than one page to get there",
+  check("the shared pager actually walks more than one page",
     pagesFetched.length > 1, true);
-  check("the first page asked for exactly PostgREST's row cap",
-    pagesFetched[0], [0, 999]);
-  check("the last page is the short one that ends the loop",
-    pagesFetched.at(-1), [1000, 1999]);
-}
-{
-  // A source with fewer rows than one page must not fetch a second page at
-  // all -- a short first page is itself proof there is nothing left.
-  const fewRows = Array.from({ length: 12 }, (_, i) => ({ id: i }));
-  let calls = 0;
-  const rows = await paginateAll(async (from, to) => {
-    calls++;
-    return { data: fewRows.slice(from, to + 1), error: null };
-  });
-  check("a catalogue smaller than one page is read in a single call", calls, 1);
-  check("all rows of the short catalogue are still returned", rows.length, 12);
 }
 
-// PostgREST returns at most a thousand rows whatever limit is asked for, so a
-// single .limit() silently returns a prefix once a table outgrows it. The
-// picker's own full-catalogue read (lib/compare-canonical-data.ts) must page
-// past that on its own -- it does not reuse lib/canonical-data.ts's allRows()
-// because it needs a narrow, picker-only column list, never "*" over the
-// full 1,500+ row trim projection with its large JSON columns.
 const fs2 = await import("node:fs");
 const canonicalData = fs2.readFileSync("lib/canonical-data.ts", "utf8");
 const compareCanonicalData = fs2.readFileSync("lib/compare-canonical-data.ts", "utf8");
-const paginateAllSource = fs2.readFileSync("lib/paginate-all.ts", "utf8");
-check("the model catalogue read is still paged rather than cut off at a limit",
-  canonicalData.includes("async function allRows") && canonicalData.includes(".range(from, from + pageSize - 1)"), true);
-check("a short page ends the model catalogue's paging", canonicalData.includes("data.length < pageSize"), true);
-check("the picker's full trim read pages with .range(), not a single .limit()",
-  compareCanonicalData.includes(".range(from, to)") && compareCanonicalData.includes("paginateAll"), true);
-check("a short page ends the picker's shared paging loop (never assumes exactly 1,000 more exist)",
-  /data\.length < pageSize/.test(paginateAllSource), true);
-check("the picker selects an explicit narrow column list, never select(\"*\") over current_market_trims",
-  compareCanonicalData.includes("PICKER_COLUMNS") && compareCanonicalData.includes(".select(PICKER_COLUMNS)")
+const pickerRoute = fs2.readFileSync("app/api/compare/trims/route.ts", "utf8");
+const compareRoute = fs2.readFileSync("app/api/tools/compare/route.ts", "utf8");
+const picker = fs2.readFileSync("app/compare/page.tsx", "utf8");
+
+check("Compare startup pages lightweight model rows, not MarketTrim rows",
+  compareCanonicalData.includes("allSlimModelRows")
+    && compareCanonicalData.includes('db.from("current_vehicle_models")')
+    && compareCanonicalData.includes(".range(from, to)"), true);
+check("there is no all-trims picker loader anymore",
+  compareCanonicalData.includes("getCanonicalCompareTrimOptions()"), false);
+check("opening a model scopes the trim query by model_id and CURRENT status",
+  compareCanonicalData.includes('.eq("model_id", modelId)')
+    && compareCanonicalData.includes('.eq("status", "CURRENT")'), true);
+check("deep-linked picker selections fetch only requested IDs",
+  compareCanonicalData.includes("getCanonicalCompareTrimOptionsByIds")
+    && compareCanonicalData.includes('.in("canonical_id", requested)'), true);
+check("picker/deep-link IDs are deduplicated and capped at four",
+  compareCanonicalData.includes("new Set(ids.filter(Boolean))")
+    && compareCanonicalData.includes(".slice(0, 4)"), true);
+check("picker trim reads use a narrow explicit column list, never select(\"*\")",
+  compareCanonicalData.includes("PICKER_COLUMNS")
+    && compareCanonicalData.includes(".select(PICKER_COLUMNS)")
     && !compareCanonicalData.includes('.select("*")'), true);
 
-const pickerRoute = fs2.readFileSync("app/api/compare/trims/route.ts", "utf8");
-check("the picker route reads the lightweight compare-picker loader",
-  pickerRoute.includes("getCanonicalCompareTrimOptions"), true);
-check("the picker route does not fall back to the full rich-payload helper",
-  pickerRoute.includes("getCanonicalCompareTrims("), false);
+check("the trim picker route exposes only model-scoped or <=4-ID reads",
+  pickerRoute.includes("getCanonicalCompareTrimOptionsForModel")
+    && pickerRoute.includes("getCanonicalCompareTrimOptionsByIds")
+    && pickerRoute.includes("model_id or ids is required"), true);
+check("the trim picker route has no bare all-trims fallback",
+  pickerRoute.includes("getCanonicalCompareTrimOptions()"), false);
 
-const compareRoute = fs2.readFileSync("app/api/tools/compare/route.ts", "utf8");
 check("an actual comparison fetches rich data only for the requested trim IDs",
   compareRoute.includes("getCanonicalCompareTrimsByIds"), true);
-check("the rich lookup does not fall back to the full-catalogue helper",
-  compareRoute.includes("getCanonicalCompareTrims("), false);
-check("the rich query constrains by the requested canonical IDs, not a table scan",
-  compareCanonicalData.includes('.in("canonical_id", requested)'), true);
-check("requested IDs are deduplicated and capped at four",
-  compareCanonicalData.includes("new Set(ids.filter(Boolean))") && compareCanonicalData.includes(".slice(0, 4)"), true);
+check("the rich compare path never calls the full model catalogue helper",
+  compareCanonicalData.includes("getCanonicalModels("), false);
+check("selected trims derive at most four model IDs for targeted metadata",
+  compareCanonicalData.includes("targetedCompareModels(db, modelIds)")
+    && compareCanonicalData.includes("new Set(modelIds.filter(Boolean))")
+    && compareCanonicalData.includes(".slice(0, 4)"), true);
+check("targeted model metadata is constrained by canonical ID",
+  compareCanonicalData.includes("COMPARE_MODEL_COLUMNS")
+    && compareCanonicalData.includes('.in("canonical_id", requested)'), true);
+check("Compare media lookup is constrained to the selected models/generations",
+  compareCanonicalData.includes('.in("entity_id", entityIds)')
+    && compareCanonicalData.includes('.in("vehicle_id", entityIds)'), true);
 check("rich rows are returned in the caller's requested order, not database row order",
   compareCanonicalData.includes("requested.map((id) => byId.get(id))"), true);
 check("missing/invalid selections surface as missing_selection, never a shifted comparison",
   compareRoute.includes("missing_selection: requestedIds.length !== selected.length"), true);
 
-const picker = fs2.readFileSync("app/compare/page.tsx", "utf8");
-check("the picker is model then trim, not one list of every trim",
-  picker.includes("groupByModel"), true);
+check("the picker opens with the model endpoint, not the trim catalogue",
+  picker.includes('fetch("/api/compare/models")')
+    && !picker.includes('fetch("/api/compare/trims")'), true);
+check("choosing a model lazy-loads that model's trims",
+  picker.includes("/api/compare/trims?model_id="), true);
 check("choosing a car does not require an account",
   picker.includes("compareSignIn") && !picker.includes('ต้องเข้าสู่ระบบก่อนเทียบรถ'), true);
 check("a selection survives being sent to the login page",
