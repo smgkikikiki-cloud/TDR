@@ -78,6 +78,110 @@ jobs:
                   except Exception as exc:
                       print(row["model_id"], label, "FAILED", type(exc).__name__)
           PY
+      - name: Prepare exactly the four visually reviewed priority heads
+        working-directory: automotive/vehicle_master
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          import shutil
+          from pathlib import Path
+          from urllib.parse import urlparse
+
+          reviewed = {
+              "aion.aion_es": {
+                  "generation_id": "aion.aion_es.aes",
+                  "label": "candidate-3",
+                  "sha256": "08e8731019d85165d41d6fc5978ba38a98a355ac12560ef5be096cd1d1ab33bb",
+                  "width": 1680,
+                  "height": 1120,
+              },
+              "aion.hyptec_ht": {
+                  "generation_id": "aion.hyptec_ht.gen1",
+                  "label": "candidate-3",
+                  "sha256": "1cc9fc2beea8e6cc87afcf80ae696cf11d3fa32141987e132e966d4c4760d359",
+                  "width": 1680,
+                  "height": 1120,
+              },
+              "jaecoo.jaecoo_6_ev": {
+                  "generation_id": "jaecoo.jaecoo_6_ev.gen1",
+                  "label": "candidate-1",
+                  "sha256": "74891422a421bbd2bbee94acdb11418ac17eaf4159530dc01c5ce61de1c7f2fc",
+                  "width": 1407,
+                  "height": 585,
+              },
+              "jaecoo.jaecoo_6t_reev": {
+                  "generation_id": "jaecoo.jaecoo_6t_reev.gen1",
+                  "label": "candidate-1",
+                  "sha256": "8a96691c77c853617b3a40589fa959ecf1de211bfd0644c0a015b118f6622c4b",
+                  "width": 1407,
+                  "height": 585,
+              },
+          }
+          rows_by_model = {
+              row["model_id"]: row
+              for row in [
+                  json.loads(line)
+                  for line in Path("integration_data/model_head_priority.jsonl").read_text().splitlines()
+                  if line.strip()
+              ]
+          }
+          review_root = Path("data/media/candidate-review")
+          cache_root = Path("data/media/cache")
+          approved = []
+          for model_id, spec in reviewed.items():
+              row = rows_by_model[model_id]
+              label = spec["label"]
+              matches = list((review_root / model_id).glob(label + ".*"))
+              if len(matches) != 1:
+                  raise SystemExit(f"{model_id}: expected one cached {label}, got {matches}")
+              candidate = matches[0]
+              digest = hashlib.sha256(candidate.read_bytes()).hexdigest()
+              if digest != spec["sha256"]:
+                  raise SystemExit(f"{model_id}: reviewed bytes changed ({digest}); refusing production write")
+              idx = int(label.split("-", 1)[1]) - 1
+              meta = (row.get("review_candidates") or [])[idx]
+              selected_image = meta.get("image_url")
+              source_url = meta.get("source_page")
+              if not selected_image or not source_url:
+                  raise SystemExit(f"{model_id}: reviewed provenance incomplete")
+              source_domain = urlparse(source_url).hostname or ""
+              if source_domain not in {"www.gacgroup.com", "www.omodajaecoo.co.th"}:
+                  raise SystemExit(f"{model_id}: unexpected source host {source_domain}")
+              suffix = candidate.suffix.lower()
+              if suffix not in {".jpg", ".png", ".webp", ".avif"}:
+                  raise SystemExit(f"{model_id}: unsupported format {suffix}")
+              rel = Path("model-head") / model_id / f"{digest}{suffix}"
+              target = cache_root / rel
+              target.parent.mkdir(parents=True, exist_ok=True)
+              shutil.copyfile(candidate, target)
+              approved.append({
+                  "model_id": model_id,
+                  "generation_id": spec["generation_id"],
+                  "status": "READY",
+                  "selected_image": selected_image,
+                  "source_url": source_url,
+                  "source_domain": source_domain,
+                  "source_type": "official_site",
+                  "sha256": digest,
+                  "storage_path": rel.as_posix(),
+                  "confidence": 85,
+                  "width": spec["width"],
+                  "height": spec["height"],
+                  "approved": True,
+              })
+          Path("/tmp/model-head-approved.jsonl").write_text(
+              "".join(json.dumps(row) + "\n" for row in approved), encoding="utf-8"
+          )
+          print(json.dumps({"approved": [row["model_id"] for row in approved]}))
+          PY
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - name: Apply only the SHA-pinned reviewed priority heads
+        run: node --experimental-strip-types scripts/apply-model-head-manifest.ts --manifest /tmp/model-head-approved.jsonl --apply
       - name: Render visual review page
         working-directory: automotive/vehicle_master
         run: |
