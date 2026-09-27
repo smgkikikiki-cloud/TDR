@@ -228,8 +228,8 @@ def _validate_current_retail_set_command(command: dict[str, Any]) -> None:
             isinstance(item, str) and item.strip() for item in trim_ids):
         raise CanonicalInputError(f"{operation} trim_ids must be a nonempty array of strings")
     source_ref = str(payload.get("source_ref") or "").strip()
-    if not source_ref.startswith(("https://", "http://")):
-        raise CanonicalInputError(f"{operation} requires an http(s) source_ref")
+    if source_ref and not source_ref.startswith(("https://", "http://")):
+        raise CanonicalInputError(f"{operation} source_ref, if supplied, must be an http(s) URL")
     _validated_human_actor(command, operation)
     _validated_submitted_at(command, operation)
 
@@ -340,7 +340,7 @@ def _apply_current_retail_set_command(
         trim_ids=[str(item) for item in payload["trim_ids"]],
         reviewer=str(command["actor"]),
         reviewed_at=reviewed_at,
-        source_ref=str(payload["source_ref"]),
+        source_ref=str(payload.get("source_ref") or ""),
         notes=str(payload.get("notes") or command.get("reason") or ""),
         write=True,
     )

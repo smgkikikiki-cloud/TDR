@@ -58,7 +58,16 @@ def _validated_date(value: str, label: str) -> str:
 
 
 def _validated_source_ref(value: str) -> str:
+    """source_ref is optional evidence, not a prerequisite for owner approval.
+
+    Empty is valid -- the approval itself is the authoritative act, recorded
+    via reviewer/reviewed_at/notes and the canonical input batch. A supplied,
+    nonempty value must still be a real http(s) URL: it is either absent or
+    a genuine link, never an arbitrary placeholder string.
+    """
     source_ref = str(value or "").strip()
+    if not source_ref:
+        return ""
     if not source_ref.startswith(("https://", "http://")):
         raise CurrentRetailError("source_ref must be an http(s) URL")
     return source_ref

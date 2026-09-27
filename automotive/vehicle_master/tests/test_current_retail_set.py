@@ -533,3 +533,129 @@ def test_bulk_batch_replaces_current_retail_sets_for_multiple_models_independent
     index = load_current_retail_index(data_dir=data, year=YEAR)
     assert index[MODEL_ID] == frozenset({echo_approved})
     assert index["acme.delta"] == frozenset({delta_approved})
+
+
+# --- 15: source_ref is optional evidence, not a prerequisite for owner
+#          approval -- the approval itself (actor + submitted_at + notes +
+#          the canonical input batch) is what is authoritative. ---
+
+def test_replace_current_retail_set_omitted_source_ref_succeeds(tmp_path):
+    data = _seed_brand(tmp_path, trims=[_trim("ultra_single_bev", "Ultra Single Motor")])
+    approved = f"{GEN_ID}.trim.ultra_single_bev"
+
+    result = CanonicalInputPipeline(data).apply(_batch([
+        {
+            "operation": "REPLACE_CURRENT_RETAIL_SET",
+            "payload": {
+                "model_id": MODEL_ID,
+                "trim_ids": [approved],
+                "notes": "Owner-approved lineup; upstream decision already completed",
+            },
+        },
+    ], batch_id="repair-echo-no-source-ref"))
+
+    assert result.status == "APPLIED"
+    assert resolve_approved_current_trim_ids(MODEL_ID, data_dir=data, year=YEAR) == frozenset({approved})
+
+
+def test_replace_current_retail_set_empty_source_ref_succeeds(tmp_path):
+    data = _seed_brand(tmp_path, trims=[_trim("ultra_single_bev", "Ultra Single Motor")])
+    approved = f"{GEN_ID}.trim.ultra_single_bev"
+
+    result = replace_current_retail_set(
+        data_dir=data, year=YEAR, model_id=MODEL_ID, trim_ids=[approved],
+        reviewer="Owner", reviewed_at="2026-09-27", source_ref="", write=True,
+    )
+    assert result["written"] is True
+    assert resolve_approved_current_trim_ids(MODEL_ID, data_dir=data, year=YEAR) == frozenset({approved})
+
+
+def test_replace_current_retail_set_valid_https_source_ref_still_succeeds(tmp_path):
+    data = _seed_brand(tmp_path, trims=[_trim("ultra_single_bev", "Ultra Single Motor")])
+    approved = f"{GEN_ID}.trim.ultra_single_bev"
+
+    result = CanonicalInputPipeline(data).apply(_batch([
+        {
+            "operation": "REPLACE_CURRENT_RETAIL_SET",
+            "payload": {
+                "model_id": MODEL_ID,
+                "trim_ids": [approved],
+                "source_ref": "https://example.test/approved-lineup",
+            },
+        },
+    ], batch_id="repair-echo-with-source-ref"))
+
+    assert result.status == "APPLIED"
+    assert resolve_approved_current_trim_ids(MODEL_ID, data_dir=data, year=YEAR) == frozenset({approved})
+
+
+def test_replace_current_retail_set_nonempty_invalid_source_ref_still_fails(tmp_path):
+    data = _seed_brand(tmp_path, trims=[_trim("ultra_single_bev", "Ultra Single Motor")])
+    approved = f"{GEN_ID}.trim.ultra_single_bev"
+
+    with pytest.raises(CanonicalInputError, match="http\\(s\\)"):
+        CanonicalInputPipeline(data).apply(_batch([
+            {
+                "operation": "REPLACE_CURRENT_RETAIL_SET",
+                "payload": {
+                    "model_id": MODEL_ID,
+                    "trim_ids": [approved],
+                    "source_ref": "foo",
+                },
+            },
+        ], batch_id="repair-echo-bad-source-ref"))
+    assert resolve_approved_current_trim_ids(MODEL_ID, data_dir=data, year=YEAR) is None
+
+    with pytest.raises(CurrentRetailError, match="http\\(s\\)"):
+        replace_current_retail_set(
+            data_dir=data, year=YEAR, model_id=MODEL_ID, trim_ids=[approved],
+            reviewer="Owner", reviewed_at="2026-09-27", source_ref="foo", write=True,
+        )
+    assert resolve_approved_current_trim_ids(MODEL_ID, data_dir=data, year=YEAR) is None
+
+
+def test_replace_current_retail_set_still_requires_human_actor_without_source_ref(tmp_path):
+    data = _seed_brand(tmp_path, trims=[_trim("ultra_single_bev", "Ultra Single Motor")])
+    approved = f"{GEN_ID}.trim.ultra_single_bev"
+
+    batch = _batch([
+        {
+            "operation": "REPLACE_CURRENT_RETAIL_SET",
+            "payload": {"model_id": MODEL_ID, "trim_ids": [approved]},
+        },
+    ], batch_id="repair-echo-system-actor")
+    batch["actor"] = "system"
+
+    with pytest.raises(CanonicalInputError, match="HUMAN"):
+        CanonicalInputPipeline(data).apply(batch)
+    assert resolve_approved_current_trim_ids(MODEL_ID, data_dir=data, year=YEAR) is None
+
+
+def test_replace_current_retail_set_still_validates_trim_model_and_catalog_without_source_ref(tmp_path):
+    data = _seed_brand(tmp_path, trims=[_trim("ultra_single_bev", "Ultra Single Motor")])
+
+    # Unknown model_id.
+    with pytest.raises(CurrentRetailError, match="unknown model_id"):
+        replace_current_retail_set(
+            data_dir=data, year=YEAR, model_id="acme.nonexistent", trim_ids=["whatever"],
+            reviewer="Owner", reviewed_at="2026-09-27", source_ref="", write=True,
+        )
+
+    # trim_ids must be nonempty.
+    with pytest.raises(CanonicalInputError, match="nonempty array"):
+        CanonicalInputPipeline(data).apply(_batch([
+            {
+                "operation": "REPLACE_CURRENT_RETAIL_SET",
+                "payload": {"model_id": MODEL_ID, "trim_ids": []},
+            },
+        ], batch_id="repair-echo-empty-trims"))
+
+    # trim_id must exist in base Catalog.
+    with pytest.raises(CurrentRetailError, match="unknown MarketTrim"):
+        replace_current_retail_set(
+            data_dir=data, year=YEAR, model_id=MODEL_ID,
+            trim_ids=[f"{GEN_ID}.trim.does_not_exist"],
+            reviewer="Owner", reviewed_at="2026-09-27", source_ref="", write=True,
+        )
+
+    assert resolve_approved_current_trim_ids(MODEL_ID, data_dir=data, year=YEAR) is None
