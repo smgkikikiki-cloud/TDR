@@ -86,12 +86,22 @@ jobs:
           set -euo pipefail
           git config user.name "TDR canonical release"
           git config user.email "noreply@github.com"
-          git switch --orphan release-staging
+          # release-staging must be a normal commit on top of this exact
+          # main/GITHUB_SHA tree -- vercel.json included -- not an orphan
+          # one-file tree. An orphan tree has no Next.js app at all, so
+          # Vercel's push-triggered Preview build failed immediately with
+          # missing_pages_app; carrying the real vercel.json
+          # (git.deploymentEnabled: main only, "*": false) instead makes
+          # Vercel skip this branch the same way it already skips every
+          # other non-main branch.
           cp /tmp/vehicle-release.json vehicle-release.json
           git add vehicle-release.json
           git commit -m "Stage canonical release ${GITHUB_SHA}"
           git push --force origin HEAD:refs/heads/release-staging
-          git switch -f main
+          # This commit must never become part of main's own history --
+          # restore the checkout exactly to what it was for the remaining
+          # steps.
+          git reset --hard "${GITHUB_SHA}"
       - name: Preflight deployment secrets
         shell: bash
         run: |
