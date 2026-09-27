@@ -104,6 +104,37 @@ write_commit: `48f9326d8197f9d768185a7f9a56c879b08cd99d`
 release_id: `vehicle-2026-fbdad1638efeb292`
 approved_by_user: true
 
+### REPAIR-05 membership
+
+State: `QUEUED` — Step 1 membership derived from the approved repair queue after `REPAIR-04`. Inspection, implementation prompt, and writes have not started.
+
+The historical BEV+REEV audit numbers below are provenance for queue ordering, not repair-lot numbers. Models already handled in `REPAIR-02b` or `REPAIR-03` are skipped; pending sub-items of the frozen `REPAIR-04` remain with that batch rather than entering this one.
+
+| Repair-05 | Historical audit # | Vehicle |
+|---:|---:|---|
+| 01 | 47 | Honda e:N2 |
+| 02 | 49 | Hyundai IONIQ 6 |
+| 03 | 50 | JAC Truck / N55 EV |
+| 04 | 51 | JAECOO 5 EV |
+| 05 | 52 | JAECOO 6 EV |
+| 06 | 56 | Kia EV6 |
+| 07 | 58 | Kia PV5 |
+| 08 | 59 | Leapmotor B10 |
+| 09 | 60 | Leapmotor C10 |
+| 10 | 61 | Lexus ES |
+| 11 | 63 | Lexus UX 300e |
+| 12 | 64 | Lotus Eletre |
+| 13 | 65 | Lotus Emeya |
+| 14 | 66 | Maserati GranTurismo Folgore |
+| 15 | 67 | Maserati Grecale Folgore |
+| 16 | 68 | Mazda6e |
+| 17 | 69 | Mercedes-Benz CLA EV |
+| 18 | 70 | Mercedes-Benz EQB |
+| 19 | 71 | Mercedes-Benz EQE |
+| 20 | 72 | Mercedes G-Class EV |
+
+Next: Step 2 inspection of precisely these 20 vehicles, including existing TDR trims, Thai-market lineup, list prices, promotions, and required changes. No batch payload or data write is approved at this stage.
+
 ## Per-batch recording template
 
 ```yaml
