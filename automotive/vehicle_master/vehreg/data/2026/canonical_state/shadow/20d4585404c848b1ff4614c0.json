@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "20d4585404c848b1ff4614c0",
+    "command_id": "ev-lot2b-033",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_s5_ev.gen1.trim.d_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Corrected re-submission of ev-retail-repair-lot-02-2026-09-27: adds the missing UPSERT_CAMPAIGN registration before each CAMPAIGN_PRICE command so vehreg market validate resolves every campaign_id it references. Same 20 approved current-retail sets and prices, unchanged.",
+    "submitted_at": "2026-09-27T10:00:00+00:00",
+    "applied_at": "2026-09-27T12:02:14+00:00",
+    "before_hash": "130f71bcefc4054295b36f7109f35e376db3337735a14714c6c98f1998c67903",
+    "after_hash": "c830375646c5cdb5acdfa506e3b01428daa9604873ad671edff24c89524e3af8",
+    "before": [
+      {
+        "trim_id": "mg.mg_s5_ev.gen1.trim.d_bev",
+        "amount_thb": 749900,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "mg.mg_s5_ev.gen1.trim.d_bev",
+        "amount_thb": 649900,
+        "price_type": "CAMPAIGN_PRICE",
+        "effective_from": "2026-09-27",
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": "mg.mg_s5_ev.gen1.trim.d_bev.campaign.2026-09-27",
+        "option_id": "default",
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "mg.mg_s5_ev.gen1.trim.d_bev",
+        "amount_thb": 749900,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_ev-lot2b-033.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "20d4585404c848b1ff4614c0:price",
+    "revision_id": "20d4585404c848b1ff4614c0",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_s5_ev.gen1.trim.d_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-27T12:02:14+00:00",
+    "payload": [
+      {
+        "trim_id": "mg.mg_s5_ev.gen1.trim.d_bev",
+        "amount_thb": 649900,
+        "price_type": "CAMPAIGN_PRICE",
+        "effective_from": "2026-09-27",
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": "mg.mg_s5_ev.gen1.trim.d_bev.campaign.2026-09-27",
+        "option_id": "default",
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "mg.mg_s5_ev.gen1.trim.d_bev",
+        "amount_thb": 749900,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

@@ -1,0 +1,621 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6b32d74d46371cab07269b6a",
+    "command_id": "ev-lot2b-064",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mg.mg4",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Corrected re-submission of ev-retail-repair-lot-02-2026-09-27: adds the missing UPSERT_CAMPAIGN registration before each CAMPAIGN_PRICE command so vehreg market validate resolves every campaign_id it references. Same 20 approved current-retail sets and prices, unchanged.",
+    "submitted_at": "2026-09-27T10:00:00+00:00",
+    "applied_at": "2026-09-27T12:02:34+00:00",
+    "before_hash": "a70d7908a4474eee01ca459590a64564843fabc1b7420b86eb4e9542a079b204",
+    "after_hash": "f7ab5e339f06f3677f3bd75bb5758204760cb18385a7e9e7576e5b739bed304d",
+    "before": {
+      "id": "mg4",
+      "name_en": "MG4 Electric",
+      "name_th": "เอ็มจี4",
+      "nameplate": "",
+      "body_type": "HATCHBACK",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "mg4",
+        "mg 4"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "MG4E",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2022-11-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "51 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "RWD",
+              "engine_cc": null,
+              "battery_kwh": 51.0,
+              "aliases": [
+                "D 51kWh"
+              ],
+              "overrides": {},
+              "price_thb": 769000,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "seed-unverified",
+              "price_min_thb": 769000,
+              "price_max_thb": 769000
+            },
+            {
+              "name": "64 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "RWD",
+              "engine_cc": null,
+              "battery_kwh": 64.0,
+              "aliases": [
+                "X 64kWh"
+              ],
+              "overrides": {},
+              "price_thb": 969000,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "seed-unverified",
+              "price_min_thb": 969000,
+              "price_max_thb": 969000
+            }
+          ],
+          "trims": [
+            {
+              "name": "Standard Range D (51 kWh RWD)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:213"
+                ]
+              },
+              "id": "standard_range_d_51_kwh_rwd_bev"
+            },
+            {
+              "name": "Standard Range X (51 kWh RWD)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:213"
+                ]
+              },
+              "id": "standard_range_x_51_kwh_rwd_bev"
+            },
+            {
+              "name": "Long Range V (64 kWh RWD)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:213"
+                ]
+              },
+              "id": "long_range_v_64_kwh_rwd_bev"
+            },
+            {
+              "name": "XPOWER (64 kWh AWD Dual Motor, 435 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:213"
+                ],
+                "eco": [
+                  "149a5a0b-1932-4636-ba17-155979f340d2"
+                ]
+              },
+              "id": "xpower_64_kwh_awd_dual_435_hp_bev",
+              "seats": 5,
+              "length_mm": 4287,
+              "width_mm": 1836,
+              "height_mm": 1516
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "mg",
+        "name_en": "MG",
+        "name_th": "เอ็มจี",
+        "brand_segment": "MASS",
+        "oem_group": "SAIC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "เอ็มจี",
+          "mg sales thailand",
+          "morris garages"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mg.mg4",
+        "brand_id": "mg",
+        "name_en": "MG4 Electric",
+        "name_th": "เอ็มจี4",
+        "nameplate": "MG4 Electric",
+        "body_type": "HATCHBACK",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "mg4",
+          "mg 4"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mg.mg4.mg4e",
+          "model_id": "mg.mg4",
+          "code": "MG4E",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2022-11-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mg.mg4.mg4e.51_kwh_bev",
+          "generation_id": "mg.mg4.mg4e",
+          "name": "51 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 51.0,
+          "price_thb": 769000,
+          "price_min_thb": 769000,
+          "price_max_thb": 769000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "D 51kWh"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "mg.mg4.mg4e.64_kwh_bev",
+          "generation_id": "mg.mg4.mg4e",
+          "name": "64 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 64.0,
+          "price_thb": 969000,
+          "price_min_thb": 969000,
+          "price_max_thb": 969000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "X 64kWh"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mg.mg4.mg4e.trim.standard_range_d_51_kwh_rwd_bev",
+          "generation_id": "mg.mg4.mg4e",
+          "name": "Standard Range D (51 kWh RWD)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:213"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg4.mg4e.trim.standard_range_x_51_kwh_rwd_bev",
+          "generation_id": "mg.mg4.mg4e",
+          "name": "Standard Range X (51 kWh RWD)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:213"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg4.mg4e.trim.long_range_v_64_kwh_rwd_bev",
+          "generation_id": "mg.mg4.mg4e",
+          "name": "Long Range V (64 kWh RWD)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:213"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg4.mg4e.trim.xpower_64_kwh_awd_dual_435_hp_bev",
+          "generation_id": "mg.mg4.mg4e",
+          "name": "XPOWER (64 kWh AWD Dual Motor, 435 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4287,
+          "width_mm": 1836,
+          "height_mm": 1516,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:213"
+            ],
+            "eco": [
+              "149a5a0b-1932-4636-ba17-155979f340d2"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg4.mg4e.trim.x_long_range_bev",
+          "generation_id": "mg.mg4.mg4e",
+          "name": "X Long Range",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mg.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6b32d74d46371cab07269b6a:catalog",
+    "revision_id": "6b32d74d46371cab07269b6a",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mg.mg4",
+    "state": "PENDING",
+    "created_at": "2026-09-27T12:02:34+00:00",
+    "payload": {
+      "brand": {
+        "id": "mg",
+        "name_en": "MG",
+        "name_th": "เอ็มจี",
+        "brand_segment": "MASS",
+        "oem_group": "SAIC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "เอ็มจี",
+          "mg sales thailand",
+          "morris garages"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mg.mg4",
+        "brand_id": "mg",
+        "name_en": "MG4 Electric",
+        "name_th": "เอ็มจี4",
+        "nameplate": "MG4 Electric",
+        "body_type": "HATCHBACK",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "mg4",
+          "mg 4"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mg.mg4.mg4e",
+          "model_id": "mg.mg4",
+          "code": "MG4E",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2022-11-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mg.mg4.mg4e.51_kwh_bev",
+          "generation_id": "mg.mg4.mg4e",
+          "name": "51 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 51.0,
+          "price_thb": 769000,
+          "price_min_thb": 769000,
+          "price_max_thb": 769000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "D 51kWh"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "mg.mg4.mg4e.64_kwh_bev",
+          "generation_id": "mg.mg4.mg4e",
+          "name": "64 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 64.0,
+          "price_thb": 969000,
+          "price_min_thb": 969000,
+          "price_max_thb": 969000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "X 64kWh"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mg.mg4.mg4e.trim.standard_range_d_51_kwh_rwd_bev",
+          "generation_id": "mg.mg4.mg4e",
+          "name": "Standard Range D (51 kWh RWD)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:213"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg4.mg4e.trim.standard_range_x_51_kwh_rwd_bev",
+          "generation_id": "mg.mg4.mg4e",
+          "name": "Standard Range X (51 kWh RWD)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:213"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg4.mg4e.trim.long_range_v_64_kwh_rwd_bev",
+          "generation_id": "mg.mg4.mg4e",
+          "name": "Long Range V (64 kWh RWD)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:213"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg4.mg4e.trim.xpower_64_kwh_awd_dual_435_hp_bev",
+          "generation_id": "mg.mg4.mg4e",
+          "name": "XPOWER (64 kWh AWD Dual Motor, 435 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4287,
+          "width_mm": 1836,
+          "height_mm": 1516,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:213"
+            ],
+            "eco": [
+              "149a5a0b-1932-4636-ba17-155979f340d2"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg4.mg4e.trim.x_long_range_bev",
+          "generation_id": "mg.mg4.mg4e",
+          "name": "X Long Range",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "adb9a735af67664124dfb2c1",
+    "command_id": "ev-lot2b-052",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "kia.ev5.gen1.trim.earth_long_range_88_1_kwh_fwd_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Corrected re-submission of ev-retail-repair-lot-02-2026-09-27: adds the missing UPSERT_CAMPAIGN registration before each CAMPAIGN_PRICE command so vehreg market validate resolves every campaign_id it references. Same 20 approved current-retail sets and prices, unchanged.",
+    "submitted_at": "2026-09-27T10:00:00+00:00",
+    "applied_at": "2026-09-27T12:02:26+00:00",
+    "before_hash": "7a16fbadeba9c06f7fd4e5c3997869560e1420e527baf62964da241e56000953",
+    "after_hash": "e4e4e47cac86693dffeb7bcc8ce8d68622954b37b0114b3d640669f12e21236c",
+    "before": [
+      {
+        "trim_id": "kia.ev5.gen1.trim.earth_long_range_88_1_kwh_fwd_bev",
+        "amount_thb": 1349000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-07-21",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/3634b9ca-fbe8-4342-9b06-5f6af4ced43e",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "kia.ev5.gen1.trim.earth_long_range_88_1_kwh_fwd_bev",
+        "amount_thb": 1349000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-07-21",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/3634b9ca-fbe8-4342-9b06-5f6af4ced43e",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "kia.ev5.gen1.trim.earth_long_range_88_1_kwh_fwd_bev",
+        "amount_thb": 1349000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_ev-lot2b-052.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "adb9a735af67664124dfb2c1:price",
+    "revision_id": "adb9a735af67664124dfb2c1",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "kia.ev5.gen1.trim.earth_long_range_88_1_kwh_fwd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-27T12:02:26+00:00",
+    "payload": [
+      {
+        "trim_id": "kia.ev5.gen1.trim.earth_long_range_88_1_kwh_fwd_bev",
+        "amount_thb": 1349000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-07-21",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/3634b9ca-fbe8-4342-9b06-5f6af4ced43e",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "kia.ev5.gen1.trim.earth_long_range_88_1_kwh_fwd_bev",
+        "amount_thb": 1349000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

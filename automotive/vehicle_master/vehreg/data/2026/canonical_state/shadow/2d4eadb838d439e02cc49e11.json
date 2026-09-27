@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2d4eadb838d439e02cc49e11",
+    "command_id": "ev-lot2b-011",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "xpeng.xpeng_g6.g6.trim.standard_range_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Corrected re-submission of ev-retail-repair-lot-02-2026-09-27: adds the missing UPSERT_CAMPAIGN registration before each CAMPAIGN_PRICE command so vehreg market validate resolves every campaign_id it references. Same 20 approved current-retail sets and prices, unchanged.",
+    "submitted_at": "2026-09-27T10:00:00+00:00",
+    "applied_at": "2026-09-27T12:01:58+00:00",
+    "before_hash": "2ecaea16e9089d68cea149beefcf6463c933d7f5b0396375660004ab3fd6b1f7",
+    "after_hash": "6c2cd91d5315483391a528a432e178e701afedaced56950bf0451d5e72249105",
+    "before": [
+      {
+        "trim_id": "xpeng.xpeng_g6.g6.trim.standard_range_bev",
+        "amount_thb": 1439000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2024-08-15",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/ec196398-f75a-4998-b7e5-8b26e8934945",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "xpeng.xpeng_g6.g6.trim.standard_range_bev",
+        "amount_thb": 1439000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2024-08-15",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/ec196398-f75a-4998-b7e5-8b26e8934945",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "xpeng.xpeng_g6.g6.trim.standard_range_bev",
+        "amount_thb": 1189000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_ev-lot2b-011.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2d4eadb838d439e02cc49e11:price",
+    "revision_id": "2d4eadb838d439e02cc49e11",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "xpeng.xpeng_g6.g6.trim.standard_range_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-27T12:01:58+00:00",
+    "payload": [
+      {
+        "trim_id": "xpeng.xpeng_g6.g6.trim.standard_range_bev",
+        "amount_thb": 1439000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2024-08-15",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/ec196398-f75a-4998-b7e5-8b26e8934945",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "xpeng.xpeng_g6.g6.trim.standard_range_bev",
+        "amount_thb": 1189000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

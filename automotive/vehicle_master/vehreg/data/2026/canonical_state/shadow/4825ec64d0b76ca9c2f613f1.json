@@ -1,0 +1,654 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "4825ec64d0b76ca9c2f613f1",
+    "command_id": "ev-lot2b-069",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "tesla.modely",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Corrected re-submission of ev-retail-repair-lot-02-2026-09-27: adds the missing UPSERT_CAMPAIGN registration before each CAMPAIGN_PRICE command so vehreg market validate resolves every campaign_id it references. Same 20 approved current-retail sets and prices, unchanged.",
+    "submitted_at": "2026-09-27T10:00:00+00:00",
+    "applied_at": "2026-09-27T12:02:38+00:00",
+    "before_hash": "039be08d8e87bcaf66029dcfd86e5216deb07eaaf4449e770f8f071ab5cb558d",
+    "after_hash": "3bf3bc1ce2ea4aa6b3d23fd8946dffcbd0efffacd942c27cdcad952ffbb1bc18",
+    "before": {
+      "id": "modely",
+      "name_en": "Model Y",
+      "name_th": "โมเดล วาย",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "model y"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "MY",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2022-12-07",
+          "ended": null,
+          "variants": [
+            {
+              "name": "60 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "RWD",
+              "engine_cc": null,
+              "battery_kwh": 60.0,
+              "aliases": [
+                "RWD"
+              ],
+              "overrides": {},
+              "price_thb": 1799000,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1799000,
+              "price_max_thb": 1799000
+            },
+            {
+              "name": "79 kWh BEV AWD",
+              "powertrain": "BEV",
+              "drivetrain": "AWD",
+              "engine_cc": null,
+              "battery_kwh": 79.0,
+              "aliases": [
+                "Performance"
+              ],
+              "overrides": {},
+              "price_thb": 2509000,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "seed-unverified",
+              "price_min_thb": 2509000,
+              "price_max_thb": 2509000
+            }
+          ],
+          "trims": [
+            {
+              "name": "Rear-Wheel Drive (RWD, 60 kWh LFP)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:269"
+                ]
+              },
+              "aliases": [
+                "Model Y Rear-Wheel Drive (RWD, 60 kWh LFP)"
+              ],
+              "id": "rear_wheel_drive_rwd_60_kwh_lfp_bev"
+            },
+            {
+              "name": "Long Range All-Wheel Drive (AWD, 78.1 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:269"
+                ]
+              },
+              "aliases": [
+                "Model Y Long Range All-Wheel Drive (AWD, 78.1 kWh)"
+              ],
+              "id": "long_range_all_wheel_drive_awd_78_1_kwh_bev"
+            },
+            {
+              "name": "Performance All-Wheel Drive (AWD, 514 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:269"
+                ]
+              },
+              "aliases": [
+                "Model Y Performance All-Wheel Drive (AWD, 514 hp)"
+              ],
+              "id": "performance_all_wheel_drive_awd_514_hp_bev"
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "tesla",
+        "name_en": "Tesla",
+        "name_th": "เทสลา",
+        "brand_segment": "PREMIUM_TECH",
+        "oem_group": "Tesla",
+        "brand_origin": "US",
+        "trim_detail": true,
+        "aliases": [
+          "เทสลา"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "tesla.modely",
+        "brand_id": "tesla",
+        "name_en": "Model Y",
+        "name_th": "โมเดล วาย",
+        "nameplate": "Model Y",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "model y"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "tesla.modely.my",
+          "model_id": "tesla.modely",
+          "code": "MY",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2022-12-07",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "tesla.modely.my.60_kwh_bev",
+          "generation_id": "tesla.modely.my",
+          "name": "60 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 60.0,
+          "price_thb": 1799000,
+          "price_min_thb": 1799000,
+          "price_max_thb": 1799000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "RWD"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "tesla.modely.my.79_kwh_bev_awd",
+          "generation_id": "tesla.modely.my",
+          "name": "79 kWh BEV AWD",
+          "powertrain": "BEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": 79.0,
+          "price_thb": 2509000,
+          "price_min_thb": 2509000,
+          "price_max_thb": 2509000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Performance"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "tesla.modely.my.trim.rear_wheel_drive_rwd_60_kwh_lfp_bev",
+          "generation_id": "tesla.modely.my",
+          "name": "Rear-Wheel Drive (RWD, 60 kWh LFP)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Model Y Rear-Wheel Drive (RWD, 60 kWh LFP)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:269"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "tesla.modely.my.trim.long_range_all_wheel_drive_awd_78_1_kwh_bev",
+          "generation_id": "tesla.modely.my",
+          "name": "Long Range All-Wheel Drive (AWD, 78.1 kWh)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Model Y Long Range All-Wheel Drive (AWD, 78.1 kWh)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:269"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "tesla.modely.my.trim.performance_all_wheel_drive_awd_514_hp_bev",
+          "generation_id": "tesla.modely.my",
+          "name": "Performance All-Wheel Drive (AWD, 514 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Model Y Performance All-Wheel Drive (AWD, 514 hp)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:269"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "tesla.modely.my.trim.premium_rwd_bev",
+          "generation_id": "tesla.modely.my",
+          "name": "Premium RWD",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": ""
+        },
+        {
+          "id": "tesla.modely.my.trim.premium_long_range_rwd_bev",
+          "generation_id": "tesla.modely.my",
+          "name": "Premium Long Range RWD",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": ""
+        },
+        {
+          "id": "tesla.modely.my.trim.model_y_l_premium_awd_bev",
+          "generation_id": "tesla.modely.my",
+          "name": "Model Y L Premium AWD",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/tesla.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "4825ec64d0b76ca9c2f613f1:catalog",
+    "revision_id": "4825ec64d0b76ca9c2f613f1",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "tesla.modely",
+    "state": "PENDING",
+    "created_at": "2026-09-27T12:02:38+00:00",
+    "payload": {
+      "brand": {
+        "id": "tesla",
+        "name_en": "Tesla",
+        "name_th": "เทสลา",
+        "brand_segment": "PREMIUM_TECH",
+        "oem_group": "Tesla",
+        "brand_origin": "US",
+        "trim_detail": true,
+        "aliases": [
+          "เทสลา"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "tesla.modely",
+        "brand_id": "tesla",
+        "name_en": "Model Y",
+        "name_th": "โมเดล วาย",
+        "nameplate": "Model Y",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "model y"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "tesla.modely.my",
+          "model_id": "tesla.modely",
+          "code": "MY",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2022-12-07",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "tesla.modely.my.60_kwh_bev",
+          "generation_id": "tesla.modely.my",
+          "name": "60 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 60.0,
+          "price_thb": 1799000,
+          "price_min_thb": 1799000,
+          "price_max_thb": 1799000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "RWD"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "tesla.modely.my.79_kwh_bev_awd",
+          "generation_id": "tesla.modely.my",
+          "name": "79 kWh BEV AWD",
+          "powertrain": "BEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": 79.0,
+          "price_thb": 2509000,
+          "price_min_thb": 2509000,
+          "price_max_thb": 2509000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Performance"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "tesla.modely.my.trim.rear_wheel_drive_rwd_60_kwh_lfp_bev",
+          "generation_id": "tesla.modely.my",
+          "name": "Rear-Wheel Drive (RWD, 60 kWh LFP)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Model Y Rear-Wheel Drive (RWD, 60 kWh LFP)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:269"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "tesla.modely.my.trim.long_range_all_wheel_drive_awd_78_1_kwh_bev",
+          "generation_id": "tesla.modely.my",
+          "name": "Long Range All-Wheel Drive (AWD, 78.1 kWh)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Model Y Long Range All-Wheel Drive (AWD, 78.1 kWh)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:269"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "tesla.modely.my.trim.performance_all_wheel_drive_awd_514_hp_bev",
+          "generation_id": "tesla.modely.my",
+          "name": "Performance All-Wheel Drive (AWD, 514 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Model Y Performance All-Wheel Drive (AWD, 514 hp)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:269"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "tesla.modely.my.trim.premium_rwd_bev",
+          "generation_id": "tesla.modely.my",
+          "name": "Premium RWD",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": ""
+        },
+        {
+          "id": "tesla.modely.my.trim.premium_long_range_rwd_bev",
+          "generation_id": "tesla.modely.my",
+          "name": "Premium Long Range RWD",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": ""
+        },
+        {
+          "id": "tesla.modely.my.trim.model_y_l_premium_awd_bev",
+          "generation_id": "tesla.modely.my",
+          "name": "Model Y L Premium AWD",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

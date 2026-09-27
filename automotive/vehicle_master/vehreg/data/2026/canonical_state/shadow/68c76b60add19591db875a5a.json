@@ -1,0 +1,389 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "68c76b60add19591db875a5a",
+    "command_id": "ev-lot2b-076",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "jaecoo.jaecoo_6t_reev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Corrected re-submission of ev-retail-repair-lot-02-2026-09-27: adds the missing UPSERT_CAMPAIGN registration before each CAMPAIGN_PRICE command so vehreg market validate resolves every campaign_id it references. Same 20 approved current-retail sets and prices, unchanged.",
+    "submitted_at": "2026-09-27T10:00:00+00:00",
+    "applied_at": "2026-09-27T12:02:40+00:00",
+    "before_hash": "8f2d7d50c1ad1dd99b7d6a5cea9164dffa7d35544eccd29740713c60e537bd86",
+    "after_hash": "02a258d4179d0804f99a5fbe8f45e672b9d41274560cfde4ff4cf9366579e2a0",
+    "before": {
+      "id": "jaecoo_6t_reev",
+      "name_en": "Jaecoo 6T REEV",
+      "name_th": "เจคู 6T รีฟ",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "6T REEV",
+        "JAECOO 6T REEV"
+      ],
+      "incomplete": true,
+      "notes": "แยกจาก 6T EV เพราะเป็น REEV เสียบชาร์จได้แล้ววิ่งต่อด้วยเครื่องยนต์ คนละคันกับตัวไฟฟ้าล้วน — DLT จดแยกชัด สเปกยังไม่ได้ตรวจ",
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2026-08-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "REEV",
+              "powertrain": "REEV",
+              "drivetrain": "AWD",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "ยังไม่ได้ตรวจราคา",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Long Range 4WD",
+              "powertrain": "REEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:131"
+                ]
+              },
+              "aliases": [
+                "Jaecoo 6T REEV Long Range 4WD"
+              ],
+              "id": "long_range_4wd_reev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "jaecoo",
+        "name_en": "Jaecoo",
+        "name_th": "เจคู",
+        "brand_segment": "MASS",
+        "oem_group": "Chery",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "jaecoo.jaecoo_6t_reev",
+        "brand_id": "jaecoo",
+        "name_en": "Jaecoo 6T REEV",
+        "name_th": "เจคู 6T รีฟ",
+        "nameplate": "Jaecoo 6T REEV",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "6T REEV",
+          "JAECOO 6T REEV"
+        ],
+        "notes": "แยกจาก 6T EV เพราะเป็น REEV เสียบชาร์จได้แล้ววิ่งต่อด้วยเครื่องยนต์ คนละคันกับตัวไฟฟ้าล้วน — DLT จดแยกชัด สเปกยังไม่ได้ตรวจ",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "jaecoo.jaecoo_6t_reev.gen1",
+          "model_id": "jaecoo.jaecoo_6t_reev",
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2026-08-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "jaecoo.jaecoo_6t_reev.gen1.reev",
+          "generation_id": "jaecoo.jaecoo_6t_reev.gen1",
+          "name": "REEV",
+          "powertrain": "REEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "jaecoo.jaecoo_6t_reev.gen1.trim.long_range_4wd_reev",
+          "generation_id": "jaecoo.jaecoo_6t_reev.gen1",
+          "name": "Long Range 4WD",
+          "powertrain": "REEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Jaecoo 6T REEV Long Range 4WD"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:131"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "jaecoo.jaecoo_6t_reev.gen1.trim.2wd_max_reev",
+          "generation_id": "jaecoo.jaecoo_6t_reev.gen1",
+          "name": "2WD MAX",
+          "powertrain": "REEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": ""
+        },
+        {
+          "id": "jaecoo.jaecoo_6t_reev.gen1.trim.4wd_ultra_reev",
+          "generation_id": "jaecoo.jaecoo_6t_reev.gen1",
+          "name": "4WD ULTRA",
+          "powertrain": "REEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/jaecoo.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "68c76b60add19591db875a5a:catalog",
+    "revision_id": "68c76b60add19591db875a5a",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "jaecoo.jaecoo_6t_reev",
+    "state": "PENDING",
+    "created_at": "2026-09-27T12:02:40+00:00",
+    "payload": {
+      "brand": {
+        "id": "jaecoo",
+        "name_en": "Jaecoo",
+        "name_th": "เจคู",
+        "brand_segment": "MASS",
+        "oem_group": "Chery",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "jaecoo.jaecoo_6t_reev",
+        "brand_id": "jaecoo",
+        "name_en": "Jaecoo 6T REEV",
+        "name_th": "เจคู 6T รีฟ",
+        "nameplate": "Jaecoo 6T REEV",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "6T REEV",
+          "JAECOO 6T REEV"
+        ],
+        "notes": "แยกจาก 6T EV เพราะเป็น REEV เสียบชาร์จได้แล้ววิ่งต่อด้วยเครื่องยนต์ คนละคันกับตัวไฟฟ้าล้วน — DLT จดแยกชัด สเปกยังไม่ได้ตรวจ",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "jaecoo.jaecoo_6t_reev.gen1",
+          "model_id": "jaecoo.jaecoo_6t_reev",
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2026-08-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "jaecoo.jaecoo_6t_reev.gen1.reev",
+          "generation_id": "jaecoo.jaecoo_6t_reev.gen1",
+          "name": "REEV",
+          "powertrain": "REEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "jaecoo.jaecoo_6t_reev.gen1.trim.long_range_4wd_reev",
+          "generation_id": "jaecoo.jaecoo_6t_reev.gen1",
+          "name": "Long Range 4WD",
+          "powertrain": "REEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Jaecoo 6T REEV Long Range 4WD"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:131"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "jaecoo.jaecoo_6t_reev.gen1.trim.2wd_max_reev",
+          "generation_id": "jaecoo.jaecoo_6t_reev.gen1",
+          "name": "2WD MAX",
+          "powertrain": "REEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": ""
+        },
+        {
+          "id": "jaecoo.jaecoo_6t_reev.gen1.trim.4wd_ultra_reev",
+          "generation_id": "jaecoo.jaecoo_6t_reev.gen1",
+          "name": "4WD ULTRA",
+          "powertrain": "REEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

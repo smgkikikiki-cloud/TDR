@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a241e8539624d13311f2f7e1",
+    "command_id": "ev-lot2b-047",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "geely.geely_ex5.gen1.trim.max_plus",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Corrected re-submission of ev-retail-repair-lot-02-2026-09-27: adds the missing UPSERT_CAMPAIGN registration before each CAMPAIGN_PRICE command so vehreg market validate resolves every campaign_id it references. Same 20 approved current-retail sets and prices, unchanged.",
+    "submitted_at": "2026-09-27T10:00:00+00:00",
+    "applied_at": "2026-09-27T12:02:22+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "5babb8979a34cd2bb2db1fc745fb071bd532dcf8b87a7b95dc37c8af1864ad54",
+    "before": [],
+    "after": [
+      {
+        "trim_id": "geely.geely_ex5.gen1.trim.max_plus",
+        "amount_thb": 929000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_ev-lot2b-047.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a241e8539624d13311f2f7e1:price",
+    "revision_id": "a241e8539624d13311f2f7e1",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "geely.geely_ex5.gen1.trim.max_plus",
+    "state": "PENDING",
+    "created_at": "2026-09-27T12:02:22+00:00",
+    "payload": [
+      {
+        "trim_id": "geely.geely_ex5.gen1.trim.max_plus",
+        "amount_thb": 929000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

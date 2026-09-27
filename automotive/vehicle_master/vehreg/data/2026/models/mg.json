@@ -261,6 +261,10 @@
               "length_mm": 4287,
               "width_mm": 1836,
               "height_mm": 1516
+            },
+            {
+              "name": "X Long Range",
+              "powertrain": "BEV"
             }
           ]
         }
@@ -1242,6 +1246,16 @@
                   "25620477-2ecb-4265-bf04-f8925c3c17d1"
                 ]
               }
+            },
+            {
+              "id": "x_plus",
+              "name": "X+",
+              "powertrain": "BEV"
+            },
+            {
+              "id": "v_plus",
+              "name": "V+",
+              "powertrain": "BEV"
             }
           ]
         }
@@ -1548,6 +1562,18 @@
                 ]
               },
               "id": "urban_ev_long_range_bev"
+            },
+            {
+              "name": "STANDARD",
+              "powertrain": "BEV"
+            },
+            {
+              "name": "MAX",
+              "powertrain": "BEV"
+            },
+            {
+              "name": "ULTRA",
+              "powertrain": "BEV"
             }
           ]
         }

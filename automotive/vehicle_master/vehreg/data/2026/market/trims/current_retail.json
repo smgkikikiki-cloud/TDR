@@ -1,6 +1,215 @@
 {
   "models": [
     {
+      "model_id": "aion.aion_v",
+      "notes": "Owner-approved current lineup: 500 Premium + 602 Luxury",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "aion.aion_v.av.trim.500_premium_bev",
+        "aion.aion_v.av.trim.602_luxury_bev"
+      ]
+    },
+    {
+      "model_id": "aion.aion_y_plus",
+      "notes": "Owner-approved current lineup: 490 Premium only; no price mutation in this lot",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "aion.aion_y_plus.ayp.trim.490_premium_bev"
+      ]
+    },
+    {
+      "model_id": "byd.atto3",
+      "notes": "Owner-approved current lineup: Premium + Extended",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "byd.atto3.atto3.trim.byd_atto3_410km_premium_bev",
+        "byd.atto3.atto3.trim.byd_atto3_480km_ext_bev"
+      ]
+    },
+    {
+      "model_id": "deepal.deepal_e07",
+      "notes": "Owner-approved current lineup: E07 Plus + E07 Performance AWD",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "deepal.deepal_e07.gen1.trim.performance_awd_bev",
+        "deepal.deepal_e07.gen1.trim.plus_bev"
+      ]
+    },
+    {
+      "model_id": "deepal.deepal_s07",
+      "notes": "Owner-approved current lineup: DEEPAL NEW S07 only",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "deepal.deepal_s07.gen1.trim.new_bev"
+      ]
+    },
+    {
+      "model_id": "geely.geely_ex5",
+      "notes": "Owner-approved current lineup: PRO + MAX (existing) + newly materialized sparse MAX+",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "geely.geely_ex5.gen1.trim.max_bev",
+        "geely.geely_ex5.gen1.trim.max_plus",
+        "geely.geely_ex5.gen1.trim.pro_bev"
+      ]
+    },
+    {
+      "model_id": "hyundai.ioniq5",
+      "notes": "Owner-approved current lineup: 2026 N Line + N; Exclusive/Premium/old N must not remain CURRENT",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "hyundai.ioniq5.ne.trim.ioniq5_n_line_bev",
+        "hyundai.ioniq5.ne.trim.n_bev"
+      ]
+    },
+    {
+      "model_id": "jaecoo.jaecoo_6t_ev",
+      "notes": "Owner-approved current lineup: Long Range 4WD only",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "jaecoo.jaecoo_6t_ev.gen1.trim.long_range_4wd_bev"
+      ]
+    },
+    {
+      "model_id": "jaecoo.jaecoo_6t_reev",
+      "notes": "Owner-approved current lineup: newly materialized sparse 2WD MAX/4WD ULTRA identities; old generic Long Range 4WD excluded",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "jaecoo.jaecoo_6t_reev.gen1.trim.2wd_max_reev",
+        "jaecoo.jaecoo_6t_reev.gen1.trim.4wd_ultra_reev"
+      ]
+    },
+    {
+      "model_id": "kia.ev5",
+      "notes": "Owner-approved current lineup: Air + Earth Long Range + Earth Exclusive AWD; Light/GT-Line excluded",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "kia.ev5.gen1.trim.air_64_2_kwh_bev",
+        "kia.ev5.gen1.trim.earth_exclusive_awd_88_1_kwh_dual_bev",
+        "kia.ev5.gen1.trim.earth_long_range_88_1_kwh_fwd_bev"
+      ]
+    },
+    {
+      "model_id": "kia.ev9",
+      "notes": "Owner-approved current lineup: GT-Line AWD only; Earth Long Range excluded",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "kia.ev9.mv.trim.gt_line_awd_dual_6_seater_swivel_relaxation_bev"
+      ]
+    },
+    {
+      "model_id": "lexus.rz",
+      "notes": "Owner-approved current lineup: newly materialized sparse RZ350e/RZ500e identities; old RZ450e trims excluded",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "lexus.rz.gen1.trim.rz350e_grand_luxury_bev",
+        "lexus.rz.gen1.trim.rz500e_premium_awd_bev",
+        "lexus.rz.gen1.trim.rz500e_premium_awd_steer_by_wire_bev"
+      ]
+    },
+    {
+      "model_id": "mg.mg4",
+      "notes": "Owner-approved current lineup: D Standard Range + newly materialized sparse X Long Range (no price authorized for X Long Range in this lot); old V/XPOWER/superseded identities excluded",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "mg.mg4.mg4e.trim.standard_range_d_51_kwh_rwd_bev",
+        "mg.mg4.mg4e.trim.x_long_range_bev"
+      ]
+    },
+    {
+      "model_id": "mg.mg_ep",
+      "notes": "Owner-approved current lineup: EP Plus only; no price mutation in this lot",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "mg.mg_ep.gen1.trim.ep_plus_bev"
+      ]
+    },
+    {
+      "model_id": "mg.mg_s5_ev",
+      "notes": "Owner-approved current lineup: D+ (existing) plus newly materialized sparse X+/V+; plain X/V retired from current",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "mg.mg_s5_ev.gen1.trim.d_bev",
+        "mg.mg_s5_ev.gen1.trim.v_plus",
+        "mg.mg_s5_ev.gen1.trim.x_plus"
+      ]
+    },
+    {
+      "model_id": "mg.mg_urban",
+      "notes": "Owner-approved current lineup: newly materialized sparse STANDARD/MAX/ULTRA identities; old Standard Range/Long Range excluded",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "mg.mg_urban.mg_urban.trim.max_bev",
+        "mg.mg_urban.mg_urban.trim.standard_bev",
+        "mg.mg_urban.mg_urban.trim.ultra_bev"
+      ]
+    },
+    {
+      "model_id": "tesla.modely",
+      "notes": "Owner-approved current lineup: newly materialized sparse Premium RWD/Premium Long Range RWD/Model Y L Premium AWD identities; old RWD/LR AWD/Performance excluded",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "tesla.modely.my.trim.model_y_l_premium_awd_bev",
+        "tesla.modely.my.trim.premium_long_range_rwd_bev",
+        "tesla.modely.my.trim.premium_rwd_bev"
+      ]
+    },
+    {
+      "model_id": "toyota.bz4x",
+      "notes": "Owner-approved current lineup: FWD + AWD; bz4x_ice known-bad identity excluded",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "toyota.bz4x.ea10.trim.awd_bev",
+        "toyota.bz4x.ea10.trim.fwd_bev"
+      ]
+    },
+    {
+      "model_id": "volvo.ec40",
+      "notes": "Owner-approved current lineup: EC40 Ultra - Single Motor only",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "volvo.ec40.gen1.trim.ec40_ultra_single_bev"
+      ]
+    },
+    {
       "model_id": "volvo.ex40",
       "notes": "Owner-approved EX40 MY2027 current retail lineup; upstream decision already completed; existing canonical evidence and price retained.",
       "reviewed_at": "2026-09-27",
@@ -8,6 +217,18 @@
       "source_ref": "",
       "trim_ids": [
         "volvo.ex40.gen1.trim.single_ultra_bev"
+      ]
+    },
+    {
+      "model_id": "xpeng.xpeng_g6",
+      "notes": "Owner-approved current lineup: generic Standard/Long Range + AWD Performance identities; detailed battery/range IDs are legacy evidence",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "xpeng.xpeng_g6.g6.trim.long_range_bev",
+        "xpeng.xpeng_g6.g6.trim.performance_awd_87_5_kwh_dual_487_hp_bev",
+        "xpeng.xpeng_g6.g6.trim.standard_range_bev"
       ]
     }
   ],

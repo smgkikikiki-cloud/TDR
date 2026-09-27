@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ddc6e719292407b90d36a2c6",
+    "command_id": "ev-lot2b-082",
+    "operation": "UPSERT_CAMPAIGN",
+    "year": 2026,
+    "topic": "campaign",
+    "entity_type": "campaign",
+    "entity_id": "mg.mg_urban.mg_urban.trim.standard_bev.campaign.2026-09-27",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Corrected re-submission of ev-retail-repair-lot-02-2026-09-27: adds the missing UPSERT_CAMPAIGN registration before each CAMPAIGN_PRICE command so vehreg market validate resolves every campaign_id it references. Same 20 approved current-retail sets and prices, unchanged.",
+    "submitted_at": "2026-09-27T10:00:00+00:00",
+    "applied_at": "2026-09-27T12:02:44+00:00",
+    "before_hash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+    "after_hash": "f4af3844b3f738830eb0292e0b57f02dd9a7df3a119b5421bd9723f78ca42414",
+    "before": null,
+    "after": {
+      "id": "mg.mg_urban.mg_urban.trim.standard_bev.campaign.2026-09-27",
+      "options": [
+        {
+          "id": "default"
+        }
+      ],
+      "brand_id": "mg"
+    },
+    "changed_files": [
+      "2026/market/campaigns/mg.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ddc6e719292407b90d36a2c6:campaign",
+    "revision_id": "ddc6e719292407b90d36a2c6",
+    "topic": "campaign",
+    "entity_type": "campaign",
+    "entity_id": "mg.mg_urban.mg_urban.trim.standard_bev.campaign.2026-09-27",
+    "state": "PENDING",
+    "created_at": "2026-09-27T12:02:44+00:00",
+    "payload": {
+      "id": "mg.mg_urban.mg_urban.trim.standard_bev.campaign.2026-09-27",
+      "options": [
+        {
+          "id": "default"
+        }
+      ],
+      "brand_id": "mg"
+    }
+  }
+}
