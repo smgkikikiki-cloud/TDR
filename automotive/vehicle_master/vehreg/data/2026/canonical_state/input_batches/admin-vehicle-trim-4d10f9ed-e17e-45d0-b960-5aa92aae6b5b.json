@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "batch_id": "admin-vehicle-trim-4d10f9ed-e17e-45d0-b960-5aa92aae6b5b",
+  "batch_hash": "56db76714f90c73cd772f0dadf125e8602422be58aef6dfb02c4f54c918fe181",
+  "status": "APPLIED",
+  "year": 2026,
+  "source": {
+    "kind": "ADMIN",
+    "ref": null
+  },
+  "actor": "siriwich",
+  "reason": "Manual edit via Canonical Vehicle Editor",
+  "submitted_at": "2026-09-27T06:12:46.139Z",
+  "applied_at": "2026-09-27T06:15:34+00:00",
+  "results": [
+    {
+      "command_id": "admin-vehicle-trim-4d10f9ed-e17e-45d0-b960-5aa92aae6b5b:1",
+      "revision_id": "f56297d182ee741a82efa20c",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "volvo.ex40",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "admin-vehicle-trim-4d10f9ed-e17e-45d0-b960-5aa92aae6b5b:2",
+      "revision_id": "fe0592df357dcdf4854f2252",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "volvo.ex40.gen1.trim.single_ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "admin-vehicle-trim-4d10f9ed-e17e-45d0-b960-5aa92aae6b5b:3",
+      "revision_id": "0066b6a3f6300ad2da5c8085",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "volvo.ex40.gen1.trim.single_ultra_bev",
+      "idempotent_replay": false
+    }
+  ],
+  "changed_files": [
+    "2026/models/volvo.json",
+    "2026/product/comparable_specs/facts/canonical_admin_volvo.ex40.gen1.trim.single_ultra_bev_ev.energy_consumption_wh_km_ab9a595cb19c.json",
+    "2026/product/comparable_specs/facts/canonical_admin_volvo.ex40.gen1.trim.single_ultra_bev_ev.rated_range_km_38ee6387cd01.json",
+    "2026/canonical_state/shadow/f56297d182ee741a82efa20c.json",
+    "2026/canonical_state/revisions.jsonl",
+    "2026/canonical_state/outbox.jsonl",
+    "2026/canonical_state/shadow/0066b6a3f6300ad2da5c8085.json",
+    "2026/canonical_state/shadow/fe0592df357dcdf4854f2252.json"
+  ]
+}

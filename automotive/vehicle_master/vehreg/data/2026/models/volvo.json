@@ -470,7 +470,7 @@
           ],
           "trims": [
             {
-              "name": "Single Motor Ultra",
+              "name": "EX40 Ultra – Single Motor",
               "powertrain": "BEV",
               "seats": 5,
               "length_mm": 4440,
@@ -480,9 +480,11 @@
               "tire_rear": "255/45R19",
               "source_refs": {
                 "eco": [
-                  "039d37fd-d95d-458a-957e-b78cbf759bc4"
+                  "039d37fd-d95d-458a-957e-b78cbf759bc4",
+                  "d125adc9-ffdd-4b79-8100-a18d26987867"
                 ]
-              }
+              },
+              "id": "single_ultra_bev"
             },
             {
               "name": "Ultra - Single Motor",

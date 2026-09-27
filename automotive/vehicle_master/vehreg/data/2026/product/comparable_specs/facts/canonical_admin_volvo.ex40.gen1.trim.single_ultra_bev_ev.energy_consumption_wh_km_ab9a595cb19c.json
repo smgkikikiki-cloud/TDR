@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "unit": "Wh/km",
+      "value": 145,
+      "source": "admin",
+      "trim_id": "volvo.ex40.gen1.trim.single_ultra_bev",
+      "field_key": "ev.energy_consumption_wh_km",
+      "source_ref": "admin",
+      "observed_at": "2026-09-27",
+      "value_state": "KNOWN",
+      "verification_status": "VERIFIED",
+      "fact_id": "admin:volvo.ex40.gen1.trim.single_ultra_bev:ev.energy_consumption_wh_km"
+    }
+  ]
+}
