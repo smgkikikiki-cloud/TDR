@@ -140,13 +140,17 @@ def trim_review_index(*, data_dir=DATA_DIR, year: int = DEFAULT_YEAR) -> dict[st
 def trim_price_eligibility(catalog: Catalog, trim_id: str, *,
                            scope_index: dict[str, ModelScope],
                            trim_reviews: dict[str, dict],
-                           approved_index: Optional[dict[str, frozenset[str]]] = None) -> tuple[bool, str]:
+                           approved_index: dict[str, frozenset[str]]) -> tuple[bool, str]:
     """Whether one existing trim may receive an automated price fact now.
 
-    ``approved_index`` (vehreg.current_retail.load_current_retail_index) is
-    optional and additive: a model absent from it (or the argument omitted
-    entirely) keeps today's legacy rule -- every non-retired trim in an
-    active generation is eligible. A model present in it flips to opt-in --
+    ``approved_index`` (vehreg.current_retail.load_current_retail_index) is a
+    REQUIRED keyword argument on purpose: forgetting current-retail authority
+    must be a loud TypeError at every call site, not a silent fallback to
+    legacy eligibility for a model that has since been explicitly managed. A
+    model absent from the index (or an intentionally empty ``{}``, for a
+    caller that genuinely wants pre-authority legacy behavior, e.g. an
+    isolated unit test) keeps today's legacy rule -- every non-retired trim in
+    an active generation is eligible. A model present in it flips to opt-in --
     only trims in its approved set are eligible, whether or not they were
     ever marked HISTORICAL, and a trim outside the set is never eligible no
     matter what evidence exists for it.
@@ -162,7 +166,7 @@ def trim_price_eligibility(catalog: Catalog, trim_id: str, *,
         return False, (scope.blocked_reason if scope else UNKNOWN_MODEL) or GENERATION_UNRESOLVED
     if trim.generation_id not in scope.active_generation_ids:
         return False, GENERATION_UNRESOLVED
-    approved = (approved_index or {}).get(generation.model_id)
+    approved = approved_index.get(generation.model_id)
     if approved is not None:
         return (True, "") if trim_id in approved else (False, TRIM_RETIRED)
     review = trim_reviews.get(trim_id)
@@ -172,13 +176,13 @@ def trim_price_eligibility(catalog: Catalog, trim_id: str, *,
 
 
 def siblings_from_scope(catalog: Catalog, scope_index: dict[str, ModelScope],
-                        trim_reviews: dict[str, dict],
-                        approved_index: Optional[dict[str, frozenset[str]]] = None) -> dict[str, list]:
+                        trim_reviews: dict[str, dict], *,
+                        approved_index: dict[str, frozenset[str]]) -> dict[str, list]:
     """Build ``model_id -> price-eligible MarketTrim`` from precomputed scope.
 
-    See :func:`trim_price_eligibility` for what ``approved_index`` changes.
+    See :func:`trim_price_eligibility` for what ``approved_index`` means and
+    why it is a required keyword argument.
     """
-    approved_index = approved_index or {}
     index: dict[str, list] = {}
     for model_id, scope in scope_index.items():
         if not scope.in_scope:
@@ -219,7 +223,7 @@ def scoped_siblings_by_model(catalog: Catalog, *, data_dir=DATA_DIR,
         catalog, data_dir=data_dir, year=year, as_of=as_of)
     trim_reviews = trim_review_index(data_dir=data_dir, year=year)
     approved_index = load_current_retail_index(data_dir=data_dir, year=year)
-    return siblings_from_scope(catalog, scope_index, trim_reviews, approved_index)
+    return siblings_from_scope(catalog, scope_index, trim_reviews, approved_index=approved_index)
 
 
 __all__ = [

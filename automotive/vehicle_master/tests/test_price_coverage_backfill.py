@@ -23,6 +23,7 @@ from tools.price_coverage_backfill import (
     run_apply,
 )
 from vehreg.catalog import Catalog, Model
+from vehreg.current_retail import replace_current_retail_set
 from vehreg.entities import MarketTrim
 from vehreg.input_pipeline import CanonicalInputBatch
 from vehreg.model_operational_state import upsert_model_operational_state
@@ -524,3 +525,173 @@ def test_run_apply_never_writes_when_fresh_evidence_disappears(tmp_path: Path):
     catalog = Catalog.load(data, 2026)
     from vehreg.pricing import PriceLedger
     assert PriceLedger.load(data, year=2026, catalog=catalog).current_list_price(J5_ULTRA_TRIM) is None
+
+
+# --- current-retail authority: price_coverage_backfill must never bypass it ---
+#
+# vehreg.retail_scope.siblings_from_scope/trim_price_eligibility used to make
+# approved_index optional, defaulting to legacy (opt-out) eligibility when
+# omitted. price_coverage_backfill.py's discovery and apply-time revalidation
+# paths both constructed their siblings map directly from
+# retail_scope_index()/trim_review_index() without ever loading
+# current_retail.json, so for a model placed under an approved current-retail
+# set, this tool could still treat a retired base-catalog trim (e.g. Volvo
+# EX40's "Ultra Twin Motor") as price-eligible even though the scheduled
+# pricefeed (vehreg.retail_scope.scoped_siblings_by_model) correctly excluded
+# it. approved_index is now a required keyword argument on both functions --
+# these tests prove price_coverage_backfill.py actually supplies it.
+
+J5_OLD_TRIM = J5_GEN_ID + ".trim.old_bev"
+
+
+def _seed_two_trim_fixture(tmp_path: Path) -> Path:
+    """Same J5 model as _seed_apply_fixture, plus a second, older trim."""
+    data = tmp_path / "data"
+    _write_json(data / "2026" / "models" / "jaecoo.json", {
+        "brand": {
+            "id": "jaecoo", "name_en": "Jaecoo", "name_th": "เจคู",
+            "brand_segment": "MASS", "oem_group": "Chery", "brand_origin": "CN",
+            "trim_detail": True, "aliases": [],
+        },
+        "models": [{
+            "id": "jaecoo_5_ev", "name_en": "Jaecoo 5 EV", "name_th": "เจคู 5",
+            "nameplate": "Jaecoo 5", "body_type": "CROSSOVER",
+            "cab_type": "NOT_APPLICABLE", "registration_type": "",
+            "market_scope": "CORE", "aliases": [],
+            "retail_status": "CURRENT", "retail_checked_at": "2026-09-11",
+            "retail_source": "https://example.test/j5/model",
+            "generations": [{
+                "code": "J5", "segment": "B", "seats": 5,
+                "launched": "2025-08-19", "ended": None,
+                "variants": [{
+                    "id": "bev_cbu", "name": "58.9 kWh BEV CBU", "powertrain": "BEV",
+                    "drivetrain": "FWD", "battery_kwh": 58.9,
+                    "import_type": "CBU", "origin_country": "CN", "aliases": [],
+                }],
+                "trims": [
+                    {
+                        "id": "ultra_bev", "name": "Ultra", "variant": "58.9 kWh BEV CBU",
+                        "powertrain": "BEV", "drivetrain": "FWD", "battery_kwh": 58.9,
+                        "seats": 5, "aliases": [],
+                        "source_refs": {"oem": ["https://example.test/j5"]},
+                    },
+                    {
+                        "id": "old_bev", "name": "Old Grade", "variant": "58.9 kWh BEV CBU",
+                        "powertrain": "BEV", "drivetrain": "FWD", "battery_kwh": 58.9,
+                        "seats": 5, "aliases": [],
+                        "source_refs": {"oem": ["https://example.test/j5-legacy"]},
+                    },
+                ],
+            }],
+        }],
+    })
+    return data
+
+
+def _approve_current_retail(data: Path, *, trim_ids: list[str]) -> None:
+    replace_current_retail_set(
+        data_dir=data, year=2026, model_id=J5_MODEL_ID, trim_ids=trim_ids,
+        reviewer="Owner", reviewed_at="2026-09-27",
+        source_ref="https://example.test/j5-approved-lineup", write=True,
+    )
+
+
+def test_1_discovery_scope_excludes_the_non_approved_trim(tmp_path: Path):
+    from vehreg.retail_scope import retail_scope_index, siblings_from_scope, trim_review_index
+    from vehreg.current_retail import load_current_retail_index
+
+    data = _seed_two_trim_fixture(tmp_path)
+    _approve_current_retail(data, trim_ids=[J5_ULTRA_TRIM])
+    catalog = Catalog.load(data, 2026)
+
+    # Exactly the construction run_discover() now performs.
+    scope_index = retail_scope_index(catalog, data_dir=data, year=2026)
+    trim_reviews = trim_review_index(data_dir=data, year=2026)
+    approved_index = load_current_retail_index(data_dir=data, year=2026)
+    siblings_by_model = siblings_from_scope(
+        catalog, scope_index, trim_reviews, approved_index=approved_index)
+
+    candidate_ids = {trim.id for trim in siblings_by_model.get(J5_MODEL_ID, [])}
+    assert J5_ULTRA_TRIM in candidate_ids
+    assert J5_OLD_TRIM not in candidate_ids
+
+    # Evidence naming the old grade cannot resolve to it at all -- it is
+    # simply not a candidate, so it can never become AUTO_READY.
+    from vehreg.price_match import match_trim_diagnostic
+    from vehreg.pricefeed import PriceClaim
+    claim = PriceClaim(
+        claim_id="c1", document_id="sha256:" + "0" * 64, source_id="oem",
+        brand_raw="Jaecoo", model_raw="Jaecoo 5 EV", trim_raw="Old Grade",
+        amount_thb=500_000, price_type=PriceType.LIST_PRICE,
+    )
+    match = match_trim_diagnostic(catalog, claim, siblings_by_model=siblings_by_model)
+    assert match.trim_id != J5_OLD_TRIM
+
+
+def test_2_apply_time_revalidation_blocks_a_trim_retired_after_discovery(tmp_path: Path):
+    """Discovery-time AUTO_READY for a trim that is no longer approved by the
+    time --apply runs must be blocked, not written -- exactly the state-drift
+    protection revalidate_manifest_for_apply exists for."""
+    data = _seed_two_trim_fixture(tmp_path)
+    # Approved at "discovery time" -- the manifest's AUTO_READY row for
+    # J5_ULTRA_TRIM was produced while this was the approved lineup.
+    _approve_current_retail(data, trim_ids=[J5_ULTRA_TRIM])
+    manifest = _manifest_dict_with_auto_ready_row()
+
+    # A repair between discovery and --apply drops J5_ULTRA_TRIM from the
+    # approved lineup in favor of the other grade -- trim A is no longer
+    # approved, without emptying the (required-nonempty) set.
+    _approve_current_retail(data, trim_ids=[J5_OLD_TRIM])
+
+    blocked = revalidate_manifest_for_apply(manifest, data_dir=data, year=2026)
+    assert blocked == 1
+    grade = manifest["models"][0]["grades"][0]
+    assert grade["terminal_state"] == "IDENTITY_BLOCKED"
+    assert grade["applied"] is False
+
+    catalog = Catalog.load(data, 2026)
+    from vehreg.pricing import PriceLedger
+    assert PriceLedger.load(data, year=2026, catalog=catalog).current_list_price(J5_ULTRA_TRIM) is None
+    # The old trim was not reopened/matched either -- it stays exactly as the
+    # repair left it, an approved identity of its own, never touched by this
+    # unrelated revalidation pass.
+    assert PriceLedger.load(data, year=2026, catalog=catalog).current_list_price(J5_OLD_TRIM) is None
+
+    # The approved set itself is exactly what the repair left it as -- this
+    # revalidation pass only reads it, it never reopens or rewrites it.
+    from vehreg.current_retail import load_current_retail_index
+    assert load_current_retail_index(data_dir=data, year=2026).get(J5_MODEL_ID) == frozenset({J5_OLD_TRIM})
+
+
+def test_3_a_still_approved_current_trim_is_unaffected(tmp_path: Path):
+    """The ordinary AUTO_READY -> APPEND_PRICE path for a trim that remains
+    approved from discovery through apply must be exactly unchanged."""
+    data = _seed_apply_fixture(tmp_path)
+    _approve_current_retail(data, trim_ids=[J5_ULTRA_TRIM])
+    manifest_path = data / "manifest.json"
+    _write_json(manifest_path, _manifest_dict_with_auto_ready_row())
+
+    result = run_apply(
+        data_dir=data, year=2026, manifest_path=manifest_path,
+        transport=_agreeing_media_transport(amount=699_000))
+    assert result["applied"] is True
+    assert result["commands"] == 1
+    catalog = Catalog.load(data, 2026)
+    from vehreg.pricing import PriceLedger
+    row = PriceLedger.load(data, year=2026, catalog=catalog).current_list_price(J5_ULTRA_TRIM)
+    assert row is not None
+    assert row.amount_thb == 699_000
+
+
+def test_4_an_unmanaged_model_keeps_legacy_behavior_unchanged(tmp_path: Path):
+    """No current_retail.json entry at all for this model -- the loaded
+    approved_index simply has no row for it, and legacy opt-out eligibility
+    must apply exactly as before this fix."""
+    data = _seed_apply_fixture(tmp_path)
+    from vehreg.current_retail import load_current_retail_index
+    assert load_current_retail_index(data_dir=data, year=2026) == {}
+
+    manifest = _manifest_dict_with_auto_ready_row()
+    blocked = revalidate_manifest_for_apply(manifest, data_dir=data, year=2026)
+    assert blocked == 0
+    assert manifest["models"][0]["grades"][0]["terminal_state"] == "AUTO_READY"

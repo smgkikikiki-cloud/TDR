@@ -4,6 +4,8 @@ from datetime import date
 import json
 from pathlib import Path
 
+import pytest
+
 from vehreg.catalog import Catalog
 from vehreg.model_operational_state import upsert_model_operational_state
 from vehreg.retail_lifecycle_review import upsert_trim_lifecycle_disposition
@@ -16,6 +18,7 @@ from vehreg.retail_scope import (
     current_generation_of,
     retail_scope_index,
     scoped_siblings_by_model,
+    siblings_from_scope,
     trim_price_eligibility,
     trim_review_index,
 )
@@ -228,11 +231,11 @@ def test_trim_price_eligibility_mirrors_scoped_siblings(tmp_path):
     trim_reviews = trim_review_index(data_dir=data, year=YEAR)
 
     ok, reason = trim_price_eligibility(
-        catalog, TRIM_ID, scope_index=scope_index, trim_reviews=trim_reviews)
+        catalog, TRIM_ID, scope_index=scope_index, trim_reviews=trim_reviews, approved_index={})
     assert ok and reason == ""
 
     ok, reason = trim_price_eligibility(
-        catalog, OLD_TRIM_ID, scope_index=scope_index, trim_reviews=trim_reviews)
+        catalog, OLD_TRIM_ID, scope_index=scope_index, trim_reviews=trim_reviews, approved_index={})
     assert not ok
     assert reason == GENERATION_UNRESOLVED
 
@@ -248,7 +251,7 @@ def test_trim_price_eligibility_reports_retired(tmp_path):
     scope_index = retail_scope_index(catalog, data_dir=data, year=YEAR)
     trim_reviews = trim_review_index(data_dir=data, year=YEAR)
     ok, reason = trim_price_eligibility(
-        catalog, TRIM_ID, scope_index=scope_index, trim_reviews=trim_reviews)
+        catalog, TRIM_ID, scope_index=scope_index, trim_reviews=trim_reviews, approved_index={})
     assert not ok
     assert reason == TRIM_RETIRED
 
@@ -271,3 +274,39 @@ def test_real_catalog_has_zero_blocked_models_and_full_current_trim_coverage():
         if review.get("status") == "HISTORICAL"
     }
     assert scoped_trim_ids == set(catalog.trims) - historical_trim_ids
+
+
+def test_siblings_from_scope_requires_approved_index_explicitly(tmp_path):
+    """Forgetting current-retail authority must be a loud TypeError at the call
+    site, not a silent fallback to legacy eligibility for a model that has
+    since been explicitly managed (this was the exact bug in
+    tools/price_coverage_backfill.py, which bypassed scoped_siblings_by_model
+    and constructed its own siblings map with no approved_index at all)."""
+    data = _seed(tmp_path)
+    catalog = _catalog(data)
+    scope_index = retail_scope_index(catalog, data_dir=data, year=YEAR)
+    trim_reviews = trim_review_index(data_dir=data, year=YEAR)
+
+    with pytest.raises(TypeError):
+        siblings_from_scope(catalog, scope_index, trim_reviews)  # type: ignore[call-arg]
+
+    # An isolated caller that genuinely wants pre-authority legacy behavior
+    # (e.g. this very test file's other fixtures, which have no
+    # current_retail.json at all) must say so explicitly.
+    siblings = siblings_from_scope(catalog, scope_index, trim_reviews, approved_index={})
+    assert {trim.id for trim in siblings[MODEL_ID]} == {TRIM_ID}
+
+
+def test_trim_price_eligibility_requires_approved_index_explicitly(tmp_path):
+    data = _seed(tmp_path)
+    catalog = _catalog(data)
+    scope_index = retail_scope_index(catalog, data_dir=data, year=YEAR)
+    trim_reviews = trim_review_index(data_dir=data, year=YEAR)
+
+    with pytest.raises(TypeError):
+        trim_price_eligibility(  # type: ignore[call-arg]
+            catalog, TRIM_ID, scope_index=scope_index, trim_reviews=trim_reviews)
+
+    ok, reason = trim_price_eligibility(
+        catalog, TRIM_ID, scope_index=scope_index, trim_reviews=trim_reviews, approved_index={})
+    assert ok and reason == ""

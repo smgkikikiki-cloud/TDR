@@ -38,6 +38,7 @@ from vehreg.price_sources import SourceKind, TargetRole, load_source_target_regi
 from vehreg.pricefeed import (
     PriceClaim, SourceDocument, body_sketch, content_id, grade_tokens, looks_reprinted,
 )
+from vehreg.current_retail import load_current_retail_index
 from vehreg.pricefeed_writer import batch_id_for
 from vehreg.pricing import PriceLedger, PriceType
 from vehreg.retail_scope import (
@@ -613,7 +614,12 @@ def run_discover(*, data_dir: Path = DATA_DIR, year: int = DEFAULT_YEAR,
     scope_index = retail_scope_index(
         catalog, data_dir=data_dir, year=year, as_of=as_of)
     trim_reviews = trim_review_index(data_dir=data_dir, year=year)
-    siblings_by_model = siblings_from_scope(catalog, scope_index, trim_reviews)
+    # Loaded once for the whole discovery run, not once per grade -- see
+    # vehreg/current_retail.py's own note on why a bulk caller must not
+    # re-resolve this per model/trim.
+    approved_index = load_current_retail_index(data_dir=data_dir, year=year)
+    siblings_by_model = siblings_from_scope(
+        catalog, scope_index, trim_reviews, approved_index=approved_index)
 
     model_ids = sorted(catalog.models)
     if limit:
@@ -702,6 +708,7 @@ def _local_revalidate_auto_ready_row(catalog: Catalog, ledger: PriceLedger, *,
                                      scope_index: dict[str, ModelScope],
                                      siblings_by_model: dict[str, list],
                                      trim_reviews: dict[str, dict],
+                                     approved_index: dict[str, frozenset[str]],
                                      model_id: str,
                                      grade: dict[str, Any]) -> tuple[bool, str, str]:
     scope = scope_index.get(model_id)
@@ -712,8 +719,15 @@ def _local_revalidate_auto_ready_row(catalog: Catalog, ledger: PriceLedger, *,
     trim_id = str(grade.get("trim_id") or "")
     if not trim_id:
         return False, TerminalState.IDENTITY_BLOCKED.value, "no trim_id recorded at discovery time"
+    # A model may have been placed under (or removed from) an approved
+    # current-retail set between discovery and --apply. Re-checking here,
+    # against the SAME approved_index the caller loaded once for this run,
+    # is exactly what protects against a stale manifest: a trim that was
+    # AUTO_READY at discovery time but has since been retired from the
+    # approved set must be blocked here, not silently written.
     eligible, reason = trim_price_eligibility(
-        catalog, trim_id, scope_index=scope_index, trim_reviews=trim_reviews)
+        catalog, trim_id, scope_index=scope_index, trim_reviews=trim_reviews,
+        approved_index=approved_index)
     if not eligible:
         return False, TerminalState.IDENTITY_BLOCKED.value, \
             f"trim no longer price-eligible ({reason})"
@@ -782,7 +796,13 @@ def revalidate_manifest_for_apply(manifest_dict: dict[str, Any], *,
     scope_index = retail_scope_index(
         catalog, data_dir=data_dir, year=year, as_of=as_of)
     trim_reviews = trim_review_index(data_dir=data_dir, year=year)
-    siblings_by_model = siblings_from_scope(catalog, scope_index, trim_reviews)
+    # Loaded once for the whole apply run, fresh off disk -- this is the
+    # current-retail state AS OF --apply time, which may differ from what
+    # discovery saw. That drift is exactly what this revalidation pass exists
+    # to catch (see _local_revalidate_auto_ready_row below).
+    approved_index = load_current_retail_index(data_dir=data_dir, year=year)
+    siblings_by_model = siblings_from_scope(
+        catalog, scope_index, trim_reviews, approved_index=approved_index)
     registry = load_source_target_registry(data_dir, year) if require_fresh_evidence else None
     if require_fresh_evidence:
         transport = transport or UrllibTransport()
@@ -814,6 +834,7 @@ def revalidate_manifest_for_apply(manifest_dict: dict[str, Any], *,
             ok, blocked_state, note = _local_revalidate_auto_ready_row(
                 catalog, ledger, scope_index=scope_index,
                 siblings_by_model=siblings_by_model, trim_reviews=trim_reviews,
+                approved_index=approved_index,
                 model_id=model_id, grade=grade)
             if not ok:
                 grade["terminal_state"] = blocked_state
