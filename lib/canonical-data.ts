@@ -1,4 +1,5 @@
 import { publicDb } from "@/lib/supabase";
+import { filterToCurrentTrims } from "@/lib/canonical-trim-status";
 
 const BODY: Record<string, string> = {
   HATCHBACK: "HATCHBACK", SEDAN: "SEDAN", CROSSOVER: "CROSSOVER",
@@ -287,12 +288,20 @@ export async function getCanonicalModelBundle(slug: string) {
   if (modelError) throw modelError;
   if (!model) return null;
   const [{ data: rawTrims, error: trimError }, media, modelHead] = await Promise.all([
-    db.from("current_market_trims").select("*").eq("model_id", model.canonical_id).order("name"),
+    // Only lifecycle-CURRENT grades belong on the public model page -- see
+    // lib/canonical-trim-status.ts. Non-current identities (research,
+    // retired, not-yet-approved) still exist in this release for provenance
+    // but must never render as an orderable trim here.
+    db.from("current_market_trims").select("*")
+      .eq("model_id", model.canonical_id).eq("status", "CURRENT").order("name"),
     getCanonicalVehicleMedia(model.generation_id || model.payload?.generation_id || ""),
     getCanonicalModelHeadOverride(model.canonical_id),
   ]);
   if (trimError) throw trimError;
-  const trims = (rawTrims || []).map(trimRow);
+  // Defense in depth alongside the query's own `.eq("status", "CURRENT")`:
+  // this is the same rule getCanonicalCompareTrims applies, so a future
+  // caller that forgets the query filter still cannot leak a non-current row.
+  const trims = filterToCurrentTrims(rawTrims).map(trimRow);
   const powertrains = trims.map((trim: any) => trim._powertrain);
   const row: any = modelRow(model);
   const numeric = (key: string) => trims.map((trim: any) => Number(trim[key]))
@@ -328,11 +337,13 @@ export async function getCanonicalModelBundle(slug: string) {
  *  name, and a car outside that slice came back as "no longer in the
  *  database" to a reader who had just chosen it from the catalogue.
  */
-async function allRows(db: any, table: string, orderBy: string, pageSize = 1000) {
+async function allRows(db: any, table: string, orderBy: string, pageSize = 1000,
+                        eqFilter?: readonly [string, string]) {
   const rows: any[] = [];
   for (let from = 0; ; from += pageSize) {
-    const { data, error } = await db.from(table).select("*")
-      .order(orderBy).range(from, from + pageSize - 1);
+    let query = db.from(table).select("*").order(orderBy);
+    if (eqFilter) query = query.eq(eqFilter[0], eqFilter[1]);
+    const { data, error } = await query.range(from, from + pageSize - 1);
     if (error) throw error;
     rows.push(...(data || []));
     if (!data || data.length < pageSize) return rows;
@@ -342,15 +353,18 @@ async function allRows(db: any, table: string, orderBy: string, pageSize = 1000)
 export async function getCanonicalCompareTrims(limit?: number) {
   const db = publicDb();
   if (!db) return [];
+  // Only lifecycle-CURRENT grades belong on this public surface -- see
+  // lib/canonical-trim-status.ts.
   const [rawTrims, modelRows] = await Promise.all([
     limit
-      ? db.from("current_market_trims").select("*").order("name").limit(limit)
+      ? db.from("current_market_trims").select("*").eq("status", "CURRENT").order("name").limit(limit)
           .then(({ data, error }: any) => { if (error) throw error; return data || []; })
-      : allRows(db, "current_market_trims", "name"),
+      : allRows(db, "current_market_trims", "name", 1000, ["status", "CURRENT"] as const),
     getCanonicalModels(1000),
   ]);
   const models = new Map((modelRows || []).map((row: any) => [row.canonical_id, row]));
-  return (rawTrims || [])
+  // Defense in depth alongside the query's own `.eq("status", "CURRENT")`.
+  return filterToCurrentTrims(rawTrims)
     .map((raw: any) => {
       const trim = trimRow(raw);
       const model: any = models.get(raw.model_id) || null;
@@ -379,7 +393,6 @@ export async function getCanonicalCompareTrims(limit?: number) {
         launch_quarter: model?.launch_quarter || null,
       };
     })
-    .filter((row: any) => String(row.status || "current").toLowerCase() !== "discontinued")
     .sort((a: any, b: any) => `${a.brand_name} ${a.model_name} ${a.name}`.localeCompare(`${b.brand_name} ${b.model_name} ${b.name}`));
 }
 

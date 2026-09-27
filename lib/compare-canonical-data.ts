@@ -1,5 +1,6 @@
 import { publicDb } from "@/lib/supabase";
 import { paginateAll } from "@/lib/paginate-all";
+import { isCurrentLifecycleStatus } from "@/lib/canonical-trim-status";
 
 /**
  * Compare has three deliberately different read shapes:
@@ -50,11 +51,11 @@ function primaryExteriorMedia(rows: CompareMediaRow[]) {
 }
 
 function isCurrentTrim(row: any) {
-  return row?.status === "CURRENT";
+  return isCurrentLifecycleStatus(row?.status);
 }
 
 function isCurrentModel(row: any) {
-  return row?.status === "CURRENT";
+  return isCurrentLifecycleStatus(row?.status);
 }
 
 function slimModel(row: any) {
