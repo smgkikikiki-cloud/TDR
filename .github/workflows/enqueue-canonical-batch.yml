@@ -1,0 +1,127 @@
+name: Enqueue canonical vehicle input batch
+
+# Thin bridge only: a caller with GitHub Actions access but no Supabase
+# credentials (e.g. Claude Code) hands a complete, already-prepared
+# canonical_input_batches payload to this workflow, which validates it,
+# inserts exactly one row using the Supabase secrets already configured for
+# Actions, and wakes the existing canonical-input worker. It never applies
+# CanonicalInputPipeline, edits canonical data, commits, or publishes --
+# canonical-input.yml (unchanged) still owns all of that.
+on:
+  workflow_dispatch:
+    inputs:
+      payload_json:
+        description: >-
+          Complete canonical_input_batches payload as JSON (schema_version 1,
+          batch_id, source, actor, submitted_at, commands[]).
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  enqueue:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+    defaults:
+      run:
+        working-directory: automotive/vehicle_master
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Pinned so workflow_dispatch can't run this against a non-main
+          # branch's copy of the validation/insert code -- see
+          # source-import.yml's checkout comment for the same reasoning.
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: automotive/vehicle_master/requirements.txt
+      - run: python -m pip install -r requirements.txt
+      - name: Write the supplied payload to a file
+        # The payload is passed through env, never spliced into the script
+        # text -- interpolating a workflow_dispatch input directly into a
+        # run: block's shell would let its content execute as commands.
+        env:
+          PAYLOAD_JSON: ${{ inputs.payload_json }}
+        run: printf '%s' "$PAYLOAD_JSON" > /tmp/canonical-batch-payload.json
+      - name: Preflight deployment secrets
+        run: |
+          set -euo pipefail
+          if [ -z "${SUPABASE_URL}" ] || [ -z "${SUPABASE_SECRET_KEY}${SUPABASE_SERVICE_ROLE_KEY}" ]; then
+            echo "::error::Set SUPABASE_URL and SUPABASE_SECRET_KEY (preferred) or SUPABASE_SERVICE_ROLE_KEY before enqueueing."
+            exit 1
+          fi
+          if ! probe=$(PYTHONPATH=. python tools/canonical_input_worker.py check 2>&1); then
+            echo "::error::Configured Supabase URL/key cannot access the TDR canonical input table: ${probe}"
+            exit 1
+          fi
+      - name: Validate and enqueue the batch
+        id: enqueue
+        run: |
+          set -euo pipefail
+          PYTHONPATH=. python -m tools.enqueue_canonical_batch \
+            --payload-file /tmp/canonical-batch-payload.json \
+            --actor "${{ github.actor }}" \
+            --result-file /tmp/enqueue-result.json
+          echo "batch_key=$(python -c "import json;print(json.load(open('/tmp/enqueue-result.json'))['batch_key'])")" >> "$GITHUB_OUTPUT"
+          echo "status=$(python -c "import json;print(json.load(open('/tmp/enqueue-result.json'))['status'])")" >> "$GITHUB_OUTPUT"
+          echo "duplicate=$(python -c "import json;print(json.load(open('/tmp/enqueue-result.json'))['duplicate'])")" >> "$GITHUB_OUTPUT"
+          echo "should_wake_worker=$(python -c "import json;print(str(json.load(open('/tmp/enqueue-result.json'))['should_wake_worker']).lower())")" >> "$GITHUB_OUTPUT"
+      # Reached only if the enqueue step above succeeded (exit 0): a
+      # malformed payload or a batch_id reused with different content
+      # fails that step first, and this step never runs.
+      #
+      # Only actually dispatches when the row this run knows about is
+      # genuinely QUEUED (freshly inserted, or an identical replay still
+      # sitting QUEUED). A duplicate already PROCESSING/STAGED/PUBLISHED/
+      # FAILED/REJECTED/NEEDS_REVIEW is real, existing state this bridge
+      # must report as-is, not silently re-queue or re-trigger.
+      - name: Wake the existing canonical-input worker
+        if: steps.enqueue.outputs.should_wake_worker == 'true'
+        working-directory: ${{ github.workspace }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          echo "dispatched_at=$(date -u +%FT%TZ)" >> "$GITHUB_OUTPUT"
+          gh workflow run canonical-input.yml --ref main
+        id: dispatch
+      - name: Report the dispatched worker run
+        if: steps.enqueue.outputs.should_wake_worker == 'true'
+        working-directory: ${{ github.workspace }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DISPATCHED_AT: ${{ steps.dispatch.outputs.dispatched_at }}
+        run: |
+          set -euo pipefail
+          run_info="{}"
+          # A few short polls for the run this dispatch just created, not a
+          # wait for it to finish. --event workflow_dispatch excludes the
+          # scheduled sweeper's own runs outright; comparing createdAt to
+          # the moment we dispatched further excludes an earlier
+          # workflow_dispatch run that just happened to still be listed.
+          for _ in 1 2 3 4 5 6; do
+            sleep 5
+            candidate=$(gh run list --workflow=canonical-input.yml --branch main \
+              --event workflow_dispatch --limit 1 \
+              --json databaseId,url,status,createdAt,event)
+            created_at=$(echo "$candidate" | python3 -c "import json,sys; rows=json.load(sys.stdin); print(rows[0]['createdAt'] if rows else '')")
+            if [ -n "$created_at" ] && [ "$created_at" \> "$DISPATCHED_AT" ]; then
+              run_info="$candidate"
+              break
+            fi
+          done
+          echo "worker_run: ${run_info}"
+      - name: Report the batch's final state
+        if: always() && steps.enqueue.outcome == 'success'
+        run: |
+          echo "batch_key: ${{ steps.enqueue.outputs.batch_key }}"
+          echo "queue_status: ${{ steps.enqueue.outputs.status }} (duplicate replay: ${{ steps.enqueue.outputs.duplicate }})"
+          echo "worker woken this run: ${{ steps.enqueue.outputs.should_wake_worker }}"
