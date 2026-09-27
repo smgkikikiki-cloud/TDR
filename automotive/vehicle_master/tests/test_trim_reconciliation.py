@@ -199,7 +199,13 @@ def test_overlay_cannot_replace_base_trim_or_guess_variant_link(tmp_path):
         raise AssertionError("overlay accepted an unreviewed analytical variant link")
 
 
-def test_ready_source_evidence_with_zero_canonical_trims_blocks_release(tmp_path):
+def test_ready_source_evidence_with_zero_canonical_trims_is_debt_not_a_blocker(tmp_path):
+    """READY means "we understand this evidence," not "it must be CURRENT."
+
+    Owner-approved current-retail membership (vehreg/current_retail.py) is the
+    only thing that may decide CURRENT; reconciliation READY/unresolved state
+    stays visible as research debt but must never block a serving release.
+    """
     write_state(tmp_path, [{
         "model_id": "acme.echo",
         "status": "READY",
@@ -208,12 +214,12 @@ def test_ready_source_evidence_with_zero_canonical_trims_blocks_release(tmp_path
         "reason": "three exact BEV trims ready to promote",
     }])
     report = release_reconciliation_report(release(), data_dir=tmp_path, year=2026)
-    assert report["blocker_count"] == 1
-    assert report["blockers"][0]["blocker"] == "SOURCE_EVIDENCE_NOT_FULLY_PROMOTED"
-    assert report["blockers"][0]["unresolved_source_trim_count"] == 3
+    assert report["blocker_count"] == 0
+    assert report["models"][0]["status"] == "READY"
+    assert report["models"][0]["unresolved_source_trim_count"] == 3
 
 
-def test_partial_ready_promotion_also_blocks(tmp_path):
+def test_partial_ready_promotion_is_debt_not_a_blocker(tmp_path):
     write_state(tmp_path, [{
         "model_id": "acme.echo",
         "status": "READY",
@@ -227,7 +233,7 @@ def test_partial_ready_promotion_also_blocks(tmp_path):
         "source_refs": {"owner_directory": ["owner:test:001"]},
     }
     report = release_reconciliation_report(release(one), data_dir=tmp_path, year=2026)
-    assert report["blocker_count"] == 1
+    assert report["blocker_count"] == 0
     assert report["models"][0]["canonical_source_trim_count"] == 1
     assert report["models"][0]["unresolved_source_trim_count"] == 1
 

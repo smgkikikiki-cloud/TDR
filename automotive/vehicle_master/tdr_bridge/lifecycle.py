@@ -1,15 +1,25 @@
 """Retail lifecycle semantics for serving releases.
 
-The serving policy is intentionally simple and operator-owned:
+The serving policy is intentionally simple and operator-owned, with one
+authority ranked above everything else:
 
-* canonical identity/catalog presence is treated as CURRENT by default;
-* an explicit HISTORICAL model or an ended generation forces HISTORICAL;
-* an explicit HUMAN trim lifecycle decision can mark one trim CURRENT/HISTORICAL;
-* otherwise a trim remains CURRENT whether or not a price has been found yet.
+* an explicit HISTORICAL model or an ended generation always forces HISTORICAL;
+* for a model with an explicit approved current-retail set
+  (vehreg/current_retail.py), CURRENT membership is decided by that set alone
+  -- a trim in it is CURRENT, a trim not in it is never CURRENT no matter what
+  source evidence, owner-directory rows, verified fragments or old prices say
+  about it (an existing HUMAN HISTORICAL disposition on a non-member is still
+  honored, since that is a stricter claim, never a way back to CURRENT);
+* for every other model (no approved set yet -- the common case during
+  migration), the legacy owner policy keeps applying unchanged: canonical
+  identity/catalog presence is CURRENT by default, an explicit HUMAN trim
+  lifecycle decision can mark one trim CURRENT/HISTORICAL, and a missing price
+  is price debt, not lifecycle debt.
 
-This keeps price coverage honest in the direction the owner actually wants: a
-missing price is price debt, not lifecycle debt. Cars stop being searched only
-when the operator explicitly archives them (or records a generation end date).
+This lets showroom-lineup repairs happen model by model: approving one
+model's current-retail set switches ONLY that model onto the strict "approved
+set is the whole truth" rule, and every untouched model keeps behaving
+exactly as it does today.
 """
 from __future__ import annotations
 
@@ -19,6 +29,7 @@ from pathlib import Path
 from typing import Any
 
 from vehreg.catalog import DATA_DIR, DEFAULT_YEAR
+from vehreg.current_retail import load_current_retail_index
 from vehreg.retail_lifecycle_review import load_trim_lifecycle_decisions
 
 _ALLOWED = {"CURRENT", "HISTORICAL", "UNVERIFIED"}
@@ -42,6 +53,11 @@ def apply_retail_lifecycle(
         row["trim_id"]: row
         for row in load_trim_lifecycle_decisions(data_dir=data_dir, year=year)
     }
+    # Loaded once for the whole build, not once per model: current_retail.json
+    # is one file, and re-reading/re-validating it (which re-loads Catalog)
+    # once per distinct model_id would turn one release build into as many
+    # redundant catalog loads as there are explicitly managed models.
+    approved_index = load_current_retail_index(data_dir=data_dir, year=year)
 
     # Historical is an explicit operator claim. Everything else in the active
     # catalog remains searchable/current by default; legacy UNVERIFIED values
@@ -75,8 +91,28 @@ def apply_retail_lifecycle(
                 # historical state from an unreadable value.
                 generation_historical = False
 
+        approved = approved_index.get(model_id)
+
         if model_status.get(model_id) == "HISTORICAL" or generation_historical:
             trim["status"] = "HISTORICAL"
+        elif approved is not None:
+            # Explicitly managed model: the approved set is the sole authority
+            # on CURRENT membership. Source evidence, owner-directory rows,
+            # verified fragments, reconciliation state and old prices have no
+            # vote here at all -- not even as a fallback.
+            if trim_id in approved:
+                trim["status"] = "CURRENT"
+            elif trim_id in decisions and decisions[trim_id].get("status") == "HISTORICAL":
+                # A non-member may still carry its own HUMAN HISTORICAL
+                # disposition -- that is a stricter claim than "just not
+                # approved," never a route back to CURRENT, so it is honored.
+                trim["status"] = "HISTORICAL"
+                trim["retail_lifecycle_review"] = {
+                    key: decisions[trim_id][key]
+                    for key in ("reviewer", "reviewed_at", "source_ref", "notes")
+                }
+            else:
+                trim["status"] = "UNVERIFIED"
         elif trim_id in decisions:
             trim["status"] = _status(decisions[trim_id].get("status"))
             trim["retail_lifecycle_review"] = {

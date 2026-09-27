@@ -24,6 +24,7 @@ from datetime import date
 from typing import Optional
 
 from .catalog import Catalog, DATA_DIR, DEFAULT_YEAR, Generation
+from .current_retail import load_current_retail_index
 from .model_operational_state import under_maintenance_model_ids
 from .retail_lifecycle_review import load_trim_lifecycle_decisions
 from .taxonomy import RetailStatus
@@ -138,8 +139,18 @@ def trim_review_index(*, data_dir=DATA_DIR, year: int = DEFAULT_YEAR) -> dict[st
 
 def trim_price_eligibility(catalog: Catalog, trim_id: str, *,
                            scope_index: dict[str, ModelScope],
-                           trim_reviews: dict[str, dict]) -> tuple[bool, str]:
-    """Whether one existing trim may receive an automated price fact now."""
+                           trim_reviews: dict[str, dict],
+                           approved_index: Optional[dict[str, frozenset[str]]] = None) -> tuple[bool, str]:
+    """Whether one existing trim may receive an automated price fact now.
+
+    ``approved_index`` (vehreg.current_retail.load_current_retail_index) is
+    optional and additive: a model absent from it (or the argument omitted
+    entirely) keeps today's legacy rule -- every non-retired trim in an
+    active generation is eligible. A model present in it flips to opt-in --
+    only trims in its approved set are eligible, whether or not they were
+    ever marked HISTORICAL, and a trim outside the set is never eligible no
+    matter what evidence exists for it.
+    """
     trim = catalog.trims.get(trim_id)
     if trim is None:
         return False, UNKNOWN_MODEL
@@ -151,6 +162,9 @@ def trim_price_eligibility(catalog: Catalog, trim_id: str, *,
         return False, (scope.blocked_reason if scope else UNKNOWN_MODEL) or GENERATION_UNRESOLVED
     if trim.generation_id not in scope.active_generation_ids:
         return False, GENERATION_UNRESOLVED
+    approved = (approved_index or {}).get(generation.model_id)
+    if approved is not None:
+        return (True, "") if trim_id in approved else (False, TRIM_RETIRED)
     review = trim_reviews.get(trim_id)
     if review is not None and review.get("status") == "HISTORICAL":
         return False, TRIM_RETIRED
@@ -158,8 +172,13 @@ def trim_price_eligibility(catalog: Catalog, trim_id: str, *,
 
 
 def siblings_from_scope(catalog: Catalog, scope_index: dict[str, ModelScope],
-                        trim_reviews: dict[str, dict]) -> dict[str, list]:
-    """Build ``model_id -> price-eligible MarketTrim`` from precomputed scope."""
+                        trim_reviews: dict[str, dict],
+                        approved_index: Optional[dict[str, frozenset[str]]] = None) -> dict[str, list]:
+    """Build ``model_id -> price-eligible MarketTrim`` from precomputed scope.
+
+    See :func:`trim_price_eligibility` for what ``approved_index`` changes.
+    """
+    approved_index = approved_index or {}
     index: dict[str, list] = {}
     for model_id, scope in scope_index.items():
         if not scope.in_scope:
@@ -169,10 +188,19 @@ def siblings_from_scope(catalog: Catalog, scope_index: dict[str, ModelScope],
             for generation in scope.active_generations
             for trim in catalog.trims_of_generation(generation.id)
         ]
-        eligible = [
-            trim for trim in trims
-            if trim_reviews.get(trim.id, {}).get("status") != "HISTORICAL"
-        ]
+        approved = approved_index.get(model_id)
+        if approved is not None:
+            # Explicitly managed model: opt-in only. A trim's HISTORICAL
+            # review, if any, is irrelevant here -- membership is the sole
+            # question, and a HUMAN review can only ever *retire* a
+            # non-member's leftover market_trims status elsewhere
+            # (tdr_bridge/lifecycle.py), never *admit* it to this scope.
+            eligible = [trim for trim in trims if trim.id in approved]
+        else:
+            eligible = [
+                trim for trim in trims
+                if trim_reviews.get(trim.id, {}).get("status") != "HISTORICAL"
+            ]
         if eligible:
             index[model_id] = eligible
     return index
@@ -181,11 +209,17 @@ def siblings_from_scope(catalog: Catalog, scope_index: dict[str, ModelScope],
 def scoped_siblings_by_model(catalog: Catalog, *, data_dir=DATA_DIR,
                              year: int = DEFAULT_YEAR,
                              as_of: Optional[date] = None) -> dict[str, list]:
-    """Drop-in siblings map restricted to active, non-retired retail identity."""
+    """Drop-in siblings map restricted to active, approved retail identity.
+
+    A model with an explicit approved current-retail set (see
+    vehreg/current_retail.py) is restricted to exactly that set; every other
+    model keeps the legacy "active and not HUMAN-retired" rule.
+    """
     scope_index = retail_scope_index(
         catalog, data_dir=data_dir, year=year, as_of=as_of)
     trim_reviews = trim_review_index(data_dir=data_dir, year=year)
-    return siblings_from_scope(catalog, scope_index, trim_reviews)
+    approved_index = load_current_retail_index(data_dir=data_dir, year=year)
+    return siblings_from_scope(catalog, scope_index, trim_reviews, approved_index)
 
 
 __all__ = [

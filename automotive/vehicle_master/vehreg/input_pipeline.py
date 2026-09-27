@@ -27,6 +27,7 @@ from typing import Any
 
 from .canonical_write import CanonicalWriteCommand, CanonicalWriteError, CanonicalWritePipeline
 from .catalog import DATA_DIR, DEFAULT_YEAR
+from .current_retail import replace_current_retail_set
 from .eco_review_write import upsert_review_dispositions
 from .model_operational_state import upsert_model_operational_state
 from .price_coverage_review import upsert_coverage_disposition
@@ -45,6 +46,7 @@ _SPECIAL_OPERATIONS = {
     "UPSERT_PRICE_COVERAGE_REVIEW",
     "UPSERT_TRIM_RETAIL_LIFECYCLE_REVIEW",
     "UPSERT_MODEL_OPERATIONAL_STATE",
+    "REPLACE_CURRENT_RETAIL_SET",
 }
 _PRICE_COVERAGE_REASONS = {
     "AWAITING_FINAL_LIST_PRICE",
@@ -205,6 +207,33 @@ def _validate_model_operational_state_command(command: dict[str, Any]) -> None:
     _validated_submitted_at(command, operation)
 
 
+def _validate_current_retail_set_command(command: dict[str, Any]) -> None:
+    operation = "REPLACE_CURRENT_RETAIL_SET"
+    unknown = set(command) - {
+        "operation", "command_id", "year", "actor", "reason", "submitted_at", "payload",
+    }
+    if unknown:
+        raise CanonicalInputError(f"{operation} unknown fields: {sorted(unknown)}")
+    payload = command.get("payload")
+    if not isinstance(payload, dict):
+        raise CanonicalInputError(f"{operation} requires payload object")
+    unknown_payload = set(payload) - {"model_id", "trim_ids", "source_ref", "notes"}
+    if unknown_payload:
+        raise CanonicalInputError(f"{operation} payload unknown fields: {sorted(unknown_payload)}")
+    model_id = str(payload.get("model_id") or "").strip()
+    if not model_id or len(model_id) > 255:
+        raise CanonicalInputError(f"{operation} model_id is required")
+    trim_ids = payload.get("trim_ids")
+    if not isinstance(trim_ids, list) or not trim_ids or not all(
+            isinstance(item, str) and item.strip() for item in trim_ids):
+        raise CanonicalInputError(f"{operation} trim_ids must be a nonempty array of strings")
+    source_ref = str(payload.get("source_ref") or "").strip()
+    if not source_ref.startswith(("https://", "http://")):
+        raise CanonicalInputError(f"{operation} requires an http(s) source_ref")
+    _validated_human_actor(command, operation)
+    _validated_submitted_at(command, operation)
+
+
 def _apply_eco_review_command(staged: Path, command: dict[str, Any]) -> tuple[dict[str, Any], Path | None]:
     _validate_eco_review_command(command)
     payload = command["payload"]
@@ -284,6 +313,44 @@ def _apply_trim_lifecycle_review_command(
         "topic": "trim_retail_lifecycle_review",
         "entity_type": "market_trim_retail_lifecycle_review",
         "entity_id": str(payload["trim_id"]),
+        "idempotent_replay": not bool(result["changed"]),
+    }, path if result["changed"] else None)
+
+
+def _apply_current_retail_set_command(
+        staged: Path, command: dict[str, Any]) -> tuple[dict[str, Any], Path | None]:
+    """Replace one model's approved CURRENT set on the SAME staged tree.
+
+    Runs after whatever earlier commands in this batch already materialized
+    into Catalog (an UPSERT_MODEL_BUNDLE command staged before this one), so
+    every trim_id it validates against is read fresh off `staged` --
+    replace_current_retail_set -> validate_current_retail_sets ->
+    Catalog.load(staged, year) -- never a cached in-memory catalog, which is
+    exactly what lets "materialize a new trim, then approve it" work as one
+    batch: this command sees the prior command's write.
+    """
+    operation = "REPLACE_CURRENT_RETAIL_SET"
+    _validate_current_retail_set_command(command)
+    payload = command["payload"]
+    reviewed_at = _validated_submitted_at(command, operation).date().isoformat()
+    result = replace_current_retail_set(
+        data_dir=staged,
+        year=int(command["year"]),
+        model_id=str(payload["model_id"]),
+        trim_ids=[str(item) for item in payload["trim_ids"]],
+        reviewer=str(command["actor"]),
+        reviewed_at=reviewed_at,
+        source_ref=str(payload["source_ref"]),
+        notes=str(payload.get("notes") or command.get("reason") or ""),
+        write=True,
+    )
+    path = Path(result["path"])
+    return ({
+        "command_id": str(command["command_id"]),
+        "revision_id": f"current-retail-set-{_hash(command)[:16]}",
+        "topic": "current_retail_set",
+        "entity_type": "market_current_retail_set",
+        "entity_id": str(payload["model_id"]),
         "idempotent_replay": not bool(result["changed"]),
     }, path if result["changed"] else None)
 
@@ -410,6 +477,11 @@ class CanonicalInputBatch:
                         raise CanonicalInputError(
                             "UPSERT_MODEL_OPERATIONAL_STATE requires source.kind ADMIN")
                     _validate_model_operational_state_command(command)
+                elif operation == "REPLACE_CURRENT_RETAIL_SET":
+                    if source_kind != "ADMIN":
+                        raise CanonicalInputError(
+                            "REPLACE_CURRENT_RETAIL_SET requires source.kind ADMIN")
+                    _validate_current_retail_set_command(command)
                 parsed_id = str(command["command_id"])
             else:
                 parsed = CanonicalWriteCommand.from_dict(command)
@@ -505,6 +577,9 @@ class CanonicalInputPipeline:
                                 staged, command)
                         elif operation == "UPSERT_TRIM_RETAIL_LIFECYCLE_REVIEW":
                             review_result, changed_path = _apply_trim_lifecycle_review_command(
+                                staged, command)
+                        elif operation == "REPLACE_CURRENT_RETAIL_SET":
+                            review_result, changed_path = _apply_current_retail_set_command(
                                 staged, command)
                         else:
                             review_result, changed_path = _apply_model_operational_state_command(

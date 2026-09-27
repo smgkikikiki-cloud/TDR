@@ -626,14 +626,10 @@ def release_reconciliation_report(
         if model_id not in model_ids:
             row["blocker"] = "SOURCE_EVIDENCE_MODEL_NOT_IN_RELEASE"
             blockers.append(row)
-        elif unresolved:
-            try:
-                status = TrimResolutionStatus(declared)
-            except ValueError:
-                status = None
-            if status not in UNRESOLVED_EXEMPTIONS:
-                row["blocker"] = "SOURCE_EVIDENCE_NOT_FULLY_PROMOTED"
-                blockers.append(row)
+        # READY-but-unresolved source evidence is no longer a release blocker:
+        # "we understand this evidence" is not the same claim as "this must be
+        # a CURRENT retail trim." It stays visible in `unresolved_source_trim_count`
+        # / `status` as research debt for whoever curates the current-retail set.
         counts[effective] = counts.get(effective, 0) + 1
         rows.append(row)
 
