@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "97d1d62e671a42a16b117194",
+    "command_id": "lot3-039",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto2.atto2.trim.extended_range_premium_45_1_kwh_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "EV Retail Repair Lot 03: owner-approved CURRENT retail set + price corrections across 20 models",
+    "submitted_at": "2026-09-27T00:00:00+00:00",
+    "applied_at": "2026-09-27T15:15:09+00:00",
+    "before_hash": "89e4870698fb4dd69d960bc158a6cc81972dd17ba40dd2ce42b7c8b5412de75b",
+    "after_hash": "084c1f6e2af7afadff615ff0901b0aa3740a78a9403c2ae2feec9be8755c1f4d",
+    "before": [
+      {
+        "trim_id": "byd.atto2.atto2.trim.extended_range_premium_45_1_kwh_bev",
+        "amount_thb": 659900,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:49:1",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: Atto 2 Premium; canonical grade: Extended Range Premium (45.1 kWh); mapping: manual. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "byd.atto2.atto2.trim.extended_range_premium_45_1_kwh_bev",
+        "amount_thb": 659900,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:49:1",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: Atto 2 Premium; canonical grade: Extended Range Premium (45.1 kWh); mapping: manual. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      },
+      {
+        "trim_id": "byd.atto2.atto2.trim.extended_range_premium_45_1_kwh_bev",
+        "amount_thb": 659900,
+        "price_type": "CAMPAIGN_PRICE",
+        "effective_from": "2026-09-16",
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": "byd.atto2.atto2.trim.extended_range_premium_45_1_kwh_bev.campaign.2026-09-16",
+        "option_id": "default",
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_lot3-039.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "97d1d62e671a42a16b117194:price",
+    "revision_id": "97d1d62e671a42a16b117194",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto2.atto2.trim.extended_range_premium_45_1_kwh_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-27T15:15:09+00:00",
+    "payload": [
+      {
+        "trim_id": "byd.atto2.atto2.trim.extended_range_premium_45_1_kwh_bev",
+        "amount_thb": 659900,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:49:1",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: Atto 2 Premium; canonical grade: Extended Range Premium (45.1 kWh); mapping: manual. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      },
+      {
+        "trim_id": "byd.atto2.atto2.trim.extended_range_premium_45_1_kwh_bev",
+        "amount_thb": 659900,
+        "price_type": "CAMPAIGN_PRICE",
+        "effective_from": "2026-09-16",
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": "byd.atto2.atto2.trim.extended_range_premium_45_1_kwh_bev.campaign.2026-09-16",
+        "option_id": "default",
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

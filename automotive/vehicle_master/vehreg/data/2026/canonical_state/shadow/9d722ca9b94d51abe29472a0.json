@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9d722ca9b94d51abe29472a0",
+    "command_id": "lot3-022",
+    "operation": "CORRECT_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.i5.gen1.trim.edrive40_m_sport_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Owner-approved current retail price for eDrive40 M Sport; supersedes prior 4,999,000 LIST_PRICE",
+    "submitted_at": "2026-09-27T00:00:00+00:00",
+    "applied_at": "2026-09-27T15:15:00+00:00",
+    "before_hash": "0f49f502c6c4d23e5bd640c8ac5277a3fe26e349c09baa634a58af360dacc65a",
+    "after_hash": "18ace73a9d04bb19f23eeb6b7a7cbf5b835eeb9796c09f60616ea09fa988c2bd",
+    "before": [
+      {
+        "trim_id": "bmw.i5.gen1.trim.edrive40_m_sport_bev",
+        "amount_thb": 4999000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:37:1",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: i5 eDrive40 M Sport; canonical grade: eDrive40 M Sport; mapping: auto_high_confidence. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "bmw.i5.gen1.trim.edrive40_m_sport_bev",
+        "amount_thb": 4999000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": "2026-09-26",
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:37:1",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: i5 eDrive40 M Sport; canonical grade: eDrive40 M Sport; mapping: auto_high_confidence. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "smgkikikiki-cloud"
+      },
+      {
+        "trim_id": "bmw.i5.gen1.trim.edrive40_m_sport_bev",
+        "amount_thb": 3299000,
+        "price_type": "LIST_PRICE",
+        "effective_from": "2026-09-27",
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "owner_pricing_directory_2026_09_14:37:1",
+        "source_document_id": "",
+        "notes": "Owner-approved current retail price for eDrive40 M Sport; supersedes prior 4,999,000 LIST_PRICE",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "smgkikikiki-cloud"
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/observations.json",
+      "2026/market/prices/owner_registry_2026-09-14.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9d722ca9b94d51abe29472a0:price",
+    "revision_id": "9d722ca9b94d51abe29472a0",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.i5.gen1.trim.edrive40_m_sport_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-27T15:15:00+00:00",
+    "payload": [
+      {
+        "trim_id": "bmw.i5.gen1.trim.edrive40_m_sport_bev",
+        "amount_thb": 4999000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": "2026-09-26",
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:37:1",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: i5 eDrive40 M Sport; canonical grade: eDrive40 M Sport; mapping: auto_high_confidence. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "smgkikikiki-cloud"
+      },
+      {
+        "trim_id": "bmw.i5.gen1.trim.edrive40_m_sport_bev",
+        "amount_thb": 3299000,
+        "price_type": "LIST_PRICE",
+        "effective_from": "2026-09-27",
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "owner_pricing_directory_2026_09_14:37:1",
+        "source_document_id": "",
+        "notes": "Owner-approved current retail price for eDrive40 M Sport; supersedes prior 4,999,000 LIST_PRICE",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "smgkikikiki-cloud"
+      }
+    ]
+  }
+}

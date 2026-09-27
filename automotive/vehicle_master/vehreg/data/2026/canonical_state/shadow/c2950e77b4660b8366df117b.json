@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c2950e77b4660b8366df117b",
+    "command_id": "lot3-056",
+    "operation": "UPSERT_CAMPAIGN",
+    "year": 2026,
+    "topic": "campaign",
+    "entity_type": "campaign",
+    "entity_id": "byd.dolphin.dol.trim.extended_range_premium_60_48_kwh_bev.campaign.2026-09-16",
+    "actor": "smgkikikiki-cloud",
+    "reason": "EV Retail Repair Lot 03: owner-approved CURRENT retail set + price corrections across 20 models",
+    "submitted_at": "2026-09-27T00:00:00+00:00",
+    "applied_at": "2026-09-27T15:15:35+00:00",
+    "before_hash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+    "after_hash": "2c8fa86eb0b0226e68db8745c8914ffaa430deb4ac5b2dc66d07e1036c2e2936",
+    "before": null,
+    "after": {
+      "id": "byd.dolphin.dol.trim.extended_range_premium_60_48_kwh_bev.campaign.2026-09-16",
+      "ends": "2026-09-30",
+      "source": "admin",
+      "starts": "2026-09-16",
+      "options": [
+        {
+          "id": "default"
+        }
+      ],
+      "brand_id": "byd",
+      "source_ref": "rever-official-16-30-sep-2026"
+    },
+    "changed_files": [
+      "2026/market/campaigns/byd.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c2950e77b4660b8366df117b:campaign",
+    "revision_id": "c2950e77b4660b8366df117b",
+    "topic": "campaign",
+    "entity_type": "campaign",
+    "entity_id": "byd.dolphin.dol.trim.extended_range_premium_60_48_kwh_bev.campaign.2026-09-16",
+    "state": "PENDING",
+    "created_at": "2026-09-27T15:15:35+00:00",
+    "payload": {
+      "id": "byd.dolphin.dol.trim.extended_range_premium_60_48_kwh_bev.campaign.2026-09-16",
+      "ends": "2026-09-30",
+      "source": "admin",
+      "starts": "2026-09-16",
+      "options": [
+        {
+          "id": "default"
+        }
+      ],
+      "brand_id": "byd",
+      "source_ref": "rever-official-16-30-sep-2026"
+    }
+  }
+}

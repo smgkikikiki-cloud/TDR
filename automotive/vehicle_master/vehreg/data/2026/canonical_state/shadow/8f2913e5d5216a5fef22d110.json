@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "8f2913e5d5216a5fef22d110",
+    "command_id": "lot3-037",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto2.atto2.trim.standard_range_dynamic_32_kwh_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "EV Retail Repair Lot 03: owner-approved CURRENT retail set + price corrections across 20 models",
+    "submitted_at": "2026-09-27T00:00:00+00:00",
+    "applied_at": "2026-09-27T15:15:07+00:00",
+    "before_hash": "06324d5efeceda2f615947fa067342baca666e1a5583c5916c1906d6555a963e",
+    "after_hash": "22f675eabaa1ee8434309126bf5de1e2aef0e328eee684627d642ef7705205d5",
+    "before": [
+      {
+        "trim_id": "byd.atto2.atto2.trim.standard_range_dynamic_32_kwh_bev",
+        "amount_thb": 629900,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "byd.atto2.atto2.trim.standard_range_dynamic_32_kwh_bev",
+        "amount_thb": 629900,
+        "price_type": "CAMPAIGN_PRICE",
+        "effective_from": "2026-09-16",
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": "byd.atto2.atto2.trim.standard_range_dynamic_32_kwh_bev.campaign.2026-09-16",
+        "option_id": "default",
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "byd.atto2.atto2.trim.standard_range_dynamic_32_kwh_bev",
+        "amount_thb": 629900,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_lot3-037.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "8f2913e5d5216a5fef22d110:price",
+    "revision_id": "8f2913e5d5216a5fef22d110",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto2.atto2.trim.standard_range_dynamic_32_kwh_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-27T15:15:07+00:00",
+    "payload": [
+      {
+        "trim_id": "byd.atto2.atto2.trim.standard_range_dynamic_32_kwh_bev",
+        "amount_thb": 629900,
+        "price_type": "CAMPAIGN_PRICE",
+        "effective_from": "2026-09-16",
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": "byd.atto2.atto2.trim.standard_range_dynamic_32_kwh_bev.campaign.2026-09-16",
+        "option_id": "default",
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "byd.atto2.atto2.trim.standard_range_dynamic_32_kwh_bev",
+        "amount_thb": 629900,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

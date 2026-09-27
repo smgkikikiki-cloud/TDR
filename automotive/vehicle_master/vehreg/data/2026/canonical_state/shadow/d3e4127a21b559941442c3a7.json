@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d3e4127a21b559941442c3a7",
+    "command_id": "lot3-052",
+    "operation": "CORRECT_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "byd.dolphin.dol.trim.standard_range_dynamic_44_9_kwh_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Owner-approved current retail price for Dolphin Standard Range; supersedes prior 569,900 LIST_PRICE",
+    "submitted_at": "2026-09-27T00:00:00+00:00",
+    "applied_at": "2026-09-27T15:15:27+00:00",
+    "before_hash": "9cb40990389000a22a201660ebcd438398a88815a588a5fa421d61753992338e",
+    "after_hash": "5f084ac1b4c7c9403f3b9b060ba47dfddbc96c4de1bad0b727de131a934512ee",
+    "before": [
+      {
+        "trim_id": "byd.dolphin.dol.trim.standard_range_dynamic_44_9_kwh_bev",
+        "amount_thb": 569900,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:53:1",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: Standard Range Dynamic; canonical grade: Standard Range Dynamic (44.9 kWh); mapping: auto_high_confidence. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "byd.dolphin.dol.trim.standard_range_dynamic_44_9_kwh_bev",
+        "amount_thb": 569900,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": "2026-09-26",
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:53:1",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: Standard Range Dynamic; canonical grade: Standard Range Dynamic (44.9 kWh); mapping: auto_high_confidence. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "smgkikikiki-cloud"
+      },
+      {
+        "trim_id": "byd.dolphin.dol.trim.standard_range_dynamic_44_9_kwh_bev",
+        "amount_thb": 599900,
+        "price_type": "LIST_PRICE",
+        "effective_from": "2026-09-27",
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "owner_pricing_directory_2026_09_14:53:1",
+        "source_document_id": "",
+        "notes": "Owner-approved current retail price for Dolphin Standard Range; supersedes prior 569,900 LIST_PRICE",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "smgkikikiki-cloud"
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/observations.json",
+      "2026/market/prices/owner_registry_2026-09-14.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d3e4127a21b559941442c3a7:price",
+    "revision_id": "d3e4127a21b559941442c3a7",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "byd.dolphin.dol.trim.standard_range_dynamic_44_9_kwh_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-27T15:15:27+00:00",
+    "payload": [
+      {
+        "trim_id": "byd.dolphin.dol.trim.standard_range_dynamic_44_9_kwh_bev",
+        "amount_thb": 569900,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": "2026-09-26",
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:53:1",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: Standard Range Dynamic; canonical grade: Standard Range Dynamic (44.9 kWh); mapping: auto_high_confidence. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "smgkikikiki-cloud"
+      },
+      {
+        "trim_id": "byd.dolphin.dol.trim.standard_range_dynamic_44_9_kwh_bev",
+        "amount_thb": 599900,
+        "price_type": "LIST_PRICE",
+        "effective_from": "2026-09-27",
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "owner_pricing_directory_2026_09_14:53:1",
+        "source_document_id": "",
+        "notes": "Owner-approved current retail price for Dolphin Standard Range; supersedes prior 569,900 LIST_PRICE",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "smgkikikiki-cloud"
+      }
+    ]
+  }
+}

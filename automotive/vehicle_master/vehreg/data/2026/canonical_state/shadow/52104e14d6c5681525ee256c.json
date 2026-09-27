@@ -1,0 +1,449 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "52104e14d6c5681525ee256c",
+    "command_id": "lot3-032",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "bmw.bmw_ix3",
+    "actor": "smgkikikiki-cloud",
+    "reason": "EV Retail Repair Lot 03: owner-approved CURRENT retail set + price corrections across 20 models",
+    "submitted_at": "2026-09-27T00:00:00+00:00",
+    "applied_at": "2026-09-27T15:15:03+00:00",
+    "before_hash": "ce3ecac6fbe1d491ceb5aff9ba2a4a295fdfca83ec58ce2f91bea97143e1dfaf",
+    "after_hash": "9ea8db2be00e4e8ab190a9b8ca64c839b35238df01d676db9802124a90e7533b",
+    "before": {
+      "id": "bmw_ix3",
+      "name_en": "iX3",
+      "name_th": "ไอเอ็กซ์3",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "ix 3",
+        "iX3 Inspiring",
+        "iX3 Impressive"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "G08",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2021-08-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "80 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "RWD",
+              "engine_cc": null,
+              "battery_kwh": 80.0,
+              "aliases": [
+                "Inspiring"
+              ],
+              "overrides": {},
+              "price_thb": 3399000,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "seed-unverified",
+              "price_min_thb": 3399000,
+              "price_max_thb": 3399000
+            }
+          ],
+          "trims": [
+            {
+              "name": "M Sport Inspiring",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:033"
+                ]
+              },
+              "aliases": [
+                "iX3 M Sport Inspiring"
+              ],
+              "id": "m_sport_inspiring_bev"
+            },
+            {
+              "name": "M Sport Impressive",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:033"
+                ]
+              },
+              "aliases": [
+                "iX3 M Sport Impressive"
+              ],
+              "id": "m_sport_impressive_bev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "bmw",
+        "name_en": "BMW",
+        "name_th": "บีเอ็มดับเบิลยู",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "BMW Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "บีเอ็มดับเบิลยู",
+          "bmw thailand"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "bmw.bmw_ix3",
+        "brand_id": "bmw",
+        "name_en": "iX3",
+        "name_th": "ไอเอ็กซ์3",
+        "nameplate": "iX3",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "ix 3",
+          "iX3 Inspiring",
+          "iX3 Impressive"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "bmw.bmw_ix3.g08",
+          "model_id": "bmw.bmw_ix3",
+          "code": "G08",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2021-08-01",
+          "ended": null,
+          "overrides": {}
+        },
+        {
+          "id": "bmw.bmw_ix3.na5",
+          "model_id": "bmw.bmw_ix3",
+          "code": "NA5",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2026-03-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "bmw.bmw_ix3.g08.80_kwh_bev",
+          "generation_id": "bmw.bmw_ix3.g08",
+          "name": "80 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 80.0,
+          "price_thb": 3399000,
+          "price_min_thb": 3399000,
+          "price_max_thb": 3399000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Inspiring"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "bmw.bmw_ix3.g08.trim.m_sport_inspiring_bev",
+          "generation_id": "bmw.bmw_ix3.g08",
+          "name": "M Sport Inspiring",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "iX3 M Sport Inspiring"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:033"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_ix3.g08.trim.m_sport_impressive_bev",
+          "generation_id": "bmw.bmw_ix3.g08",
+          "name": "M Sport Impressive",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "iX3 M Sport Impressive"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:033"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_ix3.na5.trim.50_xdrive_m_sport_bev",
+          "generation_id": "bmw.bmw_ix3.na5",
+          "name": "50 xDrive M Sport",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/bmw.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "52104e14d6c5681525ee256c:catalog",
+    "revision_id": "52104e14d6c5681525ee256c",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "bmw.bmw_ix3",
+    "state": "PENDING",
+    "created_at": "2026-09-27T15:15:03+00:00",
+    "payload": {
+      "brand": {
+        "id": "bmw",
+        "name_en": "BMW",
+        "name_th": "บีเอ็มดับเบิลยู",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "BMW Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "บีเอ็มดับเบิลยู",
+          "bmw thailand"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "bmw.bmw_ix3",
+        "brand_id": "bmw",
+        "name_en": "iX3",
+        "name_th": "ไอเอ็กซ์3",
+        "nameplate": "iX3",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "ix 3",
+          "iX3 Inspiring",
+          "iX3 Impressive"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "bmw.bmw_ix3.g08",
+          "model_id": "bmw.bmw_ix3",
+          "code": "G08",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2021-08-01",
+          "ended": null,
+          "overrides": {}
+        },
+        {
+          "id": "bmw.bmw_ix3.na5",
+          "model_id": "bmw.bmw_ix3",
+          "code": "NA5",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2026-03-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "bmw.bmw_ix3.g08.80_kwh_bev",
+          "generation_id": "bmw.bmw_ix3.g08",
+          "name": "80 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 80.0,
+          "price_thb": 3399000,
+          "price_min_thb": 3399000,
+          "price_max_thb": 3399000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Inspiring"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "bmw.bmw_ix3.g08.trim.m_sport_inspiring_bev",
+          "generation_id": "bmw.bmw_ix3.g08",
+          "name": "M Sport Inspiring",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "iX3 M Sport Inspiring"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:033"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_ix3.g08.trim.m_sport_impressive_bev",
+          "generation_id": "bmw.bmw_ix3.g08",
+          "name": "M Sport Impressive",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "iX3 M Sport Impressive"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:033"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.bmw_ix3.na5.trim.50_xdrive_m_sport_bev",
+          "generation_id": "bmw.bmw_ix3.na5",
+          "name": "50 xDrive M Sport",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

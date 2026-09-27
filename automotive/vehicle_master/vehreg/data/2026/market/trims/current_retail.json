@@ -1,6 +1,17 @@
 {
   "models": [
     {
+      "model_id": "aion.aion_ut",
+      "notes": "Owner-approved current lineup: 420 Standard + 500 Premium",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "aion.aion_ut.gen1.trim.400_standard_range_bev",
+        "aion.aion_ut.gen1.trim.500_long_range_bev"
+      ]
+    },
+    {
       "model_id": "aion.aion_v",
       "notes": "Owner-approved current lineup: 500 Premium + 602 Luxury",
       "reviewed_at": "2026-09-27",
@@ -22,6 +33,131 @@
       ]
     },
     {
+      "model_id": "aion.hyptec_ht",
+      "notes": "Owner-approved current lineup: 620 Premium only",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "aion.hyptec_ht.gen1.trim.620_premium_standard_doors_bev"
+      ]
+    },
+    {
+      "model_id": "audi.a6_etron",
+      "notes": "Owner-approved current lineup: S6 Sportback + S6 Avant e-tron quattro only; A6 Sportback/Avant e-tron performance (RWD) must not remain CURRENT",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+        "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev"
+      ]
+    },
+    {
+      "model_id": "audi.q6_etron",
+      "notes": "Owner-approved current lineup: Q6 e-tron Performance only",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "audi.q6_etron.gen1.trim.q6_e_tron_performance_rwd_bev"
+      ]
+    },
+    {
+      "model_id": "audi.q8_etron",
+      "notes": "Owner-approved current lineup: Q8 e-tron 55 quattro Black Edition only; other Q8 e-tron identities become non-current",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev"
+      ]
+    },
+    {
+      "model_id": "avatr.avatr_07",
+      "notes": "Owner-approved current lineup: Max RWD + Ultra AWD",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "avatr.avatr_07.avatr_07.trim.max_bev",
+        "avatr.avatr_07.avatr_07.trim.ultra_awd_bev"
+      ]
+    },
+    {
+      "model_id": "avatr.avatr_11",
+      "notes": "Owner-approved current lineup: Ultra + Ultra AWD + Royal Edition (MY2026 lineup superseding Standard/Long Range naming)",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "avatr.avatr_11.gen1.trim.royal_edition_awd_dual_bev",
+        "avatr.avatr_11.gen1.trim.ultra_awd_bev",
+        "avatr.avatr_11.gen1.trim.ultra_bev"
+      ]
+    },
+    {
+      "model_id": "bmw.bmw_ix3",
+      "notes": "Owner-approved current lineup: 50 xDrive M Sport (new NA5-generation Neue Klasse iX3); prior G08-generation M Sport Inspiring/Impressive trims become non-current",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "bmw.bmw_ix3.na5.trim.50_xdrive_m_sport_bev"
+      ]
+    },
+    {
+      "model_id": "bmw.i5",
+      "notes": "Owner-approved current lineup: eDrive40 M Sport only",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "bmw.i5.gen1.trim.edrive40_m_sport_bev"
+      ]
+    },
+    {
+      "model_id": "bmw.ix",
+      "notes": "Owner-approved current lineup: xDrive45 M Sport only (LCI grade)",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "bmw.ix.gen1.trim.xdrive45_m_sport_bev"
+      ]
+    },
+    {
+      "model_id": "bmw.ix1",
+      "notes": "Owner-approved current lineup: eDrive20L M Sport only (long-wheelbase variant)",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "bmw.ix1.gen1.trim.edrive20l_m_sport_bev"
+      ]
+    },
+    {
+      "model_id": "bmw.ix2",
+      "notes": "Owner-approved current lineup: xDrive30 M Sport only",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "bmw.ix2.gen1.trim.xdrive30_m_sport_bev"
+      ]
+    },
+    {
+      "model_id": "byd.atto2",
+      "notes": "Owner-approved current lineup: Dynamic + Premium; official Rever 16-30 Sep 2026 campaign encoded (net prices match LIST_PRICE, no discount stated on the official page)",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "byd.atto2.atto2.trim.extended_range_premium_45_1_kwh_bev",
+        "byd.atto2.atto2.trim.standard_range_dynamic_32_kwh_bev"
+      ]
+    },
+    {
       "model_id": "byd.atto3",
       "notes": "Owner-approved current lineup: Premium + Extended",
       "reviewed_at": "2026-09-27",
@@ -30,6 +166,53 @@
       "trim_ids": [
         "byd.atto3.atto3.trim.byd_atto3_410km_premium_bev",
         "byd.atto3.atto3.trim.byd_atto3_480km_ext_bev"
+      ]
+    },
+    {
+      "model_id": "byd.byd_m6",
+      "notes": "Owner-approved current lineup: Dynamic 6 Seats + Extended 6 Seats + Extended 7 Seats; official Rever 16-30 Sep 2026 campaign encoded (owner-confirmed net prices)",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "byd.byd_m6.m6.trim.m6_dynamic_6_seater_bev",
+        "byd.byd_m6.m6.trim.m6_extended_6_seater_captain_seats_bev",
+        "byd.byd_m6.m6.trim.m6_extended_7_seater_bev"
+      ]
+    },
+    {
+      "model_id": "byd.dolphin",
+      "notes": "Owner-approved current lineup: Standard Range + Extended Range; official Rever 16-30 Sep 2026 campaign encoded",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "byd.dolphin.dol.trim.extended_range_premium_60_48_kwh_bev",
+        "byd.dolphin.dol.trim.standard_range_dynamic_44_9_kwh_bev"
+      ]
+    },
+    {
+      "model_id": "byd.sealion7",
+      "notes": "Owner-approved current lineup: Premium + AWD Performance + AWD Ultimate; official Rever 16-30 Sep 2026 campaign encoded as CAMPAIGN_PRICE (net amounts match the previously-cited Sep 1-15 figures, confirmed current for the 16-30 window on the official page); no LIST_PRICE change requested",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "byd.sealion7.sl7.trim.awd_ultimate_bev",
+        "byd.sealion7.sl7.trim.performance_awd_dual_530_hp_bev",
+        "byd.sealion7.sl7.trim.premium_rwd_313_hp_bev"
+      ]
+    },
+    {
+      "model_id": "chery.chery_v23",
+      "notes": "Owner-approved current lineup: PLAY 2WD + PLUS 2WD + PEAK 4WD (existing 'Standard RWD'/'4WD Dual Motor' identities mapped to PLAY/PEAK by grade)",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "chery.chery_v23.gen1.trim.v23_4wd_dual_bev",
+        "chery.chery_v23.gen1.trim.v23_plus_2wd_bev",
+        "chery.chery_v23.gen1.trim.v23_standard_rwd_bev"
       ]
     },
     {

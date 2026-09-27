@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d5080a189e1272dc396f9eb9",
+    "command_id": "lot3-012",
+    "operation": "CORRECT_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Owner-approved current retail price for Q8 e-tron 55 quattro Black Edition; supersedes prior 5,499,000 LIST_PRICE",
+    "submitted_at": "2026-09-27T00:00:00+00:00",
+    "applied_at": "2026-09-27T15:14:54+00:00",
+    "before_hash": "e8314402bea9d2c7e7b1c7af7e3cfa41504582c814a75bde33a440ab489afb11",
+    "after_hash": "2e97fd1c2056d7cf86052c3be2cd81e959a9f6badce71d1087a15c47cbc0d7eb",
+    "before": [
+      {
+        "trim_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+        "amount_thb": 5499000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:20:2",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: Q8 e-tron 55 quattro Black Edition; canonical grade: Q8 e-tron 55 quattro Black Edition; mapping: auto_high_confidence. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+        "amount_thb": 5499000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": "2026-09-26",
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:20:2",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: Q8 e-tron 55 quattro Black Edition; canonical grade: Q8 e-tron 55 quattro Black Edition; mapping: auto_high_confidence. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "smgkikikiki-cloud"
+      },
+      {
+        "trim_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+        "amount_thb": 5599000,
+        "price_type": "LIST_PRICE",
+        "effective_from": "2026-09-27",
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "owner_pricing_directory_2026_09_14:20:2",
+        "source_document_id": "",
+        "notes": "Owner-approved current retail price for Q8 e-tron 55 quattro Black Edition; supersedes prior 5,499,000 LIST_PRICE",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "smgkikikiki-cloud"
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/observations.json",
+      "2026/market/prices/owner_registry_2026-09-14.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d5080a189e1272dc396f9eb9:price",
+    "revision_id": "d5080a189e1272dc396f9eb9",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-27T15:14:54+00:00",
+    "payload": [
+      {
+        "trim_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+        "amount_thb": 5499000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": "2026-09-26",
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:20:2",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: Q8 e-tron 55 quattro Black Edition; canonical grade: Q8 e-tron 55 quattro Black Edition; mapping: auto_high_confidence. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "smgkikikiki-cloud"
+      },
+      {
+        "trim_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+        "amount_thb": 5599000,
+        "price_type": "LIST_PRICE",
+        "effective_from": "2026-09-27",
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "owner_pricing_directory_2026_09_14:20:2",
+        "source_document_id": "",
+        "notes": "Owner-approved current retail price for Q8 e-tron 55 quattro Black Edition; supersedes prior 5,499,000 LIST_PRICE",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "smgkikikiki-cloud"
+      }
+    ]
+  }
+}

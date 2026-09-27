@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "0fc70faaf738bc4715b51292",
+    "command_id": "lot3-043",
+    "operation": "CORRECT_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "byd.byd_m6.m6.trim.m6_extended_6_seater_captain_seats_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Owner-approved current retail price for M6 Extended 6-Seater; supersedes prior 929,900 LIST_PRICE",
+    "submitted_at": "2026-09-27T00:00:00+00:00",
+    "applied_at": "2026-09-27T15:15:13+00:00",
+    "before_hash": "9f5d636389dd1b9d9749c4914b376107602c1e7faa3c47a194b429af77ce8659",
+    "after_hash": "005f03ef79d98e2bc241b90c6d294640c061b1d5c1ed4c6771054618fa12e1a4",
+    "before": [
+      {
+        "trim_id": "byd.byd_m6.m6.trim.m6_extended_6_seater_captain_seats_bev",
+        "amount_thb": 929900,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:51:3",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: Extended (6-Seater / 7-Seater); canonical grade: M6 Extended (6-Seater Captain Seats); mapping: manual_group_expand. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "byd.byd_m6.m6.trim.m6_extended_6_seater_captain_seats_bev",
+        "amount_thb": 929900,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": "2026-09-26",
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:51:3",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: Extended (6-Seater / 7-Seater); canonical grade: M6 Extended (6-Seater Captain Seats); mapping: manual_group_expand. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "smgkikikiki-cloud"
+      },
+      {
+        "trim_id": "byd.byd_m6.m6.trim.m6_extended_6_seater_captain_seats_bev",
+        "amount_thb": 959900,
+        "price_type": "LIST_PRICE",
+        "effective_from": "2026-09-27",
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "owner_pricing_directory_2026_09_14:51:3",
+        "source_document_id": "",
+        "notes": "Owner-approved current retail price for M6 Extended 6-Seater; supersedes prior 929,900 LIST_PRICE",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "smgkikikiki-cloud"
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/observations.json",
+      "2026/market/prices/owner_registry_2026-09-14.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "0fc70faaf738bc4715b51292:price",
+    "revision_id": "0fc70faaf738bc4715b51292",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "byd.byd_m6.m6.trim.m6_extended_6_seater_captain_seats_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-27T15:15:13+00:00",
+    "payload": [
+      {
+        "trim_id": "byd.byd_m6.m6.trim.m6_extended_6_seater_captain_seats_bev",
+        "amount_thb": 929900,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": "2026-09-26",
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:51:3",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: Extended (6-Seater / 7-Seater); canonical grade: M6 Extended (6-Seater Captain Seats); mapping: manual_group_expand. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "smgkikikiki-cloud"
+      },
+      {
+        "trim_id": "byd.byd_m6.m6.trim.m6_extended_6_seater_captain_seats_bev",
+        "amount_thb": 959900,
+        "price_type": "LIST_PRICE",
+        "effective_from": "2026-09-27",
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "owner_pricing_directory_2026_09_14:51:3",
+        "source_document_id": "",
+        "notes": "Owner-approved current retail price for M6 Extended 6-Seater; supersedes prior 929,900 LIST_PRICE",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "smgkikikiki-cloud"
+      }
+    ]
+  }
+}

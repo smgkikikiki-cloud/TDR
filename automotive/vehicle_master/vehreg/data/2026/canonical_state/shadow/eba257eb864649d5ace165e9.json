@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "eba257eb864649d5ace165e9",
+    "command_id": "lot3-070",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "chery.chery_v23.gen1.trim.v23_4wd_dual_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "EV Retail Repair Lot 03: owner-approved CURRENT retail set + price corrections across 20 models",
+    "submitted_at": "2026-09-27T00:00:00+00:00",
+    "applied_at": "2026-09-27T15:15:45+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "dda29bb45ca366392ea0c506cad531ee05b2c369413b464652f3beb3052498cc",
+    "before": [],
+    "after": [
+      {
+        "trim_id": "chery.chery_v23.gen1.trim.v23_4wd_dual_bev",
+        "amount_thb": 889900,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_lot3-070.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "eba257eb864649d5ace165e9:price",
+    "revision_id": "eba257eb864649d5ace165e9",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "chery.chery_v23.gen1.trim.v23_4wd_dual_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-27T15:15:45+00:00",
+    "payload": [
+      {
+        "trim_id": "chery.chery_v23.gen1.trim.v23_4wd_dual_bev",
+        "amount_thb": 889900,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

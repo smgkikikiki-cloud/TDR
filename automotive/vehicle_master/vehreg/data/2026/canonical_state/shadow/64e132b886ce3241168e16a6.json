@@ -1,0 +1,409 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "64e132b886ce3241168e16a6",
+    "command_id": "lot3-059",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "byd.sealion7",
+    "actor": "smgkikikiki-cloud",
+    "reason": "EV Retail Repair Lot 03: owner-approved CURRENT retail set + price corrections across 20 models",
+    "submitted_at": "2026-09-27T00:00:00+00:00",
+    "applied_at": "2026-09-27T15:15:35+00:00",
+    "before_hash": "0e7cba239a3b1c387b44e2329a95f27aced5f6e0575b6bf7f000b2dc5c0eaf6d",
+    "after_hash": "466d5c8d4d885a46f69a5a758d7463a516863d6525a5d09fed87ddd51d44e2bf",
+    "before": {
+      "id": "sealion7",
+      "name_en": "Sealion 7",
+      "name_th": "ซีไลอ้อน 7",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "sealion 7"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "SL7",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2025-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "82 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "RWD",
+              "engine_cc": null,
+              "battery_kwh": 82.5,
+              "aliases": [
+                "Premium"
+              ],
+              "overrides": {},
+              "price_thb": 1399000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1399000,
+              "price_max_thb": 1399000
+            }
+          ],
+          "trims": [
+            {
+              "name": "Premium RWD (313 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:059"
+                ]
+              },
+              "id": "premium_rwd_313_hp_bev"
+            },
+            {
+              "name": "Performance AWD (Dual Motor, 530 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:059"
+                ]
+              },
+              "id": "performance_awd_dual_motor_530_hp_bev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "byd",
+        "name_en": "BYD",
+        "name_th": "บีวายดี",
+        "brand_segment": "MASS",
+        "oem_group": "BYD",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "บีวายดี",
+          "rever automotive"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "byd.sealion7",
+        "brand_id": "byd",
+        "name_en": "Sealion 7",
+        "name_th": "ซีไลอ้อน 7",
+        "nameplate": "Sealion 7",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "sealion 7"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "byd.sealion7.sl7",
+          "model_id": "byd.sealion7",
+          "code": "SL7",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2025-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "byd.sealion7.sl7.82_kwh_bev",
+          "generation_id": "byd.sealion7.sl7",
+          "name": "82 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 82.5,
+          "price_thb": 1399000,
+          "price_min_thb": 1399000,
+          "price_max_thb": 1399000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Premium"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "byd.sealion7.sl7.trim.premium_rwd_313_hp_bev",
+          "generation_id": "byd.sealion7.sl7",
+          "name": "Premium RWD (313 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:059"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "byd.sealion7.sl7.trim.performance_awd_dual_530_hp_bev",
+          "generation_id": "byd.sealion7.sl7",
+          "name": "Performance AWD (Dual Motor, 530 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:059"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "byd.sealion7.sl7.trim.awd_ultimate_bev",
+          "generation_id": "byd.sealion7.sl7",
+          "name": "AWD Ultimate",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/byd.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "64e132b886ce3241168e16a6:catalog",
+    "revision_id": "64e132b886ce3241168e16a6",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "byd.sealion7",
+    "state": "PENDING",
+    "created_at": "2026-09-27T15:15:35+00:00",
+    "payload": {
+      "brand": {
+        "id": "byd",
+        "name_en": "BYD",
+        "name_th": "บีวายดี",
+        "brand_segment": "MASS",
+        "oem_group": "BYD",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "บีวายดี",
+          "rever automotive"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "byd.sealion7",
+        "brand_id": "byd",
+        "name_en": "Sealion 7",
+        "name_th": "ซีไลอ้อน 7",
+        "nameplate": "Sealion 7",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "sealion 7"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "byd.sealion7.sl7",
+          "model_id": "byd.sealion7",
+          "code": "SL7",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2025-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "byd.sealion7.sl7.82_kwh_bev",
+          "generation_id": "byd.sealion7.sl7",
+          "name": "82 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 82.5,
+          "price_thb": 1399000,
+          "price_min_thb": 1399000,
+          "price_max_thb": 1399000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Premium"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "byd.sealion7.sl7.trim.premium_rwd_313_hp_bev",
+          "generation_id": "byd.sealion7.sl7",
+          "name": "Premium RWD (313 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:059"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "byd.sealion7.sl7.trim.performance_awd_dual_530_hp_bev",
+          "generation_id": "byd.sealion7.sl7",
+          "name": "Performance AWD (Dual Motor, 530 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:059"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "byd.sealion7.sl7.trim.awd_ultimate_bev",
+          "generation_id": "byd.sealion7.sl7",
+          "name": "AWD Ultimate",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

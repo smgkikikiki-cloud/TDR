@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c5c02ecde05c706f642904b4",
+    "command_id": "lot3-065",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "byd.sealion7.sl7.trim.awd_ultimate_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "EV Retail Repair Lot 03: owner-approved CURRENT retail set + price corrections across 20 models",
+    "submitted_at": "2026-09-27T00:00:00+00:00",
+    "applied_at": "2026-09-27T15:15:44+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "97ce9e95b2b635d3efacd287994f5619621e51379462a8e88004c8dcb3bb7bc2",
+    "before": [],
+    "after": [
+      {
+        "trim_id": "byd.sealion7.sl7.trim.awd_ultimate_bev",
+        "amount_thb": 1349900,
+        "price_type": "CAMPAIGN_PRICE",
+        "effective_from": "2026-09-16",
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": "byd.sealion7.sl7.trim.awd_ultimate_bev.campaign.2026-09-16",
+        "option_id": "default",
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_lot3-065.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c5c02ecde05c706f642904b4:price",
+    "revision_id": "c5c02ecde05c706f642904b4",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "byd.sealion7.sl7.trim.awd_ultimate_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-27T15:15:44+00:00",
+    "payload": [
+      {
+        "trim_id": "byd.sealion7.sl7.trim.awd_ultimate_bev",
+        "amount_thb": 1349900,
+        "price_type": "CAMPAIGN_PRICE",
+        "effective_from": "2026-09-16",
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": "byd.sealion7.sl7.trim.awd_ultimate_bev.campaign.2026-09-16",
+        "option_id": "default",
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

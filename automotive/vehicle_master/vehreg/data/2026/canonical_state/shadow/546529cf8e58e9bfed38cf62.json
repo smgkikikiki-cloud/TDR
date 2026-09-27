@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "546529cf8e58e9bfed38cf62",
+    "command_id": "lot3-014",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "avatr.avatr_07.avatr_07.trim.max_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "EV Retail Repair Lot 03: owner-approved CURRENT retail set + price corrections across 20 models",
+    "submitted_at": "2026-09-27T00:00:00+00:00",
+    "applied_at": "2026-09-27T15:14:55+00:00",
+    "before_hash": "78d4498ff9f64a476135d0b3718e26360709edcd9f11d178158712754068d331",
+    "after_hash": "d43ca42564edc7f0143f35a46c2a5cff0b3318a1604f8a4351f6c2258998f133",
+    "before": [
+      {
+        "trim_id": "avatr.avatr_07.avatr_07.trim.max_bev",
+        "amount_thb": 1659000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2025-12-18",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/0918ff1d-77f6-4f26-986b-cd0283f6a72d",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "avatr.avatr_07.avatr_07.trim.max_bev",
+        "amount_thb": 1659000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2025-12-18",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/0918ff1d-77f6-4f26-986b-cd0283f6a72d",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "avatr.avatr_07.avatr_07.trim.max_bev",
+        "amount_thb": 1659000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_lot3-014.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "546529cf8e58e9bfed38cf62:price",
+    "revision_id": "546529cf8e58e9bfed38cf62",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "avatr.avatr_07.avatr_07.trim.max_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-27T15:14:55+00:00",
+    "payload": [
+      {
+        "trim_id": "avatr.avatr_07.avatr_07.trim.max_bev",
+        "amount_thb": 1659000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2025-12-18",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/0918ff1d-77f6-4f26-986b-cd0283f6a72d",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "avatr.avatr_07.avatr_07.trim.max_bev",
+        "amount_thb": 1659000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}
