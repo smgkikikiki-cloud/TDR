@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "batch_id": "ex40-current-retail-set-1",
+  "batch_hash": "c82f1f224432c9c1ea49d8df4180242c7f86b28f78deaea240f4334292eca929",
+  "status": "APPLIED",
+  "year": 2026,
+  "source": {
+    "kind": "ADMIN",
+    "ref": null
+  },
+  "actor": "Owner",
+  "reason": "EX40 acceptance test: approve authoritative current retail set",
+  "submitted_at": "2026-09-27T09:53:43.149615+00:00",
+  "applied_at": "2026-09-27T09:53:49+00:00",
+  "results": [
+    {
+      "command_id": "ex40-current-retail-set-1:1",
+      "revision_id": "current-retail-set-f2d770a7adfda4a5",
+      "topic": "current_retail_set",
+      "entity_type": "market_current_retail_set",
+      "entity_id": "volvo.ex40",
+      "idempotent_replay": false
+    }
+  ],
+  "changed_files": [
+    "2026/market/trims/current_retail.json"
+  ]
+}
