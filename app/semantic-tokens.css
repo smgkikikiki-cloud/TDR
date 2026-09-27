@@ -1,0 +1,32 @@
+/* TDR semantic color roles.
+   Keep raw brand/palette values in globals.css. Components should migrate to
+   these role names gradually so meaning is decoupled from a specific hue. */
+:root {
+  /* Content */
+  --color-text-primary: var(--ink);
+  --color-text-secondary: var(--muted);
+  --color-text-eyebrow: var(--eyebrow);
+  --color-text-inverse: var(--white);
+
+  /* Surfaces */
+  --color-surface-page: var(--paper);
+  --color-surface: var(--white);
+  --color-surface-subtle: var(--soft-blue);
+  --color-surface-attention: var(--soft-red);
+
+  /* Structure */
+  --color-border: var(--line);
+  --color-border-strong: var(--navy);
+
+  /* Interaction */
+  --color-interactive: var(--navy);
+  --color-interactive-hover: var(--red);
+  --color-focus: var(--navy);
+
+  /* Status. These are semantic state colors, not powertrain/category colors. */
+  --color-status-info: var(--navy);
+  --color-status-success: #2f6f44;
+  --color-status-warning: #8a5a00;
+  --color-status-danger: var(--red);
+  --color-status-neutral: var(--muted);
+}

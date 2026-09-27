@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./semantic-tokens.css";
 import "./catalog-v12.css";
 import "./storefront.css";
 import "./model-trim-summary.css";
