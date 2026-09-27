@@ -163,6 +163,18 @@ Primary source anchors: Lexus current lineup https://www.lexus.co.th/en/price-an
 
 Structural guard: existing release may include HEV/ICE in the same parent as target BEV. Explicit current-set commands must preserve unaffected grades. Do not confuse model-wide withdrawal with trim-level history. ES/UX HEV CURRENT rows were inspected for structural overlap only; no blanket preservation of their CURRENT status is justified, and their scope requires explicit decision. Do not use press estimates or unverified third-party price revisions as LIST_PRICE. No canonical write approved.
 
+### REPAIR-05 Step 3 draft (2026-09-27)
+
+State: still `PROMPT_READY` -- draft batch built and validated on a disposable copy; no enqueue, no canonical write. Draft batch_id `ev-retail-repair-lot-05-2026-09-27`, 36 commands (APPEND_PRICE x22, UPSERT_MODEL_BUNDLE x5, UPSERT_CAMPAIGN x4, REPLACE_CURRENT_RETAIL_SET x4, CORRECT_PRICE x1). Applied cleanly via `CanonicalInputPipeline.apply()` against a `cp -r vehreg/data` scratch copy (status APPLIED, 65 changed files), `vehreg market validate` returned valid, and the 46-test focused pytest suite passed against the real repo. A staged `tdr_bridge.release_enriched` build confirmed zero unintended impact on every mixed-powertrain sibling (Lexus ES 300h x4, Lexus UX 250h x3 + anomalous ICE row, Maserati GranTurismo/Grecale ICE grades, Mazda6 20th Anniversary ICE, Mercedes CLA ICE x4, Mercedes G-Class G400D/G450D/HEV) -- none appear in the before/after diff.
+
+Items with commands issued: 01 Honda e:N2 (price only), 05 JAECOO 6 EV (rename+correct+campaign, both trims), 07 Kia PV5 (price + current-set restricted to Cargo only, Passenger/Robotaxi preserved but flip to non-current), 08 Leapmotor B10 (rename to Life/Style + new Design trim, pricing held), 10 Lexus ES (price only, HEV untouched), 12-13 Lotus Eletre/Emeya (5-trim MY26 rename+new+price+current-set each), 16 Mazda6e (price only, both trims), 17 Mercedes CLA (rename+price), 19 Mercedes EQE (AMG 53 price only), 20 Mercedes G-Class (price only). Partial: 04 JAECOO 5 EV (MAX+ and ULTRA campaign prices only; Long Range Dynamic/Max held).
+
+Full holds, zero commands: 02 Hyundai IONIQ 6, 03 JAC Truck/N55 EV, 06 Kia EV6 (trims exist only in the enriched/serving overlay, not the base catalog -- no write is even mechanically possible without unauthorized scope), 09 Leapmotor C10, 11 Lexus UX 300e (also flags the ICE-misclassified "UX300e Premium" row for a future scope decision, not corrected here), 14 Maserati GranTurismo Folgore, 15 Maserati Grecale Folgore, 18 Mercedes EQB.
+
+Judgement calls made in this draft that were not literally spelled out in the Step 2 table and need owner sign-off at Step 4, not just silent adoption: (a) the specific old-trim-to-new-grade mapping for Lotus Eletre/Emeya (603hp Dual->600, 603hp Luxury Dual->600 GT SE, 905hp Dual-Speed AWD->900 Sport, by power-output compatibility) and for Leapmotor B10 (Standard Range->Life, Long Range->Style); (b) Mercedes EQE's StarChoice monthly-installment offer (66,800/month) is reported as a schema gap, not written as any price type; (c) the EQE sedan/SUV identity split named in Step 2 is treated as out of scope for this batch (no concrete new canonical ids were given) and only the one confirmed AMG EQE 53 price was applied.
+
+Full draft batch JSON, coverage table and validation report were delivered to the user in-chat and are not restated here in full; see chat history for the complete 1:1 item-by-item accounting.
+
 Next: Await explicit user approval for Step 4 canonical write. Claude may prepare and validate a draft payload but must not enqueue, publish, or alter canonical vehicle data while at PROMPT_READY.
 
 ## Per-batch recording template
