@@ -106,7 +106,7 @@ approved_by_user: true
 
 ### REPAIR-05 membership
 
-State: `QUEUED` — Step 1 membership derived from the approved repair queue after `REPAIR-04`. Inspection, implementation prompt, and writes have not started.
+State: `INSPECTED` — Step 1 membership fixed; Step 2 compared the serving enriched release to Thai-market primary sources on 2026-09-27. The unresolved evidence items below are explicit holds. Implementation prompt and canonical writes have not started.
 
 The historical BEV+REEV audit numbers below are provenance for queue ordering, not repair-lot numbers. Models already handled in `REPAIR-02b` or `REPAIR-03` are skipped; pending sub-items of the frozen `REPAIR-04` remain with that batch rather than entering this one.
 
@@ -133,7 +133,37 @@ The historical BEV+REEV audit numbers below are provenance for queue ordering, n
 | 19 | 71 | Mercedes-Benz EQE |
 | 20 | 72 | Mercedes G-Class EV |
 
-Next: Step 2 inspection of precisely these 20 vehicles, including existing TDR trims, Thai-market lineup, list prices, promotions, and required changes. No batch payload or data write is approved at this stage.
+### REPAIR-05 required_changes (Step 2)
+Serving state was reconstructed read-only from the enriched release on main (not solely the base inventory). Prices below are THB; do not confuse list prices with time-limited campaign prices. “Hold” means preserve existing data pending adequate evidence, not silently invent a withdrawal or price. No canonical batch has been generated.
+
+| # | Serving CURRENT BEV trims | Required trim, price, campaign, lifecycle action |
+|---:|---|---|
+| 01 | Honda e:N2: e:N2; no price | Retain one trim; add LIST_PRICE 1,429,000. Inspect Honda's valid Sep campaign terms before any campaign command. Keep CURRENT. |
+| 02 | Hyundai IONIQ 6: Exclusive LIST 1,899,000; Prestige unpriced | Hold lifecycle and price edits: absent current Hyundai Thai selector, but absence alone does not prove withdrawal. Confirm Thai orderability and grade-specific prices; retain specs/history. |
+| 03 | JAC Truck: N55 EV; unpriced | Hold any replacement/withdrawal: JAC Thailand current official truck selector names N40EV/N90EV/N150EV, not N55EV. Resolve whether N55 was ever sold in Thailand and model-level mapping; no global-to-Thai inference. |
+| 04 | JAECOO 5 EV: Long Range Dynamic, Long Range Max, MAX+ LIST 699,000, ULTRA; other three unpriced | Keep four identities pending direct grade confirmation. Official Thai material gives Dynamic LIST 629,000 / campaign 589,000 and Max LIST 679,000 / campaign 639,000; current official September campaign gives MAX+ LIST 699,000 / campaign 599,000; ULTRA campaign 699,000 against *estimated* 809,000, so do not record 809,000 as confirmed list. Sep 4–30 booking/delivery conditions. Do not merge the Long Range grades with MAX+/ULTRA. |
+| 05 | JAECOO 6 EV: Long Range 2WD LIST 1,099,000; Long Range 4WD LIST 1,249,000 | Map 2WD identity to confirmed Thai 2WD MAX preserving compatible specs; CORRECT_PRICE to LIST 859,000. 4WD LIST 1,249,000 remains. Official Sep campaign 2WD 799,000; 4WD 999,900, booking/delivery Sep 4–30. |
+| 06 | Kia EV6: Earth LR, GT, GT-Line; all unpriced | Hold lifecycle and prices: current Kia Thailand price list omits EV6 but does not establish wholesale withdrawal; verify retail orderability before marking HISTORICAL. Preserve three trim histories/specs. |
+| 07 | Kia PV5: Cargo, Passenger, Robotaxi; all unpriced | Thai retail list explicitly PV5 Cargo at LIST 1,199,000. Retain Cargo CURRENT; Passenger and Robotaxi must not be presented as confirmed retail trims absent Thai booking evidence: resolve local lifecycle per trim and preserve history. |
+| 08 | Leapmotor B10: generic Standard Range / Long Range; both unpriced | Replace generic identity with Thai Life / Style / Design (3 distinct grades), preserve compatible battery/spec facts. OEM press confirms three grades and LIST span 698,000–798,000, but per-grade official prices must be checked before assigning exact prices; no inferred campaigns. |
+| 09 | Leapmotor C10: Design, EV, EV STYLE, Style; all unpriced | Reconcile duplicate generic EV/EV STYLE against Thai retail Design and Style using battery/spec; do not assume EV STYLE maps 1:1 or withdraw a distinct variant without evidence. Verify grade-specific LIST and promotion with Thai seller. |
+| 10 | Lexus ES: ES350e Premium BEV unpriced plus HEVs sharing parent | Retain ES350e Premium and add LIST 3,290,000; preserve every valid HEV/current trim under the same model. |
+| 11 | Lexus UX 300e: one BEV unpriced plus HEVs sharing parent | Official dedicated 300e page persists but UX current selector emphasizes UX300h. Hold lifecycle until orderability evidence, retain BEV history and all HEV trims; confirm whether prior 3,490,000 is current list before writing. |
+| 12 | Lotus Eletre: base/S/R; unpriced | Replace old generic lineup with Thai MY26 600, 600 GT SE, 600 Sport SE, 900 Sport, 900 Sport Carbon (5 distinct trims) after compatible-spec mapping. Jan 2026 reports revised prices; confirm directly against Thai distributor before writing LIST or campaign; preserve older records. |
+| 13 | Lotus Emeya: base/S/R; unpriced | Same five MY26 identities as Eletre with model-specific specs; verify revised Thai distributor prices before writing; preserve older records. |
+| 14 | Maserati GranTurismo Folgore: one BEV unpriced plus ICE sharing parent | Keep Folgore CURRENT (Thai OEM configurator lists it); no independently verified Folgore Thai list price or current campaign. Preserve ICE trims; do not borrow the ICE Modena/Trofeo price. |
+| 15 | Maserati Grecale Folgore: one BEV unpriced plus ICE sharing parent | Keep Folgore CURRENT (Thai OEM configurator lists it); no independently verified Folgore Thai list price/campaign. Preserve ICE trims. |
+| 16 | Mazda6e: EXCLUSIVE/PREMIUM unpriced plus legacy ICE Mazda6 sharing parent | Retain both BEV trims. OEM LIST EXCLUSIVE 1,199,000; PREMIUM 1,169,000 (the lower PREMIUM figure is explicitly on Mazda's site). Keep unrelated ICE/history. Do not record old roadshow/launch perks as live campaign without valid dates. |
+| 17 | Mercedes-Benz CLA: generic `electric` BEV unpriced plus ICE sharing parent | Resolve generic BEV to CLA 250+ with EQ Technology using spec-safe identity edit; OEM configurator starting LIST 2,290,000. Preserve ICE grades and specs; do not copy price to ICE. |
+| 18 | Mercedes-Benz EQB: EQB 250 AMG Line LIST 3,020,000 | Hold lifecycle and price change: model page remains but current configurator lacks EQB. Confirm retail orderability and whether 3,020,000 is still valid; preserve history. |
+| 19 | Mercedes-Benz EQE: 350+ AMG Dynamic sedan, two 350 4MATIC SUV grades, AMG EQE 53; all unpriced | Split sedan vs SUV identities without deleting shared historical records. OEM configurator currently lists EQE Saloon from 5,950,000 (verify exact grade before assignment); OEM finance offers name EQE 300, 350 4MATIC SUV Electric Art/AMG Line/AMG Dynamic and AMG EQE53: reconcile old sedan/SUV/current grades against full Thai price list. Do not assign model starting price to wrong grade. |
+| 20 | Mercedes G-Class: G580 EQ Technology BEV unpriced plus ICE/HEV sharing parent | Retain BEV; OEM electric G-Class configurator starts LIST 9,500,000, confirm G580 grade mapping before writing. Preserve ICE/HEV; no confirmed live campaign. |
+
+Primary source anchors: Honda https://www.honda.co.th/en2 and https://www.honda.co.th/promotions/detail/promotion-en2-jul2026 ; Hyundai https://www.hyundai.com/th/th ; JAC https://www.jacthailand.com/product ; OMODA JAECOO https://www.omodajaecoo.co.th/th/promotion/more-rain-more-gain and https://www2.omodajaecoo.co.th/th/blog/jaecoo-5-ev ; Kia https://www.kia.com/th/th/shopping-tools/price-list/pv5-cargo.html ; Leapmotor/Stellantis https://www.media.stellantis.com/as-en/leapmotor/press/leapmotor-thailand-unveils-the-all-new-leapmotor-b10-first-in-asean ; Lexus https://www.lexus.co.th/en/price-and-model-tools/compare-models.html ; Maserati https://www.maserati.com/th/en/shopping-tools/configurator ; Mazda https://prod.mazda.co.th/th/mazda6e ; Mercedes https://www.mercedes-benz.co.th/th/passengercars/configurator.html and https://www.mercedes-benz.co.th/th/passengercars/finance/offers.html .
+
+Structural guard: existing release may include HEV/ICE in the same parent as target BEV. Explicit current-set commands must preserve unaffected grades. Do not confuse model-wide withdrawal with trim-level history. Do not use press estimates or unverified third-party price revisions as LIST_PRICE. No canonical write approved.
+
+Next: Step 3 create one Claude implementation prompt containing all 20 actions and explicit holds, following existing canonical editing pathway. Await user's instruction to advance; Step 4 remains gated by user approval.
 
 ## Per-batch recording template
 
