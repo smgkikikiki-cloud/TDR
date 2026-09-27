@@ -8,6 +8,7 @@ import { getHomeMarket } from "@/lib/home-market";
 import { PLAN_CATALOG } from "@/lib/plans";
 import { HomeMarketLine } from "@/components/HomeMarketLine";
 import { groupedNumber } from "@/components/charts/format";
+import { isCurrentLifecycleStatus } from "@/lib/canonical-trim-status";
 
 export const dynamic = "force-dynamic";
 
@@ -89,7 +90,7 @@ export default async function Home() {
     getPublishedResearchArticles(4),
   ]);
 
-  const current = (models as any[]).filter((r) => String(r.status || "current").toLowerCase() !== "discontinued");
+  const current = (models as any[]).filter((r) => isCurrentLifecycleStatus(r.status));
   const compareModels = [...current].sort((a, b) => modelScore(b) - modelScore(a)).slice(0, 2);
   const currentBrands = new Set(current.map((r) => r.brands?.slug).filter(Boolean));
   const brandRows = (brands as any[]).filter((brand) => currentBrands.has(brand.slug)).slice(0, 12);

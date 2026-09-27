@@ -4,6 +4,7 @@ import { getCanonicalBrand, getCanonicalModelsByBrand } from "@/lib/canonical-da
 import { getRelatedEvents } from "@/lib/data";
 import { bodyLabel } from "@/lib/body-labels";
 import { displayName, initials } from "@/lib/display-name";
+import { isCurrentLifecycleStatus } from "@/lib/canonical-trim-status";
 
 function baht(min: any, max: any) {
   const f = (n: number) => Number(n).toLocaleString();
@@ -15,7 +16,7 @@ export default async function BrandPage({ params }: { params: Promise<{ slug: st
   const { slug } = await params;
   const r: any = await getCanonicalBrand(slug);
   if (!r) notFound();
-  const models = (await getCanonicalModelsByBrand(r.id)).filter((model: any) => model.status !== "discontinued");
+  const models = (await getCanonicalModelsByBrand(r.id)).filter((model: any) => isCurrentLifecycleStatus(model.status));
   const events: any[] = r.editorial_id ? await getRelatedEvents({ brandId: r.editorial_id }) : [];
 
   const assembled = (models as any[]).filter((m: any) => m.production_type === "CKD" || m.production_type === "SKD").length;

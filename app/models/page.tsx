@@ -5,6 +5,7 @@ import { displayName, initials } from "@/lib/display-name";
 import { byRelevance } from "@/lib/relevance";
 import { FilterDisclosure } from "@/components/FilterDisclosure";
 import { BODY_LABEL, bodyLabel } from "@/lib/body-labels";
+import { isCurrentLifecycleStatus } from "@/lib/canonical-trim-status";
 
 type Sp = Record<string, string | undefined>;
 type Opt = { value: string; label: string; group?: string };
@@ -108,7 +109,7 @@ function Card({ r }: { r: any }) {
 export default async function ModelsPage({ searchParams }: { searchParams: Promise<Record<string, string | undefined>> }) {
   const sp = await searchParams;
   const [brands, all] = await Promise.all([getCanonicalBrands(150), getCanonicalModels(600)]);
-  const current = (all as any[]).filter((r) => r.status !== "discontinued");
+  const current = (all as any[]).filter((r) => isCurrentLifecycleStatus(r.status));
   // Public catalogue relevance uses recency only. Registration-derived
   // ordering belongs to the entitled market tools.
   const models = byRelevance(current.filter((r) => matches(r, sp)), new Map());

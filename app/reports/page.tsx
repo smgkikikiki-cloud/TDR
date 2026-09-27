@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getEvents } from "@/lib/data";
 import { getCanonicalBrands, getCanonicalModels } from "@/lib/canonical-data";
 import { displayName } from "@/lib/display-name";
+import { isCurrentLifecycleStatus } from "@/lib/canonical-trim-status";
 
 export const dynamic = "force-dynamic";
 
@@ -44,7 +45,7 @@ const MONTHLY_CUTS = [
 
 export default async function ReportsPage() {
   const [brands, events, models] = await Promise.all([getCanonicalBrands(250), getEvents(6), getCanonicalModels(600)]);
-  const current = (models as any[]).filter((r) => r.status !== "discontinued");
+  const current = (models as any[]).filter((r) => isCurrentLifecycleStatus(r.status));
   const assembled = current.filter((r) => r.production_type === "CKD" || r.production_type === "SKD").length;
 
   const cta = MEMBER_SITE || "#tdr-contact";
