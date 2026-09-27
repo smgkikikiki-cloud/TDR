@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c19319a49a80fe1019a74960",
+    "command_id": "admin-trim-price-b9249331-3940-49e5-86c3-2a3d03a150bf:3",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.ex40.gen1.trim.single_ultra_bev",
+    "actor": "siriwich",
+    "reason": "",
+    "submitted_at": "2026-09-27T06:15:00.042Z",
+    "applied_at": "2026-09-27T06:26:39+00:00",
+    "before_hash": "59e92e0883cd9c15d7965327e4490f64ecffa2217969771129314c52fbfbcd90",
+    "after_hash": "deaee27e5df67e15e2af2129ed072bbc56b164abc38d1bda6e270f1c2ac9f5ee",
+    "before": [
+      {
+        "trim_id": "volvo.ex40.gen1.trim.single_ultra_bev",
+        "amount_thb": 1890000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "volvo.ex40.gen1.trim.single_ultra_bev",
+        "amount_thb": 1890000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "volvo.ex40.gen1.trim.single_ultra_bev",
+        "amount_thb": 1890000,
+        "price_type": "CAMPAIGN_PRICE",
+        "effective_from": "2026-09-27",
+        "effective_to": "2026-09-30",
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": "volvo.ex40.gen1.trim.single_ultra_bev.campaign.2026-09-27",
+        "option_id": "default",
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_admin-trim-price-b9249331-3940-49e5-86c3-2a3d03a150bf:3.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c19319a49a80fe1019a74960:price",
+    "revision_id": "c19319a49a80fe1019a74960",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.ex40.gen1.trim.single_ultra_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-27T06:26:39+00:00",
+    "payload": [
+      {
+        "trim_id": "volvo.ex40.gen1.trim.single_ultra_bev",
+        "amount_thb": 1890000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "volvo.ex40.gen1.trim.single_ultra_bev",
+        "amount_thb": 1890000,
+        "price_type": "CAMPAIGN_PRICE",
+        "effective_from": "2026-09-27",
+        "effective_to": "2026-09-30",
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": "volvo.ex40.gen1.trim.single_ultra_bev.campaign.2026-09-27",
+        "option_id": "default",
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

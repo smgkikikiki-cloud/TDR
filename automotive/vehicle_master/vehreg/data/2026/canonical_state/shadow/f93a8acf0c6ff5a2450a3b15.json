@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f93a8acf0c6ff5a2450a3b15",
+    "command_id": "admin-trim-price-b9249331-3940-49e5-86c3-2a3d03a150bf:2",
+    "operation": "UPSERT_CAMPAIGN",
+    "year": 2026,
+    "topic": "campaign",
+    "entity_type": "campaign",
+    "entity_id": "volvo.ex40.gen1.trim.single_ultra_bev.campaign.2026-09-27",
+    "actor": "siriwich",
+    "reason": "",
+    "submitted_at": "2026-09-27T06:15:00.042Z",
+    "applied_at": "2026-09-27T06:26:39+00:00",
+    "before_hash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+    "after_hash": "321c4a0681dcb18bc69cdb54d80527191ac33775a5d750f40bdcd73884ea4824",
+    "before": null,
+    "after": {
+      "id": "volvo.ex40.gen1.trim.single_ultra_bev.campaign.2026-09-27",
+      "ends": "2026-09-30",
+      "name": "ประกันชั้น 1 + พ.ร.บ. 1 ปี; Volvo Extended Warranty 5 ปี/150,000 กม.; roadside assistance 5 ปี; รับประกันแบตเตอรี่ 8 ปี/160,000 กม.",
+      "gifts": "ประกันชั้น 1 + พ.ร.บ. 1 ปี; Volvo Extended Warranty 5 ปี/150,000 กม.; roadside assistance 5 ปี; รับประกันแบตเตอรี่ 8 ปี/160,000 กม.",
+      "source": "admin",
+      "starts": "2026-09-27",
+      "options": [
+        {
+          "id": "default",
+          "ends": "2026-09-30",
+          "label": "ประกันชั้น 1 + พ.ร.บ. 1 ปี; Volvo Extended Warranty 5 ปี/150,000 กม.; roadside assistance 5 ปี; รับประกันแบตเตอรี่ 8 ปี/160,000 กม.",
+          "starts": "2026-09-27"
+        }
+      ],
+      "brand_id": "volvo"
+    },
+    "changed_files": [
+      "2026/market/campaigns/volvo.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f93a8acf0c6ff5a2450a3b15:campaign",
+    "revision_id": "f93a8acf0c6ff5a2450a3b15",
+    "topic": "campaign",
+    "entity_type": "campaign",
+    "entity_id": "volvo.ex40.gen1.trim.single_ultra_bev.campaign.2026-09-27",
+    "state": "PENDING",
+    "created_at": "2026-09-27T06:26:39+00:00",
+    "payload": {
+      "id": "volvo.ex40.gen1.trim.single_ultra_bev.campaign.2026-09-27",
+      "ends": "2026-09-30",
+      "name": "ประกันชั้น 1 + พ.ร.บ. 1 ปี; Volvo Extended Warranty 5 ปี/150,000 กม.; roadside assistance 5 ปี; รับประกันแบตเตอรี่ 8 ปี/160,000 กม.",
+      "gifts": "ประกันชั้น 1 + พ.ร.บ. 1 ปี; Volvo Extended Warranty 5 ปี/150,000 กม.; roadside assistance 5 ปี; รับประกันแบตเตอรี่ 8 ปี/160,000 กม.",
+      "source": "admin",
+      "starts": "2026-09-27",
+      "options": [
+        {
+          "id": "default",
+          "ends": "2026-09-30",
+          "label": "ประกันชั้น 1 + พ.ร.บ. 1 ปี; Volvo Extended Warranty 5 ปี/150,000 กม.; roadside assistance 5 ปี; รับประกันแบตเตอรี่ 8 ปี/160,000 กม.",
+          "starts": "2026-09-27"
+        }
+      ],
+      "brand_id": "volvo"
+    }
+  }
+}
