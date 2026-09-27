@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "751e31df94534ae81a7a5ba1",
+    "command_id": "lot4-014",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "EV Retail Repair Lot 04: owner-approved CURRENT retail set corrections, withdrawals, and price corrections across 20 models",
+    "submitted_at": "2026-09-27T00:00:00+00:00",
+    "applied_at": "2026-09-27T16:50:43+00:00",
+    "before_hash": "6a0939e694f46302d084cb384e3153c7cac269f2cb4c5f920e8848081d9d8663",
+    "after_hash": "4a94eae03f410f91093025164a75767335465d08cb5abf59192febc982eee9e8",
+    "before": [
+      {
+        "trim_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev",
+        "amount_thb": 499000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev",
+        "amount_thb": 399000,
+        "price_type": "CAMPAIGN_PRICE",
+        "effective_from": "2026-09-01",
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev.campaign.2026-09-01",
+        "option_id": "default",
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev",
+        "amount_thb": 499000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_lot4-014.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "751e31df94534ae81a7a5ba1:price",
+    "revision_id": "751e31df94534ae81a7a5ba1",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-27T16:50:43+00:00",
+    "payload": [
+      {
+        "trim_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev",
+        "amount_thb": 399000,
+        "price_type": "CAMPAIGN_PRICE",
+        "effective_from": "2026-09-01",
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev.campaign.2026-09-01",
+        "option_id": "default",
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev",
+        "amount_thb": 499000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

@@ -1,0 +1,519 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "31fdc1b402934c9dde0c2e39",
+    "command_id": "lot4-004",
+    "operation": "WITHDRAW_MODEL",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "bmw.i3",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Owner-directed withdrawal: mixes the discontinued I01 hatchback with the China-market G28 sedan under one model; BMW Thailand has not announced the NA0 i3 50 xDrive Sedan for Thailand as of 2026-09-27 (confirmed: not yet launched, expected late 2026/early 2027), so no new CURRENT identity is added",
+    "submitted_at": "2026-09-27T00:00:00+00:00",
+    "applied_at": "2026-09-27T16:50:39+00:00",
+    "before_hash": "1a7b6104118544a9fa1f9fec2e517e8b81cac52c7296940a307dcb06ddfdb489",
+    "after_hash": "bc4cb7681258f0145e9c3792fd31ff8bd46526c651bd4d46bc5a92a30532c609",
+    "before": {
+      "id": "i3",
+      "name_en": "i3",
+      "name_th": "ไอ3",
+      "nameplate": "",
+      "body_type": "HATCHBACK",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "i3",
+        "i3s",
+        "i3s 94Ah",
+        "i 3"
+      ],
+      "incomplete": true,
+      "notes": "รถไฟฟ้ารุ่นแรกของ BMW สเปกยังไม่ได้ตรวจ",
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "B",
+          "seats": 4,
+          "launched": "2014-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "BEV",
+              "drivetrain": "AWD",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "ยังไม่ได้ตรวจราคา",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "120Ah (Compact Hatchback)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:036"
+                ]
+              },
+              "aliases": [
+                "i3 120Ah (Compact Hatchback)"
+              ],
+              "id": "120ah_compact_hatchback_bev"
+            },
+            {
+              "name": "i3s 120Ah (Sport Hatchback)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:036"
+                ]
+              },
+              "id": "i3s_120ah_sport_hatchback_bev"
+            },
+            {
+              "name": "eDrive35L (G28 Long-Wheelbase Sedan BEV)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:036"
+                ]
+              },
+              "aliases": [
+                "i3 eDrive35L (G28 Long-Wheelbase Sedan BEV)"
+              ],
+              "id": "edrive35l_g28_long_wheelbase_sedan_bev_bev"
+            },
+            {
+              "name": "eDrive40L (G28 Long-Wheelbase Sedan BEV)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:036"
+                ]
+              },
+              "aliases": [
+                "i3 eDrive40L (G28 Long-Wheelbase Sedan BEV)"
+              ],
+              "id": "edrive40l_g28_long_wheelbase_sedan_bev_bev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "bmw",
+        "name_en": "BMW",
+        "name_th": "บีเอ็มดับเบิลยู",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "BMW Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "บีเอ็มดับเบิลยู",
+          "bmw thailand"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "bmw.i3",
+        "brand_id": "bmw",
+        "name_en": "i3",
+        "name_th": "ไอ3",
+        "nameplate": "i3",
+        "body_type": "HATCHBACK",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "i3",
+          "i3s",
+          "i3s 94Ah",
+          "i 3"
+        ],
+        "notes": "รถไฟฟ้ารุ่นแรกของ BMW สเปกยังไม่ได้ตรวจ",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "HISTORICAL",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "bmw.i3.gen1",
+          "model_id": "bmw.i3",
+          "code": "gen1",
+          "segment": "B",
+          "seats": 4,
+          "launched": "2014-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "bmw.i3.gen1.spec",
+          "generation_id": "bmw.i3.gen1",
+          "name": "spec",
+          "powertrain": "BEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "bmw.i3.gen1.trim.120ah_compact_hatchback_bev",
+          "generation_id": "bmw.i3.gen1",
+          "name": "120Ah (Compact Hatchback)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "i3 120Ah (Compact Hatchback)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:036"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.i3.gen1.trim.i3s_120ah_sport_hatchback_bev",
+          "generation_id": "bmw.i3.gen1",
+          "name": "i3s 120Ah (Sport Hatchback)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:036"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.i3.gen1.trim.edrive35l_g28_long_wheelbase_sedan_bev_bev",
+          "generation_id": "bmw.i3.gen1",
+          "name": "eDrive35L (G28 Long-Wheelbase Sedan BEV)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "i3 eDrive35L (G28 Long-Wheelbase Sedan BEV)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:036"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.i3.gen1.trim.edrive40l_g28_long_wheelbase_sedan_bev_bev",
+          "generation_id": "bmw.i3.gen1",
+          "name": "eDrive40L (G28 Long-Wheelbase Sedan BEV)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "i3 eDrive40L (G28 Long-Wheelbase Sedan BEV)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:036"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/bmw.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "31fdc1b402934c9dde0c2e39:catalog",
+    "revision_id": "31fdc1b402934c9dde0c2e39",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "bmw.i3",
+    "state": "PENDING",
+    "created_at": "2026-09-27T16:50:39+00:00",
+    "payload": {
+      "brand": {
+        "id": "bmw",
+        "name_en": "BMW",
+        "name_th": "บีเอ็มดับเบิลยู",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "BMW Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "บีเอ็มดับเบิลยู",
+          "bmw thailand"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "bmw.i3",
+        "brand_id": "bmw",
+        "name_en": "i3",
+        "name_th": "ไอ3",
+        "nameplate": "i3",
+        "body_type": "HATCHBACK",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "i3",
+          "i3s",
+          "i3s 94Ah",
+          "i 3"
+        ],
+        "notes": "รถไฟฟ้ารุ่นแรกของ BMW สเปกยังไม่ได้ตรวจ",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "HISTORICAL",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "bmw.i3.gen1",
+          "model_id": "bmw.i3",
+          "code": "gen1",
+          "segment": "B",
+          "seats": 4,
+          "launched": "2014-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "bmw.i3.gen1.spec",
+          "generation_id": "bmw.i3.gen1",
+          "name": "spec",
+          "powertrain": "BEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "bmw.i3.gen1.trim.120ah_compact_hatchback_bev",
+          "generation_id": "bmw.i3.gen1",
+          "name": "120Ah (Compact Hatchback)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "i3 120Ah (Compact Hatchback)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:036"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.i3.gen1.trim.i3s_120ah_sport_hatchback_bev",
+          "generation_id": "bmw.i3.gen1",
+          "name": "i3s 120Ah (Sport Hatchback)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:036"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.i3.gen1.trim.edrive35l_g28_long_wheelbase_sedan_bev_bev",
+          "generation_id": "bmw.i3.gen1",
+          "name": "eDrive35L (G28 Long-Wheelbase Sedan BEV)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "i3 eDrive35L (G28 Long-Wheelbase Sedan BEV)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:036"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.i3.gen1.trim.edrive40l_g28_long_wheelbase_sedan_bev_bev",
+          "generation_id": "bmw.i3.gen1",
+          "name": "eDrive40L (G28 Long-Wheelbase Sedan BEV)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "i3 eDrive40L (G28 Long-Wheelbase Sedan BEV)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:036"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

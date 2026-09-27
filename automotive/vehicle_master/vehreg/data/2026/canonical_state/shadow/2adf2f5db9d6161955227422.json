@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2adf2f5db9d6161955227422",
+    "command_id": "lot4-027",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_hunter_k50.gen1.trim.reev_max_awd_reev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "EV Retail Repair Lot 04: owner-approved CURRENT retail set corrections, withdrawals, and price corrections across 20 models",
+    "submitted_at": "2026-09-27T00:00:00+00:00",
+    "applied_at": "2026-09-27T16:50:50+00:00",
+    "before_hash": "785b1f5353a7ecd812487f75955eed796e6c58a4d60b7034f55cdf36ed0c95ac",
+    "after_hash": "fc42446a2c29c4bf3f6f1c77f9dbd64ba663e7eaf418d6441f262480a8f649b2",
+    "before": [
+      {
+        "trim_id": "deepal.deepal_hunter_k50.gen1.trim.reev_max_awd_reev",
+        "amount_thb": 1369000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-03-27",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/10cc2ee9-e1f5-4121-a21b-a4ba770cfcf1",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "deepal.deepal_hunter_k50.gen1.trim.reev_max_awd_reev",
+        "amount_thb": 1369000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-03-27",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/10cc2ee9-e1f5-4121-a21b-a4ba770cfcf1",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "deepal.deepal_hunter_k50.gen1.trim.reev_max_awd_reev",
+        "amount_thb": 1249000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_lot4-027.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2adf2f5db9d6161955227422:price",
+    "revision_id": "2adf2f5db9d6161955227422",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "deepal.deepal_hunter_k50.gen1.trim.reev_max_awd_reev",
+    "state": "PENDING",
+    "created_at": "2026-09-27T16:50:50+00:00",
+    "payload": [
+      {
+        "trim_id": "deepal.deepal_hunter_k50.gen1.trim.reev_max_awd_reev",
+        "amount_thb": 1369000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-03-27",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/10cc2ee9-e1f5-4121-a21b-a4ba770cfcf1",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "deepal.deepal_hunter_k50.gen1.trim.reev_max_awd_reev",
+        "amount_thb": 1249000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-27",
+        "source": "admin",
+        "source_ref": "",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

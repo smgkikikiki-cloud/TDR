@@ -1,0 +1,441 @@
+{
+  "schema_version": 1,
+  "batch_id": "ev-retail-repair-lot-04-2026-09-27",
+  "batch_hash": "707dba87c9ed5c0c65a574d5822820b848a1c9608de5c1cc40f8116078c1e2c3",
+  "status": "APPLIED",
+  "year": 2026,
+  "source": {
+    "kind": "ADMIN",
+    "ref": "ev-retail-repair-lot-04"
+  },
+  "actor": "smgkikikiki-cloud",
+  "reason": "EV Retail Repair Lot 04: owner-approved CURRENT retail set corrections, withdrawals, and price corrections across 20 models",
+  "submitted_at": "2026-09-27T00:00:00+00:00",
+  "applied_at": "2026-09-27T16:51:03+00:00",
+  "results": [
+    {
+      "command_id": "lot4-001",
+      "revision_id": "7dd9afd52a75a9cf46efa777",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-002",
+      "revision_id": "current-retail-set-12981ad4df91f456",
+      "topic": "current_retail_set",
+      "entity_type": "market_current_retail_set",
+      "entity_id": "aion.aion_es",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-003",
+      "revision_id": "af1df34b16b68651330abf8e",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "audi.etron",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-004",
+      "revision_id": "31fdc1b402934c9dde0c2e39",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "bmw.i3",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-005",
+      "revision_id": "current-retail-set-c062f51cb8c04df6",
+      "topic": "current_retail_set",
+      "entity_type": "market_current_retail_set",
+      "entity_id": "byd.byd_t3",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-006",
+      "revision_id": "317ee0115539e761ebc21bc3",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "byd.atto1",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-007",
+      "revision_id": "2a10e8b24187e7d3a4f6832e",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-008",
+      "revision_id": "9e74976394e8234b80c6b032",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-009",
+      "revision_id": "current-retail-set-977fc33f11218075",
+      "topic": "current_retail_set",
+      "entity_type": "market_current_retail_set",
+      "entity_id": "byd.atto1",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-010",
+      "revision_id": "7067581fa65ca83ce8ede5f0",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "byd.seagull",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-011",
+      "revision_id": "907653e69dc78d7c2574bd23",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "changan.changan_lumin",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-012",
+      "revision_id": "ff879aa3d7d1a99dddf30ece",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-013",
+      "revision_id": "20c14ca194bf5c8826b23bf8",
+      "topic": "campaign",
+      "entity_type": "campaign",
+      "entity_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev.campaign.2026-09-01",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-014",
+      "revision_id": "751e31df94534ae81a7a5ba1",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "changan.changan_lumin.gen1.trim.lumin_l_dc_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-015",
+      "revision_id": "current-retail-set-436d0a223289c9ff",
+      "topic": "current_retail_set",
+      "entity_type": "market_current_retail_set",
+      "entity_id": "changan.changan_lumin",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-016",
+      "revision_id": "330ea06518e745d19f623b5c",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "changan.nevo_q05.nevo_q05.trim.max_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-017",
+      "revision_id": "4d5f128a90f82d0ff579ea9f",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "changan.nevo_q05.nevo_q05.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-018",
+      "revision_id": "d962aaa39a887987ff7c7f25",
+      "topic": "campaign",
+      "entity_type": "campaign",
+      "entity_id": "changan.nevo_q05.nevo_q05.trim.max_bev.campaign.2026-09-01",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-019",
+      "revision_id": "0bd2e6eff708d9a3a5bc150b",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "changan.nevo_q05.nevo_q05.trim.max_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-020",
+      "revision_id": "72749d23608ab3ba435f58b4",
+      "topic": "campaign",
+      "entity_type": "campaign",
+      "entity_id": "changan.nevo_q05.nevo_q05.trim.ultra_bev.campaign.2026-09-01",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-021",
+      "revision_id": "791d05fd11793ea5c14b7040",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "changan.nevo_q05.nevo_q05.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-022",
+      "revision_id": "current-retail-set-57c14e9fa22b1a0b",
+      "topic": "current_retail_set",
+      "entity_type": "market_current_retail_set",
+      "entity_id": "changan.nevo_q05",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-023",
+      "revision_id": "0465819dac1ecc98649eb61e",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "chery.omoda_c5",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-024",
+      "revision_id": "current-retail-set-5858f352ff063d7d",
+      "topic": "current_retail_set",
+      "entity_type": "market_current_retail_set",
+      "entity_id": "chery.omoda_c5",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-025",
+      "revision_id": "91d19e0fa4bc4c79941669fd",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "chery.omoda_c5.oc5.trim.new_max_plus_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-026",
+      "revision_id": "1278fb16069a95dce5813159",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "deepal.deepal_hunter_k50.gen1.trim.reev_plus_awd_reev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-027",
+      "revision_id": "2adf2f5db9d6161955227422",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "deepal.deepal_hunter_k50.gen1.trim.reev_max_awd_reev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-028",
+      "revision_id": "current-retail-set-b569a837e8c77bf3",
+      "topic": "current_retail_set",
+      "entity_type": "market_current_retail_set",
+      "entity_id": "deepal.deepal_hunter_k50",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-029",
+      "revision_id": "current-retail-set-0d4622b305e216d7",
+      "topic": "current_retail_set",
+      "entity_type": "market_current_retail_set",
+      "entity_id": "deepal.deepal_s05",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-030",
+      "revision_id": "40cf90401b609fc7c20ac366",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "denza.denza_d9.gen1.trim.d9_ev_premium_fwd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-031",
+      "revision_id": "7cf82c07bf3d806440156455",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "denza.denza_d9.gen1.trim.d9_ev_flagship_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-032",
+      "revision_id": "current-retail-set-bc2cbae4585b8529",
+      "topic": "current_retail_set",
+      "entity_type": "market_current_retail_set",
+      "entity_id": "denza.denza_d9",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-033",
+      "revision_id": "f0434e917061acc5b5b8e117",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "farizon.farizon_sv",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-034",
+      "revision_id": "current-retail-set-0668051fa2e1a930",
+      "topic": "current_retail_set",
+      "entity_type": "market_current_retail_set",
+      "entity_id": "farizon.farizon_sv",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-035",
+      "revision_id": "dd15bdc4762f1380685bb683",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "fomm.fomm_one.gen1.trim.standard_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-036",
+      "revision_id": "current-retail-set-06424a0c6886d80e",
+      "topic": "current_retail_set",
+      "entity_type": "market_current_retail_set",
+      "entity_id": "fomm.fomm_one",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-037",
+      "revision_id": "5e895a4131ec952dd432b135",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "foton.miler_iblue_65",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-038",
+      "revision_id": "current-retail-set-be08fd6f47204e77",
+      "topic": "current_retail_set",
+      "entity_type": "market_current_retail_set",
+      "entity_id": "foton.miler_iblue_65",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-039",
+      "revision_id": "2f64232ab97b7f0a678a383e",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "geely.geely_ex2.gen1.trim.ex2_youth_edition_310_km_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-040",
+      "revision_id": "7ed12faf3d95a68dad39c1b3",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "geely.geely_ex2.gen1.trim.ex2_exploration_edition_410_km_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-041",
+      "revision_id": "6a2cc834f7761240bd605aa5",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "geely.geely_ex2.gen1.trim.ex2_starship_edition_410_km_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-042",
+      "revision_id": "current-retail-set-9b4aae6c39c04773",
+      "topic": "current_retail_set",
+      "entity_type": "market_current_retail_set",
+      "entity_id": "geely.geely_ex2",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-043",
+      "revision_id": "feedab3a6a18e7666983c5b3",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "gwm.ora_03",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-044",
+      "revision_id": "b4b0eb8cced9286d1165cedc",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "gwm.ora_good_cat",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot4-045",
+      "revision_id": "current-retail-set-954b0df14d1e8179",
+      "topic": "current_retail_set",
+      "entity_type": "market_current_retail_set",
+      "entity_id": "honda.en1",
+      "idempotent_replay": false
+    }
+  ],
+  "changed_files": [
+    "2026/market/prices/canonical_lot4-031.json",
+    "2026/models/audi.json",
+    "2026/market/prices/canonical_lot4-040.json",
+    "2026/market/prices/canonical_lot4-019.json",
+    "2026/market/prices/canonical_lot4-025.json",
+    "2026/market/prices/canonical_lot4-039.json",
+    "2026/models/chery.json",
+    "2026/market/prices/observations.json",
+    "2026/market/prices/canonical_lot4-026.json",
+    "2026/market/prices/owner_registry_2026-09-14.json",
+    "2026/market/campaigns/changan.json",
+    "2026/market/prices/canonical_lot4-012.json",
+    "2026/market/prices/canonical_lot4-041.json",
+    "2026/models/gwm.json",
+    "2026/market/prices/canonical_lot4-001.json",
+    "2026/market/prices/canonical_lot4-021.json",
+    "2026/market/prices/canonical_lot4-007.json",
+    "2026/market/trims/current_retail.json",
+    "2026/market/prices/canonical_lot4-027.json",
+    "2026/models/byd.json",
+    "2026/models/changan.json",
+    "2026/models/foton.json",
+    "2026/market/prices/canonical_lot4-008.json",
+    "2026/market/prices/canonical_lot4-016.json",
+    "2026/market/prices/canonical_lot4-014.json",
+    "2026/market/prices/canonical_lot4-035.json",
+    "2026/market/prices/canonical_lot4-017.json",
+    "2026/models/farizon.json",
+    "2026/models/bmw.json",
+    "2026/canonical_state/shadow/b4b0eb8cced9286d1165cedc.json",
+    "2026/canonical_state/shadow/7067581fa65ca83ce8ede5f0.json",
+    "2026/canonical_state/revisions.jsonl",
+    "2026/canonical_state/shadow/1278fb16069a95dce5813159.json",
+    "2026/canonical_state/shadow/f0434e917061acc5b5b8e117.json",
+    "2026/canonical_state/shadow/31fdc1b402934c9dde0c2e39.json",
+    "2026/canonical_state/shadow/5e895a4131ec952dd432b135.json",
+    "2026/canonical_state/shadow/72749d23608ab3ba435f58b4.json",
+    "2026/canonical_state/shadow/9e74976394e8234b80c6b032.json",
+    "2026/canonical_state/shadow/0465819dac1ecc98649eb61e.json",
+    "2026/canonical_state/shadow/7cf82c07bf3d806440156455.json",
+    "2026/canonical_state/shadow/91d19e0fa4bc4c79941669fd.json",
+    "2026/canonical_state/shadow/791d05fd11793ea5c14b7040.json",
+    "2026/canonical_state/shadow/7ed12faf3d95a68dad39c1b3.json",
+    "2026/canonical_state/shadow/4d5f128a90f82d0ff579ea9f.json",
+    "2026/canonical_state/shadow/ff879aa3d7d1a99dddf30ece.json",
+    "2026/canonical_state/shadow/20c14ca194bf5c8826b23bf8.json",
+    "2026/canonical_state/shadow/0bd2e6eff708d9a3a5bc150b.json",
+    "2026/canonical_state/shadow/dd15bdc4762f1380685bb683.json",
+    "2026/canonical_state/shadow/af1df34b16b68651330abf8e.json",
+    "2026/canonical_state/shadow/7dd9afd52a75a9cf46efa777.json",
+    "2026/canonical_state/shadow/907653e69dc78d7c2574bd23.json",
+    "2026/canonical_state/shadow/317ee0115539e761ebc21bc3.json",
+    "2026/canonical_state/shadow/d962aaa39a887987ff7c7f25.json",
+    "2026/canonical_state/shadow/6a2cc834f7761240bd605aa5.json",
+    "2026/canonical_state/shadow/2a10e8b24187e7d3a4f6832e.json",
+    "2026/canonical_state/shadow/feedab3a6a18e7666983c5b3.json",
+    "2026/canonical_state/shadow/2f64232ab97b7f0a678a383e.json",
+    "2026/canonical_state/shadow/2adf2f5db9d6161955227422.json",
+    "2026/canonical_state/outbox.jsonl",
+    "2026/canonical_state/shadow/330ea06518e745d19f623b5c.json",
+    "2026/canonical_state/shadow/751e31df94534ae81a7a5ba1.json",
+    "2026/canonical_state/shadow/40cf90401b609fc7c20ac366.json"
+  ]
+}

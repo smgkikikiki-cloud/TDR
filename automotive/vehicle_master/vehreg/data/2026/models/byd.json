@@ -625,7 +625,8 @@
             }
           ]
         }
-      ]
+      ],
+      "retail_status": "HISTORICAL"
     },
     {
       "id": "byd_t3",
@@ -873,6 +874,35 @@
           ]
         }
       ]
+    },
+    {
+      "id": "atto1",
+      "generations": [
+        {
+          "code": "gen1",
+          "variants": [
+            {
+              "name": "BEV",
+              "powertrain": "BEV",
+              "battery_kwh": 30.08
+            }
+          ],
+          "trims": [
+            {
+              "name": "Dynamic",
+              "powertrain": "BEV",
+              "id": "dynamic_bev"
+            },
+            {
+              "name": "Premium",
+              "powertrain": "BEV",
+              "id": "premium_bev"
+            }
+          ]
+        }
+      ],
+      "name_en": "BYD ATTO 1",
+      "body_type": "HATCHBACK"
     }
   ]
 }

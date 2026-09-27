@@ -1,6 +1,16 @@
 {
   "models": [
     {
+      "model_id": "aion.aion_es",
+      "notes": "Owner-approved current lineup: Standard (Fleet/Taxi EV) only; price 846,000 sourced from official Thai launch coverage (EVme/Autolifethailand), no prior price on file",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev"
+      ]
+    },
+    {
       "model_id": "aion.aion_ut",
       "notes": "Owner-approved current lineup: 420 Standard + 500 Premium",
       "reviewed_at": "2026-09-27",
@@ -147,6 +157,17 @@
       ]
     },
     {
+      "model_id": "byd.atto1",
+      "notes": "Owner-approved current lineup: new Thai ATTO 1 model (Dynamic + Premium); prices confirmed via official Rever 16-30 Sep 2026 campaign page, no distinct discount stated there so encoded as LIST_PRICE only (no CAMPAIGN_PRICE fabricated for a page showing no price differential)",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "byd.atto1.gen1.trim.dynamic_bev",
+        "byd.atto1.gen1.trim.premium_bev"
+      ]
+    },
+    {
       "model_id": "byd.atto2",
       "notes": "Owner-approved current lineup: Dynamic + Premium; official Rever 16-30 Sep 2026 campaign encoded (net prices match LIST_PRICE, no discount stated on the official page)",
       "reviewed_at": "2026-09-27",
@@ -181,6 +202,16 @@
       ]
     },
     {
+      "model_id": "byd.byd_t3",
+      "notes": "Owner-approved current lineup: T3 Cargo Van Pure Electric only; existing 999,000 LIST_PRICE confirmed unchanged, no conflicting evidence found",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "byd.byd_t3.gen1.trim.t3_cargo_van_pure_electric_bev"
+      ]
+    },
+    {
       "model_id": "byd.dolphin",
       "notes": "Owner-approved current lineup: Standard Range + Extended Range; official Rever 16-30 Sep 2026 campaign encoded",
       "reviewed_at": "2026-09-27",
@@ -204,6 +235,27 @@
       ]
     },
     {
+      "model_id": "changan.changan_lumin",
+      "notes": "Owner-approved current lineup: Lumin L DC only, replacing the 205km/301km-range identities (kept, non-current, history preserved); LIST_PRICE and Sep 2026 CAMPAIGN_PRICE confirmed via official Changan campaign page",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "changan.changan_lumin.gen1.trim.lumin_l_dc_bev"
+      ]
+    },
+    {
+      "model_id": "changan.nevo_q05",
+      "notes": "Owner-approved current lineup: MAX + ULTRA; LIST_PRICE and Sep 2026 CAMPAIGN_PRICE confirmed via official Changan campaign page (explicit \"from X\" discount framing for both trims)",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "changan.nevo_q05.nevo_q05.trim.max_bev",
+        "changan.nevo_q05.nevo_q05.trim.ultra_bev"
+      ]
+    },
+    {
       "model_id": "chery.chery_v23",
       "notes": "Owner-approved current lineup: PLAY 2WD + PLUS 2WD + PEAK 4WD (existing 'Standard RWD'/'4WD Dual Motor' identities mapped to PLAY/PEAK by grade)",
       "reviewed_at": "2026-09-27",
@@ -213,6 +265,16 @@
         "chery.chery_v23.gen1.trim.v23_4wd_dual_bev",
         "chery.chery_v23.gen1.trim.v23_plus_2wd_bev",
         "chery.chery_v23.gen1.trim.v23_standard_rwd_bev"
+      ]
+    },
+    {
+      "model_id": "chery.omoda_c5",
+      "notes": "Owner-approved current lineup: NEW OMODA C5 EV MAX+ only; LIST_PRICE 649,000 confirmed via ZigWheels' dedicated official Max+ price page (\"OMODA C5 EV Max + Price... starting price of 649,000\", stated multiple times as the OTR Bangkok price), superseding the unconfirmed 709,000 from the original instructions",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "chery.omoda_c5.oc5.trim.new_max_plus_bev"
       ]
     },
     {
@@ -227,6 +289,32 @@
       ]
     },
     {
+      "model_id": "deepal.deepal_hunter_k50",
+      "notes": "Owner-approved current lineup: REEV PLUS AWD + REEV MAX AWD (already the only two trims on file, nothing to remove); LIST_PRICE 1,099,000/1,249,000 independently re-confirmed via multiple outlets covering the official Thai launch (AutoStation, Thairath, Autoinfo, Autolifethailand, Checkraka, Car250, HeadLight Magazine) after the single official Changan campaign page turned out to attach that figure to a different model (New S07)",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "deepal.deepal_hunter_k50.gen1.trim.reev_max_awd_reev",
+        "deepal.deepal_hunter_k50.gen1.trim.reev_plus_awd_reev"
+      ]
+    },
+    {
+      "model_id": "deepal.deepal_s05",
+      "notes": "Owner-approved current lineup: BEV Lite/Plus/Max/Max Long Range + REEV Max + REEV Plus; EV 510 Pro/EV 510 Max/REEV 1200 Max do not exist in this catalog so nothing to remove; REEV Plus included on confirmed real-sale evidence (Thai launch 2025-03-24, priced 949,000 per independent market sources), not merely absence from the Sep 2026 promo page",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "deepal.deepal_s05.gen1.trim.lite_bev",
+        "deepal.deepal_s05.gen1.trim.max_bev",
+        "deepal.deepal_s05.gen1.trim.max_long_range_bev",
+        "deepal.deepal_s05.gen1.trim.plus_bev",
+        "deepal.deepal_s05.gen1.trim.reev_max_reev",
+        "deepal.deepal_s05.gen1.trim.reev_plus_reev"
+      ]
+    },
+    {
       "model_id": "deepal.deepal_s07",
       "notes": "Owner-approved current lineup: DEEPAL NEW S07 only",
       "reviewed_at": "2026-09-27",
@@ -234,6 +322,65 @@
       "source_ref": "",
       "trim_ids": [
         "deepal.deepal_s07.gen1.trim.new_bev"
+      ]
+    },
+    {
+      "model_id": "denza.denza_d9",
+      "notes": "Owner-approved current lineup: Premium + Performance AWD (reconciled to the existing D9 EV Flagship AWD (Dual Motor) identity by spec -- the only other BEV grade besides Premium FWD); no CAMPAIGN_PRICE encoded since the official campaign page states net selling prices with no discount from a higher list price",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "denza.denza_d9.gen1.trim.d9_ev_flagship_awd_dual_bev",
+        "denza.denza_d9.gen1.trim.d9_ev_premium_fwd_bev"
+      ]
+    },
+    {
+      "model_id": "farizon.farizon_sv",
+      "notes": "Owner-approved current lineup: C5M/C6M/C6H (cargo) + P5M/P6M/P6H (passenger), all 6 confirmed as real distinct Thai product pages (farizonauto.co.th/c5m, /c6m-c6h, /p5m, /p6m-p6h) with confirmed specs (payload/range); old generic SuperVAN E6 Cargo Van/Passenger Commuter/High Roof Long Wheelbase identities kept, non-current, history preserved -- no price fact created, no official Thai price found for any of the 6 configs despite fetching each official product page directly",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "farizon.farizon_sv.gen1.trim.c5m_cargo_bev",
+        "farizon.farizon_sv.gen1.trim.c6h_cargo_bev",
+        "farizon.farizon_sv.gen1.trim.c6m_cargo_bev",
+        "farizon.farizon_sv.gen1.trim.p5m_passenger_bev",
+        "farizon.farizon_sv.gen1.trim.p6h_passenger_bev",
+        "farizon.farizon_sv.gen1.trim.p6m_passenger_bev"
+      ]
+    },
+    {
+      "model_id": "fomm.fomm_one",
+      "notes": "Owner-approved current lineup: Standard + Premium Edition (kept, naming unresolved but not withdrawn); LIST_PRICE 499,000 on Standard per direct owner instruction, no source required",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "fomm.fomm_one.gen1.trim.premium_edition_bev",
+        "fomm.fomm_one.gen1.trim.standard_bev"
+      ]
+    },
+    {
+      "model_id": "foton.miler_iblue_65",
+      "notes": "Owner-approved current lineup: e Miler iBlue 65 as its own model, split out of the generic foton.foton_truck identity per the explicit instruction not to merge Miler/Aumark/Auman into one \"Truck\" model; confirmed real distinct CP FOTON product (dedicated product page, 63.75 kWh CATL LFP battery, 4.5t GVW, ~210km range); generic foton_truck kept, non-current, untouched; no price fact created -- no official Thai price found despite fetching the official product page and a dedicated news article directly",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "foton.miler_iblue_65.gen1.trim.iblue_65_bev"
+      ]
+    },
+    {
+      "model_id": "geely.geely_ex2",
+      "notes": "Owner-approved current lineup: PRO (=Youth Edition 310km, confirmed base/entry price point) + MAX (=Exploration Edition 410km, confirmed 459,990) + Shooting Star (=Starship Edition 410km, confirmed special-edition trim ~484,900-489,900); reused by range/price spec, not by list order alone",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "geely.geely_ex2.gen1.trim.ex2_exploration_edition_410_km_bev",
+        "geely.geely_ex2.gen1.trim.ex2_starship_edition_410_km_bev",
+        "geely.geely_ex2.gen1.trim.ex2_youth_edition_310_km_bev"
       ]
     },
     {
@@ -246,6 +393,16 @@
         "geely.geely_ex5.gen1.trim.max_bev",
         "geely.geely_ex5.gen1.trim.max_plus",
         "geely.geely_ex5.gen1.trim.pro_bev"
+      ]
+    },
+    {
+      "model_id": "honda.en1",
+      "notes": "Owner-approved current lineup: Pure Electric FWD only; existing 1,199,000 LIST_PRICE already correct, not rewritten",
+      "reviewed_at": "2026-09-27",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "honda.en1.en1.trim.pure_electric_fwd_bev"
       ]
     },
     {

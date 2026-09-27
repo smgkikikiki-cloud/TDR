@@ -1,0 +1,216 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5e895a4131ec952dd432b135",
+    "command_id": "lot4-037",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "foton.miler_iblue_65",
+    "actor": "smgkikikiki-cloud",
+    "reason": "EV Retail Repair Lot 04: owner-approved CURRENT retail set corrections, withdrawals, and price corrections across 20 models",
+    "submitted_at": "2026-09-27T00:00:00+00:00",
+    "applied_at": "2026-09-27T16:50:54+00:00",
+    "before_hash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+    "after_hash": "7231b6ca82bc42bd77c60b592e1c2c748cd4311fa2db159e85e4f7c55730b8df",
+    "before": null,
+    "after": {
+      "brand": {
+        "id": "foton",
+        "name_en": "Foton",
+        "name_th": "โฟตอน",
+        "brand_segment": "BUDGET",
+        "oem_group": "Foton",
+        "brand_origin": "CN",
+        "trim_detail": false,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "foton.miler_iblue_65",
+        "brand_id": "foton",
+        "name_en": "FOTON Miler iBlue 65",
+        "name_th": "",
+        "nameplate": "FOTON Miler iBlue 65",
+        "body_type": "TRUCK",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY3",
+        "market_scope": "COMMERCIAL",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "foton.miler_iblue_65.gen1",
+          "model_id": "foton.miler_iblue_65",
+          "code": "gen1",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": null,
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "foton.miler_iblue_65.gen1.bev",
+          "generation_id": "foton.miler_iblue_65.gen1",
+          "name": "BEV",
+          "powertrain": "BEV",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": 63.75,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "UNKNOWN",
+          "origin_country": "UNKNOWN",
+          "price_note": "",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "foton.miler_iblue_65.gen1.trim.iblue_65_bev",
+          "generation_id": "foton.miler_iblue_65.gen1",
+          "name": "e Miler iBlue 65",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/foton.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5e895a4131ec952dd432b135:catalog",
+    "revision_id": "5e895a4131ec952dd432b135",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "foton.miler_iblue_65",
+    "state": "PENDING",
+    "created_at": "2026-09-27T16:50:54+00:00",
+    "payload": {
+      "brand": {
+        "id": "foton",
+        "name_en": "Foton",
+        "name_th": "โฟตอน",
+        "brand_segment": "BUDGET",
+        "oem_group": "Foton",
+        "brand_origin": "CN",
+        "trim_detail": false,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "foton.miler_iblue_65",
+        "brand_id": "foton",
+        "name_en": "FOTON Miler iBlue 65",
+        "name_th": "",
+        "nameplate": "FOTON Miler iBlue 65",
+        "body_type": "TRUCK",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY3",
+        "market_scope": "COMMERCIAL",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "foton.miler_iblue_65.gen1",
+          "model_id": "foton.miler_iblue_65",
+          "code": "gen1",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": null,
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "foton.miler_iblue_65.gen1.bev",
+          "generation_id": "foton.miler_iblue_65.gen1",
+          "name": "BEV",
+          "powertrain": "BEV",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": 63.75,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "UNKNOWN",
+          "origin_country": "UNKNOWN",
+          "price_note": "",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "foton.miler_iblue_65.gen1.trim.iblue_65_bev",
+          "generation_id": "foton.miler_iblue_65.gen1",
+          "name": "e Miler iBlue 65",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

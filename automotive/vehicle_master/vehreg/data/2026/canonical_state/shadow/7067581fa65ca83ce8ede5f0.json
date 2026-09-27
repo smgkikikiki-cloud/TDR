@@ -1,0 +1,436 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7067581fa65ca83ce8ede5f0",
+    "command_id": "lot4-010",
+    "operation": "WITHDRAW_MODEL",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "byd.seagull",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Owner-directed withdrawal: superseded by the new Thai ATTO 1 model; Vitality/Freedom/Flying Edition trims and their history are kept, not deleted",
+    "submitted_at": "2026-09-27T00:00:00+00:00",
+    "applied_at": "2026-09-27T16:50:40+00:00",
+    "before_hash": "be8292aaef81cf6dc1088092111a7c1230865d1ec265b3387017a323a4a4f000",
+    "after_hash": "4d81be17908cdc848c3a24366f74777db64d24f899a2fc8dc16afdaf3954ee55",
+    "before": {
+      "id": "seagull",
+      "name_en": "Dolphin Mini",
+      "name_th": "ดอลฟิน มินิ",
+      "nameplate": "",
+      "body_type": "HATCHBACK",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "seagull",
+        "dolphin mini",
+        "atto 1",
+        "atto1"
+      ],
+      "notes": "DLT registers this car as ATTO 1; Dolphin Mini and Seagull are the same vehicle under earlier names and have never appeared in a DLT export.",
+      "generations": [
+        {
+          "code": "SGL",
+          "segment": "A",
+          "seats": 4,
+          "launched": "2024-08-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "38 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_cc": null,
+              "battery_kwh": 38.0,
+              "aliases": [
+                "Standard"
+              ],
+              "overrides": {},
+              "price_thb": 444900,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+              "price_min_thb": 444900,
+              "price_max_thb": 444900
+            }
+          ],
+          "trims": [
+            {
+              "name": "Vitality Edition (30.08 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:054"
+                ]
+              },
+              "id": "vitality_edition_30_08_kwh_bev"
+            },
+            {
+              "name": "Freedom Edition (30.08 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:054"
+                ]
+              },
+              "id": "freedom_edition_30_08_kwh_bev"
+            },
+            {
+              "name": "Flying Edition (38.88 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:054"
+                ]
+              },
+              "id": "flying_edition_38_88_kwh_bev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "byd",
+        "name_en": "BYD",
+        "name_th": "บีวายดี",
+        "brand_segment": "MASS",
+        "oem_group": "BYD",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "บีวายดี",
+          "rever automotive"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "byd.seagull",
+        "brand_id": "byd",
+        "name_en": "Dolphin Mini",
+        "name_th": "ดอลฟิน มินิ",
+        "nameplate": "Dolphin Mini",
+        "body_type": "HATCHBACK",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "seagull",
+          "dolphin mini",
+          "atto 1",
+          "atto1"
+        ],
+        "notes": "DLT registers this car as ATTO 1; Dolphin Mini and Seagull are the same vehicle under earlier names and have never appeared in a DLT export.",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "HISTORICAL",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "byd.seagull.sgl",
+          "model_id": "byd.seagull",
+          "code": "SGL",
+          "segment": "A",
+          "seats": 4,
+          "launched": "2024-08-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "byd.seagull.sgl.38_kwh_bev",
+          "generation_id": "byd.seagull.sgl",
+          "name": "38 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 38.0,
+          "price_thb": 444900,
+          "price_min_thb": 444900,
+          "price_max_thb": 444900,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+          "aliases": [
+            "Standard"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "byd.seagull.sgl.trim.vitality_edition_30_08_kwh_bev",
+          "generation_id": "byd.seagull.sgl",
+          "name": "Vitality Edition (30.08 kWh)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:054"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "byd.seagull.sgl.trim.freedom_edition_30_08_kwh_bev",
+          "generation_id": "byd.seagull.sgl",
+          "name": "Freedom Edition (30.08 kWh)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:054"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "byd.seagull.sgl.trim.flying_edition_38_88_kwh_bev",
+          "generation_id": "byd.seagull.sgl",
+          "name": "Flying Edition (38.88 kWh)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:054"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/byd.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7067581fa65ca83ce8ede5f0:catalog",
+    "revision_id": "7067581fa65ca83ce8ede5f0",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "byd.seagull",
+    "state": "PENDING",
+    "created_at": "2026-09-27T16:50:40+00:00",
+    "payload": {
+      "brand": {
+        "id": "byd",
+        "name_en": "BYD",
+        "name_th": "บีวายดี",
+        "brand_segment": "MASS",
+        "oem_group": "BYD",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "บีวายดี",
+          "rever automotive"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "byd.seagull",
+        "brand_id": "byd",
+        "name_en": "Dolphin Mini",
+        "name_th": "ดอลฟิน มินิ",
+        "nameplate": "Dolphin Mini",
+        "body_type": "HATCHBACK",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "seagull",
+          "dolphin mini",
+          "atto 1",
+          "atto1"
+        ],
+        "notes": "DLT registers this car as ATTO 1; Dolphin Mini and Seagull are the same vehicle under earlier names and have never appeared in a DLT export.",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "HISTORICAL",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "byd.seagull.sgl",
+          "model_id": "byd.seagull",
+          "code": "SGL",
+          "segment": "A",
+          "seats": 4,
+          "launched": "2024-08-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "byd.seagull.sgl.38_kwh_bev",
+          "generation_id": "byd.seagull.sgl",
+          "name": "38 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 38.0,
+          "price_thb": 444900,
+          "price_min_thb": 444900,
+          "price_max_thb": 444900,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+          "aliases": [
+            "Standard"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "byd.seagull.sgl.trim.vitality_edition_30_08_kwh_bev",
+          "generation_id": "byd.seagull.sgl",
+          "name": "Vitality Edition (30.08 kWh)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:054"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "byd.seagull.sgl.trim.freedom_edition_30_08_kwh_bev",
+          "generation_id": "byd.seagull.sgl",
+          "name": "Freedom Edition (30.08 kWh)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:054"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "byd.seagull.sgl.trim.flying_edition_38_88_kwh_bev",
+          "generation_id": "byd.seagull.sgl",
+          "name": "Flying Edition (38.88 kWh)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:054"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

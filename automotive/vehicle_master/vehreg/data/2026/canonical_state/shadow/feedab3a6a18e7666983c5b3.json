@@ -1,0 +1,456 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "feedab3a6a18e7666983c5b3",
+    "command_id": "lot4-043",
+    "operation": "WITHDRAW_MODEL",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "gwm.ora_03",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Owner-directed withdrawal; 400 PRO / 500 ULTRA / GT trims and history are kept, not deleted",
+    "submitted_at": "2026-09-27T00:00:00+00:00",
+    "applied_at": "2026-09-27T16:50:56+00:00",
+    "before_hash": "4a920308d9954ec520a873617e81671c2411dd49a936762eb9ac8d6f85f4175e",
+    "after_hash": "f04abfec510fcacc880fd2a17bd95b3033b12b392161ecec03f2ab9c6b3a9e04",
+    "before": {
+      "id": "ora_03",
+      "name_en": "Ora 03",
+      "name_th": "โอร่า 03",
+      "nameplate": "",
+      "body_type": "HATCHBACK",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "ora 03"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "O03",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2024-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "63 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_cc": null,
+              "battery_kwh": 63.1,
+              "aliases": [
+                "500 Ultra"
+              ],
+              "overrides": {},
+              "price_thb": 829000,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "seed-unverified",
+              "price_min_thb": 829000,
+              "price_max_thb": 829000
+            }
+          ],
+          "trims": [
+            {
+              "name": "400 PRO",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:093"
+                ]
+              },
+              "aliases": [
+                "Ora 03 400 PRO"
+              ],
+              "id": "400_pro_bev"
+            },
+            {
+              "name": "500 ULTRA",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:093"
+                ]
+              },
+              "aliases": [
+                "Ora 03 500 ULTRA"
+              ],
+              "id": "500_ultra_bev"
+            },
+            {
+              "name": "GT",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:093"
+                ]
+              },
+              "aliases": [
+                "Ora 03 GT"
+              ],
+              "id": "gt_bev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "gwm",
+        "name_en": "GWM",
+        "name_th": "จีดับเบิลยูเอ็ม",
+        "brand_segment": "MASS",
+        "oem_group": "Great Wall Motor",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "great wall",
+          "great wall motor",
+          "เกรทวอลล์",
+          "haval",
+          "ora",
+          "tank"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "gwm.ora_03",
+        "brand_id": "gwm",
+        "name_en": "Ora 03",
+        "name_th": "โอร่า 03",
+        "nameplate": "Ora 03",
+        "body_type": "HATCHBACK",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "ora 03"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "HISTORICAL",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "gwm.ora_03.o03",
+          "model_id": "gwm.ora_03",
+          "code": "O03",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2024-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "gwm.ora_03.o03.63_kwh_bev",
+          "generation_id": "gwm.ora_03.o03",
+          "name": "63 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 63.1,
+          "price_thb": 829000,
+          "price_min_thb": 829000,
+          "price_max_thb": 829000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "500 Ultra"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "gwm.ora_03.o03.trim.400_pro_bev",
+          "generation_id": "gwm.ora_03.o03",
+          "name": "400 PRO",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Ora 03 400 PRO"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:093"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.ora_03.o03.trim.500_ultra_bev",
+          "generation_id": "gwm.ora_03.o03",
+          "name": "500 ULTRA",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Ora 03 500 ULTRA"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:093"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.ora_03.o03.trim.gt_bev",
+          "generation_id": "gwm.ora_03.o03",
+          "name": "GT",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Ora 03 GT"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:093"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/gwm.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "feedab3a6a18e7666983c5b3:catalog",
+    "revision_id": "feedab3a6a18e7666983c5b3",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "gwm.ora_03",
+    "state": "PENDING",
+    "created_at": "2026-09-27T16:50:56+00:00",
+    "payload": {
+      "brand": {
+        "id": "gwm",
+        "name_en": "GWM",
+        "name_th": "จีดับเบิลยูเอ็ม",
+        "brand_segment": "MASS",
+        "oem_group": "Great Wall Motor",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "great wall",
+          "great wall motor",
+          "เกรทวอลล์",
+          "haval",
+          "ora",
+          "tank"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "gwm.ora_03",
+        "brand_id": "gwm",
+        "name_en": "Ora 03",
+        "name_th": "โอร่า 03",
+        "nameplate": "Ora 03",
+        "body_type": "HATCHBACK",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "ora 03"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "HISTORICAL",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "gwm.ora_03.o03",
+          "model_id": "gwm.ora_03",
+          "code": "O03",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2024-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "gwm.ora_03.o03.63_kwh_bev",
+          "generation_id": "gwm.ora_03.o03",
+          "name": "63 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 63.1,
+          "price_thb": 829000,
+          "price_min_thb": 829000,
+          "price_max_thb": 829000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "500 Ultra"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "gwm.ora_03.o03.trim.400_pro_bev",
+          "generation_id": "gwm.ora_03.o03",
+          "name": "400 PRO",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Ora 03 400 PRO"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:093"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.ora_03.o03.trim.500_ultra_bev",
+          "generation_id": "gwm.ora_03.o03",
+          "name": "500 ULTRA",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Ora 03 500 ULTRA"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:093"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "gwm.ora_03.o03.trim.gt_bev",
+          "generation_id": "gwm.ora_03.o03",
+          "name": "GT",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Ora 03 GT"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:093"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}
