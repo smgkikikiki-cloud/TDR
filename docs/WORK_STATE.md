@@ -89,15 +89,20 @@ Do not use this historical audit range as `REPAIR-04` membership unless the repa
 ## Current repair status
 
 - `REPAIR-03`: `DONE / APPROVED` — frozen. Do not re-audit or rebuild unless user reopens it.
-- `REPAIR-04`: active. Required user workflow is **Step 1 exact 20 vehicles -> Step 2 inspect/list all fixes + prices + promotions -> Step 3 one Claude prompt**. No redundant audit between Step 2 and Step 3.
+- `REPAIR-04`: `DONE / APPROVED` — frozen. Do not re-audit or rebuild unless user reopens it.
 
 ### REPAIR-04 membership
 
-Status: `UNRESOLVED_STATE_COLLISION`
+Status: `RESOLVED` — the collision noted below was against a batch built in a parallel chat session before this file existed; the user confirmed in-session that the 20-vehicle list already implemented is the correct, frozen `REPAIR-04` membership, and directed the fixes to remaining open items (BYD Seal, OMODA C5 EV, DEEPAL Hunter K50, DEEPAL L07, Farizon SV, FOMM One, FOTON Truck) directly.
 
-Reason: prior conversation artifacts contain two incompatible things labeled “Lot 4”. Until the exact approved repair queue is recovered, agents must **not invent membership, borrow the historical audit 61–80 list, or silently continue from a guessed alphabetic position**.
+membership: AION ES; Audi e-tron; BMW i3; BYD T3; BYD Seagull→ATTO 1; BYD Seal; Changan Lumin; NEVO Q05; OMODA C5 EV; DEEPAL Hunter K50; DEEPAL L07; DEEPAL S05; DENZA D9; Farizon SV; FOMM One; FOTON Truck; GEELY EX2; GWM ORA 03; GWM ORA Good Cat; Honda e:N1.
 
-Recovery rule: locate the last user-approved repair queue / preceding `REPAIR-03` membership, then derive the next 20 exactly once and replace this section with the frozen list.
+still-pending sub-items (not full batch reopen — see write_commit for what shipped): BYD Seal (no lifecycle evidence found, left unchanged); DEEPAL L07 (Standard 540/Plus 620 naming can't be safely mapped to L07/L07 S without spec confirmation — user says they'll choose).
+
+batch_id: `ev-retail-repair-lot-04-2026-09-27`
+write_commit: `48f9326d8197f9d768185a7f9a56c879b08cd99d`
+release_id: `vehicle-2026-fbdad1638efeb292`
+approved_by_user: true
 
 ## Per-batch recording template
 
