@@ -106,7 +106,7 @@ approved_by_user: true
 
 ### REPAIR-05 membership
 
-State: `INSPECTED` — Step 1 membership fixed; Step 2 compared the serving enriched release to Thai-market primary sources on 2026-09-27. The unresolved evidence items below are explicit holds. Implementation prompt and canonical writes have not started.
+State: `PROMPT_READY` — Step 1 membership fixed; Step 2 inspected all 20 serving models; the user requested and received the single Step 3 Claude prompt on 2026-09-28 (Asia/Bangkok). Explicit holds remain holds. No canonical data write or enqueue has been approved.
 
 The historical BEV+REEV audit numbers below are provenance for queue ordering, not repair-lot numbers. Models already handled in `REPAIR-02b` or `REPAIR-03` are skipped; pending sub-items of the frozen `REPAIR-04` remain with that batch rather than entering this one.
 
@@ -163,7 +163,7 @@ Primary source anchors: Lexus current lineup https://www.lexus.co.th/en/price-an
 
 Structural guard: existing release may include HEV/ICE in the same parent as target BEV. Explicit current-set commands must preserve unaffected grades. Do not confuse model-wide withdrawal with trim-level history. ES/UX HEV CURRENT rows were inspected for structural overlap only; no blanket preservation of their CURRENT status is justified, and their scope requires explicit decision. Do not use press estimates or unverified third-party price revisions as LIST_PRICE. No canonical write approved.
 
-Next: Step 3 create one Claude implementation prompt containing all 20 actions and explicit holds, following existing canonical editing pathway. Await user's instruction to advance; Step 4 remains gated by user approval.
+Next: Await explicit user approval for Step 4 canonical write. Claude may prepare and validate a draft payload but must not enqueue, publish, or alter canonical vehicle data while at PROMPT_READY.
 
 ## Per-batch recording template
 
