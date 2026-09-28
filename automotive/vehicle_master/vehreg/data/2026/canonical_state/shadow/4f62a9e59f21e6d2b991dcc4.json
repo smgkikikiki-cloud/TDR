@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "4f62a9e59f21e6d2b991dcc4",
+    "command_id": "admin-vehicle-trim-5d46b523-f34d-4e2e-8cfe-4b57e1b80e4b:3",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+    "actor": "siriwich",
+    "reason": "Manual edit via Canonical Vehicle Editor",
+    "submitted_at": "2026-09-28T15:01:12.260Z",
+    "applied_at": "2026-09-28T16:50:22+00:00",
+    "before_hash": "1d8fc6ceb1f94c6326d6d5483d258fcb2e179e9869325b245d105c2219bf69fd",
+    "after_hash": "13ff475ae41d726881623c915f555508c55cbb4b37c562e7256d3c5e112a65b3",
+    "before": [
+      null
+    ],
+    "after": [
+      null,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_comfort.panoramic_roof_348a6266a2f1.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "4f62a9e59f21e6d2b991dcc4:spec",
+    "revision_id": "4f62a9e59f21e6d2b991dcc4",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-28T16:50:22+00:00",
+    "payload": [
+      null,
+      true
+    ]
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "batch_id": "admin-delete-trim-4a79bb1b-fddc-4b36-9dee-b7b3b126a9b0",
+  "batch_hash": "7e45735197c7206f0921ba8849edfeaf03bb218dbcceb573ec8e67f689a35a7c",
+  "status": "APPLIED",
+  "year": 2026,
+  "source": {
+    "kind": "ADMIN",
+    "ref": null
+  },
+  "actor": "siriwich",
+  "reason": "Delete erroneous MarketTrim zeekr.zeekr_x.zx.trim.long_range_rwd_272_hp_bev",
+  "submitted_at": "2026-09-28T15:08:49.664Z",
+  "applied_at": "2026-09-28T16:50:30+00:00",
+  "results": [
+    {
+      "command_id": "admin-delete-trim-4a79bb1b-fddc-4b36-9dee-b7b3b126a9b0:1",
+      "revision_id": "091d6d1d88b430bc5e8d4ed6",
+      "topic": "catalog",
+      "entity_type": "market_trim",
+      "entity_id": "zeekr.zeekr_x.zx.trim.long_range_rwd_272_hp_bev",
+      "idempotent_replay": false
+    }
+  ],
+  "changed_files": [
+    "2026/models/zeekr.json",
+    "2026/canonical_state/outbox.jsonl",
+    "2026/canonical_state/revisions.jsonl",
+    "2026/canonical_state/shadow/091d6d1d88b430bc5e8d4ed6.json"
+  ]
+}

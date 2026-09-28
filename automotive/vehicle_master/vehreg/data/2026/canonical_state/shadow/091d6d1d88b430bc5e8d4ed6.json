@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "091d6d1d88b430bc5e8d4ed6",
+    "command_id": "admin-delete-trim-4a79bb1b-fddc-4b36-9dee-b7b3b126a9b0:1",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "market_trim",
+    "entity_id": "zeekr.zeekr_x.zx.trim.long_range_rwd_272_hp_bev",
+    "actor": "siriwich",
+    "reason": "Delete erroneous MarketTrim zeekr.zeekr_x.zx.trim.long_range_rwd_272_hp_bev",
+    "submitted_at": "2026-09-28T15:08:49.664Z",
+    "applied_at": "2026-09-28T16:50:29+00:00",
+    "before_hash": "23acd92a5c95b66b3195cab037e017875ee4e8b56509af351280e6f73eb2043a",
+    "after_hash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+    "before": {
+      "id": "zeekr.zeekr_x.zx.trim.long_range_rwd_272_hp_bev",
+      "generation_id": "zeekr.zeekr_x.zx",
+      "name": "Long Range RWD (272 hp)",
+      "powertrain": "BEV",
+      "variant_id": null,
+      "price_thb": null,
+      "drivetrain": "UNKNOWN",
+      "engine_code": "",
+      "engine_cc": null,
+      "battery_kwh": null,
+      "transmission": "",
+      "seats": null,
+      "length_mm": null,
+      "width_mm": null,
+      "height_mm": null,
+      "wheelbase_mm": null,
+      "tire_front": "",
+      "tire_rear": "",
+      "wheel_front": "",
+      "wheel_rear": "",
+      "aliases": [],
+      "source_refs": {
+        "owner_directory": [
+          "owner_directory_2026_09_13:321"
+        ]
+      },
+      "notes": ""
+    },
+    "after": null,
+    "changed_files": [
+      "2026/models/zeekr.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "091d6d1d88b430bc5e8d4ed6:catalog",
+    "revision_id": "091d6d1d88b430bc5e8d4ed6",
+    "topic": "catalog",
+    "entity_type": "market_trim",
+    "entity_id": "zeekr.zeekr_x.zx.trim.long_range_rwd_272_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-28T16:50:29+00:00",
+    "payload": null
+  }
+}
