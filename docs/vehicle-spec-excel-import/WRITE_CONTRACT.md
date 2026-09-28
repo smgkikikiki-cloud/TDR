@@ -1,80 +1,69 @@
 # Vehicle Spec Excel Import — Canonical Write Contract
 
-Status: skeleton / implementation target
+Status: implemented / current contract
 
 ## Purpose
 
-Define the deterministic destination behavior for values accepted from the Vehicle Spec Excel importer.
+The Vehicle Specs workbook is a direct deterministic canonical editor for existing MarketTrims. It is not an ECO/DLT/OEM evidence ingestion workflow.
 
-This path is direct canonical authoring for existing MarketTrims. It is not an external source/evidence ingestion workflow.
+## Normalized input
 
-## Input to the writer
+The compiler resolves every non-blank workbook cell before it reaches the canonical writer:
 
-The parser must hand the writer normalized records containing at minimum:
-
-- `canonical_trim_id`
-- canonical field key or core-field destination
+- exact `canonical_trim_id`
+- exact registry field key or explicit MarketTrim core destination
 - normalized value/value-state
-- qualifier metadata when the canonical field requires it
+- canonical unit from SpecRegistry
+- qualifier metadata encoded by the machine header
 
-The writer must never infer vehicle identity, field destination, unit, or qualifier from free text.
+No vehicle identity, field destination, unit, or qualifier is inferred from free text.
 
-## Destination classes
+## Destinations
 
-Every supported Excel field must be classified before implementation as one of:
+Supported columns resolve to one of:
 
-1. MarketTrim/core field
-2. comparable-spec field
-3. dual representation only where the existing canonical model genuinely requires both
+1. comparable-spec fact
+2. MarketTrim/core field
+3. both, only where the current canonical model stores the same current value in both representations
 
-The field inventory/mapping table is the authority for this classification.
+The implemented mapping lives in `automotive/vehicle_master/vehreg/spec_excel.py`; registry metadata remains the authority for comparable-spec type/unit/applicability.
 
 ## Write semantics
 
-- Blank Excel cells never produce write commands.
-- A supplied valid value updates the current canonical value for that trim/field/qualifier.
-- Re-importing the same value must not create duplicate logical values.
-- Multiple qualified values for the same underlying field may coexist when the canonical model supports them, e.g. NEDC and WLTP range.
-- Unknown trim IDs or invalid values must not be guessed into place.
+- blank cells produce no command
+- valid supplied values replace/revise the current direct canonical value for that trim/field/qualifier
+- re-importing an identical value is a no-op
+- distinct qualified values may coexist, e.g. NEDC and WLTP range
+- unknown trims, invalid values, and unsupported qualifier names are rejected rather than guessed
+- the importer never creates vehicle identities
 
-## Source/evidence behavior
+Direct comparable-spec facts created by this workbook are source-free. They retain infrastructure-generated `observed_at` only for deterministic ordering. External/non-admin facts continue to require source evidence under SpecLedger validation.
 
-The Excel workbook must not be required to provide:
+## Whole-workbook atomicity
 
-- source name
-- source URL/reference
-- observed-at date
+A workbook may compile to more commands than one canonical input batch can hold. All batches are therefore applied to an outer temporary copy of Vehicle Master first.
 
-If the existing comparable-spec writer currently requires evidence metadata, the importer needs a direct canonical/admin authoring path or adapter so the workbook remains source-free.
+Only after every batch succeeds are the changed files promoted to the live canonical tree. If any later batch fails, no earlier batch from that workbook is left in the live tree.
 
-Operational audit metadata such as import run, actor, filename, or commit may be recorded by infrastructure, but it is not vehicle-spec source evidence and must not be required as workbook data.
+Implementation: `_apply_batches_atomically()` in `automotive/vehicle_master/tools/import_vehicle_specs.py`.
 
-## Existing integration points to reuse
+## Existing pipeline reused
 
-Implementation should reuse the current canonical pipeline rather than write around it:
+The feature uses the existing canonical machinery:
 
-- Vehicle Master canonical file-backed data
-- canonical command/input pipeline
-- comparable-spec validation/registry
-- existing import worker dispatch
-- existing canonical release/publish path
+`Excel/CSV -> spec_excel compiler -> canonical input batches -> CanonicalInputPipeline -> canonical files -> source-import workflow commit -> immutable release -> Supabase publish`
 
-The exact adapter will be chosen after inspecting the current core-field and spec-field write APIs together.
+Admin upload kind is `VEHICLE_SPECS`. Inside Vehicle Master the canonical batch source kind remains `ADMIN`; that is operational audit metadata, not vehicle-spec source evidence.
 
 ## Hard boundaries
 
-This importer must not:
+The importer does not:
 
-- create new canonical vehicle identities;
-- use fuzzy matching;
-- treat missing Excel cells as deletions;
-- silently coerce an invalid qualifier or enum into a guessed value;
-- route through ECO/DLT parsing logic simply because those import paths already exist.
+- create Brand/Model/Generation/MarketTrim identities
+- fuzzy-match trim names
+- treat blank cells as deletion
+- require source/evidence columns
+- route Vehicle Specs through ECO/DLT parsers
+- partially apply a multi-batch workbook that later fails
 
-## Next implementation step
-
-Inventory all writable current vehicle fields and produce the concrete mapping table:
-
-`excel_column -> destination_class -> canonical_key -> value_type -> qualifier/unit metadata`
-
-Once that table is complete, implement the parser against it and then connect the normalized writes to the canonical pipeline.
+Operational status and verification are recorded in `docs/vehicle-spec-excel-import/WORKUPDATE.md`.
