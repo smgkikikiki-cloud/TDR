@@ -222,6 +222,35 @@ REPAIR-05 remains DONE/APPROVED and frozen; these findings are a backlog for a s
 
 Next: REPAIR-05 is closed. Do not re-audit or rebuild unless the user explicitly reopens it. Any further correction (e.g. resolving Kia PV5's lifecycle question with real evidence, confirming the Lotus/JAECOO 6 grade mapping, resolving the Mercedes EQE split) is a new, separately-numbered repair batch, not a reopening of REPAIR-05.
 
+### REPAIR-06 membership (Step 1, 2026-09-28)
+
+State: `QUEUED` -- exact 20-vehicle membership fixed from the pre-existing 117-model BEV+REEV historical audit queue after REPAIR-05. This is a repair-lot namespace, distinct from the historical audit lot labels. Historical #75 MG EP, #81 MG S5 EV, #82 MG Urban and #84 MG4 Electric are skipped because they were already handled in frozen REPAIR-02b. This step fixes membership only; no REPAIR-06 inspection, canonical write, enqueue, or publish has occurred.
+
+| Repair-06 | Historical audit # | Vehicle |
+|---:|---:|---|
+| 01 | 73 | Mercedes-Benz EQS |
+| 02 | 74 | MG Cyberster |
+| 03 | 76 | MG ES |
+| 04 | 77 | MG IM5 |
+| 05 | 78 | MG IM6 |
+| 06 | 79 | MG Maxus 7 |
+| 07 | 80 | MG Maxus 9 |
+| 08 | 83 | MG ZS EV |
+| 09 | 85 | MINE MTS |
+| 10 | 86 | MINI Aceman |
+| 11 | 87 | MINI Cooper Electric |
+| 12 | 88 | MINI Countryman Electric |
+| 13 | 89 | MINI JCW E |
+| 14 | 90 | NETA V |
+| 15 | 91 | NETA X |
+| 16 | 92 | Nextem ORCA |
+| 17 | 93 | Porsche Cayenne EV |
+| 18 | 94 | Porsche Macan EV |
+| 19 | 95 | Porsche Taycan |
+| 20 | 96 | RIDDARA Horizon Double Cab |
+
+Next: Step 2 inspection for these exact 20 serving models: current TDR trims, current Thai trim identities, LIST prices, valid-dated campaigns, and evidence-based lifecycle, preserving mixed-powertrain/history. Do not reuse audit-only findings as current proof without checking sources.
+
 ## Per-batch recording template
 
 ```yaml
