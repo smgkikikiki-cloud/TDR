@@ -40,7 +40,7 @@ export default async function ImportPage() {
     <form action={uploadImportFileAction} className="adminForm">
       <label className="adminField adminFieldWide">
         <span>ไฟล์ CSV หรือ XLSX (สูงสุด 4 MB)</span>
-        <input name="file" type="file" accept=".csv,.xlsx,.xls" required />
+        <input name="file" type="file" accept=".csv,.xlsx" required />
       </label>
       <label className="adminField">
         <span>ประเภทไฟล์</span>
