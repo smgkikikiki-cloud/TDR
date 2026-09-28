@@ -5,9 +5,10 @@
 
 ``run`` claims each uploaded row in ``import_runs``, downloads its file and
 routes it by source kind -- ECO to the canonical MarketTrim importer, DLT to
-the registration importer, anything with no parser of its own to an explicit
-unsupported result. It never falls back to a parser built for a different
-source: a confident wrong answer is worse than a refusal.
+the registration importer, VEHICLE_SPECS to the direct canonical workbook
+importer, anything with no parser of its own to an explicit unsupported result.
+It never falls back to a parser built for a different source: a confident wrong
+answer is worse than a refusal.
 
 ``finalize`` is what marks a canonical run COMPLETED, and it runs only after
 the commit and push succeeded. A run whose write never reached the
@@ -33,6 +34,7 @@ from urllib.request import Request, urlopen
 
 from tools.canonical_input_worker import _env
 from tools.import_source import main as run_eco_import
+from tools.import_vehicle_specs import main as run_vehicle_spec_import
 from vehreg.catalog import DATA_DIR, DEFAULT_YEAR, Catalog, CatalogError
 from vehreg.registration_import import (
     MATCHED, MalformedSnapshotError, UnsupportedRegistrationSchema,
@@ -43,7 +45,7 @@ from vehreg.registration_import import (
 BUCKET = "source-imports"
 #: Sources that write canonical vehicle files, so their run is only finished
 #: once those files are committed and pushed.
-CANONICAL_SOURCES = {"ECO"}
+CANONICAL_SOURCES = {"ECO", "VEHICLE_SPECS"}
 
 
 def _headers(key: str) -> dict:
@@ -149,6 +151,29 @@ def _import_eco(source_file: Path, original_name: str, workdir: Path,
     }, exceptions
 
 
+def _import_vehicle_specs(source_file: Path, original_name: str, workdir: Path,
+                          run_id: str, submitted_at: str) -> tuple[dict, list[dict]]:
+    """Apply one direct canonical workbook. Invalid schema/value fails the run."""
+    report_dir = workdir / "report"
+    run_vehicle_spec_import([
+        str(source_file),
+        "--report-dir", str(report_dir),
+        "--apply",
+        "--submitted-at", submitted_at,
+        "--actor", "tdr-admin",
+        "--batch-prefix", f"vehicle-spec-{run_id}",
+    ])
+    report = json.loads(
+        next(report_dir.glob("*_vehicle_specs_report.json")).read_text(encoding="utf-8"))
+    return {
+        "rows_read": report.get("rows_read"),
+        "patched": report.get("rows_changed"),
+        "created": 0,
+        "exceptions": 0,
+        "canonical_changed": bool(report.get("canonical_changed")),
+    }, []
+
+
 def _trim_detail_brands() -> frozenset[str]:
     """Marques whose registration files print the grade inside the model field.
 
@@ -236,7 +261,7 @@ def _import_dlt(source_file: Path, original_name: str, workdir: Path,
     }, exceptions
 
 
-HANDLERS = {"ECO": _import_eco, "DLT": _import_dlt}
+HANDLERS = {"ECO": _import_eco, "DLT": _import_dlt, "VEHICLE_SPECS": _import_vehicle_specs}
 
 
 def process(limit: int) -> int:
