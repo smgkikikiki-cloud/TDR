@@ -337,9 +337,15 @@ def compile_rows(
                         f"row {row_number}: identity.powertrain {incoming!r} contradicts "
                         f"canonical trim powertrain {trim.powertrain.value!r}")
 
-            if definition.applicable_powertrains \
-                    and trim.powertrain.value not in definition.applicable_powertrains \
-                    and state is not ValueState.NOT_APPLICABLE:
+            if (definition.applicable_powertrains
+                    and trim.powertrain.value not in definition.applicable_powertrains):
+                # Registry applicability already says the field does not exist
+                # for this powertrain. The legacy SpecLedger rejects even a
+                # stored NOT_APPLICABLE fact, so the explicit token is the same
+                # deterministic no-op as leaving the cell blank.
+                if state is ValueState.NOT_APPLICABLE:
+                    values_unchanged += 1
+                    continue
                 raise SpecExcelError(
                     f"row {row_number}: {target.field_key} does not apply to {trim.powertrain.value}; "
                     "use NOT_APPLICABLE or leave blank")
