@@ -93,7 +93,7 @@ Do not use this historical audit range as `REPAIR-04` membership unless the repa
 - `REPAIR-05`: `DONE / APPROVED` — frozen. Do not re-audit or rebuild unless user reopens it.
 - `REPAIR-06`: `DONE / APPROVED` — frozen. Do not re-audit or rebuild unless user reopens it.
 - `REPAIR-07`: `DONE / APPROVED` — frozen. Do not re-audit or rebuild unless user reopens it. MG ZS EV identity migration NOT attempted (no provable safe mapping) and remains open for a future, separately-numbered repair.
-- `REPAIR-08`: `PROMPT_READY` — v6 draft, 36-command batch (`ev-retail-repair-lot-08-2026-09-28f`) completes 1:1 price/campaign accounting for 19 of 22 trims across all 16 members, built and validated on a disposable copy; awaiting Step 4 approval. Full holds: SERES 3, SOKON EC35, VOLT For Four, VOLT For Two, Volvo XC40 BEV (5 of 16 members — owner asked these be marked HISTORICAL but declined to supply the http(s) source the code requires for that action, so they stay held); RIDDARA Horizon 4WD, EX90's Ultra 6/7-Seat split + its campaign, Wuling Porta's Flatbed Carrier, and Zeekr X's Long Range RWD are also held within their otherwise-actioned items.
+- `REPAIR-08`: `DONE / APPROVED` — frozen. Do not re-audit or rebuild unless user reopens it. v6, 36-command batch (`ev-retail-repair-lot-08-2026-09-28f`) enqueued and published for real: write commit `6492204a74d46075adcefde1d63daf47338542a1`, release `vehicle-2026-c4e73494ab9aa779` ACTIVE. Full holds, unresolved and untouched: SERES 3, SOKON EC35, VOLT For Four, VOLT For Two, Volvo XC40 BEV (5 of 16 members — owner asked these be marked HISTORICAL but declined to supply the http(s) source the code requires for that action); RIDDARA Horizon 4WD, EX90's Ultra 6/7-Seat split + its campaign, and Zeekr X's Long Range RWD are also held within their otherwise-actioned items. Any future resolution of these is a new, separately-numbered repair.
 
 ### REPAIR-04 membership
 
@@ -567,6 +567,25 @@ State: still `PROMPT_READY` -- no enqueue, no canonical write, no publish, no me
 Full v6 batch JSON and validation/diff results were delivered to the owner in-chat.
 
 Next: await the owner's separate Step 4 approval for this 36-command batch. Do not enqueue, write to real canonical data, merge, or publish before that. If the owner later supplies a real http(s) source for SERES 3/SOKON EC35/VOLT For Four/VOLT For Two/Volvo XC40 BEV, `UPSERT_TRIM_RETAIL_LIFECYCLE_REVIEW` (`historical` action) is the correct mechanism to mark them historical rather than a `REPLACE_CURRENT_RETAIL_SET` exclusion, which only produces UNVERIFIED.
+
+### REPAIR-08 Step 4 write (2026-09-28g, DONE / APPROVED)
+
+State: `DONE / APPROVED`. Owner gave explicit approval to enqueue the full v6 batch ("eneueque ให้หมดเลย lot 8" -- enqueue all of lot 8).
+
+**1. Enqueue and worker run, tracked to completion.**
+- `enqueue-canonical-batch.yml` run `36402247605` (job `108862622079`), dispatched against `main` at `0dec3ac`: completed success. Log: `batch_key: ev-retail-repair-lot-08-2026-09-28f`, `queue_status: QUEUED (duplicate replay: False)`, `worker woken this run: true` -- dispatched worker run `36402317662`.
+- `canonical-input.yml` run `36402317662` (job `108862841510`): completed success, all steps green -- pulled/applied 1 queued batch, `vehreg market validate` valid/0 problems, focused pytest gate, commit, publish, mark-published. STAGED-recovery steps present but skipped (no failure).
+- Write commit: `6492204a74d46075adcefde1d63daf47338542a1` ("Apply 1 canonical input batch(es)", 68 files changed, 6949 insertions / 23 deletions -- exactly the `UPSERT_MODEL_BUNDLE`/`APPEND_PRICE`/`UPSERT_CAMPAIGN`/`REPLACE_CURRENT_RETAIL_SET` artifacts the batch's 36 commands produce: 3 new brand campaign files, 21 new price records, `current_retail.json` (Porta's set), 5 model files, plus canonical-state shadow/outbox/revision bookkeeping).
+- Published release: `vehicle-2026-c4e73494ab9aa779`, status `ACTIVE`, `activated_at 2026-09-28T09:17:48.298727+00:00`, `published_batches: 1`. Reported counts: `brands 62, models 323, generations 326, market_trims 1570, price_ledger 1004, spec_facts 20910` -- exact match to every disposable-copy validation run for this batch.
+
+**2. Independent verification, directly against the pulled repo, not the worker's self-report.**
+- `git fetch` + `git merge --ff-only origin/main` landed exactly on `6492204a...`, byte-identical to the worker's reported commit.
+- Directly queried the real, post-publish `Catalog`: Tesla's renamed AWD trim now named `Premium AWD`, Wuling Bingo's two trims named `LITE`/`PRO`, Wuling Darion's two trims named `Comfort`/`Premium`, Wuling Porta's two trims unchanged in name -- all id-preserving renames landed correctly.
+- Independently rebuilt `tdr_bridge.release_enriched` from the real post-publish HEAD (own revision/as-of, not the worker's) and checked, in one pass: `market_trims 1570, price_ledger 1004, spec_facts 20910` (exact match); all 9 renames landed with the correct name; all 8 new-trim additions are `CURRENT`; EX90's untouched 517hp trim, Zeekr 009's untouched Grand, and Zeekr X's untouched Long Range RWD are all still `CURRENT` (none silently downgraded); Porta's Standard Box is `CURRENT` and Flatbed Carrier is `UNVERIFIED` (the one intended status change beyond the renames); all 16 held models/trims (RIDDARA Horizon 4WD, SERES 3, SOKON EC35, VOLT For Four/Two, Volvo XC40 BEV's 7 trims) are unchanged, still `CURRENT`; all 21 new `APPEND_PRICE` rows are present with the exact amount and `observed_at 2026-09-28`; all 7 pre-existing conflicting price rows (Tesla RWD/Performance/AWD, Zeekr 009 Flagship, Zeekr X Standard/Flagship, EX90 Plus) are preserved byte-identical, untouched -- **FAILS: 0** across every check.
+
+**Outstanding issues: none for this batch.** The 5 models the owner asked to mark HISTORICAL (SERES 3, SOKON EC35, VOLT For Four, VOLT For Two, Volvo XC40 BEV) remain, as instructed, full holds pending a real http(s) source -- not touched, not claimed fixed. RIDDARA Horizon 4WD's structural identity collision, EX90's Ultra 6/7-Seat split, and Zeekr X's Long Range RWD lifecycle are likewise unresolved and were not acted on.
+
+Next: REPAIR-08 is closed. Do not re-audit, rebuild, or re-enqueue unless the user explicitly reopens it. Any future resolution of the 5 held-HISTORICAL models, RIDDARA's 4WD collision, EX90's Ultra split, Wuling Darion/Porta's remaining unresolved trim, or Zeekr X's Long Range RWD is a new, separately-numbered repair batch. The remaining historical BEV+REEV audit queue beyond REPAIR-08's 16 members was explicitly not started in this operation and is separate future work.
 
 ## Per-batch recording template
 
