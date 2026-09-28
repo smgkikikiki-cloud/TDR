@@ -91,6 +91,7 @@ Do not use this historical audit range as `REPAIR-04` membership unless the repa
 - `REPAIR-03`: `DONE / APPROVED` — frozen. Do not re-audit or rebuild unless user reopens it.
 - `REPAIR-04`: `DONE / APPROVED` — frozen. Do not re-audit or rebuild unless user reopens it.
 - `REPAIR-05`: `DONE / APPROVED` — frozen. Do not re-audit or rebuild unless user reopens it.
+- `REPAIR-06`: `DONE / APPROVED` — frozen. Do not re-audit or rebuild unless user reopens it.
 
 ### REPAIR-04 membership
 
@@ -329,6 +330,19 @@ State: still `PROMPT_READY` -- amended draft batch_id `ev-retail-repair-lot-06-2
 Full amended draft batch JSON was delivered to the user in-chat.
 
 Next: Await explicit user approval for Step 4 canonical write. Claude may prepare and validate a draft payload but must not enqueue, publish, or alter canonical vehicle data while at PROMPT_READY. This amendment did not change state to `APPROVED_TO_WRITE`.
+
+### REPAIR-06 Step 4 write (2026-09-28, DONE / APPROVED)
+
+State: `DONE / APPROVED`. Owner gave explicit Step 4 approval ("enque ไปเลย") for the amended 51-command batch `ev-retail-repair-lot-06-2026-09-28b` described above. No further changes were made to the batch between approval and enqueue.
+
+- Enqueued via `enqueue-canonical-batch.yml` (run `36375876010`, job `108781491262`): completed success, log confirmed `batch_key: ev-retail-repair-lot-06-2026-09-28b`, `queue_status: QUEUED (duplicate replay: False)`, and that it woke worker run `36375909417`.
+- Worker `canonical-input.yml` (run `36375909417`, job `108781584921`): completed success, all steps green -- apply, `vehreg market validate`, 46-test focused pytest suite, build enriched release, `git commit`, `tools.publish_canonical`, `mark-published`. STAGED-recovery steps present but skipped (no failure occurred).
+- Write commit: `be345ad2cbb5a32f2fe47586c04728b79536e584` ("Apply 1 canonical input batch(es)", 87 files changed, 10803 insertions).
+- Published release: `vehicle-2026-13b64c83d1fc710d`, status `ACTIVE`, `activated_at: 2026-09-28T04:02:41.58024+00:00`, `published_batches: 1`.
+- Independent verification performed directly against the pulled repo, not taken from the worker's self-report: (1) `git fetch origin main` + `git merge --ff-only` landed exactly on `be345ad2...`, matching the worker's reported commit; (2) a direct `vehreg market validate` re-run against the fresh pull returned valid, 0 problems; (3) a from-scratch Python cross-check loaded the actual submitted batch JSON and verified every one of the 51 commands' real effect against the live `Catalog`/`PriceLedger`/`current_retail_index` (trim existence/name for the 10 `UPSERT_MODEL_BUNDLE`s, amount/source_ref for the 33 `APPEND_PRICE`s, existence/source_ref for the 3 `UPSERT_CAMPAIGN`s, exact membership for the 5 `REPLACE_CURRENT_RETAIL_SET`s) -- result `FAILS: 0`; (4) an independent `tdr_bridge.release_enriched` rebuild from the real post-publish HEAD produced `release_id vehicle-2026-13b64c83d1fc710d`, an exact match to the actually-published/ACTIVE release_id, confirming full source-hash equivalence.
+- Two literal-wording deviations from the owner's Step 3 correction message were made and flagged transparently rather than forced or silently skipped: (a) MG ZS EV's wrong-parent ICE trims were not schema-deletable (price history attached) and were instead excluded via `REPLACE_CURRENT_RETAIL_SET`, dropping them to `UNVERIFIED`; (b) MG IM5/IM6/Maxus 7/Maxus 9's old trims could not be moved to literal per-trim `HISTORICAL` (parent models are raw `UNVERIFIED`, not `CURRENT`, which `UPSERT_TRIM_RETAIL_LIFECYCLE_REVIEW` requires) and were likewise excluded via `REPLACE_CURRENT_RETAIL_SET` instead. Both substitutions achieve the real-world "no longer presented as current" outcome with zero deletion, reparenting, or price-history loss, and are recorded in the batch's own command notes.
+
+Next: REPAIR-06 is closed. Do not re-audit or rebuild unless the user explicitly reopens it. Any further correction to any of these 20 members is a new, separately-numbered repair batch, not a reopening of REPAIR-06.
 
 ## Per-batch recording template
 
