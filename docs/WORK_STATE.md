@@ -297,7 +297,11 @@ Owner challenged whether Step 2 captured **all** currently evidenced Thai grades
 - 20 RIDDARA: Thai OEM 2025 press lists **six RD6 grades** after range additions: 2WD 63kWh 899,000; 2WD 73.9kWh 999,000; 4WD 73.9kWh 1,149,000; 4WD 86kWh 1,299,000; 2WD 86kWh 1,159,000; 4WD 86kWh Sunroof 1,335,000. This is evidence RD6 contains both 4WD 73.9 and 4WD 86, **not** proof TDR's `Horizon Pro/Ultra` names are exact Thai grade identities, nor proof all six remain orderable Sep 2026. Current Thai brand site shows RD6/ECON, not Horizon. https://thailand.riddara.com/newsroom/20250325 ; https://thailand.riddara.com/en/riddara-rd6
 - Other members (#02 Cyberster, #03 ES, #06 Maxus 7, #07 Maxus 9, #09 MINE MTS, #16 Nextem ORCA, #17 Cayenne EV) were checked against OEM offer/grade pages: no newly verified omitted currently priced Thai grade beyond what the first table reports. Maxus 7/9 exterior two-tone is an option, not proved separate mechanical grade. The absence of further OEM pages is not proof no additional fleet/private trims exist. Porsche Cayenne six electric grades remain as stated.
 
-Next: present a corrected 20-item owner-facing Thai market grid separating TDR grades+old prices, official evidenced grade/version, current price/dated promotion and grade-orderability holds; only then compose Step 3 prompt on owner direction.
+### REPAIR-06 Step 3 implementation prompt (2026-09-28)
+
+State: `PROMPT_READY`. Owner explicitly requested the Claude prompt after receiving the corrected 20-member Step 2 grid. The prompt includes all 20 members with TDR old trim/prices, evidenced Thai grades/list prices and dated campaigns, exact identity/current-retail holds, source URLs, canonical input pipeline guardrails, disposable-copy validation and an explicit STOP at draft. No batch has been enqueued, no canonical data written and no release published. The corrected Step 2 section immediately above governs if any earlier inspection text disagrees.
+
+Next: have Claude construct and validate a draft canonical batch, report exact one-to-one coverage, holds and before/after enriched release diff; await the owner's separate Step 4 approval before any enqueue, canonical write or publish.
 
 ## Per-batch recording template
 
