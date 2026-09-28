@@ -211,6 +211,15 @@ Independently verified (not just the worker's self-report): `git fetch` + `git m
 
 Membership, per-item outcomes and known limitations (Honda campaign stored-but-invisible in serving UI; Kia PV5 Passenger/Robotaxi lifecycle still open; Lotus/JAECOO grade mappings recorded as pending/unconfirmed in trim `notes`; Mercedes EQE sedan/SUV split still blocked) are exactly as recorded in the "second amendment round (2026-09-28b)" section above — nothing changed between that validated draft and what was actually written.
 
+### Post-publish follow-ups from independent REPAIR-05 v3 review (2026-09-28)
+
+REPAIR-05 remains DONE/APPROVED and frozen; these findings are a backlog for a separately scoped future repair or display-path change. Do not silently amend or re-enqueue its published batch.
+
+- Honda e:N2: the published GEN TO GEN campaign text in command lot5-002 calls the benefit a "Trade-In" and says it is conditional on trading in an old Honda. The cited Honda source instead describes proof of existing Honda ownership and buying an e:N2, without a trade-in requirement. Correct the canonical campaign's option label, condition text, and notes through a future canonical edit. Its non-price campaign is stored but invisible in the current serving quote/UI because the projection enumerates only campaign options backed by price rows; fix the projection in a separately scoped task rather than invent a price.
+- Lotus Eletre/Emeya: the published old base/S/R -> MY26 600/600 GT SE/900 Sport renames and prices were applied while the same commands describe the trim-ID mapping as unconfirmed and based only on power/name inference. Canonical notes saying PENDING do not prevent the names and prices from being served. Resolve this mapping with grade-specific evidence; if it cannot be substantiated, correct the identity/price binding through the canonical pathway, preserving price/spec/history. New 600 Sport SE and 900 Sport Carbon trims have specs pending.
+- JAECOO 6 EV and Lotus Eletre/Emeya: published current-set/trim notes say "NOT owner-approved yet" or "Not yet owner-approved" despite REPAIR-05 having since been approved and published. Remove or replace stale approval workflow wording in a future canonical edit; keep approval state in this work-state file, not market facts.
+- Kia PV5: Passenger and Robotaxi remain CURRENT by default despite absent Thai orderability evidence. Do not infer HISTORICAL solely from absence in a current price list; resolve per-trim Thai retail status with evidence, then use the supported lifecycle edit pathway. Mercedes EQE sedan/SUV model split remains blocked by model-level body_type and absent safe trim reparenting; Leapmotor B10 remains held pending grade-to-spec mapping.
+
 Next: REPAIR-05 is closed. Do not re-audit or rebuild unless the user explicitly reopens it. Any further correction (e.g. resolving Kia PV5's lifecycle question with real evidence, confirming the Lotus/JAECOO 6 grade mapping, resolving the Mercedes EQE split) is a new, separately-numbered repair batch, not a reopening of REPAIR-05.
 
 ## Per-batch recording template
