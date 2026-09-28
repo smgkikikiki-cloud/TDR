@@ -32,6 +32,7 @@ export async function AdminNav() {
       <Link href="/admin/import">นำเข้าข้อมูล</Link>
       <Link href="/admin/exceptions">รายการที่ต้องตัดสิน</Link>
       <Link href="/admin/market">ข้อมูลตลาด</Link>
+      <Link href="/admin/upcoming">Upcoming Cars</Link>
       <Link href="/admin/research">ไฟล์งานวิจัย</Link>
 
       <Link href="/" target="_blank">เปิดเว็บ Public ↗</Link>

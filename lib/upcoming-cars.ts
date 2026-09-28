@@ -26,6 +26,8 @@ export type UpcomingCarUpdate = {
   createdAt: string;
 };
 
+export type UpcomingCarForAdmin = UpcomingCar & { internalNotes: string };
+
 const CAR_COLUMNS = "id,vehicle_id,vehicle_name,status,confidence,launch_year,rumor_half,confirmed_quarter,confirmed_month,confirmed_day,description,created_at,updated_at";
 
 function carFromRow(row: any): UpcomingCar {
@@ -63,6 +65,30 @@ export async function getUpcomingCar(vehicleId: string): Promise<
   if (updatesError) throw updatesError;
   return {
     car: carFromRow(row),
+    updates: (updates || []).map((update) => ({
+      id: update.id, upcomingCarId: update.upcoming_car_id,
+      updateDate: update.update_date, message: update.message, createdAt: update.created_at,
+    })),
+  };
+}
+
+/** Admin edit form only; never pass internalNotes to public loaders. */
+export async function getUpcomingCarForAdmin(vehicleId: string): Promise<
+  { car: UpcomingCarForAdmin; updates: UpcomingCarUpdate[] } | null
+> {
+  const db = adminDb();
+  if (!db) return null;
+  const { data: row, error } = await db.from("upcoming_cars")
+    .select(`${CAR_COLUMNS},internal_notes`).eq("vehicle_id", vehicleId).maybeSingle();
+  if (error) throw error;
+  if (!row) return null;
+  const { data: updates, error: updatesError } = await db.from("upcoming_car_updates")
+    .select("id,upcoming_car_id,update_date,message,created_at")
+    .eq("upcoming_car_id", row.id)
+    .order("update_date", { ascending: false }).order("id", { ascending: false });
+  if (updatesError) throw updatesError;
+  return {
+    car: { ...carFromRow(row), internalNotes: row.internal_notes },
     updates: (updates || []).map((update) => ({
       id: update.id, upcomingCarId: update.upcoming_car_id,
       updateDate: update.update_date, message: update.message, createdAt: update.created_at,

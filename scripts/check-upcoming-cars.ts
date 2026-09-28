@@ -42,6 +42,6 @@ assert.match(sql, /upcoming_car_id bigint not null references public\.upcoming_c
 assert.match(access, /\.eq\("upcoming_car_id", row\.id\)/);
 assert.ok(!/canonical|market_trim|model_id|generation_id/i.test(sql.replace(/^--.*$/gm, "")));
 assert.ok(!/canonical|market_trim|model_id|generation_id/i.test(access));
-assert.ok(!access.includes("internal_notes"));
+assert.ok(!/const CAR_COLUMNS = [^\n]*internal_notes/.test(access));
 
 console.log("Upcoming Cars: statuses, confidence, timing, update association and isolation passed");
