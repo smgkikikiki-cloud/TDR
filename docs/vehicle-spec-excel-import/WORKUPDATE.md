@@ -103,13 +103,23 @@ Regression tests: `automotive/vehicle_master/tests/test_spec_excel_atomic_apply.
 
 Test commit: `3abab48d2d24e129782abb130fbe7bd89eff2794`.
 
+### Small audit issue fixed: deterministic promotion order
+
+The atomic helper collected changed paths in a set and originally sorted only by whether the path belonged to `canonical_state`. Paths inside the same group could therefore inherit hash/set iteration order and make output/tests flaky.
+
+The final ordering is now `(canonical_state_last, path_string)`, so promotion and reports are deterministic.
+
+Commit: `4f78a29a421dcb18c7175c03b4516d65f0ecc4e2`.
+
 ### Audit checks that passed
 
 - canonical batch `source_kind=ADMIN` is valid and is a different layer from `import_runs.source_kind=VEHICLE_SPECS`
 - release builder includes comparable specs in `spec_facts`
 - enriched release hashes `spec_facts`
 - staged Supabase publisher publishes `spec_facts`
+- source-free `spec_facts` are valid serving payloads; Supabase does not separately require source/source_ref columns
 - source-import workflow commits `vehreg/data`, publishes the exact pushed revision, then finalizes runs
+- source-import and canonical-input share the `canonical-vehicle-input` concurrency group, so another canonical writer cannot interleave with workbook staging/promotion
 - generated qualifier aliases solve the NEDC/WLTP/CLTC ambiguity without AI inference
 
 ### Not treated as blockers
@@ -129,31 +139,38 @@ They now point to the real generated header inventory instead of obsolete exampl
 
 ## Verification
 
-Previous source-free executable head `8ba7ede647420e98f146df224ea0f1f5161be362`:
+Source-free head `8ba7ede647420e98f146df224ea0f1f5161be362`:
 
 - Python compile: PASS
 - Python: 1572 passed + 4334 subtests passed; 9 existing unrelated baseline/data-fixture failures
 - production web build: PASS
-- TypeScript check: existing two unrelated lifecycle textual-smoke failures
+- TypeScript: the same two unrelated lifecycle textual-smoke failures
 
-Current audited head includes the atomic-workbook fix, atomic tests, v52 migration, and refreshed contracts.
+Audited atomic head `fe9b1bffbdf7c893f818c92d1e0493a473d857e8`:
 
-CI status at this WORKUPDATE commit:
+- Python compile: PASS
+- Python: **1574 passed + 4334 subtests passed; same 9 unrelated failures**
+- the +2 passes are the two new whole-workbook atomic regression tests
+- no `test_spec_excel*` test failed
+- production web build: PASS
+- TypeScript: exactly the same two unrelated lifecycle textual-smoke failures (`workflow store enforces canonical parent CURRENT`, `workflow store exempts reopen from parent guard`)
+
+Latest executable head `4f78a29a421dcb18c7175c03b4516d65f0ecc4e2` adds only the deterministic sort tie-breaker above:
 
 - Python compile: PASS
 - production web build: PASS
-- Python full suite: running
-- TypeScript: same baseline lifecycle check failure observed; no importer-specific TS error seen
+- TypeScript: same two unrelated lifecycle smoke failures confirmed
+- full Python suite is still running at the time of this note; the immediately preceding atomic head already passed both new importer tests with no importer-specific failure
 
 ## Current status
 
-Implementation is complete pending final CI readout for the atomic-workbook audit fix.
+Pre-merge audit found one critical correctness bug and one small determinism issue; both are fixed. No additional importer/data-path blocker was found in the second audit.
 
 End-to-end path:
 
 `generated template -> filled Excel/CSV -> deterministic compiler -> whole-workbook atomic staging -> canonical input batches -> canonical write -> worker commit -> immutable release -> Supabase publish`
 
-Do not merge automatically. Merge timing belongs to the user.
+PR remains open and is not auto-merged. Merge timing belongs to the user.
 
 ## Handoff rule
 
