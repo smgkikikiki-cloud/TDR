@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "1fd678d559ee76459a30d283",
+    "command_id": "lot8f-001",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "riddara.riddara_rd6_double_cab.gen1.trim.rd6_2wd_max_86_kwh_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "MY26 RD6 2WD Max (86 kWh) LIST 1,159,000 per Step 2's corrected audit table; trim previously unpriced. RD6 2WD Plus (73 kWh) already carries a matching on-file LIST 999,000 -- no command. RD6 2WD Lite (63 kWh) not named in Step 2's MY26 4-grade table -- untouched. 4WD (Horizon 73/86 kWh under the separate riddara_horizon_double_cab model): HELD, no command -- Step 2 itself names this a structural identity collision; gen1 variant-level drivetrain differs (RD6 RWD vs Horizon AWD), different launch dates, different owner_directory source rows, and no comparable-spec facts exist for either 4WD trim to prove or disprove a mapping. No campaign: the cited booking window (21-30 Aug 2026) is already expired as of 2026-09-28.",
+    "submitted_at": "2026-09-28T11:20:00+00:00",
+    "applied_at": "2026-09-28T09:16:11+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "ec2466fc431b277db140d85748b54a0bd7fbd86907b1448a5c60ad106fe9300c",
+    "before": [],
+    "after": [
+      {
+        "trim_id": "riddara.riddara_rd6_double_cab.gen1.trim.rd6_2wd_max_86_kwh_bev",
+        "amount_thb": 1159000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "docs/WORK_STATE.md#repair-08-step-2-inspection-2026-09-28-corrected-audit, row 01",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_lot8f-001.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "1fd678d559ee76459a30d283:price",
+    "revision_id": "1fd678d559ee76459a30d283",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "riddara.riddara_rd6_double_cab.gen1.trim.rd6_2wd_max_86_kwh_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-28T09:16:11+00:00",
+    "payload": [
+      {
+        "trim_id": "riddara.riddara_rd6_double_cab.gen1.trim.rd6_2wd_max_86_kwh_bev",
+        "amount_thb": 1159000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "docs/WORK_STATE.md#repair-08-step-2-inspection-2026-09-28-corrected-audit, row 01",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

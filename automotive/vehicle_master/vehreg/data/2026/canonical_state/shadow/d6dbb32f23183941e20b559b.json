@@ -1,0 +1,346 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d6dbb32f23183941e20b559b",
+    "command_id": "lot8f-011",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "wuling.wuling_air_ev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Wuling Air EV identity-only bundle, UNCHANGED from v4. This v5 round adds the price commands below.",
+    "submitted_at": "2026-09-28T11:20:00+00:00",
+    "applied_at": "2026-09-28T09:16:17+00:00",
+    "before_hash": "b4dc4ca1f7272d4bfbd4c8f56b37389cea5e1e2c89704ef3aa238967064fcd0d",
+    "after_hash": "8f3d981515e74aca24a1d50bdd699a206a290e6836a0d1aa8d3d9cc957f8627a",
+    "before": {
+      "id": "wuling_air_ev",
+      "name_en": "Wuling Air EV",
+      "name_th": "หวูหลิง แอร์ อีวี",
+      "nameplate": "",
+      "body_type": "HATCHBACK",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "air ev"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "A",
+          "seats": 4,
+          "launched": "2022-08-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "27 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "RWD",
+              "engine_cc": null,
+              "battery_kwh": 26.7,
+              "price_thb": 399000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Standard Range Lite (17.3 kWh, 200 km)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:314"
+                ]
+              },
+              "id": "standard_range_lite_17_3_kwh_200_km_bev"
+            },
+            {
+              "name": "Long Range (26.7 kWh, 300 km)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:314"
+                ]
+              },
+              "id": "long_range_26_7_kwh_300_km_bev"
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "wuling",
+        "name_en": "Wuling",
+        "name_th": "หวูหลิง",
+        "brand_segment": "BUDGET",
+        "oem_group": "SAIC-GM-Wuling",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "wuling.wuling_air_ev",
+        "brand_id": "wuling",
+        "name_en": "Wuling Air EV",
+        "name_th": "หวูหลิง แอร์ อีวี",
+        "nameplate": "Wuling Air EV",
+        "body_type": "HATCHBACK",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "air ev"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "wuling.wuling_air_ev.gen1",
+          "model_id": "wuling.wuling_air_ev",
+          "code": "gen1",
+          "segment": "A",
+          "seats": 4,
+          "launched": "2022-08-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "wuling.wuling_air_ev.gen1.27_kwh_bev",
+          "generation_id": "wuling.wuling_air_ev.gen1",
+          "name": "27 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 26.7,
+          "price_thb": 399000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "wuling.wuling_air_ev.gen1.trim.standard_range_lite_17_3_kwh_200_km_bev",
+          "generation_id": "wuling.wuling_air_ev.gen1",
+          "name": "Standard Range",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:314"
+            ]
+          },
+          "notes": "Unchanged from v4: renamed only, unique spec match."
+        },
+        {
+          "id": "wuling.wuling_air_ev.gen1.trim.long_range_26_7_kwh_300_km_bev",
+          "generation_id": "wuling.wuling_air_ev.gen1",
+          "name": "Long Range (26.7 kWh, 300 km)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:314"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/wuling.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d6dbb32f23183941e20b559b:catalog",
+    "revision_id": "d6dbb32f23183941e20b559b",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "wuling.wuling_air_ev",
+    "state": "PENDING",
+    "created_at": "2026-09-28T09:16:17+00:00",
+    "payload": {
+      "brand": {
+        "id": "wuling",
+        "name_en": "Wuling",
+        "name_th": "หวูหลิง",
+        "brand_segment": "BUDGET",
+        "oem_group": "SAIC-GM-Wuling",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "wuling.wuling_air_ev",
+        "brand_id": "wuling",
+        "name_en": "Wuling Air EV",
+        "name_th": "หวูหลิง แอร์ อีวี",
+        "nameplate": "Wuling Air EV",
+        "body_type": "HATCHBACK",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "air ev"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "wuling.wuling_air_ev.gen1",
+          "model_id": "wuling.wuling_air_ev",
+          "code": "gen1",
+          "segment": "A",
+          "seats": 4,
+          "launched": "2022-08-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "wuling.wuling_air_ev.gen1.27_kwh_bev",
+          "generation_id": "wuling.wuling_air_ev.gen1",
+          "name": "27 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 26.7,
+          "price_thb": 399000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "wuling.wuling_air_ev.gen1.trim.standard_range_lite_17_3_kwh_200_km_bev",
+          "generation_id": "wuling.wuling_air_ev.gen1",
+          "name": "Standard Range",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:314"
+            ]
+          },
+          "notes": "Unchanged from v4: renamed only, unique spec match."
+        },
+        {
+          "id": "wuling.wuling_air_ev.gen1.trim.long_range_26_7_kwh_300_km_bev",
+          "generation_id": "wuling.wuling_air_ev.gen1",
+          "name": "Long Range (26.7 kWh, 300 km)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:314"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

@@ -49,24 +49,30 @@
           ],
           "trims": [
             {
-              "name": "Standard Range (333 km)",
+              "name": "LITE",
               "powertrain": "BEV",
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:315"
                 ]
               },
-              "id": "standard_range_333_km_bev"
+              "id": "standard_range_333_km_bev",
+              "notes": "Renamed only (same id preserved, no price-ledger rows existed to touch). Owner-supplied current lineup in chat (2026-09-28): 2 trims, LITE 369,000 / PRO 389,000. Mapped to the cheaper-priced grade by naming convention (LITE = base spec) -- disclosed judgment call, not independently spec-verified per the owner's explicit no-re-audit instruction.",
+              "seats": null,
+              "aliases": []
             },
             {
-              "name": "Long Range (410 km)",
+              "name": "PRO",
               "powertrain": "BEV",
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:315"
                 ]
               },
-              "id": "long_range_410_km_bev"
+              "id": "long_range_410_km_bev",
+              "notes": "Renamed only (same id preserved, no price-ledger rows existed to touch). Mapped to the pricier grade (PRO = higher spec/longer range) -- same disclosed judgment call as LITE above.",
+              "seats": null,
+              "aliases": []
             }
           ]
         }
@@ -110,14 +116,17 @@
           ],
           "trims": [
             {
-              "name": "Standard Range Lite (17.3 kWh, 200 km)",
+              "name": "Standard Range",
               "powertrain": "BEV",
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:314"
                 ]
               },
-              "id": "standard_range_lite_17_3_kwh_200_km_bev"
+              "id": "standard_range_lite_17_3_kwh_200_km_bev",
+              "notes": "Unchanged from v4: renamed only, unique spec match.",
+              "seats": null,
+              "aliases": []
             },
             {
               "name": "Long Range (26.7 kWh, 300 km)",
@@ -150,7 +159,7 @@
       "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
       "generations": [
         {
-          "code": "WULING_DARION",
+          "code": "wuling_darion",
           "segment": "UNKNOWN",
           "seats": null,
           "launched": "2026-07-01",
@@ -174,24 +183,30 @@
           ],
           "trims": [
             {
-              "name": "Darion EV Cargo Van",
+              "name": "Comfort",
               "powertrain": "BEV",
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:316"
                 ]
               },
-              "id": "darion_ev_cargo_van_bev"
+              "id": "darion_ev_cargo_van_bev",
+              "notes": "Renamed only (same id preserved, no price-ledger rows existed to touch). Owner directly confirmed this exact pairing and price in chat (2026-09-28), authorizing what v1/v2 had held as an unproven price-ordering guess -- this round proceeds on the owner's direct instruction, not a fresh audit.",
+              "seats": null,
+              "aliases": []
             },
             {
-              "name": "Darion EV Passenger Minibus",
+              "name": "Premium",
               "powertrain": "BEV",
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:316"
                 ]
               },
-              "id": "darion_ev_passenger_minibus_bev"
+              "id": "darion_ev_passenger_minibus_bev",
+              "notes": "Renamed only (same id preserved, no price-ledger rows existed to touch). Same owner-direct authorization as Comfort above.",
+              "seats": null,
+              "aliases": []
             }
           ]
         }

@@ -101,7 +101,7 @@
       "notes": "",
       "generations": [
         {
-          "code": "Z009",
+          "code": "z009",
           "segment": "E",
           "seats": 6,
           "launched": "2024-05-01",
@@ -127,14 +127,17 @@
           ],
           "trims": [
             {
-              "name": "009 Luxury 6-Seater AWD (Dual Motor, 603 hp)",
+              "name": "Flagship AWD 6-Seat",
               "powertrain": "BEV",
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:320"
                 ]
               },
-              "id": "009_luxury_6_seater_awd_dual_motor_603_hp_bev"
+              "id": "009_luxury_6_seater_awd_dual_603_hp_bev",
+              "notes": "Unchanged from v4: renamed only, 6-seat count is the identity signal.",
+              "seats": 6,
+              "aliases": []
             },
             {
               "name": "009 Grand 4-Seater VIP (Ultra-Luxury Rear Suite, 778 hp)",
@@ -145,6 +148,22 @@
                 ]
               },
               "id": "009_grand_4_seater_vip_ultra_luxury_rear_suite_778_hp_bev"
+            },
+            {
+              "id": "standard_7_seater_bev",
+              "name": "Standard 7-Seat",
+              "notes": "New current trim, standard 009 lineup, unchanged from v4.",
+              "seats": 7,
+              "aliases": [],
+              "powertrain": "BEV"
+            },
+            {
+              "id": "premium_awd_7_seater_bev",
+              "name": "Premium AWD 7-Seat",
+              "notes": "New current trim, standard 009 lineup, unchanged from v4.",
+              "seats": 7,
+              "aliases": [],
+              "powertrain": "BEV"
             }
           ]
         }

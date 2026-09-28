@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c5984be757987dcad672b761",
+    "command_id": "lot8f-028",
+    "operation": "UPSERT_CAMPAIGN",
+    "year": 2026,
+    "topic": "campaign",
+    "entity_type": "campaign",
+    "entity_id": "xpeng.xpeng_x9.gen2.trim.luxury_awd_bev.campaign.2026-09-01",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Benefit/gift bundle for 'The New X9' Luxury AWD per Step 2, not a stated discounted vehicle price -- recorded as campaign metadata only, no CAMPAIGN_PRICE. Booking/delivery conditions per the Sep 2026 offer window.",
+    "submitted_at": "2026-09-28T11:20:00+00:00",
+    "applied_at": "2026-09-28T09:16:31+00:00",
+    "before_hash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+    "after_hash": "9b378c5dda5ca1dd42f80d08edeecab6ad996be7963f7a1b475cb4e18a897a8d",
+    "before": null,
+    "after": {
+      "id": "xpeng.xpeng_x9.gen2.trim.luxury_awd_bev.campaign.2026-09-01",
+      "ends": "2026-09-30",
+      "gifts": "2-year Class 1 motor insurance, home wallbox charger, portable charger, 9,000 MobiLife points.",
+      "notes": "Benefit/gift bundle for 'The New X9' Luxury AWD per Step 2, not a stated discounted vehicle price -- recorded as campaign metadata only, no CAMPAIGN_PRICE. Booking/delivery conditions per the Sep 2026 offer window.",
+      "source": "admin",
+      "starts": "2026-09-01",
+      "options": [
+        {
+          "id": "default",
+          "ends": "2026-09-30",
+          "label": "2-year Class 1 motor insurance, home wallbox charger, portab",
+          "starts": "2026-09-01",
+          "conditions": {
+            "text": "2-year Class 1 motor insurance, home wallbox charger, portable charger, 9,000 MobiLife points.",
+            "booking_to": "2026-09-30",
+            "booking_from": "2026-09-01"
+          }
+        }
+      ],
+      "brand_id": "xpeng",
+      "source_ref": "docs/WORK_STATE.md#repair-08-step-2-inspection-2026-09-28-corrected-audit, row 14"
+    },
+    "changed_files": [
+      "2026/market/campaigns/xpeng.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c5984be757987dcad672b761:campaign",
+    "revision_id": "c5984be757987dcad672b761",
+    "topic": "campaign",
+    "entity_type": "campaign",
+    "entity_id": "xpeng.xpeng_x9.gen2.trim.luxury_awd_bev.campaign.2026-09-01",
+    "state": "PENDING",
+    "created_at": "2026-09-28T09:16:31+00:00",
+    "payload": {
+      "id": "xpeng.xpeng_x9.gen2.trim.luxury_awd_bev.campaign.2026-09-01",
+      "ends": "2026-09-30",
+      "gifts": "2-year Class 1 motor insurance, home wallbox charger, portable charger, 9,000 MobiLife points.",
+      "notes": "Benefit/gift bundle for 'The New X9' Luxury AWD per Step 2, not a stated discounted vehicle price -- recorded as campaign metadata only, no CAMPAIGN_PRICE. Booking/delivery conditions per the Sep 2026 offer window.",
+      "source": "admin",
+      "starts": "2026-09-01",
+      "options": [
+        {
+          "id": "default",
+          "ends": "2026-09-30",
+          "label": "2-year Class 1 motor insurance, home wallbox charger, portab",
+          "starts": "2026-09-01",
+          "conditions": {
+            "text": "2-year Class 1 motor insurance, home wallbox charger, portable charger, 9,000 MobiLife points.",
+            "booking_to": "2026-09-30",
+            "booking_from": "2026-09-01"
+          }
+        }
+      ],
+      "brand_id": "xpeng",
+      "source_ref": "docs/WORK_STATE.md#repair-08-step-2-inspection-2026-09-28-corrected-audit, row 14"
+    }
+  }
+}

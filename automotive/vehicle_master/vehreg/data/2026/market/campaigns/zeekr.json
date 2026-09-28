@@ -1,0 +1,50 @@
+{
+  "campaigns": [
+    {
+      "id": "zeekr.zeekr_009.z009.trim.009_luxury_6_seater_awd_dual_603_hp_bev.campaign.2026-09-01",
+      "ends": "2026-09-30",
+      "gifts": "Warranty, maintenance and charging benefits.",
+      "notes": "Benefit bundle for the renamed Flagship AWD 6-Seat per Step 2, not a stated discounted vehicle price -- recorded as campaign metadata only, no CAMPAIGN_PRICE. None on Standard 7-Seat or Grand -- Step 2 explicitly restricts this offer to Premium/Flagship.",
+      "source": "admin",
+      "starts": "2026-09-01",
+      "options": [
+        {
+          "id": "default",
+          "ends": "2026-09-30",
+          "label": "Warranty, maintenance and charging benefits.",
+          "starts": "2026-09-01",
+          "conditions": {
+            "text": "Warranty, maintenance and charging benefits.",
+            "booking_to": "2026-09-30",
+            "booking_from": "2026-09-01"
+          }
+        }
+      ],
+      "brand_id": "zeekr",
+      "source_ref": "docs/WORK_STATE.md#repair-08-step-2-inspection-2026-09-28-corrected-audit, row 15"
+    },
+    {
+      "id": "zeekr.zeekr_009.z009.trim.premium_awd_7_seater_bev.campaign.2026-09-01",
+      "ends": "2026-09-30",
+      "gifts": "Warranty, maintenance and charging benefits.",
+      "notes": "Benefit bundle per Step 2, not a stated discounted vehicle price -- recorded as campaign metadata only, no CAMPAIGN_PRICE.",
+      "source": "admin",
+      "starts": "2026-09-01",
+      "options": [
+        {
+          "id": "default",
+          "ends": "2026-09-30",
+          "label": "Warranty, maintenance and charging benefits.",
+          "starts": "2026-09-01",
+          "conditions": {
+            "text": "Warranty, maintenance and charging benefits.",
+            "booking_to": "2026-09-30",
+            "booking_from": "2026-09-01"
+          }
+        }
+      ],
+      "brand_id": "zeekr",
+      "source_ref": "docs/WORK_STATE.md#repair-08-step-2-inspection-2026-09-28-corrected-audit, row 15"
+    }
+  ]
+}

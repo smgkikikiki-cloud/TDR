@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f4a8a1658e926efea56ed975",
+    "command_id": "lot8f-015",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "wuling.wuling_bingo.gen1.trim.standard_range_333_km_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "LITE current LIST per owner-supplied lineup (2026-09-28, chat, not Step 2). No existing price row -- no conflict.",
+    "submitted_at": "2026-09-28T11:20:00+00:00",
+    "applied_at": "2026-09-28T09:16:19+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "8150b8ad7b8ea57380bb546433cfa1fe686295d6f96b8bb24ddd00c409c0b62e",
+    "before": [],
+    "after": [
+      {
+        "trim_id": "wuling.wuling_bingo.gen1.trim.standard_range_333_km_bev",
+        "amount_thb": 369000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "owner-supplied-chat-2026-09-28-wuling-bingo-darion-porta",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_lot8f-015.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f4a8a1658e926efea56ed975:price",
+    "revision_id": "f4a8a1658e926efea56ed975",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "wuling.wuling_bingo.gen1.trim.standard_range_333_km_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-28T09:16:19+00:00",
+    "payload": [
+      {
+        "trim_id": "wuling.wuling_bingo.gen1.trim.standard_range_333_km_bev",
+        "amount_thb": 369000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "owner-supplied-chat-2026-09-28-wuling-bingo-darion-porta",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

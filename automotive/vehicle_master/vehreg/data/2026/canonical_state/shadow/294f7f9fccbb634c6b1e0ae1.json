@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "294f7f9fccbb634c6b1e0ae1",
+    "command_id": "lot8f-009",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.ex30.ex30g.trim.ultra_single_extended_range_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Current MY26 LIST per Step 2's corrected audit. New trim, no existing price row -- no conflict. Core/Plus/Twin remain untouched, still individually CURRENT by the legacy default (Step 2: 'do not retire old grades until direct current-set/orderability evidence'). No campaign: Step 2 explicitly found none.",
+    "submitted_at": "2026-09-28T11:20:00+00:00",
+    "applied_at": "2026-09-28T09:16:17+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "fb73c2eda83ca0dddf5414c2094dd69f3f8134ef2368da7bd0b3dbde3115c08d",
+    "before": [],
+    "after": [
+      {
+        "trim_id": "volvo.ex30.ex30g.trim.ultra_single_extended_range_bev",
+        "amount_thb": 1690000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "docs/WORK_STATE.md#repair-08-step-2-inspection-2026-09-28-corrected-audit, row 07",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_lot8f-009.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "294f7f9fccbb634c6b1e0ae1:price",
+    "revision_id": "294f7f9fccbb634c6b1e0ae1",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "volvo.ex30.ex30g.trim.ultra_single_extended_range_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-28T09:16:17+00:00",
+    "payload": [
+      {
+        "trim_id": "volvo.ex30.ex30g.trim.ultra_single_extended_range_bev",
+        "amount_thb": 1690000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "docs/WORK_STATE.md#repair-08-step-2-inspection-2026-09-28-corrected-audit, row 07",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "bb821c90853638e45aa11511",
+    "command_id": "lot8f-035",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "zeekr.zeekr_x.zx.trim.standard_rwd_272_hp_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Current Thai LIST per Step 2. Existing LIST_PRICE on file (1,199,000, 2026-09-14) is a real conflict -- not corrected, appended as a newer-dated observation with the old row preserved, flagged for owner review. No campaign: Step 2 explicitly forbids borrowing 009's campaign terms for X, and X's own offer terms are not confirmed in enough detail to write safely.",
+    "submitted_at": "2026-09-28T11:20:00+00:00",
+    "applied_at": "2026-09-28T09:16:39+00:00",
+    "before_hash": "c377e0b3a3f60638d0e53344ec06262c4cc275dc70e1916fbd335b3b63420920",
+    "after_hash": "a8cab568b508c1b69ada0b6f46c04261f2a07f0e8a734dfecd91748e06703071",
+    "before": [
+      {
+        "trim_id": "zeekr.zeekr_x.zx.trim.standard_rwd_272_hp_bev",
+        "amount_thb": 1199000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:311:1",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: Standard RWD (66 kWh); canonical grade: Standard RWD (272 hp); mapping: manual. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "zeekr.zeekr_x.zx.trim.standard_rwd_272_hp_bev",
+        "amount_thb": 1199000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:311:1",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: Standard RWD (66 kWh); canonical grade: Standard RWD (272 hp); mapping: manual. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      },
+      {
+        "trim_id": "zeekr.zeekr_x.zx.trim.standard_rwd_272_hp_bev",
+        "amount_thb": 899000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "docs/WORK_STATE.md#repair-08-step-2-inspection-2026-09-28-corrected-audit, row 16",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_lot8f-035.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "bb821c90853638e45aa11511:price",
+    "revision_id": "bb821c90853638e45aa11511",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "zeekr.zeekr_x.zx.trim.standard_rwd_272_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-28T09:16:39+00:00",
+    "payload": [
+      {
+        "trim_id": "zeekr.zeekr_x.zx.trim.standard_rwd_272_hp_bev",
+        "amount_thb": 1199000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-14",
+        "source": "owner_pricing_directory",
+        "source_ref": "owner_pricing_directory_2026_09_14:311:1",
+        "source_document_id": "",
+        "notes": "Owner-supplied Thailand pricing directory; source grade: Standard RWD (66 kWh); canonical grade: Standard RWD (272 hp); mapping: manual. Promotion text is retained in the research registry and is not promoted as a live campaign because the source row has no reliable campaign validity window.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": "owner_directory_import"
+      },
+      {
+        "trim_id": "zeekr.zeekr_x.zx.trim.standard_rwd_272_hp_bev",
+        "amount_thb": 899000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "docs/WORK_STATE.md#repair-08-step-2-inspection-2026-09-28-corrected-audit, row 16",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

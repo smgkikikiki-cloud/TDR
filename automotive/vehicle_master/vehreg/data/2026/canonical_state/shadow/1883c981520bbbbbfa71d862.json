@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "1883c981520bbbbbfa71d862",
+    "command_id": "lot8f-031",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "zeekr.zeekr_009.z009.trim.premium_awd_7_seater_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Current Thai LIST per Step 2. New trim -- no conflict (this figure coincidentally equals the OLD Flagship trim's existing on-file price below, but it is a distinct trim_id -- no data conflict).",
+    "submitted_at": "2026-09-28T11:20:00+00:00",
+    "applied_at": "2026-09-28T09:16:32+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "bf451b65274f3b49982e84c6a5ab1f69c1fbef7d9e8b7e279d6b8dc8fdf53f7a",
+    "before": [],
+    "after": [
+      {
+        "trim_id": "zeekr.zeekr_009.z009.trim.premium_awd_7_seater_bev",
+        "amount_thb": 3099000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "docs/WORK_STATE.md#repair-08-step-2-inspection-2026-09-28-corrected-audit, row 15",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_lot8f-031.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "1883c981520bbbbbfa71d862:price",
+    "revision_id": "1883c981520bbbbbfa71d862",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "zeekr.zeekr_009.z009.trim.premium_awd_7_seater_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-28T09:16:32+00:00",
+    "payload": [
+      {
+        "trim_id": "zeekr.zeekr_009.z009.trim.premium_awd_7_seater_bev",
+        "amount_thb": 3099000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "docs/WORK_STATE.md#repair-08-step-2-inspection-2026-09-28-corrected-audit, row 15",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

@@ -1,0 +1,374 @@
+{
+  "schema_version": 1,
+  "batch_id": "ev-retail-repair-lot-08-2026-09-28f",
+  "batch_hash": "1c1621b89128b20922b2e27bb8ee16adb6a8b06ccc876af9bcf1337acce7a687",
+  "status": "APPLIED",
+  "year": 2026,
+  "source": {
+    "kind": "ADMIN",
+    "ref": "docs/WORK_STATE.md#REPAIR-08"
+  },
+  "actor": "smgkikikiki-cloud",
+  "reason": "REPAIR-08 Step 3 (v6, extends the v5 16-item-scope batch): adds Wuling Bingo (LITE 369,000 / PRO 389,000), Wuling Darion EV (Comfort 839,000 / Premium 899,000 -- un-holds the v1/v2 price-ordering judgment call on owner's direct instruction) and Wuling Porta EV (single current identity, 599,000, current trim count 1 of 2) on owner-supplied evidence in chat. Owner also asked SERES 3/SOKON EC35/VOLT For Four/VOLT For Two/Volvo XC40 BEV be marked HISTORICAL; blocked by _validate_trim_lifecycle_review_command requiring a real http(s) source_ref for a historical action, which none of these 5 have -- asked the owner directly, who chose to hold rather than substitute a different mechanism or supply a URL, so these 5 remain untouched full holds. Everything else unchanged from v5 (see below). DRAFT ONLY -- not enqueued, not applied to real canonical data, not published, not merged.",
+  "submitted_at": "2026-09-28T11:20:00+00:00",
+  "applied_at": "2026-09-28T09:16:42+00:00",
+  "results": [
+    {
+      "command_id": "lot8f-001",
+      "revision_id": "1fd678d559ee76459a30d283",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "riddara.riddara_rd6_double_cab.gen1.trim.rd6_2wd_max_86_kwh_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-002",
+      "revision_id": "5f6263787a9156c304fe19f4",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "tesla.model3",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-003",
+      "revision_id": "143e59649f41471ab9177ed7",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "tesla.model3.m3h.trim.rear_wheel_drive_rwd_60_kwh_lfp_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-004",
+      "revision_id": "4fb823ec1c1f29c3f6a1e0de",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "tesla.model3.m3h.trim.premium_rwd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-005",
+      "revision_id": "7775ab396a1f3441ecd15f95",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "tesla.model3.m3h.trim.premium_long_range_rwd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-006",
+      "revision_id": "9c67e0e762792551ea828a54",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "tesla.model3.m3h.trim.performance_all_wheel_drive_awd_460_hp_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-007",
+      "revision_id": "8eb98f0c0c54d5bfae14e6f5",
+      "topic": "campaign",
+      "entity_type": "campaign",
+      "entity_id": "tesla.model3.m3h.trim.premium_rwd_bev.campaign.2026-09-28",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-008",
+      "revision_id": "dc2e92a6e1c92a593d2967be",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "volvo.ex30",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-009",
+      "revision_id": "294f7f9fccbb634c6b1e0ae1",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "volvo.ex30.ex30g.trim.ultra_single_extended_range_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-010",
+      "revision_id": "e410cc7a63387f9f8922c4e4",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "volvo.ex90",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-011",
+      "revision_id": "d6dbb32f23183941e20b559b",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "wuling.wuling_air_ev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-012",
+      "revision_id": "0a12caaf2d22ff73465f9182",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "wuling.wuling_air_ev.gen1.trim.standard_range_lite_17_3_kwh_200_km_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-013",
+      "revision_id": "ae776d66a93feddecfdebd90",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "wuling.wuling_air_ev.gen1.trim.long_range_26_7_kwh_300_km_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-014",
+      "revision_id": "1295f857767befd58a944c4b",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "wuling.wuling_bingo",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-015",
+      "revision_id": "f4a8a1658e926efea56ed975",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "wuling.wuling_bingo.gen1.trim.standard_range_333_km_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-016",
+      "revision_id": "d15d4106f072637f885269ff",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "wuling.wuling_bingo.gen1.trim.long_range_410_km_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-017",
+      "revision_id": "17f1355dfcddc0cb72f2c783",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "wuling.wuling_darion",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-018",
+      "revision_id": "934395dcff0944722f6353d1",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "wuling.wuling_darion.wuling_darion.trim.darion_ev_cargo_van_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-019",
+      "revision_id": "9e34af56fe73b3ed1a705f11",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "wuling.wuling_darion.wuling_darion.trim.darion_ev_passenger_minibus_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-020",
+      "revision_id": "e8fe9346eb4a9141e561f726",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "wuling.wuling_porta.wuling_porta.trim.porta_ev_standard_box_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-021",
+      "revision_id": "current-retail-set-b16149b4fbd192c2",
+      "topic": "current_retail_set",
+      "entity_type": "market_current_retail_set",
+      "entity_id": "wuling.wuling_porta",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-022",
+      "revision_id": "d2c78880105166aa64f1a152",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "xpeng.xpeng_x9",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-023",
+      "revision_id": "2d629e36fdeb06853f94ec45",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "xpeng.xpeng_x9.gen2.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-024",
+      "revision_id": "4406127b00669312a4209743",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "xpeng.xpeng_x9.gen2.trim.executive_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-025",
+      "revision_id": "12a5eea5eacefd50eead68dc",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "xpeng.xpeng_x9.gen2.trim.luxury_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-026",
+      "revision_id": "f647646c0ba45dd9979d5e3b",
+      "topic": "campaign",
+      "entity_type": "campaign",
+      "entity_id": "xpeng.xpeng_x9.gen2.trim.premium_bev.campaign.2026-09-01",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-027",
+      "revision_id": "db1000ba45c00dc2ad34cd9a",
+      "topic": "campaign",
+      "entity_type": "campaign",
+      "entity_id": "xpeng.xpeng_x9.gen2.trim.executive_bev.campaign.2026-09-01",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-028",
+      "revision_id": "c5984be757987dcad672b761",
+      "topic": "campaign",
+      "entity_type": "campaign",
+      "entity_id": "xpeng.xpeng_x9.gen2.trim.luxury_awd_bev.campaign.2026-09-01",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-029",
+      "revision_id": "e7b19cac4f8ac022f5b0b2a5",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "zeekr.zeekr_009",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-030",
+      "revision_id": "d6dc0b89ff188492c0b52773",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "zeekr.zeekr_009.z009.trim.standard_7_seater_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-031",
+      "revision_id": "1883c981520bbbbbfa71d862",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "zeekr.zeekr_009.z009.trim.premium_awd_7_seater_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-032",
+      "revision_id": "0d0882ee119685e6d6d26ddb",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "zeekr.zeekr_009.z009.trim.009_luxury_6_seater_awd_dual_603_hp_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-033",
+      "revision_id": "b3047cf77f8b726435aa88e1",
+      "topic": "campaign",
+      "entity_type": "campaign",
+      "entity_id": "zeekr.zeekr_009.z009.trim.premium_awd_7_seater_bev.campaign.2026-09-01",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-034",
+      "revision_id": "b3e06ae48ebb1c4d6be20c2c",
+      "topic": "campaign",
+      "entity_type": "campaign",
+      "entity_id": "zeekr.zeekr_009.z009.trim.009_luxury_6_seater_awd_dual_603_hp_bev.campaign.2026-09-01",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-035",
+      "revision_id": "bb821c90853638e45aa11511",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "zeekr.zeekr_x.zx.trim.standard_rwd_272_hp_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot8f-036",
+      "revision_id": "1c9e78dafe86f6cfef9c0253",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "zeekr.zeekr_x.zx.trim.flagship_awd_dual_428_hp_bev",
+      "idempotent_replay": false
+    }
+  ],
+  "changed_files": [
+    "2026/market/prices/canonical_lot8f-024.json",
+    "2026/market/prices/canonical_lot8f-025.json",
+    "2026/market/campaigns/tesla.json",
+    "2026/market/prices/canonical_lot8f-020.json",
+    "2026/market/prices/canonical_lot8f-004.json",
+    "2026/models/zeekr.json",
+    "2026/market/prices/canonical_lot8f-001.json",
+    "2026/market/campaigns/zeekr.json",
+    "2026/market/campaigns/xpeng.json",
+    "2026/market/trims/current_retail.json",
+    "2026/models/wuling.json",
+    "2026/market/prices/canonical_lot8f-003.json",
+    "2026/market/prices/canonical_lot8f-035.json",
+    "2026/market/prices/canonical_lot8f-009.json",
+    "2026/market/prices/canonical_lot8f-015.json",
+    "2026/market/prices/canonical_lot8f-013.json",
+    "2026/market/prices/canonical_lot8f-030.json",
+    "2026/market/prices/canonical_lot8f-006.json",
+    "2026/market/prices/canonical_lot8f-036.json",
+    "2026/market/prices/canonical_lot8f-019.json",
+    "2026/models/tesla.json",
+    "2026/market/prices/canonical_lot8f-018.json",
+    "2026/market/prices/canonical_lot8f-031.json",
+    "2026/market/prices/canonical_lot8f-005.json",
+    "2026/market/prices/canonical_lot8f-023.json",
+    "2026/market/prices/canonical_lot8f-016.json",
+    "2026/models/xpeng.json",
+    "2026/models/volvo.json",
+    "2026/market/prices/canonical_lot8f-012.json",
+    "2026/market/prices/canonical_lot8f-032.json",
+    "2026/canonical_state/shadow/e7b19cac4f8ac022f5b0b2a5.json",
+    "2026/canonical_state/shadow/e410cc7a63387f9f8922c4e4.json",
+    "2026/canonical_state/shadow/b3047cf77f8b726435aa88e1.json",
+    "2026/canonical_state/shadow/d2c78880105166aa64f1a152.json",
+    "2026/canonical_state/shadow/d6dbb32f23183941e20b559b.json",
+    "2026/canonical_state/shadow/d15d4106f072637f885269ff.json",
+    "2026/canonical_state/shadow/b3e06ae48ebb1c4d6be20c2c.json",
+    "2026/canonical_state/shadow/9c67e0e762792551ea828a54.json",
+    "2026/canonical_state/outbox.jsonl",
+    "2026/canonical_state/revisions.jsonl",
+    "2026/canonical_state/shadow/5f6263787a9156c304fe19f4.json",
+    "2026/canonical_state/shadow/294f7f9fccbb634c6b1e0ae1.json",
+    "2026/canonical_state/shadow/f647646c0ba45dd9979d5e3b.json",
+    "2026/canonical_state/shadow/d6dc0b89ff188492c0b52773.json",
+    "2026/canonical_state/shadow/f4a8a1658e926efea56ed975.json",
+    "2026/canonical_state/shadow/c5984be757987dcad672b761.json",
+    "2026/canonical_state/shadow/0a12caaf2d22ff73465f9182.json",
+    "2026/canonical_state/shadow/4fb823ec1c1f29c3f6a1e0de.json",
+    "2026/canonical_state/shadow/8eb98f0c0c54d5bfae14e6f5.json",
+    "2026/canonical_state/shadow/2d629e36fdeb06853f94ec45.json",
+    "2026/canonical_state/shadow/1fd678d559ee76459a30d283.json",
+    "2026/canonical_state/shadow/143e59649f41471ab9177ed7.json",
+    "2026/canonical_state/shadow/bb821c90853638e45aa11511.json",
+    "2026/canonical_state/shadow/ae776d66a93feddecfdebd90.json",
+    "2026/canonical_state/shadow/0d0882ee119685e6d6d26ddb.json",
+    "2026/canonical_state/shadow/4406127b00669312a4209743.json",
+    "2026/canonical_state/shadow/1295f857767befd58a944c4b.json",
+    "2026/canonical_state/shadow/db1000ba45c00dc2ad34cd9a.json",
+    "2026/canonical_state/shadow/1883c981520bbbbbfa71d862.json",
+    "2026/canonical_state/shadow/1c9e78dafe86f6cfef9c0253.json",
+    "2026/canonical_state/shadow/7775ab396a1f3441ecd15f95.json",
+    "2026/canonical_state/shadow/dc2e92a6e1c92a593d2967be.json",
+    "2026/canonical_state/shadow/e8fe9346eb4a9141e561f726.json",
+    "2026/canonical_state/shadow/934395dcff0944722f6353d1.json",
+    "2026/canonical_state/shadow/9e34af56fe73b3ed1a705f11.json",
+    "2026/canonical_state/shadow/17f1355dfcddc0cb72f2c783.json",
+    "2026/canonical_state/shadow/12a5eea5eacefd50eead68dc.json"
+  ]
+}

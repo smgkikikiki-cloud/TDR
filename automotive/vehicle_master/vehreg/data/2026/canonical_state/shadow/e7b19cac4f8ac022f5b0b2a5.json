@@ -1,0 +1,457 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e7b19cac4f8ac022f5b0b2a5",
+    "command_id": "lot8f-029",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "zeekr.zeekr_009",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Zeekr 009 identity-only bundle, UNCHANGED from v4 (Grand 4-Seater VIP remains untouched by any command; its current/historical status stays UNRESOLVED, not settled by omission -- after this batch Zeekr 009 shows FOUR CURRENT trims, Grand included, not three). This v5 round adds the price/campaign commands below.",
+    "submitted_at": "2026-09-28T11:20:00+00:00",
+    "applied_at": "2026-09-28T09:16:31+00:00",
+    "before_hash": "4e494ad53362374c3c77e8a4138ebf188e753fe5700ccdbc487e738e05fb0e8d",
+    "after_hash": "d6a6cc65a57df9e4470fe68de8004a99e3170719785bbe143045b94201d2aebf",
+    "before": {
+      "id": "zeekr_009",
+      "name_en": "Zeekr 009",
+      "name_th": "ซีเคอร์ 009",
+      "nameplate": "",
+      "body_type": "MPV",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "NICHE",
+      "aliases": [
+        "009"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "Z009",
+          "segment": "E",
+          "seats": 6,
+          "launched": "2024-05-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "116 kWh BEV AWD",
+              "powertrain": "BEV",
+              "drivetrain": "AWD",
+              "engine_cc": null,
+              "battery_kwh": 116.0,
+              "aliases": [
+                "Long Range"
+              ],
+              "overrides": {},
+              "price_thb": 3999000,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "seed-unverified",
+              "price_min_thb": 3999000,
+              "price_max_thb": 3999000
+            }
+          ],
+          "trims": [
+            {
+              "name": "009 Luxury 6-Seater AWD (Dual Motor, 603 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:320"
+                ]
+              },
+              "id": "009_luxury_6_seater_awd_dual_motor_603_hp_bev"
+            },
+            {
+              "name": "009 Grand 4-Seater VIP (Ultra-Luxury Rear Suite, 778 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:320"
+                ]
+              },
+              "id": "009_grand_4_seater_vip_ultra_luxury_rear_suite_778_hp_bev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "zeekr",
+        "name_en": "Zeekr",
+        "name_th": "ซีเคอร์",
+        "brand_segment": "PREMIUM_TECH",
+        "oem_group": "Geely",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "ซีเคอร์"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "zeekr.zeekr_009",
+        "brand_id": "zeekr",
+        "name_en": "Zeekr 009",
+        "name_th": "ซีเคอร์ 009",
+        "nameplate": "Zeekr 009",
+        "body_type": "MPV",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "009"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "zeekr.zeekr_009.z009",
+          "model_id": "zeekr.zeekr_009",
+          "code": "z009",
+          "segment": "E",
+          "seats": 6,
+          "launched": "2024-05-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "zeekr.zeekr_009.z009.116_kwh_bev_awd",
+          "generation_id": "zeekr.zeekr_009.z009",
+          "name": "116 kWh BEV AWD",
+          "powertrain": "BEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": 116.0,
+          "price_thb": 3999000,
+          "price_min_thb": 3999000,
+          "price_max_thb": 3999000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Long Range"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "zeekr.zeekr_009.z009.trim.009_luxury_6_seater_awd_dual_603_hp_bev",
+          "generation_id": "zeekr.zeekr_009.z009",
+          "name": "Flagship AWD 6-Seat",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 6,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:320"
+            ]
+          },
+          "notes": "Unchanged from v4: renamed only, 6-seat count is the identity signal."
+        },
+        {
+          "id": "zeekr.zeekr_009.z009.trim.009_grand_4_seater_vip_ultra_luxury_rear_suite_778_hp_bev",
+          "generation_id": "zeekr.zeekr_009.z009",
+          "name": "009 Grand 4-Seater VIP (Ultra-Luxury Rear Suite, 778 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:320"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "zeekr.zeekr_009.z009.trim.standard_7_seater_bev",
+          "generation_id": "zeekr.zeekr_009.z009",
+          "name": "Standard 7-Seat",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": "New current trim, standard 009 lineup, unchanged from v4."
+        },
+        {
+          "id": "zeekr.zeekr_009.z009.trim.premium_awd_7_seater_bev",
+          "generation_id": "zeekr.zeekr_009.z009",
+          "name": "Premium AWD 7-Seat",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": "New current trim, standard 009 lineup, unchanged from v4."
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/zeekr.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e7b19cac4f8ac022f5b0b2a5:catalog",
+    "revision_id": "e7b19cac4f8ac022f5b0b2a5",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "zeekr.zeekr_009",
+    "state": "PENDING",
+    "created_at": "2026-09-28T09:16:31+00:00",
+    "payload": {
+      "brand": {
+        "id": "zeekr",
+        "name_en": "Zeekr",
+        "name_th": "ซีเคอร์",
+        "brand_segment": "PREMIUM_TECH",
+        "oem_group": "Geely",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "ซีเคอร์"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "zeekr.zeekr_009",
+        "brand_id": "zeekr",
+        "name_en": "Zeekr 009",
+        "name_th": "ซีเคอร์ 009",
+        "nameplate": "Zeekr 009",
+        "body_type": "MPV",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "009"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "zeekr.zeekr_009.z009",
+          "model_id": "zeekr.zeekr_009",
+          "code": "z009",
+          "segment": "E",
+          "seats": 6,
+          "launched": "2024-05-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "zeekr.zeekr_009.z009.116_kwh_bev_awd",
+          "generation_id": "zeekr.zeekr_009.z009",
+          "name": "116 kWh BEV AWD",
+          "powertrain": "BEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": 116.0,
+          "price_thb": 3999000,
+          "price_min_thb": 3999000,
+          "price_max_thb": 3999000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Long Range"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "zeekr.zeekr_009.z009.trim.009_luxury_6_seater_awd_dual_603_hp_bev",
+          "generation_id": "zeekr.zeekr_009.z009",
+          "name": "Flagship AWD 6-Seat",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 6,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:320"
+            ]
+          },
+          "notes": "Unchanged from v4: renamed only, 6-seat count is the identity signal."
+        },
+        {
+          "id": "zeekr.zeekr_009.z009.trim.009_grand_4_seater_vip_ultra_luxury_rear_suite_778_hp_bev",
+          "generation_id": "zeekr.zeekr_009.z009",
+          "name": "009 Grand 4-Seater VIP (Ultra-Luxury Rear Suite, 778 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:320"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "zeekr.zeekr_009.z009.trim.standard_7_seater_bev",
+          "generation_id": "zeekr.zeekr_009.z009",
+          "name": "Standard 7-Seat",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": "New current trim, standard 009 lineup, unchanged from v4."
+        },
+        {
+          "id": "zeekr.zeekr_009.z009.trim.premium_awd_7_seater_bev",
+          "generation_id": "zeekr.zeekr_009.z009",
+          "name": "Premium AWD 7-Seat",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 7,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": "New current trim, standard 009 lineup, unchanged from v4."
+        }
+      ]
+    }
+  }
+}

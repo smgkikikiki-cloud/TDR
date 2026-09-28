@@ -27,7 +27,7 @@
       "notes": "",
       "generations": [
         {
-          "code": "M3H",
+          "code": "m3h",
           "segment": "C",
           "seats": 5,
           "launched": "2022-12-07",
@@ -90,17 +90,17 @@
               "height_mm": 1441
             },
             {
-              "name": "Long Range All-Wheel Drive (AWD, 78.1 kWh)",
+              "name": "Premium AWD",
               "powertrain": "BEV",
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:268"
                 ]
               },
-              "aliases": [
-                "Model 3 Long Range All-Wheel Drive (AWD, 78.1 kWh)"
-              ],
-              "id": "long_range_all_wheel_drive_awd_78_1_kwh_bev"
+              "aliases": [],
+              "id": "long_range_all_wheel_drive_awd_78_1_kwh_bev",
+              "notes": "Unchanged from v4: RENAMED only (same id/canonical_id preserved, on-file LIST_PRICE 1,899,000 observed 2026-09-14 left completely untouched). Owner-supplied evidence (autolifethailand.tv; a Tesla Thailand dealer Facebook post) confirmed this is a rebrand of the existing Long Range AWD trim, not a new tier.",
+              "seats": 5
             },
             {
               "name": "Performance All-Wheel Drive (AWD, 460 hp)",
@@ -123,6 +123,22 @@
               "height_mm": 1431,
               "tire_front": "235/35R20",
               "tire_rear": "275/30R20"
+            },
+            {
+              "id": "premium_rwd_bev",
+              "name": "Premium RWD",
+              "notes": "New current Thai RWD tier per Step 2; distinct from the existing 60 kWh LFP and 78.1 kWh AWD (Premium AWD) trims.",
+              "seats": 5,
+              "aliases": [],
+              "powertrain": "BEV"
+            },
+            {
+              "id": "premium_long_range_rwd_bev",
+              "name": "Premium Long Range RWD",
+              "notes": "New current Thai RWD tier per Step 2; RWD drivetrain distinguishes it from the AWD 'Premium AWD' trim, which this does not supersede or rename.",
+              "seats": 5,
+              "aliases": [],
+              "powertrain": "BEV"
             }
           ]
         }

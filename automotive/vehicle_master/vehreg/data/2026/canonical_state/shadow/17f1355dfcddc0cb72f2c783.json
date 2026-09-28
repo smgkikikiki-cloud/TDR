@@ -1,0 +1,352 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "17f1355dfcddc0cb72f2c783",
+    "command_id": "lot8f-017",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "wuling.wuling_darion",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Rename Darion's 2 existing trims to Comfort/Premium per owner-supplied current lineup (2026-09-28); this is the same Cargo Van->Comfort / Passenger Minibus->Premium pairing v1/v2 held for lack of independent spec proof -- now proceeding on the owner's direct, explicit instruction rather than inferred price ordering. Supersedes the prior full hold.",
+    "submitted_at": "2026-09-28T11:20:00+00:00",
+    "applied_at": "2026-09-28T09:16:20+00:00",
+    "before_hash": "0d64bb4c33d99d7a5b0ad8d37ae728add25eb2264e3921ef7ad6fbf5187024fe",
+    "after_hash": "40e86296d90d8b00688bf573ae0b6f70274a97c6fcaaac032f2ade7f35ecf72e",
+    "before": {
+      "id": "wuling_darion",
+      "name_en": "Wuling Darion EV",
+      "name_th": "",
+      "nameplate": "",
+      "body_type": "MPV",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "darion",
+        "darion ev"
+      ],
+      "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
+      "generations": [
+        {
+          "code": "WULING_DARION",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": "2026-07-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "ยังไม่แยกรุ่นย่อย",
+              "powertrain": "BEV",
+              "drivetrain": "",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "aliases": [],
+              "overrides": {},
+              "price_thb": 869000,
+              "import_type": "",
+              "origin_country": "",
+              "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+              "price_min_thb": 869000,
+              "price_max_thb": 869000
+            }
+          ],
+          "trims": [
+            {
+              "name": "Darion EV Cargo Van",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:316"
+                ]
+              },
+              "id": "darion_ev_cargo_van_bev"
+            },
+            {
+              "name": "Darion EV Passenger Minibus",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:316"
+                ]
+              },
+              "id": "darion_ev_passenger_minibus_bev"
+            }
+          ]
+        }
+      ],
+      "incomplete": true,
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "wuling",
+        "name_en": "Wuling",
+        "name_th": "หวูหลิง",
+        "brand_segment": "BUDGET",
+        "oem_group": "SAIC-GM-Wuling",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "wuling.wuling_darion",
+        "brand_id": "wuling",
+        "name_en": "Wuling Darion EV",
+        "name_th": "",
+        "nameplate": "Wuling Darion EV",
+        "body_type": "MPV",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "darion",
+          "darion ev"
+        ],
+        "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
+        "incomplete": true,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "wuling.wuling_darion.wuling_darion",
+          "model_id": "wuling.wuling_darion",
+          "code": "wuling_darion",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": "2026-07-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "wuling.wuling_darion.wuling_darion.ยงไมแยกรนยอย",
+          "generation_id": "wuling.wuling_darion.wuling_darion",
+          "name": "ยังไม่แยกรุ่นย่อย",
+          "powertrain": "BEV",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": 869000,
+          "price_min_thb": 869000,
+          "price_max_thb": 869000,
+          "import_type": "UNKNOWN",
+          "origin_country": "",
+          "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "wuling.wuling_darion.wuling_darion.trim.darion_ev_cargo_van_bev",
+          "generation_id": "wuling.wuling_darion.wuling_darion",
+          "name": "Comfort",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:316"
+            ]
+          },
+          "notes": "Renamed only (same id preserved, no price-ledger rows existed to touch). Owner directly confirmed this exact pairing and price in chat (2026-09-28), authorizing what v1/v2 had held as an unproven price-ordering guess -- this round proceeds on the owner's direct instruction, not a fresh audit."
+        },
+        {
+          "id": "wuling.wuling_darion.wuling_darion.trim.darion_ev_passenger_minibus_bev",
+          "generation_id": "wuling.wuling_darion.wuling_darion",
+          "name": "Premium",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:316"
+            ]
+          },
+          "notes": "Renamed only (same id preserved, no price-ledger rows existed to touch). Same owner-direct authorization as Comfort above."
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/wuling.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "17f1355dfcddc0cb72f2c783:catalog",
+    "revision_id": "17f1355dfcddc0cb72f2c783",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "wuling.wuling_darion",
+    "state": "PENDING",
+    "created_at": "2026-09-28T09:16:20+00:00",
+    "payload": {
+      "brand": {
+        "id": "wuling",
+        "name_en": "Wuling",
+        "name_th": "หวูหลิง",
+        "brand_segment": "BUDGET",
+        "oem_group": "SAIC-GM-Wuling",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "wuling.wuling_darion",
+        "brand_id": "wuling",
+        "name_en": "Wuling Darion EV",
+        "name_th": "",
+        "nameplate": "Wuling Darion EV",
+        "body_type": "MPV",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "darion",
+          "darion ev"
+        ],
+        "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
+        "incomplete": true,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "wuling.wuling_darion.wuling_darion",
+          "model_id": "wuling.wuling_darion",
+          "code": "wuling_darion",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": "2026-07-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "wuling.wuling_darion.wuling_darion.ยงไมแยกรนยอย",
+          "generation_id": "wuling.wuling_darion.wuling_darion",
+          "name": "ยังไม่แยกรุ่นย่อย",
+          "powertrain": "BEV",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": 869000,
+          "price_min_thb": 869000,
+          "price_max_thb": 869000,
+          "import_type": "UNKNOWN",
+          "origin_country": "",
+          "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "wuling.wuling_darion.wuling_darion.trim.darion_ev_cargo_van_bev",
+          "generation_id": "wuling.wuling_darion.wuling_darion",
+          "name": "Comfort",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:316"
+            ]
+          },
+          "notes": "Renamed only (same id preserved, no price-ledger rows existed to touch). Owner directly confirmed this exact pairing and price in chat (2026-09-28), authorizing what v1/v2 had held as an unproven price-ordering guess -- this round proceeds on the owner's direct instruction, not a fresh audit."
+        },
+        {
+          "id": "wuling.wuling_darion.wuling_darion.trim.darion_ev_passenger_minibus_bev",
+          "generation_id": "wuling.wuling_darion.wuling_darion",
+          "name": "Premium",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:316"
+            ]
+          },
+          "notes": "Renamed only (same id preserved, no price-ledger rows existed to touch). Same owner-direct authorization as Comfort above."
+        }
+      ]
+    }
+  }
+}

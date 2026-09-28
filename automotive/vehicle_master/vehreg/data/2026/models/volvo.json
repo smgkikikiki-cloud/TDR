@@ -366,7 +366,7 @@
       "notes": "",
       "generations": [
         {
-          "code": "EX30G",
+          "code": "ex30g",
           "segment": "B",
           "seats": 5,
           "launched": "2024-05-01",
@@ -428,6 +428,14 @@
               "length_mm": 4233,
               "width_mm": 1837,
               "height_mm": 1549
+            },
+            {
+              "id": "ultra_single_extended_range_bev",
+              "name": "Ultra Single Motor Extended Range",
+              "notes": "New current MY26 grade per Step 2, unchanged from v4.",
+              "seats": 5,
+              "aliases": [],
+              "powertrain": "BEV"
             }
           ]
         }
@@ -655,14 +663,17 @@
           ],
           "trims": [
             {
-              "name": "Twin Motor AWD (408 hp)",
+              "name": "Plus Twin Motor 7-Seat",
               "powertrain": "BEV",
               "source_refs": {
                 "owner_directory": [
                   "owner_directory_2026_09_13:307"
                 ]
               },
-              "id": "twin_motor_awd_408_hp_bev"
+              "id": "twin_awd_408_hp_bev",
+              "notes": "Unchanged from v4: renamed only, on-file LIST_PRICE 4,290,000 already matches Step 2's figure -- no price command needed.",
+              "seats": 7,
+              "aliases": []
             },
             {
               "name": "Twin Motor Performance AWD (517 hp)",

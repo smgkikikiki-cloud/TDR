@@ -651,6 +651,16 @@
       ]
     },
     {
+      "model_id": "wuling.wuling_porta",
+      "notes": "Owner directly stated the current Porta lineup is 1 trim (not 2), matching Standard Box's spec (56.2 kWh / 6.5 m3). This is a direct owner statement of current lineup size, not an inference from absence of price -- treated as sufficient authorization to restrict the approved current-retail set to Standard Box only. Flatbed Carrier resolves to UNVERIFIED (not HISTORICAL -- no http(s) source exists for a lifecycle-review HISTORICAL write) but is fully preserved: canonical_id, specs and (absent) price history untouched.",
+      "reviewed_at": "2026-09-28",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "",
+      "trim_ids": [
+        "wuling.wuling_porta.wuling_porta.trim.porta_ev_standard_box_bev"
+      ]
+    },
+    {
       "model_id": "xpeng.xpeng_g6",
       "notes": "Owner-approved current lineup: generic Standard/Long Range + AWD Performance identities; detailed battery/range IDs are legacy evidence",
       "reviewed_at": "2026-09-27",

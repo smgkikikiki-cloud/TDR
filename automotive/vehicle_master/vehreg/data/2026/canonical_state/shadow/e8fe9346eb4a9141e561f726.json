@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e8fe9346eb4a9141e561f726",
+    "command_id": "lot8f-020",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "wuling.wuling_porta.wuling_porta.trim.porta_ev_standard_box_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Owner-supplied current identity (2026-09-28, chat): 56.2 kWh / 6.5 m3 cargo volume, 599,000 -- identified as the enclosed 'Standard Box' trim (a box body, not an open flatbed), same identification as the original v1 judgment call. No existing price row -- no conflict. Name left unchanged (already 'Porta EV Standard Box'). Supersedes the prior full hold.",
+    "submitted_at": "2026-09-28T11:20:00+00:00",
+    "applied_at": "2026-09-28T09:16:21+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "42c60127b655923aac6e939a81bc68ca828950db56b9eda05b93a381936b9df9",
+    "before": [],
+    "after": [
+      {
+        "trim_id": "wuling.wuling_porta.wuling_porta.trim.porta_ev_standard_box_bev",
+        "amount_thb": 599000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "owner-supplied-chat-2026-09-28-wuling-bingo-darion-porta",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_lot8f-020.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e8fe9346eb4a9141e561f726:price",
+    "revision_id": "e8fe9346eb4a9141e561f726",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "wuling.wuling_porta.wuling_porta.trim.porta_ev_standard_box_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-28T09:16:21+00:00",
+    "payload": [
+      {
+        "trim_id": "wuling.wuling_porta.wuling_porta.trim.porta_ev_standard_box_bev",
+        "amount_thb": 599000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "owner-supplied-chat-2026-09-28-wuling-bingo-darion-porta",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b3e06ae48ebb1c4d6be20c2c",
+    "command_id": "lot8f-034",
+    "operation": "UPSERT_CAMPAIGN",
+    "year": 2026,
+    "topic": "campaign",
+    "entity_type": "campaign",
+    "entity_id": "zeekr.zeekr_009.z009.trim.009_luxury_6_seater_awd_dual_603_hp_bev.campaign.2026-09-01",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Benefit bundle for the renamed Flagship AWD 6-Seat per Step 2, not a stated discounted vehicle price -- recorded as campaign metadata only, no CAMPAIGN_PRICE. None on Standard 7-Seat or Grand -- Step 2 explicitly restricts this offer to Premium/Flagship.",
+    "submitted_at": "2026-09-28T11:20:00+00:00",
+    "applied_at": "2026-09-28T09:16:38+00:00",
+    "before_hash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+    "after_hash": "9071c8a37cc9603b46264b63e4d4597b6b86c22def8e0b0431e808eb56420323",
+    "before": null,
+    "after": {
+      "id": "zeekr.zeekr_009.z009.trim.009_luxury_6_seater_awd_dual_603_hp_bev.campaign.2026-09-01",
+      "ends": "2026-09-30",
+      "gifts": "Warranty, maintenance and charging benefits.",
+      "notes": "Benefit bundle for the renamed Flagship AWD 6-Seat per Step 2, not a stated discounted vehicle price -- recorded as campaign metadata only, no CAMPAIGN_PRICE. None on Standard 7-Seat or Grand -- Step 2 explicitly restricts this offer to Premium/Flagship.",
+      "source": "admin",
+      "starts": "2026-09-01",
+      "options": [
+        {
+          "id": "default",
+          "ends": "2026-09-30",
+          "label": "Warranty, maintenance and charging benefits.",
+          "starts": "2026-09-01",
+          "conditions": {
+            "text": "Warranty, maintenance and charging benefits.",
+            "booking_to": "2026-09-30",
+            "booking_from": "2026-09-01"
+          }
+        }
+      ],
+      "brand_id": "zeekr",
+      "source_ref": "docs/WORK_STATE.md#repair-08-step-2-inspection-2026-09-28-corrected-audit, row 15"
+    },
+    "changed_files": [
+      "2026/market/campaigns/zeekr.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b3e06ae48ebb1c4d6be20c2c:campaign",
+    "revision_id": "b3e06ae48ebb1c4d6be20c2c",
+    "topic": "campaign",
+    "entity_type": "campaign",
+    "entity_id": "zeekr.zeekr_009.z009.trim.009_luxury_6_seater_awd_dual_603_hp_bev.campaign.2026-09-01",
+    "state": "PENDING",
+    "created_at": "2026-09-28T09:16:38+00:00",
+    "payload": {
+      "id": "zeekr.zeekr_009.z009.trim.009_luxury_6_seater_awd_dual_603_hp_bev.campaign.2026-09-01",
+      "ends": "2026-09-30",
+      "gifts": "Warranty, maintenance and charging benefits.",
+      "notes": "Benefit bundle for the renamed Flagship AWD 6-Seat per Step 2, not a stated discounted vehicle price -- recorded as campaign metadata only, no CAMPAIGN_PRICE. None on Standard 7-Seat or Grand -- Step 2 explicitly restricts this offer to Premium/Flagship.",
+      "source": "admin",
+      "starts": "2026-09-01",
+      "options": [
+        {
+          "id": "default",
+          "ends": "2026-09-30",
+          "label": "Warranty, maintenance and charging benefits.",
+          "starts": "2026-09-01",
+          "conditions": {
+            "text": "Warranty, maintenance and charging benefits.",
+            "booking_to": "2026-09-30",
+            "booking_from": "2026-09-01"
+          }
+        }
+      ],
+      "brand_id": "zeekr",
+      "source_ref": "docs/WORK_STATE.md#repair-08-step-2-inspection-2026-09-28-corrected-audit, row 15"
+    }
+  }
+}

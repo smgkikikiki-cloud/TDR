@@ -1,0 +1,628 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5f6263787a9156c304fe19f4",
+    "command_id": "lot8f-002",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "tesla.model3",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Tesla Model 3 identity-only bundle, UNCHANGED from v4 (owner-resolved Premium AWD rename). This v5 round adds price commands below; the bundle itself carries no new decision.",
+    "submitted_at": "2026-09-28T11:20:00+00:00",
+    "applied_at": "2026-09-28T09:16:11+00:00",
+    "before_hash": "cca46adc32ea3605efddddc3b38af7a6c6950f8a5cc2b01006dfa93acb118717",
+    "after_hash": "e553918ffb13b3f412b4b7ee9842beb06f711fcfba69bf7e41a13b8bd85e5194",
+    "before": {
+      "id": "model3",
+      "name_en": "Model 3",
+      "name_th": "โมเดล 3",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "model 3"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "M3H",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2022-12-07",
+          "ended": null,
+          "variants": [
+            {
+              "name": "60 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "RWD",
+              "engine_cc": null,
+              "battery_kwh": 60.0,
+              "aliases": [
+                "RWD"
+              ],
+              "overrides": {},
+              "price_thb": 1599000,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1599000,
+              "price_max_thb": 1599000
+            },
+            {
+              "name": "79 kWh BEV AWD",
+              "powertrain": "BEV",
+              "drivetrain": "AWD",
+              "engine_cc": null,
+              "battery_kwh": 79.0,
+              "aliases": [
+                "Long Range AWD"
+              ],
+              "overrides": {},
+              "price_thb": 1899000,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "seed-unverified",
+              "price_min_thb": 1899000,
+              "price_max_thb": 1899000
+            }
+          ],
+          "trims": [
+            {
+              "name": "Rear-Wheel Drive (RWD, 60 kWh LFP)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:268"
+                ],
+                "eco": [
+                  "9c121f88-94c7-44ce-84c3-4294efa6591f"
+                ]
+              },
+              "aliases": [
+                "Model 3 Rear-Wheel Drive (RWD, 60 kWh LFP)"
+              ],
+              "id": "rear_wheel_drive_rwd_60_kwh_lfp_bev",
+              "seats": 5,
+              "length_mm": 4720,
+              "width_mm": 1850,
+              "height_mm": 1441
+            },
+            {
+              "name": "Long Range All-Wheel Drive (AWD, 78.1 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:268"
+                ]
+              },
+              "aliases": [
+                "Model 3 Long Range All-Wheel Drive (AWD, 78.1 kWh)"
+              ],
+              "id": "long_range_all_wheel_drive_awd_78_1_kwh_bev"
+            },
+            {
+              "name": "Performance All-Wheel Drive (AWD, 460 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:268"
+                ],
+                "eco": [
+                  "d18e0bd7-43e7-4dc5-bc5c-4879b9400665"
+                ]
+              },
+              "aliases": [
+                "Model 3 Performance All-Wheel Drive (AWD, 460 hp)"
+              ],
+              "id": "performance_all_wheel_drive_awd_460_hp_bev",
+              "seats": 5,
+              "length_mm": 4724,
+              "width_mm": 1850,
+              "height_mm": 1431,
+              "tire_front": "235/35R20",
+              "tire_rear": "275/30R20"
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "tesla",
+        "name_en": "Tesla",
+        "name_th": "เทสลา",
+        "brand_segment": "PREMIUM_TECH",
+        "oem_group": "Tesla",
+        "brand_origin": "US",
+        "trim_detail": true,
+        "aliases": [
+          "เทสลา"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "tesla.model3",
+        "brand_id": "tesla",
+        "name_en": "Model 3",
+        "name_th": "โมเดล 3",
+        "nameplate": "Model 3",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "model 3"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "tesla.model3.m3h",
+          "model_id": "tesla.model3",
+          "code": "m3h",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2022-12-07",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "tesla.model3.m3h.60_kwh_bev",
+          "generation_id": "tesla.model3.m3h",
+          "name": "60 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 60.0,
+          "price_thb": 1599000,
+          "price_min_thb": 1599000,
+          "price_max_thb": 1599000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "RWD"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "tesla.model3.m3h.79_kwh_bev_awd",
+          "generation_id": "tesla.model3.m3h",
+          "name": "79 kWh BEV AWD",
+          "powertrain": "BEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": 79.0,
+          "price_thb": 1899000,
+          "price_min_thb": 1899000,
+          "price_max_thb": 1899000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Long Range AWD"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "tesla.model3.m3h.trim.rear_wheel_drive_rwd_60_kwh_lfp_bev",
+          "generation_id": "tesla.model3.m3h",
+          "name": "Rear-Wheel Drive (RWD, 60 kWh LFP)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4720,
+          "width_mm": 1850,
+          "height_mm": 1441,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Model 3 Rear-Wheel Drive (RWD, 60 kWh LFP)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:268"
+            ],
+            "eco": [
+              "9c121f88-94c7-44ce-84c3-4294efa6591f"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "tesla.model3.m3h.trim.long_range_all_wheel_drive_awd_78_1_kwh_bev",
+          "generation_id": "tesla.model3.m3h",
+          "name": "Premium AWD",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:268"
+            ]
+          },
+          "notes": "Unchanged from v4: RENAMED only (same id/canonical_id preserved, on-file LIST_PRICE 1,899,000 observed 2026-09-14 left completely untouched). Owner-supplied evidence (autolifethailand.tv; a Tesla Thailand dealer Facebook post) confirmed this is a rebrand of the existing Long Range AWD trim, not a new tier."
+        },
+        {
+          "id": "tesla.model3.m3h.trim.performance_all_wheel_drive_awd_460_hp_bev",
+          "generation_id": "tesla.model3.m3h",
+          "name": "Performance All-Wheel Drive (AWD, 460 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4724,
+          "width_mm": 1850,
+          "height_mm": 1431,
+          "wheelbase_mm": null,
+          "tire_front": "235/35R20",
+          "tire_rear": "275/30R20",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Model 3 Performance All-Wheel Drive (AWD, 460 hp)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:268"
+            ],
+            "eco": [
+              "d18e0bd7-43e7-4dc5-bc5c-4879b9400665"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "tesla.model3.m3h.trim.premium_rwd_bev",
+          "generation_id": "tesla.model3.m3h",
+          "name": "Premium RWD",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": "New current Thai RWD tier per Step 2; distinct from the existing 60 kWh LFP and 78.1 kWh AWD (Premium AWD) trims."
+        },
+        {
+          "id": "tesla.model3.m3h.trim.premium_long_range_rwd_bev",
+          "generation_id": "tesla.model3.m3h",
+          "name": "Premium Long Range RWD",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": "New current Thai RWD tier per Step 2; RWD drivetrain distinguishes it from the AWD 'Premium AWD' trim, which this does not supersede or rename."
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/tesla.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5f6263787a9156c304fe19f4:catalog",
+    "revision_id": "5f6263787a9156c304fe19f4",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "tesla.model3",
+    "state": "PENDING",
+    "created_at": "2026-09-28T09:16:11+00:00",
+    "payload": {
+      "brand": {
+        "id": "tesla",
+        "name_en": "Tesla",
+        "name_th": "เทสลา",
+        "brand_segment": "PREMIUM_TECH",
+        "oem_group": "Tesla",
+        "brand_origin": "US",
+        "trim_detail": true,
+        "aliases": [
+          "เทสลา"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "tesla.model3",
+        "brand_id": "tesla",
+        "name_en": "Model 3",
+        "name_th": "โมเดล 3",
+        "nameplate": "Model 3",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "model 3"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "tesla.model3.m3h",
+          "model_id": "tesla.model3",
+          "code": "m3h",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2022-12-07",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "tesla.model3.m3h.60_kwh_bev",
+          "generation_id": "tesla.model3.m3h",
+          "name": "60 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "RWD",
+          "engine_cc": null,
+          "battery_kwh": 60.0,
+          "price_thb": 1599000,
+          "price_min_thb": 1599000,
+          "price_max_thb": 1599000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "RWD"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "tesla.model3.m3h.79_kwh_bev_awd",
+          "generation_id": "tesla.model3.m3h",
+          "name": "79 kWh BEV AWD",
+          "powertrain": "BEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": 79.0,
+          "price_thb": 1899000,
+          "price_min_thb": 1899000,
+          "price_max_thb": 1899000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Long Range AWD"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "tesla.model3.m3h.trim.rear_wheel_drive_rwd_60_kwh_lfp_bev",
+          "generation_id": "tesla.model3.m3h",
+          "name": "Rear-Wheel Drive (RWD, 60 kWh LFP)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4720,
+          "width_mm": 1850,
+          "height_mm": 1441,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Model 3 Rear-Wheel Drive (RWD, 60 kWh LFP)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:268"
+            ],
+            "eco": [
+              "9c121f88-94c7-44ce-84c3-4294efa6591f"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "tesla.model3.m3h.trim.long_range_all_wheel_drive_awd_78_1_kwh_bev",
+          "generation_id": "tesla.model3.m3h",
+          "name": "Premium AWD",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:268"
+            ]
+          },
+          "notes": "Unchanged from v4: RENAMED only (same id/canonical_id preserved, on-file LIST_PRICE 1,899,000 observed 2026-09-14 left completely untouched). Owner-supplied evidence (autolifethailand.tv; a Tesla Thailand dealer Facebook post) confirmed this is a rebrand of the existing Long Range AWD trim, not a new tier."
+        },
+        {
+          "id": "tesla.model3.m3h.trim.performance_all_wheel_drive_awd_460_hp_bev",
+          "generation_id": "tesla.model3.m3h",
+          "name": "Performance All-Wheel Drive (AWD, 460 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4724,
+          "width_mm": 1850,
+          "height_mm": 1431,
+          "wheelbase_mm": null,
+          "tire_front": "235/35R20",
+          "tire_rear": "275/30R20",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Model 3 Performance All-Wheel Drive (AWD, 460 hp)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:268"
+            ],
+            "eco": [
+              "d18e0bd7-43e7-4dc5-bc5c-4879b9400665"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "tesla.model3.m3h.trim.premium_rwd_bev",
+          "generation_id": "tesla.model3.m3h",
+          "name": "Premium RWD",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": "New current Thai RWD tier per Step 2; distinct from the existing 60 kWh LFP and 78.1 kWh AWD (Premium AWD) trims."
+        },
+        {
+          "id": "tesla.model3.m3h.trim.premium_long_range_rwd_bev",
+          "generation_id": "tesla.model3.m3h",
+          "name": "Premium Long Range RWD",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": "New current Thai RWD tier per Step 2; RWD drivetrain distinguishes it from the AWD 'Premium AWD' trim, which this does not supersede or rename."
+        }
+      ]
+    }
+  }
+}

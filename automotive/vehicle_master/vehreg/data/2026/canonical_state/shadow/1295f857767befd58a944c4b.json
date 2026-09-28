@@ -1,0 +1,352 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "1295f857767befd58a944c4b",
+    "command_id": "lot8f-014",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "wuling.wuling_bingo",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Rename Wuling Bingo's 2 existing trims to LITE/PRO per owner-supplied current lineup (2026-09-28); no new trim created, no trim deleted, both existing canonical_ids preserved. Supersedes the prior full hold (Step 2's AC/DC identity was unresolved; the owner has now supplied the actual current trim names/prices directly).",
+    "submitted_at": "2026-09-28T11:20:00+00:00",
+    "applied_at": "2026-09-28T09:16:18+00:00",
+    "before_hash": "97f7b2eb4c7e2b68a487e9233e320982b96748f36003fcc9e00e6fa00c73bc57",
+    "after_hash": "bb0f04f8c0d9d258594187b970c1c53c78a99bfedf8a95c8715b08ab06e0587b",
+    "before": {
+      "id": "wuling_bingo",
+      "name_en": "Wuling Bingo",
+      "name_th": "หวูหลิง บิงโก",
+      "nameplate": "",
+      "body_type": "HATCHBACK",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "bingo",
+        "binguo",
+        "bingou"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "A",
+          "seats": 5,
+          "launched": "2024-06-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "32 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_cc": null,
+              "battery_kwh": 31.9,
+              "price_thb": 499000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Standard Range (333 km)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:315"
+                ]
+              },
+              "id": "standard_range_333_km_bev"
+            },
+            {
+              "name": "Long Range (410 km)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:315"
+                ]
+              },
+              "id": "long_range_410_km_bev"
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "wuling",
+        "name_en": "Wuling",
+        "name_th": "หวูหลิง",
+        "brand_segment": "BUDGET",
+        "oem_group": "SAIC-GM-Wuling",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "wuling.wuling_bingo",
+        "brand_id": "wuling",
+        "name_en": "Wuling Bingo",
+        "name_th": "หวูหลิง บิงโก",
+        "nameplate": "Wuling Bingo",
+        "body_type": "HATCHBACK",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "bingo",
+          "binguo",
+          "bingou"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "wuling.wuling_bingo.gen1",
+          "model_id": "wuling.wuling_bingo",
+          "code": "gen1",
+          "segment": "A",
+          "seats": 5,
+          "launched": "2024-06-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "wuling.wuling_bingo.gen1.32_kwh_bev",
+          "generation_id": "wuling.wuling_bingo.gen1",
+          "name": "32 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 31.9,
+          "price_thb": 499000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "wuling.wuling_bingo.gen1.trim.standard_range_333_km_bev",
+          "generation_id": "wuling.wuling_bingo.gen1",
+          "name": "LITE",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:315"
+            ]
+          },
+          "notes": "Renamed only (same id preserved, no price-ledger rows existed to touch). Owner-supplied current lineup in chat (2026-09-28): 2 trims, LITE 369,000 / PRO 389,000. Mapped to the cheaper-priced grade by naming convention (LITE = base spec) -- disclosed judgment call, not independently spec-verified per the owner's explicit no-re-audit instruction."
+        },
+        {
+          "id": "wuling.wuling_bingo.gen1.trim.long_range_410_km_bev",
+          "generation_id": "wuling.wuling_bingo.gen1",
+          "name": "PRO",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:315"
+            ]
+          },
+          "notes": "Renamed only (same id preserved, no price-ledger rows existed to touch). Mapped to the pricier grade (PRO = higher spec/longer range) -- same disclosed judgment call as LITE above."
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/wuling.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "1295f857767befd58a944c4b:catalog",
+    "revision_id": "1295f857767befd58a944c4b",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "wuling.wuling_bingo",
+    "state": "PENDING",
+    "created_at": "2026-09-28T09:16:18+00:00",
+    "payload": {
+      "brand": {
+        "id": "wuling",
+        "name_en": "Wuling",
+        "name_th": "หวูหลิง",
+        "brand_segment": "BUDGET",
+        "oem_group": "SAIC-GM-Wuling",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "wuling.wuling_bingo",
+        "brand_id": "wuling",
+        "name_en": "Wuling Bingo",
+        "name_th": "หวูหลิง บิงโก",
+        "nameplate": "Wuling Bingo",
+        "body_type": "HATCHBACK",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "bingo",
+          "binguo",
+          "bingou"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "wuling.wuling_bingo.gen1",
+          "model_id": "wuling.wuling_bingo",
+          "code": "gen1",
+          "segment": "A",
+          "seats": 5,
+          "launched": "2024-06-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "wuling.wuling_bingo.gen1.32_kwh_bev",
+          "generation_id": "wuling.wuling_bingo.gen1",
+          "name": "32 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 31.9,
+          "price_thb": 499000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "wuling.wuling_bingo.gen1.trim.standard_range_333_km_bev",
+          "generation_id": "wuling.wuling_bingo.gen1",
+          "name": "LITE",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:315"
+            ]
+          },
+          "notes": "Renamed only (same id preserved, no price-ledger rows existed to touch). Owner-supplied current lineup in chat (2026-09-28): 2 trims, LITE 369,000 / PRO 389,000. Mapped to the cheaper-priced grade by naming convention (LITE = base spec) -- disclosed judgment call, not independently spec-verified per the owner's explicit no-re-audit instruction."
+        },
+        {
+          "id": "wuling.wuling_bingo.gen1.trim.long_range_410_km_bev",
+          "generation_id": "wuling.wuling_bingo.gen1",
+          "name": "PRO",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:315"
+            ]
+          },
+          "notes": "Renamed only (same id preserved, no price-ledger rows existed to touch). Mapped to the pricier grade (PRO = higher spec/longer range) -- same disclosed judgment call as LITE above."
+        }
+      ]
+    }
+  }
+}

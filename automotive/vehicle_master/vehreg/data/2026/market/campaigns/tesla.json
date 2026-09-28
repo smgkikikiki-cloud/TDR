@@ -1,0 +1,26 @@
+{
+  "campaigns": [
+    {
+      "id": "tesla.model3.m3h.trim.premium_rwd_bev.campaign.2026-09-28",
+      "ends": "2026-09-30",
+      "gifts": "Invitation-only benefit valued up to 50,000 THB, for deliveries within 30 Sep 2026.",
+      "notes": "Not a stated discounted vehicle price -- an invitation-only benefit per Step 2. Recorded as campaign metadata (gifts/notes), no CAMPAIGN_PRICE attached.",
+      "source": "admin",
+      "starts": "2026-09-01",
+      "options": [
+        {
+          "id": "default",
+          "ends": "2026-09-30",
+          "label": "Invitation-only benefit valued up to 50,000 THB, for deliver",
+          "starts": "2026-09-01",
+          "conditions": {
+            "text": "Invitation-only benefit valued up to 50,000 THB, for deliveries within 30 Sep 2026.",
+            "delivery_by": "2026-09-30"
+          }
+        }
+      ],
+      "brand_id": "tesla",
+      "source_ref": "docs/WORK_STATE.md#repair-08-step-2-inspection-2026-09-28-corrected-audit, row 04"
+    }
+  ]
+}
