@@ -90,6 +90,7 @@ Do not use this historical audit range as `REPAIR-04` membership unless the repa
 
 - `REPAIR-03`: `DONE / APPROVED` — frozen. Do not re-audit or rebuild unless user reopens it.
 - `REPAIR-04`: `DONE / APPROVED` — frozen. Do not re-audit or rebuild unless user reopens it.
+- `REPAIR-05`: `DONE / APPROVED` — frozen. Do not re-audit or rebuild unless user reopens it.
 
 ### REPAIR-04 membership
 
@@ -201,6 +202,16 @@ State: still `PROMPT_READY` -- batch_id `ev-retail-repair-lot-05-2026-09-28b`, 3
 Full v3 draft batch JSON, the command-level diff against the 2026-09-28 draft, and the updated coverage table were delivered to the user in-chat.
 
 Next: Await explicit user approval for Step 4 canonical write. Claude may prepare and validate a draft payload but must not enqueue, publish, or alter canonical vehicle data while at PROMPT_READY. This amendment did not change state to `APPROVED_TO_WRITE`.
+
+### REPAIR-05 Step 4 write (2026-09-28, DONE / APPROVED)
+
+User approved with "enqueue it". The v3 draft (`ev-retail-repair-lot-05-2026-09-28b`, 37 commands) was enqueued via `enqueue-canonical-batch.yml` (run 36369991921) with no further edits from the version already shown to and validated for the user. Enqueue result: `{"batch_key":"ev-retail-repair-lot-05-2026-09-28b","status":"QUEUED","duplicate":false,"item_count":37,"should_wake_worker":true}`. That woke `canonical-input.yml` (run 36370026270), which ran to completion: applied 1/1 batches (0 failed), 46/46 pytest passed, pre-commit `vehreg market validate` valid, committed as `2addc6fd1b90a3a12fd17fa4422a5f87af26c69b` ("Apply 1 canonical input batch(es)"), published via `tools.publish_canonical` to release `vehicle-2026-6fb90eee71870f63` (status `ACTIVE`, activated_at `2026-09-28T02:31:59Z`), batch marked PUBLISHED. No STAGED-recovery path was needed (skipped).
+
+Independently verified (not just the worker's self-report): `git fetch` + `git merge --ff-only origin/main` landed exactly commit `2addc6f`, matching the worker's own report byte-for-byte; `vehreg market validate` re-run directly against the freshly-pulled repo returned valid; a Python cross-check loaded the actual submitted batch JSON and verified all 37 commands' real effect against `vehreg.product.ProductMaster` / `Catalog` / `PriceLedger` / `load_current_retail_index` (every APPEND_PRICE/CORRECT_PRICE row's amount_thb/price_type/source_ref, every UPSERT_CAMPAIGN's source_ref, every UPSERT_MODEL_BUNDLE trim's name, every REPLACE_CURRENT_RETAIL_SET's resulting membership) — 0 mismatches out of 37.
+
+Membership, per-item outcomes and known limitations (Honda campaign stored-but-invisible in serving UI; Kia PV5 Passenger/Robotaxi lifecycle still open; Lotus/JAECOO grade mappings recorded as pending/unconfirmed in trim `notes`; Mercedes EQE sedan/SUV split still blocked) are exactly as recorded in the "second amendment round (2026-09-28b)" section above — nothing changed between that validated draft and what was actually written.
+
+Next: REPAIR-05 is closed. Do not re-audit or rebuild unless the user explicitly reopens it. Any further correction (e.g. resolving Kia PV5's lifecycle question with real evidence, confirming the Lotus/JAECOO 6 grade mapping, resolving the Mercedes EQE split) is a new, separately-numbered repair batch, not a reopening of REPAIR-05.
 
 ## Per-batch recording template
 
