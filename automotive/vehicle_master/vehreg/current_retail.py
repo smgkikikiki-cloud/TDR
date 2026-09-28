@@ -217,13 +217,40 @@ def replace_current_retail_set(*, data_dir: Path | str = DATA_DIR,
     })
     candidate = {"schema_version": 1, "models": merged}
     checked = validate_current_retail_sets(candidate, data_dir=data_dir, year=year)
+    approved_row = next(row for row in checked if row["model_id"] == model_id)
+
+    # A trim that still carries an unreopened HUMAN historical disposition
+    # (vehreg/retail_lifecycle_review.py) must not silently re-enter an
+    # approved CURRENT set: that disposition was itself only ever allowed for
+    # a trim EXCLUDED from an approved set (see upsert_trim_lifecycle_
+    # disposition's approved-set carve-out), so re-adding it here without an
+    # explicit reopen would flip it back to CURRENT in the release layer
+    # (tdr_bridge/lifecycle.py: approved-set membership is the sole CURRENT
+    # authority once a model has a set) while the historical review record
+    # sits there unreopened, silently contradicting it. Imported locally to
+    # avoid a module import cycle with retail_lifecycle_review, which imports
+    # resolve_approved_current_trim_ids from this module at top level.
+    from .retail_lifecycle_review import load_trim_lifecycle_decisions
+    decisions = {
+        row["trim_id"]: row
+        for row in load_trim_lifecycle_decisions(data_dir=data_dir, year=year)
+    }
+    for trim_id in approved_row["trim_ids"]:
+        decision = decisions.get(trim_id)
+        if decision is not None and decision["status"] == "HISTORICAL":
+            raise CurrentRetailError(
+                f"current_retail {model_id}: MarketTrim {trim_id!r} still carries an "
+                "unreopened HUMAN historical disposition; reopen it first "
+                "(UPSERT_TRIM_RETAIL_LIFECYCLE_REVIEW action=reopen) before adding it "
+                "back to the approved current-retail set"
+            )
+
     canonical = {"schema_version": 1, "models": checked}
     before = {"schema_version": 1, "models": existing}
     changed = canonical != before
     destination = current_retail_path(data_dir, year)
     if write and changed:
         _atomic_json(destination, canonical)
-    approved_row = next(row for row in checked if row["model_id"] == model_id)
     return {
         "written": bool(write and changed),
         "changed": changed,

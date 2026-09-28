@@ -256,15 +256,32 @@ def test_trim_price_eligibility_reports_retired(tmp_path):
     assert reason == TRIM_RETIRED
 
 
-def test_real_catalog_has_zero_blocked_models_and_full_current_trim_coverage():
-    """Price scope may omit only trims explicitly retired by HUMAN review."""
+def test_real_catalog_has_zero_unexpected_blocks_and_fully_accounted_trim_coverage():
+    """Price scope may omit a trim only for an accounted reason: a genuinely
+    HISTORICAL model (a deliberate retirement, not an accidental gap), an
+    explicit HUMAN trim retirement, or exclusion from an owner-approved
+    current-retail set (vehreg/current_retail.py). No other gap is
+    acceptable -- UNDER_MAINTENANCE/GENERATION_UNRESOLVED/UNKNOWN_MODEL would
+    mean real catalog trouble, not intended scope.
+
+    The original version of this test asserted `blocked == {}` and full
+    catalog-wide trim coverage minus only HUMAN-reviewed trims; both were
+    accurate for the catalog's state at the time but are now obsolete now that
+    real repairs have both retired whole models to HISTORICAL (REPAIR-04) and
+    introduced owner-approved current-retail sets (REPAIR-06/07) that
+    deliberately narrow a model's CURRENT trims below its full catalog
+    membership. This version keeps the same rigor -- every trim's scope
+    membership is checked, not just an aggregate count -- while accounting for
+    both mechanisms explicitly instead of asserting they don't exist.
+    """
     from vehreg.catalog import DATA_DIR, DEFAULT_YEAR
+    from vehreg.current_retail import load_current_retail_index
 
     catalog = Catalog.load(DATA_DIR, DEFAULT_YEAR)
     scope_index = retail_scope_index(catalog, data_dir=DATA_DIR, year=DEFAULT_YEAR)
     blocked = {model_id: scope.blocked_reason
               for model_id, scope in scope_index.items() if scope.blocked_reason}
-    assert blocked == {}
+    assert set(blocked.values()) <= {MODEL_HISTORICAL}
 
     siblings = scoped_siblings_by_model(catalog, data_dir=DATA_DIR, year=DEFAULT_YEAR)
     scoped_trim_ids = {trim.id for trims in siblings.values() for trim in trims}
@@ -273,7 +290,25 @@ def test_real_catalog_has_zero_blocked_models_and_full_current_trim_coverage():
         trim_id for trim_id, review in reviews.items()
         if review.get("status") == "HISTORICAL"
     }
-    assert scoped_trim_ids == set(catalog.trims) - historical_trim_ids
+    approved_index = load_current_retail_index(data_dir=DATA_DIR, year=DEFAULT_YEAR)
+
+    for trim_id, trim in catalog.trims.items():
+        generation = catalog.generations.get(trim.generation_id)
+        model_id = generation.model_id if generation else None
+        scope = scope_index.get(model_id)
+        if scope is None or not scope.in_scope:
+            # Whole model out of scope -- must be one of the accounted
+            # MODEL_HISTORICAL blocks asserted above, never a silent gap.
+            assert trim_id not in scoped_trim_ids
+            continue
+        approved = approved_index.get(model_id)
+        if approved is not None:
+            # Explicitly managed model: approved-set membership is the sole
+            # question; a HISTORICAL review on a non-member is irrelevant here.
+            assert (trim_id in scoped_trim_ids) == (trim_id in approved)
+        else:
+            # Legacy model: full coverage minus only explicit HUMAN retirement.
+            assert (trim_id in scoped_trim_ids) == (trim_id not in historical_trim_ids)
 
 
 def test_siblings_from_scope_requires_approved_index_explicitly(tmp_path):

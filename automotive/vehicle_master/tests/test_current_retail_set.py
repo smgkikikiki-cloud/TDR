@@ -43,6 +43,7 @@ from vehreg.current_retail import (
     resolve_approved_current_trim_ids,
 )
 from vehreg.input_pipeline import CanonicalInputError, CanonicalInputPipeline
+from vehreg.retail_lifecycle_review import load_trim_lifecycle_decisions
 from vehreg.retail_scope import scoped_siblings_by_model
 from vehreg.trim_reconciliation import apply_canonical_trim_overlay, release_reconciliation_report
 
@@ -282,6 +283,74 @@ def test_replace_current_retail_set_before_materializing_fails_closed(tmp_path):
             },
         ], batch_id="repair-echo-wrong-order"))
     assert resolve_approved_current_trim_ids(MODEL_ID, data_dir=data, year=YEAR) is None
+
+
+# --- 5b/5c: REPAIR-07 reverse transition -- an approved set may not silently
+# resurrect a trim that still carries an unreopened HUMAN historical
+# disposition (vehreg/retail_lifecycle_review.py); reopening it first is the
+# only supported path back into the approved CURRENT set. ---
+
+def _lifecycle_review_command(trim_id: str, action: str, *, source_ref: str = "") -> dict:
+    payload = {"trim_id": trim_id, "action": action}
+    if action != "reopen":
+        payload["source_ref"] = source_ref or "https://example.test/echo-lifecycle"
+    return {"operation": "UPSERT_TRIM_RETAIL_LIFECYCLE_REVIEW", "payload": payload}
+
+
+def _current_retail_command(model_id: str, trim_ids: list[str]) -> dict:
+    return {
+        "operation": "REPLACE_CURRENT_RETAIL_SET",
+        "payload": {
+            "model_id": model_id, "trim_ids": trim_ids,
+            "source_ref": "https://example.test/approved-lineup",
+        },
+    }
+
+
+def test_readding_a_historical_trim_to_the_approved_set_is_rejected(tmp_path):
+    data = _seed_brand(tmp_path, trims=[
+        _trim("old_bev", "Old Grade"), _trim("new_bev", "New Grade"),
+    ], retail_status="UNVERIFIED")
+    old_trim = f"{GEN_ID}.trim.old_bev"
+    new_trim = f"{GEN_ID}.trim.new_bev"
+
+    # Exclude old_bev from the approved set, then mark it HISTORICAL -- exactly
+    # the REPAIR-07 fix's carve-out (raw UNVERIFIED parent, excluded from an
+    # approved set).
+    _write_current_retail(data, trim_ids=[new_trim])
+    result = CanonicalInputPipeline(data).apply(_batch(
+        [_lifecycle_review_command(old_trim, "historical")], batch_id="echo-mark-historical"))
+    assert result.status == "APPLIED"
+
+    # Re-adding old_bev to the approved set without reopening it must fail.
+    with pytest.raises(CanonicalInputError, match="unreopened HUMAN historical disposition"):
+        CanonicalInputPipeline(data).apply(_batch(
+            [_current_retail_command(MODEL_ID, [new_trim, old_trim])],
+            batch_id="echo-readd-without-reopen"))
+    # Nothing was written by the rejected attempt.
+    assert resolve_approved_current_trim_ids(MODEL_ID, data_dir=data, year=YEAR) == frozenset({new_trim})
+
+
+def test_reopen_then_readd_to_the_approved_set_is_supported(tmp_path):
+    data = _seed_brand(tmp_path, trims=[
+        _trim("old_bev", "Old Grade"), _trim("new_bev", "New Grade"),
+    ], retail_status="UNVERIFIED")
+    old_trim = f"{GEN_ID}.trim.old_bev"
+    new_trim = f"{GEN_ID}.trim.new_bev"
+
+    _write_current_retail(data, trim_ids=[new_trim])
+    CanonicalInputPipeline(data).apply(_batch(
+        [_lifecycle_review_command(old_trim, "historical")], batch_id="echo-mark-historical-2"))
+
+    # Reopen first, then re-add in a separate command -- the supported order.
+    result = CanonicalInputPipeline(data).apply(_batch([
+        _lifecycle_review_command(old_trim, "reopen"),
+        _current_retail_command(MODEL_ID, [new_trim, old_trim]),
+    ], batch_id="echo-reopen-then-readd"))
+    assert result.status == "APPLIED"
+    assert resolve_approved_current_trim_ids(MODEL_ID, data_dir=data, year=YEAR) == frozenset(
+        {new_trim, old_trim})
+    assert load_trim_lifecycle_decisions(data_dir=data, year=YEAR) == []
 
 
 # --- 6: an old trim's history/identity survives removal from the set ---
