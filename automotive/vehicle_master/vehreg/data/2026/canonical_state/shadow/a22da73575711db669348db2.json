@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "a22da73575711db669348db2",
+    "command_id": "lot6-048",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.taycan.gen1.trim.turbo_s_awd_952_hp_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "LIST_PRICE 14,290,000 per the official Thailand configurator's Turbo S MY2027 sedan grade; not flagged as spec-mismatched in Step 2, no rename",
+    "submitted_at": "2026-09-28T00:00:00+00:00",
+    "applied_at": "2026-09-28T04:01:37+00:00",
+    "before_hash": "7c54209889445c42be2968907f8da475c27d86fe2751cf29a9a1982ea9963441",
+    "after_hash": "2fc0bd6c9b1085108662a0f53c0870a2709e773075378d67a331907db81e5823",
+    "before": [
+      {
+        "trim_id": "porsche.taycan.gen1.trim.turbo_s_awd_952_hp_bev",
+        "amount_thb": 13990000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2025-12-16",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/307cbe75-772d-405a-a207-4ebc8d02b064",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "porsche.taycan.gen1.trim.turbo_s_awd_952_hp_bev",
+        "amount_thb": 13990000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2025-12-16",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/307cbe75-772d-405a-a207-4ebc8d02b064",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "porsche.taycan.gen1.trim.turbo_s_awd_952_hp_bev",
+        "amount_thb": 14290000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://www.porsche.com/pap/_thailand_/models/taycan/configure/",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_lot6-048.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "a22da73575711db669348db2:price",
+    "revision_id": "a22da73575711db669348db2",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.taycan.gen1.trim.turbo_s_awd_952_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-28T04:01:37+00:00",
+    "payload": [
+      {
+        "trim_id": "porsche.taycan.gen1.trim.turbo_s_awd_952_hp_bev",
+        "amount_thb": 13990000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2025-12-16",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/307cbe75-772d-405a-a207-4ebc8d02b064",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "porsche.taycan.gen1.trim.turbo_s_awd_952_hp_bev",
+        "amount_thb": 14290000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://www.porsche.com/pap/_thailand_/models/taycan/configure/",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

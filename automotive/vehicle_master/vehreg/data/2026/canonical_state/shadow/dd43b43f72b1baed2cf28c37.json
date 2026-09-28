@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "dd43b43f72b1baed2cf28c37",
+    "command_id": "lot6-004",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_im5.mg_im5.trim.premium_long_range_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "REPAIR-06: Vehicle Master trim/price repair for 20 BEV-lineup models per docs/WORK_STATE.md Step 2 findings, amended 2026-09-28b per owner direction on EQS/ZS EV/IM5/IM6/Maxus7/Maxus9/NETA V/Taycan. DRAFT ONLY -- not yet approved for Step 4 write.",
+    "submitted_at": "2026-09-28T00:00:00+00:00",
+    "applied_at": "2026-09-28T04:01:14+00:00",
+    "before_hash": "6933a57cc26689b0e7ba3a4ae38837c8cb7338040c8a52e08f8906fec1919b7e",
+    "after_hash": "5bcf41ebe4bcd5f3a81521148d3062a4a814ac5e0b16a5d78cf19fb3539405bf",
+    "before": [
+      {
+        "trim_id": "mg.mg_im5.mg_im5.trim.premium_long_range_bev",
+        "amount_thb": 1549900,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://www.mgcars.com/en/promotions/MG-IM5-Promotion",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "mg.mg_im5.mg_im5.trim.premium_long_range_bev",
+        "amount_thb": 1499900,
+        "price_type": "CAMPAIGN_PRICE",
+        "effective_from": "2026-09-01",
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://www.mgcars.com/en/promotions/MG-IM5-Promotion",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": "mg.mg_im5.mg_im5.trim.premium_long_range_bev.campaign.2026-09-01",
+        "option_id": "default",
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "mg.mg_im5.mg_im5.trim.premium_long_range_bev",
+        "amount_thb": 1549900,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://www.mgcars.com/en/promotions/MG-IM5-Promotion",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_lot6-004.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "dd43b43f72b1baed2cf28c37:price",
+    "revision_id": "dd43b43f72b1baed2cf28c37",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "mg.mg_im5.mg_im5.trim.premium_long_range_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-28T04:01:14+00:00",
+    "payload": [
+      {
+        "trim_id": "mg.mg_im5.mg_im5.trim.premium_long_range_bev",
+        "amount_thb": 1499900,
+        "price_type": "CAMPAIGN_PRICE",
+        "effective_from": "2026-09-01",
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://www.mgcars.com/en/promotions/MG-IM5-Promotion",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": "mg.mg_im5.mg_im5.trim.premium_long_range_bev.campaign.2026-09-01",
+        "option_id": "default",
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "mg.mg_im5.mg_im5.trim.premium_long_range_bev",
+        "amount_thb": 1549900,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://www.mgcars.com/en/promotions/MG-IM5-Promotion",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

@@ -1,0 +1,334 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b1c82506aad533ecf12b81b5",
+    "command_id": "lot6-031",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mini.jcw_e",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Adding the distinct '1965 Victory Edition' as its own confirmed, separately-priced Thai retail grade",
+    "submitted_at": "2026-09-28T00:00:00+00:00",
+    "applied_at": "2026-09-28T04:01:28+00:00",
+    "before_hash": "378b8fe4145875a950a1f4698b1b5b1ad20b2094fc933ce97d53e754fc80876b",
+    "after_hash": "ce79f62be60f422a9dc6b9799ecefabf84a5cecd03b0ea200a3a893f45beacb9",
+    "before": {
+      "id": "jcw_e",
+      "name_en": "JCW E",
+      "name_th": "",
+      "nameplate": "",
+      "body_type": "HATCHBACK",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "jcw e"
+      ],
+      "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
+      "generations": [
+        {
+          "code": "JCW_E",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": "2026-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "ยังไม่แยกรุ่นย่อย",
+              "powertrain": "UNKNOWN",
+              "drivetrain": "",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "aliases": [],
+              "overrides": {},
+              "price_thb": 2069000,
+              "import_type": "",
+              "origin_country": "",
+              "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+              "price_min_thb": 2069000,
+              "price_max_thb": 2069000
+            }
+          ],
+          "trims": [
+            {
+              "name": "John Cooper Works Electric",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:218"
+                ]
+              },
+              "id": "john_cooper_works_electric_bev"
+            }
+          ]
+        }
+      ],
+      "incomplete": true
+    },
+    "after": {
+      "brand": {
+        "id": "mini",
+        "name_en": "MINI",
+        "name_th": "มินิ",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "BMW Group",
+        "brand_origin": "GB",
+        "trim_detail": false,
+        "aliases": [
+          "มินิ"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mini.jcw_e",
+        "brand_id": "mini",
+        "name_en": "JCW E",
+        "name_th": "",
+        "nameplate": "JCW E",
+        "body_type": "HATCHBACK",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "jcw e"
+        ],
+        "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mini.jcw_e.jcw_e",
+          "model_id": "mini.jcw_e",
+          "code": "jcw_e",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": "2026-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mini.jcw_e.jcw_e.ยงไมแยกรนยอย",
+          "generation_id": "mini.jcw_e.jcw_e",
+          "name": "ยังไม่แยกรุ่นย่อย",
+          "powertrain": "UNKNOWN",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": 2069000,
+          "price_min_thb": 2069000,
+          "price_max_thb": 2069000,
+          "import_type": "UNKNOWN",
+          "origin_country": "",
+          "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mini.jcw_e.jcw_e.trim.john_cooper_works_electric_bev",
+          "generation_id": "mini.jcw_e.jcw_e",
+          "name": "John Cooper Works Electric",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:218"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mini.jcw_e.jcw_e.trim.jcw_electric_1965_victory_edition_bev",
+          "generation_id": "mini.jcw_e.jcw_e",
+          "name": "JCW Electric 1965 Victory Edition",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": "New trim added from its own distinct line item on the official Mar 27, 2026 MINI Thailand price sheet."
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mini.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b1c82506aad533ecf12b81b5:catalog",
+    "revision_id": "b1c82506aad533ecf12b81b5",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mini.jcw_e",
+    "state": "PENDING",
+    "created_at": "2026-09-28T04:01:28+00:00",
+    "payload": {
+      "brand": {
+        "id": "mini",
+        "name_en": "MINI",
+        "name_th": "มินิ",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "BMW Group",
+        "brand_origin": "GB",
+        "trim_detail": false,
+        "aliases": [
+          "มินิ"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mini.jcw_e",
+        "brand_id": "mini",
+        "name_en": "JCW E",
+        "name_th": "",
+        "nameplate": "JCW E",
+        "body_type": "HATCHBACK",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "jcw e"
+        ],
+        "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mini.jcw_e.jcw_e",
+          "model_id": "mini.jcw_e",
+          "code": "jcw_e",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": "2026-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mini.jcw_e.jcw_e.ยงไมแยกรนยอย",
+          "generation_id": "mini.jcw_e.jcw_e",
+          "name": "ยังไม่แยกรุ่นย่อย",
+          "powertrain": "UNKNOWN",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": 2069000,
+          "price_min_thb": 2069000,
+          "price_max_thb": 2069000,
+          "import_type": "UNKNOWN",
+          "origin_country": "",
+          "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mini.jcw_e.jcw_e.trim.john_cooper_works_electric_bev",
+          "generation_id": "mini.jcw_e.jcw_e",
+          "name": "John Cooper Works Electric",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:218"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mini.jcw_e.jcw_e.trim.jcw_electric_1965_victory_edition_bev",
+          "generation_id": "mini.jcw_e.jcw_e",
+          "name": "JCW Electric 1965 Victory Edition",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": "New trim added from its own distinct line item on the official Mar 27, 2026 MINI Thailand price sheet."
+        }
+      ]
+    }
+  }
+}

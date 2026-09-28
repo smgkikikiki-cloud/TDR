@@ -1,0 +1,740 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "8ca14462e5b426c9bab8a191",
+    "command_id": "lot6-042",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "porsche.macan",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Adding the three Macan EV grades missing from the five-BEV official Thailand configurator lineup; ICE GTS/S/T siblings and history untouched",
+    "submitted_at": "2026-09-28T00:00:00+00:00",
+    "applied_at": "2026-09-28T04:01:34+00:00",
+    "before_hash": "eeb309d69a7e79d26e4df3352ec573115398413a0e96bfef51ef76bbd5a31590",
+    "after_hash": "0a02da2dca9c576ee3321a76a834cddd832d1159ded72d075caa5b89e2a1ac5c",
+    "before": {
+      "id": "macan",
+      "name_en": "Macan",
+      "name_th": "มาคัน",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [],
+      "notes": "",
+      "generations": [
+        {
+          "code": "95B",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2019-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "2.0L ICE AWD",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "engine_cc": 1984,
+              "battery_kwh": null,
+              "aliases": [
+                "Macan"
+              ],
+              "overrides": {},
+              "price_thb": 5300000,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "seed-unverified",
+              "price_min_thb": 5300000,
+              "price_max_thb": 5300000
+            }
+          ],
+          "trims": [
+            {
+              "name": "4 Electric (BEV 408 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:246"
+                ]
+              },
+              "aliases": [
+                "Macan 4 Electric (BEV 408 hp)"
+              ],
+              "id": "4_electric_bev_408_hp_bev"
+            },
+            {
+              "name": "Turbo Electric (BEV 639 hp)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:246"
+                ]
+              },
+              "aliases": [
+                "Macan Turbo Electric (BEV 639 hp)"
+              ],
+              "id": "turbo_electric_bev_639_hp_bev"
+            },
+            {
+              "name": "GTS",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4726,
+              "width_mm": 1927,
+              "height_mm": 1596,
+              "engine_cc": 2894,
+              "tire_front": "265/40R21",
+              "tire_rear": "295/35R21",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "a456ef09-acc8-4bba-9697-33950048daf8"
+                ]
+              }
+            },
+            {
+              "name": "S",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4726,
+              "width_mm": 1927,
+              "height_mm": 1621,
+              "engine_cc": 2894,
+              "tire_front": "265/45R20",
+              "tire_rear": "295/40R20",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "c3d59e5e-802c-4162-98e5-94d95bd43212"
+                ]
+              }
+            },
+            {
+              "name": "T",
+              "powertrain": "ICE",
+              "seats": 5,
+              "length_mm": 4726,
+              "width_mm": 1922,
+              "height_mm": 1621,
+              "engine_cc": 1984,
+              "tire_front": "265/45R20",
+              "tire_rear": "295/40R20",
+              "transmission": "AUTOMATIC",
+              "source_refs": {
+                "eco": [
+                  "ee770a24-d260-4d5f-9877-9af5bf85a301"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "porsche",
+        "name_en": "Porsche",
+        "name_th": "ปอร์เช่",
+        "brand_segment": "PERFORMANCE",
+        "oem_group": "Volkswagen Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "ปอร์เช่"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "porsche.macan",
+        "brand_id": "porsche",
+        "name_en": "Macan",
+        "name_th": "มาคัน",
+        "nameplate": "Macan",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "porsche.macan.95b",
+          "model_id": "porsche.macan",
+          "code": "95b",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2019-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "porsche.macan.95b.2_0l_ice_awd",
+          "generation_id": "porsche.macan.95b",
+          "name": "2.0L ICE AWD",
+          "powertrain": "ICE",
+          "drivetrain": "AWD",
+          "engine_cc": 1984,
+          "battery_kwh": null,
+          "price_thb": 5300000,
+          "price_min_thb": 5300000,
+          "price_max_thb": 5300000,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Macan"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "porsche.macan.95b.trim.4_electric_bev_408_hp_bev",
+          "generation_id": "porsche.macan.95b",
+          "name": "4 Electric (BEV 408 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Macan 4 Electric (BEV 408 hp)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:246"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.macan.95b.trim.turbo_electric_bev_639_hp_bev",
+          "generation_id": "porsche.macan.95b",
+          "name": "Turbo Electric (BEV 639 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Macan Turbo Electric (BEV 639 hp)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:246"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.macan.95b.trim.gts_ice",
+          "generation_id": "porsche.macan.95b",
+          "name": "GTS",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2894,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4726,
+          "width_mm": 1927,
+          "height_mm": 1596,
+          "wheelbase_mm": null,
+          "tire_front": "265/40R21",
+          "tire_rear": "295/35R21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "a456ef09-acc8-4bba-9697-33950048daf8"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.macan.95b.trim.s_ice",
+          "generation_id": "porsche.macan.95b",
+          "name": "S",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2894,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4726,
+          "width_mm": 1927,
+          "height_mm": 1621,
+          "wheelbase_mm": null,
+          "tire_front": "265/45R20",
+          "tire_rear": "295/40R20",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "c3d59e5e-802c-4162-98e5-94d95bd43212"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.macan.95b.trim.t_ice",
+          "generation_id": "porsche.macan.95b",
+          "name": "T",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1984,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4726,
+          "width_mm": 1922,
+          "height_mm": 1621,
+          "wheelbase_mm": null,
+          "tire_front": "265/45R20",
+          "tire_rear": "295/40R20",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "ee770a24-d260-4d5f-9877-9af5bf85a301"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.macan.95b.trim.electric_bev",
+          "generation_id": "porsche.macan.95b",
+          "name": "Electric",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": "New base BEV trim added from the official Thailand configurator's five-BEV lineup."
+        },
+        {
+          "id": "porsche.macan.95b.trim.4s_electric_bev",
+          "generation_id": "porsche.macan.95b",
+          "name": "4S Electric",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": "New trim added from the official Thailand configurator's five-BEV lineup."
+        },
+        {
+          "id": "porsche.macan.95b.trim.gts_electric_bev",
+          "generation_id": "porsche.macan.95b",
+          "name": "GTS Electric",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": "New trim added from the official Thailand configurator's five-BEV lineup (571 PS electric GTS). Named distinctly from the existing ICE 'GTS' trim (a separate 440 PS gasoline grade per Step 2) to avoid any identity collision -- not merged with or renamed from it."
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/porsche.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "8ca14462e5b426c9bab8a191:catalog",
+    "revision_id": "8ca14462e5b426c9bab8a191",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "porsche.macan",
+    "state": "PENDING",
+    "created_at": "2026-09-28T04:01:34+00:00",
+    "payload": {
+      "brand": {
+        "id": "porsche",
+        "name_en": "Porsche",
+        "name_th": "ปอร์เช่",
+        "brand_segment": "PERFORMANCE",
+        "oem_group": "Volkswagen Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "ปอร์เช่"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "porsche.macan",
+        "brand_id": "porsche",
+        "name_en": "Macan",
+        "name_th": "มาคัน",
+        "nameplate": "Macan",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "porsche.macan.95b",
+          "model_id": "porsche.macan",
+          "code": "95b",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2019-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "porsche.macan.95b.2_0l_ice_awd",
+          "generation_id": "porsche.macan.95b",
+          "name": "2.0L ICE AWD",
+          "powertrain": "ICE",
+          "drivetrain": "AWD",
+          "engine_cc": 1984,
+          "battery_kwh": null,
+          "price_thb": 5300000,
+          "price_min_thb": 5300000,
+          "price_max_thb": 5300000,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Macan"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "porsche.macan.95b.trim.4_electric_bev_408_hp_bev",
+          "generation_id": "porsche.macan.95b",
+          "name": "4 Electric (BEV 408 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Macan 4 Electric (BEV 408 hp)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:246"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.macan.95b.trim.turbo_electric_bev_639_hp_bev",
+          "generation_id": "porsche.macan.95b",
+          "name": "Turbo Electric (BEV 639 hp)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Macan Turbo Electric (BEV 639 hp)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:246"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.macan.95b.trim.gts_ice",
+          "generation_id": "porsche.macan.95b",
+          "name": "GTS",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2894,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4726,
+          "width_mm": 1927,
+          "height_mm": 1596,
+          "wheelbase_mm": null,
+          "tire_front": "265/40R21",
+          "tire_rear": "295/35R21",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "a456ef09-acc8-4bba-9697-33950048daf8"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.macan.95b.trim.s_ice",
+          "generation_id": "porsche.macan.95b",
+          "name": "S",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 2894,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4726,
+          "width_mm": 1927,
+          "height_mm": 1621,
+          "wheelbase_mm": null,
+          "tire_front": "265/45R20",
+          "tire_rear": "295/40R20",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "c3d59e5e-802c-4162-98e5-94d95bd43212"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.macan.95b.trim.t_ice",
+          "generation_id": "porsche.macan.95b",
+          "name": "T",
+          "powertrain": "ICE",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": 1984,
+          "battery_kwh": null,
+          "transmission": "AUTOMATIC",
+          "seats": 5,
+          "length_mm": 4726,
+          "width_mm": 1922,
+          "height_mm": 1621,
+          "wheelbase_mm": null,
+          "tire_front": "265/45R20",
+          "tire_rear": "295/40R20",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "eco": [
+              "ee770a24-d260-4d5f-9877-9af5bf85a301"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "porsche.macan.95b.trim.electric_bev",
+          "generation_id": "porsche.macan.95b",
+          "name": "Electric",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": "New base BEV trim added from the official Thailand configurator's five-BEV lineup."
+        },
+        {
+          "id": "porsche.macan.95b.trim.4s_electric_bev",
+          "generation_id": "porsche.macan.95b",
+          "name": "4S Electric",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": "New trim added from the official Thailand configurator's five-BEV lineup."
+        },
+        {
+          "id": "porsche.macan.95b.trim.gts_electric_bev",
+          "generation_id": "porsche.macan.95b",
+          "name": "GTS Electric",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": "New trim added from the official Thailand configurator's five-BEV lineup (571 PS electric GTS). Named distinctly from the existing ICE 'GTS' trim (a separate 440 PS gasoline grade per Step 2) to avoid any identity collision -- not merged with or renamed from it."
+        }
+      ]
+    }
+  }
+}

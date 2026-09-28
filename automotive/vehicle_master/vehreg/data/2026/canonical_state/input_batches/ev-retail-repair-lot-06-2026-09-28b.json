@@ -1,0 +1,513 @@
+{
+  "schema_version": 1,
+  "batch_id": "ev-retail-repair-lot-06-2026-09-28b",
+  "batch_hash": "cbb04f223ef05ce8ada518397af5f09f246abd84feec16c9718e9ad71c01379b",
+  "status": "APPLIED",
+  "year": 2026,
+  "source": {
+    "kind": "ADMIN",
+    "ref": "docs/WORK_STATE.md#REPAIR-06"
+  },
+  "actor": "smgkikikiki-cloud",
+  "reason": "REPAIR-06: Vehicle Master trim/price repair for 20 BEV-lineup models per docs/WORK_STATE.md Step 2 findings, amended 2026-09-28b per owner direction on EQS/ZS EV/IM5/IM6/Maxus7/Maxus9/NETA V/Taycan. DRAFT ONLY -- not yet approved for Step 4 write.",
+  "submitted_at": "2026-09-28T00:00:00+00:00",
+  "applied_at": "2026-09-28T04:01:40+00:00",
+  "results": [
+    {
+      "command_id": "lot6-001",
+      "revision_id": "ab9723ae91ab088d853e2491",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mg.mg_im5",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-002",
+      "revision_id": "0d95005f0c8f3da32272e3aa",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "mg.mg_im5.mg_im5.trim.premium_long_range_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-003",
+      "revision_id": "edc9c07ab0ba5c0c51b05949",
+      "topic": "campaign",
+      "entity_type": "campaign",
+      "entity_id": "mg.mg_im5.mg_im5.trim.premium_long_range_bev.campaign.2026-09-01",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-004",
+      "revision_id": "dd43b43f72b1baed2cf28c37",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "mg.mg_im5.mg_im5.trim.premium_long_range_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-005",
+      "revision_id": "current-retail-set-ce4c4f336fad18c1",
+      "topic": "current_retail_set",
+      "entity_type": "market_current_retail_set",
+      "entity_id": "mg.mg_im5",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-006",
+      "revision_id": "fa19fd6be8c8ee31fb7ef2db",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mg.mg_im6",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-007",
+      "revision_id": "e9dd054093a539acb9e9d92e",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "mg.mg_im6.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-008",
+      "revision_id": "e748f3c5815e29b9d7d3e248",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "mg.mg_im6.gen1.trim.performance_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-009",
+      "revision_id": "current-retail-set-82ad44ead8d0b278",
+      "topic": "current_retail_set",
+      "entity_type": "market_current_retail_set",
+      "entity_id": "mg.mg_im6",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-010",
+      "revision_id": "d371679410bd3839de2c850b",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mg.mg_maxus_7",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-011",
+      "revision_id": "7036ff2144f962c9110a6359",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "mg.mg_maxus_7.gen1.trim.x_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-012",
+      "revision_id": "13ceef772cc3b5474b1cd882",
+      "topic": "campaign",
+      "entity_type": "campaign",
+      "entity_id": "mg.mg_maxus_7.gen1.trim.x_bev.campaign.2026-09-01",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-013",
+      "revision_id": "0c6f486951a1d130ee0f9048",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "mg.mg_maxus_7.gen1.trim.x_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-014",
+      "revision_id": "current-retail-set-c167785d9673e859",
+      "topic": "current_retail_set",
+      "entity_type": "market_current_retail_set",
+      "entity_id": "mg.mg_maxus_7",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-015",
+      "revision_id": "c0423c14ea586c1ddbcc54eb",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mg.mg_maxus_9",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-016",
+      "revision_id": "2c4d1455f64d97d68bbfd98f",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "mg.mg_maxus_9.mifa9.trim.v_plus_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-017",
+      "revision_id": "312bb14d1a03f54aa694cb8d",
+      "topic": "campaign",
+      "entity_type": "campaign",
+      "entity_id": "mg.mg_maxus_9.mifa9.trim.v_plus_bev.campaign.2026-09-01",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-018",
+      "revision_id": "73f3933cfd6b61b996bfc82c",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "mg.mg_maxus_9.mifa9.trim.v_plus_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-019",
+      "revision_id": "current-retail-set-ba19feb001feee14",
+      "topic": "current_retail_set",
+      "entity_type": "market_current_retail_set",
+      "entity_id": "mg.mg_maxus_9",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-020",
+      "revision_id": "current-retail-set-8116f99c82868bda",
+      "topic": "current_retail_set",
+      "entity_type": "market_current_retail_set",
+      "entity_id": "mg.mg_zs_ev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-021",
+      "revision_id": "3f4602ffa5c9a2d0db76d0e0",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mini.aceman",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-022",
+      "revision_id": "7d8f85d6996cd8df0b5952e4",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "mini.aceman.gen1.trim.se_classic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-023",
+      "revision_id": "eb7dc5cdf43ea82d3a3f484b",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "mini.aceman.gen1.trim.se_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-024",
+      "revision_id": "a222d151ea3f44441cfa8ef5",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "mini.aceman.gen1.trim.se_hightrim_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-025",
+      "revision_id": "7e03fe15481df0f67fa81b28",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "mini.aceman.gen1.trim.jcw_aceman_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-026",
+      "revision_id": "71dec93be9af69dd389a1eb7",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mini.mini_cooper",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-027",
+      "revision_id": "e5fb85962e984dea925dee23",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "mini.mini_cooper.j01.trim.se_classic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-028",
+      "revision_id": "181b4b9203059f6d36b949b3",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "mini.mini_cooper.j01.trim.se_hightrim_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-029",
+      "revision_id": "f13f0c44dedb28f79c9c714e",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "mini.mini_cooper.j01.trim.paul_smith_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-030",
+      "revision_id": "181bd5b3d86d25596c2d7760",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "mini.jcw_e.jcw_e.trim.john_cooper_works_electric_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-031",
+      "revision_id": "b1c82506aad533ecf12b81b5",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mini.jcw_e",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-032",
+      "revision_id": "73f7526cf910b7821405154c",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "mini.jcw_e.jcw_e.trim.jcw_electric_1965_victory_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-033",
+      "revision_id": "e4b587485437c2228652bc52",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.cayenne.e3.trim.electric_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-034",
+      "revision_id": "30a000329e9fae5b4dea6951",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.cayenne.e3.trim.s_electric_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-035",
+      "revision_id": "fb53265bf0ed900ff8ca1826",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.cayenne.e3.trim.s_coupe_electric_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-036",
+      "revision_id": "97386d1880040da9b00512da",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.cayenne",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-037",
+      "revision_id": "de6c0921b275752646a72bae",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.cayenne.e3.trim.turbo_electric_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-038",
+      "revision_id": "01ee5ccb05ff21df871bc266",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.cayenne.e3.trim.coupe_electric_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-039",
+      "revision_id": "a3cdc5bd12e4cabfdeb82283",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.cayenne.e3.trim.turbo_coupe_electric_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-040",
+      "revision_id": "65d7404ec6f64f0876914dc2",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.macan.95b.trim.4_electric_bev_408_hp_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-041",
+      "revision_id": "7e200b46a897f4fc5ffebaf5",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.macan.95b.trim.turbo_electric_bev_639_hp_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-042",
+      "revision_id": "8ca14462e5b426c9bab8a191",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.macan",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-043",
+      "revision_id": "b2fad97babbac6a15d594ac0",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.macan.95b.trim.electric_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-044",
+      "revision_id": "2f91f97f0ca3b0f6aba61792",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.macan.95b.trim.4s_electric_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-045",
+      "revision_id": "c6ae4f4b84d05a97bdaa6171",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.macan.95b.trim.gts_electric_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-046",
+      "revision_id": "5485a2077ec0895b7fa577ea",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.taycan.gen1.trim.rwd_408_hp_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-047",
+      "revision_id": "c6db20825f81a47ffe5968be",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.taycan.gen1.trim.turbo_awd_884_hp_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-048",
+      "revision_id": "a22da73575711db669348db2",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.taycan.gen1.trim.turbo_s_awd_952_hp_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-049",
+      "revision_id": "b38308abeecea3055282f275",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.taycan.gen1.trim.turbo_gt_awd_1_034_hp_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-050",
+      "revision_id": "62a6217deaab732a5ff7c1fc",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "porsche.taycan",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot6-051",
+      "revision_id": "d6465e802fe82838e4200ba3",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "porsche.taycan.gen1.trim.4_awd_bev",
+      "idempotent_replay": false
+    }
+  ],
+  "changed_files": [
+    "2026/market/prices/canonical_lot6-045.json",
+    "2026/market/trims/current_retail.json",
+    "2026/market/prices/canonical_lot6-002.json",
+    "2026/market/prices/canonical_lot6-037.json",
+    "2026/market/prices/canonical_lot6-046.json",
+    "2026/market/prices/canonical_lot6-024.json",
+    "2026/market/prices/canonical_lot6-033.json",
+    "2026/market/prices/canonical_lot6-030.json",
+    "2026/market/prices/canonical_lot6-043.json",
+    "2026/market/prices/canonical_lot6-044.json",
+    "2026/market/campaigns/mg.json",
+    "2026/market/prices/canonical_lot6-007.json",
+    "2026/market/prices/canonical_lot6-049.json",
+    "2026/models/mg.json",
+    "2026/market/prices/canonical_lot6-013.json",
+    "2026/market/prices/canonical_lot6-047.json",
+    "2026/market/prices/canonical_lot6-022.json",
+    "2026/market/prices/canonical_lot6-035.json",
+    "2026/market/prices/canonical_lot6-032.json",
+    "2026/market/prices/canonical_lot6-051.json",
+    "2026/market/prices/canonical_lot6-016.json",
+    "2026/market/prices/canonical_lot6-023.json",
+    "2026/market/prices/canonical_lot6-008.json",
+    "2026/market/prices/canonical_lot6-048.json",
+    "2026/market/prices/canonical_lot6-041.json",
+    "2026/market/prices/canonical_lot6-029.json",
+    "2026/market/prices/canonical_lot6-018.json",
+    "2026/market/prices/canonical_lot6-028.json",
+    "2026/market/prices/canonical_lot6-025.json",
+    "2026/models/mini.json",
+    "2026/market/prices/canonical_lot6-039.json",
+    "2026/market/prices/canonical_lot6-038.json",
+    "2026/market/prices/canonical_lot6-004.json",
+    "2026/market/prices/canonical_lot6-027.json",
+    "2026/market/prices/canonical_lot6-011.json",
+    "2026/market/prices/canonical_lot6-040.json",
+    "2026/market/prices/canonical_lot6-034.json",
+    "2026/models/porsche.json",
+    "2026/canonical_state/shadow/7036ff2144f962c9110a6359.json",
+    "2026/canonical_state/shadow/2f91f97f0ca3b0f6aba61792.json",
+    "2026/canonical_state/shadow/e4b587485437c2228652bc52.json",
+    "2026/canonical_state/shadow/2c4d1455f64d97d68bbfd98f.json",
+    "2026/canonical_state/shadow/f13f0c44dedb28f79c9c714e.json",
+    "2026/canonical_state/shadow/eb7dc5cdf43ea82d3a3f484b.json",
+    "2026/canonical_state/shadow/62a6217deaab732a5ff7c1fc.json",
+    "2026/canonical_state/shadow/dd43b43f72b1baed2cf28c37.json",
+    "2026/canonical_state/shadow/c0423c14ea586c1ddbcc54eb.json",
+    "2026/canonical_state/shadow/7e03fe15481df0f67fa81b28.json",
+    "2026/canonical_state/shadow/0d95005f0c8f3da32272e3aa.json",
+    "2026/canonical_state/shadow/b1c82506aad533ecf12b81b5.json",
+    "2026/canonical_state/shadow/fb53265bf0ed900ff8ca1826.json",
+    "2026/canonical_state/shadow/73f3933cfd6b61b996bfc82c.json",
+    "2026/canonical_state/shadow/01ee5ccb05ff21df871bc266.json",
+    "2026/canonical_state/shadow/13ceef772cc3b5474b1cd882.json",
+    "2026/canonical_state/shadow/181bd5b3d86d25596c2d7760.json",
+    "2026/canonical_state/shadow/7d8f85d6996cd8df0b5952e4.json",
+    "2026/canonical_state/shadow/d371679410bd3839de2c850b.json",
+    "2026/canonical_state/shadow/71dec93be9af69dd389a1eb7.json",
+    "2026/canonical_state/shadow/a22da73575711db669348db2.json",
+    "2026/canonical_state/shadow/de6c0921b275752646a72bae.json",
+    "2026/canonical_state/shadow/181b4b9203059f6d36b949b3.json",
+    "2026/canonical_state/shadow/65d7404ec6f64f0876914dc2.json",
+    "2026/canonical_state/shadow/e9dd054093a539acb9e9d92e.json",
+    "2026/canonical_state/shadow/8ca14462e5b426c9bab8a191.json",
+    "2026/canonical_state/shadow/b38308abeecea3055282f275.json",
+    "2026/canonical_state/shadow/0c6f486951a1d130ee0f9048.json",
+    "2026/canonical_state/shadow/c6db20825f81a47ffe5968be.json",
+    "2026/canonical_state/shadow/e5fb85962e984dea925dee23.json",
+    "2026/canonical_state/shadow/a222d151ea3f44441cfa8ef5.json",
+    "2026/canonical_state/shadow/edc9c07ab0ba5c0c51b05949.json",
+    "2026/canonical_state/shadow/312bb14d1a03f54aa694cb8d.json",
+    "2026/canonical_state/revisions.jsonl",
+    "2026/canonical_state/shadow/fa19fd6be8c8ee31fb7ef2db.json",
+    "2026/canonical_state/shadow/c6ae4f4b84d05a97bdaa6171.json",
+    "2026/canonical_state/shadow/d6465e802fe82838e4200ba3.json",
+    "2026/canonical_state/shadow/e748f3c5815e29b9d7d3e248.json",
+    "2026/canonical_state/outbox.jsonl",
+    "2026/canonical_state/shadow/b2fad97babbac6a15d594ac0.json",
+    "2026/canonical_state/shadow/73f7526cf910b7821405154c.json",
+    "2026/canonical_state/shadow/3f4602ffa5c9a2d0db76d0e0.json",
+    "2026/canonical_state/shadow/a3cdc5bd12e4cabfdeb82283.json",
+    "2026/canonical_state/shadow/30a000329e9fae5b4dea6951.json",
+    "2026/canonical_state/shadow/ab9723ae91ab088d853e2491.json",
+    "2026/canonical_state/shadow/7e200b46a897f4fc5ffebaf5.json",
+    "2026/canonical_state/shadow/5485a2077ec0895b7fa577ea.json",
+    "2026/canonical_state/shadow/97386d1880040da9b00512da.json"
+  ]
+}

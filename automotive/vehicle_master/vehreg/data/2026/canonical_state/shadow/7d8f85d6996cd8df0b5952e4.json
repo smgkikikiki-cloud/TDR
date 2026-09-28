@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7d8f85d6996cd8df0b5952e4",
+    "command_id": "lot6-022",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "mini.aceman.gen1.trim.se_classic_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "REPAIR-06: Vehicle Master trim/price repair for 20 BEV-lineup models per docs/WORK_STATE.md Step 2 findings, amended 2026-09-28b per owner direction on EQS/ZS EV/IM5/IM6/Maxus7/Maxus9/NETA V/Taycan. DRAFT ONLY -- not yet approved for Step 4 write.",
+    "submitted_at": "2026-09-28T00:00:00+00:00",
+    "applied_at": "2026-09-28T04:01:24+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "bc813bddcdaf9c907e90e7ba5b83ada47fbad87d5d355964bf43e45dbecf776d",
+    "before": [],
+    "after": [
+      {
+        "trim_id": "mini.aceman.gen1.trim.se_classic_bev",
+        "amount_thb": 1625000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://www.mini.co.th/content/dam/MINI/marketTH/mini_co_th/brochure/brochure-2026/MINI-Price-Sheet-Revised-27-Mar-2026.pdf.asset.1774933915613.pdf",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_lot6-022.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7d8f85d6996cd8df0b5952e4:price",
+    "revision_id": "7d8f85d6996cd8df0b5952e4",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "mini.aceman.gen1.trim.se_classic_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-28T04:01:24+00:00",
+    "payload": [
+      {
+        "trim_id": "mini.aceman.gen1.trim.se_classic_bev",
+        "amount_thb": 1625000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://www.mini.co.th/content/dam/MINI/marketTH/mini_co_th/brochure/brochure-2026/MINI-Price-Sheet-Revised-27-Mar-2026.pdf.asset.1774933915613.pdf",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

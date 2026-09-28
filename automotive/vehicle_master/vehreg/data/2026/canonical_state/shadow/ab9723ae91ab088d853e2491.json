@@ -1,0 +1,406 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ab9723ae91ab088d853e2491",
+    "command_id": "lot6-001",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mg.mg_im5",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Adding the confirmed 'Premium Long Range' Thai retail grade as a new, distinctly-evidenced trim per owner direction 2026-09-28b",
+    "submitted_at": "2026-09-28T00:00:00+00:00",
+    "applied_at": "2026-09-28T04:01:11+00:00",
+    "before_hash": "49e9ffece0af33b292e39f406a7ebd5c42c5bb4fd88a592d653b59c3b6874b72",
+    "after_hash": "aedd6f530cee0a771e35a7ea78adf350ac855000864534ccba30a2ebf7b6ffc0",
+    "before": {
+      "id": "mg_im5",
+      "name_en": "MG IM5",
+      "name_th": "",
+      "nameplate": "",
+      "body_type": "SEDAN",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "im5"
+      ],
+      "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
+      "generations": [
+        {
+          "code": "MG_IM5",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": "2026-05-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "ยังไม่แยกรุ่นย่อย",
+              "powertrain": "UNKNOWN",
+              "drivetrain": "",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "aliases": [],
+              "overrides": {},
+              "price_thb": 1549900,
+              "import_type": "",
+              "origin_country": "",
+              "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+              "price_min_thb": 1549900,
+              "price_max_thb": 1549900
+            }
+          ],
+          "trims": [
+            {
+              "name": "IM5 Standard Range RWD",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:203"
+                ]
+              },
+              "id": "im5_standard_range_rwd_bev"
+            },
+            {
+              "name": "IM5 Long Range AWD Dual Motor",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:203"
+                ]
+              },
+              "id": "im5_long_range_awd_dual_motor_bev"
+            }
+          ]
+        }
+      ],
+      "incomplete": true
+    },
+    "after": {
+      "brand": {
+        "id": "mg",
+        "name_en": "MG",
+        "name_th": "เอ็มจี",
+        "brand_segment": "MASS",
+        "oem_group": "SAIC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "เอ็มจี",
+          "mg sales thailand",
+          "morris garages"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mg.mg_im5",
+        "brand_id": "mg",
+        "name_en": "MG IM5",
+        "name_th": "",
+        "nameplate": "MG IM5",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "im5"
+        ],
+        "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mg.mg_im5.mg_im5",
+          "model_id": "mg.mg_im5",
+          "code": "mg_im5",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": "2026-05-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mg.mg_im5.mg_im5.ยงไมแยกรนยอย",
+          "generation_id": "mg.mg_im5.mg_im5",
+          "name": "ยังไม่แยกรุ่นย่อย",
+          "powertrain": "UNKNOWN",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": 1549900,
+          "price_min_thb": 1549900,
+          "price_max_thb": 1549900,
+          "import_type": "UNKNOWN",
+          "origin_country": "",
+          "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mg.mg_im5.mg_im5.trim.im5_standard_range_rwd_bev",
+          "generation_id": "mg.mg_im5.mg_im5",
+          "name": "IM5 Standard Range RWD",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:203"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_im5.mg_im5.trim.im5_long_range_awd_dual_bev",
+          "generation_id": "mg.mg_im5.mg_im5",
+          "name": "IM5 Long Range AWD Dual Motor",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:203"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_im5.mg_im5.trim.premium_long_range_bev",
+          "generation_id": "mg.mg_im5.mg_im5",
+          "name": "Premium Long Range",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": "New trim added per the confirmed September 2026 Thai offer/quotation selector grade. Old 'Long Range AWD Dual Motor' and 'Standard Range RWD' ids are excluded from the current-retail set (REPLACE_CURRENT_RETAIL_SET) rather than deleted -- their canonical_id, specs and any price history remain fully preserved."
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mg.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ab9723ae91ab088d853e2491:catalog",
+    "revision_id": "ab9723ae91ab088d853e2491",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mg.mg_im5",
+    "state": "PENDING",
+    "created_at": "2026-09-28T04:01:11+00:00",
+    "payload": {
+      "brand": {
+        "id": "mg",
+        "name_en": "MG",
+        "name_th": "เอ็มจี",
+        "brand_segment": "MASS",
+        "oem_group": "SAIC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "เอ็มจี",
+          "mg sales thailand",
+          "morris garages"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mg.mg_im5",
+        "brand_id": "mg",
+        "name_en": "MG IM5",
+        "name_th": "",
+        "nameplate": "MG IM5",
+        "body_type": "SEDAN",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "im5"
+        ],
+        "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mg.mg_im5.mg_im5",
+          "model_id": "mg.mg_im5",
+          "code": "mg_im5",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": "2026-05-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mg.mg_im5.mg_im5.ยงไมแยกรนยอย",
+          "generation_id": "mg.mg_im5.mg_im5",
+          "name": "ยังไม่แยกรุ่นย่อย",
+          "powertrain": "UNKNOWN",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": 1549900,
+          "price_min_thb": 1549900,
+          "price_max_thb": 1549900,
+          "import_type": "UNKNOWN",
+          "origin_country": "",
+          "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mg.mg_im5.mg_im5.trim.im5_standard_range_rwd_bev",
+          "generation_id": "mg.mg_im5.mg_im5",
+          "name": "IM5 Standard Range RWD",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:203"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_im5.mg_im5.trim.im5_long_range_awd_dual_bev",
+          "generation_id": "mg.mg_im5.mg_im5",
+          "name": "IM5 Long Range AWD Dual Motor",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:203"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_im5.mg_im5.trim.premium_long_range_bev",
+          "generation_id": "mg.mg_im5.mg_im5",
+          "name": "Premium Long Range",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": "New trim added per the confirmed September 2026 Thai offer/quotation selector grade. Old 'Long Range AWD Dual Motor' and 'Standard Range RWD' ids are excluded from the current-retail set (REPLACE_CURRENT_RETAIL_SET) rather than deleted -- their canonical_id, specs and any price history remain fully preserved."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5485a2077ec0895b7fa577ea",
+    "command_id": "lot6-046",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.taycan.gen1.trim.rwd_408_hp_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "LIST_PRICE 7,190,000 per the official Thailand configurator's base MY2027 sedan grade; not flagged as spec-mismatched in Step 2, no rename",
+    "submitted_at": "2026-09-28T00:00:00+00:00",
+    "applied_at": "2026-09-28T04:01:36+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "01da0cabbd3e3be25c0f09c1ff85e1357c666f8644c0688a0c0e497df8e9331d",
+    "before": [],
+    "after": [
+      {
+        "trim_id": "porsche.taycan.gen1.trim.rwd_408_hp_bev",
+        "amount_thb": 7190000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://www.porsche.com/pap/_thailand_/models/taycan/configure/",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_lot6-046.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5485a2077ec0895b7fa577ea:price",
+    "revision_id": "5485a2077ec0895b7fa577ea",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.taycan.gen1.trim.rwd_408_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-28T04:01:36+00:00",
+    "payload": [
+      {
+        "trim_id": "porsche.taycan.gen1.trim.rwd_408_hp_bev",
+        "amount_thb": 7190000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://www.porsche.com/pap/_thailand_/models/taycan/configure/",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

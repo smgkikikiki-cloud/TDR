@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "30a000329e9fae5b4dea6951",
+    "command_id": "lot6-034",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.cayenne.e3.trim.s_electric_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "LIST_PRICE 7,350,000 per the official Thailand configurator's 'S Electric' grade -- unambiguous 1:1 name match, no rename",
+    "submitted_at": "2026-09-28T00:00:00+00:00",
+    "applied_at": "2026-09-28T04:01:30+00:00",
+    "before_hash": "85c5ffa3acbf0dc5a160a6fd553a86dbd3e1c2863f5c4b850590c29caa0e90b8",
+    "after_hash": "171e7333915d0b5a4d4ea61d9dc4f848d147edede86510d2dbf4345a099d2742",
+    "before": [
+      {
+        "trim_id": "porsche.cayenne.e3.trim.s_electric_bev",
+        "amount_thb": 8494000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-01",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/819cd062-4578-4f0d-8a80-fc40253d69a1",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "porsche.cayenne.e3.trim.s_electric_bev",
+        "amount_thb": 8494000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-01",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/819cd062-4578-4f0d-8a80-fc40253d69a1",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "porsche.cayenne.e3.trim.s_electric_bev",
+        "amount_thb": 7350000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://www.porsche.com/pap/_thailand_/models/cayenne/configure/",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_lot6-034.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "30a000329e9fae5b4dea6951:price",
+    "revision_id": "30a000329e9fae5b4dea6951",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.cayenne.e3.trim.s_electric_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-28T04:01:30+00:00",
+    "payload": [
+      {
+        "trim_id": "porsche.cayenne.e3.trim.s_electric_bev",
+        "amount_thb": 8494000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-01",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/819cd062-4578-4f0d-8a80-fc40253d69a1",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "porsche.cayenne.e3.trim.s_electric_bev",
+        "amount_thb": 7350000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://www.porsche.com/pap/_thailand_/models/cayenne/configure/",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

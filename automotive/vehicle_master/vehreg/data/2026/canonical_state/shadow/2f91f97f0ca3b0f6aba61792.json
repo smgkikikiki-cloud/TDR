@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2f91f97f0ca3b0f6aba61792",
+    "command_id": "lot6-044",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.macan.95b.trim.4s_electric_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "REPAIR-06: Vehicle Master trim/price repair for 20 BEV-lineup models per docs/WORK_STATE.md Step 2 findings, amended 2026-09-28b per owner direction on EQS/ZS EV/IM5/IM6/Maxus7/Maxus9/NETA V/Taycan. DRAFT ONLY -- not yet approved for Step 4 write.",
+    "submitted_at": "2026-09-28T00:00:00+00:00",
+    "applied_at": "2026-09-28T04:01:35+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "cb8075176e2b6a1b86131cadc667874ff78d7e142ecd2677254789ec207ede4d",
+    "before": [],
+    "after": [
+      {
+        "trim_id": "porsche.macan.95b.trim.4s_electric_bev",
+        "amount_thb": 6590000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://www.porsche.com/pap/_thailand_/models/macan/configure/",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_lot6-044.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2f91f97f0ca3b0f6aba61792:price",
+    "revision_id": "2f91f97f0ca3b0f6aba61792",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.macan.95b.trim.4s_electric_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-28T04:01:35+00:00",
+    "payload": [
+      {
+        "trim_id": "porsche.macan.95b.trim.4s_electric_bev",
+        "amount_thb": 6590000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://www.porsche.com/pap/_thailand_/models/macan/configure/",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

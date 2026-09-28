@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7e200b46a897f4fc5ffebaf5",
+    "command_id": "lot6-041",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.macan.95b.trim.turbo_electric_bev_639_hp_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "LIST_PRICE 7,890,000 per the official Thailand configurator's 'Turbo Electric' grade; frozen Step 2 finding confirms the existing trim's 639 hp spec agrees with this grade's output",
+    "submitted_at": "2026-09-28T00:00:00+00:00",
+    "applied_at": "2026-09-28T04:01:33+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "5a619156e6d87e66371b64f7e7f38835ba9620d5eac76a2ca4d19877ec4f5504",
+    "before": [],
+    "after": [
+      {
+        "trim_id": "porsche.macan.95b.trim.turbo_electric_bev_639_hp_bev",
+        "amount_thb": 7890000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://www.porsche.com/pap/_thailand_/models/macan/configure/",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_lot6-041.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7e200b46a897f4fc5ffebaf5:price",
+    "revision_id": "7e200b46a897f4fc5ffebaf5",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.macan.95b.trim.turbo_electric_bev_639_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-28T04:01:33+00:00",
+    "payload": [
+      {
+        "trim_id": "porsche.macan.95b.trim.turbo_electric_bev_639_hp_bev",
+        "amount_thb": 7890000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://www.porsche.com/pap/_thailand_/models/macan/configure/",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

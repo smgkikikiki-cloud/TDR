@@ -24,7 +24,7 @@
       "notes": "",
       "generations": [
         {
-          "code": "95B",
+          "code": "95b",
           "segment": "D",
           "seats": 5,
           "launched": "2019-01-01",
@@ -125,6 +125,24 @@
                   "ee770a24-d260-4d5f-9877-9af5bf85a301"
                 ]
               }
+            },
+            {
+              "name": "Electric",
+              "notes": "New base BEV trim added from the official Thailand configurator's five-BEV lineup.",
+              "powertrain": "BEV",
+              "id": "electric_bev"
+            },
+            {
+              "name": "4S Electric",
+              "notes": "New trim added from the official Thailand configurator's five-BEV lineup.",
+              "powertrain": "BEV",
+              "id": "4s_electric_bev"
+            },
+            {
+              "name": "GTS Electric",
+              "notes": "New trim added from the official Thailand configurator's five-BEV lineup (571 PS electric GTS). Named distinctly from the existing ICE 'GTS' trim (a separate 440 PS gasoline grade per Step 2) to avoid any identity collision -- not merged with or renamed from it.",
+              "powertrain": "BEV",
+              "id": "gts_electric_bev"
             }
           ]
         }
@@ -143,7 +161,7 @@
       "notes": "",
       "generations": [
         {
-          "code": "E3",
+          "code": "e3",
           "segment": "E",
           "seats": 5,
           "launched": "2018-01-01",
@@ -279,6 +297,24 @@
                   "297b1bea37ca483d9a23993d41f7aee2"
                 ]
               }
+            },
+            {
+              "name": "Turbo Electric",
+              "notes": "New trim added from the official Thailand configurator's six-BEV lineup.",
+              "powertrain": "BEV",
+              "id": "turbo_electric_bev"
+            },
+            {
+              "name": "Coupé Electric",
+              "notes": "New trim added from the official Thailand configurator's six-BEV lineup.",
+              "powertrain": "BEV",
+              "id": "coupe_electric_bev"
+            },
+            {
+              "name": "Turbo Coupé Electric",
+              "notes": "New trim added from the official Thailand configurator's six-BEV lineup.",
+              "powertrain": "BEV",
+              "id": "turbo_coupe_electric_bev"
             }
           ]
         }
@@ -1055,6 +1091,12 @@
               "height_mm": 1412,
               "tire_front": "245/45R20",
               "tire_rear": "285/40R20"
+            },
+            {
+              "name": "4",
+              "notes": "MY2027 Thai configurator price, per the official Porsche Thailand configurator. Plain sedan grade, scoped in per owner direction 2026-09-28b (\"sedan ปกติ\").",
+              "powertrain": "BEV",
+              "id": "4_awd_bev"
             }
           ]
         }

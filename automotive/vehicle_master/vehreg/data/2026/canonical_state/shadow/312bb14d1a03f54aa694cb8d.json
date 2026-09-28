@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "312bb14d1a03f54aa694cb8d",
+    "command_id": "lot6-017",
+    "operation": "UPSERT_CAMPAIGN",
+    "year": 2026,
+    "topic": "campaign",
+    "entity_type": "campaign",
+    "entity_id": "mg.mg_maxus_9.mifa9.trim.v_plus_bev.campaign.2026-09-01",
+    "actor": "smgkikikiki-cloud",
+    "reason": "REPAIR-06: Vehicle Master trim/price repair for 20 BEV-lineup models per docs/WORK_STATE.md Step 2 findings, amended 2026-09-28b per owner direction on EQS/ZS EV/IM5/IM6/Maxus7/Maxus9/NETA V/Taycan. DRAFT ONLY -- not yet approved for Step 4 write.",
+    "submitted_at": "2026-09-28T00:00:00+00:00",
+    "applied_at": "2026-09-28T04:01:23+00:00",
+    "before_hash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+    "after_hash": "194ccc4f9255f08e9fd7278963cdc80a13f4bd4c950dd907c257931736cdd536",
+    "before": null,
+    "after": {
+      "id": "mg.mg_maxus_9.mifa9.trim.v_plus_bev.campaign.2026-09-01",
+      "ends": "2026-09-30",
+      "name": "MG Maxus 9 MY2026 September Promotion",
+      "source": "admin",
+      "starts": "2026-09-01",
+      "options": [
+        {
+          "id": "default",
+          "conditions": {
+            "text": "Booking AND delivery both required within Sep 1-30, 2026 per the official MG Maxus 9 MY2026 promotion terms.",
+            "booking_to": "2026-09-30",
+            "delivery_by": "2026-09-30",
+            "booking_from": "2026-09-01"
+          }
+        }
+      ],
+      "brand_id": "mg",
+      "source_ref": "https://www.mgcars.com/en/promotions/MG-MAXUS-9-MY2026-Promotion"
+    },
+    "changed_files": [
+      "2026/market/campaigns/mg.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "312bb14d1a03f54aa694cb8d:campaign",
+    "revision_id": "312bb14d1a03f54aa694cb8d",
+    "topic": "campaign",
+    "entity_type": "campaign",
+    "entity_id": "mg.mg_maxus_9.mifa9.trim.v_plus_bev.campaign.2026-09-01",
+    "state": "PENDING",
+    "created_at": "2026-09-28T04:01:23+00:00",
+    "payload": {
+      "id": "mg.mg_maxus_9.mifa9.trim.v_plus_bev.campaign.2026-09-01",
+      "ends": "2026-09-30",
+      "name": "MG Maxus 9 MY2026 September Promotion",
+      "source": "admin",
+      "starts": "2026-09-01",
+      "options": [
+        {
+          "id": "default",
+          "conditions": {
+            "text": "Booking AND delivery both required within Sep 1-30, 2026 per the official MG Maxus 9 MY2026 promotion terms.",
+            "booking_to": "2026-09-30",
+            "delivery_by": "2026-09-30",
+            "booking_from": "2026-09-01"
+          }
+        }
+      ],
+      "brand_id": "mg",
+      "source_ref": "https://www.mgcars.com/en/promotions/MG-MAXUS-9-MY2026-Promotion"
+    }
+  }
+}

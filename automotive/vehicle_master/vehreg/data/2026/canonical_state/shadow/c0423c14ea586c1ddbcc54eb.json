@@ -1,0 +1,414 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c0423c14ea586c1ddbcc54eb",
+    "command_id": "lot6-015",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mg.mg_maxus_9",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Adding the confirmed 'V Plus' MY2026 Thai retail grade per owner direction 2026-09-28b",
+    "submitted_at": "2026-09-28T00:00:00+00:00",
+    "applied_at": "2026-09-28T04:01:20+00:00",
+    "before_hash": "b4c76b388916cc83b8fc8b08bd99e74fffd343da4d264dd42fb521427b965af7",
+    "after_hash": "5aeeef88846d5daa48894bb8cb6ae78d368851b37f35564c86c32c4cc8f38a5f",
+    "before": {
+      "id": "mg_maxus_9",
+      "name_en": "MG Maxus 9",
+      "name_th": "เอ็มจี แม็กซัส 9",
+      "nameplate": "",
+      "body_type": "MPV",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "maxus 9",
+        "mifa 9"
+      ],
+      "notes": "",
+      "generations": [
+        {
+          "code": "MIFA9",
+          "segment": "E",
+          "seats": 7,
+          "launched": "2023-03-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "90 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_cc": null,
+              "battery_kwh": 90.0,
+              "aliases": [
+                "Luxury"
+              ],
+              "overrides": {},
+              "price_thb": 2599000,
+              "import_type": "CBU",
+              "origin_country": "CN",
+              "price_note": "seed-unverified",
+              "price_min_thb": 2599000,
+              "price_max_thb": 2599000
+            }
+          ],
+          "trims": [
+            {
+              "name": "Maxus 9 Model X",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:206"
+                ]
+              },
+              "id": "maxus_9_model_x_bev"
+            },
+            {
+              "name": "Maxus 9 Model V",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:206"
+                ]
+              },
+              "id": "maxus_9_model_v_bev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "mg",
+        "name_en": "MG",
+        "name_th": "เอ็มจี",
+        "brand_segment": "MASS",
+        "oem_group": "SAIC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "เอ็มจี",
+          "mg sales thailand",
+          "morris garages"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mg.mg_maxus_9",
+        "brand_id": "mg",
+        "name_en": "MG Maxus 9",
+        "name_th": "เอ็มจี แม็กซัส 9",
+        "nameplate": "MG Maxus 9",
+        "body_type": "MPV",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "maxus 9",
+          "mifa 9"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mg.mg_maxus_9.mifa9",
+          "model_id": "mg.mg_maxus_9",
+          "code": "mifa9",
+          "segment": "E",
+          "seats": 7,
+          "launched": "2023-03-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mg.mg_maxus_9.mifa9.90_kwh_bev",
+          "generation_id": "mg.mg_maxus_9.mifa9",
+          "name": "90 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 90.0,
+          "price_thb": 2599000,
+          "price_min_thb": 2599000,
+          "price_max_thb": 2599000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Luxury"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mg.mg_maxus_9.mifa9.trim.maxus_9_model_x_bev",
+          "generation_id": "mg.mg_maxus_9.mifa9",
+          "name": "Maxus 9 Model X",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:206"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_maxus_9.mifa9.trim.maxus_9_model_v_bev",
+          "generation_id": "mg.mg_maxus_9.mifa9",
+          "name": "Maxus 9 Model V",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:206"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_maxus_9.mifa9.trim.v_plus_bev",
+          "generation_id": "mg.mg_maxus_9.mifa9",
+          "name": "V Plus",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": "New trim added per the confirmed MY2026 September Thai retail offer. Old 'Model V' / 'Model X' ids excluded from the current-retail set, not deleted -- their existing prices and history are preserved in full."
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/mg.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c0423c14ea586c1ddbcc54eb:catalog",
+    "revision_id": "c0423c14ea586c1ddbcc54eb",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "mg.mg_maxus_9",
+    "state": "PENDING",
+    "created_at": "2026-09-28T04:01:20+00:00",
+    "payload": {
+      "brand": {
+        "id": "mg",
+        "name_en": "MG",
+        "name_th": "เอ็มจี",
+        "brand_segment": "MASS",
+        "oem_group": "SAIC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "เอ็มจี",
+          "mg sales thailand",
+          "morris garages"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "mg.mg_maxus_9",
+        "brand_id": "mg",
+        "name_en": "MG Maxus 9",
+        "name_th": "เอ็มจี แม็กซัส 9",
+        "nameplate": "MG Maxus 9",
+        "body_type": "MPV",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "maxus 9",
+          "mifa 9"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "mg.mg_maxus_9.mifa9",
+          "model_id": "mg.mg_maxus_9",
+          "code": "mifa9",
+          "segment": "E",
+          "seats": 7,
+          "launched": "2023-03-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "mg.mg_maxus_9.mifa9.90_kwh_bev",
+          "generation_id": "mg.mg_maxus_9.mifa9",
+          "name": "90 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 90.0,
+          "price_thb": 2599000,
+          "price_min_thb": 2599000,
+          "price_max_thb": 2599000,
+          "import_type": "CBU",
+          "origin_country": "CN",
+          "price_note": "seed-unverified",
+          "aliases": [
+            "Luxury"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "mg.mg_maxus_9.mifa9.trim.maxus_9_model_x_bev",
+          "generation_id": "mg.mg_maxus_9.mifa9",
+          "name": "Maxus 9 Model X",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:206"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_maxus_9.mifa9.trim.maxus_9_model_v_bev",
+          "generation_id": "mg.mg_maxus_9.mifa9",
+          "name": "Maxus 9 Model V",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:206"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "mg.mg_maxus_9.mifa9.trim.v_plus_bev",
+          "generation_id": "mg.mg_maxus_9.mifa9",
+          "name": "V Plus",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": "New trim added per the confirmed MY2026 September Thai retail offer. Old 'Model V' / 'Model X' ids excluded from the current-retail set, not deleted -- their existing prices and history are preserved in full."
+        }
+      ]
+    }
+  }
+}

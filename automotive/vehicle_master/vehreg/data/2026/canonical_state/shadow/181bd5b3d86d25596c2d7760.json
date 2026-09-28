@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "181bd5b3d86d25596c2d7760",
+    "command_id": "lot6-030",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "mini.jcw_e.jcw_e.trim.john_cooper_works_electric_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "LIST_PRICE 2,069,000 for the existing 'John Cooper Works Electric' trim per the official Mar 27, 2026 MINI Thailand price sheet's 'JCW Electric' line -- unambiguous 1:1 nameplate match, no rename",
+    "submitted_at": "2026-09-28T00:00:00+00:00",
+    "applied_at": "2026-09-28T04:01:28+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "eaa4205398b71e28fa462a6e09c6d8057dce7d5991f48fb13f259f8646d8f3c7",
+    "before": [],
+    "after": [
+      {
+        "trim_id": "mini.jcw_e.jcw_e.trim.john_cooper_works_electric_bev",
+        "amount_thb": 2069000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://www.mini.co.th/content/dam/MINI/marketTH/mini_co_th/brochure/brochure-2026/MINI-Price-Sheet-Revised-27-Mar-2026.pdf.asset.1774933915613.pdf",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_lot6-030.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "181bd5b3d86d25596c2d7760:price",
+    "revision_id": "181bd5b3d86d25596c2d7760",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "mini.jcw_e.jcw_e.trim.john_cooper_works_electric_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-28T04:01:28+00:00",
+    "payload": [
+      {
+        "trim_id": "mini.jcw_e.jcw_e.trim.john_cooper_works_electric_bev",
+        "amount_thb": 2069000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://www.mini.co.th/content/dam/MINI/marketTH/mini_co_th/brochure/brochure-2026/MINI-Price-Sheet-Revised-27-Mar-2026.pdf.asset.1774933915613.pdf",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

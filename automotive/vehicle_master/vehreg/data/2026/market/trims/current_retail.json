@@ -532,6 +532,47 @@
       ]
     },
     {
+      "model_id": "mg.mg_im5",
+      "notes": "Owner-directed 2026-09-28b: Premium Long Range is the sole confirmed September Thai retail grade. Old Long Range AWD Dual Motor / Standard Range RWD excluded from the current set (resolve to UNVERIFIED, not deleted) -- canonical_id/specs/price history fully preserved. Not owner-approved for Step 4 write yet.",
+      "reviewed_at": "2026-09-28",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "https://www.mgcars.com/en/promotions/MG-IM5-Promotion",
+      "trim_ids": [
+        "mg.mg_im5.mg_im5.trim.premium_long_range_bev"
+      ]
+    },
+    {
+      "model_id": "mg.mg_im6",
+      "notes": "Owner-directed 2026-09-28b: Premium and Performance are the confirmed current Thai retail grades. Old Luxury RWD / Performance AWD Dual Motor excluded from the current set (resolve to UNVERIFIED, not deleted). Not owner-approved for Step 4 write yet.",
+      "reviewed_at": "2026-09-28",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "https://ex-prod.mgcars.com/en/Calculator",
+      "trim_ids": [
+        "mg.mg_im6.gen1.trim.performance_bev",
+        "mg.mg_im6.gen1.trim.premium_bev"
+      ]
+    },
+    {
+      "model_id": "mg.mg_maxus_7",
+      "notes": "Owner-directed 2026-09-28b: X is the sole confirmed September Thai retail grade. Old Luxury / Premium excluded from the current set (resolve to UNVERIFIED, not deleted). Not owner-approved for Step 4 write yet.",
+      "reviewed_at": "2026-09-28",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "https://www.mgcars.com/en/promotions/MG-MAXUS-7-Promotion",
+      "trim_ids": [
+        "mg.mg_maxus_7.gen1.trim.x_bev"
+      ]
+    },
+    {
+      "model_id": "mg.mg_maxus_9",
+      "notes": "Owner-directed 2026-09-28b: V Plus is the sole confirmed September Thai retail grade. Old Model V / Model X excluded from the current set (resolve to UNVERIFIED, not deleted); their existing LIST prices (2,499,000 / 2,099,000) are left completely untouched. Not owner-approved for Step 4 write yet.",
+      "reviewed_at": "2026-09-28",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "https://www.mgcars.com/en/promotions/MG-MAXUS-9-MY2026-Promotion",
+      "trim_ids": [
+        "mg.mg_maxus_9.mifa9.trim.v_plus_bev"
+      ]
+    },
+    {
       "model_id": "mg.mg_s5_ev",
       "notes": "Owner-approved current lineup: D+ (existing) plus newly materialized sparse X+/V+; plain X/V retired from current",
       "reviewed_at": "2026-09-27",
@@ -553,6 +594,17 @@
         "mg.mg_urban.mg_urban.trim.max_bev",
         "mg.mg_urban.mg_urban.trim.standard_bev",
         "mg.mg_urban.mg_urban.trim.ultra_bev"
+      ]
+    },
+    {
+      "model_id": "mg.mg_zs_ev",
+      "notes": "Owner-directed 2026-09-28b: actual delete_trim was checked and refused by the schema itself (price history still references both wrong-parent ICE trims -- see canonical_trim_delete.py's own guard). REPLACE_CURRENT_RETAIL_SET used instead to keep the wrongly-parented ICE 'D' and 'X' (mg_zs_ev.zsev.trim.d_ice / x_ice) out of this EV model's current set without deleting them, reparenting them, or withdrawing the model -- their ECO_STICKER_PRICE history (949,000 / 1,023,000) is fully preserved. BEV ZS EV D / ZS EV X remain unpriced pending better grade-specific evidence (unchanged from Step 2). Not owner-approved for Step 4 write yet.",
+      "reviewed_at": "2026-09-28",
+      "reviewer": "smgkikikiki-cloud",
+      "source_ref": "https://www.mgcars.com/th/cars/mg-zs-ev",
+      "trim_ids": [
+        "mg.mg_zs_ev.zsev.trim.zs_ev_d_bev",
+        "mg.mg_zs_ev.zsev.trim.zs_ev_x_bev"
       ]
     },
     {

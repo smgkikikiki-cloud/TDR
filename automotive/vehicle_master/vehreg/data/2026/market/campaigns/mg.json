@@ -10,6 +10,66 @@
       "brand_id": "mg"
     },
     {
+      "id": "mg.mg_im5.mg_im5.trim.premium_long_range_bev.campaign.2026-09-01",
+      "ends": "2026-09-30",
+      "name": "MG IM5 September Promotion",
+      "source": "admin",
+      "starts": "2026-09-01",
+      "options": [
+        {
+          "id": "default",
+          "conditions": {
+            "text": "Booking AND delivery both required within Sep 1-30, 2026 per the official MG IM5 promotion terms.",
+            "booking_to": "2026-09-30",
+            "delivery_by": "2026-09-30",
+            "booking_from": "2026-09-01"
+          }
+        }
+      ],
+      "brand_id": "mg",
+      "source_ref": "https://www.mgcars.com/en/promotions/MG-IM5-Promotion"
+    },
+    {
+      "id": "mg.mg_maxus_7.gen1.trim.x_bev.campaign.2026-09-01",
+      "ends": "2026-09-30",
+      "name": "MG Maxus 7 September Promotion",
+      "source": "admin",
+      "starts": "2026-09-01",
+      "options": [
+        {
+          "id": "default",
+          "conditions": {
+            "text": "Booking AND delivery both required within Sep 1-30, 2026 per the official MG Maxus 7 promotion terms.",
+            "booking_to": "2026-09-30",
+            "delivery_by": "2026-09-30",
+            "booking_from": "2026-09-01"
+          }
+        }
+      ],
+      "brand_id": "mg",
+      "source_ref": "https://www.mgcars.com/en/promotions/MG-MAXUS-7-Promotion"
+    },
+    {
+      "id": "mg.mg_maxus_9.mifa9.trim.v_plus_bev.campaign.2026-09-01",
+      "ends": "2026-09-30",
+      "name": "MG Maxus 9 MY2026 September Promotion",
+      "source": "admin",
+      "starts": "2026-09-01",
+      "options": [
+        {
+          "id": "default",
+          "conditions": {
+            "text": "Booking AND delivery both required within Sep 1-30, 2026 per the official MG Maxus 9 MY2026 promotion terms.",
+            "booking_to": "2026-09-30",
+            "delivery_by": "2026-09-30",
+            "booking_from": "2026-09-01"
+          }
+        }
+      ],
+      "brand_id": "mg",
+      "source_ref": "https://www.mgcars.com/en/promotions/MG-MAXUS-9-MY2026-Promotion"
+    },
+    {
       "id": "mg.mg_s5_ev.gen1.trim.d_bev.campaign.2026-09-27",
       "options": [
         {

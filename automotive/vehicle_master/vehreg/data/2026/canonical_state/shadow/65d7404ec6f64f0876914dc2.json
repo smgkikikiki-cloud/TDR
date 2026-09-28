@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "65d7404ec6f64f0876914dc2",
+    "command_id": "lot6-040",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.macan.95b.trim.4_electric_bev_408_hp_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "LIST_PRICE 5,490,000 per the official Thailand configurator's '4 Electric' grade; frozen Step 2 finding confirms the existing trim's 408 hp spec agrees with this grade's output",
+    "submitted_at": "2026-09-28T00:00:00+00:00",
+    "applied_at": "2026-09-28T04:01:33+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "36e1b1522f1e6c49dbde614c5ee80c1ac1ef44b81539fbc416eda4f6de6cbfa7",
+    "before": [],
+    "after": [
+      {
+        "trim_id": "porsche.macan.95b.trim.4_electric_bev_408_hp_bev",
+        "amount_thb": 5490000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://www.porsche.com/pap/_thailand_/models/macan/configure/",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_lot6-040.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "65d7404ec6f64f0876914dc2:price",
+    "revision_id": "65d7404ec6f64f0876914dc2",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "porsche.macan.95b.trim.4_electric_bev_408_hp_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-28T04:01:33+00:00",
+    "payload": [
+      {
+        "trim_id": "porsche.macan.95b.trim.4_electric_bev_408_hp_bev",
+        "amount_thb": 5490000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://www.porsche.com/pap/_thailand_/models/macan/configure/",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

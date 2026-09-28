@@ -1068,7 +1068,7 @@
       "notes": "",
       "generations": [
         {
-          "code": "MIFA9",
+          "code": "mifa9",
           "segment": "E",
           "seats": 7,
           "launched": "2023-03-01",
@@ -1112,6 +1112,12 @@
                 ]
               },
               "id": "maxus_9_model_v_bev"
+            },
+            {
+              "name": "V Plus",
+              "notes": "New trim added per the confirmed MY2026 September Thai retail offer. Old 'Model V' / 'Model X' ids excluded from the current-retail set, not deleted -- their existing prices and history are preserved in full.",
+              "powertrain": "BEV",
+              "id": "v_plus_bev"
             }
           ]
         }
@@ -1316,6 +1322,18 @@
                 ]
               },
               "id": "im6_performance_awd_dual_motor_bev"
+            },
+            {
+              "name": "Premium",
+              "notes": "New trim added per the current MG quotation selector. Old 'Luxury RWD' / 'Performance AWD Dual Motor' ids excluded from the current-retail set, not deleted -- preserved in full.",
+              "powertrain": "BEV",
+              "id": "premium_bev"
+            },
+            {
+              "name": "Performance",
+              "notes": "New trim added per the current MG quotation selector.",
+              "powertrain": "BEV",
+              "id": "performance_bev"
             }
           ]
         }
@@ -1449,6 +1467,12 @@
                 ]
               },
               "id": "maxus_7_luxury_bev"
+            },
+            {
+              "name": "X",
+              "notes": "New trim added per the confirmed September 2026 Thai retail offer. Old 'Luxury' / 'Premium' ids excluded from the current-retail set, not deleted -- preserved in full.",
+              "powertrain": "BEV",
+              "id": "x_bev"
             }
           ]
         }
@@ -1595,7 +1619,7 @@
       "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
       "generations": [
         {
-          "code": "MG_IM5",
+          "code": "mg_im5",
           "segment": "UNKNOWN",
           "seats": null,
           "launched": "2026-05-01",
@@ -1637,6 +1661,12 @@
                 ]
               },
               "id": "im5_long_range_awd_dual_motor_bev"
+            },
+            {
+              "name": "Premium Long Range",
+              "notes": "New trim added per the confirmed September 2026 Thai offer/quotation selector grade. Old 'Long Range AWD Dual Motor' and 'Standard Range RWD' ids are excluded from the current-retail set (REPLACE_CURRENT_RETAIL_SET) rather than deleted -- their canonical_id, specs and any price history remain fully preserved.",
+              "powertrain": "BEV",
+              "id": "premium_long_range_bev"
             }
           ]
         }

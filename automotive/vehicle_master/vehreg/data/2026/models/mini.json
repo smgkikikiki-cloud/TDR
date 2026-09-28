@@ -26,7 +26,7 @@
       "notes": "",
       "generations": [
         {
-          "code": "J01",
+          "code": "j01",
           "segment": "B",
           "seats": 4,
           "launched": "2024-06-01",
@@ -204,6 +204,24 @@
                   "3a13283ee86a4e5f9d11ac7c1a1981e8"
                 ]
               }
+            },
+            {
+              "name": "SE Classic",
+              "notes": "New trim added from the official Mar 27, 2026 MINI Thailand price sheet; not mapped to the existing 'E (BEV 3-Door)' or 'SE (BEV 3-Door, 218 hp)' ids, neither of which carries recorded spec data.",
+              "powertrain": "BEV",
+              "id": "se_classic_bev"
+            },
+            {
+              "name": "SE Hightrim",
+              "notes": "New trim added from the official Mar 27, 2026 MINI Thailand price sheet. The existing 'SE (BEV 3-Door, 218 hp)' trim's most recent ECO_STICKER_PRICE (1,669,000, observed 2025-12-29) matches this grade's LIST price numerically, but that is a coincidental corroboration, not a confirmed spec match -- the existing trim is left unrenamed and unpriced by this command.",
+              "powertrain": "BEV",
+              "id": "se_hightrim_bev"
+            },
+            {
+              "name": "Paul Smith Edition",
+              "notes": "New trim added from the official Mar 27, 2026 MINI Thailand price sheet; not mapped to any existing Cooper Electric id.",
+              "powertrain": "BEV",
+              "id": "paul_smith_edition_bev"
             }
           ]
         }
@@ -376,6 +394,30 @@
                 "Aceman SE Favoured (218 hp)"
               ],
               "id": "se_favoured_218_hp_bev"
+            },
+            {
+              "name": "SE Classic",
+              "notes": "New trim added from the official Mar 27, 2026 MINI Thailand price sheet. Not a rename of the existing 'E Classic (184 hp)' or 'SE Favoured (218 hp)' ids -- neither carries recorded spec data to prove a mapping, so both are left untouched per REPAIR-06 Structural holds.",
+              "powertrain": "BEV",
+              "id": "se_classic_bev"
+            },
+            {
+              "name": "SE",
+              "notes": "New trim added from the official Mar 27, 2026 MINI Thailand price sheet; not mapped to any existing Aceman id.",
+              "powertrain": "BEV",
+              "id": "se_bev"
+            },
+            {
+              "name": "SE Hightrim",
+              "notes": "New trim added from the official Mar 27, 2026 MINI Thailand price sheet; not mapped to any existing Aceman id.",
+              "powertrain": "BEV",
+              "id": "se_hightrim_bev"
+            },
+            {
+              "name": "JCW Aceman",
+              "notes": "New trim added from the official Mar 27, 2026 MINI Thailand price sheet. Distinct from JCW Electric under MINI JCW E (a different model) -- not merged with it.",
+              "powertrain": "BEV",
+              "id": "jcw_aceman_bev"
             }
           ]
         }
@@ -396,7 +438,7 @@
       "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
       "generations": [
         {
-          "code": "JCW_E",
+          "code": "jcw_e",
           "segment": "UNKNOWN",
           "seats": null,
           "launched": "2026-01-01",
@@ -428,6 +470,12 @@
                 ]
               },
               "id": "john_cooper_works_electric_bev"
+            },
+            {
+              "name": "JCW Electric 1965 Victory Edition",
+              "notes": "New trim added from its own distinct line item on the official Mar 27, 2026 MINI Thailand price sheet.",
+              "powertrain": "BEV",
+              "id": "jcw_electric_1965_victory_edition_bev"
             }
           ]
         }
