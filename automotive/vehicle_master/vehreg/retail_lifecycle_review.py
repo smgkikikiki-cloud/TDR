@@ -19,6 +19,7 @@ from pathlib import Path
 from typing import Any
 
 from .catalog import Catalog, DATA_DIR, DEFAULT_YEAR
+from .current_retail import resolve_approved_current_trim_ids
 
 
 class RetailLifecycleReviewError(ValueError):
@@ -61,12 +62,18 @@ def _validated_reviewer(value: str) -> str:
     return reviewer
 
 
-def _parent_model_status(catalog: Catalog, trim_id: str) -> str:
+def _parent_model(catalog: Catalog, trim_id: str) -> tuple[str, str]:
     trim = catalog.trims[trim_id]
     generation = catalog.generations.get(trim.generation_id)
-    model = catalog.models.get(generation.model_id) if generation else None
+    model_id = str(generation.model_id) if generation else ""
+    model = catalog.models.get(model_id) if generation else None
     retail_status = getattr(model, "retail_status", None)
-    return str(getattr(retail_status, "value", retail_status or "UNVERIFIED")).strip().upper()
+    status = str(getattr(retail_status, "value", retail_status or "UNVERIFIED")).strip().upper()
+    return model_id, status
+
+
+def _parent_model_status(catalog: Catalog, trim_id: str) -> str:
+    return _parent_model(catalog, trim_id)[1]
 
 
 def validate_trim_lifecycle_decisions(payload: dict[str, Any], *,
@@ -141,10 +148,38 @@ def upsert_trim_lifecycle_disposition(*, data_dir: Path | str = DATA_DIR,
     # Keep the parent invariant inside the workflow store so advanced/admin
     # batches cannot bypass the web action. Reopen is exempt because stale
     # sidecar state must remain removable after a parent becomes historical.
-    if action != "reopen" and _parent_model_status(catalog, trim_id) != "CURRENT":
-        raise RetailLifecycleReviewError(
-            "parent model must be canonical CURRENT before trim lifecycle review"
-        )
+    if action != "reopen":
+        model_id, parent_status = _parent_model(catalog, trim_id)
+        if parent_status != "CURRENT":
+            # A raw HISTORICAL parent already forces every one of its trims
+            # HISTORICAL at the release layer (tdr_bridge.lifecycle); a
+            # per-trim review on top of that is not the supported path, so it
+            # stays refused exactly as before -- `approved` is never consulted
+            # for this case.
+            approved = (
+                None if parent_status == "HISTORICAL"
+                else resolve_approved_current_trim_ids(model_id, data_dir=data_dir, year=year)
+            )
+            # A raw non-CURRENT (e.g. UNVERIFIED) parent with an explicit
+            # approved current-retail set (vehreg/current_retail.py) is
+            # different: for such a model that set is the SOLE CURRENT
+            # authority in the release layer, so a trim excluded from it is
+            # already never served as CURRENT regardless of this review.
+            # Recording a HUMAN historical disposition for exactly that
+            # excluded trim only makes an already-non-current trim's
+            # admin/history status explicit, so allow it -- and only it: a
+            # model with no approved set at all keeps the original refusal
+            # unchanged, and "current" stays refused too since it would
+            # contradict the model having no canonical-CURRENT status.
+            if approved is None or action != "historical":
+                raise RetailLifecycleReviewError(
+                    "parent model must be canonical CURRENT before trim lifecycle review"
+                )
+            if trim_id in approved:
+                raise RetailLifecycleReviewError(
+                    "trim is a member of the approved current-retail set; "
+                    "cannot record a contradictory historical disposition"
+                )
 
     existing = load_trim_lifecycle_decisions(data_dir=data_dir, year=year)
     merged = [row for row in existing if row["trim_id"] != trim_id]
