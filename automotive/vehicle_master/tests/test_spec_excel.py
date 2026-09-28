@@ -179,7 +179,7 @@ def test_same_existing_fact_becomes_noop():
     assert result.values_unchanged == 1
 
 
-def test_live_registry_template_headers_are_all_parser_compatible():
+def test_live_registry_template_headers_cover_every_field_and_parse():
     registry = SpecRegistry.load(DATA_DIR, DEFAULT_YEAR)
     headers = workbook_headers(registry)
     machine_headers = [
@@ -189,6 +189,8 @@ def test_live_registry_template_headers_are_all_parser_compatible():
     targets = build_column_targets(machine_headers, registry)
     assert len(targets) == len(machine_headers)
     assert IMPORT_DISPLAY_COLUMNS == frozenset(DISPLAY_COLUMNS)
+    covered_fields = {target.field_key for target in targets.values() if target.field_key}
+    assert set(registry.fields) <= covered_fields
     # Any field requiring qualifier context must be represented by an explicit
     # alias/header context, never an ambiguous bare value column.
     for key, definition in registry.fields.items():
