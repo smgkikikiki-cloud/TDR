@@ -519,9 +519,11 @@ State: still `PROMPT_READY` -- second-corrected draft batch built and validated 
 
 **Validation, repeated in full:** `CanonicalInputPipeline.apply()` on a fresh disposable copy: APPLIED, 14 changed files. `vehreg market validate`: valid, 0 problems. Focused gate: 98/98 passed. Staged `tdr_bridge.release_enriched` before/after: **+8 new market_trims** (down from v2's 11 -- Premium AWD and both Ultra seat trims removed), **0 removed trims, 0 status changes on any pre-existing trim, 0 price changes anywhere** (price_ledger unchanged at 983). Directly confirmed CURRENT-trim counts per affected model on the re-verified release: Tesla 5 (RWD, Long Range AWD, Performance AWD, Premium RWD, Premium Long Range RWD), Volvo EX90 2 (Plus Twin Motor 7-Seat, the untouched 517hp trim), Zeekr 009 4 (Flagship AWD 6-Seat, Standard 7-Seat, Premium AWD 7-Seat, Grand 4-Seater VIP).
 
+**Owner review correction (2026-09-28): Step 3 is incomplete against the approved 16-item Step 2 scope.** The v3 file contains only 6 identity bundles, covers 6 vehicles, and contains **zero price commands and zero campaign commands**. The other 10 vehicles have no write commands. Therefore it cannot be called a completed REPAIR-08 draft or advanced to Step 4 approval. Continue Step 3 by completing the 1:1 trim/old price/current LIST_PRICE/current promotion accounting for all 16 vehicles, using direct evidence for each price/campaign; retain explicit holds only where evidence or identity mapping is genuinely unresolved. The 6 identity changes in v3 remain a partial draft, not a substitute for the missing price/promotion work.
+
 Full second-corrected draft batch JSON was delivered to the owner in-chat.
 
-Next: await the owner's separate Step 4 approval for this corrected 6-command batch. Do not enqueue, write to real canonical data, merge, or publish before that.
+Next: continue Step 3 and complete the missing per-vehicle trim, price, and promotion work. Do not request Step 4 approval, enqueue, write to real canonical data, merge, or publish while the 16-item scope remains incomplete.
 
 ## Per-batch recording template
 
