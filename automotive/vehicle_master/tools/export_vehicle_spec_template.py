@@ -5,10 +5,10 @@ Examples:
     python -m tools.export_vehicle_spec_template --model-id toyota.corolla-cross --out /tmp/specs.xlsx
     python -m tools.export_vehicle_spec_template --trim-id <canonical-trim-id> --out /tmp/specs.xlsx
 
-The data sheet contains exact canonical identities plus deterministic machine
-headers. Registry fields requiring qualifier context are never emitted as an
-ambiguous bare column; common qualifier cases use fixed aliases and every other
-case is documented on FIELD_DICTIONARY with the generic header syntax.
+The SPECS sheet contains exact canonical identities plus deterministic machine
+headers. Every current registry field is represented. Fields whose meaning
+requires qualifier context are emitted as explicit fixed columns instead of an
+ambiguous bare value column.
 """
 
 from __future__ import annotations
@@ -27,6 +27,71 @@ from vehreg.spec_excel import CORE_ONLY_HEADERS, HEADER_ALIASES, IDENTITY_COLUMN
 
 DISPLAY_COLUMNS = ("brand", "model", "generation", "trim", "powertrain")
 
+# Fixed machine headers for qualified registry fields that do not already have
+# a short alias in vehreg.spec_excel. The qualifier is part of the column name,
+# so a value such as 300 can never be silently guessed as NEDC/CLTC/WLTP.
+# Multiple columns are intentional where the same canonical field can carry
+# multiple simultaneously valid contexts.
+QUALIFIED_TEMPLATE_HEADERS: dict[str, tuple[str, ...]] = {
+    "vehicle.curb_weight_kg": (
+        "vehicle.curb_weight_kg__measurement_basis=DECLARED",
+    ),
+    "vehicle.cargo_volume_l": (
+        "vehicle.cargo_volume_l__measurement_basis=VDA__seat_configuration=SEATS_UP",
+        "vehicle.cargo_volume_l__measurement_basis=VDA__seat_configuration=REAR_FOLDED",
+    ),
+    "vehicle.turning_radius_m": (
+        "vehicle.turning_radius_m__measurement_basis=CURB_TO_CURB",
+    ),
+    "powertrain.max_power_kw": (
+        "powertrain.max_power_kw__output_scope=SYSTEM__rating_basis=DECLARED",
+        "powertrain.max_power_kw__output_scope=ENGINE__rating_basis=DECLARED",
+        "powertrain.max_power_kw__output_scope=FRONT_MOTOR__rating_basis=DECLARED",
+        "powertrain.max_power_kw__output_scope=REAR_MOTOR__rating_basis=DECLARED",
+    ),
+    "powertrain.max_torque_nm": (
+        "powertrain.max_torque_nm__output_scope=SYSTEM__rating_basis=DECLARED",
+        "powertrain.max_torque_nm__output_scope=ENGINE__rating_basis=DECLARED",
+        "powertrain.max_torque_nm__output_scope=FRONT_MOTOR__rating_basis=DECLARED",
+        "powertrain.max_torque_nm__output_scope=REAR_MOTOR__rating_basis=DECLARED",
+    ),
+    "performance.acceleration_0_100_s": (
+        "performance.acceleration_0_100_s__measurement_basis=DECLARED",
+    ),
+    "performance.top_speed_kmh": (
+        "performance.top_speed_kmh__measurement_basis=DECLARED",
+    ),
+    "ev.energy_consumption_wh_km": tuple(
+        f"ev.energy_consumption_wh_km__measurement_basis={basis}__range_scope={scope}"
+        for scope in ("FULL", "ELECTRIC_ONLY")
+        for basis in ("NEDC", "CLTC", "WLTP", "WLTC", "EPA")
+    ),
+    "charging.dc_max_kw": (
+        "charging.dc_max_kw__rating_basis=DECLARED",
+        "charging.dc_max_kw__rating_basis=PEAK",
+    ),
+    "emissions.co2_g_km": tuple(
+        f"emissions.co2_g_km__measurement_basis={basis}"
+        for basis in ("ECO_STICKER_TH", "NEDC", "WLTP", "WLTC")
+    ),
+    "safety.ncap_stars": tuple(
+        f"safety.ncap_stars__program={program}"
+        for program in ("ASEAN_NCAP", "EURO_NCAP", "ANCAP", "C_NCAP")
+    ),
+    "efficiency.fuel_consumption_l_100km": tuple(
+        f"efficiency.fuel_consumption_l_100km__measurement_basis={basis}"
+        for basis in ("ECO_STICKER_TH", "NEDC", "WLTP", "WLTC")
+    ),
+    "efficiency.fuel_consumption_urban_l_100km": tuple(
+        f"efficiency.fuel_consumption_urban_l_100km__measurement_basis={basis}"
+        for basis in ("ECO_STICKER_TH", "NEDC", "WLTP", "WLTC")
+    ),
+    "efficiency.fuel_consumption_extra_urban_l_100km": tuple(
+        f"efficiency.fuel_consumption_extra_urban_l_100km__measurement_basis={basis}"
+        for basis in ("ECO_STICKER_TH", "NEDC", "WLTP", "WLTC")
+    ),
+}
+
 
 def _selected_trims(catalog: Catalog, *, model_id: str | None, trim_id: str | None):
     if trim_id:
@@ -41,19 +106,25 @@ def _selected_trims(catalog: Catalog, *, model_id: str | None, trim_id: str | No
     return sorted(catalog.trims.values(), key=lambda row: row.id)
 
 
-def _alias_columns_by_field() -> dict[str, list[str]]:
+def _ready_columns_by_field() -> dict[str, list[str]]:
     out: dict[str, list[str]] = defaultdict(list)
     for header, (field_key, _qualifiers) in HEADER_ALIASES.items():
         out[field_key].append(header)
-    return {key: sorted(values) for key, values in out.items()}
+    for field_key, headers in QUALIFIED_TEMPLATE_HEADERS.items():
+        out[field_key].extend(headers)
+    return {key: list(dict.fromkeys(values)) for key, values in out.items()}
 
 
 def workbook_headers(registry: SpecRegistry) -> list[str]:
-    aliases = _alias_columns_by_field()
+    ready = _ready_columns_by_field()
     columns = [IDENTITY_COLUMN, *DISPLAY_COLUMNS, *sorted(CORE_ONLY_HEADERS)]
     for key, definition in sorted(registry.fields.items()):
         if definition.comparison_qualifiers:
-            columns.extend(aliases.get(key, []))
+            qualified = ready.get(key, [])
+            if not qualified:
+                raise ValueError(
+                    f"qualified registry field {key!r} has no deterministic template column")
+            columns.extend(qualified)
         else:
             columns.append(key)
     # One header exactly once, preserving the stable order above.
@@ -71,7 +142,7 @@ def export_template(
     registry = SpecRegistry.load(DATA_DIR, year)
     trims = _selected_trims(catalog, model_id=model_id, trim_id=trim_id)
     headers = workbook_headers(registry)
-    aliases = _alias_columns_by_field()
+    ready = _ready_columns_by_field()
 
     wb = Workbook()
     ws = wb.active
@@ -105,7 +176,7 @@ def export_template(
         elif header in DISPLAY_COLUMNS:
             width = 22
         else:
-            width = min(36, max(14, len(header) + 2))
+            width = min(52, max(14, len(header) + 2))
         ws.column_dimensions[get_column_letter(index)].width = width
 
     dictionary = wb.create_sheet("FIELD_DICTIONARY")
@@ -115,7 +186,7 @@ def export_template(
     ]
     dictionary.append(dictionary_headers)
     for key, definition in sorted(registry.fields.items()):
-        ready = aliases.get(key, []) if definition.comparison_qualifiers else [key]
+        ready_columns = ready.get(key, []) if definition.comparison_qualifiers else [key]
         rule = (
             f"{key}__qualifier=value" if definition.comparison_qualifiers else key
         )
@@ -127,7 +198,7 @@ def export_template(
             definition.canonical_unit,
             ",".join(definition.applicable_powertrains),
             ",".join(definition.comparison_qualifiers),
-            ",".join(ready),
+            ",".join(ready_columns),
             rule,
         ])
     for key, core_field in sorted(CORE_ONLY_HEADERS.items()):
@@ -139,7 +210,7 @@ def export_template(
         cell.font = header_font
     dictionary.freeze_panes = "A2"
     dictionary.auto_filter.ref = dictionary.dimensions
-    for index, width in enumerate((36, 30, 30, 14, 12, 30, 34, 50, 50), start=1):
+    for index, width in enumerate((36, 30, 30, 14, 12, 30, 34, 70, 70), start=1):
         dictionary.column_dimensions[get_column_letter(index)].width = width
 
     notes = wb.create_sheet("README")
@@ -148,7 +219,7 @@ def export_template(
     notes.append(["2", "Do not edit canonical_trim_id. It is the only placement identity."])
     notes.append(["3", "Use YES/NO (or TRUE/FALSE, 1/0) for boolean fields."])
     notes.append(["4", "Use UNKNOWN / NOT_AVAILABLE / NOT_APPLICABLE when needed. '-' is rejected."])
-    notes.append(["5", "Qualified values use fixed columns such as range_nedc_km, or field__qualifier=value headers documented in FIELD_DICTIONARY."])
+    notes.append(["5", "Qualifier context is already encoded in SPECS headers (for example NEDC/WLTP/CLTC). Do not guess or strip it."])
     notes["A1"].font = Font(bold=True, size=14)
     notes.column_dimensions["A"].width = 10
     notes.column_dimensions["B"].width = 110
