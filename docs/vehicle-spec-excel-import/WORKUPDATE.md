@@ -123,24 +123,77 @@ Applied migration:
 - same existing fact becomes no-op;
 - generated headers parse against the live registry and cover every current field.
 
-## Current CI status
+## CI status on importer head `32cf108a7afeff1d89263bd42d19f88b83ac7afc`
 
-Head before this WORKUPDATE-only commit: `32cf108a7afeff1d89263bd42d19f88b83ac7afc`.
+### Web / build
 
-`Test TDR`:
+PASS.
 
-- Python compile: PASS.
-- Python full test suite: still running at last check.
-- TypeScript/check suite: FAIL, but the failure is outside this PR's changed files. The only reported failures are two existing textual smoke assertions in `scripts/check-trim-retail-lifecycle-review.ts` (`workflow store enforces canonical parent CURRENT` and `workflow store exempts reopen from parent guard`). The lifecycle implementation had already been refactored on `main`; this importer PR does not modify those files.
+The consolidated `web` job completed successfully, including `npm run build` and `/admin/import`.
 
-The PR changed-file list is scoped to the importer/admin/docs/test files plus this migration record; no lifecycle code is included.
+### Python
+
+Python compile PASS.
+
+Full suite result:
+
+- `1569 passed`
+- `4334 subtests passed`
+- `9 failed`
+
+None of the nine failures is in `tests/test_spec_excel.py` or the importer files. The failures are in existing repository expectations around:
+
+- DLT alias expectation for BYD ATTO 1 / old Seagull naming;
+- ECO provenance expectation for an existing Geely EX5 trim;
+- stale ECO resolved-count expectation (`368` vs current `370`);
+- four existing price-editing expectations affected by current canonical price state;
+- ProductMaster price-history expectation;
+- stale canonical model-count expectation (`321` vs current `323`).
+
+The same nine failures appear in both Vehicle Master workflow variants for this PR.
+
+### TypeScript/check suite
+
+`npm run check` fails on two existing textual smoke assertions in `scripts/check-trim-retail-lifecycle-review.ts`:
+
+- `workflow store enforces canonical parent CURRENT`
+- `workflow store exempts reopen from parent guard`
+
+This importer PR does not modify the lifecycle implementation or its smoke script. The consolidated production web build passes.
+
+## Important remaining blocker
+
+The importer is not yet fully compliant with the explicit requirement: **no source**.
+
+Current `spec_excel.py` still generates internal compatibility metadata for spec facts:
+
+- `source = direct_canonical_excel`
+- `source_ref = audit_ref`
+- infrastructure-generated `observed_at`
+
+This is not workbook input, but it is still fake source/evidence metadata and therefore should not be the final design.
+
+Why it exists: `SpecLedger._validate_fact()` currently rejects every comparable-spec fact unless `observed_at`, `source`, and `source_ref` are present.
+
+Final fix must be narrow: direct canonical/admin `admin:` facts written by this Excel path must be allowed to validate without external `source/source_ref`, while ECO/OEM/evidence facts must keep their existing provenance requirements. Do not globally weaken SpecLedger provenance validation.
+
+## Current functional state
+
+The end-to-end path exists:
+
+`template -> Excel/CSV -> deterministic parser -> canonical commands -> worker route -> canonical pipeline -> release/publish path`
+
+Supabase accepts `VEHICLE_SPECS`; web build passes; focused importer tests pass inside the full suite.
+
+Feature status: **mostly implemented, not yet merge-ready** because the internal fake source/source_ref shim remains.
 
 ## Remaining
 
-1. Read the final Python full-suite result for the latest importer head.
-2. If Python reports an importer-specific failure, fix it on this branch and rerun.
-3. If Python only reports pre-existing baseline failures, record that exact result here.
-4. Do not merge automatically; user decides merge timing.
+1. Remove internal fake `source/source_ref` from direct Excel facts using a narrowly scoped direct-admin canonical validation path.
+2. Add focused tests proving direct admin facts can be source-free while normal evidence facts still require provenance.
+3. Rerun focused importer tests + compile/build checks.
+4. Record final commit and test results here.
+5. Do not merge automatically; user decides merge timing.
 
 ## Handoff rule
 
