@@ -42,6 +42,7 @@ REGISTRY_TO_CORE: dict[str, str] = {
     "vehicle.height_mm": "height_mm",
     "vehicle.wheelbase_mm": "wheelbase_mm",
     "engine.displacement_cc": "engine_cc",
+    "battery.catalog_capacity_kwh": "battery_kwh",
     "powertrain.drivetrain": "drivetrain",
     "powertrain.transmission": "transmission",
     "fitment.tyre_front": "tire_front",
@@ -51,6 +52,7 @@ REGISTRY_TO_CORE: dict[str, str] = {
 _INT_CORE_FIELDS = frozenset({
     "seats", "length_mm", "width_mm", "height_mm", "wheelbase_mm", "engine_cc",
 })
+_NUMBER_CORE_FIELDS = frozenset({"battery_kwh"})
 
 # Human-friendly fixed columns for qualifier cases that occur frequently in
 # vehicle research. The generic ``field__qualifier=value`` syntax below covers
@@ -149,6 +151,11 @@ def build_column_targets(headers: Iterable[object], registry: SpecRegistry) -> d
         if unknown:
             raise SpecExcelError(
                 f"{header!r} carries unsupported qualifier(s) {sorted(unknown)}")
+        if definition.comparison_qualifiers and not qualifiers:
+            expected = ", ".join(definition.comparison_qualifiers)
+            raise SpecExcelError(
+                f"{header!r} requires qualifier context ({expected}); use a fixed alias "
+                "or field__qualifier=value")
         targets[header] = ColumnTarget(
             header=header,
             field_key=key,
@@ -218,6 +225,11 @@ def _coerce_core(field_name: str, value: Any) -> Any:
         if type(number) is not int or number <= 0:
             raise SpecExcelError(f"{field_name} requires a positive integer")
         return number
+    if field_name in _NUMBER_CORE_FIELDS:
+        number = _coerce_number(value, field_key=field_name)
+        if number <= 0:
+            raise SpecExcelError(f"{field_name} requires a positive number")
+        return number
     text = _text(value)
     if not text:
         raise SpecExcelError(f"{field_name} requires non-empty text")
@@ -228,6 +240,10 @@ def _same(left: Any, right: Any) -> bool:
     if isinstance(left, (int, float)) and isinstance(right, (int, float)) \
             and not isinstance(left, bool) and not isinstance(right, bool):
         return float(left) == float(right)
+    if hasattr(left, "value"):
+        left = left.value
+    if hasattr(right, "value"):
+        right = right.value
     return left == right
 
 
