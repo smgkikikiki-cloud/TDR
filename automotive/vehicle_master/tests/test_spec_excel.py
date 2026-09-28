@@ -2,10 +2,13 @@ from types import SimpleNamespace
 
 import pytest
 
+from tools.export_vehicle_spec_template import DISPLAY_COLUMNS, workbook_headers
+from tools.import_vehicle_specs import DISPLAY_COLUMNS as IMPORT_DISPLAY_COLUMNS
+from vehreg.catalog import DATA_DIR, DEFAULT_YEAR
 from vehreg.comparable_specs import (
     ComparisonRule, SpecFieldDefinition, SpecRegistry, ValueState, ValueType,
 )
-from vehreg.spec_excel import SpecExcelError, build_column_targets, compile_rows
+from vehreg.spec_excel import IDENTITY_COLUMN, SpecExcelError, build_column_targets, compile_rows
 
 
 TRIM_ID = "test.model.g1.trim.long-range-bev"
@@ -174,3 +177,20 @@ def test_same_existing_fact_becomes_noop():
     result = _compile({"canonical_trim_id": TRIM_ID, "safety.aeb": "YES"}, facts=[fact])
     assert result.commands == ()
     assert result.values_unchanged == 1
+
+
+def test_live_registry_template_headers_are_all_parser_compatible():
+    registry = SpecRegistry.load(DATA_DIR, DEFAULT_YEAR)
+    headers = workbook_headers(registry)
+    machine_headers = [
+        header for header in headers
+        if header != IDENTITY_COLUMN and header not in DISPLAY_COLUMNS
+    ]
+    targets = build_column_targets(machine_headers, registry)
+    assert len(targets) == len(machine_headers)
+    assert IMPORT_DISPLAY_COLUMNS == frozenset(DISPLAY_COLUMNS)
+    # Any field requiring qualifier context must be represented by an explicit
+    # alias/header context, never an ambiguous bare value column.
+    for key, definition in registry.fields.items():
+        if definition.comparison_qualifiers:
+            assert key not in headers
