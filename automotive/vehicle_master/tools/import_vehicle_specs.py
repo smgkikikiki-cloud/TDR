@@ -21,14 +21,21 @@ from vehreg.input_pipeline import CanonicalInputPipeline
 from vehreg.source_import import batches_from_commands
 from vehreg.spec_excel import SpecExcelError, compile_rows
 
+DISPLAY_COLUMNS = frozenset({"brand", "model", "generation", "trim", "powertrain"})
+
 
 def read_rows(path: Path) -> list[dict]:
     import pandas
 
     frame = (pandas.read_csv(path, keep_default_na=False)
              if path.suffix.lower() == ".csv"
-             else pandas.read_excel(path, keep_default_na=False))
-    return frame.to_dict(orient="records")
+             else pandas.read_excel(path, sheet_name="SPECS", keep_default_na=False))
+    # Template display columns exist only so a human/AI can see which row it is
+    # editing. Placement still comes solely from canonical_trim_id.
+    return [
+        {key: value for key, value in row.items() if str(key).strip() not in DISPLAY_COLUMNS}
+        for row in frame.to_dict(orient="records")
+    ]
 
 
 def _submitted_at(raw: str | None) -> str:
