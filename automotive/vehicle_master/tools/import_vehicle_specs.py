@@ -98,9 +98,12 @@ def _apply_batches_atomically(batches: list[dict], *, data_dir: Path) -> tuple[l
             changed.update(_relative_changed_path(path) for path in result.changed_files)
 
         # Data first, canonical_state/audit markers last, matching the existing
-        # per-batch pipeline's recovery ordering. Nothing reaches the live tree
-        # until every batch above has validated successfully.
-        ordered = sorted(changed, key=lambda path: "canonical_state" in path.parts)
+        # per-batch pipeline's recovery ordering. Sort the path as a tie-breaker
+        # so promotion and reports do not depend on set/hash iteration order.
+        ordered = sorted(
+            changed,
+            key=lambda path: ("canonical_state" in path.parts, str(path)),
+        )
         for relative in ordered:
             _promote_file(staged_data, live_data, relative)
 
