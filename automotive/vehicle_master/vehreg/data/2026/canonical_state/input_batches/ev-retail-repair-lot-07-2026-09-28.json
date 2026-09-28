@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "batch_id": "ev-retail-repair-lot-07-2026-09-28",
+  "batch_hash": "3e22d1ff42f40d8b44b39532347e0b5188e20d6a12a873f171b282f07139b7aa",
+  "status": "APPLIED",
+  "year": 2026,
+  "source": {
+    "kind": "ADMIN",
+    "ref": "docs/WORK_STATE.md#REPAIR-07"
+  },
+  "actor": "smgkikikiki-cloud",
+  "reason": "REPAIR-07: fix the trim lifecycle guard so old grades REPAIR-06 already excluded from an approved current-retail set (vehreg/current_retail.json) can carry an explicit HUMAN HISTORICAL disposition even though their parent model is raw UNVERIFIED, not CURRENT. See docs/WORK_STATE.md REPAIR-07 section for the code fix (vehreg/retail_lifecycle_review.py).",
+  "submitted_at": "2026-09-28T05:03:27+00:00",
+  "applied_at": "2026-09-28T05:26:54+00:00",
+  "results": [
+    {
+      "command_id": "lot7-001",
+      "revision_id": "trim-retail-lifecycle-review-a5cd401a4671fa4a",
+      "topic": "trim_retail_lifecycle_review",
+      "entity_type": "market_trim_retail_lifecycle_review",
+      "entity_id": "mg.mg_im5.mg_im5.trim.im5_standard_range_rwd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot7-002",
+      "revision_id": "trim-retail-lifecycle-review-c9a9fdc68b420281",
+      "topic": "trim_retail_lifecycle_review",
+      "entity_type": "market_trim_retail_lifecycle_review",
+      "entity_id": "mg.mg_im5.mg_im5.trim.im5_long_range_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot7-003",
+      "revision_id": "trim-retail-lifecycle-review-1e11f25fc0f31ed4",
+      "topic": "trim_retail_lifecycle_review",
+      "entity_type": "market_trim_retail_lifecycle_review",
+      "entity_id": "mg.mg_im6.gen1.trim.im6_luxury_rwd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot7-004",
+      "revision_id": "trim-retail-lifecycle-review-9f3f069fd5c422b1",
+      "topic": "trim_retail_lifecycle_review",
+      "entity_type": "market_trim_retail_lifecycle_review",
+      "entity_id": "mg.mg_im6.gen1.trim.im6_performance_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot7-005",
+      "revision_id": "trim-retail-lifecycle-review-bd007ca8acb91b33",
+      "topic": "trim_retail_lifecycle_review",
+      "entity_type": "market_trim_retail_lifecycle_review",
+      "entity_id": "mg.mg_maxus_7.gen1.trim.maxus_7_premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot7-006",
+      "revision_id": "trim-retail-lifecycle-review-9216a3a07368b36f",
+      "topic": "trim_retail_lifecycle_review",
+      "entity_type": "market_trim_retail_lifecycle_review",
+      "entity_id": "mg.mg_maxus_7.gen1.trim.maxus_7_luxury_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot7-007",
+      "revision_id": "trim-retail-lifecycle-review-511c7a7547f67fd6",
+      "topic": "trim_retail_lifecycle_review",
+      "entity_type": "market_trim_retail_lifecycle_review",
+      "entity_id": "mg.mg_maxus_9.mifa9.trim.maxus_9_model_x_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot7-008",
+      "revision_id": "trim-retail-lifecycle-review-4d095cf508f71b4c",
+      "topic": "trim_retail_lifecycle_review",
+      "entity_type": "market_trim_retail_lifecycle_review",
+      "entity_id": "mg.mg_maxus_9.mifa9.trim.maxus_9_model_v_bev",
+      "idempotent_replay": false
+    }
+  ],
+  "changed_files": [
+    "2026/market/retail_lifecycle/trim_review.json"
+  ]
+}
