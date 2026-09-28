@@ -92,7 +92,7 @@ Do not use this historical audit range as `REPAIR-04` membership unless the repa
 - `REPAIR-04`: `DONE / APPROVED` — frozen. Do not re-audit or rebuild unless user reopens it.
 - `REPAIR-05`: `DONE / APPROVED` — frozen. Do not re-audit or rebuild unless user reopens it.
 - `REPAIR-06`: `DONE / APPROVED` — frozen. Do not re-audit or rebuild unless user reopens it.
-- `REPAIR-07`: `PROMPT_READY` — code fix landed and tested; draft canonical batch built and validated on a disposable copy; awaiting separate Step 4 approval. MG ZS EV identity migration NOT attempted (no provable safe mapping).
+- `REPAIR-07`: `DONE / APPROVED` — frozen. Do not re-audit or rebuild unless user reopens it. MG ZS EV identity migration NOT attempted (no provable safe mapping) and remains open for a future, separately-numbered repair.
 
 ### REPAIR-04 membership
 
@@ -374,6 +374,32 @@ State: still `PROMPT_READY`. All work remains on branch `claude/epic-clarke-7gak
 **4. Final revalidation against latest `main`.** Code commit on `claude/epic-clarke-7gaksb`: `2e47609` (item 1's guard fix) plus this round's uncommitted-until-now changes to `vehreg/current_retail.py`, `tests/test_current_retail_set.py`, `tests/test_retail_scope.py` -- to be committed as a follow-up commit on the same branch (still not merged to `main`; `main` is unchanged at `2028d37`). Focused re-run (production 7-file gate + `test_trim_retail_lifecycle_review.py` + `test_current_retail_set.py` + `test_retail_scope.py`): 98/98 passed. Full repo suite (`pytest tests/ -q`, 1,300+ tests): see chat report for the exact final count and any remaining failures, plus confirmation of which (if any) are pre-existing and unrelated to this branch, reproduced against unmodified `main`.
 
 Next: unchanged -- await the owner's separate Step 4 approval to enqueue the (now real-timestamped) 8-command batch, and a separate approval to merge `claude/epic-clarke-7gaksb` into `main`. Neither has been given.
+
+### REPAIR-07 Step 4 write (2026-09-28c, DONE / APPROVED)
+
+State: `DONE / APPROVED`. Owner gave explicit approval for both the code merge and the enqueue in one message, naming the exact final batch (`submitted_at 2026-09-28T05:03:27+00:00`, `batch_id ev-retail-repair-lot-07-2026-09-28`, 8 commands, pipeline semantic hash `3e22d1ff42f40d8b44b39532347e0b5188e20d6a12a873f171b282f07139b7aa`) and explicitly excluding MG ZS EV from this write.
+
+**1. Branch diff re-verified before merge.** `git diff origin/main origin/claude/epic-clarke-7gaksb` showed exactly 6 files: the two guard fixes (`vehreg/retail_lifecycle_review.py`, `vehreg/current_retail.py`), their three focused test files, and `docs/WORK_STATE.md` -- nothing else. No drift on `main` since the branch was created (still exactly 2 commits behind).
+
+**2. Code merged to `main` first.** Fast-forward (`git merge --ff-only`; the branch's merge-base was `main`'s own tip, so no merge commit was needed). Pushed. Merged `main` commit: `dc619bf61a70b98c1d8b56bd0e214aae116b7f02`. Verified present in that commit: the approved-set carve-out in `upsert_trim_lifecycle_disposition()` (`retail_lifecycle_review.py`) and the reverse-transition guard in `replace_current_retail_set()` (`current_retail.py`). Focused 98-test gate re-run directly against this exact commit: 98/98 passed.
+
+**3. Batch re-verified against the exact required values before enqueue.** Recomputed via `CanonicalInputBatch.from_dict` + the pipeline's own `_hash(semantic_payload())` (not a hand-rolled hash): `batch_id ev-retail-repair-lot-07-2026-09-28`, `submitted_at 2026-09-28T05:03:27+00:00`, 8 commands, hash `3e22d1ff42f40d8b44b39532347e0b5188e20d6a12a873f171b282f07139b7aa` -- exact match to what the owner specified. Confirmed zero MG ZS EV references in the payload.
+
+**4. Enqueue and worker run, tracked to completion.**
+- `enqueue-canonical-batch.yml` run `36381831161` (job `108799004794`), dispatched against `main` at `dc619bf`: completed success. Log: `{"batch_key": "ev-retail-repair-lot-07-2026-09-28", "status": "QUEUED", "duplicate": false, "item_count": 8, ...}`, woke worker run `36381875124`.
+- `canonical-input.yml` run `36381875124` (job `108799190189`): completed success, all steps green -- `applied: 1, failed: 0`; 46/46 focused pytest; `vehreg market validate` valid/0 problems; staged `tdr_bridge.release_enriched` build (validate-only, `release_id vehicle-2026-b5f8dfafb7ace1bf`); commit; publish; mark-published. STAGED-recovery steps present but skipped (no failure).
+- Write commit: `f3075bdf293436c891307c8d17f111ff90a9aa8e` ("Apply 1 canonical input batch(es)", 2 files changed, 148 insertions -- `market/retail_lifecycle/trim_review.json` + the batch's own `canonical_state/input_batches` marker).
+- Published release: `vehicle-2026-de68225307c3c79d`, status `ACTIVE`, `activated_at 2026-09-28T05:28:02.72003+00:00`, `published_batches: 1`.
+
+**5. Independent verification, directly against the pulled repo, not the worker's self-report.**
+- `git fetch` + `git merge --ff-only origin/main` landed exactly on `f3075bdf...`, byte-identical to the worker's reported commit.
+- `vehreg market validate` re-run directly: valid, 0 problems.
+- Independently rebuilt `tdr_bridge.release_enriched` from the real post-publish HEAD (own revision/as-of, not the worker's) and checked, per trim, all 17 required outcomes: the 8 named old trims (`mg_im5` standard/long-range, `mg_im6` luxury/performance, `mg_maxus_7` premium/luxury, `mg_maxus_9` model X/V) are `HISTORICAL`; the 5 REPAIR-06 new grades (`mg_im5` Premium Long Range, `mg_im6` Premium/Performance, `mg_maxus_7` X, `mg_maxus_9` V Plus) are `CURRENT`; both MG ZS EV BEV grades (`zs_ev_d_bev`/`zs_ev_x_bev`) are `CURRENT`; both MG ZS EV wrong-parent ICE rows (`d_ice`/`x_ice`) are unchanged at `UNVERIFIED` -- `FAILS: 0`.
+- Directly checked `PriceLedger`/`trim_price_eligibility` against the live post-publish data for all 8 old trims plus the 2 untouched ZS EV ICE rows: every price record byte-identical to pre-REPAIR-07 (0 records for the 6 IM5/IM6/Maxus7 trims; `LIST_PRICE` 2,099,000/2,499,000 preserved for Maxus 9's X/V; `ECO_STICKER_PRICE` 949,000/1,023,000 preserved for ZS EV's D/X ICE rows), and every one of the 10 trims is `False`/`TRIM_RETIRED` for automated price matching, unchanged from before this write -- `FAILS: 0`.
+
+**Outstanding issue: none for this batch.** MG ZS EV's `d_ice`/`x_ice` remain, as instructed, an unresolved wrong-parent identity pending a future, separately-numbered repair -- not touched, not claimed fixed.
+
+Next: REPAIR-07 is closed. Do not re-audit, rebuild, or re-enqueue unless the user explicitly reopens it. The remaining 21-vehicle repair queue (per the historical BEV+REEV audit ordering) was explicitly not started in this operation and is separate future work. Any future MG ZS EV D/X identity resolution is a new, separately-numbered repair batch.
 
 ## Per-batch recording template
 
