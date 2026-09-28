@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d64adbd1edaec2485e1f78c6",
+    "command_id": "lot5-036",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.eqe.gen1.trim.mercedes_amg_eqe_53_4matic_plus_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "LIST_PRICE 5,950,000 per official Sep 1, 2026 AMG price sheet; no prior price on file. StarChoice finance offer (66,800/month, initial payment 2,083,000) is a monthly-installment product, not a vehicle sale price, and is not recorded as LIST_PRICE or CAMPAIGN_PRICE -- reported as a schema gap. Sedan/SUV identity split checked and found NOT achievable within the current schema while preserving canonical_id/history: body_type is a MODEL-level field (vehreg.entities.Model; mercedes_benz.eqe.body_type == SEDAN as one value for the whole model), MarketTrim carries no body_type of its own, and there is no write primitive to reparent a trim to a different model canonical_id while keeping its id -- doing the split would mean withdraw-then-recreate the two SUV trims under new ids, which is the delete-then-recreate this process forbids. It would also need a product decision (the new SUV model id; whether 'Mercedes-AMG EQE 53 4MATIC+', untagged sedan-or-SUV in current data, belongs to either side) that Step 2 does not make. No half-split done. 350+ AMG Dynamic sedan and the two 350 4MATIC SUV grades remain unpriced and unsplit",
+    "submitted_at": "2026-09-28T00:00:00+00:00",
+    "applied_at": "2026-09-28T02:30:55+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "3a6db6e81ddebc46c19ba184ce74e208945162d0286089869d31c256692cfac4",
+    "before": [],
+    "after": [
+      {
+        "trim_id": "mercedes_benz.eqe.gen1.trim.mercedes_amg_eqe_53_4matic_plus_bev",
+        "amount_thb": 5950000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://www.mercedes-benz.co.th/content/dam/thailand/brochure-specsheet/2026/pricelist/AMG_Price%20list-1-SEP_TH.pdf",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_lot5-036.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d64adbd1edaec2485e1f78c6:price",
+    "revision_id": "d64adbd1edaec2485e1f78c6",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.eqe.gen1.trim.mercedes_amg_eqe_53_4matic_plus_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-28T02:30:55+00:00",
+    "payload": [
+      {
+        "trim_id": "mercedes_benz.eqe.gen1.trim.mercedes_amg_eqe_53_4matic_plus_bev",
+        "amount_thb": 5950000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://www.mercedes-benz.co.th/content/dam/thailand/brochure-specsheet/2026/pricelist/AMG_Price%20list-1-SEP_TH.pdf",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

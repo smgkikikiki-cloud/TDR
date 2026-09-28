@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e3642109bf864d4bce659fee",
+    "command_id": "lot5-033",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mazda6.gen1.trim.mazda6e_premium_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "LIST_PRICE 1,169,000 matches existing ECO_STICKER_PRICE on file (observed 2026-03-19), explicitly the lower PREMIUM figure on Mazda's own site; no prior LIST_PRICE record",
+    "submitted_at": "2026-09-28T00:00:00+00:00",
+    "applied_at": "2026-09-28T02:30:53+00:00",
+    "before_hash": "d0f43c04e7533e95a07ea35475178059914c6bec26f613acf45d4d51ca4a2d1e",
+    "after_hash": "3796bfdf2c3db040c576328269bc4b737c9a862f9f3184af617a53dba020002f",
+    "before": [
+      {
+        "trim_id": "mazda.mazda6.gen1.trim.mazda6e_premium_bev",
+        "amount_thb": 1169000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-03-19",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/9046fd24-b2f3-4426-b84f-f8bb53fe9fda",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "mazda.mazda6.gen1.trim.mazda6e_premium_bev",
+        "amount_thb": 1169000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-03-19",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/9046fd24-b2f3-4426-b84f-f8bb53fe9fda",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "mazda.mazda6.gen1.trim.mazda6e_premium_bev",
+        "amount_thb": 1169000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://prod.mazda.co.th/th/mazda6e",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_lot5-033.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e3642109bf864d4bce659fee:price",
+    "revision_id": "e3642109bf864d4bce659fee",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "mazda.mazda6.gen1.trim.mazda6e_premium_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-28T02:30:53+00:00",
+    "payload": [
+      {
+        "trim_id": "mazda.mazda6.gen1.trim.mazda6e_premium_bev",
+        "amount_thb": 1169000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-03-19",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/9046fd24-b2f3-4426-b84f-f8bb53fe9fda",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "mazda.mazda6.gen1.trim.mazda6e_premium_bev",
+        "amount_thb": 1169000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://prod.mazda.co.th/th/mazda6e",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

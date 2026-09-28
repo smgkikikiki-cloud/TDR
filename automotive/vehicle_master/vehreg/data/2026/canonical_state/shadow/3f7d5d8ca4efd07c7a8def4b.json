@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "3f7d5d8ca4efd07c7a8def4b",
+    "command_id": "lot5-037",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.g_class.gen1.trim.g_580_with_eq_technology_electric_g_class_quad_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "LIST_PRICE 9,600,000 per OEM recommended price list effective Sep 23, 2026 (matches this PDF's own '23-SEP' filing date); no prior LIST_PRICE record on file (the stale 9,500,000 configurator starting figure this overrides was never recorded in the ledger). No confirmed live campaign",
+    "submitted_at": "2026-09-28T00:00:00+00:00",
+    "applied_at": "2026-09-28T02:30:55+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "8fa9aec54f8dcdd0d72f305389be6c9c816f6df6f07609adcdc34ada08607a9b",
+    "before": [],
+    "after": [
+      {
+        "trim_id": "mercedes_benz.g_class.gen1.trim.g_580_with_eq_technology_electric_g_class_quad_bev",
+        "amount_thb": 9600000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://www.mercedes-benz.co.th/content/dam/thailand/passengercars/brochure/MB-Price-list-23-SEP-TH.pdf",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_lot5-037.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "3f7d5d8ca4efd07c7a8def4b:price",
+    "revision_id": "3f7d5d8ca4efd07c7a8def4b",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.g_class.gen1.trim.g_580_with_eq_technology_electric_g_class_quad_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-28T02:30:55+00:00",
+    "payload": [
+      {
+        "trim_id": "mercedes_benz.g_class.gen1.trim.g_580_with_eq_technology_electric_g_class_quad_bev",
+        "amount_thb": 9600000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://www.mercedes-benz.co.th/content/dam/thailand/passengercars/brochure/MB-Price-list-23-SEP-TH.pdf",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

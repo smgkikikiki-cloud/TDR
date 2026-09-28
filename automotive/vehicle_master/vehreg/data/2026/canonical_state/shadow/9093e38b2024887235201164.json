@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "9093e38b2024887235201164",
+    "command_id": "lot5-013",
+    "operation": "UPSERT_CAMPAIGN",
+    "year": 2026,
+    "topic": "campaign",
+    "entity_type": "campaign",
+    "entity_id": "jaecoo.jaecoo_6_ev.gen1.trim.jaecoo_6_long_range_4wd_awd_dual_bev.campaign.2026-09-04",
+    "actor": "smgkikikiki-cloud",
+    "reason": "REPAIR-05: Vehicle Master trim/price/promotion repair for 20 BEV-lineup models per docs/WORK_STATE.md Step 2 findings. DRAFT ONLY -- not yet approved for Step 4 write.",
+    "submitted_at": "2026-09-28T00:00:00+00:00",
+    "applied_at": "2026-09-28T02:30:45+00:00",
+    "before_hash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+    "after_hash": "d35637c5f30d86de554c0f673e8077576a7666d13a2850f4d6d25e440ba014df",
+    "before": null,
+    "after": {
+      "id": "jaecoo.jaecoo_6_ev.gen1.trim.jaecoo_6_long_range_4wd_awd_dual_bev.campaign.2026-09-04",
+      "ends": "2026-09-30",
+      "name": "More Rain More Gain -- JAECOO 6 EV 4WD",
+      "source": "admin",
+      "starts": "2026-09-04",
+      "options": [
+        {
+          "id": "default",
+          "conditions": {
+            "text": "Booking AND delivery both required within Sep 4-30, 2026 per official OMODA/JAECOO 'More Rain More Gain' September campaign terms.",
+            "booking_to": "2026-09-30",
+            "delivery_by": "2026-09-30",
+            "booking_from": "2026-09-04"
+          }
+        }
+      ],
+      "brand_id": "jaecoo",
+      "source_ref": "https://www.omodajaecoo.co.th/th/promotion/more-rain-more-gain"
+    },
+    "changed_files": [
+      "2026/market/campaigns/jaecoo.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "9093e38b2024887235201164:campaign",
+    "revision_id": "9093e38b2024887235201164",
+    "topic": "campaign",
+    "entity_type": "campaign",
+    "entity_id": "jaecoo.jaecoo_6_ev.gen1.trim.jaecoo_6_long_range_4wd_awd_dual_bev.campaign.2026-09-04",
+    "state": "PENDING",
+    "created_at": "2026-09-28T02:30:45+00:00",
+    "payload": {
+      "id": "jaecoo.jaecoo_6_ev.gen1.trim.jaecoo_6_long_range_4wd_awd_dual_bev.campaign.2026-09-04",
+      "ends": "2026-09-30",
+      "name": "More Rain More Gain -- JAECOO 6 EV 4WD",
+      "source": "admin",
+      "starts": "2026-09-04",
+      "options": [
+        {
+          "id": "default",
+          "conditions": {
+            "text": "Booking AND delivery both required within Sep 4-30, 2026 per official OMODA/JAECOO 'More Rain More Gain' September campaign terms.",
+            "booking_to": "2026-09-30",
+            "delivery_by": "2026-09-30",
+            "booking_from": "2026-09-04"
+          }
+        }
+      ],
+      "brand_id": "jaecoo",
+      "source_ref": "https://www.omodajaecoo.co.th/th/promotion/more-rain-more-gain"
+    }
+  }
+}

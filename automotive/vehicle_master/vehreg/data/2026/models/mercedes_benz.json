@@ -1939,7 +1939,7 @@
       "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
       "generations": [
         {
-          "code": "CLA",
+          "code": "cla",
           "segment": "UNKNOWN",
           "seats": null,
           "launched": "2026-07-01",
@@ -2009,7 +2009,7 @@
               "id": "mercedes_amg_cla_45_s_4matic_plus_ice"
             },
             {
-              "name": "electric",
+              "name": "CLA 250+ with EQ Technology",
               "powertrain": "BEV",
               "seats": 5,
               "length_mm": 4731,
@@ -2021,7 +2021,8 @@
                 "eco": [
                   "6ea5211a-43ed-4c25-845b-445197120fd6"
                 ]
-              }
+              },
+              "id": "electric_bev"
             }
           ]
         }

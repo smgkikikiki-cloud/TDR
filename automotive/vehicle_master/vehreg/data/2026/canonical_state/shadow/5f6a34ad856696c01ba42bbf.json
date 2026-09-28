@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5f6a34ad856696c01ba42bbf",
+    "command_id": "lot5-006",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "jaecoo.jaecoo_5_ev.j5.trim.ultra_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "REPAIR-05: Vehicle Master trim/price/promotion repair for 20 BEV-lineup models per docs/WORK_STATE.md Step 2 findings. DRAFT ONLY -- not yet approved for Step 4 write.",
+    "submitted_at": "2026-09-28T00:00:00+00:00",
+    "applied_at": "2026-09-28T02:30:36+00:00",
+    "before_hash": "c311bab3b4c5db9c83b8d83f30507b312f87f988814fd2f495840c76dbdf3b06",
+    "after_hash": "9dd9766f6c7c1170a7d1b90f7c246082fba9af2af6532e0bd690819d0e7a08e0",
+    "before": [
+      {
+        "trim_id": "jaecoo.jaecoo_5_ev.j5.trim.ultra_bev",
+        "amount_thb": 809000,
+        "price_type": "ESTIMATED_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-08",
+        "source": "official_oem",
+        "source_ref": "https://www.omodajaecoo.co.th/en",
+        "source_document_id": "",
+        "notes": "Official English homepage explicitly labels this Estimated Price. Not canonical MSRP; retain language/page context.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "jaecoo.jaecoo_5_ev.j5.trim.ultra_bev",
+        "amount_thb": 699000,
+        "price_type": "CAMPAIGN_PRICE",
+        "effective_from": "2026-09-04",
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://www.omodajaecoo.co.th/th/promotion/more-rain-more-gain",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": "jaecoo.jaecoo_5_ev.j5.trim.ultra_bev.campaign.2026-09-04",
+        "option_id": "default",
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "jaecoo.jaecoo_5_ev.j5.trim.ultra_bev",
+        "amount_thb": 809000,
+        "price_type": "ESTIMATED_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-08",
+        "source": "official_oem",
+        "source_ref": "https://www.omodajaecoo.co.th/en",
+        "source_document_id": "",
+        "notes": "Official English homepage explicitly labels this Estimated Price. Not canonical MSRP; retain language/page context.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_lot5-006.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5f6a34ad856696c01ba42bbf:price",
+    "revision_id": "5f6a34ad856696c01ba42bbf",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "jaecoo.jaecoo_5_ev.j5.trim.ultra_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-28T02:30:36+00:00",
+    "payload": [
+      {
+        "trim_id": "jaecoo.jaecoo_5_ev.j5.trim.ultra_bev",
+        "amount_thb": 699000,
+        "price_type": "CAMPAIGN_PRICE",
+        "effective_from": "2026-09-04",
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://www.omodajaecoo.co.th/th/promotion/more-rain-more-gain",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": "jaecoo.jaecoo_5_ev.j5.trim.ultra_bev.campaign.2026-09-04",
+        "option_id": "default",
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "jaecoo.jaecoo_5_ev.j5.trim.ultra_bev",
+        "amount_thb": 809000,
+        "price_type": "ESTIMATED_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-08",
+        "source": "official_oem",
+        "source_ref": "https://www.omodajaecoo.co.th/en",
+        "source_document_id": "",
+        "notes": "Official English homepage explicitly labels this Estimated Price. Not canonical MSRP; retain language/page context.",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

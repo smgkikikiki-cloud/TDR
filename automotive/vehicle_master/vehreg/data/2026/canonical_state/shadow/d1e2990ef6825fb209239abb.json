@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d1e2990ef6825fb209239abb",
+    "command_id": "lot5-035",
+    "operation": "APPEND_PRICE",
+    "year": 2026,
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.cla.cla.trim.electric_bev",
+    "actor": "smgkikikiki-cloud",
+    "reason": "LIST_PRICE 2,290,000 per Step 2 (described there as the OEM configurator starting price). source_ref points instead to Mercedes-Benz Thailand's official Sep 23, 2026 price-list PDF -- the closest verifiable documented anchor on file; no distinct configurator URL was captured, and this substitution is noted rather than silently presented as the original citation. Existing ECO_STICKER_PRICE on file is 2,320,000 (a distinct price type/observation), not copied to or from the ICE grades",
+    "submitted_at": "2026-09-28T00:00:00+00:00",
+    "applied_at": "2026-09-28T02:30:54+00:00",
+    "before_hash": "10d6f932dc226f2cff715289a37a67a34b11676968eb6619b46d8fb6335d78e9",
+    "after_hash": "4d9a3b3a7c2fe56937c6084d1d9a9dc4d257a4f9d02b28a1dfe6ebfb4b4aa68e",
+    "before": [
+      {
+        "trim_id": "mercedes_benz.cla.cla.trim.electric_bev",
+        "amount_thb": 2320000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-04-23",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/6ea5211a-43ed-4c25-845b-445197120fd6",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "after": [
+      {
+        "trim_id": "mercedes_benz.cla.cla.trim.electric_bev",
+        "amount_thb": 2320000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-04-23",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/6ea5211a-43ed-4c25-845b-445197120fd6",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "mercedes_benz.cla.cla.trim.electric_bev",
+        "amount_thb": 2290000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://www.mercedes-benz.co.th/content/dam/thailand/passengercars/brochure/MB-Price-list-23-SEP-TH.pdf",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ],
+    "changed_files": [
+      "2026/market/prices/canonical_lot5-035.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d1e2990ef6825fb209239abb:price",
+    "revision_id": "d1e2990ef6825fb209239abb",
+    "topic": "price",
+    "entity_type": "market_trim",
+    "entity_id": "mercedes_benz.cla.cla.trim.electric_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-28T02:30:54+00:00",
+    "payload": [
+      {
+        "trim_id": "mercedes_benz.cla.cla.trim.electric_bev",
+        "amount_thb": 2320000,
+        "price_type": "ECO_STICKER_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-04-23",
+        "source": "ecosticker",
+        "source_ref": "https://car.ecosticker.go.th/landing-page/detail/6ea5211a-43ed-4c25-845b-445197120fd6",
+        "source_document_id": "",
+        "notes": "ราคาแนะนำที่ผู้ผลิตยื่นไว้กับ ECO Sticker ณ วันที่อนุมัติ เก็บเป็นหลักฐานเท่านั้น ไม่ใช่ราคาขายปัจจุบัน",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      },
+      {
+        "trim_id": "mercedes_benz.cla.cla.trim.electric_bev",
+        "amount_thb": 2290000,
+        "price_type": "LIST_PRICE",
+        "effective_from": null,
+        "effective_to": null,
+        "observed_at": "2026-09-28",
+        "source": "admin",
+        "source_ref": "https://www.mercedes-benz.co.th/content/dam/thailand/passengercars/brochure/MB-Price-list-23-SEP-TH.pdf",
+        "source_document_id": "",
+        "notes": "",
+        "campaign_id": null,
+        "option_id": null,
+        "reference_price_thb": null,
+        "retracted_at": null,
+        "retraction_reason": "",
+        "reviewed_by": ""
+      }
+    ]
+  }
+}

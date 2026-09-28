@@ -1,0 +1,564 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "32959224cffdc0dcee59883a",
+    "command_id": "lot5-018",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "lotus.eletre",
+    "actor": "smgkikikiki-cloud",
+    "reason": "Thai MY26 lineup per Lotus Thailand importer's Jan 2026 press release: 5 distinct grades 600/600 GT SE/600 Sport SE/900 Sport/900 Sport Carbon. Old base/S/R -> new-grade correspondence is a PENDING, unconfirmed proposal (power-figure inference only, no OEM spec sheet) -- see each trim's own notes field. 600 Sport SE and 900 Sport Carbon are new grades recorded with name+powertrain only, no spec",
+    "submitted_at": "2026-09-28T00:00:00+00:00",
+    "applied_at": "2026-09-28T02:30:47+00:00",
+    "before_hash": "fa04097e3093dbcb925df38c34703ed5d88ef2baa8ea0694da72f117833d5032",
+    "after_hash": "ab62e58fab4d8851c15369e5af839334a8f9f6d265c2e7273cd5225499b30283",
+    "before": {
+      "id": "eletre",
+      "name_en": "Eletre",
+      "name_th": "Eletre",
+      "nameplate": "",
+      "body_type": "COUPE",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "NICHE",
+      "aliases": [
+        "Eletre"
+      ],
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "D",
+          "seats": 2,
+          "launched": "2022-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "ICE",
+              "drivetrain": "AWD",
+              "engine_cc": 3990,
+              "battery_kwh": null,
+              "price_thb": 25000000.0,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "UNKNOWN",
+              "price_note": "seed-unverified",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "(603 hp Dual Motor)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:160"
+                ]
+              },
+              "aliases": [
+                "Eletre (603 hp Dual Motor)"
+              ],
+              "id": "603_hp_dual_motor_bev"
+            },
+            {
+              "name": "S (603 hp Luxury Dual Motor)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:160"
+                ],
+                "eco": [
+                  "dfd41df4-1181-4113-b916-a777e3ee8e49"
+                ]
+              },
+              "aliases": [
+                "Eletre S (603 hp Luxury Dual Motor)"
+              ],
+              "id": "s_603_hp_luxury_dual_bev",
+              "seats": 5,
+              "length_mm": 5103,
+              "width_mm": 2019,
+              "height_mm": 1636,
+              "tire_front": "275/40R22",
+              "tire_rear": "315/35R22"
+            },
+            {
+              "name": "R (905 hp Dual-Speed Transmission AWD)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:160"
+                ],
+                "eco": [
+                  "bc1ae94b-6db1-4644-96dd-fba2214c3229"
+                ]
+              },
+              "aliases": [
+                "Eletre R (905 hp Dual-Speed Transmission AWD)"
+              ],
+              "id": "r_905_hp_dual_speed_transmission_awd_bev",
+              "seats": 5,
+              "length_mm": 5103,
+              "width_mm": 2019,
+              "height_mm": 1636,
+              "tire_front": "275/35R23",
+              "tire_rear": "315/30R23"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "lotus",
+        "name_en": "Lotus",
+        "name_th": "โลตัส",
+        "brand_segment": "PERFORMANCE",
+        "oem_group": "Lotus",
+        "brand_origin": "GB",
+        "trim_detail": false,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "lotus.eletre",
+        "brand_id": "lotus",
+        "name_en": "Eletre",
+        "name_th": "Eletre",
+        "nameplate": "Eletre",
+        "body_type": "COUPE",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "Eletre"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "lotus.eletre.gen1",
+          "model_id": "lotus.eletre",
+          "code": "gen1",
+          "segment": "D",
+          "seats": 2,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "lotus.eletre.gen1.spec",
+          "generation_id": "lotus.eletre.gen1",
+          "name": "spec",
+          "powertrain": "ICE",
+          "drivetrain": "AWD",
+          "engine_cc": 3990,
+          "battery_kwh": null,
+          "price_thb": 25000000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "UNKNOWN",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "lotus.eletre.gen1.trim.603_hp_dual_bev",
+          "generation_id": "lotus.eletre.gen1",
+          "name": "600",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Eletre (603 hp Dual Motor)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:160"
+            ]
+          },
+          "notes": "Grade correspondence to the Thai MY26 lineup is a PENDING, UNCONFIRMED proposal by Claude, based only on the power figure already embedded in this trim's own prior name -- not an OEM grade-by-grade spec sheet. Not yet owner-approved."
+        },
+        {
+          "id": "lotus.eletre.gen1.trim.s_603_hp_luxury_dual_bev",
+          "generation_id": "lotus.eletre.gen1",
+          "name": "600 GT SE",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5103,
+          "width_mm": 2019,
+          "height_mm": 1636,
+          "wheelbase_mm": null,
+          "tire_front": "275/40R22",
+          "tire_rear": "315/35R22",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Eletre S (603 hp Luxury Dual Motor)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:160"
+            ],
+            "eco": [
+              "dfd41df4-1181-4113-b916-a777e3ee8e49"
+            ]
+          },
+          "notes": "Grade correspondence to the Thai MY26 lineup is a PENDING, UNCONFIRMED proposal by Claude, based only on the power figure already embedded in this trim's own prior name -- not an OEM grade-by-grade spec sheet. Not yet owner-approved."
+        },
+        {
+          "id": "lotus.eletre.gen1.trim.r_905_hp_dual_speed_transmission_awd_bev",
+          "generation_id": "lotus.eletre.gen1",
+          "name": "900 Sport",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5103,
+          "width_mm": 2019,
+          "height_mm": 1636,
+          "wheelbase_mm": null,
+          "tire_front": "275/35R23",
+          "tire_rear": "315/30R23",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Eletre R (905 hp Dual-Speed Transmission AWD)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:160"
+            ],
+            "eco": [
+              "bc1ae94b-6db1-4644-96dd-fba2214c3229"
+            ]
+          },
+          "notes": "Grade correspondence to the Thai MY26 lineup is a PENDING, UNCONFIRMED proposal by Claude, based only on the power figure already embedded in this trim's own prior name -- not an OEM grade-by-grade spec sheet. Not yet owner-approved."
+        },
+        {
+          "id": "lotus.eletre.gen1.trim.600_sport_se_bev",
+          "generation_id": "lotus.eletre.gen1",
+          "name": "600 Sport SE",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": "Specs pending; identity and name recorded from the Thai MY26 lineup importer announcement only, no battery/drivetrain/dimension spec exists yet."
+        },
+        {
+          "id": "lotus.eletre.gen1.trim.900_sport_carbon_bev",
+          "generation_id": "lotus.eletre.gen1",
+          "name": "900 Sport Carbon",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": "Specs pending; identity and name recorded from the Thai MY26 lineup importer announcement only, no battery/drivetrain/dimension spec exists yet."
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/lotus.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "32959224cffdc0dcee59883a:catalog",
+    "revision_id": "32959224cffdc0dcee59883a",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "lotus.eletre",
+    "state": "PENDING",
+    "created_at": "2026-09-28T02:30:47+00:00",
+    "payload": {
+      "brand": {
+        "id": "lotus",
+        "name_en": "Lotus",
+        "name_th": "โลตัส",
+        "brand_segment": "PERFORMANCE",
+        "oem_group": "Lotus",
+        "brand_origin": "GB",
+        "trim_detail": false,
+        "aliases": [],
+        "overrides": {}
+      },
+      "model": {
+        "id": "lotus.eletre",
+        "brand_id": "lotus",
+        "name_en": "Eletre",
+        "name_th": "Eletre",
+        "nameplate": "Eletre",
+        "body_type": "COUPE",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "NICHE",
+        "aliases": [
+          "Eletre"
+        ],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "lotus.eletre.gen1",
+          "model_id": "lotus.eletre",
+          "code": "gen1",
+          "segment": "D",
+          "seats": 2,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "lotus.eletre.gen1.spec",
+          "generation_id": "lotus.eletre.gen1",
+          "name": "spec",
+          "powertrain": "ICE",
+          "drivetrain": "AWD",
+          "engine_cc": 3990,
+          "battery_kwh": null,
+          "price_thb": 25000000.0,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "UNKNOWN",
+          "price_note": "seed-unverified",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "lotus.eletre.gen1.trim.603_hp_dual_bev",
+          "generation_id": "lotus.eletre.gen1",
+          "name": "600",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Eletre (603 hp Dual Motor)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:160"
+            ]
+          },
+          "notes": "Grade correspondence to the Thai MY26 lineup is a PENDING, UNCONFIRMED proposal by Claude, based only on the power figure already embedded in this trim's own prior name -- not an OEM grade-by-grade spec sheet. Not yet owner-approved."
+        },
+        {
+          "id": "lotus.eletre.gen1.trim.s_603_hp_luxury_dual_bev",
+          "generation_id": "lotus.eletre.gen1",
+          "name": "600 GT SE",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5103,
+          "width_mm": 2019,
+          "height_mm": 1636,
+          "wheelbase_mm": null,
+          "tire_front": "275/40R22",
+          "tire_rear": "315/35R22",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Eletre S (603 hp Luxury Dual Motor)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:160"
+            ],
+            "eco": [
+              "dfd41df4-1181-4113-b916-a777e3ee8e49"
+            ]
+          },
+          "notes": "Grade correspondence to the Thai MY26 lineup is a PENDING, UNCONFIRMED proposal by Claude, based only on the power figure already embedded in this trim's own prior name -- not an OEM grade-by-grade spec sheet. Not yet owner-approved."
+        },
+        {
+          "id": "lotus.eletre.gen1.trim.r_905_hp_dual_speed_transmission_awd_bev",
+          "generation_id": "lotus.eletre.gen1",
+          "name": "900 Sport",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 5103,
+          "width_mm": 2019,
+          "height_mm": 1636,
+          "wheelbase_mm": null,
+          "tire_front": "275/35R23",
+          "tire_rear": "315/30R23",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Eletre R (905 hp Dual-Speed Transmission AWD)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:160"
+            ],
+            "eco": [
+              "bc1ae94b-6db1-4644-96dd-fba2214c3229"
+            ]
+          },
+          "notes": "Grade correspondence to the Thai MY26 lineup is a PENDING, UNCONFIRMED proposal by Claude, based only on the power figure already embedded in this trim's own prior name -- not an OEM grade-by-grade spec sheet. Not yet owner-approved."
+        },
+        {
+          "id": "lotus.eletre.gen1.trim.600_sport_se_bev",
+          "generation_id": "lotus.eletre.gen1",
+          "name": "600 Sport SE",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": "Specs pending; identity and name recorded from the Thai MY26 lineup importer announcement only, no battery/drivetrain/dimension spec exists yet."
+        },
+        {
+          "id": "lotus.eletre.gen1.trim.900_sport_carbon_bev",
+          "generation_id": "lotus.eletre.gen1",
+          "name": "900 Sport Carbon",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": "Specs pending; identity and name recorded from the Thai MY26 lineup importer announcement only, no battery/drivetrain/dimension spec exists yet."
+        }
+      ]
+    }
+  }
+}

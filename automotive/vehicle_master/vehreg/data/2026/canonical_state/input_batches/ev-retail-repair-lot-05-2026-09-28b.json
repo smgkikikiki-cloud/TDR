@@ -1,0 +1,383 @@
+{
+  "schema_version": 1,
+  "batch_id": "ev-retail-repair-lot-05-2026-09-28b",
+  "batch_hash": "d0aa1abd73862eeb5c296b1575649d652eec223ca13a3bb5b9a42fe6041c7bea",
+  "status": "APPLIED",
+  "year": 2026,
+  "source": {
+    "kind": "ADMIN",
+    "ref": "docs/WORK_STATE.md#REPAIR-05"
+  },
+  "actor": "smgkikikiki-cloud",
+  "reason": "REPAIR-05: Vehicle Master trim/price/promotion repair for 20 BEV-lineup models per docs/WORK_STATE.md Step 2 findings. DRAFT ONLY -- not yet approved for Step 4 write.",
+  "submitted_at": "2026-09-28T00:00:00+00:00",
+  "applied_at": "2026-09-28T02:30:56+00:00",
+  "results": [
+    {
+      "command_id": "lot5-001",
+      "revision_id": "f526a376395db45648ccdb3d",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "honda.en2.en2.trim.e_n2_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-002",
+      "revision_id": "5e5a20b2094d732a24b02f1b",
+      "topic": "campaign",
+      "entity_type": "campaign",
+      "entity_id": "honda.en2.en2.trim.e_n2_bev.campaign.2026-07-01",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-003",
+      "revision_id": "d698790b33ada76707c9ec62",
+      "topic": "campaign",
+      "entity_type": "campaign",
+      "entity_id": "jaecoo.jaecoo_5_ev.j5.trim.max_plus_bev.campaign.2026-09-04",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-004",
+      "revision_id": "ea120c29248068b87bb017cc",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "jaecoo.jaecoo_5_ev.j5.trim.max_plus_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-005",
+      "revision_id": "bad489967880f747a7ac09a3",
+      "topic": "campaign",
+      "entity_type": "campaign",
+      "entity_id": "jaecoo.jaecoo_5_ev.j5.trim.ultra_bev.campaign.2026-09-04",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-006",
+      "revision_id": "5f6a34ad856696c01ba42bbf",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "jaecoo.jaecoo_5_ev.j5.trim.ultra_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-007",
+      "revision_id": "51071dae7fa3ff6e75e77e4d",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "jaecoo.jaecoo_5_ev.j5.trim.long_range_dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-008",
+      "revision_id": "aed91f86246e6ed9bc9989d4",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "jaecoo.jaecoo_5_ev.j5.trim.long_range_max_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-009",
+      "revision_id": "a74a31dbc5f3e26ceb337c54",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "jaecoo.jaecoo_6_ev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-010",
+      "revision_id": "d6addbc166c421b3a44757dd",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "jaecoo.jaecoo_6_ev.gen1.trim.jaecoo_6_long_range_2wd_rwd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-011",
+      "revision_id": "1876f4f3363145fc6eed07c8",
+      "topic": "campaign",
+      "entity_type": "campaign",
+      "entity_id": "jaecoo.jaecoo_6_ev.gen1.trim.jaecoo_6_long_range_2wd_rwd_bev.campaign.2026-09-04",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-012",
+      "revision_id": "a81e3363e71d86ea8f99969c",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "jaecoo.jaecoo_6_ev.gen1.trim.jaecoo_6_long_range_2wd_rwd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-013",
+      "revision_id": "9093e38b2024887235201164",
+      "topic": "campaign",
+      "entity_type": "campaign",
+      "entity_id": "jaecoo.jaecoo_6_ev.gen1.trim.jaecoo_6_long_range_4wd_awd_dual_bev.campaign.2026-09-04",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-014",
+      "revision_id": "9fd931cab181037fb10997da",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "jaecoo.jaecoo_6_ev.gen1.trim.jaecoo_6_long_range_4wd_awd_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-015",
+      "revision_id": "current-retail-set-105515d7349b3bfa",
+      "topic": "current_retail_set",
+      "entity_type": "market_current_retail_set",
+      "entity_id": "jaecoo.jaecoo_6_ev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-016",
+      "revision_id": "15b56b63f65b26ee6835597f",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "kia.kia_pv5.kia_pv5.trim.pv5_cargo_commercial_delivery_van_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-017",
+      "revision_id": "bcf8cb19a9a6c9e25a53f1dc",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "lexus.lexus_es.xz10.trim.es350e_premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-018",
+      "revision_id": "32959224cffdc0dcee59883a",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "lotus.eletre",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-019",
+      "revision_id": "94783477e19ac5866b9b71fe",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "lotus.eletre.gen1.trim.603_hp_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-020",
+      "revision_id": "a1f242779182a31398a4bd50",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "lotus.eletre.gen1.trim.s_603_hp_luxury_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-021",
+      "revision_id": "3e5b80e3e8c3fa2a3bc7099a",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "lotus.eletre.gen1.trim.r_905_hp_dual_speed_transmission_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-022",
+      "revision_id": "3fe4a3ef729e1581987fa8b8",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "lotus.eletre.gen1.trim.600_sport_se_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-023",
+      "revision_id": "abef9fd9e056bfb64dc1560b",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "lotus.eletre.gen1.trim.900_sport_carbon_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-024",
+      "revision_id": "current-retail-set-3258965abd9b704c",
+      "topic": "current_retail_set",
+      "entity_type": "market_current_retail_set",
+      "entity_id": "lotus.eletre",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-025",
+      "revision_id": "bf4c6a5ae6438b6329392feb",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "lotus.emeya",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-026",
+      "revision_id": "8f2ee038f18b8f995b6a1ee0",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "lotus.emeya.gen1.trim.603_hp_dual_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-027",
+      "revision_id": "333b255e99183493c7277c36",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "lotus.emeya.gen1.trim.s_603_hp_luxury_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-028",
+      "revision_id": "bd260ccdd4d9de60e7cadb11",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "lotus.emeya.gen1.trim.r_905_hp_dual_speed_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-029",
+      "revision_id": "dcbf7ad79783f16cc8936236",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "lotus.emeya.gen1.trim.600_sport_se_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-030",
+      "revision_id": "088576b857e14d95352c3a04",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "lotus.emeya.gen1.trim.900_sport_carbon_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-031",
+      "revision_id": "current-retail-set-4f5500c7fea710f1",
+      "topic": "current_retail_set",
+      "entity_type": "market_current_retail_set",
+      "entity_id": "lotus.emeya",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-032",
+      "revision_id": "2a8ae53523083bfbf0e07c4f",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "mazda.mazda6.gen1.trim.mazda6e_exclusive_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-033",
+      "revision_id": "e3642109bf864d4bce659fee",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "mazda.mazda6.gen1.trim.mazda6e_premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-034",
+      "revision_id": "60aa0c65fe4bbd22c0ac1dc4",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "mercedes_benz.cla",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-035",
+      "revision_id": "d1e2990ef6825fb209239abb",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "mercedes_benz.cla.cla.trim.electric_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-036",
+      "revision_id": "d64adbd1edaec2485e1f78c6",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "mercedes_benz.eqe.gen1.trim.mercedes_amg_eqe_53_4matic_plus_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "lot5-037",
+      "revision_id": "3f7d5d8ca4efd07c7a8def4b",
+      "topic": "price",
+      "entity_type": "market_trim",
+      "entity_id": "mercedes_benz.g_class.gen1.trim.g_580_with_eq_technology_electric_g_class_quad_bev",
+      "idempotent_replay": false
+    }
+  ],
+  "changed_files": [
+    "2026/market/prices/canonical_lot5-037.json",
+    "2026/market/prices/canonical_lot5-006.json",
+    "2026/models/mercedes_benz.json",
+    "2026/market/prices/owner_registry_2026-09-14.json",
+    "2026/market/prices/observations.json",
+    "2026/market/prices/canonical_lot5-020.json",
+    "2026/market/prices/canonical_lot5-030.json",
+    "2026/market/prices/canonical_lot5-012.json",
+    "2026/market/prices/canonical_lot5-029.json",
+    "2026/market/prices/canonical_lot5-017.json",
+    "2026/market/prices/canonical_lot5-035.json",
+    "2026/market/prices/canonical_lot5-032.json",
+    "2026/market/prices/canonical_lot5-004.json",
+    "2026/market/prices/canonical_lot5-026.json",
+    "2026/market/prices/canonical_lot5-014.json",
+    "2026/models/jaecoo.json",
+    "2026/market/prices/canonical_lot5-028.json",
+    "2026/market/campaigns/jaecoo.json",
+    "2026/market/prices/canonical_lot5-027.json",
+    "2026/models/lotus.json",
+    "2026/market/prices/canonical_lot5-033.json",
+    "2026/market/prices/canonical_lot5-036.json",
+    "2026/market/campaigns/honda.json",
+    "2026/market/trims/current_retail.json",
+    "2026/market/prices/canonical_lot5-001.json",
+    "2026/market/prices/canonical_lot5-019.json",
+    "2026/market/prices/canonical_lot5-021.json",
+    "2026/market/prices/canonical_lot5-007.json",
+    "2026/market/prices/canonical_lot5-023.json",
+    "2026/market/prices/canonical_lot5-008.json",
+    "2026/market/prices/canonical_lot5-016.json",
+    "2026/market/prices/canonical_lot5-022.json",
+    "2026/canonical_state/shadow/a81e3363e71d86ea8f99969c.json",
+    "2026/canonical_state/shadow/3e5b80e3e8c3fa2a3bc7099a.json",
+    "2026/canonical_state/shadow/60aa0c65fe4bbd22c0ac1dc4.json",
+    "2026/canonical_state/shadow/dcbf7ad79783f16cc8936236.json",
+    "2026/canonical_state/shadow/f526a376395db45648ccdb3d.json",
+    "2026/canonical_state/shadow/a1f242779182a31398a4bd50.json",
+    "2026/canonical_state/shadow/d64adbd1edaec2485e1f78c6.json",
+    "2026/canonical_state/shadow/bd260ccdd4d9de60e7cadb11.json",
+    "2026/canonical_state/shadow/9093e38b2024887235201164.json",
+    "2026/canonical_state/shadow/3f7d5d8ca4efd07c7a8def4b.json",
+    "2026/canonical_state/revisions.jsonl",
+    "2026/canonical_state/shadow/51071dae7fa3ff6e75e77e4d.json",
+    "2026/canonical_state/shadow/d6addbc166c421b3a44757dd.json",
+    "2026/canonical_state/shadow/1876f4f3363145fc6eed07c8.json",
+    "2026/canonical_state/shadow/aed91f86246e6ed9bc9989d4.json",
+    "2026/canonical_state/shadow/32959224cffdc0dcee59883a.json",
+    "2026/canonical_state/shadow/bad489967880f747a7ac09a3.json",
+    "2026/canonical_state/shadow/15b56b63f65b26ee6835597f.json",
+    "2026/canonical_state/shadow/088576b857e14d95352c3a04.json",
+    "2026/canonical_state/shadow/9fd931cab181037fb10997da.json",
+    "2026/canonical_state/outbox.jsonl",
+    "2026/canonical_state/shadow/abef9fd9e056bfb64dc1560b.json",
+    "2026/canonical_state/shadow/bcf8cb19a9a6c9e25a53f1dc.json",
+    "2026/canonical_state/shadow/5e5a20b2094d732a24b02f1b.json",
+    "2026/canonical_state/shadow/333b255e99183493c7277c36.json",
+    "2026/canonical_state/shadow/d698790b33ada76707c9ec62.json",
+    "2026/canonical_state/shadow/5f6a34ad856696c01ba42bbf.json",
+    "2026/canonical_state/shadow/8f2ee038f18b8f995b6a1ee0.json",
+    "2026/canonical_state/shadow/d1e2990ef6825fb209239abb.json",
+    "2026/canonical_state/shadow/e3642109bf864d4bce659fee.json",
+    "2026/canonical_state/shadow/a74a31dbc5f3e26ceb337c54.json",
+    "2026/canonical_state/shadow/3fe4a3ef729e1581987fa8b8.json",
+    "2026/canonical_state/shadow/94783477e19ac5866b9b71fe.json",
+    "2026/canonical_state/shadow/bf4c6a5ae6438b6329392feb.json",
+    "2026/canonical_state/shadow/2a8ae53523083bfbf0e07c4f.json",
+    "2026/canonical_state/shadow/ea120c29248068b87bb017cc.json"
+  ]
+}

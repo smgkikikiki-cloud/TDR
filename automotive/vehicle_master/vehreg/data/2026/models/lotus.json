@@ -47,7 +47,7 @@
           ],
           "trims": [
             {
-              "name": "(603 hp Dual Motor)",
+              "name": "600",
               "powertrain": "BEV",
               "source_refs": {
                 "owner_directory": [
@@ -57,10 +57,11 @@
               "aliases": [
                 "Eletre (603 hp Dual Motor)"
               ],
-              "id": "603_hp_dual_motor_bev"
+              "id": "603_hp_dual_bev",
+              "notes": "Grade correspondence to the Thai MY26 lineup is a PENDING, UNCONFIRMED proposal by Claude, based only on the power figure already embedded in this trim's own prior name -- not an OEM grade-by-grade spec sheet. Not yet owner-approved."
             },
             {
-              "name": "S (603 hp Luxury Dual Motor)",
+              "name": "600 GT SE",
               "powertrain": "BEV",
               "source_refs": {
                 "owner_directory": [
@@ -79,10 +80,11 @@
               "width_mm": 2019,
               "height_mm": 1636,
               "tire_front": "275/40R22",
-              "tire_rear": "315/35R22"
+              "tire_rear": "315/35R22",
+              "notes": "Grade correspondence to the Thai MY26 lineup is a PENDING, UNCONFIRMED proposal by Claude, based only on the power figure already embedded in this trim's own prior name -- not an OEM grade-by-grade spec sheet. Not yet owner-approved."
             },
             {
-              "name": "R (905 hp Dual-Speed Transmission AWD)",
+              "name": "900 Sport",
               "powertrain": "BEV",
               "source_refs": {
                 "owner_directory": [
@@ -101,7 +103,20 @@
               "width_mm": 2019,
               "height_mm": 1636,
               "tire_front": "275/35R23",
-              "tire_rear": "315/30R23"
+              "tire_rear": "315/30R23",
+              "notes": "Grade correspondence to the Thai MY26 lineup is a PENDING, UNCONFIRMED proposal by Claude, based only on the power figure already embedded in this trim's own prior name -- not an OEM grade-by-grade spec sheet. Not yet owner-approved."
+            },
+            {
+              "name": "600 Sport SE",
+              "notes": "Specs pending; identity and name recorded from the Thai MY26 lineup importer announcement only, no battery/drivetrain/dimension spec exists yet.",
+              "powertrain": "BEV",
+              "id": "600_sport_se_bev"
+            },
+            {
+              "name": "900 Sport Carbon",
+              "notes": "Specs pending; identity and name recorded from the Thai MY26 lineup importer announcement only, no battery/drivetrain/dimension spec exists yet.",
+              "powertrain": "BEV",
+              "id": "900_sport_carbon_bev"
             }
           ]
         }
@@ -144,7 +159,7 @@
           ],
           "trims": [
             {
-              "name": "(603 hp Dual Motor)",
+              "name": "600",
               "powertrain": "BEV",
               "source_refs": {
                 "owner_directory": [
@@ -154,10 +169,11 @@
               "aliases": [
                 "Emeya (603 hp Dual Motor)"
               ],
-              "id": "603_hp_dual_motor_bev"
+              "id": "603_hp_dual_bev",
+              "notes": "Grade correspondence to the Thai MY26 lineup is a PENDING, UNCONFIRMED proposal by Claude, based only on the power figure already embedded in this trim's own prior name -- not an OEM grade-by-grade spec sheet. Not yet owner-approved."
             },
             {
-              "name": "S (603 hp Luxury)",
+              "name": "600 GT SE",
               "powertrain": "BEV",
               "source_refs": {
                 "owner_directory": [
@@ -176,10 +192,11 @@
               "width_mm": 2005,
               "height_mm": 1459,
               "tire_front": "265/40R21",
-              "tire_rear": "305/35R21"
+              "tire_rear": "305/35R21",
+              "notes": "Grade correspondence to the Thai MY26 lineup is a PENDING, UNCONFIRMED proposal by Claude, based only on the power figure already embedded in this trim's own prior name -- not an OEM grade-by-grade spec sheet. Not yet owner-approved."
             },
             {
-              "name": "R (905 hp Dual-Speed AWD)",
+              "name": "900 Sport",
               "powertrain": "BEV",
               "source_refs": {
                 "owner_directory": [
@@ -198,7 +215,20 @@
               "width_mm": 2005,
               "height_mm": 1459,
               "tire_front": "265/35R22",
-              "tire_rear": "305/30R22"
+              "tire_rear": "305/30R22",
+              "notes": "Grade correspondence to the Thai MY26 lineup is a PENDING, UNCONFIRMED proposal by Claude, based only on the power figure already embedded in this trim's own prior name -- not an OEM grade-by-grade spec sheet. Not yet owner-approved."
+            },
+            {
+              "name": "600 Sport SE",
+              "notes": "Specs pending; identity and name recorded from the Thai MY26 lineup importer announcement only, no battery/drivetrain/dimension spec exists yet.",
+              "powertrain": "BEV",
+              "id": "600_sport_se_bev"
+            },
+            {
+              "name": "900 Sport Carbon",
+              "notes": "Specs pending; identity and name recorded from the Thai MY26 lineup importer announcement only, no battery/drivetrain/dimension spec exists yet.",
+              "powertrain": "BEV",
+              "id": "900_sport_carbon_bev"
             }
           ]
         }

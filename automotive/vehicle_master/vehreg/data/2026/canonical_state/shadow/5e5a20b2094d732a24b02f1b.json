@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5e5a20b2094d732a24b02f1b",
+    "command_id": "lot5-002",
+    "operation": "UPSERT_CAMPAIGN",
+    "year": 2026,
+    "topic": "campaign",
+    "entity_type": "campaign",
+    "entity_id": "honda.en2.en2.trim.e_n2_bev.campaign.2026-07-01",
+    "actor": "smgkikikiki-cloud",
+    "reason": "REPAIR-05: Vehicle Master trim/price/promotion repair for 20 BEV-lineup models per docs/WORK_STATE.md Step 2 findings. DRAFT ONLY -- not yet approved for Step 4 write.",
+    "submitted_at": "2026-09-28T00:00:00+00:00",
+    "applied_at": "2026-09-28T02:30:31+00:00",
+    "before_hash": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+    "after_hash": "b4e2ee8ac23645a5aed2c181cfdf9d2cb5cd7b2046ed71bef30dbbc122f6ce09",
+    "before": null,
+    "after": {
+      "id": "honda.en2.en2.trim.e_n2_bev.campaign.2026-07-01",
+      "ends": "2026-09-30",
+      "name": "The Grand Quake Deal (Honda e:N2)",
+      "gifts": "Applies to all e:N2 bookings in this window regardless of which option below is chosen: free Class 1 motor insurance for 1 year (~37,764.58 THB value); free home wallbox charger with installation (~60,000 THB value); 'Honda Ultimate Care' warranty extension to 5 years/140,000 km; extended EV battery & drivetrain warranty to 8 years/160,000 km. Financing: 0% interest, 25% down payment, 12-48 month installment term -- this is a financing rate/term on the SAME vehicle price, not a distinct price and not recorded as FINANCE_PRICE.",
+      "notes": "GEN TO GEN and WELCOME TEST DRIVE are two alternative options within this campaign and are explicitly mutually exclusive per official terms (cannot be combined). Neither option states a discounted THB selling price for the e:N2: GEN TO GEN is a trade-in bonus valued against the customer's OLD Honda vehicle, and WELCOME TEST DRIVE is a test-drive 'privilege value' -- so no CAMPAIGN_PRICE or FINANCE_PRICE record is attached to either option. Per vehreg.pricing.PriceLedger.current_campaign_offers()/campaign_quote() and tdr_bridge/release.py (the only place a campaign reaches the serving release), a campaign option only appears in campaign_quote() through a price record with a matching campaign_id/option_id. With none attached here, this campaign IS stored canonically but WILL NOT appear anywhere in the serving release or website. Recorded anyway because the underlying offer is real, confirmed and dated -- store-vs-display is an explicit, reported gap, not evidence this campaign doesn't exist.",
+      "source": "admin",
+      "starts": "2026-07-01",
+      "options": [
+        {
+          "id": "gen_to_gen",
+          "label": "GEN TO GEN Trade-In",
+          "conditions": {
+            "text": "Trade-in bonus for existing Honda owners: 100,000 THB (owned 1-4 years) or 120,000 THB (owned 5+ years); +10,000 THB for trading in multiple Honda vehicles (max 130,000 THB total); previous owner also receives a 3,000 THB service e-coupon. Bonus is valued against the trade-in of the customer's OLD vehicle, not a discount on the e:N2's own price. Cannot be combined with WELCOME TEST DRIVE.",
+            "booking_to": "2026-09-30",
+            "delivery_by": "2026-10-31",
+            "booking_from": "2026-07-01"
+          }
+        },
+        {
+          "id": "welcome_test_drive",
+          "label": "WELCOME TEST DRIVE",
+          "conditions": {
+            "text": "Test-drive privilege value: 90,000 THB (1 model tested) or 100,000 THB (2+ models tested). Not stated as a cash discount on the e:N2's own price. Cannot be combined with GEN TO GEN.",
+            "booking_to": "2026-09-30",
+            "delivery_by": "2026-10-31",
+            "booking_from": "2026-08-01"
+          }
+        }
+      ],
+      "brand_id": "honda",
+      "source_ref": "https://www.honda.co.th/promotions/detail/promotion-en2-jul2026"
+    },
+    "changed_files": [
+      "2026/market/campaigns/honda.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5e5a20b2094d732a24b02f1b:campaign",
+    "revision_id": "5e5a20b2094d732a24b02f1b",
+    "topic": "campaign",
+    "entity_type": "campaign",
+    "entity_id": "honda.en2.en2.trim.e_n2_bev.campaign.2026-07-01",
+    "state": "PENDING",
+    "created_at": "2026-09-28T02:30:31+00:00",
+    "payload": {
+      "id": "honda.en2.en2.trim.e_n2_bev.campaign.2026-07-01",
+      "ends": "2026-09-30",
+      "name": "The Grand Quake Deal (Honda e:N2)",
+      "gifts": "Applies to all e:N2 bookings in this window regardless of which option below is chosen: free Class 1 motor insurance for 1 year (~37,764.58 THB value); free home wallbox charger with installation (~60,000 THB value); 'Honda Ultimate Care' warranty extension to 5 years/140,000 km; extended EV battery & drivetrain warranty to 8 years/160,000 km. Financing: 0% interest, 25% down payment, 12-48 month installment term -- this is a financing rate/term on the SAME vehicle price, not a distinct price and not recorded as FINANCE_PRICE.",
+      "notes": "GEN TO GEN and WELCOME TEST DRIVE are two alternative options within this campaign and are explicitly mutually exclusive per official terms (cannot be combined). Neither option states a discounted THB selling price for the e:N2: GEN TO GEN is a trade-in bonus valued against the customer's OLD Honda vehicle, and WELCOME TEST DRIVE is a test-drive 'privilege value' -- so no CAMPAIGN_PRICE or FINANCE_PRICE record is attached to either option. Per vehreg.pricing.PriceLedger.current_campaign_offers()/campaign_quote() and tdr_bridge/release.py (the only place a campaign reaches the serving release), a campaign option only appears in campaign_quote() through a price record with a matching campaign_id/option_id. With none attached here, this campaign IS stored canonically but WILL NOT appear anywhere in the serving release or website. Recorded anyway because the underlying offer is real, confirmed and dated -- store-vs-display is an explicit, reported gap, not evidence this campaign doesn't exist.",
+      "source": "admin",
+      "starts": "2026-07-01",
+      "options": [
+        {
+          "id": "gen_to_gen",
+          "label": "GEN TO GEN Trade-In",
+          "conditions": {
+            "text": "Trade-in bonus for existing Honda owners: 100,000 THB (owned 1-4 years) or 120,000 THB (owned 5+ years); +10,000 THB for trading in multiple Honda vehicles (max 130,000 THB total); previous owner also receives a 3,000 THB service e-coupon. Bonus is valued against the trade-in of the customer's OLD vehicle, not a discount on the e:N2's own price. Cannot be combined with WELCOME TEST DRIVE.",
+            "booking_to": "2026-09-30",
+            "delivery_by": "2026-10-31",
+            "booking_from": "2026-07-01"
+          }
+        },
+        {
+          "id": "welcome_test_drive",
+          "label": "WELCOME TEST DRIVE",
+          "conditions": {
+            "text": "Test-drive privilege value: 90,000 THB (1 model tested) or 100,000 THB (2+ models tested). Not stated as a cash discount on the e:N2's own price. Cannot be combined with GEN TO GEN.",
+            "booking_to": "2026-09-30",
+            "delivery_by": "2026-10-31",
+            "booking_from": "2026-08-01"
+          }
+        }
+      ],
+      "brand_id": "honda",
+      "source_ref": "https://www.honda.co.th/promotions/detail/promotion-en2-jul2026"
+    }
+  }
+}
