@@ -28,6 +28,7 @@ def _field(key, value_type, *, unit="", powertrains=(), qualifiers=()):
 def _registry():
     return SpecRegistry([
         _field("vehicle.length_mm", ValueType.NUMBER, unit="mm"),
+        _field("engine.displacement_cc", ValueType.NUMBER, unit="cc", powertrains=("ICE", "HEV", "PHEV")),
         _field("battery.catalog_capacity_kwh", ValueType.NUMBER, unit="kWh",
                powertrains=("BEV", "PHEV", "REEV", "HEV")),
         _field("safety.aeb", ValueType.BOOLEAN),
@@ -147,6 +148,17 @@ def test_registry_value_dual_writes_market_trim_core():
 def test_wrong_powertrain_value_is_rejected():
     with pytest.raises(SpecExcelError, match="contradicts canonical trim powertrain"):
         _compile({"canonical_trim_id": TRIM_ID, "identity.powertrain": "ICE"})
+
+
+def test_inapplicable_token_is_noop_for_field_outside_powertrain():
+    result = _compile({"canonical_trim_id": TRIM_ID, "engine.displacement_cc": "NOT_APPLICABLE"})
+    assert result.commands == ()
+    assert result.values_unchanged == 1
+
+
+def test_inapplicable_field_rejects_an_actual_value():
+    with pytest.raises(SpecExcelError, match="does not apply to BEV"):
+        _compile({"canonical_trim_id": TRIM_ID, "engine.displacement_cc": 1498})
 
 
 def test_same_existing_fact_becomes_noop():
