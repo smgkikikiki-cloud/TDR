@@ -428,6 +428,31 @@ Previously handled and excluded from REPAIR-08: #101 Tesla Model Y (approved cur
 
 Next: REPAIR-08 Step 2 only when the owner directs it: inspect the current enriched TDR release and Thai-market trim/old price/current list price/campaign for these exact 16, record specific holds, and do not write canonical data at inspection stage.
 
+### REPAIR-08 Step 2 inspection (2026-09-28)
+
+State: `INSPECTED`. The 16-member queue was checked against the current TDR catalog/release and Thai-market evidence. This is analysis only: no canonical data, current-retail set, enqueue, or publish was changed. “Hold” means do not infer a lifecycle/price write until the named evidence gap is resolved. Existing price history/specs must be preserved.
+
+| # | TDR current state | Thai-market/current finding (old → current price where confirmed) | Required action / hold |
+|---:|---|---|---|
+| 01 RIDDARA RD6 | 63 2WD / 73 2WD / 86 2WD | MY26 lineup is 73.9 2WD, 86 2WD, 73.9 4WD, 86 4WD; verified list anchors 999,000 / 1,149,000 / 1,299,000 (dated promotions are not current list). | Reconcile 73/86 identities and add 4WD grades only after catalog IDs/spec mapping; do not retire 63 on absence alone; hold campaign. |
+| 02 SERES 3 | Standard / Premium | Thai names are Comfort / Comfort Sunroof; historical list 699,900, Motor Expo promo 599,200 is expired. | Name/spec reconciliation only if identity is proven; hold current lifecycle and promo. |
+| 03 SOKON EC35 | Cargo 2-seat / Passenger 5-seat | Current distributor evidence supports Cargo Van; no reliable current passenger retail evidence or verified list price. | Preserve both histories; do not withdraw Passenger by absence alone; hold price/lifecycle. |
+| 04 Tesla Model 3 | RWD / Long Range AWD / Performance AWD | Thai configs: RWD 1,149,000; Premium RWD 1,439,000; Premium LR RWD 1,599,000; Performance AWD 2,099,000. LR AWD appears in inventory but orderability is unresolved. | Add/reconcile Premium RWD and Premium LR RWD with exact Tesla evidence; do not mark LR AWD historical from inventory/page omission alone; no promo confirmed. |
+| 05 VOLT For Four | Classic / Premium | Thai historical naming is Classic / Top; old anchors about 385,000 / 415,000, no verified 2026 retail. | Possible Premium→Top rename only with identity proof; hold current prices, lifecycle, and campaigns. |
+| 06 VOLT For Two | Classic / Premium | Thai historical naming is Classic / Top; old anchors about 325,000 / 355,000, no verified 2026 retail. | Same hold as For Four; no live campaign write. |
+| 07 Volvo EX30 | Core Single 51kWh / Plus Single ER / Ultra Twin Performance | MY26 Thai evidence identifies Ultra Single Motor ER at 1,690,000; Core 1,590,000 and Twin 1,890,000 are historical references. | Add/reconcile Ultra Single Motor ER; do not retire old grades until direct current orderability/spec evidence; hold promo. |
+| 08 Volvo EX90 | Twin / Twin Performance | Thai lineup: Plus Twin Motor 7-seat; Ultra Twin Performance 6-seat and 7-seat. No authoritative current list prices captured. | Add seat-specific identities preserving specs/history; hold prices/lifecycle pending official orderability. |
+| 09 Volvo XC40 BEV | Pure Electric / Single / Twin | Volvo renamed the BEV line to EX40 from MY25; this is a legacy identity transition. | Treat XC40 BEV rows as legacy candidates for historical disposition/current-set removal only after EX40 crosswalk is proven; preserve all price history; no price rewrite. |
+| 10 Wuling Air EV | Standard Lite 17.3kWh / Long Range 26.7kWh | Thai names Standard Range / Long Range; no dated official current list price (third-party “from 395,000” is not sufficient). | Normalize Lite naming only if specs match; hold price/lifecycle/promo. |
+| 11 Wuling Bingo | Standard 333 / Long Range 410 | Thai lineup is Binguo AC 333 and AC/DC 333; 410 mapping is not supported. | Reconcile two 333 identities by charging/spec facts; do not copy a price or retire 410 without current evidence. |
+| 12 Wuling Darion EV | Cargo Van / Passenger Minibus not found in fetched base catalog | Thai launch identities Comfort / Premium (7-seat MPV), list anchors 799,000 / 859,000; current status needs confirmation. | Structural hold: locate/prove canonical model IDs before any write; do not create or rename blindly. |
+| 13 Wuling Porta EV | Flatbed Carrier / Standard Box not found in fetched base catalog | Thai product evidence shows one Porta cargo-van identity (56.2kWh, 6.5m³); no verified current list price. | Structural hold: locate canonical model/trim IDs first; preserve any existing records. |
+| 14 XPENG X9 | Long Range Pro / Long Range Max / Performance AWD Ultra | Thai current-generation evidence: Executive 2,499,000 and Luxury 2,749,000; newer MY26 “New X9” pricing differs. | Do not overwrite old IDs across generations; add/reconcile Executive/Luxury only after generation/spec proof; hold campaign/current set. |
+| 15 ZEEKR 009 | Luxury 6-seat / Grand 4-seat | Thai standard 009 requires 7-seat Standard FWD, 7-seat Premium AWD, 6-seat Flagship AWD; Grand 4-seat is a separate derivative. | Structural/model expansion hold: identify canonical IDs and generation; do not map Grand to standard or infer prices from third-party listings. |
+| 16 ZEEKR X | Standard RWD / Long Range RWD / Flagship AWD | MY26 evidence: Standard RWD 899,000; Flagship AWD 1,069,000; Long Range RWD orderability unresolved. | Add/confirm current prices for Standard/Flagship; hold Long Range lifecycle and campaigns pending direct orderability evidence. |
+
+Price/campaign source status: only dated, grade-specific evidence may become a campaign command. Expired Motor Expo/Motor Show offers and financing/gifts are not numeric vehicle-price campaigns. Structural blockers (missing Darion/Porta IDs, XC40→EX40 crosswalk, XPENG/ZEEKR generation splits) require resolution before Step 3. Next step is the implementation prompt only after the owner accepts these recorded holds/judgement boundaries.
+
 ## Per-batch recording template
 
 ```yaml
