@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
+    "check:upcoming": "node --experimental-strip-types scripts/check-upcoming-cars.ts",
     "media:publish": "node --experimental-strip-types scripts/publish-official-media.ts",
     "media:prune-orphans": "node --experimental-strip-types scripts/prune-official-media-storage.ts",
     "check:model-trim-summary": "node --experimental-strip-types scripts/check-model-trim-summary.ts",
