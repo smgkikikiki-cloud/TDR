@@ -1,6 +1,7 @@
 # Vehicle Spec Excel Import — WORKUPDATE
 
 Branch: `feature/vehicle-spec-excel-importer`
+PR: `#164` — Add deterministic vehicle spec Excel importer
 
 Goal: finish a deterministic Excel -> canonical vehicle spec importer for existing MarketTrims, covering the full current field inventory without AI field guessing and without requiring source/evidence data in the workbook.
 
@@ -15,45 +16,82 @@ Locked behavior: one row = one existing MarketTrim; `canonical_trim_id` is autho
 
 ### 2026-09-28 — Deterministic compiler
 
-Added `automotive/vehicle_master/vehreg/spec_excel.py` (`d73405bd8b6ea84bc7ce78bd750f3b4567c6d4fa`).
+`automotive/vehicle_master/vehreg/spec_excel.py`
 
 Implemented:
 
-- Registry-driven field recognition and type validation for current comparable-spec fields.
+- Registry-driven field recognition/type/unit validation.
 - Sparse writes: blank cells produce no command.
 - Existing `canonical_trim_id` required; no vehicle creation or fuzzy matching.
 - BOOLEAN accepts YES/NO, TRUE/FALSE, 1/0; NUMBER, ENUM/TEXT and SET are parsed deterministically.
-- Explicit value states: `UNKNOWN`, `NOT_AVAILABLE`, `NOT_APPLICABLE`; ambiguous `-` is rejected.
-- Powertrain applicability is checked from the registry.
-- Qualifier-aware headers. Common aliases include NEDC/CLTC/WLTP/WLTC/EPA ranges, electric-only ranges, laden/unladen ground clearance and common DC SOC windows. Generic registry qualifiers use `field.key__qualifier=value`.
-- Qualifier-aware stable fact IDs so NEDC and WLTP for the same field do not overwrite each other.
-- Sparse MarketTrim core updates plus comparable-spec writes.
+- Explicit states: `UNKNOWN`, `NOT_AVAILABLE`, `NOT_APPLICABLE`; ambiguous `-` is rejected.
+- Powertrain applicability from registry.
+- Qualifier-aware fixed aliases plus generic `field.key__qualifier=value` syntax.
+- Bare headers are rejected for registry fields that require qualifier context.
+- Qualifier-aware stable fact IDs so NEDC/WLTP/CLTC values coexist instead of overwriting.
+- Sparse MarketTrim core + comparable-spec dual writes where both representations exist.
+- `battery.catalog_capacity_kwh` also updates `MarketTrim.battery_kwh`.
 
-Code discovery that directly affected implementation: canonical `APPEND_SPEC` defaults to one `admin:{trim}:{field}` fact ID, so two qualifier contexts would collide unless the importer supplies qualifier-aware fact IDs itself.
+Code discovery that directly affected implementation: canonical `APPEND_SPEC` defaults to one `admin:{trim}:{field}` fact ID, so two qualifier contexts collide unless this importer supplies qualifier-aware fact IDs.
+
+Latest compiler fix commit: `4164e54dbf126ed70f520a5efd40b5562b279f43`.
 
 ### 2026-09-28 — Import CLI and worker route
 
-Added `automotive/vehicle_master/tools/import_vehicle_specs.py` (`55112e61f47c7fd806aa3624151107955db5e038`).
-
-- Reads CSV/XLSX with `keep_default_na=False`.
+- Added `automotive/vehicle_master/tools/import_vehicle_specs.py`.
+- Reads CSV or the `SPECS` sheet of XLSX with `keep_default_na=False`.
+- Human display columns are ignored for placement; only `canonical_trim_id` places a row.
 - Loads current Catalog + SpecRegistry + SpecLedger.
-- Compiles workbook into existing canonical input batches.
-- Supports dry-run and `--apply`.
-- Reuses the existing staged/validated canonical pipeline and produces a machine report for the upload worker.
+- Supports dry-run and `--apply` through existing staged canonical input pipeline.
+- Added `VEHICLE_SPECS` to `tools/import_worker.py`; canonical-changing runs wait for commit + publish, no-op runs finish without a fake pending publish.
 
-Updated `automotive/vehicle_master/tools/import_worker.py` (`edaff7faa376e45bf0403c7672a50f019fdb9a30`).
+Worker route commit: `edaff7faa376e45bf0403c7672a50f019fdb9a30`.
+Display-column CLI update: `311de8f1d7fb7ff3f30150571d5854d1f3cc17c0`.
 
-- Added `VEHICLE_SPECS` handler.
-- Treats it as a canonical-writing upload, therefore waits for commit + publish exactly like ECO when it actually changes data.
-- Invalid workbooks fail their own run; they are never routed into ECO/DLT parsing.
-- No-op workbooks complete without waiting for a publish that has no diff.
+### 2026-09-28 — Workbook template exporter
 
-## In progress
+Added `automotive/vehicle_master/tools/export_vehicle_spec_template.py` (`b9dc63b11a923df78b5feab754ecda7f1eeb39b7`).
 
-1. Add usable workbook/template export from current registry + existing trim IDs.
-2. Expose `VEHICLE_SPECS` in the existing admin upload UI.
-3. Add focused tests for blank/no-op, type validation, exact identity and qualifier coexistence.
-4. Run test suite / branch CI and fix failures.
+It generates:
+
+- `SPECS`: exact canonical trim rows + deterministic editable headers.
+- `FIELD_DICTIONARY`: every current registry field, type, unit, applicable powertrains, qualifier names, ready fixed columns and generic qualified-header rule.
+- `README`: only the workbook rules needed to fill it.
+
+Qualified registry fields are not emitted as ambiguous bare value columns. Common qualifier cases are fixed columns; uncommon cases remain fully supported through the documented generic qualified-header syntax.
+
+### 2026-09-28 — Admin upload route
+
+- `app/admin/import-actions.ts` now accepts `VEHICLE_SPECS` (`d12ed22efb251792c3f76e38bb8a4f72be84697e`).
+- `/admin/import` exposes `Vehicle Specs / Canonical Excel` and defaults to it (`71d322ad87d3da01ff48553179c6a5d4040bb4d7`).
+- Existing ECO and DLT routes remain separate.
+
+### 2026-09-28 — Focused tests
+
+Added `automotive/vehicle_master/tests/test_spec_excel.py` (`bd237e9ddb208d4a06c79631e64e93da496e3fd7`).
+
+Covers:
+
+- YES/NO boolean parsing.
+- NEDC + WLTP coexist with distinct fact IDs.
+- ambiguous bare qualified fields reject.
+- generic qualified-header parsing.
+- blank = no-op.
+- unknown canonical trim rejects.
+- ambiguous `-` rejects.
+- core/spec dual write including battery capacity.
+- powertrain contradiction rejects.
+- same existing fact becomes no-op.
+
+## CI
+
+PR #164 opened. Repository PR workflows are running against the implementation branch. Do not merge until CI result is checked and any failures are fixed.
+
+## Remaining
+
+1. Check PR #164 CI.
+2. Fix any real failures.
+3. Record final green status here.
 
 ## Handoff rule
 
