@@ -13,7 +13,10 @@ from __future__ import annotations
 import argparse
 from datetime import datetime, timezone
 import json
+import os
 from pathlib import Path
+import shutil
+import tempfile
 
 from vehreg.catalog import Catalog, DATA_DIR, DEFAULT_YEAR
 from vehreg.comparable_specs import SpecLedger, SpecRegistry
@@ -46,6 +49,62 @@ def _submitted_at(raw: str | None) -> str:
     if parsed.tzinfo is None:
         raise SpecExcelError("submitted_at must include timezone")
     return parsed.isoformat(timespec="seconds")
+
+
+def _relative_changed_path(raw: str) -> Path:
+    relative = Path(str(raw))
+    if relative.is_absolute() or ".." in relative.parts:
+        raise RuntimeError(f"canonical pipeline returned unsafe changed path {raw!r}")
+    return relative
+
+
+def _promote_file(staged_data: Path, live_data: Path, relative: Path) -> None:
+    source = staged_data / relative
+    if not source.is_file():
+        raise RuntimeError(f"canonical pipeline reported missing changed file {relative}")
+    target = live_data / relative
+    target.parent.mkdir(parents=True, exist_ok=True)
+    temporary = target.with_suffix(target.suffix + ".tmp")
+    temporary.write_bytes(source.read_bytes())
+    os.replace(temporary, target)
+
+
+def _apply_batches_atomically(batches: list[dict], *, data_dir: Path) -> tuple[list[dict], list[str]]:
+    """Apply every workbook batch to a sandbox, then promote only after all pass.
+
+    CanonicalInputPipeline is atomic per batch. A workbook can exceed one batch,
+    so applying batches directly to the live tree could leave the first batch
+    behind when a later batch failed. The outer sandbox makes the workbook the
+    transaction boundary instead.
+    """
+    if not batches:
+        return [], []
+
+    live_data = Path(data_dir)
+    with tempfile.TemporaryDirectory(prefix="tdr-vehicle-spec-workbook-") as temp:
+        staged_data = Path(temp) / "data"
+        shutil.copytree(live_data, staged_data)
+        pipeline = CanonicalInputPipeline(staged_data)
+
+        applied_batches: list[dict] = []
+        changed: set[Path] = set()
+        for batch in batches:
+            result = pipeline.apply(batch)
+            applied_batches.append({
+                "batch_id": result.batch_id,
+                "status": result.status,
+                "idempotent_replay": result.idempotent_replay,
+            })
+            changed.update(_relative_changed_path(path) for path in result.changed_files)
+
+        # Data first, canonical_state/audit markers last, matching the existing
+        # per-batch pipeline's recovery ordering. Nothing reaches the live tree
+        # until every batch above has validated successfully.
+        ordered = sorted(changed, key=lambda path: "canonical_state" in path.parts)
+        for relative in ordered:
+            _promote_file(staged_data, live_data, relative)
+
+    return applied_batches, [str(path) for path in ordered]
 
 
 def import_workbook(
@@ -82,18 +141,11 @@ def import_workbook(
         actor=actor,
     ) if compiled.commands else []
 
-    applied_batches = []
+    applied_batches: list[dict] = []
     changed_files: list[str] = []
     if apply:
-        pipeline = CanonicalInputPipeline(DATA_DIR)
-        for batch in batches:
-            result = pipeline.apply(batch)
-            applied_batches.append({
-                "batch_id": result.batch_id,
-                "status": result.status,
-                "idempotent_replay": result.idempotent_replay,
-            })
-            changed_files.extend(result.changed_files)
+        applied_batches, changed_files = _apply_batches_atomically(
+            batches, data_dir=DATA_DIR)
 
     return {
         "schema_version": 1,
