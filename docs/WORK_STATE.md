@@ -401,6 +401,33 @@ State: `DONE / APPROVED`. Owner gave explicit approval for both the code merge a
 
 Next: REPAIR-07 is closed. Do not re-audit, rebuild, or re-enqueue unless the user explicitly reopens it. The remaining 21-vehicle repair queue (per the historical BEV+REEV audit ordering) was explicitly not started in this operation and is separate future work. Any future MG ZS EV D/X identity resolution is a new, separately-numbered repair batch.
 
+### REPAIR-08 membership — final unscheduled BEV+REEV queue (Step 1, 2026-09-28)
+
+State: `QUEUED`. The owner asked to start the next repair batch while REPAIR-07 completed. The authoritative historical audit source is the owner-supplied `Markdown ที่วาง.md`, which enumerates #97–117 after REPAIR-06's final #96. This is a **16-model final repair batch**: five entries in the 21-number audit tail were already repaired in earlier frozen repair batches and must not be repeated merely to fill 20 slots. This step fixes membership only. No Step 2 inspection, new canonical write, enqueue, or publish for REPAIR-08 has occurred. Historical audit findings are queue provenance, not fresh market evidence.
+
+Previously handled and excluded from REPAIR-08: #101 Tesla Model Y (approved current set Premium RWD/Premium Long Range RWD/Model Y L); #102 Toyota bZ4X (approved FWD/AWD set); #105 Volvo EC40 (approved Ultra Single Motor set); #107 Volvo EX40 (approved Ultra Single Motor set); #114 XPENG G6 (approved Standard Range/Long Range/AWD Performance set). These five approved sets are present in published `vehreg/data/2026/market/trims/current_retail.json` as of Step 1. Open sub-items in any frozen prior lot stay with that lot, not this membership.
+
+| REPAIR-08 | Historical audit # | Vehicle |
+|---:|---:|---|
+| 01 | 97 | RIDDARA RD6 Double Cab |
+| 02 | 98 | SERES 3 |
+| 03 | 99 | SOKON EC35 |
+| 04 | 100 | Tesla Model 3 |
+| 05 | 103 | VOLT For Four |
+| 06 | 104 | VOLT For Two |
+| 07 | 106 | Volvo EX30 |
+| 08 | 108 | Volvo EX90 |
+| 09 | 109 | Volvo XC40 BEV |
+| 10 | 110 | Wuling Air EV |
+| 11 | 111 | Wuling Bingo |
+| 12 | 112 | Wuling Darion EV |
+| 13 | 113 | Wuling Porta EV |
+| 14 | 115 | XPENG X9 |
+| 15 | 116 | ZEEKR 009 |
+| 16 | 117 | ZEEKR X |
+
+Next: REPAIR-08 Step 2 only when the owner directs it: inspect the current enriched TDR release and Thai-market trim/old price/current list price/campaign for these exact 16, record specific holds, and do not write canonical data at inspection stage.
+
 ## Per-batch recording template
 
 ```yaml
