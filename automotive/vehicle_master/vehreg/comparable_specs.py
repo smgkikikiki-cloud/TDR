@@ -90,8 +90,8 @@ CHEMISTRY_FAMILIES = (
 #: Same problem, in Thai: the register writes the gearbox as prose.
 TRANSMISSION_FAMILIES = (
     (("cvt",), "CVT"),
-    (("\u0e18\u0e23\u0e23\u0e21\u0e14\u0e32", "manual"), "MANUAL"),
-    (("\u0e2d\u0e31\u0e15\u0e42\u0e19\u0e21\u0e31\u0e15\u0e34", "automatic"), "AUTOMATIC"),
+    (("ธรรมดา", "manual"), "MANUAL"),
+    (("อัตโนมัติ", "automatic"), "AUTOMATIC"),
 )
 
 
@@ -436,8 +436,14 @@ class SpecLedger:
               not in definition.applicable_powertrains):
             problems.append(
                 f"field does not apply to {self.catalog.trims[fact.trim_id].powertrain.value}")
-        if not fact.observed_at or not fact.source or not fact.source_ref:
-            problems.append("observed_at, source and source_ref are required")
+        if not fact.observed_at:
+            problems.append("observed_at is required")
+        is_direct_admin_fact = fact.fact_id.startswith("admin:")
+        if is_direct_admin_fact:
+            if bool(fact.source) != bool(fact.source_ref):
+                problems.append("admin fact source and source_ref must be both present or both absent")
+        elif not fact.source or not fact.source_ref:
+            problems.append("source and source_ref are required")
         if fact.effective_from and fact.effective_to \
                 and fact.effective_from > fact.effective_to:
             problems.append("effective_from is after effective_to")
