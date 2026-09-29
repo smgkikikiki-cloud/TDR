@@ -7,7 +7,7 @@ on:
   repository_dispatch:
     types: [canonical-input]
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "* * * * *"
   workflow_dispatch:
 
 permissions:
@@ -15,9 +15,19 @@ permissions:
   pull-requests: write
 
 concurrency:
-  # Shared with source-import, pricefeed and vehicle-release -- see
-  # pricefeed.yml's concurrency comment.
-  group: canonical-vehicle-input
+  # Deliberately its OWN group, not the shared "canonical-vehicle-input"
+  # group used by source-import/pricefeed/vehicle-release. Those three are
+  # periodic batch producers that can tolerate waiting behind each other;
+  # this one is the interactive admin queue and needs to drain roughly
+  # every minute. Sharing one mutex meant this worker's ticks were mostly
+  # getting skipped/coalesced behind source-import's 15-minute cron and
+  # pricefeed's 12-hour cron, so a QUEUED row could sit for hours before
+  # anything looked at it even though this workflow's own schedule says
+  # every minute. The residual risk of a same-second git push race against
+  # one of those three (writing the same vehreg/data tree, same branch) is
+  # handled by the retry loop in "Commit the validated write" below instead
+  # of by mutual exclusion.
+  group: canonical-input-worker
   cancel-in-progress: false
 
 jobs:
@@ -143,8 +153,23 @@ jobs:
           git config user.email "noreply@github.com"
           git add vehreg/data
           git commit -m "Apply ${{ steps.changes.outputs.count }} canonical input batch(es)"
-          git pull --rebase origin main
-          git push origin HEAD:main
+          # No longer mutually exclusive with source-import/pricefeed/
+          # vehicle-release (separate concurrency group, see above), so a
+          # same-second push from one of those three is now possible where
+          # it previously couldn't happen. Retry the rebase+push a few times
+          # before giving up -- cheap insurance against a rare race, not a
+          # replacement for the concurrency group those three still share
+          # with each other.
+          for attempt in 1 2 3 4 5; do
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              break
+            fi
+            if [ "$attempt" -eq 5 ]; then
+              echo "::error::git push kept losing a race after 5 attempts"
+              exit 1
+            fi
+            sleep $((attempt * 3))
+          done
           echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
           PYTHONPATH=. python tools/canonical_input_worker.py mark-staged \
             --result-file /tmp/canonical-input.json \

@@ -14,13 +14,16 @@ permissions:
   contents: write
 
 concurrency:
-  # Shared with source-import, canonical-input and pricefeed: this job
-  # activates a canonical vehicle release exactly like they do, and a
-  # separate concurrency group is what let an older commit's publish here
-  # race a newer commit's publish from one of them (or vice versa) and
-  # roll the active release backward. migration_v44's ordinal guard is the
-  # second line of defense, for an out-of-order queue a shared group alone
-  # cannot prevent.
+  # Shared with source-import and pricefeed: this job activates a canonical
+  # vehicle release exactly like they do, and a separate concurrency group
+  # is what let an older commit's publish here race a newer commit's
+  # publish from one of them (or vice versa) and roll the active release
+  # backward. migration_v44's ordinal guard is the second line of defense,
+  # for an out-of-order queue a shared group alone cannot prevent.
+  # canonical-input.yml deliberately left this group (see its own
+  # concurrency comment) to poll roughly every minute instead of waiting
+  # behind these slower jobs; the ordinal guard is what still protects the
+  # active release from that decoupling.
   group: canonical-vehicle-input
   cancel-in-progress: false
 
