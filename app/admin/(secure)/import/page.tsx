@@ -31,8 +31,8 @@ export default async function ImportPage() {
         <small>VEHICLE MASTER · IMPORT</small>
         <h1>นำเข้าข้อมูลจากไฟล์</h1>
         <p>
-          อัปไฟล์แล้วจบ — ระบบจับคู่รถให้เอง เขียนเฉพาะช่องที่ไฟล์มีค่าจริง ช่องว่างไม่แตะของเดิม
-          แถวที่หา identity ไม่ได้จริงๆ ไปรออยู่ที่ <Link href="/admin/exceptions">รายการที่ต้องตัดสิน</Link>
+          อัปไฟล์แล้วจบ — แต่ละประเภทใช้ parser ของตัวเอง ช่องว่างใน Vehicle Specs ไม่แตะค่าเดิม
+          และ canonical trim ID ต้องตรงกับรถที่มีอยู่แล้ว
         </p>
       </div>
     </div>
@@ -40,15 +40,12 @@ export default async function ImportPage() {
     <form action={uploadImportFileAction} className="adminForm">
       <label className="adminField adminFieldWide">
         <span>ไฟล์ CSV หรือ XLSX (สูงสุด 4 MB)</span>
-        <input name="file" type="file" accept=".csv,.xlsx,.xls" required />
+        <input name="file" type="file" accept=".csv,.xlsx" required />
       </label>
       <label className="adminField">
-        <span>แหล่งข้อมูล</span>
-        {/* Only sources with a parser of their own are offered. A file
-            has to be read by something that understands it, and running
-            one source's file through another's parser produces confident
-            nonsense rather than an error. */}
-        <select name="source_kind" defaultValue="ECO">
+        <span>ประเภทไฟล์</span>
+        <select name="source_kind" defaultValue="VEHICLE_SPECS">
+          <option value="VEHICLE_SPECS">Vehicle Specs / Canonical Excel</option>
           <option value="ECO">ECO Sticker</option>
           <option value="DLT">DLT / ยอดจดทะเบียน</option>
         </select>
@@ -59,7 +56,7 @@ export default async function ImportPage() {
     <div className="adminHeader"><div><small>สถานะ</small><h2>ไฟล์ที่อัปไว้</h2></div></div>
     <div className="libraryTable"><table>
       <thead><tr>
-        <th>ไฟล์</th><th>แหล่ง</th><th>สถานะ</th><th>อ่านได้</th>
+        <th>ไฟล์</th><th>ประเภท</th><th>สถานะ</th><th>อ่านได้</th>
         <th>อัปเดต</th><th>สร้างใหม่</th><th>ต้องตัดสิน</th>
       </tr></thead>
       <tbody>

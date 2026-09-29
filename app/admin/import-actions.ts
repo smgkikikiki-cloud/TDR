@@ -18,10 +18,9 @@ import { adminDb } from "@/lib/supabase";
 import { IMPORT_BUCKET, safeImportName } from "@/lib/import-runs";
 
 const MAX_BYTES = 4 * 1024 * 1024;
-// Sources with a parser of their own. Anything else has no import
-// profile yet, and is refused here rather than routed to whichever
-// parser is nearest.
-const SOURCE_KINDS = new Set(["ECO", "DLT"]);
+// File kinds with a parser of their own. Anything else is refused here rather
+// than being sent through whichever parser happens to be nearest.
+const SOURCE_KINDS = new Set(["ECO", "DLT", "VEHICLE_SPECS"]);
 
 export async function uploadImportFileAction(formData: FormData) {
   if (!(await isAdmin())) redirect("/admin/login");
@@ -29,7 +28,7 @@ export async function uploadImportFileAction(formData: FormData) {
   if (!(file instanceof File) || !file.size) throw new Error("เลือกไฟล์ก่อน");
   if (file.size > MAX_BYTES) throw new Error("ไฟล์ใหญ่เกิน 4 MB");
   const sourceKind = (field(formData, "source_kind") || "ECO").toUpperCase();
-  if (!SOURCE_KINDS.has(sourceKind)) throw new Error("ชนิดแหล่งข้อมูลไม่รองรับ");
+  if (!SOURCE_KINDS.has(sourceKind)) throw new Error("ชนิดไฟล์ไม่รองรับ");
 
   const db = adminDb();
   if (!db) throw new Error("ยังไม่ได้ตั้งค่า Supabase server credential");
