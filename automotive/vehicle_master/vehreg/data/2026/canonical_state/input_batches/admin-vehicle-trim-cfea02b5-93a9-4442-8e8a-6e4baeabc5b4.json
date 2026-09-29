@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "batch_id": "admin-vehicle-trim-cfea02b5-93a9-4442-8e8a-6e4baeabc5b4",
+  "batch_hash": "73903e2afb5529a30ad77724ccc6ebdf9c13d0abb3ed2972edf4d971c72f5b9d",
+  "status": "APPLIED",
+  "year": 2026,
+  "source": {
+    "kind": "ADMIN",
+    "ref": null
+  },
+  "actor": "siriwich",
+  "reason": "Manual edit via Canonical Vehicle Editor",
+  "submitted_at": "2026-09-29T03:46:53.585Z",
+  "applied_at": "2026-09-29T04:22:57+00:00",
+  "results": [
+    {
+      "command_id": "admin-vehicle-trim-cfea02b5-93a9-4442-8e8a-6e4baeabc5b4:1",
+      "revision_id": "b57e51d00ba4faaa6a276fc2",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "audi.a4",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "admin-vehicle-trim-cfea02b5-93a9-4442-8e8a-6e4baeabc5b4:2",
+      "revision_id": "14922d220d36fa642b2ed73d",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a4.gen1.trim.40_tfsi_s_line_hev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "admin-vehicle-trim-cfea02b5-93a9-4442-8e8a-6e4baeabc5b4:3",
+      "revision_id": "ad3f6be19abef9c6f94d584f",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a4.gen1.trim.40_tfsi_s_line_hev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "admin-vehicle-trim-cfea02b5-93a9-4442-8e8a-6e4baeabc5b4:4",
+      "revision_id": "129f6f2fa1b410d67b7fc94f",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a4.gen1.trim.40_tfsi_s_line_hev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "admin-vehicle-trim-cfea02b5-93a9-4442-8e8a-6e4baeabc5b4:5",
+      "revision_id": "40884b93f51658444dad0766",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a4.gen1.trim.40_tfsi_s_line_hev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "admin-vehicle-trim-cfea02b5-93a9-4442-8e8a-6e4baeabc5b4:6",
+      "revision_id": "98aa4cfb97ff4f2168b86263",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a4.gen1.trim.40_tfsi_s_line_hev",
+      "idempotent_replay": false
+    }
+  ],
+  "changed_files": [
+    "2026/models/audi.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a4.gen1.trim.40_tfsi_s_line_hev_engine.combustion_type_c70171a64200.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a4.gen1.trim.40_tfsi_s_line_hev_emissions.co2_g_km_5863a00d326b.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a4.gen1.trim.40_tfsi_s_line_hev_efficiency.fuel_consumption_urban_l_100km_d5c19fb02150.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a4.gen1.trim.40_tfsi_s_line_hev_efficiency.fuel_consumption_extra_urban_l_100km_7ed7dbb7011d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a4.gen1.trim.40_tfsi_s_line_hev_efficiency.fuel_consumption_l_100km_c88d89b20cec.json",
+    "2026/canonical_state/revisions.jsonl",
+    "2026/canonical_state/shadow/b57e51d00ba4faaa6a276fc2.json",
+    "2026/canonical_state/shadow/ad3f6be19abef9c6f94d584f.json",
+    "2026/canonical_state/shadow/98aa4cfb97ff4f2168b86263.json",
+    "2026/canonical_state/shadow/14922d220d36fa642b2ed73d.json",
+    "2026/canonical_state/outbox.jsonl",
+    "2026/canonical_state/shadow/129f6f2fa1b410d67b7fc94f.json",
+    "2026/canonical_state/shadow/40884b93f51658444dad0766.json"
+  ]
+}
