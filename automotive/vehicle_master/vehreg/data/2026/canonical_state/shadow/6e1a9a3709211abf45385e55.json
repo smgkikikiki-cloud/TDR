@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6e1a9a3709211abf45385e55",
+    "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:12",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-29T06:47:28+00:00",
+    "applied_at": "2026-09-29T06:48:26+00:00",
+    "before_hash": "a344993173ce9ece087bf2baab6b8e10a0d1f774b25cc95620fe13d698f4a702",
+    "after_hash": "e4b0ba1a10522f23733ecd1d1d08f58ff5b1f842a1aa3faafe056ef7c63b08f8",
+    "before": [
+      50.6,
+      "LFP",
+      6.6,
+      75,
+      "CCS2",
+      "MacPherson Strut",
+      "Torsion Beam",
+      true,
+      true,
+      true,
+      false,
+      true,
+      null
+    ],
+    "after": [
+      50.6,
+      "LFP",
+      6.6,
+      75,
+      "CCS2",
+      "MacPherson Strut",
+      "Torsion Beam",
+      true,
+      true,
+      true,
+      false,
+      true,
+      null,
+      442
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_ev.rated_range_km_0ae84e372d69_b1964d84a254.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6e1a9a3709211abf45385e55:spec",
+    "revision_id": "6e1a9a3709211abf45385e55",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-29T06:48:26+00:00",
+    "payload": [
+      50.6,
+      "LFP",
+      6.6,
+      75,
+      "CCS2",
+      "MacPherson Strut",
+      "Torsion Beam",
+      true,
+      true,
+      true,
+      false,
+      true,
+      null,
+      442
+    ]
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "716c9b6b536d00cff04f8e4f",
+    "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:6",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-29T06:47:28+00:00",
+    "applied_at": "2026-09-29T06:48:26+00:00",
+    "before_hash": "f792bc7967a1c4361f1dce10007ca59df757888b78794371d99ee558061b1c27",
+    "after_hash": "e2768a62d5c555f0a33d1f7050b9b4de9c5601fb79d8aa048172749b9bcd0de2",
+    "before": [
+      50.6,
+      "LFP",
+      6.6,
+      75,
+      true,
+      true,
+      true,
+      null
+    ],
+    "after": [
+      50.6,
+      "LFP",
+      6.6,
+      75,
+      true,
+      true,
+      true,
+      null,
+      "CCS2"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_charging.port_type_907c034b8fa2.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "716c9b6b536d00cff04f8e4f:spec",
+    "revision_id": "716c9b6b536d00cff04f8e4f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-29T06:48:26+00:00",
+    "payload": [
+      50.6,
+      "LFP",
+      6.6,
+      75,
+      true,
+      true,
+      true,
+      null,
+      "CCS2"
+    ]
+  }
+}

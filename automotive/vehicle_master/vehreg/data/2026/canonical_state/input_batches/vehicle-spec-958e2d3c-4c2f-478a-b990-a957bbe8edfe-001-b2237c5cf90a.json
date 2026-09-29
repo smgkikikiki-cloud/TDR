@@ -1,0 +1,341 @@
+{
+  "schema_version": 1,
+  "batch_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a",
+  "batch_hash": "75428daddd77552d6bc5e3264a79d841f0674490283be2d490107e0df7ae4bee",
+  "status": "APPLIED",
+  "year": 2026,
+  "source": {
+    "kind": "ADMIN",
+    "ref": "vehicle-spec-excel"
+  },
+  "actor": "tdr-admin",
+  "reason": "bulk import from vehicle-spec-excel",
+  "submitted_at": "2026-09-29T06:47:28+00:00",
+  "applied_at": "2026-09-29T06:48:27+00:00",
+  "results": [
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:1",
+      "revision_id": "eee2273dda19f1c696790e81",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "aion.aion_es",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:2",
+      "revision_id": "c114cb61b64bb664ecf27319",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:3",
+      "revision_id": "762478a409977e41812e1e22",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:4",
+      "revision_id": "ab4c78d497320829b3f7ad83",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:5",
+      "revision_id": "a240f67005022226a556c2cb",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:6",
+      "revision_id": "716c9b6b536d00cff04f8e4f",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:7",
+      "revision_id": "97bb466c9c0a2b1068508630",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:8",
+      "revision_id": "4ed88fad690020fb43159cff",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:9",
+      "revision_id": "dd0edf9a14a1c7a3c4b161e8",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:10",
+      "revision_id": "7c6dfcf3533d35446bdc04b4",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:11",
+      "revision_id": "c9402249fe2f47a0c409dd99",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:12",
+      "revision_id": "6e1a9a3709211abf45385e55",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:13",
+      "revision_id": "f17919464c55dab04f1f6b5d",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:14",
+      "revision_id": "0f2b8f131baa9b7797119a8c",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:15",
+      "revision_id": "33fa912e58b51071b9554235",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:16",
+      "revision_id": "796099e2b6141356c1f440f8",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:17",
+      "revision_id": "68d473c07e353bbe150cea24",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:18",
+      "revision_id": "408b1ee375d598d462507159",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:19",
+      "revision_id": "14d60e28f1fdbfef050738c0",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:20",
+      "revision_id": "0aea4ba9679ad7a0134d426a",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:21",
+      "revision_id": "ea5d874fad492f8e6681682c",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:22",
+      "revision_id": "95adc0d6a4abe45a3490a868",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:23",
+      "revision_id": "8c8b15bc4d1ac746100dcf98",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:24",
+      "revision_id": "af7e0cdf7c22dcafd1cbf076",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:25",
+      "revision_id": "1e076b2738ad8a6379ca1169",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:26",
+      "revision_id": "40f16e9dd34f5a05ca2d0bb5",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:27",
+      "revision_id": "b8aede65241b7baaa3b33f3d",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:28",
+      "revision_id": "886648f88b98478489e54157",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:29",
+      "revision_id": "31d1d9df7e0950a7886b30ca",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:30",
+      "revision_id": "d6339397659134ea585c56e2",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:31",
+      "revision_id": "180075687ba983562c2310ed",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:32",
+      "revision_id": "b9a8ca534250c3906483434a",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+      "idempotent_replay": false
+    }
+  ],
+  "changed_files": [
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_vehicle.curb_weight_kg_eef0f338d6b2_9dcd7d5def6f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_safety.blind_spot_fc42517da5f9.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_powertrain.max_power_kw_398e0332b76d_cd966915ec7d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_charging.port_type_907c034b8fa2.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_chassis.suspension_front_5b9eb4e1b40a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_vehicle.width_mm_49a0930f8769.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_powertrain.max_power_kw_157d561b6286_952ef3358a3a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_safety.airbag_count_a43e43511394.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_charging.ac_max_kw_49c5e5fbfdbe.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_performance.top_speed_kmh_eef0f338d6b2_6542a20f34cc.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_fitment.tyre_rear_de343defe363.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_safety.rear_cross_traffic_ae66e813414a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_vehicle.wheelbase_mm_2136d94e1e4e.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_powertrain.motor_type_8de5c6df73c5.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_vehicle.height_mm_013f4f0b6c4f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_chassis.suspension_rear_0942a7c88954.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_safety.esc_00cf8d1925bd.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_vehicle.length_mm_2dc652b9978b.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_battery.catalog_capacity_kwh_bbf22b403138.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_powertrain.max_torque_nm_157d561b6286_b393a5755085.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_safety.abs_b4055a9f63d8.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_vehicle.seats_8d374db4f110.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_charging.dc_max_kw_9d18d19d12be_fa2d5dde8710.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_safety.aeb_33529aeb07eb.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_battery.chemistry_9505e3b1e179.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_comfort.keyless_entry_e137ce7cb039.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_fitment.tyre_front_eb5488c8a839.json",
+    "2026/models/aion.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_powertrain.max_torque_nm_398e0332b76d_6bd133caef16.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_ev.rated_range_km_0ae84e372d69_b1964d84a254.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_comfort.panoramic_roof_348a6266a2f1.json",
+    "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_comfort.electric_parking_brake_5b7cda04dac0.json",
+    "2026/canonical_state/shadow/886648f88b98478489e54157.json",
+    "2026/canonical_state/shadow/8c8b15bc4d1ac746100dcf98.json",
+    "2026/canonical_state/shadow/a240f67005022226a556c2cb.json",
+    "2026/canonical_state/shadow/7c6dfcf3533d35446bdc04b4.json",
+    "2026/canonical_state/revisions.jsonl",
+    "2026/canonical_state/shadow/ab4c78d497320829b3f7ad83.json",
+    "2026/canonical_state/shadow/f17919464c55dab04f1f6b5d.json",
+    "2026/canonical_state/shadow/eee2273dda19f1c696790e81.json",
+    "2026/canonical_state/shadow/ea5d874fad492f8e6681682c.json",
+    "2026/canonical_state/shadow/4ed88fad690020fb43159cff.json",
+    "2026/canonical_state/shadow/dd0edf9a14a1c7a3c4b161e8.json",
+    "2026/canonical_state/shadow/796099e2b6141356c1f440f8.json",
+    "2026/canonical_state/outbox.jsonl",
+    "2026/canonical_state/shadow/95adc0d6a4abe45a3490a868.json",
+    "2026/canonical_state/shadow/31d1d9df7e0950a7886b30ca.json",
+    "2026/canonical_state/shadow/0f2b8f131baa9b7797119a8c.json",
+    "2026/canonical_state/shadow/1e076b2738ad8a6379ca1169.json",
+    "2026/canonical_state/shadow/40f16e9dd34f5a05ca2d0bb5.json",
+    "2026/canonical_state/shadow/c9402249fe2f47a0c409dd99.json",
+    "2026/canonical_state/shadow/0aea4ba9679ad7a0134d426a.json",
+    "2026/canonical_state/shadow/b8aede65241b7baaa3b33f3d.json",
+    "2026/canonical_state/shadow/68d473c07e353bbe150cea24.json",
+    "2026/canonical_state/shadow/14d60e28f1fdbfef050738c0.json",
+    "2026/canonical_state/shadow/c114cb61b64bb664ecf27319.json",
+    "2026/canonical_state/shadow/d6339397659134ea585c56e2.json",
+    "2026/canonical_state/shadow/180075687ba983562c2310ed.json",
+    "2026/canonical_state/shadow/b9a8ca534250c3906483434a.json",
+    "2026/canonical_state/shadow/97bb466c9c0a2b1068508630.json",
+    "2026/canonical_state/shadow/762478a409977e41812e1e22.json",
+    "2026/canonical_state/shadow/6e1a9a3709211abf45385e55.json",
+    "2026/canonical_state/shadow/33fa912e58b51071b9554235.json",
+    "2026/canonical_state/shadow/af7e0cdf7c22dcafd1cbf076.json",
+    "2026/canonical_state/shadow/716c9b6b536d00cff04f8e4f.json",
+    "2026/canonical_state/shadow/408b1ee375d598d462507159.json"
+  ]
+}

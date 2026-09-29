@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "4ed88fad690020fb43159cff",
+    "command_id": "vehicle-spec-958e2d3c-4c2f-478a-b990-a957bbe8edfe-001-b2237c5cf90a:8",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-29T06:47:28+00:00",
+    "applied_at": "2026-09-29T06:48:26+00:00",
+    "before_hash": "147fc299c903074ae79d6bdcf440d55ad8676f46b7cd395d900e4767c5dc868d",
+    "after_hash": "1c620866c9c1838737948e5e5e276a5ea6e53cf24854023211fd4ea12c7eea60",
+    "before": [
+      50.6,
+      "LFP",
+      6.6,
+      75,
+      "CCS2",
+      "MacPherson Strut",
+      true,
+      true,
+      true,
+      null
+    ],
+    "after": [
+      50.6,
+      "LFP",
+      6.6,
+      75,
+      "CCS2",
+      "MacPherson Strut",
+      true,
+      true,
+      true,
+      null,
+      "Torsion Beam"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev_chassis.suspension_rear_0942a7c88954.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "4ed88fad690020fb43159cff:spec",
+    "revision_id": "4ed88fad690020fb43159cff",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_es.aes.trim.standard_fleet_taxi_ev_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-29T06:48:26+00:00",
+    "payload": [
+      50.6,
+      "LFP",
+      6.6,
+      75,
+      "CCS2",
+      "MacPherson Strut",
+      true,
+      true,
+      true,
+      null,
+      "Torsion Beam"
+    ]
+  }
+}
