@@ -191,44 +191,43 @@ Commit `765ff653d32c8c070b70c46d4df88ec3ebc1c738`:
 
 - production runtime now derives `GITHUB_REPOSITORY` from `VERCEL_GIT_REPO_OWNER` + `VERCEL_GIT_REPO_SLUG` when `GITHUB_REPOSITORY` is not explicitly configured, matching `.env.example`
 
-### Confirmed remaining production blocker
+### Root cause confirmed in production
 
 A live Save after the repository-resolution hotfix produced this Vercel runtime warning:
 
 `canonical input queued but immediate dispatch is unavailable: GITHUB_DISPATCH_TOKEN is not configured`
 
-Therefore the immediate wake-up still cannot run in production until the token is configured. The durable queue remains intact; the scheduled sweeper remains the fallback.
+The remaining blocker was therefore the missing server-only `GITHUB_DISPATCH_TOKEN` in Vercel Production. The durable Supabase queue was intact throughout.
 
-### Manual deployment action required
+### Resolution and live verification
 
-In the Vercel project `tdr`, add a **server-only** Production environment variable:
+A fine-grained GitHub token with access to `smgkikikiki-cloud/TDR` and repository **Contents — Read and write** permission was added to Vercel Production as `GITHUB_DISPATCH_TOKEN`, then Production was redeployed.
 
-`GITHUB_DISPATCH_TOKEN=<fine-grained GitHub token>`
+Live verification after redeploy:
 
-Token requirements for the current implementation (`POST /repos/{owner}/{repo}/dispatches`):
+- an admin MarketTrim Save completed at approximately `2026-09-29T04:22:01Z`
+- GitHub Actions run `36521308420` (`Process canonical vehicle input`, run `#2046`) was created at `2026-09-29T04:22:06Z`
+- the run event was **`repository_dispatch`**, proving the immediate wake-up path works instead of relying on cron
+- the new batch plus two older queued admin batches were all pulled by the worker and moved to `PROCESSING`, `attempts=1`
+- validation, commit, exact-revision publish, and `Mark the applied batches PUBLISHED` all completed successfully
+- all three batches finished `PUBLISHED` with no error
+- all three point to release `vehicle-2026-65979fa053990149`
+- publish timestamps were approximately `2026-09-29T04:24:38Z`–`04:24:39Z`
+- the user confirmed the edited values appeared on the public UI for all affected records
 
-- resource owner: the GitHub account owning `smgkikikiki-cloud/TDR`
-- repository access: only `smgkikikiki-cloud/TDR` is sufficient
-- repository permission: **Contents — Read and write**
-- no token value belongs in this repository or in this document
-
-After adding the environment variable, redeploy Production so the new secret is available to server actions.
-
-### Required live verification after secret configuration
-
-1. Save one harmless canonical admin edit.
-2. Confirm a `Process canonical vehicle input` Actions run appears within seconds with event `repository_dispatch`.
-3. Confirm the queued batch moves out of `QUEUED` and receives processing/publish metadata.
-4. Confirm the public UI serves the new canonical release.
-5. Confirm older queued batches are picked up by the worker/sweeper as expected.
-
-Do not consider the fast path closed until this real production chain is observed.
+The worker intentionally drains queued backlog when woken; a new Save can therefore recover older `QUEUED` rows in the same validated/published release.
 
 ## Current status
 
 The deterministic Vehicle Spec Excel importer is merged into `main`.
 
-Importer/data correctness blockers found during the pre-merge audit were fixed. The current open operational issue is the **production canonical-input immediate wake-up**, whose remaining confirmed blocker is missing `GITHUB_DISPATCH_TOKEN` in Vercel Production.
+Importer/data correctness blockers found during the pre-merge audit were fixed. The post-merge admin canonical-input immediate wake-up incident is also **RESOLVED and verified end-to-end in production**.
+
+Current live path:
+
+`admin Save -> durable Supabase QUEUED row -> repository_dispatch within seconds -> canonical worker -> validate -> commit -> exact-revision publish -> PUBLISHED -> public UI`
+
+Fallback `*/5` scheduled sweep remains as recovery if an immediate dispatch ever fails.
 
 End-to-end importer path:
 
