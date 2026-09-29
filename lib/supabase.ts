@@ -13,6 +13,25 @@ function cleanEnv(value: string | undefined) {
   return trimmed;
 }
 
+// Admin server actions enqueue durable rows through this module before they
+// try to wake GitHub Actions. Vercel already exposes the repository owner and
+// slug as system environment variables, so honour the deployment contract in
+// .env.example and synthesize GITHUB_REPOSITORY when it was not set manually.
+// Existing explicit configuration always wins.
+function hydrateGitHubRepositoryEnv() {
+  const explicit = cleanEnv(process.env.GITHUB_REPOSITORY);
+  if (explicit) {
+    process.env.GITHUB_REPOSITORY = explicit;
+    return;
+  }
+
+  const owner = cleanEnv(process.env.VERCEL_GIT_REPO_OWNER);
+  const slug = cleanEnv(process.env.VERCEL_GIT_REPO_SLUG);
+  if (owner && slug) process.env.GITHUB_REPOSITORY = `${owner}/${slug}`;
+}
+
+hydrateGitHubRepositoryEnv();
+
 export function publicDb(): SupabaseClient | null {
   const url = cleanEnv(process.env.NEXT_PUBLIC_SUPABASE_URL) || FALLBACK_SUPABASE_URL;
   const key = cleanEnv(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) || FALLBACK_SUPABASE_PUBLISHABLE_KEY;
