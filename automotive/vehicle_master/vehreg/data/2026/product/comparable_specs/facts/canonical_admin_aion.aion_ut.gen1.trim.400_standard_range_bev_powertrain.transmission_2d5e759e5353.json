@@ -2,16 +2,15 @@
   "schema_version": 1,
   "facts": [
     {
-      "unit": "",
-      "value": null,
-      "source": "admin",
+      "fact_id": "admin:aion.aion_ut.gen1.trim.400_standard_range_bev:powertrain.transmission",
       "trim_id": "aion.aion_ut.gen1.trim.400_standard_range_bev",
       "field_key": "powertrain.transmission",
-      "source_ref": "admin",
-      "observed_at": "2026-09-26",
-      "value_state": "UNKNOWN",
-      "verification_status": "VERIFIED",
-      "fact_id": "admin:aion.aion_ut.gen1.trim.400_standard_range_bev:powertrain.transmission"
+      "value_state": "KNOWN",
+      "value": "1-Speed",
+      "unit": "",
+      "qualifiers": {},
+      "observed_at": "2026-09-29",
+      "verification_status": "VERIFIED"
     }
   ]
 }

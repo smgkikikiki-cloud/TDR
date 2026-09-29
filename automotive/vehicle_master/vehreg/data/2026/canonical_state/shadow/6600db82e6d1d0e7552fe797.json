@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6600db82e6d1d0e7552fe797",
+    "command_id": "vehicle-spec-34dc3bad-445c-4f30-b42b-92ead6d73b6f-001-e49fa4716835:81",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_ut.gen1.trim.500_long_range_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-29T19:26:56+00:00",
+    "applied_at": "2026-09-29T19:28:00+00:00",
+    "before_hash": "d2f1cc65bb9c89bd8191ad994dd9910c271f3f498c0c8ba791856f1858a9e120",
+    "after_hash": "fd855f5bf07dfe4ad9dd1f8743e696d4a4df5218c1c40ef7e708008ff2938ee8",
+    "before": [
+      60,
+      "LFP",
+      350,
+      57.5,
+      200000,
+      8,
+      6.6,
+      "CCS2",
+      80,
+      24,
+      true,
+      "MacPherson Strut"
+    ],
+    "after": [
+      60,
+      "LFP",
+      350,
+      57.5,
+      200000,
+      8,
+      6.6,
+      "CCS2",
+      80,
+      24,
+      true,
+      "MacPherson Strut",
+      "Torsion Beam"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_aion.aion_ut.gen1.trim.500_long_range_bev_chassis.suspension_rear_991c749724f5.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6600db82e6d1d0e7552fe797:spec",
+    "revision_id": "6600db82e6d1d0e7552fe797",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_ut.gen1.trim.500_long_range_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-29T19:28:00+00:00",
+    "payload": [
+      60,
+      "LFP",
+      350,
+      57.5,
+      200000,
+      8,
+      6.6,
+      "CCS2",
+      80,
+      24,
+      true,
+      "MacPherson Strut",
+      "Torsion Beam"
+    ]
+  }
+}

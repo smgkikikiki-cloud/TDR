@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "31c09d72d38c59f6967c8e13",
+    "command_id": "vehicle-spec-34dc3bad-445c-4f30-b42b-92ead6d73b6f-001-e49fa4716835:7",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_ut.gen1.trim.400_standard_range_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-29T19:26:56+00:00",
+    "applied_at": "2026-09-29T19:27:59+00:00",
+    "before_hash": "0b203b87c80fabcbc66eef28410fda603daecc602d4249fa21943127920b1e91",
+    "after_hash": "b8214dced7e39f12a583ea19bbedd43f6404f0939dbeb00625d384ec6867f985",
+    "before": [
+      50.27,
+      "LFP",
+      350,
+      48,
+      200000,
+      null,
+      6
+    ],
+    "after": [
+      50.27,
+      "LFP",
+      350,
+      48,
+      200000,
+      null,
+      6,
+      8
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_aion.aion_ut.gen1.trim.400_standard_range_bev_battery.warranty_years_ae3b045bd482.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "31c09d72d38c59f6967c8e13:spec",
+    "revision_id": "31c09d72d38c59f6967c8e13",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_ut.gen1.trim.400_standard_range_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-29T19:27:59+00:00",
+    "payload": [
+      50.27,
+      "LFP",
+      350,
+      48,
+      200000,
+      null,
+      6,
+      8
+    ]
+  }
+}

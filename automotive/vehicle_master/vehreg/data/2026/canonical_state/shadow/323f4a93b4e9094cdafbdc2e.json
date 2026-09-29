@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "323f4a93b4e9094cdafbdc2e",
+    "command_id": "vehicle-spec-34dc3bad-445c-4f30-b42b-92ead6d73b6f-001-e49fa4716835:79",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_ut.gen1.trim.500_long_range_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-29T19:26:56+00:00",
+    "applied_at": "2026-09-29T19:28:00+00:00",
+    "before_hash": "d17df0c0dbd33ff989183734d44b2ef18e2c210b980a84fa1a6c15f738f3877b",
+    "after_hash": "9deba912cb66d96f3a5836263dd41d9b4861d7016483dd12994137258b8242e8",
+    "before": [
+      60,
+      "LFP",
+      350,
+      57.5,
+      200000,
+      8,
+      6.6,
+      "CCS2",
+      80,
+      24
+    ],
+    "after": [
+      60,
+      "LFP",
+      350,
+      57.5,
+      200000,
+      8,
+      6.6,
+      "CCS2",
+      80,
+      24,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_aion.aion_ut.gen1.trim.500_long_range_bev_charging.v2l_supported_ee857933e30a.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "323f4a93b4e9094cdafbdc2e:spec",
+    "revision_id": "323f4a93b4e9094cdafbdc2e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_ut.gen1.trim.500_long_range_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-29T19:28:00+00:00",
+    "payload": [
+      60,
+      "LFP",
+      350,
+      57.5,
+      200000,
+      8,
+      6.6,
+      "CCS2",
+      80,
+      24,
+      true
+    ]
+  }
+}

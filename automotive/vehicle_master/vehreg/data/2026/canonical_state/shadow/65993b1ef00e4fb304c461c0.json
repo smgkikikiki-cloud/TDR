@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "65993b1ef00e4fb304c461c0",
+    "command_id": "vehicle-spec-34dc3bad-445c-4f30-b42b-92ead6d73b6f-001-e49fa4716835:82",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_ut.gen1.trim.500_long_range_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-29T19:26:56+00:00",
+    "applied_at": "2026-09-29T19:28:00+00:00",
+    "before_hash": "fd855f5bf07dfe4ad9dd1f8743e696d4a4df5218c1c40ef7e708008ff2938ee8",
+    "after_hash": "f5b73461b3aeeed5337256495d94a23446cda62d8d3c774eeb4c7ce52c7278d8",
+    "before": [
+      60,
+      "LFP",
+      350,
+      57.5,
+      200000,
+      8,
+      6.6,
+      "CCS2",
+      80,
+      24,
+      true,
+      "MacPherson Strut",
+      "Torsion Beam"
+    ],
+    "after": [
+      60,
+      "LFP",
+      350,
+      57.5,
+      200000,
+      8,
+      6.6,
+      "CCS2",
+      80,
+      24,
+      true,
+      "MacPherson Strut",
+      "Torsion Beam",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_aion.aion_ut.gen1.trim.500_long_range_bev_comfort.auto_climate_903005613e47.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "65993b1ef00e4fb304c461c0:spec",
+    "revision_id": "65993b1ef00e4fb304c461c0",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "aion.aion_ut.gen1.trim.500_long_range_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-29T19:28:00+00:00",
+    "payload": [
+      60,
+      "LFP",
+      350,
+      57.5,
+      200000,
+      8,
+      6.6,
+      "CCS2",
+      80,
+      24,
+      true,
+      "MacPherson Strut",
+      "Torsion Beam",
+      true
+    ]
+  }
+}
