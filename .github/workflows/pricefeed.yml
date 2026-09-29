@@ -19,9 +19,10 @@ concurrency:
   # publish concurrently -- see migration_v44's ordinal guard for the case
   # a shared group alone cannot fully prevent (an out-of-order queue, not
   # true concurrency). canonical-input.yml deliberately left this group
-  # (see its own concurrency comment) to poll roughly every minute instead
-  # of waiting behind this job's 12-hour cadence; migration_v44's guard is
-  # what still protects the active release from that decoupling.
+  # (see its own concurrency comment) so a dispatched admin save reacts in
+  # seconds instead of waiting behind this job's 12-hour cadence;
+  # migration_v44's guard is what still protects the active release from
+  # that decoupling.
   group: canonical-vehicle-input
   cancel-in-progress: false
 

@@ -143,7 +143,36 @@ async function enqueuePayload(payload: Record<string, unknown>, resultKind: stri
     redirect(`/admin/vehicle-input?queued=duplicate&kind=${encodeURIComponent(resultKind)}`);
   }
   if (error) throw error;
+  // The row is durably QUEUED at this point regardless of what happens
+  // next -- dispatch is a best-effort nudge to start processing in seconds
+  // rather than at the next fallback sweep, never a condition for the
+  // insert above to count as done.
+  await dispatchCanonicalInputWorker();
   redirect(`/admin/vehicle-input?queued=1&kind=${encodeURIComponent(resultKind)}`);
+}
+
+/** Wake canonical-input.yml now instead of waiting for its 5-minute
+ *  fallback schedule. Mirrors dispatchImportWorker() in import-actions.ts
+ *  (same token, same GitHub API call, same fire-and-forget failure
+ *  handling): a failed dispatch never touches the row enqueuePayload()
+ *  just inserted -- the schedule sweep picks it up. */
+async function dispatchCanonicalInputWorker() {
+  const token = process.env.GITHUB_DISPATCH_TOKEN;
+  const repo = process.env.GITHUB_REPOSITORY;
+  if (!token || !repo) return;
+  try {
+    await fetch(`https://api.github.com/repos/${repo}/dispatches`, {
+      method: "POST",
+      headers: {
+        authorization: `Bearer ${token}`,
+        accept: "application/vnd.github+json",
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ event_type: "canonical-input" }),
+    });
+  } catch (error) {
+    console.error("canonical input dispatch failed; the sweep will pick it up", error);
+  }
 }
 
 export async function enqueueVehicleInput(formData: FormData) {

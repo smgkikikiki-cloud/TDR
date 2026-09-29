@@ -1,13 +1,16 @@
 name: Process canonical vehicle input
 
 on:
-  # A save dispatches this directly, so the write starts in seconds rather
-  # than whenever the next tick comes round. The schedule stays only as a
-  # sweeper for a dispatch that never arrived; nobody waits on it.
+  # A save (app/admin/input-actions.ts's enqueuePayload(), via
+  # dispatchCanonicalInputWorker()) dispatches this directly right after
+  # the row lands QUEUED, so the write starts in seconds rather than
+  # whenever the next tick comes round. The 5-minute schedule below is
+  # only a fallback sweeper for a dispatch that was never sent or never
+  # arrived; the admin does not normally wait on it.
   repository_dispatch:
     types: [canonical-input]
   schedule:
-    - cron: "* * * * *"
+    - cron: "*/5 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -18,15 +21,14 @@ concurrency:
   # Deliberately its OWN group, not the shared "canonical-vehicle-input"
   # group used by source-import/pricefeed/vehicle-release. Those three are
   # periodic batch producers that can tolerate waiting behind each other;
-  # this one is the interactive admin queue and needs to drain roughly
-  # every minute. Sharing one mutex meant this worker's ticks were mostly
-  # getting skipped/coalesced behind source-import's 15-minute cron and
-  # pricefeed's 12-hour cron, so a QUEUED row could sit for hours before
-  # anything looked at it even though this workflow's own schedule says
-  # every minute. The residual risk of a same-second git push race against
-  # one of those three (writing the same vehreg/data tree, same branch) is
-  # handled by the retry loop in "Commit the validated write" below instead
-  # of by mutual exclusion.
+  # this one is the interactive admin queue and needs to react to a
+  # dispatch in seconds. Sharing one mutex meant this worker's own ticks
+  # were mostly getting skipped/coalesced behind source-import's 15-minute
+  # cron and pricefeed's 12-hour cron, so a QUEUED row could sit for hours
+  # before anything looked at it. The residual risk of a same-second git
+  # push race against one of those three (writing the same vehreg/data
+  # tree, same branch) is handled by the retry loop in "Commit the
+  # validated write" below instead of by mutual exclusion.
   group: canonical-input-worker
   cancel-in-progress: false
 
@@ -161,10 +163,19 @@ jobs:
           # replacement for the concurrency group those three still share
           # with each other.
           for attempt in 1 2 3 4 5; do
+            # A conflicted rebase from a previous attempt would make this
+            # attempt's own `git pull --rebase` fail immediately with
+            # "rebase in progress" instead of retrying cleanly. Always
+            # start from a clean, non-rebasing state -- a no-op when
+            # nothing is in progress -- so every attempt gets a fresh try.
+            # This restores our own not-yet-pushed commit exactly as it
+            # was before the failed rebase; it never discards it.
+            git rebase --abort 2>/dev/null || true
             if git pull --rebase origin main && git push origin HEAD:main; then
               break
             fi
             if [ "$attempt" -eq 5 ]; then
+              git rebase --abort 2>/dev/null || true
               echo "::error::git push kept losing a race after 5 attempts"
               exit 1
             fi
