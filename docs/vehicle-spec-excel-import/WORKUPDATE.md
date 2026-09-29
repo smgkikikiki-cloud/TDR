@@ -1,7 +1,7 @@
 # Vehicle Spec Excel Import — WORKUPDATE
 
 Branch: `feature/vehicle-spec-excel-importer`
-PR: `#164` — Add deterministic vehicle spec Excel importer
+PR: `#164` — Add deterministic vehicle spec Excel importer — **MERGED**
 
 ## Goal
 
@@ -162,15 +162,77 @@ Latest executable head `4f78a29a421dcb18c7175c03b4516d65f0ecc4e2` adds only the 
 - TypeScript: same two unrelated lifecycle smoke failures confirmed
 - full Python suite is still running at the time of this note; the immediately preceding atomic head already passed both new importer tests with no importer-specific failure
 
+## Post-merge admin canonical-input wake-up incident — 2026-09-29
+
+The importer PR is merged, but live testing of ordinary admin canonical saves exposed a separate latency/reliability problem in the canonical-input wake-up path.
+
+### Symptoms observed in production
+
+- admin Save successfully inserts a durable row into `canonical_input_batches`
+- the admin editor can immediately show the pending edit through its QUEUED/PROCESSING overlay
+- the public UI remains on the previous active canonical release until the worker processes and publishes the batch
+- two live admin batches observed during testing remained `QUEUED`, `attempts=0`, with no `release_id`
+- GitHub Actions showed no `repository_dispatch` runs from those saves
+
+This isolated the failure to `admin Save -> wake GitHub Actions`, not the Supabase queue, admin editor, canonical compiler, or public rendering path.
+
+### Fixes already merged
+
+Commit `69634cb38cadf35b652996904f51f63b87ccea79`:
+
+- `app/admin/input-actions.ts` now calls `dispatchCanonicalInputWorker()` immediately after a genuinely new successful QUEUED insert
+- duplicate-resubmit path does not dispatch again
+- `.github/workflows/canonical-input.yml` keeps `repository_dispatch: types: [canonical-input]`
+- fallback schedule is `*/5 * * * *`
+- canonical-input keeps its dedicated `canonical-input-worker` concurrency group instead of the shared canonical writer group
+- failed rebase attempts are aborted before the next push retry
+
+Commit `765ff653d32c8c070b70c46d4df88ec3ebc1c738`:
+
+- production runtime now derives `GITHUB_REPOSITORY` from `VERCEL_GIT_REPO_OWNER` + `VERCEL_GIT_REPO_SLUG` when `GITHUB_REPOSITORY` is not explicitly configured, matching `.env.example`
+
+### Confirmed remaining production blocker
+
+A live Save after the repository-resolution hotfix produced this Vercel runtime warning:
+
+`canonical input queued but immediate dispatch is unavailable: GITHUB_DISPATCH_TOKEN is not configured`
+
+Therefore the immediate wake-up still cannot run in production until the token is configured. The durable queue remains intact; the scheduled sweeper remains the fallback.
+
+### Manual deployment action required
+
+In the Vercel project `tdr`, add a **server-only** Production environment variable:
+
+`GITHUB_DISPATCH_TOKEN=<fine-grained GitHub token>`
+
+Token requirements for the current implementation (`POST /repos/{owner}/{repo}/dispatches`):
+
+- resource owner: the GitHub account owning `smgkikikiki-cloud/TDR`
+- repository access: only `smgkikikiki-cloud/TDR` is sufficient
+- repository permission: **Contents — Read and write**
+- no token value belongs in this repository or in this document
+
+After adding the environment variable, redeploy Production so the new secret is available to server actions.
+
+### Required live verification after secret configuration
+
+1. Save one harmless canonical admin edit.
+2. Confirm a `Process canonical vehicle input` Actions run appears within seconds with event `repository_dispatch`.
+3. Confirm the queued batch moves out of `QUEUED` and receives processing/publish metadata.
+4. Confirm the public UI serves the new canonical release.
+5. Confirm older queued batches are picked up by the worker/sweeper as expected.
+
+Do not consider the fast path closed until this real production chain is observed.
+
 ## Current status
 
-Pre-merge audit found one critical correctness bug and one small determinism issue; both are fixed. No additional importer/data-path blocker was found in the second audit.
+The deterministic Vehicle Spec Excel importer is merged into `main`.
 
-End-to-end path:
+Importer/data correctness blockers found during the pre-merge audit were fixed. The current open operational issue is the **production canonical-input immediate wake-up**, whose remaining confirmed blocker is missing `GITHUB_DISPATCH_TOKEN` in Vercel Production.
+
+End-to-end importer path:
 
 `generated template -> filled Excel/CSV -> deterministic compiler -> whole-workbook atomic staging -> canonical input batches -> canonical write -> worker commit -> immutable release -> Supabase publish`
-
-PR remains open and is not auto-merged. Merge timing belongs to the user.
 
 ## Handoff rule
 
