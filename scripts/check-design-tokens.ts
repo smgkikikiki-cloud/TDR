@@ -66,7 +66,11 @@ const report = process.argv.includes("--report");
 let failed = 0;
 const rows: [string, number, number][] = [];
 
-for (const file of ROOTS.flatMap((r) => walk(r))) {
+// Strict files that live outside app/ and components/ (design/components.css) are scanned too.
+const scanned = new Set(ROOTS.flatMap((r) => walk(r)));
+for (const f of strict) if (existsSync(f) && !ALLOW_FILES.has(f)) scanned.add(f);
+
+for (const file of scanned) {
   if (ALLOW_FILES.has(file)) continue;
   const src = readFileSync(file, "utf8");
   const colors = src.match(COLOR)?.length ?? 0;
