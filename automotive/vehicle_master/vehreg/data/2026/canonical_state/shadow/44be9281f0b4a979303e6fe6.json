@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "44be9281f0b4a979303e6fe6",
+    "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:3",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T02:50:37+00:00",
+    "applied_at": "2026-09-30T02:51:40+00:00",
+    "before_hash": "02802f66bfe7715dc7fa103e3a07f4f9f948544b8b78d3db5e9acb18285b892b",
+    "after_hash": "6ec55ff3ccd19dad27255329c0ce24a1677604b6c2a74a24d8a0ef7735560118",
+    "before": [
+      114
+    ],
+    "after": [
+      114,
+      "Li-ion"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_battery.chemistry_1c09c6d0dd17.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "44be9281f0b4a979303e6fe6:spec",
+    "revision_id": "44be9281f0b4a979303e6fe6",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T02:51:40+00:00",
+    "payload": [
+      114,
+      "Li-ion"
+    ]
+  }
+}

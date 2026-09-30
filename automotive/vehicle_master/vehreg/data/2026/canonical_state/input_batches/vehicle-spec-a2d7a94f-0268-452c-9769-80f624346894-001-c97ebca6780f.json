@@ -1,0 +1,471 @@
+{
+  "schema_version": 1,
+  "batch_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f",
+  "batch_hash": "ce52120855057ae57b11362bee23c04bc673fc448f0f9d51a08d3e2c7453eb37",
+  "status": "APPLIED",
+  "year": 2026,
+  "source": {
+    "kind": "ADMIN",
+    "ref": "vehicle-spec-excel"
+  },
+  "actor": "tdr-admin",
+  "reason": "bulk import from vehicle-spec-excel",
+  "submitted_at": "2026-09-30T02:50:37+00:00",
+  "applied_at": "2026-09-30T02:51:41+00:00",
+  "results": [
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:1",
+      "revision_id": "e7589172e402a8a2e5681000",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "audi.q8_etron",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:2",
+      "revision_id": "5b9e35a0cc429c93da869c12",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:3",
+      "revision_id": "44be9281f0b4a979303e6fe6",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:4",
+      "revision_id": "17343b3c7eaf6a83084ef3e7",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:5",
+      "revision_id": "bab17ec72feb7b0e8ce7a23d",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:6",
+      "revision_id": "e32df4c8c26813573c6bff52",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:7",
+      "revision_id": "c96c62adfcd3afa3bd5183b5",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:8",
+      "revision_id": "48584cae834215e2f6bef6d8",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:9",
+      "revision_id": "36898ccc15e63151e23e0baa",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:10",
+      "revision_id": "151c20280a3ad660af5fd3e4",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:11",
+      "revision_id": "fa3d9ae288f2205249c1115b",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:12",
+      "revision_id": "b88c51c5e89ba5f29e89443a",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:13",
+      "revision_id": "743b095529f6fec699ee078d",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:14",
+      "revision_id": "f04df0141dfc72bfe05e692c",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:15",
+      "revision_id": "652245ed3cc0bad17f67804f",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:16",
+      "revision_id": "7bef0a5d3bcb433516d6de95",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:17",
+      "revision_id": "468791b357efc6a936839a33",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:18",
+      "revision_id": "a35ca6478dbb39d8cd993bb3",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:19",
+      "revision_id": "037df972a5495d2d8794a753",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:20",
+      "revision_id": "077ecf4cd49c5d5ee40e2ba8",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:21",
+      "revision_id": "35049ade180a29161bcb2166",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:22",
+      "revision_id": "c74336cea911f5f7799227ba",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:23",
+      "revision_id": "9eb7773dcc0da1d18e85facf",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:24",
+      "revision_id": "7202a007aa6572deb2ffa0ad",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:25",
+      "revision_id": "e4d1ae0e22af98aac7db13a4",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:26",
+      "revision_id": "1b49e959c2f51c17443f7520",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:27",
+      "revision_id": "f4cc46ea70dfac64598a1e0d",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:28",
+      "revision_id": "f125192e5b2ac081e6a734b7",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:29",
+      "revision_id": "6ad054a8cb79edccf5cca190",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:30",
+      "revision_id": "094b5871c1fad0a61be1bdfe",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:31",
+      "revision_id": "5d336f6f299aaef3c90b7920",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:32",
+      "revision_id": "8bbe3fc87896477be5e56c07",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:33",
+      "revision_id": "64704e5cfa8401fc76a2bf5e",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:34",
+      "revision_id": "b678dc0333e2b9649a75bc5e",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:35",
+      "revision_id": "1079e484dc5e417651275446",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:36",
+      "revision_id": "628df06be53c95a4b467e0c5",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:37",
+      "revision_id": "c0e22c5e85acff58a60bc23f",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:38",
+      "revision_id": "362cb4a269da5b93aafbf013",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:39",
+      "revision_id": "5877c57e8ed7f9a56c7d8617",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:40",
+      "revision_id": "ba3ea366b7b7eb3d6f2bf4b7",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:41",
+      "revision_id": "ec919644b3fa50228b0c0635",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:42",
+      "revision_id": "29977826e086b493cf9d7edb",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:43",
+      "revision_id": "cb8242c2e450238eceed3ae8",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:44",
+      "revision_id": "7faa476658a286c4b9cb4f96",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:45",
+      "revision_id": "99af316d1a191f97dadcf431",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+      "idempotent_replay": false
+    }
+  ],
+  "changed_files": [
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_safety.lane_departure_warning_e34732b301ae.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_charging.dc_time_min_5ada1b93f5e5_c09e214a0fdd.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_comfort.panoramic_roof_78e4b6c55c9e.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_safety.esc_069b623e5fdc.json",
+    "2026/models/audi.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_battery.warranty_km_8f3cf9bb3356.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_vehicle.width_mm_9c322dd9cace.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_vehicle.cargo_volume_l_33557c0b97f2_b6534229158e.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_safety.airbag_count_0ecc3eea50a6.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_vehicle.height_mm_b6b110da91c0.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_performance.top_speed_kmh_eef0f338d6b2_1ecf9028fa0d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_vehicle.seats_96f8f1735184.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_safety.rear_cross_traffic_39c9935bb606.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_ev.rated_range_km_224c80f8b885_2f6d347cc4ed.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_powertrain.max_power_kw_398e0332b76d_500151a8c4d9.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_powertrain.drivetrain_3a2f0ee81220.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_battery.catalog_capacity_kwh_6eef9f6b1f95.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_technology.surround_view_camera_ebc8b635ac71.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_comfort.auto_climate_8a9d9a2055ea.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_safety.curtain_airbag_dc2c29f94643.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_powertrain.transmission_389b649fc374.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_ev.rated_range_km_212aedf38c5e_9deae885dee5.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_technology.smartphone_mirroring_46c6698f605b.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_technology.led_headlights_3b0c6a09fa4b.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_comfort.keyless_entry_f7fdeb80cdda.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_vehicle.cargo_volume_l_6a5d82f5ba62_e5439322cb01.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_safety.abs_93c12d66b086.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_battery.chemistry_1c09c6d0dd17.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_charging.connector_type_8a77e069c5bf.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_ev.rated_range_km_51bfb9054be0_cfe947c5855d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_performance.acceleration_0_100_s_eef0f338d6b2_dc5ffb27c4ad.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_safety.adaptive_cruise_7ad530568290.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_safety.side_airbag_e5932c2aa285.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_powertrain.gear_count_b03538656b65.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_comfort.electric_parking_brake_6fc0f99b8db5.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_powertrain.motor_count_e41217d035e2.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_comfort.power_windows_29c08a711b47.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_powertrain.max_torque_nm_398e0332b76d_1199071226f5.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_charging.ac_max_kw_38021f822e97.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_vehicle.wheelbase_mm_381e3ce3be2e.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_vehicle.length_mm_670e8761e7fc.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_battery.warranty_years_d7acc125677e.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_charging.dc_max_kw_9d18d19d12be_8feda502323c.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_ev.rated_range_km_0ae84e372d69_0199fd41030c.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_safety.blind_spot_f5755a3bcc46.json",
+    "2026/canonical_state/shadow/362cb4a269da5b93aafbf013.json",
+    "2026/canonical_state/shadow/7bef0a5d3bcb433516d6de95.json",
+    "2026/canonical_state/shadow/8bbe3fc87896477be5e56c07.json",
+    "2026/canonical_state/shadow/b88c51c5e89ba5f29e89443a.json",
+    "2026/canonical_state/shadow/f4cc46ea70dfac64598a1e0d.json",
+    "2026/canonical_state/shadow/5877c57e8ed7f9a56c7d8617.json",
+    "2026/canonical_state/revisions.jsonl",
+    "2026/canonical_state/shadow/652245ed3cc0bad17f67804f.json",
+    "2026/canonical_state/shadow/ba3ea366b7b7eb3d6f2bf4b7.json",
+    "2026/canonical_state/shadow/35049ade180a29161bcb2166.json",
+    "2026/canonical_state/shadow/1079e484dc5e417651275446.json",
+    "2026/canonical_state/outbox.jsonl",
+    "2026/canonical_state/shadow/b678dc0333e2b9649a75bc5e.json",
+    "2026/canonical_state/shadow/ec919644b3fa50228b0c0635.json",
+    "2026/canonical_state/shadow/7202a007aa6572deb2ffa0ad.json",
+    "2026/canonical_state/shadow/a35ca6478dbb39d8cd993bb3.json",
+    "2026/canonical_state/shadow/17343b3c7eaf6a83084ef3e7.json",
+    "2026/canonical_state/shadow/cb8242c2e450238eceed3ae8.json",
+    "2026/canonical_state/shadow/e7589172e402a8a2e5681000.json",
+    "2026/canonical_state/shadow/48584cae834215e2f6bef6d8.json",
+    "2026/canonical_state/shadow/151c20280a3ad660af5fd3e4.json",
+    "2026/canonical_state/shadow/e4d1ae0e22af98aac7db13a4.json",
+    "2026/canonical_state/shadow/c74336cea911f5f7799227ba.json",
+    "2026/canonical_state/shadow/077ecf4cd49c5d5ee40e2ba8.json",
+    "2026/canonical_state/shadow/64704e5cfa8401fc76a2bf5e.json",
+    "2026/canonical_state/shadow/99af316d1a191f97dadcf431.json",
+    "2026/canonical_state/shadow/628df06be53c95a4b467e0c5.json",
+    "2026/canonical_state/shadow/bab17ec72feb7b0e8ce7a23d.json",
+    "2026/canonical_state/shadow/6ad054a8cb79edccf5cca190.json",
+    "2026/canonical_state/shadow/9eb7773dcc0da1d18e85facf.json",
+    "2026/canonical_state/shadow/094b5871c1fad0a61be1bdfe.json",
+    "2026/canonical_state/shadow/e32df4c8c26813573c6bff52.json",
+    "2026/canonical_state/shadow/f04df0141dfc72bfe05e692c.json",
+    "2026/canonical_state/shadow/5b9e35a0cc429c93da869c12.json",
+    "2026/canonical_state/shadow/44be9281f0b4a979303e6fe6.json",
+    "2026/canonical_state/shadow/7faa476658a286c4b9cb4f96.json",
+    "2026/canonical_state/shadow/fa3d9ae288f2205249c1115b.json",
+    "2026/canonical_state/shadow/1b49e959c2f51c17443f7520.json",
+    "2026/canonical_state/shadow/037df972a5495d2d8794a753.json",
+    "2026/canonical_state/shadow/29977826e086b493cf9d7edb.json",
+    "2026/canonical_state/shadow/f125192e5b2ac081e6a734b7.json",
+    "2026/canonical_state/shadow/5d336f6f299aaef3c90b7920.json",
+    "2026/canonical_state/shadow/468791b357efc6a936839a33.json",
+    "2026/canonical_state/shadow/36898ccc15e63151e23e0baa.json",
+    "2026/canonical_state/shadow/743b095529f6fec699ee078d.json",
+    "2026/canonical_state/shadow/c96c62adfcd3afa3bd5183b5.json",
+    "2026/canonical_state/shadow/c0e22c5e85acff58a60bc23f.json"
+  ]
+}

@@ -1,0 +1,496 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "e7589172e402a8a2e5681000",
+    "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:1",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "audi.q8_etron",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T02:50:37+00:00",
+    "applied_at": "2026-09-30T02:51:39+00:00",
+    "before_hash": "3f204bfdb4efa100c4244f63202c99f10195a62d3cb49383af4fe935bf4ea2f3",
+    "after_hash": "94ca545d674d9229ad065e03910b7e30935f4f7d96e11ae6e477884fc8a277a1",
+    "before": {
+      "id": "q8_etron",
+      "name_en": "Audi Q8 e-tron",
+      "name_th": "ออดี้ คิว8 อี-ทรอน",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "Q8 e-tron",
+        "Q8 etron",
+        "Q8 SB e-tron",
+        "Q8 SB etron"
+      ],
+      "incomplete": true,
+      "notes": "รถไฟฟ้าตระกูล e-tron แยกเป็นรุ่นของตัวเอง — DLT จดแยก และเดิมมันไปเกาะรุ่นเบนซินชื่อคล้ายกัน สเปกยังไม่ได้ตรวจ",
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "BEV",
+              "drivetrain": "AWD",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "ยังไม่ได้ตรวจราคา",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Q8 e-tron 50 quattro",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:020"
+                ]
+              },
+              "id": "q8_e_tron_50_quattro_bev"
+            },
+            {
+              "name": "Q8 e-tron 55 quattro Black Edition",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:020"
+                ]
+              },
+              "id": "q8_e_tron_55_quattro_black_edition_bev"
+            },
+            {
+              "name": "Q8 Sportback e-tron 50 quattro",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:020"
+                ]
+              },
+              "id": "q8_sportback_e_tron_50_quattro_bev"
+            },
+            {
+              "name": "Q8 Sportback e-tron 55 quattro Black Edition",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:020"
+                ]
+              },
+              "id": "q8_sportback_e_tron_55_quattro_black_edition_bev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "audi",
+        "name_en": "Audi",
+        "name_th": "เอาดี้",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Volkswagen Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "เอาดี้"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "audi.q8_etron",
+        "brand_id": "audi",
+        "name_en": "Audi Q8 e-tron",
+        "name_th": "ออดี้ คิว8 อี-ทรอน",
+        "nameplate": "Audi Q8 e-tron",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "Q8 e-tron",
+          "Q8 etron",
+          "Q8 SB e-tron",
+          "Q8 SB etron"
+        ],
+        "notes": "รถไฟฟ้าตระกูล e-tron แยกเป็นรุ่นของตัวเอง — DLT จดแยก และเดิมมันไปเกาะรุ่นเบนซินชื่อคล้ายกัน สเปกยังไม่ได้ตรวจ",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "audi.q8_etron.gen1",
+          "model_id": "audi.q8_etron",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "audi.q8_etron.gen1.spec",
+          "generation_id": "audi.q8_etron.gen1",
+          "name": "spec",
+          "powertrain": "BEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "audi.q8_etron.gen1.trim.q8_e_tron_50_quattro_bev",
+          "generation_id": "audi.q8_etron.gen1",
+          "name": "Q8 e-tron 50 quattro",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:020"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+          "generation_id": "audi.q8_etron.gen1",
+          "name": "Q8 e-tron 55 quattro Black Edition",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": 114,
+          "transmission": "1-Speed",
+          "seats": 5,
+          "length_mm": 4915,
+          "width_mm": 1937,
+          "height_mm": 1633,
+          "wheelbase_mm": 2928,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:020"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.q8_etron.gen1.trim.q8_sportback_e_tron_50_quattro_bev",
+          "generation_id": "audi.q8_etron.gen1",
+          "name": "Q8 Sportback e-tron 50 quattro",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:020"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.q8_etron.gen1.trim.q8_sportback_e_tron_55_quattro_black_edition_bev",
+          "generation_id": "audi.q8_etron.gen1",
+          "name": "Q8 Sportback e-tron 55 quattro Black Edition",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:020"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/audi.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "e7589172e402a8a2e5681000:catalog",
+    "revision_id": "e7589172e402a8a2e5681000",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "audi.q8_etron",
+    "state": "PENDING",
+    "created_at": "2026-09-30T02:51:39+00:00",
+    "payload": {
+      "brand": {
+        "id": "audi",
+        "name_en": "Audi",
+        "name_th": "เอาดี้",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Volkswagen Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "เอาดี้"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "audi.q8_etron",
+        "brand_id": "audi",
+        "name_en": "Audi Q8 e-tron",
+        "name_th": "ออดี้ คิว8 อี-ทรอน",
+        "nameplate": "Audi Q8 e-tron",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "Q8 e-tron",
+          "Q8 etron",
+          "Q8 SB e-tron",
+          "Q8 SB etron"
+        ],
+        "notes": "รถไฟฟ้าตระกูล e-tron แยกเป็นรุ่นของตัวเอง — DLT จดแยก และเดิมมันไปเกาะรุ่นเบนซินชื่อคล้ายกัน สเปกยังไม่ได้ตรวจ",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "audi.q8_etron.gen1",
+          "model_id": "audi.q8_etron",
+          "code": "gen1",
+          "segment": "E",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "audi.q8_etron.gen1.spec",
+          "generation_id": "audi.q8_etron.gen1",
+          "name": "spec",
+          "powertrain": "BEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "audi.q8_etron.gen1.trim.q8_e_tron_50_quattro_bev",
+          "generation_id": "audi.q8_etron.gen1",
+          "name": "Q8 e-tron 50 quattro",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:020"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+          "generation_id": "audi.q8_etron.gen1",
+          "name": "Q8 e-tron 55 quattro Black Edition",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": 114,
+          "transmission": "1-Speed",
+          "seats": 5,
+          "length_mm": 4915,
+          "width_mm": 1937,
+          "height_mm": 1633,
+          "wheelbase_mm": 2928,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:020"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.q8_etron.gen1.trim.q8_sportback_e_tron_50_quattro_bev",
+          "generation_id": "audi.q8_etron.gen1",
+          "name": "Q8 Sportback e-tron 50 quattro",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:020"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.q8_etron.gen1.trim.q8_sportback_e_tron_55_quattro_black_edition_bev",
+          "generation_id": "audi.q8_etron.gen1",
+          "name": "Q8 Sportback e-tron 55 quattro Black Edition",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:020"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

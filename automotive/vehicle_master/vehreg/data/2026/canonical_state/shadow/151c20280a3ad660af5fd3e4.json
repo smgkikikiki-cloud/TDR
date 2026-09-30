@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "151c20280a3ad660af5fd3e4",
+    "command_id": "vehicle-spec-a2d7a94f-0268-452c-9769-80f624346894-001-c97ebca6780f:10",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T02:50:37+00:00",
+    "applied_at": "2026-09-30T02:51:40+00:00",
+    "before_hash": "fc3f950d24f21a2600d74bc6aeabc2562315c0f2a121819cc5c660dcd4afeaa1",
+    "after_hash": "808e8d9e3fc5b48c9fa7551eefa60f3cfde241663995f39097f254fa96e83a03",
+    "before": [
+      114,
+      "Li-ion",
+      160000,
+      8,
+      22,
+      "CCS2",
+      170,
+      31
+    ],
+    "after": [
+      114,
+      "Li-ion",
+      160000,
+      8,
+      22,
+      "CCS2",
+      170,
+      31,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev_comfort.auto_climate_8a9d9a2055ea.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "151c20280a3ad660af5fd3e4:spec",
+    "revision_id": "151c20280a3ad660af5fd3e4",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.q8_etron.gen1.trim.q8_e_tron_55_quattro_black_edition_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T02:51:40+00:00",
+    "payload": [
+      114,
+      "Li-ion",
+      160000,
+      8,
+      22,
+      "CCS2",
+      170,
+      31,
+      true
+    ]
+  }
+}
