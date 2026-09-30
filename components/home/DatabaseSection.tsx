@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Chip, KpiCard, Skeleton } from "@/components/design";
 import { BodyIconSvg } from "@/components/home/BodyIcons";
 import { BlockEmpty, BlockError } from "@/components/home/states";
-import { BODY_LABEL } from "@/lib/body-labels";
 import { formatNumber } from "@/lib/design/format";
 import { getHomeCatalog } from "@/lib/home/catalog";
 import type { HomeCatalog } from "@/lib/home/catalog-logic";
@@ -30,11 +29,12 @@ export function DatabaseBlock({ state }: { state: DatabaseState }) {
       </div>
       <div className="tdr-home-lbl">เลือกตามประเภทตัวถัง</div>
       <div className="tdr-chips">
-        {catalog.bodies.map((b) => (
-          <Chip key={b.value} href={`/models?body=${b.value}`} count={b.count}>
-            <BodyIconSvg icon={b.icon} />{BODY_LABEL[b.value] || b.value}
-          </Chip>
-        ))}
+        {catalog.bodies.map((b) => {
+          const face = <><BodyIconSvg icon={b.icon} />{b.label}</>;
+          return b.href
+            ? <Chip key={b.key} href={b.href} count={b.count}>{face}</Chip>
+            : <Chip key={b.key} count={b.count}>{face}</Chip>;
+        })}
       </div>
       <div className="tdr-home-lbl">เลือกตามแบรนด์</div>
       <div className="tdr-chips">

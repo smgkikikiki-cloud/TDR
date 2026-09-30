@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button, Card, Flag } from "@/components/design";
-import { MarketPending } from "@/components/home/states";
+import { MarketUpdating } from "@/components/home/states";
 import { PROVINCE_PATHS } from "@/components/home/province-paths";
 
 const PROVINCES = PROVINCE_PATHS.length;
@@ -51,11 +51,11 @@ export function IntelligenceBand() {
             <p className="tdr-home-muted">แผนที่ {PROVINCES} จังหวัด แยกเชื้อเพลิงและรุ่น จะเปิดใน Panel 1</p>
           </Card>
           <div className="tdr-home-stack">
-            <MarketPending title="ยอดจดทะเบียนรวมรายเดือน" />
-            <MarketPending title="สัดส่วนระบบขับเคลื่อน" />
+            <MarketUpdating title="ยอดจดทะเบียนรวมรายเดือน" />
+            <MarketUpdating title="สัดส่วนระบบขับเคลื่อน" />
           </div>
           <div className="tdr-home-stack">
-            <MarketPending title="ส่วนแบ่งแบรนด์" />
+            <MarketUpdating title="ส่วนแบ่งแบรนด์" />
             <Link className="tdr-home-more" href="/market">เปิด Panel 5 ส่วนแบ่งตลาด →</Link>
           </div>
         </div>

@@ -76,6 +76,7 @@
 .tdr-home-list li { margin: 4px 0; }
 .tdr-home-badges { display: flex; gap: 8px; flex-wrap: wrap; }
 .tdr-home-pending .tdr-card__head, .tdr-home-empty .tdr-card__head { margin-bottom: 4px; }
+.tdr-home-pending a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
 
 /* Intelligence band (inverse surface) */
 .tdr-home-band { background: var(--surface-inverse); color: var(--ink-on-inverse); }

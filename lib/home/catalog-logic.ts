@@ -21,18 +21,24 @@ export type HomeModel = {
 export type HomeTrim = { model_id?: string | null; price_baht?: number | null };
 export type HomeBrand = { slug?: string | null; name_en?: string | null; name_th?: string | null };
 
-/** The six body chips of the approved reference, one canonical body value each so the count is exactly what
- *  `/models?body=<value>` lists (the models filter takes a single value). DATA_MAP groups sedan+coupe+wagon and
- *  crossover+ppv+offroad; that needs multi-value filtering on /models (PR 6), so it is not done here. */
+/** The six body-family chips of the approved reference (DATA_MAP §Home). A family is a set of canonical body values and
+ *  its count is the number of current models whose body_type is in the set; TRUCK is not a chip. `/models?body=` takes a
+ *  single value today, so only a one-value family can link accurately; a multi-value family stays a plain chip until
+ *  PR 6 gives /models a family filter. */
 export const HOME_BODY_CHIPS = [
-  { value: "SEDAN", icon: "sedan" },
-  { value: "CROSSOVER", icon: "suv" },
-  { value: "PICKUP", icon: "pickup" },
-  { value: "MPV", icon: "mpv" },
-  { value: "HATCHBACK", icon: "hatchback" },
-  { value: "VAN", icon: "van" },
+  { key: "sedan", label: "รถเก๋ง", values: ["SEDAN", "COUPE", "WAGON"], icon: "sedan" },
+  { key: "suv", label: "SUV", values: ["CROSSOVER", "PPV", "OFFROAD"], icon: "suv" },
+  { key: "hatchback", label: "แฮทช์แบ็ก", values: ["HATCHBACK"], icon: "hatchback" },
+  { key: "pickup", label: "กระบะ", values: ["PICKUP"], icon: "pickup" },
+  { key: "mpv", label: "MPV", values: ["MPV"], icon: "mpv" },
+  { key: "van", label: "รถตู้", values: ["VAN"], icon: "van" },
 ] as const;
 export type BodyIcon = (typeof HOME_BODY_CHIPS)[number]["icon"];
+
+/** Where a family chip goes: the models list for a one-value family, nowhere for a multi-value one. */
+export function bodyFamilyHref(values: readonly string[]): string | null {
+  return values.length === 1 ? `/models?body=${values[0]}` : null;
+}
 
 export const HOME_BRAND_CHIP_LIMIT = 18;
 
@@ -44,7 +50,7 @@ export type HomeCatalog = {
   models: number;
   trims: number;
   brands: number;
-  bodies: { value: string; icon: BodyIcon; count: number }[];
+  bodies: { key: string; label: string; icon: BodyIcon; count: number; href: string | null }[];
   brandChips: { slug: string; name: string; count: number }[];
   compare: CompareExample[];
 };
@@ -111,7 +117,10 @@ export function summarizeCatalog(current: HomeModel[], brands: HomeBrand[], curr
     models: current.length,
     trims: currentTrims.length,
     brands: perBrand.size,
-    bodies: HOME_BODY_CHIPS.map((c) => ({ ...c, count: current.filter((m) => m.body_type === c.value).length })),
+    bodies: HOME_BODY_CHIPS.map((c) => ({
+      key: c.key, label: c.label, icon: c.icon, href: bodyFamilyHref(c.values),
+      count: current.filter((m) => (c.values as readonly string[]).includes(String(m.body_type))).length,
+    })),
     brandChips,
     compare: pickCompareExamples(current, currentTrims),
   };

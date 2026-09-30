@@ -1,5 +1,5 @@
 import { TierBadge } from "@/components/design";
-import { MarketPending } from "@/components/home/states";
+import { MarketUpdating } from "@/components/home/states";
 
 /** Info & Top 10 (PAGES P01). The sample Top 5 is built from registrations by model, so it waits for the new market
  *  engine (blocker 11); the copy and the locked tier badges are static. */
@@ -18,7 +18,7 @@ export function InfoSample() {
           <div className="tdr-home-badges"><TierBadge tier="pro" locked /><TierBadge tier="enterprise" locked label="Enterprise · CSV" /></div>
         </div>
         <div aria-label="ตัวอย่าง Info Top 5" role="group">
-          <MarketPending title="Top 5 รุ่นจดทะเบียน" />
+          <MarketUpdating title="Top 5 รุ่นจดทะเบียน" />
         </div>
       </div>
     </section>

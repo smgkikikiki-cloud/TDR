@@ -8,7 +8,7 @@
  */
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
-import { HOME_BODY_CHIPS, HOME_BRAND_CHIP_LIMIT, pickCompareExamples, priceRange, summarizeCatalog, type HomeModel, type HomeTrim } from "../lib/home/catalog-logic.ts";
+import { HOME_BODY_CHIPS, bodyFamilyHref, HOME_BRAND_CHIP_LIMIT, pickCompareExamples, priceRange, summarizeCatalog, type HomeModel, type HomeTrim } from "../lib/home/catalog-logic.ts";
 
 let failed = 0;
 function check(name: string, got: unknown, want: unknown) {
@@ -35,8 +35,12 @@ const brands = [{ slug: "toyota", name_en: "Toyota" }, { slug: "honda", name_en:
 console.log("catalogue summary");
 const s = summarizeCatalog(models, brands, trims);
 check("model, trim and brand counts", [s.models, s.trims, s.brands], [7, 7, 5]);
-check("body counts are exact single canonical values", s.bodies.map((b) => [b.value, b.count]), [["SEDAN", 2], ["CROSSOVER", 1], ["PICKUP", 2], ["MPV", 0], ["HATCHBACK", 0], ["VAN", 1]]);
-check("six body chips, each one canonical value", HOME_BODY_CHIPS.length, 6);
+check("body-family counts follow DATA_MAP (sedan+coupe+wagon, crossover+ppv+offroad)", s.bodies.map((b) => [b.label, b.count]), [["รถเก๋ง", 3], ["SUV", 1], ["แฮทช์แบ็ก", 0], ["กระบะ", 2], ["MPV", 0], ["รถตู้", 1]]);
+const fam = summarizeCatalog([model("w", "x", "WAGON"), model("p", "x", "PPV"), model("o", "x", "OFFROAD"), model("t", "x", "TRUCK"), model("h", "x", "HATCHBACK")], [], []);
+check("wagon, ppv and offroad land in their families; TRUCK is in no chip", fam.bodies.map((b) => [b.key, b.count]), [["sedan", 1], ["suv", 2], ["hatchback", 1], ["pickup", 0], ["mpv", 0], ["van", 0]]);
+check("family definitions are the approved ones", HOME_BODY_CHIPS.map((c) => [c.label, c.values.join("+")]), [["รถเก๋ง", "SEDAN+COUPE+WAGON"], ["SUV", "CROSSOVER+PPV+OFFROAD"], ["แฮทช์แบ็ก", "HATCHBACK"], ["กระบะ", "PICKUP"], ["MPV", "MPV"], ["รถตู้", "VAN"]]);
+check("only one-value families link (/models?body= takes one value)", s.bodies.map((b) => b.href), [null, null, "/models?body=HATCHBACK", "/models?body=PICKUP", "/models?body=MPV", "/models?body=VAN"]);
+check("a multi-value family never links to a partial result", bodyFamilyHref(["SEDAN", "COUPE"]), null);
 check("brand chips are ordered by current model count, then name", s.brandChips.map((b) => [b.slug, b.count]), [["byd", 2], ["toyota", 2], ["honda", 1], ["isuzu", 1], ["mg", 1]]);
 check("brand chip name falls back to the slug", s.brandChips.find((b) => b.slug === "mg")?.name, "mg");
 const many = Array.from({ length: 30 }, (_, i) => model(`m${i}`, `brand${String(i).padStart(2, "0")}`, "SEDAN"));
@@ -61,6 +65,14 @@ for (const file of files) {
   check(`${file}: no forbidden import`, FORBIDDEN_IMPORT.test(src), false);
   check(`${file}: no forbidden call or logo field`, FORBIDDEN_CALL.test(src.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "")), false);
 }
+console.log("\nproduct-contract guards");
+const read = (f: string) => readFileSync(f, "utf8").replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
+const states = read("components/home/states.tsx");
+const updating = states.slice(states.indexOf("export function MarketUpdating"), states.indexOf("export function BlockError"));
+check("blocked market blocks are not labelled 'coming soon'", /เร็วๆ นี้|kind="soon"|<Flag/.test(updating), false);
+check("hero, Top 5 and band market cards use MarketUpdating", ["components/home/HomeHero.tsx", "components/home/InfoSample.tsx", "components/home/IntelligenceBand.tsx"].map((f) => read(f).includes("<MarketUpdating")), [true, true, true]);
+const plans = read("components/home/PlansSection.tsx");
+check("PlansSection embeds no price, saving or percentage (plan prices live in lib/plans.ts)", /[฿%]|\d,\d{3}/.test(plans), false);
 const page = readFileSync("app/page.tsx", "utf8");
 check("Home page is wrapped in .designPage (migrated page boundary)", /className="designPage /.test(page), true);
 

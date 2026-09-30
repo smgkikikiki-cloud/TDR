@@ -1,16 +1,18 @@
-import { Card, Flag } from "@/components/design";
+import Link from "next/link";
+import { Card } from "@/components/design";
 
 /** Blocker 11 (design/GRAFT_PLAN.md): the market analysis engine is being replaced, so Home must not read market
- *  figures through the old one. Every market-dependent block renders this pending state with its approved title and
- *  no numbers. When the new engine ships, each call site swaps this for the real block; nothing else changes. */
-export function MarketPending({ title, hint }: { title: string; hint?: string }) {
+ *  figures through the old one. These blocks are existing market capabilities that are temporarily not rewired, not
+ *  unreleased features, so they never say "เร็วๆ นี้" (that label is only for the Ice-dependent Panels 1-4 and the
+ *  province map). Each shows its approved title and no figures, and points to the live market page. When the new engine
+ *  ships, each call site swaps this for the real block. */
+export function MarketUpdating({ title }: { title: string }) {
   return (
     <Card tone="dashed" className="tdr-home-pending">
       <div className="tdr-card__head">
         <b className="tdr-card__title">{title}</b>
-        <Flag kind="soon">เร็วๆ นี้</Flag>
       </div>
-      {hint ? <p className="tdr-home-muted">{hint}</p> : null}
+      <p className="tdr-home-muted">อยู่ระหว่างปรับปรุงระบบวิเคราะห์ตลาด · <Link href="/market">ดูข้อมูลตลาดที่หน้า Automotive Intelligence</Link></p>
     </Card>
   );
 }
