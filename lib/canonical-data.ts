@@ -276,8 +276,42 @@ export async function getCanonicalModels(limit = 600) {
       image_url: media?.public_url || null,
       hero_image_url: media?.public_url || null,
       image_type: media?.image_type || null,
+      // Provenance of the picture, so a page can require a credit before it shows one (DESIGN §9).
+      image_source_url: media?.source_url || null,
+      image_source_type: media?.source_type || null,
     };
   });
+}
+
+/** Number of lifecycle-CURRENT trims per model (DATA_MAP §/models: "count of current_market_trims CURRENT").
+ *  Paged like allRows() because PostgREST caps a response at a thousand rows. */
+export async function getCurrentTrimCountsByModel(): Promise<Map<string, number>> {
+  const db = publicDb();
+  const counts = new Map<string, number>();
+  if (!db) return counts;
+  for (let from = 0; ; from += 1000) {
+    const { data, error } = await db.from("current_market_trims").select("model_id,status")
+      .eq("status", "CURRENT").order("canonical_id").range(from, from + 999);
+    if (error) throw error;
+    for (const row of filterToCurrentTrims(data || [])) {
+      if (row.model_id) counts.set(row.model_id, (counts.get(row.model_id) || 0) + 1);
+    }
+    if (!data || data.length < 1000) return counts;
+  }
+}
+
+/** Trims of a model that the release marks HISTORICAL (retired). Read-only projection for the collapsed
+ *  "เลิกจำหน่ายแล้ว" list on the model page: no price, no link, nothing orderable. UNVERIFIED is deliberately not
+ *  included -- "not yet verified" is not "retired". */
+export async function getCanonicalHistoricalTrims(modelCanonicalId: string) {
+  const db = publicDb();
+  if (!db || !modelCanonicalId) return [];
+  const { data, error } = await db.from("current_market_trims")
+    .select("canonical_id,name,powertrain,status")
+    .eq("model_id", modelCanonicalId).eq("status", "HISTORICAL").order("name");
+  if (error) throw error;
+  return (data || []).filter((row: any) => row.status === "HISTORICAL")
+    .map((row: any) => ({ id: row.canonical_id as string, name: row.name as string, powertrain: (row.powertrain || null) as string | null }));
 }
 
 export async function getCanonicalModelBundle(slug: string) {
@@ -318,6 +352,8 @@ export async function getCanonicalModelBundle(slug: string) {
     ...row,
     image_url: hero?.public_url || null,
     hero_image_url: hero?.public_url || null,
+    image_source_url: hero?.source_url || null,
+    image_source_type: hero?.source_type || null,
     media,
     powertrains_detail: powertrains,
     trims: trims.map(({ _powertrain, ...trim }: any) => trim),

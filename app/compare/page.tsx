@@ -83,6 +83,9 @@ export default function ComparePage() {
   const [result, setResult] = useState<CompareResult | null>(null);
   const [status, setStatus] = useState<"idle" | "loading" | "quota" | "signup" | "error">("idle");
   const [message, setMessage] = useState("");
+  // Models handed over by the /models CompareTray (?models=<model id>). A model is not a trim, so nothing is chosen
+  // for the reader: each queued model opens the picker on its own trim list and waits for an explicit choice.
+  const [queuedModels, setQueuedModels] = useState<string[]>([]);
 
   useEffect(() => {
     fetch("/api/compare/models")
@@ -94,6 +97,8 @@ export default function ComparePage() {
       .catch((error) => setPickerError(error instanceof Error ? error.message : "โหลดรุ่นรถไม่สำเร็จ"));
 
     const wanted = [...new Set(new URLSearchParams(window.location.search).getAll("trims").filter(Boolean))].slice(0, 4);
+    const wantedModels = [...new Set(new URLSearchParams(window.location.search).getAll("models").filter(Boolean))].slice(0, 4 - wanted.length);
+    if (wantedModels.length) setQueuedModels(wantedModels);
     if (wanted.length) {
       setSlots([wanted[0] || null, wanted[1] || null, wanted[2] || null, wanted[3] || null]);
       const params = new URLSearchParams();
@@ -156,12 +161,31 @@ export default function ComparePage() {
   }
 
   function closePicker() {
+    setQueuedModels([]);
     setActiveSlot(null);
     setQuery("");
     setModelId("");
     setPendingTrimId("");
     setPickerError("");
   }
+
+  /** Opens the picker for the next queued model in the first free slot, or ends the queue. */
+  function openNextQueued(queue: string[], currentSlots: (string | null)[]) {
+    const free = currentSlots.findIndex((value) => !value);
+    if (!queue.length || free === -1) { setQueuedModels([]); return; }
+    setActiveSlot(free);
+    setQuery("");
+    setModelId(queue[0]);
+    setPendingTrimId("");
+    setPickerError("");
+    void loadModelTrims(queue[0]);
+  }
+
+  useEffect(() => {
+    if (queuedModels.length && activeSlot === null) openNextQueued(queuedModels, slots);
+    // Runs once when the queue is first filled from the URL; later steps are driven by confirm/close below.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [queuedModels.length > 0]);
 
   function chooseModel(nextModelId: string) {
     setModelId(nextModelId);
@@ -172,9 +196,12 @@ export default function ComparePage() {
 
   function confirmPicker() {
     if (activeSlot === null || !pendingTrimId) return;
-    setSlots((current) => current.map((value, index) => index === activeSlot ? pendingTrimId : value));
+    const nextSlots = slots.map((value, index) => index === activeSlot ? pendingTrimId : value);
+    setSlots(nextSlots);
     setResult(null);
+    const rest = queuedModels.slice(1);
     closePicker();
+    if (rest.length) { setQueuedModels(rest); openNextQueued(rest, nextSlots); }
   }
 
   function removeSlot(index: number) {
