@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5d93d3f00109c269681fe660",
+    "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:3",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T03:37:46+00:00",
+    "applied_at": "2026-09-30T03:38:53+00:00",
+    "before_hash": "a49779d9653b115297d1ccd41b0e11f4e61d02c0c37a594b1661ff9a54d15726",
+    "after_hash": "7361c00d70bd37408588cbabe6215fef31bb042e859304bcbd0ef720a48640bd",
+    "before": [
+      "Li-ion"
+    ],
+    "after": [
+      "Li-ion",
+      66.5
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_battery.gross_capacity_kwh_50bb95d24063.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5d93d3f00109c269681fe660:spec",
+    "revision_id": "5d93d3f00109c269681fe660",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T03:38:53+00:00",
+    "payload": [
+      "Li-ion",
+      66.5
+    ]
+  }
+}

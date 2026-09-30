@@ -1,0 +1,373 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "5481cf5e27c55b70a38d1917",
+    "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:1",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "bmw.ix2",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T03:37:46+00:00",
+    "applied_at": "2026-09-30T03:38:52+00:00",
+    "before_hash": "c272c3ef27726f5513510e7e8ddc9571b354950aa65e59ecd0c3fb109cab9c6b",
+    "after_hash": "5c6075a9996bbd89195dd9b98016cdd38572a46919503c3102f047e1438c2184",
+    "before": {
+      "id": "ix2",
+      "name_en": "iX2",
+      "name_th": "ไอเอ็กซ์2",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "iX2",
+        "iX2 xDrive30",
+        "i X2"
+      ],
+      "incomplete": true,
+      "notes": "แยกจาก iX — คนละคันกัน iX2 เป็น crossover ฐาน X2",
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2024-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "BEV",
+              "drivetrain": "AWD",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "ยังไม่ได้ตรวจราคา",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "eDrive20 M Sport",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:042"
+                ]
+              },
+              "aliases": [
+                "iX2 eDrive20 M Sport"
+              ],
+              "id": "edrive20_m_sport_bev"
+            },
+            {
+              "name": "xDrive30 M Sport",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:042"
+                ]
+              },
+              "aliases": [
+                "iX2 xDrive30 M Sport"
+              ],
+              "id": "xdrive30_m_sport_bev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "bmw",
+        "name_en": "BMW",
+        "name_th": "บีเอ็มดับเบิลยู",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "BMW Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "บีเอ็มดับเบิลยู",
+          "bmw thailand"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "bmw.ix2",
+        "brand_id": "bmw",
+        "name_en": "iX2",
+        "name_th": "ไอเอ็กซ์2",
+        "nameplate": "iX2",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "iX2",
+          "iX2 xDrive30",
+          "i X2"
+        ],
+        "notes": "แยกจาก iX — คนละคันกัน iX2 เป็น crossover ฐาน X2",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "bmw.ix2.gen1",
+          "model_id": "bmw.ix2",
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2024-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "bmw.ix2.gen1.spec",
+          "generation_id": "bmw.ix2.gen1",
+          "name": "spec",
+          "powertrain": "BEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "bmw.ix2.gen1.trim.edrive20_m_sport_bev",
+          "generation_id": "bmw.ix2.gen1",
+          "name": "eDrive20 M Sport",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "iX2 eDrive20 M Sport"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:042"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+          "generation_id": "bmw.ix2.gen1",
+          "name": "xDrive30 M Sport",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "1-Speed",
+          "seats": 5,
+          "length_mm": 4554,
+          "width_mm": 1845,
+          "height_mm": 1560,
+          "wheelbase_mm": 2692,
+          "tire_front": "245/40 R20",
+          "tire_rear": "245/40 R20",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "iX2 xDrive30 M Sport"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:042"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/bmw.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "5481cf5e27c55b70a38d1917:catalog",
+    "revision_id": "5481cf5e27c55b70a38d1917",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "bmw.ix2",
+    "state": "PENDING",
+    "created_at": "2026-09-30T03:38:52+00:00",
+    "payload": {
+      "brand": {
+        "id": "bmw",
+        "name_en": "BMW",
+        "name_th": "บีเอ็มดับเบิลยู",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "BMW Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "บีเอ็มดับเบิลยู",
+          "bmw thailand"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "bmw.ix2",
+        "brand_id": "bmw",
+        "name_en": "iX2",
+        "name_th": "ไอเอ็กซ์2",
+        "nameplate": "iX2",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "iX2",
+          "iX2 xDrive30",
+          "i X2"
+        ],
+        "notes": "แยกจาก iX — คนละคันกัน iX2 เป็น crossover ฐาน X2",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "bmw.ix2.gen1",
+          "model_id": "bmw.ix2",
+          "code": "gen1",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2024-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "bmw.ix2.gen1.spec",
+          "generation_id": "bmw.ix2.gen1",
+          "name": "spec",
+          "powertrain": "BEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "bmw.ix2.gen1.trim.edrive20_m_sport_bev",
+          "generation_id": "bmw.ix2.gen1",
+          "name": "eDrive20 M Sport",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "iX2 eDrive20 M Sport"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:042"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+          "generation_id": "bmw.ix2.gen1",
+          "name": "xDrive30 M Sport",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "AWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "1-Speed",
+          "seats": 5,
+          "length_mm": 4554,
+          "width_mm": 1845,
+          "height_mm": 1560,
+          "wheelbase_mm": 2692,
+          "tire_front": "245/40 R20",
+          "tire_rear": "245/40 R20",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "iX2 xDrive30 M Sport"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:042"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

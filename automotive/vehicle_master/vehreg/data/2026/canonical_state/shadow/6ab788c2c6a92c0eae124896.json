@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6ab788c2c6a92c0eae124896",
+    "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:15",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T03:37:46+00:00",
+    "applied_at": "2026-09-30T03:38:53+00:00",
+    "before_hash": "059e3c4853f9b2d92e2b109d3ccf893d3dc6b64d159a287041cd9e2a7b20b10d",
+    "after_hash": "0ea9c9939770b0b61816721ede934e37257c313cb299a50a92e641177896c9cf",
+    "before": [
+      "Li-ion",
+      66.5,
+      64.7,
+      160000,
+      8,
+      22,
+      "CCS2",
+      130,
+      29,
+      "MacPherson Strut",
+      "Multi-Link",
+      true,
+      true
+    ],
+    "after": [
+      "Li-ion",
+      66.5,
+      64.7,
+      160000,
+      8,
+      22,
+      "CCS2",
+      130,
+      29,
+      "MacPherson Strut",
+      "Multi-Link",
+      true,
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_comfort.keyless_entry_18b939c9b801.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6ab788c2c6a92c0eae124896:spec",
+    "revision_id": "6ab788c2c6a92c0eae124896",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T03:38:53+00:00",
+    "payload": [
+      "Li-ion",
+      66.5,
+      64.7,
+      160000,
+      8,
+      22,
+      "CCS2",
+      130,
+      29,
+      "MacPherson Strut",
+      "Multi-Link",
+      true,
+      true,
+      true
+    ]
+  }
+}

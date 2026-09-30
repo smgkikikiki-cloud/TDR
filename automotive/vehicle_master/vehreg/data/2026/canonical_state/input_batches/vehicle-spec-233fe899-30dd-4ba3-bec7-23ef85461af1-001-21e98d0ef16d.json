@@ -1,0 +1,581 @@
+{
+  "schema_version": 1,
+  "batch_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d",
+  "batch_hash": "448ed696ca92b52861a42b8eb6cb778dcbbb34626e0a6e3ab0cb31b1aa15401b",
+  "status": "APPLIED",
+  "year": 2026,
+  "source": {
+    "kind": "ADMIN",
+    "ref": "vehicle-spec-excel"
+  },
+  "actor": "tdr-admin",
+  "reason": "bulk import from vehicle-spec-excel",
+  "submitted_at": "2026-09-30T03:37:46+00:00",
+  "applied_at": "2026-09-30T03:38:54+00:00",
+  "results": [
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:1",
+      "revision_id": "5481cf5e27c55b70a38d1917",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "bmw.ix2",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:2",
+      "revision_id": "01fe081e7972bb8ada3e4dd2",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:3",
+      "revision_id": "5d93d3f00109c269681fe660",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:4",
+      "revision_id": "3250c1a0d513241443d8846c",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:5",
+      "revision_id": "0f482a2cdd7a68d98a0264f2",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:6",
+      "revision_id": "04369e79b0e0c9865f97b9ce",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:7",
+      "revision_id": "b1cd04f768129a16b5d9abcb",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:8",
+      "revision_id": "4ea9b50235ece74b17dd4cb3",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:9",
+      "revision_id": "9bdff8c6ca29cf1963169baa",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:10",
+      "revision_id": "f3816f28ec84a441e8fc7f6b",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:11",
+      "revision_id": "81fb76133d820e3da5e09b2e",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:12",
+      "revision_id": "da40dd9817a1f47aa0841378",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:13",
+      "revision_id": "8f46fd07873dc8c1d94dfa35",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:14",
+      "revision_id": "f951c21d3c2244ac75dd6db8",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:15",
+      "revision_id": "6ab788c2c6a92c0eae124896",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:16",
+      "revision_id": "3bb80fa9826816d6467d242b",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:17",
+      "revision_id": "67972c64c8ffdcec500a4cd7",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:18",
+      "revision_id": "7323ec887be9481ceb41ad85",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:19",
+      "revision_id": "24a3913498885e45528023d7",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:20",
+      "revision_id": "60d8b1e9a6bd4be2a45ff00d",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:21",
+      "revision_id": "66078c63c3db2924ba54624f",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:22",
+      "revision_id": "66777cd7aa7698a0145aa30a",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:23",
+      "revision_id": "4f797425e0a7dbabf27dbb6e",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:24",
+      "revision_id": "ae80d9e46150d58f8c43b5df",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:25",
+      "revision_id": "56608113d1324dac9ed9bd11",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:26",
+      "revision_id": "30a4717e19e5c38e95fc0187",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:27",
+      "revision_id": "cd0fc39888056804a1ca6deb",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:28",
+      "revision_id": "fb6ddb77a42f64956425ea44",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:29",
+      "revision_id": "f186749798e852983a518c43",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:30",
+      "revision_id": "80ef0bb612221c8cd10599d7",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:31",
+      "revision_id": "591e4f06868c2e534fffa174",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:32",
+      "revision_id": "6de661424c4009ba87aacd10",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:33",
+      "revision_id": "ad53f2adf658b00df99c2edc",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:34",
+      "revision_id": "8b679963f641f54ab07d4c9d",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:35",
+      "revision_id": "70834f34eb4681e64ef297d4",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:36",
+      "revision_id": "af8b52aeda7a32288194c77a",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:37",
+      "revision_id": "acdb716c56f8cbf147402f29",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:38",
+      "revision_id": "b317f65e19a029b420564d8f",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:39",
+      "revision_id": "da52cb1c18e020ec6abcc5b8",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:40",
+      "revision_id": "1e7d1aac4b1947f9a50f2323",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:41",
+      "revision_id": "68cadd88560dcf5ead96e35d",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:42",
+      "revision_id": "9c044f60ac582f2fae4653fe",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:43",
+      "revision_id": "80e11bfa318bb4485a0d0c3f",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:44",
+      "revision_id": "4448b20041068df681c8f337",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:45",
+      "revision_id": "f8cd5ec88e14bf1bb2b0a85e",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:46",
+      "revision_id": "a36dad1977a53910ada1d5a4",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:47",
+      "revision_id": "11f0f2cc12203cc485d4ebe9",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:48",
+      "revision_id": "d89fb87d127d919a6b3152d8",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:49",
+      "revision_id": "1531be56465be2bcc1d93740",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:50",
+      "revision_id": "8e8916c7b8b5c2413df7690a",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:51",
+      "revision_id": "1e7fa969252e7975c030903f",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:52",
+      "revision_id": "fbbe95c0cbd4ab08352154e0",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:53",
+      "revision_id": "bdca7f426c8087155f371a27",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:54",
+      "revision_id": "81cb192728d393019ad6db06",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:55",
+      "revision_id": "6ef35e29c9958a1c800e59b3",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:56",
+      "revision_id": "dcb8e559d0454321b35e6f68",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+      "idempotent_replay": false
+    }
+  ],
+  "changed_files": [
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_vehicle.cargo_volume_l_6a5d82f5ba62_105d59495148.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_powertrain.drivetrain_4d5e123e5790.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_technology.connected_services_c1ff4583e44f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_technology.smartphone_mirroring_149933177d91.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_technology.surround_view_camera_25c84e72d910.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_fitment.tyre_front_03f6378e44eb.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_battery.gross_capacity_kwh_50bb95d24063.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_safety.side_airbag_af220a79d578.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_performance.top_speed_kmh_eef0f338d6b2_ba37a72614fe.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_chassis.suspension_front_773fb8e4bf95.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_vehicle.curb_weight_kg_eef0f338d6b2_7862755f270f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_comfort.panoramic_roof_9431d1e315c1.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_battery.warranty_km_38a0054f69e4.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_vehicle.height_mm_c6289166f316.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_chassis.suspension_rear_ef7c0b017103.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_battery.warranty_years_368ea0cce6cd.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_powertrain.transmission_715028337b08.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_comfort.power_windows_24d4578e5173.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_technology.ota_update_648ab1123d0c.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_performance.acceleration_0_100_s_eef0f338d6b2_080b6ea3107f.json",
+    "2026/models/bmw.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_charging.connector_type_120efe343f93.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_charging.dc_time_min_5ada1b93f5e5_6d6dcec238aa.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_safety.lane_keep_assist_0e4cbde3782a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_safety.curtain_airbag_3d1528b862be.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_fitment.tyre_rear_2916457b23bd.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_safety.esc_04bcc17b3b50.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_fitment.tyre_size_7375007986d8.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_safety.lane_departure_warning_4e2d02fa12a1.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_comfort.keyless_entry_18b939c9b801.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_vehicle.length_mm_80ad666d9262.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_safety.rear_cross_traffic_1cffd9e7f6e4.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_vehicle.seats_08d58966d088.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_charging.dc_max_kw_9d18d19d12be_2e2a83bf6dea.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_powertrain.gear_count_eaffcb5271d0.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_vehicle.wheelbase_mm_240f994df789.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_battery.usable_capacity_kwh_5fa713a87ac2.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_safety.adaptive_cruise_e33002d010b9.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_comfort.electric_parking_brake_b6997ab7e8ab.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_ev.rated_range_km_212aedf38c5e_939c1bb55aa5.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_safety.forward_collision_warning_2a7faa778e86.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_powertrain.motor_type_4d895167a1bf.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_powertrain.motor_count_1d69a6c0db23.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_battery.chemistry_8b20b819b02a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_safety.aeb_0389a5e9820b.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_charging.ac_max_kw_3debbc96b604.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_powertrain.max_power_kw_398e0332b76d_6d1e4796bde7.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_safety.blind_spot_04081c52e4c3.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_safety.abs_37ed880685fc.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_comfort.auto_climate_c5586815d5fa.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_vehicle.cargo_volume_l_33557c0b97f2_ddae7e6d9e45.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_ev.rated_range_km_224c80f8b885_1b8bbd01b7aa.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_powertrain.max_torque_nm_398e0332b76d_488f5f7639fd.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_technology.led_headlights_2f3f6ad10a2c.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_vehicle.width_mm_f3836379319c.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_technology.head_up_display_d434577bc883.json",
+    "2026/canonical_state/shadow/80ef0bb612221c8cd10599d7.json",
+    "2026/canonical_state/shadow/da40dd9817a1f47aa0841378.json",
+    "2026/canonical_state/shadow/f3816f28ec84a441e8fc7f6b.json",
+    "2026/canonical_state/shadow/af8b52aeda7a32288194c77a.json",
+    "2026/canonical_state/revisions.jsonl",
+    "2026/canonical_state/shadow/acdb716c56f8cbf147402f29.json",
+    "2026/canonical_state/shadow/81cb192728d393019ad6db06.json",
+    "2026/canonical_state/shadow/6ef35e29c9958a1c800e59b3.json",
+    "2026/canonical_state/shadow/7323ec887be9481ceb41ad85.json",
+    "2026/canonical_state/shadow/4ea9b50235ece74b17dd4cb3.json",
+    "2026/canonical_state/shadow/11f0f2cc12203cc485d4ebe9.json",
+    "2026/canonical_state/shadow/56608113d1324dac9ed9bd11.json",
+    "2026/canonical_state/shadow/1531be56465be2bcc1d93740.json",
+    "2026/canonical_state/shadow/9c044f60ac582f2fae4653fe.json",
+    "2026/canonical_state/shadow/5d93d3f00109c269681fe660.json",
+    "2026/canonical_state/outbox.jsonl",
+    "2026/canonical_state/shadow/5481cf5e27c55b70a38d1917.json",
+    "2026/canonical_state/shadow/01fe081e7972bb8ada3e4dd2.json",
+    "2026/canonical_state/shadow/8f46fd07873dc8c1d94dfa35.json",
+    "2026/canonical_state/shadow/bdca7f426c8087155f371a27.json",
+    "2026/canonical_state/shadow/80e11bfa318bb4485a0d0c3f.json",
+    "2026/canonical_state/shadow/0f482a2cdd7a68d98a0264f2.json",
+    "2026/canonical_state/shadow/67972c64c8ffdcec500a4cd7.json",
+    "2026/canonical_state/shadow/1e7d1aac4b1947f9a50f2323.json",
+    "2026/canonical_state/shadow/6de661424c4009ba87aacd10.json",
+    "2026/canonical_state/shadow/b1cd04f768129a16b5d9abcb.json",
+    "2026/canonical_state/shadow/81fb76133d820e3da5e09b2e.json",
+    "2026/canonical_state/shadow/a36dad1977a53910ada1d5a4.json",
+    "2026/canonical_state/shadow/f951c21d3c2244ac75dd6db8.json",
+    "2026/canonical_state/shadow/04369e79b0e0c9865f97b9ce.json",
+    "2026/canonical_state/shadow/d89fb87d127d919a6b3152d8.json",
+    "2026/canonical_state/shadow/4448b20041068df681c8f337.json",
+    "2026/canonical_state/shadow/fbbe95c0cbd4ab08352154e0.json",
+    "2026/canonical_state/shadow/dcb8e559d0454321b35e6f68.json",
+    "2026/canonical_state/shadow/6ab788c2c6a92c0eae124896.json",
+    "2026/canonical_state/shadow/f8cd5ec88e14bf1bb2b0a85e.json",
+    "2026/canonical_state/shadow/9bdff8c6ca29cf1963169baa.json",
+    "2026/canonical_state/shadow/ad53f2adf658b00df99c2edc.json",
+    "2026/canonical_state/shadow/8b679963f641f54ab07d4c9d.json",
+    "2026/canonical_state/shadow/68cadd88560dcf5ead96e35d.json",
+    "2026/canonical_state/shadow/1e7fa969252e7975c030903f.json",
+    "2026/canonical_state/shadow/70834f34eb4681e64ef297d4.json",
+    "2026/canonical_state/shadow/cd0fc39888056804a1ca6deb.json",
+    "2026/canonical_state/shadow/da52cb1c18e020ec6abcc5b8.json",
+    "2026/canonical_state/shadow/fb6ddb77a42f64956425ea44.json",
+    "2026/canonical_state/shadow/4f797425e0a7dbabf27dbb6e.json",
+    "2026/canonical_state/shadow/f186749798e852983a518c43.json",
+    "2026/canonical_state/shadow/30a4717e19e5c38e95fc0187.json",
+    "2026/canonical_state/shadow/66777cd7aa7698a0145aa30a.json",
+    "2026/canonical_state/shadow/591e4f06868c2e534fffa174.json",
+    "2026/canonical_state/shadow/60d8b1e9a6bd4be2a45ff00d.json",
+    "2026/canonical_state/shadow/66078c63c3db2924ba54624f.json",
+    "2026/canonical_state/shadow/3250c1a0d513241443d8846c.json",
+    "2026/canonical_state/shadow/ae80d9e46150d58f8c43b5df.json",
+    "2026/canonical_state/shadow/b317f65e19a029b420564d8f.json",
+    "2026/canonical_state/shadow/8e8916c7b8b5c2413df7690a.json",
+    "2026/canonical_state/shadow/3bb80fa9826816d6467d242b.json",
+    "2026/canonical_state/shadow/24a3913498885e45528023d7.json"
+  ]
+}

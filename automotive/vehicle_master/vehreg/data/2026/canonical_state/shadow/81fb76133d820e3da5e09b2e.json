@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "81fb76133d820e3da5e09b2e",
+    "command_id": "vehicle-spec-233fe899-30dd-4ba3-bec7-23ef85461af1-001-21e98d0ef16d:11",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T03:37:46+00:00",
+    "applied_at": "2026-09-30T03:38:53+00:00",
+    "before_hash": "eb943790deb61d04d6b530c05964d11aba18865e079863fe792c44e073e57d1d",
+    "after_hash": "04e45dd705c994ade7cad24421c93f9b0dc0e3dedac356bd68eb4fba0bcde982",
+    "before": [
+      "Li-ion",
+      66.5,
+      64.7,
+      160000,
+      8,
+      22,
+      "CCS2",
+      130,
+      29
+    ],
+    "after": [
+      "Li-ion",
+      66.5,
+      64.7,
+      160000,
+      8,
+      22,
+      "CCS2",
+      130,
+      29,
+      "MacPherson Strut"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_bmw.ix2.gen1.trim.xdrive30_m_sport_bev_chassis.suspension_front_773fb8e4bf95.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "81fb76133d820e3da5e09b2e:spec",
+    "revision_id": "81fb76133d820e3da5e09b2e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.ix2.gen1.trim.xdrive30_m_sport_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T03:38:53+00:00",
+    "payload": [
+      "Li-ion",
+      66.5,
+      64.7,
+      160000,
+      8,
+      22,
+      "CCS2",
+      130,
+      29,
+      "MacPherson Strut"
+    ]
+  }
+}
