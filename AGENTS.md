@@ -26,3 +26,15 @@ Rules:
 `smgkikikiki-cloud/vehicle-market-master` is historical only. Do not route implementation tasks, fixes, data updates, workflows, repository dispatches, scheduled jobs, pull requests, issues, or agent commands to it. Do not revive automation there.
 
 When a task mentions Vehicle Master, treat `automotive/vehicle_master/` inside this repository as the target unless the user explicitly asks to inspect historical material.
+
+## Design system migration
+
+The TDR design system and the page-by-page graft plan live in `design/`. Read `design/README.md` for the reading order; `docs/MERGE_DECISIONS.md` records the owner's decisions and wins over everything else in `design/`.
+
+Rules:
+- Read `docs/WORK_STATE.md` before multi-step work.
+- Design PRs never touch the active repair batch or `automotive/vehicle_master/`.
+- Editorial tables (upcoming, analysis) may link canonical IDs but never redefine vehicle facts.
+- One PR per row of `design/GRAFT_PLAN.md`, on `design/<name>` (features: `feat/<name>`). Nothing in a later row starts without the owner's go.
+- No data, permission, or payment logic in design PRs.
+- Colours only through `var(--token)` from `design/tokens.css`; edit `design/tokens.json` and run `npm run build:design-tokens` (never hand-edit `tokens.css`). Files migrated to the design system are listed in `design/migrated.json` and enforced by `npm run check:design`.

@@ -1,0 +1,66 @@
+{"name": "TDR Design System", "version": 1,
+ "color": {"themes": [{"id": "light", "name": "Light"}, {"id": "dark", "name": "Dark"}],
+  "tokens": [
+   {"name": "brand-navy", "value": {"light": "#002060", "dark": "#9DB2EA"}, "usage": "สีหลักจากโลโก้ (THAILAND / DEVELOPMENT). หัวข้อ เมนู ไอคอนหลัก. บนพื้นมืดใช้ค่าสว่าง"},
+   {"name": "brand-blue", "value": {"light": "#1D3880", "dark": "#7C9BDC"}, "usage": "แถบบนของโลโก้แบบกล่อง. ลิงก์ สถานะที่เลือก เส้นขอบโฟกัส"},
+   {"name": "brand-red", "value": {"light": "#AD1300", "dark": "#F2745F"}, "usage": "คำว่า REPORT ในโลโก้. ใช้เฉพาะป้ายแบรนด์ ข่าวเด่น และปุ่มอัปเกรด ห้ามใช้แทนค่าลดลงในกราฟ"},
+   {"name": "surface-page", "value": {"light": "#FFFFFF", "dark": "#0A1426"}, "usage": "พื้นหน้าเว็บ"},
+   {"name": "surface-raised", "value": {"light": "#F3F5F9", "dark": "#111E38"}, "usage": "พื้นการ์ด แถบตัวกรอง แถวหัวตาราง"},
+   {"name": "surface-inverse", "value": {"light": "#002060", "dark": "#16284F"}, "usage": "แถบ Automotive Intelligence และ footer ตัวอักษรบนพื้นนี้ใช้ ink-on-inverse"},
+   {"name": "ink", "value": {"light": "#0E1526", "dark": "#EEF2FA"}, "usage": "ตัวอักษรหลักบน surface-page และ surface-raised"},
+   {"name": "ink-muted", "value": {"light": "#4A5368", "dark": "#A7B2C9"}, "usage": "คำอธิบาย วันที่ ที่มาข้อมูล (ผ่าน 4.5:1 ทั้งสองธีม)"},
+   {"name": "ink-on-inverse", "value": {"light": "#FFFFFF", "dark": "#EEF2FA"}, "usage": "ตัวอักษรบน surface-inverse"},
+   {"name": "border", "value": {"light": "#D6DBE5", "dark": "#283A60"}, "usage": "เส้นแบ่ง ขอบการ์ด ขอบช่องกรอก"},
+   {"name": "action-primary", "value": {"light": "#002060", "dark": "#9DB2EA"}, "usage": "พื้นปุ่มหลัก"},
+   {"name": "on-action", "value": {"light": "#FFFFFF", "dark": "#0A1426"}, "usage": "ตัวอักษรบน action-primary และ brand-red"},
+   {"name": "delta-up", "value": {"light": "#1D4FB8", "dark": "#86A8F0"}, "usage": "ค่าเพิ่มขึ้น (น้ำเงิน) ในตาราง แผนที่สองขั้ว กราฟ ใช้คู่กับเครื่องหมาย +"},
+   {"name": "delta-down", "value": {"light": "#B24A00", "dark": "#F39A55"}, "usage": "ค่าลดลง (ส้มอิฐ) ใช้คู่กับเครื่องหมาย − ไม่ใช้ brand-red เพื่อไม่ให้สับสนกับแบรนด์ และแยกได้สำหรับคนตาบอดสีแดง-เขียว"},
+   {"name": "flag-estimate-bg", "value": {"light": "#FFF1D0", "dark": "#3A2C08"}, "usage": "พื้นป้าย ประมาณการ / ครอบคลุม X%"},
+   {"name": "flag-estimate-ink", "value": {"light": "#7A4E00", "dark": "#F5C66A"}, "usage": "ตัวอักษรป้าย ประมาณการ บน flag-estimate-bg"},
+   {"name": "tier-pro", "value": {"light": "#1D3880", "dark": "#7C9BDC"}, "usage": "ป้ายระดับ Pro"},
+   {"name": "tier-enterprise", "value": {"light": "#0E1526", "dark": "#EEF2FA"}, "usage": "ป้ายระดับ Enterprise (พื้นเข้ม ตัวอักษรกลับสี)"},
+   {"name": "map-1", "value": {"light": "#E7EDF8", "dark": "#16284F"}, "usage": "แผนที่ลำดับขั้น ค่าน้อยสุด"},
+   {"name": "map-2", "value": {"light": "#B9C8E7", "dark": "#284580"}, "usage": "แผนที่ลำดับขั้น"},
+   {"name": "map-3", "value": {"light": "#7F98CF", "dark": "#4668B5"}, "usage": "แผนที่ลำดับขั้น กลาง"},
+   {"name": "map-4", "value": {"light": "#3D5FAA", "dark": "#7C9BDC"}, "usage": "แผนที่ลำดับขั้น"},
+   {"name": "map-5", "value": {"light": "#002060", "dark": "#C4D3F4"}, "usage": "แผนที่ลำดับขั้น ค่ามากสุด"}
+  ]},
+ "type": {"fonts": [],
+  "families": {"display": "\"Anuphan\", \"IBM Plex Sans Thai\", Tahoma, sans-serif", "sans": "\"IBM Plex Sans Thai\", Tahoma, system-ui, sans-serif", "mono": "\"IBM Plex Mono\", ui-monospace, Menlo, monospace"},
+  "groups": [
+   {"name": "Display", "family": "display", "styles": [
+    {"name": "display-xl", "fontSize": "48px", "lineHeight": "60px", "fontWeight": 700},
+    {"name": "h1", "fontSize": "36px", "lineHeight": "48px", "fontWeight": 700},
+    {"name": "h2", "fontSize": "28px", "lineHeight": "38px", "fontWeight": 700},
+    {"name": "h3", "fontSize": "20px", "lineHeight": "30px", "fontWeight": 600}]},
+   {"name": "Text", "family": "sans", "styles": [
+    {"name": "body", "fontSize": "16px", "lineHeight": "26px", "fontWeight": 400},
+    {"name": "body-sm", "fontSize": "14px", "lineHeight": "22px", "fontWeight": 400},
+    {"name": "label", "fontSize": "14px", "lineHeight": "20px", "fontWeight": 600},
+    {"name": "caption", "fontSize": "12px", "lineHeight": "18px", "fontWeight": 500}]},
+   {"name": "Data", "family": "mono", "styles": [
+    {"name": "data-lg", "fontSize": "40px", "lineHeight": "48px", "fontWeight": 500},
+    {"name": "data", "fontSize": "14px", "lineHeight": "20px", "fontWeight": 500}]}]},
+ "spacing": {"tokens": [
+  {"name": "space-1", "value": "4px", "usage": "ช่องไฟในป้ายและไอคอน"},
+  {"name": "space-2", "value": "8px", "usage": "ระยะระหว่างชิปตัวกรอง"},
+  {"name": "space-3", "value": "12px", "usage": "ระยะในการ์ด KPI"},
+  {"name": "space-4", "value": "16px", "usage": "ขอบข้างหน้าจอโทรศัพท์ ระยะในการ์ด"},
+  {"name": "space-6", "value": "24px", "usage": "ระยะระหว่างการ์ด ขอบข้างแท็บเล็ต"},
+  {"name": "space-8", "value": "32px", "usage": "ระยะระหว่างกลุ่มเนื้อหา"},
+  {"name": "space-12", "value": "48px", "usage": "ระยะระหว่างส่วนบนโทรศัพท์/แท็บเล็ต"},
+  {"name": "space-16", "value": "64px", "usage": "ระยะระหว่างส่วนบนเดสก์ท็อป"},
+  {"name": "gutter-desktop", "value": "96px", "usage": "ขอบข้างเดสก์ท็อป 1440"}]},
+ "radius": {"tokens": [
+  {"name": "radius-sm", "value": "4px", "usage": "ป้ายสถานะ ช่องตาราง"},
+  {"name": "radius-md", "value": "8px", "usage": "ปุ่ม ช่องกรอก"},
+  {"name": "radius-lg", "value": "12px", "usage": "การ์ด แผงข้อมูล"},
+  {"name": "radius-pill", "value": "999px", "usage": "ชิปตัวกรอง ป้ายระดับสมาชิก"}]},
+ "shadow": {"tokens": [
+  {"name": "shadow-pop", "value": "0 8px 24px rgba(0,32,96,0.16)", "usage": "เมนูลอย แผ่นล่าง (bottom sheet) หน้าต่างส่งออก เท่านั้น การ์ดทั่วไปใช้ขอบ ไม่ใช้เงา"}]},
+ "breakpoint": {"tokens": [
+  {"name": "bp-phone", "value": "390px", "usage": "ขนาดออกแบบโทรศัพท์ ใช้ถึง 767px"},
+  {"name": "bp-tablet-portrait", "value": "834px", "usage": "แท็บเล็ตแนวตั้ง 768–1023px"},
+  {"name": "bp-tablet-landscape", "value": "1024px", "usage": "แท็บเล็ตแนวนอน 1024–1279px"},
+  {"name": "bp-desktop", "value": "1440px", "usage": "เดสก์ท็อป ตั้งแต่ 1280px"}]}
+}
