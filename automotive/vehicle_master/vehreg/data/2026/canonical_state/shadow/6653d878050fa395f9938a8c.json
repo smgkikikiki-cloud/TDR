@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6653d878050fa395f9938a8c",
+    "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:15",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T02:35:52+00:00",
+    "applied_at": "2026-09-30T02:36:55+00:00",
+    "before_hash": "00d874fa72aedd6253a664ce159d1143c0254096545489ac4295583fb4355a4e",
+    "after_hash": "f86ae541342abbd2d60237f0e9635c16e72b79e8e9f43dcd71fb24b12624ba9d",
+    "before": [
+      100,
+      "Li-ion",
+      160000,
+      8,
+      "CCS2",
+      270,
+      true,
+      true,
+      true,
+      730,
+      647,
+      "245/40 R21",
+      "275/35 R21"
+    ],
+    "after": [
+      100,
+      "Li-ion",
+      160000,
+      8,
+      "CCS2",
+      270,
+      true,
+      true,
+      true,
+      730,
+      647,
+      "245/40 R21",
+      "275/35 R21",
+      3.9
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_performance.acceleration_0_100_s_eef0f338d6b2_5392a4d42166.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6653d878050fa395f9938a8c:spec",
+    "revision_id": "6653d878050fa395f9938a8c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T02:36:55+00:00",
+    "payload": [
+      100,
+      "Li-ion",
+      160000,
+      8,
+      "CCS2",
+      270,
+      true,
+      true,
+      true,
+      730,
+      647,
+      "245/40 R21",
+      "275/35 R21",
+      3.9
+    ]
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "dacffcf220df7b9fcdae74ab",
+    "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:7",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T02:35:52+00:00",
+    "applied_at": "2026-09-30T02:36:55+00:00",
+    "before_hash": "37e0b2acad0c84f5b692aa8ac0c4b4560799037d03b1bdaae18de75dee66d62f",
+    "after_hash": "7de5c0ad185b58d520d965cca1ba52dc36cd038c8d544683042d081c4937f160",
+    "before": [
+      100,
+      "Li-ion",
+      160000,
+      8,
+      "CCS2"
+    ],
+    "after": [
+      100,
+      "Li-ion",
+      160000,
+      8,
+      "CCS2",
+      270
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_charging.dc_max_kw_9d18d19d12be_5c18c6271c95.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "dacffcf220df7b9fcdae74ab:spec",
+    "revision_id": "dacffcf220df7b9fcdae74ab",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T02:36:55+00:00",
+    "payload": [
+      100,
+      "Li-ion",
+      160000,
+      8,
+      "CCS2",
+      270
+    ]
+  }
+}

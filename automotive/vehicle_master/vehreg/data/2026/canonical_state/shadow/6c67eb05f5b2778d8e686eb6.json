@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "6c67eb05f5b2778d8e686eb6",
+    "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:54",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T02:35:52+00:00",
+    "applied_at": "2026-09-30T02:36:55+00:00",
+    "before_hash": "b33d56d455c9024ee2a6158ec3155815ede96b662edc3294afe5163d298060cf",
+    "after_hash": "35457c1fb6a821ab4a28a5f46dab49b57f9c2ad11fe24a25d29cccde3eeb4130",
+    "before": [
+      100,
+      "Li-ion",
+      160000,
+      8,
+      "CCS2",
+      270,
+      true,
+      true,
+      true,
+      753,
+      675
+    ],
+    "after": [
+      100,
+      "Li-ion",
+      160000,
+      8,
+      "CCS2",
+      270,
+      true,
+      true,
+      true,
+      753,
+      675,
+      "245/40 R21"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_fitment.tyre_front_82bc35cec24c.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "6c67eb05f5b2778d8e686eb6:spec",
+    "revision_id": "6c67eb05f5b2778d8e686eb6",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T02:36:55+00:00",
+    "payload": [
+      100,
+      "Li-ion",
+      160000,
+      8,
+      "CCS2",
+      270,
+      true,
+      true,
+      true,
+      753,
+      675,
+      "245/40 R21"
+    ]
+  }
+}

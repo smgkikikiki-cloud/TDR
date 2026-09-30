@@ -1,0 +1,840 @@
+{
+  "schema_version": 1,
+  "batch_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f",
+  "batch_hash": "41ddfeabbb41ecbd5511143773f7d12cf854732f3ca7781fa97a45b3282cc031",
+  "status": "APPLIED",
+  "year": 2026,
+  "source": {
+    "kind": "ADMIN",
+    "ref": "vehicle-spec-excel"
+  },
+  "actor": "tdr-admin",
+  "reason": "bulk import from vehicle-spec-excel",
+  "submitted_at": "2026-09-30T02:35:52+00:00",
+  "applied_at": "2026-09-30T02:36:56+00:00",
+  "results": [
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:1",
+      "revision_id": "9d13cf9484c9893460151e16",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "audi.a6_etron",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:2",
+      "revision_id": "6934e406346956f8d2115ad3",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:3",
+      "revision_id": "1224ba88f77a686872c2ec4d",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:4",
+      "revision_id": "2fe0804c4939cc88f182abb0",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:5",
+      "revision_id": "b7941941b3ddc3f9a894d4c4",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:6",
+      "revision_id": "9dc89590239b667487bc0b3c",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:7",
+      "revision_id": "dacffcf220df7b9fcdae74ab",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:8",
+      "revision_id": "4ea3227373f60ef0496a8f4d",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:9",
+      "revision_id": "19f55e84dd4bc9b2504dc997",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:10",
+      "revision_id": "ab051a1eee0985b48a3abf2c",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:11",
+      "revision_id": "4b83b67e76a4b4b1062c3011",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:12",
+      "revision_id": "956573a9a2c7e63a858187e5",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:13",
+      "revision_id": "3cfc8930211936aec592c63e",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:14",
+      "revision_id": "123dd2e2695fd9b043fe8ad7",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:15",
+      "revision_id": "6653d878050fa395f9938a8c",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:16",
+      "revision_id": "fc64d97ec7087657bde2f2ef",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:17",
+      "revision_id": "390f9c74718bf4112a227956",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:18",
+      "revision_id": "11cd90913487d1ee4e428927",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:19",
+      "revision_id": "9c159d2955e69b455b01eaec",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:20",
+      "revision_id": "48d8e5ed5f8f20866b9701a3",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:21",
+      "revision_id": "51c65cb1eb4c241ccc37fde0",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:22",
+      "revision_id": "2e1c3803e776f37fe7305367",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:23",
+      "revision_id": "6075da082080b061671d6eb6",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:24",
+      "revision_id": "15503537fedec9735c08150f",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:25",
+      "revision_id": "4eaf8496d3aa9f28a1fc1f47",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:26",
+      "revision_id": "6f92346ce372daad5417f0d9",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:27",
+      "revision_id": "74a62c77805921370871248e",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:28",
+      "revision_id": "80c5b1a66418c4e228bd81a5",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:29",
+      "revision_id": "fec119bf49e7d2f1981ed02b",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:30",
+      "revision_id": "a18540a9e2757bd66c2fad36",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:31",
+      "revision_id": "fbe4bd737c2a8ffff171bc62",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:32",
+      "revision_id": "051af1254a174d71601d6c00",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:33",
+      "revision_id": "36934b2d553e3db473c898bf",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:34",
+      "revision_id": "bc3b8d395d8e553cbd9cf823",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:35",
+      "revision_id": "0909f292ff72fd8cb2e35a6b",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:36",
+      "revision_id": "a2cca0a244b9e35f2f33b03c",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:37",
+      "revision_id": "d9c5e7551711092e4e863e31",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:38",
+      "revision_id": "2f9e646929dc4726dd459d00",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:39",
+      "revision_id": "163214e260fcd6fb5c2c612b",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:40",
+      "revision_id": "855b0c988fe00765de8abb4c",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:41",
+      "revision_id": "4a772cc9d7a99c7d9f1fb5f4",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:42",
+      "revision_id": "2203195c0456aad2c4009ee5",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "audi.a6_etron",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:43",
+      "revision_id": "751de8b020f8125cf87e14e0",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:44",
+      "revision_id": "a30a4c724d40ea0ebb2b056f",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:45",
+      "revision_id": "de199cf90d577ea7c70f60a4",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:46",
+      "revision_id": "a2210b00d11b13fd24ddf0a0",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:47",
+      "revision_id": "229c0e09cda4e11021d7cf3f",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:48",
+      "revision_id": "39005dec605a9315139e1e72",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:49",
+      "revision_id": "22be15d8db80b4dc8f1838b6",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:50",
+      "revision_id": "1628a8849e4898802f15c0f7",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:51",
+      "revision_id": "8378fb55bf594a0ca07734d2",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:52",
+      "revision_id": "0d094b8a340382c1255fe8d5",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:53",
+      "revision_id": "78b74871c22d15912d5b76dd",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:54",
+      "revision_id": "6c67eb05f5b2778d8e686eb6",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:55",
+      "revision_id": "a1143e749e567ad2b7266b5f",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:56",
+      "revision_id": "2e60182ac293c99863bd55f2",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:57",
+      "revision_id": "1c377edbacd4fcd5f04651ff",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:58",
+      "revision_id": "d58a39be80da1fa1b2849d3c",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:59",
+      "revision_id": "523acfbe2e556f35d2f40f32",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:60",
+      "revision_id": "b5ef59e118e2308cc9d23f9f",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:61",
+      "revision_id": "d60259a7a425ab59f7c641a2",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:62",
+      "revision_id": "40ec67346fb2cd89143a9334",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:63",
+      "revision_id": "3deb881afbf0816499e52471",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:64",
+      "revision_id": "6004ba19d26e1b3188f1216b",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:65",
+      "revision_id": "15b0e83add1cec6898da5b47",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:66",
+      "revision_id": "90615773530f38a74f340c53",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:67",
+      "revision_id": "765d38a2b8db380fb281680e",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:68",
+      "revision_id": "87c90314f59896d76e088cd9",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:69",
+      "revision_id": "cb925fff3efe5052fdf63399",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:70",
+      "revision_id": "039d54d4448961de0a1be670",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:71",
+      "revision_id": "8b89c0ee83934df748e63c28",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:72",
+      "revision_id": "2b97493f8655664b6ef2a2bd",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:73",
+      "revision_id": "46131e64929540bc3a6f1a49",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:74",
+      "revision_id": "b9fbddc3eeecadd847c00488",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:75",
+      "revision_id": "a6fd46fdd33bfdc05e03ec17",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:76",
+      "revision_id": "12f59d23b7c4f2869587e886",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:77",
+      "revision_id": "62a887daa27e244716c57ea2",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:78",
+      "revision_id": "5ce73d3d661ba49e1fdd7e1a",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:79",
+      "revision_id": "3b870b547f53ef0731a73bd5",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:80",
+      "revision_id": "1c18eb946a946c64b7333498",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:81",
+      "revision_id": "66c26261c90e5bfe54d012e8",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:82",
+      "revision_id": "be41a174eda61fefd7edf4b6",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+      "idempotent_replay": false
+    }
+  ],
+  "changed_files": [
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_powertrain.motor_count_fdd913e409e1.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_comfort.keyless_entry_0ab0954a16e2.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_technology.surround_view_camera_59c969377bad.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_vehicle.wheelbase_mm_0f94fbf7fa2b.json",
+    "2026/models/audi.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_powertrain.drivetrain_2ffc358f6c24.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_powertrain.max_power_kw_398e0332b76d_76a43a51d33a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_safety.driver_attention_alert_03aee78d0226.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_ev.rated_range_km_212aedf38c5e_cf6811108841.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_vehicle.length_mm_0049363db7e1.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_charging.connector_type_fe75b782d14b.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_powertrain.max_torque_nm_398e0332b76d_a2b3453d5b40.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_charging.dc_max_kw_9d18d19d12be_d9026b4d7aca.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_powertrain.max_torque_nm_398e0332b76d_7f924aa786ae.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_safety.curtain_airbag_eb2399b384ff.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_ev.rated_range_km_0ae84e372d69_4ae71f51e871.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_battery.warranty_km_d627c38b1b29.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_performance.top_speed_kmh_eef0f338d6b2_a04656fd4ad2.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_safety.airbag_count_3761ffd2f05f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_safety.abs_791651e9eca8.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_safety.adaptive_cruise_8db0b2f35dd0.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_safety.curtain_airbag_12de30f11920.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_performance.acceleration_0_100_s_eef0f338d6b2_00e253b0154f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_fitment.tyre_front_f6c6cc66b797.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_safety.rear_cross_traffic_2b5824514eae.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_vehicle.cargo_volume_l_6a5d82f5ba62_2b7ed810f1f3.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_vehicle.height_mm_c1a252c7ebd6.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_charging.dc_max_kw_9d18d19d12be_5c18c6271c95.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_technology.led_headlights_639b45de2a55.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_battery.catalog_capacity_kwh_c8cedf0abfe9.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_safety.driver_attention_alert_961af3e919bb.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_comfort.power_windows_d2dc48ec6ab8.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_technology.led_headlights_57f4f1b9123a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_ev.rated_range_km_0ae84e372d69_dcd35cabe014.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_safety.esc_47157f31754f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_vehicle.cargo_volume_l_6a5d82f5ba62_fd70df57b50f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_safety.adaptive_cruise_9ebe502ea334.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_powertrain.drivetrain_0a14ae2a5fd5.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_battery.warranty_years_931c9d46eb60.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_powertrain.max_power_kw_398e0332b76d_9c519d031a5b.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_vehicle.height_mm_2f82e7c2fdc8.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_vehicle.cargo_volume_l_33557c0b97f2_9b9efdd6e865.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_safety.forward_collision_warning_2520d1485bcf.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_safety.lane_departure_warning_8078621dd24a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_fitment.tyre_rear_c42553de690f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_safety.rear_cross_traffic_57f48f3364e9.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_safety.lane_departure_warning_200a2128b1c9.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_battery.catalog_capacity_kwh_43fbc986b242.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_safety.aeb_15ed96fbde53.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_technology.surround_view_camera_fbcd31e26d40.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_vehicle.width_mm_bebe03d15f31.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_technology.smartphone_mirroring_65dcd6dfaa5f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_safety.airbag_count_d39f5e8ab348.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_vehicle.length_mm_2cafc0efc2e4.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_safety.esc_03127cc65d64.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_safety.forward_collision_warning_a8457fb0a772.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_performance.top_speed_kmh_eef0f338d6b2_531ad3d5ed79.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_battery.chemistry_8b6091ef0fcb.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_performance.acceleration_0_100_s_eef0f338d6b2_5392a4d42166.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_safety.blind_spot_c4147a5d00e5.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_comfort.auto_climate_53189119e7e0.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_powertrain.motor_count_35e837e16d15.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_safety.abs_6a087b61d9b4.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_comfort.auto_climate_32e504be7dfd.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_vehicle.width_mm_2e900451fa2f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_ev.rated_range_km_212aedf38c5e_698c1bfe38ca.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_battery.chemistry_27d419512828.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_technology.smartphone_mirroring_ba49dcfb55b9.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_battery.warranty_km_f289a508ed4a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_charging.connector_type_d901af0b023e.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_fitment.tyre_rear_59324a215a43.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_safety.blind_spot_a250dd2e0c15.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_comfort.keyless_entry_d7b7d3f2d90e.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_battery.warranty_years_d0e560dbebed.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_safety.side_airbag_eb508c32a156.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_safety.side_airbag_175c499c4f24.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_safety.aeb_fab879ad572f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_avant_e_tron_quattro_awd_bev_vehicle.wheelbase_mm_f88588c0b1b6.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_vehicle.cargo_volume_l_33557c0b97f2_da8c9ac8961d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_fitment.tyre_front_82bc35cec24c.json",
+    "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_comfort.power_windows_4fbda0c23ea3.json",
+    "2026/canonical_state/shadow/cb925fff3efe5052fdf63399.json",
+    "2026/canonical_state/shadow/22be15d8db80b4dc8f1838b6.json",
+    "2026/canonical_state/shadow/d9c5e7551711092e4e863e31.json",
+    "2026/canonical_state/shadow/ab051a1eee0985b48a3abf2c.json",
+    "2026/canonical_state/shadow/fbe4bd737c2a8ffff171bc62.json",
+    "2026/canonical_state/shadow/0d094b8a340382c1255fe8d5.json",
+    "2026/canonical_state/shadow/d58a39be80da1fa1b2849d3c.json",
+    "2026/canonical_state/shadow/12f59d23b7c4f2869587e886.json",
+    "2026/canonical_state/shadow/15b0e83add1cec6898da5b47.json",
+    "2026/canonical_state/shadow/765d38a2b8db380fb281680e.json",
+    "2026/canonical_state/shadow/2e1c3803e776f37fe7305367.json",
+    "2026/canonical_state/shadow/bc3b8d395d8e553cbd9cf823.json",
+    "2026/canonical_state/shadow/751de8b020f8125cf87e14e0.json",
+    "2026/canonical_state/shadow/523acfbe2e556f35d2f40f32.json",
+    "2026/canonical_state/shadow/19f55e84dd4bc9b2504dc997.json",
+    "2026/canonical_state/shadow/a30a4c724d40ea0ebb2b056f.json",
+    "2026/canonical_state/shadow/2e60182ac293c99863bd55f2.json",
+    "2026/canonical_state/shadow/b7941941b3ddc3f9a894d4c4.json",
+    "2026/canonical_state/shadow/4eaf8496d3aa9f28a1fc1f47.json",
+    "2026/canonical_state/shadow/15503537fedec9735c08150f.json",
+    "2026/canonical_state/shadow/9dc89590239b667487bc0b3c.json",
+    "2026/canonical_state/shadow/a2cca0a244b9e35f2f33b03c.json",
+    "2026/canonical_state/shadow/fec119bf49e7d2f1981ed02b.json",
+    "2026/canonical_state/shadow/36934b2d553e3db473c898bf.json",
+    "2026/canonical_state/shadow/a2210b00d11b13fd24ddf0a0.json",
+    "2026/canonical_state/shadow/3b870b547f53ef0731a73bd5.json",
+    "2026/canonical_state/shadow/9d13cf9484c9893460151e16.json",
+    "2026/canonical_state/shadow/78b74871c22d15912d5b76dd.json",
+    "2026/canonical_state/shadow/6075da082080b061671d6eb6.json",
+    "2026/canonical_state/shadow/8378fb55bf594a0ca07734d2.json",
+    "2026/canonical_state/shadow/8b89c0ee83934df748e63c28.json",
+    "2026/canonical_state/shadow/a1143e749e567ad2b7266b5f.json",
+    "2026/canonical_state/shadow/2b97493f8655664b6ef2a2bd.json",
+    "2026/canonical_state/revisions.jsonl",
+    "2026/canonical_state/shadow/51c65cb1eb4c241ccc37fde0.json",
+    "2026/canonical_state/shadow/a18540a9e2757bd66c2fad36.json",
+    "2026/canonical_state/shadow/1224ba88f77a686872c2ec4d.json",
+    "2026/canonical_state/shadow/2f9e646929dc4726dd459d00.json",
+    "2026/canonical_state/shadow/0909f292ff72fd8cb2e35a6b.json",
+    "2026/canonical_state/shadow/229c0e09cda4e11021d7cf3f.json",
+    "2026/canonical_state/shadow/d60259a7a425ab59f7c641a2.json",
+    "2026/canonical_state/shadow/123dd2e2695fd9b043fe8ad7.json",
+    "2026/canonical_state/shadow/be41a174eda61fefd7edf4b6.json",
+    "2026/canonical_state/shadow/3deb881afbf0816499e52471.json",
+    "2026/canonical_state/shadow/9c159d2955e69b455b01eaec.json",
+    "2026/canonical_state/shadow/2203195c0456aad2c4009ee5.json",
+    "2026/canonical_state/shadow/b5ef59e118e2308cc9d23f9f.json",
+    "2026/canonical_state/shadow/87c90314f59896d76e088cd9.json",
+    "2026/canonical_state/shadow/46131e64929540bc3a6f1a49.json",
+    "2026/canonical_state/shadow/2fe0804c4939cc88f182abb0.json",
+    "2026/canonical_state/shadow/48d8e5ed5f8f20866b9701a3.json",
+    "2026/canonical_state/shadow/1c18eb946a946c64b7333498.json",
+    "2026/canonical_state/shadow/fc64d97ec7087657bde2f2ef.json",
+    "2026/canonical_state/shadow/6c67eb05f5b2778d8e686eb6.json",
+    "2026/canonical_state/shadow/6f92346ce372daad5417f0d9.json",
+    "2026/canonical_state/shadow/4a772cc9d7a99c7d9f1fb5f4.json",
+    "2026/canonical_state/shadow/5ce73d3d661ba49e1fdd7e1a.json",
+    "2026/canonical_state/shadow/956573a9a2c7e63a858187e5.json",
+    "2026/canonical_state/shadow/163214e260fcd6fb5c2c612b.json",
+    "2026/canonical_state/shadow/039d54d4448961de0a1be670.json",
+    "2026/canonical_state/outbox.jsonl",
+    "2026/canonical_state/shadow/a6fd46fdd33bfdc05e03ec17.json",
+    "2026/canonical_state/shadow/b9fbddc3eeecadd847c00488.json",
+    "2026/canonical_state/shadow/855b0c988fe00765de8abb4c.json",
+    "2026/canonical_state/shadow/dacffcf220df7b9fcdae74ab.json",
+    "2026/canonical_state/shadow/4ea3227373f60ef0496a8f4d.json",
+    "2026/canonical_state/shadow/de199cf90d577ea7c70f60a4.json",
+    "2026/canonical_state/shadow/1628a8849e4898802f15c0f7.json",
+    "2026/canonical_state/shadow/4b83b67e76a4b4b1062c3011.json",
+    "2026/canonical_state/shadow/74a62c77805921370871248e.json",
+    "2026/canonical_state/shadow/1c377edbacd4fcd5f04651ff.json",
+    "2026/canonical_state/shadow/90615773530f38a74f340c53.json",
+    "2026/canonical_state/shadow/11cd90913487d1ee4e428927.json",
+    "2026/canonical_state/shadow/051af1254a174d71601d6c00.json",
+    "2026/canonical_state/shadow/80c5b1a66418c4e228bd81a5.json",
+    "2026/canonical_state/shadow/6004ba19d26e1b3188f1216b.json",
+    "2026/canonical_state/shadow/3cfc8930211936aec592c63e.json",
+    "2026/canonical_state/shadow/6934e406346956f8d2115ad3.json",
+    "2026/canonical_state/shadow/6653d878050fa395f9938a8c.json",
+    "2026/canonical_state/shadow/40ec67346fb2cd89143a9334.json",
+    "2026/canonical_state/shadow/66c26261c90e5bfe54d012e8.json",
+    "2026/canonical_state/shadow/62a887daa27e244716c57ea2.json",
+    "2026/canonical_state/shadow/39005dec605a9315139e1e72.json",
+    "2026/canonical_state/shadow/390f9c74718bf4112a227956.json"
+  ]
+}

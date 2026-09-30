@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "0d094b8a340382c1255fe8d5",
+    "command_id": "vehicle-spec-a559d9ad-9925-4700-9e06-680aa2a3d60f-001-4a58de812f7f:52",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T02:35:52+00:00",
+    "applied_at": "2026-09-30T02:36:55+00:00",
+    "before_hash": "d9171437829f8a39117ecd8f8a84dc77028deacf36e0c96263b9f9c4f224a4e4",
+    "after_hash": "8df65850e25c6c1c659cd45132787236bb04a769675d178fd3943c29046aa9a3",
+    "before": [
+      100,
+      "Li-ion",
+      160000,
+      8,
+      "CCS2",
+      270,
+      true,
+      true,
+      true
+    ],
+    "after": [
+      100,
+      "Li-ion",
+      160000,
+      8,
+      "CCS2",
+      270,
+      true,
+      true,
+      true,
+      753
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev_ev.rated_range_km_0ae84e372d69_dcd35cabe014.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "0d094b8a340382c1255fe8d5:spec",
+    "revision_id": "0d094b8a340382c1255fe8d5",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.a6_etron.gen1.trim.s6_sportback_e_tron_quattro_awd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T02:36:55+00:00",
+    "payload": [
+      100,
+      "Li-ion",
+      160000,
+      8,
+      "CCS2",
+      270,
+      true,
+      true,
+      true,
+      753
+    ]
+  }
+}
