@@ -249,3 +249,22 @@ This is a production weapon only when all are true:
 Branch: `feature/retail-lineup-bootstrap`
 
 Chunk 1 owns **planning only**. It must remain side-effect free. Later chunks should treat its identity resolution, baseline hashing and action classification as the source of truth rather than reimplementing them.
+
+## Chunk 2 status
+
+Implemented on `feature/retail-lineup-bootstrap`.
+
+Chunk 2 adds the staged apply engine in `vehreg/retail_lineup_bootstrap_apply.py` and keeps Chunk 1's planner side-effect free. Apply rechecks both the immutable `plan_hash` and the baseline before any write. If the baseline has changed, it fails `STALE_BASELINE` unless the tree already exactly matches the plan's intended post-state, in which case the retry is treated as an idempotent replay.
+
+The runtime order is intentionally:
+
+1. materialize every CREATE MarketTrim into base Catalog;
+2. explicitly reopen target HISTORICAL identities marked REACTIVATE;
+3. replace each model's whole approved CURRENT set;
+4. mark every omitted old CURRENT trim literal HISTORICAL.
+
+The CURRENT-set replacement comes before ARCHIVE because the existing lifecycle invariant permits a historical trim under a raw `UNVERIFIED` parent only when an explicit approved set already exists and excludes that trim. Nothing intermediate is served because Chunk 2 mutates only a caller-owned staged tree. Chunk 4 still owns whole-workbook live-tree promotion and serving-release validation.
+
+Chunk 2 also adds a dedicated owner-authoritative lifecycle helper. Ordinary per-trim lifecycle review continues to require a real http(s) source URL for CURRENT/HISTORICAL. Bootstrap may store an empty `source_ref` instead of fabricating a URL; HUMAN reviewer, reviewed date, notes and the immutable bootstrap plan are its authority/audit trail. Parent-model and approved-set safeguards are unchanged.
+
+Covered behaviors include KEEP + CREATE + REACTIVATE + ARCHIVE in one plan, creation without copied specs/prices, preservation of retired identities/history files, literal HISTORICAL archival, historical reopen before reactivation, raw-UNVERIFIED parents with no pre-existing approved set, stale-baseline refusal, plan-hash tamper refusal, fake source-ref refusal, and successful idempotent replay after the exact post-state already landed.
