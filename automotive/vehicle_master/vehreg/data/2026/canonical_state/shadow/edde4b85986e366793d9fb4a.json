@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "edde4b85986e366793d9fb4a",
+    "command_id": "vehicle-spec-4196b465-414a-4c85-8bd0-693d36de774b-001-04290da891d6:46",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto2.atto2.trim.standard_range_dynamic_32_kwh_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T05:18:48+00:00",
+    "applied_at": "2026-09-30T05:19:50+00:00",
+    "before_hash": "d07f3af4b3369657b41a4f467161fd4cb77a088c31d1b416c7ed6807410501cc",
+    "after_hash": "8e5b7816efbddcaaff06f75fdee9e2be75afc63d0fa0513a0630695d98d027a0",
+    "before": [
+      32,
+      "LFP",
+      160000,
+      8,
+      "CCS2"
+    ],
+    "after": [
+      32,
+      "LFP",
+      160000,
+      8,
+      "CCS2",
+      65
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.atto2.atto2.trim.standard_range_dynamic_32_kwh_bev_charging.dc_max_kw_9d18d19d12be_fce69a735010.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "edde4b85986e366793d9fb4a:spec",
+    "revision_id": "edde4b85986e366793d9fb4a",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto2.atto2.trim.standard_range_dynamic_32_kwh_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T05:19:50+00:00",
+    "payload": [
+      32,
+      "LFP",
+      160000,
+      8,
+      "CCS2",
+      65
+    ]
+  }
+}

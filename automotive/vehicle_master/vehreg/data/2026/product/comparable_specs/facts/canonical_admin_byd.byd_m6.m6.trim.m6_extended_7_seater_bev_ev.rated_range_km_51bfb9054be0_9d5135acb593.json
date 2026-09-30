@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "admin:byd.byd_m6.m6.trim.m6_extended_7_seater_bev:ev.rated_range_km:51bfb9054be0",
+      "trim_id": "byd.byd_m6.m6.trim.m6_extended_7_seater_bev",
+      "field_key": "ev.rated_range_km",
+      "value_state": "KNOWN",
+      "value": 530,
+      "unit": "km",
+      "qualifiers": {
+        "measurement_basis": "NEDC",
+        "range_scope": "ELECTRIC_ONLY"
+      },
+      "observed_at": "2026-09-30",
+      "verification_status": "VERIFIED"
+    }
+  ]
+}

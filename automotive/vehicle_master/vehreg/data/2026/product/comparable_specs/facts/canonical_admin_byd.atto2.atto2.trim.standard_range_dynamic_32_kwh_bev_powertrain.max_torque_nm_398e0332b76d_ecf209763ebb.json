@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "admin:byd.atto2.atto2.trim.standard_range_dynamic_32_kwh_bev:powertrain.max_torque_nm:398e0332b76d",
+      "trim_id": "byd.atto2.atto2.trim.standard_range_dynamic_32_kwh_bev",
+      "field_key": "powertrain.max_torque_nm",
+      "value_state": "KNOWN",
+      "value": 180,
+      "unit": "Nm",
+      "qualifiers": {
+        "output_scope": "SYSTEM",
+        "rating_basis": "DECLARED"
+      },
+      "observed_at": "2026-09-30",
+      "verification_status": "VERIFIED"
+    }
+  ]
+}

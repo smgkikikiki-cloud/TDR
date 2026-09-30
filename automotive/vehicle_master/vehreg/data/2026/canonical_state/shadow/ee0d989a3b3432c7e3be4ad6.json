@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ee0d989a3b3432c7e3be4ad6",
+    "command_id": "vehicle-spec-4196b465-414a-4c85-8bd0-693d36de774b-001-04290da891d6:5",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto2.atto2.trim.extended_range_premium_45_1_kwh_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T05:18:48+00:00",
+    "applied_at": "2026-09-30T05:19:50+00:00",
+    "before_hash": "8173afd12372865e9f5bd9a5db76d0ea38f125f758264f42d7d3d2c505c58424",
+    "after_hash": "c2f1e2db417c0ea2640cff4dbc859a38cdb25d00ce1d77f8400c1b66549cba8d",
+    "before": [
+      45.12,
+      "LFP",
+      160000
+    ],
+    "after": [
+      45.12,
+      "LFP",
+      160000,
+      8
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.atto2.atto2.trim.extended_range_premium_45_1_kwh_bev_battery.warranty_years_2876082b80e0.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ee0d989a3b3432c7e3be4ad6:spec",
+    "revision_id": "ee0d989a3b3432c7e3be4ad6",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto2.atto2.trim.extended_range_premium_45_1_kwh_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T05:19:50+00:00",
+    "payload": [
+      45.12,
+      "LFP",
+      160000,
+      8
+    ]
+  }
+}

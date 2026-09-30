@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "905cd343c0205138fc86bf1b",
+    "command_id": "vehicle-spec-4196b465-414a-4c85-8bd0-693d36de774b-001-04290da891d6:196",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.byd_m6.m6.trim.m6_dynamic_6_seater_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T05:18:48+00:00",
+    "applied_at": "2026-09-30T05:19:52+00:00",
+    "before_hash": "e4901eeca2d24d03bef70a9ddca535f60e1dd4aa1e73e2bf9b45f50c5dbcf399",
+    "after_hash": "c2fab388856a297b8a708b576c247ef9d84d145dd10dbdfc085a269aa7817d19",
+    "before": [
+      55.4,
+      "LFP",
+      160000,
+      8,
+      7,
+      "CCS2",
+      89,
+      true,
+      "MacPherson Strut",
+      "Multi-Link",
+      true,
+      true
+    ],
+    "after": [
+      55.4,
+      "LFP",
+      160000,
+      8,
+      7,
+      "CCS2",
+      89,
+      true,
+      "MacPherson Strut",
+      "Multi-Link",
+      true,
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.byd_m6.m6.trim.m6_dynamic_6_seater_bev_comfort.keyless_entry_e6cdc213c534.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "905cd343c0205138fc86bf1b:spec",
+    "revision_id": "905cd343c0205138fc86bf1b",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.byd_m6.m6.trim.m6_dynamic_6_seater_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T05:19:52+00:00",
+    "payload": [
+      55.4,
+      "LFP",
+      160000,
+      8,
+      7,
+      "CCS2",
+      89,
+      true,
+      "MacPherson Strut",
+      "Multi-Link",
+      true,
+      true,
+      true
+    ]
+  }
+}

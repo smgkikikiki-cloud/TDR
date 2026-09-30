@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "admin:byd.atto2.atto2.trim.extended_range_premium_45_1_kwh_bev:charging.dc_max_kw:9d18d19d12be",
+      "trim_id": "byd.atto2.atto2.trim.extended_range_premium_45_1_kwh_bev",
+      "field_key": "charging.dc_max_kw",
+      "value_state": "KNOWN",
+      "value": 65,
+      "unit": "kW",
+      "qualifiers": {
+        "rating_basis": "DECLARED"
+      },
+      "observed_at": "2026-09-30",
+      "verification_status": "VERIFIED"
+    }
+  ]
+}

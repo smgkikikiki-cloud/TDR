@@ -65,7 +65,14 @@
                 "eco": [
                   "762c0806-4101-4155-9343-7c2dc815dd3b"
                 ]
-              }
+              },
+              "battery_kwh": 49.92,
+              "tire_front": "215/55 R18",
+              "tire_rear": "215/55 R18",
+              "drivetrain": "FWD",
+              "transmission": "1-Speed",
+              "wheelbase_mm": 2720,
+              "id": "byd_atto3_410km_premium_bev"
             },
             {
               "name": "BYD ATTO3 (480KM-EXT)",
@@ -78,7 +85,14 @@
                 "eco": [
                   "e529321a-7be2-4dfe-9087-8fdf70958ca0"
                 ]
-              }
+              },
+              "battery_kwh": 60.48,
+              "tire_front": "215/55 R18",
+              "tire_rear": "215/55 R18",
+              "drivetrain": "FWD",
+              "transmission": "1-Speed",
+              "wheelbase_mm": 2720,
+              "id": "byd_atto3_480km_ext_bev"
             }
           ]
         }
@@ -470,7 +484,17 @@
                   "owner_directory_2026_09_13:051"
                 ]
               },
-              "id": "m6_extended_7_seater_bev"
+              "id": "m6_extended_7_seater_bev",
+              "battery_kwh": 71.8,
+              "tire_front": "225/55 R17",
+              "tire_rear": "225/55 R17",
+              "drivetrain": "FWD",
+              "transmission": "1-Speed",
+              "height_mm": 1690,
+              "length_mm": 4710,
+              "seats": 7,
+              "wheelbase_mm": 2800,
+              "width_mm": 1810
             },
             {
               "name": "M6 Extended (6-Seater Captain Seats)",
@@ -480,12 +504,32 @@
                   "owner_directory_2026_09_13:051"
                 ]
               },
-              "id": "m6_extended_6_seater_captain_seats_bev"
+              "id": "m6_extended_6_seater_captain_seats_bev",
+              "battery_kwh": 71.8,
+              "tire_front": "225/55 R17",
+              "tire_rear": "225/55 R17",
+              "drivetrain": "FWD",
+              "transmission": "1-Speed",
+              "height_mm": 1690,
+              "length_mm": 4710,
+              "seats": 6,
+              "wheelbase_mm": 2800,
+              "width_mm": 1810
             },
             {
               "name": "M6 Dynamic (6-Seater)",
               "powertrain": "BEV",
-              "id": "m6_dynamic_6_seater_bev"
+              "id": "m6_dynamic_6_seater_bev",
+              "battery_kwh": 55.4,
+              "tire_front": "225/55 R17",
+              "tire_rear": "225/55 R17",
+              "drivetrain": "FWD",
+              "transmission": "1-Speed",
+              "height_mm": 1690,
+              "length_mm": 4710,
+              "seats": 6,
+              "wheelbase_mm": 2800,
+              "width_mm": 1810
             }
           ]
         }
@@ -727,7 +771,17 @@
               "aliases": [
                 "Atto 2 Standard Range Dynamic (32 kWh)"
               ],
-              "id": "standard_range_dynamic_32_kwh_bev"
+              "id": "standard_range_dynamic_32_kwh_bev",
+              "battery_kwh": 32,
+              "tire_front": "215/65 R16",
+              "tire_rear": "215/65 R16",
+              "drivetrain": "FWD",
+              "transmission": "1-Speed",
+              "height_mm": 1675,
+              "length_mm": 4310,
+              "seats": 5,
+              "wheelbase_mm": 2620,
+              "width_mm": 1830
             },
             {
               "name": "Extended Range Premium (45.1 kWh)",
@@ -740,7 +794,17 @@
               "aliases": [
                 "Atto 2 Extended Range Premium (45.1 kWh)"
               ],
-              "id": "extended_range_premium_45_1_kwh_bev"
+              "id": "extended_range_premium_45_1_kwh_bev",
+              "battery_kwh": 45.12,
+              "tire_front": "215/60 R17",
+              "tire_rear": "215/60 R17",
+              "drivetrain": "FWD",
+              "transmission": "1-Speed",
+              "height_mm": 1675,
+              "length_mm": 4310,
+              "seats": 5,
+              "wheelbase_mm": 2620,
+              "width_mm": 1830
             }
           ]
         }

@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "44e2c6507c33c56c8c82af1e",
+    "command_id": "vehicle-spec-4196b465-414a-4c85-8bd0-693d36de774b-001-04290da891d6:50",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto2.atto2.trim.standard_range_dynamic_32_kwh_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T05:18:48+00:00",
+    "applied_at": "2026-09-30T05:19:50+00:00",
+    "before_hash": "9c4865c927403736bc29b4d569ca5260415f65ac44db7789aba78a7dc3e9d6ed",
+    "after_hash": "fb7167dc6bba07c20db2364fd4213377b04539944a5de8b518676411980168b1",
+    "before": [
+      32,
+      "LFP",
+      160000,
+      8,
+      "CCS2",
+      65,
+      true,
+      "MacPherson Strut",
+      "Torsion Beam"
+    ],
+    "after": [
+      32,
+      "LFP",
+      160000,
+      8,
+      "CCS2",
+      65,
+      true,
+      "MacPherson Strut",
+      "Torsion Beam",
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.atto2.atto2.trim.standard_range_dynamic_32_kwh_bev_comfort.auto_climate_f01fa14f697e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "44e2c6507c33c56c8c82af1e:spec",
+    "revision_id": "44e2c6507c33c56c8c82af1e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto2.atto2.trim.standard_range_dynamic_32_kwh_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T05:19:50+00:00",
+    "payload": [
+      32,
+      "LFP",
+      160000,
+      8,
+      "CCS2",
+      65,
+      true,
+      "MacPherson Strut",
+      "Torsion Beam",
+      true
+    ]
+  }
+}

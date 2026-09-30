@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "dfd719bc5dc67ff42d70806f",
+    "command_id": "vehicle-spec-4196b465-414a-4c85-8bd0-693d36de774b-001-04290da891d6:230",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.byd_m6.m6.trim.m6_extended_6_seater_captain_seats_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T05:18:48+00:00",
+    "applied_at": "2026-09-30T05:19:52+00:00",
+    "before_hash": "aee3a3f77e04624a87ceb798c78c9334d398049a151908301a4f6a92835142a3",
+    "after_hash": "e0f476f4644e26f3c959b964057e80acea2b6f7f8bc0dc518c43142fb5fc995c",
+    "before": [
+      71.8,
+      "LFP",
+      160000,
+      8,
+      7
+    ],
+    "after": [
+      71.8,
+      "LFP",
+      160000,
+      8,
+      7,
+      "CCS2"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.byd_m6.m6.trim.m6_extended_6_seater_captain_seats_bev_charging.connector_type_f7c414c249d9.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "dfd719bc5dc67ff42d70806f:spec",
+    "revision_id": "dfd719bc5dc67ff42d70806f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.byd_m6.m6.trim.m6_extended_6_seater_captain_seats_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T05:19:52+00:00",
+    "payload": [
+      71.8,
+      "LFP",
+      160000,
+      8,
+      7,
+      "CCS2"
+    ]
+  }
+}

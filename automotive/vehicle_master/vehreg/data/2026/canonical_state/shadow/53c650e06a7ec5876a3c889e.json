@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "53c650e06a7ec5876a3c889e",
+    "command_id": "vehicle-spec-4196b465-414a-4c85-8bd0-693d36de774b-001-04290da891d6:3",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto2.atto2.trim.extended_range_premium_45_1_kwh_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T05:18:48+00:00",
+    "applied_at": "2026-09-30T05:19:50+00:00",
+    "before_hash": "20c69245f33072537e333f3490951c882f67e93c3a8a3324ed755ce61e442089",
+    "after_hash": "38ff8e3338da2aa00b11dbdbc789797b343da3199eb34941440190ea377e22c7",
+    "before": [
+      45.12
+    ],
+    "after": [
+      45.12,
+      "LFP"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.atto2.atto2.trim.extended_range_premium_45_1_kwh_bev_battery.chemistry_e06114b10399.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "53c650e06a7ec5876a3c889e:spec",
+    "revision_id": "53c650e06a7ec5876a3c889e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto2.atto2.trim.extended_range_premium_45_1_kwh_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T05:19:50+00:00",
+    "payload": [
+      45.12,
+      "LFP"
+    ]
+  }
+}

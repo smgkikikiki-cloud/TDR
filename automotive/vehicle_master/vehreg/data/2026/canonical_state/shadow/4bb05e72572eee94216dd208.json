@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "4bb05e72572eee94216dd208",
+    "command_id": "vehicle-spec-4196b465-414a-4c85-8bd0-693d36de774b-001-04290da891d6:43",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto2.atto2.trim.standard_range_dynamic_32_kwh_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T05:18:48+00:00",
+    "applied_at": "2026-09-30T05:19:50+00:00",
+    "before_hash": "ad85dd0993b827a453c120361870daff28041d18b2248024e5bca96ae2753352",
+    "after_hash": "fd0809c984f634d700bd6d73310be572d0c879f244486b0c7d7c067da912e1a5",
+    "before": [
+      32,
+      "LFP"
+    ],
+    "after": [
+      32,
+      "LFP",
+      160000
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.atto2.atto2.trim.standard_range_dynamic_32_kwh_bev_battery.warranty_km_09fde8aa4875.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "4bb05e72572eee94216dd208:spec",
+    "revision_id": "4bb05e72572eee94216dd208",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto2.atto2.trim.standard_range_dynamic_32_kwh_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T05:19:50+00:00",
+    "payload": [
+      32,
+      "LFP",
+      160000
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "admin:byd.byd_m6.m6.trim.m6_extended_6_seater_captain_seats_bev:powertrain.max_torque_nm:157d561b6286",
+      "trim_id": "byd.byd_m6.m6.trim.m6_extended_6_seater_captain_seats_bev",
+      "field_key": "powertrain.max_torque_nm",
+      "value_state": "KNOWN",
+      "value": 310,
+      "unit": "Nm",
+      "qualifiers": {
+        "output_scope": "FRONT_MOTOR",
+        "rating_basis": "DECLARED"
+      },
+      "observed_at": "2026-09-30",
+      "verification_status": "VERIFIED"
+    }
+  ]
+}

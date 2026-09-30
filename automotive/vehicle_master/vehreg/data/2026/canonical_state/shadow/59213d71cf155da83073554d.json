@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "59213d71cf155da83073554d",
+    "command_id": "vehicle-spec-4196b465-414a-4c85-8bd0-693d36de774b-001-04290da891d6:13",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto2.atto2.trim.extended_range_premium_45_1_kwh_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T05:18:48+00:00",
+    "applied_at": "2026-09-30T05:19:50+00:00",
+    "before_hash": "8ce526472722e703083a8fe9c3f9b8ec93a5e613eee2eb74016060ba51042bdb",
+    "after_hash": "97e5c6a599bc4d8a452c4086f15da1a36e8974011b7119f9ef1bad788c1d7c46",
+    "before": [
+      45.12,
+      "LFP",
+      160000,
+      8,
+      "CCS2",
+      65,
+      true,
+      "MacPherson Strut",
+      "Torsion Beam",
+      true,
+      true
+    ],
+    "after": [
+      45.12,
+      "LFP",
+      160000,
+      8,
+      "CCS2",
+      65,
+      true,
+      "MacPherson Strut",
+      "Torsion Beam",
+      true,
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.atto2.atto2.trim.extended_range_premium_45_1_kwh_bev_comfort.keyless_entry_97d738729a52.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "59213d71cf155da83073554d:spec",
+    "revision_id": "59213d71cf155da83073554d",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto2.atto2.trim.extended_range_premium_45_1_kwh_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T05:19:50+00:00",
+    "payload": [
+      45.12,
+      "LFP",
+      160000,
+      8,
+      "CCS2",
+      65,
+      true,
+      "MacPherson Strut",
+      "Torsion Beam",
+      true,
+      true,
+      true
+    ]
+  }
+}

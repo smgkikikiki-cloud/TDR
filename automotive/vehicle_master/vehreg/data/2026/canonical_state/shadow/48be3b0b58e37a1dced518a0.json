@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "48be3b0b58e37a1dced518a0",
+    "command_id": "vehicle-spec-4196b465-414a-4c85-8bd0-693d36de774b-001-04290da891d6:55",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto2.atto2.trim.standard_range_dynamic_32_kwh_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T05:18:48+00:00",
+    "applied_at": "2026-09-30T05:19:50+00:00",
+    "before_hash": "075ed8c94fbfa0282eab0b85ce4ad6a39518dd1471ae398c682ea4489599c74b",
+    "after_hash": "2990f2e6398df89953ccc7521e1c7c213f3d9a0c6b1296175089202e6a8c5200",
+    "before": [
+      32,
+      "LFP",
+      160000,
+      8,
+      "CCS2",
+      65,
+      true,
+      "MacPherson Strut",
+      "Torsion Beam",
+      true,
+      true,
+      true,
+      true,
+      480
+    ],
+    "after": [
+      32,
+      "LFP",
+      160000,
+      8,
+      "CCS2",
+      65,
+      true,
+      "MacPherson Strut",
+      "Torsion Beam",
+      true,
+      true,
+      true,
+      true,
+      480,
+      "215/65 R16"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.atto2.atto2.trim.standard_range_dynamic_32_kwh_bev_fitment.tyre_front_bdab2fa57f69.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "48be3b0b58e37a1dced518a0:spec",
+    "revision_id": "48be3b0b58e37a1dced518a0",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto2.atto2.trim.standard_range_dynamic_32_kwh_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T05:19:50+00:00",
+    "payload": [
+      32,
+      "LFP",
+      160000,
+      8,
+      "CCS2",
+      65,
+      true,
+      "MacPherson Strut",
+      "Torsion Beam",
+      true,
+      true,
+      true,
+      true,
+      480,
+      "215/65 R16"
+    ]
+  }
+}

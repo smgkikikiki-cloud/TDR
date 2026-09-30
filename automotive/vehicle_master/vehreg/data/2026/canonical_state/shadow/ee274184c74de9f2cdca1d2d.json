@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ee274184c74de9f2cdca1d2d",
+    "command_id": "vehicle-spec-4196b465-414a-4c85-8bd0-693d36de774b-001-04290da891d6:227",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.byd_m6.m6.trim.m6_extended_6_seater_captain_seats_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T05:18:48+00:00",
+    "applied_at": "2026-09-30T05:19:52+00:00",
+    "before_hash": "526a19f7478f76655e39b60652c8471b1360dbed31d22b4d986edae036511069",
+    "after_hash": "c665d393c91745d0993ac197e6136c691594978ade2f541aecf035a4ac318dcc",
+    "before": [
+      71.8,
+      "LFP"
+    ],
+    "after": [
+      71.8,
+      "LFP",
+      160000
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.byd_m6.m6.trim.m6_extended_6_seater_captain_seats_bev_battery.warranty_km_e13c2779902e.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ee274184c74de9f2cdca1d2d:spec",
+    "revision_id": "ee274184c74de9f2cdca1d2d",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.byd_m6.m6.trim.m6_extended_6_seater_captain_seats_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T05:19:52+00:00",
+    "payload": [
+      71.8,
+      "LFP",
+      160000
+    ]
+  }
+}

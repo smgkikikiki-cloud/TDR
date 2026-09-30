@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "1142dd8ac280b3700f2e333e",
+    "command_id": "vehicle-spec-4196b465-414a-4c85-8bd0-693d36de774b-001-04290da891d6:189",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.byd_m6.m6.trim.m6_dynamic_6_seater_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T05:18:48+00:00",
+    "applied_at": "2026-09-30T05:19:52+00:00",
+    "before_hash": "bba4e1118e9d9b691dcb41dffc3025f6f31b426e67f1c1c5a4b1ee8631a0a1d1",
+    "after_hash": "02b1d6a6c5ea55e8403b39553ff98b4a1ca9f7f0b9457ca94d4f56f2c481be30",
+    "before": [
+      55.4,
+      "LFP",
+      160000,
+      8,
+      7
+    ],
+    "after": [
+      55.4,
+      "LFP",
+      160000,
+      8,
+      7,
+      "CCS2"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.byd_m6.m6.trim.m6_dynamic_6_seater_bev_charging.connector_type_de0210491052.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "1142dd8ac280b3700f2e333e:spec",
+    "revision_id": "1142dd8ac280b3700f2e333e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.byd_m6.m6.trim.m6_dynamic_6_seater_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T05:19:52+00:00",
+    "payload": [
+      55.4,
+      "LFP",
+      160000,
+      8,
+      7,
+      "CCS2"
+    ]
+  }
+}

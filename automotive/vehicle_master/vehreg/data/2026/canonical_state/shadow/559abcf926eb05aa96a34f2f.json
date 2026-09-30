@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "559abcf926eb05aa96a34f2f",
+    "command_id": "vehicle-spec-4196b465-414a-4c85-8bd0-693d36de774b-001-04290da891d6:188",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.byd_m6.m6.trim.m6_dynamic_6_seater_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T05:18:48+00:00",
+    "applied_at": "2026-09-30T05:19:52+00:00",
+    "before_hash": "99342c4bd66d0e4ed91e9411c241c6de5db6664da4fc36db1d6b421ca9a2ca39",
+    "after_hash": "bba4e1118e9d9b691dcb41dffc3025f6f31b426e67f1c1c5a4b1ee8631a0a1d1",
+    "before": [
+      55.4,
+      "LFP",
+      160000,
+      8
+    ],
+    "after": [
+      55.4,
+      "LFP",
+      160000,
+      8,
+      7
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.byd_m6.m6.trim.m6_dynamic_6_seater_bev_charging.ac_max_kw_f6af5ac74a4f.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "559abcf926eb05aa96a34f2f:spec",
+    "revision_id": "559abcf926eb05aa96a34f2f",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.byd_m6.m6.trim.m6_dynamic_6_seater_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T05:19:52+00:00",
+    "payload": [
+      55.4,
+      "LFP",
+      160000,
+      8,
+      7
+    ]
+  }
+}

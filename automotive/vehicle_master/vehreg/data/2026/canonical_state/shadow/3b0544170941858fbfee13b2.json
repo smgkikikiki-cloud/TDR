@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "3b0544170941858fbfee13b2",
+    "command_id": "vehicle-spec-4196b465-414a-4c85-8bd0-693d36de774b-001-04290da891d6:234",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.byd_m6.m6.trim.m6_extended_6_seater_captain_seats_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T05:18:48+00:00",
+    "applied_at": "2026-09-30T05:19:52+00:00",
+    "before_hash": "f806682f8c639c06cddaad025ffa109d81a5e3116929068a670046794227461f",
+    "after_hash": "60e6bd652d7c0f0efe41ad303801ac8b208addcb92b966dd19b2f6da21739e9d",
+    "before": [
+      71.8,
+      "LFP",
+      160000,
+      8,
+      7,
+      "CCS2",
+      115,
+      true,
+      "MacPherson Strut"
+    ],
+    "after": [
+      71.8,
+      "LFP",
+      160000,
+      8,
+      7,
+      "CCS2",
+      115,
+      true,
+      "MacPherson Strut",
+      "Multi-Link"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.byd_m6.m6.trim.m6_extended_6_seater_captain_seats_bev_chassis.suspension_rear_5ac6f722a61b.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "3b0544170941858fbfee13b2:spec",
+    "revision_id": "3b0544170941858fbfee13b2",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.byd_m6.m6.trim.m6_extended_6_seater_captain_seats_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T05:19:52+00:00",
+    "payload": [
+      71.8,
+      "LFP",
+      160000,
+      8,
+      7,
+      "CCS2",
+      115,
+      true,
+      "MacPherson Strut",
+      "Multi-Link"
+    ]
+  }
+}

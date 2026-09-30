@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "13d07477960de15a737734a1",
+    "command_id": "vehicle-spec-4196b465-414a-4c85-8bd0-693d36de774b-001-04290da891d6:9",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto2.atto2.trim.extended_range_premium_45_1_kwh_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T05:18:48+00:00",
+    "applied_at": "2026-09-30T05:19:50+00:00",
+    "before_hash": "a8d5e25feb858f73aeb3e4576649a4ae0cc7c3b1c79956bf5962755b852bb490",
+    "after_hash": "e6373160b5c12e795630d4a029a89b19a47b7df1dc86906202af5c09afe9ea0d",
+    "before": [
+      45.12,
+      "LFP",
+      160000,
+      8,
+      "CCS2",
+      65,
+      true
+    ],
+    "after": [
+      45.12,
+      "LFP",
+      160000,
+      8,
+      "CCS2",
+      65,
+      true,
+      "MacPherson Strut"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.atto2.atto2.trim.extended_range_premium_45_1_kwh_bev_chassis.suspension_front_6a2caf5d3d95.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "13d07477960de15a737734a1:spec",
+    "revision_id": "13d07477960de15a737734a1",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto2.atto2.trim.extended_range_premium_45_1_kwh_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T05:19:50+00:00",
+    "payload": [
+      45.12,
+      "LFP",
+      160000,
+      8,
+      "CCS2",
+      65,
+      true,
+      "MacPherson Strut"
+    ]
+  }
+}

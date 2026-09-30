@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "4f07434cb2f9f16445b48221",
+    "command_id": "vehicle-spec-4196b465-414a-4c85-8bd0-693d36de774b-001-04290da891d6:187",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.byd_m6.m6.trim.m6_dynamic_6_seater_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T05:18:48+00:00",
+    "applied_at": "2026-09-30T05:19:52+00:00",
+    "before_hash": "33e0119159c70b543344d5d3e942389816b133df5ca3bb9295e4ff82314b486c",
+    "after_hash": "99342c4bd66d0e4ed91e9411c241c6de5db6664da4fc36db1d6b421ca9a2ca39",
+    "before": [
+      55.4,
+      "LFP",
+      160000
+    ],
+    "after": [
+      55.4,
+      "LFP",
+      160000,
+      8
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.byd_m6.m6.trim.m6_dynamic_6_seater_bev_battery.warranty_years_b456c9dc70f0.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "4f07434cb2f9f16445b48221:spec",
+    "revision_id": "4f07434cb2f9f16445b48221",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.byd_m6.m6.trim.m6_dynamic_6_seater_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T05:19:52+00:00",
+    "payload": [
+      55.4,
+      "LFP",
+      160000,
+      8
+    ]
+  }
+}

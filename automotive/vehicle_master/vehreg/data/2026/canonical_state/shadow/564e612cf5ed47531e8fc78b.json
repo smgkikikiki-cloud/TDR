@@ -1,0 +1,368 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "564e612cf5ed47531e8fc78b",
+    "command_id": "vehicle-spec-4196b465-414a-4c85-8bd0-693d36de774b-001-04290da891d6:1",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "byd.atto2",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T05:18:48+00:00",
+    "applied_at": "2026-09-30T05:19:49+00:00",
+    "before_hash": "38d1fb86b6ca35a470c987f042bf8e3f6bb2bace0a549c87b33d68f08d7abfa8",
+    "after_hash": "0c690268bdffb994598b8c73c46a02d85d7e92d0e91e2a81ba12f2e6ab51317e",
+    "before": {
+      "id": "atto2",
+      "name_en": "Atto 2",
+      "name_th": "",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "atto 2"
+      ],
+      "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
+      "generations": [
+        {
+          "code": "ATTO2",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": "2026-04-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "ยังไม่แยกรุ่นย่อย",
+              "powertrain": "UNKNOWN",
+              "drivetrain": "",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "aliases": [],
+              "overrides": {},
+              "price_thb": 644900,
+              "import_type": "",
+              "origin_country": "",
+              "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+              "price_min_thb": 644900,
+              "price_max_thb": 644900
+            }
+          ],
+          "trims": [
+            {
+              "name": "Standard Range Dynamic (32 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:049"
+                ]
+              },
+              "aliases": [
+                "Atto 2 Standard Range Dynamic (32 kWh)"
+              ],
+              "id": "standard_range_dynamic_32_kwh_bev"
+            },
+            {
+              "name": "Extended Range Premium (45.1 kWh)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:049"
+                ]
+              },
+              "aliases": [
+                "Atto 2 Extended Range Premium (45.1 kWh)"
+              ],
+              "id": "extended_range_premium_45_1_kwh_bev"
+            }
+          ]
+        }
+      ],
+      "incomplete": true
+    },
+    "after": {
+      "brand": {
+        "id": "byd",
+        "name_en": "BYD",
+        "name_th": "บีวายดี",
+        "brand_segment": "MASS",
+        "oem_group": "BYD",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "บีวายดี",
+          "rever automotive"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "byd.atto2",
+        "brand_id": "byd",
+        "name_en": "Atto 2",
+        "name_th": "",
+        "nameplate": "Atto 2",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "atto 2"
+        ],
+        "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "byd.atto2.atto2",
+          "model_id": "byd.atto2",
+          "code": "ATTO2",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": "2026-04-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "byd.atto2.atto2.ยงไมแยกรนยอย",
+          "generation_id": "byd.atto2.atto2",
+          "name": "ยังไม่แยกรุ่นย่อย",
+          "powertrain": "UNKNOWN",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": 644900,
+          "price_min_thb": 644900,
+          "price_max_thb": 644900,
+          "import_type": "UNKNOWN",
+          "origin_country": "",
+          "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "byd.atto2.atto2.trim.standard_range_dynamic_32_kwh_bev",
+          "generation_id": "byd.atto2.atto2",
+          "name": "Standard Range Dynamic (32 kWh)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Atto 2 Standard Range Dynamic (32 kWh)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:049"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "byd.atto2.atto2.trim.extended_range_premium_45_1_kwh_bev",
+          "generation_id": "byd.atto2.atto2",
+          "name": "Extended Range Premium (45.1 kWh)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": 45.12,
+          "transmission": "1-Speed",
+          "seats": 5,
+          "length_mm": 4310,
+          "width_mm": 1830,
+          "height_mm": 1675,
+          "wheelbase_mm": 2620,
+          "tire_front": "215/60 R17",
+          "tire_rear": "215/60 R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Atto 2 Extended Range Premium (45.1 kWh)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:049"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/byd.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "564e612cf5ed47531e8fc78b:catalog",
+    "revision_id": "564e612cf5ed47531e8fc78b",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "byd.atto2",
+    "state": "PENDING",
+    "created_at": "2026-09-30T05:19:49+00:00",
+    "payload": {
+      "brand": {
+        "id": "byd",
+        "name_en": "BYD",
+        "name_th": "บีวายดี",
+        "brand_segment": "MASS",
+        "oem_group": "BYD",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "บีวายดี",
+          "rever automotive"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "byd.atto2",
+        "brand_id": "byd",
+        "name_en": "Atto 2",
+        "name_th": "",
+        "nameplate": "Atto 2",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "atto 2"
+        ],
+        "notes": "added from DLT registrations; price is the owner's median MSRP, spec detail beyond body type and powertrain is not filled in",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "byd.atto2.atto2",
+          "model_id": "byd.atto2",
+          "code": "ATTO2",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": "2026-04-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "byd.atto2.atto2.ยงไมแยกรนยอย",
+          "generation_id": "byd.atto2.atto2",
+          "name": "ยังไม่แยกรุ่นย่อย",
+          "powertrain": "UNKNOWN",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": 644900,
+          "price_min_thb": 644900,
+          "price_max_thb": 644900,
+          "import_type": "UNKNOWN",
+          "origin_country": "",
+          "price_note": "owner-supplied: median MSRP of the current variants, list price excluding promotional discounts",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "byd.atto2.atto2.trim.standard_range_dynamic_32_kwh_bev",
+          "generation_id": "byd.atto2.atto2",
+          "name": "Standard Range Dynamic (32 kWh)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Atto 2 Standard Range Dynamic (32 kWh)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:049"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "byd.atto2.atto2.trim.extended_range_premium_45_1_kwh_bev",
+          "generation_id": "byd.atto2.atto2",
+          "name": "Extended Range Premium (45.1 kWh)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": 45.12,
+          "transmission": "1-Speed",
+          "seats": 5,
+          "length_mm": 4310,
+          "width_mm": 1830,
+          "height_mm": 1675,
+          "wheelbase_mm": 2620,
+          "tire_front": "215/60 R17",
+          "tire_rear": "215/60 R17",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Atto 2 Extended Range Premium (45.1 kWh)"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:049"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}
