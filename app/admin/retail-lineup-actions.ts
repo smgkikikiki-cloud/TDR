@@ -151,6 +151,7 @@ export async function applyRetailLineupPlanAction(formData: FormData) {
   const planId = field(formData, "plan_id");
   const planHash = field(formData, "plan_hash").toLowerCase();
   const baselineHash = field(formData, "baseline_hash").toLowerCase();
+  if (field(formData, "confirm") !== "YES") throw new Error("ต้องยืนยัน Preview ก่อน Apply");
   if (!UUID.test(planId)) throw new Error("plan id ไม่ถูกต้อง");
   if (!HEX64.test(planHash) || !HEX64.test(baselineHash)) throw new Error("reviewed hash ไม่ถูกต้อง");
 
