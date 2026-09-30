@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "1436f7be73e6f17fd767b0b5",
+    "command_id": "vehicle-spec-bfeca2c8-245d-4a28-8694-34a45750c3d6-001-f9e407d3f403:14",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.i5.gen1.trim.edrive40_m_sport_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T03:11:12+00:00",
+    "applied_at": "2026-09-30T03:12:16+00:00",
+    "before_hash": "c5a60779325a33db9217a47f41265f88149069b3eca83f8fbe7654711c98cdda",
+    "after_hash": "1d9779e8d4dc317de1559af44532c57a3846ee5ad8626faad8672c96fcc97ddd",
+    "before": [
+      "Li-ion",
+      83.9,
+      81.2,
+      160000,
+      8,
+      22,
+      "CCS2",
+      205,
+      30,
+      "Double Wishbone",
+      "Multi-Link",
+      true
+    ],
+    "after": [
+      "Li-ion",
+      83.9,
+      81.2,
+      160000,
+      8,
+      22,
+      "CCS2",
+      205,
+      30,
+      "Double Wishbone",
+      "Multi-Link",
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_bmw.i5.gen1.trim.edrive40_m_sport_bev_comfort.electric_parking_brake_e6366ff998ff.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "1436f7be73e6f17fd767b0b5:spec",
+    "revision_id": "1436f7be73e6f17fd767b0b5",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.i5.gen1.trim.edrive40_m_sport_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T03:12:16+00:00",
+    "payload": [
+      "Li-ion",
+      83.9,
+      81.2,
+      160000,
+      8,
+      22,
+      "CCS2",
+      205,
+      30,
+      "Double Wishbone",
+      "Multi-Link",
+      true,
+      true
+    ]
+  }
+}

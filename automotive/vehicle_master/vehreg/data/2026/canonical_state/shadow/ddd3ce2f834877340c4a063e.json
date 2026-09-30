@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "ddd3ce2f834877340c4a063e",
+    "command_id": "vehicle-spec-bfeca2c8-245d-4a28-8694-34a45750c3d6-001-f9e407d3f403:12",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.i5.gen1.trim.edrive40_m_sport_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T03:11:12+00:00",
+    "applied_at": "2026-09-30T03:12:16+00:00",
+    "before_hash": "5f669b3b9ed59ff2900ed49430b3e3540ccd610a575ea679fb42dfb2c1190bd3",
+    "after_hash": "d3d7e9a859c6f1587fe7635dcb44276d15035b5fa23df581ff9f4d094996c7ee",
+    "before": [
+      "Li-ion",
+      83.9,
+      81.2,
+      160000,
+      8,
+      22,
+      "CCS2",
+      205,
+      30,
+      "Double Wishbone"
+    ],
+    "after": [
+      "Li-ion",
+      83.9,
+      81.2,
+      160000,
+      8,
+      22,
+      "CCS2",
+      205,
+      30,
+      "Double Wishbone",
+      "Multi-Link"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_bmw.i5.gen1.trim.edrive40_m_sport_bev_chassis.suspension_rear_07d134bd1bdb.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "ddd3ce2f834877340c4a063e:spec",
+    "revision_id": "ddd3ce2f834877340c4a063e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.i5.gen1.trim.edrive40_m_sport_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T03:12:16+00:00",
+    "payload": [
+      "Li-ion",
+      83.9,
+      81.2,
+      160000,
+      8,
+      22,
+      "CCS2",
+      205,
+      30,
+      "Double Wishbone",
+      "Multi-Link"
+    ]
+  }
+}

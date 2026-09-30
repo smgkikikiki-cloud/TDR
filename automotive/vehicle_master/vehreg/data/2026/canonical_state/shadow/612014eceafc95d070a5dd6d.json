@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "612014eceafc95d070a5dd6d",
+    "command_id": "vehicle-spec-bfeca2c8-245d-4a28-8694-34a45750c3d6-001-f9e407d3f403:16",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.i5.gen1.trim.edrive40_m_sport_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T03:11:12+00:00",
+    "applied_at": "2026-09-30T03:12:16+00:00",
+    "before_hash": "60fdd9780c46e107763ed1d9bd9f1f239fcd0231d9be114569f6797e534bef7c",
+    "after_hash": "6fd21299270b853e2c4fea99a591a46e7a805ce8e69929ed069bca349a2a1faf",
+    "before": [
+      "Li-ion",
+      83.9,
+      81.2,
+      160000,
+      8,
+      22,
+      "CCS2",
+      205,
+      30,
+      "Double Wishbone",
+      "Multi-Link",
+      true,
+      true,
+      true
+    ],
+    "after": [
+      "Li-ion",
+      83.9,
+      81.2,
+      160000,
+      8,
+      22,
+      "CCS2",
+      205,
+      30,
+      "Double Wishbone",
+      "Multi-Link",
+      true,
+      true,
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_bmw.i5.gen1.trim.edrive40_m_sport_bev_comfort.panoramic_roof_ca233c9db809.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "612014eceafc95d070a5dd6d:spec",
+    "revision_id": "612014eceafc95d070a5dd6d",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.i5.gen1.trim.edrive40_m_sport_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T03:12:16+00:00",
+    "payload": [
+      "Li-ion",
+      83.9,
+      81.2,
+      160000,
+      8,
+      22,
+      "CCS2",
+      205,
+      30,
+      "Double Wishbone",
+      "Multi-Link",
+      true,
+      true,
+      true,
+      true
+    ]
+  }
+}
