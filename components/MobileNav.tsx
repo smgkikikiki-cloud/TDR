@@ -1,85 +1,114 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { KeyboardEvent as ReactKeyboardEvent } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { isNavItemActive, memberEntry, primaryNav } from "@/lib/navigation";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { isNavItemActive, memberEntry, pricingEntry, primaryNav, signupEntry } from "@/lib/navigation";
 
-/** Matches the .mobileNavToggle breakpoint in globals.css. The drawer only
- * exists below this width, so crossing it (resize, tablet rotation) must
- * close the drawer -- otherwise the overlay can outlive the hamburger that
- * opened it. */
-const MOBILE_BREAKPOINT_QUERY = "(min-width: 701px)";
+/** Matches the width where the header nav row is shown again (tdr-nav in shell.css). */
+const DESKTOP_QUERY = "(min-width: 1024px)";
+const FOCUSABLE = "a[href], button:not([disabled])";
 
-/** Explicit mobile menu for <=700px, replacing the old horizontal-scroll nav
- * row that gave no hint more items existed off-screen. Tablet keeps the
- * scrollable row (still usable with a pointer/wider viewport). */
+/** Burger drawer for <1024px. The nav row is hidden there, and so are the header links
+ *  that no longer fit at each width, so the drawer carries all of them.
+ *  Keyboard: focus moves into the drawer on open, Tab/Shift+Tab stay inside it while open,
+ *  and Escape, the close button, the scrim and the burger all return focus to the burger. */
 export function MobileNav() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname() || "/";
+  const burgerRef = useRef<HTMLButtonElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const drawerRef = useRef<HTMLDivElement>(null);
+
+  /** Closes the drawer. Focus goes back to the burger unless the close came from navigation
+   *  or a resize, where the reader is somewhere else and the burger may not even be visible. */
+  const close = useCallback((returnFocus: boolean) => {
+    setOpen(false);
+    if (returnFocus) burgerRef.current?.focus();
+  }, []);
 
   useEffect(() => {
     if (!open) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
-    };
+    closeRef.current?.focus();
+    const onKey = (event: KeyboardEvent) => { if (event.key === "Escape") close(true); };
     window.addEventListener("keydown", onKey);
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKey);
     };
-  }, [open]);
+  }, [open, close]);
 
-  // A route change (link click, back/forward) always closes the drawer.
-  useEffect(() => { setOpen(false); }, [pathname]);
+  useEffect(() => { close(false); }, [pathname, close]);
 
-  // Crossing into desktop width (resize, tablet rotation) must close the
-  // drawer -- it has no desktop trigger, so a stale open=true would leave
-  // the overlay/panel visible with no hamburger left to close it.
   useEffect(() => {
-    const query = window.matchMedia(MOBILE_BREAKPOINT_QUERY);
-    const onChange = (event: MediaQueryListEvent | MediaQueryList) => {
-      if (event.matches) setOpen(false);
-    };
+    const query = window.matchMedia(DESKTOP_QUERY);
+    const onChange = (event: MediaQueryListEvent | MediaQueryList) => { if (event.matches) close(false); };
     onChange(query);
     query.addEventListener("change", onChange);
     return () => query.removeEventListener("change", onChange);
-  }, []);
+  }, [close]);
+
+  /** Keeps Tab inside the drawer: wraps at both ends and pulls stray focus back in. */
+  function trapTab(event: ReactKeyboardEvent<HTMLDivElement>) {
+    if (event.key !== "Tab") return;
+    const items = Array.from(drawerRef.current?.querySelectorAll<HTMLElement>(FOCUSABLE) ?? []);
+    if (!items.length) return;
+    const first = items[0];
+    const last = items[items.length - 1];
+    const active = document.activeElement;
+    if (!drawerRef.current?.contains(active)) { event.preventDefault(); first.focus(); }
+    else if (event.shiftKey && active === first) { event.preventDefault(); last.focus(); }
+    else if (!event.shiftKey && active === last) { event.preventDefault(); first.focus(); }
+  }
 
   return (
     <>
       <button
+        ref={burgerRef}
         type="button"
-        className="mobileNavToggle"
+        className="tdr-icon-btn tdr-burger"
         aria-expanded={open}
-        aria-controls="mobileNavPanel"
+        aria-controls="tdrDrawer"
+        aria-haspopup="dialog"
         aria-label={open ? "ปิดเมนู" : "เปิดเมนู"}
-        onClick={() => setOpen((value) => !value)}
+        onClick={() => (open ? close(true) : setOpen(true))}
       >
-        <span /><span /><span />
+        ☰
       </button>
 
       {open ? (
-        <div className="mobileNavOverlay" onClick={() => setOpen(false)}>
-          <nav
-            id="mobileNavPanel"
-            className="mobileNavPanel"
-            aria-label="เมนูหลัก (มือถือ)"
+        <div className="tdr-drawer-overlay" onClick={() => close(true)}>
+          <div
+            id="tdrDrawer"
+            ref={drawerRef}
+            className="tdr-drawer"
+            role="dialog"
+            aria-modal="true"
+            aria-label="เมนู"
             onClick={(event) => event.stopPropagation()}
+            onKeyDown={trapTab}
           >
-            <button type="button" className="mobileNavClose" aria-label="ปิดเมนู" onClick={() => setOpen(false)}>×</button>
-            {primaryNav.map((item) => {
-              const active = isNavItemActive(pathname, item.href);
-              return (
-                <Link key={item.href} href={item.href} className={active ? "navOn" : undefined} aria-current={active ? "page" : undefined}>
-                  {item.label}
-                </Link>
-              );
-            })}
-            <Link href={memberEntry.href} className="mobileNavAccount">{memberEntry.label}</Link>
-          </nav>
+            <button ref={closeRef} type="button" className="tdr-icon-btn tdr-drawer__close" aria-label="ปิดเมนู" onClick={() => close(true)}>×</button>
+            <nav className="tdr-drawer__nav" aria-label="เมนูหลัก (มือถือและแท็บเล็ต)">
+              {primaryNav.map((item) => {
+                const active = isNavItemActive(pathname, item.href);
+                return (
+                  <Link key={item.href} href={item.href} className={active ? "on" : undefined} aria-current={active ? "page" : undefined}>
+                    {item.label}
+                  </Link>
+                );
+              })}
+              <hr />
+              <Link href={pricingEntry.href}>{pricingEntry.label}</Link>
+              <Link href={memberEntry.href}>{memberEntry.label}</Link>
+              <Link href={signupEntry.href} className="tdr-btn tdr-signup">{signupEntry.label}</Link>
+            </nav>
+            <ThemeToggle className="tdr-drawer__theme" />
+          </div>
         </div>
       ) : null}
     </>

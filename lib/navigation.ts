@@ -1,23 +1,35 @@
-/** The primary navigation IS the product: the free vehicle database and its
- * comparison tool, then the two subscriber layers, then how to get more of
- * it. Nothing else belongs here — brands, plants and search are views of the
- * database, not sections of their own, and they are reached from inside it. */
+/** The primary navigation (design/DESIGN.md §7): the four sections, in this order,
+ *  English labels. Hrefs point at the pages that exist today; the target pages move
+ *  with their own PRs (Intelligence hub, Analysis) and only this file changes then. */
 export const primaryNav = [
-  { href: "/models", label: "ฐานข้อมูลรถยนต์" },
-  { href: "/compare", label: "เปรียบเทียบสเปก" },
-  { href: "/market", label: "ข้อมูลตลาดรถยนต์" },
-  { href: "/research", label: "บทวิเคราะห์เชิงลึก" },
-  { href: "/pricing", label: "แพ็กเกจ" },
+  { href: "/market", label: "Automotive Intelligence" },
+  { href: "/models", label: "Vehicle Database" },
+  { href: "/compare", label: "Compare Specs" },
+  { href: "/research", label: "Analysis Report" },
 ];
 
-/** Where the header's account entry points. */
+/** Header actions. Sign-up and sign-in share the member page until the auth pages ship. */
+export const pricingEntry = { href: "/pricing", label: "แพ็กเกจ" };
 export const memberEntry = { href: "/member/login", label: "เข้าสู่ระบบ" };
+export const signupEntry = { href: "/member/login", label: "สมัครสมาชิก" };
 
-/** Brand and search routes are views of the canonical vehicle catalogue, so
- *  they light up the catalogue's nav entry rather than nothing at all. Shared
- *  by the desktop row and the mobile drawer so the two can never disagree
- *  about where the reader is. */
-const NAV_SECTION_OF: Record<string, string> = { "/brands": "/models", "/search": "/models" };
+/** Phone bottom bar (design/DESIGN.md §6): home · Intelligence · database · account. */
+export const bottomNav = [
+  { href: "/", label: "หน้าแรก", icon: "⌂", match: (path: string) => path === "/" },
+  { href: "/market", label: "Intelligence", icon: "◔", match: (path: string) => path === "/market" || path.startsWith("/market/") || path.startsWith("/member/market") },
+  { href: "/models", label: "ฐานข้อมูล", icon: "▦", match: (path: string) => path === "/models" || path.startsWith("/models/") || path.startsWith("/brands") || path.startsWith("/search") },
+  { href: "/member/login", label: "บัญชี", icon: "☺", match: (path: string) => path.startsWith("/member") && !path.startsWith("/member/market") },
+];
+
+/** Brand and search routes are views of the canonical vehicle catalogue, and the member
+ *  market workspace is the Intelligence section, so they light up that section's nav entry
+ *  rather than nothing at all. Shared by the desktop row and the drawer so the two can
+ *  never disagree about where the reader is. */
+const NAV_SECTION_OF: Record<string, string> = {
+  "/brands": "/models",
+  "/search": "/models",
+  "/member/market": "/market",
+};
 
 export function resolveActiveNavHref(pathname: string): string {
   const section = Object.entries(NAV_SECTION_OF)

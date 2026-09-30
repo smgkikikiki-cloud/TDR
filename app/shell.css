@@ -1,0 +1,104 @@
+/* TDR site shell: header, footer, phone bottom bar, burger drawer.
+   Selectors that override design/components.css (.tdr-btn sets display) are scoped under .tdr-acts:
+   the bundler does not guarantee which of the two files comes last.
+   Copied from design/reference/home_v7.html; sizes, gutters and breakpoints follow
+   design/DESIGN.md §5–§7. Colours only through tokens (design/tokens.css). */
+:root { --tdr-gutter: 96px; }
+
+.tdr-wrap { max-width: 1440px; margin: 0 auto; padding: 0 var(--tdr-gutter); }
+
+/* The global button lift in globals.css is for legacy pages; the shell's buttons stay still. */
+.tdr-header button:not(:disabled), .tdr-header button:not(:disabled):hover, .tdr-header button:not(:disabled):active,
+.tdr-drawer button:not(:disabled), .tdr-drawer button:not(:disabled):hover, .tdr-drawer button:not(:disabled):active {
+  transform: none; box-shadow: none; transition: none;
+}
+
+/* Header */
+.tdr-header { border-bottom: 1px solid var(--border); background: var(--surface-page); position: sticky; top: 0; z-index: 5; }
+.tdr-header__row { height: 84px; display: flex; align-items: center; gap: 32px; }
+.tdr-logo { display: block; flex: none; }
+.tdr-logo img { height: 44px; width: auto; display: block; }
+:root[data-theme="dark"] .tdr-logo { background: var(--logo-plate); border-radius: var(--radius-md); padding: 4px 8px; }
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) .tdr-logo { background: var(--logo-plate); border-radius: var(--radius-md); padding: 4px 8px; }
+}
+.tdr-nav { display: flex; gap: 28px; flex: 1; justify-content: center; white-space: nowrap; }
+.tdr-nav a { color: var(--ink); font-weight: 500; font-size: 15px; padding: 8px 0; border-bottom: 2px solid transparent; }
+.tdr-nav a.on { color: var(--brand-navy); border-color: var(--brand-navy); }
+.tdr-acts { display: flex; gap: 10px; align-items: center; margin-left: auto; }
+.tdr-nav + .tdr-acts { margin-left: 0; }
+.tdr-acts .tdr-btn, .tdr-drawer .tdr-btn { white-space: nowrap; }
+.tdr-acts .tdr-btn--secondary { font-weight: 500; }
+/* Sign-up is a navy outline button (DESIGN.md §7). Scoped one level up so it beats components.css whatever the bundle order. */
+.tdr-header .tdr-signup, .tdr-drawer .tdr-signup { background: transparent; border-color: var(--brand-navy); color: var(--brand-navy); font-weight: 500; }
+.tdr-acts .tdr-btn--ghost { padding: 0 4px; }
+.tdr-icon-btn { width: 44px; height: 44px; border-radius: var(--radius-md); border: 1px solid var(--border); background: transparent; color: var(--ink); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; font-size: 18px; }
+.tdr-burger { display: none; }
+.tdr-header a:focus-visible, .tdr-header button:focus-visible, .tdr-drawer a:focus-visible, .tdr-drawer button:focus-visible,
+.tdr-footer a:focus-visible, .tdr-bottom a:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 2px; }
+.tdr-footer a:focus-visible { outline-color: var(--ink-on-inverse); }
+
+/* Footer */
+.tdr-footer { background: var(--surface-inverse); color: var(--ink-on-inverse); }
+.tdr-footer__row { padding-top: 32px; padding-bottom: 32px; display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; font-size: 14px; }
+.tdr-footer__logo { background: var(--logo-plate); padding: 6px 10px; border-radius: var(--radius-md); }
+.tdr-footer__logo img { height: 28px; width: auto; display: block; }
+.tdr-footer nav { display: flex; gap: 20px; flex-wrap: wrap; }
+.tdr-footer nav a { color: var(--ink-on-inverse); }
+.tdr-footer__src { opacity: .8; font-size: 13px; }
+
+/* Phone bottom bar */
+.tdr-bottom { display: none; }
+
+/* 1280–1399: tighter nav gaps, logo 32, gutter 40 */
+@media (max-width: 1399px) {
+  :root { --tdr-gutter: 40px; }
+  .tdr-header__row { gap: 16px; }
+  .tdr-logo img { height: 32px; }
+  .tdr-nav { gap: 18px; }
+}
+/* 1024–1279: the "แพ็กเกจ" link leaves the header */
+@media (max-width: 1279px) {
+  .tdr-header__row { gap: 12px; }
+  .tdr-logo img { height: 30px; }
+  .tdr-nav { gap: 14px; }
+  .tdr-nav a { font-size: 14px; }
+  .tdr-acts { gap: 6px; }
+  .tdr-acts .tdr-btn { padding: 0 12px; font-size: 14px; }
+  .tdr-acts .tdr-btn--ghost { padding: 0 4px; }
+  .tdr-acts .tdr-pk { display: none; }
+}
+/* 768–1023: nav becomes the burger */
+@media (max-width: 1023px) {
+  :root { --tdr-gutter: 24px; }
+  .tdr-nav { display: none; }
+  .tdr-header__row { gap: 16px; }
+  .tdr-logo img { height: 36px; }
+  .tdr-burger { display: inline-flex; }
+  .tdr-acts .tdr-login { display: none; }
+  .tdr-acts { margin-left: auto; }
+}
+/* Phone */
+@media (max-width: 767px) {
+  :root { --tdr-gutter: 16px; }
+  .tdr-header__row { height: 64px; }
+  .tdr-logo img { height: 30px; }
+  .tdr-acts .tdr-signup { padding: 0 14px; }
+  .tdr-acts .tdr-theme { display: none; }
+  .tdr-footer { padding-bottom: 64px; }
+  .tdr-bottom { display: grid; grid-template-columns: repeat(4, 1fr); position: fixed; left: 0; right: 0; bottom: 0; height: 64px; background: var(--surface-page); border-top: 1px solid var(--border); z-index: 6; }
+  .tdr-bottom a { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 12px; color: var(--ink-muted); }
+  .tdr-bottom a b { font-size: 18px; line-height: 1; }
+  .tdr-bottom a.on { color: var(--brand-navy); }
+}
+
+/* Burger drawer */
+.tdr-drawer-overlay { position: fixed; inset: 0; z-index: 20; background: color-mix(in srgb, var(--ink) 40%, transparent); }
+.tdr-drawer { position: absolute; top: 0; right: 0; bottom: 0; width: min(320px, 86vw); background: var(--surface-page); border-left: 1px solid var(--border); box-shadow: var(--shadow-pop); padding: 16px; display: flex; flex-direction: column; gap: 4px; overflow-y: auto; }
+.tdr-drawer__nav { display: flex; flex-direction: column; gap: 4px; }
+.tdr-drawer a:not(.tdr-btn) { display: flex; align-items: center; min-height: 44px; color: var(--ink); font-weight: 500; font-size: 16px; }
+.tdr-drawer a.on { color: var(--brand-navy); font-weight: 700; }
+.tdr-drawer hr { width: 100%; border: 0; border-top: 1px solid var(--border); margin: 8px 0; }
+.tdr-drawer .tdr-btn { margin-top: 8px; }
+.tdr-drawer__close { align-self: flex-end; margin-bottom: 8px; font-size: 22px; }
+.tdr-drawer__theme { align-self: flex-start; width: 44px; height: 44px; margin-top: 8px; border-radius: var(--radius-md); border: 1px solid var(--border); background: transparent; color: var(--ink); font-size: 18px; cursor: pointer; }

@@ -38,6 +38,16 @@ const nextConfig: NextConfig = {
     // bigger number in a form label.
     serverActions: { bodySizeLimit: "4mb" },
   },
+  // design/PAGES.md §6: the redirects whose target pages exist today. The /market, /reports, /member
+  // and /research redirects arrive with the pages they point at (Intelligence hub, Analysis).
+  async redirects() {
+    return [
+      { source: "/plants", destination: "/models", permanent: true },
+      { source: "/plants/:slug", destination: "/models", permanent: true },
+      { source: "/production", destination: "/models", permanent: true },
+      { source: "/production/:slug", destination: "/models/:slug", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {
