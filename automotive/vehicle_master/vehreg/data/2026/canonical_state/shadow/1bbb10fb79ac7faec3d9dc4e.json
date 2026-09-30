@@ -1,0 +1,525 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "1bbb10fb79ac7faec3d9dc4e",
+    "command_id": "vehicle-spec-837f8469-a0b0-4f6f-bdc0-211421a0fa30-001-efec041ef832:1",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "aion.aion_y_plus",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T02:26:51+00:00",
+    "applied_at": "2026-09-30T02:28:35+00:00",
+    "before_hash": "952af2853a86f2457d588706b69ad8f0e72064be7502a9c41c3218c819f5bb54",
+    "after_hash": "818fa9cf3329a0bee351f486211c1d175b6a0a7ac2fe45435aecf9cfdbf327da",
+    "before": {
+      "id": "aion_y_plus",
+      "name_en": "Aion Y Plus",
+      "name_th": "ไอออน วาย พลัส",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "aion y",
+        "y plus"
+      ],
+      "notes": "Thai-market lineup and specification verified against GAC Thailand official sources on 2026-09-25. Current official retail lineup is 490 Premium only; the former 410 Premium and 490 Elite are retained as historical canonical identities for source and price-history provenance. AION Y Plus has been locally assembled at GAC's Rayong plant since 2024.",
+      "retail_status": "CURRENT",
+      "retail_checked_at": "2026-09-25",
+      "retail_source": "https://www.gacgroup.com/th-th/configuration/aion-y-plus/2024",
+      "generations": [
+        {
+          "code": "AYP",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2023-09-09",
+          "ended": null,
+          "variants": [
+            {
+              "name": "63.2 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_cc": null,
+              "battery_kwh": 63.2,
+              "aliases": [
+                "490 Premium",
+                "Premium 490"
+              ],
+              "overrides": {},
+              "price_thb": 749000,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "Current advertised retail price on GAC Thailand official AION Y Plus product page, verified 2026-09-25; local CKD production in Rayong.",
+              "price_min_thb": 749000,
+              "price_max_thb": 749000
+            }
+          ],
+          "trims": [
+            {
+              "name": "410 Premium",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:004"
+                ],
+                "eco": [
+                  "9d818c38-a8c6-4bfb-b915-8c1de68264d1"
+                ]
+              },
+              "aliases": [
+                "Aion Y Plus 410 Premium"
+              ],
+              "id": "410_premium_bev",
+              "seats": 5,
+              "length_mm": 4535,
+              "width_mm": 1870,
+              "height_mm": 1650,
+              "notes": "Former Thai-market grade retained as HISTORICAL canonical identity so ECO Sticker and price-history facts remain referentially valid."
+            },
+            {
+              "name": "490 Elite",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:004"
+                ]
+              },
+              "aliases": [
+                "Aion Y Plus 490 Elite"
+              ],
+              "id": "490_elite_bev",
+              "notes": "Former Thai-market grade retained as HISTORICAL canonical identity for historical provenance."
+            },
+            {
+              "name": "490 Premium",
+              "variant": "63.2 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_code": "",
+              "engine_cc": null,
+              "battery_kwh": 63.2,
+              "transmission": "single-speed",
+              "seats": 5,
+              "length_mm": 4535,
+              "width_mm": 1870,
+              "height_mm": 1650,
+              "wheelbase_mm": 2750,
+              "tire_front": "215/50 R18",
+              "tire_rear": "215/50 R18",
+              "wheel_front": "18 in",
+              "wheel_rear": "18 in",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:004"
+                ],
+                "eco": [
+                  "2558d4e8-a7d2-4f99-b513-baf08070c26f"
+                ],
+                "official_gac": [
+                  "https://www.gacgroup.com/th-th/configuration/aion-y-plus/2024",
+                  "https://www.gacgroup.com/th-th/suv/aion-y-plus",
+                  "https://www.gacgroup.com/th-th/news/article/gac-thailand-%E0%B8%89%E0%B8%A5%E0%B8%AD%E0%B8%87%E0%B8%84%E0%B8%A3%E0%B8%9A%E0%B8%A3%E0%B8%AD%E0%B8%9A-2-%E0%B8%9B%E0%B8%B5-%E0%B8%99%E0%B8%A7%E0%B8%B1%E0%B8%95%E0%B8%81%E0%B8%A3%E0%B8%A3%E0%B8%A1-ev-%E0%B8%AA%E0%B8%B9%E0%B9%88%E0%B8%AD%E0%B8%99%E0%B8%B2%E0%B8%84%E0%B8%95-%E0%B8%9E%E0%B8%A3%E0%B9%89%E0%B8%AD%E0%B8%A1%E0%B8%88%E0%B8%B1%E0%B8%94%E0%B8%81%E0%B8%B4%E0%B8%88%E0%B8%81%E0%B8%A3%E0%B8%A3%E0%B8%A1%E0%B8%97%E0%B8%94%E0%B8%AA%E0%B8%AD%E0%B8%9A%E0%B8%82%E0%B8%B1%E0%B8%9A--2nd-drive-2gether-with-you--%E0%B8%AA%E0%B8%B8%E0%B8%94%E0%B9%80%E0%B8%AD%E0%B9%87%E0%B8%81%E0%B8%8B%E0%B9%8C%E0%B8%84%E0%B8%A5%E0%B8%B9%E0%B8%8B%E0%B8%B5%E0%B8%9F-26"
+                ],
+                "local_production": [
+                  "https://www.headlightmag.com/2024-07-02-world-news-thai-factory-gac-aion-at-rayong-will-starts-mid-july-2024/"
+                ]
+              },
+              "aliases": [
+                "Aion Y Plus 490 Premium",
+                "AION Y PLUS 490 Premium"
+              ],
+              "id": "490_premium_bev",
+              "notes": "Current Thai-market retail SKU verified 2026-09-25. OEM currently lists only 490 Premium; former 410 Premium and 490 Elite are retained as historical canonical identities."
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "aion",
+        "name_en": "Aion",
+        "name_th": "ไอออน",
+        "brand_segment": "MASS",
+        "oem_group": "GAC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "gac aion",
+          "ไอออน"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "aion.aion_y_plus",
+        "brand_id": "aion",
+        "name_en": "Aion Y Plus",
+        "name_th": "ไอออน วาย พลัส",
+        "nameplate": "Aion Y Plus",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "aion y",
+          "y plus"
+        ],
+        "notes": "Thai-market lineup and specification verified against GAC Thailand official sources on 2026-09-25. Current official retail lineup is 490 Premium only; the former 410 Premium and 490 Elite are retained as historical canonical identities for source and price-history provenance. AION Y Plus has been locally assembled at GAC's Rayong plant since 2024.",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "CURRENT",
+        "retail_checked_at": "2026-09-25",
+        "retail_source": "https://www.gacgroup.com/th-th/configuration/aion-y-plus/2024",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "aion.aion_y_plus.ayp",
+          "model_id": "aion.aion_y_plus",
+          "code": "AYP",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2023-09-09",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "aion.aion_y_plus.ayp.63_2_kwh_bev",
+          "generation_id": "aion.aion_y_plus.ayp",
+          "name": "63.2 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 63.2,
+          "price_thb": 749000,
+          "price_min_thb": 749000,
+          "price_max_thb": 749000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "Current advertised retail price on GAC Thailand official AION Y Plus product page, verified 2026-09-25; local CKD production in Rayong.",
+          "aliases": [
+            "490 Premium",
+            "Premium 490"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "aion.aion_y_plus.ayp.trim.410_premium_bev",
+          "generation_id": "aion.aion_y_plus.ayp",
+          "name": "410 Premium",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4535,
+          "width_mm": 1870,
+          "height_mm": 1650,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Aion Y Plus 410 Premium"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:004"
+            ],
+            "eco": [
+              "9d818c38-a8c6-4bfb-b915-8c1de68264d1"
+            ]
+          },
+          "notes": "Former Thai-market grade retained as HISTORICAL canonical identity so ECO Sticker and price-history facts remain referentially valid."
+        },
+        {
+          "id": "aion.aion_y_plus.ayp.trim.490_elite_bev",
+          "generation_id": "aion.aion_y_plus.ayp",
+          "name": "490 Elite",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Aion Y Plus 490 Elite"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:004"
+            ]
+          },
+          "notes": "Former Thai-market grade retained as HISTORICAL canonical identity for historical provenance."
+        },
+        {
+          "id": "aion.aion_y_plus.ayp.trim.490_premium_bev",
+          "generation_id": "aion.aion_y_plus.ayp",
+          "name": "490 Premium",
+          "powertrain": "BEV",
+          "variant_id": "aion.aion_y_plus.ayp.63_2_kwh_bev",
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": 63.2,
+          "transmission": "1-Speed",
+          "seats": 5,
+          "length_mm": 4535,
+          "width_mm": 1870,
+          "height_mm": 1650,
+          "wheelbase_mm": 2750,
+          "tire_front": "215/55 R18",
+          "tire_rear": "215/55 R18",
+          "wheel_front": "18 in",
+          "wheel_rear": "18 in",
+          "aliases": [
+            "Aion Y Plus 490 Premium",
+            "AION Y PLUS 490 Premium"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:004"
+            ],
+            "eco": [
+              "2558d4e8-a7d2-4f99-b513-baf08070c26f"
+            ],
+            "official_gac": [
+              "https://www.gacgroup.com/th-th/configuration/aion-y-plus/2024",
+              "https://www.gacgroup.com/th-th/suv/aion-y-plus",
+              "https://www.gacgroup.com/th-th/news/article/gac-thailand-%E0%B8%89%E0%B8%A5%E0%B8%AD%E0%B8%87%E0%B8%84%E0%B8%A3%E0%B8%9A%E0%B8%A3%E0%B8%AD%E0%B8%9A-2-%E0%B8%9B%E0%B8%B5-%E0%B8%99%E0%B8%A7%E0%B8%B1%E0%B8%95%E0%B8%81%E0%B8%A3%E0%B8%A3%E0%B8%A1-ev-%E0%B8%AA%E0%B8%B9%E0%B9%88%E0%B8%AD%E0%B8%99%E0%B8%B2%E0%B8%84%E0%B8%95-%E0%B8%9E%E0%B8%A3%E0%B9%89%E0%B8%AD%E0%B8%A1%E0%B8%88%E0%B8%B1%E0%B8%94%E0%B8%81%E0%B8%B4%E0%B8%88%E0%B8%81%E0%B8%A3%E0%B8%A3%E0%B8%A1%E0%B8%97%E0%B8%94%E0%B8%AA%E0%B8%AD%E0%B8%9A%E0%B8%82%E0%B8%B1%E0%B8%9A--2nd-drive-2gether-with-you--%E0%B8%AA%E0%B8%B8%E0%B8%94%E0%B9%80%E0%B8%AD%E0%B9%87%E0%B8%81%E0%B8%8B%E0%B9%8C%E0%B8%84%E0%B8%A5%E0%B8%B9%E0%B8%8B%E0%B8%B5%E0%B8%9F-26"
+            ],
+            "local_production": [
+              "https://www.headlightmag.com/2024-07-02-world-news-thai-factory-gac-aion-at-rayong-will-starts-mid-july-2024/"
+            ]
+          },
+          "notes": "Current Thai-market retail SKU verified 2026-09-25. OEM currently lists only 490 Premium; former 410 Premium and 490 Elite are retained as historical canonical identities."
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/aion.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "1bbb10fb79ac7faec3d9dc4e:catalog",
+    "revision_id": "1bbb10fb79ac7faec3d9dc4e",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "aion.aion_y_plus",
+    "state": "PENDING",
+    "created_at": "2026-09-30T02:28:35+00:00",
+    "payload": {
+      "brand": {
+        "id": "aion",
+        "name_en": "Aion",
+        "name_th": "ไอออน",
+        "brand_segment": "MASS",
+        "oem_group": "GAC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "gac aion",
+          "ไอออน"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "aion.aion_y_plus",
+        "brand_id": "aion",
+        "name_en": "Aion Y Plus",
+        "name_th": "ไอออน วาย พลัส",
+        "nameplate": "Aion Y Plus",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "aion y",
+          "y plus"
+        ],
+        "notes": "Thai-market lineup and specification verified against GAC Thailand official sources on 2026-09-25. Current official retail lineup is 490 Premium only; the former 410 Premium and 490 Elite are retained as historical canonical identities for source and price-history provenance. AION Y Plus has been locally assembled at GAC's Rayong plant since 2024.",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "CURRENT",
+        "retail_checked_at": "2026-09-25",
+        "retail_source": "https://www.gacgroup.com/th-th/configuration/aion-y-plus/2024",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "aion.aion_y_plus.ayp",
+          "model_id": "aion.aion_y_plus",
+          "code": "AYP",
+          "segment": "B",
+          "seats": 5,
+          "launched": "2023-09-09",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "aion.aion_y_plus.ayp.63_2_kwh_bev",
+          "generation_id": "aion.aion_y_plus.ayp",
+          "name": "63.2 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 63.2,
+          "price_thb": 749000,
+          "price_min_thb": 749000,
+          "price_max_thb": 749000,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "Current advertised retail price on GAC Thailand official AION Y Plus product page, verified 2026-09-25; local CKD production in Rayong.",
+          "aliases": [
+            "490 Premium",
+            "Premium 490"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "aion.aion_y_plus.ayp.trim.410_premium_bev",
+          "generation_id": "aion.aion_y_plus.ayp",
+          "name": "410 Premium",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": 5,
+          "length_mm": 4535,
+          "width_mm": 1870,
+          "height_mm": 1650,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Aion Y Plus 410 Premium"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:004"
+            ],
+            "eco": [
+              "9d818c38-a8c6-4bfb-b915-8c1de68264d1"
+            ]
+          },
+          "notes": "Former Thai-market grade retained as HISTORICAL canonical identity so ECO Sticker and price-history facts remain referentially valid."
+        },
+        {
+          "id": "aion.aion_y_plus.ayp.trim.490_elite_bev",
+          "generation_id": "aion.aion_y_plus.ayp",
+          "name": "490 Elite",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [
+            "Aion Y Plus 490 Elite"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:004"
+            ]
+          },
+          "notes": "Former Thai-market grade retained as HISTORICAL canonical identity for historical provenance."
+        },
+        {
+          "id": "aion.aion_y_plus.ayp.trim.490_premium_bev",
+          "generation_id": "aion.aion_y_plus.ayp",
+          "name": "490 Premium",
+          "powertrain": "BEV",
+          "variant_id": "aion.aion_y_plus.ayp.63_2_kwh_bev",
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": 63.2,
+          "transmission": "1-Speed",
+          "seats": 5,
+          "length_mm": 4535,
+          "width_mm": 1870,
+          "height_mm": 1650,
+          "wheelbase_mm": 2750,
+          "tire_front": "215/55 R18",
+          "tire_rear": "215/55 R18",
+          "wheel_front": "18 in",
+          "wheel_rear": "18 in",
+          "aliases": [
+            "Aion Y Plus 490 Premium",
+            "AION Y PLUS 490 Premium"
+          ],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:004"
+            ],
+            "eco": [
+              "2558d4e8-a7d2-4f99-b513-baf08070c26f"
+            ],
+            "official_gac": [
+              "https://www.gacgroup.com/th-th/configuration/aion-y-plus/2024",
+              "https://www.gacgroup.com/th-th/suv/aion-y-plus",
+              "https://www.gacgroup.com/th-th/news/article/gac-thailand-%E0%B8%89%E0%B8%A5%E0%B8%AD%E0%B8%87%E0%B8%84%E0%B8%A3%E0%B8%9A%E0%B8%A3%E0%B8%AD%E0%B8%9A-2-%E0%B8%9B%E0%B8%B5-%E0%B8%99%E0%B8%A7%E0%B8%B1%E0%B8%95%E0%B8%81%E0%B8%A3%E0%B8%A3%E0%B8%A1-ev-%E0%B8%AA%E0%B8%B9%E0%B9%88%E0%B8%AD%E0%B8%99%E0%B8%B2%E0%B8%84%E0%B8%95-%E0%B8%9E%E0%B8%A3%E0%B9%89%E0%B8%AD%E0%B8%A1%E0%B8%88%E0%B8%B1%E0%B8%94%E0%B8%81%E0%B8%B4%E0%B8%88%E0%B8%81%E0%B8%A3%E0%B8%A3%E0%B8%A1%E0%B8%97%E0%B8%94%E0%B8%AA%E0%B8%AD%E0%B8%9A%E0%B8%82%E0%B8%B1%E0%B8%9A--2nd-drive-2gether-with-you--%E0%B8%AA%E0%B8%B8%E0%B8%94%E0%B9%80%E0%B8%AD%E0%B9%87%E0%B8%81%E0%B8%8B%E0%B9%8C%E0%B8%84%E0%B8%A5%E0%B8%B9%E0%B8%8B%E0%B8%B5%E0%B8%9F-26"
+            ],
+            "local_production": [
+              "https://www.headlightmag.com/2024-07-02-world-news-thai-factory-gac-aion-at-rayong-will-starts-mid-july-2024/"
+            ]
+          },
+          "notes": "Current Thai-market retail SKU verified 2026-09-25. OEM currently lists only 490 Premium; former 410 Premium and 490 Elite are retained as historical canonical identities."
+        }
+      ]
+    }
+  }
+}
