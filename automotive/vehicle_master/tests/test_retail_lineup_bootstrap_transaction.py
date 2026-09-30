@@ -182,3 +182,35 @@ def test_live_baseline_is_rechecked_after_staged_validation(tmp_path, monkeypatc
 
     assert set(load_current_retail_index(data_dir=data, year=YEAR)[MODEL]) == {A}
     assert new_id not in Catalog.load(data, YEAR).trims
+
+
+def test_shared_sidecar_metadata_write_is_not_overwritten(tmp_path, monkeypatch):
+    data = _seed(tmp_path)
+    plan = _plan(data)
+    new_id = next(item.canonical_trim_id for model in plan.models for item in model.items
+                  if item.action.value == "CREATE")
+
+    def validate_then_metadata_writer(plan, *, data_dir, **_kwargs):
+        result = _fake_validation(plan, data_dir=data_dir)
+        # Same membership means the semantic target-model baseline stays the
+        # same, but current_retail.json bytes change. The file-level CAS must
+        # still reject promotion so this concurrent audit metadata is not lost.
+        replace_current_retail_set(
+            data_dir=data, year=YEAR, model_id=MODEL, trim_ids=[A, B],
+            reviewer="Other owner", reviewed_at="2026-09-30", source_ref="",
+            notes="concurrent metadata", write=True)
+        return result
+
+    monkeypatch.setattr(
+        transaction, "validate_retail_lineup_staged_release", validate_then_metadata_writer)
+    with pytest.raises(RetailLineupBootstrapError, match="CONCURRENT_WRITE_BEFORE_PROMOTION"):
+        transaction.apply_retail_lineup_plan_atomically(
+            plan, data_dir=data, actor="Owner",
+            submitted_at="2026-09-30T12:00:00+07:00")
+
+    current_path = data / str(YEAR) / "market" / "trims" / "current_retail.json"
+    payload = json.loads(current_path.read_text(encoding="utf-8"))
+    row = next(row for row in payload["models"] if row["model_id"] == MODEL)
+    assert row["notes"] == "concurrent metadata"
+    assert set(row["trim_ids"]) == {A, B}
+    assert new_id not in Catalog.load(data, YEAR).trims
