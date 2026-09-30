@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7b8575ce1d6606f57db0b6e3",
+    "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:41",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto1.gen1.trim.premium_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T08:47:43+00:00",
+    "applied_at": "2026-09-30T09:25:22+00:00",
+    "before_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "after_hash": "c1a401fc409400cd14bc3643832f3b6d6c7b217c551f0cacdbe5fb7112e3f907",
+    "before": [],
+    "after": [
+      38.88
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_battery.catalog_capacity_kwh_bb61a9f31fa2.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7b8575ce1d6606f57db0b6e3:spec",
+    "revision_id": "7b8575ce1d6606f57db0b6e3",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto1.gen1.trim.premium_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:25:22+00:00",
+    "payload": [
+      38.88
+    ]
+  }
+}

@@ -66,9 +66,9 @@
                   "762c0806-4101-4155-9343-7c2dc815dd3b"
                 ]
               },
-              "battery_kwh": 49.92,
-              "tire_front": "215/55 R18",
-              "tire_rear": "215/55 R18",
+              "battery_kwh": 50.25,
+              "tire_front": "235/50 R18",
+              "tire_rear": "235/50 R18",
               "drivetrain": "FWD",
               "transmission": "1-Speed",
               "wheelbase_mm": 2720,
@@ -87,8 +87,8 @@
                 ]
               },
               "battery_kwh": 60.48,
-              "tire_front": "215/55 R18",
-              "tire_rear": "215/55 R18",
+              "tire_front": "235/50 R18",
+              "tire_rear": "235/50 R18",
               "drivetrain": "FWD",
               "transmission": "1-Speed",
               "wheelbase_mm": 2720,
@@ -955,12 +955,28 @@
             {
               "name": "Dynamic",
               "powertrain": "BEV",
-              "id": "dynamic_bev"
+              "id": "dynamic_bev",
+              "battery_kwh": 30.08,
+              "tire_front": "185/55 R16",
+              "tire_rear": "185/55 R16",
+              "drivetrain": "FWD",
+              "height_mm": 1590,
+              "length_mm": 3925,
+              "wheelbase_mm": 2500,
+              "width_mm": 1720
             },
             {
               "name": "Premium",
               "powertrain": "BEV",
-              "id": "premium_bev"
+              "id": "premium_bev",
+              "battery_kwh": 38.88,
+              "tire_front": "185/55 R16",
+              "tire_rear": "185/55 R16",
+              "drivetrain": "FWD",
+              "height_mm": 1590,
+              "length_mm": 3925,
+              "wheelbase_mm": 2500,
+              "width_mm": 1720
             }
           ]
         }

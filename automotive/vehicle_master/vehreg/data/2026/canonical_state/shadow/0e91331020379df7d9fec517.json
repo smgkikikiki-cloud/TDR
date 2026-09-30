@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "0e91331020379df7d9fec517",
+    "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:53",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto1.gen1.trim.premium_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T08:47:43+00:00",
+    "applied_at": "2026-09-30T09:25:22+00:00",
+    "before_hash": "7ddff6da03b8c1e81f0346924c36fb21691a48eb2ab1a2928ab02c20c47f6ab6",
+    "after_hash": "983219fc9bb39a1ebe638d992e6ae6942a1e56125fc51f42ea4b0d8daae4e74f",
+    "before": [
+      38.88,
+      "BYD Blade Battery",
+      160000,
+      8,
+      6.6,
+      "CCS2",
+      40,
+      true,
+      "Macpherson Strut",
+      "Torsion Beam",
+      true,
+      380
+    ],
+    "after": [
+      38.88,
+      "BYD Blade Battery",
+      160000,
+      8,
+      6.6,
+      "CCS2",
+      40,
+      true,
+      "Macpherson Strut",
+      "Torsion Beam",
+      true,
+      380,
+      "185/55 R16"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_fitment.tyre_front_d3c1ccb1f609.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "0e91331020379df7d9fec517:spec",
+    "revision_id": "0e91331020379df7d9fec517",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto1.gen1.trim.premium_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:25:22+00:00",
+    "payload": [
+      38.88,
+      "BYD Blade Battery",
+      160000,
+      8,
+      6.6,
+      "CCS2",
+      40,
+      true,
+      "Macpherson Strut",
+      "Torsion Beam",
+      true,
+      380,
+      "185/55 R16"
+    ]
+  }
+}

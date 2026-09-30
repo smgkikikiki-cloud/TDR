@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "19ff9f2bc3b612dd203fd42d",
+    "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:47",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto1.gen1.trim.premium_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T08:47:43+00:00",
+    "applied_at": "2026-09-30T09:25:22+00:00",
+    "before_hash": "ee1d5e5416f8cac05b3b146adc4eeae5f48e3264b06a74b5ee8de722eacfd12e",
+    "after_hash": "3d9c0c719aad327862351f227e1c981aea32ec0cf97eb849046ff06f648e18a4",
+    "before": [
+      38.88,
+      "BYD Blade Battery",
+      160000,
+      8,
+      6.6,
+      "CCS2"
+    ],
+    "after": [
+      38.88,
+      "BYD Blade Battery",
+      160000,
+      8,
+      6.6,
+      "CCS2",
+      40
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_charging.dc_max_kw_9d18d19d12be_013fb7333a19.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "19ff9f2bc3b612dd203fd42d:spec",
+    "revision_id": "19ff9f2bc3b612dd203fd42d",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto1.gen1.trim.premium_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:25:22+00:00",
+    "payload": [
+      38.88,
+      "BYD Blade Battery",
+      160000,
+      8,
+      6.6,
+      "CCS2",
+      40
+    ]
+  }
+}

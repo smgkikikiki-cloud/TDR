@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "2337e252979a77782b60167b",
+    "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:10",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T08:47:43+00:00",
+    "applied_at": "2026-09-30T09:25:21+00:00",
+    "before_hash": "c0a9f77749d69280d339e8d662c691a11ec18d8ba93e060bb88ef7ff36001da7",
+    "after_hash": "8f7e9bf0f0ae5f45b26105a39246c19556bdd2ce38d4a7055e90fc9fcdfa4353",
+    "before": [
+      30.08,
+      "BYD Blade Battery",
+      160000,
+      8,
+      6.6,
+      "CCS2",
+      30,
+      true
+    ],
+    "after": [
+      30.08,
+      "BYD Blade Battery",
+      160000,
+      8,
+      6.6,
+      "CCS2",
+      30,
+      true,
+      "Macpherson Strut"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_chassis.suspension_front_b6b6b7c52661.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "2337e252979a77782b60167b:spec",
+    "revision_id": "2337e252979a77782b60167b",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:25:21+00:00",
+    "payload": [
+      30.08,
+      "BYD Blade Battery",
+      160000,
+      8,
+      6.6,
+      "CCS2",
+      30,
+      true,
+      "Macpherson Strut"
+    ]
+  }
+}

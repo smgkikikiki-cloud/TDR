@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c3b306ae2fb76d88e92a9fd5",
+    "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:42",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto1.gen1.trim.premium_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T08:47:43+00:00",
+    "applied_at": "2026-09-30T09:25:22+00:00",
+    "before_hash": "c1a401fc409400cd14bc3643832f3b6d6c7b217c551f0cacdbe5fb7112e3f907",
+    "after_hash": "23d5fe81894acc510ab64588e0c736a5a5fc56b056ec98b8f9c075e9716d398a",
+    "before": [
+      38.88
+    ],
+    "after": [
+      38.88,
+      "BYD Blade Battery"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_battery.chemistry_as_declared_83210d75401f.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c3b306ae2fb76d88e92a9fd5:spec",
+    "revision_id": "c3b306ae2fb76d88e92a9fd5",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto1.gen1.trim.premium_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:25:22+00:00",
+    "payload": [
+      38.88,
+      "BYD Blade Battery"
+    ]
+  }
+}

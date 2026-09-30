@@ -1,0 +1,300 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b9d2d2d8112b628320c13007",
+    "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:1",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "byd.atto1",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T08:47:43+00:00",
+    "applied_at": "2026-09-30T09:25:20+00:00",
+    "before_hash": "eed08af346275f11a22bd5c07b02ab3cdfc6f672b5b1b79f67b48be20e67f68f",
+    "after_hash": "444f920d3b3e1f81244e2d688dd6ff7a5fd0db168df2c477e333d7c2c869f415",
+    "before": {
+      "id": "atto1",
+      "generations": [
+        {
+          "code": "gen1",
+          "variants": [
+            {
+              "name": "BEV",
+              "powertrain": "BEV",
+              "battery_kwh": 30.08
+            }
+          ],
+          "trims": [
+            {
+              "name": "Dynamic",
+              "powertrain": "BEV",
+              "id": "dynamic_bev"
+            },
+            {
+              "name": "Premium",
+              "powertrain": "BEV",
+              "id": "premium_bev"
+            }
+          ]
+        }
+      ],
+      "name_en": "BYD ATTO 1",
+      "body_type": "HATCHBACK"
+    },
+    "after": {
+      "brand": {
+        "id": "byd",
+        "name_en": "BYD",
+        "name_th": "บีวายดี",
+        "brand_segment": "MASS",
+        "oem_group": "BYD",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "บีวายดี",
+          "rever automotive"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "byd.atto1",
+        "brand_id": "byd",
+        "name_en": "BYD ATTO 1",
+        "name_th": "",
+        "nameplate": "BYD ATTO 1",
+        "body_type": "HATCHBACK",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "byd.atto1.gen1",
+          "model_id": "byd.atto1",
+          "code": "gen1",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": null,
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "byd.atto1.gen1.bev",
+          "generation_id": "byd.atto1.gen1",
+          "name": "BEV",
+          "powertrain": "BEV",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": 30.08,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "UNKNOWN",
+          "origin_country": "UNKNOWN",
+          "price_note": "",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "byd.atto1.gen1.trim.dynamic_bev",
+          "generation_id": "byd.atto1.gen1",
+          "name": "Dynamic",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": 30.08,
+          "transmission": "",
+          "seats": null,
+          "length_mm": 3925,
+          "width_mm": 1720,
+          "height_mm": 1590,
+          "wheelbase_mm": 2500,
+          "tire_front": "185/55 R16",
+          "tire_rear": "185/55 R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": ""
+        },
+        {
+          "id": "byd.atto1.gen1.trim.premium_bev",
+          "generation_id": "byd.atto1.gen1",
+          "name": "Premium",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/byd.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b9d2d2d8112b628320c13007:catalog",
+    "revision_id": "b9d2d2d8112b628320c13007",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "byd.atto1",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:25:20+00:00",
+    "payload": {
+      "brand": {
+        "id": "byd",
+        "name_en": "BYD",
+        "name_th": "บีวายดี",
+        "brand_segment": "MASS",
+        "oem_group": "BYD",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "บีวายดี",
+          "rever automotive"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "byd.atto1",
+        "brand_id": "byd",
+        "name_en": "BYD ATTO 1",
+        "name_th": "",
+        "nameplate": "BYD ATTO 1",
+        "body_type": "HATCHBACK",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [],
+        "notes": "",
+        "incomplete": false,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "byd.atto1.gen1",
+          "model_id": "byd.atto1",
+          "code": "gen1",
+          "segment": "UNKNOWN",
+          "seats": null,
+          "launched": null,
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "byd.atto1.gen1.bev",
+          "generation_id": "byd.atto1.gen1",
+          "name": "BEV",
+          "powertrain": "BEV",
+          "drivetrain": "UNKNOWN",
+          "engine_cc": null,
+          "battery_kwh": 30.08,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "UNKNOWN",
+          "origin_country": "UNKNOWN",
+          "price_note": "",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "byd.atto1.gen1.trim.dynamic_bev",
+          "generation_id": "byd.atto1.gen1",
+          "name": "Dynamic",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": 30.08,
+          "transmission": "",
+          "seats": null,
+          "length_mm": 3925,
+          "width_mm": 1720,
+          "height_mm": 1590,
+          "wheelbase_mm": 2500,
+          "tire_front": "185/55 R16",
+          "tire_rear": "185/55 R16",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": ""
+        },
+        {
+          "id": "byd.atto1.gen1.trim.premium_bev",
+          "generation_id": "byd.atto1.gen1",
+          "name": "Premium",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {},
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

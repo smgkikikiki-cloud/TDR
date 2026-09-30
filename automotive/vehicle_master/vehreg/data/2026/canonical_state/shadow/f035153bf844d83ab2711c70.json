@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "f035153bf844d83ab2711c70",
+    "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:43",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto1.gen1.trim.premium_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T08:47:43+00:00",
+    "applied_at": "2026-09-30T09:25:22+00:00",
+    "before_hash": "23d5fe81894acc510ab64588e0c736a5a5fc56b056ec98b8f9c075e9716d398a",
+    "after_hash": "77dc5f2df0c21d0b2882111d019209a12d38f26027344b2cbf71044849c8a06c",
+    "before": [
+      38.88,
+      "BYD Blade Battery"
+    ],
+    "after": [
+      38.88,
+      "BYD Blade Battery",
+      160000
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_battery.warranty_km_89d23f7d1ace.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "f035153bf844d83ab2711c70:spec",
+    "revision_id": "f035153bf844d83ab2711c70",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto1.gen1.trim.premium_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:25:22+00:00",
+    "payload": [
+      38.88,
+      "BYD Blade Battery",
+      160000
+    ]
+  }
+}

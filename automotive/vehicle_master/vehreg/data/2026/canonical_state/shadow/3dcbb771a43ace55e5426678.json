@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "3dcbb771a43ace55e5426678",
+    "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:7",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T08:47:43+00:00",
+    "applied_at": "2026-09-30T09:25:21+00:00",
+    "before_hash": "290c03a37cacd421f8d775fb08b286ce3311261d9cf24d74ef03be494e4a5890",
+    "after_hash": "4504d4c53632f25b97cbcfe6e64321afdc1eaa17606efa8ee1bc1932e4d366a5",
+    "before": [
+      30.08,
+      "BYD Blade Battery",
+      160000,
+      8,
+      6.6
+    ],
+    "after": [
+      30.08,
+      "BYD Blade Battery",
+      160000,
+      8,
+      6.6,
+      "CCS2"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_charging.connector_type_135febcace80.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "3dcbb771a43ace55e5426678:spec",
+    "revision_id": "3dcbb771a43ace55e5426678",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:25:21+00:00",
+    "payload": [
+      30.08,
+      "BYD Blade Battery",
+      160000,
+      8,
+      6.6,
+      "CCS2"
+    ]
+  }
+}

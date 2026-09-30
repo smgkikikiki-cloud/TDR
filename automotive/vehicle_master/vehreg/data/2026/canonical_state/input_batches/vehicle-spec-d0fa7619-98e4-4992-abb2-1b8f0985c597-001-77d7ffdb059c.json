@@ -1,0 +1,1068 @@
+{
+  "schema_version": 1,
+  "batch_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c",
+  "batch_hash": "830b05ba60974c309da481704449a03ace8e77b7c522a9951026dd2a383bea53",
+  "status": "APPLIED",
+  "year": 2026,
+  "source": {
+    "kind": "ADMIN",
+    "ref": "vehicle-spec-excel"
+  },
+  "actor": "tdr-admin",
+  "reason": "bulk import from vehicle-spec-excel",
+  "submitted_at": "2026-09-30T08:47:43+00:00",
+  "applied_at": "2026-09-30T09:25:24+00:00",
+  "results": [
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:1",
+      "revision_id": "b9d2d2d8112b628320c13007",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "byd.atto1",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:2",
+      "revision_id": "d68c12bbe59e130017ae977e",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:3",
+      "revision_id": "1b9200fa35c1f5efe5ce26f5",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:4",
+      "revision_id": "8214908dfa6d0ca9cb2b6f2b",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:5",
+      "revision_id": "0c25fe27f69744b6743c6730",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:6",
+      "revision_id": "5e16cf1f45dfe378e70176c7",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:7",
+      "revision_id": "3dcbb771a43ace55e5426678",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:8",
+      "revision_id": "35ce0ed172bacbad958b48b1",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:9",
+      "revision_id": "8b3c630b7c259f30133aa596",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:10",
+      "revision_id": "2337e252979a77782b60167b",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:11",
+      "revision_id": "9ed67036acac44f89ec41a21",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:12",
+      "revision_id": "c9727dc27756b668c9746a6d",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:13",
+      "revision_id": "540b760ffa3b08c2b08487a4",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:14",
+      "revision_id": "f767a392b30e7f5081020b6b",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:15",
+      "revision_id": "ff342a5c7b0dd69de402989e",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:16",
+      "revision_id": "08a39bbcbf8e5e7494c75793",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:17",
+      "revision_id": "b0692108764f29ef776c16e7",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:18",
+      "revision_id": "d3e59b268b78965a453c8d31",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:19",
+      "revision_id": "c763e56d492f574f4ce0d517",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:20",
+      "revision_id": "a024ac8148e0838ae08b4102",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:21",
+      "revision_id": "474d2a14b53562a66af11371",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:22",
+      "revision_id": "b3fbe2dfa8af9f85bbfe4216",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:23",
+      "revision_id": "45a8d787b5f7bd40f366f146",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:24",
+      "revision_id": "4b2149397213183c8077dd83",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:25",
+      "revision_id": "368af38f63ba71272ef25b05",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:26",
+      "revision_id": "8b317dc2d30427ea7030b7ed",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:27",
+      "revision_id": "06944c1bd3d8b941997b3b89",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:28",
+      "revision_id": "ff594042a1f3439d29c56143",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:29",
+      "revision_id": "b0724620df82c237db49ee33",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:30",
+      "revision_id": "c5df35fad22acb90e8c29161",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:31",
+      "revision_id": "45c72ca865d8a79188c53b15",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:32",
+      "revision_id": "38cb93c63292798cdeaa87c9",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:33",
+      "revision_id": "8b36cd5c8c05040cb43ed813",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:34",
+      "revision_id": "20b4af7b7bcc2d0c86f272b5",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:35",
+      "revision_id": "8909e2d88f994f9574bae308",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:36",
+      "revision_id": "95eba12d651366c031b20657",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:37",
+      "revision_id": "c7444a696e23df287dbeaf73",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:38",
+      "revision_id": "05d1509d47955f3a102b8cce",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:39",
+      "revision_id": "8170955532f487dd99829232",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:40",
+      "revision_id": "b4d7ed64e3310610ee8c3982",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "byd.atto1",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:41",
+      "revision_id": "7b8575ce1d6606f57db0b6e3",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:42",
+      "revision_id": "c3b306ae2fb76d88e92a9fd5",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:43",
+      "revision_id": "f035153bf844d83ab2711c70",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:44",
+      "revision_id": "406afd106d53d8bc4a5fc376",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:45",
+      "revision_id": "b99899c45d53389220e429d1",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:46",
+      "revision_id": "50c0a341a4fc8efedcccebda",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:47",
+      "revision_id": "19ff9f2bc3b612dd203fd42d",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:48",
+      "revision_id": "c79833c7df3ff2a83ec6bb1c",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:49",
+      "revision_id": "71764eb16aa29b9a5ffaf358",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:50",
+      "revision_id": "7d2fb6cd0f4e43462ae22987",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:51",
+      "revision_id": "83ddb2bb84bbf1352c0c563c",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:52",
+      "revision_id": "bea600aa97cb5584114afeb1",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:53",
+      "revision_id": "0e91331020379df7d9fec517",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:54",
+      "revision_id": "96ae7175b75a8bdc813b7096",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:55",
+      "revision_id": "555fd27ab2e89a078cca9a59",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:56",
+      "revision_id": "230fe7548272d5147a81dc4d",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:57",
+      "revision_id": "b8a0f0e821ce342ccc97984b",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:58",
+      "revision_id": "76b0a5d05f052d46eed069e0",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:59",
+      "revision_id": "3c2f727ec62a8a1b79f60b1c",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:60",
+      "revision_id": "a54aa6c944d6bccf7b84e25f",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:61",
+      "revision_id": "3c2cf483d3a4588ae865a382",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:62",
+      "revision_id": "e1269311cb60f3302a95ac55",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:63",
+      "revision_id": "d4c999696a27d56a0e533ad5",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:64",
+      "revision_id": "a0ff855d2eec72e32cc5ddb7",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:65",
+      "revision_id": "7523cb0fa590a15da0e34572",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:66",
+      "revision_id": "7245e48e4b49bf4072196233",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:67",
+      "revision_id": "9a88e6c3575192631a45f7f6",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:68",
+      "revision_id": "c528879f607d15d375399759",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:69",
+      "revision_id": "82ee66012e2564b5fd27a04c",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:70",
+      "revision_id": "03374fb68e3f638cc33664dc",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:71",
+      "revision_id": "4b76cf47a78b4fd09e8c26a8",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:72",
+      "revision_id": "351f37e9f95bd080a6587c43",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:73",
+      "revision_id": "1517063ab49f2645a933fb94",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:74",
+      "revision_id": "f8de8dfdf63eb58b0b9c7174",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:75",
+      "revision_id": "9fc7ffdb77f38bb4805534e7",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:76",
+      "revision_id": "707adafbae3b0df341098c05",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:77",
+      "revision_id": "e6f535a75c8116ee1e748998",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:78",
+      "revision_id": "241bbe8cfa42fa197dd46e77",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto1.gen1.trim.premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:79",
+      "revision_id": "7980ebe570c41c32f5c12661",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "byd.atto3",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:80",
+      "revision_id": "e3c76aa392cd9b052e7bf9cb",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto3.atto3.trim.byd_atto3_410km_premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:81",
+      "revision_id": "4ea5f0c535ed4ad5bcbd9342",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto3.atto3.trim.byd_atto3_410km_premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:82",
+      "revision_id": "e7e0467afee00c615c8a66ad",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto3.atto3.trim.byd_atto3_410km_premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:83",
+      "revision_id": "03de4298fb0d5fcf4ce4c2ed",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto3.atto3.trim.byd_atto3_410km_premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:84",
+      "revision_id": "cbc46c64928fb6c759a864a2",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto3.atto3.trim.byd_atto3_410km_premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:85",
+      "revision_id": "7984d709af1e7d29a517a656",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto3.atto3.trim.byd_atto3_410km_premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:86",
+      "revision_id": "7e91ae9746564b548935e976",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto3.atto3.trim.byd_atto3_410km_premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:87",
+      "revision_id": "19634da4c960c7dafe26986f",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto3.atto3.trim.byd_atto3_410km_premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:88",
+      "revision_id": "e851e1d743031857eb768ae0",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto3.atto3.trim.byd_atto3_410km_premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:89",
+      "revision_id": "91d8a86be4435bbbc5ff6863",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto3.atto3.trim.byd_atto3_410km_premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:90",
+      "revision_id": "f3e6450e9357a58fd2e2892c",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto3.atto3.trim.byd_atto3_410km_premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:91",
+      "revision_id": "ce771cac76a08bdc873a91dc",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto3.atto3.trim.byd_atto3_410km_premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:92",
+      "revision_id": "626300ba86fb4884c3320e0e",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto3.atto3.trim.byd_atto3_410km_premium_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:93",
+      "revision_id": "07d70ed3c3e2d615060e7214",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "byd.atto3",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:94",
+      "revision_id": "2c54cb8a95f062d7d13e6ff7",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto3.atto3.trim.byd_atto3_480km_ext_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:95",
+      "revision_id": "b033c7d3d21e09a8bdfac413",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto3.atto3.trim.byd_atto3_480km_ext_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:96",
+      "revision_id": "e2324655f550299a6d4b9180",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto3.atto3.trim.byd_atto3_480km_ext_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:97",
+      "revision_id": "b98381456d0bb9aa0e928f69",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto3.atto3.trim.byd_atto3_480km_ext_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:98",
+      "revision_id": "417f4dc92b198f11c07a39d4",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto3.atto3.trim.byd_atto3_480km_ext_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:99",
+      "revision_id": "23034aca8a84ebc8e6261d4b",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto3.atto3.trim.byd_atto3_480km_ext_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:100",
+      "revision_id": "5a1017a2f75a1d7e8e4ffb3e",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto3.atto3.trim.byd_atto3_480km_ext_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:101",
+      "revision_id": "f4f73bd90c3f08bdcddcfc62",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto3.atto3.trim.byd_atto3_480km_ext_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:102",
+      "revision_id": "2b92cd4ff46119f86a1f0176",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto3.atto3.trim.byd_atto3_480km_ext_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:103",
+      "revision_id": "f97a65e1d27ed6d861a61c01",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto3.atto3.trim.byd_atto3_480km_ext_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:104",
+      "revision_id": "7ac08ce79615aa7dbe5604f9",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto3.atto3.trim.byd_atto3_480km_ext_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:105",
+      "revision_id": "e1d0baeb363fa4a93e6ed5f6",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "byd.atto3.atto3.trim.byd_atto3_480km_ext_bev",
+      "idempotent_replay": false
+    }
+  ],
+  "changed_files": [
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto3.atto3.trim.byd_atto3_480km_ext_bev_fitment.tyre_rear_1c2b5970610e.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto3.atto3.trim.byd_atto3_480km_ext_bev_battery.chemistry_as_declared_fa17885c3aba.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_charging.connector_type_135febcace80.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_vehicle.height_mm_c39c5ef37f6a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_safety.un_regulations_097a6c35e25f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_safety.lane_departure_warning_86afc4860d1e.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto3.atto3.trim.byd_atto3_410km_premium_bev_vehicle.ground_clearance_mm_549268ae7970_c0c47db9765a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_technology.smartphone_mirroring_064e1d23736f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_battery.chemistry_as_declared_83210d75401f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto3.atto3.trim.byd_atto3_410km_premium_bev_fitment.tyre_rear_f23cdabd9246.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_chassis.suspension_rear_e12d338184f9.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_charging.dc_max_kw_9d18d19d12be_013fb7333a19.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto3.atto3.trim.byd_atto3_480km_ext_bev_powertrain.motor_type_f969ba258a22.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto3.atto3.trim.byd_atto3_410km_premium_bev_safety.un_regulations_0d1e89d00b3d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto3.atto3.trim.byd_atto3_480km_ext_bev_vehicle.curb_weight_kg_eef0f338d6b2_9074d86a2f79.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_fitment.tyre_front_ca9017da0822.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_chassis.suspension_rear_0f2d28643787.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_battery.warranty_km_446dc9d79ef9.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_powertrain.drivetrain_18772ca4cbaa.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto3.atto3.trim.byd_atto3_480km_ext_bev_chassis.suspension_rear_1b065a84eabe.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_safety.abs_d197ce44621d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto3.atto3.trim.byd_atto3_410km_premium_bev_safety.forward_collision_warning_6328da57046e.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_ev.rated_range_km_0ae84e372d69_206f1549250f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto3.atto3.trim.byd_atto3_410km_premium_bev_fitment.tyre_size_27c7d8a3c691.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_technology.ota_update_2f2abb0af48c.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_safety.un_regulations_107343023498.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_powertrain.max_power_kw_398e0332b76d_6b53713c0c24.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_vehicle.wheelbase_mm_deb908acadf4.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_charging.dc_max_kw_9d18d19d12be_de0d28663ac0.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_safety.aeb_c4aa7e8b2829.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_comfort.keyless_entry_ab3d9fb8336e.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto3.atto3.trim.byd_atto3_410km_premium_bev_battery.catalog_capacity_kwh_ad059919de00.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_battery.catalog_capacity_kwh_081b108cca3b.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_charging.v2l_supported_545a26ab0876.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_fitment.tyre_rear_274c243c0800.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_vehicle.ground_clearance_mm_549268ae7970_9780164e50c7.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_chassis.suspension_front_3eb484134684.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_chassis.suspension_front_b6b6b7c52661.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_technology.smartphone_mirroring_54e748204b3d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_fitment.tyre_front_d3c1ccb1f609.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_technology.led_headlights_956ba37eb604.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto3.atto3.trim.byd_atto3_480km_ext_bev_vehicle.ground_clearance_mm_549268ae7970_87f8274d9732.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_vehicle.width_mm_22ecdcd86499.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_charging.ac_max_kw_098082243ac7.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_safety.side_airbag_c02fdad7faec.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_safety.lane_departure_warning_ef4a8dfe5d39.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_charging.ac_max_kw_192b60c70a68.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_powertrain.motor_type_9e8d96c678f8.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_safety.adaptive_cruise_363ccae2b93f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_powertrain.max_torque_nm_398e0332b76d_2d9c0bafd174.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_vehicle.ground_clearance_mm_549268ae7970_b5adc8887714.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_technology.led_headlights_5343aaca5b6d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto3.atto3.trim.byd_atto3_480km_ext_bev_fitment.tyre_front_4534359cf204.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto3.atto3.trim.byd_atto3_480km_ext_bev_chassis.suspension_front_47e294a6431f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_battery.chemistry_as_declared_eceee831720a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto3.atto3.trim.byd_atto3_480km_ext_bev_vehicle.declared_total_weight_kg_35a812b7e045.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_powertrain.drivetrain_2889decb4d53.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_comfort.keyless_entry_efdcbc659d16.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_technology.ota_update_7ab1c352ccf2.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto3.atto3.trim.byd_atto3_480km_ext_bev_safety.forward_collision_warning_9eef6538d7d8.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_fitment.tyre_size_41edc33b3eb5.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_vehicle.wheelbase_mm_b6d48cf0cd94.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto3.atto3.trim.byd_atto3_410km_premium_bev_battery.chemistry_as_declared_105568ce02ab.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_powertrain.max_power_kw_398e0332b76d_289a60763104.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto3.atto3.trim.byd_atto3_410km_premium_bev_chassis.suspension_front_0a460794214d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_battery.catalog_capacity_kwh_bb61a9f31fa2.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_charging.v2l_supported_d1c7e12d4ed4.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto3.atto3.trim.byd_atto3_410km_premium_bev_powertrain.motor_type_40a72107bd1d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_fitment.tyre_rear_225de9f522f4.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_vehicle.curb_weight_kg_eef0f338d6b2_6a4e571e5d70.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_safety.side_airbag_cd314ce96ec0.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_powertrain.motor_type_a3caef145b00.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_safety.aeb_b844da8c9611.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_vehicle.height_mm_91d22c7e86f0.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_battery.warranty_years_e97b04858096.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_safety.abs_e63cfffe2a54.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_ev.rated_range_km_0ae84e372d69_e173a40e2cdb.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto3.atto3.trim.byd_atto3_480km_ext_bev_safety.un_regulations_61c5d449c36d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_technology.connected_services_d61574d8bad3.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto3.atto3.trim.byd_atto3_410km_premium_bev_vehicle.curb_weight_kg_eef0f338d6b2_a5bca86c8eda.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_battery.warranty_km_89d23f7d1ace.json",
+    "2026/models/byd.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_vehicle.declared_total_weight_kg_cd89f256bfbf.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_powertrain.max_torque_nm_398e0332b76d_c83805de272d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_vehicle.length_mm_476fef2a623c.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_fitment.tyre_size_64bc23d3ba25.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto3.atto3.trim.byd_atto3_410km_premium_bev_chassis.suspension_rear_1240327c41ef.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_vehicle.declared_total_weight_kg_6f396b488d56.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto3.atto3.trim.byd_atto3_410km_premium_bev_vehicle.declared_total_weight_kg_cc3ba0b632a3.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_safety.curtain_airbag_387f04fa06fa.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_vehicle.curb_weight_kg_eef0f338d6b2_75025992dffd.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_vehicle.width_mm_8672287a4d3d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_vehicle.length_mm_a4f2b3d01955.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto3.atto3.trim.byd_atto3_480km_ext_bev_fitment.tyre_size_02e74c4f56f1.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_battery.warranty_years_d68c9371247f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_safety.forward_collision_warning_1705c222d7a2.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_safety.curtain_airbag_b883ba6912ab.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_technology.connected_services_5ba1a5b8e933.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto3.atto3.trim.byd_atto3_410km_premium_bev_fitment.tyre_front_7322fd465119.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_safety.adaptive_cruise_b6396b61681d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_safety.forward_collision_warning_e2c9e34a006a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.premium_bev_charging.connector_type_d71560d43c87.json",
+    "2026/canonical_state/shadow/96ae7175b75a8bdc813b7096.json",
+    "2026/canonical_state/shadow/7ac08ce79615aa7dbe5604f9.json",
+    "2026/canonical_state/shadow/a024ac8148e0838ae08b4102.json",
+    "2026/canonical_state/shadow/cbc46c64928fb6c759a864a2.json",
+    "2026/canonical_state/shadow/2c54cb8a95f062d7d13e6ff7.json",
+    "2026/canonical_state/shadow/2b92cd4ff46119f86a1f0176.json",
+    "2026/canonical_state/shadow/e1d0baeb363fa4a93e6ed5f6.json",
+    "2026/canonical_state/shadow/82ee66012e2564b5fd27a04c.json",
+    "2026/canonical_state/shadow/19634da4c960c7dafe26986f.json",
+    "2026/canonical_state/shadow/bea600aa97cb5584114afeb1.json",
+    "2026/canonical_state/shadow/540b760ffa3b08c2b08487a4.json",
+    "2026/canonical_state/shadow/241bbe8cfa42fa197dd46e77.json",
+    "2026/canonical_state/shadow/d68c12bbe59e130017ae977e.json",
+    "2026/canonical_state/shadow/0e91331020379df7d9fec517.json",
+    "2026/canonical_state/shadow/b0692108764f29ef776c16e7.json",
+    "2026/canonical_state/shadow/45a8d787b5f7bd40f366f146.json",
+    "2026/canonical_state/shadow/406afd106d53d8bc4a5fc376.json",
+    "2026/canonical_state/shadow/8b3c630b7c259f30133aa596.json",
+    "2026/canonical_state/shadow/d4c999696a27d56a0e533ad5.json",
+    "2026/canonical_state/shadow/2337e252979a77782b60167b.json",
+    "2026/canonical_state/shadow/95eba12d651366c031b20657.json",
+    "2026/canonical_state/shadow/474d2a14b53562a66af11371.json",
+    "2026/canonical_state/outbox.jsonl",
+    "2026/canonical_state/shadow/f035153bf844d83ab2711c70.json",
+    "2026/canonical_state/shadow/5a1017a2f75a1d7e8e4ffb3e.json",
+    "2026/canonical_state/shadow/f97a65e1d27ed6d861a61c01.json",
+    "2026/canonical_state/shadow/0c25fe27f69744b6743c6730.json",
+    "2026/canonical_state/shadow/83ddb2bb84bbf1352c0c563c.json",
+    "2026/canonical_state/shadow/f8de8dfdf63eb58b0b9c7174.json",
+    "2026/canonical_state/shadow/06944c1bd3d8b941997b3b89.json",
+    "2026/canonical_state/shadow/08a39bbcbf8e5e7494c75793.json",
+    "2026/canonical_state/shadow/8b317dc2d30427ea7030b7ed.json",
+    "2026/canonical_state/shadow/707adafbae3b0df341098c05.json",
+    "2026/canonical_state/shadow/05d1509d47955f3a102b8cce.json",
+    "2026/canonical_state/shadow/b033c7d3d21e09a8bdfac413.json",
+    "2026/canonical_state/shadow/4b2149397213183c8077dd83.json",
+    "2026/canonical_state/shadow/3dcbb771a43ace55e5426678.json",
+    "2026/canonical_state/shadow/71764eb16aa29b9a5ffaf358.json",
+    "2026/canonical_state/shadow/b8a0f0e821ce342ccc97984b.json",
+    "2026/canonical_state/shadow/ff594042a1f3439d29c56143.json",
+    "2026/canonical_state/revisions.jsonl",
+    "2026/canonical_state/shadow/9ed67036acac44f89ec41a21.json",
+    "2026/canonical_state/shadow/9fc7ffdb77f38bb4805534e7.json",
+    "2026/canonical_state/shadow/e1269311cb60f3302a95ac55.json",
+    "2026/canonical_state/shadow/368af38f63ba71272ef25b05.json",
+    "2026/canonical_state/shadow/f4f73bd90c3f08bdcddcfc62.json",
+    "2026/canonical_state/shadow/c9727dc27756b668c9746a6d.json",
+    "2026/canonical_state/shadow/a54aa6c944d6bccf7b84e25f.json",
+    "2026/canonical_state/shadow/91d8a86be4435bbbc5ff6863.json",
+    "2026/canonical_state/shadow/19ff9f2bc3b612dd203fd42d.json",
+    "2026/canonical_state/shadow/23034aca8a84ebc8e6261d4b.json",
+    "2026/canonical_state/shadow/ff342a5c7b0dd69de402989e.json",
+    "2026/canonical_state/shadow/7e91ae9746564b548935e976.json",
+    "2026/canonical_state/shadow/a0ff855d2eec72e32cc5ddb7.json",
+    "2026/canonical_state/shadow/b9d2d2d8112b628320c13007.json",
+    "2026/canonical_state/shadow/e6f535a75c8116ee1e748998.json",
+    "2026/canonical_state/shadow/b3fbe2dfa8af9f85bbfe4216.json",
+    "2026/canonical_state/shadow/351f37e9f95bd080a6587c43.json",
+    "2026/canonical_state/shadow/07d70ed3c3e2d615060e7214.json",
+    "2026/canonical_state/shadow/c79833c7df3ff2a83ec6bb1c.json",
+    "2026/canonical_state/shadow/7980ebe570c41c32f5c12661.json",
+    "2026/canonical_state/shadow/f3e6450e9357a58fd2e2892c.json",
+    "2026/canonical_state/shadow/38cb93c63292798cdeaa87c9.json",
+    "2026/canonical_state/shadow/3c2cf483d3a4588ae865a382.json",
+    "2026/canonical_state/shadow/8214908dfa6d0ca9cb2b6f2b.json",
+    "2026/canonical_state/shadow/e851e1d743031857eb768ae0.json",
+    "2026/canonical_state/shadow/1517063ab49f2645a933fb94.json",
+    "2026/canonical_state/shadow/8909e2d88f994f9574bae308.json",
+    "2026/canonical_state/shadow/e7e0467afee00c615c8a66ad.json",
+    "2026/canonical_state/shadow/b99899c45d53389220e429d1.json",
+    "2026/canonical_state/shadow/76b0a5d05f052d46eed069e0.json",
+    "2026/canonical_state/shadow/f767a392b30e7f5081020b6b.json",
+    "2026/canonical_state/shadow/5e16cf1f45dfe378e70176c7.json",
+    "2026/canonical_state/shadow/50c0a341a4fc8efedcccebda.json",
+    "2026/canonical_state/shadow/7b8575ce1d6606f57db0b6e3.json",
+    "2026/canonical_state/shadow/45c72ca865d8a79188c53b15.json",
+    "2026/canonical_state/shadow/626300ba86fb4884c3320e0e.json",
+    "2026/canonical_state/shadow/230fe7548272d5147a81dc4d.json",
+    "2026/canonical_state/shadow/e2324655f550299a6d4b9180.json",
+    "2026/canonical_state/shadow/3c2f727ec62a8a1b79f60b1c.json",
+    "2026/canonical_state/shadow/555fd27ab2e89a078cca9a59.json",
+    "2026/canonical_state/shadow/03de4298fb0d5fcf4ce4c2ed.json",
+    "2026/canonical_state/shadow/c528879f607d15d375399759.json",
+    "2026/canonical_state/shadow/9a88e6c3575192631a45f7f6.json",
+    "2026/canonical_state/shadow/03374fb68e3f638cc33664dc.json",
+    "2026/canonical_state/shadow/4ea5f0c535ed4ad5bcbd9342.json",
+    "2026/canonical_state/shadow/c763e56d492f574f4ce0d517.json",
+    "2026/canonical_state/shadow/ce771cac76a08bdc873a91dc.json",
+    "2026/canonical_state/shadow/7d2fb6cd0f4e43462ae22987.json",
+    "2026/canonical_state/shadow/4b76cf47a78b4fd09e8c26a8.json",
+    "2026/canonical_state/shadow/8170955532f487dd99829232.json",
+    "2026/canonical_state/shadow/20b4af7b7bcc2d0c86f272b5.json",
+    "2026/canonical_state/shadow/1b9200fa35c1f5efe5ce26f5.json",
+    "2026/canonical_state/shadow/35ce0ed172bacbad958b48b1.json",
+    "2026/canonical_state/shadow/417f4dc92b198f11c07a39d4.json",
+    "2026/canonical_state/shadow/7245e48e4b49bf4072196233.json",
+    "2026/canonical_state/shadow/c3b306ae2fb76d88e92a9fd5.json",
+    "2026/canonical_state/shadow/b98381456d0bb9aa0e928f69.json",
+    "2026/canonical_state/shadow/b4d7ed64e3310610ee8c3982.json",
+    "2026/canonical_state/shadow/7984d709af1e7d29a517a656.json",
+    "2026/canonical_state/shadow/b0724620df82c237db49ee33.json",
+    "2026/canonical_state/shadow/7523cb0fa590a15da0e34572.json",
+    "2026/canonical_state/shadow/c5df35fad22acb90e8c29161.json",
+    "2026/canonical_state/shadow/e3c76aa392cd9b052e7bf9cb.json",
+    "2026/canonical_state/shadow/8b36cd5c8c05040cb43ed813.json",
+    "2026/canonical_state/shadow/d3e59b268b78965a453c8d31.json",
+    "2026/canonical_state/shadow/c7444a696e23df287dbeaf73.json"
+  ]
+}

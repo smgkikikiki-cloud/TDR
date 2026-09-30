@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "540b760ffa3b08c2b08487a4",
+    "command_id": "vehicle-spec-d0fa7619-98e4-4992-abb2-1b8f0985c597-001-77d7ffdb059c:13",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T08:47:43+00:00",
+    "applied_at": "2026-09-30T09:25:21+00:00",
+    "before_hash": "a652330aac78a9078168150c85accedf2963c280a8d9db222aef69730012330f",
+    "after_hash": "e35a5e071ab459267bc0392e653d99d7271c2f797d276eb7d56783828676eb9b",
+    "before": [
+      30.08,
+      "BYD Blade Battery",
+      160000,
+      8,
+      6.6,
+      "CCS2",
+      30,
+      true,
+      "Macpherson Strut",
+      "Torsion Beam",
+      true
+    ],
+    "after": [
+      30.08,
+      "BYD Blade Battery",
+      160000,
+      8,
+      6.6,
+      "CCS2",
+      30,
+      true,
+      "Macpherson Strut",
+      "Torsion Beam",
+      true,
+      300
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_byd.atto1.gen1.trim.dynamic_bev_ev.rated_range_km_0ae84e372d69_e173a40e2cdb.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "540b760ffa3b08c2b08487a4:spec",
+    "revision_id": "540b760ffa3b08c2b08487a4",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "byd.atto1.gen1.trim.dynamic_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T09:25:21+00:00",
+    "payload": [
+      30.08,
+      "BYD Blade Battery",
+      160000,
+      8,
+      6.6,
+      "CCS2",
+      30,
+      true,
+      "Macpherson Strut",
+      "Torsion Beam",
+      true,
+      300
+    ]
+  }
+}
