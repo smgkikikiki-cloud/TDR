@@ -120,7 +120,7 @@ The migration exposes service-role-only compare-and-set RPCs:
 - `tdr_fail_retail_lineup_plan_apply(...)`
 - `tdr_mark_retail_lineup_plan_stale(...)`
 
-`begin_apply` requires the exact `plan_hash` and `baseline_hash` the Admin reviewed. A stale hash, terminal plan or unknown plan returns no applicable row / fails closed. There is no fallback that silently recompiles a newer workbook/canonical state behind the operator's back.
+`begin_apply` requires the exact `plan_hash` and `baseline_hash` the Admin reviewed. A stale hash, terminal plan or unknown plan fails closed. There is no fallback that silently recompiles a newer workbook/canonical state behind the operator's back.
 
 `migration_v54` additionally prevents privileged same-status rewrites of approval identity, commit SHA or release ID. Audit fields may only change on the state transition that owns them. A retry from FAILED records a fresh approval timestamp/actor.
 
@@ -133,16 +133,7 @@ Implemented:
 - `automotive/vehicle_master/tools/retail_lineup_plan_store.py`
 - `automotive/vehicle_master/tests/test_retail_lineup_plan_store.py`
 
-The helper can:
-
-- persist an immutable PREVIEW_READY plan
-- fetch a preview
-- atomically begin apply with both reviewed hashes
-- record canonical commit identity
-- record completed serving release identity
-- record FAILED / STALE state
-
-It performs no workbook compilation and no canonical write.
+The helper can persist/fetch an immutable PREVIEW_READY plan, atomically begin apply with both reviewed hashes, record canonical commit identity, record completed serving release identity, and record FAILED/STALE state. It performs no workbook compilation and no canonical write.
 
 ### Exact persisted-plan decoder
 
@@ -151,18 +142,9 @@ Implemented:
 - `automotive/vehicle_master/vehreg/retail_lineup_plan_codec.py`
 - `automotive/vehicle_master/tests/test_retail_lineup_plan_codec.py`
 
-This is important for the later apply worker: it rebuilds the frozen Chunk-1 dataclasses from the **stored `compiled_plan` JSON**, not from the source workbook and not by rerunning identity resolution.
+This rebuilds the frozen Chunk-1 dataclasses from the **stored `compiled_plan` JSON**, not from the source workbook and not by rerunning identity resolution.
 
-The decoder:
-
-- requires the exact persisted JSON schema
-- rejects unknown fields / wrong types / duplicate identities
-- verifies model/item ownership
-- recomputes action counts instead of trusting stored counts
-- checks the row's expected plan/baseline hashes
-- independently recomputes the immutable plan hash before returning the plan
-
-Any payload tampering fails before Chunk 4 can apply it.
+The decoder requires the exact persisted JSON schema, rejects unknown fields/wrong types/duplicate identities, verifies model/item ownership, recomputes action counts, checks the durable row hashes, and independently recomputes the immutable plan hash before returning the plan. Payload tampering therefore fails before Chunk 4 can apply it.
 
 Additional audit-state static guard:
 
@@ -182,7 +164,7 @@ Additional audit-state static guard:
 
 Full Vehicle Master CI on code head `2de280e86725056a48d381bd3d5a97c915e17f3e` completed with **1612 passed / 11 failed / 4334 subtests passed**. The 11 failures are the same repository-baseline failures already observed before Chunk 5; no Retail Lineup Bootstrap plan-store/codec test appears in the failure list.
 
-The exact final Chunk-5 head `738774d91e793e72a96526120b86780f4eaf6fdb` has additionally passed Python compilation and the TypeScript job while its long full-suite run continues in CI. Changes after the full validated code head are SQL state-machine hardening plus its static file-contract test; they do not touch canonical runtime/apply logic.
+The exact final Chunk-5 code/test head `738774d91e793e72a96526120b86780f4eaf6fdb` has additionally passed Python compilation and the TypeScript job while its long full-suite run continues in CI. Changes after the full validated code head are SQL state-machine hardening plus its static file-contract test; they do not touch canonical runtime/apply logic.
 
 No v53/v54 migration has been applied to production Supabase. No main merge or production write has occurred.
 
