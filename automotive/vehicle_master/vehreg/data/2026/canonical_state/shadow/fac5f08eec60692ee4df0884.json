@@ -1,0 +1,506 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "fac5f08eec60692ee4df0884",
+    "command_id": "vehicle-spec-eb8ab38f-83c6-4c3a-9f40-33af7f60fd12-001-5cc369e27948:1",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "aion.aion_v",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T02:21:26+00:00",
+    "applied_at": "2026-09-30T02:22:24+00:00",
+    "before_hash": "efd3f8dd3fcbe4e3f452c781b0f4688b9700dd570c6208a5312765255fd6b658",
+    "after_hash": "796932bfc881262dadcacb72b9b39f72585fb82ad427b1e8bcb669dcd970f5e2",
+    "before": {
+      "id": "aion_v",
+      "name_en": "Aion V",
+      "name_th": "ไอออน วี",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "aion v"
+      ],
+      "notes": "Thai-market lineup and specification verified against GAC Thailand official sources on 2026-09-25. Current lineup is 500 Premium / 602 Luxury; Rayong local production is confirmed by GAC Thailand.",
+      "retail_status": "CURRENT",
+      "retail_checked_at": "2026-09-25",
+      "retail_source": "https://www.gacgroup.com/th-th/configuration/aion-v/2024",
+      "generations": [
+        {
+          "code": "AV",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2024-11-28",
+          "ended": null,
+          "variants": [
+            {
+              "name": "64.5 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_cc": null,
+              "battery_kwh": 64.5,
+              "aliases": [
+                "500 Premium"
+              ],
+              "overrides": {},
+              "price_thb": 799900,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "GAC Thailand official September 2026 regular price; current campaign price is tracked separately.",
+              "price_min_thb": 799900,
+              "price_max_thb": 799900
+            },
+            {
+              "name": "75.26 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_cc": null,
+              "battery_kwh": 75.26,
+              "aliases": [
+                "602 Luxury",
+                "75 kWh BEV",
+                "Luxury"
+              ],
+              "overrides": {},
+              "price_thb": 899900,
+              "import_type": "CKD",
+              "origin_country": "TH",
+              "price_note": "GAC Thailand official September 2026 retail price; local production confirmed at Rayong.",
+              "price_min_thb": 899900,
+              "price_max_thb": 899900
+            }
+          ],
+          "trims": [
+            {
+              "name": "500 Premium",
+              "variant": "64.5 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_code": "",
+              "engine_cc": null,
+              "battery_kwh": 64.5,
+              "transmission": "single-speed",
+              "seats": 5,
+              "length_mm": 4605,
+              "width_mm": 1854,
+              "height_mm": 1686,
+              "wheelbase_mm": 2775,
+              "tire_front": "225/45 R19",
+              "tire_rear": "225/45 R19",
+              "wheel_front": "19 in",
+              "wheel_rear": "19 in",
+              "source_refs": {
+                "eco": [
+                  "ba597ad2-802d-4b27-942b-33c1a69035a1"
+                ],
+                "official_gac": [
+                  "https://www.gacgroup.com/th-th/configuration/aion-v/2024",
+                  "https://www.gacgroup.com/th-th/news/article/gac-thailand-3rd-anniversary-promotions-195",
+                  "https://www.gacgroup.com/th-th/news/article/gac-%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B8%81%E0%B8%A5%E0%B8%A2%E0%B8%B8%E0%B8%97%E0%B8%98%E0%B9%8C--one-gac-2-0--%E0%B9%80%E0%B8%9B%E0%B8%B4%E0%B8%94%E0%B8%AA%E0%B8%B2%E0%B8%A2%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%9C%E0%B8%A5%E0%B8%B4%E0%B8%95-aion-v-%E0%B8%84%E0%B8%B1%E0%B8%99%E0%B9%81%E0%B8%A3%E0%B8%81%E0%B9%83%E0%B8%99%E0%B9%84%E0%B8%97%E0%B8%A2-%E0%B8%A1%E0%B8%B8%E0%B9%88%E0%B8%87%E0%B8%AA%E0%B8%B9%E0%B9%88%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B9%80%E0%B8%9B%E0%B9%87%E0%B8%99%E0%B9%81%E0%B8%9A%E0%B8%A3%E0%B8%99%E0%B8%94%E0%B9%8C%E0%B8%A3%E0%B8%96%E0%B8%A2%E0%B8%99%E0%B8%95%E0%B9%8C%E0%B9%84%E0%B8%9F%E0%B8%9F%E0%B9%89%E0%B8%B2%E0%B8%A3%E0%B8%B0%E0%B8%94%E0%B8%B1%E0%B8%9A%E0%B9%82%E0%B8%A5%E0%B8%81-46"
+                ]
+              },
+              "aliases": [
+                "Aion V 500 Premium",
+                "AION V 500 PREMIUM"
+              ],
+              "notes": "Thai-market specification verified against GAC Thailand official configuration on 2026-09-25."
+            },
+            {
+              "name": "602 Luxury",
+              "variant": "75.26 kWh BEV",
+              "powertrain": "BEV",
+              "drivetrain": "FWD",
+              "engine_code": "",
+              "engine_cc": null,
+              "battery_kwh": 75.26,
+              "transmission": "single-speed",
+              "seats": 5,
+              "length_mm": 4605,
+              "width_mm": 1854,
+              "height_mm": 1686,
+              "wheelbase_mm": 2775,
+              "tire_front": "225/45 R19",
+              "tire_rear": "225/45 R19",
+              "wheel_front": "19 in",
+              "wheel_rear": "19 in",
+              "source_refs": {
+                "eco": [
+                  "d01c8507-33fe-4ab7-9759-8183639b4bf5"
+                ],
+                "official_gac": [
+                  "https://www.gacgroup.com/th-th/configuration/aion-v/2024",
+                  "https://www.gacgroup.com/th-th/news/article/gac-thailand-3rd-anniversary-promotions-195",
+                  "https://www.gacgroup.com/th-th/news/article/gac-%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B8%81%E0%B8%A5%E0%B8%A2%E0%B8%B8%E0%B8%97%E0%B8%98%E0%B9%8C--one-gac-2-0--%E0%B9%80%E0%B8%9B%E0%B8%B4%E0%B8%94%E0%B8%AA%E0%B8%B2%E0%B8%A2%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%9C%E0%B8%A5%E0%B8%B4%E0%B8%95-aion-v-%E0%B8%84%E0%B8%B1%E0%B8%99%E0%B9%81%E0%B8%A3%E0%B8%81%E0%B9%83%E0%B8%99%E0%B9%84%E0%B8%97%E0%B8%A2-%E0%B8%A1%E0%B8%B8%E0%B9%88%E0%B8%87%E0%B8%AA%E0%B8%B9%E0%B9%88%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B9%80%E0%B8%9B%E0%B9%87%E0%B8%99%E0%B9%81%E0%B8%9A%E0%B8%A3%E0%B8%99%E0%B8%94%E0%B9%8C%E0%B8%A3%E0%B8%96%E0%B8%A2%E0%B8%99%E0%B8%95%E0%B9%8C%E0%B9%84%E0%B8%9F%E0%B8%9F%E0%B9%89%E0%B8%B2%E0%B8%A3%E0%B8%B0%E0%B8%94%E0%B8%B1%E0%B8%9A%E0%B9%82%E0%B8%A5%E0%B8%81-46"
+                ]
+              },
+              "aliases": [
+                "Aion V 602 Luxury",
+                "AION V 602 LUXURY"
+              ],
+              "notes": "Thai-market specification verified against GAC Thailand official configuration on 2026-09-25; corrected width from 1876 mm seed value to OEM 1854 mm."
+            }
+          ]
+        }
+      ],
+      "powertrain_checked": true
+    },
+    "after": {
+      "brand": {
+        "id": "aion",
+        "name_en": "Aion",
+        "name_th": "ไอออน",
+        "brand_segment": "MASS",
+        "oem_group": "GAC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "gac aion",
+          "ไอออน"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "aion.aion_v",
+        "brand_id": "aion",
+        "name_en": "Aion V",
+        "name_th": "ไอออน วี",
+        "nameplate": "Aion V",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "aion v"
+        ],
+        "notes": "Thai-market lineup and specification verified against GAC Thailand official sources on 2026-09-25. Current lineup is 500 Premium / 602 Luxury; Rayong local production is confirmed by GAC Thailand.",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "CURRENT",
+        "retail_checked_at": "2026-09-25",
+        "retail_source": "https://www.gacgroup.com/th-th/configuration/aion-v/2024",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "aion.aion_v.av",
+          "model_id": "aion.aion_v",
+          "code": "AV",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2024-11-28",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "aion.aion_v.av.64_5_kwh_bev",
+          "generation_id": "aion.aion_v.av",
+          "name": "64.5 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 64.5,
+          "price_thb": 799900,
+          "price_min_thb": 799900,
+          "price_max_thb": 799900,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "GAC Thailand official September 2026 regular price; current campaign price is tracked separately.",
+          "aliases": [
+            "500 Premium"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "aion.aion_v.av.75_26_kwh_bev",
+          "generation_id": "aion.aion_v.av",
+          "name": "75.26 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 75.26,
+          "price_thb": 899900,
+          "price_min_thb": 899900,
+          "price_max_thb": 899900,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "GAC Thailand official September 2026 retail price; local production confirmed at Rayong.",
+          "aliases": [
+            "602 Luxury",
+            "75 kWh BEV",
+            "Luxury"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "aion.aion_v.av.trim.500_premium_bev",
+          "generation_id": "aion.aion_v.av",
+          "name": "500 Premium",
+          "powertrain": "BEV",
+          "variant_id": "aion.aion_v.av.64_5_kwh_bev",
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": 64.5,
+          "transmission": "1-Speed",
+          "seats": 5,
+          "length_mm": 4605,
+          "width_mm": 1854,
+          "height_mm": 1686,
+          "wheelbase_mm": 2775,
+          "tire_front": "225/45 R19",
+          "tire_rear": "225/45 R19",
+          "wheel_front": "19 in",
+          "wheel_rear": "19 in",
+          "aliases": [
+            "Aion V 500 Premium",
+            "AION V 500 PREMIUM"
+          ],
+          "source_refs": {
+            "eco": [
+              "ba597ad2-802d-4b27-942b-33c1a69035a1"
+            ],
+            "official_gac": [
+              "https://www.gacgroup.com/th-th/configuration/aion-v/2024",
+              "https://www.gacgroup.com/th-th/news/article/gac-thailand-3rd-anniversary-promotions-195",
+              "https://www.gacgroup.com/th-th/news/article/gac-%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B8%81%E0%B8%A5%E0%B8%A2%E0%B8%B8%E0%B8%97%E0%B8%98%E0%B9%8C--one-gac-2-0--%E0%B9%80%E0%B8%9B%E0%B8%B4%E0%B8%94%E0%B8%AA%E0%B8%B2%E0%B8%A2%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%9C%E0%B8%A5%E0%B8%B4%E0%B8%95-aion-v-%E0%B8%84%E0%B8%B1%E0%B8%99%E0%B9%81%E0%B8%A3%E0%B8%81%E0%B9%83%E0%B8%99%E0%B9%84%E0%B8%97%E0%B8%A2-%E0%B8%A1%E0%B8%B8%E0%B9%88%E0%B8%87%E0%B8%AA%E0%B8%B9%E0%B9%88%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B9%80%E0%B8%9B%E0%B9%87%E0%B8%99%E0%B9%81%E0%B8%9A%E0%B8%A3%E0%B8%99%E0%B8%94%E0%B9%8C%E0%B8%A3%E0%B8%96%E0%B8%A2%E0%B8%99%E0%B8%95%E0%B9%8C%E0%B9%84%E0%B8%9F%E0%B8%9F%E0%B9%89%E0%B8%B2%E0%B8%A3%E0%B8%B0%E0%B8%94%E0%B8%B1%E0%B8%9A%E0%B9%82%E0%B8%A5%E0%B8%81-46"
+            ]
+          },
+          "notes": "Thai-market specification verified against GAC Thailand official configuration on 2026-09-25."
+        },
+        {
+          "id": "aion.aion_v.av.trim.602_luxury_bev",
+          "generation_id": "aion.aion_v.av",
+          "name": "602 Luxury",
+          "powertrain": "BEV",
+          "variant_id": "aion.aion_v.av.75_26_kwh_bev",
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": 75.26,
+          "transmission": "single-speed",
+          "seats": 5,
+          "length_mm": 4605,
+          "width_mm": 1854,
+          "height_mm": 1686,
+          "wheelbase_mm": 2775,
+          "tire_front": "225/45 R19",
+          "tire_rear": "225/45 R19",
+          "wheel_front": "19 in",
+          "wheel_rear": "19 in",
+          "aliases": [
+            "Aion V 602 Luxury",
+            "AION V 602 LUXURY"
+          ],
+          "source_refs": {
+            "eco": [
+              "d01c8507-33fe-4ab7-9759-8183639b4bf5"
+            ],
+            "official_gac": [
+              "https://www.gacgroup.com/th-th/configuration/aion-v/2024",
+              "https://www.gacgroup.com/th-th/news/article/gac-thailand-3rd-anniversary-promotions-195",
+              "https://www.gacgroup.com/th-th/news/article/gac-%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B8%81%E0%B8%A5%E0%B8%A2%E0%B8%B8%E0%B8%97%E0%B8%98%E0%B9%8C--one-gac-2-0--%E0%B9%80%E0%B8%9B%E0%B8%B4%E0%B8%94%E0%B8%AA%E0%B8%B2%E0%B8%A2%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%9C%E0%B8%A5%E0%B8%B4%E0%B8%95-aion-v-%E0%B8%84%E0%B8%B1%E0%B8%99%E0%B9%81%E0%B8%A3%E0%B8%81%E0%B9%83%E0%B8%99%E0%B9%84%E0%B8%97%E0%B8%A2-%E0%B8%A1%E0%B8%B8%E0%B9%88%E0%B8%87%E0%B8%AA%E0%B8%B9%E0%B9%88%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B9%80%E0%B8%9B%E0%B9%87%E0%B8%99%E0%B9%81%E0%B8%9A%E0%B8%A3%E0%B8%99%E0%B8%94%E0%B9%8C%E0%B8%A3%E0%B8%96%E0%B8%A2%E0%B8%99%E0%B8%95%E0%B9%8C%E0%B9%84%E0%B8%9F%E0%B8%9F%E0%B9%89%E0%B8%B2%E0%B8%A3%E0%B8%B0%E0%B8%94%E0%B8%B1%E0%B8%9A%E0%B9%82%E0%B8%A5%E0%B8%81-46"
+            ]
+          },
+          "notes": "Thai-market specification verified against GAC Thailand official configuration on 2026-09-25; corrected width from 1876 mm seed value to OEM 1854 mm."
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/aion.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "fac5f08eec60692ee4df0884:catalog",
+    "revision_id": "fac5f08eec60692ee4df0884",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "aion.aion_v",
+    "state": "PENDING",
+    "created_at": "2026-09-30T02:22:24+00:00",
+    "payload": {
+      "brand": {
+        "id": "aion",
+        "name_en": "Aion",
+        "name_th": "ไอออน",
+        "brand_segment": "MASS",
+        "oem_group": "GAC",
+        "brand_origin": "CN",
+        "trim_detail": true,
+        "aliases": [
+          "gac aion",
+          "ไอออน"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "aion.aion_v",
+        "brand_id": "aion",
+        "name_en": "Aion V",
+        "name_th": "ไอออน วี",
+        "nameplate": "Aion V",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "aion v"
+        ],
+        "notes": "Thai-market lineup and specification verified against GAC Thailand official sources on 2026-09-25. Current lineup is 500 Premium / 602 Luxury; Rayong local production is confirmed by GAC Thailand.",
+        "incomplete": false,
+        "powertrain_checked": true,
+        "retail_status": "CURRENT",
+        "retail_checked_at": "2026-09-25",
+        "retail_source": "https://www.gacgroup.com/th-th/configuration/aion-v/2024",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "aion.aion_v.av",
+          "model_id": "aion.aion_v",
+          "code": "AV",
+          "segment": "C",
+          "seats": 5,
+          "launched": "2024-11-28",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "aion.aion_v.av.64_5_kwh_bev",
+          "generation_id": "aion.aion_v.av",
+          "name": "64.5 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 64.5,
+          "price_thb": 799900,
+          "price_min_thb": 799900,
+          "price_max_thb": 799900,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "GAC Thailand official September 2026 regular price; current campaign price is tracked separately.",
+          "aliases": [
+            "500 Premium"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        },
+        {
+          "id": "aion.aion_v.av.75_26_kwh_bev",
+          "generation_id": "aion.aion_v.av",
+          "name": "75.26 kWh BEV",
+          "powertrain": "BEV",
+          "drivetrain": "FWD",
+          "engine_cc": null,
+          "battery_kwh": 75.26,
+          "price_thb": 899900,
+          "price_min_thb": 899900,
+          "price_max_thb": 899900,
+          "import_type": "CKD",
+          "origin_country": "TH",
+          "price_note": "GAC Thailand official September 2026 retail price; local production confirmed at Rayong.",
+          "aliases": [
+            "602 Luxury",
+            "75 kWh BEV",
+            "Luxury"
+          ],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "aion.aion_v.av.trim.500_premium_bev",
+          "generation_id": "aion.aion_v.av",
+          "name": "500 Premium",
+          "powertrain": "BEV",
+          "variant_id": "aion.aion_v.av.64_5_kwh_bev",
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": 64.5,
+          "transmission": "1-Speed",
+          "seats": 5,
+          "length_mm": 4605,
+          "width_mm": 1854,
+          "height_mm": 1686,
+          "wheelbase_mm": 2775,
+          "tire_front": "225/45 R19",
+          "tire_rear": "225/45 R19",
+          "wheel_front": "19 in",
+          "wheel_rear": "19 in",
+          "aliases": [
+            "Aion V 500 Premium",
+            "AION V 500 PREMIUM"
+          ],
+          "source_refs": {
+            "eco": [
+              "ba597ad2-802d-4b27-942b-33c1a69035a1"
+            ],
+            "official_gac": [
+              "https://www.gacgroup.com/th-th/configuration/aion-v/2024",
+              "https://www.gacgroup.com/th-th/news/article/gac-thailand-3rd-anniversary-promotions-195",
+              "https://www.gacgroup.com/th-th/news/article/gac-%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B8%81%E0%B8%A5%E0%B8%A2%E0%B8%B8%E0%B8%97%E0%B8%98%E0%B9%8C--one-gac-2-0--%E0%B9%80%E0%B8%9B%E0%B8%B4%E0%B8%94%E0%B8%AA%E0%B8%B2%E0%B8%A2%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%9C%E0%B8%A5%E0%B8%B4%E0%B8%95-aion-v-%E0%B8%84%E0%B8%B1%E0%B8%99%E0%B9%81%E0%B8%A3%E0%B8%81%E0%B9%83%E0%B8%99%E0%B9%84%E0%B8%97%E0%B8%A2-%E0%B8%A1%E0%B8%B8%E0%B9%88%E0%B8%87%E0%B8%AA%E0%B8%B9%E0%B9%88%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B9%80%E0%B8%9B%E0%B9%87%E0%B8%99%E0%B9%81%E0%B8%9A%E0%B8%A3%E0%B8%99%E0%B8%94%E0%B9%8C%E0%B8%A3%E0%B8%96%E0%B8%A2%E0%B8%99%E0%B8%95%E0%B9%8C%E0%B9%84%E0%B8%9F%E0%B8%9F%E0%B9%89%E0%B8%B2%E0%B8%A3%E0%B8%B0%E0%B8%94%E0%B8%B1%E0%B8%9A%E0%B9%82%E0%B8%A5%E0%B8%81-46"
+            ]
+          },
+          "notes": "Thai-market specification verified against GAC Thailand official configuration on 2026-09-25."
+        },
+        {
+          "id": "aion.aion_v.av.trim.602_luxury_bev",
+          "generation_id": "aion.aion_v.av",
+          "name": "602 Luxury",
+          "powertrain": "BEV",
+          "variant_id": "aion.aion_v.av.75_26_kwh_bev",
+          "price_thb": null,
+          "drivetrain": "FWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": 75.26,
+          "transmission": "single-speed",
+          "seats": 5,
+          "length_mm": 4605,
+          "width_mm": 1854,
+          "height_mm": 1686,
+          "wheelbase_mm": 2775,
+          "tire_front": "225/45 R19",
+          "tire_rear": "225/45 R19",
+          "wheel_front": "19 in",
+          "wheel_rear": "19 in",
+          "aliases": [
+            "Aion V 602 Luxury",
+            "AION V 602 LUXURY"
+          ],
+          "source_refs": {
+            "eco": [
+              "d01c8507-33fe-4ab7-9759-8183639b4bf5"
+            ],
+            "official_gac": [
+              "https://www.gacgroup.com/th-th/configuration/aion-v/2024",
+              "https://www.gacgroup.com/th-th/news/article/gac-thailand-3rd-anniversary-promotions-195",
+              "https://www.gacgroup.com/th-th/news/article/gac-%E0%B9%80%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B8%81%E0%B8%A5%E0%B8%A2%E0%B8%B8%E0%B8%97%E0%B8%98%E0%B9%8C--one-gac-2-0--%E0%B9%80%E0%B8%9B%E0%B8%B4%E0%B8%94%E0%B8%AA%E0%B8%B2%E0%B8%A2%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%9C%E0%B8%A5%E0%B8%B4%E0%B8%95-aion-v-%E0%B8%84%E0%B8%B1%E0%B8%99%E0%B9%81%E0%B8%A3%E0%B8%81%E0%B9%83%E0%B8%99%E0%B9%84%E0%B8%97%E0%B8%A2-%E0%B8%A1%E0%B8%B8%E0%B9%88%E0%B8%87%E0%B8%AA%E0%B8%B9%E0%B9%88%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B9%80%E0%B8%9B%E0%B9%87%E0%B8%99%E0%B9%81%E0%B8%9A%E0%B8%A3%E0%B8%99%E0%B8%94%E0%B9%8C%E0%B8%A3%E0%B8%96%E0%B8%A2%E0%B8%99%E0%B8%95%E0%B9%8C%E0%B9%84%E0%B8%9F%E0%B8%9F%E0%B9%89%E0%B8%B2%E0%B8%A3%E0%B8%B0%E0%B8%94%E0%B8%B1%E0%B8%9A%E0%B9%82%E0%B8%A5%E0%B8%81-46"
+            ]
+          },
+          "notes": "Thai-market specification verified against GAC Thailand official configuration on 2026-09-25; corrected width from 1876 mm seed value to OEM 1854 mm."
+        }
+      ]
+    }
+  }
+}

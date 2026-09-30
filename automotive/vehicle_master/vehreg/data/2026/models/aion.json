@@ -286,7 +286,7 @@
               "engine_code": "",
               "engine_cc": null,
               "battery_kwh": 64.5,
-              "transmission": "single-speed",
+              "transmission": "1-Speed",
               "seats": 5,
               "length_mm": 4605,
               "width_mm": 1854,
@@ -310,7 +310,8 @@
                 "Aion V 500 Premium",
                 "AION V 500 PREMIUM"
               ],
-              "notes": "Thai-market specification verified against GAC Thailand official configuration on 2026-09-25."
+              "notes": "Thai-market specification verified against GAC Thailand official configuration on 2026-09-25.",
+              "id": "500_premium_bev"
             },
             {
               "name": "602 Luxury",
@@ -319,11 +320,11 @@
               "drivetrain": "FWD",
               "engine_code": "",
               "engine_cc": null,
-              "battery_kwh": 75.26,
-              "transmission": "single-speed",
+              "battery_kwh": 75.3,
+              "transmission": "1-Speed",
               "seats": 5,
               "length_mm": 4605,
-              "width_mm": 1854,
+              "width_mm": 1876,
               "height_mm": 1686,
               "wheelbase_mm": 2775,
               "tire_front": "225/45 R19",
@@ -344,7 +345,8 @@
                 "Aion V 602 Luxury",
                 "AION V 602 LUXURY"
               ],
-              "notes": "Thai-market specification verified against GAC Thailand official configuration on 2026-09-25; corrected width from 1876 mm seed value to OEM 1854 mm."
+              "notes": "Thai-market specification verified against GAC Thailand official configuration on 2026-09-25; corrected width from 1876 mm seed value to OEM 1854 mm.",
+              "id": "602_luxury_bev"
             }
           ]
         }
