@@ -40,9 +40,9 @@
   --chart-cat-3: #199d6e;
   --chart-cat-4: #ba7e00;
   --chart-cat-5: #e25b8d;
-  --font-display: "Anuphan", "IBM Plex Sans Thai", Tahoma, sans-serif;
-  --font-sans: "IBM Plex Sans Thai", Tahoma, system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --font-display: var(--nf-anuphan, "Anuphan"), var(--nf-plex-thai, "IBM Plex Sans Thai"), Tahoma, sans-serif;
+  --font-sans: var(--nf-plex-thai, "IBM Plex Sans Thai"), Tahoma, system-ui, sans-serif;
+  --font-mono: var(--nf-plex-mono, "IBM Plex Mono"), ui-monospace, Menlo, monospace;
   --type-display-xl: 700 48px/60px var(--font-display);
   --type-h1: 700 36px/48px var(--font-display);
   --type-h2: 700 28px/38px var(--font-display);

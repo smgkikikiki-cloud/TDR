@@ -76,7 +76,10 @@ for (const file of ROOTS.flatMap((r) => walk(r))) {
     if (colors) { failed++; console.log(`  FAIL ${file}: ${colors} literal colour(s) — use var(--token) from design/tokens.css`); }
     if (logos) { failed++; console.log(`  FAIL ${file}: car-brand logo usage — logos are banned (DESIGN.md)`); }
     for (const [cls, arrow, sign] of [["delta-up", "▲", "+"], ["delta-down", "▼", "−"]] as const) {
-      for (const m of src.matchAll(new RegExp(cls, "g"))) {
+      // CSS files only define the classes and reference the --delta-* tokens; the sign rule
+      // applies to the markup that uses a delta class. `(?<![-\\w])` skips --delta-up tokens.
+      if (file.endsWith(".css")) break;
+      for (const m of src.matchAll(new RegExp(`(?<![-\\w])${cls}`, "g"))) {
         const region = elementRegion(src, m.index!);
         if (!region.includes(arrow) || !region.includes(sign)) {
           failed++;

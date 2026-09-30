@@ -1,32 +1,36 @@
-/* TDR semantic color roles.
-   Keep raw brand/palette values in globals.css. Components should migrate to
-   these role names gradually so meaning is decoupled from a specific hue. */
+/* TDR semantic color roles, mapped onto the design tokens (design/tokens.css).
+   Raw legacy palette values stay in globals.css; components migrate to these role
+   names gradually so meaning is decoupled from a specific hue. No component uses
+   the roles yet, so this mapping changes nothing visually today.
+
+   Note: --ink is declared by both design/tokens.css and globals.css. tokens.css is
+   imported first, so the legacy value wins until globals.css stops declaring it. */
 :root {
   /* Content */
   --color-text-primary: var(--ink);
-  --color-text-secondary: var(--muted);
-  --color-text-eyebrow: var(--eyebrow);
-  --color-text-inverse: var(--white);
+  --color-text-secondary: var(--ink-muted);
+  --color-text-eyebrow: var(--ink-muted);
+  --color-text-inverse: var(--ink-on-inverse);
 
   /* Surfaces */
-  --color-surface-page: var(--paper);
-  --color-surface: var(--white);
-  --color-surface-subtle: var(--soft-blue);
-  --color-surface-attention: var(--soft-red);
+  --color-surface-page: var(--surface-page);
+  --color-surface: var(--surface-page);
+  --color-surface-subtle: var(--surface-raised);
+  --color-surface-attention: var(--flag-estimate-bg);
 
   /* Structure */
-  --color-border: var(--line);
-  --color-border-strong: var(--navy);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
 
   /* Interaction */
-  --color-interactive: var(--navy);
-  --color-interactive-hover: var(--red);
-  --color-focus: var(--navy);
+  --color-interactive: var(--action-primary);
+  --color-interactive-hover: var(--accent);
+  --color-focus: var(--brand-blue);
 
   /* Status. These are semantic state colors, not powertrain/category colors. */
-  --color-status-info: var(--navy);
-  --color-status-success: #2f6f44;
-  --color-status-warning: #8a5a00;
-  --color-status-danger: var(--red);
-  --color-status-neutral: var(--muted);
+  --color-status-info: var(--brand-blue);
+  --color-status-success: var(--delta-up);
+  --color-status-warning: var(--flag-estimate-ink);
+  --color-status-danger: var(--accent);
+  --color-status-neutral: var(--ink-muted);
 }
