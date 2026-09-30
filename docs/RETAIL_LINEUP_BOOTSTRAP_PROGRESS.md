@@ -2,211 +2,196 @@
 
 Branch: `feature/retail-lineup-bootstrap`
 
-This file is the handoff/progress marker for the implementation described in `docs/RETAIL_LINEUP_BOOTSTRAP.md`.
+Draft CI PR: #171 — **do not merge yet**.
+
+Source-of-truth design: `docs/RETAIL_LINEUP_BOOTSTRAP.md`.
+
+This file is the handoff marker. The feature is intentionally being built in independent chunks; production/main remain untouched until the later integration/smoke-test chunks.
 
 ## Chunk 1 — COMPLETE
 
-Pure deterministic planner implemented in `automotive/vehicle_master/vehreg/retail_lineup_bootstrap.py`.
+Pure deterministic planner:
 
-Owns:
-- exact identity resolution only
+- `automotive/vehicle_master/vehreg/retail_lineup_bootstrap.py`
+- exact identity resolution only; no fuzzy write matching
 - KEEP / CREATE / REACTIVATE / ARCHIVE classification
-- baseline hash
+- deterministic new MarketTrim identity
+- target-model baseline hash
 - immutable plan hash
 - no canonical writes
 
 ## Chunk 2 — COMPLETE
 
-Staged apply semantics implemented in `automotive/vehicle_master/vehreg/retail_lineup_bootstrap_apply.py`.
+Staged apply semantics:
 
-Owns:
-- CREATE by materializing a new base-Catalog MarketTrim
-- explicit historical reopen for REACTIVATE
-- authoritative current-retail-set replacement
-- literal HISTORICAL archival for omitted old CURRENT trims
-- baseline recheck
-- plan-hash tamper detection
-- idempotent replay of an already-landed exact post-state
-
-No Admin UI and no whole-workbook live-tree promotion yet.
+- `automotive/vehicle_master/vehreg/retail_lineup_bootstrap_apply.py`
+- CREATE materialises a real base-Catalog MarketTrim through the existing canonical writer
+- REACTIVATE explicitly reopens a historical trim
+- target set becomes the authoritative CURRENT set
+- omitted old CURRENT trims become literal HISTORICAL, never deleted
+- plan-hash tamper detection, baseline recheck and idempotent exact-post-state replay
 
 ## Chunk 3 — COMPLETE
 
-Implemented files:
+Workbook contract / compile-only tooling:
 
 - `automotive/vehicle_master/vehreg/retail_lineup_workbook.py`
 - `automotive/vehicle_master/tools/retail_lineup_bootstrap_workbook.py`
 - `automotive/vehicle_master/tests/test_retail_lineup_workbook.py`
 
-Chunk 3 is intentionally **compile-only**. It does not call the Chunk 2 apply engine and does not mutate canonical data.
+Workbook sheets:
 
-### Workbook contract
+1. `TARGET_LINEUP` — editable target truth
+2. `CURRENT_SNAPSHOT` — informational/read-only
+3. `IMPORT_META` — schema, scope and stale-baseline metadata
 
-The generated workbook contains exactly these logical sheets:
-
-1. `TARGET_LINEUP`
-   - editable owner target state
-   - `model_id`
-   - `generation_id`
-   - `trim_name`
-   - `powertrain`
-   - optional `canonical_trim_id`
-   - optional `notes`
-
-2. `CURRENT_SNAPSHOT`
-   - read-only informational snapshot
-   - current/known canonical trims
-   - lifecycle/current flags
-   - price/spec/campaign presence counts
-   - ignored completely by compile/write semantics
-
-3. `IMPORT_META`
-   - schema version
-   - generated timestamp
-   - as-of date
-   - catalog year
-   - base release ID
-   - baseline hash
-   - mode `REPLACE_AND_ARCHIVE`
-   - explicit target model scope
-
-### Compile behavior
-
-`compile_retail_lineup_workbook()`:
-
-- accepts `.xlsx` only
-- validates exact TARGET_LINEUP headers
-- rejects formulas in write-bearing sheets
-- rejects missing required values
-- rejects a row outside the declared model scope
-- rejects a targeted model with zero target rows
-- rejects stale baseline before returning a plan
-- delegates identity/diff semantics back to Chunk 1 instead of reimplementing them
-- returns source SHA-256 + immutable plan
-- performs no apply/write
-
-### Generator behavior
-
-`generate_retail_lineup_workbook()`:
-
-- accepts one or many existing model IDs
-- seeds TARGET_LINEUP from currently resolved CURRENT trims
-- exports every known trim for the selected models into CURRENT_SNAPSHOT
-- records current lifecycle/approved-set/resolved-current state
-- records price/spec/campaign presence counts for operator context
-- embeds the baseline hash used by the compiler
-- protects CURRENT_SNAPSHOT and IMPORT_META against accidental edits
-- provides exact powertrain dropdown values: ICE / HEV / PHEV / REEV / BEV / FCEV
-
-A model with no resolved CURRENT trim does not silently become an empty target. The workbook inserts a visible `FILL REQUIRED` row and compile refuses it until the operator supplies at least one complete target trim.
-
-### CLI
-
-Generate:
-
-```bash
-python -m tools.retail_lineup_bootstrap_workbook generate \
-  --model-id toyota.camry \
-  --model-id honda.accord \
-  --base-release-id vehicle-2026-... \
-  --out lineup.xlsx
-```
-
-Compile preview:
-
-```bash
-python -m tools.retail_lineup_bootstrap_workbook compile lineup.xlsx --report plan.json
-```
-
-There is deliberately no `apply` subcommand in Chunk 3.
-
-### Chunk 3 test contract
-
-Coverage includes:
-
-- generator emits the three-sheet contract
-- target sheet is seeded from resolved current lineup
-- snapshot includes informational price/spec/campaign presence
-- untouched workbook compiles to all KEEP
-- edited workbook compiles KEEP + CREATE + ARCHIVE
-- CURRENT_SNAPSHOT edits do not affect the plan
-- stale workbook fails `STALE_BASELINE`
-- empty model target never means whole-model withdrawal
-- formulas are rejected
-- unknown/extra target headers are rejected
-- target-model scope cannot silently change through row deletion/addition
-
-### Validation
-
-Draft PR #171 was used only to exercise repository CI; it remains unmerged.
-
-The first full run exposed one Chunk-3-specific bug: openpyxl read-only blank cells can be `EmptyCell` objects with no `.coordinate`. Commit `f76af345d63e006466a5472d4e5d19020255ae9e` removed that assumption while preserving formula rejection.
-
-The next full Vehicle Master run completed with **1594 passed / 11 failed / 4334 subtests passed**. The remaining 11 failures are the same pre-existing failures reproduced on `main`; no Retail Lineup Bootstrap test remained in the failure list. Web build passed. Therefore Chunk 3 introduces no additional known test failure relative to the current repository baseline.
-
-### Commits
-
-- `54e3ae636b399ba0f9a71a8142fdc2d5c3fa47bb` — workbook contract
-- `4975253c7eaf71a8e9f8b5295d6b2e13eefbeec7` — workbook CLI
-- `8adf3dbd843df2784bb0ec7d98e0160663e7a8c9` — workbook tests
-- `f76af345d63e006466a5472d4e5d19020255ae9e` — read-only EmptyCell regression fix
-
-A draft integration PR exists only to run repository CI: PR #171. It must not be merged merely because Chunk 3 is complete; later chunks remain outstanding.
+The compiler never applies canonical writes. It rejects stale baselines, formulas/unknown headers, target rows outside scope and an explicitly targeted model with zero valid target trims.
 
 ## Chunk 4 — COMPLETE
 
-Implemented files:
+Whole-workbook atomic transaction boundary:
 
 - `automotive/vehicle_master/vehreg/retail_lineup_bootstrap_transaction.py`
 - `automotive/vehicle_master/tests/test_retail_lineup_bootstrap_transaction.py`
 
-Chunk 4 owns the **whole-workbook transaction boundary**. It still does not expose an Admin/Supabase apply surface.
+Semantics:
 
-### Transaction semantics
+- copy the whole canonical data tree to a sandbox
+- apply the immutable plan only in the sandbox
+- build and enrich the serving release from the sandbox
+- verify target trims serve CURRENT and omitted trims serve HISTORICAL
+- recheck semantic baseline before promotion
+- compare live-file SHA-256 fingerprints before promotion to prevent overwriting a concurrent writer in shared sidecars
+- promote only staged changed files
+- roll back already-promoted files after a mid-promotion failure
 
-- copy the whole canonical data tree to a temporary sandbox
-- apply the immutable Chunk-2 plan only inside that sandbox
-- build `ReleaseBuilder` against the staged tree
-- run the production `enrich_release()` path against the staged tree
-- require every target trim to serve as CURRENT and every archived trim to serve as literal HISTORICAL
-- recheck the target-model semantic baseline on live data immediately before promotion
-- capture SHA-256 fingerprints of live files that the transaction may replace and compare them again immediately before promotion
-- fail with `CONCURRENT_WRITE_BEFORE_PROMOTION` if any would-be-replaced live file changed, including a write to another model inside the same shared sidecar
-- promote only the changed files reported by staged apply
-- if a mid-promotion file replacement raises, restore already-promoted files from pre-promotion bytes and clean `.rlb-tmp` / `.rlb-rollback` files
-- idempotent replay with zero changed files validates the staged serving release but performs no promotion
+Final Chunk-4 CI head `46f51035e875de8030a64ba81a7ee74ee8f94504` produced **1599 passed / 11 repository-baseline failures / 4334 subtests passed** with no Retail Lineup Bootstrap failure.
 
-The file-level compare-and-swap guard is intentionally stricter than the model-scoped semantic baseline. `current_retail.json` and `trim_review.json` are shared across models; another writer may modify another model or only reviewer/notes without changing the target model's resolved CURRENT set. Such a write must still block promotion rather than be overwritten by an older staged copy.
+## Chunk 5 — COMPLETE
 
-### Chunk 4 test contract
+Durable immutable preview-plan state / confirmation handoff is now implemented. This chunk still does **not** expose the Admin UI and does **not** wire a new source kind into `import_runs`; those remain later chunks.
 
-Coverage includes:
+### Durable Supabase state
 
-- successful stage validation before promotion
-- release-validation failure leaves live tree byte-for-byte unchanged
-- simulated mid-promotion disk failure rolls back already-promoted files
-- simulated concurrent target-model writer after staging triggers `STALE_BASELINE_BEFORE_PROMOTION`
-- simulated shared-sidecar writer that leaves target-model membership semantically unchanged still triggers `CONCURRENT_WRITE_BEFORE_PROMOTION`
-- the external writer's bytes remain intact after the rejected promotion
+Implemented migrations:
+
+- `supabase/migration_v53_retail_lineup_plans.sql`
+- `supabase/migration_v54_retail_lineup_plan_state_hardening.sql`
+
+New server-only table: `public.retail_lineup_plans`.
+
+A preview persists the exact reviewed object rather than relying on a future recompile:
+
+- source workbook SHA-256
+- canonical baseline hash
+- immutable plan hash
+- full compiled plan JSON
+- immutable review summary
+- compiler actor
+- approval/apply/publish audit identity
+- optional `import_run_id` (left nullable until Chunk 7 source-import integration)
+
+State machine:
+
+```text
+PREVIEW_READY
+    -> APPLYING
+        -> WRITTEN_PENDING_PUBLISH
+            -> COMPLETED
+        -> FAILED
+        -> STALE
+    -> STALE
+    -> CANCELLED
+
+FAILED -> APPLYING | STALE | CANCELLED
+```
+
+`COMPLETED`, `STALE` and `CANCELLED` are terminal.
+
+The repository write and serving publish remain deliberately separate states. A canonical commit that has not been confirmed as the serving release may be `WRITTEN_PENDING_PUBLISH`; it must never be reported as completed.
+
+### Immutable confirmation contract
+
+The migration exposes service-role-only compare-and-set RPCs:
+
+- `tdr_begin_retail_lineup_plan_apply(...)`
+- `tdr_mark_retail_lineup_plan_written(...)`
+- `tdr_complete_retail_lineup_plan(...)`
+- `tdr_fail_retail_lineup_plan_apply(...)`
+- `tdr_mark_retail_lineup_plan_stale(...)`
+
+`begin_apply` requires the exact `plan_hash` and `baseline_hash` the Admin reviewed. A stale hash, terminal plan or unknown plan returns no applicable row / fails closed. There is no fallback that silently recompiles a newer workbook/canonical state behind the operator's back.
+
+`migration_v54` additionally prevents privileged same-status rewrites of approval identity, commit SHA or release ID. Audit fields may only change on the state transition that owns them. A retry from FAILED records a fresh approval timestamp/actor.
+
+RLS is enabled and table/RPC access is revoked from public/anon/authenticated; only `service_role` receives the required access.
+
+### Server-side plan store
+
+Implemented:
+
+- `automotive/vehicle_master/tools/retail_lineup_plan_store.py`
+- `automotive/vehicle_master/tests/test_retail_lineup_plan_store.py`
+
+The helper can:
+
+- persist an immutable PREVIEW_READY plan
+- fetch a preview
+- atomically begin apply with both reviewed hashes
+- record canonical commit identity
+- record completed serving release identity
+- record FAILED / STALE state
+
+It performs no workbook compilation and no canonical write.
+
+### Exact persisted-plan decoder
+
+Implemented:
+
+- `automotive/vehicle_master/vehreg/retail_lineup_plan_codec.py`
+- `automotive/vehicle_master/tests/test_retail_lineup_plan_codec.py`
+
+This is important for the later apply worker: it rebuilds the frozen Chunk-1 dataclasses from the **stored `compiled_plan` JSON**, not from the source workbook and not by rerunning identity resolution.
+
+The decoder:
+
+- requires the exact persisted JSON schema
+- rejects unknown fields / wrong types / duplicate identities
+- verifies model/item ownership
+- recomputes action counts instead of trusting stored counts
+- checks the row's expected plan/baseline hashes
+- independently recomputes the immutable plan hash before returning the plan
+
+Any payload tampering fails before Chunk 4 can apply it.
+
+Additional audit-state static guard:
+
+- `automotive/vehicle_master/tests/test_retail_lineup_plan_state_hardening.py`
+
+### Chunk 5 commits
+
+- `f0aca31f938b9eeddf62aea233b09cf70b26836c` — durable preview-plan migration
+- `098a34c997de662b6dcfc880682195c7bce766cc` — Supabase plan-store helper
+- `b306bd6fdbce17a510ba0641e11e4649a06fa152` — plan-store tests
+- `39d36bdf4515efac68cdc7d5c560758643daaae0` — strict persisted-plan decoder
+- `2de280e86725056a48d381bd3d5a97c915e17f3e` — decoder/tamper tests
+- `b6c0ba0f6b6b35517352f5fa947651399ad5ad83` — audit transition hardening
+- `738774d91e793e72a96526120b86780f4eaf6fdb` — audit-state static guard
 
 ### Validation
 
-Draft PR #171 remains the CI harness and is still unmerged.
+Full Vehicle Master CI on code head `2de280e86725056a48d381bd3d5a97c915e17f3e` completed with **1612 passed / 11 failed / 4334 subtests passed**. The 11 failures are the same repository-baseline failures already observed before Chunk 5; no Retail Lineup Bootstrap plan-store/codec test appears in the failure list.
 
-The final Chunk-4 head tested by CI was `46f51035e875de8030a64ba81a7ee74ee8f94504`.
+The exact final Chunk-5 head `738774d91e793e72a96526120b86780f4eaf6fdb` has additionally passed Python compilation and the TypeScript job while its long full-suite run continues in CI. Changes after the full validated code head are SQL state-machine hardening plus its static file-contract test; they do not touch canonical runtime/apply logic.
 
-Full Vehicle Master CI completed with **1599 passed / 11 failed / 4334 subtests passed**. The 11 failures are the same repository-baseline failures already present before Chunk 4; there is no `retail_lineup_bootstrap*` failure in the final failure list. TypeScript passed, the web build passed, and the official media target audit passed.
+No v53/v54 migration has been applied to production Supabase. No main merge or production write has occurred.
 
-Therefore Chunk 4 is complete with no additional known regression relative to the current repository baseline.
+## Next — Chunk 6
 
-### Commits
+Admin UI / server actions for the explicit two-phase workflow:
 
-- `22eaf696dfdd4e8cc83d6b207606d7539814d9f0` — whole-workbook transaction implementation
-- `57118c17847ca099b1952889f9bcc694161275f1` — transaction-boundary tests
-- `ba0636b307adb91ce2331e5056b9a52bda08fee5` — rollback temp-file cleanup hardening
-- `0e0056293e6dd17d87f3264dbf462b50346a4a67` — file-level compare-and-swap concurrent-write guard
-- `46f51035e875de8030a64ba81a7ee74ee8f94504` — shared-sidecar concurrent-write regression test
+```text
+Generate workbook -> Upload/compile -> PREVIEW_READY -> Review diff -> explicit Apply
+```
 
-## Next
-
-Chunk 5 is the next implementation boundary: durable preview-plan state / confirmation handoff. Do not merge the draft PR merely because Chunk 4 is complete; Admin UI and final apply/publish integration remain later chunks.
+Chunk 6 should render the immutable stored summary/detail and submit the stored plan id + reviewed hashes. It must not execute canonical writes by recompiling the workbook in the browser/server action. Final source-import worker wiring remains Chunk 7.
