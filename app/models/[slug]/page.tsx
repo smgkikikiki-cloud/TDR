@@ -6,6 +6,7 @@ import { bodyLabel } from "@/lib/body-labels";
 import { displayName, initials } from "@/lib/display-name";
 import { trimLocalId } from "@/lib/trim-editor-state";
 import { trimSummarySpecs } from "@/lib/model-trim-summary";
+import { modelRangeSummary, preferredRangeForTrim } from "@/lib/model-range-summary";
 import { loadSpecFieldRegistry } from "@/lib/spec-field-registry";
 
 function launch(r: any) { return [r.launch_quarter, r.launch_year].filter(Boolean).join(" ") || null }
@@ -16,11 +17,6 @@ function bahtRange(values: number[]) {
   const min = Math.min(...values), max = Math.max(...values);
   return min === max ? `฿${min.toLocaleString()} – ${max.toLocaleString()}`.replace(` – ${max.toLocaleString()}`, "") : `฿${min.toLocaleString()} – ${max.toLocaleString()}`;
 }
-function numberRange(values: number[], formatter: (n: number) => string) {
-  if (!values.length) return null;
-  const min = Math.min(...values), max = Math.max(...values);
-  return min === max ? formatter(min) : `${formatter(min)} – ${formatter(max)}`;
-}
 function ptSummary(p: any) {
   const b: string[] = [];
   if (p.displacement_cc) b.push(`${Number(p.displacement_cc).toLocaleString()} cc`);
@@ -28,16 +24,6 @@ function ptSummary(p: any) {
   if (p.powertrain_type) b.push(p.powertrain_type);
   if (p.horsepower_ps) b.push(`${p.horsepower_ps} PS`);
   return b.join(" · ") || p.label || "Powertrain";
-}
-function officialRangeLabel(trims: any[]) {
-  const withRange = trims.filter((t) => Number(t.published_range_km) > 0);
-  if (!withRange.length) return null;
-  const values = withRange.map((t) => Number(t.published_range_km));
-  const cycles = [...new Set(withRange.map((t) => t.published_range_cycle).filter(Boolean))];
-  return {
-    range: numberRange(values, (n) => `${Math.round(n).toLocaleString()} km`),
-    cycle: cycles.length === 1 ? cycles[0] : "หลายมาตรฐาน",
-  };
 }
 
 /** One trim row. Shared by the current and the discontinued list. */
@@ -52,6 +38,7 @@ function TrimRow({ t, ptById, specFields, muted, slug }: {
   const price = baht(t.price_baht);
   const offers = (t.campaign_quote?.campaign_options || []).filter((offer: any) => offer.status_as_of === "ACTIVE");
   const summarySpecs = trimSummarySpecs(t, specFields, 6);
+  const publishedRange = preferredRangeForTrim(t);
   return (
     <details className={muted ? "sfTrimRow sfDiscontinued" : "sfTrimRow"}>
       <summary>
@@ -60,7 +47,7 @@ function TrimRow({ t, ptById, specFields, muted, slug }: {
           <span>{linked.map((p: any) => ptSummary(p)).join(" / ") || (muted ? "เลิกจำหน่ายแล้ว" : "")}</span>
         </div>
         <div className="sfTrimNums">
-          {t.published_range_km ? <span>{Number(t.published_range_km).toLocaleString()} km {t.published_range_cycle || ""}</span> : null}
+          {publishedRange ? <span>{publishedRange.value.toLocaleString()} km {publishedRange.cycle}</span> : null}
           {price ? <strong>{price}</strong> : <span className="sfMissing">ไม่ระบุราคา</span>}
         </div>
       </summary>
@@ -109,7 +96,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ slug: 
   const heroPrice = bahtRange(trimPrices) || (r.retail_price_min || r.retail_price_max
     ? bahtRange([r.retail_price_min, r.retail_price_max].filter((n: any) => Number(n) > 0).map(Number))
     : null);
-  const heroRange = officialRangeLabel(currentTrims);
+  const heroRange = modelRangeSummary(currentTrims);
   const brand = displayName(r.brands);
 
   const dimensions = [
