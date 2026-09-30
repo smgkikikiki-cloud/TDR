@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "390e3f90effefbe435fb0a7e",
+    "command_id": "vehicle-spec-3878b595-06eb-4f3b-a568-b3b25f73b5cb-001-f36b9a738228:16",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.q6_etron.gen1.trim.q6_e_tron_performance_rwd_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T02:45:33+00:00",
+    "applied_at": "2026-09-30T02:46:19+00:00",
+    "before_hash": "8678a27e097100b71e1e70b8f2e5f95b0d8b18afeb90609e0e2359f58fc1da89",
+    "after_hash": "21068288b8e4dddc292a41ee49ee242339a4ada2fc6927b477c6c86c13618aac",
+    "before": [
+      100,
+      "Li-ion",
+      160000,
+      8,
+      11,
+      "CCS2",
+      260,
+      22,
+      "MacPherson Strut",
+      true,
+      true,
+      true,
+      true,
+      714
+    ],
+    "after": [
+      100,
+      "Li-ion",
+      160000,
+      8,
+      11,
+      "CCS2",
+      260,
+      22,
+      "MacPherson Strut",
+      true,
+      true,
+      true,
+      true,
+      714,
+      641
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.q6_etron.gen1.trim.q6_e_tron_performance_rwd_bev_ev.rated_range_km_212aedf38c5e_da3ccc76b63f.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "390e3f90effefbe435fb0a7e:spec",
+    "revision_id": "390e3f90effefbe435fb0a7e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.q6_etron.gen1.trim.q6_e_tron_performance_rwd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T02:46:19+00:00",
+    "payload": [
+      100,
+      "Li-ion",
+      160000,
+      8,
+      11,
+      "CCS2",
+      260,
+      22,
+      "MacPherson Strut",
+      true,
+      true,
+      true,
+      true,
+      714,
+      641
+    ]
+  }
+}

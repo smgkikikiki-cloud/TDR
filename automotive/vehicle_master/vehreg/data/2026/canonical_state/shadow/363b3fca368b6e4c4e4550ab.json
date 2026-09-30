@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "363b3fca368b6e4c4e4550ab",
+    "command_id": "vehicle-spec-3878b595-06eb-4f3b-a568-b3b25f73b5cb-001-f36b9a738228:7",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.q6_etron.gen1.trim.q6_e_tron_performance_rwd_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T02:45:33+00:00",
+    "applied_at": "2026-09-30T02:46:19+00:00",
+    "before_hash": "43fc060ab33bfeaea28fc65d378293d18a8a7bdd19c34c7c403bf1c2c939361f",
+    "after_hash": "94f96e05903123a343a06f4edcdef1602f6bf0da2ab18c10d7272361acfd8c19",
+    "before": [
+      100,
+      "Li-ion",
+      160000,
+      8,
+      11
+    ],
+    "after": [
+      100,
+      "Li-ion",
+      160000,
+      8,
+      11,
+      "CCS2"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.q6_etron.gen1.trim.q6_e_tron_performance_rwd_bev_charging.connector_type_7a2cbf951001.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "363b3fca368b6e4c4e4550ab:spec",
+    "revision_id": "363b3fca368b6e4c4e4550ab",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.q6_etron.gen1.trim.q6_e_tron_performance_rwd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T02:46:19+00:00",
+    "payload": [
+      100,
+      "Li-ion",
+      160000,
+      8,
+      11,
+      "CCS2"
+    ]
+  }
+}

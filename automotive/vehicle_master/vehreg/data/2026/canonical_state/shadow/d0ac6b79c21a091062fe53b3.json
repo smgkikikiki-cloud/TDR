@@ -1,0 +1,422 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "d0ac6b79c21a091062fe53b3",
+    "command_id": "vehicle-spec-3878b595-06eb-4f3b-a568-b3b25f73b5cb-001-f36b9a738228:1",
+    "operation": "UPSERT_MODEL_BUNDLE",
+    "year": 2026,
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "audi.q6_etron",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T02:45:33+00:00",
+    "applied_at": "2026-09-30T02:46:18+00:00",
+    "before_hash": "1f52fd7c8e8b807706b623cc22dcd8300fd28114e3945c279fa46e53004a394a",
+    "after_hash": "686b8e31a78fc0e1ddfa14740a54d193a85ca9ba0c8e377307aad35088693c28",
+    "before": {
+      "id": "q6_etron",
+      "name_en": "Audi Q6 e-tron",
+      "name_th": "ออดี้ คิว6 อี-ทรอน",
+      "nameplate": "",
+      "body_type": "CROSSOVER",
+      "cab_type": "NOT_APPLICABLE",
+      "registration_type": "",
+      "market_scope": "CORE",
+      "aliases": [
+        "Q6 e-tron",
+        "Q6 etron"
+      ],
+      "incomplete": true,
+      "notes": "รถไฟฟ้าตระกูล e-tron แยกเป็นรุ่นของตัวเอง — DLT จดแยก และเดิมมันไปเกาะรุ่นเบนซินชื่อคล้ายกัน สเปกยังไม่ได้ตรวจ",
+      "generations": [
+        {
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "variants": [
+            {
+              "name": "spec",
+              "powertrain": "BEV",
+              "drivetrain": "AWD",
+              "engine_cc": null,
+              "battery_kwh": null,
+              "price_thb": null,
+              "price_min_thb": null,
+              "price_max_thb": null,
+              "import_type": "CBU",
+              "origin_country": "DE",
+              "price_note": "ยังไม่ได้ตรวจราคา",
+              "aliases": []
+            }
+          ],
+          "trims": [
+            {
+              "name": "Q6 e-tron performance (RWD)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:017"
+                ]
+              },
+              "id": "q6_e_tron_performance_rwd_bev"
+            },
+            {
+              "name": "Q6 e-tron quattro (AWD)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:017"
+                ]
+              },
+              "id": "q6_e_tron_quattro_awd_bev"
+            },
+            {
+              "name": "SQ6 e-tron (High-Performance AWD)",
+              "powertrain": "BEV",
+              "source_refs": {
+                "owner_directory": [
+                  "owner_directory_2026_09_13:017"
+                ]
+              },
+              "id": "sq6_e_tron_high_performance_awd_bev"
+            }
+          ]
+        }
+      ]
+    },
+    "after": {
+      "brand": {
+        "id": "audi",
+        "name_en": "Audi",
+        "name_th": "เอาดี้",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Volkswagen Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "เอาดี้"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "audi.q6_etron",
+        "brand_id": "audi",
+        "name_en": "Audi Q6 e-tron",
+        "name_th": "ออดี้ คิว6 อี-ทรอน",
+        "nameplate": "Audi Q6 e-tron",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "Q6 e-tron",
+          "Q6 etron"
+        ],
+        "notes": "รถไฟฟ้าตระกูล e-tron แยกเป็นรุ่นของตัวเอง — DLT จดแยก และเดิมมันไปเกาะรุ่นเบนซินชื่อคล้ายกัน สเปกยังไม่ได้ตรวจ",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "audi.q6_etron.gen1",
+          "model_id": "audi.q6_etron",
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "audi.q6_etron.gen1.spec",
+          "generation_id": "audi.q6_etron.gen1",
+          "name": "spec",
+          "powertrain": "BEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "audi.q6_etron.gen1.trim.q6_e_tron_performance_rwd_bev",
+          "generation_id": "audi.q6_etron.gen1",
+          "name": "Q6 e-tron performance (RWD)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "RWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": 100,
+          "transmission": "1-Speed",
+          "seats": 5,
+          "length_mm": 4771,
+          "width_mm": 1939,
+          "height_mm": 1685,
+          "wheelbase_mm": 2889,
+          "tire_front": "255/50 R20",
+          "tire_rear": "285/45 R20",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:017"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.q6_etron.gen1.trim.q6_e_tron_quattro_awd_bev",
+          "generation_id": "audi.q6_etron.gen1",
+          "name": "Q6 e-tron quattro (AWD)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:017"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.q6_etron.gen1.trim.sq6_e_tron_high_performance_awd_bev",
+          "generation_id": "audi.q6_etron.gen1",
+          "name": "SQ6 e-tron (High-Performance AWD)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:017"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    },
+    "changed_files": [
+      "2026/models/audi.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "d0ac6b79c21a091062fe53b3:catalog",
+    "revision_id": "d0ac6b79c21a091062fe53b3",
+    "topic": "catalog",
+    "entity_type": "model",
+    "entity_id": "audi.q6_etron",
+    "state": "PENDING",
+    "created_at": "2026-09-30T02:46:18+00:00",
+    "payload": {
+      "brand": {
+        "id": "audi",
+        "name_en": "Audi",
+        "name_th": "เอาดี้",
+        "brand_segment": "PREMIUM_LUXURY",
+        "oem_group": "Volkswagen Group",
+        "brand_origin": "DE",
+        "trim_detail": false,
+        "aliases": [
+          "เอาดี้"
+        ],
+        "overrides": {}
+      },
+      "model": {
+        "id": "audi.q6_etron",
+        "brand_id": "audi",
+        "name_en": "Audi Q6 e-tron",
+        "name_th": "ออดี้ คิว6 อี-ทรอน",
+        "nameplate": "Audi Q6 e-tron",
+        "body_type": "CROSSOVER",
+        "cab_type": "NOT_APPLICABLE",
+        "registration_type": "RY1",
+        "market_scope": "CORE",
+        "aliases": [
+          "Q6 e-tron",
+          "Q6 etron"
+        ],
+        "notes": "รถไฟฟ้าตระกูล e-tron แยกเป็นรุ่นของตัวเอง — DLT จดแยก และเดิมมันไปเกาะรุ่นเบนซินชื่อคล้ายกัน สเปกยังไม่ได้ตรวจ",
+        "incomplete": true,
+        "powertrain_checked": false,
+        "retail_status": "UNVERIFIED",
+        "retail_checked_at": null,
+        "retail_source": "",
+        "overrides": {}
+      },
+      "generations": [
+        {
+          "id": "audi.q6_etron.gen1",
+          "model_id": "audi.q6_etron",
+          "code": "gen1",
+          "segment": "D",
+          "seats": 5,
+          "launched": "2022-01-01",
+          "ended": null,
+          "overrides": {}
+        }
+      ],
+      "variants": [
+        {
+          "id": "audi.q6_etron.gen1.spec",
+          "generation_id": "audi.q6_etron.gen1",
+          "name": "spec",
+          "powertrain": "BEV",
+          "drivetrain": "AWD",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "price_thb": null,
+          "price_min_thb": null,
+          "price_max_thb": null,
+          "import_type": "CBU",
+          "origin_country": "DE",
+          "price_note": "ยังไม่ได้ตรวจราคา",
+          "aliases": [],
+          "incomplete": false,
+          "overrides": {}
+        }
+      ],
+      "trims": [
+        {
+          "id": "audi.q6_etron.gen1.trim.q6_e_tron_performance_rwd_bev",
+          "generation_id": "audi.q6_etron.gen1",
+          "name": "Q6 e-tron performance (RWD)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "RWD",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": 100,
+          "transmission": "1-Speed",
+          "seats": 5,
+          "length_mm": 4771,
+          "width_mm": 1939,
+          "height_mm": 1685,
+          "wheelbase_mm": 2889,
+          "tire_front": "255/50 R20",
+          "tire_rear": "285/45 R20",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:017"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.q6_etron.gen1.trim.q6_e_tron_quattro_awd_bev",
+          "generation_id": "audi.q6_etron.gen1",
+          "name": "Q6 e-tron quattro (AWD)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:017"
+            ]
+          },
+          "notes": ""
+        },
+        {
+          "id": "audi.q6_etron.gen1.trim.sq6_e_tron_high_performance_awd_bev",
+          "generation_id": "audi.q6_etron.gen1",
+          "name": "SQ6 e-tron (High-Performance AWD)",
+          "powertrain": "BEV",
+          "variant_id": null,
+          "price_thb": null,
+          "drivetrain": "UNKNOWN",
+          "engine_code": "",
+          "engine_cc": null,
+          "battery_kwh": null,
+          "transmission": "",
+          "seats": null,
+          "length_mm": null,
+          "width_mm": null,
+          "height_mm": null,
+          "wheelbase_mm": null,
+          "tire_front": "",
+          "tire_rear": "",
+          "wheel_front": "",
+          "wheel_rear": "",
+          "aliases": [],
+          "source_refs": {
+            "owner_directory": [
+              "owner_directory_2026_09_13:017"
+            ]
+          },
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

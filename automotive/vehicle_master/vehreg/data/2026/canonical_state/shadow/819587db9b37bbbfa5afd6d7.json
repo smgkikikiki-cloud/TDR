@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "819587db9b37bbbfa5afd6d7",
+    "command_id": "vehicle-spec-3878b595-06eb-4f3b-a568-b3b25f73b5cb-001-f36b9a738228:4",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.q6_etron.gen1.trim.q6_e_tron_performance_rwd_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T02:45:33+00:00",
+    "applied_at": "2026-09-30T02:46:19+00:00",
+    "before_hash": "e7810527d5fe9e1cf26f2fbca7a3fa404ec80cd6142afb5400f51c898a1b1691",
+    "after_hash": "2f7880f36316231a13afeeacab5cfaafe0477163ca12ba087799b7c07de95aa2",
+    "before": [
+      100,
+      "Li-ion"
+    ],
+    "after": [
+      100,
+      "Li-ion",
+      160000
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.q6_etron.gen1.trim.q6_e_tron_performance_rwd_bev_battery.warranty_km_0d9ec735ef20.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "819587db9b37bbbfa5afd6d7:spec",
+    "revision_id": "819587db9b37bbbfa5afd6d7",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.q6_etron.gen1.trim.q6_e_tron_performance_rwd_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T02:46:19+00:00",
+    "payload": [
+      100,
+      "Li-ion",
+      160000
+    ]
+  }
+}
