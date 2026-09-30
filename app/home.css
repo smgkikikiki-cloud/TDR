@@ -1,0 +1,165 @@
+/* Home (PAGES P01) layout. Tokens only; component looks come from design/components.css.
+   Copied from design/reference/home_v7.html: the section rhythm, the hero grid, the inverse Intelligence band. */
+.tdr-home { --sec: 64px; }
+@media (max-width: 1023px) { .tdr-home { --sec: 48px; } }
+@media (max-width: 767px) { .tdr-home { --sec: 40px; } }
+
+.tdr-home h1, .tdr-home h2, .tdr-home h3 { word-break: keep-all; text-wrap: balance; }
+.tdr-home-muted { color: var(--ink-muted); margin: 0; }
+.tdr-home-sm { font-size: 14px; }
+.tdr-home-xs { font-size: 13px; }
+.tdr-home-mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-style: normal; }
+.tdr-home-src { font-size: 13px; color: var(--ink-muted); }
+.tdr-home-hl, .tdr-home-nw { white-space: nowrap; }
+.tdr-home-hl { color: var(--red-text); }
+.tdr-home .tdr-card__head b { color: var(--brand-navy); }
+
+/* Hero */
+.tdr-home-hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 48px; align-items: start; padding: 56px 0 64px; }
+.tdr-home-h1 { margin: 12px 0 14px; font: var(--type-display-xl); color: var(--brand-navy); }
+.tdr-home-lead { margin: 0 0 24px; font-size: 18px; line-height: 1.7; color: var(--ink-muted); max-width: 620px; }
+.tdr-home-hero__copy > .tdr-home-pending { margin: 0 0 24px; }
+.tdr-home-cta { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+.tdr-home-cta .tdr-btn--accent { min-height: 56px; padding: 0 28px; font-size: 17px; }
+.tdr-home-reassure { font-size: 14px; color: var(--ink-muted); }
+.tdr-home-alt { margin-top: 22px; padding-top: 18px; border-top: 1px dashed var(--border); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.tdr-home-altlink { font-weight: 600; color: var(--red-text); }
+@media (max-width: 1279px) { .tdr-home-hero { grid-template-columns: 1fr 1fr; gap: 32px; } .tdr-home-h1 { font: var(--type-h1); } }
+@media (max-width: 1023px) { .tdr-home-hero { grid-template-columns: 1fr; } }
+@media (max-width: 767px) {
+  .tdr-home-hero { padding: 32px 0 40px; }
+  .tdr-home-h1 { font-size: 30px; line-height: 40px; }
+  .tdr-home-lead { font-size: 16px; }
+  .tdr-home-cta { align-items: stretch; }
+  .tdr-home-cta .tdr-btn--accent { width: 100%; }
+  .tdr-home-reassure { text-align: center; }
+}
+
+/* Locked province probe */
+.tdr-home-probe { border: 1px solid var(--border); border-radius: 16px; background: var(--surface-raised); padding: 20px 22px; }
+.tdr-home-probe__head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+.tdr-home-probe__body { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 18px; align-items: start; }
+.tdr-home-ghostmap { filter: grayscale(1) blur(1.5px); opacity: .35; pointer-events: none; }
+.tdr-home-map { display: block; width: 100%; height: auto; max-height: 470px; }
+.tdr-home-pinfo { background: var(--surface-page); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px; }
+.tdr-home-pname { font: 700 22px/1.3 var(--font-display); color: var(--brand-navy); }
+.tdr-home-pinfo > .tdr-home-muted { font-size: 14px; margin: 6px 0 12px; }
+.tdr-home-locked { margin-top: 10px; border-top: 1px solid var(--border); padding-top: 6px; }
+.tdr-home-lrow { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; align-items: center; padding: 7px 0; font-size: 14px; }
+.tdr-home-probe > .tdr-home-src { margin-top: 10px; }
+@media (max-width: 1279px) { .tdr-home-probe__body { grid-template-columns: 1fr; } .tdr-home-map { max-height: 360px; } }
+@media (max-width: 1023px) { .tdr-home-probe__body { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); } }
+@media (max-width: 767px) { .tdr-home-probe__body { grid-template-columns: 1fr; } .tdr-home-map { max-height: 320px; } }
+
+/* Entry cards */
+.tdr-home-entries { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; padding: 8px 0 var(--sec); }
+.tdr-home-entry { border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px 20px; display: flex; flex-direction: column; gap: 4px; color: var(--ink); background: var(--surface-page); text-decoration: none; }
+.tdr-home-entry:hover { border-color: var(--brand-blue); }
+.tdr-home-entry:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 2px; }
+.tdr-home-entry__k { display: flex; justify-content: space-between; align-items: center; font: 600 12px/1 var(--font-mono); color: var(--ink-muted); }
+.tdr-home-entry__k i { font-style: normal; color: var(--brand-blue); font-size: 18px; }
+.tdr-home-entry b { margin-top: 10px; color: var(--brand-navy); font-size: 17px; }
+.tdr-home-entry small { color: var(--ink-muted); font-size: 14px; }
+@media (max-width: 1023px) { .tdr-home-entries { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 767px) { .tdr-home-entries { grid-template-columns: 1fr; } }
+
+/* Section rhythm */
+.tdr-home-blk { padding: var(--sec) 0; border-top: 1px solid var(--border); }
+.tdr-home-blk--raised { background: var(--surface-raised); }
+.tdr-home-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
+.tdr-home-h2 { margin: 6px 0 0; font: var(--type-h2); color: var(--ink-on-inverse); }
+.tdr-home-h2--ink { color: var(--brand-navy); }
+.tdr-home-more { font-weight: 600; white-space: nowrap; color: var(--red-text); }
+.tdr-home-subhead { margin: 8px 0 0; font-size: 16px; color: var(--ink-muted); max-width: 720px; }
+.tdr-home-lbl { font-size: 14px; font-weight: 600; margin: 18px 0 10px; color: var(--ink); }
+.tdr-home-list { margin: 12px 0 20px; padding-left: 20px; color: var(--ink-muted); }
+.tdr-home-list li { margin: 4px 0; }
+.tdr-home-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+.tdr-home-pending .tdr-card__head, .tdr-home-empty .tdr-card__head { margin-bottom: 4px; }
+
+/* Intelligence band (inverse surface) */
+.tdr-home-band { background: var(--surface-inverse); color: var(--ink-on-inverse); }
+.tdr-home-band > .tdr-wrap { padding-top: var(--sec); padding-bottom: var(--sec); }
+.tdr-home-on-inverse { color: var(--ink-on-inverse); }
+.tdr-home-on-inverse-muted { color: color-mix(in srgb, var(--ink-on-inverse) 78%, transparent); }
+.tdr-home-band p.tdr-home-on-inverse-muted { margin: 12px 0 20px; }
+.tdr-home-band__top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 48px; align-items: start; }
+.tdr-home-band__cta { display: flex; gap: 12px; flex-wrap: wrap; }
+.tdr-home-band .tdr-btn.tdr-home-inv { background: var(--ink-on-inverse); color: var(--surface-inverse); border-color: var(--ink-on-inverse); font-weight: 600; }
+.tdr-home-band .tdr-btn.tdr-home-inv-outline { background: transparent; color: var(--ink-on-inverse); border-color: color-mix(in srgb, var(--ink-on-inverse) 60%, transparent); }
+.tdr-home-panels { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.tdr-home-panel { border: 1px solid color-mix(in srgb, var(--ink-on-inverse) 22%, transparent); border-radius: var(--radius-lg); padding: 16px 18px; display: flex; flex-direction: column; gap: 4px; color: var(--ink-on-inverse); text-decoration: none; }
+.tdr-home-panel:hover { border-color: color-mix(in srgb, var(--ink-on-inverse) 60%, transparent); }
+.tdr-home-panel:focus-visible { outline: 2px solid var(--ink-on-inverse); outline-offset: 2px; }
+.tdr-home-panel--p5 { grid-column: 1 / -1; border-color: color-mix(in srgb, var(--ink-on-inverse) 60%, transparent); background: color-mix(in srgb, var(--ink-on-inverse) 6%, transparent); }
+.tdr-home-panel__n { font: 600 12px var(--font-mono); color: color-mix(in srgb, var(--ink-on-inverse) 78%, transparent); display: flex; justify-content: space-between; align-items: center; }
+.tdr-home-panel b { font-size: 16px; }
+.tdr-home-panel small { color: color-mix(in srgb, var(--ink-on-inverse) 78%, transparent); font-size: 13px; }
+.tdr-home-band__grid { margin-top: 32px; display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.3fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.tdr-home-band .tdr-home-pending { background: var(--surface-page); color: var(--ink); }
+.tdr-home-stack { display: flex; flex-direction: column; gap: 16px; }
+.tdr-home-band .tdr-home-more { display: block; margin-top: 2px; color: var(--ink-on-inverse); }
+.tdr-home-trial { margin-top: 16px; border: 1px dashed color-mix(in srgb, var(--ink-on-inverse) 35%, transparent); border-radius: var(--radius-lg); padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.tdr-home-trial__opts { display: flex; gap: 8px; flex-wrap: wrap; }
+.tdr-home-trial__opts span { padding: 4px 12px; border-radius: var(--radius-pill); background: color-mix(in srgb, var(--ink-on-inverse) 12%, transparent); font-size: 13px; }
+.tdr-home-band > .tdr-wrap > .tdr-home-src { margin-top: 14px; }
+@media (max-width: 1279px) { .tdr-home-band__grid { grid-template-columns: 1fr 1fr; } .tdr-home-band__grid > :first-child { grid-column: 1 / -1; } }
+@media (max-width: 1023px) { .tdr-home-band__top { grid-template-columns: 1fr; } }
+@media (max-width: 767px) { .tdr-home-band__grid { grid-template-columns: 1fr; } .tdr-home-panels { grid-template-columns: 1fr; } }
+
+/* Info sample */
+.tdr-home-info { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: center; }
+@media (max-width: 1023px) { .tdr-home-info { grid-template-columns: 1fr; } }
+
+/* Vehicle Database */
+.tdr-home-stats { grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px; }
+.tdr-home-bico { width: 40px; height: 20px; fill: none; stroke: var(--brand-navy); stroke-width: 1.8; stroke-linejoin: round; stroke-linecap: round; flex: none; }
+.tdr-chip:hover .tdr-home-bico { stroke: var(--red-text); }
+.tdr-home-chip-more { color: var(--brand-blue); font-weight: 600; }
+@media (max-width: 767px) { .tdr-home-stats { grid-template-columns: 1fr; } }
+
+/* Compare */
+.tdr-home-cmp { display: grid; grid-template-columns: 1fr auto 1fr minmax(220px, .8fr); gap: 16px; align-items: stretch; }
+.tdr-home-car { display: flex; flex-direction: column; gap: 6px; padding: 20px; }
+.tdr-home-car__name { color: var(--ink); font-size: 18px; }
+.tdr-home-vs { align-self: center; font: 600 14px var(--font-mono); color: var(--ink-muted); }
+.tdr-home-facts { display: flex; flex-direction: column; gap: 12px; }
+.tdr-home-fact { border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 14px 18px; display: flex; flex-direction: column; }
+.tdr-home-fact strong { font: 500 30px/1.1 var(--font-mono); display: block; font-variant-numeric: tabular-nums; }
+@media (max-width: 1023px) {
+  .tdr-home-cmp { grid-template-columns: 1fr auto 1fr; }
+  .tdr-home-facts { grid-column: 1 / -1; flex-direction: row; align-items: stretch; }
+  .tdr-home-facts > * { flex: 1; }
+}
+@media (max-width: 767px) {
+  .tdr-home-cmp { grid-template-columns: 1fr; }
+  .tdr-home-vs { justify-self: center; }
+  .tdr-home-facts { flex-direction: column; }
+}
+
+/* Empty and error blocks */
+.tdr-home-empty--center { text-align: center; padding: 40px 24px; }
+.tdr-home-empty .tdr-home-muted, .tdr-home-error .tdr-home-muted { margin-top: 6px; }
+.tdr-home-error a { color: var(--red-text); font-weight: 600; }
+
+/* Plans */
+.tdr-home-plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.tdr-home-plan { border: 1px solid var(--border); border-radius: 16px; padding: 26px; display: flex; flex-direction: column; gap: 12px; }
+.tdr-home-plan > .tdr-tier { width: max-content; }
+.tdr-home-plan h3 { margin: 0; font: var(--type-h3); }
+.tdr-home-plan--hl { border: 2px solid var(--brand-blue); }
+.tdr-home-plan ul { margin: 0; padding-left: 18px; font-size: 14px; color: var(--ink-muted); flex: 1; }
+.tdr-home-plan li { margin: 3px 0; }
+.tdr-home-plan .tdr-btn { align-self: flex-start; }
+.tdr-home-price { font: 500 34px/1.1 var(--font-mono); }
+.tdr-home-price small { font: 400 15px var(--font-sans); color: var(--ink-muted); margin-left: 6px; }
+.tdr-home-price--free { color: var(--red-text); }
+.tdr-home-price--ent { font: 700 24px/1.3 var(--font-display); color: var(--brand-navy); }
+.tdr-home-save { color: var(--red-text); font-weight: 600; }
+@media (max-width: 1023px) { .tdr-home-plans { grid-template-columns: 1fr 1fr; } .tdr-home-plans > :last-child { grid-column: span 2; } }
+@media (max-width: 767px) { .tdr-home-plans { grid-template-columns: 1fr; } .tdr-home-plans > :last-child { grid-column: auto; } .tdr-home-plan .tdr-btn { align-self: stretch; } }
+
+/* About */
+.tdr-home-about { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+.tdr-home-about a { color: var(--red-text); font-weight: 600; }
+@media (max-width: 1023px) { .tdr-home-about { grid-template-columns: 1fr; } }

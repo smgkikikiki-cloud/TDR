@@ -111,10 +111,11 @@ for (const page of ["app/brands/page.tsx", "app/brands/[slug]/page.tsx",
   check(`${page} still falls back to initials`,
     /logo_url \? <img[^>]*\/> : <span>\{initials\(/.test(fs.readFileSync(page, "utf8")), true);
 }
+// Home is on the design system, which removes car-brand logos from the whole site (owner decision,
+// docs/MERGE_DECISIONS.md, DESIGN §9): brands are text chips there, so it must not read or render a logo.
 const homePage = fs.readFileSync("app/page.tsx", "utf8");
-check("app/page.tsx still falls back to initials",
-  homePage.includes("resolveBrandLogo(brand.slug, brand.logo_url)")
-    && /logo \? <img[^>]*\/> : <span>\{initials\(brand\)\}<\/span>/.test(homePage), true);
+check("app/page.tsx (design system) renders no car-brand logo",
+  !homePage.includes("resolveBrandLogo") && !homePage.includes("logo_url"), true);
 const backfill = fs.readFileSync("supabase/migration_v37_brand_logos.sql", "utf8");
 check("the backfill never overwrites a curated logo",
   backfill.split("\n").filter((line: string) => line.startsWith("update public.brands"))
