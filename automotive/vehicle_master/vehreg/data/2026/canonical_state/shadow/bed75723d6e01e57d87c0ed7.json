@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "bed75723d6e01e57d87c0ed7",
+    "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:116",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T03:08:02+00:00",
+    "applied_at": "2026-09-30T03:08:58+00:00",
+    "before_hash": "495d5f1057b3aa9f78cd2c2df843acbae9536573a2e127e50688da71cb27ebec",
+    "after_hash": "158743306bf5a967cde3b9ab6ca8721fb3b3c71ec55c40e9ed0833a2644e5c39",
+    "before": [
+      "Li-ion",
+      83.9
+    ],
+    "after": [
+      "Li-ion",
+      83.9,
+      80.7
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_battery.usable_capacity_kwh_678cb833836d.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "bed75723d6e01e57d87c0ed7:spec",
+    "revision_id": "bed75723d6e01e57d87c0ed7",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T03:08:58+00:00",
+    "payload": [
+      "Li-ion",
+      83.9,
+      80.7
+    ]
+  }
+}

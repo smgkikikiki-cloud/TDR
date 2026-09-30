@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "admin:bmw.bmw_i4.g26.trim.m50_bev:vehicle.ground_clearance_mm:b3f986a37970",
+      "trim_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "field_key": "vehicle.ground_clearance_mm",
+      "value_state": "KNOWN",
+      "value": 125,
+      "unit": "mm",
+      "qualifiers": {
+        "load_state": "UNLADEN"
+      },
+      "observed_at": "2026-09-30",
+      "verification_status": "VERIFIED"
+    }
+  ]
+}

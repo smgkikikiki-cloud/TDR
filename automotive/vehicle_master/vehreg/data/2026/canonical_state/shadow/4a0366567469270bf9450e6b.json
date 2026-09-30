@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "4a0366567469270bf9450e6b",
+    "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:67",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T03:08:02+00:00",
+    "applied_at": "2026-09-30T03:08:57+00:00",
+    "before_hash": "b3d371bd3b913a7491b003a2766e2416e1f5899d4a3b8b318d46e498ca290b99",
+    "after_hash": "64bbd20a771ce1ffac053ecdfa8da51e6beb44d086a1a2e6134d30c869ff6661",
+    "before": [
+      "Li-ion",
+      83.9,
+      80.7,
+      160000,
+      8,
+      11,
+      "CCS2",
+      205,
+      "Double-joint spring strut"
+    ],
+    "after": [
+      "Li-ion",
+      83.9,
+      80.7,
+      160000,
+      8,
+      11,
+      "CCS2",
+      205,
+      "Double-joint spring strut",
+      "Multi-Link"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_chassis.suspension_rear_dce635a027c4.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "4a0366567469270bf9450e6b:spec",
+    "revision_id": "4a0366567469270bf9450e6b",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T03:08:57+00:00",
+    "payload": [
+      "Li-ion",
+      83.9,
+      80.7,
+      160000,
+      8,
+      11,
+      "CCS2",
+      205,
+      "Double-joint spring strut",
+      "Multi-Link"
+    ]
+  }
+}

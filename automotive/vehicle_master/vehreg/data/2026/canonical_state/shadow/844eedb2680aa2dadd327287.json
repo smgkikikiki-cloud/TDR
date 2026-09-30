@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "844eedb2680aa2dadd327287",
+    "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:64",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T03:08:02+00:00",
+    "applied_at": "2026-09-30T03:08:57+00:00",
+    "before_hash": "a01149f0a185a37ee2797d5ecc3956528b3f54f2e0b9597239ddee36bebc0824",
+    "after_hash": "e5edc519dd9cc619acd8c25d7ed11b8415c0b91c8e8c573710483689797e827e",
+    "before": [
+      "Li-ion",
+      83.9,
+      80.7,
+      160000,
+      8,
+      11
+    ],
+    "after": [
+      "Li-ion",
+      83.9,
+      80.7,
+      160000,
+      8,
+      11,
+      "CCS2"
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_charging.connector_type_6d9adca98512.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "844eedb2680aa2dadd327287:spec",
+    "revision_id": "844eedb2680aa2dadd327287",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T03:08:57+00:00",
+    "payload": [
+      "Li-ion",
+      83.9,
+      80.7,
+      160000,
+      8,
+      11,
+      "CCS2"
+    ]
+  }
+}

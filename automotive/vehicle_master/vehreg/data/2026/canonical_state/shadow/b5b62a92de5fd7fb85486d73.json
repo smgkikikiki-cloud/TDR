@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "b5b62a92de5fd7fb85486d73",
+    "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:59",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T03:08:02+00:00",
+    "applied_at": "2026-09-30T03:08:57+00:00",
+    "before_hash": "a49779d9653b115297d1ccd41b0e11f4e61d02c0c37a594b1661ff9a54d15726",
+    "after_hash": "495d5f1057b3aa9f78cd2c2df843acbae9536573a2e127e50688da71cb27ebec",
+    "before": [
+      "Li-ion"
+    ],
+    "after": [
+      "Li-ion",
+      83.9
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_battery.gross_capacity_kwh_c33421ba0e8a.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "b5b62a92de5fd7fb85486d73:spec",
+    "revision_id": "b5b62a92de5fd7fb85486d73",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T03:08:57+00:00",
+    "payload": [
+      "Li-ion",
+      83.9
+    ]
+  }
+}

@@ -684,8 +684,11 @@
               "length_mm": 4783,
               "width_mm": 1852,
               "height_mm": 1448,
-              "tire_front": "245/45R18",
-              "tire_rear": "255/45R18"
+              "tire_front": "245/45 R18",
+              "tire_rear": "255/45 R18",
+              "drivetrain": "RWD",
+              "transmission": "1-Speed",
+              "wheelbase_mm": 2856
             },
             {
               "name": "eDrive40 M Sport",
@@ -698,7 +701,16 @@
               "aliases": [
                 "i4 eDrive40 M Sport"
               ],
-              "id": "edrive40_m_sport_bev"
+              "id": "edrive40_m_sport_bev",
+              "tire_front": "245/40 R19",
+              "tire_rear": "255/40 R19",
+              "drivetrain": "RWD",
+              "transmission": "1-Speed",
+              "height_mm": 1448,
+              "length_mm": 4783,
+              "seats": 5,
+              "wheelbase_mm": 2856,
+              "width_mm": 1852
             },
             {
               "name": "M50",
@@ -711,7 +723,16 @@
               "aliases": [
                 "i4 M50"
               ],
-              "id": "m50_bev"
+              "id": "m50_bev",
+              "tire_front": "245/40 R19",
+              "tire_rear": "255/40 R19",
+              "drivetrain": "AWD",
+              "transmission": "1-Speed",
+              "height_mm": 1448,
+              "length_mm": 4783,
+              "seats": 5,
+              "wheelbase_mm": 2856,
+              "width_mm": 1852
             },
             {
               "name": "M Sport",

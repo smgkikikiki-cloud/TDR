@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "admin:bmw.bmw_i4.g26.trim.m50_bev:ev.rated_range_km:212aedf38c5e",
+      "trim_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "field_key": "ev.rated_range_km",
+      "value_state": "KNOWN",
+      "value": 521,
+      "unit": "km",
+      "qualifiers": {
+        "measurement_basis": "WLTP",
+        "range_scope": "FULL"
+      },
+      "observed_at": "2026-09-30",
+      "verification_status": "VERIFIED"
+    }
+  ]
+}

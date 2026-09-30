@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "8434b0d709df6f54c891222e",
+    "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:117",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T03:08:02+00:00",
+    "applied_at": "2026-09-30T03:08:58+00:00",
+    "before_hash": "158743306bf5a967cde3b9ab6ca8721fb3b3c71ec55c40e9ed0833a2644e5c39",
+    "after_hash": "647834b38837cc524498730ef111137ad7299594ab78d4c586afb59388d4a4a0",
+    "before": [
+      "Li-ion",
+      83.9,
+      80.7
+    ],
+    "after": [
+      "Li-ion",
+      83.9,
+      80.7,
+      160000
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_battery.warranty_km_825c5aeb4876.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "8434b0d709df6f54c891222e:spec",
+    "revision_id": "8434b0d709df6f54c891222e",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T03:08:58+00:00",
+    "payload": [
+      "Li-ion",
+      83.9,
+      80.7,
+      160000
+    ]
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "7857b8a1dbe6dfa6fd98827c",
+    "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:126",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T03:08:02+00:00",
+    "applied_at": "2026-09-30T03:08:58+00:00",
+    "before_hash": "e6f5f9ecf88a765ad8f9851dbf1ffe8930a4aea3df112889bebbfa6349965ff6",
+    "after_hash": "60a7c383b362567d6541d45785609864837176013bbf7c0399522ef07bb4cee9",
+    "before": [
+      "Li-ion",
+      83.9,
+      80.7,
+      160000,
+      8,
+      11,
+      "CCS2",
+      205,
+      "Double-joint spring strut",
+      "Multi-Link",
+      true,
+      true
+    ],
+    "after": [
+      "Li-ion",
+      83.9,
+      80.7,
+      160000,
+      8,
+      11,
+      "CCS2",
+      205,
+      "Double-joint spring strut",
+      "Multi-Link",
+      true,
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_comfort.keyless_entry_ad10f8d32758.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "7857b8a1dbe6dfa6fd98827c:spec",
+    "revision_id": "7857b8a1dbe6dfa6fd98827c",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T03:08:58+00:00",
+    "payload": [
+      "Li-ion",
+      83.9,
+      80.7,
+      160000,
+      8,
+      11,
+      "CCS2",
+      205,
+      "Double-joint spring strut",
+      "Multi-Link",
+      true,
+      true,
+      true
+    ]
+  }
+}

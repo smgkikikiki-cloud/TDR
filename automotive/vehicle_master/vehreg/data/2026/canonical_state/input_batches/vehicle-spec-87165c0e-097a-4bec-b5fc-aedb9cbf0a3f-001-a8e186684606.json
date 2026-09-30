@@ -1,0 +1,1689 @@
+{
+  "schema_version": 1,
+  "batch_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606",
+  "batch_hash": "0bd0d8c891806d8c6c0e76ec0b493c4bee10aced26b89b7a946c9058269227d3",
+  "status": "APPLIED",
+  "year": 2026,
+  "source": {
+    "kind": "ADMIN",
+    "ref": "vehicle-spec-excel"
+  },
+  "actor": "tdr-admin",
+  "reason": "bulk import from vehicle-spec-excel",
+  "submitted_at": "2026-09-30T03:08:02+00:00",
+  "applied_at": "2026-09-30T03:08:59+00:00",
+  "results": [
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:1",
+      "revision_id": "3df6923fedc70009853d7ac5",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "bmw.bmw_i4",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:2",
+      "revision_id": "6cd090b9a4c1271890fd2129",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:3",
+      "revision_id": "225571ba2e026922af3342da",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:4",
+      "revision_id": "35f1149d1a1af4658d6c2d59",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:5",
+      "revision_id": "cbd26d9bc8dce4bc94a495a0",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:6",
+      "revision_id": "eb1707b8693c8e72dbfe88ff",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:7",
+      "revision_id": "f2ed6e9974b2085263398bce",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:8",
+      "revision_id": "454ba079315891797db84151",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:9",
+      "revision_id": "31635c68abfcfa0981c05a88",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:10",
+      "revision_id": "acec3bf558dbee5e66bb78f8",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:11",
+      "revision_id": "a562798c2ab8e0860980ba3e",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:12",
+      "revision_id": "5cecb3901a8b416bcadeb5a9",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:13",
+      "revision_id": "48a2cb0808bf469c0c45b330",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:14",
+      "revision_id": "f4d66e0340aee03f227fe340",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:15",
+      "revision_id": "43fc1775321932cf65c70652",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:16",
+      "revision_id": "680a87d968864acee913ef71",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:17",
+      "revision_id": "b72f268874dfcdd5813f9b79",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:18",
+      "revision_id": "07aa5fca047d44cd6a2e92b6",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:19",
+      "revision_id": "80381be63681583a7d034ee2",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:20",
+      "revision_id": "dd4b5eeca0888131233809a5",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:21",
+      "revision_id": "43c45a04a7ca9fba09d407cf",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:22",
+      "revision_id": "371689be52ca55e21aa81975",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:23",
+      "revision_id": "3537f4a0cd88d56f48045dda",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:24",
+      "revision_id": "47d4f4512ee8874540fb780e",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:25",
+      "revision_id": "97b50464cb4ba54aa6f79eec",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:26",
+      "revision_id": "50f09435f43fb7e060b61c3f",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:27",
+      "revision_id": "78778055abfd9a3842c84176",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:28",
+      "revision_id": "a7d9246926bdb25ab9852f30",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:29",
+      "revision_id": "5a7d28ae23c5173fb850bcee",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:30",
+      "revision_id": "93f0b33d2cfd1872fccf5dbd",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:31",
+      "revision_id": "e91a52fd311eaeb58b489950",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:32",
+      "revision_id": "7772f80a65f501d250dce580",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:33",
+      "revision_id": "127f81f7fbb344064a5b0d7a",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:34",
+      "revision_id": "6c787f8b834db5dc6240c22d",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:35",
+      "revision_id": "99fdf154e8c9457aba2a6ca0",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:36",
+      "revision_id": "4f0b046d0afdb8b2559a1175",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:37",
+      "revision_id": "2afe52e2246772531e2c88bb",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:38",
+      "revision_id": "afd6252641e67236716a0038",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:39",
+      "revision_id": "a573218bbf77b3440239a1b0",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:40",
+      "revision_id": "b822e97b323d3ef6bcafd854",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:41",
+      "revision_id": "68d52b29e48137c83691121c",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:42",
+      "revision_id": "89760f112242119d7d2117d4",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:43",
+      "revision_id": "08b1245a5f97872db3251a2a",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:44",
+      "revision_id": "e0b75cca9947ea55d3147705",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:45",
+      "revision_id": "0ae99bfa08169780fe10beaf",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:46",
+      "revision_id": "7253e810c96047e4ef7f9241",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:47",
+      "revision_id": "51d0e23ddf04050ec49ea16b",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:48",
+      "revision_id": "11ce8a572759fb8db5d16ec2",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:49",
+      "revision_id": "6d317b2923a2e4675f4fb1a6",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:50",
+      "revision_id": "b4bbeeda21d3bcb65e5c4b16",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:51",
+      "revision_id": "3b9c1349fa25674c71de2b50",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:52",
+      "revision_id": "bd1b564a8262830f0f36bbed",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:53",
+      "revision_id": "46b3a1cae26149c19fcfea6b",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:54",
+      "revision_id": "26d42b0e341fa4126c80f377",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:55",
+      "revision_id": "ad09cd958fedcac4a79b3945",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:56",
+      "revision_id": "145d4cf5778e1b623ea13cf2",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:57",
+      "revision_id": "5475f7109e72494e0909fbda",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "bmw.bmw_i4",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:58",
+      "revision_id": "ef300d94eb45d8f959e6fb5a",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:59",
+      "revision_id": "b5b62a92de5fd7fb85486d73",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:60",
+      "revision_id": "0d57ca9c1a094848c98c2ce4",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:61",
+      "revision_id": "972161a843807f849b3f22e1",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:62",
+      "revision_id": "242ba9a34edeae61c5c74038",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:63",
+      "revision_id": "532d5de558e5286d529466e8",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:64",
+      "revision_id": "844eedb2680aa2dadd327287",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:65",
+      "revision_id": "07d170258fc85985baa920b2",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:66",
+      "revision_id": "90f0d8dec7bfcfcba07487d5",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:67",
+      "revision_id": "4a0366567469270bf9450e6b",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:68",
+      "revision_id": "b86c7d9d3365e0243a3c5488",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:69",
+      "revision_id": "4088b4a113e06b3a55caffde",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:70",
+      "revision_id": "55d162a9cec3baf9bb03b093",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:71",
+      "revision_id": "3564ece0b3809602f5467f2d",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:72",
+      "revision_id": "b0df3869ee921ce327824a17",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:73",
+      "revision_id": "60da866e939eb876135621d6",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:74",
+      "revision_id": "5fed45c3774f9b6a005152ab",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:75",
+      "revision_id": "3b5729832fcf07ede94351c8",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:76",
+      "revision_id": "a002f3604bc7a5ab8971194e",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:77",
+      "revision_id": "dd30945da1d59a926bc99862",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:78",
+      "revision_id": "2a59f1a39cc6a4ed008ab1b3",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:79",
+      "revision_id": "eb075511f5ba73b9ba93f886",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:80",
+      "revision_id": "d4c4b86e6b0c569b669ec344",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:81",
+      "revision_id": "1280136d7a85c460a2431948",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:82",
+      "revision_id": "0470b5dc01853cf6347886be",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:83",
+      "revision_id": "40e0ac1dccd26eee0f7c7110",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:84",
+      "revision_id": "42806babb7240aaf642a9671",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:85",
+      "revision_id": "9112dcc587027c00ff19f23b",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:86",
+      "revision_id": "3282d3311bccad8c30bb3633",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:87",
+      "revision_id": "70748d96f04814d4591ce44d",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:88",
+      "revision_id": "63b8015132fc1c323a9acc4b",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:89",
+      "revision_id": "15f7af34e9e0adddc157dd33",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:90",
+      "revision_id": "a11e3fff08d91ec844cccbb5",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:91",
+      "revision_id": "308e922aa9507a598dc29e67",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:92",
+      "revision_id": "7d3515c95d60773b4982e572",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:93",
+      "revision_id": "32e73f89b14057fa11959266",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:94",
+      "revision_id": "2eadf14eaca5230300128f42",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:95",
+      "revision_id": "f1770326d19a867e7ffd81a0",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:96",
+      "revision_id": "b4780e5c294f6bcb2e8ccdcb",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:97",
+      "revision_id": "145292b364c965b996c1b062",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:98",
+      "revision_id": "94b852c87ac1bc0fea72b807",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:99",
+      "revision_id": "fc62d7f3ac65efade97fb61e",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:100",
+      "revision_id": "54d66c045873390eba37b290",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:101",
+      "revision_id": "c314cf99ee9b35fa881abac3",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:102",
+      "revision_id": "10433732b3c4ede56f7cc7b4",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:103",
+      "revision_id": "baeaa0ac98390c130fd78fb2",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:104",
+      "revision_id": "1439b46bded367bbdd2b1d18",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:105",
+      "revision_id": "cbd1804c90aed9e0eb8fe34e",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:106",
+      "revision_id": "ee7828f9f2308b87ccedcab8",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:107",
+      "revision_id": "d05b30c45f60a65b31c94382",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:108",
+      "revision_id": "c69f6dc4b788389348fffbe0",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:109",
+      "revision_id": "6d4fe38a2db54b356846fe46",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:110",
+      "revision_id": "5aa25100cc14542626973f46",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:111",
+      "revision_id": "f1fb064b90fdd43f247e5c6f",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:112",
+      "revision_id": "a8bcf8d99b20727cbddf60ff",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.edrive40_m_sport_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:113",
+      "revision_id": "efb97d68f32a9707d805a809",
+      "topic": "catalog",
+      "entity_type": "model",
+      "entity_id": "bmw.bmw_i4",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:114",
+      "revision_id": "4090d1faa85cf7312660e3ef",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:115",
+      "revision_id": "bb57f483181d35ef1816e71e",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:116",
+      "revision_id": "bed75723d6e01e57d87c0ed7",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:117",
+      "revision_id": "8434b0d709df6f54c891222e",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:118",
+      "revision_id": "0c260d2ef66af3e3d6f04193",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:119",
+      "revision_id": "d458590d9f48acb4c34cb3a9",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:120",
+      "revision_id": "6a8e5a401c38f3ed9b0a7b45",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:121",
+      "revision_id": "21fe76069310ffab2235e690",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:122",
+      "revision_id": "2f4ed8b224daf01f74adf44c",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:123",
+      "revision_id": "bf341fc036a7da0c2a4bd5a6",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:124",
+      "revision_id": "1f9f2bb1a8416ac65c5072d1",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:125",
+      "revision_id": "447a1124c20bbea7d581adc0",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:126",
+      "revision_id": "7857b8a1dbe6dfa6fd98827c",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:127",
+      "revision_id": "08efbd8398b4ae6ddb5f5331",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:128",
+      "revision_id": "932f4729e66709f3b38c8113",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:129",
+      "revision_id": "886a34c6a37c8ba555ee580d",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:130",
+      "revision_id": "0ffcc19eb781f88127c0dd8c",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:131",
+      "revision_id": "42e748c2f1ce51fc7168592e",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:132",
+      "revision_id": "6fac502e344c4aae7b58ced7",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:133",
+      "revision_id": "982dc17e6bfd8152dc0bfc06",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:134",
+      "revision_id": "cc3faddc6378abae44f5ad77",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:135",
+      "revision_id": "d72f332472f7fb48d5387ed1",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:136",
+      "revision_id": "6aca7f067230397022ec132b",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:137",
+      "revision_id": "5375fcb76149870edcd5665a",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:138",
+      "revision_id": "c4f0b4ab535074445af29c01",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:139",
+      "revision_id": "32c4125bbb10738dc55b50ff",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:140",
+      "revision_id": "08dbd02991f536fb7d42b1c6",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:141",
+      "revision_id": "003b5b0f31d501d56b3e12fb",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:142",
+      "revision_id": "10f107d50dbea67fd6bbf75a",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:143",
+      "revision_id": "3d9daddec78c115c0adcc4e4",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:144",
+      "revision_id": "9adc72c05584972091764f05",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:145",
+      "revision_id": "75b54a4b7efd2b0cecdb7c2c",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:146",
+      "revision_id": "311e5d7cc2445f521102de08",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:147",
+      "revision_id": "321de666d89fd6fb241f407d",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:148",
+      "revision_id": "1d1145edc46fbfaba59c7c4f",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:149",
+      "revision_id": "ae4991d583ba42f1854859c0",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:150",
+      "revision_id": "70d7bdd0814413ab51085de7",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:151",
+      "revision_id": "fc1eacd6cc6152a3d979b2db",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:152",
+      "revision_id": "8c957d2b9e56548c88741437",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:153",
+      "revision_id": "70a4c7735bea9e0f206c5b89",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:154",
+      "revision_id": "c6ccdd0b974195d5c7aae0fe",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:155",
+      "revision_id": "802a4f3a9b3b15009734c9b3",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:156",
+      "revision_id": "3f3e3310a0ab0a5f556a31bc",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:157",
+      "revision_id": "2ef92106ae567216e56133d9",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:158",
+      "revision_id": "168cc49f4098f3bd5cc10486",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:159",
+      "revision_id": "ec29fa8680d1259dbcf87b28",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:160",
+      "revision_id": "1a03500fa25b2487a170dcf8",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:161",
+      "revision_id": "472cef3c362c8a289f7e1eeb",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:162",
+      "revision_id": "b3c8df5d6036034498f9a7c4",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:163",
+      "revision_id": "1479e049f9b6556ed87edb9c",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:164",
+      "revision_id": "5c7bcd22d12c56b7a78ed0e1",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:165",
+      "revision_id": "b1f337f7d9ed136f9e019f3a",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:166",
+      "revision_id": "8799468b691fca40dc1ed4ec",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    },
+    {
+      "command_id": "vehicle-spec-87165c0e-097a-4bec-b5fc-aedb9cbf0a3f-001-a8e186684606:167",
+      "revision_id": "da6ab0f68140758fcece243a",
+      "topic": "spec",
+      "entity_type": "market_trim",
+      "entity_id": "bmw.bmw_i4.g26.trim.m50_bev",
+      "idempotent_replay": false
+    }
+  ],
+  "changed_files": [
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_safety.blind_spot_ef14e65a2eec.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_safety.blind_spot_2c52bc54a26e.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_powertrain.motor_type_abd4a8a384c7.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_powertrain.max_power_kw_dc778bb487d7_f04658b25d51.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_safety.rear_cross_traffic_bd100078501f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_powertrain.drivetrain_0a7ec4f3a064.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_powertrain.max_power_kw_dc778bb487d7_538b8d063ed1.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_safety.airbag_count_4f24d1efae5a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_battery.gross_capacity_kwh_2cf9e4df84aa.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_technology.ota_update_a7e91b25c1fb.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_vehicle.seats_15d892deeb79.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_fitment.tyre_rear_e5dcbd8ef018.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_fitment.tyre_front_cd9c8fc4bb15.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_charging.connector_type_f0bd69664782.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_powertrain.max_torque_nm_dc778bb487d7_b91fc0b2c870.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_technology.connected_services_8a341eba9fd7.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_charging.ac_max_kw_6d720199b1c0.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_ev.rated_range_km_224c80f8b885_1d9a52ed887a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_powertrain.max_power_kw_398e0332b76d_3956239ea60c.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_battery.warranty_km_a7a619a3c163.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_charging.dc_max_kw_9d18d19d12be_49d048fb735d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_safety.airbag_count_c838945787a3.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_charging.ac_max_kw_ca1c807ad471.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_fitment.tyre_front_bc8f56b69562.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_safety.side_airbag_8a9fe00edf33.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_comfort.power_windows_21f908754a8b.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_safety.aeb_2728ab22dd54.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_charging.ac_max_kw_93860b5ff93e.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_chassis.suspension_rear_dce635a027c4.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_battery.gross_capacity_kwh_c33421ba0e8a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_vehicle.seats_9409c60d0b5f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_vehicle.ground_clearance_mm_b3f986a37970_ee1c920a2b67.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_battery.usable_capacity_kwh_678cb833836d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_safety.abs_b7ca57aac10a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_technology.smartphone_mirroring_4aa4af6e704e.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_comfort.auto_climate_6dc0208f1de8.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_battery.warranty_km_825c5aeb4876.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_comfort.keyless_entry_dcfcf21895b6.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_performance.acceleration_0_100_s_eef0f338d6b2_641f59ff58f9.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_powertrain.motor_type_17c33e9c63a4.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_performance.acceleration_0_100_s_eef0f338d6b2_eae60f79b585.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_safety.forward_collision_warning_7dfc503f0f00.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_vehicle.height_mm_61467d6494b5.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_safety.esc_1681ba45e2b9.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_vehicle.curb_weight_kg_eef0f338d6b2_0865c71524ed.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_fitment.tyre_size_929c48c03bab.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_comfort.panoramic_roof_e87f7f36725c.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_vehicle.cargo_volume_l_6a5d82f5ba62_ae5c9440ec41.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_ev.rated_range_km_212aedf38c5e_035ac2dc4ca4.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_technology.led_headlights_43c025067ad9.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_safety.abs_2b8bf15bde0a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_safety.abs_dd01e0b40778.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_performance.top_speed_kmh_eef0f338d6b2_7204f1218edc.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_powertrain.max_torque_nm_398e0332b76d_84008fcb191a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_vehicle.curb_weight_kg_eef0f338d6b2_4e18bfab835d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_comfort.electric_parking_brake_60adc3c2742a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_comfort.panoramic_roof_44f833f6a764.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_ev.rated_range_km_224c80f8b885_13df14c69d5b.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_chassis.suspension_rear_687b65aaa3ec.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_powertrain.transmission_4213904eb6f5.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_safety.lane_departure_warning_0d8b77a55aaf.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_powertrain.max_power_kw_398e0332b76d_dd1f75f54f56.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_comfort.power_windows_3552f13b0037.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_vehicle.curb_weight_kg_eef0f338d6b2_3853cd2f00e3.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_chassis.suspension_rear_739b3c0ddcd4.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_safety.curtain_airbag_5057c2300a15.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_vehicle.cargo_volume_l_33557c0b97f2_8b2c59c325ce.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_vehicle.ground_clearance_mm_b3f986a37970_a03bd7991e73.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_safety.aeb_cfa9fad2f007.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_chassis.suspension_front_918c0fdef9b7.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_ev.rated_range_km_224c80f8b885_4bf80975078d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_powertrain.max_torque_nm_398e0332b76d_2ccb0260c398.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_charging.dc_max_kw_9d18d19d12be_b1f95872a195.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_safety.side_airbag_56c9bd2826a4.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_powertrain.drivetrain_fa96a0c8b7c4.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_vehicle.width_mm_dcc27cdd14f2.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_powertrain.motor_count_205209b608e1.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_battery.chemistry_6fef09ba0ea6.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_battery.chemistry_f4945a2800aa.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_technology.smartphone_mirroring_4c1ff0fcf8d9.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_powertrain.gear_count_fd600c6d1cd6.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_powertrain.drivetrain_6c4dd216ffd0.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_comfort.auto_climate_e37a42d6e90f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_safety.curtain_airbag_678b7307eee0.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_battery.warranty_years_26ae1852cd69.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_comfort.panoramic_roof_052038790d05.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_vehicle.cargo_volume_l_33557c0b97f2_2fa663b297c8.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_vehicle.wheelbase_mm_6a7fa2673a5d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_charging.connector_type_741bf1fd3e98.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_safety.side_airbag_4ee2d2b8a0d7.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_vehicle.ground_clearance_mm_b3f986a37970_6aaf33f99053.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_fitment.tyre_size_80382ed1c1a2.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_chassis.suspension_front_0554070c8ced.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_powertrain.gear_count_663e501c7b4c.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_powertrain.max_torque_nm_398e0332b76d_56b023a2b7df.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_safety.forward_collision_warning_9a78c1b23b4a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_battery.warranty_years_e866c77d77f4.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_battery.warranty_km_1a4dd9b75df0.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_safety.rear_cross_traffic_b82d4778b5d4.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_technology.connected_services_9e1d52bcc057.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_fitment.tyre_front_a2b86d455c5c.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_fitment.tyre_size_619adc0c7775.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_comfort.keyless_entry_ad10f8d32758.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_safety.esc_c949616b40dc.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_battery.chemistry_06bb950f0c53.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_vehicle.cargo_volume_l_6a5d82f5ba62_375dc9c87705.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_powertrain.max_torque_nm_dc778bb487d7_2046bb57cc06.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_technology.led_headlights_ffea0f97dac2.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_technology.smartphone_mirroring_fb3ed47449be.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_powertrain.motor_count_3f5785fa312a.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_vehicle.width_mm_7d77eb1888bc.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_powertrain.transmission_9a0200c7e881.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_vehicle.wheelbase_mm_5ff61bbf5041.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_comfort.keyless_entry_8fa27e379471.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_vehicle.height_mm_ab601dfa9459.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_safety.blind_spot_eaad3f14b153.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_battery.warranty_years_e54ceee4594e.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_vehicle.cargo_volume_l_6a5d82f5ba62_46a420fb6c44.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_comfort.electric_parking_brake_adec6f4bbe8d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_ev.rated_range_km_212aedf38c5e_ca4e26b5b17c.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_safety.rear_cross_traffic_a474a6199203.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_battery.usable_capacity_kwh_2b36112d95bb.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_performance.top_speed_kmh_eef0f338d6b2_4946382e5886.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_comfort.electric_parking_brake_98945484feec.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_safety.lane_departure_warning_fc4e27d76a89.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_powertrain.motor_count_394155c76321.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_technology.head_up_display_7e3200b28ac7.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_comfort.auto_climate_1ac75000cf39.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_chassis.suspension_front_ac50adf678b5.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_vehicle.seats_c6724b618ee8.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_fitment.tyre_rear_f952a25ffa3c.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_vehicle.cargo_volume_l_33557c0b97f2_a25a73a38b83.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_powertrain.motor_type_101ba3254550.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_technology.surround_view_camera_b106740abadb.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_technology.surround_view_camera_325cf61df828.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_powertrain.gear_count_81b81c3923b4.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_technology.surround_view_camera_fe13b7591024.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_safety.lane_departure_warning_ab5a3e4042a2.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_vehicle.length_mm_2568e32a39ea.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_vehicle.width_mm_402446c98ef3.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_performance.top_speed_kmh_eef0f338d6b2_be9ea0faf59d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_vehicle.length_mm_f3393376f2bf.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_technology.ota_update_8a2eb9226bd6.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_charging.dc_max_kw_9d18d19d12be_2e293a702f8e.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_technology.led_headlights_866080818aaa.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_battery.usable_capacity_kwh_e39711a3221b.json",
+    "2026/models/bmw.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_powertrain.max_power_kw_398e0332b76d_93003f8e1ebd.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_fitment.tyre_rear_88b8aa3020ec.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_vehicle.wheelbase_mm_d341b62462f3.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_charging.connector_type_6d9adca98512.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_powertrain.transmission_b825ebaca3aa.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_safety.curtain_airbag_fe77d11c7ff8.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_vehicle.length_mm_b8f268088e0c.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_performance.acceleration_0_100_s_eef0f338d6b2_c475cfbf6188.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_safety.forward_collision_warning_5d8ee8f2a502.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_safety.esc_1d40022282e4.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_ev.rated_range_km_212aedf38c5e_bb6e8e8425b9.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_battery.gross_capacity_kwh_1ad9394ae781.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_technology.connected_services_573f71f6947d.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_safety.aeb_4b8a28ceb16f.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive35_m_sport_bev_safety.airbag_count_1ffd22f46458.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.m50_bev_vehicle.height_mm_ce3870c15299.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_technology.ota_update_34c0fdf229bf.json",
+    "2026/product/comparable_specs/facts/canonical_admin_bmw.bmw_i4.g26.trim.edrive40_m_sport_bev_comfort.power_windows_29800ace019c.json",
+    "2026/canonical_state/shadow/51d0e23ddf04050ec49ea16b.json",
+    "2026/canonical_state/shadow/b4780e5c294f6bcb2e8ccdcb.json",
+    "2026/canonical_state/shadow/f1fb064b90fdd43f247e5c6f.json",
+    "2026/canonical_state/shadow/c314cf99ee9b35fa881abac3.json",
+    "2026/canonical_state/shadow/225571ba2e026922af3342da.json",
+    "2026/canonical_state/shadow/3564ece0b3809602f5467f2d.json",
+    "2026/canonical_state/shadow/127f81f7fbb344064a5b0d7a.json",
+    "2026/canonical_state/shadow/10f107d50dbea67fd6bbf75a.json",
+    "2026/canonical_state/shadow/4a0366567469270bf9450e6b.json",
+    "2026/canonical_state/shadow/75b54a4b7efd2b0cecdb7c2c.json",
+    "2026/canonical_state/shadow/6d317b2923a2e4675f4fb1a6.json",
+    "2026/canonical_state/shadow/5cecb3901a8b416bcadeb5a9.json",
+    "2026/canonical_state/shadow/cbd26d9bc8dce4bc94a495a0.json",
+    "2026/canonical_state/shadow/07d170258fc85985baa920b2.json",
+    "2026/canonical_state/shadow/3b5729832fcf07ede94351c8.json",
+    "2026/canonical_state/shadow/1280136d7a85c460a2431948.json",
+    "2026/canonical_state/shadow/21fe76069310ffab2235e690.json",
+    "2026/canonical_state/shadow/5aa25100cc14542626973f46.json",
+    "2026/canonical_state/shadow/10433732b3c4ede56f7cc7b4.json",
+    "2026/canonical_state/shadow/8c957d2b9e56548c88741437.json",
+    "2026/canonical_state/shadow/a562798c2ab8e0860980ba3e.json",
+    "2026/canonical_state/shadow/70d7bdd0814413ab51085de7.json",
+    "2026/canonical_state/shadow/eb075511f5ba73b9ba93f886.json",
+    "2026/canonical_state/shadow/4f0b046d0afdb8b2559a1175.json",
+    "2026/canonical_state/shadow/da6ab0f68140758fcece243a.json",
+    "2026/canonical_state/shadow/0470b5dc01853cf6347886be.json",
+    "2026/canonical_state/shadow/9112dcc587027c00ff19f23b.json",
+    "2026/canonical_state/shadow/68d52b29e48137c83691121c.json",
+    "2026/canonical_state/shadow/26d42b0e341fa4126c80f377.json",
+    "2026/canonical_state/shadow/acec3bf558dbee5e66bb78f8.json",
+    "2026/canonical_state/shadow/308e922aa9507a598dc29e67.json",
+    "2026/canonical_state/shadow/50f09435f43fb7e060b61c3f.json",
+    "2026/canonical_state/shadow/32c4125bbb10738dc55b50ff.json",
+    "2026/canonical_state/shadow/972161a843807f849b3f22e1.json",
+    "2026/canonical_state/shadow/b5b62a92de5fd7fb85486d73.json",
+    "2026/canonical_state/shadow/e0b75cca9947ea55d3147705.json",
+    "2026/canonical_state/shadow/78778055abfd9a3842c84176.json",
+    "2026/canonical_state/shadow/eb1707b8693c8e72dbfe88ff.json",
+    "2026/canonical_state/shadow/4090d1faa85cf7312660e3ef.json",
+    "2026/canonical_state/shadow/5475f7109e72494e0909fbda.json",
+    "2026/canonical_state/shadow/40e0ac1dccd26eee0f7c7110.json",
+    "2026/canonical_state/shadow/43c45a04a7ca9fba09d407cf.json",
+    "2026/canonical_state/shadow/ef300d94eb45d8f959e6fb5a.json",
+    "2026/canonical_state/shadow/b0df3869ee921ce327824a17.json",
+    "2026/canonical_state/shadow/932f4729e66709f3b38c8113.json",
+    "2026/canonical_state/shadow/bf341fc036a7da0c2a4bd5a6.json",
+    "2026/canonical_state/shadow/321de666d89fd6fb241f407d.json",
+    "2026/canonical_state/shadow/42e748c2f1ce51fc7168592e.json",
+    "2026/canonical_state/shadow/bb57f483181d35ef1816e71e.json",
+    "2026/canonical_state/shadow/311e5d7cc2445f521102de08.json",
+    "2026/canonical_state/shadow/d05b30c45f60a65b31c94382.json",
+    "2026/canonical_state/shadow/43fc1775321932cf65c70652.json",
+    "2026/canonical_state/shadow/242ba9a34edeae61c5c74038.json",
+    "2026/canonical_state/shadow/35f1149d1a1af4658d6c2d59.json",
+    "2026/canonical_state/shadow/d458590d9f48acb4c34cb3a9.json",
+    "2026/canonical_state/shadow/60da866e939eb876135621d6.json",
+    "2026/canonical_state/shadow/d72f332472f7fb48d5387ed1.json",
+    "2026/canonical_state/shadow/31635c68abfcfa0981c05a88.json",
+    "2026/canonical_state/shadow/168cc49f4098f3bd5cc10486.json",
+    "2026/canonical_state/shadow/a7d9246926bdb25ab9852f30.json",
+    "2026/canonical_state/shadow/b86c7d9d3365e0243a3c5488.json",
+    "2026/canonical_state/outbox.jsonl",
+    "2026/canonical_state/shadow/2f4ed8b224daf01f74adf44c.json",
+    "2026/canonical_state/shadow/3df6923fedc70009853d7ac5.json",
+    "2026/canonical_state/shadow/3537f4a0cd88d56f48045dda.json",
+    "2026/canonical_state/shadow/5375fcb76149870edcd5665a.json",
+    "2026/canonical_state/shadow/b822e97b323d3ef6bcafd854.json",
+    "2026/canonical_state/shadow/5fed45c3774f9b6a005152ab.json",
+    "2026/canonical_state/shadow/ee7828f9f2308b87ccedcab8.json",
+    "2026/canonical_state/shadow/63b8015132fc1c323a9acc4b.json",
+    "2026/canonical_state/shadow/c69f6dc4b788389348fffbe0.json",
+    "2026/canonical_state/shadow/6fac502e344c4aae7b58ced7.json",
+    "2026/canonical_state/shadow/6c787f8b834db5dc6240c22d.json",
+    "2026/canonical_state/shadow/d4c4b86e6b0c569b669ec344.json",
+    "2026/canonical_state/shadow/1479e049f9b6556ed87edb9c.json",
+    "2026/canonical_state/shadow/886a34c6a37c8ba555ee580d.json",
+    "2026/canonical_state/shadow/f1770326d19a867e7ffd81a0.json",
+    "2026/canonical_state/shadow/3f3e3310a0ab0a5f556a31bc.json",
+    "2026/canonical_state/shadow/80381be63681583a7d034ee2.json",
+    "2026/canonical_state/shadow/680a87d968864acee913ef71.json",
+    "2026/canonical_state/shadow/55d162a9cec3baf9bb03b093.json",
+    "2026/canonical_state/shadow/1d1145edc46fbfaba59c7c4f.json",
+    "2026/canonical_state/shadow/15f7af34e9e0adddc157dd33.json",
+    "2026/canonical_state/shadow/efb97d68f32a9707d805a809.json",
+    "2026/canonical_state/shadow/0ffcc19eb781f88127c0dd8c.json",
+    "2026/canonical_state/shadow/afd6252641e67236716a0038.json",
+    "2026/canonical_state/shadow/b1f337f7d9ed136f9e019f3a.json",
+    "2026/canonical_state/shadow/47d4f4512ee8874540fb780e.json",
+    "2026/canonical_state/shadow/93f0b33d2cfd1872fccf5dbd.json",
+    "2026/canonical_state/shadow/7772f80a65f501d250dce580.json",
+    "2026/canonical_state/shadow/145292b364c965b996c1b062.json",
+    "2026/canonical_state/shadow/2afe52e2246772531e2c88bb.json",
+    "2026/canonical_state/shadow/08dbd02991f536fb7d42b1c6.json",
+    "2026/canonical_state/shadow/6aca7f067230397022ec132b.json",
+    "2026/canonical_state/shadow/ae4991d583ba42f1854859c0.json",
+    "2026/canonical_state/shadow/bd1b564a8262830f0f36bbed.json",
+    "2026/canonical_state/shadow/42806babb7240aaf642a9671.json",
+    "2026/canonical_state/shadow/70a4c7735bea9e0f206c5b89.json",
+    "2026/canonical_state/shadow/6cd090b9a4c1271890fd2129.json",
+    "2026/canonical_state/shadow/1f9f2bb1a8416ac65c5072d1.json",
+    "2026/canonical_state/shadow/0c260d2ef66af3e3d6f04193.json",
+    "2026/canonical_state/shadow/99fdf154e8c9457aba2a6ca0.json",
+    "2026/canonical_state/shadow/1439b46bded367bbdd2b1d18.json",
+    "2026/canonical_state/shadow/2eadf14eaca5230300128f42.json",
+    "2026/canonical_state/shadow/70748d96f04814d4591ce44d.json",
+    "2026/canonical_state/shadow/3282d3311bccad8c30bb3633.json",
+    "2026/canonical_state/shadow/5a7d28ae23c5173fb850bcee.json",
+    "2026/canonical_state/shadow/46b3a1cae26149c19fcfea6b.json",
+    "2026/canonical_state/shadow/145d4cf5778e1b623ea13cf2.json",
+    "2026/canonical_state/shadow/a11e3fff08d91ec844cccbb5.json",
+    "2026/canonical_state/shadow/fc1eacd6cc6152a3d979b2db.json",
+    "2026/canonical_state/shadow/9adc72c05584972091764f05.json",
+    "2026/canonical_state/shadow/07aa5fca047d44cd6a2e92b6.json",
+    "2026/canonical_state/shadow/cbd1804c90aed9e0eb8fe34e.json",
+    "2026/canonical_state/shadow/532d5de558e5286d529466e8.json",
+    "2026/canonical_state/shadow/b3c8df5d6036034498f9a7c4.json",
+    "2026/canonical_state/shadow/08efbd8398b4ae6ddb5f5331.json",
+    "2026/canonical_state/shadow/3d9daddec78c115c0adcc4e4.json",
+    "2026/canonical_state/shadow/6a8e5a401c38f3ed9b0a7b45.json",
+    "2026/canonical_state/shadow/fc62d7f3ac65efade97fb61e.json",
+    "2026/canonical_state/shadow/b4bbeeda21d3bcb65e5c4b16.json",
+    "2026/canonical_state/shadow/8434b0d709df6f54c891222e.json",
+    "2026/canonical_state/shadow/dd4b5eeca0888131233809a5.json",
+    "2026/canonical_state/shadow/b72f268874dfcdd5813f9b79.json",
+    "2026/canonical_state/shadow/c4f0b4ab535074445af29c01.json",
+    "2026/canonical_state/shadow/0ae99bfa08169780fe10beaf.json",
+    "2026/canonical_state/shadow/2ef92106ae567216e56133d9.json",
+    "2026/canonical_state/shadow/f2ed6e9974b2085263398bce.json",
+    "2026/canonical_state/shadow/11ce8a572759fb8db5d16ec2.json",
+    "2026/canonical_state/shadow/ec29fa8680d1259dbcf87b28.json",
+    "2026/canonical_state/shadow/2a59f1a39cc6a4ed008ab1b3.json",
+    "2026/canonical_state/shadow/c6ccdd0b974195d5c7aae0fe.json",
+    "2026/canonical_state/shadow/844eedb2680aa2dadd327287.json",
+    "2026/canonical_state/shadow/baeaa0ac98390c130fd78fb2.json",
+    "2026/canonical_state/shadow/371689be52ca55e21aa81975.json",
+    "2026/canonical_state/shadow/a8bcf8d99b20727cbddf60ff.json",
+    "2026/canonical_state/shadow/802a4f3a9b3b15009734c9b3.json",
+    "2026/canonical_state/shadow/6d4fe38a2db54b356846fe46.json",
+    "2026/canonical_state/shadow/7857b8a1dbe6dfa6fd98827c.json",
+    "2026/canonical_state/shadow/94b852c87ac1bc0fea72b807.json",
+    "2026/canonical_state/shadow/1a03500fa25b2487a170dcf8.json",
+    "2026/canonical_state/shadow/8799468b691fca40dc1ed4ec.json",
+    "2026/canonical_state/shadow/4088b4a113e06b3a55caffde.json",
+    "2026/canonical_state/shadow/89760f112242119d7d2117d4.json",
+    "2026/canonical_state/shadow/32e73f89b14057fa11959266.json",
+    "2026/canonical_state/shadow/003b5b0f31d501d56b3e12fb.json",
+    "2026/canonical_state/revisions.jsonl",
+    "2026/canonical_state/shadow/dd30945da1d59a926bc99862.json",
+    "2026/canonical_state/shadow/454ba079315891797db84151.json",
+    "2026/canonical_state/shadow/5c7bcd22d12c56b7a78ed0e1.json",
+    "2026/canonical_state/shadow/7d3515c95d60773b4982e572.json",
+    "2026/canonical_state/shadow/97b50464cb4ba54aa6f79eec.json",
+    "2026/canonical_state/shadow/48a2cb0808bf469c0c45b330.json",
+    "2026/canonical_state/shadow/54d66c045873390eba37b290.json",
+    "2026/canonical_state/shadow/e91a52fd311eaeb58b489950.json",
+    "2026/canonical_state/shadow/3b9c1349fa25674c71de2b50.json",
+    "2026/canonical_state/shadow/bed75723d6e01e57d87c0ed7.json",
+    "2026/canonical_state/shadow/7253e810c96047e4ef7f9241.json",
+    "2026/canonical_state/shadow/a002f3604bc7a5ab8971194e.json",
+    "2026/canonical_state/shadow/08b1245a5f97872db3251a2a.json",
+    "2026/canonical_state/shadow/ad09cd958fedcac4a79b3945.json",
+    "2026/canonical_state/shadow/447a1124c20bbea7d581adc0.json",
+    "2026/canonical_state/shadow/f4d66e0340aee03f227fe340.json",
+    "2026/canonical_state/shadow/982dc17e6bfd8152dc0bfc06.json",
+    "2026/canonical_state/shadow/472cef3c362c8a289f7e1eeb.json",
+    "2026/canonical_state/shadow/cc3faddc6378abae44f5ad77.json",
+    "2026/canonical_state/shadow/0d57ca9c1a094848c98c2ce4.json",
+    "2026/canonical_state/shadow/a573218bbf77b3440239a1b0.json",
+    "2026/canonical_state/shadow/90f0d8dec7bfcfcba07487d5.json"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "facts": [
+    {
+      "fact_id": "admin:bmw.bmw_i4.g26.trim.edrive35_m_sport_bev:powertrain.max_power_kw:398e0332b76d",
+      "trim_id": "bmw.bmw_i4.g26.trim.edrive35_m_sport_bev",
+      "field_key": "powertrain.max_power_kw",
+      "value_state": "KNOWN",
+      "value": 210,
+      "unit": "kW",
+      "qualifiers": {
+        "output_scope": "SYSTEM",
+        "rating_basis": "DECLARED"
+      },
+      "observed_at": "2026-09-30",
+      "verification_status": "VERIFIED"
+    }
+  ]
+}
