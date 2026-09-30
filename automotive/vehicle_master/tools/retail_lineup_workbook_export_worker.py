@@ -83,23 +83,30 @@ def _patch_processing(
 
 def _storage_upload(path: str, content: bytes) -> None:
     url, api_key = _env()
-    # Prefer the legacy service-role JWT when it exists because Storage accepts
-    # it universally as a Bearer token. New sb_secret keys remain the fallback.
-    bearer = _clean_env_value(
-        os.environ.get("SUPABASE_SERVICE_ROLE_KEY") or api_key,
-        "SUPABASE_SERVICE_ROLE_KEY", "SUPABASE_SECRET_KEY",
+    # Supabase's legacy service-role JWT belongs in Authorization. The newer
+    # sb_secret_* key is a privileged apikey and must not be copied into a
+    # Bearer header. Keep both credential generations working because existing
+    # deployments may expose either one.
+    legacy_jwt = _clean_env_value(
+        os.environ.get("SUPABASE_SERVICE_ROLE_KEY"),
+        "SUPABASE_SERVICE_ROLE_KEY",
     )
+    headers = {
+        "apikey": api_key,
+        "content-type": XLSX_CONTENT_TYPE,
+        "x-upsert": "false",
+    }
+    if legacy_jwt.startswith("eyJ"):
+        headers["authorization"] = f"Bearer {legacy_jwt}"
+    elif api_key.startswith("eyJ"):
+        headers["authorization"] = f"Bearer {api_key}"
+
     encoded = quote(path.strip("/"), safe="/")
     request = Request(
         f"{url}/storage/v1/object/{BUCKET}/{encoded}",
         data=content,
         method="POST",
-        headers={
-            "apikey": api_key,
-            "authorization": f"Bearer {bearer}",
-            "content-type": XLSX_CONTENT_TYPE,
-            "x-upsert": "false",
-        },
+        headers=headers,
     )
     try:
         with urlopen(request, timeout=120) as response:
