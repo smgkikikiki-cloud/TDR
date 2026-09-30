@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "eadb0574e48f3007b4b3565d",
+    "command_id": "vehicle-spec-4964068c-c833-405c-a189-d239219c444e-001-fd4148e2673b:100",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.etron_gt.gen1.trim.rs_e_tron_gt_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T02:40:21+00:00",
+    "applied_at": "2026-09-30T02:41:20+00:00",
+    "before_hash": "60cec2eba153bb58012371c25f393750970e4378470345019cf2ee0960baad35",
+    "after_hash": "c3600091801e61acd4297d40c7d4bff5a6dcdf276254b103f6f4e409f1e3f3f0",
+    "before": [
+      93.4,
+      "Li-ion"
+    ],
+    "after": [
+      93.4,
+      "Li-ion",
+      160000
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.etron_gt.gen1.trim.rs_e_tron_gt_bev_battery.warranty_km_6f420c81a2a2.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "eadb0574e48f3007b4b3565d:spec",
+    "revision_id": "eadb0574e48f3007b4b3565d",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.etron_gt.gen1.trim.rs_e_tron_gt_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T02:41:20+00:00",
+    "payload": [
+      93.4,
+      "Li-ion",
+      160000
+    ]
+  }
+}

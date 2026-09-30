@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "release_kind": "SHADOW",
+  "revision": {
+    "schema_version": 1,
+    "revision_id": "c460e0d0d4f95f67e445df76",
+    "command_id": "vehicle-spec-4964068c-c833-405c-a189-d239219c444e-001-fd4148e2673b:12",
+    "operation": "APPEND_SPEC",
+    "year": 2026,
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.etron_gt.gen1.trim.e_tron_gt_quattro_bev",
+    "actor": "tdr-admin",
+    "reason": "bulk import from vehicle-spec-excel",
+    "submitted_at": "2026-09-30T02:40:21+00:00",
+    "applied_at": "2026-09-30T02:41:19+00:00",
+    "before_hash": "ca4e155ddbb3f8319ce3922616d666313c6a54232469f834f58f00c54d14f6e2",
+    "after_hash": "11c12e6676235383eed068bbb278adae5651ca7ac41a07cbb93223b8c3f5f58d",
+    "before": [
+      93.4,
+      "Li-ion",
+      160000,
+      8,
+      11,
+      "CCS2",
+      270,
+      "Adaptive Air Suspension",
+      "Adaptive Air Suspension",
+      true
+    ],
+    "after": [
+      93.4,
+      "Li-ion",
+      160000,
+      8,
+      11,
+      "CCS2",
+      270,
+      "Adaptive Air Suspension",
+      "Adaptive Air Suspension",
+      true,
+      true
+    ],
+    "changed_files": [
+      "2026/product/comparable_specs/facts/canonical_admin_audi.etron_gt.gen1.trim.e_tron_gt_quattro_bev_comfort.electric_parking_brake_e7b4d930c367.json"
+    ]
+  },
+  "event": {
+    "schema_version": 1,
+    "event_id": "c460e0d0d4f95f67e445df76:spec",
+    "revision_id": "c460e0d0d4f95f67e445df76",
+    "topic": "spec",
+    "entity_type": "market_trim",
+    "entity_id": "audi.etron_gt.gen1.trim.e_tron_gt_quattro_bev",
+    "state": "PENDING",
+    "created_at": "2026-09-30T02:41:19+00:00",
+    "payload": [
+      93.4,
+      "Li-ion",
+      160000,
+      8,
+      11,
+      "CCS2",
+      270,
+      "Adaptive Air Suspension",
+      "Adaptive Air Suspension",
+      true,
+      true
+    ]
+  }
+}
