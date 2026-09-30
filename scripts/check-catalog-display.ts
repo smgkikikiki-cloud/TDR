@@ -7,6 +7,7 @@
  */
 
 import { displayName, initials, titleFromSlug } from "../lib/display-name.ts";
+import { modelRangeSummary, preferredRangeForTrim } from "../lib/model-range-summary.ts";
 import { byRelevance, freshness } from "../lib/relevance.ts";
 
 let failed = 0;
@@ -34,6 +35,39 @@ check("a slug is lower case, so digits cannot mean 'already capitalised'",
 check("longer slug words are ordinary words", titleFromSlug("toyota-hilux-revo"), "Toyota Hilux Revo");
 check("a row with neither is not left nameless", displayName(null, "—"), "—");
 check("initials for a brand with no logo", initials({ name_en: "Toyota" }), "TO");
+
+console.log("\nrange — model pages read the canonical spec ledger without mixing standards");
+const rangeFact = (value: number, basis: string, scope = "FULL") => ({
+  field_key: "ev.rated_range_km",
+  value,
+  value_state: "KNOWN",
+  qualifiers: { measurement_basis: basis, range_scope: scope },
+});
+check("ledger-backed range is visible even when legacy flat columns are empty",
+  preferredRangeForTrim({ comparable_specs: [rangeFact(410, "NEDC")] }),
+  { value: 410, cycle: "NEDC" });
+check("FULL and ELECTRIC_ONLY duplicates do not create an ambiguous trim range",
+  preferredRangeForTrim({ comparable_specs: [rangeFact(410, "NEDC"), rangeFact(410, "NEDC", "ELECTRIC_ONLY")] }),
+  { value: 410, cycle: "NEDC" });
+check("two trims on the same basis become one model range",
+  modelRangeSummary([
+    { comparable_specs: [rangeFact(410, "NEDC")] },
+    { comparable_specs: [rangeFact(480, "NEDC")] },
+  ]), { range: "410 km – 480 km", cycle: "NEDC" });
+check("different standards are never collapsed into one misleading model range",
+  modelRangeSummary([
+    { comparable_specs: [rangeFact(410, "NEDC")] },
+    { comparable_specs: [rangeFact(420, "WLTP")] },
+  ]), null);
+check("legacy flat range remains a fallback for old releases",
+  preferredRangeForTrim({ published_range_km: 500, published_range_cycle: "WLTP" }),
+  { value: 500, cycle: "WLTP" });
+check("ledger range wins over a stale legacy flat range",
+  preferredRangeForTrim({
+    published_range_km: 999,
+    published_range_cycle: "NEDC",
+    comparable_specs: [rangeFact(480, "NEDC")],
+  }), { value: 480, cycle: "NEDC" });
 
 console.log("\nfreshness — as at September 2026");
 const now = new Date(2026, 8, 8);
