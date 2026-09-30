@@ -120,7 +120,7 @@ The migration exposes service-role-only compare-and-set RPCs:
 - `tdr_fail_retail_lineup_plan_apply(...)`
 - `tdr_mark_retail_lineup_plan_stale(...)`
 
-`begin_apply` requires the exact `plan_hash` and `baseline_hash` the Admin reviewed. A stale hash, terminal plan or unknown plan fails closed. There is no fallback that silently recompiles a newer workbook/canonical state behind the operator's back.
+`begin_apply` requires the exact `plan_hash` and `baseline_hash` the Admin reviewed. A stale hash, terminal plan or unknown plan fails closed. There is no fallback that silently recompiles a newer plan behind the operator's back.
 
 `migration_v54` additionally prevents privileged same-status rewrites of approval identity, commit SHA or release ID. Audit fields may only change on the state transition that owns them. A retry from FAILED records a fresh approval timestamp/actor.
 
@@ -293,10 +293,10 @@ Implemented:
 
 Coverage includes compile-preview persistence, PROCESSING crash recovery, stored-plan-only Apply, STALE baseline transition, migration/workflow wiring, canonical concurrency and scheduled recovery presence.
 
-Current code/test head before this documentation commit: `625261c430e4c6d331a85f1fa8fbd0759d199bc1`.
+Runtime/test implementation head before documentation-only commits: `625261c430e4c6d331a85f1fa8fbd0759d199bc1`.
 
-CI for that head is queued/running. Do not call Chunk 7 validated until the targeted tests/imports and repository build have completed. No v56 migration has been applied to production, no main merge has occurred, and no production canonical write has occurred.
+CI was queued on that runtime/test head when this checkpoint was written. Documentation-only commits after it do not alter execution semantics. Do not call Chunk 7 validated until the targeted tests/imports and repository build have completed. No v56 migration has been applied to production, no main merge has occurred, and no production canonical write has occurred.
 
 ## Next checkpoint
 
-Wait for the Chunk-7 CI head. If its only full-suite failures are the same known repository-baseline failures, mark Chunk 7 complete. After that, the next work is controlled production integration: apply v53-v56 migrations, merge the reviewed PR, then run a deliberately tiny end-to-end smoke test before using the bootstrap on the full 73-model ICE reset.
+Wait for the Chunk-7 runtime/test CI. If its only full-suite failures are the same known repository-baseline failures, mark Chunk 7 complete. After that, the next work is controlled production integration: apply v53-v56 migrations, merge the reviewed PR, then run a deliberately tiny end-to-end smoke test before using the bootstrap on the full 73-model ICE reset.
