@@ -7,7 +7,7 @@
  *       shadow token itself, which lives in tokens.css and is never scanned);
  *    2. never render a car-brand logo (no resolveBrandLogo(), no logo_url);
  *    3. never pair a delta colour with no sign: every "delta-up" needs ▲ and +,
- *       every "delta-down" needs ▼ and −, within 200 characters of the class.
+ *       every "delta-down" needs ▼ and −, inside the element that carries the class.
  *
  *  Unmigrated files are only reported (use --report to list them), so the check
  *  can go into `npm run check` on day one without breaking the build.
@@ -41,6 +41,27 @@ function walk(dir: string, out: string[] = []): string[] {
   return out;
 }
 
+/** The source text of the element that carries a class at `idx`: from the opening
+ *  tag's "<" to its matching closing tag (depth-aware for same-name nesting), so a
+ *  neighbouring element's ▲/+ or ▼/− can never satisfy this one. Self-closing or
+ *  unbalanced tags fall back to the rest of the opening tag plus 300 characters. */
+function elementRegion(src: string, idx: number): string {
+  const open = src.lastIndexOf("<", idx);
+  const name = open >= 0 ? /^<([A-Za-z][\w.-]*)/.exec(src.slice(open))?.[1] : undefined;
+  if (open < 0 || !name) return src.slice(Math.max(0, idx - 80), idx + 300);
+  const tagEnd = src.indexOf(">", idx);
+  if (tagEnd < 0 || src[tagEnd - 1] === "/") return src.slice(open, Math.min(src.length, (tagEnd < 0 ? idx : tagEnd) + 1));
+  const re = new RegExp(`<(/?)${name.replace(/[.]/g, "\\.")}(?=[\\s>/])`, "g");
+  re.lastIndex = tagEnd;
+  let depth = 1;
+  for (let t = re.exec(src); t; t = re.exec(src)) {
+    const selfClosing = !t[1] && src[src.indexOf(">", t.index) - 1] === "/";
+    if (t[1]) depth--; else if (!selfClosing) depth++;
+    if (depth === 0) return src.slice(open, src.indexOf(">", t.index) + 1);
+  }
+  return src.slice(open, tagEnd + 301);
+}
+
 const report = process.argv.includes("--report");
 let failed = 0;
 const rows: [string, number, number][] = [];
@@ -55,13 +76,11 @@ for (const file of ROOTS.flatMap((r) => walk(r))) {
     if (colors) { failed++; console.log(`  FAIL ${file}: ${colors} literal colour(s) — use var(--token) from design/tokens.css`); }
     if (logos) { failed++; console.log(`  FAIL ${file}: car-brand logo usage — logos are banned (DESIGN.md)`); }
     for (const [cls, arrow, sign] of [["delta-up", "▲", "+"], ["delta-down", "▼", "−"]] as const) {
-      // The sign must sit next to the element that carries the class (±200 chars),
-      // not merely somewhere in the file.
       for (const m of src.matchAll(new RegExp(cls, "g"))) {
-        const near = src.slice(Math.max(0, m.index! - 200), m.index! + 200);
-        if (!near.includes(arrow) || !near.includes(sign)) {
+        const region = elementRegion(src, m.index!);
+        if (!region.includes(arrow) || !region.includes(sign)) {
           failed++;
-          console.log(`  FAIL ${file}: ${cls} at offset ${m.index} has no ${arrow} and ${sign} within 200 chars`);
+          console.log(`  FAIL ${file}: ${cls} at offset ${m.index} — its own element has no ${arrow} and ${sign}`);
         }
       }
     }

@@ -4,7 +4,7 @@
     "deploymentEnabled": {
       "main": true,
       "design/*": true,
-      "*": false
+      "**": false
     }
   }
 }
