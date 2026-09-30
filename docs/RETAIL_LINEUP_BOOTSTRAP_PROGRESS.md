@@ -164,16 +164,97 @@ Additional audit-state static guard:
 
 Full Vehicle Master CI on code head `2de280e86725056a48d381bd3d5a97c915e17f3e` completed with **1612 passed / 11 failed / 4334 subtests passed**. The 11 failures are the same repository-baseline failures already observed before Chunk 5; no Retail Lineup Bootstrap plan-store/codec test appears in the failure list.
 
-The exact final Chunk-5 code/test head `738774d91e793e72a96526120b86780f4eaf6fdb` has additionally passed Python compilation and the TypeScript job while its long full-suite run continues in CI. Changes after the full validated code head are SQL state-machine hardening plus its static file-contract test; they do not touch canonical runtime/apply logic.
+The exact final Chunk-5 code/test head `738774d91e793e72a96526120b86780f4eaf6fdb` additionally passed Python compilation and the TypeScript job. Changes after the full validated code head are SQL state-machine hardening plus its static file-contract test; they do not touch canonical runtime/apply logic.
 
 No v53/v54 migration has been applied to production Supabase. No main merge or production write has occurred.
 
-## Next — Chunk 6
+## Chunk 6 — COMPLETE
 
-Admin UI / server actions for the explicit two-phase workflow:
+Dedicated Admin UI / explicit confirmation surface is implemented. Chunk 6 deliberately stops before the source-import compiler and apply/publish workers; those remain Chunk 7.
+
+### Level-0 Admin workspace
+
+Implemented:
+
+- `app/admin/(secure)/retail-lineup-bootstrap/page.tsx`
+- `app/admin/(secure)/retail-lineup-bootstrap/[planId]/page.tsx`
+- `app/admin/retail-lineup-actions.ts`
+- `lib/retail-lineup-admin.ts`
+- Admin navigation/home links marking this as a separate **LEVEL 0** operation
+
+The workflow presented to the owner is:
 
 ```text
-Generate workbook -> Upload/compile -> PREVIEW_READY -> Review diff -> explicit Apply
+Generate workbook -> edit TARGET_LINEUP -> upload -> immutable Preview
+-> inspect KEEP / CREATE / REACTIVATE / ARCHIVE -> explicit Apply
+-> APPLYING -> WRITTEN_PENDING_PUBLISH -> COMPLETED
 ```
 
-Chunk 6 should render the immutable stored summary/detail and submit the stored plan id + reviewed hashes. It must not execute canonical writes by recompiling the workbook in the browser/server action. Final source-import worker wiring remains Chunk 7.
+The detail page renders the stored plan rather than reconstructing a diff in TypeScript. It shows source SHA-256, baseline hash, plan hash, base release, actor/approver, every model and every planned item including canonical ID and identity-resolution basis.
+
+### Explicit Apply safety
+
+The Admin Apply request:
+
+- requires a separate confirmation checkbox
+- submits the rendered `plan_id`, `plan_hash` and `baseline_hash`
+- re-fetches the durable plan and verifies both hashes still match
+- calls only `tdr_begin_retail_lineup_plan_apply(...)`
+- never parses the XLSX again
+- never reruns identity resolution
+- never calls the canonical writer or Chunk-4 transaction in the Vercel request
+- dispatches the approved plan ID for the Chunk-7 worker, which must decode the stored `compiled_plan`
+
+Therefore a click cannot silently apply a newer interpretation than the object the Admin reviewed.
+
+### Workbook generation surface
+
+Workbook generation also avoids a parallel TypeScript implementation of the Excel contract.
+
+Implemented:
+
+- `supabase/migration_v55_retail_lineup_workbook_exports.sql`
+- `automotive/vehicle_master/tools/retail_lineup_workbook_export_worker.py`
+- `.github/workflows/retail-lineup-workbook-export.yml`
+- `automotive/vehicle_master/tests/test_retail_lineup_workbook_export_worker.py`
+
+Admin stores a durable generation request containing exact model scope, catalog year and base release. The read-only worker checks out `main`, calls the existing Chunk-3 `generate_retail_lineup_workbook()`, uploads the XLSX to the private `source-imports` bucket and records its baseline hash. The worker has no canonical write or git-push permission.
+
+The export request state machine is `QUEUED -> PROCESSING -> READY | FAILED`; request identity is immutable and the table is service-role-only.
+
+### Upload boundary
+
+The UI accepts `.xlsx` only, maximum 4 MB, stores it in the existing private import bucket and queues the dedicated `RETAIL_LINEUP_BOOTSTRAP` source kind. Chunk 6 intentionally does **not** add that source kind to the current `import_runs` constraint or importer handler. That migration/compiler wiring is Chunk 7, so a feature-branch UI upload is not claimed to be operational yet.
+
+This separation is deliberate: Chunk 6 proves the Admin contract without modifying the ordinary ECO/DLT/Vehicle-Specs import worker.
+
+### Chunk 6 commits
+
+- `d31ef618cb23ddc526dffdf8c1b6888367a50ec9` — workbook export queue migration
+- `f17b75e5d3ab3b863c13e631ea8417c07770a5dd` — read-only workbook generator worker
+- `23c4898c899409e477e98e85db6fbfbfb50bbcde` — generator workflow
+- `5ea8377237c626eb3661d456275c5a91a3b3430e` — generator worker tests
+- `bca45fb87f856c3d98cacd1017c573f0eb13d61c` — Admin read models
+- `109082b25311ee5daff9d3cc8dd5c9adb087fe8b` — initial Admin server actions
+- `404d3f04ba603992d6e61e52a33feae0375d210b` — Level-0 workspace page
+- `c16bf51745159ac6766c9405b4ab9e5a728cb7cd` — immutable Preview detail page
+- `576effb2e99e071d1d095587bbc5258c2bb0cc1f` — explicit Apply confirmation guard
+- `f4bc16a33d80dcaa998f99a4be21b6dadd49eb1c` — Admin nav entry
+- `d005a820acb7d67a71c2bd681efa32af37946e4b` — Admin-home entry
+- `62d6886b240d728fb4642a22e0550238847a5623` — Admin safety-contract tests
+- `fd02219933358ad14805f19f29cc165c08b80816` — Supabase secret-key compatibility for workbook storage
+
+### Validation
+
+The Chunk-6 UI/action code through `f4bc16a33d80dcaa998f99a4be21b6dadd49eb1c` has passed the repository TypeScript job and the full Next.js web build. The Vehicle Master job also passed Python compilation and is running the repository's long full suite; later Chunk-6 commits add only the Admin-home link, static safety-contract tests and Storage credential compatibility.
+
+No Retail Lineup Bootstrap migration (v53-v55) has been applied to production. No `main` merge and no production canonical write has occurred.
+
+## Next — Chunk 7
+
+Wire the two server-side execution paths while preserving the already-reviewed object boundary:
+
+1. add `RETAIL_LINEUP_BOOTSTRAP` to the `import_runs` source-kind constraint and make source-import compile the uploaded XLSX into one immutable `PREVIEW_READY` row linked to that import run;
+2. add the approved-plan apply worker that fetches/decodes the stored `compiled_plan`, runs the Chunk-4 transaction, commits exactly those promoted canonical files, publishes the exact commit/release and advances `APPLYING -> WRITTEN_PENDING_PUBLISH -> COMPLETED` (or FAILED/STALE).
+
+Chunk 7 must include a scheduled recovery sweep so a lost repository-dispatch after Admin confirmation cannot strand an `APPLYING` plan forever.
